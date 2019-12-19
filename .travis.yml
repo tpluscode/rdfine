@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "10"
+  - "12"
+  - "13"
+
+after_script:
+  - npm run build
+
+after_success:
+  - npx codecov
+after_failure:
+  - npx codecov
