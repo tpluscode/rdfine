@@ -131,11 +131,23 @@ export function literal(options: LiteralAccessorOption = {}) {
       get(this: RdfResource): any {
         const node = getNode(this._node, getPath(protoOrDescriptor, this._node, name, options.path))
 
-        if (options.type === Boolean) {
-          return trueLiteral.equals(node.term as any) // TODO: fix equals typing
+        const values = node.map(objNode => {
+          if (options.type === Boolean) {
+            return trueLiteral.equals(objNode.term as any) // TODO: fix equals typing
+          }
+
+          return objNode.value
+        })
+
+        if (options.array === true) {
+          return values
         }
 
-        return node.value
+        if (values.length > 1) {
+          throw new Error('Multiple terms found where 0..1 was expected')
+        }
+
+        return values[0]
       },
 
       set(this: RdfResource, value: any) {
