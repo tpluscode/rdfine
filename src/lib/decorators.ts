@@ -71,13 +71,24 @@ export function resource(options: ResourceAccessorOptions = {}) {
         return values[0]
       },
 
-      set(this: RdfResource, value: any) {
+      set(this: RdfResource, value: RdfResource | null) {
         const path = getPath(protoOrDescriptor, this._node, name, options.path)
         const node = path.length === 1 ? this._node : getNode(this._node, path.slice(path.length - 1))
 
         const lastPredicate = path[path.length - 1]
         node.deleteOut(lastPredicate)
-          .addOut(lastPredicate, value)
+
+        if (value === null) {
+          return
+        }
+
+        if (typeof value === 'object' && '_node' in value) {
+          node.addOut(lastPredicate, value._node)
+          return
+        }
+
+        const pathStr = path.map(p => `<${p}>`).join('/')
+        throw new Error('Unexpected value for path ' + pathStr + '. Expecting a resource object')
       },
     })
   }

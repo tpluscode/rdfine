@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`decorator resource sets a relation between resources 1`] = `
+"<http://example.com/jane> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
+<http://example.com/john> <http://schema.org/spouse> <http://example.com/jane> .
+<http://example.com/john> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
+"
+`;
+
+exports[`decorator resource setting null removes relation 1`] = `
+"<http://example.com/jane> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
+<http://example.com/john> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
+"
+`;
