@@ -5,7 +5,7 @@ declare module 'clownface' {
   interface ClownfaceOptions {
     dataset?: unknown;
     graph?: unknown;
-    term?: Term;
+    term?: Term | null;
     value?: unknown;
     _context?: unknown;
   }

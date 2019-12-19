@@ -23,7 +23,7 @@ export class ResourceFactory {
   public createEntity<T>(term: Clownface, explicitMixins: Mixin<any>[] = []): RdfResource & T {
     const entity = new this.__baseClass(term)
 
-    const mixins = this.__mixins.reduce((selected, next: any) => {
+    const mixins = this.__mixins.reduce<any[]>((selected, next: any) => {
       if (next.shouldApply === true || next.shouldApply(entity)) {
         if (!selected.includes(next)) {
           selected.push(next)
@@ -33,7 +33,7 @@ export class ResourceFactory {
       return selected
     }, [...explicitMixins])
 
-    const Type = mixins.reduce<Constructor>((Mixed, Next: any) => Next(Mixed), this.__baseClass)
+    const Type = mixins.reduce<Constructor>((Mixed: Constructor, Next: any) => Next(Mixed), this.__baseClass)
 
     return new Type(term) as unknown as RdfResource & T
   }

@@ -1,7 +1,8 @@
-import { Literal, NamedNode } from 'rdf-js'
+import { Literal, NamedNode, Term } from 'rdf-js'
 import Clownface from 'clownface/lib/Clownface'
 import rdf from 'rdf-data-model'
 import { Mixin } from './ResourceFactory'
+import RdfResource from './RdfResource'
 
 const trueLiteral: Literal = rdf.literal('true', rdf.namedNode('http://www.w3.org/2001/XMLSchema#boolean'))
 
@@ -9,9 +10,17 @@ type PropRef = string | NamedNode
 
 interface AccessorOptions {
   path?: PropRef | PropRef[]
-  as?: 'term' | Mixin<any>[]
   array?: boolean
 }
+
+interface ResourceAccessorOptions extends AccessorOptions {
+  as?: Mixin<any>[]
+}
+
+type Constructor<T = RdfResource> = {
+  new (...args: any[]): T
+  __ns?: any
+};
 
 interface LiteralAccessorOption extends AccessorOptions {
   type?: typeof Boolean
@@ -41,24 +50,14 @@ function getPath(protoOrDescriptor: any, cf: Clownface, name: PropertyKey, path?
     .map(termOrString => predicate(cf, termOrString))
 }
 
-export function property(options: AccessorOptions = {}) {
-  const Type = options.as || 'auto'
-
+export function resource(options: ResourceAccessorOptions = {}) {
   return (protoOrDescriptor: any, name: PropertyKey): any => {
     Object.defineProperty(protoOrDescriptor, name, {
-      get(this: Clownface): any {
-        const node = getNode(this, getPath(protoOrDescriptor, this, name, options.path))
+      get(this: any): any {
+        const node = getNode(this._node, getPath(protoOrDescriptor, this._node, name, options.path))
 
         const values = node.map(term => {
-          if (Type === 'term') {
-            return term.term
-          }
-
-          if (Type === 'auto') {
-            return protoOrDescriptor._factory.createEntity(term)
-          }
-
-          return protoOrDescriptor._factory.createEntity(term, Type)
+          return this.constructor._factory.createEntity(term, options.as)
         })
 
         if (options.array === true) {
@@ -72,9 +71,40 @@ export function property(options: AccessorOptions = {}) {
         return values[0]
       },
 
-      set(this: Clownface, value: any) {
-        const path = getPath(protoOrDescriptor, this, name, options.path)
-        const node = path.length === 1 ? this : getNode(this, path.slice(path.length - 1))
+      set(this: RdfResource, value: any) {
+        const path = getPath(protoOrDescriptor, this._node, name, options.path)
+        const node = path.length === 1 ? this._node : getNode(this._node, path.slice(path.length - 1))
+
+        const lastPredicate = path[path.length - 1]
+        node.deleteOut(lastPredicate)
+          .addOut(lastPredicate, value)
+      },
+    })
+  }
+}
+
+export function term(options: AccessorOptions = {}) {
+  return (protoOrDescriptor: any, name: PropertyKey): any => {
+    Object.defineProperty(protoOrDescriptor, name, {
+      get(this: any): any {
+        const node = getNode(this._node, getPath(protoOrDescriptor, this._node, name, options.path))
+
+        const values = node.terms
+
+        if (options.array === true) {
+          return values
+        }
+
+        if (values.length > 1) {
+          throw new Error('Multiple terms found where 0..1 was expected')
+        }
+
+        return values[0]
+      },
+
+      set(this: RdfResource, value: Term) {
+        const path = getPath(protoOrDescriptor, this._node, name, options.path)
+        const node = path.length === 1 ? this._node : getNode(this._node, path.slice(path.length - 1))
 
         const lastPredicate = path[path.length - 1]
         node.deleteOut(lastPredicate)
@@ -87,8 +117,8 @@ export function property(options: AccessorOptions = {}) {
 export function literal(options: LiteralAccessorOption = {}) {
   return (protoOrDescriptor: any, name: PropertyKey): any => {
     Object.defineProperty(protoOrDescriptor, name, {
-      get(this: Clownface): any {
-        const node = getNode(this, getPath(protoOrDescriptor, this, name, options.path))
+      get(this: RdfResource): any {
+        const node = getNode(this._node, getPath(protoOrDescriptor, this._node, name, options.path))
 
         if (options.type === Boolean) {
           return trueLiteral.equals(node.term as any) // TODO: fix equals typing
@@ -97,9 +127,9 @@ export function literal(options: LiteralAccessorOption = {}) {
         return node.value
       },
 
-      set(this: Clownface, value: any) {
-        const path = getPath(protoOrDescriptor, this, name, options.path)
-        const node = path.length === 1 ? this : getNode(this, path.slice(path.length - 1))
+      set(this: RdfResource, value: any) {
+        const path = getPath(protoOrDescriptor, this._node, name, options.path)
+        const node = path.length === 1 ? this._node : getNode(this._node, path.slice(path.length - 1))
 
         const lastPredicate = path[path.length - 1]
         node.deleteOut(lastPredicate)
@@ -110,7 +140,7 @@ export function literal(options: LiteralAccessorOption = {}) {
 }
 
 export function namespace(ns: any) {
-  return (classOrDescriptor: any) => {
+  return <T extends RdfResource>(classOrDescriptor: Constructor<T>) => {
     classOrDescriptor.__ns = ns
   }
 }

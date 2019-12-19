@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "target": "esnext",
+    "target": "es2019",
     "declaration": true,
     "lib": [
       "es6",
@@ -11,6 +11,7 @@
     "emitDecoratorMetadata": true,
     "strictNullChecks": true,
     "strict": true,
+    "noEmit": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,

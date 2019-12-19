@@ -1,5 +1,6 @@
-import { Term, NamedNode } from 'rdf-js'
+import { Term, NamedNode, DatasetCore, BlankNode } from 'rdf-js'
 import Clownface from 'clownface/lib/Clownface'
+import cf from 'clownface'
 import ns from '@rdfjs/namespace'
 import { ResourceFactory } from './ResourceFactory'
 
@@ -16,11 +17,13 @@ export default class RdfResourceImpl implements RdfResource {
 
   public static _factory = new ResourceFactory(RdfResourceImpl)
 
-  public constructor(cf: Clownface) {
-    this._node = cf
+  public constructor(node: Clownface | { dataset: DatasetCore; term: NamedNode | BlankNode; graph?: NamedNode }) {
+    this._node = cf(node)
   }
 
   public get id() {
+    if (!this._node.term) throw new Error('Graph context does not represent a single node')
+
     return this._node.term
   }
 

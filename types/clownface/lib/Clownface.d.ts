@@ -21,7 +21,8 @@ declare module 'clownface/lib/Clownface' {
     toArray(): Clownface<T>[];
     filter(cb: (quad: Clownface<T>) => boolean): Clownface<T>;
     forEach(cb: (quad: Clownface<T>) => void): void;
-    map<X>(cb: (quad: Clownface<T>) => X): X[];
+    map<X>(cb: (quad: Clownface<T>, index: number) => X): X[];
+
     toString(): string;
     node<X extends Term = Term> (values: any, { type, datatype, language }?: any): Clownface<X>;
     blankNode (values?: any): Clownface<BlankNode>;
@@ -49,7 +50,7 @@ declare module 'clownface/lib/Clownface' {
   }
 
   class Clownface<T extends Term = Term> implements Clownface<T> {
-    public constructor(o: { term?: Term; dataset?: any; _context?: unknown });
+    public constructor(o: { term?: Term | null; dataset?: any; _context?: unknown });
     public readonly _context: unknown;
   }
 
