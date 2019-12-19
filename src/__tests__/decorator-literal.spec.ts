@@ -31,7 +31,7 @@ describe('decorator', () => {
     })
 
     it('returns boolean when type is set', async () => {
-    // given
+      // given
       const dataset = await parse(`
         @prefix ex: <${prefixes.ex}> .
         @prefix schema: <${prefixes.schema}> .
@@ -57,6 +57,86 @@ describe('decorator', () => {
       // then
       expect(instance.single).toStrictEqual(false)
       expect(instance.married).toStrictEqual(true)
+    })
+
+    describe('setter', () => {
+      it('replaces boolean object value', async () => {
+        // given
+        const dataset = await parse(`
+        @prefix ex: <${prefixes.ex}> .
+        @prefix schema: <${prefixes.schema}> .
+        @prefix xsd: <${prefixes.xsd}> .
+        
+        ex:res ex:isMarried true .
+      `)
+        class Resource extends RdfResource {
+          @literal({ path: ex.isMarried, type: Boolean })
+          married?: boolean
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // when
+        instance.married = false
+
+        // then
+        expect(instance._node.dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('replaces string object value', async () => {
+        // given
+        const dataset = await parse(`
+        @prefix ex: <${prefixes.ex}> .
+        @prefix schema: <${prefixes.schema}> .
+        @prefix xsd: <${prefixes.xsd}> .
+        
+        ex:res schema:name "John" .
+      `)
+        class Resource extends RdfResource {
+          @literal({ path: schema.name })
+          name?: string
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // when
+        instance.name = 'Jane'
+
+        // then
+        expect(instance._node.dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('unsets string object when null is set', async () => {
+        // given
+        const dataset = await parse(`
+        @prefix ex: <${prefixes.ex}> .
+        @prefix schema: <${prefixes.schema}> .
+        @prefix xsd: <${prefixes.xsd}> .
+        
+        ex:res schema:name "John" .
+      `)
+        class Resource extends RdfResource {
+          @literal({ path: schema.name })
+          name: string | null = null
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // when
+        instance.name = null
+
+        // then
+        expect(instance._node.dataset.toCanonical()).toMatchSnapshot()
+      })
     })
   })
 })

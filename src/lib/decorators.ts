@@ -126,13 +126,15 @@ export function term(options: AccessorOptions = {}) {
 }
 
 export function literal(options: LiteralAccessorOption = {}) {
+  const type = options.type || String
+
   return (protoOrDescriptor: any, name: PropertyKey): any => {
     Object.defineProperty(protoOrDescriptor, name, {
       get(this: RdfResource): any {
         const node = getNode(this._node, getPath(protoOrDescriptor, this._node, name, options.path))
 
         const values = node.map(objNode => {
-          if (options.type === Boolean) {
+          if (type === Boolean) {
             return trueLiteral.equals(objNode.term as any) // TODO: fix equals typing
           }
 
@@ -152,11 +154,26 @@ export function literal(options: LiteralAccessorOption = {}) {
 
       set(this: RdfResource, value: any) {
         const path = getPath(protoOrDescriptor, this._node, name, options.path)
-        const node = path.length === 1 ? this._node : getNode(this._node, path.slice(path.length - 1))
+        const subject = path.length === 1 ? this._node : getNode(this._node, path.slice(path.length - 1))
 
         const lastPredicate = path[path.length - 1]
-        node.deleteOut(lastPredicate)
-          .addOut(lastPredicate, value)
+        subject.deleteOut(lastPredicate)
+
+        if (value === null) {
+          return
+        }
+
+        if (typeof value === 'object') {
+          const pathStr = path.map(p => `<${p}>`).join('/')
+          throw new Error(`Unexpected value for path ${pathStr}. Expecting a ${type.name}`)
+        }
+
+        let datatype: NamedNode | undefined
+        if (type === Boolean) {
+          datatype = trueLiteral.datatype
+        }
+
+        subject.addOut(lastPredicate, subject.literal(value.toString(), datatype))
       },
     })
   }

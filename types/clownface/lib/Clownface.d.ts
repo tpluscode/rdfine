@@ -26,7 +26,7 @@ declare module 'clownface/lib/Clownface' {
     toString(): string;
     node<X extends Term = Term> (values: any, { type, datatype, language }?: any): Clownface<X>;
     blankNode (values?: any): Clownface<BlankNode>;
-    literal (values: any, languageOrDatatype?: string): Clownface<Literal>;
+    literal (values: any, languageOrDatatype?: string | NamedNode): Clownface<Literal>;
     namedNode (values: any): Clownface<NamedNode>;
     in<X extends Term = Term> (predicates: SingleOrArrayOfTerms): Clownface<X>;
     out<X extends Term = Term> (predicates: SingleOrArrayOfTerms): Clownface<X>;
