@@ -17,12 +17,24 @@
     "ts-decorators-utils": "^1.1.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
     "@pika/pack": "^0.5.0",
-    "@pika/plugin-standard-pkg": "^0.8.1",
     "@pika/plugin-build-node": "^0.8.1",
-    "@pika/plugin-build-web": "^0.8.1",
     "@pika/plugin-build-types": "^0.8.1",
-    "@types/rdf-js": "^2.0.5"
+    "@pika/plugin-build-web": "^0.8.1",
+    "@pika/plugin-ts-standard-pkg": "^0.8.1",
+    "@tpluscode/eslint-config": "0.0.4",
+    "@types/jest": "^24.0.24",
+    "@types/rdf-data-model": "^1.0.2",
+    "@types/rdf-js": "^2.0.5",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "cz-conventional-changelog": "^3.0.2",
+    "husky": "^3.1.0",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.5.0",
+    "standard": "^14.3.1"
   },
   "@pika/pack": {
     "pipeline": [
@@ -40,6 +52,28 @@
       [
         "@pika/plugin-build-web"
       ]
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix --quiet",
+      "git add"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
     ]
   },
   "keywords": [

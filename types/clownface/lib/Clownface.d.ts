@@ -23,10 +23,10 @@ declare module 'clownface/lib/Clownface' {
     forEach(cb: (quad: Clownface<T>) => void): void;
     map<X>(cb: (quad: Clownface<T>) => X): X[];
     toString(): string;
-    node<X extends Term = Term> (values, { type, datatype, language }?): Clownface<X>;
-    blankNode (values?): Clownface<BlankNode>;
-    literal (values, languageOrDatatype?: string): Clownface<Literal>;
-    namedNode (values): Clownface<NamedNode>;
+    node<X extends Term = Term> (values: any, { type, datatype, language }?: any): Clownface<X>;
+    blankNode (values?: any): Clownface<BlankNode>;
+    literal (values: any, languageOrDatatype?: string): Clownface<Literal>;
+    namedNode (values: any): Clownface<NamedNode>;
     in<X extends Term = Term> (predicates: SingleOrArrayOfTerms): Clownface<X>;
     out<X extends Term = Term> (predicates: SingleOrArrayOfTerms): Clownface<X>;
 
@@ -41,7 +41,7 @@ declare module 'clownface/lib/Clownface' {
     addOut<X extends Term = Term> (predicates: SingleOrArrayOfTerms, objectsOrCallback: SingleOrArrayOfTermsOrLiterals | AddCallback<X>): Clownface<X>;
     addOut<X extends Term = Term> (predicates: SingleOrArrayOfTerms, objects: SingleOrArrayOfTermsOrLiterals, callback: AddCallback<X>): Clownface<X>;
 
-    addList<X extends Term = Term> (predicates: SingleOrArrayOfTerms, objects?, callback?: AddCallback<X>): Clownface<X>;
+    addList<X extends Term = Term> (predicates: SingleOrArrayOfTerms, objects?: any, callback?: AddCallback<X>): Clownface<X>;
 
     deleteIn<X extends Term = Term> (predicates: SingleOrArrayOfTerms): Clownface<X>;
     deleteOut<X extends Term = Term> (predicates: SingleOrArrayOfTerms): Clownface<X>;
