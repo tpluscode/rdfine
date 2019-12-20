@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "pika build",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -14,8 +14,7 @@
   "dependencies": {
     "@rdfjs/namespace": "^1.1.0",
     "clownface": "^0.12.1",
-    "rdf-data-model": "^1.0.0",
-    "ts-decorators-utils": "^1.1.2"
+    "rdf-data-model": "^1.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",

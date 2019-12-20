@@ -1,5 +1,5 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import { term } from '../lib/decorators'
+import { property } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 import { Literal, NamedNode, Term } from 'rdf-js'
@@ -17,7 +17,7 @@ describe('decorator', () => {
 
           ex:res foaf:friend ex:friend .`)
         class Resource extends RdfResource {
-          @term({ path: foaf.friend })
+          @property({ path: foaf.friend })
           friend?: NamedNode
         }
 
@@ -44,7 +44,7 @@ describe('decorator', () => {
           ] .
         `)
         class Resource extends RdfResource {
-          @term({ path: ex.likes })
+          @property({ path: ex.likes })
           likes?: Term
         }
 
@@ -68,7 +68,7 @@ describe('decorator', () => {
           ex:res foaf:name "John Doe"@en-us .
         `)
         class Resource extends RdfResource {
-          @term({ path: foaf.name })
+          @property({ path: foaf.name })
           name?: Literal
         }
 
@@ -94,7 +94,7 @@ describe('decorator', () => {
           ex:res schema:children ex:Hansel, ex:Gretel .
         `)
         class Resource extends RdfResource {
-          @term({ path: schema.children })
+          @property({ path: schema.children })
           children?: Literal
         }
 
@@ -117,7 +117,7 @@ describe('decorator', () => {
           ex:res schema:children ex:Hansel, ex:Gretel .
         `)
         class Resource extends RdfResource {
-          @term({ path: schema.children, array: true })
+          @property({ path: schema.children, array: true })
           children?: Term[]
         }
 
@@ -150,7 +150,7 @@ describe('decorator', () => {
           ] .
         `)
         class Resource extends RdfResource {
-          @term({ path: foaf.name })
+          @property({ path: foaf.name })
           name?: Term | null
         }
 
@@ -163,7 +163,7 @@ describe('decorator', () => {
         instance.name = instance._node.has(rdf.type, ex.BlankNodeName).term
 
         // then
-        expect(instance._node.dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
     })
   })

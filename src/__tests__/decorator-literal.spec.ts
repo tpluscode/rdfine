@@ -1,5 +1,5 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import { literal } from '../lib/decorators'
+import { property } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 
@@ -16,7 +16,7 @@ describe('decorator', () => {
         ex:res schema:name "John Doe" .
       `)
       class Resource extends RdfResource {
-        @literal({ path: schema.name })
+        @property.literal({ path: schema.name })
         name?: string
       }
 
@@ -41,10 +41,10 @@ describe('decorator', () => {
         ex:res ex:isSingle "false"^^xsd:boolean .
       `)
       class Resource extends RdfResource {
-        @literal({ path: ex.isMarried, type: Boolean })
+        @property.literal({ path: ex.isMarried, type: Boolean })
         married?: boolean
 
-        @literal({ path: ex.isSingle, type: Boolean })
+        @property.literal({ path: ex.isSingle, type: Boolean })
         single?: boolean
       }
 
@@ -70,7 +70,7 @@ describe('decorator', () => {
         ex:res ex:isMarried true .
       `)
         class Resource extends RdfResource {
-          @literal({ path: ex.isMarried, type: Boolean })
+          @property.literal({ path: ex.isMarried, type: Boolean })
           married?: boolean
         }
 
@@ -83,7 +83,7 @@ describe('decorator', () => {
         instance.married = false
 
         // then
-        expect(instance._node.dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
       it('replaces string object value', async () => {
@@ -96,7 +96,7 @@ describe('decorator', () => {
         ex:res schema:name "John" .
       `)
         class Resource extends RdfResource {
-          @literal({ path: schema.name })
+          @property.literal({ path: schema.name })
           name?: string
         }
 
@@ -109,7 +109,7 @@ describe('decorator', () => {
         instance.name = 'Jane'
 
         // then
-        expect(instance._node.dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
       it('unsets string object when null is set', async () => {
@@ -122,7 +122,7 @@ describe('decorator', () => {
         ex:res schema:name "John" .
       `)
         class Resource extends RdfResource {
-          @literal({ path: schema.name })
+          @property.literal({ path: schema.name })
           name: string | null = null
         }
 
@@ -135,7 +135,7 @@ describe('decorator', () => {
         instance.name = null
 
         // then
-        expect(instance._node.dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
     })
   })

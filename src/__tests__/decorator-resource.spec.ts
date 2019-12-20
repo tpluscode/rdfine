@@ -1,5 +1,5 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import { resource } from '../lib/decorators'
+import { property } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 
@@ -17,7 +17,7 @@ describe('decorator', () => {
       `)
 
       class Resource extends RdfResource {
-        @resource({ path: foaf.friend })
+        @property.resource({ path: foaf.friend })
         friend?: RdfResource
       }
 
@@ -44,7 +44,7 @@ describe('decorator', () => {
       `)
 
       class Resource extends RdfResource {
-        @resource({ path: schema.spouse })
+        @property.resource({ path: schema.spouse })
         spouse?: RdfResource
       }
       const john = new Resource({ dataset, term: ex.john })
@@ -54,7 +54,7 @@ describe('decorator', () => {
       john.spouse = jane
 
       // then
-      expect(john._node.dataset.toCanonical()).toMatchSnapshot()
+      expect(dataset.toCanonical()).toMatchSnapshot()
     })
 
     it('setting null removes relation', async () => {
@@ -70,7 +70,7 @@ describe('decorator', () => {
       `)
 
       class Resource extends RdfResource {
-        @resource({ path: schema.spouse })
+        @property.resource({ path: schema.spouse })
         spouse?: RdfResource | null
       }
       const john = new Resource({ dataset, term: ex.john })
@@ -79,7 +79,7 @@ describe('decorator', () => {
       john.spouse = null
 
       // then
-      expect(john._node.dataset.toCanonical()).toMatchSnapshot()
+      expect(dataset.toCanonical()).toMatchSnapshot()
     })
   })
 })

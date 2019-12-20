@@ -1,8 +1,8 @@
 import { Term, NamedNode, DatasetCore, BlankNode } from 'rdf-js'
-import Clownface from 'clownface/lib/Clownface'
 import cf from 'clownface'
 import ns from '@rdfjs/namespace'
 import { ResourceFactory } from './ResourceFactory'
+import { SingleContextClownface } from 'clownface/lib'
 
 const rdf = ns('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 
@@ -12,13 +12,20 @@ export interface RdfResource {
   hasType (type: string | NamedNode): boolean
 }
 
-export default class RdfResourceImpl implements RdfResource {
-  public _node: Clownface
+export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource {
+  public _node: SingleContextClownface<D>
+  public static __ns?: any
 
   public static _factory = new ResourceFactory(RdfResourceImpl)
 
-  public constructor(node: Clownface | { dataset: DatasetCore; term: NamedNode | BlankNode; graph?: NamedNode }) {
-    this._node = cf(node)
+  public constructor(node: SingleContextClownface<D> | { dataset: D; term: NamedNode | BlankNode; graph?: NamedNode }) {
+    const contexts = cf(node).toArray()
+
+    if (contexts.length !== 1) {
+      throw new Error('RdfResource can only be initialized from a single node. Got ' + contexts.length)
+    }
+
+    this._node = cf(node).toArray()[0]
   }
 
   public get id() {

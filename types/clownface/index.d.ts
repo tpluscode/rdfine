@@ -1,16 +1,10 @@
 declare module 'clownface' {
-  import { Term } from 'rdf-js'
-  import Clownface from 'clownface/lib/Clownface'
+  import { DatasetCore } from 'rdf-js';
+  import {SafeClownface, ClownfaceInit, WithTerm, WithValue} from 'clownface/lib'
+  import Clownface = require('clownface/lib/Clownface');
 
-  interface ClownfaceOptions {
-    dataset?: unknown;
-    graph?: unknown;
-    term?: Term | null;
-    value?: unknown;
-    _context?: unknown;
-  }
-
-  const factory: (options: ClownfaceOptions) => Clownface
+  function factory<D extends DatasetCore>(options: ClownfaceInit<D> & WithTerm | ClownfaceInit<D> & WithValue): SafeClownface<D>;
+  function factory<D extends DatasetCore>(options: ClownfaceInit<D>): Clownface<D>;
 
   export = factory
 }
