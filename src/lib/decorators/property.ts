@@ -48,7 +48,7 @@ function propertyDecorator<T>({ path, array, fromTerm, toTerm, assertSetValue, v
 
       set(this: RdfResource, value: T | Term) {
         const pathNodes = getPath(protoOrDescriptor, name, path)
-        const subject = pathNodes.length === 1 ? this._node : getNode(this, pathNodes.slice(pathNodes.length - 1))
+        const subject = pathNodes.length === 1 ? this._node : getNode(this, pathNodes.slice(0, pathNodes.length - 1))
 
         const lastPredicate = pathNodes[pathNodes.length - 1]
         subject.deleteOut(lastPredicate)
