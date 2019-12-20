@@ -9,6 +9,6 @@ type Constructor<T = RdfResource> = {
 export function namespace(stringOrNamespace: string | unknown) {
   return <T extends RdfResource>(classOrDescriptor: Constructor<T>) => {
     classOrDescriptor.__ns = typeof stringOrNamespace === 'string'
-      ? ns(stringOrNamespace) : ns
+      ? ns(stringOrNamespace) : stringOrNamespace
   }
 }

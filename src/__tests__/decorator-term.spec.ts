@@ -1,6 +1,6 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
 import cf from 'clownface'
-import { property } from '..'
+import { namespace, property } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 import { Literal, NamedNode, Term } from 'rdf-js'
@@ -133,6 +133,56 @@ describe('decorator', () => {
         expect(instance.children!.map(c => c.value)).toContain(ex.Hansel.value)
         expect(instance.children!.map(c => c.value)).toContain(ex.Gretel.value)
       })
+
+      it('return correct node when annotated with namespace, using prop name', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+
+          ex:res foaf:friend ex:friend .`)
+
+        @namespace(foaf)
+        class Resource extends RdfResource {
+          @property()
+          friend?: NamedNode
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+        const friend = instance.friend
+
+        // then
+        expect(friend!.value).toEqual(ex.friend.value)
+      })
+    })
+
+    it('return correct node when annotated with namespace', async () => {
+      // given
+      const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+
+          ex:res foaf:friend ex:friend .`)
+
+      @namespace(foaf)
+      class Resource extends RdfResource {
+        @property({ path: 'friend' })
+        colleague?: NamedNode
+      }
+
+      // when
+      const instance = new Resource({
+        dataset,
+        term: ex.res,
+      })
+      const friend = instance.colleague
+
+      // then
+      expect(friend!.value).toEqual(ex.friend.value)
     })
 
     describe('setter', () => {

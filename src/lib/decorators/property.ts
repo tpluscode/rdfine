@@ -26,10 +26,9 @@ interface PropertyDecoratorOptions<T> extends AccessorOptions {
 
 function propertyDecorator<T>({ path, array, fromTerm, toTerm, assertSetValue, valueTypeName }: PropertyDecoratorOptions<T>) {
   return (protoOrDescriptor: any, name: PropertyKey): any => {
-    const pathNodes = getPath(protoOrDescriptor, name, path)
-
     Object.defineProperty(protoOrDescriptor, name, {
       get(this: any): any {
+        const pathNodes = getPath(protoOrDescriptor, name, path)
         const node = getNode(this, pathNodes)
 
         const values = node.map(quad => {
@@ -48,6 +47,7 @@ function propertyDecorator<T>({ path, array, fromTerm, toTerm, assertSetValue, v
       },
 
       set(this: RdfResource, value: T | Term) {
+        const pathNodes = getPath(protoOrDescriptor, name, path)
         const subject = pathNodes.length === 1 ? this._node : getNode(this, pathNodes.slice(pathNodes.length - 1))
 
         const lastPredicate = pathNodes[pathNodes.length - 1]
