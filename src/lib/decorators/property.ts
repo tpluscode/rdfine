@@ -20,7 +20,7 @@ function getNode(r: RdfResource, path: NamedNode[]): SafeClownface {
 interface PropertyDecoratorOptions<T> extends AccessorOptions {
   fromTerm: (this: RdfResource, obj: SingleContextClownface) => T
   toTerm: (value: T) => Term
-  assertSetValue: (value: T) => boolean
+  assertSetValue: (value: T | Term) => boolean
   valueTypeName: string
 }
 
@@ -47,19 +47,24 @@ function propertyDecorator<T>({ path, array, fromTerm, toTerm, assertSetValue, v
         return values[0]
       },
 
-      set(this: RdfResource, value: T) {
+      set(this: RdfResource, value: T | Term) {
         const subject = pathNodes.length === 1 ? this._node : getNode(this, pathNodes.slice(pathNodes.length - 1))
 
         const lastPredicate = pathNodes[pathNodes.length - 1]
         subject.deleteOut(lastPredicate)
 
-        if (value === null) {
+        if (value === null || typeof value === 'undefined') {
           return
         }
 
         if (!assertSetValue(value)) {
           const pathStr = pathNodes.map(p => `<${p}>`).join('/')
-          throw new Error(`Unexpected value for path ${pathStr}. Expecting a ${valueTypeName}`)
+          throw new Error(`Unexpected value for path ${pathStr}. Expecting a ${valueTypeName} or RDF/JS term`)
+        }
+
+        if (typeof value === 'object' && 'termType' in value) {
+          subject.addOut(lastPredicate, value)
+          return
         }
 
         subject.addOut(lastPredicate, toTerm(value))
@@ -87,7 +92,7 @@ const trueLiteral: Literal = rdf.literal('true', rdf.namedNode('http://www.w3.or
 property.literal = function (options: AccessorOptions & LiteralOptions = {}) {
   const type = options.type || String
 
-  return propertyDecorator<any>({
+  return propertyDecorator<unknown>({
     ...options,
     fromTerm(obj) {
       if (type === Boolean) {
@@ -96,7 +101,7 @@ property.literal = function (options: AccessorOptions & LiteralOptions = {}) {
 
       return obj.value
     },
-    toTerm(value) {
+    toTerm(value: any) {
       let datatype: NamedNode | undefined
       if (type === Boolean) {
         datatype = trueLiteral.datatype
@@ -105,8 +110,8 @@ property.literal = function (options: AccessorOptions & LiteralOptions = {}) {
       return rdf.literal(value.toString(), datatype)
     },
     valueTypeName: type.name,
-    assertSetValue: (value: unknown) => {
-      return typeof value !== 'object'
+    assertSetValue: (value: any) => {
+      return typeof value !== 'object' || value.termType === 'Literal'
     },
   })
 }
@@ -125,6 +130,12 @@ property.resource = function (options: AccessorOptions & ResourceOptions) {
       return value._node.term
     },
     valueTypeName: 'RdfResource instance',
-    assertSetValue: () => true,
+    assertSetValue: (value) => {
+      if ('termType' in value) {
+        return value.termType === 'NamedNode' || value.termType === 'BlankNode'
+      }
+
+      return true
+    },
   })
 }

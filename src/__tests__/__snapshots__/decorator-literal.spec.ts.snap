@@ -1,5 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`decorator literal setter accepts raw term 1`] = `
+"<http://example.com/res> <http://schema.org/name> \\"John\\"@en-gb .
+"
+`;
+
 exports[`decorator literal setter replaces boolean object value 1`] = `
 "<http://example.com/res> <http://example.com/isMarried> \\"false\\"^^<http://www.w3.org/2001/XMLSchema#boolean> .
 "

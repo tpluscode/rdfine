@@ -2,6 +2,8 @@ import { prefixes } from '@zazuko/rdf-vocabularies'
 import { property } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
+import { Literal } from 'rdf-js'
+import { literal } from 'rdf-data-model'
 
 const { ex, schema } = vocabs
 
@@ -60,6 +62,32 @@ describe('decorator', () => {
     })
 
     describe('setter', () => {
+      it('accepts raw term', async () => {
+        // given
+        const dataset = await parse(`
+        @prefix ex: <${prefixes.ex}> .
+        @prefix schema: <${prefixes.schema}> .
+        @prefix xsd: <${prefixes.xsd}> .
+        
+        ex:res schema:name "Johann"@de .
+      `)
+        class Resource extends RdfResource {
+          @property.literal({ path: schema.name })
+          name?: string | Literal
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // when
+        instance.name = literal('John', 'en-gb')
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
       it('replaces boolean object value', async () => {
         // given
         const dataset = await parse(`

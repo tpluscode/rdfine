@@ -1,4 +1,5 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
+import cf from 'clownface'
 import { property } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
@@ -160,7 +161,7 @@ describe('decorator', () => {
         })
 
         // when
-        instance.name = instance._node.has(rdf.type, ex.BlankNodeName).term
+        instance.name = cf({ dataset }).has(rdf.type, ex.BlankNodeName).term
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
