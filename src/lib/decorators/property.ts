@@ -2,7 +2,7 @@ import { Literal, NamedNode, Term } from 'rdf-js'
 import RdfResource from '../RdfResource'
 import { getPath, PropRef } from '../path'
 import rdf from 'rdf-data-model'
-import { Mixin } from '../ResourceFactory'
+import { instance as factory, Mixin } from '../ResourceFactory'
 import { SafeClownface, SingleContextClownface } from 'clownface/lib'
 
 interface AccessorOptions {
@@ -18,7 +18,7 @@ function getNode(r: RdfResource, path: NamedNode[]): SafeClownface {
 }
 
 interface PropertyDecoratorOptions<T> extends AccessorOptions {
-  fromTerm: (this: RdfResource, obj: SingleContextClownface) => T
+  fromTerm: (this: RdfResource, obj: SingleContextClownface) => unknown
   toTerm: (value: T) => Term
   assertSetValue: (value: T | Term) => boolean
   valueTypeName: string
@@ -124,7 +124,7 @@ property.resource = function (options: AccessorOptions & ResourceOptions) {
   return propertyDecorator<RdfResource>({
     ...options,
     fromTerm(this: RdfResource, obj) {
-      return (this.constructor as any)._factory.createEntity(obj, options.as)
+      return factory.createEntity(obj, options.as)
     },
     toTerm(value: RdfResource) {
       return value._node.term
