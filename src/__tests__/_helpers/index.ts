@@ -1,7 +1,7 @@
 import stringToStream from 'string-to-stream'
 import rdf from 'rdf-ext'
 import Parser from '@rdfjs/parser-n3'
-import { Dataset } from 'rdf-js'
+import { Dataset, NamedNode } from 'rdf-js'
 import ns from '@rdfjs/namespace'
 import { prefixes } from '@zazuko/rdf-vocabularies'
 
@@ -22,6 +22,6 @@ const vocab = Object.entries(prefixes)
       [key]: ns(value),
     }
   }, {}) as {
-  [P in keyof typeof prefixes]: any;
+  [P in keyof typeof prefixes]: Record<string, NamedNode>;
 }
 export const vocabs = { ...vocab }

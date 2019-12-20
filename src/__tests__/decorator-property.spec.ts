@@ -4,6 +4,7 @@ import { namespace, property } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 import { Literal, NamedNode, Term } from 'rdf-js'
+import { literal } from 'rdf-data-model'
 
 const { ex, foaf, schema, rdf } = vocabs
 
@@ -158,31 +159,63 @@ describe('decorator', () => {
         // then
         expect(friend!.value).toEqual(ex.friend.value)
       })
-    })
 
-    it('return correct node when annotated with namespace', async () => {
+      it('get resource by paths of arbitrary length', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+
+          ex:res foaf:friend ex:friend .
+          ex:friend ex:worksAt ex:factory .
+          ex:factory foaf:name "RDF Software House" .`)
+
+        @namespace(foaf)
+        class Resource extends RdfResource {
+          @property({
+            path: [
+              'friend',
+              'http://example.com/worksAt',
+              foaf.name,
+            ],
+          })
+          friendsWorkplaceName?: Literal
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.friendsWorkplaceName!.value).toEqual('RDF Software House')
+      })
+
+      it('return correct node when annotated with namespace', async () => {
       // given
-      const dataset = await parse(`
+        const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
           @prefix foaf: <${prefixes.foaf}> .
 
           ex:res foaf:friend ex:friend .`)
 
-      @namespace(foaf)
-      class Resource extends RdfResource {
-        @property({ path: 'friend' })
-        colleague?: NamedNode
-      }
+        @namespace(foaf)
+        class Resource extends RdfResource {
+          @property({ path: 'friend' })
+          colleague?: NamedNode
+        }
 
-      // when
-      const instance = new Resource({
-        dataset,
-        term: ex.res,
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+        const friend = instance.colleague
+
+        // then
+        expect(friend!.value).toEqual(ex.friend.value)
       })
-      const friend = instance.colleague
-
-      // then
-      expect(friend!.value).toEqual(ex.friend.value)
     })
 
     describe('setter', () => {
@@ -212,6 +245,39 @@ describe('decorator', () => {
 
         // when
         instance.name = cf({ dataset }).has(rdf.type, ex.BlankNodeName).term
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('sets value at paths of arbitrary length', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+
+          ex:res foaf:friend ex:friend .
+          ex:friend ex:worksAt ex:factory .
+          ex:factory foaf:name "RDF Software House" .`)
+
+        @namespace(foaf)
+        class Resource extends RdfResource {
+          @property({
+            path: [
+              'friend',
+              'http://example.com/worksAt',
+              foaf.name,
+            ],
+          })
+          friendsWorkplaceName?: Literal
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+        instance.friendsWorkplaceName = literal('Google')
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
