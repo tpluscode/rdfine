@@ -1,6 +1,6 @@
 {
   "name": "@tpluscode/rdfine",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "RDF/JS interfaces - native extensions",
   "main": "dist/node/index.js",
   "module": "dist/es/index.js",
