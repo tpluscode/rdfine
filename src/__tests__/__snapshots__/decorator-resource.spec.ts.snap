@@ -1,13 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`decorator resource sets a relation between resources 1`] = `
+exports[`decorator resource setter accepts raw blank node term 1`] = `
+"<http://example.com/lois> <http://schema.org/spouse> _:c14n0 .
+<http://example.com/lois> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
+_:c14n0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.com/Superman> .
+"
+`;
+
+exports[`decorator resource setter accepts raw named node term 1`] = `
 "<http://example.com/jane> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
 <http://example.com/john> <http://schema.org/spouse> <http://example.com/jane> .
 <http://example.com/john> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
 "
 `;
 
-exports[`decorator resource setting null removes relation 1`] = `
+exports[`decorator resource setter sets a relation between resources 1`] = `
+"<http://example.com/jane> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
+<http://example.com/john> <http://schema.org/spouse> <http://example.com/jane> .
+<http://example.com/john> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
+"
+`;
+
+exports[`decorator resource setter setting null removes relation 1`] = `
 "<http://example.com/jane> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
 <http://example.com/john> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
 "
