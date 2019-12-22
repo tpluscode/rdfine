@@ -1,5 +1,5 @@
 {
-  "name": "rdfine",
+  "name": "@tpluscode/rdfine",
   "version": "0.0.0",
   "description": "RDF/JS interfaces - native extensions",
   "main": "index.js",
@@ -103,5 +103,8 @@
   "bugs": {
     "url": "https://github.com/tpluscode/rdfine/issues"
   },
-  "homepage": "https://github.com/tpluscode/rdfine#readme"
+  "homepage": "https://github.com/tpluscode/rdfine#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
