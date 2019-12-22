@@ -1,6 +1,5 @@
 declare module 'clownface' {
   import {DatasetCore, Term, BlankNode, NamedNode, Literal, Quad_Graph} from 'rdf-js';
-  import Clownface = require('clownface/lib/Clownface');
 
   namespace clownface {
 
@@ -102,7 +101,7 @@ declare module 'clownface' {
   }
 
   function clownface<D extends DatasetCore>(options: clownface.ClownfaceInit<D> & clownface.WithTerm | clownface.ClownfaceInit<D> & clownface.WithValue): clownface.SafeClownface<D>;
-  function clownface<D extends DatasetCore>(options: clownface.ClownfaceInit<D>): Clownface<D>;
+  function clownface<D extends DatasetCore>(options: clownface.ClownfaceInit<D>): clownface.Clownface<D>;
 
   export = clownface
 }

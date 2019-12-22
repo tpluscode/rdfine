@@ -1,6 +1,6 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
 import cf from 'clownface'
-import { property } from '..'
+import { property, namespace } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 import { NamedNode, Term } from 'rdf-js'
@@ -9,30 +9,59 @@ const { ex, foaf, schema, rdf } = vocabs
 
 describe('decorator', () => {
   describe('resource', () => {
-    it('returns a resource object using path predicate', async () => {
-      // given
-      const dataset = await parse(`
-        @prefix ex: <${prefixes.ex}> .
-        @prefix foaf: <${prefixes.foaf}> .
-        
-        ex:res foaf:friend ex:friend .
-      `)
+    describe('getter', () => {
+      it('returns a resource object using path predicate', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:res foaf:friend ex:friend .
+        `)
 
-      class Resource extends RdfResource {
-        @property.resource({ path: foaf.friend })
-        friend?: RdfResource
-      }
+        class Resource extends RdfResource {
+          @property.resource({ path: foaf.friend })
+          friend!: RdfResource
+        }
 
-      // when
-      const instance = new Resource({
-        dataset,
-        term: ex.res,
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+        const friend = instance.friend
+
+        // then
+        expect(friend).toBeInstanceOf(RdfResource)
+        expect(friend.id.value).toEqual(ex.friend.value)
       })
-      const friend = instance.friend
 
-      // then
-      expect(friend).toBeInstanceOf(RdfResource)
-      expect(friend!.id.value).toEqual(ex.friend.value)
+      it('can be used with namespace decorator', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:res foaf:friend ex:friend .
+        `)
+
+        @namespace(foaf)
+        class Resource extends RdfResource {
+          @property.resource()
+          friend!: RdfResource
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+        const friend = instance.friend
+
+        // then
+        expect(friend).toBeInstanceOf(RdfResource)
+        expect(friend.id.value).toEqual(ex.friend.value)
+      })
     })
 
     describe('setter', () => {

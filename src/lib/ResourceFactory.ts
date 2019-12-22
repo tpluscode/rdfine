@@ -1,5 +1,5 @@
 import RdfResourceImpl, { RdfResource } from './RdfResource'
-import Clownface from 'clownface/lib/Clownface'
+import { Clownface } from 'clownface'
 
 export type AnyFunction<A = any> = (...input: any[]) => A
 export type Constructor<A extends RdfResource = RdfResource> = new (...input: any[]) => A

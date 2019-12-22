@@ -124,7 +124,7 @@ interface ResourceOptions {
   as?: Mixin<any>[]
 }
 
-property.resource = function (options: AccessorOptions & ResourceOptions) {
+property.resource = function (options: AccessorOptions & ResourceOptions = {}) {
   return propertyDecorator<RdfResource>({
     ...options,
     fromTerm(this: RdfResource, obj) {

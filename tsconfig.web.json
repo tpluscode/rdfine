@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "outDir": "dist/es"
+  },
+  "files": [
+    "src/index.ts"
+  ]
+}
