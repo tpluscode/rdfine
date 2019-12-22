@@ -5,14 +5,14 @@ import { namespace, property, RdfResourceImpl, Constructor, RdfResource } from '
 const hydra = ns(prefixes.hydra)
 
 export interface Collection extends RdfResource {
-  members?: HydraResource[]
+  members: HydraResource[]
 }
 
 export function CollectionMixin<Base extends Constructor>(base: Base) {
   @namespace(hydra)
   class C extends base implements Collection {
     @property.resource({ path: 'member', array: true })
-    members?: HydraResource[]
+    members!: HydraResource[]
   }
 
   return C

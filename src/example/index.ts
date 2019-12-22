@@ -31,7 +31,7 @@ program
       term: namedNode(uri),
     }))
 
-    ;(collection.members || []).forEach(m => {
+    collection.members.forEach(m => {
       log(m.id)
     })
   })

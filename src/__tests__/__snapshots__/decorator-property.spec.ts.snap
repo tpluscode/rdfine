@@ -8,6 +8,14 @@ _:c14n0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.com/Bl
 "
 `;
 
+exports[`decorator term setter can set array 1`] = `
+"<http://example.com/res> <http://xmlns.com/foaf/0.1/name> \\"Jan\\"@pl .
+<http://example.com/res> <http://xmlns.com/foaf/0.1/name> \\"Jean\\"@fr .
+"
+`;
+
+exports[`decorator term setter can set empty array, removing objects 1`] = `""`;
+
 exports[`decorator term setter sets value at paths of arbitrary length 1`] = `
 "<http://example.com/factory> <http://xmlns.com/foaf/0.1/name> \\"Google\\" .
 <http://example.com/friend> <http://example.com/worksAt> <http://example.com/factory> .

@@ -47,6 +47,10 @@ function propertyDecorator<T>({ path, array, fromTerm, toTerm, assertSetValue, v
       },
 
       set(this: RdfResource, value: T | Term) {
+        if (!array && Array.isArray(value)) {
+          throw new Error('Cannot set array to a non-array property')
+        }
+
         const pathNodes = getPath(protoOrDescriptor, name, path)
         const subject = pathNodes.length === 1 ? this._node : getNode(this, pathNodes.slice(0, pathNodes.length - 1))
 

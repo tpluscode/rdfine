@@ -220,7 +220,7 @@ describe('decorator', () => {
 
     describe('setter', () => {
       it('can replace literal with blank', async () => {
-      // given
+        // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
           @prefix foaf: <${prefixes.foaf}> .
@@ -248,6 +248,87 @@ describe('decorator', () => {
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('can set empty array, removing objects', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:res foaf:name "John"@en-us, "Johann"@de, "Jan"@pl, "Jean"@fr .
+        `)
+        class Resource extends RdfResource {
+          @property({ path: foaf.name, array: true })
+          name?: Term[]
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // when
+        instance.name = []
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('can set array', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:res foaf:name "John"@en-us, "Johann"@de .
+        `)
+        class Resource extends RdfResource {
+          @property({ path: foaf.name, array: true })
+          name?: Term[]
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // when
+        instance.name = [
+          literal('Jan', 'pl'),
+          literal('Jean', 'fr'),
+        ]
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('throws when setting array to non-array getter', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:res foaf:name "John"@en-us, "Johann"@de, "Jan"@pl, "Jean"@fr .
+        `)
+        class Resource extends RdfResource {
+          @property({ path: foaf.name })
+          name?: any
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // when
+        const setArray = () => { instance.name = [] }
+
+        // then
+        expect(setArray).toThrow()
       })
 
       it('sets value at paths of arbitrary length', async () => {
