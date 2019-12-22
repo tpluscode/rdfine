@@ -2,8 +2,8 @@ import { Literal, NamedNode, Term } from 'rdf-js'
 import RdfResource from '../RdfResource'
 import { getPath, PropRef } from '../path'
 import rdf from 'rdf-data-model'
-import { instance as factory, Mixin } from '../ResourceFactory'
-import { SafeClownface, SingleContextClownface } from 'clownface/lib'
+import { factory, Mixin } from '../ResourceFactory'
+import { SafeClownface, SingleContextClownface } from 'clownface'
 
 interface AccessorOptions {
   array?: boolean

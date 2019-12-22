@@ -1,7 +1,6 @@
 import { Term, NamedNode, DatasetCore, BlankNode } from 'rdf-js'
-import cf from 'clownface'
+import cf, { SingleContextClownface } from 'clownface'
 import ns from '@rdfjs/namespace'
-import { SingleContextClownface } from 'clownface/lib'
 
 const rdf = ns('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 

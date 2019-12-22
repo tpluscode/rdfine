@@ -9,15 +9,15 @@ interface ShouldApply {
 
 export type Mixin<T extends AnyFunction> = InstanceType<ReturnType<T>>
 
-export class ResourceFactory {
+export class ResourceFactory<T extends AnyFunction> {
   private __mixins: Set<Mixin<any>> = new Set()
   public BaseClass: Constructor = RdfResourceImpl
 
-  public addMixin<T extends AnyFunction>(mixin: Mixin<T> & ShouldApply): void {
+  public addMixin(mixin: Mixin<T> & ShouldApply): void {
     this.__mixins.add(mixin)
   }
 
-  public createEntity<T extends AnyFunction>(term: Clownface, explicitMixins: Mixin<T>[] = []): RdfResource {
+  public createEntity<R extends RdfResource>(term: Clownface, explicitMixins: Mixin<T>[] = []): RdfResource & R {
     const entity = new this.BaseClass(term)
 
     const mixins = [...this.__mixins].reduce<Mixin<T>[]>((selected, next: any) => {
@@ -31,9 +31,10 @@ export class ResourceFactory {
     }, [...explicitMixins])
 
     const Type = mixins.reduce<Constructor>((Mixed: Constructor, Next: Mixin<T>) => Next(Mixed), this.BaseClass)
+    ;(Type as any).__mixins = mixins
 
-    return new Type(term)
+    return new Type(term) as RdfResource & R
   }
 }
 
-export const instance = new ResourceFactory()
+export const factory = new ResourceFactory()

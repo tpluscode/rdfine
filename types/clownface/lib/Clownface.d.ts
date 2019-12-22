@@ -11,7 +11,7 @@ declare module 'clownface/lib/Clownface' {
     SingleOrArrayOfTermsOrLiterals,
     WithValue,
     WithTerm
-  } from 'clownface/lib'
+  } from 'clownface'
 
   class Clownface<D extends DatasetCore = DatasetCore, T extends Term = Term> implements ClownfaceContract<D, T> {
     constructor(options: ClownfaceInit & Partial<WithTerm> & Partial<WithValue>);
