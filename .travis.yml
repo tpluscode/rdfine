@@ -18,3 +18,4 @@ deploy:
   on:
     tags: true
     repo: tpluscode/rdfine
+    node: '13'
