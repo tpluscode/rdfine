@@ -4,8 +4,12 @@
   "description": "RDF/JS interfaces - native extensions",
   "main": "dist/node/index.js",
   "module": "dist/es/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "prepublshOnly": "npm run test",
+    "prepack": "npm run build",
     "build": "rimraf dist; npm run build:node; npm run build:web",
     "build:node": "tsc -p tsconfig.node.json",
     "build:web": "tsc -p tsconfig.web.json",

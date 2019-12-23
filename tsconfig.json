@@ -3,10 +3,12 @@
     "module": "esnext",
     "target": "es2019",
     "declaration": true,
+    "declarationMap": true,
     "lib": [
       "es6",
       "esnext"
     ],
+    "declarationDir": "dist/types",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictNullChecks": true,
