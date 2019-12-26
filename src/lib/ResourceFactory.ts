@@ -20,7 +20,7 @@ export class ResourceFactory<T extends AnyFunction> {
   public createEntity<R extends RdfResource>(term: Clownface, explicitMixins: Mixin<T>[] = []): RdfResource & R {
     const entity = new this.BaseClass(term)
 
-    const mixins = [...this.__mixins].reduce<Mixin<T>[]>((selected, next: any) => {
+    const mixins = [...this.__mixins].reduce<Mixin<T>[]>((selected, next: Mixin<T> & ShouldApply) => {
       if (next.shouldApply === true || (typeof next.shouldApply === 'function' && next.shouldApply(entity))) {
         if (!selected.includes(next)) {
           selected.push(next)

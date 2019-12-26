@@ -1,4 +1,4 @@
-import ns from '@rdfjs/namespace'
+import ns, { NamespaceBuilder } from '@rdfjs/namespace'
 import { RdfResource } from '../RdfResource'
 
 type Constructor<T = RdfResource> = {
@@ -6,7 +6,7 @@ type Constructor<T = RdfResource> = {
   __ns?: any
 };
 
-export function namespace(stringOrNamespace: string | unknown) {
+export function namespace(stringOrNamespace: string | NamespaceBuilder) {
   return <T extends RdfResource>(classOrDescriptor: Constructor<T>) => {
     classOrDescriptor.__ns = typeof stringOrNamespace === 'string'
       ? ns(stringOrNamespace) : stringOrNamespace

@@ -29,7 +29,7 @@ describe('decorator', () => {
       const ns = WithNamespace.__ns()
 
       // then
-      expect(ns.value).toEqual(foaf().value)
+      expect(ns.value).toEqual(foaf('').value)
     })
   })
 })
