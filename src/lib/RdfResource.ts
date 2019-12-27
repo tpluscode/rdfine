@@ -2,6 +2,7 @@ import { Term, NamedNode, DatasetCore, BlankNode } from 'rdf-js'
 import cf, { SingleContextClownface } from 'clownface'
 import ns from '@rdfjs/namespace'
 import { ResourceFactory } from './ResourceFactory'
+import once from 'once'
 
 const rdf = ns('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 
@@ -14,8 +15,10 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
   public readonly _node: SingleContextClownface<D>
+  private readonly __initializeProperties: (() => void)
   public static __ns?: any
   public static factory: ResourceFactory = new ResourceFactory(RdfResourceImpl)
+  private static __defaults = new Map<string, unknown>()
 
   public constructor(node: SingleContextClownface<D> | { dataset: D; term: NamedNode | BlankNode; graph?: NamedNode }) {
     const contexts = cf(node).toArray()
@@ -25,6 +28,17 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     }
 
     this._node = cf(node).toArray()[0]
+
+    this.__initializeProperties = once(() => {
+      const self = this as any
+      RdfResourceImpl.__defaults.forEach((value, key) => {
+        if (typeof self[key] === 'undefined') {
+          self[key] = value
+        }
+      })
+    })
+
+    this.__initializeProperties()
   }
 
   public get id() {

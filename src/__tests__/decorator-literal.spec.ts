@@ -4,6 +4,7 @@ import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 import { Literal } from 'rdf-js'
 import { literal } from 'rdf-data-model'
+import rdfExt from 'rdf-ext'
 
 const { ex, schema } = vocabs
 
@@ -99,6 +100,7 @@ describe('decorator', () => {
         
         ex:res ex:isMarried true .
       `)
+
         class Resource extends RdfResource {
           @property.literal({ path: ex.isMarried, type: Boolean })
           married?: boolean
@@ -125,6 +127,7 @@ describe('decorator', () => {
         
         ex:res schema:name "John" .
       `)
+
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
           name?: string
@@ -151,6 +154,7 @@ describe('decorator', () => {
         
         ex:res schema:name "John" .
       `)
+
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
           name: string | null = null
@@ -165,6 +169,80 @@ describe('decorator', () => {
         instance.name = null
 
         // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+    })
+
+    describe('initial', () => {
+      it('sets default value when not present in dataset', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        class Resource extends RdfResource {
+          @property.literal({
+            path: schema.name,
+            initial: 'foo',
+          })
+          name = 'foo'
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.name).toEqual('foo')
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('does not set initialized value when present in initial dataset', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          @prefix xsd: <${prefixes.xsd}> .
+          
+          ex:res schema:name "bar" .
+        `)
+        class Resource extends RdfResource {
+          @property.literal({
+            path: schema.name,
+            initial: 'foo',
+          })
+          name!: string
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.name).toEqual('bar')
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('sets initial value from node', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        class Resource extends RdfResource {
+          @property.literal({
+            path: schema.name,
+            initial: literal('foo'),
+          })
+          name!: string
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.name).toEqual('foo')
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
     })

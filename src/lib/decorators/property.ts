@@ -1,4 +1,4 @@
-import { Literal, NamedNode, Term } from 'rdf-js'
+import { BlankNode, Literal, NamedNode, Term } from 'rdf-js'
 import RdfResource from '../RdfResource'
 import { getPath, PropRef } from '../path'
 import rdf from 'rdf-data-model'
@@ -17,14 +17,15 @@ function getNode(r: RdfResource, path: NamedNode[]): SafeClownface {
   }, r._node)
 }
 
-interface PropertyDecoratorOptions<T> extends AccessorOptions {
+interface PropertyDecoratorOptions<T, N> extends AccessorOptions {
   fromTerm: (this: RdfResource, obj: SingleContextClownface) => unknown
   toTerm: (value: T) => Term
   assertSetValue: (value: T | Term) => boolean
   valueTypeName: string
+  initial?: T | N
 }
 
-function propertyDecorator<T>({ path, array, fromTerm, toTerm, assertSetValue, valueTypeName }: PropertyDecoratorOptions<T>) {
+function propertyDecorator<T, N>({ path, array, fromTerm, toTerm, assertSetValue, valueTypeName, initial }: PropertyDecoratorOptions<T, N>) {
   return (protoOrDescriptor: any, name: PropertyKey): any => {
     Object.defineProperty(protoOrDescriptor, name, {
       get(this: any): any {
@@ -74,11 +75,19 @@ function propertyDecorator<T>({ path, array, fromTerm, toTerm, assertSetValue, v
         subject.addOut(lastPredicate, toTerm(value))
       },
     })
+
+    if (typeof initial !== 'undefined') {
+      protoOrDescriptor.constructor.__defaults.set(name.toString(), initial)
+    }
   }
 }
 
-export function property(options: AccessorOptions = {}) {
-  return propertyDecorator<Term>({
+interface TermOptions {
+  initial?: Term
+}
+
+export function property(options: AccessorOptions & TermOptions = {}) {
+  return propertyDecorator({
     ...options,
     fromTerm: (obj) => obj.term,
     toTerm: value => value,
@@ -89,6 +98,7 @@ export function property(options: AccessorOptions = {}) {
 
 interface LiteralOptions {
   type?: typeof Boolean | typeof String
+  initial?: unknown | Literal
 }
 
 const trueLiteral: Literal = rdf.literal('true', rdf.namedNode('http://www.w3.org/2001/XMLSchema#boolean'))
@@ -96,7 +106,7 @@ const trueLiteral: Literal = rdf.literal('true', rdf.namedNode('http://www.w3.or
 property.literal = function (options: AccessorOptions & LiteralOptions = {}) {
   const type = options.type || String
 
-  return propertyDecorator<unknown>({
+  return propertyDecorator<unknown, Literal>({
     ...options,
     fromTerm(obj) {
       if (type === Boolean) {
@@ -122,10 +132,11 @@ property.literal = function (options: AccessorOptions & LiteralOptions = {}) {
 
 interface ResourceOptions {
   as?: Mixin<any>[]
+  initial?: BlankNode | NamedNode | RdfResource
 }
 
 property.resource = function (options: AccessorOptions & ResourceOptions = {}) {
-  return propertyDecorator<RdfResource>({
+  return propertyDecorator<RdfResource, BlankNode | NamedNode>({
     ...options,
     fromTerm(this: RdfResource, obj) {
       const constructor: Constructor & Function = this.constructor as Constructor
