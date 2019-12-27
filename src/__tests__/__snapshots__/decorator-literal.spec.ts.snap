@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`decorator literal initial does not set initialized value when present in initial dataset 1`] = `
+"<http://example.com/res> <http://schema.org/name> \\"bar\\" .
+"
+`;
+
+exports[`decorator literal initial sets default value when not present in dataset 1`] = `
+"<http://example.com/res> <http://schema.org/name> \\"foo\\" .
+"
+`;
+
+exports[`decorator literal initial sets initial value from node 1`] = `
+"<http://example.com/res> <http://schema.org/name> \\"foo\\" .
+"
+`;
+
 exports[`decorator literal setter accepts raw term 1`] = `
 "<http://example.com/res> <http://schema.org/name> \\"John\\"@en-gb .
 "
