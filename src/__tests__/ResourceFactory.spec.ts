@@ -2,10 +2,11 @@ import cf from 'clownface'
 import { prefixes } from '@zazuko/rdf-vocabularies'
 import { Constructor, ResourceFactory } from '../lib/ResourceFactory'
 import { parse, vocabs } from './_helpers'
+import { RdfResourceImpl } from '../index'
 
 const { ex } = vocabs
 
-const factory = new ResourceFactory()
+const factory = new ResourceFactory(RdfResourceImpl)
 
 function NeverApply() {
   return class {
