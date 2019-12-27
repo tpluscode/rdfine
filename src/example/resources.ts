@@ -1,6 +1,6 @@
 import ns from '@rdfjs/namespace'
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import { namespace, property, RdfResourceImpl, Constructor, RdfResource } from '../'
+import { namespace, property, RdfResourceImpl, Constructor, RdfResource, ResourceFactory } from '../'
 
 const hydra = ns(prefixes.hydra)
 
@@ -22,4 +22,5 @@ CollectionMixin.shouldApply = (res: HydraResource) => {
 }
 
 export class HydraResource extends RdfResourceImpl {
+  public static factory: ResourceFactory = new ResourceFactory(HydraResource)
 }

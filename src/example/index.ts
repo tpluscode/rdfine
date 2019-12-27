@@ -1,4 +1,3 @@
-import { factory } from '../'
 import program from 'commander'
 import fetch from 'node-fetch'
 import cf from 'clownface'
@@ -10,9 +9,9 @@ import { Collection, CollectionMixin, HydraResource } from './resources'
 
 const parser = new Parser()
 const log = debug('example')
+debug.enable('example')
 
-factory.BaseClass = HydraResource
-factory.addMixin(CollectionMixin)
+HydraResource.factory.addMixin(CollectionMixin)
 
 program
   .arguments('<uri>')
@@ -26,7 +25,7 @@ program
     const dataset = rdf.dataset()
     await dataset.import(await parser.import(response.body as any))
 
-    const collection = factory.createEntity<Collection>(cf({
+    const collection = HydraResource.factory.createEntity<Collection>(cf({
       dataset,
       term: namedNode(uri),
     }))

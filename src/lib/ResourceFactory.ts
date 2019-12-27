@@ -1,17 +1,24 @@
-import RdfResourceImpl, { RdfResource } from './RdfResource'
+import { RdfResource } from './RdfResource'
 import { Clownface } from 'clownface'
 
 export type AnyFunction<A = any> = (...input: any[]) => A
-export type Constructor<A extends RdfResource = RdfResource> = new (...input: any[]) => A
+export interface Constructor<A extends RdfResource = RdfResource> {
+  new (...input: any[]): A
+  factory: ResourceFactory<any>
+}
 interface ShouldApply {
   shouldApply: boolean | ((entity: RdfResource) => boolean)
 }
 
 export type Mixin<T extends AnyFunction> = InstanceType<ReturnType<T>>
 
-export class ResourceFactory<T extends AnyFunction> {
+export class ResourceFactory<T extends AnyFunction = any> {
   private __mixins: Set<Mixin<any>> = new Set()
-  public BaseClass: Constructor = RdfResourceImpl
+  public BaseClass: Constructor
+
+  public constructor(baseClass: Constructor) {
+    this.BaseClass = baseClass
+  }
 
   public addMixin(mixin: Mixin<T> & ShouldApply): void {
     this.__mixins.add(mixin)
@@ -36,5 +43,3 @@ export class ResourceFactory<T extends AnyFunction> {
     return new Type(term) as RdfResource & R
   }
 }
-
-export const factory = new ResourceFactory()

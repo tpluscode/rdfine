@@ -2,7 +2,7 @@ import { BlankNode, Literal, NamedNode, Term } from 'rdf-js'
 import RdfResource from '../RdfResource'
 import { getPath, PropRef } from '../path'
 import rdf from 'rdf-data-model'
-import { factory, Mixin } from '../ResourceFactory'
+import { Constructor, Mixin } from '../ResourceFactory'
 import { SafeClownface, SingleContextClownface } from 'clownface'
 
 interface AccessorOptions {
@@ -139,7 +139,12 @@ property.resource = function (options: AccessorOptions & ResourceOptions = {}) {
   return propertyDecorator<RdfResource, BlankNode | NamedNode>({
     ...options,
     fromTerm(this: RdfResource, obj) {
-      return factory.createEntity(obj, options.as)
+      const constructor: Constructor & Function = this.constructor as Constructor
+      if ('factory' in constructor) {
+        return constructor.factory.createEntity(obj, options.as)
+      }
+
+      throw new Error(`The class ${constructor.name} does not implement a static 'factory' property`)
     },
     toTerm(value: RdfResource) {
       return value._node.term
