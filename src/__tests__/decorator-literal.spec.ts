@@ -14,11 +14,11 @@ describe('decorator', () => {
       it('returns string value of literal', async () => {
         // given
         const dataset = await parse(`
-        @prefix ex: <${prefixes.ex}> .
-        @prefix schema: <${prefixes.schema}> .
-        
-        ex:res schema:name "John Doe" .
-      `)
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:res schema:name "John Doe" .
+        `)
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
           name?: string
@@ -68,12 +68,12 @@ describe('decorator', () => {
       it('accepts raw term', async () => {
         // given
         const dataset = await parse(`
-        @prefix ex: <${prefixes.ex}> .
-        @prefix schema: <${prefixes.schema}> .
-        @prefix xsd: <${prefixes.xsd}> .
-        
-        ex:res schema:name "Johann"@de .
-      `)
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          @prefix xsd: <${prefixes.xsd}> .
+          
+          ex:res schema:name "Johann"@de .
+        `)
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
           name?: string | Literal
@@ -94,12 +94,12 @@ describe('decorator', () => {
       it('replaces boolean object value', async () => {
         // given
         const dataset = await parse(`
-        @prefix ex: <${prefixes.ex}> .
-        @prefix schema: <${prefixes.schema}> .
-        @prefix xsd: <${prefixes.xsd}> .
-        
-        ex:res ex:isMarried true .
-      `)
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          @prefix xsd: <${prefixes.xsd}> .
+          
+          ex:res ex:isMarried true .
+        `)
 
         class Resource extends RdfResource {
           @property.literal({ path: ex.isMarried, type: Boolean })
@@ -121,12 +121,12 @@ describe('decorator', () => {
       it('replaces string object value', async () => {
         // given
         const dataset = await parse(`
-        @prefix ex: <${prefixes.ex}> .
-        @prefix schema: <${prefixes.schema}> .
-        @prefix xsd: <${prefixes.xsd}> .
-        
-        ex:res schema:name "John" .
-      `)
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          @prefix xsd: <${prefixes.xsd}> .
+          
+          ex:res schema:name "John" .
+        `)
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
@@ -148,12 +148,12 @@ describe('decorator', () => {
       it('unsets string object when null is set', async () => {
         // given
         const dataset = await parse(`
-        @prefix ex: <${prefixes.ex}> .
-        @prefix schema: <${prefixes.schema}> .
-        @prefix xsd: <${prefixes.xsd}> .
-        
-        ex:res schema:name "John" .
-      `)
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          @prefix xsd: <${prefixes.xsd}> .
+          
+          ex:res schema:name "John" .
+        `)
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })

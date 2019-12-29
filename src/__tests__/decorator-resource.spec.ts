@@ -118,12 +118,12 @@ describe('decorator', () => {
       it('accepts raw named node term', async () => {
         // given
         const dataset = await parse(`
-        @prefix ex: <${prefixes.ex}> .
-        @prefix schema: <${prefixes.schema}> .
-        
-        ex:john a schema:Person .
-        ex:jane a schema:Person .
-      `)
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:john a schema:Person .
+          ex:jane a schema:Person .
+        `)
 
         class Resource extends RdfResource {
           @property.resource({ path: schema.spouse })
@@ -141,12 +141,12 @@ describe('decorator', () => {
       it('accepts raw blank node term', async () => {
         // given
         const dataset = await parse(`
-        @prefix ex: <${prefixes.ex}> .
-        @prefix schema: <${prefixes.schema}> .
-        
-        ex:lois a schema:Person .
-        _:clark a ex:Superman .
-      `)
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:lois a schema:Person .
+          _:clark a ex:Superman .
+        `)
 
         class Resource extends RdfResource {
           @property.resource({ path: schema.spouse })
