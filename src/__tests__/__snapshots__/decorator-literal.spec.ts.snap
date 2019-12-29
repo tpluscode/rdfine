@@ -10,6 +10,11 @@ exports[`decorator literal initial sets default value when not present in datase
 "
 `;
 
+exports[`decorator literal initial sets initial value from function 1`] = `
+"<http://example.com/res> <http://schema.org/name> \\"http://example.com/res\\" .
+"
+`;
+
 exports[`decorator literal initial sets initial value from node 1`] = `
 "<http://example.com/res> <http://schema.org/name> \\"foo\\" .
 "

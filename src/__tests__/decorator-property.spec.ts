@@ -4,7 +4,8 @@ import { namespace, property } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 import { Literal, NamedNode, Term } from 'rdf-js'
-import { literal } from 'rdf-data-model'
+import { literal, namedNode } from 'rdf-data-model'
+import rdfExt from 'rdf-ext'
 
 const { ex, foaf, schema, rdf } = vocabs
 
@@ -361,6 +362,52 @@ describe('decorator', () => {
         instance.friendsWorkplaceName = literal('Google')
 
         // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+    })
+
+    describe('initial', () => {
+      it('sets initial value from node', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        class Resource extends RdfResource {
+          @property({
+            path: schema.name,
+            initial: literal('foo'),
+          })
+          name!: Literal
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.name.value).toEqual('foo')
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('sets initial value from function', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        class Resource extends RdfResource {
+          @property({
+            path: schema.name,
+            initial: (self: Resource) => namedNode(`${self.id.value}/child`),
+          })
+          child!: NamedNode
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.child.value).toEqual('http://example.com/res/child')
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
     })

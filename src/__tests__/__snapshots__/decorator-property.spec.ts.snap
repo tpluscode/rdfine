@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`decorator term initial sets initial value from function 1`] = `
+"<http://example.com/res> <http://schema.org/name> <http://example.com/res/child> .
+"
+`;
+
+exports[`decorator term initial sets initial value from node 1`] = `
+"<http://example.com/res> <http://schema.org/name> \\"foo\\" .
+"
+`;
+
 exports[`decorator term setter can replace literal with blank 1`] = `
 "<http://example.com/res> <http://xmlns.com/foaf/0.1/name> _:c14n0 .
 _:c14n0 <http://example.com/first> \\"John\\" .
