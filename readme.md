@@ -1,6 +1,6 @@
 ## RDFine _/rɪdɪˈfaɪn/_
-### RDF/JS interfaces - native extensions
-### [![NPM version](https://img.shields.io/npm/v/rdfine.svg?style=flat-square)](https://www.npmjs.com/package/rdfine) [![Build](https://travis-ci.org/tpluscode/rdfine.svg?branch=master)](https://travis-ci.org/tpluscode/rdfine) [![codecov.io](https://codecov.io/github/tpluscode/rdfine/coverage.svg?branch=master)](https://codecov.io/github/tpluscode/rdfine?branch=master)
+### RDF/JS idiomatic, native, enjoyable
+### [![NPM version](https://img.shields.io/npm/v/@tpluscode/rdfine.svg?style=flat-square)](https://www.npmjs.com/package/@tpluscode/rdfine) [![Build](https://travis-ci.org/tpluscode/rdfine.svg?branch=master)](https://travis-ci.org/tpluscode/rdfine) [![codecov.io](https://codecov.io/github/tpluscode/rdfine/coverage.svg?branch=master)](https://codecov.io/github/tpluscode/rdfine?branch=master)
 
 ## Installation
 
