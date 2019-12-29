@@ -7,10 +7,10 @@ import { prefixes } from '@zazuko/rdf-vocabularies'
 
 const parser = new Parser()
 
-export async function parse(quads: string): Promise<Dataset> {
+export function parse(quads: string): Promise<Dataset> {
   const stream = stringToStream(quads) as any
 
-  return rdf.dataset().import(await parser.import(stream))
+  return rdf.dataset().import(parser.import(stream))
 }
 
 prefixes.ex = 'http://example.com/'
