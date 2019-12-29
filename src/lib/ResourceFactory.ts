@@ -24,8 +24,17 @@ export class ResourceFactory<T extends AnyFunction = any> {
     this.__mixins.add(mixin)
   }
 
-  public createEntity<R extends RdfResource>(term: Clownface, explicitMixins: Mixin<T>[] = []): RdfResource & R {
-    const entity = new this.BaseClass(term)
+  public createEntity<R extends RdfResource>(term: Clownface, typeAndMixins: Mixin<any>[] | [Constructor, ...Mixin<any>[]] = []): RdfResource & R {
+    let BaseClass = this.BaseClass
+    let explicitMixins: Mixin<any>[] = typeAndMixins
+    if (typeAndMixins.length > 0) {
+      const [BaseClassOrMixin, ...rest] = typeAndMixins
+      if ('factory' in BaseClassOrMixin) {
+        BaseClass = BaseClassOrMixin
+        explicitMixins = rest
+      }
+    }
+    const entity = new BaseClass(term)
 
     const mixins = [...this.__mixins].reduce<Mixin<T>[]>((selected, next: Mixin<T> & ShouldApply) => {
       if (next.shouldApply === true || (typeof next.shouldApply === 'function' && next.shouldApply(entity))) {
@@ -37,7 +46,7 @@ export class ResourceFactory<T extends AnyFunction = any> {
       return selected
     }, [...explicitMixins])
 
-    const Type = mixins.reduce<Constructor>((Mixed: Constructor, Next: Mixin<T>) => Next(Mixed), this.BaseClass)
+    const Type = mixins.reduce<Constructor>((Mixed: Constructor, Next: Mixin<T>) => Next(Mixed), BaseClass)
     ;(Type as any).__mixins = mixins
 
     return new Type(term) as RdfResource & R
