@@ -10,7 +10,7 @@ const parser = new Parser()
 export function parse(quads: string): Promise<Dataset> {
   const stream = stringToStream(quads) as any
 
-  return rdf.dataset().import(parser.import(stream))
+  return rdf.dataset().import(parser.import(stream) as any)
 }
 
 prefixes.ex = 'http://example.com/'
