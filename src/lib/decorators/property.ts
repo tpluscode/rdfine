@@ -17,12 +17,14 @@ function getNode(r: RdfResource, path: NamedNode[]): SafeClownface {
   }, r._node)
 }
 
+type ObjectOrFactory<R, T> = T | ((self: R) => T)
+
 interface PropertyDecoratorOptions<T, N> extends AccessorOptions {
   fromTerm: (this: RdfResource, obj: SingleContextClownface) => unknown
   toTerm: (value: T) => Term
   assertSetValue: (value: T | Term) => boolean
   valueTypeName: string
-  initial?: T | N
+  initial?: ObjectOrFactory<any, T | N>
 }
 
 function propertyDecorator<T, N>({ path, array, fromTerm, toTerm, assertSetValue, valueTypeName, initial }: PropertyDecoratorOptions<T, N>) {
@@ -77,16 +79,20 @@ function propertyDecorator<T, N>({ path, array, fromTerm, toTerm, assertSetValue
     })
 
     if (typeof initial !== 'undefined') {
+      if (!Object.hasOwnProperty.call(protoOrDescriptor.constructor, '__defaults')) {
+        protoOrDescriptor.constructor.__defaults = new Map()
+      }
+
       protoOrDescriptor.constructor.__defaults.set(name.toString(), initial)
     }
   }
 }
 
-interface TermOptions {
-  initial?: Term
+interface TermOptions<R extends RdfResource> {
+  initial?: ObjectOrFactory<R, Term>
 }
 
-export function property(options: AccessorOptions & TermOptions = {}) {
+export function property<R extends RdfResource>(options: AccessorOptions & TermOptions<R> = {}) {
   return propertyDecorator({
     ...options,
     fromTerm: (obj) => obj.term,
@@ -96,14 +102,14 @@ export function property(options: AccessorOptions & TermOptions = {}) {
   })
 }
 
-interface LiteralOptions {
+interface LiteralOptions<R extends RdfResource> {
   type?: typeof Boolean | typeof String
-  initial?: unknown | Literal
+  initial?: ObjectOrFactory<R, string | boolean | number | bigint | Literal>
 }
 
 const trueLiteral: Literal = rdf.literal('true', rdf.namedNode('http://www.w3.org/2001/XMLSchema#boolean'))
 
-property.literal = function (options: AccessorOptions & LiteralOptions = {}) {
+property.literal = function<R extends RdfResource> (options: AccessorOptions & LiteralOptions<R> = {}) {
   const type = options.type || String
 
   return propertyDecorator<unknown, Literal>({
@@ -135,7 +141,7 @@ interface ResourceOptions<R extends RdfResource> {
   initial?: ObjectOrFactory<R, BlankNode | NamedNode | RdfResource>
 }
 
-property.resource = function (options: AccessorOptions & ResourceOptions = {}) {
+property.resource = function <R extends RdfResource> (options: AccessorOptions & ResourceOptions<R> = {}) {
   return propertyDecorator<RdfResource, BlankNode | NamedNode>({
     ...options,
     fromTerm(this: RdfResource, obj) {

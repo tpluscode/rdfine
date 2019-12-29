@@ -1,9 +1,10 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import cf from 'clownface'
+import cf, { SingleContextClownface } from 'clownface'
 import { property, namespace } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 import { NamedNode, Term } from 'rdf-js'
+import rdfExt from 'rdf-ext'
 
 const { ex, foaf, schema, rdf } = vocabs
 
@@ -157,6 +158,52 @@ describe('decorator', () => {
         lois.spouse = cf({ dataset }).has(rdf.type, ex.Superman).term
 
         // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+    })
+
+    describe('initial', () => {
+      it('set object returned by factory function', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        @namespace('http://example.com/')
+        class NameResource extends RdfResource {
+          @property.literal()
+          first!: string
+
+          @property.literal()
+          last!: string
+
+          @property.resource()
+          person!: RdfResource
+        }
+        class Resource extends RdfResource {
+          @property.resource({
+            path: foaf.friend,
+            initial: (self: Resource) => {
+              const name = new NameResource(self._node.blankNode() as SingleContextClownface)
+              name.first = 'John'
+              name.last = 'Doe'
+              name.person = self
+              return name
+            },
+            as: [NameResource],
+          })
+          name!: NameResource
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+        const name = instance.name
+
+        // then
+        expect(name).toBeInstanceOf(RdfResource)
+        expect(name.first).toEqual('John')
+        expect(name.last).toEqual('Doe')
+        expect(name.person.id.value).toEqual(instance.id.value)
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
     })
