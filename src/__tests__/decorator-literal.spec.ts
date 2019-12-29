@@ -62,6 +62,54 @@ describe('decorator', () => {
         expect(instance.single).toStrictEqual(false)
         expect(instance.married).toStrictEqual(true)
       })
+
+      it('returns integer when type is set', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          @prefix xsd: <${prefixes.xsd}> .
+          
+          ex:res ex:age "30" .
+        `)
+        class Resource extends RdfResource {
+          @property.literal({ path: ex.age, type: Number })
+          age!: number
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.age).toStrictEqual(30)
+      })
+
+      it('returns float when type is set and node is floating point', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          @prefix xsd: <${prefixes.xsd}> .
+          
+          ex:res ex:age 30.6 .
+        `)
+        class Resource extends RdfResource {
+          @property.literal({ path: ex.age, type: Number })
+          age!: number
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.age).toStrictEqual(30.6)
+      })
     })
 
     describe('setter', () => {
@@ -113,6 +161,48 @@ describe('decorator', () => {
 
         // when
         instance.married = false
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('sets xsd:integer literal for int number', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+
+        class Resource extends RdfResource {
+          @property.literal({ path: ex.age, type: Number })
+          age!: number
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // when
+        instance.age = 30
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('sets xsd:float literal for float number', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+
+        class Resource extends RdfResource {
+          @property.literal({ path: ex.age, type: Number })
+          age!: number
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // when
+        instance.age = 30.4
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
