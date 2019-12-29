@@ -8,6 +8,7 @@ import { SafeClownface, SingleContextClownface } from 'clownface'
 interface AccessorOptions {
   array?: boolean
   path?: PropRef | PropRef[]
+  strict?: true
 }
 
 function getNode(r: RdfResource, path: NamedNode[]): SafeClownface {
@@ -27,7 +28,8 @@ interface PropertyDecoratorOptions<T, N> extends AccessorOptions {
   initial?: ObjectOrFactory<any, T | N>
 }
 
-function propertyDecorator<T, N>({ path, array, fromTerm, toTerm, assertSetValue, valueTypeName, initial }: PropertyDecoratorOptions<T, N>) {
+function propertyDecorator<T, N>(options: PropertyDecoratorOptions<T, N>) {
+  const { path, array, fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict } = options
   return (protoOrDescriptor: any, name: PropertyKey): any => {
     Object.defineProperty(protoOrDescriptor, name, {
       get(this: any): any {
@@ -44,6 +46,10 @@ function propertyDecorator<T, N>({ path, array, fromTerm, toTerm, assertSetValue
 
         if (values.length > 1) {
           throw new Error('Multiple terms found where 0..1 was expected')
+        }
+
+        if (strict && values.length === 0) {
+          throw new Error(`Object not found for property ${name.toString()}`)
         }
 
         return values[0]
