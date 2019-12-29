@@ -38,6 +38,7 @@
     "@types/jest": "^24.0.24",
     "@types/node-fetch": "^2.5.4",
     "@types/once": "^1.4.0",
+    "@types/rdfjs__parser-n3": "^1.1.0",
     "@types/rdf-data-model": "^1.0.2",
     "@types/rdf-js": "^2.0.5",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
