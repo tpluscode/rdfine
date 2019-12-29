@@ -217,6 +217,25 @@ describe('decorator', () => {
         // then
         expect(friend!.value).toEqual(ex.friend.value)
       })
+
+      it('strict throws when object not found', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        class Resource extends RdfResource {
+          @property({ path: foaf.name, strict: true })
+          name!: Literal
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+        const getName = () => instance.name
+
+        // then
+        expect(getName).toThrow()
+      })
     })
 
     describe('setter', () => {
