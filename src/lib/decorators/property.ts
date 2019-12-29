@@ -130,9 +130,9 @@ property.literal = function (options: AccessorOptions & LiteralOptions = {}) {
   })
 }
 
-interface ResourceOptions {
-  as?: Mixin<any>[]
-  initial?: BlankNode | NamedNode | RdfResource
+interface ResourceOptions<R extends RdfResource> {
+  as?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]
+  initial?: ObjectOrFactory<R, BlankNode | NamedNode | RdfResource>
 }
 
 property.resource = function (options: AccessorOptions & ResourceOptions = {}) {
