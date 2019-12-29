@@ -35,4 +35,14 @@ exports[`decorator literal setter replaces string object value 1`] = `
 "
 `;
 
+exports[`decorator literal setter sets xsd:float literal for float number 1`] = `
+"<http://example.com/res> <http://example.com/age> \\"30.4\\"^^<http://www.w3.org/2001/XMLSchema#float> .
+"
+`;
+
+exports[`decorator literal setter sets xsd:integer literal for int number 1`] = `
+"<http://example.com/res> <http://example.com/age> \\"30\\"^^<http://www.w3.org/2001/XMLSchema#integer> .
+"
+`;
+
 exports[`decorator literal setter unsets string object when null is set 1`] = `""`;

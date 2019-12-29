@@ -1,9 +1,12 @@
 import { BlankNode, Literal, NamedNode, Term } from 'rdf-js'
+import ns from '@rdfjs/namespace'
 import RdfResource from '../RdfResource'
 import { getPath, PropRef } from '../path'
 import rdf from 'rdf-data-model'
 import { Constructor, Mixin } from '../ResourceFactory'
 import { SafeClownface, SingleContextClownface } from 'clownface'
+
+const xsd = ns('http://www.w3.org/2001/XMLSchema#')
 
 interface AccessorOptions {
   array?: boolean
@@ -109,11 +112,11 @@ export function property<R extends RdfResource>(options: AccessorOptions & TermO
 }
 
 interface LiteralOptions<R extends RdfResource> {
-  type?: typeof Boolean | typeof String
+  type?: typeof Boolean | typeof String | typeof Number
   initial?: ObjectOrFactory<R, string | boolean | number | bigint | Literal>
 }
 
-const trueLiteral: Literal = rdf.literal('true', rdf.namedNode('http://www.w3.org/2001/XMLSchema#boolean'))
+const trueLiteral: Literal = rdf.literal('true', xsd.boolean)
 
 property.literal = function<R extends RdfResource> (options: AccessorOptions & LiteralOptions<R> = {}) {
   const type = options.type || String
@@ -122,7 +125,11 @@ property.literal = function<R extends RdfResource> (options: AccessorOptions & L
     ...options,
     fromTerm(obj) {
       if (type === Boolean) {
-        return trueLiteral.equals(obj.term as any) // TODO: fix equals typing
+        return trueLiteral.equals(obj.term)
+      }
+
+      if (type === Number) {
+        return Number.parseFloat(obj.value)
       }
 
       return obj.value
@@ -131,6 +138,11 @@ property.literal = function<R extends RdfResource> (options: AccessorOptions & L
       let datatype: NamedNode | undefined
       if (type === Boolean) {
         datatype = trueLiteral.datatype
+      }
+      if (type === Number && Number.isInteger(value)) {
+        datatype = xsd.integer
+      } else if (type === Number) {
+        datatype = xsd.float
       }
 
       return rdf.literal(value.toString(), datatype)
