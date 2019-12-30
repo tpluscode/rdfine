@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/tpluscode/rdfine/compare/v0.0.2...v0.1.0) (2019-12-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* a factory instance must exist on the base class
+
+### Features
+
+* allow decorated base class override ([6628435](https://github.com/tpluscode/rdfine/commit/662843515b6d111089e319f6d4dbc8f58fec428c))
+* basic support for numeric literals ([34c6f2f](https://github.com/tpluscode/rdfine/commit/34c6f2fe4d64af725f2bf194790258a6daaf59be))
+* dafault property value ([c1e9c57](https://github.com/tpluscode/rdfine/commit/c1e9c57e6c5cab629cbb1942572728ca0525feca))
+* declare initial prop value as factory function ([4849b98](https://github.com/tpluscode/rdfine/commit/4849b98e3e86d3b961c853ed7f49121ae26a326b))
+* strict properties ([d4fe5c1](https://github.com/tpluscode/rdfine/commit/d4fe5c1518ebed6c753b72e9ecbd80ef49ea7cbc))
+
+
+* remove singleton factory ([723c504](https://github.com/tpluscode/rdfine/commit/723c504a006a6594c67baf1e37d511373307d2c2))
+
 ### [0.0.2](https://github.com/tpluscode/rdfine/compare/v0.0.1...v0.0.2) (2019-12-23)
 
 ### 0.0.1 (2019-12-22)
