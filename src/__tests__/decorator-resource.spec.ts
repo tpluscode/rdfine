@@ -3,7 +3,7 @@ import cf, { SingleContextClownface } from 'clownface'
 import { property, namespace } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
-import { NamedNode, Term } from 'rdf-js'
+import { BlankNode, DatasetCore, NamedNode, Term } from 'rdf-js'
 import rdfExt from 'rdf-ext'
 
 const { ex, foaf, schema, rdf } = vocabs
@@ -181,7 +181,7 @@ describe('decorator', () => {
           @property.resource({
             path: foaf.friend,
             initial: (self: Resource) => {
-              const name = new NameResource(self._node.blankNode() as SingleContextClownface)
+              const name = new NameResource(self._node.blankNode() as SingleContextClownface<DatasetCore, BlankNode>)
               name.first = 'John'
               name.last = 'Doe'
               name.person = self

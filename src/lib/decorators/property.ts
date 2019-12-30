@@ -1,12 +1,10 @@
 import { BlankNode, Literal, NamedNode, Term } from 'rdf-js'
-import ns from '@rdfjs/namespace'
 import RdfResource from '../RdfResource'
 import { getPath, PropRef } from '../path'
 import rdf from 'rdf-data-model'
 import { Constructor, Mixin } from '../ResourceFactory'
 import { SafeClownface, SingleContextClownface } from 'clownface'
-
-const xsd = ns('http://www.w3.org/2001/XMLSchema#')
+import { xsd } from '../vocabs'
 
 interface AccessorOptions {
   array?: boolean
