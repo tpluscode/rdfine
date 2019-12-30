@@ -1,33 +1,40 @@
-import { Term, NamedNode, DatasetCore, BlankNode } from 'rdf-js'
-import cf, { SingleContextClownface } from 'clownface'
-import ns from '@rdfjs/namespace'
+import { NamedNode, DatasetCore, BlankNode } from 'rdf-js'
+import cf, { SafeClownface, SingleContextClownface } from 'clownface'
 import { ResourceFactory } from './ResourceFactory'
 import once from 'once'
+import { TypeCollection } from './TypeCollection'
 
-const rdf = ns('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 type ObjectOrFactory<T> = T | ((self: RdfResource) => T)
 
 export interface RdfResource<D extends DatasetCore = DatasetCore> {
-  readonly id: BlankNode | NamedNode | null
-  readonly types: Term[]
-  readonly _node: SingleContextClownface<D>
+  readonly id: BlankNode | NamedNode
+  readonly types: TypeCollection<D>
+  readonly _node: SingleContextClownface<D, NamedNode | BlankNode>
   hasType (type: string | NamedNode): boolean
 }
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
-  public readonly _node: SingleContextClownface<D>
+  public readonly _node: SingleContextClownface<D, NamedNode | BlankNode>
   private readonly __initializeProperties: (() => void)
   public static __ns?: any
   public static factory: ResourceFactory = new ResourceFactory(RdfResourceImpl)
 
-  public constructor(node: SingleContextClownface<D> | { dataset: D; term: NamedNode | BlankNode; graph?: NamedNode }) {
-    const contexts = cf(node).toArray()
+  public constructor(node: SafeClownface<D, NamedNode | BlankNode> | { dataset: D; term: NamedNode | BlankNode; graph?: NamedNode }) {
+    let contexts: SingleContextClownface<D, NamedNode | BlankNode>[]
+
+    if ('_context' in node) {
+      contexts = node.toArray()
+    } else {
+      // TODO: remove cast after DefinitelyTyped/DefinitelyTyped#41310
+      contexts = cf(node).toArray() as any
+    }
 
     if (contexts.length !== 1) {
       throw new Error('RdfResource can only be initialized from a single node. Got ' + contexts.length)
     }
 
-    this._node = cf(node).toArray()[0]
+    this._node = contexts[0]
+    this.types = new TypeCollection(this._node, this.constructor as any)
 
     this.__initializeProperties = once(() => {
       const self = this as any
@@ -61,13 +68,9 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     }
   }
 
-  public get types() {
-    return this._node.out(rdf.type).terms
-  }
+  public readonly types: TypeCollection<D>
 
-  public hasType(type: string | NamedNode) {
-    const typeNode = typeof type === 'string' ? this._node.namedNode(type) : type
-
-    return this._node.has(rdf.type, typeNode).terms.length > 0
+  public hasType(type: string | NamedNode): boolean {
+    return this.types.has(type)
   }
 }
