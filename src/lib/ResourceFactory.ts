@@ -1,5 +1,6 @@
-import { RdfResource } from './RdfResource'
 import { Clownface } from 'clownface'
+import { RdfResource } from './RdfResource'
+import { createProxy } from './proxy'
 
 export type AnyFunction<A = any> = (...input: any[]) => A
 export interface Constructor<A extends RdfResource = RdfResource> {
@@ -49,6 +50,6 @@ export class ResourceFactory<T extends AnyFunction = any> {
     const Type = mixins.reduce<Constructor>((Mixed: Constructor, Next: Mixin<T>) => Next(Mixed), BaseClass)
     ;(Type as any).__mixins = mixins
 
-    return new Type(term) as RdfResource & R
+    return createProxy(new Type(term)) as RdfResource & R
   }
 }
