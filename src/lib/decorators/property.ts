@@ -7,6 +7,7 @@ import { SafeClownface, SingleContextClownface } from 'clownface'
 import { xsd } from '../vocabs'
 import { isList, enumerateList } from '../rdf-list'
 import { ClassElement } from './index'
+import { fromLiteral, fromResource } from '../conversion'
 
 interface AccessorOptions {
   array?: boolean
@@ -184,15 +185,7 @@ property.literal = function<R extends RdfResource> (options: AccessorOptions & L
   return propertyDecorator<unknown, Literal>({
     ...options,
     fromTerm(obj) {
-      if (type === Boolean) {
-        return trueLiteral.equals(obj.term)
-      }
-
-      if (type === Number) {
-        return Number.parseFloat(obj.value)
-      }
-
-      return obj.value
+      return fromLiteral(type, obj)
     },
     toTerm(value: any) {
       let datatype: NamedNode | undefined
@@ -223,12 +216,7 @@ property.resource = function <R extends RdfResource> (options: AccessorOptions &
   return propertyDecorator<RdfResource, BlankNode | NamedNode>({
     ...options,
     fromTerm(this: RdfResource, obj) {
-      const constructor: Constructor & Function = this.constructor as Constructor
-      if ('factory' in constructor) {
-        return constructor.factory.createEntity(obj, options.as)
-      }
-
-      throw new Error(`The class ${constructor.name} does not implement a static 'factory' property`)
+      return fromResource(this, obj, options.as)
     },
     toTerm(value: RdfResource) {
       return value._node.term
