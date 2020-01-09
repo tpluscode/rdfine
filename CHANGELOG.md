@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/tpluscode/rdfine/compare/v0.1.1...v0.1.2) (2020-01-09)
+
+
+### Features
+
+* read-only support for rdf lists ([1849150](https://github.com/tpluscode/rdfine/commit/1849150f659a62e125d351da9613ba815ab4f890))
+
+
+### Bug Fixes
+
+* decorators fail to apply with babel ([dcd0ca0](https://github.com/tpluscode/rdfine/commit/dcd0ca0c9386d2ccc4ea03fc6d7b56aec0027fa3))
+* strict property throws when initialized declaratively ([a7088ff](https://github.com/tpluscode/rdfine/commit/a7088ff33df3e6620374743adc0c6f06fc99124c))
+
 ### [0.1.1](https://github.com/tpluscode/rdfine/compare/v0.1.0...v0.1.1) (2020-01-08)
 
 
