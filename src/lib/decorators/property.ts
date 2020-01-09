@@ -66,7 +66,7 @@ function propertyDecorator<T, N>(options: PropertyDecoratorOptions<T, N>) {
           throw new Error('RDF List found where 0..1 object was expected')
         }
 
-        if (strict && values.length === 0) {
+        if (this.__initialized && strict && values.length === 0) {
           throw new Error(`Object not found for property ${name.toString()}`)
         }
 
