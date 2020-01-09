@@ -7,4 +7,5 @@ module.exports = {
     '<rootDir>/src/__tests__/_helpers',
     '<rootDir>/node_modules/',
   ],
+  coverageDirectory: 'coverage/babel',
 }
