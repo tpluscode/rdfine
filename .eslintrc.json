@@ -8,5 +8,8 @@
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
+  },
+  "rules": {
+    "symbol-description": "off"
   }
 }

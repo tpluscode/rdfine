@@ -13,7 +13,9 @@
     "build": "rimraf dist; npm run build:node; npm run build:web",
     "build:node": "tsc -p tsconfig.node.json",
     "build:web": "tsc -p tsconfig.web.json",
-    "test": "jest --coverage",
+    "test": "npm run test:ts-node; npm run test:babel",
+    "test:ts-node": "jest --coverage",
+    "test:babel": "jest --coverage -c jest.babel.config.js",
     "example": "ts-node -P tsconfig.example.json src/example/index.ts https://sources.wikibus.org/brochures"
   },
   "repository": {
@@ -30,6 +32,11 @@
     "once": "^1.4.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-typescript": "^7.3.3",
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
     "@rdfjs/parser-n3": "^1.1.3",
