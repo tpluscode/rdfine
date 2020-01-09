@@ -1,5 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`decorator term getter strict can be initialized 1`] = `
+"<http://example.com/res> <http://xmlns.com/foaf/0.1/name> \\"bar\\" .
+"
+`;
+
 exports[`decorator term initial sets initial value from function 1`] = `
 "<http://example.com/res> <http://schema.org/name> <http://example.com/res/child> .
 "

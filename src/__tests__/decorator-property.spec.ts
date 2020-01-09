@@ -237,6 +237,25 @@ describe('decorator', () => {
         expect(getName).toThrow()
       })
 
+      it('strict can be initialized', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        class Resource extends RdfResource {
+          @property.literal({ path: foaf.name, strict: true, initial: 'bar' })
+          foo!: string
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.foo).toEqual('bar')
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
       it('returns rdf list array', async () => {
         // given
         const dataset = await parse(`

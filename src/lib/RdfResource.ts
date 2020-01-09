@@ -15,7 +15,8 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
   public readonly _node: SingleContextClownface<D, NamedNode | BlankNode>
-  private readonly __initializeProperties: (() => void)
+  private readonly __initialized: boolean = false
+  private readonly __initializeProperties: (() => boolean)
   public static __ns?: any
   public static factory: ResourceFactory = new ResourceFactory(RdfResourceImpl)
 
@@ -51,9 +52,11 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
 
         self[key] = value
       })
+
+      return true
     })
 
-    this.__initializeProperties()
+    this.__initialized = this.__initializeProperties()
   }
 
   public get id(): BlankNode | NamedNode {
