@@ -80,7 +80,7 @@ mixins to add to the constructed class, a factory can be used.
 ```typescript
 import { DatasetCore } from 'rdf-js'
 import { namedNode } from 'rdf-data-model'
-import { factory } from '@tpluscode/rdfine'
+import { RdfResourceImpl } from '@tpluscode/rdfine'
 import { Person, PersonMixin } from './Person'
 
 // register the mixin type with the factory
@@ -89,7 +89,7 @@ factory.addMixin(PersonMixin)
 // load you RDF triples into a RDF/JS dataset
 let dataset: DatasetCore = loadRdfData()
 
-const person = factory.createEntity<Person>({
+const person = RdfResourceImpl.factory.createEntity<Person>({
   dataset,
   term: namedNode('http://example.com/gh/tpluscode')
 })
@@ -121,3 +121,27 @@ The last line above will print triples equivalent to those below
     schema:name "Tomasz" ;
     schema:knows <http://example.com/gh/bergos> , <http://example.com/gh/ktk>  .
 ```
+
+## Using with babel
+
+1. `npm i -D @babel/preset-env @babel/plugin-proposal-decorators @babel/plugin-proposal-class-properties`
+1. Configure babel (for example with `.babelrc`)
+    ```
+    {
+      "presets": [
+        [
+          "@babel/env"
+      ],
+      "plugins": [
+        [
+          "@babel/plugin-proposal-decorators",
+          {
+            "decoratorsBeforeExport": true
+          }
+        ],
+        [
+          "@babel/proposal-class-properties"
+        ]
+      ]
+    }
+    ```
