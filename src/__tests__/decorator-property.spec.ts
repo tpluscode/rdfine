@@ -236,6 +236,75 @@ describe('decorator', () => {
         // then
         expect(getName).toThrow()
       })
+
+      it('returns rdf list array', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:res ex:letters ( "a" "b" "c" ) .
+        `)
+        class Resource extends RdfResource {
+          @property({ path: ex.letters, array: true })
+          letters!: Literal[]
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.letters.map(l => l.value)).toEqual(['a', 'b', 'c'])
+      })
+
+      it('returns empty rdf list array', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:res ex:letters ( ) .
+        `)
+        class Resource extends RdfResource {
+          @property({ path: ex.letters, array: true })
+          letters!: Literal[]
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.letters).toEqual([])
+      })
+
+      it('throws when rdf list is the object but not annotated', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:res foaf:knows ( ex:Will ex:Joe ex:Sindy ) .
+        `)
+        class Resource extends RdfResource {
+          @property({ path: foaf.knows })
+          friend!: Term
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(() => instance.friend).toThrow()
+      })
     })
 
     describe('setter', () => {
@@ -428,6 +497,31 @@ describe('decorator', () => {
         // then
         expect(instance.child.value).toEqual('http://example.com/res/child')
         expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('throws when trying to replace rdf list', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:res foaf:knows ( ex:Will ex:Joe ex:Sindy ) .
+        `)
+        class Resource extends RdfResource {
+          @property({ path: foaf.knows, array: true })
+          friend!: Term[]
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(() => {
+          instance.friend = []
+        }).toThrow()
       })
     })
   })

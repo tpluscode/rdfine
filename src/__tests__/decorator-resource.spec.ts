@@ -63,6 +63,33 @@ describe('decorator', () => {
         expect(friend).toBeInstanceOf(RdfResource)
         expect(friend.id.value).toEqual(ex.friend.value)
       })
+
+      it('returns rdf list array', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:res foaf:knows ( ex:Will ex:Joe ex:Sindy ) .
+        `)
+        class Resource extends RdfResource {
+          @property.resource({ path: foaf.knows, array: true })
+          friends!: RdfResource[]
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.friends.map(l => l.id.value)).toEqual([
+          ex.Will.value,
+          ex.Joe.value,
+          ex.Sindy.value,
+        ])
+      })
     })
 
     describe('setter', () => {

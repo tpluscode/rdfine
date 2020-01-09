@@ -110,6 +110,29 @@ describe('decorator', () => {
         // then
         expect(instance.age).toStrictEqual(30.6)
       })
+
+      it('returns rdf list array', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:res ex:letters ( "a" "b" "c" ) .
+        `)
+        class Resource extends RdfResource {
+          @property.literal({ path: ex.letters, array: true })
+          letters?: string[]
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.letters).toEqual(['a', 'b', 'c'])
+      })
     })
 
     describe('setter', () => {

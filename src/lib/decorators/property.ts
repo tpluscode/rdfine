@@ -1,10 +1,11 @@
 import { BlankNode, Literal, NamedNode, Term } from 'rdf-js'
-import RdfResource from '../RdfResource'
+import { RdfResource } from '../RdfResource'
 import { getPath, PropRef } from '../path'
 import rdf from 'rdf-data-model'
 import { Constructor, Mixin } from '../ResourceFactory'
 import { SafeClownface, SingleContextClownface } from 'clownface'
 import { xsd } from '../vocabs'
+import { isList, enumerateList } from '../rdf-list'
 
 interface AccessorOptions {
   array?: boolean
@@ -37,16 +38,32 @@ function propertyDecorator<T, N>(options: PropertyDecoratorOptions<T, N>) {
         const pathNodes = getPath(protoOrDescriptor, name, path)
         const node = getNode(this, pathNodes)
 
-        const values = node.map(quad => {
+        const values = node.map((quad, index) => {
+          if (isList(quad)) {
+            if (index > 0) {
+              throw new Error('Lists of lists are not supported')
+            }
+
+            return enumerateList(this, quad, fromTerm.bind(this))
+          }
+
           return fromTerm.call(this, quad)
         })
 
         if (array === true) {
+          if (values.length === 1 && Array.isArray(values[0])) {
+            return [...values[0]]
+          }
+
           return values
         }
 
         if (values.length > 1) {
           throw new Error('Multiple terms found where 0..1 was expected')
+        }
+
+        if (Array.isArray(values[0])) {
+          throw new Error('RDF List found where 0..1 object was expected')
         }
 
         if (strict && values.length === 0) {
@@ -65,6 +82,13 @@ function propertyDecorator<T, N>(options: PropertyDecoratorOptions<T, N>) {
         const subject = pathNodes.length === 1 ? this._node : getNode(this, pathNodes.slice(0, pathNodes.length - 1))
 
         const lastPredicate = pathNodes[pathNodes.length - 1]
+
+        subject.out(lastPredicate).forEach(obj => {
+          if (isList(obj)) {
+            throw new Error('Setting RDF Lists is not supported')
+          }
+        })
+
         subject.deleteOut(lastPredicate)
 
         if (value === null || typeof value === 'undefined') {
