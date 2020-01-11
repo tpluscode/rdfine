@@ -14,7 +14,7 @@ export function createProxy<T extends RdfResource>(resource: T): T & Record<stri
         return undefined
       }
 
-      return objects
+      const results = objects
         .map(obj => {
           switch (obj.term.termType) {
             case 'BlankNode':
@@ -24,6 +24,8 @@ export function createProxy<T extends RdfResource>(resource: T): T & Record<stri
               return obj.term
           }
         })
+
+      return results.length === 1 ? results[0] : results
     },
   })
 }
