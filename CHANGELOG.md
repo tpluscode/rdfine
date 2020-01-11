@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/tpluscode/rdfine/compare/v0.1.2...v0.1.3) (2020-01-11)
+
+
+### Features
+
+* wrap object in proxy to allow arbitrary property access ([3a08b8c](https://github.com/tpluscode/rdfine/commit/3a08b8c498e5503f927430f783827ecd065ebacb))
+
 ### [0.1.2](https://github.com/tpluscode/rdfine/compare/v0.1.1...v0.1.2) (2020-01-09)
 
 
