@@ -78,6 +78,14 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return this.types.has(type)
   }
 
+  public equals(other: RdfResource | undefined | null): boolean {
+    if (!other) {
+      return false
+    }
+
+    return this.id.equals(other.id)
+  }
+
   public _create<T extends RdfResource>(term: SingleContextClownface<D, NamedNode | BlankNode>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T {
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins)
   }
