@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/tpluscode/rdfine/compare/v0.1.3...v0.1.4) (2020-01-13)
+
+
+### Features
+
+* equals method to compare resource instances ([#19](https://github.com/tpluscode/rdfine/issues/19)) ([421c5a4](https://github.com/tpluscode/rdfine/commit/421c5a4849e6c3984be26166372419148d3d9807))
+* instance method to create resources ([bab524d](https://github.com/tpluscode/rdfine/commit/bab524d638473034588240f6056437bc2d560140))
+
+
+### Bug Fixes
+
+* proxy returns array for single object ([dd40473](https://github.com/tpluscode/rdfine/commit/dd404738ff6a50e3846de1a90b57e5c76a79b41b))
+
 ### [0.1.3](https://github.com/tpluscode/rdfine/compare/v0.1.2...v0.1.3) (2020-01-11)
 
 
