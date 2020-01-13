@@ -1,4 +1,4 @@
-import { Literal } from 'rdf-js'
+import { BlankNode, DatasetCore, Literal, NamedNode } from 'rdf-js'
 import rdf from 'rdf-data-model'
 import { xsd } from './vocabs'
 import { SingleContextClownface } from 'clownface'
@@ -19,11 +19,6 @@ export function fromLiteral(type: BooleanConstructor | StringConstructor | Numbe
   return obj.value
 }
 
-export function fromResource(parent: RdfResource, obj: SingleContextClownface, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]) {
-  const constructor: Constructor & Function = parent.constructor as Constructor
-  if ('factory' in constructor) {
-    return constructor.factory.createEntity(obj, mixins)
-  }
-
-  throw new Error(`The class ${constructor.name} does not implement a static 'factory' property`)
+export function fromResource(parent: RdfResource, obj: SingleContextClownface<DatasetCore, NamedNode | BlankNode>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]) {
+  return parent._create(obj, mixins)
 }
