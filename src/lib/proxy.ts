@@ -1,3 +1,5 @@
+import { SingleContextClownface } from 'clownface'
+import { BlankNode, DatasetCore, NamedNode } from 'rdf-js'
 import { RdfResource } from './RdfResource'
 import { fromResource } from './conversion'
 
@@ -19,7 +21,7 @@ export function createProxy<T extends RdfResource>(resource: T): T & Record<stri
           switch (obj.term.termType) {
             case 'BlankNode':
             case 'NamedNode':
-              return fromResource(target, obj)
+              return fromResource(target, obj as SingleContextClownface<DatasetCore, NamedNode | BlankNode>)
             default:
               return obj.term
           }
