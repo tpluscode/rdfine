@@ -1,6 +1,7 @@
 import $rdf from 'rdf-ext'
 import cf, { SingleContextClownface } from 'clownface'
 import ns from '@rdfjs/namespace'
+import { BlankNode, DatasetCore, NamedNode } from 'rdf-js'
 import { TypeCollection } from '../lib/TypeCollection'
 import RdfResourceImpl, { RdfResource } from '../lib/RdfResource'
 import { parse } from './_helpers'
@@ -9,17 +10,19 @@ const ex = ns('http://example.com/')
 const nullResource = {} as RdfResource
 
 describe('TypeCollection', () => {
+  let node: SingleContextClownface<DatasetCore, NamedNode | BlankNode>
+
   describe('size', () => {
     it('returns 0 when no types', () => {
       // given
       const dataset = $rdf.dataset()
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
       expect(tc.size).toEqual(0)
@@ -32,13 +35,13 @@ describe('TypeCollection', () => {
         
         ex:res a ex:Type1, ex:Type2, ex:Type3, ex:Type4 .
       `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
       expect(tc.size).toEqual(4)
@@ -51,13 +54,13 @@ describe('TypeCollection', () => {
         
         ex:res a ex:Type1, ex:Type2, ex:Type1, ex:Type2 .
       `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
       expect(tc.size).toEqual(2)
@@ -72,13 +75,13 @@ describe('TypeCollection', () => {
         
         ex:res a ex:Type .
       `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
       expect(tc.has('http://example.com/Type')).toBe(true)
@@ -91,13 +94,13 @@ describe('TypeCollection', () => {
         
         ex:res a ex:Type .
       `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
       expect(tc.has(ex.Type)).toBe(true)
@@ -110,13 +113,13 @@ describe('TypeCollection', () => {
         
         ex:res a ex:Type .
       `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
       const type: RdfResource = {
         ...nullResource,
         id: ex.Type,
@@ -133,13 +136,13 @@ describe('TypeCollection', () => {
         
         ex:res a ex:Type .
       `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
       expect(tc.has('http://example.com/Type2')).toBe(false)
@@ -152,13 +155,13 @@ describe('TypeCollection', () => {
         
         ex:res a ex:Type .
       `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
       expect(tc.has(ex.Type2)).toBe(false)
@@ -171,13 +174,13 @@ describe('TypeCollection', () => {
         
         ex:res a ex:Type .
       `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
       const type = {
         ...nullResource,
         id: ex.Type2,
@@ -197,13 +200,13 @@ describe('TypeCollection', () => {
       ex:res a ex:Type1, ex:Type2, ex:Type3, ex:Type4 .
       ex:res2 a ex:Type1 .
     `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
       tc.clear()
 
       // then
@@ -216,13 +219,13 @@ describe('TypeCollection', () => {
     it('modifies the dataset when adding named node', () => {
       // given
       const dataset = $rdf.dataset()
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
       tc.add(ex.Type)
 
       // then
@@ -232,17 +235,17 @@ describe('TypeCollection', () => {
     it('modifies the dataset when adding resource', () => {
       // given
       const dataset = $rdf.dataset()
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
       const newType = {
         ...nullResource,
         id: ex.Type,
       }
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
       tc.add(newType)
 
       // then
@@ -256,17 +259,17 @@ describe('TypeCollection', () => {
         
         ex:res a ex:Type .
       `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
       const newType = {
         ...nullResource,
         id: ex.Type,
       }
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
       tc.add(newType)
 
       // then
@@ -283,13 +286,13 @@ describe('TypeCollection', () => {
       ex:res a ex:Type1, ex:Type2, ex:Type3, ex:Type4 .
       ex:res2 a ex:Type1 .
     `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
       tc.delete(ex.Type2)
 
       // then
@@ -304,13 +307,13 @@ describe('TypeCollection', () => {
       
       ex:res a ex:Type1 .
     `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
       const deleted = tc.delete(ex.Type1)
 
       // then
@@ -324,13 +327,13 @@ describe('TypeCollection', () => {
       
       ex:res a ex:Type1 .
     `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
       const deleted = tc.delete(ex.Type2)
 
       // then
@@ -346,13 +349,13 @@ describe('TypeCollection', () => {
         
         ex:res a ex:Type .
       `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
       const thisArg = {}
 
       // then
@@ -373,13 +376,13 @@ describe('TypeCollection', () => {
         
         ex:res a ex:Type .
       `)
-      const node = cf({
+      node = cf({
         dataset,
         term: ex.res,
-      }) as any as SingleContextClownface
+      }) as any
 
       // when
-      const tc = new TypeCollection(node, RdfResourceImpl)
+      const tc = new TypeCollection(new RdfResourceImpl(node))
       const entries = tc.entries()
 
       // then

@@ -216,7 +216,7 @@ property.resource = function <R extends RdfResource> (options: AccessorOptions &
   return propertyDecorator<RdfResource, BlankNode | NamedNode>({
     ...options,
     fromTerm(this: RdfResource, obj) {
-      return fromResource(this, obj, options.as)
+      return fromResource(this, obj as any, options.as)
     },
     toTerm(value: RdfResource) {
       return value._node.term
