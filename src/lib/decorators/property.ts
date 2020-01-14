@@ -60,11 +60,11 @@ function createProperty<T, N>(proto: any, name: string, options: PropertyDecorat
       }
 
       if (values.length > 1) {
-        throw new Error('Multiple terms found where 0..1 was expected')
+        throw new Error(`${name}: Multiple terms found where 0..1 was expected`)
       }
 
       if (Array.isArray(values[0])) {
-        throw new Error('RDF List found where 0..1 object was expected')
+        throw new Error(`${name}: RDF List found where 0..1 object was expected`)
       }
 
       if (this.__initialized && strict && values.length === 0) {
@@ -76,7 +76,7 @@ function createProperty<T, N>(proto: any, name: string, options: PropertyDecorat
 
     set(this: RdfResource, value: T | Term) {
       if (!array && Array.isArray(value)) {
-        throw new Error('Cannot set array to a non-array property')
+        throw new Error(`${name}: Cannot set array to a non-array property`)
       }
 
       const pathNodes = getPath(proto, name, path)
@@ -86,7 +86,7 @@ function createProperty<T, N>(proto: any, name: string, options: PropertyDecorat
 
       subject.out(lastPredicate).forEach(obj => {
         if (isList(obj)) {
-          throw new Error('Setting RDF Lists is not supported')
+          throw new Error(`${name}: Setting RDF Lists is not supported`)
         }
       })
 
