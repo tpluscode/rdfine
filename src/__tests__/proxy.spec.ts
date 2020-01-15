@@ -13,7 +13,7 @@ describe('proxy', () => {
 
   beforeEach(() => {
     node = cf({ dataset: $rdf.dataset() })
-      .namedNode(ex.Proxied) as any
+      .namedNode(ex.Proxied)
 
     node.addOut(ex.Prop1, ex.Proxied2, p => {
       p.addOut(ex.Prop2, node.literal('foo', 'bar'))
