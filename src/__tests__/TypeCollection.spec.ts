@@ -18,8 +18,7 @@ describe('TypeCollection', () => {
       const dataset = $rdf.dataset()
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -37,8 +36,7 @@ describe('TypeCollection', () => {
       `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -56,8 +54,7 @@ describe('TypeCollection', () => {
       `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -77,8 +74,7 @@ describe('TypeCollection', () => {
       `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -96,8 +92,7 @@ describe('TypeCollection', () => {
       `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -115,8 +110,7 @@ describe('TypeCollection', () => {
       `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -138,8 +132,7 @@ describe('TypeCollection', () => {
       `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -157,8 +150,7 @@ describe('TypeCollection', () => {
       `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -176,8 +168,7 @@ describe('TypeCollection', () => {
       `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -202,8 +193,7 @@ describe('TypeCollection', () => {
     `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -221,8 +211,7 @@ describe('TypeCollection', () => {
       const dataset = $rdf.dataset()
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -237,8 +226,7 @@ describe('TypeCollection', () => {
       const dataset = $rdf.dataset()
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
       const newType = {
         ...nullResource,
         id: ex.Type,
@@ -261,8 +249,7 @@ describe('TypeCollection', () => {
       `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
       const newType = {
         ...nullResource,
         id: ex.Type,
@@ -288,8 +275,7 @@ describe('TypeCollection', () => {
     `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -309,8 +295,7 @@ describe('TypeCollection', () => {
     `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -329,8 +314,7 @@ describe('TypeCollection', () => {
     `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -351,8 +335,7 @@ describe('TypeCollection', () => {
       `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))
@@ -378,8 +361,7 @@ describe('TypeCollection', () => {
       `)
       node = cf({
         dataset,
-        term: ex.res,
-      }) as any
+      }).namedNode(ex.res)
 
       // when
       const tc = new TypeCollection(new RdfResourceImpl(node))

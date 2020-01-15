@@ -27,8 +27,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     if ('_context' in node) {
       contexts = node.toArray()
     } else {
-      // TODO: remove cast after DefinitelyTyped/DefinitelyTyped#41310
-      contexts = cf(node).toArray() as any
+      contexts = cf(node).toArray()
     }
 
     if (contexts.length !== 1) {

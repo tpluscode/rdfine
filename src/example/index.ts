@@ -23,7 +23,7 @@ program
     })
 
     const dataset = rdf.dataset()
-    await dataset.import(await parser.import(response.body as any))
+    await dataset.import(await parser.import(response.body))
 
     const collection = HydraResource.factory.createEntity<Collection>(cf({
       dataset,
