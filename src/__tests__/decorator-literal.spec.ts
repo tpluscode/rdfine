@@ -120,7 +120,7 @@ describe('decorator', () => {
           ex:res ex:letters ( "a" "b" "c" ) .
         `)
         class Resource extends RdfResource {
-          @property.literal({ path: ex.letters, array: true })
+          @property.literal({ path: ex.letters, values: 'list' })
           letters?: string[]
         }
 

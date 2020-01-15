@@ -11,7 +11,7 @@ export interface Collection extends RdfResource {
 export function CollectionMixin<Base extends Constructor>(base: Base) {
   @namespace(hydra)
   class C extends base implements Collection {
-    @property.resource({ path: 'member', array: true })
+    @property.resource({ path: 'member', values: 'array' })
     members!: HydraResource[]
   }
 

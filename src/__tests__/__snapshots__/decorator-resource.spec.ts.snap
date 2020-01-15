@@ -29,6 +29,21 @@ exports[`decorator resource setter sets a relation between resources 1`] = `
 "
 `;
 
+exports[`decorator resource setter sets array to rdf list property 1`] = `
+"<http://example.com/john> <http://xmlns.com/foaf/0.1/knows> _:c14n1 .
+_:c14n0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://example.com/joe> .
+_:c14n0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:c14n1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://example.com/jane> .
+_:c14n1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:c14n0 .
+"
+`;
+
+exports[`decorator resource setter sets array to set property 1`] = `
+"<http://example.com/john> <http://xmlns.com/foaf/0.1/knows> <http://example.com/jane> .
+<http://example.com/john> <http://xmlns.com/foaf/0.1/knows> <http://example.com/joe> .
+"
+`;
+
 exports[`decorator resource setter setting null removes relation 1`] = `
 "<http://example.com/jane> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
 <http://example.com/john> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
