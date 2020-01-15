@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/tpluscode/rdfine/compare/v0.1.4...v0.2.0) (2020-01-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* decorator's `array: boolean` changed to `values: 'array' | 'list' | undefined`
+
+### Features
+
+* allow setting RDF arrays ([7d83311](https://github.com/tpluscode/rdfine/commit/7d833110273f7966973400792df38fc0037d51df))
+
+
+### Bug Fixes
+
+* more informative getter/setter exceptions ([621c6c9](https://github.com/tpluscode/rdfine/commit/621c6c910b5191624c8301cf234eb4e21492c528))
+
 ### [0.1.4](https://github.com/tpluscode/rdfine/compare/v0.1.3...v0.1.4) (2020-01-13)
 
 
