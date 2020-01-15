@@ -219,7 +219,7 @@ property.resource = function <R extends RdfResource> (options: AccessorOptions &
       return fromResource(this, obj as any, options.as)
     },
     toTerm(value: RdfResource) {
-      return value._node.term
+      return value.id
     },
     valueTypeName: 'RdfResource instance',
     assertSetValue: (value) => {
