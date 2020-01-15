@@ -41,7 +41,7 @@ export function PersonMixin<Base extends Constructor>(base: Base) {
       // http://schema.org/knows
       path: 'knows',
       // always return a JS array
-      array: true
+      values: 'array'
     })
     friends!: Person[]
     
@@ -97,7 +97,7 @@ const person = RdfResourceImpl.factory.createEntity<Person>({
 
 ### Use it!
 
-The setters are immediately reflected in the underlying.
+The setters are immediately reflected in the underlying dataset.
 Note that any property can also be set with raw RDF term matching the annotated type
 
 ```typescript
@@ -107,7 +107,7 @@ person.name = "Tomasz"
 person.friends = [
   namedNode('http://example.com/gh/bergos'),
   namedNode('http://example.com/gh/ktk')
-] as any as Person[]
+] as any
 
 console.log(person._node.dataset.toString())
 ```
