@@ -1,16 +1,15 @@
-import { BlankNode, Literal, NamedNode, Term } from 'rdf-js'
+import { NamedNode, Term } from 'rdf-js'
 import { RdfResource } from '../RdfResource'
 import { getPath, PropRef } from '../path'
-import rdf from 'rdf-data-model'
-import { Constructor, Mixin } from '../ResourceFactory'
 import { SafeClownface, SingleContextClownface } from 'clownface'
-import { xsd } from '../vocabs'
 import { isList, enumerateList } from '../rdf-list'
 import { ClassElement } from './index'
-import { fromLiteral, fromResource } from '../conversion'
+import literalPropertyDecorator from './property/literal'
+import resourcePropertyDecorator from './property/resource'
+import { rdf } from '../vocabs'
 
-interface AccessorOptions {
-  array?: boolean
+export interface AccessorOptions {
+  values?: 'array' | 'list'
   path?: PropRef | PropRef[]
   strict?: true
 }
@@ -22,7 +21,7 @@ function getNode(r: RdfResource, path: NamedNode[]): SafeClownface {
   }, r._node)
 }
 
-type ObjectOrFactory<R, T> = T | ((self: R) => T)
+export type ObjectOrFactory<R, T> = T | ((self: R) => T)
 
 interface PropertyDecoratorOptions<T, N> extends AccessorOptions {
   fromTerm: (this: RdfResource, obj: SingleContextClownface) => unknown
@@ -33,13 +32,15 @@ interface PropertyDecoratorOptions<T, N> extends AccessorOptions {
 }
 
 function createProperty<T, N>(proto: any, name: string, options: PropertyDecoratorOptions<T, N>) {
-  const { path, array, fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict } = options
+  const { path, fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict } = options
+  const values = options.values || 'single'
+
   Object.defineProperty(proto, name, {
     get(this: any): any {
       const pathNodes = getPath(proto, name, path)
       const node = getNode(this, pathNodes)
 
-      const values = node.map((quad, index) => {
+      const objects = node.map((quad, index) => {
         if (isList(quad)) {
           if (index > 0) {
             throw new Error('Lists of lists are not supported')
@@ -51,31 +52,31 @@ function createProperty<T, N>(proto: any, name: string, options: PropertyDecorat
         return fromTerm.call(this, quad)
       })
 
-      if (array === true) {
-        if (values.length === 1 && Array.isArray(values[0])) {
-          return [...values[0]]
-        }
-
-        return values
+      if (values === 'array') {
+        return objects
       }
 
-      if (values.length > 1) {
+      if (values === 'list') {
+        return objects[0] || []
+      }
+
+      if (objects.length > 1) {
         throw new Error(`${name}: Multiple terms found where 0..1 was expected`)
       }
 
-      if (Array.isArray(values[0])) {
+      if (Array.isArray(objects[0])) {
         throw new Error(`${name}: RDF List found where 0..1 object was expected`)
       }
 
-      if (this.__initialized && strict && values.length === 0) {
+      if (this.__initialized && strict && objects.length === 0) {
         throw new Error(`Object not found for property ${name}`)
       }
 
-      return values[0]
+      return objects[0]
     },
 
-    set(this: RdfResource, value: T | Term) {
-      if (!array && Array.isArray(value)) {
+    set(this: RdfResource, value: T | Term | Array<T | Term>) {
+      if (values === 'single' && Array.isArray(value)) {
         throw new Error(`${name}: Cannot set array to a non-array property`)
       }
 
@@ -86,7 +87,7 @@ function createProperty<T, N>(proto: any, name: string, options: PropertyDecorat
 
       subject.out(lastPredicate).forEach(obj => {
         if (isList(obj)) {
-          throw new Error(`${name}: Setting RDF Lists is not supported`)
+          subject.deleteList(lastPredicate)
         }
       })
 
@@ -96,17 +97,35 @@ function createProperty<T, N>(proto: any, name: string, options: PropertyDecorat
         return
       }
 
-      if (!assertSetValue(value)) {
-        const pathStr = pathNodes.map(p => `<${p}>`).join('/')
-        throw new Error(`Unexpected value for path ${pathStr}. Expecting a ${valueTypeName} or RDF/JS term`)
+      let valueArray: Array<T | Term>
+      if (Array.isArray(value)) {
+        valueArray = value
+      } else {
+        valueArray = [value]
       }
 
-      if (typeof value === 'object' && 'termType' in value) {
-        subject.addOut(lastPredicate, value)
-        return
-      }
+      const termsArray = valueArray.map(value => {
+        if (!assertSetValue(value)) {
+          const pathStr = pathNodes.map(p => `<${p}>`).join('/')
+          throw new Error(`Unexpected value for path ${pathStr}. Expecting a ${valueTypeName} or RDF/JS term`)
+        }
 
-      subject.addOut(lastPredicate, toTerm(value))
+        if (typeof value === 'object' && 'termType' in value) {
+          return value
+        }
+
+        return toTerm(value)
+      })
+
+      if (values === 'list') {
+        if (termsArray.length === 0) {
+          subject.addOut(lastPredicate, rdf.nil)
+        } else {
+          subject.addList(lastPredicate, termsArray)
+        }
+      } else {
+        subject.addOut(lastPredicate, termsArray)
+      }
     },
   })
 
@@ -151,7 +170,7 @@ const standardProperty =
     }
   }
 
-function propertyDecorator<T, N>(options: PropertyDecoratorOptions<T, N>) {
+export function propertyDecorator<T, N>(options: PropertyDecoratorOptions<T, N>) {
   return (protoOrDescriptor: RdfResource|ClassElement, name?: PropertyKey): any =>
     (name !== undefined)
       ? legacyProperty(options, protoOrDescriptor as any, name)
@@ -172,62 +191,6 @@ export function property<R extends RdfResource>(options: AccessorOptions & TermO
   })
 }
 
-interface LiteralOptions<R extends RdfResource> {
-  type?: typeof Boolean | typeof String | typeof Number
-  initial?: ObjectOrFactory<R, string | boolean | number | bigint | Literal>
-}
+property.literal = literalPropertyDecorator
 
-const trueLiteral: Literal = rdf.literal('true', xsd.boolean)
-
-property.literal = function<R extends RdfResource> (options: AccessorOptions & LiteralOptions<R> = {}) {
-  const type = options.type || String
-
-  return propertyDecorator<unknown, Literal>({
-    ...options,
-    fromTerm(obj) {
-      return fromLiteral(type, obj)
-    },
-    toTerm(value: any) {
-      let datatype: NamedNode | undefined
-      if (type === Boolean) {
-        datatype = trueLiteral.datatype
-      }
-      if (type === Number && Number.isInteger(value)) {
-        datatype = xsd.integer
-      } else if (type === Number) {
-        datatype = xsd.float
-      }
-
-      return rdf.literal(value.toString(), datatype)
-    },
-    valueTypeName: type.name,
-    assertSetValue: (value: any) => {
-      return typeof value !== 'object' || value.termType === 'Literal'
-    },
-  })
-}
-
-interface ResourceOptions<R extends RdfResource> {
-  as?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]
-  initial?: ObjectOrFactory<R, BlankNode | NamedNode | RdfResource>
-}
-
-property.resource = function <R extends RdfResource> (options: AccessorOptions & ResourceOptions<R> = {}) {
-  return propertyDecorator<RdfResource, BlankNode | NamedNode>({
-    ...options,
-    fromTerm(this: RdfResource, obj) {
-      return fromResource(this, obj as any, options.as)
-    },
-    toTerm(value: RdfResource) {
-      return value.id
-    },
-    valueTypeName: 'RdfResource instance',
-    assertSetValue: (value) => {
-      if ('termType' in value) {
-        return value.termType === 'NamedNode' || value.termType === 'BlankNode'
-      }
-
-      return true
-    },
-  })
-}
+property.resource = resourcePropertyDecorator

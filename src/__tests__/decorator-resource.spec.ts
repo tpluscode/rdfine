@@ -73,7 +73,7 @@ describe('decorator', () => {
           ex:res foaf:knows ( ex:Will ex:Joe ex:Sindy ) .
         `)
         class Resource extends RdfResource {
-          @property.resource({ path: foaf.knows, array: true })
+          @property.resource({ path: foaf.knows, values: 'list' })
           friends!: RdfResource[]
         }
 
@@ -160,6 +160,59 @@ describe('decorator', () => {
 
         // when
         john.spouse = ex.jane
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('sets array to rdf list property', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:john foaf:knows (
+            ex:stacy
+            ex:frank
+          ) .
+        `)
+
+        class Resource extends RdfResource {
+          @property.resource({ path: foaf.knows, values: 'list' })
+          knows?: (RdfResource | NamedNode)[]
+        }
+        const john = new Resource({ dataset, term: ex.john })
+
+        // when
+        john.knows = [
+          ex.jane,
+          ex.joe,
+        ]
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('sets array to set property', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:john foaf:knows ex:stacy, ex:frank .
+        `)
+
+        class Resource extends RdfResource {
+          @property.resource({ path: foaf.knows, values: 'array' })
+          knows?: (RdfResource | NamedNode)[]
+        }
+        const john = new Resource({ dataset, term: ex.john })
+
+        // when
+        john.knows = [
+          ex.jane,
+          ex.joe,
+        ]
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()

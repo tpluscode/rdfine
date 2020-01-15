@@ -120,7 +120,7 @@ describe('decorator', () => {
           ex:res schema:children ex:Hansel, ex:Gretel .
         `)
         class Resource extends RdfResource {
-          @property({ path: schema.children, array: true })
+          @property({ path: schema.children, values: 'array' })
           children?: Term[]
         }
 
@@ -265,7 +265,7 @@ describe('decorator', () => {
           ex:res ex:letters ( "a" "b" "c" ) .
         `)
         class Resource extends RdfResource {
-          @property({ path: ex.letters, array: true })
+          @property({ path: ex.letters, values: 'list' })
           letters!: Literal[]
         }
 
@@ -288,7 +288,7 @@ describe('decorator', () => {
           ex:res ex:letters ( ) .
         `)
         class Resource extends RdfResource {
-          @property({ path: ex.letters, array: true })
+          @property({ path: ex.letters, values: 'list' })
           letters!: Literal[]
         }
 
@@ -368,7 +368,7 @@ describe('decorator', () => {
           ex:res foaf:name "John"@en-us, "Johann"@de, "Jan"@pl, "Jean"@fr .
         `)
         class Resource extends RdfResource {
-          @property({ path: foaf.name, array: true })
+          @property({ path: foaf.name, values: 'array' })
           name?: Term[]
         }
 
@@ -394,7 +394,7 @@ describe('decorator', () => {
           ex:res foaf:name "John"@en-us, "Johann"@de .
         `)
         class Resource extends RdfResource {
-          @property({ path: foaf.name, array: true })
+          @property({ path: foaf.name, values: 'array' })
           name?: Term[]
         }
 
@@ -471,6 +471,54 @@ describe('decorator', () => {
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
+
+      it('sets nil for empty rdf list', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:res foaf:knows ( ex:Will ex:Joe ex:Sindy ) .
+        `)
+        class Resource extends RdfResource {
+          @property({ path: foaf.knows, values: 'list' })
+          friend!: Term[]
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+        instance.friend = []
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('setting null to rdf list removes triple', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:res foaf:knows ( ex:Will ex:Joe ex:Sindy ) .
+        `)
+        class Resource extends RdfResource {
+          @property({ path: foaf.knows, values: 'array' })
+          friend!: Term[] | null
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+        instance.friend = null
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
     })
 
     describe('initial', () => {
@@ -516,31 +564,6 @@ describe('decorator', () => {
         // then
         expect(instance.child.value).toEqual('http://example.com/res/child')
         expect(dataset.toCanonical()).toMatchSnapshot()
-      })
-
-      it('throws when trying to replace rdf list', async () => {
-        // given
-        const dataset = await parse(`
-          @prefix ex: <${prefixes.ex}> .
-          @prefix foaf: <${prefixes.foaf}> .
-          
-          ex:res foaf:knows ( ex:Will ex:Joe ex:Sindy ) .
-        `)
-        class Resource extends RdfResource {
-          @property({ path: foaf.knows, array: true })
-          friend!: Term[]
-        }
-
-        // when
-        const instance = new Resource({
-          dataset,
-          term: ex.res,
-        })
-
-        // then
-        expect(() => {
-          instance.friend = []
-        }).toThrow()
       })
     })
   })
