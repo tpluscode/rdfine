@@ -11,7 +11,7 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly types: TypeCollection<D>
   readonly _node: SingleContextClownface<D, NamedNode | BlankNode>
   hasType (type: string | NamedNode): boolean
-  _create<T extends RdfResource>(term: SingleContextClownface<D, NamedNode | BlankNode>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T
+  _create<T extends RdfResource>(term: SingleContextClownface<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T
 }
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
@@ -21,20 +21,23 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   public static __ns?: any
   public static factory: ResourceFactory = new ResourceFactory(RdfResourceImpl)
 
-  public constructor(node: SafeClownface<D, NamedNode | BlankNode> | { dataset: D; term: NamedNode | BlankNode; graph?: NamedNode }) {
-    let contexts: SingleContextClownface<D, NamedNode | BlankNode>[]
+  public constructor(graph: SafeClownface<D> | { dataset: D; term: NamedNode | BlankNode; graph?: NamedNode }) {
+    if ('_context' in graph) {
+      const [{ term }, ...rest] = graph.toArray()
 
-    if ('_context' in node) {
-      contexts = node.toArray()
+      if (rest.length > 0) {
+        throw new Error(`RdfResource can only be initialized from a single node. Got ${rest.length} additional values.`)
+      }
+
+      if (term.termType !== 'BlankNode' && term.termType !== 'NamedNode') {
+        throw new Error(`RdfResource cannot be initialized from a ${term.termType} node`)
+      }
+
+      this._node = graph.node(term)
     } else {
-      contexts = cf(node).toArray()
+      this._node = cf(graph)
     }
 
-    if (contexts.length !== 1) {
-      throw new Error('RdfResource can only be initialized from a single node. Got ' + contexts.length)
-    }
-
-    this._node = contexts[0]
     this.types = new TypeCollection(this)
 
     this.__initializeProperties = once(() => {
@@ -60,15 +63,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   }
 
   public get id(): BlankNode | NamedNode {
-    if (!this._node.term) throw new Error('Graph context does not represent a single node')
-
-    switch (this._node.term.termType) {
-      case 'BlankNode':
-      case 'NamedNode':
-        return this._node.term
-      default:
-        throw new Error('Resource identifier should only be a blank or named node')
-    }
+    return this._node.term
   }
 
   public readonly types: TypeCollection<D>
@@ -85,7 +80,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return this.id.equals(other.id)
   }
 
-  public _create<T extends RdfResource>(term: SingleContextClownface<D, NamedNode | BlankNode>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T {
+  public _create<T extends RdfResource>(term: SingleContextClownface<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T {
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins)
   }
 }

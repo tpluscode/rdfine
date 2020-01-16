@@ -8,6 +8,12 @@
 npm i @tplusode/rdfine
 ```
 
+Also peer `@types` dependencies:
+
+```shell script
+npm i --save-dev @types/clownface @types/rdf-ext @types/rdfjs__namespace
+```
+
 ## Usage
 ### Define resource interfaces
 
