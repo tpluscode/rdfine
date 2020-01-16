@@ -76,12 +76,6 @@ export class TypeCollection<D extends DatasetCore> implements Set<RdfResource<D>
   private get __values() {
     return this.__resource._node
       .out(rdf.type)
-      .map(type => {
-        if (type.term.termType !== 'BlankNode' && type.term.termType !== 'NamedNode') {
-          throw new Error('RDF Type must be a resource')
-        }
-
-        return this.__resource._create<RdfResource<D>>(type as any)
-      })
+      .map(type => this.__resource._create<RdfResource<D>>(type))
   }
 }
