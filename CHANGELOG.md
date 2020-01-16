@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/tpluscode/rdfine/compare/v0.2.0...v0.2.1) (2020-01-16)
+
+
+### Bug Fixes
+
+* relax the typings of create method ([5c98a21](https://github.com/tpluscode/rdfine/commit/5c98a213dc0d2d0bc78a6ffd291dd5677ec7f1e3))
+
 ## [0.2.0](https://github.com/tpluscode/rdfine/compare/v0.1.4...v0.2.0) (2020-01-15)
 
 
