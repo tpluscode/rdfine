@@ -1,9 +1,9 @@
-import { BlankNode, DatasetCore, Literal, NamedNode } from 'rdf-js'
+import { DatasetCore, Literal } from 'rdf-js'
 import rdf from 'rdf-data-model'
 import { xsd } from './vocabs'
 import { SingleContextClownface } from 'clownface'
 import { Constructor, Mixin } from './ResourceFactory'
-import { RdfResource } from './RdfResource'
+import { RdfResource, ResourceIdentifier } from './RdfResource'
 
 const trueLiteral: Literal = rdf.literal('true', xsd.boolean)
 
@@ -19,6 +19,6 @@ export function fromLiteral(type: BooleanConstructor | StringConstructor | Numbe
   return obj.value
 }
 
-export function fromResource(parent: RdfResource, obj: SingleContextClownface<DatasetCore, NamedNode | BlankNode>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]) {
+export function fromResource(parent: RdfResource, obj: SingleContextClownface<DatasetCore, ResourceIdentifier>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]) {
   return parent._create(obj, mixins)
 }

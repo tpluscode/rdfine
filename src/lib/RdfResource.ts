@@ -6,22 +6,24 @@ import { TypeCollection } from './TypeCollection'
 
 type ObjectOrFactory<T> = T | ((self: RdfResource) => T)
 
+export type ResourceIdentifier = BlankNode | NamedNode
+
 export interface RdfResource<D extends DatasetCore = DatasetCore> {
-  readonly id: BlankNode | NamedNode
+  readonly id: ResourceIdentifier
   readonly types: TypeCollection<D>
-  readonly _node: SingleContextClownface<D, NamedNode | BlankNode>
+  readonly _node: SingleContextClownface<D, ResourceIdentifier>
   hasType (type: string | NamedNode): boolean
   _create<T extends RdfResource>(term: SingleContextClownface<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T
 }
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
-  public readonly _node: SingleContextClownface<D, NamedNode | BlankNode>
+  public readonly _node: SingleContextClownface<D, ResourceIdentifier>
   private readonly __initialized: boolean = false
   private readonly __initializeProperties: (() => boolean)
   public static __ns?: any
   public static factory: ResourceFactory = new ResourceFactory(RdfResourceImpl)
 
-  public constructor(graph: SafeClownface<D> | { dataset: D; term: NamedNode | BlankNode; graph?: NamedNode }) {
+  public constructor(graph: SafeClownface<D> | { dataset: D; term: ResourceIdentifier; graph?: NamedNode }) {
     if ('_context' in graph) {
       const [{ term }, ...rest] = graph.toArray()
 
@@ -62,7 +64,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     this.__initialized = this.__initializeProperties()
   }
 
-  public get id(): BlankNode | NamedNode {
+  public get id(): ResourceIdentifier {
     return this._node.term
   }
 
