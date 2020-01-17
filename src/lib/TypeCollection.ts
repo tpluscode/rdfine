@@ -1,9 +1,9 @@
-import { BlankNode, DatasetCore, NamedNode } from 'rdf-js'
-import { RdfResource } from './RdfResource'
+import { DatasetCore } from 'rdf-js'
+import { RdfResource, ResourceIdentifier } from './RdfResource'
 import { rdf } from './vocabs'
 import { namedNode } from 'rdf-data-model'
 
-function getNode(value: RdfResource | NamedNode | BlankNode | string): NamedNode | BlankNode {
+function getNode(value: RdfResource | ResourceIdentifier | string): ResourceIdentifier {
   if (typeof value === 'string') {
     return namedNode(value)
   }
@@ -18,7 +18,7 @@ function getNode(value: RdfResource | NamedNode | BlankNode | string): NamedNode
 export class TypeCollection<D extends DatasetCore> implements Set<RdfResource<D>> {
   private readonly __resource: RdfResource<D>
 
-  add(value: RdfResource<D> | NamedNode | BlankNode | string): this {
+  add(value: RdfResource<D> | ResourceIdentifier | string): this {
     this.__resource._node.addOut(rdf.type, getNode(value))
     return this
   }
@@ -27,7 +27,7 @@ export class TypeCollection<D extends DatasetCore> implements Set<RdfResource<D>
     this.__resource._node.deleteOut(rdf.type)
   }
 
-  delete(value: RdfResource<D> | NamedNode | BlankNode | string): boolean {
+  delete(value: RdfResource<D> | ResourceIdentifier | string): boolean {
     const deletedQuads = this.__resource._node.dataset.match(this.__resource.id, rdf.type, getNode(value))
 
     for (const quad of deletedQuads) {
@@ -43,7 +43,7 @@ export class TypeCollection<D extends DatasetCore> implements Set<RdfResource<D>
     }
   }
 
-  has(value: RdfResource<D> | NamedNode | BlankNode | string): boolean {
+  has(value: RdfResource<D> | ResourceIdentifier | string): boolean {
     return this.__resource._node.has(rdf.type, getNode(value)).terms.length > 0
   }
 
