@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/tpluscode/rdfine/compare/v0.2.2...v0.2.3) (2020-01-17)
+
+
+### Features
+
+* export a resource identitifier term type ([d13a4cd](https://github.com/tpluscode/rdfine/commit/d13a4cd7ae4fc35b55ebf0dff3ec0384e0fe60bf))
+
 ### [0.2.2](https://github.com/tpluscode/rdfine/compare/v0.2.1...v0.2.2) (2020-01-17)
 
 ### [0.2.1](https://github.com/tpluscode/rdfine/compare/v0.2.0...v0.2.1) (2020-01-16)
