@@ -5,7 +5,7 @@ import { createProxy } from './proxy'
 export type AnyFunction<A = any> = (...input: any[]) => A
 export interface Constructor<A extends RdfResource = RdfResource> {
   new (...input: any[]): A
-  factory: ResourceFactory<any>
+  factory: ResourceFactory
 }
 interface ShouldApply {
   shouldApply: boolean | ((entity: RdfResource) => boolean)
@@ -13,7 +13,7 @@ interface ShouldApply {
 
 export type Mixin<T extends AnyFunction> = InstanceType<ReturnType<T>>
 
-export class ResourceFactory<T extends AnyFunction = any> {
+export class ResourceFactory<R extends RdfResource = RdfResource, T extends AnyFunction = any> {
   private __mixins: Set<Mixin<any>> = new Set()
   public BaseClass: Constructor
 
@@ -25,7 +25,7 @@ export class ResourceFactory<T extends AnyFunction = any> {
     this.__mixins.add(mixin)
   }
 
-  public createEntity<R extends RdfResource>(term: Clownface, typeAndMixins: Mixin<any>[] | [Constructor, ...Mixin<any>[]] = []): RdfResource & R {
+  public createEntity<S>(term: Clownface, typeAndMixins: Mixin<any>[] | [Constructor, ...Mixin<any>[]] = []): R & S {
     let BaseClass = this.BaseClass
     let explicitMixins: Mixin<any>[] = typeAndMixins
     if (typeAndMixins.length > 0) {
@@ -50,6 +50,6 @@ export class ResourceFactory<T extends AnyFunction = any> {
     const Type = mixins.reduce<Constructor>((Mixed: Constructor, Next: Mixin<T>) => Next(Mixed), BaseClass)
     ;(Type as any).__mixins = mixins
 
-    return createProxy(new Type(term)) as RdfResource & R
+    return createProxy(new Type(term)) as R & S
   }
 }
