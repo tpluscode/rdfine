@@ -146,7 +146,7 @@ The last line above will print triples equivalent to those below
           }
         ],
         [
-          "@babel/proposal-class-properties"
+          "@babel/plugin-proposal-class-properties"
         ]
       ]
     }
