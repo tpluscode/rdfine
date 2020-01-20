@@ -1,4 +1,5 @@
 import { Clownface } from 'clownface'
+import { Literal } from 'rdf-js'
 import { RdfResource } from './RdfResource'
 import { createProxy } from './proxy'
 
@@ -9,6 +10,10 @@ export interface Constructor<A extends RdfResource = RdfResource> {
 }
 interface ShouldApply {
   shouldApply: boolean | ((entity: RdfResource) => boolean)
+}
+
+export interface ResourceIndexer<T extends RdfResource = RdfResource> {
+  [ prop: string ]: T | Literal | Array<T | Literal>
 }
 
 export type Mixin<T extends AnyFunction> = InstanceType<ReturnType<T>>
@@ -25,7 +30,7 @@ export class ResourceFactory<R extends RdfResource = RdfResource, T extends AnyF
     this.__mixins.add(mixin)
   }
 
-  public createEntity<S>(term: Clownface, typeAndMixins: Mixin<any>[] | [Constructor, ...Mixin<any>[]] = []): R & S {
+  public createEntity<S>(term: Clownface, typeAndMixins: Mixin<any>[] | [Constructor, ...Mixin<any>[]] = []): R & S & ResourceIndexer<R> {
     let BaseClass = this.BaseClass
     let explicitMixins: Mixin<any>[] = typeAndMixins
     if (typeAndMixins.length > 0) {
@@ -50,6 +55,6 @@ export class ResourceFactory<R extends RdfResource = RdfResource, T extends AnyF
     const Type = mixins.reduce<Constructor>((Mixed: Constructor, Next: Mixin<T>) => Next(Mixed), BaseClass)
     ;(Type as any).__mixins = mixins
 
-    return createProxy(new Type(term)) as R & S
+    return createProxy(new Type(term)) as R & S & ResourceIndexer<R>
   }
 }
