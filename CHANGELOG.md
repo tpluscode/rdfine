@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.5](https://github.com/tpluscode/rdfine/compare/v0.2.4...v0.2.5) (2020-01-20)
+
+
+### Features
+
+* export indexer interface ([aea91a8](https://github.com/tpluscode/rdfine/commit/aea91a81028d9c43472daaf149dca91d9b0c2531))
+
 ### [0.2.4](https://github.com/tpluscode/rdfine/compare/v0.2.3...v0.2.4) (2020-01-20)
 
 
