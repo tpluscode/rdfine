@@ -81,6 +81,18 @@ describe('proxy', () => {
       // then
       expect(proxy.foo).toStrictEqual(5)
     })
+
+    it('returns undefined for missing property', () => {
+      // given
+      const resource = new RdfResourceImpl(node)
+      const proxy = createProxy(resource)
+
+      // when
+      const value = proxy['http://example.com/foo']
+
+      // then
+      expect(value).toBeUndefined()
+    })
   })
 
   describe('set', () => {
