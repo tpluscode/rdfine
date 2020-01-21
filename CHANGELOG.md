@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.6](https://github.com/tpluscode/rdfine/compare/v0.2.5...v0.2.6) (2020-01-21)
+
+
+### Features
+
+* setter proxy ([e2f11fb](https://github.com/tpluscode/rdfine/commit/e2f11fbb335d0a9ac6c84b92f7bf4b6165aea230))
+
 ### [0.2.5](https://github.com/tpluscode/rdfine/compare/v0.2.4...v0.2.5) (2020-01-20)
 
 
