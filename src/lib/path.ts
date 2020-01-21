@@ -1,5 +1,5 @@
 import { NamedNode } from 'rdf-js'
-import { namedNode } from 'rdf-data-model'
+import { namedNode } from '@rdfjs/data-model'
 
 export type PropRef = string | NamedNode
 

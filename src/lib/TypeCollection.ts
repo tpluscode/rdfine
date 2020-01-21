@@ -1,7 +1,7 @@
 import { DatasetCore } from 'rdf-js'
 import { RdfResource, ResourceIdentifier } from './RdfResource'
 import { rdf } from './vocabs'
-import { namedNode } from 'rdf-data-model'
+import { namedNode } from '@rdfjs/data-model'
 
 function getNode(value: RdfResource | ResourceIdentifier | string): ResourceIdentifier {
   if (typeof value === 'string') {

@@ -2,7 +2,7 @@ import { RdfResource } from '../../RdfResource'
 import { Literal, NamedNode } from 'rdf-js'
 import { fromLiteral } from '../../conversion'
 import { xsd } from '../../vocabs'
-import rdf from 'rdf-data-model'
+import rdf from '@rdfjs/data-model'
 import { AccessorOptions, ObjectOrFactory, propertyDecorator } from '../property'
 
 interface LiteralOptions<R extends RdfResource> {
