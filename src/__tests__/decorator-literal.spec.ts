@@ -3,7 +3,7 @@ import { property } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 import { Literal } from 'rdf-js'
-import { literal } from 'rdf-data-model'
+import { literal } from '@rdfjs/data-model'
 import rdfExt from 'rdf-ext'
 
 const { ex, schema } = vocabs

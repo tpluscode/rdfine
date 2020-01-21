@@ -4,7 +4,7 @@ import { namespace, property } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 import { Literal, NamedNode, Term } from 'rdf-js'
-import { literal, namedNode } from 'rdf-data-model'
+import { literal, namedNode } from '@rdfjs/data-model'
 import rdfExt from 'rdf-ext'
 
 const { ex, foaf, schema, rdf } = vocabs

@@ -1,5 +1,5 @@
 import { DatasetCore, Literal } from 'rdf-js'
-import rdf from 'rdf-data-model'
+import rdf from '@rdfjs/data-model'
 import { xsd } from './vocabs'
 import { SingleContextClownface } from 'clownface'
 import { Constructor, Mixin } from './ResourceFactory'
