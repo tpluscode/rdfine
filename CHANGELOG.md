@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.7](https://github.com/tpluscode/rdfine/compare/v0.2.6...v0.2.7) (2020-01-22)
+
+
+### Bug Fixes
+
+* add resource indexer to RdfResource._create ([f1deedb](https://github.com/tpluscode/rdfine/commit/f1deedba70d7ea008f7ba8a57fcb52331980e330))
+
 ### [0.2.6](https://github.com/tpluscode/rdfine/compare/v0.2.5...v0.2.6) (2020-01-21)
 
 
