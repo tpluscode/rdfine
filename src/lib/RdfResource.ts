@@ -1,6 +1,6 @@
 import { NamedNode, DatasetCore, BlankNode } from 'rdf-js'
 import cf, { SafeClownface, SingleContextClownface } from 'clownface'
-import { Constructor, Mixin, ResourceFactory } from './ResourceFactory'
+import { Constructor, Mixin, ResourceFactory, ResourceIndexer } from './ResourceFactory'
 import once from 'once'
 import { TypeCollection } from './TypeCollection'
 
@@ -13,7 +13,7 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly types: TypeCollection<D>
   readonly _node: SingleContextClownface<D, ResourceIdentifier>
   hasType (type: string | NamedNode): boolean
-  _create<T extends RdfResource>(term: SingleContextClownface<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T
+  _create<T extends RdfResource>(term: SingleContextClownface<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T & ResourceIndexer
 }
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
@@ -82,7 +82,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return this.id.equals(other.id)
   }
 
-  public _create<T extends RdfResource>(term: SingleContextClownface<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T {
+  public _create<T extends RdfResource>(term: SingleContextClownface<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T & ResourceIndexer {
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins)
   }
 }
