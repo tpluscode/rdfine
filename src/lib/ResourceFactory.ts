@@ -12,8 +12,10 @@ interface ShouldApply {
   shouldApply: boolean | ((entity: RdfResource) => boolean)
 }
 
+type MaybeArray<T> = T | T[]
+
 export interface ResourceIndexer<T extends RdfResource = RdfResource> {
-  [ prop: string ]: T | Literal | Array<T | Literal>
+  [ prop: string ]: null | undefined | MaybeArray<T> | MaybeArray<Literal> | MaybeArray<T & ResourceIndexer>
 }
 
 export type Mixin<T extends AnyFunction> = InstanceType<ReturnType<T>>

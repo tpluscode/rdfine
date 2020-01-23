@@ -1,9 +1,28 @@
+import { Literal, Term } from 'rdf-js'
 import { SingleContextClownface } from 'clownface'
-import { DatasetCore, Literal, Term } from 'rdf-js'
-import { RdfResource, ResourceIdentifier } from './RdfResource'
-import { fromResource } from './conversion'
+import { RdfResource } from './RdfResource'
+import * as rdfList from './rdf-list'
+import { ResourceIndexer } from './ResourceFactory'
 
-export function createProxy<T extends RdfResource>(resource: T): T & Record<string, any> {
+function nodeToValue(target: RdfResource) {
+  const fromTerm = (obj: SingleContextClownface): any => {
+    switch (obj.term.termType) {
+      case 'BlankNode':
+      case 'NamedNode':
+        if (rdfList.isList(obj)) {
+          return rdfList.enumerateList(target, obj, fromTerm)
+        }
+
+        return target._create(obj)
+      default:
+        return obj.term
+    }
+  }
+
+  return fromTerm
+}
+
+export function createProxy<T extends RdfResource>(resource: T): T & ResourceIndexer {
   return new Proxy(resource, {
     get(target, property) {
       if (property in target) {
@@ -16,16 +35,7 @@ export function createProxy<T extends RdfResource>(resource: T): T & Record<stri
         return undefined
       }
 
-      const results = objects
-        .map(obj => {
-          switch (obj.term.termType) {
-            case 'BlankNode':
-            case 'NamedNode':
-              return fromResource(target, obj as SingleContextClownface<DatasetCore, ResourceIdentifier>)
-            default:
-              return obj.term
-          }
-        })
+      const results = objects.map(nodeToValue(target))
 
       return results.length === 1 ? results[0] : results
     },
@@ -63,5 +73,5 @@ export function createProxy<T extends RdfResource>(resource: T): T & Record<stri
 
       return true
     },
-  })
+  }) as any
 }
