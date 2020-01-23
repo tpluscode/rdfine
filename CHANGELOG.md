@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.8](https://github.com/tpluscode/rdfine/compare/v0.2.7...v0.2.8) (2020-01-23)
+
+
+### Bug Fixes
+
+* proxy indexer also returns rdf lists as array ([9cd04bd](https://github.com/tpluscode/rdfine/commit/9cd04bd3fa3d02ad6d531dd80c8704c1caf30a52))
+
 ### [0.2.7](https://github.com/tpluscode/rdfine/compare/v0.2.6...v0.2.7) (2020-01-22)
 
 
