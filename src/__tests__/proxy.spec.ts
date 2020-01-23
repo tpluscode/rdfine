@@ -4,9 +4,9 @@ import namespace from '@rdfjs/namespace'
 import { literal } from '@rdfjs/data-model'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { createProxy } from '../lib/proxy'
-import RdfResourceImpl from '../lib/RdfResource'
+import RdfResourceImpl, { RdfResource } from '../lib/RdfResource'
 import { Literal, NamedNode } from 'rdf-js'
-import { property } from '..'
+import { property, ResourceIndexer } from '..'
 
 const ex = namespace('http://example.com/')
 
@@ -31,7 +31,7 @@ describe('proxy', () => {
       const proxy = createProxy(resource)
 
       // when
-      const value = proxy['http://example.com/Prop1']
+      const value = proxy['http://example.com/Prop1'] as RdfResource
 
       // then
       expect(value.id.value).toEqual('http://example.com/Proxied2')
@@ -43,7 +43,7 @@ describe('proxy', () => {
       const proxy = createProxy(resource)
 
       // when
-      const value = proxy['http://example.com/Prop1']['http://example.com/Prop2']
+      const value = (proxy['http://example.com/Prop1'] as ResourceIndexer)['http://example.com/Prop2']
 
       // then
       expect(value).toEqual(node.literal('foo', 'bar').term)
@@ -92,6 +92,40 @@ describe('proxy', () => {
 
       // then
       expect(value).toBeUndefined()
+    })
+
+    it('returns enumerated RDF list of literals', () => {
+      // given
+      const resource = new RdfResourceImpl(node)
+      const proxy = createProxy(resource)
+      node.addList(ex.listOfLiterals, ['a', 'B', 'cc'])
+
+      // when
+      const listItems = proxy['http://example.com/listOfLiterals'] as Literal[]
+
+      // then
+      expect(listItems.map(l => l.value)).toEqual(
+        expect.arrayContaining(['a', 'B', 'cc'])
+      )
+    })
+
+    it('returns enumerated RDF list of literals', () => {
+      // given
+      const resource = new RdfResourceImpl(node)
+      const proxy = createProxy(resource)
+      node.addList(ex.listOfUris, [
+        ex.jane,
+        ex.jane,
+        ex.john,
+      ])
+
+      // when
+      const listItems = proxy['http://example.com/listOfUris'] as RdfResource[]
+
+      // then
+      expect(listItems.map(l => l.id.value)).toEqual(
+        expect.arrayContaining([ex.jane.value, ex.jane.value, ex.john.value])
+      )
     })
   })
 

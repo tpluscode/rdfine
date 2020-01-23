@@ -1,5 +1,4 @@
 import { RdfResource, ResourceIdentifier } from '../../RdfResource'
-import { fromResource } from '../../conversion'
 import { AccessorOptions, ObjectOrFactory, propertyDecorator } from '../property'
 import { Constructor, Mixin } from '../../ResourceFactory'
 
@@ -12,7 +11,7 @@ function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptio
   return propertyDecorator<RdfResource, ResourceIdentifier>({
     ...options,
     fromTerm(this: RdfResource, obj) {
-      return fromResource(this, obj as any, options.as)
+      return this._create(obj, options.as)
     },
     toTerm(value: RdfResource) {
       return value.id
