@@ -15,7 +15,7 @@ interface ShouldApply {
 type MaybeArray<T> = T | T[]
 
 export interface ResourceIndexer<T extends RdfResource = RdfResource> {
-  [ prop: string ]: null | undefined | MaybeArray<T> | MaybeArray<Literal> | MaybeArray<T & ResourceIndexer>
+  [ prop: string ]: null | undefined | MaybeArray<T | Literal | T & ResourceIndexer>
 }
 
 export type Mixin<T extends AnyFunction> = InstanceType<ReturnType<T>>
