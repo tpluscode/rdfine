@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.9](https://github.com/tpluscode/rdfine/compare/v0.2.8...v0.2.9) (2020-01-26)
+
+
+### Bug Fixes
+
+* revisit the type declaration for ResourceIndexer ([34d57ca](https://github.com/tpluscode/rdfine/commit/34d57cae253923356a48ced40b9c9b7f2312df53))
+
 ### [0.2.8](https://github.com/tpluscode/rdfine/compare/v0.2.7...v0.2.8) (2020-01-23)
 
 
