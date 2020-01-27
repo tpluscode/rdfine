@@ -21,7 +21,7 @@ function getNode(r: RdfResource, path: NamedNode[]): SafeClownface {
   }, r._node)
 }
 
-export type ObjectOrFactory<R, T> = T | ((self: R) => T)
+export type ObjectOrFactory<R, T> = T | T[] | ((self: R) => T | T[])
 
 interface PropertyDecoratorOptions<T, N> extends AccessorOptions {
   fromTerm: (this: RdfResource, obj: SingleContextClownface) => unknown

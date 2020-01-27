@@ -256,6 +256,90 @@ describe('decorator', () => {
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
+      it('array can be initialized', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        class Resource extends RdfResource {
+          @property.literal({ path: foaf.name, values: 'array', initial: 'bar' })
+          foo!: string
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.foo).toEqual(
+          expect.arrayContaining(['bar'])
+        )
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('array can be initialized with multiple values', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        class Resource extends RdfResource {
+          @property.literal({ path: foaf.name, values: 'array', initial: ['foo', 'bar'] })
+          foo!: string
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.foo).toEqual(
+          expect.arrayContaining(['foo', 'bar'])
+        )
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('rdf list can be initialized', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        class Resource extends RdfResource {
+          @property.literal({ path: foaf.name, values: 'list', initial: 'bar' })
+          foo!: string
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.foo).toEqual(
+          expect.arrayContaining(['bar'])
+        )
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('rdf list can be initialized with multiple values', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        class Resource extends RdfResource {
+          @property.literal({ path: foaf.name, values: 'list', initial: ['foo', 'bar'] })
+          foo!: string
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.foo).toEqual(
+          expect.arrayContaining(['foo', 'bar'])
+        )
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
       it('returns rdf list array', async () => {
         // given
         const dataset = await parse(`
