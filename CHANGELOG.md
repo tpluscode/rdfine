@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.10](https://github.com/tpluscode/rdfine/compare/v0.2.9...v0.2.10) (2020-01-27)
+
+
+### Bug Fixes
+
+* initial property value does not work with array properties ([c400565](https://github.com/tpluscode/rdfine/commit/c400565d61d99a4daf296a24fc9bbe5b645e95eb))
+
 ### [0.2.9](https://github.com/tpluscode/rdfine/compare/v0.2.8...v0.2.9) (2020-01-26)
 
 
