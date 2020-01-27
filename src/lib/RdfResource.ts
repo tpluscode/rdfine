@@ -2,7 +2,7 @@ import { NamedNode, DatasetCore, BlankNode } from 'rdf-js'
 import cf, { SafeClownface, SingleContextClownface } from 'clownface'
 import { Constructor, Mixin, ResourceFactory, ResourceIndexer } from './ResourceFactory'
 import once from 'once'
-import { TypeCollection } from './TypeCollection'
+import TypeCollectionCtor, { TypeCollection } from './TypeCollection'
 
 type ObjectOrFactory<T> = T | ((self: RdfResource) => T)
 
@@ -40,7 +40,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       this._node = cf(graph)
     }
 
-    this.types = new TypeCollection(this)
+    this.types = new TypeCollectionCtor(this)
 
     this.__initializeProperties = once(() => {
       const self = this as any
