@@ -46,7 +46,11 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       const self = this as any
       const defaults: Map<string, ObjectOrFactory<any>> = self.constructor.__defaults || new Map<string, ObjectOrFactory<any>>()
       defaults.forEach((value, key) => {
-        if (typeof self[key] !== 'undefined') {
+        const currentValue = self[key]
+        const valueIsEmptyArray = Array.isArray(currentValue) && currentValue.length === 0
+        const valueIsUndefined = typeof currentValue === 'undefined'
+
+        if (!(valueIsEmptyArray || valueIsUndefined)) {
           return
         }
 
