@@ -15,7 +15,13 @@ function getNode(value: RdfResource | ResourceIdentifier | string): ResourceIden
   return value.id
 }
 
-export class TypeCollection<D extends DatasetCore> implements Set<RdfResource<D>> {
+export interface TypeCollection<D extends DatasetCore> extends Set<RdfResource<D>> {
+  add(value: RdfResource<D> | ResourceIdentifier | string): this
+  delete(value: RdfResource<D> | ResourceIdentifier | string): boolean
+  has(value: RdfResource<D> | ResourceIdentifier | string): boolean
+}
+
+export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
   private readonly __resource: RdfResource<D>
 
   add(value: RdfResource<D> | ResourceIdentifier | string): this {
