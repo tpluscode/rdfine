@@ -21,18 +21,20 @@ export interface ResourceIndexer<T extends RdfResource = RdfResource> {
 export type Mixin<T extends AnyFunction> = InstanceType<ReturnType<T>>
 
 export class ResourceFactory<R extends RdfResource = RdfResource, T extends AnyFunction = any> {
-  private __mixins: Set<Mixin<any>> = new Set()
+  private __mixins: Set<Mixin<T>> = new Set()
   public BaseClass: Constructor
 
   public constructor(baseClass: Constructor) {
     this.BaseClass = baseClass
   }
 
-  public addMixin(mixin: Mixin<T> & ShouldApply): void {
-    this.__mixins.add(mixin)
+  public addMixin(...mixins: (Mixin<T> & ShouldApply)[]): void {
+    mixins.forEach(mixin => {
+      this.__mixins.add(mixin)
+    })
   }
 
-  public createEntity<S>(term: Clownface, typeAndMixins: Mixin<any>[] | [Constructor, ...Mixin<any>[]] = []): R & S & ResourceIndexer<R> {
+  public createEntity<S>(term: Clownface, typeAndMixins: Mixin<T>[] | [Constructor, ...Mixin<T>[]] = []): R & S & ResourceIndexer<R> {
     let BaseClass = this.BaseClass
     let explicitMixins: Mixin<any>[] = typeAndMixins
     if (typeAndMixins.length > 0) {
