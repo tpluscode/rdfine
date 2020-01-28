@@ -1,14 +1,18 @@
+import { DatasetCore, Term } from 'rdf-js'
+import { SingleContextClownface } from 'clownface'
 import { RdfResource, ResourceIdentifier } from '../../RdfResource'
 import { AccessorOptions, ObjectOrFactory, propertyDecorator } from '../property'
 import { Constructor, Mixin } from '../../ResourceFactory'
 
+type InitialValue = SingleContextClownface<DatasetCore, ResourceIdentifier> | RdfResource
+
 interface ResourceOptions<R extends RdfResource> {
   as?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]
-  initial?: ObjectOrFactory<R, ResourceIdentifier | RdfResource>
+  initial?: ObjectOrFactory<R, InitialValue | RdfResource>
 }
 
 function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptions & ResourceOptions<R> = {}) {
-  return propertyDecorator<RdfResource, ResourceIdentifier>({
+  return propertyDecorator<RdfResource, InitialValue>({
     ...options,
     fromTerm(this: RdfResource, obj) {
       return this._create(obj, options.as)
@@ -18,8 +22,16 @@ function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptio
     },
     valueTypeName: 'RdfResource instance',
     assertSetValue: (value) => {
+      let term: Term | null = null
+
       if ('termType' in value) {
-        return value.termType === 'NamedNode' || value.termType === 'BlankNode'
+        term = value
+      } else if ('term' in value) {
+        term = value.term
+      }
+
+      if (term) {
+        return term.termType === 'NamedNode' || term.termType === 'BlankNode'
       }
 
       return true
