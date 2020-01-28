@@ -1,9 +1,9 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import cf, { SingleContextClownface } from 'clownface'
+import cf from 'clownface'
 import { property, namespace } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
-import { BlankNode, DatasetCore, NamedNode, Term } from 'rdf-js'
+import { NamedNode, Term } from 'rdf-js'
 import rdfExt from 'rdf-ext'
 
 const { ex, foaf, schema, rdf } = vocabs
@@ -261,7 +261,7 @@ describe('decorator', () => {
           @property.resource({
             path: foaf.friend,
             initial: (self: Resource) => {
-              const name = new NameResource(self._node.blankNode() as SingleContextClownface<DatasetCore, BlankNode>)
+              const name = new NameResource(self._node.blankNode())
               name.first = 'John'
               name.last = 'Doe'
               name.person = self
@@ -284,6 +284,30 @@ describe('decorator', () => {
         expect(name.first).toEqual('John')
         expect(name.last).toEqual('Doe')
         expect(name.person.id.value).toEqual(instance.id.value)
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('set object returned by factory function as clownface', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        class Resource extends RdfResource {
+          @property.resource({
+            path: foaf.friend,
+            initial: (self: Resource) => {
+              return self._node.namedNode('http://example.com/friend')
+            },
+          })
+          friend!: RdfResource
+        }
+
+        // when
+        // eslint-disable-next-line no-new
+        new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
     })

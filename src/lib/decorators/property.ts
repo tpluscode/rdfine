@@ -22,11 +22,12 @@ function getNode(r: RdfResource, path: NamedNode[]): SafeClownface {
 }
 
 export type ObjectOrFactory<R, T> = T | T[] | ((self: R) => T | T[])
+type ArrayOrSingle<T> = T | T[]
 
 interface PropertyDecoratorOptions<T, N> extends AccessorOptions {
   fromTerm: (this: RdfResource, obj: SingleContextClownface) => unknown
   toTerm: (value: T) => Term
-  assertSetValue: (value: T | Term) => boolean
+  assertSetValue: (value: T | Term | SingleContextClownface) => boolean
   valueTypeName: string
   initial?: ObjectOrFactory<any, T | N>
 }
@@ -75,7 +76,7 @@ function createProperty<T, N>(proto: any, name: string, options: PropertyDecorat
       return objects[0]
     },
 
-    set(this: RdfResource, value: T | Term | Array<T | Term>) {
+    set(this: RdfResource, value: ArrayOrSingle<T | Term | SingleContextClownface>) {
       if (values === 'single' && Array.isArray(value)) {
         throw new Error(`${name}: Cannot set array to a non-array property`)
       }
@@ -97,7 +98,7 @@ function createProperty<T, N>(proto: any, name: string, options: PropertyDecorat
         return
       }
 
-      let valueArray: Array<T | Term>
+      let valueArray: Array<T | Term | SingleContextClownface>
       if (Array.isArray(value)) {
         valueArray = value
       } else {
@@ -112,6 +113,10 @@ function createProperty<T, N>(proto: any, name: string, options: PropertyDecorat
 
         if (typeof value === 'object' && 'termType' in value) {
           return value
+        }
+
+        if (value && typeof value === 'object' && 'term' in value) {
+          return value.term
         }
 
         return toTerm(value)

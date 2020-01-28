@@ -1,5 +1,6 @@
+import { SingleContextClownface } from 'clownface'
 import { RdfResource } from '../../RdfResource'
-import { Literal, NamedNode } from 'rdf-js'
+import { Literal, NamedNode, Term } from 'rdf-js'
 import { fromLiteral } from '../../conversion'
 import { xsd } from '../../vocabs'
 import rdf from '@rdfjs/data-model'
@@ -15,7 +16,7 @@ const trueLiteral: Literal = rdf.literal('true', xsd.boolean)
 export default function<R extends RdfResource> (options: AccessorOptions & LiteralOptions<R> = {}) {
   const type = options.type || String
 
-  return propertyDecorator<unknown, Literal>({
+  return propertyDecorator<Term | SingleContextClownface | string | number | boolean | bigint, Literal>({
     ...options,
     fromTerm(obj) {
       return fromLiteral(type, obj)
@@ -34,8 +35,14 @@ export default function<R extends RdfResource> (options: AccessorOptions & Liter
       return rdf.literal(value.toString(), datatype)
     },
     valueTypeName: type.name,
-    assertSetValue: (value: any) => {
-      return typeof value !== 'object' || value.termType === 'Literal'
+    assertSetValue: (value: Term | SingleContextClownface | string | number | boolean | bigint) => {
+      if (typeof value === 'object') {
+        const term = 'term' in value ? value.term : value
+
+        return term.termType === 'Literal'
+      }
+
+      return true
     },
   })
 }
