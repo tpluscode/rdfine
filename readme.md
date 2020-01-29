@@ -14,7 +14,7 @@ It is also possible to share the JS-RDF bindings between projects as npm package
 ### Native
 
 While plain JS objects are the preferred way to access the graphs, they do not completely
-replace the underlying [RDF/JS dataset][dataset]. Both RDFin objects and the dataset can
+replace the underlying [RDF/JS dataset][dataset]. Both RDFine objects and the dataset can
 be modified simultaneously, with changes to one immediately reflected in the other.
 
 ### Effective
