@@ -32,7 +32,7 @@ integration with [@rdfjs][rdfjs] libraries.
 You have RDF triples in an RDF/JS Dataset object
 
 ```turtle
-@prefix ex: <http://rdfine.ggg> .
+@prefix ex: <http://rdfine.ggg/> .
 @prefix schema: <http://schema.org/> .
 
 ex:john a schema:Person ; 
