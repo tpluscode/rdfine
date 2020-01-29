@@ -2,10 +2,76 @@
 ### **RDF**/JS **i**diomatic, **n**ative, **e**njoyable
 ### [![NPM version](https://img.shields.io/npm/v/@tpluscode/rdfine.svg?style=flat-square)](https://www.npmjs.com/package/@tpluscode/rdfine) [![Build](https://travis-ci.org/tpluscode/rdfine.svg?branch=master)](https://travis-ci.org/tpluscode/rdfine) [![codecov.io](https://codecov.io/github/tpluscode/rdfine/coverage.svg?branch=master)](https://codecov.io/github/tpluscode/rdfine?branch=master)
 
+## About
+
+### Idiomatic
+
+RDFine greatly simplifies the manipulation of data in RDF graph ([RDF/JS datasets][dataset])
+by wrapping low-level node handling of triples in plain JavaScript objects.
+
+It is also possible to share the JS-RDF bindings between projects as npm packages.
+
+### Native
+
+While plain JS objects are the preferred way to access the graphs, they do not completely
+replace the underlying [RDF/JS dataset][dataset]. Both RDFin objects and the dataset can
+be modified simultaneously, with changes to one immediately reflected in the other.
+
+### Effective
+
+RDFine makes it super easy to bootstrap a triple-backed project without the need
+to drink up the RDF Kool-Aid. Novices will use the idiomatic JS interface to get
+the job done quickly, while power users still can take advantage of seamless
+integration with [@rdfjs][rdfjs] libraries.
+
+[dataset]: https://rdf.js.org/dataset-spec/
+[rdfjs]: https://www.npmjs.com/search?q=rdfjs
+
+## TL;DR; overview
+
+You have RDF triples in an RDF/JS Dataset object
+
+```turtle
+@prefix ex: <http://rdfine.ggg> .
+@prefix schema: <http://schema.org/> .
+
+ex:john a schema:Person ; 
+    schema:name "John Doe" ;
+    schema:spouse ex:jane ;
+    schema:nationality [
+        schema:name "USA"
+    ] .
+```
+
+You want to create a JS object model to access that data
+
+```typescript
+import { namedNode } from '@rdfjs/data-model'
+import { RdfResourceImpl } from '@tpluscode/rdfine'
+import { loadData } from './data/person'
+import { Person, PersonMixin } from './model/Person'
+
+// make rdfine "aware" of object model for schema:Person
+RdfResourceImpl.factory.addMixin(PersonMixin)
+
+// create entity through the factory
+const john = RdfResourceImpl.factory.createEntity<Person>({
+  dataset: await loadData(),
+  term: namedNode('http://rdfine.ggg/john'),
+})
+
+// modify the dataset through JS objects
+john.nationality = "United States of America"
+john.spouse.name = "Jane Doe"
+
+// get the modified dataset, always in sync
+const dataset = john._node.dataset
+```
+
 ## Installation
 
 ```shell script
-npm i @tplusode/rdfine
+npm i @tpluscode/rdfine
 ```
 
 Also peer `@types` dependencies:
