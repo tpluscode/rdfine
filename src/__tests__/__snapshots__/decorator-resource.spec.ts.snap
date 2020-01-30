@@ -13,6 +13,20 @@ exports[`decorator resource initial set object returned by factory function as c
 "
 `;
 
+exports[`decorator resource over multiple graphs constructed from clownface graph setter assert link quad in subject's graph 1`] = `
+"<http://example.com/John> <http://schema.org/name> \\"John\\" <http://example.com/John> .
+<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Will> <http://example.com/John> .
+<http://example.com/Will> <http://schema.org/name> \\"William\\" <http://example.com/Will> .
+"
+`;
+
+exports[`decorator resource over multiple graphs constructed from plain object setter assert link quad in subject's graph 1`] = `
+"<http://example.com/John> <http://schema.org/name> \\"John\\" <http://example.com/John> .
+<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Will> <http://example.com/John> .
+<http://example.com/Will> <http://schema.org/name> \\"William\\" <http://example.com/Will> .
+"
+`;
+
 exports[`decorator resource setter accepts raw blank node term 1`] = `
 "<http://example.com/lois> <http://schema.org/spouse> _:c14n0 .
 <http://example.com/lois> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .

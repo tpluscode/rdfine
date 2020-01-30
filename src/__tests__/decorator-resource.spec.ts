@@ -453,6 +453,28 @@ describe('decorator', () => {
             expect(instance.allAboutAllFriends).toHaveLength(2)
           })
         })
+
+        describe('setter', () => {
+          it('assert link quad in subject\'s graph', async () => {
+            // given
+            const dataset = await parse(`
+              @prefix ex: <${prefixes.ex}> .
+              @prefix foaf: <${prefixes.foaf}> .
+              @prefix schema: <${prefixes.schema}> .
+              
+              ex:John schema:name "John" ex:John .
+              
+              ex:Will schema:name "William" ex:Will .
+            `)
+
+            // when
+            const john = newResource(dataset, ex.John, ex.John)
+            john.friend = newResource(dataset, ex.Will, ex.Will)
+
+            // then
+            expect(dataset.toCanonical()).toMatchSnapshot()
+          })
+        })
       }
 
       describe('constructed from plain object', () => {
