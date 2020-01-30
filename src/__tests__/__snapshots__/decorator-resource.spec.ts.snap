@@ -13,6 +13,13 @@ exports[`decorator resource initial set object returned by factory function as c
 "
 `;
 
+exports[`decorator resource setter accepts blank node context 1`] = `
+"<http://example.com/jane> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
+<http://example.com/john> <http://schema.org/spouse> _:c14n0 .
+<http://example.com/john> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
+"
+`;
+
 exports[`decorator resource setter accepts raw blank node term 1`] = `
 "<http://example.com/lois> <http://schema.org/spouse> _:c14n0 .
 <http://example.com/lois> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
