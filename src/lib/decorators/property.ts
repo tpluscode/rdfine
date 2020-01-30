@@ -243,7 +243,7 @@ interface TermOptions<R extends RdfResource> {
 }
 
 export function property<R extends RdfResource>(options: AccessorOptions & TermOptions<R> = {}) {
-  return propertyDecorator({
+  return propertyDecorator<Term, Term>({
     ...options,
     namedGraphs: {
       crossBoundaries: false,

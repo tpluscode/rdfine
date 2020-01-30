@@ -16,20 +16,26 @@ const trueLiteral: Literal = rdf.literal('true', xsd.boolean)
 export default function<R extends RdfResource> (options: AccessorOptions & LiteralOptions<R> = {}) {
   const type = options.type || String
 
-  return propertyDecorator<Term | SingleContextClownface | string | number | boolean | bigint, Literal>({
+  return propertyDecorator<string | number | boolean | bigint, Literal>({
     ...options,
     fromTerm(obj) {
       return fromLiteral(type, obj)
     },
-    toTerm(value: any) {
+    toTerm(value) {
       let datatype: NamedNode | undefined
-      if (type === Boolean) {
-        datatype = trueLiteral.datatype
-      }
-      if (type === Number && Number.isInteger(value)) {
-        datatype = xsd.integer
-      } else if (type === Number) {
-        datatype = xsd.float
+      switch (typeof value) {
+        case 'boolean':
+          datatype = trueLiteral.datatype
+          break
+        case 'bigint':
+          datatype = xsd.long
+          break
+        case 'number':
+          if (Number.isInteger(value)) {
+            datatype = xsd.integer
+          } else {
+            datatype = xsd.float
+          }
       }
 
       return rdf.literal(value.toString(), datatype)
