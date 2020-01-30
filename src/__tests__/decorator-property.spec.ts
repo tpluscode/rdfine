@@ -3,9 +3,10 @@ import cf from 'clownface'
 import { namespace, property } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
-import { Literal, NamedNode, Term } from 'rdf-js'
+import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
 import { literal, namedNode } from '@rdfjs/data-model'
 import rdfExt from 'rdf-ext'
+import DatasetExt from 'rdf-ext/lib/Dataset'
 
 const { ex, foaf, schema, rdf } = vocabs
 
@@ -648,6 +649,173 @@ describe('decorator', () => {
         // then
         expect(instance.child.value).toEqual('http://example.com/res/child')
         expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+    })
+
+    describe('over multiple graphs', () => {
+      class Resource<D extends DatasetCore> extends RdfResource<D> {
+        @property({ path: foaf.knows })
+        friend!: Term
+
+        @property({
+          path: foaf.knows,
+          namedGraphs: {
+            crossBoundaries: true,
+          },
+        })
+        allFriendsAcross!: Term[]
+
+        @property(({
+          path: foaf.knows,
+          namedGraphs: {
+            combineSubjects: true,
+          },
+        }))
+        allKnownFriends!: Term[]
+      }
+
+      function namedGraphTests(newResource: (dataset: DatasetExt, term: NamedNode, graph?: NamedNode | DefaultGraph) => Resource<DatasetExt>) {
+        describe('getter', () => {
+          it('returns value from same graph', async () => {
+            // given
+            const dataset = await parse(`
+              @prefix ex: <${prefixes.ex}> .
+              @prefix foaf: <${prefixes.foaf}> .
+              
+              ex:John foaf:knows ex:Will ex:John .
+              ex:John foaf:knows ex:Sindy ex:Sindy .
+              ex:John foaf:knows ex:Brad .
+            `)
+
+            // when
+            const instance = newResource(dataset, ex.John, ex.John)
+
+            // then
+            expect(instance.allKnownFriends).toEqual(
+              expect.arrayContaining([ex.Will, ex.Sindy, ex.Brad])
+            )
+          })
+
+          it('returns value from default graph if unspecified', async () => {
+            // given
+            const dataset = await parse(`
+              @prefix ex: <${prefixes.ex}> .
+              @prefix foaf: <${prefixes.foaf}> .
+              
+              ex:John foaf:knows ex:Will ex:John .
+              ex:John foaf:knows ex:Sindy ex:Sindy .
+              ex:John foaf:knows ex:Brad .
+            `)
+
+            // when
+            const instance = newResource(dataset, ex.John)
+
+            // then
+            expect(instance.friend.value).toEqual(ex.Brad.value)
+          })
+
+          it('ignores crossingBoundaries option', async () => {
+            // given
+            const dataset = await parse(`
+              @prefix ex: <${prefixes.ex}> .
+              @prefix foaf: <${prefixes.foaf}> .
+              
+              ex:John foaf:knows ex:Will ex:John .
+              ex:John foaf:knows ex:Will ex:Sindy .
+              ex:John foaf:knows ex:Will .
+            `)
+
+            // when
+            const instance = newResource(dataset, ex.John, ex.John)
+
+            // then
+            expect(instance.allFriendsAcross).toHaveLength(1)
+          })
+
+          it('de-duplicates terms', async () => {
+            // given
+            const dataset = await parse(`
+              @prefix ex: <${prefixes.ex}> .
+              @prefix foaf: <${prefixes.foaf}> .
+              
+              ex:John foaf:knows ex:Will ex:John .
+              ex:John foaf:knows ex:Will ex:Sindy .
+              ex:John foaf:knows ex:Will .
+            `)
+
+            // when
+            const instance = newResource(dataset, ex.John, ex.John)
+
+            // then
+            expect(instance.allKnownFriends).toHaveLength(1)
+          })
+        })
+
+        describe('setter', () => {
+          it('sets value to same graph', async () => {
+            // given
+            const dataset = await parse(`
+              @prefix ex: <${prefixes.ex}> .
+              @prefix foaf: <${prefixes.foaf}> .
+              
+              ex:John foaf:knows ex:Will ex:John .
+              ex:John foaf:knows ex:Sindy ex:Sindy .
+              ex:John foaf:knows ex:Brad .
+            `)
+            const instance = newResource(dataset, ex.John, ex.John)
+
+            // when
+            instance.friend = ex.Holly
+
+            // then
+            expect(instance._unionGraph.dataset.toCanonical()).toMatchSnapshot()
+          })
+
+          it('sets value to default graph if unspecified', async () => {
+            // given
+            const dataset = await parse(`
+              @prefix ex: <${prefixes.ex}> .
+              @prefix foaf: <${prefixes.foaf}> .
+              
+              ex:John foaf:knows ex:Will ex:John .
+              ex:John foaf:knows ex:Sindy ex:Sindy .
+              ex:John foaf:knows ex:Brad .
+            `)
+            const instance = newResource(dataset, ex.John)
+
+            // when
+            instance.friend = ex.Holly
+
+            // then
+            expect(instance._unionGraph.dataset.toCanonical()).toMatchSnapshot()
+          })
+        })
+
+        describe('initial', () => {
+          it('sets initial values in self graph', () => {
+            // given
+            const dataset = rdfExt.dataset()
+            const instance = newResource(dataset, ex.John, ex.John)
+
+            // when
+            instance.friend = ex.Holly
+
+            // then
+            expect(instance._unionGraph.dataset.toCanonical()).toMatchSnapshot()
+          })
+        })
+      }
+
+      describe('constructed from plain object', () => {
+        namedGraphTests((dataset, term, graph,) => {
+          return new Resource({ dataset, term, graph })
+        })
+      })
+
+      describe('constructed from clownface graph', () => {
+        namedGraphTests((dataset, term, graph,) => {
+          return new Resource(cf({ dataset, term, graph }))
+        })
       })
     })
   })

@@ -42,6 +42,44 @@ exports[`decorator term initial sets initial value from node 1`] = `
 "
 `;
 
+exports[`decorator term over multiple graphs constructed from clownface graph initial sets initial values in self graph 1`] = `
+"<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Holly> <http://example.com/John> .
+"
+`;
+
+exports[`decorator term over multiple graphs constructed from clownface graph setter sets value to default graph if unspecified 1`] = `
+"<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Holly> .
+<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Sindy> <http://example.com/Sindy> .
+<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Will> <http://example.com/John> .
+"
+`;
+
+exports[`decorator term over multiple graphs constructed from clownface graph setter sets value to same graph 1`] = `
+"<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Brad> .
+<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Holly> <http://example.com/John> .
+<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Sindy> <http://example.com/Sindy> .
+"
+`;
+
+exports[`decorator term over multiple graphs constructed from plain object initial sets initial values in self graph 1`] = `
+"<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Holly> <http://example.com/John> .
+"
+`;
+
+exports[`decorator term over multiple graphs constructed from plain object setter sets value to default graph if unspecified 1`] = `
+"<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Holly> .
+<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Sindy> <http://example.com/Sindy> .
+<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Will> <http://example.com/John> .
+"
+`;
+
+exports[`decorator term over multiple graphs constructed from plain object setter sets value to same graph 1`] = `
+"<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Brad> .
+<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Holly> <http://example.com/John> .
+<http://example.com/John> <http://xmlns.com/foaf/0.1/knows> <http://example.com/Sindy> <http://example.com/Sindy> .
+"
+`;
+
 exports[`decorator term setter can replace literal with blank 1`] = `
 "<http://example.com/res> <http://xmlns.com/foaf/0.1/name> _:c14n0 .
 _:c14n0 <http://example.com/first> \\"John\\" .

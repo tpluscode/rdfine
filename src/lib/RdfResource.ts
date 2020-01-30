@@ -1,4 +1,6 @@
-import { NamedNode, DatasetCore, BlankNode } from 'rdf-js'
+/* eslint-disable camelcase,@typescript-eslint/camelcase */
+import { defaultGraph } from '@rdfjs/data-model'
+import { NamedNode, DatasetCore, BlankNode, DefaultGraph, Quad_Graph } from 'rdf-js'
 import cf, { SafeClownface, SingleContextClownface } from 'clownface'
 import { Constructor, Mixin, ResourceFactory, ResourceIndexer } from './ResourceFactory'
 import once from 'once'
@@ -11,19 +13,24 @@ export type ResourceIdentifier = BlankNode | NamedNode
 export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly id: ResourceIdentifier
   readonly types: TypeCollection<D>
-  readonly _node: SingleContextClownface<D, ResourceIdentifier>
+  readonly _selfGraph: SingleContextClownface<D, ResourceIdentifier>
+  readonly _unionGraph: SingleContextClownface<D, ResourceIdentifier>
+  readonly _graphId: Quad_Graph
   hasType (type: string | NamedNode): boolean
   _create<T extends RdfResource>(term: SingleContextClownface<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T & ResourceIndexer
 }
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
-  public readonly _node: SingleContextClownface<D, ResourceIdentifier>
-  private readonly __initialized: boolean = false
+  public readonly _selfGraph: SingleContextClownface<D, ResourceIdentifier>
+  public readonly _unionGraph: SingleContextClownface<D, ResourceIdentifier>
+  public readonly __initialized: boolean = false
   private readonly __initializeProperties: (() => boolean)
   public static __ns?: any
   public static factory: ResourceFactory = new ResourceFactory(RdfResourceImpl)
 
-  public constructor(graph: SafeClownface<D> | { dataset: D; term: ResourceIdentifier; graph?: NamedNode }) {
+  public constructor(graph: SafeClownface<D> | { dataset: D; term: ResourceIdentifier; graph?: NamedNode | DefaultGraph }) {
+    let selfGraph: SingleContextClownface<D, ResourceIdentifier>
+
     if ('_context' in graph) {
       const [{ term }, ...rest] = graph.toArray()
 
@@ -35,9 +42,17 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
         throw new Error(`RdfResource cannot be initialized from a ${term.termType} node`)
       }
 
-      this._node = graph.node(term)
+      selfGraph = graph.node(term)
     } else {
-      this._node = cf(graph)
+      selfGraph = cf(graph)
+    }
+
+    if (selfGraph._context[0].graph) {
+      this._selfGraph = selfGraph
+      this._unionGraph = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: undefined })
+    } else {
+      this._selfGraph = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: defaultGraph() })
+      this._unionGraph = cf({ dataset: selfGraph.dataset, term: selfGraph.term })
     }
 
     this.types = new TypeCollectionCtor(this)
@@ -69,7 +84,11 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   }
 
   public get id(): ResourceIdentifier {
-    return this._node.term
+    return this._selfGraph.term
+  }
+
+  public get _graphId(): Quad_Graph {
+    return this._selfGraph._context[0].graph!
   }
 
   public readonly types: TypeCollection<D>

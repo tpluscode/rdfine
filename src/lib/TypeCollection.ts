@@ -25,19 +25,19 @@ export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
   private readonly __resource: RdfResource<D>
 
   add(value: RdfResource<D> | ResourceIdentifier | string): this {
-    this.__resource._node.addOut(rdf.type, getNode(value))
+    this.__resource._selfGraph.addOut(rdf.type, getNode(value))
     return this
   }
 
   clear(): void {
-    this.__resource._node.deleteOut(rdf.type)
+    this.__resource._selfGraph.deleteOut(rdf.type)
   }
 
   delete(value: RdfResource<D> | ResourceIdentifier | string): boolean {
-    const deletedQuads = this.__resource._node.dataset.match(this.__resource.id, rdf.type, getNode(value))
+    const deletedQuads = this.__resource._selfGraph.dataset.match(this.__resource.id, rdf.type, getNode(value))
 
     for (const quad of deletedQuads) {
-      this.__resource._node.dataset.delete(quad)
+      this.__resource._selfGraph.dataset.delete(quad)
     }
 
     return deletedQuads.size > 0
@@ -50,11 +50,11 @@ export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
   }
 
   has(value: RdfResource<D> | ResourceIdentifier | string): boolean {
-    return this.__resource._node.has(rdf.type, getNode(value)).terms.length > 0
+    return this.__resource._selfGraph.has(rdf.type, getNode(value)).terms.length > 0
   }
 
   get size(): number {
-    return this.__resource._node.out(rdf.type).terms.length
+    return this.__resource._selfGraph.out(rdf.type).terms.length
   }
 
   [Symbol.iterator](): IterableIterator<RdfResource<D>> {
@@ -80,7 +80,7 @@ export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
   }
 
   private get __values() {
-    return this.__resource._node
+    return this.__resource._selfGraph
       .out(rdf.type)
       .map(type => this.__resource._create<RdfResource<D>>(type))
   }

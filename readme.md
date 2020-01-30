@@ -65,7 +65,7 @@ john.nationality = "United States of America"
 john.spouse.name = "Jane Doe"
 
 // get the modified dataset, always in sync
-const dataset = john._node.dataset
+const dataset = john._selfGraph.dataset
 ```
 
 ## Installation
@@ -124,10 +124,10 @@ export function PersonMixin<Base extends Constructor>(base: Base) {
     })
     label: Term
     
-    // use _node property to access raw triples
+    // use _selfGraph property to access raw triples
     // by traversing the graph with https://github.com/rdf-ext/clownface
     get hasOccupation(): boolean {
-      return this._node
+      return this._selfGraph
         .out(namedNode('http://schema.org/hasOccupation'))
         .terms.length > 0
     }
@@ -181,7 +181,7 @@ person.friends = [
   namedNode('http://example.com/gh/ktk')
 ] as any
 
-console.log(person._node.dataset.toString())
+console.log(person._selfGraph.dataset.toString())
 ```
 
 The last line above will print triples equivalent to those below
