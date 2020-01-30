@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.12](https://github.com/tpluscode/rdfine/compare/v0.2.11...v0.2.12) (2020-01-30)
+
+
+### Features
+
+* ability to add multiple mixins at once ([9cb5595](https://github.com/tpluscode/rdfine/commit/9cb5595a045e5354115d7ac5e0153ae6ac84b116))
+* allow setting initial value as clownface node ([82ca518](https://github.com/tpluscode/rdfine/commit/82ca518892fa4a290b36c7cd7ca14845167bdfd2))
+
 ### [0.2.11](https://github.com/tpluscode/rdfine/compare/v0.2.10...v0.2.11) (2020-01-27)
 
 
