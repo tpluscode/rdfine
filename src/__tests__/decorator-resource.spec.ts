@@ -7,7 +7,6 @@ import { defaultGraph, literal } from '@rdfjs/data-model'
 import { property, namespace } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
-import arrayContaining = jasmine.arrayContaining;
 
 const { ex, foaf, schema, rdf } = vocabs
 
@@ -384,10 +383,10 @@ describe('decorator', () => {
             expect(instance.allAboutFriends).toHaveLength(2)
             const friends = instance.allAboutFriends
             expect(friends.map(will => will._graphId)).toEqual(
-              arrayContaining([ex.John, ex.Will])
+              expect.arrayContaining([ex.John, ex.Will])
             )
             expect(friends.map(will => will.name)).toEqual(
-              arrayContaining([literal('William')])
+              expect.arrayContaining([literal('William')])
             )
           })
 
@@ -412,7 +411,7 @@ describe('decorator', () => {
             expect(instance.allAboutFriends).toHaveLength(4)
             const wills = instance.allAboutFriends
             expect(wills.map(w => w._graphId)).toEqual(
-              arrayContaining([defaultGraph(), ex.WillName, ex.WillFriends, ex.WillJob])
+              expect.arrayContaining([defaultGraph(), ex.WillName, ex.WillFriends, ex.WillJob])
             )
           })
 
