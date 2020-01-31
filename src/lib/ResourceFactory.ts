@@ -20,7 +20,12 @@ export interface ResourceIndexer<T extends RdfResource = RdfResource> {
 
 export type Mixin<T extends AnyFunction> = InstanceType<ReturnType<T>>
 
-export class ResourceFactory<R extends RdfResource = RdfResource, T extends AnyFunction = any> {
+export interface ResourceFactory<R extends RdfResource = RdfResource, T extends AnyFunction = any> {
+  addMixin(...mixins: (Mixin<T> & ShouldApply)[]): void
+  createEntity<S>(term: Clownface, typeAndMixins?: Mixin<T>[] | [Constructor, ...Mixin<T>[]]): R & S & ResourceIndexer<R>
+}
+
+export default class <R extends RdfResource = RdfResource, T extends AnyFunction = any> implements ResourceFactory<R, T> {
   private __mixins: Set<Mixin<T>> = new Set()
   public BaseClass: Constructor
 
