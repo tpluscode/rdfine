@@ -1,17 +1,18 @@
 import ns from '@rdfjs/namespace'
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import { namespace, property, RdfResourceImpl, Constructor, RdfResource, ResourceFactory } from '../'
+import * as rdfine from '../'
+import ResourceFactory from '../lib/ResourceFactory'
 
 const hydra = ns(prefixes.hydra)
 
-export interface Collection extends RdfResource {
+export interface Collection extends rdfine.RdfResource {
   members: HydraResource[]
 }
 
-export function CollectionMixin<Base extends Constructor>(base: Base) {
-  @namespace(hydra)
+export function CollectionMixin<Base extends rdfine.Constructor>(base: Base) {
+  @rdfine.namespace(hydra)
   class C extends base implements Collection {
-    @property.resource({ path: 'member', values: 'array' })
+    @rdfine.property.resource({ path: 'member', values: 'array' })
     members!: HydraResource[]
   }
 
@@ -21,6 +22,6 @@ CollectionMixin.shouldApply = (res: HydraResource) => {
   return res.hasType(hydra.Collection)
 }
 
-export class HydraResource extends RdfResourceImpl {
+export class HydraResource extends rdfine.RdfResourceImpl {
   public static factory: ResourceFactory = new ResourceFactory(HydraResource)
 }

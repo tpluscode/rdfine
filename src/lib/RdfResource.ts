@@ -1,6 +1,6 @@
 import { NamedNode, DatasetCore, BlankNode } from 'rdf-js'
 import cf, { SafeClownface, SingleContextClownface } from 'clownface'
-import { Constructor, Mixin, ResourceFactory, ResourceIndexer } from './ResourceFactory'
+import ResourceFactoryImpl, { Constructor, Mixin, ResourceFactory, ResourceIndexer } from './ResourceFactory'
 import once from 'once'
 import TypeCollectionCtor, { TypeCollection } from './TypeCollection'
 
@@ -21,7 +21,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   private readonly __initialized: boolean = false
   private readonly __initializeProperties: (() => boolean)
   public static __ns?: any
-  public static factory: ResourceFactory = new ResourceFactory(RdfResourceImpl)
+  public static factory: ResourceFactory = new ResourceFactoryImpl(RdfResourceImpl)
 
   public constructor(graph: SafeClownface<D> | { dataset: D; term: ResourceIdentifier; graph?: NamedNode }) {
     if ('_context' in graph) {

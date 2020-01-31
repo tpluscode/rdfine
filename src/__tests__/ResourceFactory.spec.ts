@@ -1,6 +1,6 @@
 import cf from 'clownface'
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import { Constructor, ResourceFactory } from '../lib/ResourceFactory'
+import ResourceFactory, { Constructor } from '../lib/ResourceFactory'
 import { parse, vocabs } from './_helpers'
 import { RdfResourceImpl } from '../index'
 
