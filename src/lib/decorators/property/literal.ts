@@ -44,11 +44,13 @@ export default function<R extends RdfResource> (options: AccessorOptions & Liter
     valueTypeName: type.name,
     assertSetValue: (value) => {
       if (typeof value === 'object') {
-        let term: RdfResource | Term
+        let term: Term
+        if ('id' in value) {
+          return false
+        }
+
         if ('term' in value) {
           term = value.term
-        } else if ('id' in value) {
-          term = value.id
         } else {
           term = value
         }
