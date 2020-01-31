@@ -1,6 +1,10 @@
 import cf from 'clownface'
 import $rdf from 'rdf-ext'
+import { defaultGraph } from '@rdfjs/data-model'
 import RdfResource from '../lib/RdfResource'
+import { vocabs } from './_helpers'
+
+const { ex } = vocabs
 
 describe('RdfResource', () => {
   describe('constructor', () => {
@@ -48,6 +52,30 @@ describe('RdfResource', () => {
 
       // then
       expect(areEqual).toBe(false)
+    })
+  })
+
+  describe('_graphId', () => {
+    it('returns the clownface context graph', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset(), graph: ex.graph }).blankNode()
+
+      // when
+      const res = new RdfResource(node)
+
+      // then
+      expect(res._graphId.equals(ex.graph))
+    })
+
+    it('is default graph when not initialized explicitly', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+
+      // when
+      const res = new RdfResource(node)
+
+      // then
+      expect(res._graphId.equals(defaultGraph()))
     })
   })
 })

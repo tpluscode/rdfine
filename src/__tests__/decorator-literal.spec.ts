@@ -328,7 +328,7 @@ describe('decorator', () => {
         }) as any
 
         // when
-        instance.name = instance._node.literal('Jane', ex.Name)
+        instance.name = instance._selfGraph.literal('Jane', ex.Name)
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()

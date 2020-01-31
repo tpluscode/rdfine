@@ -60,5 +60,8 @@ export default function<R extends RdfResource> (options: AccessorOptions & Liter
 
       return true
     },
+    compare(left, right) {
+      return left === right
+    },
   })
 }

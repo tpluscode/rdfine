@@ -36,6 +36,13 @@ function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptio
 
       return true
     },
+    compare(left, right) {
+      if (!left || !right) {
+        return false
+      }
+
+      return left.id.equals(right.id) && left._graphId.equals(right._graphId)
+    },
   })
 }
 

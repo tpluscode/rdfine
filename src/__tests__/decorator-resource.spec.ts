@@ -1,10 +1,12 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
 import cf, { SingleContextClownface } from 'clownface'
-import { property, namespace } from '..'
+import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
+import rdfExt from 'rdf-ext'
+import DatasetExt from 'rdf-ext/lib/Dataset'
+import { defaultGraph, literal } from '@rdfjs/data-model'
+import { property, namespace, crossBoundaries } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
-import { NamedNode, Term } from 'rdf-js'
-import rdfExt from 'rdf-ext'
 
 const { ex, foaf, schema, rdf } = vocabs
 
@@ -182,7 +184,7 @@ describe('decorator', () => {
         const john = new Resource({ dataset, term: ex.john })
 
         // when
-        john.spouse = john._node.blankNode()
+        john.spouse = john._selfGraph.blankNode()
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
@@ -284,7 +286,7 @@ describe('decorator', () => {
           @property.resource({
             path: foaf.friend,
             initial: (self: Resource) => {
-              const name = new NameResource(self._node.blankNode())
+              const name = new NameResource(self._selfGraph.blankNode())
               name.first = 'John'
               name.last = 'Doe'
               name.person = self
@@ -317,7 +319,7 @@ describe('decorator', () => {
           @property.resource({
             path: foaf.friend,
             initial: (self: Resource) => {
-              return self._node.namedNode('http://example.com/friend')
+              return self._selfGraph.namedNode('http://example.com/friend')
             },
           })
           friend!: RdfResource
@@ -332,6 +334,176 @@ describe('decorator', () => {
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+    })
+
+    describe('over multiple graphs', () => {
+      class Resource<D extends DatasetCore> extends RdfResource<D> {
+        @property.resource({ path: foaf.knows })
+        friend!: this
+
+        @property({ path: schema('name') })
+        name?: Literal
+
+        @property.resource({
+          path: crossBoundaries(foaf.knows),
+          as: [Resource],
+        })
+        allAboutFriends!: this[]
+
+        @property.resource({
+          path: crossBoundaries(foaf.knows),
+          subjectFromAllGraphs: true,
+          as: [Resource],
+        })
+        allAboutAllFriends!: this[]
+      }
+
+      function namedGraphTests(newResource: (dataset: DatasetExt, term: NamedNode, graph?: NamedNode | DefaultGraph) => Resource<DatasetExt>) {
+        describe('getter', () => {
+          it('does not cross named graph boundary by default', async () => {
+            // given
+            const dataset = await parse(`
+              @prefix ex: <${prefixes.ex}> .
+              @prefix foaf: <${prefixes.foaf}> .
+              @prefix schema: <${prefixes.schema}> .
+              
+              ex:John foaf:knows ex:Will ex:John .
+              
+              ex:Will schema:name "William" ex:Will .
+            `)
+
+            // when
+            const instance = newResource(dataset, ex.John, ex.John)
+
+            // then
+            expect(instance.friend.name).toBeUndefined()
+          })
+
+          it('crosses named graph boundary when explicitly annotated', async () => {
+            // given
+            const dataset = await parse(`
+              @prefix ex: <${prefixes.ex}> .
+              @prefix foaf: <${prefixes.foaf}> .
+              @prefix schema: <${prefixes.schema}> .
+              
+              ex:John foaf:knows ex:Will ex:John .
+              
+              ex:Will schema:name "William" ex:Will .
+              ex:Will foaf:knows ex:John ex:Will .
+            `)
+
+            // when
+            const instance = newResource(dataset, ex.John, ex.John)
+
+            // then
+            expect(instance.allAboutFriends).toHaveLength(2)
+            const friends = instance.allAboutFriends
+            expect(friends.map(will => will._graphId)).toEqual(
+              expect.arrayContaining([ex.John, ex.Will])
+            )
+            expect(friends.map(will => will.name)).toEqual(
+              expect.arrayContaining([literal('William')])
+            )
+          })
+
+          it('when crossing named graph boundaries returns separate resource object for each named graph', async () => {
+            // given
+            const dataset = await parse(`
+              @prefix ex: <${prefixes.ex}> .
+              @prefix foaf: <${prefixes.foaf}> .
+              @prefix schema: <${prefixes.schema}> .
+              
+              ex:John foaf:knows ex:Will .
+              
+              ex:Will schema:name "William" ex:WillName .
+              ex:Will foaf:knows ex:John ex:WillFriends .
+              ex:Will schema:employee ex:Google ex:WillJob .
+            `)
+
+            // when
+            const instance = newResource(dataset, ex.John)
+
+            // then
+            expect(instance.allAboutFriends).toHaveLength(4)
+            const wills = instance.allAboutFriends
+            expect(wills.map(w => w._graphId)).toEqual(
+              expect.arrayContaining([defaultGraph(), ex.WillName, ex.WillFriends, ex.WillJob])
+            )
+          })
+
+          it('when crossing named graph boundaries does not merge subject from other graphs', async () => {
+            // given
+            const dataset = await parse(`
+              @prefix ex: <${prefixes.ex}> .
+              @prefix foaf: <${prefixes.foaf}> .
+              @prefix schema: <${prefixes.schema}> .
+              
+              ex:John foaf:knows ex:Will .
+              ex:John foaf:knows ex:Sindy ex:JohnGraph .              
+            `)
+
+            // when
+            const instance = newResource(dataset, ex.John)
+
+            // then
+            expect(instance.name).toBeUndefined()
+            expect(instance.allAboutFriends).toHaveLength(1)
+          })
+
+          it('when crossing named graph boundaries can also merge subject from other graphs', async () => {
+            // given
+            const dataset = await parse(`
+              @prefix ex: <${prefixes.ex}> .
+              @prefix foaf: <${prefixes.foaf}> .
+              @prefix schema: <${prefixes.schema}> .
+              
+              ex:John foaf:knows ex:Will .
+              ex:John schema:name "John Doe" ex:JohnGraph .
+              ex:John foaf:knows ex:Sindy ex:JohnGraph .    
+            `)
+
+            // when
+            const instance = newResource(dataset, ex.John)
+
+            // then
+            expect(instance.allAboutAllFriends).toHaveLength(2)
+          })
+        })
+
+        describe('setter', () => {
+          it('assert link quad in subject\'s graph', async () => {
+            // given
+            const dataset = await parse(`
+              @prefix ex: <${prefixes.ex}> .
+              @prefix foaf: <${prefixes.foaf}> .
+              @prefix schema: <${prefixes.schema}> .
+              
+              ex:John schema:name "John" ex:John .
+              
+              ex:Will schema:name "William" ex:Will .
+            `)
+
+            // when
+            const john = newResource(dataset, ex.John, ex.John)
+            john.friend = newResource(dataset, ex.Will, ex.Will)
+
+            // then
+            expect(dataset.toCanonical()).toMatchSnapshot()
+          })
+        })
+      }
+
+      describe('constructed from plain object', () => {
+        namedGraphTests((dataset, term, graph,) => {
+          return new Resource({ dataset, term, graph })
+        })
+      })
+
+      describe('constructed from clownface graph', () => {
+        namedGraphTests((dataset, term, graph,) => {
+          return new Resource(cf({ dataset, term, graph }))
+        })
       })
     })
   })

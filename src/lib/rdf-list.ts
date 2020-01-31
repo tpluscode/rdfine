@@ -1,12 +1,12 @@
-import { SafeClownface, SingleContextClownface } from 'clownface'
+import { Clownface, SingleContextClownface } from 'clownface'
 import { RdfResource } from './RdfResource'
 import { rdf } from './vocabs'
 
-function isLast(node: SafeClownface): boolean {
+function isLast(node: Clownface): boolean {
   return rdf.nil.equals(node.term)
 }
 
-export function isList(node: SafeClownface): boolean {
+export function isList(node: Clownface): boolean {
   const isLastListNode = isLast(node)
   const isListNode = node.out([rdf.first, rdf.rest]).values.length === 2
   return isLastListNode || isListNode

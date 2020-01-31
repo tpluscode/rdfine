@@ -1,7 +1,8 @@
-import { DatasetCore, NamedNode, Term } from 'rdf-js'
-import { RdfResource } from '../RdfResource'
-import { getPath, PropRef } from '../path'
-import { SafeClownface, SingleContextClownface } from 'clownface'
+import { DatasetCore, Term } from 'rdf-js'
+import { Context } from 'clownface/lib/Context'
+import RdfResourceImpl, { RdfResource } from '../RdfResource'
+import { EdgeTraversal, EdgeTraversalFactory, PropRef, toEdgeTraversals } from '../path'
+import cf, { SafeClownface, SingleContextClownface } from 'clownface'
 import { isList, enumerateList } from '../rdf-list'
 import { ClassElement } from './index'
 import literalPropertyDecorator from './property/literal'
@@ -10,15 +11,52 @@ import { rdf } from '../vocabs'
 
 export interface AccessorOptions {
   values?: 'array' | 'list'
-  path?: PropRef | PropRef[]
+  path?: ArrayOrSingle<PropRef | EdgeTraversalFactory>
   strict?: true
+  subjectFromAllGraphs?: true
 }
 
-function getNode(r: RdfResource, path: NamedNode[]): SafeClownface {
-  return path
-    .reduce<SafeClownface>((node, prop) => {
-    return node.out(prop)
-  }, r._node)
+interface NamedGraphsOptions {
+  subjectFromAllGraphs: boolean
+}
+
+function getObjects(node: SingleContextClownface, path: EdgeTraversal[]): SafeClownface {
+  const nodes = path.reduce((subjects, edge) => {
+    const objects: SingleContextClownface[] = []
+
+    subjects.forEach(subject => {
+      objects.push(...edge(subject))
+    })
+
+    return objects
+  }, [node])
+
+  const context = nodes.reduce((contexts, node) => {
+    return contexts.concat(node._context)
+  }, [] as Context<DatasetCore, Term>[])
+
+  return cf({
+    dataset: node.dataset,
+    _context: context,
+  }) as any as SafeClownface
+}
+
+function onlyUnique <T>(areEqual: (left: T, right: T) => boolean) {
+  return function (value: T | T[], index: number, self: Array<T | T[]>): boolean {
+    if (Array.isArray(value)) {
+      return true
+    }
+
+    const found = self.findIndex(other => {
+      if (Array.isArray(other)) {
+        return true
+      }
+
+      return areEqual(value, other)
+    })
+
+    return found === index
+  }
 }
 
 type ArrayOrSingle<T> = T | T[]
@@ -32,61 +70,73 @@ interface PropertyDecoratorOptions<T extends RdfResource, TValue, TTerm extends 
   assertSetValue: (value: RdfResource | Term | SingleContextClownface | TValue) => boolean
   valueTypeName: string
   initial?: ObjectOrFactory<T, TValue, TTerm>
+  compare: (left: TValue, right: TValue) => boolean
 }
 
 function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto: any, name: string, options: PropertyDecoratorOptions<T, TValue, TTerm>) {
-  const { path, fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict } = options
-  const values = options.values || 'single'
+  const { fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict, compare, subjectFromAllGraphs } = options
+  let values = options.values || 'single'
+
+  const getPath = () => Array.isArray(options.path)
+    ? toEdgeTraversals(proto, options.path)
+    : toEdgeTraversals(proto, [options.path || name])
 
   Object.defineProperty(proto, name, {
-    get(this: any): any {
-      const pathNodes = getPath(proto, name, path)
-      const node = getNode(this, pathNodes)
+    get(this: T & RdfResourceImpl): unknown {
+      const rootNode = subjectFromAllGraphs ? this._unionGraph : this._selfGraph
+      const path = getPath()
+      const nodes = getObjects(rootNode, path)
+      const crossesBoundaries = path.some(edge => edge.crossesGraphBoundaries)
+      if (subjectFromAllGraphs || crossesBoundaries) {
+        values = 'array' as const
+      }
 
-      const objects = node.map((quad, index) => {
-        if (isList(quad)) {
+      const returnValues = nodes.map((obj, index) => {
+        if (isList(obj)) {
           if (index > 0) {
             throw new Error('Lists of lists are not supported')
           }
 
-          return enumerateList(this, quad, fromTerm.bind(this))
+          return enumerateList(this, obj, fromTerm.bind(this))
         }
 
-        return fromTerm.call(this, quad)
-      })
+        return fromTerm.call(this, obj)
+      }).filter(onlyUnique(compare))
 
       if (values === 'array') {
-        return objects
+        return returnValues
       }
 
       if (values === 'list') {
-        return objects[0] || []
+        return returnValues[0] || []
       }
 
-      if (objects.length > 1) {
+      if (returnValues.length > 1) {
         throw new Error(`${name}: Multiple terms found where 0..1 was expected`)
       }
 
-      if (Array.isArray(objects[0])) {
+      if (Array.isArray(returnValues[0])) {
         throw new Error(`${name}: RDF List found where 0..1 object was expected`)
       }
 
-      if (this.__initialized && strict && objects.length === 0) {
+      if (this.__initialized && strict && returnValues.length === 0) {
         throw new Error(`Object not found for property ${name}`)
       }
 
-      return objects[0]
+      return returnValues[0]
     },
 
-    set(this: RdfResource, value: ArrayOrSingle<RdfResource | Term | SingleContextClownface>) {
+    set(this: RdfResourceImpl, value: ArrayOrSingle<RdfResource | Term | SingleContextClownface>) {
       if (values === 'single' && Array.isArray(value)) {
         throw new Error(`${name}: Cannot set array to a non-array property`)
       }
 
-      const pathNodes = getPath(proto, name, path)
-      const subject = pathNodes.length === 1 ? this._node : getNode(this, pathNodes.slice(0, pathNodes.length - 1))
+      const path = getPath()
+      const subject = path.length === 1
+        ? this._selfGraph
+        : getObjects(this._selfGraph, path.slice(0, path.length - 1))
 
-      const lastPredicate = pathNodes[pathNodes.length - 1]
+      const lastPredicate = path[path.length - 1].predicate
 
       subject.out(lastPredicate).forEach(obj => {
         if (isList(obj)) {
@@ -109,7 +159,7 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
 
       const termsArray = valueArray.map(value => {
         if (!assertSetValue(value)) {
-          const pathStr = pathNodes.map(p => `<${p}>`).join('/')
+          const pathStr = path.map(edge => `<${edge.predicate}>`).join('/')
           throw new Error(`Unexpected value for path ${pathStr}. Expecting a ${valueTypeName} or RDF/JS term`)
         }
 
@@ -193,12 +243,13 @@ interface TermOptions <TSelf>{
 }
 
 export function property<R extends RdfResource>(options: AccessorOptions & TermOptions<R> = {}) {
-  return propertyDecorator({
+  return propertyDecorator<R, Term, Term>({
     ...options,
     fromTerm: (obj) => obj.term,
     toTerm: value => value,
     valueTypeName: 'RDF/JS term object',
     assertSetValue: () => true,
+    compare: (left, right) => left && left.equals(right),
   })
 }
 
