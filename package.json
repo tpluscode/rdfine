@@ -4,9 +4,13 @@
   "description": "RDF/JS idiomatic, native, effective",
   "main": "dist/node/index.js",
   "module": "dist/es/index.js",
-  "types": "dist/types/index.d.ts",
+  "types": "index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "**/*.d.ts",
+    "**/*.d.ts.map",
+    "*.d.ts.map",
+    "*.d.ts"
   ],
   "scripts": {
     "prepack": "npm run build",
