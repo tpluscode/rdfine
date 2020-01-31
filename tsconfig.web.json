@@ -4,8 +4,5 @@
     "target": "es2019",
     "module": "esnext",
     "outDir": "dist/es"
-  },
-  "files": [
-    "src/index.ts"
-  ]
+  }
 }

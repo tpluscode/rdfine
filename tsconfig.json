@@ -2,13 +2,11 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "es2019",
-    "declaration": true,
-    "declarationMap": true,
+    "declaration": false,
     "lib": [
       "es6",
       "esnext"
     ],
-    "declarationDir": "dist/types",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictNullChecks": true,
@@ -22,5 +20,8 @@
       "node_modules/@types",
       "types"
     ]
-  }
+  },
+  "files": [
+    "src/index.ts"
+  ]
 }
