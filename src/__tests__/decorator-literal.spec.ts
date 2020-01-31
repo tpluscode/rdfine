@@ -1,9 +1,10 @@
+/* global BigInt */
 import { prefixes } from '@zazuko/rdf-vocabularies'
 import { property } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 import { Literal } from 'rdf-js'
-import { literal } from '@rdfjs/data-model'
+import { blankNode, literal, namedNode } from '@rdfjs/data-model'
 import rdfExt from 'rdf-ext'
 
 const { ex, schema } = vocabs
@@ -231,6 +232,27 @@ describe('decorator', () => {
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
+      it('sets xsd:long literal for bigint', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+
+        class Resource extends RdfResource {
+          @property.literal({ path: ex.age, type: Number })
+          age!: bigint
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // when
+        instance.age = BigInt(9007199254740991)
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
       it('replaces string object value', async () => {
         // given
         const dataset = await parse(`
@@ -253,6 +275,60 @@ describe('decorator', () => {
 
         // when
         instance.name = 'Jane'
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('replaces string literal node value', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          @prefix xsd: <${prefixes.xsd}> .
+          
+          ex:res schema:name "John" .
+        `)
+
+        class Resource extends RdfResource {
+          @property.literal({ path: schema.name })
+          name?: string
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        }) as any
+
+        // when
+        instance.name = literal('Jane', ex.Name)
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('replaces string literal node value', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          @prefix xsd: <${prefixes.xsd}> .
+          
+          ex:res schema:name "John" .
+        `)
+
+        class Resource extends RdfResource {
+          @property.literal({ path: schema.name })
+          name?: string
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        }) as any
+
+        // when
+        instance.name = instance._node.literal('Jane', ex.Name)
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
@@ -283,6 +359,84 @@ describe('decorator', () => {
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('throws when trying to set a named node', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          @prefix xsd: <${prefixes.xsd}> .
+          
+          ex:res schema:name "John" .
+        `)
+
+        class Resource extends RdfResource {
+          @property.literal({ path: schema.name })
+          name?: string
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        }) as any
+
+        // the
+        expect(() => {
+          instance.name = namedNode('foo')
+        }).toThrow()
+      })
+
+      it('throws when trying to set a blank node', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          @prefix xsd: <${prefixes.xsd}> .
+          
+          ex:res schema:name "John" .
+        `)
+
+        class Resource extends RdfResource {
+          @property.literal({ path: schema.name })
+          name?: string
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        }) as any
+
+        // the
+        expect(() => {
+          instance.name = blankNode('foo')
+        }).toThrow()
+      })
+
+      it('throws when trying to set a resource', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          @prefix xsd: <${prefixes.xsd}> .
+          
+          ex:res schema:name "John" .
+        `)
+
+        class Resource extends RdfResource {
+          @property.literal({ path: schema.name })
+          name?: string
+        }
+
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        }) as any
+
+        // the
+        expect(() => {
+          instance.name = instance
+        }).toThrow()
       })
     })
 
