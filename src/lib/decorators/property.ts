@@ -1,4 +1,4 @@
-import { NamedNode, Term } from 'rdf-js'
+import { DatasetCore, NamedNode, Term } from 'rdf-js'
 import { RdfResource } from '../RdfResource'
 import { getPath, PropRef } from '../path'
 import { SafeClownface, SingleContextClownface } from 'clownface'
@@ -21,18 +21,20 @@ function getNode(r: RdfResource, path: NamedNode[]): SafeClownface {
   }, r._node)
 }
 
-export type ObjectOrFactory<R, T> = T | T[] | ((self: R) => T | T[])
 type ArrayOrSingle<T> = T | T[]
+export type ObjectOrFactory<TSelf, T, TTerm extends Term> =
+  ArrayOrSingle<T | TTerm | SingleContextClownface<DatasetCore, TTerm>> |
+  ((self: TSelf) => ArrayOrSingle<T | TTerm | SingleContextClownface<DatasetCore, TTerm>>)
 
-interface PropertyDecoratorOptions<T, N> extends AccessorOptions {
-  fromTerm: (this: RdfResource, obj: SingleContextClownface) => unknown
-  toTerm: (value: T) => Term
-  assertSetValue: (value: T | Term | SingleContextClownface) => boolean
+interface PropertyDecoratorOptions<T extends RdfResource, TValue, TTerm extends Term> extends AccessorOptions {
+  fromTerm: (this: T, obj: SingleContextClownface) => TValue
+  toTerm: (value: TValue) => TTerm
+  assertSetValue: (value: RdfResource | Term | SingleContextClownface | TValue) => boolean
   valueTypeName: string
-  initial?: ObjectOrFactory<any, T | N>
+  initial?: ObjectOrFactory<T, TValue, TTerm>
 }
 
-function createProperty<T, N>(proto: any, name: string, options: PropertyDecoratorOptions<T, N>) {
+function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto: any, name: string, options: PropertyDecoratorOptions<T, TValue, TTerm>) {
   const { path, fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict } = options
   const values = options.values || 'single'
 
@@ -76,7 +78,7 @@ function createProperty<T, N>(proto: any, name: string, options: PropertyDecorat
       return objects[0]
     },
 
-    set(this: RdfResource, value: ArrayOrSingle<T | Term | SingleContextClownface>) {
+    set(this: RdfResource, value: ArrayOrSingle<RdfResource | Term | SingleContextClownface>) {
       if (values === 'single' && Array.isArray(value)) {
         throw new Error(`${name}: Cannot set array to a non-array property`)
       }
@@ -98,7 +100,7 @@ function createProperty<T, N>(proto: any, name: string, options: PropertyDecorat
         return
       }
 
-      let valueArray: Array<T | Term | SingleContextClownface>
+      let valueArray: Array<RdfResource | Term | SingleContextClownface | TValue>
       if (Array.isArray(value)) {
         valueArray = value
       } else {
@@ -115,8 +117,12 @@ function createProperty<T, N>(proto: any, name: string, options: PropertyDecorat
           return value
         }
 
-        if (value && typeof value === 'object' && 'term' in value) {
+        if (typeof value === 'object' && 'term' in value) {
           return value.term
+        }
+
+        if (typeof value === 'object' && 'id' in value) {
+          return value.id
         }
 
         return toTerm(value)
@@ -144,12 +150,12 @@ function createProperty<T, N>(proto: any, name: string, options: PropertyDecorat
 }
 
 const legacyProperty =
-  <T, N>(options: PropertyDecoratorOptions<T, N>, proto: Record<string, unknown>, name: PropertyKey) => {
+  <T extends RdfResource, TValue, TInitial, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>, proto: Record<string, unknown>, name: PropertyKey) => {
     createProperty(proto, name.toString(), options)
   }
 
 const standardProperty =
-  <T, N>(options: PropertyDecoratorOptions<T, N>, element: ClassElement) => {
+  <T extends RdfResource, TValue, TInitial, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>, element: ClassElement) => {
     return {
       kind: 'field',
       key: Symbol(),
@@ -175,15 +181,15 @@ const standardProperty =
     }
   }
 
-export function propertyDecorator<T, N>(options: PropertyDecoratorOptions<T, N>) {
+export function propertyDecorator<T extends RdfResource, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>) {
   return (protoOrDescriptor: RdfResource|ClassElement, name?: PropertyKey): any =>
     (name !== undefined)
       ? legacyProperty(options, protoOrDescriptor as any, name)
       : standardProperty(options, protoOrDescriptor as ClassElement)
 }
 
-interface TermOptions<R extends RdfResource> {
-  initial?: ObjectOrFactory<R, Term>
+interface TermOptions <TSelf>{
+  initial?: ObjectOrFactory<TSelf, Term, Term>
 }
 
 export function property<R extends RdfResource>(options: AccessorOptions & TermOptions<R> = {}) {
