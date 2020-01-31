@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/tpluscode/rdfine/compare/v0.2.12...v0.3.0) (2020-01-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* replaces _node property with _selfGraph
+
+### Features
+
+* named graph must be explicitly traversed in isolation ([902a7a6](https://github.com/tpluscode/rdfine/commit/902a7a64e70046ae955c0038ac3a4e6b1c936a40))
+
+
+### Bug Fixes
+
+* **decorator:** make generic annotation more accurate ([4707b0b](https://github.com/tpluscode/rdfine/commit/4707b0b60f3724430573ae645903839adb36fc2f))
+* **factory:** depend on interface and not implementation ([0a67270](https://github.com/tpluscode/rdfine/commit/0a672700ae1b8855d6157900a419d1f1cbb10f5e))
+
 ### [0.2.12](https://github.com/tpluscode/rdfine/compare/v0.2.11...v0.2.12) (2020-01-30)
 
 
