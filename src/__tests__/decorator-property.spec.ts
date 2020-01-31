@@ -629,6 +629,28 @@ describe('decorator', () => {
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
+      it('sets initial value from clownface object', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        class Resource extends RdfResource {
+          @property({
+            path: schema.name,
+            initial: (self: Resource) => self._selfGraph.blankNode('foo'),
+          })
+          name!: Literal
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.name.value).toEqual('foo')
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
       it('sets initial value from function', async () => {
         // given
         const dataset = rdfExt.dataset()

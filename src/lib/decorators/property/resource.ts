@@ -8,16 +8,16 @@ type InitialValue = SingleContextClownface<DatasetCore, ResourceIdentifier> | Rd
 
 interface ResourceOptions<R extends RdfResource> {
   as?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]
-  initial?: ObjectOrFactory<R, InitialValue | RdfResource>
+  initial?: ObjectOrFactory<R, InitialValue | RdfResource, ResourceIdentifier>
 }
 
 function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptions & ResourceOptions<R> = {}) {
-  return propertyDecorator<RdfResource, InitialValue>({
+  return propertyDecorator<R, RdfResource, ResourceIdentifier>({
     ...options,
     fromTerm(this: RdfResource, obj) {
       return this._create(obj, options.as)
     },
-    toTerm(value: RdfResource) {
+    toTerm(value) {
       return value.id
     },
     valueTypeName: 'RdfResource instance',

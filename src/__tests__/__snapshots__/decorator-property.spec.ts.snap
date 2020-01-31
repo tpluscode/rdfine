@@ -32,6 +32,11 @@ exports[`decorator term getter strict can be initialized 1`] = `
 "
 `;
 
+exports[`decorator term initial sets initial value from clownface object 1`] = `
+"<http://example.com/res> <http://schema.org/name> _:c14n0 .
+"
+`;
+
 exports[`decorator term initial sets initial value from function 1`] = `
 "<http://example.com/res> <http://schema.org/name> <http://example.com/res/child> .
 "

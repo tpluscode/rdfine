@@ -30,6 +30,16 @@ exports[`decorator literal setter replaces boolean object value 1`] = `
 "
 `;
 
+exports[`decorator literal setter replaces string literal node value 1`] = `
+"<http://example.com/res> <http://schema.org/name> \\"Jane\\"^^<http://example.com/Name> .
+"
+`;
+
+exports[`decorator literal setter replaces string literal node value 2`] = `
+"<http://example.com/res> <http://schema.org/name> \\"Jane\\"^^<http://example.com/Name> .
+"
+`;
+
 exports[`decorator literal setter replaces string object value 1`] = `
 "<http://example.com/res> <http://schema.org/name> \\"Jane\\" .
 "
@@ -42,6 +52,11 @@ exports[`decorator literal setter sets xsd:float literal for float number 1`] = 
 
 exports[`decorator literal setter sets xsd:integer literal for int number 1`] = `
 "<http://example.com/res> <http://example.com/age> \\"30\\"^^<http://www.w3.org/2001/XMLSchema#integer> .
+"
+`;
+
+exports[`decorator literal setter sets xsd:long literal for bigint 1`] = `
+"<http://example.com/res> <http://example.com/age> \\"9007199254740991\\"^^<http://www.w3.org/2001/XMLSchema#long> .
 "
 `;
 

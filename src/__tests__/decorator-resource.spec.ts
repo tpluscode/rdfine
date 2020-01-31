@@ -1,5 +1,5 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import cf from 'clownface'
+import cf, { SingleContextClownface } from 'clownface'
 import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
 import rdfExt from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
@@ -162,6 +162,29 @@ describe('decorator', () => {
 
         // when
         john.spouse = ex.jane
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('accepts blank node context', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:john a schema:Person .
+          ex:jane a schema:Person .
+        `)
+
+        class Resource extends RdfResource {
+          @property.resource({ path: schema.spouse })
+          spouse?: RdfResource | SingleContextClownface
+        }
+        const john = new Resource({ dataset, term: ex.john })
+
+        // when
+        john.spouse = john._selfGraph.blankNode()
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
