@@ -1,6 +1,6 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
 import cf from 'clownface'
-import { namespace, property } from '..'
+import { namespace, property, crossBoundaries } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
@@ -680,10 +680,7 @@ describe('decorator', () => {
         friend!: Term
 
         @property({
-          path: foaf.knows,
-          namedGraphs: {
-            crossBoundaries: true,
-          },
+          path: crossBoundaries(foaf.knows),
         })
         allFriendsAcross!: Term[]
 

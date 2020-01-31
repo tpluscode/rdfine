@@ -4,7 +4,7 @@ import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
 import rdfExt from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { defaultGraph, literal } from '@rdfjs/data-model'
-import { property, namespace } from '..'
+import { property, namespace, crossBoundaries } from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 
@@ -346,19 +346,15 @@ describe('decorator', () => {
         name?: Literal
 
         @property.resource({
-          path: foaf.knows,
-          namedGraphs: {
-            crossBoundaries: true,
-          },
+          path: crossBoundaries(foaf.knows),
           as: [Resource],
         })
         allAboutFriends!: this[]
 
         @property.resource({
-          path: foaf.knows,
+          path: crossBoundaries(foaf.knows),
           namedGraphs: {
             combineSubjects: true,
-            crossBoundaries: true,
           },
           as: [Resource],
         })

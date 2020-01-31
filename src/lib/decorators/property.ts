@@ -1,6 +1,7 @@
-import { DatasetCore, NamedNode, Term } from 'rdf-js'
+import { DatasetCore, Term } from 'rdf-js'
+import { Context } from 'clownface/lib/Context'
 import RdfResourceImpl, { RdfResource } from '../RdfResource'
-import { getPath, PropRef } from '../path'
+import { EdgeTraversal, EdgeTraversalFactory, PropRef, toEdgeTraversals } from '../path'
 import cf, { SafeClownface, SingleContextClownface } from 'clownface'
 import { isList, enumerateList } from '../rdf-list'
 import { ClassElement } from './index'
@@ -10,21 +11,34 @@ import { rdf } from '../vocabs'
 
 export interface AccessorOptions {
   values?: 'array' | 'list'
-  path?: PropRef | PropRef[]
+  path?: ArrayOrSingle<PropRef | EdgeTraversalFactory>
   strict?: true
   namedGraphs?: Partial<NamedGraphsOptions>
 }
 
 interface NamedGraphsOptions {
   combineSubjects: boolean
-  crossBoundaries: boolean
 }
 
-function getNode(node: SingleContextClownface, path: NamedNode[]): SafeClownface {
-  return path
-    .reduce<SafeClownface>((node, prop) => {
-    return node.out(prop)
-  }, node)
+function getObjects(node: SingleContextClownface, path: EdgeTraversal[]): SafeClownface {
+  const nodes = path.reduce((subjects, edge) => {
+    const objects: SingleContextClownface[] = []
+
+    subjects.forEach(subject => {
+      objects.push(...edge(subject))
+    })
+
+    return objects
+  }, [node])
+
+  const context = nodes.reduce((contexts, node) => {
+    return contexts.concat(node._context)
+  }, [] as Context<DatasetCore, Term>[])
+
+  return cf({
+    dataset: node.dataset,
+    _context: context,
+  }) as any as SafeClownface
 }
 
 function onlyUnique <T>(areEqual: (left: T, right: T) => boolean) {
@@ -60,44 +74,25 @@ interface PropertyDecoratorOptions<T extends RdfResource, TValue, TTerm extends 
 }
 
 function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto: any, name: string, options: PropertyDecoratorOptions<T, TValue, TTerm>) {
-  const { path, fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict, compare } = options
-  const { combineSubjects = false, crossBoundaries = false } = options.namedGraphs || {}
-  const values = options.values || (crossBoundaries || combineSubjects ? 'array' : 'single')
+  const { fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict, compare } = options
+  const { combineSubjects = false } = options.namedGraphs || {}
+  let values = options.values || 'single'
 
-  if (values === 'list' && crossBoundaries) {
-    throw new Error('RDF Lists are not supported with property operating across multiple named graphs')
-  }
+  const getPath = () => Array.isArray(options.path)
+    ? toEdgeTraversals(proto, options.path)
+    : toEdgeTraversals(proto, [options.path || name])
 
   Object.defineProperty(proto, name, {
     get(this: T & RdfResourceImpl): unknown {
       const rootNode = combineSubjects ? this._unionGraph : this._selfGraph
-      const pathNodes = getPath(proto, name, path)
-      const nodes = getNode(rootNode, pathNodes)
+      const path = getPath()
+      const nodes = getObjects(rootNode, path)
+      const crossesBoundaries = path.some(edge => edge.crossesGraphBoundaries)
+      if (combineSubjects || crossesBoundaries) {
+        values = 'array' as const
+      }
 
-      const objectNodes = nodes.toArray().reduce((current, node) => {
-        if (crossBoundaries) {
-          const quadsWithSubject = rootNode.dataset.match(node.term)
-          const quadsWithObject = rootNode.dataset.match(null, null, node.term)
-          const allQuads = [...quadsWithSubject, ...quadsWithObject]
-
-          const allNodes = allQuads.reduce((graphNodes, quad) => {
-            if (!graphNodes.has(quad.graph.value)) {
-              graphNodes.set(quad.graph.value, cf({
-                dataset: this._unionGraph.dataset,
-                term: quad.subject,
-                graph: quad.graph,
-              }))
-            }
-
-            return graphNodes
-          }, new Map<string, SingleContextClownface>())
-          return [...current, ...allNodes.values()]
-        }
-
-        return [...current, node]
-      }, [] as SingleContextClownface[])
-
-      const returnValues = objectNodes.map((obj, index) => {
+      const returnValues = nodes.map((obj, index) => {
         if (isList(obj)) {
           if (index > 0) {
             throw new Error('Lists of lists are not supported')
@@ -137,12 +132,12 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
         throw new Error(`${name}: Cannot set array to a non-array property`)
       }
 
-      const pathNodes = getPath(proto, name, path)
-      const subject = pathNodes.length === 1
+      const path = getPath()
+      const subject = path.length === 1
         ? this._selfGraph
-        : getNode(this._selfGraph, pathNodes.slice(0, pathNodes.length - 1))
+        : getObjects(this._selfGraph, path.slice(0, path.length - 1))
 
-      const lastPredicate = pathNodes[pathNodes.length - 1]
+      const lastPredicate = path[path.length - 1].predicate
 
       subject.out(lastPredicate).forEach(obj => {
         if (isList(obj)) {
@@ -165,7 +160,7 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
 
       const termsArray = valueArray.map(value => {
         if (!assertSetValue(value)) {
-          const pathStr = pathNodes.map(p => `<${p}>`).join('/')
+          const pathStr = path.map(edge => `<${edge.predicate}>`).join('/')
           throw new Error(`Unexpected value for path ${pathStr}. Expecting a ${valueTypeName} or RDF/JS term`)
         }
 
@@ -252,10 +247,8 @@ export function property<R extends RdfResource>(options: AccessorOptions & TermO
   return propertyDecorator<R, Term, Term>({
     ...options,
     namedGraphs: {
-      crossBoundaries: false,
       combineSubjects: options.namedGraphs?.combineSubjects,
     },
-    values: options.namedGraphs?.crossBoundaries ? 'array' : options.values,
     fromTerm: (obj) => obj.term,
     toTerm: value => value,
     valueTypeName: 'RDF/JS term object',
