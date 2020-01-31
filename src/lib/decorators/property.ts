@@ -13,11 +13,11 @@ export interface AccessorOptions {
   values?: 'array' | 'list'
   path?: ArrayOrSingle<PropRef | EdgeTraversalFactory>
   strict?: true
-  namedGraphs?: Partial<NamedGraphsOptions>
+  subjectFromAllGraphs?: true
 }
 
 interface NamedGraphsOptions {
-  combineSubjects: boolean
+  subjectFromAllGraphs: boolean
 }
 
 function getObjects(node: SingleContextClownface, path: EdgeTraversal[]): SafeClownface {
@@ -74,8 +74,7 @@ interface PropertyDecoratorOptions<T extends RdfResource, TValue, TTerm extends 
 }
 
 function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto: any, name: string, options: PropertyDecoratorOptions<T, TValue, TTerm>) {
-  const { fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict, compare } = options
-  const { combineSubjects = false } = options.namedGraphs || {}
+  const { fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict, compare, subjectFromAllGraphs } = options
   let values = options.values || 'single'
 
   const getPath = () => Array.isArray(options.path)
@@ -84,11 +83,11 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
 
   Object.defineProperty(proto, name, {
     get(this: T & RdfResourceImpl): unknown {
-      const rootNode = combineSubjects ? this._unionGraph : this._selfGraph
+      const rootNode = subjectFromAllGraphs ? this._unionGraph : this._selfGraph
       const path = getPath()
       const nodes = getObjects(rootNode, path)
       const crossesBoundaries = path.some(edge => edge.crossesGraphBoundaries)
-      if (combineSubjects || crossesBoundaries) {
+      if (subjectFromAllGraphs || crossesBoundaries) {
         values = 'array' as const
       }
 
@@ -246,9 +245,6 @@ interface TermOptions <TSelf>{
 export function property<R extends RdfResource>(options: AccessorOptions & TermOptions<R> = {}) {
   return propertyDecorator<R, Term, Term>({
     ...options,
-    namedGraphs: {
-      combineSubjects: options.namedGraphs?.combineSubjects,
-    },
     fromTerm: (obj) => obj.term,
     toTerm: value => value,
     valueTypeName: 'RDF/JS term object',

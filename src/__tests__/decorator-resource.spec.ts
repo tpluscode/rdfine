@@ -353,9 +353,7 @@ describe('decorator', () => {
 
         @property.resource({
           path: crossBoundaries(foaf.knows),
-          namedGraphs: {
-            combineSubjects: true,
-          },
+          subjectFromAllGraphs: true,
           as: [Resource],
         })
         allAboutAllFriends!: this[]

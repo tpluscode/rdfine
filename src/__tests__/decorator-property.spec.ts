@@ -686,9 +686,7 @@ describe('decorator', () => {
 
         @property(({
           path: foaf.knows,
-          namedGraphs: {
-            combineSubjects: true,
-          },
+          subjectFromAllGraphs: true,
         }))
         allKnownFriends!: Term[]
       }
