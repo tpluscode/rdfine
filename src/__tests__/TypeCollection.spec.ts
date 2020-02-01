@@ -3,7 +3,7 @@ import cf, { SingleContextClownface } from 'clownface'
 import ns from '@rdfjs/namespace'
 import { DatasetCore } from 'rdf-js'
 import TypeCollection from '../lib/TypeCollection'
-import RdfResourceImpl, { RdfResource, ResourceIdentifier } from '../lib/RdfResource'
+import RdfResourceImpl, { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { parse } from './_helpers'
 
 const ex = ns('http://example.com/')

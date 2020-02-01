@@ -1,5 +1,5 @@
 import { DatasetCore } from 'rdf-js'
-import { RdfResource, ResourceIdentifier } from './RdfResource'
+import { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { rdf } from './vocabs'
 import { namedNode } from '@rdfjs/data-model'
 

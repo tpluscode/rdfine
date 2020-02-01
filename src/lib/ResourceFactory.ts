@@ -1,6 +1,6 @@
 import { Clownface } from 'clownface'
 import { Literal } from 'rdf-js'
-import { RdfResource } from './RdfResource'
+import { RdfResource } from '../RdfResource'
 import { createProxy } from './proxy'
 
 export type AnyFunction<A = any> = (...input: any[]) => A

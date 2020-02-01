@@ -4,8 +4,9 @@ import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
 import rdfExt from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { defaultGraph, literal } from '@rdfjs/data-model'
-import { property, namespace, crossBoundaries } from '..'
-import RdfResource from '../lib/RdfResource'
+import { property, namespace } from '..'
+import { crossBoundaries } from '../path'
+import RdfResource from '../RdfResource'
 import { parse, vocabs } from './_helpers'
 
 const { ex, foaf, schema, rdf } = vocabs

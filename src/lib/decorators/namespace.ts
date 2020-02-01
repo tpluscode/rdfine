@@ -1,5 +1,5 @@
 import ns, { NamespaceBuilder } from '@rdfjs/namespace'
-import { RdfResource } from '../RdfResource'
+import { RdfResource } from '../../RdfResource'
 import { ClassDescriptor } from '.'
 
 type Constructor<T = RdfResource> = {

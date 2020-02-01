@@ -1,6 +1,6 @@
 import { DatasetCore, Term } from 'rdf-js'
 import { SingleContextClownface } from 'clownface'
-import { RdfResource, ResourceIdentifier } from '../../RdfResource'
+import { RdfResource, ResourceIdentifier } from '../../../RdfResource'
 import { AccessorOptions, ObjectOrFactory, propertyDecorator } from '../property'
 import { Constructor, Mixin } from '../../ResourceFactory'
 

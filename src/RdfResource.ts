@@ -2,9 +2,9 @@
 import { defaultGraph } from '@rdfjs/data-model'
 import { NamedNode, DatasetCore, BlankNode, DefaultGraph, Quad_Graph } from 'rdf-js'
 import cf, { SafeClownface, SingleContextClownface } from 'clownface'
-import ResourceFactoryImpl, { Constructor, Mixin, ResourceFactory, ResourceIndexer } from './ResourceFactory'
+import ResourceFactoryImpl, { Constructor, Mixin, ResourceFactory, ResourceIndexer } from './lib/ResourceFactory'
 import once from 'once'
-import TypeCollectionCtor, { TypeCollection } from './TypeCollection'
+import TypeCollectionCtor, { TypeCollection } from './lib/TypeCollection'
 
 type ObjectOrFactory<T> = T | ((self: RdfResource) => T)
 

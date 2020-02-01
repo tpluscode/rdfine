@@ -1,7 +1,7 @@
 import cf from 'clownface'
 import $rdf from 'rdf-ext'
 import { defaultGraph } from '@rdfjs/data-model'
-import RdfResource from '../lib/RdfResource'
+import RdfResource from '../RdfResource'
 import { vocabs } from './_helpers'
 
 const { ex } = vocabs
