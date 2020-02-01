@@ -1,5 +1,5 @@
 export { namespace } from './lib/decorators/namespace'
-export { default as ResourceFactoryImpl, ResourceFactory, Constructor, ResourceIndexer } from './lib/ResourceFactory'
-export { default as RdfResourceImpl, RdfResource, ResourceIdentifier } from './lib/RdfResource'
+export { ResourceFactory, Constructor, ResourceIndexer } from './lib/ResourceFactory'
+export { RdfResource, ResourceIdentifier } from './lib/RdfResource'
 export { property } from './lib/decorators/property'
 export { crossBoundaries } from './lib/path'

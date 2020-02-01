@@ -7,7 +7,7 @@
     "jest"
   ],
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.lint.json"
   },
   "rules": {
     "symbol-description": "off"

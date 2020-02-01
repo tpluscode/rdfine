@@ -2,25 +2,24 @@
   "name": "@tpluscode/rdfine",
   "version": "0.3.2",
   "description": "RDF/JS idiomatic, native, effective",
-  "main": "dist/node/index.js",
-  "module": "dist/es/index.js",
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
   "types": "index.d.ts",
   "files": [
-    "dist",
     "**/*.d.ts",
     "**/*.d.ts.map",
     "*.d.ts.map",
-    "*.d.ts"
+    "*.d.ts",
+    "*.js",
+    "**/*.js"
   ],
   "scripts": {
     "prepack": "npm run build",
-    "build": "rimraf dist; npm run build:node; npm run build:web; npm run build:types",
-    "build:node": "tsc -p tsconfig.node.json",
-    "build:web": "tsc -p tsconfig.web.json",
-    "build:types": "tsc -p tsconfig.json --declaration --outDir . --emitDeclarationOnly --declarationMap",
+    "build": "tsc -p tsconfig.json",
     "test": "npm run test:ts-node; npm run test:babel",
-    "test:ts-node": "jest --coverage",
-    "test:babel": "jest --coverage -c jest.babel.config.js",
+    "test:ts-node": "jest --coverage -c jest.config.json",
+    "test:babel": "jest --coverage -c jest.babel.config.json",
     "example": "ts-node -P tsconfig.example.json src/example/index.ts https://sources.wikibus.org/brochures"
   },
   "repository": {
@@ -110,5 +109,8 @@
   "homepage": "https://github.com/tpluscode/rdfine#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "engines": {
+    "node": ">=12"
   }
 }
