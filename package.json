@@ -2,21 +2,21 @@
   "name": "@tpluscode/rdfine",
   "version": "0.4.0-pre.0",
   "description": "RDF/JS idiomatic, native, effective",
-  "type": "module",
-  "main": "index.js",
+  "main": "node/index.js",
   "module": "index.js",
   "types": "index.d.ts",
   "files": [
-    "**/*.d.ts",
-    "**/*.d.ts.map",
+    "node",
+    "lib",
     "*.d.ts.map",
     "*.d.ts",
-    "*.js",
-    "**/*.js"
+    "./*.js"
   ],
   "scripts": {
     "prepack": "npm run build",
-    "build": "tsc -p tsconfig.json",
+    "build": "npm run build:modules; npm run build:node",
+    "build:modules": "tsc -p tsconfig.json --declaration --declarationMap",
+    "build:node": "tsc -p tsconfig.json --outDir node --module commonjs",
     "test": "npm run test:ts-node; npm run test:babel",
     "test:ts-node": "jest --coverage -c jest.config.json",
     "test:babel": "jest --coverage -c jest.babel.config.json",
@@ -110,7 +110,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "engines": {
-    "node": ">=12"
+  "exports": {
+    "./lib/": "./node/lib/"
   }
 }
