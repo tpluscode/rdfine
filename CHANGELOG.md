@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0-pre.0](https://github.com/tpluscode/rdfine/compare/v0.3.2...v0.4.0-pre.0) (2020-02-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* change to imports
+* requires at least node 12
+
+### Features
+
+* (optional) type collection to work over all graphs ([12f8089](https://github.com/tpluscode/rdfine/commit/12f8089efe7f11c8c7ca63fc8776044c659010b8))
+
+
+* publish only ES modules ([5b31f8e](https://github.com/tpluscode/rdfine/commit/5b31f8e6f1a8b8d646ef9eb9e2bc12dc54c078ed))
+* reorganize source files so that's easier to import stuff ([e977a90](https://github.com/tpluscode/rdfine/commit/e977a9001bfc3742b2b6859fb6603bb48dffec40))
+
 ### [0.3.2](https://github.com/tpluscode/rdfine/compare/v0.3.1...v0.3.2) (2020-01-31)
 
 
