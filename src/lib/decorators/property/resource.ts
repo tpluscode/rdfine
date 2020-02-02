@@ -3,6 +3,7 @@ import { SingleContextClownface } from 'clownface'
 import { RdfResource, ResourceIdentifier } from '../../../RdfResource'
 import { AccessorOptions, ObjectOrFactory, propertyDecorator } from '../property'
 import { Constructor, Mixin } from '../../ResourceFactory'
+import * as compare from '../../compare'
 
 type InitialValue = SingleContextClownface<DatasetCore, ResourceIdentifier> | RdfResource
 
@@ -36,13 +37,7 @@ function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptio
 
       return true
     },
-    compare(left, right) {
-      if (!left || !right) {
-        return false
-      }
-
-      return left.id.equals(right.id) && left._graphId.equals(right._graphId)
-    },
+    compare: compare.resources(true),
   })
 }
 

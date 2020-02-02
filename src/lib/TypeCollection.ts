@@ -1,7 +1,10 @@
 import { DatasetCore } from 'rdf-js'
+import cf, { SingleContextClownface } from 'clownface'
 import { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { rdf } from './vocabs'
 import { namedNode } from '@rdfjs/data-model'
+import { onlyUnique } from './filter'
+import * as compare from './compare'
 
 function getNode(value: RdfResource | ResourceIdentifier | string): ResourceIdentifier {
   if (typeof value === 'string') {
@@ -23,6 +26,8 @@ export interface TypeCollection<D extends DatasetCore> extends Set<RdfResource<D
 
 export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
   private readonly __resource: RdfResource<D>
+  private readonly __allGraphs: boolean
+  private __graph: SingleContextClownface<D>
 
   add(value: RdfResource<D> | ResourceIdentifier | string): this {
     this.__resource._selfGraph.addOut(rdf.type, getNode(value))
@@ -30,14 +35,14 @@ export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
   }
 
   clear(): void {
-    this.__resource._selfGraph.deleteOut(rdf.type)
+    this.__graph.deleteOut(rdf.type)
   }
 
   delete(value: RdfResource<D> | ResourceIdentifier | string): boolean {
-    const deletedQuads = this.__resource._selfGraph.dataset.match(this.__resource.id, rdf.type, getNode(value))
+    const deletedQuads = this.__graph.dataset.match(this.__resource.id, rdf.type, getNode(value))
 
     for (const quad of deletedQuads) {
-      this.__resource._selfGraph.dataset.delete(quad)
+      this.__graph.dataset.delete(quad)
     }
 
     return deletedQuads.size > 0
@@ -50,11 +55,11 @@ export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
   }
 
   has(value: RdfResource<D> | ResourceIdentifier | string): boolean {
-    return this.__resource._selfGraph.has(rdf.type, getNode(value)).terms.length > 0
+    return this.__graph.has(rdf.type, getNode(value)).terms.length > 0
   }
 
   get size(): number {
-    return this.__resource._selfGraph.out(rdf.type).terms.length
+    return this.__graph.out(rdf.type).terms.filter(onlyUnique(compare.terms)).length
   }
 
   [Symbol.iterator](): IterableIterator<RdfResource<D>> {
@@ -75,13 +80,25 @@ export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
 
   [Symbol.toStringTag]: string;
 
-  public constructor(resource: RdfResource<D>) {
+  public constructor(resource: RdfResource<D>, allGraphs = false) {
     this.__resource = resource
+    this.__allGraphs = allGraphs
+    this.__graph = allGraphs ? resource._unionGraph : resource._selfGraph
   }
 
   private get __values() {
-    return this.__resource._selfGraph
-      .out(rdf.type)
+    const graphId = !this.__allGraphs ? this.__resource._graphId : null
+    const typeQuads = this.__graph.dataset.match(this.__resource.id, rdf.type, null, graphId)
+
+    return [...typeQuads]
+      .map(quad => {
+        return cf({
+          dataset: this.__graph.dataset,
+          term: quad.object,
+          graph: quad.graph,
+        })
+      })
       .map(type => this.__resource._create<RdfResource<D>>(type))
+      .filter(onlyUnique(compare.resources(false)))
   }
 }

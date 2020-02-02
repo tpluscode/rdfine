@@ -5,6 +5,7 @@ import { DatasetCore } from 'rdf-js'
 import TypeCollection from '../lib/TypeCollection'
 import RdfResourceImpl, { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { parse } from './_helpers'
+import { rdf } from '../lib/vocabs'
 
 const ex = ns('http://example.com/')
 const nullResource = {} as RdfResource
@@ -372,6 +373,60 @@ describe('TypeCollection', () => {
         expect(ex.Type.equals(one.id))
         expect(ex.Type.equals(two.id))
       }
+    })
+  })
+})
+
+describe('TypeCollection', () => {
+  let node: SingleContextClownface<DatasetCore, ResourceIdentifier>
+
+  describe('allGraphs = true', () => {
+    describe('size', () => {
+      it('counts unique types from all graphs', () => {
+        // given
+        const dataset = $rdf.dataset()
+        cf({ dataset, graph: ex.G1 })
+          .namedNode(ex.res)
+          .addOut(rdf.type, [ex.Type1, ex.Type2])
+        cf({ dataset, graph: ex.G2 })
+          .namedNode(ex.res)
+          .addOut(rdf.type, [ex.Type1, ex.Type2])
+        node = cf({
+          dataset,
+        }).namedNode(ex.res)
+
+        // when
+        const tc = new TypeCollection(new RdfResourceImpl(node), true)
+
+        // then
+        expect(tc.size).toEqual(2)
+      })
+    })
+
+    describe('values', () => {
+      it('returns unique types from all graphs', () => {
+        // given
+        const dataset = $rdf.dataset()
+        cf({ dataset, graph: ex.G1 })
+          .namedNode(ex.res)
+          .addOut(rdf.type, [ex.Type1, ex.Type2])
+        cf({ dataset, graph: ex.G2 })
+          .namedNode(ex.res)
+          .addOut(rdf.type, [ex.Type1, ex.Type2])
+        node = cf({
+          dataset,
+        }).namedNode(ex.res)
+
+        // when
+        const tc = new TypeCollection(new RdfResourceImpl(node), true)
+        const values = [...tc.values()]
+
+        // then
+        expect(values).toHaveLength(2)
+        expect(values.map(r => r.id)).toEqual(
+          expect.arrayContaining([ex.Type1, ex.Type2])
+        )
+      })
     })
   })
 })
