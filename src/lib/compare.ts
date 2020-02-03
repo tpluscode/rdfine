@@ -1,5 +1,5 @@
 import { Term } from 'rdf-js'
-import { RdfResource } from '../RdfResource'
+import { RdfResource } from './RdfResource'
 
 export function terms(left: Term, right: Term): boolean {
   return left && left.equals(right)
