@@ -12,7 +12,7 @@ export type ResourceIdentifier = BlankNode | NamedNode
 
 export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly id: ResourceIdentifier
-  readonly types: TypeCollection<D>
+  types: TypeCollection<D>
   readonly _selfGraph: SingleContextClownface<D, ResourceIdentifier>
   readonly _unionGraph: SingleContextClownface<D, ResourceIdentifier>
   readonly _graphId: Quad_Graph
@@ -91,7 +91,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return this._selfGraph._context[0].graph!
   }
 
-  public readonly types: TypeCollection<D>
+  public types: TypeCollection<D>
 
   public hasType(type: string | NamedNode): boolean {
     return this.types.has(type)

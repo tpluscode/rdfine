@@ -11,7 +11,7 @@
     "lib",
     "*.d.ts.map",
     "*.d.ts",
-    "./*.js"
+    "*.js"
   ],
   "scripts": {
     "prepack": "npm run build",
