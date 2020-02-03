@@ -312,6 +312,27 @@ describe('decorator', () => {
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
+      it('set by named node', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        class Resource extends RdfResource {
+          @property.resource({
+            path: schema.employee,
+            initial: ex.Google,
+          })
+          employer!: RdfResource
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.employer.id).toEqual(ex.Google)
+      })
+
       it('set object returned by factory function as clownface', async () => {
         // given
         const dataset = rdfExt.dataset()
