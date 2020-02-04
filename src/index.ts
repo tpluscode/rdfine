@@ -3,3 +3,4 @@ export { default as ResourceFactoryImpl, ResourceFactory, Constructor, ResourceI
 export { default as RdfResourceImpl, RdfResource, ResourceIdentifier } from './lib/RdfResource'
 export { property } from './lib/decorators/property'
 export { crossBoundaries } from './lib/path'
+export { default as TypeCollectionImpl, TypeCollection } from './lib/TypeCollection'
