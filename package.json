@@ -7,8 +7,8 @@
   "types": "index.d.ts",
   "files": [
     "dist",
-    "lib/*.d.ts",
-    "lib/*.d.ts.map",
+    "lib/**/*.d.ts",
+    "lib/**/*.d.ts.map",
     "*.d.ts.map",
     "*.d.ts"
   ],
