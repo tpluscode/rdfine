@@ -8,6 +8,8 @@ import { ClassElement } from './index'
 import literalPropertyDecorator from './property/literal'
 import resourcePropertyDecorator from './property/resource'
 import { rdf } from '../vocabs'
+import { onlyUnique } from '../filter'
+import * as compare from '../compare'
 
 export interface AccessorOptions {
   values?: 'array' | 'list'
@@ -39,24 +41,6 @@ function getObjects(node: SingleContextClownface, path: EdgeTraversal[]): SafeCl
     dataset: node.dataset,
     _context: context,
   }) as any as SafeClownface
-}
-
-function onlyUnique <T>(areEqual: (left: T, right: T) => boolean) {
-  return function (value: T | T[], index: number, self: Array<T | T[]>): boolean {
-    if (Array.isArray(value)) {
-      return true
-    }
-
-    const found = self.findIndex(other => {
-      if (Array.isArray(other)) {
-        return true
-      }
-
-      return areEqual(value, other)
-    })
-
-    return found === index
-  }
 }
 
 type ArrayOrSingle<T> = T | T[]
@@ -249,7 +233,7 @@ export function property<R extends RdfResource>(options: AccessorOptions & TermO
     toTerm: value => value,
     valueTypeName: 'RDF/JS term object',
     assertSetValue: () => true,
-    compare: (left, right) => left && left.equals(right),
+    compare: compare.terms,
   })
 }
 

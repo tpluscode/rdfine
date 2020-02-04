@@ -55,8 +55,6 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       this._unionGraph = cf({ dataset: selfGraph.dataset, term: selfGraph.term })
     }
 
-    this.types = new TypeCollectionCtor(this)
-
     this.__initializeProperties = once(() => {
       const self = this as any
       const defaults: Map<string, ObjectOrFactory<any>> = self.constructor.__defaults || new Map<string, ObjectOrFactory<any>>()
@@ -91,7 +89,9 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return this._selfGraph._context[0].graph!
   }
 
-  public readonly types: TypeCollection<D>
+  public get types(): TypeCollection<D> {
+    return new TypeCollectionCtor(this)
+  }
 
   public hasType(type: string | NamedNode): boolean {
     return this.types.has(type)

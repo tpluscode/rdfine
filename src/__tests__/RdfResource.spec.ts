@@ -2,7 +2,7 @@ import cf from 'clownface'
 import $rdf from 'rdf-ext'
 import { defaultGraph } from '@rdfjs/data-model'
 import RdfResource from '../lib/RdfResource'
-import { vocabs } from './_helpers'
+import { parse, vocabs } from './_helpers'
 
 const { ex } = vocabs
 
@@ -76,6 +76,30 @@ describe('RdfResource', () => {
 
       // then
       expect(res._graphId.equals(defaultGraph()))
+    })
+  })
+
+  describe('types', () => {
+    it('returns an iterable set of resource\'s types', async () => {
+      // given
+      const dataset = await parse(`
+        @prefix ex: <${ex().value}> .
+        
+        ex:res a ex:Type1, ex:Type2, ex:Type3, ex:Type4 .
+      `)
+      const node = cf({
+        dataset,
+      }).namedNode(ex.res)
+
+      // when
+      const tc = new RdfResource(node).types
+
+      // then
+      expect([...tc.values()].map(r => r.id)).toEqual(
+        expect.arrayContaining([
+          ex.Type1, ex.Type2, ex.Type3, ex.Type4,
+        ])
+      )
     })
   })
 })
