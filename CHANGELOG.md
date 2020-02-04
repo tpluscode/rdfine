@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.3](https://github.com/tpluscode/rdfine/compare/v0.3.2...v0.3.3) (2020-02-04)
+
+
+### Features
+
+* (optional) type collection to work over all graphs ([752ce18](https://github.com/tpluscode/rdfine/commit/752ce18fb82ef7f9044fdcead003d1c63085d615))
+
 ### [0.3.2](https://github.com/tpluscode/rdfine/compare/v0.3.1...v0.3.2) (2020-01-31)
 
 
