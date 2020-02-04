@@ -14,11 +14,11 @@
   ],
   "scripts": {
     "prepack": "npm run build",
-    "build": "rimraf dist; npm run build:node; npm run build:web; npm run build:types",
+    "build": "rimraf dist & npm run build:node & npm run build:web & npm run build:types",
     "build:node": "tsc -p tsconfig.node.json",
     "build:web": "tsc -p tsconfig.web.json",
     "build:types": "tsc -p tsconfig.json --declaration --outDir . --emitDeclarationOnly --declarationMap",
-    "test": "npm run test:ts-node; npm run test:babel",
+    "test": "npm run test:ts-node & npm run test:babel",
     "test:ts-node": "jest --coverage",
     "test:babel": "jest --coverage -c jest.babel.config.js",
     "example": "ts-node -P tsconfig.example.json src/example/index.ts https://sources.wikibus.org/brochures"
