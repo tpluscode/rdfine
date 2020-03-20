@@ -4,7 +4,7 @@ node_js:
 - '12'
 - '13'
 after_script:
-- npm run build
+- lerna run build
 after_success:
 - npx codecov
 after_failure:

@@ -1,0 +1,77 @@
+{
+  "name": "@tpluscode/rdfine",
+  "version": "0.3.5",
+  "description": "RDF/JS idiomatic, native, effective",
+  "main": "dist/node/index.js",
+  "module": "dist/es/index.js",
+  "types": "index.d.ts",
+  "files": [
+    "dist",
+    "lib/**/*.d.ts",
+    "lib/**/*.d.ts.map",
+    "*.d.ts.map",
+    "*.d.ts"
+  ],
+  "scripts": {
+    "prepack": "npm run build",
+    "build": "rimraf dist & npm run build:node & npm run build:web & npm run build:types",
+    "build:node": "tsc -p tsconfig.node.json",
+    "build:web": "tsc -p tsconfig.web.json",
+    "build:types": "tsc -p ../../tsconfig.json --declaration --outDir . --emitDeclarationOnly --declarationMap",
+    "test": "npm run test:ts-node & npm run test:babel",
+    "test:ts-node": "jest --coverage",
+    "test:babel": "jest --coverage -c jest.babel.config.js",
+    "example": "ts-node -P tsconfig.example.json src/example/index.ts https://sources.wikibus.org/brochures"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tpluscode/rdfine.git"
+  },
+  "dependencies": {
+    "@rdfjs/namespace": "^1.1.0",
+    "clownface": "^0.12.1",
+    "@rdfjs/data-model": "^1.1.2",
+    "once": "^1.4.0",
+    "@types/clownface": "^0.12.7",
+    "@types/rdf-ext": "^1.3.2",
+    "@types/rdf-js": "^2.0.8",
+    "@types/rdfjs__namespace": "^1.1.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@rdfjs/parser-n3": "^1.1.3",
+    "@types/debug": "^4.1.5",
+    "@types/node-fetch": "^2.5.4",
+    "@types/once": "^1.4.0",
+    "@types/rdfjs__parser-n3": "^1.1.2",
+    "@zazuko/rdf-vocabularies": "^2019.10.22",
+    "commander": "^4.0.1",
+    "debug": "^4.1.1",
+    "node-fetch": "^2.6.0",
+    "rdf-ext": "^1.3.0",
+    "string-to-stream": "^3.0.1",
+    "ts-jest": "^24.2.0"
+  },
+  "keywords": [
+    "rdf",
+    "rdfjs",
+    "entity",
+    "decorator",
+    "clownface",
+    "graph"
+  ],
+  "author": "tpluscode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tpluscode/rdfine/issues"
+  },
+  "homepage": "https://github.com/tpluscode/rdfine#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -273,7 +273,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).toEqual(
-          expect.arrayContaining(['bar'])
+          expect.arrayContaining(['bar']),
         )
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
@@ -294,7 +294,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).toEqual(
-          expect.arrayContaining(['foo', 'bar'])
+          expect.arrayContaining(['foo', 'bar']),
         )
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
@@ -315,7 +315,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).toEqual(
-          expect.arrayContaining(['bar'])
+          expect.arrayContaining(['bar']),
         )
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
@@ -336,7 +336,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).toEqual(
-          expect.arrayContaining(['foo', 'bar'])
+          expect.arrayContaining(['foo', 'bar']),
         )
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
@@ -709,7 +709,7 @@ describe('decorator', () => {
 
             // then
             expect(instance.allKnownFriends).toEqual(
-              expect.arrayContaining([ex.Will, ex.Sindy, ex.Brad])
+              expect.arrayContaining([ex.Will, ex.Sindy, ex.Brad]),
             )
           })
 
@@ -824,13 +824,13 @@ describe('decorator', () => {
       }
 
       describe('constructed from plain object', () => {
-        namedGraphTests((dataset, term, graph,) => {
+        namedGraphTests((dataset, term, graph) => {
           return new Resource({ dataset, term, graph })
         })
       })
 
       describe('constructed from clownface graph', () => {
-        namedGraphTests((dataset, term, graph,) => {
+        namedGraphTests((dataset, term, graph) => {
           return new Resource(cf({ dataset, term, graph }))
         })
       })

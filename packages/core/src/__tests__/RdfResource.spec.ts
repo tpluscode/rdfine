@@ -98,7 +98,7 @@ describe('RdfResource', () => {
       expect([...tc.values()].map(r => r.id)).toEqual(
         expect.arrayContaining([
           ex.Type1, ex.Type2, ex.Type3, ex.Type4,
-        ])
+        ]),
       )
     })
   })

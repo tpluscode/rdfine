@@ -105,7 +105,7 @@ describe('proxy', () => {
 
       // then
       expect(listItems.map(l => l.value)).toEqual(
-        expect.arrayContaining(['a', 'B', 'cc'])
+        expect.arrayContaining(['a', 'B', 'cc']),
       )
     })
 
@@ -124,7 +124,7 @@ describe('proxy', () => {
 
       // then
       expect(listItems.map(l => l.id.value)).toEqual(
-        expect.arrayContaining([ex.jane.value, ex.jane.value, ex.john.value])
+        expect.arrayContaining([ex.jane.value, ex.jane.value, ex.john.value]),
       )
     })
   })
