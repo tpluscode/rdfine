@@ -6,9 +6,9 @@
 	"types": "index.d.ts",
   "scripts": {
     "prepack": "npm run build",
-    "build": "npm run build:node && npm run build:web",
-    "build:node": "tsc --outDir dist/node --target es2016 --module commonjs",
-    "build:web": "tsc --declaration",
+    "build": "run-s build:*",
+    "build:node": "tsc -p tsconfig.build.json --outDir dist/node --target es2016 --module commonjs",
+    "build:web": "tsc -p tsconfig.build.json --declaration",
     "test": "jest --coverage"
   },
 	"dependencies": {
@@ -25,6 +25,7 @@
 		"@types/clownface": "^0.12.7",
 		"@types/rdf-js": "^2.0.11",
 		"jest": "^24.9.0",
+    "npm-run-all": "^4.1.5",
 		"ts-jest": "^25.2.1",
 		"typescript": "^3.8.3"
 	},

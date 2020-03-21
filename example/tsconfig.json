@@ -1,9 +1,11 @@
 {
   "extends": "../tsconfig.json",
-
   "compilerOptions": {
     "target": "es2019",
-    "module": "commonjs"
+    "module": "commonjs",
+    "lib": [
+      "WebWorker"
+    ]
   },
   "files": [
     "index.ts"

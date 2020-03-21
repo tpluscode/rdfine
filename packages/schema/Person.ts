@@ -4,6 +4,7 @@ import { schema } from '@tpluscode/rdf-ns-builders'
 export interface Person {
   givenName: string
   familyName: string
+  name: string
 }
 
 export default function PersonMixin<Base extends Constructor>(Resource: Base) {
@@ -14,6 +15,9 @@ export default function PersonMixin<Base extends Constructor>(Resource: Base) {
 
     @property.literal()
     public givenName!: string
+
+    @property.literal()
+    public name!: string
   }
 
   return PersonClass

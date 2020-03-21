@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "test": "lerna run test --stream --no-prefix"
+    "test": "lerna run test --stream --no-prefix",
+    "example": "lerna run start --scope rdfine-example"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
