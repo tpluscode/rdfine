@@ -71,7 +71,7 @@ describe('decorator', () => {
           .addOut(rdfs('label'), 'rdfs label')
 
         // when
-        const resource = new TwoNamespaces(node)
+        const resource = new TwoNamespaces(node as any)
 
         // then
         expect(resource.name).toBe('schema name')

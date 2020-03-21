@@ -1,7 +1,7 @@
 /* eslint-disable camelcase,@typescript-eslint/camelcase */
 import { defaultGraph } from '@rdfjs/data-model'
 import { NamedNode, DatasetCore, BlankNode, DefaultGraph, Quad_Graph } from 'rdf-js'
-import cf, { SafeClownface, SingleContextClownface } from 'clownface'
+import cf, { SingleContextClownface } from 'clownface'
 import ResourceFactoryImpl, { Constructor, Mixin, ResourceFactory, ResourceIndexer } from './ResourceFactory'
 import once from 'once'
 import TypeCollectionCtor, { TypeCollection } from './TypeCollection'
@@ -9,6 +9,7 @@ import TypeCollectionCtor, { TypeCollection } from './TypeCollection'
 type ObjectOrFactory<T> = T | ((self: RdfResource) => T)
 
 export type ResourceIdentifier = BlankNode | NamedNode
+export type ResourceInitializer<D extends DatasetCore = DatasetCore> = SingleContextClownface<D> | { dataset: D; term: ResourceIdentifier; graph?: NamedNode | DefaultGraph }
 
 export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly id: ResourceIdentifier
@@ -17,7 +18,7 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly _unionGraph: SingleContextClownface<D, ResourceIdentifier>
   readonly _graphId: Quad_Graph
   hasType (type: string | NamedNode): boolean
-  _create<T extends RdfResource>(term: SingleContextClownface<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T & ResourceIndexer
+  _create<T extends RdfResource>(term: ResourceInitializer<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T & ResourceIndexer
 }
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
@@ -28,7 +29,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   public static __ns?: any
   public static factory: ResourceFactory = new ResourceFactoryImpl(RdfResourceImpl)
 
-  public constructor(graph: SafeClownface<D> | { dataset: D; term: ResourceIdentifier; graph?: NamedNode | DefaultGraph }) {
+  public constructor(graph: ResourceInitializer<D>) {
     let selfGraph: SingleContextClownface<D, ResourceIdentifier>
 
     if ('_context' in graph) {
@@ -105,7 +106,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return this.id.equals(other.id)
   }
 
-  public _create<T extends RdfResource>(term: SingleContextClownface<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T & ResourceIndexer {
+  public _create<T extends RdfResource>(term: ResourceInitializer<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T & ResourceIndexer {
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins)
   }
 }

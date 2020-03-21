@@ -1,6 +1,5 @@
-import { Clownface } from 'clownface'
-import { Literal } from 'rdf-js'
-import { RdfResource } from './RdfResource'
+import { DatasetCore, Literal } from 'rdf-js'
+import { RdfResource, ResourceInitializer } from './RdfResource'
 import { createProxy } from './proxy'
 
 export type AnyFunction<A = any> = (...input: any[]) => A
@@ -14,18 +13,18 @@ interface ShouldApply {
 
 type MaybeArray<T> = T | T[]
 
-export interface ResourceIndexer<T extends RdfResource = RdfResource> {
+export interface ResourceIndexer<D extends DatasetCore = DatasetCore, T extends RdfResource<D> = RdfResource<D>> {
   [ prop: string ]: null | undefined | MaybeArray<T | Literal | T & ResourceIndexer>
 }
 
 export type Mixin<T extends AnyFunction> = InstanceType<ReturnType<T>>
 
-export interface ResourceFactory<R extends RdfResource = RdfResource, T extends AnyFunction = any> {
+export interface ResourceFactory<D extends DatasetCore = DatasetCore, R extends RdfResource<D> = RdfResource<D>, T extends AnyFunction = any> {
   addMixin(...mixins: (Mixin<T> & ShouldApply)[]): void
-  createEntity<S>(term: Clownface, typeAndMixins?: Mixin<T>[] | [Constructor, ...Mixin<T>[]]): R & S & ResourceIndexer<R>
+  createEntity<S>(term: ResourceInitializer<D>, typeAndMixins?: Mixin<T>[] | [Constructor, ...Mixin<T>[]]): R & S & ResourceIndexer<D, R>
 }
 
-export default class <R extends RdfResource = RdfResource, T extends AnyFunction = any> implements ResourceFactory<R, T> {
+export default class <D extends DatasetCore = DatasetCore, R extends RdfResource<D> = RdfResource<D>, T extends AnyFunction = any> implements ResourceFactory<D, R, T> {
   private __mixins: Set<Mixin<T>> = new Set()
   public BaseClass: Constructor
 
@@ -39,7 +38,7 @@ export default class <R extends RdfResource = RdfResource, T extends AnyFunction
     })
   }
 
-  public createEntity<S>(term: Clownface, typeAndMixins: Mixin<T>[] | [Constructor, ...Mixin<T>[]] = []): R & S & ResourceIndexer<R> {
+  public createEntity<S>(term: ResourceInitializer<D>, typeAndMixins: Mixin<T>[] | [Constructor, ...Mixin<T>[]] = []): R & S & ResourceIndexer<D, R> {
     let BaseClass = this.BaseClass
     let explicitMixins: Mixin<any>[] = typeAndMixins
     if (typeAndMixins.length > 0) {
@@ -64,6 +63,6 @@ export default class <R extends RdfResource = RdfResource, T extends AnyFunction
     const Type = mixins.reduce<Constructor>((Mixed: Constructor, Next: Mixin<T>) => Next(Mixed), BaseClass)
     ;(Type as any).__mixins = mixins
 
-    return createProxy(new Type(term)) as R & S & ResourceIndexer<R>
+    return createProxy(new Type(term)) as R & S & ResourceIndexer<D, R>
   }
 }

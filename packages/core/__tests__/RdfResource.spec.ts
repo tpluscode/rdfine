@@ -23,7 +23,7 @@ describe('RdfResource', () => {
           term: [$rdf.blankNode(), $rdf.blankNode()],
         })
 
-        return new RdfResource(node)
+        return new RdfResource(node as any)
       }).toThrow()
     })
   })
