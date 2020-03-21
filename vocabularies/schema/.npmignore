@@ -1,0 +1,7 @@
+__tests__/
+*.ts
+!*.d.ts
+*.json
+*.config.js
+.babelrc
+coverage/

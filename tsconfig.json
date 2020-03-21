@@ -15,14 +15,14 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "moduleResolution": "node",
-    "esModuleInterop": true,
-    "typeRoots": [
-      "node_modules/@types",
-      "types"
-    ]
+    "esModuleInterop": true
   },
-  "files": [
-    "src/index.ts"
+  "include": [
+    "**/*.ts",
+    "**/*.js"
   ],
-  "include": ["src/__tests__"]
+  "exclude": [
+    "**/*.d.ts",
+    "node_modules"
+  ]
 }

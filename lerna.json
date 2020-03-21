@@ -1,0 +1,17 @@
+{
+  "packages": [
+    "example",
+    "packages/*",
+    "vocabularies/*"
+  ],
+  "command": {
+    "publish": {
+      "conventionalCommits": true
+    },
+    "version": {
+      "message": "chore: release new versions",
+      "conventionalCommits": true
+    }
+  },
+  "version": "independent"
+}
