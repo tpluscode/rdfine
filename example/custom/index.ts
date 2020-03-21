@@ -3,11 +3,7 @@ import { namedNode } from '@rdfjs/data-model'
 import fetch from '@rdfjs/fetch'
 import formats from '@rdfjs/formats-common'
 import factory from '@rdfjs/dataset'
-import debug from 'debug'
 import { Collection, CollectionMixin, HydraResource } from './resources'
-
-const log = debug('example')
-debug.enable('example')
 
 HydraResource.factory.addMixin(CollectionMixin)
 
@@ -27,7 +23,7 @@ program
     })
 
     collection.members.forEach(m => {
-      log(m.id)
+      console.log(m.id)
     })
   })
 

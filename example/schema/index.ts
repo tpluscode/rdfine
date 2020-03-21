@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import factory from '@rdfjs/dataset'
 import fetch from '@rdfjs/fetch'
 import { namedNode } from '@rdfjs/data-model'
