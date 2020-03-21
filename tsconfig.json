@@ -18,10 +18,11 @@
     "esModuleInterop": true
   },
   "include": [
-    "packages/**/*.ts",
-    "packages/**/*.js"
+    "**/*.ts",
+    "**/*.js"
   ],
   "exclude": [
-    "**/*.d.ts"
+    "**/*.d.ts",
+    "node_modules"
   ]
 }

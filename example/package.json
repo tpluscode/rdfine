@@ -1,0 +1,21 @@
+{
+  "name": "rdfine-example",
+  "private": true,
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "dependencies": {
+    "@rdfine/schema": "*",
+    "@tpluscode/rdfine": "*",
+    "@rdfjs/dataset": "^1.0.1",
+    "@rdfjs/data-model": "^1.1.2",
+    "clownface": "^0.12.1"
+  },
+  "devDependencies": {
+    "@tpluscode/rdf-string": "^0.2.8",
+    "@types/clownface": "^0.12.7",
+    "@types/rdfjs__dataset": "^1.0.0",
+    "ts-node": "^8.7.0",
+    "typescript": "^3.8.3"
+  }
+}

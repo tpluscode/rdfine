@@ -3,3 +3,5 @@ dist/
 coverage/
 *.d.ts
 *.d.ts.map
+*.js
+!*.config.js

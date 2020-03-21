@@ -7,5 +7,5 @@ module.exports = {
     '<rootDir>/__tests__/_helpers',
     '<rootDir>/node_modules/',
   ],
-  coverageDirectory: 'coverage/babel',
+  preset: 'ts-jest',
 }

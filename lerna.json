@@ -1,5 +1,6 @@
 {
   "packages": [
+    "example",
     "packages/*"
   ],
   "command": {
@@ -11,5 +12,5 @@
       "conventionalCommits": true
     }
   },
-  "version": "0.3.5"
+  "version": "independent"
 }

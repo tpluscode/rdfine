@@ -1,0 +1,52 @@
+{
+	"name": "@rdfine/schema",
+	"version": "0.0.0",
+	"main": "dist/node/index.js",
+	"module": "index.js",
+	"types": "index.d.ts",
+  "scripts": {
+    "prepack": "npm run build",
+    "build": "npm run build:node && npm run build:web",
+    "build:node": "tsc --outDir dist/node --target es2016 --module commonjs",
+    "build:web": "tsc --declaration",
+    "test": "jest --coverage"
+  },
+	"dependencies": {
+    "@tpluscode/rdfine": "^0.3.5",
+		"@tpluscode/rdf-ns-builders": "^0.1.0"
+	},
+	"devDependencies": {
+		"@babel/plugin-proposal-class-properties": "^7.8.3",
+		"@babel/plugin-proposal-decorators": "^7.8.3",
+		"@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
+		"@babel/preset-env": "^7.8.3",
+		"@babel/preset-typescript": "^7.8.3",
+		"@types/clownface": "^0.12.7",
+		"@types/rdf-js": "^2.0.11",
+		"jest": "^24.9.0",
+		"ts-jest": "^25.2.1",
+		"typescript": "^3.8.3"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tpluscode/rdfine.git"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"keywords": [
+		"rdf",
+		"rdfjs",
+		"entity",
+		"decorator",
+		"clownface",
+		"graph"
+	],
+	"author": "tpluscode",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/tpluscode/rdfine/issues"
+	},
+	"homepage": "https://github.com/tpluscode/rdfine#readme"
+}
