@@ -1,7 +1,8 @@
 {
   "packages": [
     "example",
-    "packages/*"
+    "packages/*",
+    "vocabularies/*"
   ],
   "command": {
     "publish": {
