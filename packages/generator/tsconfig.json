@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "target": "ES2016",
+    "module": "CommonJS",
+    "esModuleInterop": true
+  },
+  "files": ["bin/rdfine-gen.ts"],
+  "include": []
+}

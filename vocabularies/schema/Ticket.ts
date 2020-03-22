@@ -1,0 +1,50 @@
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { schema } from './lib/namespace';
+import type * as Schema from '.';
+import IntangibleMixin from './Intangible';
+
+export interface Ticket extends Schema.Intangible, RdfResource {
+  dateIssued: Date | Date;
+  issuedBy: Schema.Organization;
+  priceCurrency: string;
+  ticketedSeat: Schema.Seat;
+  ticketNumber: string;
+  ticketToken: string | string;
+  totalPrice: Schema.PriceSpecification;
+  totalPriceLiteral: number | string;
+  underName: Schema.Organization | Schema.Person;
+}
+
+export default function TicketMixin<Base extends Constructor>(Resource: Base) {
+  @namespace(schema)
+  class TicketClass extends IntangibleMixin(Resource) implements Ticket {
+    @property.literal()
+    dateIssued!: Date | Date;
+    @property.resource()
+    issuedBy!: Schema.Organization;
+    @property.literal()
+    priceCurrency!: string;
+    @property.resource()
+    ticketedSeat!: Schema.Seat;
+    @property.literal()
+    ticketNumber!: string;
+    @property.literal()
+    ticketToken!: string | string;
+    @property.resource()
+    totalPrice!: Schema.PriceSpecification;
+    @property.literal({ path: schema.totalPrice })
+    totalPriceLiteral!: number | string;
+    @property.resource()
+    underName!: Schema.Organization | Schema.Person;
+  }
+  return TicketClass
+}
+
+class TicketImpl extends TicketMixin(RdfResourceImpl) {
+  constructor(arg: any) {
+    super(arg)
+    this.types.add(schema.Ticket)
+  }
+}
+TicketMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Ticket)
+TicketMixin.Class = TicketImpl
