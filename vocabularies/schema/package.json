@@ -46,7 +46,7 @@
 		"@babel/preset-typescript": "^7.8.3",
     "@rdfine/generator": "*",
     "@rdfjs/dataset": "^1.0.1",
-		"@types/clownface": "^0.12.7",
+		"@types/clownface": "^0.12.8",
 		"@types/rdf-js": "^2.0.11",
 		"@types/rdfjs__dataset": "^1.0.0",
     "@zazuko/rdf-vocabularies": "^2020.3.17",

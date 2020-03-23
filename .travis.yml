@@ -3,6 +3,8 @@ node_js:
 - '10'
 - '12'
 - '13'
+before_script:
+- lerna bootstrap --hoist @types/*
 after_script:
 - lerna run build
 - lerna run example
