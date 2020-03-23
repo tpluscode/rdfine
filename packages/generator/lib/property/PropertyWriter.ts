@@ -31,13 +31,16 @@ export class PropertyWriter {
   }
 
   private __addProperty(prop: JavascriptProperty) {
-    let type = 'any'
+    let type
+    let rdfTerm = false
     const propertyTypes = prop.range
       .filter(range => !this.__context.excludedTypes.includes(nameOf.term(range.type)))
       .map(range => this.__rangeMappers.map(toReturnType => toReturnType(range)).filter(Boolean).shift())
       .filter(Boolean) as string[]
 
     if (propertyTypes.length === 0) {
+      type = 'rdf.Term'
+      rdfTerm = true
       this.__context.log.warn('Could not determine types for property %s', prop.name)
     } else {
       type = propertyTypes.join(' | ')
@@ -55,10 +58,17 @@ export class PropertyWriter {
       type,
     })
 
-    classProp.addDecorator(this.__createDecorator(prop, propertyTypes))
+    classProp.addDecorator(this.__createDecorator(prop, propertyTypes, rdfTerm))
   }
 
-  private __createDecorator(prop: JavascriptProperty, propertyTypes: string[]): OptionalKind<DecoratorStructure> {
+  private __createDecorator(prop: JavascriptProperty, propertyTypes: string[], rdfTerm: boolean): OptionalKind<DecoratorStructure> {
+    if (rdfTerm) {
+      return {
+        name: 'property',
+        arguments: [],
+      }
+    }
+
     if (prop.type === 'resource') {
       return {
         name: 'property.resource',

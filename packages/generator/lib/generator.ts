@@ -58,7 +58,7 @@ export async function generate(options: GeneratorOptions, log: Debugger) {
   const vocabulary = cf({ dataset })
   const classes = vocabulary
     .has(ns.rdf.type, ns.rdfs.Class)
-    .filter(clas => !isDatatype(clas, options.datatypes))
+    .filter(clas => !isDatatype(clas, datatypeMappings))
 
   const context: Context = {
     vocabulary,

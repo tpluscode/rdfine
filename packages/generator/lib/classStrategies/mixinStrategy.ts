@@ -98,6 +98,10 @@ export const mixinStrategy: ModuleStrategy = {
       moduleSpecifier: '@tpluscode/rdfine',
     })
     mixinFile.addImportDeclaration({
+      namespaceImport: 'rdf',
+      moduleSpecifier: 'rdf-js',
+    })
+    mixinFile.addImportDeclaration({
       namedImports: [context.prefix],
       moduleSpecifier: './lib/namespace',
     })

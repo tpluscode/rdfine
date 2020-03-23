@@ -1,9 +1,9 @@
 import { SingleContextClownface } from 'clownface'
 import * as ns from '@tpluscode/rdf-ns-builders'
-import nameOf from './nameOf'
+import { shrink } from '@zazuko/rdf-vocabularies'
 
 export function isDatatype(term: SingleContextClownface, datatypeMappings: Record<string, string>): boolean {
-  if (Object.keys(datatypeMappings).includes(nameOf.term(term))) {
+  if (Object.keys(datatypeMappings).includes(shrink(term.value))) {
     return true
   }
 
