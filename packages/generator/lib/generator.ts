@@ -74,6 +74,9 @@ export async function generate(options: GeneratorOptions, log: Debugger) {
     },
   }
 
+  context.log.error.enabled = true
+  context.log.warn.enabled = true
+
   generateNamespace({ project }, context)
   const indexModule = project.createSourceFile('index.ts', {}, { overwrite: true })
 
