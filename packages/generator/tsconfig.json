@@ -3,7 +3,8 @@
   "compilerOptions": {
     "target": "ES2016",
     "module": "CommonJS",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "declaration": true
   },
   "files": ["bin/rdfine-gen.ts"],
   "include": []

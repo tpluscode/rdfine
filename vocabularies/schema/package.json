@@ -49,7 +49,7 @@
 		"@types/clownface": "^0.12.7",
 		"@types/rdf-js": "^2.0.11",
 		"@types/rdfjs__dataset": "^1.0.0",
-    "@zazuko/rdf-vocabularies": "file:../../../../../zazuko/rdf-vocabularies",
+    "@zazuko/rdf-vocabularies": "^2020.3.17",
     "clownface": "^0.12.1",
     "eslint": "^6.8.0",
 		"jest": "^24.9.0",
