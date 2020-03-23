@@ -1,4 +1,5 @@
 import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
 import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
@@ -11,9 +12,9 @@ export interface SpeakableSpecification extends Schema.Intangible, RdfResource {
 export default function SpeakableSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SpeakableSpecificationClass extends IntangibleMixin(Resource) implements SpeakableSpecification {
-    @property.resource()
+    @property.literal()
     cssSelector!: string;
-    @property.resource()
+    @property.literal()
     xpath!: string;
   }
   return SpeakableSpecificationClass

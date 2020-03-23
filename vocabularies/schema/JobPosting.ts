@@ -1,4 +1,5 @@
 import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
 import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
@@ -15,14 +16,14 @@ export interface JobPosting extends Schema.Intangible, RdfResource {
   hiringOrganization: Schema.Organization;
   incentiveCompensation: string;
   incentives: string;
-  industry: any;
+  industry: rdf.Term;
   industryLiteral: string;
   jobBenefits: string;
   jobLocation: Schema.Place;
   relevantOccupation: Schema.Occupation;
   responsibilities: string;
   salaryCurrency: string;
-  skills: any;
+  skills: rdf.Term;
   skillsLiteral: string;
   specialCommitments: string;
   title: string;
@@ -55,8 +56,8 @@ export default function JobPostingMixin<Base extends Constructor>(Resource: Base
     incentiveCompensation!: string;
     @property.literal()
     incentives!: string;
-    @property.resource()
-    industry!: any;
+    @property()
+    industry!: rdf.Term;
     @property.literal({ path: schema.industry })
     industryLiteral!: string;
     @property.literal()
@@ -69,8 +70,8 @@ export default function JobPostingMixin<Base extends Constructor>(Resource: Base
     responsibilities!: string;
     @property.literal()
     salaryCurrency!: string;
-    @property.resource()
-    skills!: any;
+    @property()
+    skills!: rdf.Term;
     @property.literal({ path: schema.skills })
     skillsLiteral!: string;
     @property.literal()

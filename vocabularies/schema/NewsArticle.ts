@@ -1,4 +1,5 @@
 import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
 import type * as Schema from '.';
 import ArticleMixin from './Article';

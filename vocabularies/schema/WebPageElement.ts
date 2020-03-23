@@ -1,4 +1,5 @@
 import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
 import type * as Schema from '.';
 import CreativeWorkMixin from './CreativeWork';
@@ -11,9 +12,9 @@ export interface WebPageElement extends Schema.CreativeWork, RdfResource {
 export default function WebPageElementMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WebPageElementClass extends CreativeWorkMixin(Resource) implements WebPageElement {
-    @property.resource()
+    @property.literal()
     cssSelector!: string;
-    @property.resource()
+    @property.literal()
     xpath!: string;
   }
   return WebPageElementClass

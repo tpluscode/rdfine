@@ -1,4 +1,5 @@
 import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
 import type * as Schema from '.';
 import CreativeWorkMixin from './CreativeWork';
@@ -7,7 +8,7 @@ export interface Course extends Schema.CreativeWork, RdfResource {
   courseCode: string;
   coursePrerequisites: Schema.AlignmentObject | Course;
   coursePrerequisitesLiteral: string;
-  educationalCredentialAwarded: any;
+  educationalCredentialAwarded: rdf.Term;
   educationalCredentialAwardedLiteral: string | string;
   hasCourseInstance: Schema.CourseInstance;
 }
@@ -21,8 +22,8 @@ export default function CourseMixin<Base extends Constructor>(Resource: Base) {
     coursePrerequisites!: Schema.AlignmentObject | Course;
     @property.literal({ path: schema.coursePrerequisites })
     coursePrerequisitesLiteral!: string;
-    @property.resource()
-    educationalCredentialAwarded!: any;
+    @property()
+    educationalCredentialAwarded!: rdf.Term;
     @property.literal({ path: schema.educationalCredentialAwarded })
     educationalCredentialAwardedLiteral!: string | string;
     @property.resource()

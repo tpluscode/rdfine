@@ -1,4 +1,5 @@
 import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
 import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
@@ -9,7 +10,7 @@ export interface Occupation extends Schema.Intangible, RdfResource {
   experienceRequirements: string;
   occupationLocation: Schema.AdministrativeArea;
   responsibilities: string;
-  skills: any;
+  skills: rdf.Term;
   skillsLiteral: string;
 }
 
@@ -26,8 +27,8 @@ export default function OccupationMixin<Base extends Constructor>(Resource: Base
     occupationLocation!: Schema.AdministrativeArea;
     @property.literal()
     responsibilities!: string;
-    @property.resource()
-    skills!: any;
+    @property()
+    skills!: rdf.Term;
     @property.literal({ path: schema.skills })
     skillsLiteral!: string;
   }
