@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import AllocateActionMixin from './AllocateAction';
 
@@ -18,9 +19,10 @@ export default function AuthorizeActionMixin<Base extends Constructor>(Resource:
 }
 
 class AuthorizeActionImpl extends AuthorizeActionMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<AuthorizeAction>) {
     super(arg)
     this.types.add(schema.AuthorizeAction)
+    initializeProperties(this, init)
   }
 }
 AuthorizeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AuthorizeAction)

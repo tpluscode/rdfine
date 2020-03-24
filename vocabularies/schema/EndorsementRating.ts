@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import RatingMixin from './Rating';
 
@@ -15,9 +16,10 @@ export default function EndorsementRatingMixin<Base extends Constructor>(Resourc
 }
 
 class EndorsementRatingImpl extends EndorsementRatingMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<EndorsementRating>) {
     super(arg)
     this.types.add(schema.EndorsementRating)
+    initializeProperties(this, init)
   }
 }
 EndorsementRatingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EndorsementRating)

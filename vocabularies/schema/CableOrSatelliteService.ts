@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import ServiceMixin from './Service';
 
@@ -15,9 +16,10 @@ export default function CableOrSatelliteServiceMixin<Base extends Constructor>(R
 }
 
 class CableOrSatelliteServiceImpl extends CableOrSatelliteServiceMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<CableOrSatelliteService>) {
     super(arg)
     this.types.add(schema.CableOrSatelliteService)
+    initializeProperties(this, init)
   }
 }
 CableOrSatelliteServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CableOrSatelliteService)

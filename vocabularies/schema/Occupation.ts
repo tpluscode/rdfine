@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
@@ -36,9 +37,10 @@ export default function OccupationMixin<Base extends Constructor>(Resource: Base
 }
 
 class OccupationImpl extends OccupationMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<Occupation>) {
     super(arg)
     this.types.add(schema.Occupation)
+    initializeProperties(this, init)
   }
 }
 OccupationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Occupation)

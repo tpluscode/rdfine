@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import PerformingGroupMixin from './PerformingGroup';
 
@@ -36,9 +37,10 @@ export default function MusicGroupMixin<Base extends Constructor>(Resource: Base
 }
 
 class MusicGroupImpl extends MusicGroupMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<MusicGroup>) {
     super(arg)
     this.types.add(schema.MusicGroup)
+    initializeProperties(this, init)
   }
 }
 MusicGroupMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MusicGroup)

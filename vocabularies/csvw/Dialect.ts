@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { csvw } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Csvw from '.';
 
 export interface Dialect extends RdfResource {
@@ -53,9 +54,10 @@ export default function DialectMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class DialectImpl extends DialectMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<Dialect>) {
     super(arg)
     this.types.add(csvw.Dialect)
+    initializeProperties(this, init)
   }
 }
 DialectMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Dialect)

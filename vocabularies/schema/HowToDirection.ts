@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import CreativeWorkMixin from './CreativeWork';
 import ListItemMixin from './ListItem';
@@ -46,9 +47,10 @@ export default function HowToDirectionMixin<Base extends Constructor>(Resource: 
 }
 
 class HowToDirectionImpl extends HowToDirectionMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<HowToDirection>) {
     super(arg)
     this.types.add(schema.HowToDirection)
+    initializeProperties(this, init)
   }
 }
 HowToDirectionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HowToDirection)

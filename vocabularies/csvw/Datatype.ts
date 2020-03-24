@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { csvw } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Csvw from '.';
 
 export interface Datatype extends RdfResource {
@@ -41,9 +42,10 @@ export default function DatatypeMixin<Base extends Constructor>(Resource: Base) 
 }
 
 class DatatypeImpl extends DatatypeMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<Datatype>) {
     super(arg)
     this.types.add(csvw.Datatype)
+    initializeProperties(this, init)
   }
 }
 DatatypeMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Datatype)

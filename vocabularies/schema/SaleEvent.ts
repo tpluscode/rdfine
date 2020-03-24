@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import EventMixin from './Event';
 
@@ -15,9 +16,10 @@ export default function SaleEventMixin<Base extends Constructor>(Resource: Base)
 }
 
 class SaleEventImpl extends SaleEventMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<SaleEvent>) {
     super(arg)
     this.types.add(schema.SaleEvent)
+    initializeProperties(this, init)
   }
 }
 SaleEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SaleEvent)

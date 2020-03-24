@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import PriceSpecificationMixin from './PriceSpecification';
 
@@ -18,9 +19,10 @@ export default function CompoundPriceSpecificationMixin<Base extends Constructor
 }
 
 class CompoundPriceSpecificationImpl extends CompoundPriceSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<CompoundPriceSpecification>) {
     super(arg)
     this.types.add(schema.CompoundPriceSpecification)
+    initializeProperties(this, init)
   }
 }
 CompoundPriceSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CompoundPriceSpecification)

@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
@@ -27,9 +28,10 @@ export default function ListItemMixin<Base extends Constructor>(Resource: Base) 
 }
 
 class ListItemImpl extends ListItemMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<ListItem>) {
     super(arg)
     this.types.add(schema.ListItem)
+    initializeProperties(this, init)
   }
 }
 ListItemMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ListItem)

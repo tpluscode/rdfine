@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import LodgingBusinessMixin from './LodgingBusiness';
 
@@ -15,9 +16,10 @@ export default function BedAndBreakfastMixin<Base extends Constructor>(Resource:
 }
 
 class BedAndBreakfastImpl extends BedAndBreakfastMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<BedAndBreakfast>) {
     super(arg)
     this.types.add(schema.BedAndBreakfast)
+    initializeProperties(this, init)
   }
 }
 BedAndBreakfastMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BedAndBreakfast)

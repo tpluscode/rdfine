@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import LocalBusinessMixin from './LocalBusiness';
 
@@ -15,9 +16,10 @@ export default function TelevisionStationMixin<Base extends Constructor>(Resourc
 }
 
 class TelevisionStationImpl extends TelevisionStationMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<TelevisionStation>) {
     super(arg)
     this.types.add(schema.TelevisionStation)
+    initializeProperties(this, init)
   }
 }
 TelevisionStationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TelevisionStation)

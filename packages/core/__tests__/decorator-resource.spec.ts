@@ -10,7 +10,7 @@ import {
   crossBoundaries,
   Constructor,
   RdfResource as IRdfResource,
-  init,
+  fromObject,
   ResourceFactoryImpl,
 } from '..'
 import RdfResource from '../lib/RdfResource'
@@ -307,7 +307,7 @@ describe('decorator', () => {
         const lois = TestResourceBase.factory.createEntity<Person>({ dataset, term: ex.Lois })
 
         // when
-        lois.knows = init({
+        lois.knows = fromObject({
           id: ex.Superman,
           types: [schema.Person],
           name: 'Superman',

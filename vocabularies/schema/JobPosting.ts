@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
@@ -87,9 +88,10 @@ export default function JobPostingMixin<Base extends Constructor>(Resource: Base
 }
 
 class JobPostingImpl extends JobPostingMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<JobPosting>) {
     super(arg)
     this.types.add(schema.JobPosting)
+    initializeProperties(this, init)
   }
 }
 JobPostingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.JobPosting)

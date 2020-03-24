@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import CivicStructureMixin from './CivicStructure';
 import EntertainmentBusinessMixin from './EntertainmentBusiness';
@@ -19,9 +20,10 @@ export default function MovieTheaterMixin<Base extends Constructor>(Resource: Ba
 }
 
 class MovieTheaterImpl extends MovieTheaterMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<MovieTheater>) {
     super(arg)
     this.types.add(schema.MovieTheater)
+    initializeProperties(this, init)
   }
 }
 MovieTheaterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MovieTheater)

@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import LocalBusinessMixin from './LocalBusiness';
 
@@ -15,9 +16,10 @@ export default function HomeAndConstructionBusinessMixin<Base extends Constructo
 }
 
 class HomeAndConstructionBusinessImpl extends HomeAndConstructionBusinessMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<HomeAndConstructionBusiness>) {
     super(arg)
     this.types.add(schema.HomeAndConstructionBusiness)
+    initializeProperties(this, init)
   }
 }
 HomeAndConstructionBusinessMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HomeAndConstructionBusiness)

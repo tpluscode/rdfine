@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import SoftwareApplicationMixin from './SoftwareApplication';
 
@@ -18,9 +19,10 @@ export default function MobileApplicationMixin<Base extends Constructor>(Resourc
 }
 
 class MobileApplicationImpl extends MobileApplicationMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<MobileApplication>) {
     super(arg)
     this.types.add(schema.MobileApplication)
+    initializeProperties(this, init)
   }
 }
 MobileApplicationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MobileApplication)

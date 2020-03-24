@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import FinancialProductMixin from './FinancialProduct';
 
@@ -15,9 +16,10 @@ export default function CurrencyConversionServiceMixin<Base extends Constructor>
 }
 
 class CurrencyConversionServiceImpl extends CurrencyConversionServiceMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<CurrencyConversionService>) {
     super(arg)
     this.types.add(schema.CurrencyConversionService)
+    initializeProperties(this, init)
   }
 }
 CurrencyConversionServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CurrencyConversionService)

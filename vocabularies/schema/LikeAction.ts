@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import ReactActionMixin from './ReactAction';
 
@@ -15,9 +16,10 @@ export default function LikeActionMixin<Base extends Constructor>(Resource: Base
 }
 
 class LikeActionImpl extends LikeActionMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<LikeAction>) {
     super(arg)
     this.types.add(schema.LikeAction)
+    initializeProperties(this, init)
   }
 }
 LikeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LikeAction)

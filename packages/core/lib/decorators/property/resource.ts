@@ -31,7 +31,7 @@ function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptio
       } else {
         valueNode = this._selfGraph.blankNode()
       }
-      if (value.types) {
+      if (value.types && Array.isArray(value.types)) {
         valueNode.addOut(rdf.type, value.types)
       }
 

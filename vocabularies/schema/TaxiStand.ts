@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import CivicStructureMixin from './CivicStructure';
 
@@ -15,9 +16,10 @@ export default function TaxiStandMixin<Base extends Constructor>(Resource: Base)
 }
 
 class TaxiStandImpl extends TaxiStandMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<TaxiStand>) {
     super(arg)
     this.types.add(schema.TaxiStand)
+    initializeProperties(this, init)
   }
 }
 TaxiStandMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TaxiStand)
