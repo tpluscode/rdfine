@@ -5,7 +5,8 @@
     "declaration": false,
     "lib": [
       "es6",
-      "esnext"
+      "esnext",
+      "WebWorker"
     ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

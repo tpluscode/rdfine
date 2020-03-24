@@ -3,7 +3,8 @@ node_js:
 - '10'
 - '12'
 - '13'
-after_script:
+script:
+- npm test
 - lerna run build
 - lerna run example
 after_success:

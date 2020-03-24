@@ -1,0 +1,19 @@
+{
+  "rules": {
+    "no-unused-vars": "warn",
+    "semi": "off",
+    "symbol-description": "off",
+    "lines-between-class-members": "off",
+    "@typescript-eslint/no-empty-interface": "warn",
+    "@typescript-eslint/member-delimiter-style": [2, {
+      "multiline": {
+        "delimiter": "semi",
+        "requireLast": true
+      },
+      "singleline": {
+        "delimiter": "semi",
+        "requireLast": false
+      }
+    }]
+  }
+}

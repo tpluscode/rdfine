@@ -6,10 +6,33 @@
 	"types": "index.d.ts",
   "scripts": {
     "prepack": "npm run build",
+    "clean": "find . -name '*.ts' -maxdepth 1 -delete",
     "build": "run-s build:*",
     "build:node": "tsc -p tsconfig.build.json --outDir dist/node --target es2016 --module commonjs",
     "build:web": "tsc -p tsconfig.build.json --declaration",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "generate": "rdf-vocab prefix schema | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
+  },
+  "rdfine": {
+    "namespace": "http://schema.org/",
+    "prefix": "schema",
+    "types": {
+      "schema:CssSelectorType": "string",
+      "schema:URL": "NamedNode",
+      "schema:XPathType": "string"
+    },
+    "exclude": [
+      "Class",
+      "DataType",
+      "DefinedTerm",
+      "EducationalOccupationalCredential",
+      "Enumeration",
+      "GeospatialGeometry",
+      "MedicalBusiness",
+      "PhysicalActivityCategory",
+      "URL",
+      "VirtualLocation"
+    ]
   },
 	"dependencies": {
     "@tpluscode/rdfine": "^0.3.5",
@@ -22,12 +45,19 @@
 		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
 		"@babel/preset-env": "^7.8.3",
 		"@babel/preset-typescript": "^7.8.3",
-		"@types/clownface": "^0.12.7",
+    "@rdfine/generator": "*",
+    "@rdfjs/dataset": "^1.0.1",
+		"@types/clownface": "^0.12.8",
 		"@types/rdf-js": "^2.0.11",
+		"@types/rdfjs__dataset": "^1.0.0",
+    "@zazuko/rdf-vocabularies": "^2020.3.23",
+    "clownface": "^0.12.1",
+    "eslint": "^6.8.0",
 		"jest": "^24.9.0",
     "npm-run-all": "^4.1.5",
 		"ts-jest": "^25.2.1",
-		"typescript": "^3.8.3"
+    "ts-node": "^8.8.1",
+		"typescript": "next"
 	},
 	"repository": {
 		"type": "git",
