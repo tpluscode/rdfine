@@ -47,7 +47,7 @@
   "bugs": {
     "url": "https://github.com/tpluscode/rdfine/issues"
   },
-  "homepage": "https://github.com/tpluscode/rdfine#readme",
+  "homepage": "https://github.com/tpluscode/rdfine/tree/master/packages/generator#readme",
   "publishConfig": {
     "access": "public"
   }

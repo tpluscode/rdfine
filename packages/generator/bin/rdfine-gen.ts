@@ -24,10 +24,10 @@ function assignDefined(target: Record<string, any>, ...sources: Record<string, a
 }
 
 program
-  .requiredOption('--format <format>')
-  .option('--namespace <namespace>')
-  .option('--prefix <prefix>')
-  .option('--outDir <outDir>', '')
+  .requiredOption('--format <format>', 'Media type of parser to use')
+  .option('--namespace <namespace>', 'Namespace URI')
+  .option('--prefix <prefix>', 'prefix')
+  .option('--outDir <outDir>', 'Output directory', '.')
   .option('--verbose')
   .action(async ({ format, namespace, prefix, outDir, verbose }) => {
     const stream = formats.parsers.import(format, process.stdin)
