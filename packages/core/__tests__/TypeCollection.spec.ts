@@ -5,7 +5,7 @@ import { DatasetCore } from 'rdf-js'
 import TypeCollection from '../lib/TypeCollection'
 import RdfResourceImpl, { RdfResource, ResourceIdentifier } from '../lib/RdfResource'
 import { parse } from './_helpers'
-import { rdf } from '../lib/vocabs'
+import { rdf } from '@tpluscode/rdf-ns-builders'
 
 const ex = ns('http://example.com/')
 const nullResource = {} as RdfResource

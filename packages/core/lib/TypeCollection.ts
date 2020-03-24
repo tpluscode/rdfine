@@ -1,7 +1,7 @@
 import { DatasetCore } from 'rdf-js'
 import cf, { SingleContextClownface } from 'clownface'
 import { RdfResource, ResourceIdentifier } from './RdfResource'
-import { rdf } from './vocabs'
+import { rdf } from '@tpluscode/rdf-ns-builders'
 import { namedNode } from '@rdfjs/data-model'
 import { onlyUnique } from './filter'
 import * as compare from './compare'

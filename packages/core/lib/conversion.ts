@@ -1,6 +1,6 @@
 import { Literal } from 'rdf-js'
 import rdf from '@rdfjs/data-model'
-import { xsd } from './vocabs'
+import { xsd } from '@tpluscode/rdf-ns-builders'
 import { SingleContextClownface } from 'clownface'
 
 const trueLiteral: Literal = rdf.literal('true', xsd.boolean)

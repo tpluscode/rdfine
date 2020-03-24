@@ -7,7 +7,7 @@ import { isList, enumerateList } from '../rdf-list'
 import { ClassElement } from './index'
 import literalPropertyDecorator from './property/literal'
 import resourcePropertyDecorator from './property/resource'
-import { rdf } from '../vocabs'
+import { rdf } from '@tpluscode/rdf-ns-builders'
 import { onlyUnique } from '../filter'
 import * as compare from '../compare'
 
@@ -155,11 +155,11 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
           return value.term
         }
 
-        if (typeof value === 'object' && 'id' in value) {
+        if (typeof value === 'object' && '_selfGraph' in value) {
           return value.id
         }
 
-        return toTerm(value)
+        return toTerm.call(this, value)
       })
 
       if (values === 'list') {

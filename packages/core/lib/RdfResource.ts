@@ -110,3 +110,23 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins)
   }
 }
+
+type UserDefinedInterface<T extends RdfResource> = Omit<T, keyof RdfResource>
+
+interface BaseInitializer {
+  types?: NamedNode[]
+  id?: RdfResource['id']
+}
+
+export type Initializer<T extends RdfResource> = Partial<{
+  [P in keyof UserDefinedInterface<T>]?:
+  T[P] extends (infer U)[] ? U extends RdfResource ? Initializer<U>[] : T[P] :
+    T[P] extends RdfResource ? Initializer<T[P] & BaseInitializer> :
+      T[P]
+}> & BaseInitializer
+
+type PartialRecursive<T> = T extends object ? { [K in keyof T]?: PartialRecursive<T[K]> } : T
+
+export function init<T extends RdfResource>(initializer: Initializer<T & BaseInitializer>): T {
+  return initializer as unknown as T
+}
