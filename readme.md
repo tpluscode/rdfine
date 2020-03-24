@@ -11,7 +11,7 @@ Core library to define the JavaScript object model for RDF classes and propertie
 
 ### Generated model packages for selected vocabularies:
 
-* [@rdfine/csvw](vocabularies/csvw) - Metadata Vocabulary for Tabular Data
+* [@rdfine/csvw](vocabularies/csvw) - [Metadata Vocabulary for Tabular Data](https://www.w3.org/TR/tabular-metadata/)
 * [@rdfine/schema](vocabularies/csvw) - http://schema.org/
 
 ### [@rdfine/generator](packages/generator)
