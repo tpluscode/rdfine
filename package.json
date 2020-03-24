@@ -4,7 +4,8 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "test": "lerna run test --stream --no-prefix",
-    "example": "lerna run start --scope rdfine-example --stream --no-prefix"
+    "example": "lerna run start --scope rdfine-example --stream --no-prefix",
+    "generate": "lerna run generate"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",

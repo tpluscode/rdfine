@@ -1,5 +1,5 @@
 import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
-import * as rdf from 'rdf-js';
+import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
 import type * as Schema from '.';
 import MoveActionMixin from './MoveAction';

@@ -100,6 +100,7 @@ export const mixinStrategy: ModuleStrategy = {
     mixinFile.addImportDeclaration({
       namespaceImport: 'rdf',
       moduleSpecifier: 'rdf-js',
+      isTypeOnly: true,
     })
     mixinFile.addImportDeclaration({
       namedImports: [context.prefix],
