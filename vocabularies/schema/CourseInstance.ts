@@ -5,15 +5,18 @@ import type * as Schema from '.';
 import EventMixin from './Event';
 
 export interface CourseInstance extends Schema.Event, RdfResource {
-  courseMode: string | string;
+  courseMode: rdf.Term;
+  courseModeLiteral: string;
   instructor: Schema.Person;
 }
 
 export default function CourseInstanceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CourseInstanceClass extends EventMixin(Resource) implements CourseInstance {
-    @property.literal()
-    courseMode!: string | string;
+    @property()
+    courseMode!: rdf.Term;
+    @property.literal({ path: schema.courseMode })
+    courseModeLiteral!: string;
     @property.resource()
     instructor!: Schema.Person;
   }

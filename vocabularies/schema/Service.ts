@@ -20,7 +20,6 @@ export interface Service extends Schema.Intangible, RdfResource {
   isRelatedTo: Schema.Product | Service;
   isSimilarTo: Schema.Product | Service;
   logo: Schema.ImageObject;
-  logoLiteral: string;
   offers: Schema.Demand | Schema.Offer;
   produces: Schema.Thing;
   provider: Schema.Organization | Schema.Person;
@@ -66,8 +65,6 @@ export default function ServiceMixin<Base extends Constructor>(Resource: Base) {
     isSimilarTo!: Schema.Product | Service;
     @property.resource()
     logo!: Schema.ImageObject;
-    @property.literal({ path: schema.logo })
-    logoLiteral!: string;
     @property.resource()
     offers!: Schema.Demand | Schema.Offer;
     @property.resource()

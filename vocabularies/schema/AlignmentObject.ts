@@ -9,7 +9,7 @@ export interface AlignmentObject extends Schema.Intangible, RdfResource {
   educationalFramework: string;
   targetDescription: string;
   targetName: string;
-  targetUrl: string;
+  targetUrl: rdf.Term;
 }
 
 export default function AlignmentObjectMixin<Base extends Constructor>(Resource: Base) {
@@ -23,8 +23,8 @@ export default function AlignmentObjectMixin<Base extends Constructor>(Resource:
     targetDescription!: string;
     @property.literal()
     targetName!: string;
-    @property.literal()
-    targetUrl!: string;
+    @property()
+    targetUrl!: rdf.Term;
   }
   return AlignmentObjectClass
 }

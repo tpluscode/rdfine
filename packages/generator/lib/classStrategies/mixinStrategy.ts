@@ -126,8 +126,8 @@ export const mixinStrategy: ModuleStrategy = {
       classDeclaration,
       context,
       rangeMappers: [
-        rangeMappers.defaultDatatypes(context.datatypeMappings),
-        rangeMappers.schemaUrl(),
+        rangeMappers.defaultDatatypes(context.typeMappings),
+        rangeMappers.anyLiteral(),
         rangeMappers.selfInterfaceName(name),
         rangeMappers.classToPrefixedName(context.defaultExport),
       ],

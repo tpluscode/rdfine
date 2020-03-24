@@ -26,10 +26,9 @@ export interface Product extends Schema.Thing, RdfResource {
   isSimilarTo: Product | Schema.Service;
   itemCondition: Schema.OfferItemCondition;
   logo: Schema.ImageObject;
-  logoLiteral: string;
   manufacturer: Schema.Organization;
   material: Product;
-  materialLiteral: string | string;
+  materialLiteral: string;
   model: Schema.ProductModel;
   modelLiteral: string;
   mpn: string;
@@ -91,14 +90,12 @@ export default function ProductMixin<Base extends Constructor>(Resource: Base) {
     itemCondition!: Schema.OfferItemCondition;
     @property.resource()
     logo!: Schema.ImageObject;
-    @property.literal({ path: schema.logo })
-    logoLiteral!: string;
     @property.resource()
     manufacturer!: Schema.Organization;
     @property.resource()
     material!: Product;
     @property.literal({ path: schema.material })
-    materialLiteral!: string | string;
+    materialLiteral!: string;
     @property.resource()
     model!: Schema.ProductModel;
     @property.literal({ path: schema.model })

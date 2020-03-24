@@ -8,7 +8,8 @@ export interface TypeAndQuantityNode extends Schema.StructuredValue, RdfResource
   amountOfThisGood: number;
   businessFunction: Schema.BusinessFunction;
   typeOfGood: Schema.Product | Schema.Service;
-  unitCode: string | string;
+  unitCode: rdf.Term;
+  unitCodeLiteral: string;
   unitText: string;
 }
 
@@ -21,8 +22,10 @@ export default function TypeAndQuantityNodeMixin<Base extends Constructor>(Resou
     businessFunction!: Schema.BusinessFunction;
     @property.resource()
     typeOfGood!: Schema.Product | Schema.Service;
-    @property.literal()
-    unitCode!: string | string;
+    @property()
+    unitCode!: rdf.Term;
+    @property.literal({ path: schema.unitCode })
+    unitCodeLiteral!: string;
     @property.literal()
     unitText!: string;
   }

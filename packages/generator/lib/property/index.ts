@@ -70,7 +70,7 @@ export function findProperties({ clas }: {clas: SingleContextClownface}, context
         name: nameOf.term(prop),
         range: flatUnique(directRanges, owlUnionRanges).map(range => ({
           type: range,
-          isLiteral: isDatatype(range, context.datatypeMappings),
+          isLiteral: isDatatype(range, context.typeMappings),
         })),
       }
     })

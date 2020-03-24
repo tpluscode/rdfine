@@ -8,7 +8,8 @@ export interface QuantitativeValue extends Schema.StructuredValue, RdfResource {
   additionalProperty: Schema.PropertyValue;
   maxValue: number;
   minValue: number;
-  unitCode: string | string;
+  unitCode: rdf.Term;
+  unitCodeLiteral: string;
   unitText: string;
   value: Schema.StructuredValue;
   valueLiteral: boolean | number | string;
@@ -24,8 +25,10 @@ export default function QuantitativeValueMixin<Base extends Constructor>(Resourc
     maxValue!: number;
     @property.literal({ type: Number })
     minValue!: number;
-    @property.literal()
-    unitCode!: string | string;
+    @property()
+    unitCode!: rdf.Term;
+    @property.literal({ path: schema.unitCode })
+    unitCodeLiteral!: string;
     @property.literal()
     unitText!: string;
     @property.resource()

@@ -8,11 +8,12 @@ export interface MediaObject extends Schema.CreativeWork, RdfResource {
   associatedArticle: Schema.NewsArticle;
   bitrate: string;
   contentSize: string;
-  contentUrl: string;
+  contentUrl: rdf.Term;
   duration: Schema.Duration;
-  embedUrl: string;
+  embedUrl: rdf.Term;
   encodesCreativeWork: Schema.CreativeWork;
-  encodingFormat: string | string;
+  encodingFormat: rdf.Term;
+  encodingFormatLiteral: string;
   endTime: Date | Date;
   height: Schema.Distance | Schema.QuantitativeValue;
   playerType: string;
@@ -34,16 +35,18 @@ export default function MediaObjectMixin<Base extends Constructor>(Resource: Bas
     bitrate!: string;
     @property.literal()
     contentSize!: string;
-    @property.literal()
-    contentUrl!: string;
+    @property()
+    contentUrl!: rdf.Term;
     @property.resource()
     duration!: Schema.Duration;
-    @property.literal()
-    embedUrl!: string;
+    @property()
+    embedUrl!: rdf.Term;
     @property.resource()
     encodesCreativeWork!: Schema.CreativeWork;
-    @property.literal()
-    encodingFormat!: string | string;
+    @property()
+    encodingFormat!: rdf.Term;
+    @property.literal({ path: schema.encodingFormat })
+    encodingFormatLiteral!: string;
     @property.literal()
     endTime!: Date | Date;
     @property.resource()

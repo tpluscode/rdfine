@@ -8,7 +8,6 @@ export interface Game extends Schema.CreativeWork, RdfResource {
   characterAttribute: Schema.Thing;
   gameItem: Schema.Thing;
   gameLocation: Schema.Place | Schema.PostalAddress;
-  gameLocationLiteral: string;
   numberOfPlayers: Schema.QuantitativeValue;
   quest: Schema.Thing;
 }
@@ -22,8 +21,6 @@ export default function GameMixin<Base extends Constructor>(Resource: Base) {
     gameItem!: Schema.Thing;
     @property.resource()
     gameLocation!: Schema.Place | Schema.PostalAddress;
-    @property.literal({ path: schema.gameLocation })
-    gameLocationLiteral!: string;
     @property.resource()
     numberOfPlayers!: Schema.QuantitativeValue;
     @property.resource()

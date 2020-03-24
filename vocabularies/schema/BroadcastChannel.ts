@@ -9,7 +9,8 @@ export interface BroadcastChannel extends Schema.Intangible, RdfResource {
   broadcastFrequency: Schema.BroadcastFrequencySpecification;
   broadcastFrequencyLiteral: string;
   broadcastServiceTier: string;
-  genre: string | string;
+  genre: rdf.Term;
+  genreLiteral: string;
   inBroadcastLineup: Schema.CableOrSatelliteService;
   providesBroadcastService: Schema.BroadcastService;
 }
@@ -25,8 +26,10 @@ export default function BroadcastChannelMixin<Base extends Constructor>(Resource
     broadcastFrequencyLiteral!: string;
     @property.literal()
     broadcastServiceTier!: string;
-    @property.literal()
-    genre!: string | string;
+    @property()
+    genre!: rdf.Term;
+    @property.literal({ path: schema.genre })
+    genreLiteral!: string;
     @property.resource()
     inBroadcastLineup!: Schema.CableOrSatelliteService;
     @property.resource()

@@ -12,7 +12,7 @@ export interface VideoGame extends Schema.Game, Schema.SoftwareApplication, RdfR
   director: Schema.Person;
   directors: Schema.Person;
   gamePlatform: Schema.Thing;
-  gamePlatformLiteral: string | string;
+  gamePlatformLiteral: string;
   gameServer: Schema.GameServer;
   gameTip: Schema.CreativeWork;
   musicBy: Schema.MusicGroup | Schema.Person;
@@ -36,7 +36,7 @@ export default function VideoGameMixin<Base extends Constructor>(Resource: Base)
     @property.resource()
     gamePlatform!: Schema.Thing;
     @property.literal({ path: schema.gamePlatform })
-    gamePlatformLiteral!: string | string;
+    gamePlatformLiteral!: string;
     @property.resource()
     gameServer!: Schema.GameServer;
     @property.resource()

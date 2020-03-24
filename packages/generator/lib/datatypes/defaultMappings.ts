@@ -1,4 +1,6 @@
-export const defaultMappings = {
+import { TypeMap } from '../index'
+
+export const defaultMappings: TypeMap = {
   'xsd:boolean': 'boolean',
   'xsd:decimal': 'number',
   'xsd:int': 'number',

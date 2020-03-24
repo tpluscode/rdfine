@@ -17,7 +17,6 @@ export interface RadioSeries extends Schema.CreativeWorkSeries, RdfResource {
   numberOfSeasons: number;
   productionCompany: Schema.Organization;
   season: Schema.CreativeWorkSeason;
-  seasonLiteral: string;
   seasons: Schema.CreativeWorkSeason;
   trailer: Schema.VideoObject;
 }
@@ -49,8 +48,6 @@ export default function RadioSeriesMixin<Base extends Constructor>(Resource: Bas
     productionCompany!: Schema.Organization;
     @property.resource()
     season!: Schema.CreativeWorkSeason;
-    @property.literal({ path: schema.season })
-    seasonLiteral!: string;
     @property.resource()
     seasons!: Schema.CreativeWorkSeason;
     @property.resource()

@@ -30,15 +30,13 @@ export interface Place extends Schema.Thing, RdfResource {
   geoWithin: Place;
   globalLocationNumber: string;
   hasMap: Schema.Map;
-  hasMapLiteral: string;
   isAccessibleForFree: boolean;
   isicV4: string;
   latitude: number | string;
   logo: Schema.ImageObject;
-  logoLiteral: string;
   longitude: number | string;
-  map: string;
-  maps: string;
+  map: rdf.Term;
+  maps: rdf.Term;
   maximumAttendeeCapacity: number;
   openingHoursSpecification: Schema.OpeningHoursSpecification;
   photo: Schema.ImageObject | Schema.Photograph;
@@ -105,8 +103,6 @@ export default function PlaceMixin<Base extends Constructor>(Resource: Base) {
     globalLocationNumber!: string;
     @property.resource()
     hasMap!: Schema.Map;
-    @property.literal({ path: schema.hasMap })
-    hasMapLiteral!: string;
     @property.literal({ type: Boolean })
     isAccessibleForFree!: boolean;
     @property.literal()
@@ -115,14 +111,12 @@ export default function PlaceMixin<Base extends Constructor>(Resource: Base) {
     latitude!: number | string;
     @property.resource()
     logo!: Schema.ImageObject;
-    @property.literal({ path: schema.logo })
-    logoLiteral!: string;
     @property.literal()
     longitude!: number | string;
-    @property.literal()
-    map!: string;
-    @property.literal()
-    maps!: string;
+    @property()
+    map!: rdf.Term;
+    @property()
+    maps!: rdf.Term;
     @property.literal({ type: Number })
     maximumAttendeeCapacity!: number;
     @property.resource()

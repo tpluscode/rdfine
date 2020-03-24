@@ -1,10 +1,16 @@
 import { SingleContextClownface } from 'clownface'
 import * as ns from '@tpluscode/rdf-ns-builders'
 import { shrink } from '@zazuko/rdf-vocabularies'
+import { TypeMap } from '../index'
 
-export function isDatatype(term: SingleContextClownface, datatypeMappings: Record<string, string>): boolean {
-  if (Object.keys(datatypeMappings).includes(shrink(term.value))) {
+export function isDatatype(term: SingleContextClownface, typeMappings: TypeMap): boolean {
+  if (term.has(ns.rdf.type, ns.rdfs.Datatype).values.length) {
     return true
+  }
+
+  const mapped = typeMappings[shrink(term.value)]
+  if (mapped) {
+    return mapped !== 'NamedNode'
   }
 
   const result = term.has(ns.rdf.type, [ns.schema.DataType, ns.rdfs.Datatype]).values.length > 0
@@ -14,7 +20,7 @@ export function isDatatype(term: SingleContextClownface, datatypeMappings: Recor
 
   const superClasses = term.out(ns.rdfs.subClassOf).toArray()
   for (const superClass of superClasses) {
-    if (isDatatype(superClass, datatypeMappings)) {
+    if (isDatatype(superClass, typeMappings)) {
       return true
     }
   }

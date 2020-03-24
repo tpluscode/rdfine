@@ -7,11 +7,8 @@ import ListItemMixin from './ListItem';
 
 export interface HowToDirection extends Schema.CreativeWork, Schema.ListItem, RdfResource {
   afterMedia: Schema.MediaObject;
-  afterMediaLiteral: string;
   beforeMedia: Schema.MediaObject;
-  beforeMediaLiteral: string;
   duringMedia: Schema.MediaObject;
-  duringMediaLiteral: string;
   performTime: Schema.Duration;
   prepTime: Schema.Duration;
   supply: Schema.HowToSupply;
@@ -26,16 +23,10 @@ export default function HowToDirectionMixin<Base extends Constructor>(Resource: 
   class HowToDirectionClass extends ListItemMixin(CreativeWorkMixin(Resource)) implements HowToDirection {
     @property.resource()
     afterMedia!: Schema.MediaObject;
-    @property.literal({ path: schema.afterMedia })
-    afterMediaLiteral!: string;
     @property.resource()
     beforeMedia!: Schema.MediaObject;
-    @property.literal({ path: schema.beforeMedia })
-    beforeMediaLiteral!: string;
     @property.resource()
     duringMedia!: Schema.MediaObject;
-    @property.literal({ path: schema.duringMedia })
-    duringMediaLiteral!: string;
     @property.resource()
     performTime!: Schema.Duration;
     @property.resource()

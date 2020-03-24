@@ -10,7 +10,8 @@ export interface Ticket extends Schema.Intangible, RdfResource {
   priceCurrency: string;
   ticketedSeat: Schema.Seat;
   ticketNumber: string;
-  ticketToken: string | string;
+  ticketToken: rdf.Term;
+  ticketTokenLiteral: string;
   totalPrice: Schema.PriceSpecification;
   totalPriceLiteral: number | string;
   underName: Schema.Organization | Schema.Person;
@@ -29,8 +30,10 @@ export default function TicketMixin<Base extends Constructor>(Resource: Base) {
     ticketedSeat!: Schema.Seat;
     @property.literal()
     ticketNumber!: string;
-    @property.literal()
-    ticketToken!: string | string;
+    @property()
+    ticketToken!: rdf.Term;
+    @property.literal({ path: schema.ticketToken })
+    ticketTokenLiteral!: string;
     @property.resource()
     totalPrice!: Schema.PriceSpecification;
     @property.literal({ path: schema.totalPrice })

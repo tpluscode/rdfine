@@ -9,7 +9,7 @@ export interface UserComments extends Schema.UserInteraction, RdfResource {
   commentTime: Date | Date;
   creator: Schema.Organization | Schema.Person;
   discusses: Schema.CreativeWork;
-  replyToUrl: string;
+  replyToUrl: rdf.Term;
 }
 
 export default function UserCommentsMixin<Base extends Constructor>(Resource: Base) {
@@ -23,8 +23,8 @@ export default function UserCommentsMixin<Base extends Constructor>(Resource: Ba
     creator!: Schema.Organization | Schema.Person;
     @property.resource()
     discusses!: Schema.CreativeWork;
-    @property.literal()
-    replyToUrl!: string;
+    @property()
+    replyToUrl!: rdf.Term;
   }
   return UserCommentsClass
 }

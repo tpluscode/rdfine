@@ -40,7 +40,6 @@ export interface Organization extends Schema.Thing, RdfResource {
   location: Schema.Place | Schema.PostalAddress;
   locationLiteral: string;
   logo: Schema.ImageObject;
-  logoLiteral: string;
   makesOffer: Schema.Offer;
   member: Organization | Schema.Person;
   memberOf: Organization | Schema.ProgramMembership;
@@ -50,7 +49,6 @@ export interface Organization extends Schema.Thing, RdfResource {
   owns: Schema.OwnershipInfo | Schema.Product;
   parentOrganization: Organization;
   publishingPrinciples: Schema.CreativeWork;
-  publishingPrinciplesLiteral: string;
   review: Schema.Review;
   reviews: Schema.Review;
   seeks: Schema.Demand;
@@ -136,8 +134,6 @@ export default function OrganizationMixin<Base extends Constructor>(Resource: Ba
     locationLiteral!: string;
     @property.resource()
     logo!: Schema.ImageObject;
-    @property.literal({ path: schema.logo })
-    logoLiteral!: string;
     @property.resource()
     makesOffer!: Schema.Offer;
     @property.resource()
@@ -156,8 +152,6 @@ export default function OrganizationMixin<Base extends Constructor>(Resource: Ba
     parentOrganization!: Organization;
     @property.resource()
     publishingPrinciples!: Schema.CreativeWork;
-    @property.literal({ path: schema.publishingPrinciples })
-    publishingPrinciplesLiteral!: string;
     @property.resource()
     review!: Schema.Review;
     @property.resource()

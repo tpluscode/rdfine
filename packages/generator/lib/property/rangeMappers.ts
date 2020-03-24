@@ -1,18 +1,29 @@
-import { schema } from '@tpluscode/rdf-ns-builders'
 import { shrink } from '@zazuko/rdf-vocabularies'
 import { RangeMapper } from './index'
 import nameOf from '../util/nameOf'
+import { TypeMap } from '../index'
 
-export function defaultDatatypes(datatypes: Record<string, string>): RangeMapper {
+export function defaultDatatypes(datatypes: TypeMap): RangeMapper {
   return range => {
-    return datatypes[shrink(range.type.value)]
+    const mapped = datatypes[shrink(range.type.value)]
+    switch (mapped) {
+      case 'number':
+      case 'boolean':
+      case 'string':
+      case 'Date':
+        return datatypes[shrink(range.type.value)]
+      case 'NamedNode':
+        return `rdf.${mapped}`
+    }
+
+    return null
   }
 }
 
-export function schemaUrl(): RangeMapper {
+export function anyLiteral(): RangeMapper {
   return range => {
-    if (range.type.term.equals(schema.URL)) {
-      return 'RdfResource'
+    if (range.isLiteral) {
+      return 'string'
     }
 
     return null

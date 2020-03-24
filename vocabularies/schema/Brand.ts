@@ -7,7 +7,6 @@ import IntangibleMixin from './Intangible';
 export interface Brand extends Schema.Intangible, RdfResource {
   aggregateRating: Schema.AggregateRating;
   logo: Schema.ImageObject;
-  logoLiteral: string;
   review: Schema.Review;
   slogan: string;
 }
@@ -19,8 +18,6 @@ export default function BrandMixin<Base extends Constructor>(Resource: Base) {
     aggregateRating!: Schema.AggregateRating;
     @property.resource()
     logo!: Schema.ImageObject;
-    @property.literal({ path: schema.logo })
-    logoLiteral!: string;
     @property.resource()
     review!: Schema.Review;
     @property.literal()

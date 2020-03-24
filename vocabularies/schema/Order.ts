@@ -25,7 +25,7 @@ export interface Order extends Schema.Intangible, RdfResource {
   paymentDueDate: Date | Date;
   paymentMethod: Schema.PaymentMethod;
   paymentMethodId: string;
-  paymentUrl: string;
+  paymentUrl: rdf.Term;
   seller: Schema.Organization | Schema.Person;
 }
 
@@ -72,8 +72,8 @@ export default function OrderMixin<Base extends Constructor>(Resource: Base) {
     paymentMethod!: Schema.PaymentMethod;
     @property.literal()
     paymentMethodId!: string;
-    @property.literal()
-    paymentUrl!: string;
+    @property()
+    paymentUrl!: rdf.Term;
     @property.resource()
     seller!: Schema.Organization | Schema.Person;
   }

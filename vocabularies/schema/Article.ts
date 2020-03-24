@@ -11,7 +11,6 @@ export interface Article extends Schema.CreativeWork, RdfResource {
   pageStart: number | string;
   pagination: string;
   speakable: Schema.SpeakableSpecification;
-  speakableLiteral: string;
   wordCount: number;
 }
 
@@ -30,8 +29,6 @@ export default function ArticleMixin<Base extends Constructor>(Resource: Base) {
     pagination!: string;
     @property.resource()
     speakable!: Schema.SpeakableSpecification;
-    @property.literal({ path: schema.speakable })
-    speakableLiteral!: string;
     @property.literal({ type: Number })
     wordCount!: number;
   }

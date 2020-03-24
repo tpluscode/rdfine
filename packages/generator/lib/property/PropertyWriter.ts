@@ -43,6 +43,14 @@ export class PropertyWriter {
       rdfTerm = true
       this.__context.log.warn('Could not determine types for property %s', prop.name)
     } else {
+      if (propertyTypes.includes('rdf.NamedNode')) {
+        if (propertyTypes.length > 1) {
+          propertyTypes.splice(propertyTypes.indexOf('rdf.NamedNode'), 1, 'RdfResource')
+        } else {
+          rdfTerm = true
+        }
+      }
+
       type = propertyTypes.join(' | ')
       this.__context.log.debug('Generating Property %s => %s: %s', prop.term, prop.name, type)
     }

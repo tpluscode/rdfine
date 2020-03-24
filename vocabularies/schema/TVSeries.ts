@@ -19,7 +19,6 @@ export interface TVSeries extends Schema.CreativeWork, Schema.CreativeWorkSeries
   numberOfSeasons: number;
   productionCompany: Schema.Organization;
   season: Schema.CreativeWorkSeason;
-  seasonLiteral: string;
   seasons: Schema.CreativeWorkSeason;
   trailer: Schema.VideoObject;
 }
@@ -53,8 +52,6 @@ export default function TVSeriesMixin<Base extends Constructor>(Resource: Base) 
     productionCompany!: Schema.Organization;
     @property.resource()
     season!: Schema.CreativeWorkSeason;
-    @property.literal({ path: schema.season })
-    seasonLiteral!: string;
     @property.resource()
     seasons!: Schema.CreativeWorkSeason;
     @property.resource()

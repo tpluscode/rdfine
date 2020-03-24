@@ -16,9 +16,9 @@
   "rdfine": {
     "namespace": "http://schema.org/",
     "prefix": "schema",
-    "datatypes": {
+    "types": {
       "schema:CssSelectorType": "string",
-      "schema:URL": "string",
+      "schema:URL": "NamedNode",
       "schema:XPathType": "string"
     },
     "exclude": [
@@ -30,6 +30,7 @@
       "GeospatialGeometry",
       "MedicalBusiness",
       "PhysicalActivityCategory",
+      "URL",
       "VirtualLocation"
     ]
   },

@@ -12,7 +12,7 @@ export interface Vehicle extends Schema.Product, RdfResource {
   fuelConsumption: Schema.QuantitativeValue;
   fuelEfficiency: Schema.QuantitativeValue;
   fuelType: Schema.QualitativeValue;
-  fuelTypeLiteral: string | string;
+  fuelTypeLiteral: string;
   knownVehicleDamages: string;
   mileageFromOdometer: Schema.QuantitativeValue;
   numberOfAirbags: number | string;
@@ -36,7 +36,7 @@ export interface Vehicle extends Schema.Product, RdfResource {
   vehicleSeatingCapacity: Schema.QuantitativeValue;
   vehicleSeatingCapacityLiteral: number;
   vehicleTransmission: Schema.QualitativeValue;
-  vehicleTransmissionLiteral: string | string;
+  vehicleTransmissionLiteral: string;
 }
 
 export default function VehicleMixin<Base extends Constructor>(Resource: Base) {
@@ -57,7 +57,7 @@ export default function VehicleMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     fuelType!: Schema.QualitativeValue;
     @property.literal({ path: schema.fuelType })
-    fuelTypeLiteral!: string | string;
+    fuelTypeLiteral!: string;
     @property.literal()
     knownVehicleDamages!: string;
     @property.resource()
@@ -105,7 +105,7 @@ export default function VehicleMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     vehicleTransmission!: Schema.QualitativeValue;
     @property.literal({ path: schema.vehicleTransmission })
-    vehicleTransmissionLiteral!: string | string;
+    vehicleTransmissionLiteral!: string;
   }
   return VehicleClass
 }

@@ -9,7 +9,7 @@ export interface Course extends Schema.CreativeWork, RdfResource {
   coursePrerequisites: Schema.AlignmentObject | Course;
   coursePrerequisitesLiteral: string;
   educationalCredentialAwarded: rdf.Term;
-  educationalCredentialAwardedLiteral: string | string;
+  educationalCredentialAwardedLiteral: string;
   hasCourseInstance: Schema.CourseInstance;
 }
 
@@ -25,7 +25,7 @@ export default function CourseMixin<Base extends Constructor>(Resource: Base) {
     @property()
     educationalCredentialAwarded!: rdf.Term;
     @property.literal({ path: schema.educationalCredentialAwarded })
-    educationalCredentialAwardedLiteral!: string | string;
+    educationalCredentialAwardedLiteral!: string;
     @property.resource()
     hasCourseInstance!: Schema.CourseInstance;
   }

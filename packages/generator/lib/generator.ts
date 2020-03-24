@@ -13,14 +13,14 @@ import { enumerationStrategy } from './classStrategies/enumerationStrategy'
 import { mixinStrategy } from './classStrategies/mixinStrategy'
 import nameOf from './util/nameOf'
 import { defaultMappings } from './datatypes/defaultMappings'
-import { Context } from './index'
+import { Context, TypeMap } from './index'
 
 interface GeneratorOptions {
   stream: Stream
   namespace: string
   outDir: string
   prefix: string
-  datatypes: Record<string, string>
+  types: TypeMap
   exclude: string[]
 }
 
@@ -41,9 +41,9 @@ function assertOptions(options: Record<string, any>) {
 export async function generate(options: GeneratorOptions, log: Debugger) {
   assertOptions(options)
   const { namespace, stream, outDir, prefix } = options
-  const datatypeMappings = {
+  const typeMappings: TypeMap = {
     ...defaultMappings,
-    ...options.datatypes,
+    ...options.types,
   }
   const project = new Project({
     fileSystem: new FileSystem(outDir),
@@ -58,14 +58,14 @@ export async function generate(options: GeneratorOptions, log: Debugger) {
   const vocabulary = cf({ dataset })
   const classes = vocabulary
     .has(ns.rdf.type, ns.rdfs.Class)
-    .filter(clas => !isDatatype(clas, datatypeMappings))
+    .filter(clas => !isDatatype(clas, typeMappings))
 
   const context: Context = {
     vocabulary,
     prefix,
     namespace: nsBuilder(namespace),
     defaultExport: prefix.replace(/^\w/, first => first.toUpperCase()),
-    datatypeMappings,
+    typeMappings,
     excludedTypes: options.exclude,
     log: {
       debug: log,

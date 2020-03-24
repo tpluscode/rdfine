@@ -16,9 +16,8 @@ export interface VideoGameSeries extends Schema.CreativeWorkSeries, RdfResource 
   episodes: Schema.Episode;
   gameItem: Schema.Thing;
   gameLocation: Schema.Place | Schema.PostalAddress;
-  gameLocationLiteral: string;
   gamePlatform: Schema.Thing;
-  gamePlatformLiteral: string | string;
+  gamePlatformLiteral: string;
   musicBy: Schema.MusicGroup | Schema.Person;
   numberOfEpisodes: number;
   numberOfPlayers: Schema.QuantitativeValue;
@@ -27,7 +26,6 @@ export interface VideoGameSeries extends Schema.CreativeWorkSeries, RdfResource 
   productionCompany: Schema.Organization;
   quest: Schema.Thing;
   season: Schema.CreativeWorkSeason;
-  seasonLiteral: string;
   seasons: Schema.CreativeWorkSeason;
   trailer: Schema.VideoObject;
 }
@@ -57,12 +55,10 @@ export default function VideoGameSeriesMixin<Base extends Constructor>(Resource:
     gameItem!: Schema.Thing;
     @property.resource()
     gameLocation!: Schema.Place | Schema.PostalAddress;
-    @property.literal({ path: schema.gameLocation })
-    gameLocationLiteral!: string;
     @property.resource()
     gamePlatform!: Schema.Thing;
     @property.literal({ path: schema.gamePlatform })
-    gamePlatformLiteral!: string | string;
+    gamePlatformLiteral!: string;
     @property.resource()
     musicBy!: Schema.MusicGroup | Schema.Person;
     @property.literal({ type: Number })
@@ -79,8 +75,6 @@ export default function VideoGameSeriesMixin<Base extends Constructor>(Resource:
     quest!: Schema.Thing;
     @property.resource()
     season!: Schema.CreativeWorkSeason;
-    @property.literal({ path: schema.season })
-    seasonLiteral!: string;
     @property.resource()
     seasons!: Schema.CreativeWorkSeason;
     @property.resource()

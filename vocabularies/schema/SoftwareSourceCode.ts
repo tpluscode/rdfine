@@ -5,7 +5,7 @@ import type * as Schema from '.';
 import CreativeWorkMixin from './CreativeWork';
 
 export interface SoftwareSourceCode extends Schema.CreativeWork, RdfResource {
-  codeRepository: string;
+  codeRepository: rdf.Term;
   codeSampleType: string;
   programmingLanguage: Schema.ComputerLanguage;
   programmingLanguageLiteral: string;
@@ -18,8 +18,8 @@ export interface SoftwareSourceCode extends Schema.CreativeWork, RdfResource {
 export default function SoftwareSourceCodeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SoftwareSourceCodeClass extends CreativeWorkMixin(Resource) implements SoftwareSourceCode {
-    @property.literal()
-    codeRepository!: string;
+    @property()
+    codeRepository!: rdf.Term;
     @property.literal()
     codeSampleType!: string;
     @property.resource()

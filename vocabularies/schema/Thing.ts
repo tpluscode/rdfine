@@ -4,28 +4,26 @@ import { schema } from './lib/namespace';
 import type * as Schema from '.';
 
 export interface Thing extends RdfResource {
-  additionalType: string;
+  additionalType: rdf.Term;
   alternateName: string;
   description: string;
   disambiguatingDescription: string;
   identifier: Schema.PropertyValue;
-  identifierLiteral: string | string;
+  identifierLiteral: string;
   image: Schema.ImageObject;
-  imageLiteral: string;
   mainEntityOfPage: Schema.CreativeWork;
-  mainEntityOfPageLiteral: string;
   name: string;
   potentialAction: Schema.Action;
-  sameAs: string;
+  sameAs: rdf.Term;
   subjectOf: Schema.CreativeWork | Schema.Event;
-  url: string;
+  url: rdf.Term;
 }
 
 export default function ThingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ThingClass extends Resource implements Thing {
-    @property.literal()
-    additionalType!: string;
+    @property()
+    additionalType!: rdf.Term;
     @property.literal()
     alternateName!: string;
     @property.literal()
@@ -35,25 +33,21 @@ export default function ThingMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     identifier!: Schema.PropertyValue;
     @property.literal({ path: schema.identifier })
-    identifierLiteral!: string | string;
+    identifierLiteral!: string;
     @property.resource()
     image!: Schema.ImageObject;
-    @property.literal({ path: schema.image })
-    imageLiteral!: string;
     @property.resource()
     mainEntityOfPage!: Schema.CreativeWork;
-    @property.literal({ path: schema.mainEntityOfPage })
-    mainEntityOfPageLiteral!: string;
     @property.literal()
     name!: string;
     @property.resource()
     potentialAction!: Schema.Action;
-    @property.literal()
-    sameAs!: string;
+    @property()
+    sameAs!: rdf.Term;
     @property.resource()
     subjectOf!: Schema.CreativeWork | Schema.Event;
-    @property.literal()
-    url!: string;
+    @property()
+    url!: rdf.Term;
   }
   return ThingClass
 }

@@ -8,7 +8,8 @@ export interface UnitPriceSpecification extends Schema.PriceSpecification, RdfRe
   billingIncrement: number;
   priceType: string;
   referenceQuantity: Schema.QuantitativeValue;
-  unitCode: string | string;
+  unitCode: rdf.Term;
+  unitCodeLiteral: string;
   unitText: string;
 }
 
@@ -21,8 +22,10 @@ export default function UnitPriceSpecificationMixin<Base extends Constructor>(Re
     priceType!: string;
     @property.resource()
     referenceQuantity!: Schema.QuantitativeValue;
-    @property.literal()
-    unitCode!: string | string;
+    @property()
+    unitCode!: rdf.Term;
+    @property.literal({ path: schema.unitCode })
+    unitCodeLiteral!: string;
     @property.literal()
     unitText!: string;
   }

@@ -7,7 +7,8 @@ import ServiceMixin from './Service';
 export interface FinancialProduct extends Schema.Service, RdfResource {
   annualPercentageRate: Schema.QuantitativeValue;
   annualPercentageRateLiteral: number;
-  feesAndCommissionsSpecification: string | string;
+  feesAndCommissionsSpecification: rdf.Term;
+  feesAndCommissionsSpecificationLiteral: string;
   interestRate: Schema.QuantitativeValue;
   interestRateLiteral: number;
 }
@@ -19,8 +20,10 @@ export default function FinancialProductMixin<Base extends Constructor>(Resource
     annualPercentageRate!: Schema.QuantitativeValue;
     @property.literal({ type: Number, path: schema.annualPercentageRate })
     annualPercentageRateLiteral!: number;
-    @property.literal()
-    feesAndCommissionsSpecification!: string | string;
+    @property()
+    feesAndCommissionsSpecification!: rdf.Term;
+    @property.literal({ path: schema.feesAndCommissionsSpecification })
+    feesAndCommissionsSpecificationLiteral!: string;
     @property.resource()
     interestRate!: Schema.QuantitativeValue;
     @property.literal({ type: Number, path: schema.interestRate })

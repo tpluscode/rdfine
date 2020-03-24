@@ -6,7 +6,8 @@ import IntangibleMixin from './Intangible';
 
 export interface EntryPoint extends Schema.Intangible, RdfResource {
   actionApplication: Schema.SoftwareApplication;
-  actionPlatform: string | string;
+  actionPlatform: rdf.Term;
+  actionPlatformLiteral: string;
   application: Schema.SoftwareApplication;
   contentType: string;
   encodingType: string;
@@ -19,8 +20,10 @@ export default function EntryPointMixin<Base extends Constructor>(Resource: Base
   class EntryPointClass extends IntangibleMixin(Resource) implements EntryPoint {
     @property.resource()
     actionApplication!: Schema.SoftwareApplication;
-    @property.literal()
-    actionPlatform!: string | string;
+    @property()
+    actionPlatform!: rdf.Term;
+    @property.literal({ path: schema.actionPlatform })
+    actionPlatformLiteral!: string;
     @property.resource()
     application!: Schema.SoftwareApplication;
     @property.literal()

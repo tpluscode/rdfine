@@ -17,7 +17,6 @@ export interface Person extends Schema.Thing, RdfResource {
   brand: Schema.Brand | Schema.Organization;
   children: Person;
   colleague: Person;
-  colleagueLiteral: string;
   colleagues: Person;
   contactPoint: Schema.ContactPoint;
   contactPoints: Schema.ContactPoint;
@@ -51,7 +50,6 @@ export interface Person extends Schema.Thing, RdfResource {
   parents: Person;
   performerIn: Schema.Event;
   publishingPrinciples: Schema.CreativeWork;
-  publishingPrinciplesLiteral: string;
   relatedTo: Person;
   seeks: Schema.Demand;
   sibling: Person;
@@ -93,8 +91,6 @@ export default function PersonMixin<Base extends Constructor>(Resource: Base) {
     children!: Person;
     @property.resource()
     colleague!: Person;
-    @property.literal({ path: schema.colleague })
-    colleagueLiteral!: string;
     @property.resource()
     colleagues!: Person;
     @property.resource()
@@ -161,8 +157,6 @@ export default function PersonMixin<Base extends Constructor>(Resource: Base) {
     performerIn!: Schema.Event;
     @property.resource()
     publishingPrinciples!: Schema.CreativeWork;
-    @property.literal({ path: schema.publishingPrinciples })
-    publishingPrinciplesLiteral!: string;
     @property.resource()
     relatedTo!: Person;
     @property.resource()

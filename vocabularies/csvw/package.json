@@ -15,10 +15,7 @@
   },
   "rdfine": {
     "namespace": "http://www.w3.org/ns/csvw#",
-    "prefix": "csvw",
-    "datatypes": {
-      "csvw:uriTemplate": "string"
-    }
+    "prefix": "csvw"
   },
 	"dependencies": {
     "@tpluscode/rdfine": "^0.3.5",

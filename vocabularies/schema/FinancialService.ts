@@ -5,14 +5,17 @@ import type * as Schema from '.';
 import LocalBusinessMixin from './LocalBusiness';
 
 export interface FinancialService extends Schema.LocalBusiness, RdfResource {
-  feesAndCommissionsSpecification: string | string;
+  feesAndCommissionsSpecification: rdf.Term;
+  feesAndCommissionsSpecificationLiteral: string;
 }
 
 export default function FinancialServiceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class FinancialServiceClass extends LocalBusinessMixin(Resource) implements FinancialService {
-    @property.literal()
-    feesAndCommissionsSpecification!: string | string;
+    @property()
+    feesAndCommissionsSpecification!: rdf.Term;
+    @property.literal({ path: schema.feesAndCommissionsSpecification })
+    feesAndCommissionsSpecificationLiteral!: string;
   }
   return FinancialServiceClass
 }

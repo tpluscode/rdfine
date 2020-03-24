@@ -5,40 +5,51 @@ import type * as Schema from '.';
 import CreativeWorkMixin from './CreativeWork';
 
 export interface SoftwareApplication extends Schema.CreativeWork, RdfResource {
-  applicationCategory: string | string;
-  applicationSubCategory: string | string;
+  applicationCategory: rdf.Term;
+  applicationCategoryLiteral: string;
+  applicationSubCategory: rdf.Term;
+  applicationSubCategoryLiteral: string;
   applicationSuite: string;
   availableOnDevice: string;
   countriesNotSupported: string;
   countriesSupported: string;
   device: string;
-  downloadUrl: string;
-  featureList: string | string;
+  downloadUrl: rdf.Term;
+  featureList: rdf.Term;
+  featureListLiteral: string;
   fileSize: string;
-  installUrl: string;
-  memoryRequirements: string | string;
+  installUrl: rdf.Term;
+  memoryRequirements: rdf.Term;
+  memoryRequirementsLiteral: string;
   operatingSystem: string;
   permissions: string;
   processorRequirements: string;
-  releaseNotes: string | string;
-  requirements: string | string;
+  releaseNotes: rdf.Term;
+  releaseNotesLiteral: string;
+  requirements: rdf.Term;
+  requirementsLiteral: string;
   screenshot: Schema.ImageObject;
-  screenshotLiteral: string;
   softwareAddOn: SoftwareApplication;
   softwareHelp: Schema.CreativeWork;
-  softwareRequirements: string | string;
+  softwareRequirements: rdf.Term;
+  softwareRequirementsLiteral: string;
   softwareVersion: string;
-  storageRequirements: string | string;
+  storageRequirements: rdf.Term;
+  storageRequirementsLiteral: string;
   supportingData: Schema.DataFeed;
 }
 
 export default function SoftwareApplicationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SoftwareApplicationClass extends CreativeWorkMixin(Resource) implements SoftwareApplication {
-    @property.literal()
-    applicationCategory!: string | string;
-    @property.literal()
-    applicationSubCategory!: string | string;
+    @property()
+    applicationCategory!: rdf.Term;
+    @property.literal({ path: schema.applicationCategory })
+    applicationCategoryLiteral!: string;
+    @property()
+    applicationSubCategory!: rdf.Term;
+    @property.literal({ path: schema.applicationSubCategory })
+    applicationSubCategoryLiteral!: string;
     @property.literal()
     applicationSuite!: string;
     @property.literal()
@@ -49,40 +60,50 @@ export default function SoftwareApplicationMixin<Base extends Constructor>(Resou
     countriesSupported!: string;
     @property.literal()
     device!: string;
-    @property.literal()
-    downloadUrl!: string;
-    @property.literal()
-    featureList!: string | string;
+    @property()
+    downloadUrl!: rdf.Term;
+    @property()
+    featureList!: rdf.Term;
+    @property.literal({ path: schema.featureList })
+    featureListLiteral!: string;
     @property.literal()
     fileSize!: string;
-    @property.literal()
-    installUrl!: string;
-    @property.literal()
-    memoryRequirements!: string | string;
+    @property()
+    installUrl!: rdf.Term;
+    @property()
+    memoryRequirements!: rdf.Term;
+    @property.literal({ path: schema.memoryRequirements })
+    memoryRequirementsLiteral!: string;
     @property.literal()
     operatingSystem!: string;
     @property.literal()
     permissions!: string;
     @property.literal()
     processorRequirements!: string;
-    @property.literal()
-    releaseNotes!: string | string;
-    @property.literal()
-    requirements!: string | string;
+    @property()
+    releaseNotes!: rdf.Term;
+    @property.literal({ path: schema.releaseNotes })
+    releaseNotesLiteral!: string;
+    @property()
+    requirements!: rdf.Term;
+    @property.literal({ path: schema.requirements })
+    requirementsLiteral!: string;
     @property.resource()
     screenshot!: Schema.ImageObject;
-    @property.literal({ path: schema.screenshot })
-    screenshotLiteral!: string;
     @property.resource()
     softwareAddOn!: SoftwareApplication;
     @property.resource()
     softwareHelp!: Schema.CreativeWork;
-    @property.literal()
-    softwareRequirements!: string | string;
+    @property()
+    softwareRequirements!: rdf.Term;
+    @property.literal({ path: schema.softwareRequirements })
+    softwareRequirementsLiteral!: string;
     @property.literal()
     softwareVersion!: string;
-    @property.literal()
-    storageRequirements!: string | string;
+    @property()
+    storageRequirements!: rdf.Term;
+    @property.literal({ path: schema.storageRequirements })
+    storageRequirementsLiteral!: string;
     @property.resource()
     supportingData!: Schema.DataFeed;
   }

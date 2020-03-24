@@ -16,7 +16,7 @@ export interface ParcelDelivery extends Schema.Intangible, RdfResource {
   partOfOrder: Schema.Order;
   provider: Schema.Organization | Schema.Person;
   trackingNumber: string;
-  trackingUrl: string;
+  trackingUrl: rdf.Term;
 }
 
 export default function ParcelDeliveryMixin<Base extends Constructor>(Resource: Base) {
@@ -44,8 +44,8 @@ export default function ParcelDeliveryMixin<Base extends Constructor>(Resource: 
     provider!: Schema.Organization | Schema.Person;
     @property.literal()
     trackingNumber!: string;
-    @property.literal()
-    trackingUrl!: string;
+    @property()
+    trackingUrl!: rdf.Term;
   }
   return ParcelDeliveryClass
 }

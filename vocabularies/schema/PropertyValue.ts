@@ -7,8 +7,10 @@ import StructuredValueMixin from './StructuredValue';
 export interface PropertyValue extends Schema.StructuredValue, RdfResource {
   maxValue: number;
   minValue: number;
-  propertyID: string | string;
-  unitCode: string | string;
+  propertyID: rdf.Term;
+  propertyIDLiteral: string;
+  unitCode: rdf.Term;
+  unitCodeLiteral: string;
   unitText: string;
   value: Schema.StructuredValue;
   valueLiteral: boolean | number | string;
@@ -22,10 +24,14 @@ export default function PropertyValueMixin<Base extends Constructor>(Resource: B
     maxValue!: number;
     @property.literal({ type: Number })
     minValue!: number;
-    @property.literal()
-    propertyID!: string | string;
-    @property.literal()
-    unitCode!: string | string;
+    @property()
+    propertyID!: rdf.Term;
+    @property.literal({ path: schema.propertyID })
+    propertyIDLiteral!: string;
+    @property()
+    unitCode!: rdf.Term;
+    @property.literal({ path: schema.unitCode })
+    unitCodeLiteral!: string;
     @property.literal()
     unitText!: string;
     @property.resource()
