@@ -1,5 +1,5 @@
 > ## RDFine _/rɪdɪˈfaɪn/_
-### **RDF**/JS **i**diomatic, **n**ative, **e**njoyable
+> ### **RDF**/JS **i**diomatic, **n**ative, **e**njoyable
 ### [![NPM version](https://img.shields.io/npm/v/@tpluscode/rdfine.svg?style=flat-square)](https://www.npmjs.com/package/@tpluscode/rdfine) [![Build](https://travis-ci.org/tpluscode/rdfine.svg?branch=master)](https://travis-ci.org/tpluscode/rdfine) [![codecov.io](https://codecov.io/github/tpluscode/rdfine/coverage.svg?branch=master)](https://codecov.io/github/tpluscode/rdfine?branch=master)
 
 ## About
