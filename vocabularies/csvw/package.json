@@ -10,7 +10,6 @@
     "build": "run-s build:*",
     "build:node": "tsc -p tsconfig.build.json --outDir dist/node --target es2016 --module commonjs",
     "build:web": "tsc -p tsconfig.build.json --declaration",
-    "test": "jest --coverage",
     "generate": "rdf-vocab prefix csvw | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
   },
   "rdfine": {
