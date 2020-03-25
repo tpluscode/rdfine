@@ -1,7 +1,7 @@
 import cf from 'clownface'
 import $rdf from 'rdf-ext'
 import { defaultGraph } from '@rdfjs/data-model'
-import RdfResource from '../lib/RdfResource'
+import RdfResource, { initializeProperties } from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 
 const { ex } = vocabs
@@ -101,5 +101,27 @@ describe('RdfResource', () => {
         ]),
       )
     })
+  })
+})
+
+describe('initializeProperties', () => {
+  it('skips id and types properties', () => {
+    // given
+    interface Resource extends RdfResource {
+      name: string
+    }
+    const resource: Resource = {} as any
+
+    // when
+    initializeProperties<Resource>(resource, {
+      id: ex.Foo,
+      types: [ex.Bar],
+      name: 'baz',
+    } as any)
+
+    // then
+    expect(resource.name).toEqual('baz')
+    expect(resource).not.toHaveProperty('id')
+    expect(resource).not.toHaveProperty('types')
   })
 })
