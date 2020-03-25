@@ -17,7 +17,7 @@ describe('decorator', () => {
       }
 
       // when
-      const ns = WithNamespace.__ns()
+      const ns = WithNamespace.__ns!()
 
       // then
       expect(ns.value).toEqual('http://foo/')
@@ -31,7 +31,7 @@ describe('decorator', () => {
       }
 
       // when
-      const ns = WithNamespace.__ns()
+      const ns = WithNamespace.__ns!()
 
       // then
       expect(ns.value).toEqual(foaf('').value)
