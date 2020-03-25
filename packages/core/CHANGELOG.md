@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.3.6...@tpluscode/rdfine@0.3.7) (2020-03-25)
+
+
+### Bug Fixes
+
+* **core:** clownface used to create resource would fail ([02a4be9](https://github.com/tpluscode/rdfine/commit/02a4be97107d495fe0be62c2bb4073c6ae574403))
+* **core:** simplify resource initialization ([cfc6731](https://github.com/tpluscode/rdfine/commit/cfc673171c0b969b52b890d375aac093a4024093))
+
+
+
+
+
 ## 0.3.6 (2020-03-25)
 
 

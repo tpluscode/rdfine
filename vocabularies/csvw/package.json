@@ -1,6 +1,6 @@
 {
 	"name": "@rdfine/csvw",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"main": "dist/node/index.js",
 	"module": "index.js",
 	"types": "index.d.ts",
@@ -18,7 +18,7 @@
 	},
 	"dependencies": {
 		"@tpluscode/rdf-ns-builders": "^0.1.0",
-		"@tpluscode/rdfine": "^0.3.6"
+		"@tpluscode/rdfine": "^0.3.7"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -27,7 +27,7 @@
 		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
 		"@babel/preset-env": "^7.8.3",
 		"@babel/preset-typescript": "^7.8.3",
-		"@rdfine/generator": "^0.0.1",
+		"@rdfine/generator": "^0.0.2",
 		"@rdfjs/dataset": "^1.0.1",
 		"@types/clownface": "^0.12.8",
 		"@types/rdf-js": "^2.0.11",

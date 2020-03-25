@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.2](https://github.com/tpluscode/rdfine/compare/@rdfine/generator@0.0.1...@rdfine/generator@0.0.2) (2020-03-25)
+
+
+### Bug Fixes
+
+* **core:** simplify resource initialization ([cfc6731](https://github.com/tpluscode/rdfine/commit/cfc673171c0b969b52b890d375aac093a4024093))
+
+
+
+
+
 ## 0.0.1 (2020-03-25)
 
 
