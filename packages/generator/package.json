@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/generator",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Generates rdfine entities from RDF vocabulary",
   "main": "index.js",
   "bin": {
@@ -14,7 +14,6 @@
     "build": "tsc"
   },
   "dependencies": {
-    "rdf-ext": "^1.3.0",
     "@rdfjs/formats-common": "^2.1.0",
     "@rdfjs/namespace": "^1.1.0",
     "@tpluscode/rdf-ns-builders": "^0.1.0",
@@ -22,6 +21,7 @@
     "commander": "^5.0.0",
     "debug": "^4.1.1",
     "pkg-up": "^3.1.0",
+    "rdf-ext": "^1.3.0",
     "ts-morph": "^7.0.0"
   },
   "devDependencies": {

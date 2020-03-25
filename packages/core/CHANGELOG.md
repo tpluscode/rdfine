@@ -1,3 +1,27 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 0.3.6 (2020-03-25)
+
+
+### Bug Fixes
+
+* **core:** plain intialization impossible with union type properties ([a545e48](https://github.com/tpluscode/rdfine/commit/a545e485b1827df15788ffacfe6907b408bd5de1))
+* simplify the creation of resources ([1077cb1](https://github.com/tpluscode/rdfine/commit/1077cb1681b600961b5947e1f24aea52f3b2b85e))
+
+
+### Features
+
+* **generator:** create classes which can be easily initialized ([3fb0900](https://github.com/tpluscode/rdfine/commit/3fb090087cc7feba2c1cc258bb3db46a52f363d5))
+* first draft of schema.org package ([feaa2df](https://github.com/tpluscode/rdfine/commit/feaa2df9418bd763dea1c006a1ba6aab988f8781))
+* handle deep initialization from plain object ([0fd30af](https://github.com/tpluscode/rdfine/commit/0fd30af410d7cc0462ce78868da6f383c21305f1))
+
+
+
+
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
