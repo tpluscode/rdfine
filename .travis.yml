@@ -6,7 +6,6 @@ node_js:
 script:
 - npm test
 - lerna run build
-- npm run example
 after_success:
 - npx codecov
 after_failure:
