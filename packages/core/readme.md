@@ -46,8 +46,9 @@ ex:john a schema:Person ;
 You want to create a JS object model to access that data
 
 ```typescript
+import {schema} from '@tpluscode/rdf-ns-builders'
 import { namedNode } from '@rdfjs/data-model'
-import { RdfResourceImpl } from '@tpluscode/rdfine'
+import { RdfResourceImpl, fromObject } from '@tpluscode/rdfine'
 import { loadData } from './data/person'
 import { Person, PersonMixin } from './model/Person'
 
@@ -62,7 +63,11 @@ const john = RdfResourceImpl.factory.createEntity<Person>({
 
 // modify the dataset through JS objects
 john.nationality = "United States of America"
-john.spouse.name = "Jane Doe"
+// also with deep graph modifications
+john.spouse = fromObject({
+  types: [schema.Person],
+  name: 'Jane Doe',
+})
 
 // get the modified dataset, always in sync
 const dataset = john._selfGraph.dataset
