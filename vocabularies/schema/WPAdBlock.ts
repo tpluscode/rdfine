@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import WebPageElementMixin from './WebPageElement';
 
@@ -16,10 +16,9 @@ export default function WPAdBlockMixin<Base extends Constructor>(Resource: Base)
 }
 
 class WPAdBlockImpl extends WPAdBlockMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<WPAdBlock>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<WPAdBlock>) {
+    super(arg, init)
     this.types.add(schema.WPAdBlock)
-    initializeProperties<WPAdBlock>(this, init)
   }
 }
 WPAdBlockMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WPAdBlock)

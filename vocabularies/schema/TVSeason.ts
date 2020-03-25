@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import CreativeWorkMixin from './CreativeWork';
 import CreativeWorkSeasonMixin from './CreativeWorkSeason';
@@ -23,10 +23,9 @@ export default function TVSeasonMixin<Base extends Constructor>(Resource: Base) 
 }
 
 class TVSeasonImpl extends TVSeasonMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<TVSeason>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<TVSeason>) {
+    super(arg, init)
     this.types.add(schema.TVSeason)
-    initializeProperties<TVSeason>(this, init)
   }
 }
 TVSeasonMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TVSeason)

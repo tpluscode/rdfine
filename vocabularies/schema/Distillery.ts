@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import FoodEstablishmentMixin from './FoodEstablishment';
 
@@ -16,10 +16,9 @@ export default function DistilleryMixin<Base extends Constructor>(Resource: Base
 }
 
 class DistilleryImpl extends DistilleryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Distillery>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Distillery>) {
+    super(arg, init)
     this.types.add(schema.Distillery)
-    initializeProperties<Distillery>(this, init)
   }
 }
 DistilleryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Distillery)

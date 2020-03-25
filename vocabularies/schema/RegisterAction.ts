@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import InteractActionMixin from './InteractAction';
 
@@ -16,10 +16,9 @@ export default function RegisterActionMixin<Base extends Constructor>(Resource: 
 }
 
 class RegisterActionImpl extends RegisterActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<RegisterAction>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<RegisterAction>) {
+    super(arg, init)
     this.types.add(schema.RegisterAction)
-    initializeProperties<RegisterAction>(this, init)
   }
 }
 RegisterActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RegisterAction)

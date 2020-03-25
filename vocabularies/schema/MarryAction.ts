@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import InteractActionMixin from './InteractAction';
 
@@ -16,10 +16,9 @@ export default function MarryActionMixin<Base extends Constructor>(Resource: Bas
 }
 
 class MarryActionImpl extends MarryActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<MarryAction>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<MarryAction>) {
+    super(arg, init)
     this.types.add(schema.MarryAction)
-    initializeProperties<MarryAction>(this, init)
   }
 }
 MarryActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MarryAction)

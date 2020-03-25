@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import EventMixin from './Event';
 
@@ -16,10 +16,9 @@ export default function MusicEventMixin<Base extends Constructor>(Resource: Base
 }
 
 class MusicEventImpl extends MusicEventMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<MusicEvent>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<MusicEvent>) {
+    super(arg, init)
     this.types.add(schema.MusicEvent)
-    initializeProperties<MusicEvent>(this, init)
   }
 }
 MusicEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MusicEvent)

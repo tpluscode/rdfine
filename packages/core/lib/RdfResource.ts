@@ -29,7 +29,19 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   public static __ns?: any
   public static factory: ResourceFactory = new ResourceFactoryImpl(RdfResourceImpl)
 
-  public constructor(graph: ResourceNode<D>) {
+  private static _userInitializeProperties(resource: RdfResourceImpl, init: Initializer<any> = {}): void {
+    Object.entries(init as any)
+      .filter(([prop]) => prop !== 'id' && prop !== 'types')
+      .forEach(([prop, value]) => {
+        (resource as any)[prop] = value
+      })
+
+    if (init.types && Array.isArray(init.types)) {
+      init.types.forEach(type => resource.types.add(type))
+    }
+  }
+
+  public constructor(graph: ResourceNode<D>, init: Initializer<any> = {}) {
     let selfGraph: SingleContextClownface<D, ResourceIdentifier>
 
     if ('_context' in graph) {
@@ -80,6 +92,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     })
 
     this.__initialized = this.__initializeProperties()
+    RdfResourceImpl._userInitializeProperties(this, init)
   }
 
   public get id(): ResourceIdentifier {
@@ -124,21 +137,9 @@ export type Initializer<T> = Partial<Omit<{
     T[P] extends RdfResource ? Initializer<UserDefinedInterface<T[P]> & BaseInitializer> :
       T[P]
 }, keyof RdfResource>> & BaseInitializer
-export type PropertyInitializer<T extends RdfResource> = {
-  [P in keyof T]?:
-  T[P] extends RdfResource ? Initializer<UserDefinedInterface<T[P]>> : T[P]
-}
 
 type PartialRecursive<T> = T extends object ? { [K in keyof T]?: PartialRecursive<T[K]> } : T
 
 export function fromObject<T extends RdfResource>(initializer: Initializer<UserDefinedInterface<T> & BaseInitializer>): T {
   return initializer as unknown as T
-}
-
-export function initializeProperties<T extends RdfResource>(resource: T, init: PropertyInitializer<T> = {}): void {
-  Object.entries(init as any)
-    .filter(([prop]) => prop !== 'id' && prop !== 'types')
-    .forEach(([prop, value]) => {
-      (resource as any)[prop] = value
-    })
 }

@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import FinancialServiceMixin from './FinancialService';
 
@@ -16,10 +16,9 @@ export default function InsuranceAgencyMixin<Base extends Constructor>(Resource:
 }
 
 class InsuranceAgencyImpl extends InsuranceAgencyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<InsuranceAgency>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<InsuranceAgency>) {
+    super(arg, init)
     this.types.add(schema.InsuranceAgency)
-    initializeProperties<InsuranceAgency>(this, init)
   }
 }
 InsuranceAgencyMixin.shouldApply = (r: RdfResource) => r.types.has(schema.InsuranceAgency)

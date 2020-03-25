@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import TripMixin from './Trip';
 
@@ -34,10 +34,9 @@ export default function TrainTripMixin<Base extends Constructor>(Resource: Base)
 }
 
 class TrainTripImpl extends TrainTripMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<TrainTrip>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<TrainTrip>) {
+    super(arg, init)
     this.types.add(schema.TrainTrip)
-    initializeProperties<TrainTrip>(this, init)
   }
 }
 TrainTripMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TrainTrip)

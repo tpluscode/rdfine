@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import EventMixin from './Event';
 
@@ -28,10 +28,9 @@ export default function DeliveryEventMixin<Base extends Constructor>(Resource: B
 }
 
 class DeliveryEventImpl extends DeliveryEventMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<DeliveryEvent>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<DeliveryEvent>) {
+    super(arg, init)
     this.types.add(schema.DeliveryEvent)
-    initializeProperties<DeliveryEvent>(this, init)
   }
 }
 DeliveryEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DeliveryEvent)

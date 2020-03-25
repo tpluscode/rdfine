@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import StoreMixin from './Store';
 
@@ -16,10 +16,9 @@ export default function MobilePhoneStoreMixin<Base extends Constructor>(Resource
 }
 
 class MobilePhoneStoreImpl extends MobilePhoneStoreMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<MobilePhoneStore>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<MobilePhoneStore>) {
+    super(arg, init)
     this.types.add(schema.MobilePhoneStore)
-    initializeProperties<MobilePhoneStore>(this, init)
   }
 }
 MobilePhoneStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MobilePhoneStore)

@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import LegalServiceMixin from './LegalService';
 
@@ -16,10 +16,9 @@ export default function NotaryMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class NotaryImpl extends NotaryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Notary>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Notary>) {
+    super(arg, init)
     this.types.add(schema.Notary)
-    initializeProperties<Notary>(this, init)
   }
 }
 NotaryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Notary)

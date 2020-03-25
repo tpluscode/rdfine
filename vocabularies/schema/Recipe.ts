@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import HowToMixin from './HowTo';
 
@@ -52,10 +52,9 @@ export default function RecipeMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class RecipeImpl extends RecipeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Recipe>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Recipe>) {
+    super(arg, init)
     this.types.add(schema.Recipe)
-    initializeProperties<Recipe>(this, init)
   }
 }
 RecipeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Recipe)

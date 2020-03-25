@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import AutomotiveBusinessMixin from './AutomotiveBusiness';
 
@@ -16,10 +16,9 @@ export default function MotorcycleRepairMixin<Base extends Constructor>(Resource
 }
 
 class MotorcycleRepairImpl extends MotorcycleRepairMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<MotorcycleRepair>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<MotorcycleRepair>) {
+    super(arg, init)
     this.types.add(schema.MotorcycleRepair)
-    initializeProperties<MotorcycleRepair>(this, init)
   }
 }
 MotorcycleRepairMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MotorcycleRepair)

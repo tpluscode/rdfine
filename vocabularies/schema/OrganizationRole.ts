@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import RoleMixin from './Role';
 
@@ -19,10 +19,9 @@ export default function OrganizationRoleMixin<Base extends Constructor>(Resource
 }
 
 class OrganizationRoleImpl extends OrganizationRoleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<OrganizationRole>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<OrganizationRole>) {
+    super(arg, init)
     this.types.add(schema.OrganizationRole)
-    initializeProperties<OrganizationRole>(this, init)
   }
 }
 OrganizationRoleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.OrganizationRole)

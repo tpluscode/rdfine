@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import ActionMixin from './Action';
 
@@ -19,10 +19,9 @@ export default function SearchActionMixin<Base extends Constructor>(Resource: Ba
 }
 
 class SearchActionImpl extends SearchActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<SearchAction>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<SearchAction>) {
+    super(arg, init)
     this.types.add(schema.SearchAction)
-    initializeProperties<SearchAction>(this, init)
   }
 }
 SearchActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SearchAction)

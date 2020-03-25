@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import CreateActionMixin from './CreateAction';
 
@@ -16,10 +16,9 @@ export default function PhotographActionMixin<Base extends Constructor>(Resource
 }
 
 class PhotographActionImpl extends PhotographActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<PhotographAction>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<PhotographAction>) {
+    super(arg, init)
     this.types.add(schema.PhotographAction)
-    initializeProperties<PhotographAction>(this, init)
   }
 }
 PhotographActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PhotographAction)

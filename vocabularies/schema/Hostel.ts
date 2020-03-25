@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import LodgingBusinessMixin from './LodgingBusiness';
 
@@ -16,10 +16,9 @@ export default function HostelMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class HostelImpl extends HostelMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Hostel>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Hostel>) {
+    super(arg, init)
     this.types.add(schema.Hostel)
-    initializeProperties<Hostel>(this, init)
   }
 }
 HostelMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Hostel)

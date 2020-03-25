@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import CivicStructureMixin from './CivicStructure';
 
@@ -16,10 +16,9 @@ export default function AquariumMixin<Base extends Constructor>(Resource: Base) 
 }
 
 class AquariumImpl extends AquariumMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Aquarium>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Aquarium>) {
+    super(arg, init)
     this.types.add(schema.Aquarium)
-    initializeProperties<Aquarium>(this, init)
   }
 }
 AquariumMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Aquarium)

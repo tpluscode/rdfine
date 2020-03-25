@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import TradeActionMixin from './TradeAction';
 
@@ -19,10 +19,9 @@ export default function DonateActionMixin<Base extends Constructor>(Resource: Ba
 }
 
 class DonateActionImpl extends DonateActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<DonateAction>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<DonateAction>) {
+    super(arg, init)
     this.types.add(schema.DonateAction)
-    initializeProperties<DonateAction>(this, init)
   }
 }
 DonateActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DonateAction)

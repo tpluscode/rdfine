@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import ArticleMixin from './Article';
 
@@ -19,10 +19,9 @@ export default function SocialMediaPostingMixin<Base extends Constructor>(Resour
 }
 
 class SocialMediaPostingImpl extends SocialMediaPostingMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<SocialMediaPosting>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<SocialMediaPosting>) {
+    super(arg, init)
     this.types.add(schema.SocialMediaPosting)
-    initializeProperties<SocialMediaPosting>(this, init)
   }
 }
 SocialMediaPostingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SocialMediaPosting)

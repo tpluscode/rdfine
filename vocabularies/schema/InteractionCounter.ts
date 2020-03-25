@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import StructuredValueMixin from './StructuredValue';
 
@@ -25,10 +25,9 @@ export default function InteractionCounterMixin<Base extends Constructor>(Resour
 }
 
 class InteractionCounterImpl extends InteractionCounterMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<InteractionCounter>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<InteractionCounter>) {
+    super(arg, init)
     this.types.add(schema.InteractionCounter)
-    initializeProperties<InteractionCounter>(this, init)
   }
 }
 InteractionCounterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.InteractionCounter)

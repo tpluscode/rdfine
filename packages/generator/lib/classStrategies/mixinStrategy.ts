@@ -89,7 +89,7 @@ export const mixinStrategy: ModuleStrategy = {
       .filter(superClass => !exclude.includes(nameOf.term(superClass)))
     const classProperties = properties.findProperties({ clas }, context)
 
-    const rdfineImports = ['Constructor', 'namespace', 'RdfResource', 'RdfResourceImpl', 'initializeProperties']
+    const rdfineImports = ['Constructor', 'namespace', 'RdfResource', 'RdfResourceImpl']
     if (classProperties.some(Boolean)) {
       rdfineImports.push('property')
     }
@@ -107,7 +107,7 @@ export const mixinStrategy: ModuleStrategy = {
       moduleSpecifier: './lib/namespace',
     })
     mixinFile.addImportDeclaration({
-      namedImports: ['PropertyInitializer', 'ResourceNode'],
+      namedImports: ['Initializer', 'ResourceNode'],
       moduleSpecifier: '@tpluscode/rdfine/lib/RdfResource',
       isTypeOnly: true,
     })
@@ -146,11 +146,10 @@ export const mixinStrategy: ModuleStrategy = {
     implementationClass.addConstructor({
       parameters: [
         { name: 'arg', type: 'ResourceNode' },
-        { name: 'init', type: `PropertyInitializer<${name}>`, hasQuestionToken: true }],
+        { name: 'init', type: `Initializer<${name}>`, hasQuestionToken: true }],
       statements: [
-        'super(arg)',
+        'super(arg, init)',
         `this.types.add(${context.prefix}.${name})`,
-        `initializeProperties<${name}>(this, init)`,
       ],
     })
 

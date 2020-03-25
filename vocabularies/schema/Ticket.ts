@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
@@ -46,10 +46,9 @@ export default function TicketMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class TicketImpl extends TicketMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Ticket>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Ticket>) {
+    super(arg, init)
     this.types.add(schema.Ticket)
-    initializeProperties<Ticket>(this, init)
   }
 }
 TicketMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Ticket)

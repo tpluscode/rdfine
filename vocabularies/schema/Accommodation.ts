@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import PlaceMixin from './Place';
 
@@ -34,10 +34,9 @@ export default function AccommodationMixin<Base extends Constructor>(Resource: B
 }
 
 class AccommodationImpl extends AccommodationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Accommodation>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Accommodation>) {
+    super(arg, init)
     this.types.add(schema.Accommodation)
-    initializeProperties<Accommodation>(this, init)
   }
 }
 AccommodationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Accommodation)

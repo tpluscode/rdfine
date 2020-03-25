@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { csvw } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Csvw from '.';
 
 export interface Transformation extends RdfResource {
@@ -30,10 +30,9 @@ export default function TransformationMixin<Base extends Constructor>(Resource: 
 }
 
 class TransformationImpl extends TransformationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Transformation>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Transformation>) {
+    super(arg, init)
     this.types.add(csvw.Transformation)
-    initializeProperties<Transformation>(this, init)
   }
 }
 TransformationMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Transformation)

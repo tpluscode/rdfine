@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import ReservationMixin from './Reservation';
 
@@ -28,10 +28,9 @@ export default function FoodEstablishmentReservationMixin<Base extends Construct
 }
 
 class FoodEstablishmentReservationImpl extends FoodEstablishmentReservationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<FoodEstablishmentReservation>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<FoodEstablishmentReservation>) {
+    super(arg, init)
     this.types.add(schema.FoodEstablishmentReservation)
-    initializeProperties<FoodEstablishmentReservation>(this, init)
   }
 }
 FoodEstablishmentReservationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FoodEstablishmentReservation)

@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import UserInteractionMixin from './UserInteraction';
 
@@ -31,10 +31,9 @@ export default function UserCommentsMixin<Base extends Constructor>(Resource: Ba
 }
 
 class UserCommentsImpl extends UserCommentsMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<UserComments>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<UserComments>) {
+    super(arg, init)
     this.types.add(schema.UserComments)
-    initializeProperties<UserComments>(this, init)
   }
 }
 UserCommentsMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UserComments)

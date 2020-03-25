@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import LocalBusinessMixin from './LocalBusiness';
 
@@ -16,10 +16,9 @@ export default function LegalServiceMixin<Base extends Constructor>(Resource: Ba
 }
 
 class LegalServiceImpl extends LegalServiceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<LegalService>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<LegalService>) {
+    super(arg, init)
     this.types.add(schema.LegalService)
-    initializeProperties<LegalService>(this, init)
   }
 }
 LegalServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LegalService)

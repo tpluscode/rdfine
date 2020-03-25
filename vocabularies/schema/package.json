@@ -1,83 +1,83 @@
 {
-		"name": "@rdfine/schema",
-		"version": "0.0.1",
-		"main": "dist/node/index.js",
-		"module": "index.js",
-		"types": "index.d.ts",
-		"scripts": {
-				"prepack": "npm run build",
-				"clean": "find . -name '*.ts' -maxdepth 1 -delete",
-				"build": "run-s build:*",
-				"build:node": "tsc -p tsconfig.build.json --outDir dist/node --target es2016 --module commonjs",
-				"build:web": "tsc -p tsconfig.build.json --declaration",
-				"test": "jest",
-				"generate": "rdf-vocab prefix schema | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
-		},
-		"rdfine": {
-				"namespace": "http://schema.org/",
-				"prefix": "schema",
-				"types": {
-						"schema:CssSelectorType": "string",
-						"schema:URL": "NamedNode",
-						"schema:XPathType": "string"
-				},
-				"exclude": [
-						"Class",
-						"DataType",
-						"DefinedTerm",
-						"EducationalOccupationalCredential",
-						"Enumeration",
-						"GeospatialGeometry",
-						"MedicalBusiness",
-						"PhysicalActivityCategory",
-						"URL",
-						"VirtualLocation"
-				]
-		},
-		"dependencies": {
-				"@tpluscode/rdf-ns-builders": "^0.1.0",
-				"@tpluscode/rdfine": "^0.3.6"
-		},
-		"devDependencies": {
-				"@babel/plugin-proposal-class-properties": "^7.8.3",
-				"@babel/plugin-proposal-decorators": "^7.8.3",
-				"@babel/plugin-proposal-object-rest-spread": "^7.8.3",
-				"@babel/plugin-proposal-optional-chaining": "^7.8.3",
-				"@babel/preset-env": "^7.8.3",
-				"@babel/preset-typescript": "^7.8.3",
-				"@rdfine/generator": "^0.0.1",
-				"@rdfjs/dataset": "^1.0.1",
-				"@types/clownface": "^0.12.8",
-				"@types/rdf-js": "^2.0.11",
-				"@types/rdfjs__dataset": "^1.0.0",
-				"@zazuko/rdf-vocabularies": "^2020.3.23",
-				"clownface": "^0.12.1",
-				"eslint": "^6.8.0",
-				"jest": "^25.1.0",
-				"npm-run-all": "^4.1.5",
-				"ts-jest": "^25.2.1",
-				"ts-node": "^8.8.1",
-				"typescript": "next"
-		},
-		"repository": {
-				"type": "git",
-				"url": "git+https://github.com/tpluscode/rdfine.git"
-		},
-		"publishConfig": {
-				"access": "public"
-		},
-		"keywords": [
-				"rdf",
-				"rdfjs",
-				"entity",
-				"decorator",
-				"clownface",
-				"graph"
-		],
-		"author": "tpluscode",
-		"license": "MIT",
-		"bugs": {
-				"url": "https://github.com/tpluscode/rdfine/issues"
-		},
-		"homepage": "https://github.com/tpluscode/rdfine#readme"
+  "name": "@rdfine/schema",
+  "version": "0.0.1",
+  "main": "dist/node/index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "prepack": "npm run build",
+    "clean": "find . -name '*.ts' -maxdepth 1 -delete",
+    "build": "run-s build:*",
+    "build:node": "tsc -p tsconfig.build.json --outDir dist/node --target es2016 --module commonjs",
+    "build:web": "tsc -p tsconfig.build.json --declaration",
+    "test": "jest",
+    "generate": "rdf-vocab prefix schema | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
+  },
+  "rdfine": {
+    "namespace": "http://schema.org/",
+    "prefix": "schema",
+    "types": {
+      "schema:CssSelectorType": "string",
+      "schema:URL": "NamedNode",
+      "schema:XPathType": "string"
+    },
+    "exclude": [
+      "Class",
+      "DataType",
+      "DefinedTerm",
+      "EducationalOccupationalCredential",
+      "Enumeration",
+      "GeospatialGeometry",
+      "MedicalBusiness",
+      "PhysicalActivityCategory",
+      "URL",
+      "VirtualLocation"
+    ]
+  },
+  "dependencies": {
+    "@tpluscode/rdf-ns-builders": "^0.1.0",
+    "@tpluscode/rdfine": "^0.3.6"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@rdfine/generator": "^0.0.1",
+    "@rdfjs/dataset": "^1.0.1",
+    "@types/clownface": "^0.12.8",
+    "@types/rdf-js": "^2.0.11",
+    "@types/rdfjs__dataset": "^1.0.0",
+    "@zazuko/rdf-vocabularies": "^2020.3.23",
+    "clownface": "^0.12.1",
+    "eslint": "^6.8.0",
+    "jest": "^25.1.0",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^25.2.1",
+    "ts-node": "^8.8.1",
+    "typescript": "next"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tpluscode/rdfine.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "rdf",
+    "rdfjs",
+    "entity",
+    "decorator",
+    "clownface",
+    "graph"
+  ],
+  "author": "tpluscode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tpluscode/rdfine/issues"
+  },
+  "homepage": "https://github.com/tpluscode/rdfine#readme"
 }

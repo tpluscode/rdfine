@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import InteractActionMixin from './InteractAction';
 
@@ -19,10 +19,9 @@ export default function LeaveActionMixin<Base extends Constructor>(Resource: Bas
 }
 
 class LeaveActionImpl extends LeaveActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<LeaveAction>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<LeaveAction>) {
+    super(arg, init)
     this.types.add(schema.LeaveAction)
-    initializeProperties<LeaveAction>(this, init)
   }
 }
 LeaveActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LeaveAction)

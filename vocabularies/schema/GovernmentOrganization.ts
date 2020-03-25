@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import OrganizationMixin from './Organization';
 
@@ -16,10 +16,9 @@ export default function GovernmentOrganizationMixin<Base extends Constructor>(Re
 }
 
 class GovernmentOrganizationImpl extends GovernmentOrganizationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<GovernmentOrganization>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<GovernmentOrganization>) {
+    super(arg, init)
     this.types.add(schema.GovernmentOrganization)
-    initializeProperties<GovernmentOrganization>(this, init)
   }
 }
 GovernmentOrganizationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GovernmentOrganization)

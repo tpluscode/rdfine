@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import UpdateActionMixin from './UpdateAction';
 
@@ -16,10 +16,9 @@ export default function DeleteActionMixin<Base extends Constructor>(Resource: Ba
 }
 
 class DeleteActionImpl extends DeleteActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<DeleteAction>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<DeleteAction>) {
+    super(arg, init)
     this.types.add(schema.DeleteAction)
-    initializeProperties<DeleteAction>(this, init)
   }
 }
 DeleteActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DeleteAction)

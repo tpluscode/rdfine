@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import QuantitativeValueDistributionMixin from './QuantitativeValueDistribution';
 
@@ -19,10 +19,9 @@ export default function MonetaryAmountDistributionMixin<Base extends Constructor
 }
 
 class MonetaryAmountDistributionImpl extends MonetaryAmountDistributionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<MonetaryAmountDistribution>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<MonetaryAmountDistribution>) {
+    super(arg, init)
     this.types.add(schema.MonetaryAmountDistribution)
-    initializeProperties<MonetaryAmountDistribution>(this, init)
   }
 }
 MonetaryAmountDistributionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MonetaryAmountDistribution)

@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import MediaGalleryMixin from './MediaGallery';
 
@@ -16,10 +16,9 @@ export default function VideoGalleryMixin<Base extends Constructor>(Resource: Ba
 }
 
 class VideoGalleryImpl extends VideoGalleryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<VideoGallery>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<VideoGallery>) {
+    super(arg, init)
     this.types.add(schema.VideoGallery)
-    initializeProperties<VideoGallery>(this, init)
   }
 }
 VideoGalleryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.VideoGallery)

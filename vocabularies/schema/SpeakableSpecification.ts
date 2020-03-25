@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
@@ -22,10 +22,9 @@ export default function SpeakableSpecificationMixin<Base extends Constructor>(Re
 }
 
 class SpeakableSpecificationImpl extends SpeakableSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<SpeakableSpecification>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<SpeakableSpecification>) {
+    super(arg, init)
     this.types.add(schema.SpeakableSpecification)
-    initializeProperties<SpeakableSpecification>(this, init)
   }
 }
 SpeakableSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SpeakableSpecification)

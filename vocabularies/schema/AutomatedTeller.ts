@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import FinancialServiceMixin from './FinancialService';
 
@@ -16,10 +16,9 @@ export default function AutomatedTellerMixin<Base extends Constructor>(Resource:
 }
 
 class AutomatedTellerImpl extends AutomatedTellerMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<AutomatedTeller>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<AutomatedTeller>) {
+    super(arg, init)
     this.types.add(schema.AutomatedTeller)
-    initializeProperties<AutomatedTeller>(this, init)
   }
 }
 AutomatedTellerMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AutomatedTeller)

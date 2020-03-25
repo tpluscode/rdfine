@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import CivicStructureMixin from './CivicStructure';
 import EmergencyServiceMixin from './EmergencyService';
@@ -18,10 +18,9 @@ export default function HospitalMixin<Base extends Constructor>(Resource: Base) 
 }
 
 class HospitalImpl extends HospitalMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Hospital>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Hospital>) {
+    super(arg, init)
     this.types.add(schema.Hospital)
-    initializeProperties<Hospital>(this, init)
   }
 }
 HospitalMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Hospital)

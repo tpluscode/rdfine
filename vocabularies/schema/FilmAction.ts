@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import CreateActionMixin from './CreateAction';
 
@@ -16,10 +16,9 @@ export default function FilmActionMixin<Base extends Constructor>(Resource: Base
 }
 
 class FilmActionImpl extends FilmActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<FilmAction>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<FilmAction>) {
+    super(arg, init)
     this.types.add(schema.FilmAction)
-    initializeProperties<FilmAction>(this, init)
   }
 }
 FilmActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FilmAction)

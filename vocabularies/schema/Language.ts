@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
@@ -16,10 +16,9 @@ export default function LanguageMixin<Base extends Constructor>(Resource: Base) 
 }
 
 class LanguageImpl extends LanguageMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Language>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Language>) {
+    super(arg, init)
     this.types.add(schema.Language)
-    initializeProperties<Language>(this, init)
   }
 }
 LanguageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Language)

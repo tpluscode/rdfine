@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import HealthAndBeautyBusinessMixin from './HealthAndBeautyBusiness';
 import SportsActivityLocationMixin from './SportsActivityLocation';
@@ -17,10 +17,9 @@ export default function HealthClubMixin<Base extends Constructor>(Resource: Base
 }
 
 class HealthClubImpl extends HealthClubMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<HealthClub>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<HealthClub>) {
+    super(arg, init)
     this.types.add(schema.HealthClub)
-    initializeProperties<HealthClub>(this, init)
   }
 }
 HealthClubMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HealthClub)

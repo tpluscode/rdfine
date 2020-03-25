@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import StructuredValueMixin from './StructuredValue';
 
@@ -22,10 +22,9 @@ export default function WarrantyPromiseMixin<Base extends Constructor>(Resource:
 }
 
 class WarrantyPromiseImpl extends WarrantyPromiseMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<WarrantyPromise>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<WarrantyPromise>) {
+    super(arg, init)
     this.types.add(schema.WarrantyPromise)
-    initializeProperties<WarrantyPromise>(this, init)
   }
 }
 WarrantyPromiseMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WarrantyPromise)

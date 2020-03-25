@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import DigitalDocumentMixin from './DigitalDocument';
 
@@ -16,10 +16,9 @@ export default function SpreadsheetDigitalDocumentMixin<Base extends Constructor
 }
 
 class SpreadsheetDigitalDocumentImpl extends SpreadsheetDigitalDocumentMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<SpreadsheetDigitalDocument>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<SpreadsheetDigitalDocument>) {
+    super(arg, init)
     this.types.add(schema.SpreadsheetDigitalDocument)
-    initializeProperties<SpreadsheetDigitalDocument>(this, init)
   }
 }
 SpreadsheetDigitalDocumentMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SpreadsheetDigitalDocument)

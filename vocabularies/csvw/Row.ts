@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { csvw } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Csvw from '.';
 
 export interface Row extends RdfResource {
@@ -27,10 +27,9 @@ export default function RowMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class RowImpl extends RowMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Row>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Row>) {
+    super(arg, init)
     this.types.add(csvw.Row)
-    initializeProperties<Row>(this, init)
   }
 }
 RowMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Row)

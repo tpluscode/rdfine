@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import CreativeWorkMixin from './CreativeWork';
 
@@ -37,10 +37,9 @@ export default function ArticleMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class ArticleImpl extends ArticleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Article>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Article>) {
+    super(arg, init)
     this.types.add(schema.Article)
-    initializeProperties<Article>(this, init)
   }
 }
 ArticleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Article)

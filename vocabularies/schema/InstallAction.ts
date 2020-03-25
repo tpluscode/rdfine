@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import ConsumeActionMixin from './ConsumeAction';
 
@@ -16,10 +16,9 @@ export default function InstallActionMixin<Base extends Constructor>(Resource: B
 }
 
 class InstallActionImpl extends InstallActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<InstallAction>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<InstallAction>) {
+    super(arg, init)
     this.types.add(schema.InstallAction)
-    initializeProperties<InstallAction>(this, init)
   }
 }
 InstallActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.InstallAction)

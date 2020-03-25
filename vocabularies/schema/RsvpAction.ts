@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import InformActionMixin from './InformAction';
 
@@ -25,10 +25,9 @@ export default function RsvpActionMixin<Base extends Constructor>(Resource: Base
 }
 
 class RsvpActionImpl extends RsvpActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<RsvpAction>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<RsvpAction>) {
+    super(arg, init)
     this.types.add(schema.RsvpAction)
-    initializeProperties<RsvpAction>(this, init)
   }
 }
 RsvpActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RsvpAction)

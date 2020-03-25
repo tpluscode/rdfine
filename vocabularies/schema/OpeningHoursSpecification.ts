@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import StructuredValueMixin from './StructuredValue';
 
@@ -31,10 +31,9 @@ export default function OpeningHoursSpecificationMixin<Base extends Constructor>
 }
 
 class OpeningHoursSpecificationImpl extends OpeningHoursSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<OpeningHoursSpecification>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<OpeningHoursSpecification>) {
+    super(arg, init)
     this.types.add(schema.OpeningHoursSpecification)
-    initializeProperties<OpeningHoursSpecification>(this, init)
   }
 }
 OpeningHoursSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.OpeningHoursSpecification)

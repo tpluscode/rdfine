@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import StructuredValueMixin from './StructuredValue';
 
@@ -52,10 +52,9 @@ export default function NutritionInformationMixin<Base extends Constructor>(Reso
 }
 
 class NutritionInformationImpl extends NutritionInformationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<NutritionInformation>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<NutritionInformation>) {
+    super(arg, init)
     this.types.add(schema.NutritionInformation)
-    initializeProperties<NutritionInformation>(this, init)
   }
 }
 NutritionInformationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.NutritionInformation)

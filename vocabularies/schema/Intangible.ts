@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import ThingMixin from './Thing';
 
@@ -16,10 +16,9 @@ export default function IntangibleMixin<Base extends Constructor>(Resource: Base
 }
 
 class IntangibleImpl extends IntangibleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Intangible>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Intangible>) {
+    super(arg, init)
     this.types.add(schema.Intangible)
-    initializeProperties<Intangible>(this, init)
   }
 }
 IntangibleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Intangible)

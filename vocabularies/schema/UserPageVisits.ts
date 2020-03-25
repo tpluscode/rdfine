@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import UserInteractionMixin from './UserInteraction';
 
@@ -16,10 +16,9 @@ export default function UserPageVisitsMixin<Base extends Constructor>(Resource: 
 }
 
 class UserPageVisitsImpl extends UserPageVisitsMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<UserPageVisits>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<UserPageVisits>) {
+    super(arg, init)
     this.types.add(schema.UserPageVisits)
-    initializeProperties<UserPageVisits>(this, init)
   }
 }
 UserPageVisitsMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UserPageVisits)

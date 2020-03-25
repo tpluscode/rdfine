@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import WebPageMixin from './WebPage';
 
@@ -16,10 +16,9 @@ export default function ProfilePageMixin<Base extends Constructor>(Resource: Bas
 }
 
 class ProfilePageImpl extends ProfilePageMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<ProfilePage>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<ProfilePage>) {
+    super(arg, init)
     this.types.add(schema.ProfilePage)
-    initializeProperties<ProfilePage>(this, init)
   }
 }
 ProfilePageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ProfilePage)

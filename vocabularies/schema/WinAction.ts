@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import AchieveActionMixin from './AchieveAction';
 
@@ -19,10 +19,9 @@ export default function WinActionMixin<Base extends Constructor>(Resource: Base)
 }
 
 class WinActionImpl extends WinActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<WinAction>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<WinAction>) {
+    super(arg, init)
     this.types.add(schema.WinAction)
-    initializeProperties<WinAction>(this, init)
   }
 }
 WinActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WinAction)

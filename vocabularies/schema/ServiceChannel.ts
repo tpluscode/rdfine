@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
@@ -43,10 +43,9 @@ export default function ServiceChannelMixin<Base extends Constructor>(Resource: 
 }
 
 class ServiceChannelImpl extends ServiceChannelMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<ServiceChannel>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<ServiceChannel>) {
+    super(arg, init)
     this.types.add(schema.ServiceChannel)
-    initializeProperties<ServiceChannel>(this, init)
   }
 }
 ServiceChannelMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ServiceChannel)

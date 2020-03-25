@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import ReactActionMixin from './ReactAction';
 
@@ -16,10 +16,9 @@ export default function AgreeActionMixin<Base extends Constructor>(Resource: Bas
 }
 
 class AgreeActionImpl extends AgreeActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<AgreeAction>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<AgreeAction>) {
+    super(arg, init)
     this.types.add(schema.AgreeAction)
-    initializeProperties<AgreeAction>(this, init)
   }
 }
 AgreeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AgreeAction)

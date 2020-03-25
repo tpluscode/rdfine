@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import EducationalOrganizationMixin from './EducationalOrganization';
 
@@ -16,10 +16,9 @@ export default function SchoolMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class SchoolImpl extends SchoolMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<School>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<School>) {
+    super(arg, init)
     this.types.add(schema.School)
-    initializeProperties<School>(this, init)
   }
 }
 SchoolMixin.shouldApply = (r: RdfResource) => r.types.has(schema.School)

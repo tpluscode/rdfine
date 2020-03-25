@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import AdministrativeAreaMixin from './AdministrativeArea';
 
@@ -16,10 +16,9 @@ export default function CountryMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class CountryImpl extends CountryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Country>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Country>) {
+    super(arg, init)
     this.types.add(schema.Country)
-    initializeProperties<Country>(this, init)
   }
 }
 CountryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Country)

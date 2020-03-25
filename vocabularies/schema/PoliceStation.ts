@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import CivicStructureMixin from './CivicStructure';
 import EmergencyServiceMixin from './EmergencyService';
@@ -17,10 +17,9 @@ export default function PoliceStationMixin<Base extends Constructor>(Resource: B
 }
 
 class PoliceStationImpl extends PoliceStationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<PoliceStation>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<PoliceStation>) {
+    super(arg, init)
     this.types.add(schema.PoliceStation)
-    initializeProperties<PoliceStation>(this, init)
   }
 }
 PoliceStationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PoliceStation)

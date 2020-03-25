@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import PlaceOfWorshipMixin from './PlaceOfWorship';
 
@@ -16,10 +16,9 @@ export default function ChurchMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class ChurchImpl extends ChurchMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Church>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Church>) {
+    super(arg, init)
     this.types.add(schema.Church)
-    initializeProperties<Church>(this, init)
   }
 }
 ChurchMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Church)

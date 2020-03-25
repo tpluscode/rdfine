@@ -1,8 +1,9 @@
 import cf from 'clownface'
 import $rdf from 'rdf-ext'
 import { defaultGraph } from '@rdfjs/data-model'
-import RdfResource, { initializeProperties } from '../lib/RdfResource'
+import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
+import { property } from '..'
 
 const { ex } = vocabs
 
@@ -102,26 +103,49 @@ describe('RdfResource', () => {
       )
     })
   })
-})
 
-describe('initializeProperties', () => {
-  it('skips id and types properties', () => {
-    // given
-    interface Resource extends RdfResource {
-      name: string
-    }
-    const resource: Resource = {} as any
+  describe('initializeProperties', () => {
+    it('skips id', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Resource extends RdfResource {
+        name: string
+      }
+      class ResourceImpl extends RdfResource implements Resource {
+        @property.literal({ path: ex.name })
+        name!: string;
+      }
 
-    // when
-    initializeProperties<Resource>(resource, {
-      id: ex.Foo,
-      types: [ex.Bar],
-      name: 'baz',
-    } as any)
+      // when
+      const resource = new ResourceImpl(node, {
+        id: ex.Foo,
+        name: 'baz',
+      })
 
-    // then
-    expect(resource.name).toEqual('baz')
-    expect(resource).not.toHaveProperty('id')
-    expect(resource).not.toHaveProperty('types')
+      // then
+      expect(resource.name).toEqual('baz')
+      expect(resource.id.termType).toEqual('BlankNode')
+      expect(resource.types.size).toEqual(0)
+    })
+
+    it('add additional types', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Resource extends RdfResource {
+        name: string
+      }
+      class ResourceImpl extends RdfResource implements Resource {
+        name!: string;
+      }
+
+      // when
+      const resource = new ResourceImpl(node, {
+        types: [ex.Bar],
+      })
+
+      // then
+      expect(resource.types.size).toEqual(1)
+      expect([...resource.types][0].id.value).toEqual(ex.Bar.value)
+    })
   })
 })

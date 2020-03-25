@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import LocalBusinessMixin from './LocalBusiness';
 
@@ -16,10 +16,9 @@ export default function RadioStationMixin<Base extends Constructor>(Resource: Ba
 }
 
 class RadioStationImpl extends RadioStationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<RadioStation>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<RadioStation>) {
+    super(arg, init)
     this.types.add(schema.RadioStation)
-    initializeProperties<RadioStation>(this, init)
   }
 }
 RadioStationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RadioStation)

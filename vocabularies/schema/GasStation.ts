@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import AutomotiveBusinessMixin from './AutomotiveBusiness';
 
@@ -16,10 +16,9 @@ export default function GasStationMixin<Base extends Constructor>(Resource: Base
 }
 
 class GasStationImpl extends GasStationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<GasStation>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<GasStation>) {
+    super(arg, init)
     this.types.add(schema.GasStation)
-    initializeProperties<GasStation>(this, init)
   }
 }
 GasStationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GasStation)

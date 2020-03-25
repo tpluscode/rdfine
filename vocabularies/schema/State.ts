@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import AdministrativeAreaMixin from './AdministrativeArea';
 
@@ -16,10 +16,9 @@ export default function StateMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class StateImpl extends StateMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<State>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<State>) {
+    super(arg, init)
     this.types.add(schema.State)
-    initializeProperties<State>(this, init)
   }
 }
 StateMixin.shouldApply = (r: RdfResource) => r.types.has(schema.State)

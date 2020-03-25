@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import GeoShapeMixin from './GeoShape';
 
@@ -25,10 +25,9 @@ export default function GeoCircleMixin<Base extends Constructor>(Resource: Base)
 }
 
 class GeoCircleImpl extends GeoCircleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<GeoCircle>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<GeoCircle>) {
+    super(arg, init)
     this.types.add(schema.GeoCircle)
-    initializeProperties<GeoCircle>(this, init)
   }
 }
 GeoCircleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GeoCircle)

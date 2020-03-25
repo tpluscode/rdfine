@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import EventMixin from './Event';
 
@@ -22,10 +22,9 @@ export default function ScreeningEventMixin<Base extends Constructor>(Resource: 
 }
 
 class ScreeningEventImpl extends ScreeningEventMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<ScreeningEvent>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<ScreeningEvent>) {
+    super(arg, init)
     this.types.add(schema.ScreeningEvent)
-    initializeProperties<ScreeningEvent>(this, init)
   }
 }
 ScreeningEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ScreeningEvent)

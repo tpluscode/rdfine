@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import LandformMixin from './Landform';
 
@@ -16,10 +16,9 @@ export default function VolcanoMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class VolcanoImpl extends VolcanoMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Volcano>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Volcano>) {
+    super(arg, init)
     this.types.add(schema.Volcano)
-    initializeProperties<Volcano>(this, init)
   }
 }
 VolcanoMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Volcano)

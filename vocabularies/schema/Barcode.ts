@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import ImageObjectMixin from './ImageObject';
 
@@ -16,10 +16,9 @@ export default function BarcodeMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class BarcodeImpl extends BarcodeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Barcode>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Barcode>) {
+    super(arg, init)
     this.types.add(schema.Barcode)
-    initializeProperties<Barcode>(this, init)
   }
 }
 BarcodeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Barcode)

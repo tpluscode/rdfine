@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import RadioChannelMixin from './RadioChannel';
 
@@ -16,10 +16,9 @@ export default function AMRadioChannelMixin<Base extends Constructor>(Resource: 
 }
 
 class AMRadioChannelImpl extends AMRadioChannelMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<AMRadioChannel>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<AMRadioChannel>) {
+    super(arg, init)
     this.types.add(schema.AMRadioChannel)
-    initializeProperties<AMRadioChannel>(this, init)
   }
 }
 AMRadioChannelMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AMRadioChannel)

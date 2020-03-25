@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import PropertyValueMixin from './PropertyValue';
 
@@ -25,10 +25,9 @@ export default function LocationFeatureSpecificationMixin<Base extends Construct
 }
 
 class LocationFeatureSpecificationImpl extends LocationFeatureSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<LocationFeatureSpecification>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<LocationFeatureSpecification>) {
+    super(arg, init)
     this.types.add(schema.LocationFeatureSpecification)
-    initializeProperties<LocationFeatureSpecification>(this, init)
   }
 }
 LocationFeatureSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LocationFeatureSpecification)

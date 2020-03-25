@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import PriceSpecificationMixin from './PriceSpecification';
 
@@ -31,10 +31,9 @@ export default function DeliveryChargeSpecificationMixin<Base extends Constructo
 }
 
 class DeliveryChargeSpecificationImpl extends DeliveryChargeSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<DeliveryChargeSpecification>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<DeliveryChargeSpecification>) {
+    super(arg, init)
     this.types.add(schema.DeliveryChargeSpecification)
-    initializeProperties<DeliveryChargeSpecification>(this, init)
   }
 }
 DeliveryChargeSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DeliveryChargeSpecification)

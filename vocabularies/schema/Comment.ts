@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import CreativeWorkMixin from './CreativeWork';
 
@@ -25,10 +25,9 @@ export default function CommentMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class CommentImpl extends CommentMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Comment>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Comment>) {
+    super(arg, init)
     this.types.add(schema.Comment)
-    initializeProperties<Comment>(this, init)
   }
 }
 CommentMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Comment)

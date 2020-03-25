@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import HomeAndConstructionBusinessMixin from './HomeAndConstructionBusiness';
 
@@ -16,10 +16,9 @@ export default function ElectricianMixin<Base extends Constructor>(Resource: Bas
 }
 
 class ElectricianImpl extends ElectricianMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<Electrician>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<Electrician>) {
+    super(arg, init)
     this.types.add(schema.Electrician)
-    initializeProperties<Electrician>(this, init)
   }
 }
 ElectricianMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Electrician)

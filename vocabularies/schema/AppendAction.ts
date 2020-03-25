@@ -1,7 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
-import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import InsertActionMixin from './InsertAction';
 
@@ -16,10 +16,9 @@ export default function AppendActionMixin<Base extends Constructor>(Resource: Ba
 }
 
 class AppendActionImpl extends AppendActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: PropertyInitializer<AppendAction>) {
-    super(arg)
+  constructor(arg: ResourceNode, init?: Initializer<AppendAction>) {
+    super(arg, init)
     this.types.add(schema.AppendAction)
-    initializeProperties<AppendAction>(this, init)
   }
 }
 AppendActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AppendAction)
