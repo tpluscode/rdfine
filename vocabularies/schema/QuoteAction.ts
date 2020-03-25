@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import TradeActionMixin from './TradeAction';
 
@@ -15,9 +16,10 @@ export default function QuoteActionMixin<Base extends Constructor>(Resource: Bas
 }
 
 class QuoteActionImpl extends QuoteActionMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<QuoteAction>) {
     super(arg)
     this.types.add(schema.QuoteAction)
+    initializeProperties<QuoteAction>(this, init)
   }
 }
 QuoteActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.QuoteAction)

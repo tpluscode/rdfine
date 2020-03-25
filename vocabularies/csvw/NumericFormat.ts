@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { csvw } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Csvw from '.';
 
 export interface NumericFormat extends RdfResource {
@@ -26,9 +27,10 @@ export default function NumericFormatMixin<Base extends Constructor>(Resource: B
 }
 
 class NumericFormatImpl extends NumericFormatMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<NumericFormat>) {
     super(arg)
     this.types.add(csvw.NumericFormat)
+    initializeProperties<NumericFormat>(this, init)
   }
 }
 NumericFormatMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.NumericFormat)

@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import ReactActionMixin from './ReactAction';
 
@@ -15,9 +16,10 @@ export default function DislikeActionMixin<Base extends Constructor>(Resource: B
 }
 
 class DislikeActionImpl extends DislikeActionMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<DislikeAction>) {
     super(arg)
     this.types.add(schema.DislikeAction)
+    initializeProperties<DislikeAction>(this, init)
   }
 }
 DislikeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DislikeAction)

@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import FindActionMixin from './FindAction';
 
@@ -15,9 +16,10 @@ export default function CheckActionMixin<Base extends Constructor>(Resource: Bas
 }
 
 class CheckActionImpl extends CheckActionMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<CheckAction>) {
     super(arg)
     this.types.add(schema.CheckAction)
+    initializeProperties<CheckAction>(this, init)
   }
 }
 CheckActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CheckAction)

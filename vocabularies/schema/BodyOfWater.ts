@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import LandformMixin from './Landform';
 
@@ -15,9 +16,10 @@ export default function BodyOfWaterMixin<Base extends Constructor>(Resource: Bas
 }
 
 class BodyOfWaterImpl extends BodyOfWaterMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<BodyOfWater>) {
     super(arg)
     this.types.add(schema.BodyOfWater)
+    initializeProperties<BodyOfWater>(this, init)
   }
 }
 BodyOfWaterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BodyOfWater)

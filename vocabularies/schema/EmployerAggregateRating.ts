@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import AggregateRatingMixin from './AggregateRating';
 
@@ -15,9 +16,10 @@ export default function EmployerAggregateRatingMixin<Base extends Constructor>(R
 }
 
 class EmployerAggregateRatingImpl extends EmployerAggregateRatingMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<EmployerAggregateRating>) {
     super(arg)
     this.types.add(schema.EmployerAggregateRating)
+    initializeProperties<EmployerAggregateRating>(this, init)
   }
 }
 EmployerAggregateRatingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EmployerAggregateRating)

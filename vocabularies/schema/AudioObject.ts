@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import MediaObjectMixin from './MediaObject';
 
@@ -24,9 +25,10 @@ export default function AudioObjectMixin<Base extends Constructor>(Resource: Bas
 }
 
 class AudioObjectImpl extends AudioObjectMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<AudioObject>) {
     super(arg)
     this.types.add(schema.AudioObject)
+    initializeProperties<AudioObject>(this, init)
   }
 }
 AudioObjectMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AudioObject)

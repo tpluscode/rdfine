@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import SportsActivityLocationMixin from './SportsActivityLocation';
 
@@ -15,9 +16,10 @@ export default function GolfCourseMixin<Base extends Constructor>(Resource: Base
 }
 
 class GolfCourseImpl extends GolfCourseMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<GolfCourse>) {
     super(arg)
     this.types.add(schema.GolfCourse)
+    initializeProperties<GolfCourse>(this, init)
   }
 }
 GolfCourseMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GolfCourse)

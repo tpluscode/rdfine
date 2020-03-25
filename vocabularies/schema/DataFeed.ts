@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import DatasetMixin from './Dataset';
 
@@ -21,9 +22,10 @@ export default function DataFeedMixin<Base extends Constructor>(Resource: Base) 
 }
 
 class DataFeedImpl extends DataFeedMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<DataFeed>) {
     super(arg)
     this.types.add(schema.DataFeed)
+    initializeProperties<DataFeed>(this, init)
   }
 }
 DataFeedMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DataFeed)

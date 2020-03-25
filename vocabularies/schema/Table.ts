@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import WebPageElementMixin from './WebPageElement';
 
@@ -15,9 +16,10 @@ export default function TableMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class TableImpl extends TableMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<Table>) {
     super(arg)
     this.types.add(schema.Table)
+    initializeProperties<Table>(this, init)
   }
 }
 TableMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Table)

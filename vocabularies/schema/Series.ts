@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
@@ -15,9 +16,10 @@ export default function SeriesMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class SeriesImpl extends SeriesMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<Series>) {
     super(arg)
     this.types.add(schema.Series)
+    initializeProperties<Series>(this, init)
   }
 }
 SeriesMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Series)

@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import AssessActionMixin from './AssessAction';
 
@@ -15,9 +16,10 @@ export default function ReactActionMixin<Base extends Constructor>(Resource: Bas
 }
 
 class ReactActionImpl extends ReactActionMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<ReactAction>) {
     super(arg)
     this.types.add(schema.ReactAction)
+    initializeProperties<ReactAction>(this, init)
   }
 }
 ReactActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ReactAction)

@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import FinancialProductMixin from './FinancialProduct';
 
@@ -15,9 +16,10 @@ export default function BankAccountMixin<Base extends Constructor>(Resource: Bas
 }
 
 class BankAccountImpl extends BankAccountMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<BankAccount>) {
     super(arg)
     this.types.add(schema.BankAccount)
+    initializeProperties<BankAccount>(this, init)
   }
 }
 BankAccountMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BankAccount)

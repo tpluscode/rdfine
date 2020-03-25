@@ -9,7 +9,7 @@ import TypeCollectionCtor, { TypeCollection } from './TypeCollection'
 type ObjectOrFactory<T> = T | ((self: RdfResource) => T)
 
 export type ResourceIdentifier = BlankNode | NamedNode
-export type ResourceInitializer<D extends DatasetCore = DatasetCore> = SingleContextClownface<D> | { dataset: D; term: ResourceIdentifier; graph?: NamedNode | DefaultGraph }
+export type ResourceNode<D extends DatasetCore = DatasetCore> = SingleContextClownface<D> | { dataset: D; term: ResourceIdentifier; graph?: NamedNode | DefaultGraph }
 
 export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly id: ResourceIdentifier
@@ -18,7 +18,7 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly _unionGraph: SingleContextClownface<D, ResourceIdentifier>
   readonly _graphId: Quad_Graph
   hasType (type: string | NamedNode): boolean
-  _create<T extends RdfResource>(term: ResourceInitializer<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T & ResourceIndexer
+  _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]]): T & ResourceIndexer
 }
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
@@ -29,7 +29,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   public static __ns?: any
   public static factory: ResourceFactory = new ResourceFactoryImpl(RdfResourceImpl)
 
-  public constructor(graph: ResourceInitializer<D>) {
+  public constructor(graph: ResourceNode<D>) {
     let selfGraph: SingleContextClownface<D, ResourceIdentifier>
 
     if ('_context' in graph) {
@@ -106,7 +106,39 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return this.id.equals(other.id)
   }
 
-  public _create<T extends RdfResource>(term: ResourceInitializer<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T & ResourceIndexer {
+  public _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]]): T & ResourceIndexer {
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins)
   }
+}
+
+type UserDefinedInterface<T extends RdfResource> = Omit<T, keyof RdfResource>
+
+interface BaseInitializer {
+  types?: NamedNode[] | TypeCollection<any>
+  id?: RdfResource['id']
+}
+
+export type Initializer<T> = Partial<Omit<{
+  [P in keyof T]?:
+  T[P] extends (infer U)[] ? U extends RdfResource ? Initializer<UserDefinedInterface<U>>[] : T[P] :
+    T[P] extends RdfResource ? Initializer<UserDefinedInterface<T[P]> & BaseInitializer> :
+      T[P]
+}, keyof RdfResource>> & BaseInitializer
+export type PropertyInitializer<T extends RdfResource> = {
+  [P in keyof T]?:
+  T[P] extends RdfResource ? Initializer<UserDefinedInterface<T[P]>> : T[P]
+}
+
+type PartialRecursive<T> = T extends object ? { [K in keyof T]?: PartialRecursive<T[K]> } : T
+
+export function fromObject<T extends RdfResource>(initializer: Initializer<UserDefinedInterface<T> & BaseInitializer>): T {
+  return initializer as unknown as T
+}
+
+export function initializeProperties<T extends RdfResource>(resource: T, init: PropertyInitializer<T> = {}): void {
+  Object.entries(init as any)
+    .filter(([prop]) => prop !== 'id' && prop !== 'types')
+    .forEach(([prop, value]) => {
+      (resource as any)[prop] = value
+    })
 }

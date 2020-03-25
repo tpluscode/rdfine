@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import EpisodeMixin from './Episode';
 
@@ -21,9 +22,10 @@ export default function TVEpisodeMixin<Base extends Constructor>(Resource: Base)
 }
 
 class TVEpisodeImpl extends TVEpisodeMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<TVEpisode>) {
     super(arg)
     this.types.add(schema.TVEpisode)
+    initializeProperties<TVEpisode>(this, init)
   }
 }
 TVEpisodeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TVEpisode)

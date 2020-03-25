@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import OrganizationMixin from './Organization';
 import PlaceMixin from './Place';
@@ -31,9 +32,10 @@ export default function LocalBusinessMixin<Base extends Constructor>(Resource: B
 }
 
 class LocalBusinessImpl extends LocalBusinessMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<LocalBusiness>) {
     super(arg)
     this.types.add(schema.LocalBusiness)
+    initializeProperties<LocalBusiness>(this, init)
   }
 }
 LocalBusinessMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LocalBusiness)

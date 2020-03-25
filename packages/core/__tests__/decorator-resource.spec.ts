@@ -4,7 +4,15 @@ import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
 import rdfExt from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { defaultGraph, literal } from '@rdfjs/data-model'
-import { property, namespace, crossBoundaries } from '..'
+import {
+  property,
+  namespace,
+  crossBoundaries,
+  Constructor,
+  RdfResource as IRdfResource,
+  fromObject,
+  ResourceFactoryImpl,
+} from '..'
 import RdfResource from '../lib/RdfResource'
 import { parse, vocabs } from './_helpers'
 
@@ -261,6 +269,54 @@ describe('decorator', () => {
 
         // when
         lois.spouse = cf({ dataset }).has(rdf.type, ex.Superman).term
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('accepts deep plain JS object', async () => {
+        // given
+        interface Person extends IRdfResource {
+          knows: Person
+          name: string
+          parents: Person[]
+        }
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:Lois a schema:Person .
+        `)
+        function Mixin<B extends Constructor>(base: B) {
+          class Resource extends base implements Person {
+            @property.resource({ path: schema.knows })
+            knows!: Person
+
+            @property.literal({ path: schema('name') })
+            name!: string
+
+            @property.resource({ path: schema.parent, values: 'array' })
+            parents!: Person[]
+          }
+          return Resource
+        }
+        Mixin.shouldApply = () => true
+        class TestResourceBase extends RdfResource {}
+        TestResourceBase.factory = new ResourceFactoryImpl(TestResourceBase)
+        TestResourceBase.factory.addMixin(Mixin)
+        const lois = TestResourceBase.factory.createEntity<Person>({ dataset, term: ex.Lois })
+
+        // when
+        lois.knows = fromObject({
+          id: ex.Superman,
+          types: [schema.Person],
+          name: 'Superman',
+          parents: [{
+            name: 'Jor-El',
+          }, {
+            name: 'Lara Lor-Van',
+          }],
+        })
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()

@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import DigitalDocumentMixin from './DigitalDocument';
 
@@ -15,9 +16,10 @@ export default function NoteDigitalDocumentMixin<Base extends Constructor>(Resou
 }
 
 class NoteDigitalDocumentImpl extends NoteDigitalDocumentMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<NoteDigitalDocument>) {
     super(arg)
     this.types.add(schema.NoteDigitalDocument)
+    initializeProperties<NoteDigitalDocument>(this, init)
   }
 }
 NoteDigitalDocumentMixin.shouldApply = (r: RdfResource) => r.types.has(schema.NoteDigitalDocument)

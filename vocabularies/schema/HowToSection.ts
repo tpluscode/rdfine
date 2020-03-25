@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import CreativeWorkMixin from './CreativeWork';
 import ItemListMixin from './ItemList';
@@ -23,9 +24,10 @@ export default function HowToSectionMixin<Base extends Constructor>(Resource: Ba
 }
 
 class HowToSectionImpl extends HowToSectionMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<HowToSection>) {
     super(arg)
     this.types.add(schema.HowToSection)
+    initializeProperties<HowToSection>(this, init)
   }
 }
 HowToSectionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HowToSection)

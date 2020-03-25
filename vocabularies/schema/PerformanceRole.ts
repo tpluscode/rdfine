@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import RoleMixin from './Role';
 
@@ -18,9 +19,10 @@ export default function PerformanceRoleMixin<Base extends Constructor>(Resource:
 }
 
 class PerformanceRoleImpl extends PerformanceRoleMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<PerformanceRole>) {
     super(arg)
     this.types.add(schema.PerformanceRole)
+    initializeProperties<PerformanceRole>(this, init)
   }
 }
 PerformanceRoleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PerformanceRole)

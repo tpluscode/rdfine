@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import AutomotiveBusinessMixin from './AutomotiveBusiness';
 
@@ -15,9 +16,10 @@ export default function AutoRepairMixin<Base extends Constructor>(Resource: Base
 }
 
 class AutoRepairImpl extends AutoRepairMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<AutoRepair>) {
     super(arg)
     this.types.add(schema.AutoRepair)
+    initializeProperties<AutoRepair>(this, init)
   }
 }
 AutoRepairMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AutoRepair)

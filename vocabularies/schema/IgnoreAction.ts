@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import AssessActionMixin from './AssessAction';
 
@@ -15,9 +16,10 @@ export default function IgnoreActionMixin<Base extends Constructor>(Resource: Ba
 }
 
 class IgnoreActionImpl extends IgnoreActionMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<IgnoreAction>) {
     super(arg)
     this.types.add(schema.IgnoreAction)
+    initializeProperties<IgnoreAction>(this, init)
   }
 }
 IgnoreActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.IgnoreAction)

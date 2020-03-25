@@ -1,5 +1,5 @@
 import { DatasetCore, Literal } from 'rdf-js'
-import { RdfResource, ResourceInitializer } from './RdfResource'
+import { RdfResource, ResourceNode } from './RdfResource'
 import { createProxy } from './proxy'
 
 export type AnyFunction<A = any> = (...input: any[]) => A
@@ -17,11 +17,11 @@ export interface ResourceIndexer<D extends DatasetCore = DatasetCore, T extends 
   [ prop: string ]: null | undefined | MaybeArray<T | Literal | T & ResourceIndexer>
 }
 
-export type Mixin<T extends AnyFunction> = InstanceType<ReturnType<T>>
+export type Mixin<T extends AnyFunction = any> = InstanceType<ReturnType<T>>
 
 export interface ResourceFactory<D extends DatasetCore = DatasetCore, R extends RdfResource<D> = RdfResource<D>, T extends AnyFunction = any> {
   addMixin(...mixins: (Mixin<T> & ShouldApply)[]): void
-  createEntity<S>(term: ResourceInitializer<D>, typeAndMixins?: Mixin<T>[] | [Constructor, ...Mixin<T>[]]): R & S & ResourceIndexer<D, R>
+  createEntity<S>(term: ResourceNode<D>, typeAndMixins?: Mixin<T>[] | [Constructor, ...Mixin<T>[]]): R & S & ResourceIndexer<D, R>
 }
 
 export default class <D extends DatasetCore = DatasetCore, R extends RdfResource<D> = RdfResource<D>, T extends AnyFunction = any> implements ResourceFactory<D, R, T> {
@@ -38,9 +38,9 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     })
   }
 
-  public createEntity<S>(term: ResourceInitializer<D>, typeAndMixins: Mixin<T>[] | [Constructor, ...Mixin<T>[]] = []): R & S & ResourceIndexer<D, R> {
+  public createEntity<S>(term: ResourceNode<D>, typeAndMixins: Mixin<T>[] | [Constructor, ...Mixin<T>[]] = []): R & S & ResourceIndexer<D, R> {
     let BaseClass = this.BaseClass
-    let explicitMixins: Mixin<any>[] = typeAndMixins
+    let explicitMixins: Mixin[] = typeAndMixins
     if (typeAndMixins.length > 0) {
       const [BaseClassOrMixin, ...rest] = typeAndMixins
       if ('factory' in BaseClassOrMixin) {

@@ -1,6 +1,7 @@
-import { DatasetCore, Term } from 'rdf-js'
+import { rdf } from '@tpluscode/rdf-ns-builders'
+import { BlankNode, DatasetCore, NamedNode, Term } from 'rdf-js'
 import { SingleContextClownface } from 'clownface'
-import { RdfResource, ResourceIdentifier } from '../../RdfResource'
+import { Initializer, RdfResource, ResourceIdentifier } from '../../RdfResource'
 import { AccessorOptions, ObjectOrFactory, propertyDecorator } from '../property'
 import { Constructor, Mixin } from '../../ResourceFactory'
 import * as compare from '../../compare'
@@ -8,7 +9,7 @@ import * as compare from '../../compare'
 type InitialValue = SingleContextClownface<DatasetCore, ResourceIdentifier> | RdfResource
 
 interface ResourceOptions<R extends RdfResource> {
-  as?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]
+  as?: Mixin[] | [Constructor, ...Mixin[]]
   initial?: ObjectOrFactory<R, InitialValue | RdfResource, ResourceIdentifier>
 }
 
@@ -18,8 +19,33 @@ function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptio
     fromTerm(this: RdfResource, obj) {
       return this._create(obj, options.as)
     },
-    toTerm(value) {
-      return value.id
+    toTerm(this: R, valueActual) {
+      const value = valueActual as RdfResource | Initializer<R>
+
+      if ('_selfGraph' in value) {
+        return value.id
+      }
+
+      let valueNode: SingleContextClownface<any, BlankNode | NamedNode>
+
+      if (value.id) {
+        valueNode = this._selfGraph.node(value.id)
+      } else {
+        valueNode = this._selfGraph.blankNode()
+      }
+      if (value.types && Array.isArray(value.types)) {
+        valueNode.addOut(rdf.type, value.types)
+      }
+
+      const valueResource = this._create(valueNode)
+
+      Object.entries(value)
+        .filter(([prop]) => prop !== 'id' && prop !== 'types')
+        .forEach(([prop, propValue]) => {
+          valueResource[prop] = propValue as any
+        })
+
+      return valueNode.term
     },
     valueTypeName: 'RdfResource instance',
     assertSetValue: (value) => {

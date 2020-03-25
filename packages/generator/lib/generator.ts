@@ -4,7 +4,7 @@ import rdf from 'rdf-ext'
 import cf from 'clownface'
 import nsBuilder from '@rdfjs/namespace'
 import * as ns from '@tpluscode/rdf-ns-builders'
-import { ArrayLiteralExpression, AsExpression, IndentationText, Project, QuoteKind } from 'ts-morph'
+import { ArrayLiteralExpression, IndentationText, Project, QuoteKind } from 'ts-morph'
 import { generateNamespace } from './namespace'
 import FileSystem from './util/FileSystem'
 import { isDatatype } from './util/subClasses'
@@ -84,10 +84,10 @@ export async function generate(options: GeneratorOptions, log: Debugger) {
     namedImports: ['Mixin'],
     moduleSpecifier: '@tpluscode/rdfine/lib/ResourceFactory',
   })
-  const defaultExport = (indexModule.addExportAssignment({
-    expression: '[] as Mixin<any>[]',
+  const defaultExport = indexModule.addExportAssignment({
+    expression: '[]',
     isExportEquals: false,
-  }).getExpression() as AsExpression).getExpression() as ArrayLiteralExpression
+  }).getExpression() as ArrayLiteralExpression
 
   classes
     .toArray()
@@ -117,7 +117,7 @@ export async function generate(options: GeneratorOptions, log: Debugger) {
           defaultImport: result.mainModuleMixinExport,
           moduleSpecifier: result.moduleSpecifier,
         })
-        defaultExport.addElement(result.mainModuleMixinExport, { useNewLines: true })
+        defaultExport.addElement(`${result.mainModuleMixinExport} as Mixin`, { useNewLines: true })
       }
     })
 

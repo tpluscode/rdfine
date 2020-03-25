@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { csvw } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Csvw from '.';
 
 export interface Column extends RdfResource {
@@ -65,9 +66,10 @@ export default function ColumnMixin<Base extends Constructor>(Resource: Base) {
 }
 
 class ColumnImpl extends ColumnMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<Column>) {
     super(arg)
     this.types.add(csvw.Column)
+    initializeProperties<Column>(this, init)
   }
 }
 ColumnMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Column)

@@ -1,6 +1,7 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource, RdfResourceImpl, initializeProperties } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
+import type { PropertyInitializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Schema from '.';
 import InteractActionMixin from './InteractAction';
 
@@ -15,9 +16,10 @@ export default function SubscribeActionMixin<Base extends Constructor>(Resource:
 }
 
 class SubscribeActionImpl extends SubscribeActionMixin(RdfResourceImpl) {
-  constructor(arg: any) {
+  constructor(arg: ResourceNode, init?: PropertyInitializer<SubscribeAction>) {
     super(arg)
     this.types.add(schema.SubscribeAction)
+    initializeProperties<SubscribeAction>(this, init)
   }
 }
 SubscribeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SubscribeAction)
