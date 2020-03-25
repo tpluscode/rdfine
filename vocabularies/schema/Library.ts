@@ -19,7 +19,7 @@ class LibraryImpl extends LibraryMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Library>) {
     super(arg)
     this.types.add(schema.Library)
-    initializeProperties(this, init)
+    initializeProperties<Library>(this, init)
   }
 }
 LibraryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Library)

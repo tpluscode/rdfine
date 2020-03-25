@@ -31,7 +31,7 @@ class FoodEstablishmentReservationImpl extends FoodEstablishmentReservationMixin
   constructor(arg: ResourceNode, init?: PropertyInitializer<FoodEstablishmentReservation>) {
     super(arg)
     this.types.add(schema.FoodEstablishmentReservation)
-    initializeProperties(this, init)
+    initializeProperties<FoodEstablishmentReservation>(this, init)
   }
 }
 FoodEstablishmentReservationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FoodEstablishmentReservation)

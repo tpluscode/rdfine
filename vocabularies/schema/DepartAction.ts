@@ -19,7 +19,7 @@ class DepartActionImpl extends DepartActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DepartAction>) {
     super(arg)
     this.types.add(schema.DepartAction)
-    initializeProperties(this, init)
+    initializeProperties<DepartAction>(this, init)
   }
 }
 DepartActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DepartAction)

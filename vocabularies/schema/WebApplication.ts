@@ -22,7 +22,7 @@ class WebApplicationImpl extends WebApplicationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WebApplication>) {
     super(arg)
     this.types.add(schema.WebApplication)
-    initializeProperties(this, init)
+    initializeProperties<WebApplication>(this, init)
   }
 }
 WebApplicationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WebApplication)

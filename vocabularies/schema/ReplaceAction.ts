@@ -25,7 +25,7 @@ class ReplaceActionImpl extends ReplaceActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ReplaceAction>) {
     super(arg)
     this.types.add(schema.ReplaceAction)
-    initializeProperties(this, init)
+    initializeProperties<ReplaceAction>(this, init)
   }
 }
 ReplaceActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ReplaceAction)

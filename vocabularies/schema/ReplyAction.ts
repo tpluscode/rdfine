@@ -22,7 +22,7 @@ class ReplyActionImpl extends ReplyActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ReplyAction>) {
     super(arg)
     this.types.add(schema.ReplyAction)
-    initializeProperties(this, init)
+    initializeProperties<ReplyAction>(this, init)
   }
 }
 ReplyActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ReplyAction)

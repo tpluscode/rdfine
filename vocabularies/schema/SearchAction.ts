@@ -22,7 +22,7 @@ class SearchActionImpl extends SearchActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SearchAction>) {
     super(arg)
     this.types.add(schema.SearchAction)
-    initializeProperties(this, init)
+    initializeProperties<SearchAction>(this, init)
   }
 }
 SearchActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SearchAction)

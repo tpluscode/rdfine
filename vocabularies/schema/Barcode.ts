@@ -19,7 +19,7 @@ class BarcodeImpl extends BarcodeMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Barcode>) {
     super(arg)
     this.types.add(schema.Barcode)
-    initializeProperties(this, init)
+    initializeProperties<Barcode>(this, init)
   }
 }
 BarcodeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Barcode)

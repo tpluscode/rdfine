@@ -19,7 +19,7 @@ class RoofingContractorImpl extends RoofingContractorMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<RoofingContractor>) {
     super(arg)
     this.types.add(schema.RoofingContractor)
-    initializeProperties(this, init)
+    initializeProperties<RoofingContractor>(this, init)
   }
 }
 RoofingContractorMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RoofingContractor)

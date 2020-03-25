@@ -19,7 +19,7 @@ class RejectActionImpl extends RejectActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<RejectAction>) {
     super(arg)
     this.types.add(schema.RejectAction)
-    initializeProperties(this, init)
+    initializeProperties<RejectAction>(this, init)
   }
 }
 RejectActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RejectAction)

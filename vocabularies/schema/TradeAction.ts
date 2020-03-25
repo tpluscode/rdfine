@@ -28,7 +28,7 @@ class TradeActionImpl extends TradeActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TradeAction>) {
     super(arg)
     this.types.add(schema.TradeAction)
-    initializeProperties(this, init)
+    initializeProperties<TradeAction>(this, init)
   }
 }
 TradeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TradeAction)

@@ -19,7 +19,7 @@ class TaxiImpl extends TaxiMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Taxi>) {
     super(arg)
     this.types.add(schema.Taxi)
-    initializeProperties(this, init)
+    initializeProperties<Taxi>(this, init)
   }
 }
 TaxiMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Taxi)

@@ -49,7 +49,7 @@ class TicketImpl extends TicketMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Ticket>) {
     super(arg)
     this.types.add(schema.Ticket)
-    initializeProperties(this, init)
+    initializeProperties<Ticket>(this, init)
   }
 }
 TicketMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Ticket)

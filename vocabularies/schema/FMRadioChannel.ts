@@ -19,7 +19,7 @@ class FMRadioChannelImpl extends FMRadioChannelMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<FMRadioChannel>) {
     super(arg)
     this.types.add(schema.FMRadioChannel)
-    initializeProperties(this, init)
+    initializeProperties<FMRadioChannel>(this, init)
   }
 }
 FMRadioChannelMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FMRadioChannel)

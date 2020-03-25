@@ -19,7 +19,7 @@ class RoomImpl extends RoomMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Room>) {
     super(arg)
     this.types.add(schema.Room)
-    initializeProperties(this, init)
+    initializeProperties<Room>(this, init)
   }
 }
 RoomMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Room)

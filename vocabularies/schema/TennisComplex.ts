@@ -19,7 +19,7 @@ class TennisComplexImpl extends TennisComplexMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TennisComplex>) {
     super(arg)
     this.types.add(schema.TennisComplex)
-    initializeProperties(this, init)
+    initializeProperties<TennisComplex>(this, init)
   }
 }
 TennisComplexMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TennisComplex)

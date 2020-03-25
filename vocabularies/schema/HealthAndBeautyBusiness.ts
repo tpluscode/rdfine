@@ -19,7 +19,7 @@ class HealthAndBeautyBusinessImpl extends HealthAndBeautyBusinessMixin(RdfResour
   constructor(arg: ResourceNode, init?: PropertyInitializer<HealthAndBeautyBusiness>) {
     super(arg)
     this.types.add(schema.HealthAndBeautyBusiness)
-    initializeProperties(this, init)
+    initializeProperties<HealthAndBeautyBusiness>(this, init)
   }
 }
 HealthAndBeautyBusinessMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HealthAndBeautyBusiness)

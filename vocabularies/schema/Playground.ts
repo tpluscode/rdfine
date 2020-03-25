@@ -19,7 +19,7 @@ class PlaygroundImpl extends PlaygroundMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Playground>) {
     super(arg)
     this.types.add(schema.Playground)
-    initializeProperties(this, init)
+    initializeProperties<Playground>(this, init)
   }
 }
 PlaygroundMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Playground)

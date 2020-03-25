@@ -19,7 +19,7 @@ class RecyclingCenterImpl extends RecyclingCenterMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<RecyclingCenter>) {
     super(arg)
     this.types.add(schema.RecyclingCenter)
-    initializeProperties(this, init)
+    initializeProperties<RecyclingCenter>(this, init)
   }
 }
 RecyclingCenterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RecyclingCenter)

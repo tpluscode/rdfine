@@ -31,7 +31,7 @@ class TripImpl extends TripMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Trip>) {
     super(arg)
     this.types.add(schema.Trip)
-    initializeProperties(this, init)
+    initializeProperties<Trip>(this, init)
   }
 }
 TripMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Trip)

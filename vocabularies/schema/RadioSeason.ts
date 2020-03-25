@@ -19,7 +19,7 @@ class RadioSeasonImpl extends RadioSeasonMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<RadioSeason>) {
     super(arg)
     this.types.add(schema.RadioSeason)
-    initializeProperties(this, init)
+    initializeProperties<RadioSeason>(this, init)
   }
 }
 RadioSeasonMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RadioSeason)

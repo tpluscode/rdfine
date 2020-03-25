@@ -31,7 +31,7 @@ class BrandImpl extends BrandMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Brand>) {
     super(arg)
     this.types.add(schema.Brand)
-    initializeProperties(this, init)
+    initializeProperties<Brand>(this, init)
   }
 }
 BrandMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Brand)

@@ -35,7 +35,7 @@ class LocalBusinessImpl extends LocalBusinessMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<LocalBusiness>) {
     super(arg)
     this.types.add(schema.LocalBusiness)
-    initializeProperties(this, init)
+    initializeProperties<LocalBusiness>(this, init)
   }
 }
 LocalBusinessMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LocalBusiness)

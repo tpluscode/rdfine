@@ -19,7 +19,7 @@ class WatchActionImpl extends WatchActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WatchAction>) {
     super(arg)
     this.types.add(schema.WatchAction)
-    initializeProperties(this, init)
+    initializeProperties<WatchAction>(this, init)
   }
 }
 WatchActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WatchAction)

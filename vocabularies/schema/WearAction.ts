@@ -19,7 +19,7 @@ class WearActionImpl extends WearActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WearAction>) {
     super(arg)
     this.types.add(schema.WearAction)
-    initializeProperties(this, init)
+    initializeProperties<WearAction>(this, init)
   }
 }
 WearActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WearAction)

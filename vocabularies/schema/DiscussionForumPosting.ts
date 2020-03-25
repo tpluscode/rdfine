@@ -19,7 +19,7 @@ class DiscussionForumPostingImpl extends DiscussionForumPostingMixin(RdfResource
   constructor(arg: ResourceNode, init?: PropertyInitializer<DiscussionForumPosting>) {
     super(arg)
     this.types.add(schema.DiscussionForumPosting)
-    initializeProperties(this, init)
+    initializeProperties<DiscussionForumPosting>(this, init)
   }
 }
 DiscussionForumPostingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DiscussionForumPosting)

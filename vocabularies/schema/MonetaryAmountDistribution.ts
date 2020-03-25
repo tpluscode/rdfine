@@ -22,7 +22,7 @@ class MonetaryAmountDistributionImpl extends MonetaryAmountDistributionMixin(Rdf
   constructor(arg: ResourceNode, init?: PropertyInitializer<MonetaryAmountDistribution>) {
     super(arg)
     this.types.add(schema.MonetaryAmountDistribution)
-    initializeProperties(this, init)
+    initializeProperties<MonetaryAmountDistribution>(this, init)
   }
 }
 MonetaryAmountDistributionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MonetaryAmountDistribution)

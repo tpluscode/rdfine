@@ -19,7 +19,7 @@ class HostelImpl extends HostelMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Hostel>) {
     super(arg)
     this.types.add(schema.Hostel)
-    initializeProperties(this, init)
+    initializeProperties<Hostel>(this, init)
   }
 }
 HostelMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Hostel)

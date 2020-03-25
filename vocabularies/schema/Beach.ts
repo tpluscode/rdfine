@@ -19,7 +19,7 @@ class BeachImpl extends BeachMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Beach>) {
     super(arg)
     this.types.add(schema.Beach)
-    initializeProperties(this, init)
+    initializeProperties<Beach>(this, init)
   }
 }
 BeachMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Beach)

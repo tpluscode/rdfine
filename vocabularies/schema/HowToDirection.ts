@@ -50,7 +50,7 @@ class HowToDirectionImpl extends HowToDirectionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HowToDirection>) {
     super(arg)
     this.types.add(schema.HowToDirection)
-    initializeProperties(this, init)
+    initializeProperties<HowToDirection>(this, init)
   }
 }
 HowToDirectionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HowToDirection)

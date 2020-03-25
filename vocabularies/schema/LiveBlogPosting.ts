@@ -28,7 +28,7 @@ class LiveBlogPostingImpl extends LiveBlogPostingMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<LiveBlogPosting>) {
     super(arg)
     this.types.add(schema.LiveBlogPosting)
-    initializeProperties(this, init)
+    initializeProperties<LiveBlogPosting>(this, init)
   }
 }
 LiveBlogPostingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LiveBlogPosting)

@@ -19,7 +19,7 @@ class SuspendActionImpl extends SuspendActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SuspendAction>) {
     super(arg)
     this.types.add(schema.SuspendAction)
-    initializeProperties(this, init)
+    initializeProperties<SuspendAction>(this, init)
   }
 }
 SuspendActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SuspendAction)

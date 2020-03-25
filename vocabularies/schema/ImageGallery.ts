@@ -19,7 +19,7 @@ class ImageGalleryImpl extends ImageGalleryMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ImageGallery>) {
     super(arg)
     this.types.add(schema.ImageGallery)
-    initializeProperties(this, init)
+    initializeProperties<ImageGallery>(this, init)
   }
 }
 ImageGalleryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ImageGallery)

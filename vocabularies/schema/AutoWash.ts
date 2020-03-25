@@ -19,7 +19,7 @@ class AutoWashImpl extends AutoWashMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AutoWash>) {
     super(arg)
     this.types.add(schema.AutoWash)
-    initializeProperties(this, init)
+    initializeProperties<AutoWash>(this, init)
   }
 }
 AutoWashMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AutoWash)

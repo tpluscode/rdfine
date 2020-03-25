@@ -19,7 +19,7 @@ class TattooParlorImpl extends TattooParlorMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TattooParlor>) {
     super(arg)
     this.types.add(schema.TattooParlor)
-    initializeProperties(this, init)
+    initializeProperties<TattooParlor>(this, init)
   }
 }
 TattooParlorMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TattooParlor)

@@ -22,7 +22,7 @@ class TipActionImpl extends TipActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TipAction>) {
     super(arg)
     this.types.add(schema.TipAction)
-    initializeProperties(this, init)
+    initializeProperties<TipAction>(this, init)
   }
 }
 TipActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TipAction)

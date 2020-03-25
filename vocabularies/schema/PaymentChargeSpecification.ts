@@ -25,7 +25,7 @@ class PaymentChargeSpecificationImpl extends PaymentChargeSpecificationMixin(Rdf
   constructor(arg: ResourceNode, init?: PropertyInitializer<PaymentChargeSpecification>) {
     super(arg)
     this.types.add(schema.PaymentChargeSpecification)
-    initializeProperties(this, init)
+    initializeProperties<PaymentChargeSpecification>(this, init)
   }
 }
 PaymentChargeSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PaymentChargeSpecification)

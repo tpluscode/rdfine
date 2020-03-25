@@ -27,7 +27,7 @@ class HowToSectionImpl extends HowToSectionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HowToSection>) {
     super(arg)
     this.types.add(schema.HowToSection)
-    initializeProperties(this, init)
+    initializeProperties<HowToSection>(this, init)
   }
 }
 HowToSectionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HowToSection)

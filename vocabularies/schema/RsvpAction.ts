@@ -28,7 +28,7 @@ class RsvpActionImpl extends RsvpActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<RsvpAction>) {
     super(arg)
     this.types.add(schema.RsvpAction)
-    initializeProperties(this, init)
+    initializeProperties<RsvpAction>(this, init)
   }
 }
 RsvpActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RsvpAction)

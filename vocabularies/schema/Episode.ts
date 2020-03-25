@@ -49,7 +49,7 @@ class EpisodeImpl extends EpisodeMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Episode>) {
     super(arg)
     this.types.add(schema.Episode)
-    initializeProperties(this, init)
+    initializeProperties<Episode>(this, init)
   }
 }
 EpisodeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Episode)

@@ -31,7 +31,7 @@ class DeliveryEventImpl extends DeliveryEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DeliveryEvent>) {
     super(arg)
     this.types.add(schema.DeliveryEvent)
-    initializeProperties(this, init)
+    initializeProperties<DeliveryEvent>(this, init)
   }
 }
 DeliveryEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DeliveryEvent)

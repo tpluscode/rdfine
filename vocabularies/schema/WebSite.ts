@@ -22,7 +22,7 @@ class WebSiteImpl extends WebSiteMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WebSite>) {
     super(arg)
     this.types.add(schema.WebSite)
-    initializeProperties(this, init)
+    initializeProperties<WebSite>(this, init)
   }
 }
 WebSiteMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WebSite)

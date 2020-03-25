@@ -19,7 +19,7 @@ class TheaterGroupImpl extends TheaterGroupMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TheaterGroup>) {
     super(arg)
     this.types.add(schema.TheaterGroup)
-    initializeProperties(this, init)
+    initializeProperties<TheaterGroup>(this, init)
   }
 }
 TheaterGroupMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TheaterGroup)

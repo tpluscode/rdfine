@@ -19,7 +19,7 @@ class TheaterEventImpl extends TheaterEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TheaterEvent>) {
     super(arg)
     this.types.add(schema.TheaterEvent)
-    initializeProperties(this, init)
+    initializeProperties<TheaterEvent>(this, init)
   }
 }
 TheaterEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TheaterEvent)

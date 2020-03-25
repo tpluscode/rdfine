@@ -19,7 +19,7 @@ class GardenStoreImpl extends GardenStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<GardenStore>) {
     super(arg)
     this.types.add(schema.GardenStore)
-    initializeProperties(this, init)
+    initializeProperties<GardenStore>(this, init)
   }
 }
 GardenStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GardenStore)

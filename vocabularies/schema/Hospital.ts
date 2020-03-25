@@ -21,7 +21,7 @@ class HospitalImpl extends HospitalMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Hospital>) {
     super(arg)
     this.types.add(schema.Hospital)
-    initializeProperties(this, init)
+    initializeProperties<Hospital>(this, init)
   }
 }
 HospitalMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Hospital)

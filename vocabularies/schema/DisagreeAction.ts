@@ -19,7 +19,7 @@ class DisagreeActionImpl extends DisagreeActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DisagreeAction>) {
     super(arg)
     this.types.add(schema.DisagreeAction)
-    initializeProperties(this, init)
+    initializeProperties<DisagreeAction>(this, init)
   }
 }
 DisagreeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DisagreeAction)

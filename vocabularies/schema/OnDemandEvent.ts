@@ -19,7 +19,7 @@ class OnDemandEventImpl extends OnDemandEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<OnDemandEvent>) {
     super(arg)
     this.types.add(schema.OnDemandEvent)
-    initializeProperties(this, init)
+    initializeProperties<OnDemandEvent>(this, init)
   }
 }
 OnDemandEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.OnDemandEvent)

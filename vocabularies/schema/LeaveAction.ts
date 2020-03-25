@@ -22,7 +22,7 @@ class LeaveActionImpl extends LeaveActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<LeaveAction>) {
     super(arg)
     this.types.add(schema.LeaveAction)
-    initializeProperties(this, init)
+    initializeProperties<LeaveAction>(this, init)
   }
 }
 LeaveActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LeaveAction)

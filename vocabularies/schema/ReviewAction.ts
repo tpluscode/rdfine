@@ -22,7 +22,7 @@ class ReviewActionImpl extends ReviewActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ReviewAction>) {
     super(arg)
     this.types.add(schema.ReviewAction)
-    initializeProperties(this, init)
+    initializeProperties<ReviewAction>(this, init)
   }
 }
 ReviewActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ReviewAction)

@@ -25,7 +25,7 @@ class AirlineImpl extends AirlineMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Airline>) {
     super(arg)
     this.types.add(schema.Airline)
-    initializeProperties(this, init)
+    initializeProperties<Airline>(this, init)
   }
 }
 AirlineMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Airline)

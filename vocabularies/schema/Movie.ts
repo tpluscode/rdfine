@@ -46,7 +46,7 @@ class MovieImpl extends MovieMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Movie>) {
     super(arg)
     this.types.add(schema.Movie)
-    initializeProperties(this, init)
+    initializeProperties<Movie>(this, init)
   }
 }
 MovieMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Movie)

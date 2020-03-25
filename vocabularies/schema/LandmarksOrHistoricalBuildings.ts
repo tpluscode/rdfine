@@ -19,7 +19,7 @@ class LandmarksOrHistoricalBuildingsImpl extends LandmarksOrHistoricalBuildingsM
   constructor(arg: ResourceNode, init?: PropertyInitializer<LandmarksOrHistoricalBuildings>) {
     super(arg)
     this.types.add(schema.LandmarksOrHistoricalBuildings)
-    initializeProperties(this, init)
+    initializeProperties<LandmarksOrHistoricalBuildings>(this, init)
   }
 }
 LandmarksOrHistoricalBuildingsMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LandmarksOrHistoricalBuildings)

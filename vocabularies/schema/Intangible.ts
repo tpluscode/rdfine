@@ -19,7 +19,7 @@ class IntangibleImpl extends IntangibleMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Intangible>) {
     super(arg)
     this.types.add(schema.Intangible)
-    initializeProperties(this, init)
+    initializeProperties<Intangible>(this, init)
   }
 }
 IntangibleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Intangible)

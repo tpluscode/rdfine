@@ -19,7 +19,7 @@ class FestivalImpl extends FestivalMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Festival>) {
     super(arg)
     this.types.add(schema.Festival)
-    initializeProperties(this, init)
+    initializeProperties<Festival>(this, init)
   }
 }
 FestivalMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Festival)

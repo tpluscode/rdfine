@@ -28,7 +28,7 @@ class BlogImpl extends BlogMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Blog>) {
     super(arg)
     this.types.add(schema.Blog)
-    initializeProperties(this, init)
+    initializeProperties<Blog>(this, init)
   }
 }
 BlogMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Blog)

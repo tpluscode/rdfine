@@ -19,7 +19,7 @@ class PlaceOfWorshipImpl extends PlaceOfWorshipMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PlaceOfWorship>) {
     super(arg)
     this.types.add(schema.PlaceOfWorship)
-    initializeProperties(this, init)
+    initializeProperties<PlaceOfWorship>(this, init)
   }
 }
 PlaceOfWorshipMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PlaceOfWorship)

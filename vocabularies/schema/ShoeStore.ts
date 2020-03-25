@@ -19,7 +19,7 @@ class ShoeStoreImpl extends ShoeStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ShoeStore>) {
     super(arg)
     this.types.add(schema.ShoeStore)
-    initializeProperties(this, init)
+    initializeProperties<ShoeStore>(this, init)
   }
 }
 ShoeStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ShoeStore)

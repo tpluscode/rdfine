@@ -19,7 +19,7 @@ class GovernmentPermitImpl extends GovernmentPermitMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<GovernmentPermit>) {
     super(arg)
     this.types.add(schema.GovernmentPermit)
-    initializeProperties(this, init)
+    initializeProperties<GovernmentPermit>(this, init)
   }
 }
 GovernmentPermitMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GovernmentPermit)

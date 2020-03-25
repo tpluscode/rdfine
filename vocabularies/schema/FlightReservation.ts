@@ -34,7 +34,7 @@ class FlightReservationImpl extends FlightReservationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<FlightReservation>) {
     super(arg)
     this.types.add(schema.FlightReservation)
-    initializeProperties(this, init)
+    initializeProperties<FlightReservation>(this, init)
   }
 }
 FlightReservationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FlightReservation)

@@ -19,7 +19,7 @@ class ReserveActionImpl extends ReserveActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ReserveAction>) {
     super(arg)
     this.types.add(schema.ReserveAction)
-    initializeProperties(this, init)
+    initializeProperties<ReserveAction>(this, init)
   }
 }
 ReserveActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ReserveAction)

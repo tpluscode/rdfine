@@ -69,7 +69,7 @@ class ColumnImpl extends ColumnMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Column>) {
     super(arg)
     this.types.add(csvw.Column)
-    initializeProperties(this, init)
+    initializeProperties<Column>(this, init)
   }
 }
 ColumnMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Column)

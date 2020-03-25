@@ -19,7 +19,7 @@ class AutoRepairImpl extends AutoRepairMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AutoRepair>) {
     super(arg)
     this.types.add(schema.AutoRepair)
-    initializeProperties(this, init)
+    initializeProperties<AutoRepair>(this, init)
   }
 }
 AutoRepairMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AutoRepair)

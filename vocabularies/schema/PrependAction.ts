@@ -19,7 +19,7 @@ class PrependActionImpl extends PrependActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PrependAction>) {
     super(arg)
     this.types.add(schema.PrependAction)
-    initializeProperties(this, init)
+    initializeProperties<PrependAction>(this, init)
   }
 }
 PrependActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PrependAction)

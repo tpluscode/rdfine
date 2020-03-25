@@ -19,7 +19,7 @@ class SpreadsheetDigitalDocumentImpl extends SpreadsheetDigitalDocumentMixin(Rdf
   constructor(arg: ResourceNode, init?: PropertyInitializer<SpreadsheetDigitalDocument>) {
     super(arg)
     this.types.add(schema.SpreadsheetDigitalDocument)
-    initializeProperties(this, init)
+    initializeProperties<SpreadsheetDigitalDocument>(this, init)
   }
 }
 SpreadsheetDigitalDocumentMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SpreadsheetDigitalDocument)

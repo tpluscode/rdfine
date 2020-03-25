@@ -19,7 +19,7 @@ class DanceGroupImpl extends DanceGroupMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DanceGroup>) {
     super(arg)
     this.types.add(schema.DanceGroup)
-    initializeProperties(this, init)
+    initializeProperties<DanceGroup>(this, init)
   }
 }
 DanceGroupMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DanceGroup)

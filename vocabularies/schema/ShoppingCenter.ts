@@ -19,7 +19,7 @@ class ShoppingCenterImpl extends ShoppingCenterMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ShoppingCenter>) {
     super(arg)
     this.types.add(schema.ShoppingCenter)
-    initializeProperties(this, init)
+    initializeProperties<ShoppingCenter>(this, init)
   }
 }
 ShoppingCenterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ShoppingCenter)

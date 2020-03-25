@@ -19,7 +19,7 @@ class ContactPageImpl extends ContactPageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ContactPage>) {
     super(arg)
     this.types.add(schema.ContactPage)
-    initializeProperties(this, init)
+    initializeProperties<ContactPage>(this, init)
   }
 }
 ContactPageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ContactPage)

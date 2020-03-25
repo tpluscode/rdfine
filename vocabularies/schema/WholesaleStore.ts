@@ -19,7 +19,7 @@ class WholesaleStoreImpl extends WholesaleStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WholesaleStore>) {
     super(arg)
     this.types.add(schema.WholesaleStore)
-    initializeProperties(this, init)
+    initializeProperties<WholesaleStore>(this, init)
   }
 }
 WholesaleStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WholesaleStore)

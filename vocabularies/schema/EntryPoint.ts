@@ -43,7 +43,7 @@ class EntryPointImpl extends EntryPointMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<EntryPoint>) {
     super(arg)
     this.types.add(schema.EntryPoint)
-    initializeProperties(this, init)
+    initializeProperties<EntryPoint>(this, init)
   }
 }
 EntryPointMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EntryPoint)

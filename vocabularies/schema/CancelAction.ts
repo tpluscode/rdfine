@@ -19,7 +19,7 @@ class CancelActionImpl extends CancelActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CancelAction>) {
     super(arg)
     this.types.add(schema.CancelAction)
-    initializeProperties(this, init)
+    initializeProperties<CancelAction>(this, init)
   }
 }
 CancelActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CancelAction)

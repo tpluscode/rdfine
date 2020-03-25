@@ -22,7 +22,7 @@ class CorporationImpl extends CorporationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Corporation>) {
     super(arg)
     this.types.add(schema.Corporation)
-    initializeProperties(this, init)
+    initializeProperties<Corporation>(this, init)
   }
 }
 CorporationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Corporation)

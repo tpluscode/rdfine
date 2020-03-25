@@ -37,7 +37,7 @@ class TypeAndQuantityNodeImpl extends TypeAndQuantityNodeMixin(RdfResourceImpl) 
   constructor(arg: ResourceNode, init?: PropertyInitializer<TypeAndQuantityNode>) {
     super(arg)
     this.types.add(schema.TypeAndQuantityNode)
-    initializeProperties(this, init)
+    initializeProperties<TypeAndQuantityNode>(this, init)
   }
 }
 TypeAndQuantityNodeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TypeAndQuantityNode)

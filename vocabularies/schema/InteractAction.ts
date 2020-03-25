@@ -19,7 +19,7 @@ class InteractActionImpl extends InteractActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<InteractAction>) {
     super(arg)
     this.types.add(schema.InteractAction)
-    initializeProperties(this, init)
+    initializeProperties<InteractAction>(this, init)
   }
 }
 InteractActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.InteractAction)

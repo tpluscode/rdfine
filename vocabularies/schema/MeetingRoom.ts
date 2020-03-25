@@ -19,7 +19,7 @@ class MeetingRoomImpl extends MeetingRoomMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MeetingRoom>) {
     super(arg)
     this.types.add(schema.MeetingRoom)
-    initializeProperties(this, init)
+    initializeProperties<MeetingRoom>(this, init)
   }
 }
 MeetingRoomMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MeetingRoom)

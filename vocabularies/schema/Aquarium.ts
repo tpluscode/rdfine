@@ -19,7 +19,7 @@ class AquariumImpl extends AquariumMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Aquarium>) {
     super(arg)
     this.types.add(schema.Aquarium)
-    initializeProperties(this, init)
+    initializeProperties<Aquarium>(this, init)
   }
 }
 AquariumMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Aquarium)

@@ -19,7 +19,7 @@ class MovingCompanyImpl extends MovingCompanyMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MovingCompany>) {
     super(arg)
     this.types.add(schema.MovingCompany)
-    initializeProperties(this, init)
+    initializeProperties<MovingCompany>(this, init)
   }
 }
 MovingCompanyMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MovingCompany)

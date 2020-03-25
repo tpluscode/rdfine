@@ -19,7 +19,7 @@ class HighSchoolImpl extends HighSchoolMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HighSchool>) {
     super(arg)
     this.types.add(schema.HighSchool)
-    initializeProperties(this, init)
+    initializeProperties<HighSchool>(this, init)
   }
 }
 HighSchoolMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HighSchool)

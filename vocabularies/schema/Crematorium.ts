@@ -19,7 +19,7 @@ class CrematoriumImpl extends CrematoriumMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Crematorium>) {
     super(arg)
     this.types.add(schema.Crematorium)
-    initializeProperties(this, init)
+    initializeProperties<Crematorium>(this, init)
   }
 }
 CrematoriumMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Crematorium)

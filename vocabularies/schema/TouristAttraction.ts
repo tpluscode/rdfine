@@ -31,7 +31,7 @@ class TouristAttractionImpl extends TouristAttractionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TouristAttraction>) {
     super(arg)
     this.types.add(schema.TouristAttraction)
-    initializeProperties(this, init)
+    initializeProperties<TouristAttraction>(this, init)
   }
 }
 TouristAttractionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TouristAttraction)

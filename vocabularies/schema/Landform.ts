@@ -19,7 +19,7 @@ class LandformImpl extends LandformMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Landform>) {
     super(arg)
     this.types.add(schema.Landform)
-    initializeProperties(this, init)
+    initializeProperties<Landform>(this, init)
   }
 }
 LandformMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Landform)

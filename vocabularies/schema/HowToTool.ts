@@ -19,7 +19,7 @@ class HowToToolImpl extends HowToToolMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HowToTool>) {
     super(arg)
     this.types.add(schema.HowToTool)
-    initializeProperties(this, init)
+    initializeProperties<HowToTool>(this, init)
   }
 }
 HowToToolMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HowToTool)

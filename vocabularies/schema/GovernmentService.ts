@@ -22,7 +22,7 @@ class GovernmentServiceImpl extends GovernmentServiceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<GovernmentService>) {
     super(arg)
     this.types.add(schema.GovernmentService)
-    initializeProperties(this, init)
+    initializeProperties<GovernmentService>(this, init)
   }
 }
 GovernmentServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GovernmentService)

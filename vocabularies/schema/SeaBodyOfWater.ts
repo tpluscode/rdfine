@@ -19,7 +19,7 @@ class SeaBodyOfWaterImpl extends SeaBodyOfWaterMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SeaBodyOfWater>) {
     super(arg)
     this.types.add(schema.SeaBodyOfWater)
-    initializeProperties(this, init)
+    initializeProperties<SeaBodyOfWater>(this, init)
   }
 }
 SeaBodyOfWaterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SeaBodyOfWater)

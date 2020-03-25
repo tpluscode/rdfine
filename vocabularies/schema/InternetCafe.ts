@@ -19,7 +19,7 @@ class InternetCafeImpl extends InternetCafeMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<InternetCafe>) {
     super(arg)
     this.types.add(schema.InternetCafe)
-    initializeProperties(this, init)
+    initializeProperties<InternetCafe>(this, init)
   }
 }
 InternetCafeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.InternetCafe)

@@ -28,7 +28,7 @@ class BedDetailsImpl extends BedDetailsMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BedDetails>) {
     super(arg)
     this.types.add(schema.BedDetails)
-    initializeProperties(this, init)
+    initializeProperties<BedDetails>(this, init)
   }
 }
 BedDetailsMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BedDetails)

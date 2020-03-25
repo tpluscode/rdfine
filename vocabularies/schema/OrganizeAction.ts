@@ -19,7 +19,7 @@ class OrganizeActionImpl extends OrganizeActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<OrganizeAction>) {
     super(arg)
     this.types.add(schema.OrganizeAction)
-    initializeProperties(this, init)
+    initializeProperties<OrganizeAction>(this, init)
   }
 }
 OrganizeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.OrganizeAction)

@@ -19,7 +19,7 @@ class UnRegisterActionImpl extends UnRegisterActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<UnRegisterAction>) {
     super(arg)
     this.types.add(schema.UnRegisterAction)
-    initializeProperties(this, init)
+    initializeProperties<UnRegisterAction>(this, init)
   }
 }
 UnRegisterActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UnRegisterAction)

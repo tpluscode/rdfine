@@ -25,7 +25,7 @@ class FinancialServiceImpl extends FinancialServiceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<FinancialService>) {
     super(arg)
     this.types.add(schema.FinancialService)
-    initializeProperties(this, init)
+    initializeProperties<FinancialService>(this, init)
   }
 }
 FinancialServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FinancialService)

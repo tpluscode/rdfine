@@ -19,7 +19,7 @@ class VisualArtsEventImpl extends VisualArtsEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<VisualArtsEvent>) {
     super(arg)
     this.types.add(schema.VisualArtsEvent)
-    initializeProperties(this, init)
+    initializeProperties<VisualArtsEvent>(this, init)
   }
 }
 VisualArtsEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.VisualArtsEvent)

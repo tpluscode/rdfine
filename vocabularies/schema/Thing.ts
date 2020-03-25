@@ -57,7 +57,7 @@ class ThingImpl extends ThingMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Thing>) {
     super(arg)
     this.types.add(schema.Thing)
-    initializeProperties(this, init)
+    initializeProperties<Thing>(this, init)
   }
 }
 ThingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Thing)

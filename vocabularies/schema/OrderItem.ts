@@ -34,7 +34,7 @@ class OrderItemImpl extends OrderItemMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<OrderItem>) {
     super(arg)
     this.types.add(schema.OrderItem)
-    initializeProperties(this, init)
+    initializeProperties<OrderItem>(this, init)
   }
 }
 OrderItemMixin.shouldApply = (r: RdfResource) => r.types.has(schema.OrderItem)

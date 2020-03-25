@@ -19,7 +19,7 @@ class CodeImpl extends CodeMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Code>) {
     super(arg)
     this.types.add(schema.Code)
-    initializeProperties(this, init)
+    initializeProperties<Code>(this, init)
   }
 }
 CodeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Code)

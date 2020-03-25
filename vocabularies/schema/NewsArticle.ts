@@ -34,7 +34,7 @@ class NewsArticleImpl extends NewsArticleMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<NewsArticle>) {
     super(arg)
     this.types.add(schema.NewsArticle)
-    initializeProperties(this, init)
+    initializeProperties<NewsArticle>(this, init)
   }
 }
 NewsArticleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.NewsArticle)

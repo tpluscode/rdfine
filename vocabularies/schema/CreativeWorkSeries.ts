@@ -29,7 +29,7 @@ class CreativeWorkSeriesImpl extends CreativeWorkSeriesMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CreativeWorkSeries>) {
     super(arg)
     this.types.add(schema.CreativeWorkSeries)
-    initializeProperties(this, init)
+    initializeProperties<CreativeWorkSeries>(this, init)
   }
 }
 CreativeWorkSeriesMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CreativeWorkSeries)

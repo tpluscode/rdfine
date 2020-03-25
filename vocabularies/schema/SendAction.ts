@@ -25,7 +25,7 @@ class SendActionImpl extends SendActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SendAction>) {
     super(arg)
     this.types.add(schema.SendAction)
-    initializeProperties(this, init)
+    initializeProperties<SendAction>(this, init)
   }
 }
 SendActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SendAction)

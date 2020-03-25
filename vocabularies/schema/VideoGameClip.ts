@@ -19,7 +19,7 @@ class VideoGameClipImpl extends VideoGameClipMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<VideoGameClip>) {
     super(arg)
     this.types.add(schema.VideoGameClip)
-    initializeProperties(this, init)
+    initializeProperties<VideoGameClip>(this, init)
   }
 }
 VideoGameClipMixin.shouldApply = (r: RdfResource) => r.types.has(schema.VideoGameClip)

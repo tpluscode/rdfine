@@ -19,7 +19,7 @@ class PhotographActionImpl extends PhotographActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PhotographAction>) {
     super(arg)
     this.types.add(schema.PhotographAction)
-    initializeProperties(this, init)
+    initializeProperties<PhotographAction>(this, init)
   }
 }
 PhotographActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PhotographAction)

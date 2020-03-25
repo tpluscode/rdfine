@@ -19,7 +19,7 @@ class ToyStoreImpl extends ToyStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ToyStore>) {
     super(arg)
     this.types.add(schema.ToyStore)
-    initializeProperties(this, init)
+    initializeProperties<ToyStore>(this, init)
   }
 }
 ToyStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ToyStore)

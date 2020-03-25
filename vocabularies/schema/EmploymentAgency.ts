@@ -19,7 +19,7 @@ class EmploymentAgencyImpl extends EmploymentAgencyMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<EmploymentAgency>) {
     super(arg)
     this.types.add(schema.EmploymentAgency)
-    initializeProperties(this, init)
+    initializeProperties<EmploymentAgency>(this, init)
   }
 }
 EmploymentAgencyMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EmploymentAgency)

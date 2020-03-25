@@ -37,7 +37,7 @@ class UnitPriceSpecificationImpl extends UnitPriceSpecificationMixin(RdfResource
   constructor(arg: ResourceNode, init?: PropertyInitializer<UnitPriceSpecification>) {
     super(arg)
     this.types.add(schema.UnitPriceSpecification)
-    initializeProperties(this, init)
+    initializeProperties<UnitPriceSpecification>(this, init)
   }
 }
 UnitPriceSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UnitPriceSpecification)

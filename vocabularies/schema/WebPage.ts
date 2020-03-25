@@ -52,7 +52,7 @@ class WebPageImpl extends WebPageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WebPage>) {
     super(arg)
     this.types.add(schema.WebPage)
-    initializeProperties(this, init)
+    initializeProperties<WebPage>(this, init)
   }
 }
 WebPageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WebPage)

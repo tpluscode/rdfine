@@ -19,7 +19,7 @@ class BridgeImpl extends BridgeMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Bridge>) {
     super(arg)
     this.types.add(schema.Bridge)
-    initializeProperties(this, init)
+    initializeProperties<Bridge>(this, init)
   }
 }
 BridgeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Bridge)

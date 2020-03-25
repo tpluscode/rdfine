@@ -20,7 +20,7 @@ class HowToTipImpl extends HowToTipMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HowToTip>) {
     super(arg)
     this.types.add(schema.HowToTip)
-    initializeProperties(this, init)
+    initializeProperties<HowToTip>(this, init)
   }
 }
 HowToTipMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HowToTip)

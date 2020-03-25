@@ -19,7 +19,7 @@ class DownloadActionImpl extends DownloadActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DownloadAction>) {
     super(arg)
     this.types.add(schema.DownloadAction)
-    initializeProperties(this, init)
+    initializeProperties<DownloadAction>(this, init)
   }
 }
 DownloadActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DownloadAction)

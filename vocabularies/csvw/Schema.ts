@@ -69,7 +69,7 @@ class SchemaImpl extends SchemaMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Schema>) {
     super(arg)
     this.types.add(csvw.Schema)
-    initializeProperties(this, init)
+    initializeProperties<Schema>(this, init)
   }
 }
 SchemaMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Schema)

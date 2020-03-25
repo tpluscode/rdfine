@@ -19,7 +19,7 @@ class ResidenceImpl extends ResidenceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Residence>) {
     super(arg)
     this.types.add(schema.Residence)
-    initializeProperties(this, init)
+    initializeProperties<Residence>(this, init)
   }
 }
 ResidenceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Residence)

@@ -19,7 +19,7 @@ class UserCheckinsImpl extends UserCheckinsMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<UserCheckins>) {
     super(arg)
     this.types.add(schema.UserCheckins)
-    initializeProperties(this, init)
+    initializeProperties<UserCheckins>(this, init)
   }
 }
 UserCheckinsMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UserCheckins)

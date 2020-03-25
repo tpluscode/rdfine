@@ -19,7 +19,7 @@ class UserPlaysImpl extends UserPlaysMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<UserPlays>) {
     super(arg)
     this.types.add(schema.UserPlays)
-    initializeProperties(this, init)
+    initializeProperties<UserPlays>(this, init)
   }
 }
 UserPlaysMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UserPlays)

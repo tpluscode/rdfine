@@ -115,7 +115,7 @@ class SoftwareApplicationImpl extends SoftwareApplicationMixin(RdfResourceImpl) 
   constructor(arg: ResourceNode, init?: PropertyInitializer<SoftwareApplication>) {
     super(arg)
     this.types.add(schema.SoftwareApplication)
-    initializeProperties(this, init)
+    initializeProperties<SoftwareApplication>(this, init)
   }
 }
 SoftwareApplicationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SoftwareApplication)

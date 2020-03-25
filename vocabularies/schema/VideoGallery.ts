@@ -19,7 +19,7 @@ class VideoGalleryImpl extends VideoGalleryMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<VideoGallery>) {
     super(arg)
     this.types.add(schema.VideoGallery)
-    initializeProperties(this, init)
+    initializeProperties<VideoGallery>(this, init)
   }
 }
 VideoGalleryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.VideoGallery)

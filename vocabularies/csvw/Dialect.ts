@@ -57,7 +57,7 @@ class DialectImpl extends DialectMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Dialect>) {
     super(arg)
     this.types.add(csvw.Dialect)
-    initializeProperties(this, init)
+    initializeProperties<Dialect>(this, init)
   }
 }
 DialectMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Dialect)

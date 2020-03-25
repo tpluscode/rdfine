@@ -22,7 +22,7 @@ class PerformanceRoleImpl extends PerformanceRoleMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PerformanceRole>) {
     super(arg)
     this.types.add(schema.PerformanceRole)
-    initializeProperties(this, init)
+    initializeProperties<PerformanceRole>(this, init)
   }
 }
 PerformanceRoleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PerformanceRole)

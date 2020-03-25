@@ -19,7 +19,7 @@ class OfferCatalogImpl extends OfferCatalogMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<OfferCatalog>) {
     super(arg)
     this.types.add(schema.OfferCatalog)
-    initializeProperties(this, init)
+    initializeProperties<OfferCatalog>(this, init)
   }
 }
 OfferCatalogMixin.shouldApply = (r: RdfResource) => r.types.has(schema.OfferCatalog)

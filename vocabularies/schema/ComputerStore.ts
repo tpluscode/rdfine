@@ -19,7 +19,7 @@ class ComputerStoreImpl extends ComputerStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ComputerStore>) {
     super(arg)
     this.types.add(schema.ComputerStore)
-    initializeProperties(this, init)
+    initializeProperties<ComputerStore>(this, init)
   }
 }
 ComputerStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ComputerStore)

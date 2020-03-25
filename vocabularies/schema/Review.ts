@@ -31,7 +31,7 @@ class ReviewImpl extends ReviewMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Review>) {
     super(arg)
     this.types.add(schema.Review)
-    initializeProperties(this, init)
+    initializeProperties<Review>(this, init)
   }
 }
 ReviewMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Review)

@@ -19,7 +19,7 @@ class ReactActionImpl extends ReactActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ReactAction>) {
     super(arg)
     this.types.add(schema.ReactAction)
-    initializeProperties(this, init)
+    initializeProperties<ReactAction>(this, init)
   }
 }
 ReactActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ReactAction)

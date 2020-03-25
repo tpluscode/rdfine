@@ -28,7 +28,7 @@ class BusinessAudienceImpl extends BusinessAudienceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BusinessAudience>) {
     super(arg)
     this.types.add(schema.BusinessAudience)
-    initializeProperties(this, init)
+    initializeProperties<BusinessAudience>(this, init)
   }
 }
 BusinessAudienceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BusinessAudience)

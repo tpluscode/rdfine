@@ -25,7 +25,7 @@ class UpdateActionImpl extends UpdateActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<UpdateAction>) {
     super(arg)
     this.types.add(schema.UpdateAction)
-    initializeProperties(this, init)
+    initializeProperties<UpdateAction>(this, init)
   }
 }
 UpdateActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UpdateAction)

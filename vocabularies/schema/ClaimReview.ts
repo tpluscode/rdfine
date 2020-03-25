@@ -22,7 +22,7 @@ class ClaimReviewImpl extends ClaimReviewMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ClaimReview>) {
     super(arg)
     this.types.add(schema.ClaimReview)
-    initializeProperties(this, init)
+    initializeProperties<ClaimReview>(this, init)
   }
 }
 ClaimReviewMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ClaimReview)

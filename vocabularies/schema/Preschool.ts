@@ -19,7 +19,7 @@ class PreschoolImpl extends PreschoolMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Preschool>) {
     super(arg)
     this.types.add(schema.Preschool)
-    initializeProperties(this, init)
+    initializeProperties<Preschool>(this, init)
   }
 }
 PreschoolMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Preschool)

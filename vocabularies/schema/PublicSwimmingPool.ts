@@ -19,7 +19,7 @@ class PublicSwimmingPoolImpl extends PublicSwimmingPoolMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PublicSwimmingPool>) {
     super(arg)
     this.types.add(schema.PublicSwimmingPool)
-    initializeProperties(this, init)
+    initializeProperties<PublicSwimmingPool>(this, init)
   }
 }
 PublicSwimmingPoolMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PublicSwimmingPool)

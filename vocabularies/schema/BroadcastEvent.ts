@@ -28,7 +28,7 @@ class BroadcastEventImpl extends BroadcastEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BroadcastEvent>) {
     super(arg)
     this.types.add(schema.BroadcastEvent)
-    initializeProperties(this, init)
+    initializeProperties<BroadcastEvent>(this, init)
   }
 }
 BroadcastEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BroadcastEvent)

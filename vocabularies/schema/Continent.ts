@@ -19,7 +19,7 @@ class ContinentImpl extends ContinentMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Continent>) {
     super(arg)
     this.types.add(schema.Continent)
-    initializeProperties(this, init)
+    initializeProperties<Continent>(this, init)
   }
 }
 ContinentMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Continent)

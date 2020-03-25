@@ -19,7 +19,7 @@ class MusicVideoObjectImpl extends MusicVideoObjectMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MusicVideoObject>) {
     super(arg)
     this.types.add(schema.MusicVideoObject)
-    initializeProperties(this, init)
+    initializeProperties<MusicVideoObject>(this, init)
   }
 }
 MusicVideoObjectMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MusicVideoObject)

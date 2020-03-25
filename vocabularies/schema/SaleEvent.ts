@@ -19,7 +19,7 @@ class SaleEventImpl extends SaleEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SaleEvent>) {
     super(arg)
     this.types.add(schema.SaleEvent)
-    initializeProperties(this, init)
+    initializeProperties<SaleEvent>(this, init)
   }
 }
 SaleEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SaleEvent)

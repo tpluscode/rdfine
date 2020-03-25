@@ -19,7 +19,7 @@ class LiquorStoreImpl extends LiquorStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<LiquorStore>) {
     super(arg)
     this.types.add(schema.LiquorStore)
-    initializeProperties(this, init)
+    initializeProperties<LiquorStore>(this, init)
   }
 }
 LiquorStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LiquorStore)

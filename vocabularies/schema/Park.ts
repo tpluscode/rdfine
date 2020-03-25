@@ -19,7 +19,7 @@ class ParkImpl extends ParkMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Park>) {
     super(arg)
     this.types.add(schema.Park)
-    initializeProperties(this, init)
+    initializeProperties<Park>(this, init)
   }
 }
 ParkMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Park)

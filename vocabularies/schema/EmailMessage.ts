@@ -19,7 +19,7 @@ class EmailMessageImpl extends EmailMessageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<EmailMessage>) {
     super(arg)
     this.types.add(schema.EmailMessage)
-    initializeProperties(this, init)
+    initializeProperties<EmailMessage>(this, init)
   }
 }
 EmailMessageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EmailMessage)

@@ -37,7 +37,7 @@ class CourseImpl extends CourseMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Course>) {
     super(arg)
     this.types.add(schema.Course)
-    initializeProperties(this, init)
+    initializeProperties<Course>(this, init)
   }
 }
 CourseMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Course)

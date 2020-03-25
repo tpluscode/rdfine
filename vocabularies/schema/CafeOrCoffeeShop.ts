@@ -19,7 +19,7 @@ class CafeOrCoffeeShopImpl extends CafeOrCoffeeShopMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CafeOrCoffeeShop>) {
     super(arg)
     this.types.add(schema.CafeOrCoffeeShop)
-    initializeProperties(this, init)
+    initializeProperties<CafeOrCoffeeShop>(this, init)
   }
 }
 CafeOrCoffeeShopMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CafeOrCoffeeShop)

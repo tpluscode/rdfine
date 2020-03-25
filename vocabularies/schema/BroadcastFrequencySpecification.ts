@@ -25,7 +25,7 @@ class BroadcastFrequencySpecificationImpl extends BroadcastFrequencySpecificatio
   constructor(arg: ResourceNode, init?: PropertyInitializer<BroadcastFrequencySpecification>) {
     super(arg)
     this.types.add(schema.BroadcastFrequencySpecification)
-    initializeProperties(this, init)
+    initializeProperties<BroadcastFrequencySpecification>(this, init)
   }
 }
 BroadcastFrequencySpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BroadcastFrequencySpecification)

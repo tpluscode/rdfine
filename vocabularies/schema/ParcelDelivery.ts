@@ -55,7 +55,7 @@ class ParcelDeliveryImpl extends ParcelDeliveryMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ParcelDelivery>) {
     super(arg)
     this.types.add(schema.ParcelDelivery)
-    initializeProperties(this, init)
+    initializeProperties<ParcelDelivery>(this, init)
   }
 }
 ParcelDeliveryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ParcelDelivery)

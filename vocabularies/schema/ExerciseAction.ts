@@ -46,7 +46,7 @@ class ExerciseActionImpl extends ExerciseActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ExerciseAction>) {
     super(arg)
     this.types.add(schema.ExerciseAction)
-    initializeProperties(this, init)
+    initializeProperties<ExerciseAction>(this, init)
   }
 }
 ExerciseActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ExerciseAction)

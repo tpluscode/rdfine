@@ -19,7 +19,7 @@ class FoodEventImpl extends FoodEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<FoodEvent>) {
     super(arg)
     this.types.add(schema.FoodEvent)
-    initializeProperties(this, init)
+    initializeProperties<FoodEvent>(this, init)
   }
 }
 FoodEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FoodEvent)

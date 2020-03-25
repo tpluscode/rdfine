@@ -19,7 +19,7 @@ class ParkingFacilityImpl extends ParkingFacilityMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ParkingFacility>) {
     super(arg)
     this.types.add(schema.ParkingFacility)
-    initializeProperties(this, init)
+    initializeProperties<ParkingFacility>(this, init)
   }
 }
 ParkingFacilityMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ParkingFacility)

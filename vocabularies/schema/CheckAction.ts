@@ -19,7 +19,7 @@ class CheckActionImpl extends CheckActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CheckAction>) {
     super(arg)
     this.types.add(schema.CheckAction)
-    initializeProperties(this, init)
+    initializeProperties<CheckAction>(this, init)
   }
 }
 CheckActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CheckAction)

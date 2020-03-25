@@ -19,7 +19,7 @@ class ListenActionImpl extends ListenActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ListenAction>) {
     super(arg)
     this.types.add(schema.ListenAction)
-    initializeProperties(this, init)
+    initializeProperties<ListenAction>(this, init)
   }
 }
 ListenActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ListenAction)

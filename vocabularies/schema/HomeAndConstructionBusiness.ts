@@ -19,7 +19,7 @@ class HomeAndConstructionBusinessImpl extends HomeAndConstructionBusinessMixin(R
   constructor(arg: ResourceNode, init?: PropertyInitializer<HomeAndConstructionBusiness>) {
     super(arg)
     this.types.add(schema.HomeAndConstructionBusiness)
-    initializeProperties(this, init)
+    initializeProperties<HomeAndConstructionBusiness>(this, init)
   }
 }
 HomeAndConstructionBusinessMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HomeAndConstructionBusiness)

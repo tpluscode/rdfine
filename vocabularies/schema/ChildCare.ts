@@ -19,7 +19,7 @@ class ChildCareImpl extends ChildCareMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ChildCare>) {
     super(arg)
     this.types.add(schema.ChildCare)
-    initializeProperties(this, init)
+    initializeProperties<ChildCare>(this, init)
   }
 }
 ChildCareMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ChildCare)

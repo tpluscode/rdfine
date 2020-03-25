@@ -19,7 +19,7 @@ class ElementarySchoolImpl extends ElementarySchoolMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ElementarySchool>) {
     super(arg)
     this.types.add(schema.ElementarySchool)
-    initializeProperties(this, init)
+    initializeProperties<ElementarySchool>(this, init)
   }
 }
 ElementarySchoolMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ElementarySchool)

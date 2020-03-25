@@ -25,7 +25,7 @@ class DigitalDocumentPermissionImpl extends DigitalDocumentPermissionMixin(RdfRe
   constructor(arg: ResourceNode, init?: PropertyInitializer<DigitalDocumentPermission>) {
     super(arg)
     this.types.add(schema.DigitalDocumentPermission)
-    initializeProperties(this, init)
+    initializeProperties<DigitalDocumentPermission>(this, init)
   }
 }
 DigitalDocumentPermissionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DigitalDocumentPermission)

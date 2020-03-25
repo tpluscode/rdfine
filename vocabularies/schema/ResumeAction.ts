@@ -19,7 +19,7 @@ class ResumeActionImpl extends ResumeActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ResumeAction>) {
     super(arg)
     this.types.add(schema.ResumeAction)
-    initializeProperties(this, init)
+    initializeProperties<ResumeAction>(this, init)
   }
 }
 ResumeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ResumeAction)

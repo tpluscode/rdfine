@@ -19,7 +19,7 @@ class DataDownloadImpl extends DataDownloadMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DataDownload>) {
     super(arg)
     this.types.add(schema.DataDownload)
-    initializeProperties(this, init)
+    initializeProperties<DataDownload>(this, init)
   }
 }
 DataDownloadMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DataDownload)

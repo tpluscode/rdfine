@@ -19,7 +19,7 @@ class BookStoreImpl extends BookStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BookStore>) {
     super(arg)
     this.types.add(schema.BookStore)
-    initializeProperties(this, init)
+    initializeProperties<BookStore>(this, init)
   }
 }
 BookStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BookStore)

@@ -19,7 +19,7 @@ class DiscoverActionImpl extends DiscoverActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DiscoverAction>) {
     super(arg)
     this.types.add(schema.DiscoverAction)
-    initializeProperties(this, init)
+    initializeProperties<DiscoverAction>(this, init)
   }
 }
 DiscoverActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DiscoverAction)

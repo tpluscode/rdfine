@@ -19,7 +19,7 @@ class DistilleryImpl extends DistilleryMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Distillery>) {
     super(arg)
     this.types.add(schema.Distillery)
-    initializeProperties(this, init)
+    initializeProperties<Distillery>(this, init)
   }
 }
 DistilleryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Distillery)

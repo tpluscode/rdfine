@@ -19,7 +19,7 @@ class ComedyClubImpl extends ComedyClubMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ComedyClub>) {
     super(arg)
     this.types.add(schema.ComedyClub)
-    initializeProperties(this, init)
+    initializeProperties<ComedyClub>(this, init)
   }
 }
 ComedyClubMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ComedyClub)

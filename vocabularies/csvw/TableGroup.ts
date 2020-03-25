@@ -72,7 +72,7 @@ class TableGroupImpl extends TableGroupMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TableGroup>) {
     super(arg)
     this.types.add(csvw.TableGroup)
-    initializeProperties(this, init)
+    initializeProperties<TableGroup>(this, init)
   }
 }
 TableGroupMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.TableGroup)

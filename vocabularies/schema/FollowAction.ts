@@ -22,7 +22,7 @@ class FollowActionImpl extends FollowActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<FollowAction>) {
     super(arg)
     this.types.add(schema.FollowAction)
-    initializeProperties(this, init)
+    initializeProperties<FollowAction>(this, init)
   }
 }
 FollowActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FollowAction)

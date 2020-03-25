@@ -19,7 +19,7 @@ class GolfCourseImpl extends GolfCourseMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<GolfCourse>) {
     super(arg)
     this.types.add(schema.GolfCourse)
-    initializeProperties(this, init)
+    initializeProperties<GolfCourse>(this, init)
   }
 }
 GolfCourseMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GolfCourse)

@@ -19,7 +19,7 @@ class SearchResultsPageImpl extends SearchResultsPageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SearchResultsPage>) {
     super(arg)
     this.types.add(schema.SearchResultsPage)
-    initializeProperties(this, init)
+    initializeProperties<SearchResultsPage>(this, init)
   }
 }
 SearchResultsPageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SearchResultsPage)

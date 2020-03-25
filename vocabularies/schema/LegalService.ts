@@ -19,7 +19,7 @@ class LegalServiceImpl extends LegalServiceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<LegalService>) {
     super(arg)
     this.types.add(schema.LegalService)
-    initializeProperties(this, init)
+    initializeProperties<LegalService>(this, init)
   }
 }
 LegalServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LegalService)

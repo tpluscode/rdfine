@@ -19,7 +19,7 @@ class BookmarkActionImpl extends BookmarkActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BookmarkAction>) {
     super(arg)
     this.types.add(schema.BookmarkAction)
-    initializeProperties(this, init)
+    initializeProperties<BookmarkAction>(this, init)
   }
 }
 BookmarkActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BookmarkAction)

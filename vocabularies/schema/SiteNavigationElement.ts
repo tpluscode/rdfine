@@ -19,7 +19,7 @@ class SiteNavigationElementImpl extends SiteNavigationElementMixin(RdfResourceIm
   constructor(arg: ResourceNode, init?: PropertyInitializer<SiteNavigationElement>) {
     super(arg)
     this.types.add(schema.SiteNavigationElement)
-    initializeProperties(this, init)
+    initializeProperties<SiteNavigationElement>(this, init)
   }
 }
 SiteNavigationElementMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SiteNavigationElement)

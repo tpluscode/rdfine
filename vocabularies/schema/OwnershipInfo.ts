@@ -31,7 +31,7 @@ class OwnershipInfoImpl extends OwnershipInfoMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<OwnershipInfo>) {
     super(arg)
     this.types.add(schema.OwnershipInfo)
-    initializeProperties(this, init)
+    initializeProperties<OwnershipInfo>(this, init)
   }
 }
 OwnershipInfoMixin.shouldApply = (r: RdfResource) => r.types.has(schema.OwnershipInfo)

@@ -40,7 +40,7 @@ class OccupationImpl extends OccupationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Occupation>) {
     super(arg)
     this.types.add(schema.Occupation)
-    initializeProperties(this, init)
+    initializeProperties<Occupation>(this, init)
   }
 }
 OccupationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Occupation)

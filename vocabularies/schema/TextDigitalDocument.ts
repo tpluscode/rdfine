@@ -19,7 +19,7 @@ class TextDigitalDocumentImpl extends TextDigitalDocumentMixin(RdfResourceImpl) 
   constructor(arg: ResourceNode, init?: PropertyInitializer<TextDigitalDocument>) {
     super(arg)
     this.types.add(schema.TextDigitalDocument)
-    initializeProperties(this, init)
+    initializeProperties<TextDigitalDocument>(this, init)
   }
 }
 TextDigitalDocumentMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TextDigitalDocument)

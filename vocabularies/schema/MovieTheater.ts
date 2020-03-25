@@ -23,7 +23,7 @@ class MovieTheaterImpl extends MovieTheaterMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MovieTheater>) {
     super(arg)
     this.types.add(schema.MovieTheater)
-    initializeProperties(this, init)
+    initializeProperties<MovieTheater>(this, init)
   }
 }
 MovieTheaterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MovieTheater)

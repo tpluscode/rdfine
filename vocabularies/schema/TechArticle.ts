@@ -25,7 +25,7 @@ class TechArticleImpl extends TechArticleMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TechArticle>) {
     super(arg)
     this.types.add(schema.TechArticle)
-    initializeProperties(this, init)
+    initializeProperties<TechArticle>(this, init)
   }
 }
 TechArticleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TechArticle)

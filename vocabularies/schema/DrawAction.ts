@@ -19,7 +19,7 @@ class DrawActionImpl extends DrawActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DrawAction>) {
     super(arg)
     this.types.add(schema.DrawAction)
-    initializeProperties(this, init)
+    initializeProperties<DrawAction>(this, init)
   }
 }
 DrawActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DrawAction)

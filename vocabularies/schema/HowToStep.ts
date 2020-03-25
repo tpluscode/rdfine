@@ -21,7 +21,7 @@ class HowToStepImpl extends HowToStepMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HowToStep>) {
     super(arg)
     this.types.add(schema.HowToStep)
-    initializeProperties(this, init)
+    initializeProperties<HowToStep>(this, init)
   }
 }
 HowToStepMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HowToStep)

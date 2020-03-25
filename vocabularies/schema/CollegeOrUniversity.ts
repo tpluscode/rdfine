@@ -19,7 +19,7 @@ class CollegeOrUniversityImpl extends CollegeOrUniversityMixin(RdfResourceImpl) 
   constructor(arg: ResourceNode, init?: PropertyInitializer<CollegeOrUniversity>) {
     super(arg)
     this.types.add(schema.CollegeOrUniversity)
-    initializeProperties(this, init)
+    initializeProperties<CollegeOrUniversity>(this, init)
   }
 }
 CollegeOrUniversityMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CollegeOrUniversity)

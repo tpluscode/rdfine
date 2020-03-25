@@ -19,7 +19,7 @@ class CurrencyConversionServiceImpl extends CurrencyConversionServiceMixin(RdfRe
   constructor(arg: ResourceNode, init?: PropertyInitializer<CurrencyConversionService>) {
     super(arg)
     this.types.add(schema.CurrencyConversionService)
-    initializeProperties(this, init)
+    initializeProperties<CurrencyConversionService>(this, init)
   }
 }
 CurrencyConversionServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CurrencyConversionService)

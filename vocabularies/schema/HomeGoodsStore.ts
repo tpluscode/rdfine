@@ -19,7 +19,7 @@ class HomeGoodsStoreImpl extends HomeGoodsStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HomeGoodsStore>) {
     super(arg)
     this.types.add(schema.HomeGoodsStore)
-    initializeProperties(this, init)
+    initializeProperties<HomeGoodsStore>(this, init)
   }
 }
 HomeGoodsStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HomeGoodsStore)

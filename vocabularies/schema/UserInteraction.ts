@@ -19,7 +19,7 @@ class UserInteractionImpl extends UserInteractionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<UserInteraction>) {
     super(arg)
     this.types.add(schema.UserInteraction)
-    initializeProperties(this, init)
+    initializeProperties<UserInteraction>(this, init)
   }
 }
 UserInteractionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UserInteraction)

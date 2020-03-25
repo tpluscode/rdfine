@@ -19,7 +19,7 @@ class FilmActionImpl extends FilmActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<FilmAction>) {
     super(arg)
     this.types.add(schema.FilmAction)
-    initializeProperties(this, init)
+    initializeProperties<FilmAction>(this, init)
   }
 }
 FilmActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FilmAction)

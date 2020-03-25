@@ -40,7 +40,7 @@ class PostalAddressImpl extends PostalAddressMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PostalAddress>) {
     super(arg)
     this.types.add(schema.PostalAddress)
-    initializeProperties(this, init)
+    initializeProperties<PostalAddress>(this, init)
   }
 }
 PostalAddressMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PostalAddress)

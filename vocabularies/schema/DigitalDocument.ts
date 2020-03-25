@@ -22,7 +22,7 @@ class DigitalDocumentImpl extends DigitalDocumentMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DigitalDocument>) {
     super(arg)
     this.types.add(schema.DigitalDocument)
-    initializeProperties(this, init)
+    initializeProperties<DigitalDocument>(this, init)
   }
 }
 DigitalDocumentMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DigitalDocument)

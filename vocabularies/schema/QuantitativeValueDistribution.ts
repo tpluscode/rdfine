@@ -37,7 +37,7 @@ class QuantitativeValueDistributionImpl extends QuantitativeValueDistributionMix
   constructor(arg: ResourceNode, init?: PropertyInitializer<QuantitativeValueDistribution>) {
     super(arg)
     this.types.add(schema.QuantitativeValueDistribution)
-    initializeProperties(this, init)
+    initializeProperties<QuantitativeValueDistribution>(this, init)
   }
 }
 QuantitativeValueDistributionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.QuantitativeValueDistribution)

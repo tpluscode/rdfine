@@ -19,7 +19,7 @@ class MiddleSchoolImpl extends MiddleSchoolMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MiddleSchool>) {
     super(arg)
     this.types.add(schema.MiddleSchool)
-    initializeProperties(this, init)
+    initializeProperties<MiddleSchool>(this, init)
   }
 }
 MiddleSchoolMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MiddleSchool)

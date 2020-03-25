@@ -25,7 +25,7 @@ class SpeakableSpecificationImpl extends SpeakableSpecificationMixin(RdfResource
   constructor(arg: ResourceNode, init?: PropertyInitializer<SpeakableSpecification>) {
     super(arg)
     this.types.add(schema.SpeakableSpecification)
-    initializeProperties(this, init)
+    initializeProperties<SpeakableSpecification>(this, init)
   }
 }
 SpeakableSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SpeakableSpecification)

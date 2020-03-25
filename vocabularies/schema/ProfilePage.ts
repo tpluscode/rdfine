@@ -19,7 +19,7 @@ class ProfilePageImpl extends ProfilePageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ProfilePage>) {
     super(arg)
     this.types.add(schema.ProfilePage)
-    initializeProperties(this, init)
+    initializeProperties<ProfilePage>(this, init)
   }
 }
 ProfilePageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ProfilePage)

@@ -73,7 +73,7 @@ class FlightImpl extends FlightMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Flight>) {
     super(arg)
     this.types.add(schema.Flight)
-    initializeProperties(this, init)
+    initializeProperties<Flight>(this, init)
   }
 }
 FlightMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Flight)

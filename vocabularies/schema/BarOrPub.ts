@@ -19,7 +19,7 @@ class BarOrPubImpl extends BarOrPubMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BarOrPub>) {
     super(arg)
     this.types.add(schema.BarOrPub)
-    initializeProperties(this, init)
+    initializeProperties<BarOrPub>(this, init)
   }
 }
 BarOrPubMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BarOrPub)

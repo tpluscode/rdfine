@@ -19,7 +19,7 @@ class AchieveActionImpl extends AchieveActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AchieveAction>) {
     super(arg)
     this.types.add(schema.AchieveAction)
-    initializeProperties(this, init)
+    initializeProperties<AchieveAction>(this, init)
   }
 }
 AchieveActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AchieveAction)

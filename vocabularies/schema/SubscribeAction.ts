@@ -19,7 +19,7 @@ class SubscribeActionImpl extends SubscribeActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SubscribeAction>) {
     super(arg)
     this.types.add(schema.SubscribeAction)
-    initializeProperties(this, init)
+    initializeProperties<SubscribeAction>(this, init)
   }
 }
 SubscribeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SubscribeAction)

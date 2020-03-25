@@ -19,7 +19,7 @@ class ScholarlyArticleImpl extends ScholarlyArticleMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ScholarlyArticle>) {
     super(arg)
     this.types.add(schema.ScholarlyArticle)
-    initializeProperties(this, init)
+    initializeProperties<ScholarlyArticle>(this, init)
   }
 }
 ScholarlyArticleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ScholarlyArticle)

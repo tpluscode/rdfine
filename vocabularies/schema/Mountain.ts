@@ -19,7 +19,7 @@ class MountainImpl extends MountainMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Mountain>) {
     super(arg)
     this.types.add(schema.Mountain)
-    initializeProperties(this, init)
+    initializeProperties<Mountain>(this, init)
   }
 }
 MountainMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Mountain)

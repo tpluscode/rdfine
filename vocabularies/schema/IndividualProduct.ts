@@ -22,7 +22,7 @@ class IndividualProductImpl extends IndividualProductMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<IndividualProduct>) {
     super(arg)
     this.types.add(schema.IndividualProduct)
-    initializeProperties(this, init)
+    initializeProperties<IndividualProduct>(this, init)
   }
 }
 IndividualProductMixin.shouldApply = (r: RdfResource) => r.types.has(schema.IndividualProduct)

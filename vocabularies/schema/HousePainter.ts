@@ -19,7 +19,7 @@ class HousePainterImpl extends HousePainterMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HousePainter>) {
     super(arg)
     this.types.add(schema.HousePainter)
-    initializeProperties(this, init)
+    initializeProperties<HousePainter>(this, init)
   }
 }
 HousePainterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HousePainter)

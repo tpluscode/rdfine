@@ -19,7 +19,7 @@ class AutomatedTellerImpl extends AutomatedTellerMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AutomatedTeller>) {
     super(arg)
     this.types.add(schema.AutomatedTeller)
-    initializeProperties(this, init)
+    initializeProperties<AutomatedTeller>(this, init)
   }
 }
 AutomatedTellerMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AutomatedTeller)

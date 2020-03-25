@@ -22,7 +22,7 @@ class InsertActionImpl extends InsertActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<InsertAction>) {
     super(arg)
     this.types.add(schema.InsertAction)
-    initializeProperties(this, init)
+    initializeProperties<InsertAction>(this, init)
   }
 }
 InsertActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.InsertAction)

@@ -133,7 +133,7 @@ class ProductImpl extends ProductMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Product>) {
     super(arg)
     this.types.add(schema.Product)
-    initializeProperties(this, init)
+    initializeProperties<Product>(this, init)
   }
 }
 ProductMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Product)

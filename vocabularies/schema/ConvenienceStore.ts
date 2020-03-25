@@ -19,7 +19,7 @@ class ConvenienceStoreImpl extends ConvenienceStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ConvenienceStore>) {
     super(arg)
     this.types.add(schema.ConvenienceStore)
-    initializeProperties(this, init)
+    initializeProperties<ConvenienceStore>(this, init)
   }
 }
 ConvenienceStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ConvenienceStore)

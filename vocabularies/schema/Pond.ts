@@ -19,7 +19,7 @@ class PondImpl extends PondMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Pond>) {
     super(arg)
     this.types.add(schema.Pond)
-    initializeProperties(this, init)
+    initializeProperties<Pond>(this, init)
   }
 }
 PondMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Pond)

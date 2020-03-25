@@ -19,7 +19,7 @@ class UserBlocksImpl extends UserBlocksMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<UserBlocks>) {
     super(arg)
     this.types.add(schema.UserBlocks)
-    initializeProperties(this, init)
+    initializeProperties<UserBlocks>(this, init)
   }
 }
 UserBlocksMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UserBlocks)

@@ -25,7 +25,7 @@ class AudienceImpl extends AudienceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Audience>) {
     super(arg)
     this.types.add(schema.Audience)
-    initializeProperties(this, init)
+    initializeProperties<Audience>(this, init)
   }
 }
 AudienceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Audience)

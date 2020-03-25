@@ -46,7 +46,7 @@ class ActionAccessSpecificationImpl extends ActionAccessSpecificationMixin(RdfRe
   constructor(arg: ResourceNode, init?: PropertyInitializer<ActionAccessSpecification>) {
     super(arg)
     this.types.add(schema.ActionAccessSpecification)
-    initializeProperties(this, init)
+    initializeProperties<ActionAccessSpecification>(this, init)
   }
 }
 ActionAccessSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ActionAccessSpecification)

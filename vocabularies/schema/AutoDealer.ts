@@ -19,7 +19,7 @@ class AutoDealerImpl extends AutoDealerMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AutoDealer>) {
     super(arg)
     this.types.add(schema.AutoDealer)
-    initializeProperties(this, init)
+    initializeProperties<AutoDealer>(this, init)
   }
 }
 AutoDealerMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AutoDealer)

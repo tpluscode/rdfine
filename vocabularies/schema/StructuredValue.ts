@@ -19,7 +19,7 @@ class StructuredValueImpl extends StructuredValueMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<StructuredValue>) {
     super(arg)
     this.types.add(schema.StructuredValue)
-    initializeProperties(this, init)
+    initializeProperties<StructuredValue>(this, init)
   }
 }
 StructuredValueMixin.shouldApply = (r: RdfResource) => r.types.has(schema.StructuredValue)

@@ -18,7 +18,7 @@ class CellImpl extends CellMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Cell>) {
     super(arg)
     this.types.add(csvw.Cell)
-    initializeProperties(this, init)
+    initializeProperties<Cell>(this, init)
   }
 }
 CellMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Cell)

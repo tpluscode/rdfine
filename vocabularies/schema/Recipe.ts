@@ -55,7 +55,7 @@ class RecipeImpl extends RecipeMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Recipe>) {
     super(arg)
     this.types.add(schema.Recipe)
-    initializeProperties(this, init)
+    initializeProperties<Recipe>(this, init)
   }
 }
 RecipeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Recipe)

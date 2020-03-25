@@ -301,7 +301,7 @@ class CreativeWorkImpl extends CreativeWorkMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CreativeWork>) {
     super(arg)
     this.types.add(schema.CreativeWork)
-    initializeProperties(this, init)
+    initializeProperties<CreativeWork>(this, init)
   }
 }
 CreativeWorkMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CreativeWork)

@@ -19,7 +19,7 @@ class InstallActionImpl extends InstallActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<InstallAction>) {
     super(arg)
     this.types.add(schema.InstallAction)
-    initializeProperties(this, init)
+    initializeProperties<InstallAction>(this, init)
   }
 }
 InstallActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.InstallAction)

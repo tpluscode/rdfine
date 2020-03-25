@@ -19,7 +19,7 @@ class MassImpl extends MassMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Mass>) {
     super(arg)
     this.types.add(schema.Mass)
-    initializeProperties(this, init)
+    initializeProperties<Mass>(this, init)
   }
 }
 MassMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Mass)

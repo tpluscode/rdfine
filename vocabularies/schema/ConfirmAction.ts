@@ -19,7 +19,7 @@ class ConfirmActionImpl extends ConfirmActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ConfirmAction>) {
     super(arg)
     this.types.add(schema.ConfirmAction)
-    initializeProperties(this, init)
+    initializeProperties<ConfirmAction>(this, init)
   }
 }
 ConfirmActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ConfirmAction)

@@ -25,7 +25,7 @@ class MoveActionImpl extends MoveActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MoveAction>) {
     super(arg)
     this.types.add(schema.MoveAction)
-    initializeProperties(this, init)
+    initializeProperties<MoveAction>(this, init)
   }
 }
 MoveActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MoveAction)

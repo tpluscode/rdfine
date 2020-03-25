@@ -19,7 +19,7 @@ class LakeBodyOfWaterImpl extends LakeBodyOfWaterMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<LakeBodyOfWater>) {
     super(arg)
     this.types.add(schema.LakeBodyOfWater)
-    initializeProperties(this, init)
+    initializeProperties<LakeBodyOfWater>(this, init)
   }
 }
 LakeBodyOfWaterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LakeBodyOfWater)

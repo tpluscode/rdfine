@@ -40,7 +40,7 @@ class ArticleImpl extends ArticleMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Article>) {
     super(arg)
     this.types.add(schema.Article)
-    initializeProperties(this, init)
+    initializeProperties<Article>(this, init)
   }
 }
 ArticleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Article)

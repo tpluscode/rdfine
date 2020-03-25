@@ -31,7 +31,7 @@ class AggregateOfferImpl extends AggregateOfferMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AggregateOffer>) {
     super(arg)
     this.types.add(schema.AggregateOffer)
-    initializeProperties(this, init)
+    initializeProperties<AggregateOffer>(this, init)
   }
 }
 AggregateOfferMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AggregateOffer)

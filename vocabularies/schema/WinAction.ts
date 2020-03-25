@@ -22,7 +22,7 @@ class WinActionImpl extends WinActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WinAction>) {
     super(arg)
     this.types.add(schema.WinAction)
-    initializeProperties(this, init)
+    initializeProperties<WinAction>(this, init)
   }
 }
 WinActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WinAction)

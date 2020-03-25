@@ -73,7 +73,7 @@ class InvoiceImpl extends InvoiceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Invoice>) {
     super(arg)
     this.types.add(schema.Invoice)
-    initializeProperties(this, init)
+    initializeProperties<Invoice>(this, init)
   }
 }
 InvoiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Invoice)

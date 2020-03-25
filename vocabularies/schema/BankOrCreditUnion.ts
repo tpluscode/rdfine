@@ -19,7 +19,7 @@ class BankOrCreditUnionImpl extends BankOrCreditUnionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BankOrCreditUnion>) {
     super(arg)
     this.types.add(schema.BankOrCreditUnion)
-    initializeProperties(this, init)
+    initializeProperties<BankOrCreditUnion>(this, init)
   }
 }
 BankOrCreditUnionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BankOrCreditUnion)

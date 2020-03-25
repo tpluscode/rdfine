@@ -19,7 +19,7 @@ class WineryImpl extends WineryMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Winery>) {
     super(arg)
     this.types.add(schema.Winery)
-    initializeProperties(this, init)
+    initializeProperties<Winery>(this, init)
   }
 }
 WineryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Winery)

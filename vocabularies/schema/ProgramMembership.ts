@@ -34,7 +34,7 @@ class ProgramMembershipImpl extends ProgramMembershipMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ProgramMembership>) {
     super(arg)
     this.types.add(schema.ProgramMembership)
-    initializeProperties(this, init)
+    initializeProperties<ProgramMembership>(this, init)
   }
 }
 ProgramMembershipMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ProgramMembership)

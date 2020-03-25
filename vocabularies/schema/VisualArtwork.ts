@@ -55,7 +55,7 @@ class VisualArtworkImpl extends VisualArtworkMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<VisualArtwork>) {
     super(arg)
     this.types.add(schema.VisualArtwork)
-    initializeProperties(this, init)
+    initializeProperties<VisualArtwork>(this, init)
   }
 }
 VisualArtworkMixin.shouldApply = (r: RdfResource) => r.types.has(schema.VisualArtwork)

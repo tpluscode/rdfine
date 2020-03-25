@@ -49,7 +49,7 @@ class PropertyValueImpl extends PropertyValueMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PropertyValue>) {
     super(arg)
     this.types.add(schema.PropertyValue)
-    initializeProperties(this, init)
+    initializeProperties<PropertyValue>(this, init)
   }
 }
 PropertyValueMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PropertyValue)

@@ -19,7 +19,7 @@ class StateImpl extends StateMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<State>) {
     super(arg)
     this.types.add(schema.State)
-    initializeProperties(this, init)
+    initializeProperties<State>(this, init)
   }
 }
 StateMixin.shouldApply = (r: RdfResource) => r.types.has(schema.State)

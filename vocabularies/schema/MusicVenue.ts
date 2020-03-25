@@ -19,7 +19,7 @@ class MusicVenueImpl extends MusicVenueMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MusicVenue>) {
     super(arg)
     this.types.add(schema.MusicVenue)
-    initializeProperties(this, init)
+    initializeProperties<MusicVenue>(this, init)
   }
 }
 MusicVenueMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MusicVenue)

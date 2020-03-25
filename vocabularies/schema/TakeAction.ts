@@ -19,7 +19,7 @@ class TakeActionImpl extends TakeActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TakeAction>) {
     super(arg)
     this.types.add(schema.TakeAction)
-    initializeProperties(this, init)
+    initializeProperties<TakeAction>(this, init)
   }
 }
 TakeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TakeAction)

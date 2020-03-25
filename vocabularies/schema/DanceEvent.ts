@@ -19,7 +19,7 @@ class DanceEventImpl extends DanceEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DanceEvent>) {
     super(arg)
     this.types.add(schema.DanceEvent)
-    initializeProperties(this, init)
+    initializeProperties<DanceEvent>(this, init)
   }
 }
 DanceEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DanceEvent)

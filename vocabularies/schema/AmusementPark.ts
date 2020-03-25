@@ -19,7 +19,7 @@ class AmusementParkImpl extends AmusementParkMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AmusementPark>) {
     super(arg)
     this.types.add(schema.AmusementPark)
-    initializeProperties(this, init)
+    initializeProperties<AmusementPark>(this, init)
   }
 }
 AmusementParkMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AmusementPark)

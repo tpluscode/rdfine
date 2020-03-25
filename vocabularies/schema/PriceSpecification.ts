@@ -46,7 +46,7 @@ class PriceSpecificationImpl extends PriceSpecificationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PriceSpecification>) {
     super(arg)
     this.types.add(schema.PriceSpecification)
-    initializeProperties(this, init)
+    initializeProperties<PriceSpecification>(this, init)
   }
 }
 PriceSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PriceSpecification)

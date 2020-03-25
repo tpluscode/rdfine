@@ -25,7 +25,7 @@ class HowToSupplyImpl extends HowToSupplyMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HowToSupply>) {
     super(arg)
     this.types.add(schema.HowToSupply)
-    initializeProperties(this, init)
+    initializeProperties<HowToSupply>(this, init)
   }
 }
 HowToSupplyMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HowToSupply)

@@ -61,7 +61,7 @@ class RadioSeriesImpl extends RadioSeriesMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<RadioSeries>) {
     super(arg)
     this.types.add(schema.RadioSeries)
-    initializeProperties(this, init)
+    initializeProperties<RadioSeries>(this, init)
   }
 }
 RadioSeriesMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RadioSeries)

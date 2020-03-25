@@ -19,7 +19,7 @@ class NGOImpl extends NGOMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<NGO>) {
     super(arg)
     this.types.add(schema.NGO)
-    initializeProperties(this, init)
+    initializeProperties<NGO>(this, init)
   }
 }
 NGOMixin.shouldApply = (r: RdfResource) => r.types.has(schema.NGO)

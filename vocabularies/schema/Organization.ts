@@ -181,7 +181,7 @@ class OrganizationImpl extends OrganizationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Organization>) {
     super(arg)
     this.types.add(schema.Organization)
-    initializeProperties(this, init)
+    initializeProperties<Organization>(this, init)
   }
 }
 OrganizationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Organization)

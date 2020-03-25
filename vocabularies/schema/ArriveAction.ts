@@ -19,7 +19,7 @@ class ArriveActionImpl extends ArriveActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ArriveAction>) {
     super(arg)
     this.types.add(schema.ArriveAction)
-    initializeProperties(this, init)
+    initializeProperties<ArriveAction>(this, init)
   }
 }
 ArriveActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ArriveAction)

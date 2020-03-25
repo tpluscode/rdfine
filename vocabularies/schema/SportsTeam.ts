@@ -25,7 +25,7 @@ class SportsTeamImpl extends SportsTeamMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SportsTeam>) {
     super(arg)
     this.types.add(schema.SportsTeam)
-    initializeProperties(this, init)
+    initializeProperties<SportsTeam>(this, init)
   }
 }
 SportsTeamMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SportsTeam)

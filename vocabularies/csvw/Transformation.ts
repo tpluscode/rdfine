@@ -33,7 +33,7 @@ class TransformationImpl extends TransformationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Transformation>) {
     super(arg)
     this.types.add(csvw.Transformation)
-    initializeProperties(this, init)
+    initializeProperties<Transformation>(this, init)
   }
 }
 TransformationMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Transformation)

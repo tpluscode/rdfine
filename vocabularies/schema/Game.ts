@@ -34,7 +34,7 @@ class GameImpl extends GameMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Game>) {
     super(arg)
     this.types.add(schema.Game)
-    initializeProperties(this, init)
+    initializeProperties<Game>(this, init)
   }
 }
 GameMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Game)

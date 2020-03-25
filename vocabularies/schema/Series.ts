@@ -19,7 +19,7 @@ class SeriesImpl extends SeriesMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Series>) {
     super(arg)
     this.types.add(schema.Series)
-    initializeProperties(this, init)
+    initializeProperties<Series>(this, init)
   }
 }
 SeriesMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Series)

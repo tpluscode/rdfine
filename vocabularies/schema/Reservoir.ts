@@ -19,7 +19,7 @@ class ReservoirImpl extends ReservoirMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Reservoir>) {
     super(arg)
     this.types.add(schema.Reservoir)
-    initializeProperties(this, init)
+    initializeProperties<Reservoir>(this, init)
   }
 }
 ReservoirMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Reservoir)

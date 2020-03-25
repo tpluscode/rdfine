@@ -55,7 +55,7 @@ class NutritionInformationImpl extends NutritionInformationMixin(RdfResourceImpl
   constructor(arg: ResourceNode, init?: PropertyInitializer<NutritionInformation>) {
     super(arg)
     this.types.add(schema.NutritionInformation)
-    initializeProperties(this, init)
+    initializeProperties<NutritionInformation>(this, init)
   }
 }
 NutritionInformationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.NutritionInformation)

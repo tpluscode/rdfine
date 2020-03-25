@@ -19,7 +19,7 @@ class EmbassyImpl extends EmbassyMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Embassy>) {
     super(arg)
     this.types.add(schema.Embassy)
-    initializeProperties(this, init)
+    initializeProperties<Embassy>(this, init)
   }
 }
 EmbassyMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Embassy)

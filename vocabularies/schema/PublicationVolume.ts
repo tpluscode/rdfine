@@ -31,7 +31,7 @@ class PublicationVolumeImpl extends PublicationVolumeMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PublicationVolume>) {
     super(arg)
     this.types.add(schema.PublicationVolume)
-    initializeProperties(this, init)
+    initializeProperties<PublicationVolume>(this, init)
   }
 }
 PublicationVolumeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PublicationVolume)

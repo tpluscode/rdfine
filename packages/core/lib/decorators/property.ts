@@ -50,7 +50,7 @@ export type ObjectOrFactory<TSelf, T, TTerm extends Term> =
 
 interface PropertyDecoratorOptions<T extends RdfResource, TValue, TTerm extends Term> extends AccessorOptions {
   fromTerm: (this: T, obj: SingleContextClownface) => TValue
-  toTerm: (value: TValue) => TTerm
+  toTerm: (this: T, value: TValue) => TTerm
   assertSetValue: (value: RdfResource | Term | SingleContextClownface | TValue) => boolean
   valueTypeName: string
   initial?: ObjectOrFactory<T, TValue, TTerm>
@@ -110,7 +110,7 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
       return returnValues[0]
     },
 
-    set(this: RdfResourceImpl, value: ArrayOrSingle<RdfResource | Term | SingleContextClownface>) {
+    set(this: T & RdfResourceImpl, value: ArrayOrSingle<RdfResource | Term | SingleContextClownface>) {
       if (values === 'single' && Array.isArray(value)) {
         throw new Error(`${name}: Cannot set array to a non-array property`)
       }

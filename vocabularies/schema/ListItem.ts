@@ -31,7 +31,7 @@ class ListItemImpl extends ListItemMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ListItem>) {
     super(arg)
     this.types.add(schema.ListItem)
-    initializeProperties(this, init)
+    initializeProperties<ListItem>(this, init)
   }
 }
 ListItemMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ListItem)

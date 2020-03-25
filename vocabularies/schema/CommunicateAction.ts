@@ -34,7 +34,7 @@ class CommunicateActionImpl extends CommunicateActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CommunicateAction>) {
     super(arg)
     this.types.add(schema.CommunicateAction)
-    initializeProperties(this, init)
+    initializeProperties<CommunicateAction>(this, init)
   }
 }
 CommunicateActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CommunicateAction)

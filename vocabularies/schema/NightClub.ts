@@ -19,7 +19,7 @@ class NightClubImpl extends NightClubMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<NightClub>) {
     super(arg)
     this.types.add(schema.NightClub)
-    initializeProperties(this, init)
+    initializeProperties<NightClub>(this, init)
   }
 }
 NightClubMixin.shouldApply = (r: RdfResource) => r.types.has(schema.NightClub)

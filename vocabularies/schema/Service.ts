@@ -94,7 +94,7 @@ class ServiceImpl extends ServiceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Service>) {
     super(arg)
     this.types.add(schema.Service)
-    initializeProperties(this, init)
+    initializeProperties<Service>(this, init)
   }
 }
 ServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Service)

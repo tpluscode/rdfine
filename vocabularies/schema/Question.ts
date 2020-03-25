@@ -34,7 +34,7 @@ class QuestionImpl extends QuestionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Question>) {
     super(arg)
     this.types.add(schema.Question)
-    initializeProperties(this, init)
+    initializeProperties<Question>(this, init)
   }
 }
 QuestionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Question)

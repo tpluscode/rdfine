@@ -28,7 +28,7 @@ class CookActionImpl extends CookActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CookAction>) {
     super(arg)
     this.types.add(schema.CookAction)
-    initializeProperties(this, init)
+    initializeProperties<CookAction>(this, init)
   }
 }
 CookActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CookAction)

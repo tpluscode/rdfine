@@ -19,7 +19,7 @@ class ChildrensEventImpl extends ChildrensEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ChildrensEvent>) {
     super(arg)
     this.types.add(schema.ChildrensEvent)
-    initializeProperties(this, init)
+    initializeProperties<ChildrensEvent>(this, init)
   }
 }
 ChildrensEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ChildrensEvent)

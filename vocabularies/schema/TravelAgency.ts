@@ -19,7 +19,7 @@ class TravelAgencyImpl extends TravelAgencyMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TravelAgency>) {
     super(arg)
     this.types.add(schema.TravelAgency)
-    initializeProperties(this, init)
+    initializeProperties<TravelAgency>(this, init)
   }
 }
 TravelAgencyMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TravelAgency)

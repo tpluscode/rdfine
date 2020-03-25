@@ -25,7 +25,7 @@ class MediaSubscriptionImpl extends MediaSubscriptionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MediaSubscription>) {
     super(arg)
     this.types.add(schema.MediaSubscription)
-    initializeProperties(this, init)
+    initializeProperties<MediaSubscription>(this, init)
   }
 }
 MediaSubscriptionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MediaSubscription)

@@ -14,20 +14,20 @@ import TableReferenceMixin from './TableReference';
 import TransformationMixin from './Transformation';
 
 export default [
-  CellMixin,
-  ColumnMixin,
-  DatatypeMixin,
-  DialectMixin,
-  DirectionMixin,
-  ForeignKeyMixin,
-  NumericFormatMixin,
-  RowMixin,
-  SchemaMixin,
-  TableMixin,
-  TableGroupMixin,
-  TableReferenceMixin,
-  TransformationMixin,
-] as Mixin<any>[];
+  CellMixin as Mixin,
+  ColumnMixin as Mixin,
+  DatatypeMixin as Mixin,
+  DialectMixin as Mixin,
+  DirectionMixin as Mixin,
+  ForeignKeyMixin as Mixin,
+  NumericFormatMixin as Mixin,
+  RowMixin as Mixin,
+  SchemaMixin as Mixin,
+  TableMixin as Mixin,
+  TableGroupMixin as Mixin,
+  TableReferenceMixin as Mixin,
+  TransformationMixin as Mixin,
+];
 
 export { Cell } from './Cell';
 export { Column } from './Column';

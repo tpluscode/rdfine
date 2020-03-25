@@ -19,7 +19,7 @@ class CemeteryImpl extends CemeteryMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Cemetery>) {
     super(arg)
     this.types.add(schema.Cemetery)
-    initializeProperties(this, init)
+    initializeProperties<Cemetery>(this, init)
   }
 }
 CemeteryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Cemetery)

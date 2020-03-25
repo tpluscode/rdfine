@@ -22,7 +22,7 @@ class CivicStructureImpl extends CivicStructureMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CivicStructure>) {
     super(arg)
     this.types.add(schema.CivicStructure)
-    initializeProperties(this, init)
+    initializeProperties<CivicStructure>(this, init)
   }
 }
 CivicStructureMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CivicStructure)

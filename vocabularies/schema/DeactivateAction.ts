@@ -19,7 +19,7 @@ class DeactivateActionImpl extends DeactivateActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DeactivateAction>) {
     super(arg)
     this.types.add(schema.DeactivateAction)
-    initializeProperties(this, init)
+    initializeProperties<DeactivateAction>(this, init)
   }
 }
 DeactivateActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DeactivateAction)

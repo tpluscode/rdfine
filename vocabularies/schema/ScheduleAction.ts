@@ -19,7 +19,7 @@ class ScheduleActionImpl extends ScheduleActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ScheduleAction>) {
     super(arg)
     this.types.add(schema.ScheduleAction)
-    initializeProperties(this, init)
+    initializeProperties<ScheduleAction>(this, init)
   }
 }
 ScheduleActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ScheduleAction)

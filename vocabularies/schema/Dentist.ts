@@ -20,7 +20,7 @@ class DentistImpl extends DentistMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Dentist>) {
     super(arg)
     this.types.add(schema.Dentist)
-    initializeProperties(this, init)
+    initializeProperties<Dentist>(this, init)
   }
 }
 DentistMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Dentist)

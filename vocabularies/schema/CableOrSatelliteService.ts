@@ -19,7 +19,7 @@ class CableOrSatelliteServiceImpl extends CableOrSatelliteServiceMixin(RdfResour
   constructor(arg: ResourceNode, init?: PropertyInitializer<CableOrSatelliteService>) {
     super(arg)
     this.types.add(schema.CableOrSatelliteService)
-    initializeProperties(this, init)
+    initializeProperties<CableOrSatelliteService>(this, init)
   }
 }
 CableOrSatelliteServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CableOrSatelliteService)

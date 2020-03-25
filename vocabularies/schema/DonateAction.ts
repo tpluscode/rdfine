@@ -22,7 +22,7 @@ class DonateActionImpl extends DonateActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DonateAction>) {
     super(arg)
     this.types.add(schema.DonateAction)
-    initializeProperties(this, init)
+    initializeProperties<DonateAction>(this, init)
   }
 }
 DonateActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DonateAction)

@@ -19,7 +19,7 @@ class PresentationDigitalDocumentImpl extends PresentationDigitalDocumentMixin(R
   constructor(arg: ResourceNode, init?: PropertyInitializer<PresentationDigitalDocument>) {
     super(arg)
     this.types.add(schema.PresentationDigitalDocument)
-    initializeProperties(this, init)
+    initializeProperties<PresentationDigitalDocument>(this, init)
   }
 }
 PresentationDigitalDocumentMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PresentationDigitalDocument)

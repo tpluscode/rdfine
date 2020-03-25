@@ -19,7 +19,7 @@ class PaintingImpl extends PaintingMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Painting>) {
     super(arg)
     this.types.add(schema.Painting)
-    initializeProperties(this, init)
+    initializeProperties<Painting>(this, init)
   }
 }
 PaintingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Painting)

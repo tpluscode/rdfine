@@ -19,7 +19,7 @@ class EatActionImpl extends EatActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<EatAction>) {
     super(arg)
     this.types.add(schema.EatAction)
-    initializeProperties(this, init)
+    initializeProperties<EatAction>(this, init)
   }
 }
 EatActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EatAction)

@@ -19,7 +19,7 @@ class ArtGalleryImpl extends ArtGalleryMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ArtGallery>) {
     super(arg)
     this.types.add(schema.ArtGallery)
-    initializeProperties(this, init)
+    initializeProperties<ArtGallery>(this, init)
   }
 }
 ArtGalleryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ArtGallery)

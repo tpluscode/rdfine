@@ -19,7 +19,7 @@ class ElectricianImpl extends ElectricianMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Electrician>) {
     super(arg)
     this.types.add(schema.Electrician)
-    initializeProperties(this, init)
+    initializeProperties<Electrician>(this, init)
   }
 }
 ElectricianMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Electrician)

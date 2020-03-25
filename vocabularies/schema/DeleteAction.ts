@@ -19,7 +19,7 @@ class DeleteActionImpl extends DeleteActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DeleteAction>) {
     super(arg)
     this.types.add(schema.DeleteAction)
-    initializeProperties(this, init)
+    initializeProperties<DeleteAction>(this, init)
   }
 }
 DeleteActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DeleteAction)

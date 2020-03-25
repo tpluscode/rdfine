@@ -19,7 +19,7 @@ class ItemPageImpl extends ItemPageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ItemPage>) {
     super(arg)
     this.types.add(schema.ItemPage)
-    initializeProperties(this, init)
+    initializeProperties<ItemPage>(this, init)
   }
 }
 ItemPageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ItemPage)

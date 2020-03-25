@@ -19,7 +19,7 @@ class LocksmithImpl extends LocksmithMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Locksmith>) {
     super(arg)
     this.types.add(schema.Locksmith)
-    initializeProperties(this, init)
+    initializeProperties<Locksmith>(this, init)
   }
 }
 LocksmithMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Locksmith)

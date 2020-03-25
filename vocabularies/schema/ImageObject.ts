@@ -37,7 +37,7 @@ class ImageObjectImpl extends ImageObjectMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ImageObject>) {
     super(arg)
     this.types.add(schema.ImageObject)
-    initializeProperties(this, init)
+    initializeProperties<ImageObject>(this, init)
   }
 }
 ImageObjectMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ImageObject)

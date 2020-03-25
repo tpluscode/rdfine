@@ -19,7 +19,7 @@ class SocialEventImpl extends SocialEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SocialEvent>) {
     super(arg)
     this.types.add(schema.SocialEvent)
-    initializeProperties(this, init)
+    initializeProperties<SocialEvent>(this, init)
   }
 }
 SocialEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SocialEvent)

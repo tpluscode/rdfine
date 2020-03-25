@@ -46,7 +46,7 @@ class LodgingReservationImpl extends LodgingReservationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<LodgingReservation>) {
     super(arg)
     this.types.add(schema.LodgingReservation)
-    initializeProperties(this, init)
+    initializeProperties<LodgingReservation>(this, init)
   }
 }
 LodgingReservationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LodgingReservation)

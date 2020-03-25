@@ -19,7 +19,7 @@ class ExhibitionEventImpl extends ExhibitionEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ExhibitionEvent>) {
     super(arg)
     this.types.add(schema.ExhibitionEvent)
-    initializeProperties(this, init)
+    initializeProperties<ExhibitionEvent>(this, init)
   }
 }
 ExhibitionEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ExhibitionEvent)

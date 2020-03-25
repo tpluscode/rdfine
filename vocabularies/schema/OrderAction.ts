@@ -22,7 +22,7 @@ class OrderActionImpl extends OrderActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<OrderAction>) {
     super(arg)
     this.types.add(schema.OrderAction)
-    initializeProperties(this, init)
+    initializeProperties<OrderAction>(this, init)
   }
 }
 OrderActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.OrderAction)

@@ -19,7 +19,7 @@ class CheckoutPageImpl extends CheckoutPageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CheckoutPage>) {
     super(arg)
     this.types.add(schema.CheckoutPage)
-    initializeProperties(this, init)
+    initializeProperties<CheckoutPage>(this, init)
   }
 }
 CheckoutPageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CheckoutPage)

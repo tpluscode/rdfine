@@ -22,7 +22,7 @@ class JoinActionImpl extends JoinActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<JoinAction>) {
     super(arg)
     this.types.add(schema.JoinAction)
-    initializeProperties(this, init)
+    initializeProperties<JoinAction>(this, init)
   }
 }
 JoinActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.JoinAction)

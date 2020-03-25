@@ -19,7 +19,7 @@ class WPHeaderImpl extends WPHeaderMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WPHeader>) {
     super(arg)
     this.types.add(schema.WPHeader)
-    initializeProperties(this, init)
+    initializeProperties<WPHeader>(this, init)
   }
 }
 WPHeaderMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WPHeader)

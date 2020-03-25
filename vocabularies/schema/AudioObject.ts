@@ -28,7 +28,7 @@ class AudioObjectImpl extends AudioObjectMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AudioObject>) {
     super(arg)
     this.types.add(schema.AudioObject)
-    initializeProperties(this, init)
+    initializeProperties<AudioObject>(this, init)
   }
 }
 AudioObjectMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AudioObject)

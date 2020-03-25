@@ -19,7 +19,7 @@ class QuoteActionImpl extends QuoteActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<QuoteAction>) {
     super(arg)
     this.types.add(schema.QuoteAction)
-    initializeProperties(this, init)
+    initializeProperties<QuoteAction>(this, init)
   }
 }
 QuoteActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.QuoteAction)

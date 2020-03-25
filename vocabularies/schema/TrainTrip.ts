@@ -37,7 +37,7 @@ class TrainTripImpl extends TrainTripMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TrainTrip>) {
     super(arg)
     this.types.add(schema.TrainTrip)
-    initializeProperties(this, init)
+    initializeProperties<TrainTrip>(this, init)
   }
 }
 TrainTripMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TrainTrip)

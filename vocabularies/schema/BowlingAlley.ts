@@ -19,7 +19,7 @@ class BowlingAlleyImpl extends BowlingAlleyMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BowlingAlley>) {
     super(arg)
     this.types.add(schema.BowlingAlley)
-    initializeProperties(this, init)
+    initializeProperties<BowlingAlley>(this, init)
   }
 }
 BowlingAlleyMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BowlingAlley)

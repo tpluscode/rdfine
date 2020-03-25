@@ -19,7 +19,7 @@ class SchoolImpl extends SchoolMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<School>) {
     super(arg)
     this.types.add(schema.School)
-    initializeProperties(this, init)
+    initializeProperties<School>(this, init)
   }
 }
 SchoolMixin.shouldApply = (r: RdfResource) => r.types.has(schema.School)

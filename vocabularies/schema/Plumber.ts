@@ -19,7 +19,7 @@ class PlumberImpl extends PlumberMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Plumber>) {
     super(arg)
     this.types.add(schema.Plumber)
-    initializeProperties(this, init)
+    initializeProperties<Plumber>(this, init)
   }
 }
 PlumberMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Plumber)

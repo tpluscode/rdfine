@@ -19,7 +19,7 @@ class CheckOutActionImpl extends CheckOutActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CheckOutAction>) {
     super(arg)
     this.types.add(schema.CheckOutAction)
-    initializeProperties(this, init)
+    initializeProperties<CheckOutAction>(this, init)
   }
 }
 CheckOutActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CheckOutAction)

@@ -19,7 +19,7 @@ class HardwareStoreImpl extends HardwareStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HardwareStore>) {
     super(arg)
     this.types.add(schema.HardwareStore)
-    initializeProperties(this, init)
+    initializeProperties<HardwareStore>(this, init)
   }
 }
 HardwareStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HardwareStore)

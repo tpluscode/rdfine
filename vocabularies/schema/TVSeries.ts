@@ -65,7 +65,7 @@ class TVSeriesImpl extends TVSeriesMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TVSeries>) {
     super(arg)
     this.types.add(schema.TVSeries)
-    initializeProperties(this, init)
+    initializeProperties<TVSeries>(this, init)
   }
 }
 TVSeriesMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TVSeries)

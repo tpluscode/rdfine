@@ -19,7 +19,7 @@ class PhysicianImpl extends PhysicianMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Physician>) {
     super(arg)
     this.types.add(schema.Physician)
-    initializeProperties(this, init)
+    initializeProperties<Physician>(this, init)
   }
 }
 PhysicianMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Physician)

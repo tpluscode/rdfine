@@ -19,7 +19,7 @@ class OutletStoreImpl extends OutletStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<OutletStore>) {
     super(arg)
     this.types.add(schema.OutletStore)
-    initializeProperties(this, init)
+    initializeProperties<OutletStore>(this, init)
   }
 }
 OutletStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.OutletStore)

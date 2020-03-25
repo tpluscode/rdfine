@@ -34,7 +34,7 @@ class UserCommentsImpl extends UserCommentsMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<UserComments>) {
     super(arg)
     this.types.add(schema.UserComments)
-    initializeProperties(this, init)
+    initializeProperties<UserComments>(this, init)
   }
 }
 UserCommentsMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UserComments)

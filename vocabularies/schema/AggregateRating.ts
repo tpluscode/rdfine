@@ -28,7 +28,7 @@ class AggregateRatingImpl extends AggregateRatingMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AggregateRating>) {
     super(arg)
     this.types.add(schema.AggregateRating)
-    initializeProperties(this, init)
+    initializeProperties<AggregateRating>(this, init)
   }
 }
 AggregateRatingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AggregateRating)

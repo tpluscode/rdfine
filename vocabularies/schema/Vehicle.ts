@@ -115,7 +115,7 @@ class VehicleImpl extends VehicleMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Vehicle>) {
     super(arg)
     this.types.add(schema.Vehicle)
-    initializeProperties(this, init)
+    initializeProperties<Vehicle>(this, init)
   }
 }
 VehicleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Vehicle)

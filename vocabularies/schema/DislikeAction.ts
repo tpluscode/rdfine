@@ -19,7 +19,7 @@ class DislikeActionImpl extends DislikeActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DislikeAction>) {
     super(arg)
     this.types.add(schema.DislikeAction)
-    initializeProperties(this, init)
+    initializeProperties<DislikeAction>(this, init)
   }
 }
 DislikeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DislikeAction)

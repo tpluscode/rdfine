@@ -49,7 +49,7 @@ class MusicCompositionImpl extends MusicCompositionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MusicComposition>) {
     super(arg)
     this.types.add(schema.MusicComposition)
-    initializeProperties(this, init)
+    initializeProperties<MusicComposition>(this, init)
   }
 }
 MusicCompositionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MusicComposition)

@@ -19,7 +19,7 @@ class UserLikesImpl extends UserLikesMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<UserLikes>) {
     super(arg)
     this.types.add(schema.UserLikes)
-    initializeProperties(this, init)
+    initializeProperties<UserLikes>(this, init)
   }
 }
 UserLikesMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UserLikes)

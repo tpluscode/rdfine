@@ -19,7 +19,7 @@ class CarImpl extends CarMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Car>) {
     super(arg)
     this.types.add(schema.Car)
-    initializeProperties(this, init)
+    initializeProperties<Car>(this, init)
   }
 }
 CarMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Car)

@@ -31,7 +31,7 @@ class PublicationIssueImpl extends PublicationIssueMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PublicationIssue>) {
     super(arg)
     this.types.add(schema.PublicationIssue)
-    initializeProperties(this, init)
+    initializeProperties<PublicationIssue>(this, init)
   }
 }
 PublicationIssueMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PublicationIssue)

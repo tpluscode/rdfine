@@ -150,7 +150,7 @@ export const mixinStrategy: ModuleStrategy = {
       statements: [
         'super(arg)',
         `this.types.add(${context.prefix}.${name})`,
-        'initializeProperties(this, init)',
+        `initializeProperties<${name}>(this, init)`,
       ],
     })
 

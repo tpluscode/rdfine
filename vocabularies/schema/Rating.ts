@@ -34,7 +34,7 @@ class RatingImpl extends RatingMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Rating>) {
     super(arg)
     this.types.add(schema.Rating)
-    initializeProperties(this, init)
+    initializeProperties<Rating>(this, init)
   }
 }
 RatingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Rating)

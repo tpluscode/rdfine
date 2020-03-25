@@ -19,7 +19,7 @@ class PhotographImpl extends PhotographMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Photograph>) {
     super(arg)
     this.types.add(schema.Photograph)
-    initializeProperties(this, init)
+    initializeProperties<Photograph>(this, init)
   }
 }
 PhotographMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Photograph)

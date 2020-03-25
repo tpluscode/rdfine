@@ -19,7 +19,7 @@ class PeriodicalImpl extends PeriodicalMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Periodical>) {
     super(arg)
     this.types.add(schema.Periodical)
-    initializeProperties(this, init)
+    initializeProperties<Periodical>(this, init)
   }
 }
 PeriodicalMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Periodical)

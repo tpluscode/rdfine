@@ -19,7 +19,7 @@ class AssignActionImpl extends AssignActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AssignAction>) {
     super(arg)
     this.types.add(schema.AssignAction)
-    initializeProperties(this, init)
+    initializeProperties<AssignAction>(this, init)
   }
 }
 AssignActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AssignAction)

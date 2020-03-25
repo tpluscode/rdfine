@@ -20,7 +20,7 @@ class DepositAccountImpl extends DepositAccountMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DepositAccount>) {
     super(arg)
     this.types.add(schema.DepositAccount)
-    initializeProperties(this, init)
+    initializeProperties<DepositAccount>(this, init)
   }
 }
 DepositAccountMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DepositAccount)

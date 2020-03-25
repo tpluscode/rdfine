@@ -19,7 +19,7 @@ class EndorsementRatingImpl extends EndorsementRatingMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<EndorsementRating>) {
     super(arg)
     this.types.add(schema.EndorsementRating)
-    initializeProperties(this, init)
+    initializeProperties<EndorsementRating>(this, init)
   }
 }
 EndorsementRatingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EndorsementRating)

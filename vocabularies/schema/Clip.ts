@@ -46,7 +46,7 @@ class ClipImpl extends ClipMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Clip>) {
     super(arg)
     this.types.add(schema.Clip)
-    initializeProperties(this, init)
+    initializeProperties<Clip>(this, init)
   }
 }
 ClipMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Clip)

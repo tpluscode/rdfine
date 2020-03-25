@@ -19,7 +19,7 @@ class AutoRentalImpl extends AutoRentalMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AutoRental>) {
     super(arg)
     this.types.add(schema.AutoRental)
-    initializeProperties(this, init)
+    initializeProperties<AutoRental>(this, init)
   }
 }
 AutoRentalMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AutoRental)

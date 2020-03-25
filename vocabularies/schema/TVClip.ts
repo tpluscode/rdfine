@@ -22,7 +22,7 @@ class TVClipImpl extends TVClipMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TVClip>) {
     super(arg)
     this.types.add(schema.TVClip)
-    initializeProperties(this, init)
+    initializeProperties<TVClip>(this, init)
   }
 }
 TVClipMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TVClip)

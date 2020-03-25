@@ -25,7 +25,7 @@ class ConsumeActionImpl extends ConsumeActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ConsumeAction>) {
     super(arg)
     this.types.add(schema.ConsumeAction)
-    initializeProperties(this, init)
+    initializeProperties<ConsumeAction>(this, init)
   }
 }
 ConsumeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ConsumeAction)

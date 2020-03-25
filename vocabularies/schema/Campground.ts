@@ -20,7 +20,7 @@ class CampgroundImpl extends CampgroundMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Campground>) {
     super(arg)
     this.types.add(schema.Campground)
-    initializeProperties(this, init)
+    initializeProperties<Campground>(this, init)
   }
 }
 CampgroundMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Campground)

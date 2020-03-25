@@ -148,7 +148,7 @@ class OfferImpl extends OfferMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Offer>) {
     super(arg)
     this.types.add(schema.Offer)
-    initializeProperties(this, init)
+    initializeProperties<Offer>(this, init)
   }
 }
 OfferMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Offer)

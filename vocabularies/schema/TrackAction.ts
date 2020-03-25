@@ -22,7 +22,7 @@ class TrackActionImpl extends TrackActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TrackAction>) {
     super(arg)
     this.types.add(schema.TrackAction)
-    initializeProperties(this, init)
+    initializeProperties<TrackAction>(this, init)
   }
 }
 TrackActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TrackAction)

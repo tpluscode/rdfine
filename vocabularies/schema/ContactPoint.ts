@@ -58,7 +58,7 @@ class ContactPointImpl extends ContactPointMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ContactPoint>) {
     super(arg)
     this.types.add(schema.ContactPoint)
-    initializeProperties(this, init)
+    initializeProperties<ContactPoint>(this, init)
   }
 }
 ContactPointMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ContactPoint)

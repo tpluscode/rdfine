@@ -19,7 +19,7 @@ class AnimalShelterImpl extends AnimalShelterMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AnimalShelter>) {
     super(arg)
     this.types.add(schema.AnimalShelter)
-    initializeProperties(this, init)
+    initializeProperties<AnimalShelter>(this, init)
   }
 }
 AnimalShelterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AnimalShelter)

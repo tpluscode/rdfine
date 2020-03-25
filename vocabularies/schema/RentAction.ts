@@ -25,7 +25,7 @@ class RentActionImpl extends RentActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<RentAction>) {
     super(arg)
     this.types.add(schema.RentAction)
-    initializeProperties(this, init)
+    initializeProperties<RentAction>(this, init)
   }
 }
 RentActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RentAction)

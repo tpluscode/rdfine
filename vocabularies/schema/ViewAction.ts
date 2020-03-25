@@ -19,7 +19,7 @@ class ViewActionImpl extends ViewActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ViewAction>) {
     super(arg)
     this.types.add(schema.ViewAction)
-    initializeProperties(this, init)
+    initializeProperties<ViewAction>(this, init)
   }
 }
 ViewActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ViewAction)

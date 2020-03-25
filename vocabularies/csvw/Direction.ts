@@ -18,7 +18,7 @@ class DirectionImpl extends DirectionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Direction>) {
     super(arg)
     this.types.add(csvw.Direction)
-    initializeProperties(this, init)
+    initializeProperties<Direction>(this, init)
   }
 }
 DirectionMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Direction)

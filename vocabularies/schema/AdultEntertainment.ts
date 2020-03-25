@@ -19,7 +19,7 @@ class AdultEntertainmentImpl extends AdultEntertainmentMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AdultEntertainment>) {
     super(arg)
     this.types.add(schema.AdultEntertainment)
-    initializeProperties(this, init)
+    initializeProperties<AdultEntertainment>(this, init)
   }
 }
 AdultEntertainmentMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AdultEntertainment)

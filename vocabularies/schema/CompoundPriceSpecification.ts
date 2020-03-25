@@ -22,7 +22,7 @@ class CompoundPriceSpecificationImpl extends CompoundPriceSpecificationMixin(Rdf
   constructor(arg: ResourceNode, init?: PropertyInitializer<CompoundPriceSpecification>) {
     super(arg)
     this.types.add(schema.CompoundPriceSpecification)
-    initializeProperties(this, init)
+    initializeProperties<CompoundPriceSpecification>(this, init)
   }
 }
 CompoundPriceSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CompoundPriceSpecification)

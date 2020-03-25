@@ -19,7 +19,7 @@ class TireShopImpl extends TireShopMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TireShop>) {
     super(arg)
     this.types.add(schema.TireShop)
-    initializeProperties(this, init)
+    initializeProperties<TireShop>(this, init)
   }
 }
 TireShopMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TireShop)

@@ -19,7 +19,7 @@ class SportsActivityLocationImpl extends SportsActivityLocationMixin(RdfResource
   constructor(arg: ResourceNode, init?: PropertyInitializer<SportsActivityLocation>) {
     super(arg)
     this.types.add(schema.SportsActivityLocation)
-    initializeProperties(this, init)
+    initializeProperties<SportsActivityLocation>(this, init)
   }
 }
 SportsActivityLocationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SportsActivityLocation)

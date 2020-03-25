@@ -19,7 +19,7 @@ class AcceptActionImpl extends AcceptActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AcceptAction>) {
     super(arg)
     this.types.add(schema.AcceptAction)
-    initializeProperties(this, init)
+    initializeProperties<AcceptAction>(this, init)
   }
 }
 AcceptActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AcceptAction)

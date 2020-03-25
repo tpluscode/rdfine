@@ -19,7 +19,7 @@ class TelevisionChannelImpl extends TelevisionChannelMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TelevisionChannel>) {
     super(arg)
     this.types.add(schema.TelevisionChannel)
-    initializeProperties(this, init)
+    initializeProperties<TelevisionChannel>(this, init)
   }
 }
 TelevisionChannelMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TelevisionChannel)

@@ -28,7 +28,7 @@ class GameServerImpl extends GameServerMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<GameServer>) {
     super(arg)
     this.types.add(schema.GameServer)
-    initializeProperties(this, init)
+    initializeProperties<GameServer>(this, init)
   }
 }
 GameServerMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GameServer)

@@ -22,7 +22,7 @@ class TravelActionImpl extends TravelActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TravelAction>) {
     super(arg)
     this.types.add(schema.TravelAction)
-    initializeProperties(this, init)
+    initializeProperties<TravelAction>(this, init)
   }
 }
 TravelActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TravelAction)

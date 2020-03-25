@@ -34,7 +34,7 @@ class APIReferenceImpl extends APIReferenceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<APIReference>) {
     super(arg)
     this.types.add(schema.APIReference)
-    initializeProperties(this, init)
+    initializeProperties<APIReference>(this, init)
   }
 }
 APIReferenceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.APIReference)

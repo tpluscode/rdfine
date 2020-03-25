@@ -64,7 +64,7 @@ class HowToImpl extends HowToMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HowTo>) {
     super(arg)
     this.types.add(schema.HowTo)
-    initializeProperties(this, init)
+    initializeProperties<HowTo>(this, init)
   }
 }
 HowToMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HowTo)

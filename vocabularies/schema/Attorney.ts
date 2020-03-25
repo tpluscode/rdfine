@@ -19,7 +19,7 @@ class AttorneyImpl extends AttorneyMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Attorney>) {
     super(arg)
     this.types.add(schema.Attorney)
-    initializeProperties(this, init)
+    initializeProperties<Attorney>(this, init)
   }
 }
 AttorneyMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Attorney)

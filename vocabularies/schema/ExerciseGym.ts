@@ -19,7 +19,7 @@ class ExerciseGymImpl extends ExerciseGymMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ExerciseGym>) {
     super(arg)
     this.types.add(schema.ExerciseGym)
-    initializeProperties(this, init)
+    initializeProperties<ExerciseGym>(this, init)
   }
 }
 ExerciseGymMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ExerciseGym)

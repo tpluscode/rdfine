@@ -19,7 +19,7 @@ class PerformingGroupImpl extends PerformingGroupMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PerformingGroup>) {
     super(arg)
     this.types.add(schema.PerformingGroup)
-    initializeProperties(this, init)
+    initializeProperties<PerformingGroup>(this, init)
   }
 }
 PerformingGroupMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PerformingGroup)

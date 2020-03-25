@@ -19,7 +19,7 @@ class MarryActionImpl extends MarryActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MarryAction>) {
     super(arg)
     this.types.add(schema.MarryAction)
-    initializeProperties(this, init)
+    initializeProperties<MarryAction>(this, init)
   }
 }
 MarryActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MarryAction)

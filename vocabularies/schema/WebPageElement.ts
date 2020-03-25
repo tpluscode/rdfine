@@ -25,7 +25,7 @@ class WebPageElementImpl extends WebPageElementMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WebPageElement>) {
     super(arg)
     this.types.add(schema.WebPageElement)
-    initializeProperties(this, init)
+    initializeProperties<WebPageElement>(this, init)
   }
 }
 WebPageElementMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WebPageElement)

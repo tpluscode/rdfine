@@ -19,7 +19,7 @@ class PetStoreImpl extends PetStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PetStore>) {
     super(arg)
     this.types.add(schema.PetStore)
-    initializeProperties(this, init)
+    initializeProperties<PetStore>(this, init)
   }
 }
 PetStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PetStore)

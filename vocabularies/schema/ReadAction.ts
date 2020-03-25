@@ -19,7 +19,7 @@ class ReadActionImpl extends ReadActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ReadAction>) {
     super(arg)
     this.types.add(schema.ReadAction)
-    initializeProperties(this, init)
+    initializeProperties<ReadAction>(this, init)
   }
 }
 ReadActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ReadAction)

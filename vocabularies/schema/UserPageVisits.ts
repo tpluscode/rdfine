@@ -19,7 +19,7 @@ class UserPageVisitsImpl extends UserPageVisitsMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<UserPageVisits>) {
     super(arg)
     this.types.add(schema.UserPageVisits)
-    initializeProperties(this, init)
+    initializeProperties<UserPageVisits>(this, init)
   }
 }
 UserPageVisitsMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UserPageVisits)

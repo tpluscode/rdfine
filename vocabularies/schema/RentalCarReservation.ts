@@ -31,7 +31,7 @@ class RentalCarReservationImpl extends RentalCarReservationMixin(RdfResourceImpl
   constructor(arg: ResourceNode, init?: PropertyInitializer<RentalCarReservation>) {
     super(arg)
     this.types.add(schema.RentalCarReservation)
-    initializeProperties(this, init)
+    initializeProperties<RentalCarReservation>(this, init)
   }
 }
 RentalCarReservationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RentalCarReservation)

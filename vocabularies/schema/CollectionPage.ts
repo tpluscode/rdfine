@@ -19,7 +19,7 @@ class CollectionPageImpl extends CollectionPageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CollectionPage>) {
     super(arg)
     this.types.add(schema.CollectionPage)
-    initializeProperties(this, init)
+    initializeProperties<CollectionPage>(this, init)
   }
 }
 CollectionPageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CollectionPage)

@@ -19,7 +19,7 @@ class WorkersUnionImpl extends WorkersUnionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WorkersUnion>) {
     super(arg)
     this.types.add(schema.WorkersUnion)
-    initializeProperties(this, init)
+    initializeProperties<WorkersUnion>(this, init)
   }
 }
 WorkersUnionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WorkersUnion)

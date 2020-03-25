@@ -19,7 +19,7 @@ class ElectronicsStoreImpl extends ElectronicsStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ElectronicsStore>) {
     super(arg)
     this.types.add(schema.ElectronicsStore)
-    initializeProperties(this, init)
+    initializeProperties<ElectronicsStore>(this, init)
   }
 }
 ElectronicsStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ElectronicsStore)

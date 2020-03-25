@@ -25,7 +25,7 @@ class ReceiveActionImpl extends ReceiveActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ReceiveAction>) {
     super(arg)
     this.types.add(schema.ReceiveAction)
-    initializeProperties(this, init)
+    initializeProperties<ReceiveAction>(this, init)
   }
 }
 ReceiveActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ReceiveAction)

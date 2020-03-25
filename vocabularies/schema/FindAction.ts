@@ -19,7 +19,7 @@ class FindActionImpl extends FindActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<FindAction>) {
     super(arg)
     this.types.add(schema.FindAction)
-    initializeProperties(this, init)
+    initializeProperties<FindAction>(this, init)
   }
 }
 FindActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FindAction)

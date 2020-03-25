@@ -22,7 +22,7 @@ class PerformActionImpl extends PerformActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PerformAction>) {
     super(arg)
     this.types.add(schema.PerformAction)
-    initializeProperties(this, init)
+    initializeProperties<PerformAction>(this, init)
   }
 }
 PerformActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PerformAction)

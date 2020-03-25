@@ -19,7 +19,7 @@ class LanguageImpl extends LanguageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Language>) {
     super(arg)
     this.types.add(schema.Language)
-    initializeProperties(this, init)
+    initializeProperties<Language>(this, init)
   }
 }
 LanguageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Language)

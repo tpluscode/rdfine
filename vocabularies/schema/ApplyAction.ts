@@ -19,7 +19,7 @@ class ApplyActionImpl extends ApplyActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ApplyAction>) {
     super(arg)
     this.types.add(schema.ApplyAction)
-    initializeProperties(this, init)
+    initializeProperties<ApplyAction>(this, init)
   }
 }
 ApplyActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ApplyAction)

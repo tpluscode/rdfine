@@ -19,7 +19,7 @@ class MedicalOrganizationImpl extends MedicalOrganizationMixin(RdfResourceImpl) 
   constructor(arg: ResourceNode, init?: PropertyInitializer<MedicalOrganization>) {
     super(arg)
     this.types.add(schema.MedicalOrganization)
-    initializeProperties(this, init)
+    initializeProperties<MedicalOrganization>(this, init)
   }
 }
 MedicalOrganizationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MedicalOrganization)

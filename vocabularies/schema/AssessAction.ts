@@ -19,7 +19,7 @@ class AssessActionImpl extends AssessActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AssessAction>) {
     super(arg)
     this.types.add(schema.AssessAction)
-    initializeProperties(this, init)
+    initializeProperties<AssessAction>(this, init)
   }
 }
 AssessActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AssessAction)

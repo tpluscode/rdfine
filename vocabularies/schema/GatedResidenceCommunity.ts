@@ -19,7 +19,7 @@ class GatedResidenceCommunityImpl extends GatedResidenceCommunityMixin(RdfResour
   constructor(arg: ResourceNode, init?: PropertyInitializer<GatedResidenceCommunity>) {
     super(arg)
     this.types.add(schema.GatedResidenceCommunity)
-    initializeProperties(this, init)
+    initializeProperties<GatedResidenceCommunity>(this, init)
   }
 }
 GatedResidenceCommunityMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GatedResidenceCommunity)

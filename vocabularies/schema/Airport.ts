@@ -25,7 +25,7 @@ class AirportImpl extends AirportMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Airport>) {
     super(arg)
     this.types.add(schema.Airport)
-    initializeProperties(this, init)
+    initializeProperties<Airport>(this, init)
   }
 }
 AirportMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Airport)

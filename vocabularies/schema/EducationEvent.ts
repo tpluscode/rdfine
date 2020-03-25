@@ -19,7 +19,7 @@ class EducationEventImpl extends EducationEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<EducationEvent>) {
     super(arg)
     this.types.add(schema.EducationEvent)
-    initializeProperties(this, init)
+    initializeProperties<EducationEvent>(this, init)
   }
 }
 EducationEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EducationEvent)

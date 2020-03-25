@@ -19,7 +19,7 @@ class LikeActionImpl extends LikeActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<LikeAction>) {
     super(arg)
     this.types.add(schema.LikeAction)
-    initializeProperties(this, init)
+    initializeProperties<LikeAction>(this, init)
   }
 }
 LikeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LikeAction)

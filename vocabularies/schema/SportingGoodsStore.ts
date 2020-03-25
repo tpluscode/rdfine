@@ -19,7 +19,7 @@ class SportingGoodsStoreImpl extends SportingGoodsStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SportingGoodsStore>) {
     super(arg)
     this.types.add(schema.SportingGoodsStore)
-    initializeProperties(this, init)
+    initializeProperties<SportingGoodsStore>(this, init)
   }
 }
 SportingGoodsStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SportingGoodsStore)

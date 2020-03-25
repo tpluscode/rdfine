@@ -148,7 +148,7 @@ class PlaceImpl extends PlaceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Place>) {
     super(arg)
     this.types.add(schema.Place)
-    initializeProperties(this, init)
+    initializeProperties<Place>(this, init)
   }
 }
 PlaceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Place)

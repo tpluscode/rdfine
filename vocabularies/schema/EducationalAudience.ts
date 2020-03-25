@@ -22,7 +22,7 @@ class EducationalAudienceImpl extends EducationalAudienceMixin(RdfResourceImpl) 
   constructor(arg: ResourceNode, init?: PropertyInitializer<EducationalAudience>) {
     super(arg)
     this.types.add(schema.EducationalAudience)
-    initializeProperties(this, init)
+    initializeProperties<EducationalAudience>(this, init)
   }
 }
 EducationalAudienceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EducationalAudience)

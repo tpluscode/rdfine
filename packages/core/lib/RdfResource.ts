@@ -18,7 +18,7 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly _unionGraph: SingleContextClownface<D, ResourceIdentifier>
   readonly _graphId: Quad_Graph
   hasType (type: string | NamedNode): boolean
-  _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T & ResourceIndexer
+  _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]]): T & ResourceIndexer
 }
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
@@ -106,7 +106,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return this.id.equals(other.id)
   }
 
-  public _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]): T & ResourceIndexer {
+  public _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]]): T & ResourceIndexer {
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins)
   }
 }
@@ -118,25 +118,25 @@ interface BaseInitializer {
   id?: RdfResource['id']
 }
 
-export type Initializer<T extends RdfResource> = Partial<{
-  [P in keyof UserDefinedInterface<T>]?:
-  T[P] extends (infer U)[] ? U extends RdfResource ? Initializer<U>[] : T[P] :
-    T[P] extends RdfResource ? Initializer<T[P] & BaseInitializer> :
+export type Initializer<T> = Partial<Omit<{
+  [P in keyof T]?:
+  T[P] extends (infer U)[] ? U extends RdfResource ? Initializer<UserDefinedInterface<U>>[] : T[P] :
+    T[P] extends RdfResource ? Initializer<UserDefinedInterface<T[P]> & BaseInitializer> :
       T[P]
-}> & BaseInitializer
+}, keyof RdfResource>> & BaseInitializer
 export type PropertyInitializer<T extends RdfResource> = {
-  [P in keyof UserDefinedInterface<T>]?:
-  T[P] extends RdfResource ? Initializer<T[P]> : T[P]
+  [P in keyof T]?:
+  T[P] extends RdfResource ? Initializer<UserDefinedInterface<T[P]>> : T[P]
 }
 
 type PartialRecursive<T> = T extends object ? { [K in keyof T]?: PartialRecursive<T[K]> } : T
 
-export function fromObject<T extends RdfResource>(initializer: Initializer<T & BaseInitializer>): T {
+export function fromObject<T extends RdfResource>(initializer: Initializer<UserDefinedInterface<T> & BaseInitializer>): T {
   return initializer as unknown as T
 }
 
 export function initializeProperties<T extends RdfResource>(resource: T, init: PropertyInitializer<T> = {}): void {
-  Object.entries(init)
+  Object.entries(init as any)
     .filter(([prop]) => prop !== 'id' && prop !== 'types')
     .forEach(([prop, value]) => {
       (resource as any)[prop] = value

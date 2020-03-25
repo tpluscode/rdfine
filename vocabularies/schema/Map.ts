@@ -22,7 +22,7 @@ class MapImpl extends MapMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Map>) {
     super(arg)
     this.types.add(schema.Map)
-    initializeProperties(this, init)
+    initializeProperties<Map>(this, init)
   }
 }
 MapMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Map)

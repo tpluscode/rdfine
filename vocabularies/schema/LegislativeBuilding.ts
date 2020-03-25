@@ -19,7 +19,7 @@ class LegislativeBuildingImpl extends LegislativeBuildingMixin(RdfResourceImpl) 
   constructor(arg: ResourceNode, init?: PropertyInitializer<LegislativeBuilding>) {
     super(arg)
     this.types.add(schema.LegislativeBuilding)
-    initializeProperties(this, init)
+    initializeProperties<LegislativeBuilding>(this, init)
   }
 }
 LegislativeBuildingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LegislativeBuilding)

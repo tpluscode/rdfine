@@ -19,7 +19,7 @@ class PerformingArtsTheaterImpl extends PerformingArtsTheaterMixin(RdfResourceIm
   constructor(arg: ResourceNode, init?: PropertyInitializer<PerformingArtsTheater>) {
     super(arg)
     this.types.add(schema.PerformingArtsTheater)
-    initializeProperties(this, init)
+    initializeProperties<PerformingArtsTheater>(this, init)
   }
 }
 PerformingArtsTheaterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PerformingArtsTheater)

@@ -25,7 +25,7 @@ class WarrantyPromiseImpl extends WarrantyPromiseMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WarrantyPromise>) {
     super(arg)
     this.types.add(schema.WarrantyPromise)
-    initializeProperties(this, init)
+    initializeProperties<WarrantyPromise>(this, init)
   }
 }
 WarrantyPromiseMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WarrantyPromise)

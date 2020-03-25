@@ -28,7 +28,7 @@ class LocationFeatureSpecificationImpl extends LocationFeatureSpecificationMixin
   constructor(arg: ResourceNode, init?: PropertyInitializer<LocationFeatureSpecification>) {
     super(arg)
     this.types.add(schema.LocationFeatureSpecification)
-    initializeProperties(this, init)
+    initializeProperties<LocationFeatureSpecification>(this, init)
   }
 }
 LocationFeatureSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LocationFeatureSpecification)

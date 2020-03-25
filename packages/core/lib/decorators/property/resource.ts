@@ -3,13 +3,13 @@ import { BlankNode, DatasetCore, NamedNode, Term } from 'rdf-js'
 import { SingleContextClownface } from 'clownface'
 import { Initializer, RdfResource, ResourceIdentifier } from '../../RdfResource'
 import { AccessorOptions, ObjectOrFactory, propertyDecorator } from '../property'
-import { Constructor, Mixin, ResourceIndexer } from '../../ResourceFactory'
+import { Constructor, Mixin } from '../../ResourceFactory'
 import * as compare from '../../compare'
 
 type InitialValue = SingleContextClownface<DatasetCore, ResourceIdentifier> | RdfResource
 
 interface ResourceOptions<R extends RdfResource> {
-  as?: Mixin<any>[] | [Constructor, ...Mixin<any>[]]
+  as?: Mixin[] | [Constructor, ...Mixin[]]
   initial?: ObjectOrFactory<R, InitialValue | RdfResource, ResourceIdentifier>
 }
 
@@ -19,7 +19,9 @@ function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptio
     fromTerm(this: RdfResource, obj) {
       return this._create(obj, options.as)
     },
-    toTerm(this: RdfResource & ResourceIndexer, value: RdfResource | Initializer<R>) {
+    toTerm(this: R, valueActual) {
+      const value = valueActual as RdfResource | Initializer<R>
+
       if ('_selfGraph' in value) {
         return value.id
       }

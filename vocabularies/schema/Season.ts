@@ -19,7 +19,7 @@ class SeasonImpl extends SeasonMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Season>) {
     super(arg)
     this.types.add(schema.Season)
-    initializeProperties(this, init)
+    initializeProperties<Season>(this, init)
   }
 }
 SeasonMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Season)

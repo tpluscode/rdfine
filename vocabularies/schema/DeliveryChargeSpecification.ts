@@ -34,7 +34,7 @@ class DeliveryChargeSpecificationImpl extends DeliveryChargeSpecificationMixin(R
   constructor(arg: ResourceNode, init?: PropertyInitializer<DeliveryChargeSpecification>) {
     super(arg)
     this.types.add(schema.DeliveryChargeSpecification)
-    initializeProperties(this, init)
+    initializeProperties<DeliveryChargeSpecification>(this, init)
   }
 }
 DeliveryChargeSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DeliveryChargeSpecification)

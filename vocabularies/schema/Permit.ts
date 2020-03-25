@@ -40,7 +40,7 @@ class PermitImpl extends PermitMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Permit>) {
     super(arg)
     this.types.add(schema.Permit)
-    initializeProperties(this, init)
+    initializeProperties<Permit>(this, init)
   }
 }
 PermitMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Permit)

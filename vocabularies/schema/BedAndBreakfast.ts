@@ -19,7 +19,7 @@ class BedAndBreakfastImpl extends BedAndBreakfastMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BedAndBreakfast>) {
     super(arg)
     this.types.add(schema.BedAndBreakfast)
-    initializeProperties(this, init)
+    initializeProperties<BedAndBreakfast>(this, init)
   }
 }
 BedAndBreakfastMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BedAndBreakfast)

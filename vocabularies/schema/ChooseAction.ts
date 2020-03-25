@@ -31,7 +31,7 @@ class ChooseActionImpl extends ChooseActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ChooseAction>) {
     super(arg)
     this.types.add(schema.ChooseAction)
-    initializeProperties(this, init)
+    initializeProperties<ChooseAction>(this, init)
   }
 }
 ChooseActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ChooseAction)

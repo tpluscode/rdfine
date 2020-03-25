@@ -37,7 +37,7 @@ class LoanOrCreditImpl extends LoanOrCreditMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<LoanOrCredit>) {
     super(arg)
     this.types.add(schema.LoanOrCredit)
-    initializeProperties(this, init)
+    initializeProperties<LoanOrCredit>(this, init)
   }
 }
 LoanOrCreditMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LoanOrCredit)

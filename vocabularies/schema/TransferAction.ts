@@ -25,7 +25,7 @@ class TransferActionImpl extends TransferActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TransferAction>) {
     super(arg)
     this.types.add(schema.TransferAction)
-    initializeProperties(this, init)
+    initializeProperties<TransferAction>(this, init)
   }
 }
 TransferActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TransferAction)

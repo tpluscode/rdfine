@@ -19,7 +19,7 @@ class BusinessEventImpl extends BusinessEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BusinessEvent>) {
     super(arg)
     this.types.add(schema.BusinessEvent)
-    initializeProperties(this, init)
+    initializeProperties<BusinessEvent>(this, init)
   }
 }
 BusinessEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BusinessEvent)

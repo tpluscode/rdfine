@@ -28,7 +28,7 @@ class SingleFamilyResidenceImpl extends SingleFamilyResidenceMixin(RdfResourceIm
   constructor(arg: ResourceNode, init?: PropertyInitializer<SingleFamilyResidence>) {
     super(arg)
     this.types.add(schema.SingleFamilyResidence)
-    initializeProperties(this, init)
+    initializeProperties<SingleFamilyResidence>(this, init)
   }
 }
 SingleFamilyResidenceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SingleFamilyResidence)

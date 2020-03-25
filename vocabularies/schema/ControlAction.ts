@@ -19,7 +19,7 @@ class ControlActionImpl extends ControlActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ControlAction>) {
     super(arg)
     this.types.add(schema.ControlAction)
-    initializeProperties(this, init)
+    initializeProperties<ControlAction>(this, init)
   }
 }
 ControlActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ControlAction)

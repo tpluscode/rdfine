@@ -49,7 +49,7 @@ class GeoShapeImpl extends GeoShapeMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<GeoShape>) {
     super(arg)
     this.types.add(schema.GeoShape)
-    initializeProperties(this, init)
+    initializeProperties<GeoShape>(this, init)
   }
 }
 GeoShapeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GeoShape)

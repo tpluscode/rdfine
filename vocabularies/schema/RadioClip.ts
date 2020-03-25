@@ -19,7 +19,7 @@ class RadioClipImpl extends RadioClipMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<RadioClip>) {
     super(arg)
     this.types.add(schema.RadioClip)
-    initializeProperties(this, init)
+    initializeProperties<RadioClip>(this, init)
   }
 }
 RadioClipMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RadioClip)

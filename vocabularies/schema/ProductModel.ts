@@ -28,7 +28,7 @@ class ProductModelImpl extends ProductModelMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ProductModel>) {
     super(arg)
     this.types.add(schema.ProductModel)
-    initializeProperties(this, init)
+    initializeProperties<ProductModel>(this, init)
   }
 }
 ProductModelMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ProductModel)

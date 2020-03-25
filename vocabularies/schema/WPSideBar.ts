@@ -19,7 +19,7 @@ class WPSideBarImpl extends WPSideBarMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WPSideBar>) {
     super(arg)
     this.types.add(schema.WPSideBar)
-    initializeProperties(this, init)
+    initializeProperties<WPSideBar>(this, init)
   }
 }
 WPSideBarMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WPSideBar)

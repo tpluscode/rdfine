@@ -19,7 +19,7 @@ class AdministrativeAreaImpl extends AdministrativeAreaMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AdministrativeArea>) {
     super(arg)
     this.types.add(schema.AdministrativeArea)
-    initializeProperties(this, init)
+    initializeProperties<AdministrativeArea>(this, init)
   }
 }
 AdministrativeAreaMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AdministrativeArea)

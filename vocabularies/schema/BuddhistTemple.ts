@@ -19,7 +19,7 @@ class BuddhistTempleImpl extends BuddhistTempleMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BuddhistTemple>) {
     super(arg)
     this.types.add(schema.BuddhistTemple)
-    initializeProperties(this, init)
+    initializeProperties<BuddhistTemple>(this, init)
   }
 }
 BuddhistTempleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BuddhistTemple)

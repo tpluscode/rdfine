@@ -19,7 +19,7 @@ class PaymentServiceImpl extends PaymentServiceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PaymentService>) {
     super(arg)
     this.types.add(schema.PaymentService)
-    initializeProperties(this, init)
+    initializeProperties<PaymentService>(this, init)
   }
 }
 PaymentServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PaymentService)

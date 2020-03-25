@@ -22,7 +22,7 @@ class GiveActionImpl extends GiveActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<GiveAction>) {
     super(arg)
     this.types.add(schema.GiveAction)
-    initializeProperties(this, init)
+    initializeProperties<GiveAction>(this, init)
   }
 }
 GiveActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GiveAction)

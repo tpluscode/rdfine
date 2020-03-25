@@ -22,7 +22,7 @@ class EducationalOrganizationImpl extends EducationalOrganizationMixin(RdfResour
   constructor(arg: ResourceNode, init?: PropertyInitializer<EducationalOrganization>) {
     super(arg)
     this.types.add(schema.EducationalOrganization)
-    initializeProperties(this, init)
+    initializeProperties<EducationalOrganization>(this, init)
   }
 }
 EducationalOrganizationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EducationalOrganization)

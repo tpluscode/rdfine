@@ -19,7 +19,7 @@ class FastFoodRestaurantImpl extends FastFoodRestaurantMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<FastFoodRestaurant>) {
     super(arg)
     this.types.add(schema.FastFoodRestaurant)
-    initializeProperties(this, init)
+    initializeProperties<FastFoodRestaurant>(this, init)
   }
 }
 FastFoodRestaurantMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FastFoodRestaurant)

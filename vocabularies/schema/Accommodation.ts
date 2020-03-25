@@ -37,7 +37,7 @@ class AccommodationImpl extends AccommodationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Accommodation>) {
     super(arg)
     this.types.add(schema.Accommodation)
-    initializeProperties(this, init)
+    initializeProperties<Accommodation>(this, init)
   }
 }
 AccommodationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Accommodation)

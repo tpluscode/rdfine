@@ -19,7 +19,7 @@ class MotelImpl extends MotelMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Motel>) {
     super(arg)
     this.types.add(schema.Motel)
-    initializeProperties(this, init)
+    initializeProperties<Motel>(this, init)
   }
 }
 MotelMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Motel)

@@ -19,7 +19,7 @@ class TaxiServiceImpl extends TaxiServiceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TaxiService>) {
     super(arg)
     this.types.add(schema.TaxiService)
-    initializeProperties(this, init)
+    initializeProperties<TaxiService>(this, init)
   }
 }
 TaxiServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TaxiService)

@@ -19,7 +19,7 @@ class DurationImpl extends DurationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Duration>) {
     super(arg)
     this.types.add(schema.Duration)
-    initializeProperties(this, init)
+    initializeProperties<Duration>(this, init)
   }
 }
 DurationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Duration)

@@ -19,7 +19,7 @@ class CountryImpl extends CountryMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Country>) {
     super(arg)
     this.types.add(schema.Country)
-    initializeProperties(this, init)
+    initializeProperties<Country>(this, init)
   }
 }
 CountryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Country)

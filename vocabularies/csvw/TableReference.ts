@@ -27,7 +27,7 @@ class TableReferenceImpl extends TableReferenceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TableReference>) {
     super(arg)
     this.types.add(csvw.TableReference)
-    initializeProperties(this, init)
+    initializeProperties<TableReference>(this, init)
   }
 }
 TableReferenceMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.TableReference)

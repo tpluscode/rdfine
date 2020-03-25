@@ -19,7 +19,7 @@ class IgnoreActionImpl extends IgnoreActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<IgnoreAction>) {
     super(arg)
     this.types.add(schema.IgnoreAction)
-    initializeProperties(this, init)
+    initializeProperties<IgnoreAction>(this, init)
   }
 }
 IgnoreActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.IgnoreAction)

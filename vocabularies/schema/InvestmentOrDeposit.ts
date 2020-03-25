@@ -25,7 +25,7 @@ class InvestmentOrDepositImpl extends InvestmentOrDepositMixin(RdfResourceImpl) 
   constructor(arg: ResourceNode, init?: PropertyInitializer<InvestmentOrDeposit>) {
     super(arg)
     this.types.add(schema.InvestmentOrDeposit)
-    initializeProperties(this, init)
+    initializeProperties<InvestmentOrDeposit>(this, init)
   }
 }
 InvestmentOrDepositMixin.shouldApply = (r: RdfResource) => r.types.has(schema.InvestmentOrDeposit)

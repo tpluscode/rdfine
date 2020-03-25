@@ -22,7 +22,7 @@ class PlanActionImpl extends PlanActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PlanAction>) {
     super(arg)
     this.types.add(schema.PlanAction)
-    initializeProperties(this, init)
+    initializeProperties<PlanAction>(this, init)
   }
 }
 PlanActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PlanAction)

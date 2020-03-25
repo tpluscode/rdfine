@@ -22,7 +22,7 @@ class CommentActionImpl extends CommentActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CommentAction>) {
     super(arg)
     this.types.add(schema.CommentAction)
-    initializeProperties(this, init)
+    initializeProperties<CommentAction>(this, init)
   }
 }
 CommentActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CommentAction)

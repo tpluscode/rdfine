@@ -19,7 +19,7 @@ class UserTweetsImpl extends UserTweetsMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<UserTweets>) {
     super(arg)
     this.types.add(schema.UserTweets)
-    initializeProperties(this, init)
+    initializeProperties<UserTweets>(this, init)
   }
 }
 UserTweetsMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UserTweets)

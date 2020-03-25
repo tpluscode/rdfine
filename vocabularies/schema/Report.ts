@@ -22,7 +22,7 @@ class ReportImpl extends ReportMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Report>) {
     super(arg)
     this.types.add(schema.Report)
-    initializeProperties(this, init)
+    initializeProperties<Report>(this, init)
   }
 }
 ReportMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Report)

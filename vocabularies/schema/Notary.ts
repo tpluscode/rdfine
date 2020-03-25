@@ -19,7 +19,7 @@ class NotaryImpl extends NotaryMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Notary>) {
     super(arg)
     this.types.add(schema.Notary)
-    initializeProperties(this, init)
+    initializeProperties<Notary>(this, init)
   }
 }
 NotaryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Notary)

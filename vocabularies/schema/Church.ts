@@ -19,7 +19,7 @@ class ChurchImpl extends ChurchMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Church>) {
     super(arg)
     this.types.add(schema.Church)
-    initializeProperties(this, init)
+    initializeProperties<Church>(this, init)
   }
 }
 ChurchMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Church)

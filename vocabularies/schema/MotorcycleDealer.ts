@@ -19,7 +19,7 @@ class MotorcycleDealerImpl extends MotorcycleDealerMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MotorcycleDealer>) {
     super(arg)
     this.types.add(schema.MotorcycleDealer)
-    initializeProperties(this, init)
+    initializeProperties<MotorcycleDealer>(this, init)
   }
 }
 MotorcycleDealerMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MotorcycleDealer)

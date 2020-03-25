@@ -55,7 +55,7 @@ class ActionImpl extends ActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Action>) {
     super(arg)
     this.types.add(schema.Action)
-    initializeProperties(this, init)
+    initializeProperties<Action>(this, init)
   }
 }
 ActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Action)

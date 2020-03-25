@@ -19,7 +19,7 @@ class BeautySalonImpl extends BeautySalonMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BeautySalon>) {
     super(arg)
     this.types.add(schema.BeautySalon)
-    initializeProperties(this, init)
+    initializeProperties<BeautySalon>(this, init)
   }
 }
 BeautySalonMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BeautySalon)

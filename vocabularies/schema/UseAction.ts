@@ -19,7 +19,7 @@ class UseActionImpl extends UseActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<UseAction>) {
     super(arg)
     this.types.add(schema.UseAction)
-    initializeProperties(this, init)
+    initializeProperties<UseAction>(this, init)
   }
 }
 UseActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UseAction)

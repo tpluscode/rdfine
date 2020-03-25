@@ -19,7 +19,7 @@ class BakeryImpl extends BakeryMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Bakery>) {
     super(arg)
     this.types.add(schema.Bakery)
-    initializeProperties(this, init)
+    initializeProperties<Bakery>(this, init)
   }
 }
 BakeryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Bakery)

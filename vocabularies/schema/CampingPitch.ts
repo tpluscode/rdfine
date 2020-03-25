@@ -19,7 +19,7 @@ class CampingPitchImpl extends CampingPitchMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CampingPitch>) {
     super(arg)
     this.types.add(schema.CampingPitch)
-    initializeProperties(this, init)
+    initializeProperties<CampingPitch>(this, init)
   }
 }
 CampingPitchMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CampingPitch)

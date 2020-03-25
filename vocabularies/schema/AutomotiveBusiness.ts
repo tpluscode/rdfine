@@ -19,7 +19,7 @@ class AutomotiveBusinessImpl extends AutomotiveBusinessMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AutomotiveBusiness>) {
     super(arg)
     this.types.add(schema.AutomotiveBusiness)
-    initializeProperties(this, init)
+    initializeProperties<AutomotiveBusiness>(this, init)
   }
 }
 AutomotiveBusinessMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AutomotiveBusiness)

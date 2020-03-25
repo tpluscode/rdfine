@@ -55,7 +55,7 @@ class PropertyValueSpecificationImpl extends PropertyValueSpecificationMixin(Rdf
   constructor(arg: ResourceNode, init?: PropertyInitializer<PropertyValueSpecification>) {
     super(arg)
     this.types.add(schema.PropertyValueSpecification)
-    initializeProperties(this, init)
+    initializeProperties<PropertyValueSpecification>(this, init)
   }
 }
 PropertyValueSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PropertyValueSpecification)

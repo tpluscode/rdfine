@@ -43,7 +43,7 @@ class GeoCoordinatesImpl extends GeoCoordinatesMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<GeoCoordinates>) {
     super(arg)
     this.types.add(schema.GeoCoordinates)
-    initializeProperties(this, init)
+    initializeProperties<GeoCoordinates>(this, init)
   }
 }
 GeoCoordinatesMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GeoCoordinates)

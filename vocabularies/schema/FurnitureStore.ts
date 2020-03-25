@@ -19,7 +19,7 @@ class FurnitureStoreImpl extends FurnitureStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<FurnitureStore>) {
     super(arg)
     this.types.add(schema.FurnitureStore)
-    initializeProperties(this, init)
+    initializeProperties<FurnitureStore>(this, init)
   }
 }
 FurnitureStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FurnitureStore)

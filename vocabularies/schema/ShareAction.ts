@@ -19,7 +19,7 @@ class ShareActionImpl extends ShareActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ShareAction>) {
     super(arg)
     this.types.add(schema.ShareAction)
-    initializeProperties(this, init)
+    initializeProperties<ShareAction>(this, init)
   }
 }
 ShareActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ShareAction)

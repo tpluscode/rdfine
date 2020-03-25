@@ -22,7 +22,7 @@ class DataCatalogImpl extends DataCatalogMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DataCatalog>) {
     super(arg)
     this.types.add(schema.DataCatalog)
-    initializeProperties(this, init)
+    initializeProperties<DataCatalog>(this, init)
   }
 }
 DataCatalogMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DataCatalog)

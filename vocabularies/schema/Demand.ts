@@ -118,7 +118,7 @@ class DemandImpl extends DemandMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Demand>) {
     super(arg)
     this.types.add(schema.Demand)
-    initializeProperties(this, init)
+    initializeProperties<Demand>(this, init)
   }
 }
 DemandMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Demand)

@@ -26,7 +26,7 @@ class TVSeasonImpl extends TVSeasonMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TVSeason>) {
     super(arg)
     this.types.add(schema.TVSeason)
-    initializeProperties(this, init)
+    initializeProperties<TVSeason>(this, init)
   }
 }
 TVSeasonMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TVSeason)

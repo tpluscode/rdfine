@@ -31,7 +31,7 @@ class MenuItemImpl extends MenuItemMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MenuItem>) {
     super(arg)
     this.types.add(schema.MenuItem)
-    initializeProperties(this, init)
+    initializeProperties<MenuItem>(this, init)
   }
 }
 MenuItemMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MenuItem)

@@ -19,7 +19,7 @@ class PharmacyImpl extends PharmacyMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Pharmacy>) {
     super(arg)
     this.types.add(schema.Pharmacy)
-    initializeProperties(this, init)
+    initializeProperties<Pharmacy>(this, init)
   }
 }
 PharmacyMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Pharmacy)

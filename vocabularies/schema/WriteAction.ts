@@ -28,7 +28,7 @@ class WriteActionImpl extends WriteActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WriteAction>) {
     super(arg)
     this.types.add(schema.WriteAction)
-    initializeProperties(this, init)
+    initializeProperties<WriteAction>(this, init)
   }
 }
 WriteActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WriteAction)

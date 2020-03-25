@@ -25,7 +25,7 @@ class SellActionImpl extends SellActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SellAction>) {
     super(arg)
     this.types.add(schema.SellAction)
-    initializeProperties(this, init)
+    initializeProperties<SellAction>(this, init)
   }
 }
 SellActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SellAction)

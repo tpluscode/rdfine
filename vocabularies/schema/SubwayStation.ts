@@ -19,7 +19,7 @@ class SubwayStationImpl extends SubwayStationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SubwayStation>) {
     super(arg)
     this.types.add(schema.SubwayStation)
-    initializeProperties(this, init)
+    initializeProperties<SubwayStation>(this, init)
   }
 }
 SubwayStationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SubwayStation)

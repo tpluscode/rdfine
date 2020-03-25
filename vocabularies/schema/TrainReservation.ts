@@ -19,7 +19,7 @@ class TrainReservationImpl extends TrainReservationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TrainReservation>) {
     super(arg)
     this.types.add(schema.TrainReservation)
-    initializeProperties(this, init)
+    initializeProperties<TrainReservation>(this, init)
   }
 }
 TrainReservationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TrainReservation)

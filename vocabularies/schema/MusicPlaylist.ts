@@ -28,7 +28,7 @@ class MusicPlaylistImpl extends MusicPlaylistMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MusicPlaylist>) {
     super(arg)
     this.types.add(schema.MusicPlaylist)
-    initializeProperties(this, init)
+    initializeProperties<MusicPlaylist>(this, init)
   }
 }
 MusicPlaylistMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MusicPlaylist)

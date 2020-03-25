@@ -28,7 +28,7 @@ class GeoCircleImpl extends GeoCircleMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<GeoCircle>) {
     super(arg)
     this.types.add(schema.GeoCircle)
-    initializeProperties(this, init)
+    initializeProperties<GeoCircle>(this, init)
   }
 }
 GeoCircleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GeoCircle)

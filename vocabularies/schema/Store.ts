@@ -19,7 +19,7 @@ class StoreImpl extends StoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Store>) {
     super(arg)
     this.types.add(schema.Store)
-    initializeProperties(this, init)
+    initializeProperties<Store>(this, init)
   }
 }
 StoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Store)

@@ -30,7 +30,7 @@ class RowImpl extends RowMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Row>) {
     super(arg)
     this.types.add(csvw.Row)
-    initializeProperties(this, init)
+    initializeProperties<Row>(this, init)
   }
 }
 RowMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Row)

@@ -30,7 +30,7 @@ class NumericFormatImpl extends NumericFormatMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<NumericFormat>) {
     super(arg)
     this.types.add(csvw.NumericFormat)
-    initializeProperties(this, init)
+    initializeProperties<NumericFormat>(this, init)
   }
 }
 NumericFormatMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.NumericFormat)

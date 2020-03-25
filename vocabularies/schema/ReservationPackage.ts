@@ -22,7 +22,7 @@ class ReservationPackageImpl extends ReservationPackageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ReservationPackage>) {
     super(arg)
     this.types.add(schema.ReservationPackage)
-    initializeProperties(this, init)
+    initializeProperties<ReservationPackage>(this, init)
   }
 }
 ReservationPackageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ReservationPackage)

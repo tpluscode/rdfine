@@ -19,7 +19,7 @@ class ResortImpl extends ResortMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Resort>) {
     super(arg)
     this.types.add(schema.Resort)
-    initializeProperties(this, init)
+    initializeProperties<Resort>(this, init)
   }
 }
 ResortMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Resort)

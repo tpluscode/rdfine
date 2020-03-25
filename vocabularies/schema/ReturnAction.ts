@@ -22,7 +22,7 @@ class ReturnActionImpl extends ReturnActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ReturnAction>) {
     super(arg)
     this.types.add(schema.ReturnAction)
-    initializeProperties(this, init)
+    initializeProperties<ReturnAction>(this, init)
   }
 }
 ReturnActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ReturnAction)

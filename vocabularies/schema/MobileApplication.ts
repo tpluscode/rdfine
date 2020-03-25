@@ -22,7 +22,7 @@ class MobileApplicationImpl extends MobileApplicationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MobileApplication>) {
     super(arg)
     this.types.add(schema.MobileApplication)
-    initializeProperties(this, init)
+    initializeProperties<MobileApplication>(this, init)
   }
 }
 MobileApplicationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MobileApplication)

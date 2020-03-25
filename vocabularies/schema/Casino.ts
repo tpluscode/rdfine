@@ -19,7 +19,7 @@ class CasinoImpl extends CasinoMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Casino>) {
     super(arg)
     this.types.add(schema.Casino)
-    initializeProperties(this, init)
+    initializeProperties<Casino>(this, init)
   }
 }
 CasinoMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Casino)

@@ -19,7 +19,7 @@ class FloristImpl extends FloristMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Florist>) {
     super(arg)
     this.types.add(schema.Florist)
-    initializeProperties(this, init)
+    initializeProperties<Florist>(this, init)
   }
 }
 FloristMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Florist)

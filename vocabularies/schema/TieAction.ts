@@ -19,7 +19,7 @@ class TieActionImpl extends TieActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<TieAction>) {
     super(arg)
     this.types.add(schema.TieAction)
-    initializeProperties(this, init)
+    initializeProperties<TieAction>(this, init)
   }
 }
 TieActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TieAction)

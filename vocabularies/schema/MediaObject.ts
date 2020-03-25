@@ -76,7 +76,7 @@ class MediaObjectImpl extends MediaObjectMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MediaObject>) {
     super(arg)
     this.types.add(schema.MediaObject)
-    initializeProperties(this, init)
+    initializeProperties<MediaObject>(this, init)
   }
 }
 MediaObjectMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MediaObject)

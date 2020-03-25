@@ -19,7 +19,7 @@ class IceCreamShopImpl extends IceCreamShopMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<IceCreamShop>) {
     super(arg)
     this.types.add(schema.IceCreamShop)
-    initializeProperties(this, init)
+    initializeProperties<IceCreamShop>(this, init)
   }
 }
 IceCreamShopMixin.shouldApply = (r: RdfResource) => r.types.has(schema.IceCreamShop)

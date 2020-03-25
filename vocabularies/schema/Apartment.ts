@@ -28,7 +28,7 @@ class ApartmentImpl extends ApartmentMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Apartment>) {
     super(arg)
     this.types.add(schema.Apartment)
-    initializeProperties(this, init)
+    initializeProperties<Apartment>(this, init)
   }
 }
 ApartmentMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Apartment)

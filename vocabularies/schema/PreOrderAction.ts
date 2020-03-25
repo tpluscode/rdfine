@@ -19,7 +19,7 @@ class PreOrderActionImpl extends PreOrderActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PreOrderAction>) {
     super(arg)
     this.types.add(schema.PreOrderAction)
-    initializeProperties(this, init)
+    initializeProperties<PreOrderAction>(this, init)
   }
 }
 PreOrderActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PreOrderAction)

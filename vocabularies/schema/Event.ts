@@ -130,7 +130,7 @@ class EventImpl extends EventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Event>) {
     super(arg)
     this.types.add(schema.Event)
-    initializeProperties(this, init)
+    initializeProperties<Event>(this, init)
   }
 }
 EventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Event)

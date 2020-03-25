@@ -25,7 +25,7 @@ class PlayActionImpl extends PlayActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PlayAction>) {
     super(arg)
     this.types.add(schema.PlayAction)
-    initializeProperties(this, init)
+    initializeProperties<PlayAction>(this, init)
   }
 }
 PlayActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PlayAction)

@@ -34,7 +34,7 @@ class DatedMoneySpecificationImpl extends DatedMoneySpecificationMixin(RdfResour
   constructor(arg: ResourceNode, init?: PropertyInitializer<DatedMoneySpecification>) {
     super(arg)
     this.types.add(schema.DatedMoneySpecification)
-    initializeProperties(this, init)
+    initializeProperties<DatedMoneySpecification>(this, init)
   }
 }
 DatedMoneySpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DatedMoneySpecification)

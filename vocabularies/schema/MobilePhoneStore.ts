@@ -19,7 +19,7 @@ class MobilePhoneStoreImpl extends MobilePhoneStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MobilePhoneStore>) {
     super(arg)
     this.types.add(schema.MobilePhoneStore)
-    initializeProperties(this, init)
+    initializeProperties<MobilePhoneStore>(this, init)
   }
 }
 MobilePhoneStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MobilePhoneStore)

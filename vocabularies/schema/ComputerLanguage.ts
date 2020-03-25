@@ -19,7 +19,7 @@ class ComputerLanguageImpl extends ComputerLanguageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ComputerLanguage>) {
     super(arg)
     this.types.add(schema.ComputerLanguage)
-    initializeProperties(this, init)
+    initializeProperties<ComputerLanguage>(this, init)
   }
 }
 ComputerLanguageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ComputerLanguage)

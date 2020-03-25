@@ -22,7 +22,7 @@ class VoteActionImpl extends VoteActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<VoteAction>) {
     super(arg)
     this.types.add(schema.VoteAction)
-    initializeProperties(this, init)
+    initializeProperties<VoteAction>(this, init)
   }
 }
 VoteActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.VoteAction)

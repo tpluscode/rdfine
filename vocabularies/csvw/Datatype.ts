@@ -45,7 +45,7 @@ class DatatypeImpl extends DatatypeMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Datatype>) {
     super(arg)
     this.types.add(csvw.Datatype)
-    initializeProperties(this, init)
+    initializeProperties<Datatype>(this, init)
   }
 }
 DatatypeMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Datatype)

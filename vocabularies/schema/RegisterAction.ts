@@ -19,7 +19,7 @@ class RegisterActionImpl extends RegisterActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<RegisterAction>) {
     super(arg)
     this.types.add(schema.RegisterAction)
-    initializeProperties(this, init)
+    initializeProperties<RegisterAction>(this, init)
   }
 }
 RegisterActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RegisterAction)

@@ -19,7 +19,7 @@ class EmergencyServiceImpl extends EmergencyServiceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<EmergencyService>) {
     super(arg)
     this.types.add(schema.EmergencyService)
-    initializeProperties(this, init)
+    initializeProperties<EmergencyService>(this, init)
   }
 }
 EmergencyServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EmergencyService)

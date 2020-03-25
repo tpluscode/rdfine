@@ -19,7 +19,7 @@ class ProfessionalServiceImpl extends ProfessionalServiceMixin(RdfResourceImpl) 
   constructor(arg: ResourceNode, init?: PropertyInitializer<ProfessionalService>) {
     super(arg)
     this.types.add(schema.ProfessionalService)
-    initializeProperties(this, init)
+    initializeProperties<ProfessionalService>(this, init)
   }
 }
 ProfessionalServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ProfessionalService)

@@ -19,7 +19,7 @@ class TouristInformationCenterImpl extends TouristInformationCenterMixin(RdfReso
   constructor(arg: ResourceNode, init?: PropertyInitializer<TouristInformationCenter>) {
     super(arg)
     this.types.add(schema.TouristInformationCenter)
-    initializeProperties(this, init)
+    initializeProperties<TouristInformationCenter>(this, init)
   }
 }
 TouristInformationCenterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.TouristInformationCenter)

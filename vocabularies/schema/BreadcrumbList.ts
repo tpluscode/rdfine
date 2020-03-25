@@ -19,7 +19,7 @@ class BreadcrumbListImpl extends BreadcrumbListMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BreadcrumbList>) {
     super(arg)
     this.types.add(schema.BreadcrumbList)
-    initializeProperties(this, init)
+    initializeProperties<BreadcrumbList>(this, init)
   }
 }
 BreadcrumbListMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BreadcrumbList)

@@ -20,7 +20,7 @@ class AutoPartsStoreImpl extends AutoPartsStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AutoPartsStore>) {
     super(arg)
     this.types.add(schema.AutoPartsStore)
-    initializeProperties(this, init)
+    initializeProperties<AutoPartsStore>(this, init)
   }
 }
 AutoPartsStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AutoPartsStore)

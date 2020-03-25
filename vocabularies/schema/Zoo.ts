@@ -19,7 +19,7 @@ class ZooImpl extends ZooMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Zoo>) {
     super(arg)
     this.types.add(schema.Zoo)
-    initializeProperties(this, init)
+    initializeProperties<Zoo>(this, init)
   }
 }
 ZooMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Zoo)

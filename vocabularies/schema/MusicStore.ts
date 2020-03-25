@@ -19,7 +19,7 @@ class MusicStoreImpl extends MusicStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MusicStore>) {
     super(arg)
     this.types.add(schema.MusicStore)
-    initializeProperties(this, init)
+    initializeProperties<MusicStore>(this, init)
   }
 }
 MusicStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MusicStore)

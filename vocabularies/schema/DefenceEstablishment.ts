@@ -19,7 +19,7 @@ class DefenceEstablishmentImpl extends DefenceEstablishmentMixin(RdfResourceImpl
   constructor(arg: ResourceNode, init?: PropertyInitializer<DefenceEstablishment>) {
     super(arg)
     this.types.add(schema.DefenceEstablishment)
-    initializeProperties(this, init)
+    initializeProperties<DefenceEstablishment>(this, init)
   }
 }
 DefenceEstablishmentMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DefenceEstablishment)

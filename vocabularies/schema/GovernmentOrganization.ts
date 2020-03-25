@@ -19,7 +19,7 @@ class GovernmentOrganizationImpl extends GovernmentOrganizationMixin(RdfResource
   constructor(arg: ResourceNode, init?: PropertyInitializer<GovernmentOrganization>) {
     super(arg)
     this.types.add(schema.GovernmentOrganization)
-    initializeProperties(this, init)
+    initializeProperties<GovernmentOrganization>(this, init)
   }
 }
 GovernmentOrganizationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GovernmentOrganization)

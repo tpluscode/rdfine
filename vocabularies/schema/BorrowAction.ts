@@ -22,7 +22,7 @@ class BorrowActionImpl extends BorrowActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BorrowAction>) {
     super(arg)
     this.types.add(schema.BorrowAction)
-    initializeProperties(this, init)
+    initializeProperties<BorrowAction>(this, init)
   }
 }
 BorrowActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BorrowAction)

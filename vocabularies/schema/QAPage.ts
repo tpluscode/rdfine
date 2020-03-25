@@ -19,7 +19,7 @@ class QAPageImpl extends QAPageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<QAPage>) {
     super(arg)
     this.types.add(schema.QAPage)
-    initializeProperties(this, init)
+    initializeProperties<QAPage>(this, init)
   }
 }
 QAPageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.QAPage)

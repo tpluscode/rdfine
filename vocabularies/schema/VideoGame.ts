@@ -56,7 +56,7 @@ class VideoGameImpl extends VideoGameMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<VideoGame>) {
     super(arg)
     this.types.add(schema.VideoGame)
-    initializeProperties(this, init)
+    initializeProperties<VideoGame>(this, init)
   }
 }
 VideoGameMixin.shouldApply = (r: RdfResource) => r.types.has(schema.VideoGame)

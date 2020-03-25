@@ -19,7 +19,7 @@ class EventReservationImpl extends EventReservationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<EventReservation>) {
     super(arg)
     this.types.add(schema.EventReservation)
-    initializeProperties(this, init)
+    initializeProperties<EventReservation>(this, init)
   }
 }
 EventReservationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EventReservation)

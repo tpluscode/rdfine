@@ -19,7 +19,7 @@ class TableImpl extends TableMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Table>) {
     super(arg)
     this.types.add(schema.Table)
-    initializeProperties(this, init)
+    initializeProperties<Table>(this, init)
   }
 }
 TableMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Table)

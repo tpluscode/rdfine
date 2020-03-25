@@ -28,7 +28,7 @@ class PublicationEventImpl extends PublicationEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PublicationEvent>) {
     super(arg)
     this.types.add(schema.PublicationEvent)
-    initializeProperties(this, init)
+    initializeProperties<PublicationEvent>(this, init)
   }
 }
 PublicationEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PublicationEvent)

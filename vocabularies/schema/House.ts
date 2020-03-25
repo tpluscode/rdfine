@@ -25,7 +25,7 @@ class HouseImpl extends HouseMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<House>) {
     super(arg)
     this.types.add(schema.House)
-    initializeProperties(this, init)
+    initializeProperties<House>(this, init)
   }
 }
 HouseMixin.shouldApply = (r: RdfResource) => r.types.has(schema.House)

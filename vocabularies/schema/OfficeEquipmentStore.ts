@@ -19,7 +19,7 @@ class OfficeEquipmentStoreImpl extends OfficeEquipmentStoreMixin(RdfResourceImpl
   constructor(arg: ResourceNode, init?: PropertyInitializer<OfficeEquipmentStore>) {
     super(arg)
     this.types.add(schema.OfficeEquipmentStore)
-    initializeProperties(this, init)
+    initializeProperties<OfficeEquipmentStore>(this, init)
   }
 }
 OfficeEquipmentStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.OfficeEquipmentStore)

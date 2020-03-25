@@ -19,7 +19,7 @@ class BusReservationImpl extends BusReservationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BusReservation>) {
     super(arg)
     this.types.add(schema.BusReservation)
-    initializeProperties(this, init)
+    initializeProperties<BusReservation>(this, init)
   }
 }
 BusReservationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BusReservation)

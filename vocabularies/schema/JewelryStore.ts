@@ -19,7 +19,7 @@ class JewelryStoreImpl extends JewelryStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<JewelryStore>) {
     super(arg)
     this.types.add(schema.JewelryStore)
-    initializeProperties(this, init)
+    initializeProperties<JewelryStore>(this, init)
   }
 }
 JewelryStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.JewelryStore)

@@ -19,7 +19,7 @@ class BookSeriesImpl extends BookSeriesMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BookSeries>) {
     super(arg)
     this.types.add(schema.BookSeries)
-    initializeProperties(this, init)
+    initializeProperties<BookSeries>(this, init)
   }
 }
 BookSeriesMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BookSeries)

@@ -19,7 +19,7 @@ class WPAdBlockImpl extends WPAdBlockMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WPAdBlock>) {
     super(arg)
     this.types.add(schema.WPAdBlock)
-    initializeProperties(this, init)
+    initializeProperties<WPAdBlock>(this, init)
   }
 }
 WPAdBlockMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WPAdBlock)

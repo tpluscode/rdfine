@@ -19,7 +19,7 @@ class DrinkActionImpl extends DrinkActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DrinkAction>) {
     super(arg)
     this.types.add(schema.DrinkAction)
-    initializeProperties(this, init)
+    initializeProperties<DrinkAction>(this, init)
   }
 }
 DrinkActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DrinkAction)

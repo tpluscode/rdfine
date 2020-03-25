@@ -19,7 +19,7 @@ class DryCleaningOrLaundryImpl extends DryCleaningOrLaundryMixin(RdfResourceImpl
   constructor(arg: ResourceNode, init?: PropertyInitializer<DryCleaningOrLaundry>) {
     super(arg)
     this.types.add(schema.DryCleaningOrLaundry)
-    initializeProperties(this, init)
+    initializeProperties<DryCleaningOrLaundry>(this, init)
   }
 }
 DryCleaningOrLaundryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DryCleaningOrLaundry)

@@ -28,7 +28,7 @@ class BuyActionImpl extends BuyActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BuyAction>) {
     super(arg)
     this.types.add(schema.BuyAction)
-    initializeProperties(this, init)
+    initializeProperties<BuyAction>(this, init)
   }
 }
 BuyActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BuyAction)

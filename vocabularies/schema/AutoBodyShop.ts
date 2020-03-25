@@ -19,7 +19,7 @@ class AutoBodyShopImpl extends AutoBodyShopMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AutoBodyShop>) {
     super(arg)
     this.types.add(schema.AutoBodyShop)
-    initializeProperties(this, init)
+    initializeProperties<AutoBodyShop>(this, init)
   }
 }
 AutoBodyShopMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AutoBodyShop)

@@ -20,7 +20,7 @@ class FireStationImpl extends FireStationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<FireStation>) {
     super(arg)
     this.types.add(schema.FireStation)
-    initializeProperties(this, init)
+    initializeProperties<FireStation>(this, init)
   }
 }
 FireStationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FireStation)

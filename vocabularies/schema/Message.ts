@@ -46,7 +46,7 @@ class MessageImpl extends MessageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Message>) {
     super(arg)
     this.types.add(schema.Message)
-    initializeProperties(this, init)
+    initializeProperties<Message>(this, init)
   }
 }
 MessageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Message)

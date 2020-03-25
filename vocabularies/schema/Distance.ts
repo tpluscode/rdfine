@@ -19,7 +19,7 @@ class DistanceImpl extends DistanceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Distance>) {
     super(arg)
     this.types.add(schema.Distance)
-    initializeProperties(this, init)
+    initializeProperties<Distance>(this, init)
   }
 }
 DistanceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Distance)

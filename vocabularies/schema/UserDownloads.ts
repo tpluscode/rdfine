@@ -19,7 +19,7 @@ class UserDownloadsImpl extends UserDownloadsMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<UserDownloads>) {
     super(arg)
     this.types.add(schema.UserDownloads)
-    initializeProperties(this, init)
+    initializeProperties<UserDownloads>(this, init)
   }
 }
 UserDownloadsMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UserDownloads)

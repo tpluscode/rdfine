@@ -19,7 +19,7 @@ class PawnShopImpl extends PawnShopMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PawnShop>) {
     super(arg)
     this.types.add(schema.PawnShop)
-    initializeProperties(this, init)
+    initializeProperties<PawnShop>(this, init)
   }
 }
 PawnShopMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PawnShop)

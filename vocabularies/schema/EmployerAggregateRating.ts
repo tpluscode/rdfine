@@ -19,7 +19,7 @@ class EmployerAggregateRatingImpl extends EmployerAggregateRatingMixin(RdfResour
   constructor(arg: ResourceNode, init?: PropertyInitializer<EmployerAggregateRating>) {
     super(arg)
     this.types.add(schema.EmployerAggregateRating)
-    initializeProperties(this, init)
+    initializeProperties<EmployerAggregateRating>(this, init)
   }
 }
 EmployerAggregateRatingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EmployerAggregateRating)

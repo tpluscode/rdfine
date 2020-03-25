@@ -55,7 +55,7 @@ class BroadcastServiceImpl extends BroadcastServiceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BroadcastService>) {
     super(arg)
     this.types.add(schema.BroadcastService)
-    initializeProperties(this, init)
+    initializeProperties<BroadcastService>(this, init)
   }
 }
 BroadcastServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BroadcastService)

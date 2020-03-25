@@ -22,7 +22,7 @@ class PayActionImpl extends PayActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PayAction>) {
     super(arg)
     this.types.add(schema.PayAction)
-    initializeProperties(this, init)
+    initializeProperties<PayAction>(this, init)
   }
 }
 PayActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PayAction)

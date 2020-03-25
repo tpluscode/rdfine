@@ -19,7 +19,7 @@ class ConversationImpl extends ConversationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Conversation>) {
     super(arg)
     this.types.add(schema.Conversation)
-    initializeProperties(this, init)
+    initializeProperties<Conversation>(this, init)
   }
 }
 ConversationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Conversation)

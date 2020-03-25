@@ -19,7 +19,7 @@ class BikeStoreImpl extends BikeStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BikeStore>) {
     super(arg)
     this.types.add(schema.BikeStore)
-    initializeProperties(this, init)
+    initializeProperties<BikeStore>(this, init)
   }
 }
 BikeStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BikeStore)

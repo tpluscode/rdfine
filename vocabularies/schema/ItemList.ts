@@ -34,7 +34,7 @@ class ItemListImpl extends ItemListMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ItemList>) {
     super(arg)
     this.types.add(schema.ItemList)
-    initializeProperties(this, init)
+    initializeProperties<ItemList>(this, init)
   }
 }
 ItemListMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ItemList)

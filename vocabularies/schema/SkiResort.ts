@@ -19,7 +19,7 @@ class SkiResortImpl extends SkiResortMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SkiResort>) {
     super(arg)
     this.types.add(schema.SkiResort)
-    initializeProperties(this, init)
+    initializeProperties<SkiResort>(this, init)
   }
 }
 SkiResortMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SkiResort)

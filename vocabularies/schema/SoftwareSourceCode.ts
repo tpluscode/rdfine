@@ -43,7 +43,7 @@ class SoftwareSourceCodeImpl extends SoftwareSourceCodeMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SoftwareSourceCode>) {
     super(arg)
     this.types.add(schema.SoftwareSourceCode)
-    initializeProperties(this, init)
+    initializeProperties<SoftwareSourceCode>(this, init)
   }
 }
 SoftwareSourceCodeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SoftwareSourceCode)

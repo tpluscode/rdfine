@@ -52,7 +52,7 @@ class VideoObjectImpl extends VideoObjectMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<VideoObject>) {
     super(arg)
     this.types.add(schema.VideoObject)
-    initializeProperties(this, init)
+    initializeProperties<VideoObject>(this, init)
   }
 }
 VideoObjectMixin.shouldApply = (r: RdfResource) => r.types.has(schema.VideoObject)

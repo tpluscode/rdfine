@@ -19,7 +19,7 @@ class EntertainmentBusinessImpl extends EntertainmentBusinessMixin(RdfResourceIm
   constructor(arg: ResourceNode, init?: PropertyInitializer<EntertainmentBusiness>) {
     super(arg)
     this.types.add(schema.EntertainmentBusiness)
-    initializeProperties(this, init)
+    initializeProperties<EntertainmentBusiness>(this, init)
   }
 }
 EntertainmentBusinessMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EntertainmentBusiness)

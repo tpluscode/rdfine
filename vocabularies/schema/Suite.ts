@@ -34,7 +34,7 @@ class SuiteImpl extends SuiteMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Suite>) {
     super(arg)
     this.types.add(schema.Suite)
-    initializeProperties(this, init)
+    initializeProperties<Suite>(this, init)
   }
 }
 SuiteMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Suite)

@@ -22,7 +22,7 @@ class AuthorizeActionImpl extends AuthorizeActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AuthorizeAction>) {
     super(arg)
     this.types.add(schema.AuthorizeAction)
-    initializeProperties(this, init)
+    initializeProperties<AuthorizeAction>(this, init)
   }
 }
 AuthorizeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AuthorizeAction)

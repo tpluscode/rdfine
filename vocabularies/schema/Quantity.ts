@@ -19,7 +19,7 @@ class QuantityImpl extends QuantityMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Quantity>) {
     super(arg)
     this.types.add(schema.Quantity)
-    initializeProperties(this, init)
+    initializeProperties<Quantity>(this, init)
   }
 }
 QuantityMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Quantity)

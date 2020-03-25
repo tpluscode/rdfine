@@ -19,7 +19,7 @@ class HVACBusinessImpl extends HVACBusinessMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HVACBusiness>) {
     super(arg)
     this.types.add(schema.HVACBusiness)
-    initializeProperties(this, init)
+    initializeProperties<HVACBusiness>(this, init)
   }
 }
 HVACBusinessMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HVACBusiness)

@@ -19,7 +19,7 @@ class DaySpaImpl extends DaySpaMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DaySpa>) {
     super(arg)
     this.types.add(schema.DaySpa)
-    initializeProperties(this, init)
+    initializeProperties<DaySpa>(this, init)
   }
 }
 DaySpaMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DaySpa)

@@ -19,7 +19,7 @@ class SynagogueImpl extends SynagogueMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Synagogue>) {
     super(arg)
     this.types.add(schema.Synagogue)
-    initializeProperties(this, init)
+    initializeProperties<Synagogue>(this, init)
   }
 }
 SynagogueMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Synagogue)

@@ -34,7 +34,7 @@ class AlignmentObjectImpl extends AlignmentObjectMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AlignmentObject>) {
     super(arg)
     this.types.add(schema.AlignmentObject)
-    initializeProperties(this, init)
+    initializeProperties<AlignmentObject>(this, init)
   }
 }
 AlignmentObjectMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AlignmentObject)

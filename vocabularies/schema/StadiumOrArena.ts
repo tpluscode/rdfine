@@ -20,7 +20,7 @@ class StadiumOrArenaImpl extends StadiumOrArenaMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<StadiumOrArena>) {
     super(arg)
     this.types.add(schema.StadiumOrArena)
-    initializeProperties(this, init)
+    initializeProperties<StadiumOrArena>(this, init)
   }
 }
 StadiumOrArenaMixin.shouldApply = (r: RdfResource) => r.types.has(schema.StadiumOrArena)

@@ -28,7 +28,7 @@ class InteractionCounterImpl extends InteractionCounterMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<InteractionCounter>) {
     super(arg)
     this.types.add(schema.InteractionCounter)
-    initializeProperties(this, init)
+    initializeProperties<InteractionCounter>(this, init)
   }
 }
 InteractionCounterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.InteractionCounter)

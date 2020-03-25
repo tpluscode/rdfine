@@ -19,7 +19,7 @@ class VolcanoImpl extends VolcanoMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Volcano>) {
     super(arg)
     this.types.add(schema.Volcano)
-    initializeProperties(this, init)
+    initializeProperties<Volcano>(this, init)
   }
 }
 VolcanoMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Volcano)

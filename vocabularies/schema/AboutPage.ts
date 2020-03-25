@@ -19,7 +19,7 @@ class AboutPageImpl extends AboutPageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AboutPage>) {
     super(arg)
     this.types.add(schema.AboutPage)
-    initializeProperties(this, init)
+    initializeProperties<AboutPage>(this, init)
   }
 }
 AboutPageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AboutPage)

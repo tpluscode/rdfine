@@ -19,7 +19,7 @@ class BreweryImpl extends BreweryMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Brewery>) {
     super(arg)
     this.types.add(schema.Brewery)
-    initializeProperties(this, init)
+    initializeProperties<Brewery>(this, init)
   }
 }
 BreweryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Brewery)

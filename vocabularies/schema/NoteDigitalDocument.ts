@@ -19,7 +19,7 @@ class NoteDigitalDocumentImpl extends NoteDigitalDocumentMixin(RdfResourceImpl) 
   constructor(arg: ResourceNode, init?: PropertyInitializer<NoteDigitalDocument>) {
     super(arg)
     this.types.add(schema.NoteDigitalDocument)
-    initializeProperties(this, init)
+    initializeProperties<NoteDigitalDocument>(this, init)
   }
 }
 NoteDigitalDocumentMixin.shouldApply = (r: RdfResource) => r.types.has(schema.NoteDigitalDocument)

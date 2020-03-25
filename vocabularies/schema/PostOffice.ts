@@ -19,7 +19,7 @@ class PostOfficeImpl extends PostOfficeMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PostOffice>) {
     super(arg)
     this.types.add(schema.PostOffice)
-    initializeProperties(this, init)
+    initializeProperties<PostOffice>(this, init)
   }
 }
 PostOfficeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PostOffice)

@@ -19,7 +19,7 @@ class CityHallImpl extends CityHallMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CityHall>) {
     super(arg)
     this.types.add(schema.CityHall)
-    initializeProperties(this, init)
+    initializeProperties<CityHall>(this, init)
   }
 }
 CityHallMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CityHall)

@@ -22,7 +22,7 @@ class InformActionImpl extends InformActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<InformAction>) {
     super(arg)
     this.types.add(schema.InformAction)
-    initializeProperties(this, init)
+    initializeProperties<InformAction>(this, init)
   }
 }
 InformActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.InformAction)

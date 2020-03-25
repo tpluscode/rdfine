@@ -19,7 +19,7 @@ class WantActionImpl extends WantActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WantAction>) {
     super(arg)
     this.types.add(schema.WantAction)
-    initializeProperties(this, init)
+    initializeProperties<WantAction>(this, init)
   }
 }
 WantActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WantAction)

@@ -20,7 +20,7 @@ class PoliceStationImpl extends PoliceStationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PoliceStation>) {
     super(arg)
     this.types.add(schema.PoliceStation)
-    initializeProperties(this, init)
+    initializeProperties<PoliceStation>(this, init)
   }
 }
 PoliceStationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PoliceStation)

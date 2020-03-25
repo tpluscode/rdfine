@@ -22,7 +22,7 @@ class OrganizationRoleImpl extends OrganizationRoleMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<OrganizationRole>) {
     super(arg)
     this.types.add(schema.OrganizationRole)
-    initializeProperties(this, init)
+    initializeProperties<OrganizationRole>(this, init)
   }
 }
 OrganizationRoleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.OrganizationRole)

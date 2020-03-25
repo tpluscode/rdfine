@@ -22,7 +22,7 @@ class LoseActionImpl extends LoseActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<LoseAction>) {
     super(arg)
     this.types.add(schema.LoseAction)
-    initializeProperties(this, init)
+    initializeProperties<LoseAction>(this, init)
   }
 }
 LoseActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LoseAction)

@@ -22,7 +22,7 @@ class EndorseActionImpl extends EndorseActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<EndorseAction>) {
     super(arg)
     this.types.add(schema.EndorseAction)
-    initializeProperties(this, init)
+    initializeProperties<EndorseAction>(this, init)
   }
 }
 EndorseActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EndorseAction)

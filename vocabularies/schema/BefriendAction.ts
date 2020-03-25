@@ -19,7 +19,7 @@ class BefriendActionImpl extends BefriendActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BefriendAction>) {
     super(arg)
     this.types.add(schema.BefriendAction)
-    initializeProperties(this, init)
+    initializeProperties<BefriendAction>(this, init)
   }
 }
 BefriendActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BefriendAction)

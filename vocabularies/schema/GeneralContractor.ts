@@ -19,7 +19,7 @@ class GeneralContractorImpl extends GeneralContractorMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<GeneralContractor>) {
     super(arg)
     this.types.add(schema.GeneralContractor)
-    initializeProperties(this, init)
+    initializeProperties<GeneralContractor>(this, init)
   }
 }
 GeneralContractorMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GeneralContractor)

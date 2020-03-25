@@ -31,7 +31,7 @@ class DataFeedItemImpl extends DataFeedItemMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DataFeedItem>) {
     super(arg)
     this.types.add(schema.DataFeedItem)
-    initializeProperties(this, init)
+    initializeProperties<DataFeedItem>(this, init)
   }
 }
 DataFeedItemMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DataFeedItem)

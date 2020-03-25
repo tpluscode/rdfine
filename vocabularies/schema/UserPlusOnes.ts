@@ -19,7 +19,7 @@ class UserPlusOnesImpl extends UserPlusOnesMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<UserPlusOnes>) {
     super(arg)
     this.types.add(schema.UserPlusOnes)
-    initializeProperties(this, init)
+    initializeProperties<UserPlusOnes>(this, init)
   }
 }
 UserPlusOnesMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UserPlusOnes)

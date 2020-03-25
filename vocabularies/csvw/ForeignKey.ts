@@ -24,7 +24,7 @@ class ForeignKeyImpl extends ForeignKeyMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ForeignKey>) {
     super(arg)
     this.types.add(csvw.ForeignKey)
-    initializeProperties(this, init)
+    initializeProperties<ForeignKey>(this, init)
   }
 }
 ForeignKeyMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.ForeignKey)

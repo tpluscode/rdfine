@@ -28,7 +28,7 @@ class EmployeeRoleImpl extends EmployeeRoleMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<EmployeeRole>) {
     super(arg)
     this.types.add(schema.EmployeeRole)
-    initializeProperties(this, init)
+    initializeProperties<EmployeeRole>(this, init)
   }
 }
 EmployeeRoleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EmployeeRole)

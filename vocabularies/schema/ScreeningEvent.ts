@@ -25,7 +25,7 @@ class ScreeningEventImpl extends ScreeningEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ScreeningEvent>) {
     super(arg)
     this.types.add(schema.ScreeningEvent)
-    initializeProperties(this, init)
+    initializeProperties<ScreeningEvent>(this, init)
   }
 }
 ScreeningEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ScreeningEvent)

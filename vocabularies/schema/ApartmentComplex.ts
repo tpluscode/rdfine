@@ -22,7 +22,7 @@ class ApartmentComplexImpl extends ApartmentComplexMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ApartmentComplex>) {
     super(arg)
     this.types.add(schema.ApartmentComplex)
-    initializeProperties(this, init)
+    initializeProperties<ApartmentComplex>(this, init)
   }
 }
 ApartmentComplexMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ApartmentComplex)

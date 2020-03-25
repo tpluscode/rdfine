@@ -19,7 +19,7 @@ class SelfStorageImpl extends SelfStorageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SelfStorage>) {
     super(arg)
     this.types.add(schema.SelfStorage)
-    initializeProperties(this, init)
+    initializeProperties<SelfStorage>(this, init)
   }
 }
 SelfStorageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SelfStorage)

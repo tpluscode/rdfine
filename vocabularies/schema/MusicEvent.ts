@@ -19,7 +19,7 @@ class MusicEventImpl extends MusicEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MusicEvent>) {
     super(arg)
     this.types.add(schema.MusicEvent)
-    initializeProperties(this, init)
+    initializeProperties<MusicEvent>(this, init)
   }
 }
 MusicEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MusicEvent)

@@ -19,7 +19,7 @@ class MuseumImpl extends MuseumMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Museum>) {
     super(arg)
     this.types.add(schema.Museum)
-    initializeProperties(this, init)
+    initializeProperties<Museum>(this, init)
   }
 }
 MuseumMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Museum)

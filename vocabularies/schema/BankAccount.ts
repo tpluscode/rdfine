@@ -19,7 +19,7 @@ class BankAccountImpl extends BankAccountMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BankAccount>) {
     super(arg)
     this.types.add(schema.BankAccount)
-    initializeProperties(this, init)
+    initializeProperties<BankAccount>(this, init)
   }
 }
 BankAccountMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BankAccount)

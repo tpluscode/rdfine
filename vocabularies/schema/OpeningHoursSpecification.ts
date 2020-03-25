@@ -34,7 +34,7 @@ class OpeningHoursSpecificationImpl extends OpeningHoursSpecificationMixin(RdfRe
   constructor(arg: ResourceNode, init?: PropertyInitializer<OpeningHoursSpecification>) {
     super(arg)
     this.types.add(schema.OpeningHoursSpecification)
-    initializeProperties(this, init)
+    initializeProperties<OpeningHoursSpecification>(this, init)
   }
 }
 OpeningHoursSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.OpeningHoursSpecification)

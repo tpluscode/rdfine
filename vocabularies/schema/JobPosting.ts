@@ -91,7 +91,7 @@ class JobPostingImpl extends JobPostingMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<JobPosting>) {
     super(arg)
     this.types.add(schema.JobPosting)
-    initializeProperties(this, init)
+    initializeProperties<JobPosting>(this, init)
   }
 }
 JobPostingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.JobPosting)

@@ -25,7 +25,7 @@ class ParentAudienceImpl extends ParentAudienceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ParentAudience>) {
     super(arg)
     this.types.add(schema.ParentAudience)
-    initializeProperties(this, init)
+    initializeProperties<ParentAudience>(this, init)
   }
 }
 ParentAudienceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ParentAudience)

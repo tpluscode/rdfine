@@ -25,7 +25,7 @@ class HowToItemImpl extends HowToItemMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HowToItem>) {
     super(arg)
     this.types.add(schema.HowToItem)
-    initializeProperties(this, init)
+    initializeProperties<HowToItem>(this, init)
   }
 }
 HowToItemMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HowToItem)

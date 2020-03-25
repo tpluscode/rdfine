@@ -19,7 +19,7 @@ class GasStationImpl extends GasStationMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<GasStation>) {
     super(arg)
     this.types.add(schema.GasStation)
-    initializeProperties(this, init)
+    initializeProperties<GasStation>(this, init)
   }
 }
 GasStationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GasStation)

@@ -20,7 +20,7 @@ class HealthClubImpl extends HealthClubMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<HealthClub>) {
     super(arg)
     this.types.add(schema.HealthClub)
-    initializeProperties(this, init)
+    initializeProperties<HealthClub>(this, init)
   }
 }
 HealthClubMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HealthClub)

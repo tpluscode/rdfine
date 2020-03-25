@@ -22,7 +22,7 @@ class AskActionImpl extends AskActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AskAction>) {
     super(arg)
     this.types.add(schema.AskAction)
-    initializeProperties(this, init)
+    initializeProperties<AskAction>(this, init)
   }
 }
 AskActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AskAction)

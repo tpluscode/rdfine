@@ -19,7 +19,7 @@ class ActivateActionImpl extends ActivateActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ActivateAction>) {
     super(arg)
     this.types.add(schema.ActivateAction)
-    initializeProperties(this, init)
+    initializeProperties<ActivateAction>(this, init)
   }
 }
 ActivateActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ActivateAction)

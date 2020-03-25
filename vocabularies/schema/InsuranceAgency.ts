@@ -19,7 +19,7 @@ class InsuranceAgencyImpl extends InsuranceAgencyMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<InsuranceAgency>) {
     super(arg)
     this.types.add(schema.InsuranceAgency)
-    initializeProperties(this, init)
+    initializeProperties<InsuranceAgency>(this, init)
   }
 }
 InsuranceAgencyMixin.shouldApply = (r: RdfResource) => r.types.has(schema.InsuranceAgency)

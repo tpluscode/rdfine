@@ -19,7 +19,7 @@ class RealEstateAgentImpl extends RealEstateAgentMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<RealEstateAgent>) {
     super(arg)
     this.types.add(schema.RealEstateAgent)
-    initializeProperties(this, init)
+    initializeProperties<RealEstateAgent>(this, init)
   }
 }
 RealEstateAgentMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RealEstateAgent)

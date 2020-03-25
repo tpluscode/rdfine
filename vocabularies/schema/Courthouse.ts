@@ -19,7 +19,7 @@ class CourthouseImpl extends CourthouseMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Courthouse>) {
     super(arg)
     this.types.add(schema.Courthouse)
-    initializeProperties(this, init)
+    initializeProperties<Courthouse>(this, init)
   }
 }
 CourthouseMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Courthouse)

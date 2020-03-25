@@ -19,7 +19,7 @@ class EventVenueImpl extends EventVenueMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<EventVenue>) {
     super(arg)
     this.types.add(schema.EventVenue)
-    initializeProperties(this, init)
+    initializeProperties<EventVenue>(this, init)
   }
 }
 EventVenueMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EventVenue)

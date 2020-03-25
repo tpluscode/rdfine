@@ -49,7 +49,7 @@ class LodgingBusinessImpl extends LodgingBusinessMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<LodgingBusiness>) {
     super(arg)
     this.types.add(schema.LodgingBusiness)
-    initializeProperties(this, init)
+    initializeProperties<LodgingBusiness>(this, init)
   }
 }
 LodgingBusinessMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LodgingBusiness)

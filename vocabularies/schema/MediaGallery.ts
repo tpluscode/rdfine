@@ -19,7 +19,7 @@ class MediaGalleryImpl extends MediaGalleryMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<MediaGallery>) {
     super(arg)
     this.types.add(schema.MediaGallery)
-    initializeProperties(this, init)
+    initializeProperties<MediaGallery>(this, init)
   }
 }
 MediaGalleryMixin.shouldApply = (r: RdfResource) => r.types.has(schema.MediaGallery)

@@ -19,7 +19,7 @@ class FAQPageImpl extends FAQPageMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<FAQPage>) {
     super(arg)
     this.types.add(schema.FAQPage)
-    initializeProperties(this, init)
+    initializeProperties<FAQPage>(this, init)
   }
 }
 FAQPageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FAQPage)

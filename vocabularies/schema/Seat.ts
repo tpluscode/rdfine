@@ -34,7 +34,7 @@ class SeatImpl extends SeatMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Seat>) {
     super(arg)
     this.types.add(schema.Seat)
-    initializeProperties(this, init)
+    initializeProperties<Seat>(this, init)
   }
 }
 SeatMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Seat)

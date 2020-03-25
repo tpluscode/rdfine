@@ -22,7 +22,7 @@ class LendActionImpl extends LendActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<LendAction>) {
     super(arg)
     this.types.add(schema.LendAction)
-    initializeProperties(this, init)
+    initializeProperties<LendAction>(this, init)
   }
 }
 LendActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LendAction)

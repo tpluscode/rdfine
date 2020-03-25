@@ -19,7 +19,7 @@ class MosqueImpl extends MosqueMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Mosque>) {
     super(arg)
     this.types.add(schema.Mosque)
-    initializeProperties(this, init)
+    initializeProperties<Mosque>(this, init)
   }
 }
 MosqueMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Mosque)

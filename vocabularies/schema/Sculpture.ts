@@ -19,7 +19,7 @@ class SculptureImpl extends SculptureMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Sculpture>) {
     super(arg)
     this.types.add(schema.Sculpture)
-    initializeProperties(this, init)
+    initializeProperties<Sculpture>(this, init)
   }
 }
 SculptureMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Sculpture)

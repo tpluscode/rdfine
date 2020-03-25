@@ -19,7 +19,7 @@ class EnergyImpl extends EnergyMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Energy>) {
     super(arg)
     this.types.add(schema.Energy)
-    initializeProperties(this, init)
+    initializeProperties<Energy>(this, init)
   }
 }
 EnergyMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Energy)

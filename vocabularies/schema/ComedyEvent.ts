@@ -19,7 +19,7 @@ class ComedyEventImpl extends ComedyEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ComedyEvent>) {
     super(arg)
     this.types.add(schema.ComedyEvent)
-    initializeProperties(this, init)
+    initializeProperties<ComedyEvent>(this, init)
   }
 }
 ComedyEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ComedyEvent)

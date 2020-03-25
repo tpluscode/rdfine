@@ -19,7 +19,7 @@ class LiteraryEventImpl extends LiteraryEventMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<LiteraryEvent>) {
     super(arg)
     this.types.add(schema.LiteraryEvent)
-    initializeProperties(this, init)
+    initializeProperties<LiteraryEvent>(this, init)
   }
 }
 LiteraryEventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LiteraryEvent)

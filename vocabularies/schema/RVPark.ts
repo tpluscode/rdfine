@@ -19,7 +19,7 @@ class RVParkImpl extends RVParkMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<RVPark>) {
     super(arg)
     this.types.add(schema.RVPark)
-    initializeProperties(this, init)
+    initializeProperties<RVPark>(this, init)
   }
 }
 RVParkMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RVPark)

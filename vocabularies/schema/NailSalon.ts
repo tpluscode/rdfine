@@ -19,7 +19,7 @@ class NailSalonImpl extends NailSalonMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<NailSalon>) {
     super(arg)
     this.types.add(schema.NailSalon)
-    initializeProperties(this, init)
+    initializeProperties<NailSalon>(this, init)
   }
 }
 NailSalonMixin.shouldApply = (r: RdfResource) => r.types.has(schema.NailSalon)

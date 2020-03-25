@@ -19,7 +19,7 @@ class DepartmentStoreImpl extends DepartmentStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<DepartmentStore>) {
     super(arg)
     this.types.add(schema.DepartmentStore)
-    initializeProperties(this, init)
+    initializeProperties<DepartmentStore>(this, init)
   }
 }
 DepartmentStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DepartmentStore)

@@ -34,7 +34,7 @@ class BookImpl extends BookMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Book>) {
     super(arg)
     this.types.add(schema.Book)
-    initializeProperties(this, init)
+    initializeProperties<Book>(this, init)
   }
 }
 BookMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Book)

@@ -22,7 +22,7 @@ class InviteActionImpl extends InviteActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<InviteAction>) {
     super(arg)
     this.types.add(schema.InviteAction)
-    initializeProperties(this, init)
+    initializeProperties<InviteAction>(this, init)
   }
 }
 InviteActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.InviteAction)

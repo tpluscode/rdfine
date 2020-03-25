@@ -46,7 +46,7 @@ class ServiceChannelImpl extends ServiceChannelMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<ServiceChannel>) {
     super(arg)
     this.types.add(schema.ServiceChannel)
-    initializeProperties(this, init)
+    initializeProperties<ServiceChannel>(this, init)
   }
 }
 ServiceChannelMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ServiceChannel)

@@ -19,7 +19,7 @@ class CatholicChurchImpl extends CatholicChurchMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CatholicChurch>) {
     super(arg)
     this.types.add(schema.CatholicChurch)
-    initializeProperties(this, init)
+    initializeProperties<CatholicChurch>(this, init)
   }
 }
 CatholicChurchMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CatholicChurch)

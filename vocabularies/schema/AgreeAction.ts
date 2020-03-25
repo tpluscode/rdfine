@@ -19,7 +19,7 @@ class AgreeActionImpl extends AgreeActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AgreeAction>) {
     super(arg)
     this.types.add(schema.AgreeAction)
-    initializeProperties(this, init)
+    initializeProperties<AgreeAction>(this, init)
   }
 }
 AgreeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AgreeAction)

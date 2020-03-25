@@ -19,7 +19,7 @@ class GroceryStoreImpl extends GroceryStoreMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<GroceryStore>) {
     super(arg)
     this.types.add(schema.GroceryStore)
-    initializeProperties(this, init)
+    initializeProperties<GroceryStore>(this, init)
   }
 }
 GroceryStoreMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GroceryStore)

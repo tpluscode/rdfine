@@ -19,7 +19,7 @@ class WaterfallImpl extends WaterfallMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Waterfall>) {
     super(arg)
     this.types.add(schema.Waterfall)
-    initializeProperties(this, init)
+    initializeProperties<Waterfall>(this, init)
   }
 }
 WaterfallMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Waterfall)

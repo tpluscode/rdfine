@@ -19,7 +19,7 @@ class PaintActionImpl extends PaintActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<PaintAction>) {
     super(arg)
     this.types.add(schema.PaintAction)
-    initializeProperties(this, init)
+    initializeProperties<PaintAction>(this, init)
   }
 }
 PaintActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PaintAction)

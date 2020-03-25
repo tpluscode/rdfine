@@ -190,7 +190,7 @@ class PersonImpl extends PersonMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Person>) {
     super(arg)
     this.types.add(schema.Person)
-    initializeProperties(this, init)
+    initializeProperties<Person>(this, init)
   }
 }
 PersonMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Person)

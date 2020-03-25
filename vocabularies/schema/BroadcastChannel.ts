@@ -43,7 +43,7 @@ class BroadcastChannelImpl extends BroadcastChannelMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<BroadcastChannel>) {
     super(arg)
     this.types.add(schema.BroadcastChannel)
-    initializeProperties(this, init)
+    initializeProperties<BroadcastChannel>(this, init)
   }
 }
 BroadcastChannelMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BroadcastChannel)

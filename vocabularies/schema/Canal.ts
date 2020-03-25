@@ -19,7 +19,7 @@ class CanalImpl extends CanalMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Canal>) {
     super(arg)
     this.types.add(schema.Canal)
-    initializeProperties(this, init)
+    initializeProperties<Canal>(this, init)
   }
 }
 CanalMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Canal)

@@ -19,7 +19,7 @@ class AccountingServiceImpl extends AccountingServiceMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AccountingService>) {
     super(arg)
     this.types.add(schema.AccountingService)
-    initializeProperties(this, init)
+    initializeProperties<AccountingService>(this, init)
   }
 }
 AccountingServiceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AccountingService)

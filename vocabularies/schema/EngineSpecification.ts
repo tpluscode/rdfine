@@ -25,7 +25,7 @@ class EngineSpecificationImpl extends EngineSpecificationMixin(RdfResourceImpl) 
   constructor(arg: ResourceNode, init?: PropertyInitializer<EngineSpecification>) {
     super(arg)
     this.types.add(schema.EngineSpecification)
-    initializeProperties(this, init)
+    initializeProperties<EngineSpecification>(this, init)
   }
 }
 EngineSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EngineSpecification)

@@ -37,7 +37,7 @@ class DatasetImpl extends DatasetMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Dataset>) {
     super(arg)
     this.types.add(schema.Dataset)
-    initializeProperties(this, init)
+    initializeProperties<Dataset>(this, init)
   }
 }
 DatasetMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Dataset)

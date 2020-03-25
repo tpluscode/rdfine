@@ -19,7 +19,7 @@ class WPFooterImpl extends WPFooterMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<WPFooter>) {
     super(arg)
     this.types.add(schema.WPFooter)
-    initializeProperties(this, init)
+    initializeProperties<WPFooter>(this, init)
   }
 }
 WPFooterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WPFooter)

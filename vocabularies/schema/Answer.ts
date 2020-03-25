@@ -19,7 +19,7 @@ class AnswerImpl extends AnswerMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<Answer>) {
     super(arg)
     this.types.add(schema.Answer)
-    initializeProperties(this, init)
+    initializeProperties<Answer>(this, init)
   }
 }
 AnswerMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Answer)

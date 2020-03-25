@@ -22,7 +22,7 @@ class SocialMediaPostingImpl extends SocialMediaPostingMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<SocialMediaPosting>) {
     super(arg)
     this.types.add(schema.SocialMediaPosting)
-    initializeProperties(this, init)
+    initializeProperties<SocialMediaPosting>(this, init)
   }
 }
 SocialMediaPostingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SocialMediaPosting)

@@ -19,7 +19,7 @@ class AllocateActionImpl extends AllocateActionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<AllocateAction>) {
     super(arg)
     this.types.add(schema.AllocateAction)
-    initializeProperties(this, init)
+    initializeProperties<AllocateAction>(this, init)
   }
 }
 AllocateActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AllocateAction)

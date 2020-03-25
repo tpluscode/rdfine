@@ -19,7 +19,7 @@ class RadioEpisodeImpl extends RadioEpisodeMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<RadioEpisode>) {
     super(arg)
     this.types.add(schema.RadioEpisode)
-    initializeProperties(this, init)
+    initializeProperties<RadioEpisode>(this, init)
   }
 }
 RadioEpisodeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RadioEpisode)

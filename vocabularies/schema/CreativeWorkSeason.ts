@@ -52,7 +52,7 @@ class CreativeWorkSeasonImpl extends CreativeWorkSeasonMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: PropertyInitializer<CreativeWorkSeason>) {
     super(arg)
     this.types.add(schema.CreativeWorkSeason)
-    initializeProperties(this, init)
+    initializeProperties<CreativeWorkSeason>(this, init)
   }
 }
 CreativeWorkSeasonMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CreativeWorkSeason)
