@@ -14,7 +14,6 @@
     "generate": "rdf-vocab prefix schema | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
   },
   "rdfine": {
-    "namespace": "http://schema.org/",
     "prefix": "schema",
     "types": {
       "schema:CssSelectorType": "string",

@@ -61,7 +61,6 @@ program
 
     options.outDir = path.resolve(process.cwd(), options.outDir)
 
-    log('Generating types for vocabulary <%s>', options.namespace)
     const project = await generate(options, log)
 
     log('Writing source files')

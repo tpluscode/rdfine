@@ -13,7 +13,6 @@
 		"generate": "rdf-vocab prefix csvw | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
 	},
 	"rdfine": {
-		"namespace": "http://www.w3.org/ns/csvw#",
 		"prefix": "csvw"
 	},
 	"dependencies": {

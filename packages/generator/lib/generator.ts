@@ -2,7 +2,7 @@ import { Debugger } from 'debug'
 import { Stream } from 'rdf-js'
 import rdf from 'rdf-ext'
 import cf from 'clownface'
-import nsBuilder from '@rdfjs/namespace'
+import { prefixes } from '@zazuko/rdf-vocabularies'
 import * as ns from '@tpluscode/rdf-ns-builders'
 import { ArrayLiteralExpression, IndentationText, Project, QuoteKind } from 'ts-morph'
 import { generateNamespace } from './namespace'
@@ -30,7 +30,7 @@ const strategies: ModuleStrategy[] = [
 ]
 
 function assertOptions(options: Record<string, any>) {
-  ['namespace', 'stream', 'outDir', 'prefix']
+  ['stream', 'outDir', 'prefix']
     .forEach(arg => {
       if (!options[arg]) {
         throw new Error(`Missing ${arg} parameter`)
@@ -60,10 +60,17 @@ export async function generate(options: GeneratorOptions, log: Debugger) {
     .has(ns.rdf.type, ns.rdfs.Class)
     .filter(clas => !isDatatype(clas, typeMappings))
 
+  if (namespace) {
+    prefixes[prefix] = namespace
+  }
+
+  if (!prefixes[prefix]) {
+    throw new Error(`The prefix ${prefix} is not known to @zazuko/rdf-vocabularies. It has to provided as parameter`)
+  }
+
   const context: Context = {
     vocabulary,
     prefix,
-    namespace: nsBuilder(namespace),
     defaultExport: prefix.replace(/^\w/, first => first.toUpperCase()),
     typeMappings,
     excludedTypes: options.exclude,
@@ -77,6 +84,7 @@ export async function generate(options: GeneratorOptions, log: Debugger) {
   context.log.error.enabled = true
   context.log.warn.enabled = true
 
+  log('Generating types for vocabulary <%s>', namespace)
   generateNamespace({ project }, context)
   const indexModule = project.createSourceFile('index.ts', {}, { overwrite: true })
 
