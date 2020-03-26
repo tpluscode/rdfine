@@ -59,7 +59,6 @@ rdf-vocab prefix foaf | rdfine-gen \
 If the given vocabulary is dereferencable form the web, curl can be used to fetch it and pipe to the generator
 
 ```
-npm i -g @zazuko/rdf-vocabularies
 curl http://xmlns.com/foaf/0.1/ -H accept:application/rdf+xml -H | \
   rdfine-gen \
   --format application/rdf+xml \
