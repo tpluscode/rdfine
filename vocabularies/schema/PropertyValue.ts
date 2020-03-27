@@ -8,14 +8,14 @@ import StructuredValueMixin from './StructuredValue';
 export interface PropertyValue extends Schema.StructuredValue, RdfResource {
   maxValue: number;
   minValue: number;
-  propertyID: rdf.Term;
-  propertyIDLiteral: string;
-  unitCode: rdf.Term;
-  unitCodeLiteral: string;
+  propertyID: string;
+  propertyIDTerm: rdf.NamedNode;
+  unitCode: string;
+  unitCodeTerm: rdf.NamedNode;
   unitText: string;
   value: Schema.StructuredValue;
   valueLiteral: boolean | number | string;
-  valueReference: PropertyValue | Schema.QualitativeValue | Schema.QuantitativeValue | Schema.StructuredValue;
+  valueReference: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue;
 }
 
 export default function PropertyValueMixin<Base extends Constructor>(Resource: Base) {
@@ -25,14 +25,14 @@ export default function PropertyValueMixin<Base extends Constructor>(Resource: B
     maxValue!: number;
     @property.literal({ type: Number })
     minValue!: number;
-    @property()
-    propertyID!: rdf.Term;
-    @property.literal({ path: schema.propertyID })
-    propertyIDLiteral!: string;
-    @property()
-    unitCode!: rdf.Term;
-    @property.literal({ path: schema.unitCode })
-    unitCodeLiteral!: string;
+    @property.literal()
+    propertyID!: string;
+    @property({ path: schema.propertyID })
+    propertyIDTerm!: rdf.NamedNode;
+    @property.literal()
+    unitCode!: string;
+    @property({ path: schema.unitCode })
+    unitCodeTerm!: rdf.NamedNode;
     @property.literal()
     unitText!: string;
     @property.resource()
@@ -40,7 +40,7 @@ export default function PropertyValueMixin<Base extends Constructor>(Resource: B
     @property.literal({ path: schema.value })
     valueLiteral!: boolean | number | string;
     @property.resource()
-    valueReference!: PropertyValue | Schema.QualitativeValue | Schema.QuantitativeValue | Schema.StructuredValue;
+    valueReference!: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue;
   }
   return PropertyValueClass
 }

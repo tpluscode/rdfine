@@ -16,7 +16,7 @@ export default function EmployeeRoleMixin<Base extends Constructor>(Resource: Ba
   class EmployeeRoleClass extends OrganizationRoleMixin(Resource) implements EmployeeRole {
     @property.resource()
     baseSalary!: Schema.MonetaryAmount | Schema.PriceSpecification;
-    @property.literal({ type: Number, path: schema.baseSalary })
+    @property.literal({ path: schema.baseSalary, type: Number })
     baseSalaryLiteral!: number;
     @property.literal()
     salaryCurrency!: string;

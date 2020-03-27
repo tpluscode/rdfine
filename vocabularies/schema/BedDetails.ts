@@ -7,8 +7,8 @@ import IntangibleMixin from './Intangible';
 
 export interface BedDetails extends Schema.Intangible, RdfResource {
   numberOfBeds: number;
-  typeOfBed: Schema.BedType;
-  typeOfBedLiteral: string;
+  typeOfBed: string;
+  typeOfBedTerm: Schema.BedType;
 }
 
 export default function BedDetailsMixin<Base extends Constructor>(Resource: Base) {
@@ -16,10 +16,10 @@ export default function BedDetailsMixin<Base extends Constructor>(Resource: Base
   class BedDetailsClass extends IntangibleMixin(Resource) implements BedDetails {
     @property.literal({ type: Number })
     numberOfBeds!: number;
-    @property.resource()
-    typeOfBed!: Schema.BedType;
-    @property.literal({ path: schema.typeOfBed })
-    typeOfBedLiteral!: string;
+    @property.literal()
+    typeOfBed!: string;
+    @property({ path: schema.typeOfBed })
+    typeOfBedTerm!: Schema.BedType;
   }
   return BedDetailsClass
 }

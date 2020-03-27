@@ -17,18 +17,16 @@ export interface JobPosting extends Schema.Intangible, RdfResource {
   hiringOrganization: Schema.Organization;
   incentiveCompensation: string;
   incentives: string;
-  industry: rdf.Term;
-  industryLiteral: string;
+  industry: string;
   jobBenefits: string;
   jobLocation: Schema.Place;
   relevantOccupation: Schema.Occupation;
   responsibilities: string;
   salaryCurrency: string;
-  skills: rdf.Term;
-  skillsLiteral: string;
+  skills: string;
   specialCommitments: string;
   title: string;
-  validThrough: Date | Date;
+  validThrough: Date;
   workHours: string;
 }
 
@@ -37,7 +35,7 @@ export default function JobPostingMixin<Base extends Constructor>(Resource: Base
   class JobPostingClass extends IntangibleMixin(Resource) implements JobPosting {
     @property.resource()
     baseSalary!: Schema.MonetaryAmount | Schema.PriceSpecification;
-    @property.literal({ type: Number, path: schema.baseSalary })
+    @property.literal({ path: schema.baseSalary, type: Number })
     baseSalaryLiteral!: number;
     @property.literal()
     benefits!: string;
@@ -47,7 +45,7 @@ export default function JobPostingMixin<Base extends Constructor>(Resource: Base
     employmentType!: string;
     @property.resource()
     estimatedSalary!: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution;
-    @property.literal({ type: Number, path: schema.estimatedSalary })
+    @property.literal({ path: schema.estimatedSalary, type: Number })
     estimatedSalaryLiteral!: number;
     @property.literal()
     experienceRequirements!: string;
@@ -57,10 +55,8 @@ export default function JobPostingMixin<Base extends Constructor>(Resource: Base
     incentiveCompensation!: string;
     @property.literal()
     incentives!: string;
-    @property()
-    industry!: rdf.Term;
-    @property.literal({ path: schema.industry })
-    industryLiteral!: string;
+    @property.literal()
+    industry!: string;
     @property.literal()
     jobBenefits!: string;
     @property.resource()
@@ -71,16 +67,14 @@ export default function JobPostingMixin<Base extends Constructor>(Resource: Base
     responsibilities!: string;
     @property.literal()
     salaryCurrency!: string;
-    @property()
-    skills!: rdf.Term;
-    @property.literal({ path: schema.skills })
-    skillsLiteral!: string;
+    @property.literal()
+    skills!: string;
     @property.literal()
     specialCommitments!: string;
     @property.literal()
     title!: string;
     @property.literal()
-    validThrough!: Date | Date;
+    validThrough!: Date;
     @property.literal()
     workHours!: string;
   }

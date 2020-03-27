@@ -14,10 +14,10 @@ export interface Organization extends Schema.Thing, RdfResource {
   areaServedLiteral: string;
   award: string;
   awards: string;
-  brand: Schema.Brand | Organization;
+  brand: Schema.Brand | Schema.Organization;
   contactPoint: Schema.ContactPoint;
   contactPoints: Schema.ContactPoint;
-  department: Organization;
+  department: Schema.Organization;
   dissolutionDate: Date;
   duns: string;
   email: string;
@@ -30,7 +30,7 @@ export interface Organization extends Schema.Thing, RdfResource {
   founders: Schema.Person;
   foundingDate: Date;
   foundingLocation: Schema.Place;
-  funder: Organization | Schema.Person;
+  funder: Schema.Organization | Schema.Person;
   globalLocationNumber: string;
   hasOfferCatalog: Schema.OfferCatalog;
   hasPOS: Schema.Place;
@@ -42,21 +42,21 @@ export interface Organization extends Schema.Thing, RdfResource {
   locationLiteral: string;
   logo: Schema.ImageObject;
   makesOffer: Schema.Offer;
-  member: Organization | Schema.Person;
-  memberOf: Organization | Schema.ProgramMembership;
-  members: Organization | Schema.Person;
+  member: Schema.Organization | Schema.Person;
+  memberOf: Schema.Organization | Schema.ProgramMembership;
+  members: Schema.Organization | Schema.Person;
   naics: string;
   numberOfEmployees: Schema.QuantitativeValue;
   owns: Schema.OwnershipInfo | Schema.Product;
-  parentOrganization: Organization;
+  parentOrganization: Schema.Organization;
   publishingPrinciples: Schema.CreativeWork;
   review: Schema.Review;
   reviews: Schema.Review;
   seeks: Schema.Demand;
   serviceArea: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
   slogan: string;
-  sponsor: Organization | Schema.Person;
-  subOrganization: Organization;
+  sponsor: Schema.Organization | Schema.Person;
+  subOrganization: Schema.Organization;
   taxID: string;
   telephone: string;
   vatID: string;
@@ -82,13 +82,13 @@ export default function OrganizationMixin<Base extends Constructor>(Resource: Ba
     @property.literal()
     awards!: string;
     @property.resource()
-    brand!: Schema.Brand | Organization;
+    brand!: Schema.Brand | Schema.Organization;
     @property.resource()
     contactPoint!: Schema.ContactPoint;
     @property.resource()
     contactPoints!: Schema.ContactPoint;
     @property.resource()
-    department!: Organization;
+    department!: Schema.Organization;
     @property.literal()
     dissolutionDate!: Date;
     @property.literal()
@@ -114,7 +114,7 @@ export default function OrganizationMixin<Base extends Constructor>(Resource: Ba
     @property.resource()
     foundingLocation!: Schema.Place;
     @property.resource()
-    funder!: Organization | Schema.Person;
+    funder!: Schema.Organization | Schema.Person;
     @property.literal()
     globalLocationNumber!: string;
     @property.resource()
@@ -138,11 +138,11 @@ export default function OrganizationMixin<Base extends Constructor>(Resource: Ba
     @property.resource()
     makesOffer!: Schema.Offer;
     @property.resource()
-    member!: Organization | Schema.Person;
+    member!: Schema.Organization | Schema.Person;
     @property.resource()
-    memberOf!: Organization | Schema.ProgramMembership;
+    memberOf!: Schema.Organization | Schema.ProgramMembership;
     @property.resource()
-    members!: Organization | Schema.Person;
+    members!: Schema.Organization | Schema.Person;
     @property.literal()
     naics!: string;
     @property.resource()
@@ -150,7 +150,7 @@ export default function OrganizationMixin<Base extends Constructor>(Resource: Ba
     @property.resource()
     owns!: Schema.OwnershipInfo | Schema.Product;
     @property.resource()
-    parentOrganization!: Organization;
+    parentOrganization!: Schema.Organization;
     @property.resource()
     publishingPrinciples!: Schema.CreativeWork;
     @property.resource()
@@ -164,9 +164,9 @@ export default function OrganizationMixin<Base extends Constructor>(Resource: Ba
     @property.literal()
     slogan!: string;
     @property.resource()
-    sponsor!: Organization | Schema.Person;
+    sponsor!: Schema.Organization | Schema.Person;
     @property.resource()
-    subOrganization!: Organization;
+    subOrganization!: Schema.Organization;
     @property.literal()
     taxID!: string;
     @property.literal()

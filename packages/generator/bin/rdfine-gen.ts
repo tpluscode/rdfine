@@ -3,7 +3,7 @@
 import program from 'commander'
 import formats from '@rdfjs/formats-common'
 import pkgUp from 'pkg-up'
-import { generate } from '../lib/generator'
+import { generate } from '../lib'
 import path from 'path'
 import debug from 'debug'
 
@@ -61,10 +61,7 @@ program
 
     options.outDir = path.resolve(process.cwd(), options.outDir)
 
-    const project = await generate(options, log)
-
-    log('Writing source files')
-    await project.save()
+    await generate(options, log)
   })
 
 program.parseAsync(process.argv).catch((e) => {

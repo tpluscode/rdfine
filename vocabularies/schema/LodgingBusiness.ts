@@ -10,8 +10,8 @@ export interface LodgingBusiness extends Schema.LocalBusiness, RdfResource {
   audience: Schema.Audience;
   availableLanguage: Schema.Language;
   availableLanguageLiteral: string;
-  checkinTime: Date | Date;
-  checkoutTime: Date | Date;
+  checkinTime: Date;
+  checkoutTime: Date;
   numberOfRooms: Schema.QuantitativeValue;
   numberOfRoomsLiteral: number;
   petsAllowed: boolean | string;
@@ -30,12 +30,12 @@ export default function LodgingBusinessMixin<Base extends Constructor>(Resource:
     @property.literal({ path: schema.availableLanguage })
     availableLanguageLiteral!: string;
     @property.literal()
-    checkinTime!: Date | Date;
+    checkinTime!: Date;
     @property.literal()
-    checkoutTime!: Date | Date;
+    checkoutTime!: Date;
     @property.resource()
     numberOfRooms!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.numberOfRooms })
+    @property.literal({ path: schema.numberOfRooms, type: Number })
     numberOfRoomsLiteral!: number;
     @property.literal()
     petsAllowed!: boolean | string;

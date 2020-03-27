@@ -7,8 +7,8 @@ import ReservationMixin from './Reservation';
 
 export interface FlightReservation extends Schema.Reservation, RdfResource {
   boardingGroup: string;
-  passengerPriorityStatus: Schema.QualitativeValue;
-  passengerPriorityStatusLiteral: string;
+  passengerPriorityStatus: string;
+  passengerPriorityStatusTerm: Schema.QualitativeValue;
   passengerSequenceNumber: string;
   securityScreening: string;
 }
@@ -18,10 +18,10 @@ export default function FlightReservationMixin<Base extends Constructor>(Resourc
   class FlightReservationClass extends ReservationMixin(Resource) implements FlightReservation {
     @property.literal()
     boardingGroup!: string;
-    @property.resource()
-    passengerPriorityStatus!: Schema.QualitativeValue;
-    @property.literal({ path: schema.passengerPriorityStatus })
-    passengerPriorityStatusLiteral!: string;
+    @property.literal()
+    passengerPriorityStatus!: string;
+    @property({ path: schema.passengerPriorityStatus })
+    passengerPriorityStatusTerm!: Schema.QualitativeValue;
     @property.literal()
     passengerSequenceNumber!: string;
     @property.literal()

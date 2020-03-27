@@ -1,47 +1,43 @@
 import { ClassDeclaration, DecoratorStructure, InterfaceDeclaration, OptionalKind } from 'ts-morph'
-import { EntityProperty, RangeMapper } from './index'
-import { fromEntityProperty, JavascriptProperty } from './JsProperties'
+import { JavascriptProperty } from './JsProperties'
 import { Context } from '../index'
-import nameOf from '../util/nameOf'
+import { TypeMeta } from '../types'
 
 interface PropertyWriterInit {
   interfaceDeclaration: InterfaceDeclaration
   classDeclaration: ClassDeclaration
-  rangeMappers: RangeMapper[]
   context: Context
 }
 
 export class PropertyWriter {
   private readonly __interface: InterfaceDeclaration;
   private readonly __class: ClassDeclaration;
-  private readonly __rangeMappers: RangeMapper[]
   private readonly __context: Context
 
-  public constructor({ interfaceDeclaration, classDeclaration, rangeMappers, context }: PropertyWriterInit) {
+  public constructor({ interfaceDeclaration, classDeclaration, context }: PropertyWriterInit) {
     this.__interface = interfaceDeclaration
     this.__class = classDeclaration
-    this.__rangeMappers = rangeMappers
     this.__context = context
   }
 
-  public addProperty(prop: EntityProperty): void {
-    const jsProps = fromEntityProperty(prop)
-
-    ;[...jsProps].forEach(jsProp => this.__addProperty(jsProp))
-  }
-
-  private __addProperty(prop: JavascriptProperty) {
+  public addProperty(prop: JavascriptProperty) {
     let type
     let rdfTerm = false
     const propertyTypes = prop.range
-      .filter(range => !this.__context.excludedTypes.includes(nameOf.term(range.type)))
-      .map(range => this.__rangeMappers.map(toReturnType => toReturnType(range)).filter(Boolean).shift())
-      .filter(Boolean) as string[]
+      .reduce<string[]>((result, range) => {
+      const returnType = this.__getJsReturnType(range)
+      if (returnType && !result.includes(returnType)) {
+        result.push(returnType)
+      }
+
+      return result
+    }, [])
+      .sort((l, r) => l.localeCompare(r))
 
     if (propertyTypes.length === 0) {
       type = 'rdf.Term'
       rdfTerm = true
-      this.__context.log.warn('Could not determine types for property %s', prop.name)
+      this.__context.log.warn('Could not determine types for property %s', prop.id)
     } else {
       if (propertyTypes.includes('rdf.NamedNode')) {
         if (propertyTypes.length > 1) {
@@ -69,48 +65,56 @@ export class PropertyWriter {
     classProp.addDecorator(this.__createDecorator(prop, propertyTypes, rdfTerm))
   }
 
+  private __getJsReturnType(range: TypeMeta): string | null {
+    switch (range.type) {
+      case 'Literal':
+        return range.nativeName
+      case 'Resource':
+      case 'ExternalResource':
+      case 'Enumeration':
+        return range.qualifiedName
+      case 'Term':
+        return `rdf.${range.termType}`
+    }
+
+    return null
+  }
+
   private __createDecorator(prop: JavascriptProperty, propertyTypes: string[], rdfTerm: boolean): OptionalKind<DecoratorStructure> {
-    if (rdfTerm) {
-      return {
-        name: 'property',
-        arguments: [],
-      }
-    }
-
-    if (prop.type === 'resource') {
-      return {
-        name: 'property.resource',
-        arguments: [],
-      }
-    }
-
-    if (prop.type === 'term') {
-      return {
-        name: 'property',
-        arguments: [],
-      }
-    }
-
+    let name: string
     const decoratorOptions: string[] = []
-    const uniqueTypes = [...new Set(propertyTypes)]
-
-    if (uniqueTypes.length === 1) {
-      switch (uniqueTypes.shift()) {
-        case 'boolean':
-          decoratorOptions.push('type: Boolean')
-          break
-        case 'number':
-          decoratorOptions.push('type: Number')
-          break
-      }
-    }
-
-    if (prop.addPath) {
+    if (prop.name !== prop.term) {
       decoratorOptions.push(`path: ${this.__context.prefix}.${prop.term}`)
     }
 
+    switch (prop.type) {
+      case 'literal': {
+        name = 'property.literal'
+
+        const uniqueTypes = [...new Set(propertyTypes)]
+
+        if (uniqueTypes.length === 1) {
+          switch (uniqueTypes.shift()) {
+            case 'boolean':
+              decoratorOptions.push('type: Boolean')
+              break
+            case 'number':
+              decoratorOptions.push('type: Number')
+              break
+          }
+        }
+      }
+        break
+      case 'resource':
+        name = 'property.resource'
+        break
+      case 'term':
+        name = 'property'
+        break
+    }
+
     return {
-      name: 'property.literal',
+      name,
       arguments: Object.keys(decoratorOptions).length ? [`{ ${decoratorOptions.join(', ')} }`] : [],
     }
   }

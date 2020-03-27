@@ -18,8 +18,8 @@ export interface Service extends Schema.Intangible, RdfResource {
   categoryLiteral: string;
   hasOfferCatalog: Schema.OfferCatalog;
   hoursAvailable: Schema.OpeningHoursSpecification;
-  isRelatedTo: Schema.Product | Service;
-  isSimilarTo: Schema.Product | Service;
+  isRelatedTo: Schema.Product | Schema.Service;
+  isSimilarTo: Schema.Product | Schema.Service;
   logo: Schema.ImageObject;
   offers: Schema.Demand | Schema.Offer;
   produces: Schema.Thing;
@@ -61,9 +61,9 @@ export default function ServiceMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     hoursAvailable!: Schema.OpeningHoursSpecification;
     @property.resource()
-    isRelatedTo!: Schema.Product | Service;
+    isRelatedTo!: Schema.Product | Schema.Service;
     @property.resource()
-    isSimilarTo!: Schema.Product | Service;
+    isSimilarTo!: Schema.Product | Schema.Service;
     @property.resource()
     logo!: Schema.ImageObject;
     @property.resource()

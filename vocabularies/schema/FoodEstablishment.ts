@@ -6,8 +6,8 @@ import type * as Schema from '.';
 import LocalBusinessMixin from './LocalBusiness';
 
 export interface FoodEstablishment extends Schema.LocalBusiness, RdfResource {
-  acceptsReservations: rdf.Term;
-  acceptsReservationsLiteral: boolean | string;
+  acceptsReservations: boolean | string;
+  acceptsReservationsTerm: rdf.NamedNode;
   hasMenu: Schema.Menu;
   hasMenuLiteral: string;
   menu: Schema.Menu;
@@ -19,10 +19,10 @@ export interface FoodEstablishment extends Schema.LocalBusiness, RdfResource {
 export default function FoodEstablishmentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class FoodEstablishmentClass extends LocalBusinessMixin(Resource) implements FoodEstablishment {
-    @property()
-    acceptsReservations!: rdf.Term;
-    @property.literal({ path: schema.acceptsReservations })
-    acceptsReservationsLiteral!: boolean | string;
+    @property.literal()
+    acceptsReservations!: boolean | string;
+    @property({ path: schema.acceptsReservations })
+    acceptsReservationsTerm!: rdf.NamedNode;
     @property.resource()
     hasMenu!: Schema.Menu;
     @property.literal({ path: schema.hasMenu })

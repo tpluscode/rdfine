@@ -28,8 +28,6 @@
       "Enumeration",
       "GeospatialGeometry",
       "MedicalBusiness",
-      "PhysicalActivityCategory",
-      "URL",
       "VirtualLocation"
     ]
   },

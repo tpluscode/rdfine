@@ -9,8 +9,8 @@ export interface DatedMoneySpecification extends Schema.StructuredValue, RdfReso
   amount: Schema.MonetaryAmount;
   amountLiteral: number;
   currency: string;
-  endDate: Date | Date;
-  startDate: Date | Date;
+  endDate: Date;
+  startDate: Date;
 }
 
 export default function DatedMoneySpecificationMixin<Base extends Constructor>(Resource: Base) {
@@ -18,14 +18,14 @@ export default function DatedMoneySpecificationMixin<Base extends Constructor>(R
   class DatedMoneySpecificationClass extends StructuredValueMixin(Resource) implements DatedMoneySpecification {
     @property.resource()
     amount!: Schema.MonetaryAmount;
-    @property.literal({ type: Number, path: schema.amount })
+    @property.literal({ path: schema.amount, type: Number })
     amountLiteral!: number;
     @property.literal()
     currency!: string;
     @property.literal()
-    endDate!: Date | Date;
+    endDate!: Date;
     @property.literal()
-    startDate!: Date | Date;
+    startDate!: Date;
   }
   return DatedMoneySpecificationClass
 }

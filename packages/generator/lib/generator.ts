@@ -1,90 +1,13 @@
-import { Debugger } from 'debug'
-import { Stream } from 'rdf-js'
-import rdf from 'rdf-ext'
-import cf from 'clownface'
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import * as ns from '@tpluscode/rdf-ns-builders'
-import { ArrayLiteralExpression, IndentationText, Project, QuoteKind } from 'ts-morph'
+import { ArrayLiteralExpression, Project } from 'ts-morph'
 import { generateNamespace } from './namespace'
-import FileSystem from './util/FileSystem'
-import { isDatatype } from './util/subClasses'
-import { ModuleStrategy } from './classStrategies'
-import { enumerationStrategy } from './classStrategies/enumerationStrategy'
-import { mixinStrategy } from './classStrategies/mixinStrategy'
-import nameOf from './util/nameOf'
-import { defaultMappings } from './datatypes/defaultMappings'
-import { Context, TypeMap } from './index'
+import { Context, GeneratedModule, ModuleStrategy } from './index'
+import { TypeMetaCollection } from './types'
 
-interface GeneratorOptions {
-  stream: Stream
-  namespace: string
-  outDir: string
-  prefix: string
-  types: TypeMap
-  exclude: string[]
-}
+export async function generate(project: Project, types: TypeMetaCollection, strategies: ModuleStrategy[], context: Context) {
+  const { log, prefix } = context
 
-const strategies: ModuleStrategy[] = [
-  enumerationStrategy,
-  mixinStrategy,
-]
-
-function assertOptions(options: Record<string, any>) {
-  ['stream', 'outDir', 'prefix']
-    .forEach(arg => {
-      if (!options[arg]) {
-        throw new Error(`Missing ${arg} parameter`)
-      }
-    })
-}
-
-export async function generate(options: GeneratorOptions, log: Debugger) {
-  assertOptions(options)
-  const { namespace, stream, outDir, prefix } = options
-  const typeMappings: TypeMap = {
-    ...defaultMappings,
-    ...options.types,
-  }
-  const project = new Project({
-    fileSystem: new FileSystem(outDir),
-    manipulationSettings: {
-      useTrailingCommas: true,
-      indentationText: IndentationText.TwoSpaces,
-      quoteKind: QuoteKind.Single,
-    },
-  })
-
-  const dataset = await rdf.dataset().import(stream)
-  const vocabulary = cf({ dataset })
-  const classes = vocabulary
-    .has(ns.rdf.type, ns.rdfs.Class)
-    .filter(clas => !isDatatype(clas, typeMappings))
-
-  if (namespace) {
-    prefixes[prefix] = namespace
-  }
-
-  if (!prefixes[prefix]) {
-    throw new Error(`The prefix ${prefix} is not known to @zazuko/rdf-vocabularies. It has to provided as parameter`)
-  }
-
-  const context: Context = {
-    vocabulary,
-    prefix,
-    defaultExport: prefix.replace(/^\w/, first => first.toUpperCase()),
-    typeMappings,
-    excludedTypes: options.exclude,
-    log: {
-      debug: log,
-      error: log.extend('error'),
-      warn: log.extend('warn'),
-    },
-  }
-
-  context.log.error.enabled = true
-  context.log.warn.enabled = true
-
-  log('Generating types for vocabulary <%s>', namespace)
+  log.debug('Generating vocabulary <%s>', prefixes[prefix])
   generateNamespace({ project }, context)
   const indexModule = project.createSourceFile('index.ts', {}, { overwrite: true })
 
@@ -97,37 +20,55 @@ export async function generate(options: GeneratorOptions, log: Debugger) {
     isExportEquals: false,
   }).getExpression() as ArrayLiteralExpression
 
-  classes
-    .toArray()
-    .filter(clas => !options.exclude.includes(nameOf.term(clas)))
-    .sort((left, right) => {
-      return left.value.localeCompare(right.value)
+  const writers = strategies.reduce((moduleWriters, strategy) => {
+    return strategy.findTermsToGenerate(types, context)
+      .reduce((moduleWriters, writer) => {
+        if (moduleWriters.has(writer.node.value)) {
+          log.debug(`Type ${writer.node.value} has already been selected by another strategy`)
+        }
+
+        moduleWriters.set(writer.node.value, writer)
+        return moduleWriters
+      }, moduleWriters)
+  }, new Map<string, GeneratedModule>())
+
+  await [...writers.values()]
+    .filter(({ node }) => {
+      if (!types.get(node)) {
+        log.warn(`Skipping excluded type ${node.value}`)
+        return false
+      }
+
+      return true
     })
-    .forEach(clas => {
-      const strategy = strategies.find(cs => cs.matches(clas))
-      if (!strategy) {
-        context.log.warn('Skipping class <%s>', clas.value)
-        return
-      }
+    .sort((left, right) => left.node.value.localeCompare(right.node.value))
+    .reduce((previous, moduleWriter) => {
+      return previous.then(async () => {
+        try {
+          const moduleSpecifier = moduleWriter.type.module
+          const sourceFile = project.createSourceFile(`${moduleWriter.type.module}.ts`, {}, { overwrite: true })
 
-      context.log.debug('Generating class <%s>', clas.value)
+          const result = moduleWriter.writeModule(sourceFile, types, context)
+          if (result.mainModuleExport) {
+            const namedExports = [result.mainModuleExport]
+            indexModule.addExportDeclaration({
+              namedExports,
+              moduleSpecifier,
+            })
+          }
 
-      const result = strategy.generate({ clas, project, exclude: options.exclude }, context)
-      if (result.mainModuleExport) {
-        indexModule.addExportDeclaration({
-          namedExports: [result.mainModuleExport],
-          moduleSpecifier: result.moduleSpecifier,
-        })
-      }
+          if (moduleWriter.type.type === 'Resource') {
+            indexModule.addImportDeclaration({
+              defaultImport: moduleWriter.type.mixinName,
+              moduleSpecifier,
+            })
+            defaultExport.addElement(`${moduleWriter.type.mixinName} as Mixin`, { useNewLines: true })
+          }
+        } catch (e) {
+          context.log.error('Failed to generate type %s\n%s', moduleWriter.node.value, e.message)
+        }
 
-      if (result.mainModuleMixinExport) {
-        indexModule.addImportDeclaration({
-          defaultImport: result.mainModuleMixinExport,
-          moduleSpecifier: result.moduleSpecifier,
-        })
-        defaultExport.addElement(`${result.mainModuleMixinExport} as Mixin`, { useNewLines: true })
-      }
-    })
-
-  return project
+        await project.save()
+      })
+    }, Promise.resolve())
 }

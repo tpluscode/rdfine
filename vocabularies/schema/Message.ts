@@ -8,7 +8,7 @@ import CreativeWorkMixin from './CreativeWork';
 export interface Message extends Schema.CreativeWork, RdfResource {
   bccRecipient: Schema.ContactPoint | Schema.Organization | Schema.Person;
   ccRecipient: Schema.ContactPoint | Schema.Organization | Schema.Person;
-  dateRead: Date | Date;
+  dateRead: Date;
   dateReceived: Date;
   dateSent: Date;
   messageAttachment: Schema.CreativeWork;
@@ -25,7 +25,7 @@ export default function MessageMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     ccRecipient!: Schema.ContactPoint | Schema.Organization | Schema.Person;
     @property.literal()
-    dateRead!: Date | Date;
+    dateRead!: Date;
     @property.literal()
     dateReceived!: Date;
     @property.literal()

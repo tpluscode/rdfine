@@ -6,7 +6,7 @@ import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
 export interface MenuItem extends Schema.Intangible, RdfResource {
-  menuAddOn: MenuItem | Schema.MenuSection;
+  menuAddOn: Schema.MenuItem | Schema.MenuSection;
   nutrition: Schema.NutritionInformation;
   offers: Schema.Demand | Schema.Offer;
   suitableForDiet: Schema.RestrictedDiet;
@@ -16,7 +16,7 @@ export default function MenuItemMixin<Base extends Constructor>(Resource: Base) 
   @namespace(schema)
   class MenuItemClass extends IntangibleMixin(Resource) implements MenuItem {
     @property.resource()
-    menuAddOn!: MenuItem | Schema.MenuSection;
+    menuAddOn!: Schema.MenuItem | Schema.MenuSection;
     @property.resource()
     nutrition!: Schema.NutritionInformation;
     @property.resource()

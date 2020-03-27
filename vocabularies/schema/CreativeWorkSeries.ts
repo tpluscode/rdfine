@@ -7,20 +7,20 @@ import CreativeWorkMixin from './CreativeWork';
 import SeriesMixin from './Series';
 
 export interface CreativeWorkSeries extends Schema.CreativeWork, Schema.Series, RdfResource {
-  endDate: Date | Date;
+  endDate: Date;
   issn: string;
-  startDate: Date | Date;
+  startDate: Date;
 }
 
 export default function CreativeWorkSeriesMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CreativeWorkSeriesClass extends SeriesMixin(CreativeWorkMixin(Resource)) implements CreativeWorkSeries {
     @property.literal()
-    endDate!: Date | Date;
+    endDate!: Date;
     @property.literal()
     issn!: string;
     @property.literal()
-    startDate!: Date | Date;
+    startDate!: Date;
   }
   return CreativeWorkSeriesClass
 }

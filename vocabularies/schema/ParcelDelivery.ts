@@ -9,15 +9,15 @@ export interface ParcelDelivery extends Schema.Intangible, RdfResource {
   carrier: Schema.Organization;
   deliveryAddress: Schema.PostalAddress;
   deliveryStatus: Schema.DeliveryEvent;
-  expectedArrivalFrom: Date | Date;
-  expectedArrivalUntil: Date | Date;
+  expectedArrivalFrom: Date;
+  expectedArrivalUntil: Date;
   hasDeliveryMethod: Schema.DeliveryMethod;
   itemShipped: Schema.Product;
   originAddress: Schema.PostalAddress;
   partOfOrder: Schema.Order;
   provider: Schema.Organization | Schema.Person;
   trackingNumber: string;
-  trackingUrl: rdf.Term;
+  trackingUrl: rdf.NamedNode;
 }
 
 export default function ParcelDeliveryMixin<Base extends Constructor>(Resource: Base) {
@@ -30,9 +30,9 @@ export default function ParcelDeliveryMixin<Base extends Constructor>(Resource: 
     @property.resource()
     deliveryStatus!: Schema.DeliveryEvent;
     @property.literal()
-    expectedArrivalFrom!: Date | Date;
+    expectedArrivalFrom!: Date;
     @property.literal()
-    expectedArrivalUntil!: Date | Date;
+    expectedArrivalUntil!: Date;
     @property()
     hasDeliveryMethod!: Schema.DeliveryMethod;
     @property.resource()
@@ -46,7 +46,7 @@ export default function ParcelDeliveryMixin<Base extends Constructor>(Resource: 
     @property.literal()
     trackingNumber!: string;
     @property()
-    trackingUrl!: rdf.Term;
+    trackingUrl!: rdf.NamedNode;
   }
   return ParcelDeliveryClass
 }

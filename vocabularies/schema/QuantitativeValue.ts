@@ -9,12 +9,12 @@ export interface QuantitativeValue extends Schema.StructuredValue, RdfResource {
   additionalProperty: Schema.PropertyValue;
   maxValue: number;
   minValue: number;
-  unitCode: rdf.Term;
-  unitCodeLiteral: string;
+  unitCode: string;
+  unitCodeTerm: rdf.NamedNode;
   unitText: string;
   value: Schema.StructuredValue;
   valueLiteral: boolean | number | string;
-  valueReference: Schema.PropertyValue | Schema.QualitativeValue | QuantitativeValue | Schema.StructuredValue;
+  valueReference: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue;
 }
 
 export default function QuantitativeValueMixin<Base extends Constructor>(Resource: Base) {
@@ -26,10 +26,10 @@ export default function QuantitativeValueMixin<Base extends Constructor>(Resourc
     maxValue!: number;
     @property.literal({ type: Number })
     minValue!: number;
-    @property()
-    unitCode!: rdf.Term;
-    @property.literal({ path: schema.unitCode })
-    unitCodeLiteral!: string;
+    @property.literal()
+    unitCode!: string;
+    @property({ path: schema.unitCode })
+    unitCodeTerm!: rdf.NamedNode;
     @property.literal()
     unitText!: string;
     @property.resource()
@@ -37,7 +37,7 @@ export default function QuantitativeValueMixin<Base extends Constructor>(Resourc
     @property.literal({ path: schema.value })
     valueLiteral!: boolean | number | string;
     @property.resource()
-    valueReference!: Schema.PropertyValue | Schema.QualitativeValue | QuantitativeValue | Schema.StructuredValue;
+    valueReference!: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue;
   }
   return QuantitativeValueClass
 }

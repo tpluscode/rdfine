@@ -16,17 +16,17 @@ export interface Order extends Schema.Intangible, RdfResource {
   discountCurrency: string;
   isGift: boolean;
   merchant: Schema.Organization | Schema.Person;
-  orderDate: Date | Date;
+  orderDate: Date;
   orderDelivery: Schema.ParcelDelivery;
   orderedItem: Schema.OrderItem | Schema.Product | Schema.Service;
   orderNumber: string;
   orderStatus: Schema.OrderStatus;
   partOfInvoice: Schema.Invoice;
   paymentDue: Date;
-  paymentDueDate: Date | Date;
+  paymentDueDate: Date;
   paymentMethod: Schema.PaymentMethod;
   paymentMethodId: string;
-  paymentUrl: rdf.Term;
+  paymentUrl: rdf.NamedNode;
   seller: Schema.Organization | Schema.Person;
 }
 
@@ -54,7 +54,7 @@ export default function OrderMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     merchant!: Schema.Organization | Schema.Person;
     @property.literal()
-    orderDate!: Date | Date;
+    orderDate!: Date;
     @property.resource()
     orderDelivery!: Schema.ParcelDelivery;
     @property.resource()
@@ -68,13 +68,13 @@ export default function OrderMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     paymentDue!: Date;
     @property.literal()
-    paymentDueDate!: Date | Date;
+    paymentDueDate!: Date;
     @property()
     paymentMethod!: Schema.PaymentMethod;
     @property.literal()
     paymentMethodId!: string;
     @property()
-    paymentUrl!: rdf.Term;
+    paymentUrl!: rdf.NamedNode;
     @property.resource()
     seller!: Schema.Organization | Schema.Person;
   }

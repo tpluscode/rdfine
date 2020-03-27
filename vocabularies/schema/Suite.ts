@@ -6,7 +6,7 @@ import type * as Schema from '.';
 import AccommodationMixin from './Accommodation';
 
 export interface Suite extends Schema.Accommodation, RdfResource {
-  bed: Schema.BedDetails | Schema.BedType;
+  bed: Schema.BedDetails;
   bedLiteral: string;
   numberOfRooms: Schema.QuantitativeValue;
   numberOfRoomsLiteral: number;
@@ -17,12 +17,12 @@ export default function SuiteMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SuiteClass extends AccommodationMixin(Resource) implements Suite {
     @property.resource()
-    bed!: Schema.BedDetails | Schema.BedType;
+    bed!: Schema.BedDetails;
     @property.literal({ path: schema.bed })
     bedLiteral!: string;
     @property.resource()
     numberOfRooms!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.numberOfRooms })
+    @property.literal({ path: schema.numberOfRooms, type: Number })
     numberOfRoomsLiteral!: number;
     @property.resource()
     occupancy!: Schema.QuantitativeValue;

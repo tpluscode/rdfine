@@ -1,22 +1,6 @@
 import { Clownface, SingleContextClownface } from 'clownface'
 import { Context } from '../index'
 import { owl, rdfs, schema } from '@tpluscode/rdf-ns-builders'
-import nameOf from '../util/nameOf'
-import { isDatatype } from '../util/subClasses'
-
-export interface EntityRange {
-  type: SingleContextClownface
-  isLiteral: boolean
-}
-
-export interface EntityProperty {
-  name: string
-  range: EntityRange[]
-}
-
-export interface RangeMapper {
-  (range: EntityRange): string | null
-}
 
 function findDirectRanges(prop: SingleContextClownface): SingleContextClownface[] {
   return prop.out([schema.rangeIncludes, rdfs.range])
@@ -57,7 +41,7 @@ function findUnionedDomains(clas: SingleContextClownface, vocabulary: Clownface)
     .map(pair => pair.prop)
 }
 
-export function findProperties({ clas }: {clas: SingleContextClownface}, context: Context): EntityProperty[] {
+export function findProperties(clas: SingleContextClownface, context: Context) {
   const directDomains = findDirectDomain(clas, context.vocabulary)
   const unionDomains = findUnionedDomains(clas, context.vocabulary)
 
@@ -67,14 +51,11 @@ export function findProperties({ clas }: {clas: SingleContextClownface}, context
       const owlUnionRanges = findUnionedRanges(prop)
 
       return {
-        name: nameOf.term(prop),
-        range: flatUnique(directRanges, owlUnionRanges).map(range => ({
-          type: range,
-          isLiteral: isDatatype(range, context.typeMappings),
-        })),
+        term: prop,
+        range: flatUnique(directRanges, owlUnionRanges),
       }
     })
     .sort((left, right) => {
-      return left.name.localeCompare(right.name)
+      return left.term.value.localeCompare(right.term.value)
     })
 }

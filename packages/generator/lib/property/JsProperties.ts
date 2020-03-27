@@ -1,66 +1,86 @@
-import { EntityProperty, EntityRange } from './index'
-import { isEnumerationType } from '../util/subClasses'
+import { SingleContextClownface } from 'clownface'
+import { TypeMeta, TypeMetaCollection } from '../types'
+import { Context } from '../index'
+import { nameOf } from '../util/nameOf'
 
 export interface JavascriptProperty {
+  id: string
   name: string
-  range: EntityRange[]
-  addPath?: boolean
+  range: TypeMeta[]
   term: string
   type: 'resource' | 'term' | 'literal'
 }
 
-interface RangesSplit {
-  objectProperties: EntityRange[]
-  datatypeProperties: EntityRange[]
-}
+function groupRangeTypes(range: SingleContextClownface[], types: TypeMetaCollection, { log }: Context) {
+  const grouped = {
+    resource: [] as TypeMeta[],
+    literal: [] as TypeMeta[],
+    term: [] as TypeMeta[],
+  }
 
-function splitRanges(ranges: EntityRange[]): RangesSplit {
-  return ranges.reduce<RangesSplit>((split, range) => {
-    if (range.isLiteral) {
-      split.datatypeProperties.push(range)
-    } else {
-      split.objectProperties.push(range)
+  for (const rangeType of range) {
+    const meta = types.get(rangeType)
+    if (!meta) {
+      log.warn(`Skipping unrecognized property type ${rangeType.value}`)
+      continue
     }
 
-    return split
-  }, {
-    objectProperties: [],
-    datatypeProperties: [],
-  })
+    switch (meta.type) {
+      case 'Literal':
+        grouped.literal.push(meta)
+        continue
+      case 'Resource':
+      case 'ExternalResource':
+        grouped.resource.push(meta)
+        continue
+      default:
+        grouped.term.push(meta)
+    }
+  }
+
+  return grouped
 }
 
-export function * fromEntityProperty(prop: EntityProperty): Iterable<JavascriptProperty> {
-  const ranges = splitRanges(prop.range)
+export function * toJavascriptProperties(prop: SingleContextClownface, range: SingleContextClownface[], types: TypeMetaCollection, context: Context): Iterable<JavascriptProperty> {
+  const ranges = groupRangeTypes(range, types, context)
+  const baseProperty: Omit<JavascriptProperty, 'type' | 'range'> = {
+    id: prop.value,
+    name: nameOf(prop),
+    term: nameOf(prop),
+  }
+  let resourceProperty: JavascriptProperty | null = null
+  let literalProperty: JavascriptProperty | null = null
+  let termProperty: JavascriptProperty | null = null
 
-  if (ranges.datatypeProperties.length && ranges.objectProperties.length) {
-    yield {
-      name: prop.name,
-      term: prop.name,
-      range: ranges.objectProperties,
+  if (ranges.resource.length) {
+    resourceProperty = {
+      ...baseProperty,
+      range: ranges.resource,
       type: 'resource',
     }
+  }
 
-    yield {
-      name: prop.name + 'Literal',
-      term: prop.name,
-      range: ranges.datatypeProperties,
-      addPath: true,
+  if (ranges.literal.length) {
+    const name = ranges.resource.length ? `${baseProperty.name}Literal` : baseProperty.name
+    literalProperty = {
+      ...baseProperty,
+      name,
+      range: ranges.literal,
       type: 'literal',
     }
-
-    return
   }
 
-  let type: JavascriptProperty['type'] = 'literal'
-  if (ranges.objectProperties.length) {
-    const isEnumeration = ranges.objectProperties.every(range => isEnumerationType(range.type))
-    type = isEnumeration ? 'term' : 'resource'
+  if ((ranges.term.length && !ranges.resource.length) || (!ranges.literal.length && !ranges.resource.length)) {
+    const name = ranges.literal.length ? `${baseProperty.name}Term` : baseProperty.name
+    termProperty = {
+      ...baseProperty,
+      name,
+      range: ranges.term,
+      type: 'term',
+    }
   }
 
-  yield {
-    name: prop.name,
-    term: prop.name,
-    range: prop.range,
-    type,
-  }
+  if (resourceProperty) yield resourceProperty
+  if (literalProperty) yield literalProperty
+  if (termProperty) yield termProperty
 }

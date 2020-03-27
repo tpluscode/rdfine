@@ -17,7 +17,7 @@ export default function TaxiReservationMixin<Base extends Constructor>(Resource:
   class TaxiReservationClass extends ReservationMixin(Resource) implements TaxiReservation {
     @property.resource()
     partySize!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.partySize })
+    @property.literal({ path: schema.partySize, type: Number })
     partySizeLiteral!: number;
     @property.resource()
     pickupLocation!: Schema.Place;

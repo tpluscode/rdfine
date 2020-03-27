@@ -7,10 +7,10 @@ import UserInteractionMixin from './UserInteraction';
 
 export interface UserComments extends Schema.UserInteraction, RdfResource {
   commentText: string;
-  commentTime: Date | Date;
+  commentTime: Date;
   creator: Schema.Organization | Schema.Person;
   discusses: Schema.CreativeWork;
-  replyToUrl: rdf.Term;
+  replyToUrl: rdf.NamedNode;
 }
 
 export default function UserCommentsMixin<Base extends Constructor>(Resource: Base) {
@@ -19,13 +19,13 @@ export default function UserCommentsMixin<Base extends Constructor>(Resource: Ba
     @property.literal()
     commentText!: string;
     @property.literal()
-    commentTime!: Date | Date;
+    commentTime!: Date;
     @property.resource()
     creator!: Schema.Organization | Schema.Person;
     @property.resource()
     discusses!: Schema.CreativeWork;
     @property()
-    replyToUrl!: rdf.Term;
+    replyToUrl!: rdf.NamedNode;
   }
   return UserCommentsClass
 }

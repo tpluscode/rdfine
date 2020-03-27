@@ -9,8 +9,8 @@ export interface OpeningHoursSpecification extends Schema.StructuredValue, RdfRe
   closes: Date;
   dayOfWeek: Schema.DayOfWeek;
   opens: Date;
-  validFrom: Date | Date;
-  validThrough: Date | Date;
+  validFrom: Date;
+  validThrough: Date;
 }
 
 export default function OpeningHoursSpecificationMixin<Base extends Constructor>(Resource: Base) {
@@ -23,9 +23,9 @@ export default function OpeningHoursSpecificationMixin<Base extends Constructor>
     @property.literal()
     opens!: Date;
     @property.literal()
-    validFrom!: Date | Date;
+    validFrom!: Date;
     @property.literal()
-    validThrough!: Date | Date;
+    validThrough!: Date;
   }
   return OpeningHoursSpecificationClass
 }

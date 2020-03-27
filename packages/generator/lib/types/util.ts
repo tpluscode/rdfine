@@ -1,0 +1,38 @@
+import { SingleContextClownface } from 'clownface'
+import { TypeMap } from '../types'
+import { rdf, rdfs, schema } from '@tpluscode/rdf-ns-builders'
+
+export function isDatatype(term: SingleContextClownface, typeMappings: TypeMap): boolean {
+  if (term.has(rdf.type, rdfs.Datatype).values.length) {
+    return true
+  }
+
+  const result = term.has(rdf.type, [schema.DataType, rdfs.Datatype]).values.length > 0
+  if (result) {
+    return true
+  }
+
+  const superClasses = term.out(rdfs.subClassOf).toArray()
+  for (const superClass of superClasses) {
+    if (isDatatype(superClass, typeMappings)) {
+      return true
+    }
+  }
+
+  return false
+}
+
+export function isEnumerationType(term: SingleContextClownface) {
+  if (term.has(rdfs.subClassOf, schema.Enumeration).values.length > 0) {
+    return true
+  }
+
+  const superClasses = term.out(rdfs.subClassOf).toArray()
+  for (const superClass of superClasses) {
+    if (isEnumerationType(superClass)) {
+      return true
+    }
+  }
+
+  return false
+}

@@ -9,8 +9,8 @@ export interface MonetaryAmount extends Schema.StructuredValue, RdfResource {
   currency: string;
   maxValue: number;
   minValue: number;
-  validFrom: Date | Date;
-  validThrough: Date | Date;
+  validFrom: Date;
+  validThrough: Date;
   value: Schema.StructuredValue;
   valueLiteral: boolean | number | string;
 }
@@ -25,9 +25,9 @@ export default function MonetaryAmountMixin<Base extends Constructor>(Resource: 
     @property.literal({ type: Number })
     minValue!: number;
     @property.literal()
-    validFrom!: Date | Date;
+    validFrom!: Date;
     @property.literal()
-    validThrough!: Date | Date;
+    validThrough!: Date;
     @property.resource()
     value!: Schema.StructuredValue;
     @property.literal({ path: schema.value })

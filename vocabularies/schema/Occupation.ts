@@ -11,8 +11,7 @@ export interface Occupation extends Schema.Intangible, RdfResource {
   experienceRequirements: string;
   occupationLocation: Schema.AdministrativeArea;
   responsibilities: string;
-  skills: rdf.Term;
-  skillsLiteral: string;
+  skills: string;
 }
 
 export default function OccupationMixin<Base extends Constructor>(Resource: Base) {
@@ -20,7 +19,7 @@ export default function OccupationMixin<Base extends Constructor>(Resource: Base
   class OccupationClass extends IntangibleMixin(Resource) implements Occupation {
     @property.resource()
     estimatedSalary!: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution;
-    @property.literal({ type: Number, path: schema.estimatedSalary })
+    @property.literal({ path: schema.estimatedSalary, type: Number })
     estimatedSalaryLiteral!: number;
     @property.literal()
     experienceRequirements!: string;
@@ -28,10 +27,8 @@ export default function OccupationMixin<Base extends Constructor>(Resource: Base
     occupationLocation!: Schema.AdministrativeArea;
     @property.literal()
     responsibilities!: string;
-    @property()
-    skills!: rdf.Term;
-    @property.literal({ path: schema.skills })
-    skillsLiteral!: string;
+    @property.literal()
+    skills!: string;
   }
   return OccupationClass
 }

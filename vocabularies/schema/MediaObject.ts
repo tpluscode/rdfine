@@ -9,20 +9,20 @@ export interface MediaObject extends Schema.CreativeWork, RdfResource {
   associatedArticle: Schema.NewsArticle;
   bitrate: string;
   contentSize: string;
-  contentUrl: rdf.Term;
+  contentUrl: rdf.NamedNode;
   duration: Schema.Duration;
-  embedUrl: rdf.Term;
+  embedUrl: rdf.NamedNode;
   encodesCreativeWork: Schema.CreativeWork;
-  encodingFormat: rdf.Term;
-  encodingFormatLiteral: string;
-  endTime: Date | Date;
+  encodingFormat: string;
+  encodingFormatTerm: rdf.NamedNode;
+  endTime: Date;
   height: Schema.Distance | Schema.QuantitativeValue;
   playerType: string;
   productionCompany: Schema.Organization;
   regionsAllowed: Schema.Place;
   requiresSubscription: Schema.MediaSubscription;
   requiresSubscriptionLiteral: boolean;
-  startTime: Date | Date;
+  startTime: Date;
   uploadDate: Date;
   width: Schema.Distance | Schema.QuantitativeValue;
 }
@@ -37,19 +37,19 @@ export default function MediaObjectMixin<Base extends Constructor>(Resource: Bas
     @property.literal()
     contentSize!: string;
     @property()
-    contentUrl!: rdf.Term;
+    contentUrl!: rdf.NamedNode;
     @property.resource()
     duration!: Schema.Duration;
     @property()
-    embedUrl!: rdf.Term;
+    embedUrl!: rdf.NamedNode;
     @property.resource()
     encodesCreativeWork!: Schema.CreativeWork;
-    @property()
-    encodingFormat!: rdf.Term;
-    @property.literal({ path: schema.encodingFormat })
-    encodingFormatLiteral!: string;
     @property.literal()
-    endTime!: Date | Date;
+    encodingFormat!: string;
+    @property({ path: schema.encodingFormat })
+    encodingFormatTerm!: rdf.NamedNode;
+    @property.literal()
+    endTime!: Date;
     @property.resource()
     height!: Schema.Distance | Schema.QuantitativeValue;
     @property.literal()
@@ -60,10 +60,10 @@ export default function MediaObjectMixin<Base extends Constructor>(Resource: Bas
     regionsAllowed!: Schema.Place;
     @property.resource()
     requiresSubscription!: Schema.MediaSubscription;
-    @property.literal({ type: Boolean, path: schema.requiresSubscription })
+    @property.literal({ path: schema.requiresSubscription, type: Boolean })
     requiresSubscriptionLiteral!: boolean;
     @property.literal()
-    startTime!: Date | Date;
+    startTime!: Date;
     @property.literal()
     uploadDate!: Date;
     @property.resource()

@@ -14,7 +14,7 @@ export interface ServiceChannel extends Schema.Intangible, RdfResource {
   servicePhone: Schema.ContactPoint;
   servicePostalAddress: Schema.PostalAddress;
   serviceSmsNumber: Schema.ContactPoint;
-  serviceUrl: rdf.Term;
+  serviceUrl: rdf.NamedNode;
 }
 
 export default function ServiceChannelMixin<Base extends Constructor>(Resource: Base) {
@@ -37,7 +37,7 @@ export default function ServiceChannelMixin<Base extends Constructor>(Resource: 
     @property.resource()
     serviceSmsNumber!: Schema.ContactPoint;
     @property()
-    serviceUrl!: rdf.Term;
+    serviceUrl!: rdf.NamedNode;
   }
   return ServiceChannelClass
 }

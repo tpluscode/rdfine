@@ -6,23 +6,23 @@ import type * as Schema from '.';
 import ReservationMixin from './Reservation';
 
 export interface FoodEstablishmentReservation extends Schema.Reservation, RdfResource {
-  endTime: Date | Date;
+  endTime: Date;
   partySize: Schema.QuantitativeValue;
   partySizeLiteral: number;
-  startTime: Date | Date;
+  startTime: Date;
 }
 
 export default function FoodEstablishmentReservationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class FoodEstablishmentReservationClass extends ReservationMixin(Resource) implements FoodEstablishmentReservation {
     @property.literal()
-    endTime!: Date | Date;
+    endTime!: Date;
     @property.resource()
     partySize!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.partySize })
+    @property.literal({ path: schema.partySize, type: Number })
     partySizeLiteral!: number;
     @property.literal()
-    startTime!: Date | Date;
+    startTime!: Date;
   }
   return FoodEstablishmentReservationClass
 }

@@ -15,7 +15,7 @@ export default function InvestmentOrDepositMixin<Base extends Constructor>(Resou
   class InvestmentOrDepositClass extends FinancialProductMixin(Resource) implements InvestmentOrDeposit {
     @property.resource()
     amount!: Schema.MonetaryAmount;
-    @property.literal({ type: Number, path: schema.amount })
+    @property.literal({ path: schema.amount, type: Number })
     amountLiteral!: number;
   }
   return InvestmentOrDepositClass

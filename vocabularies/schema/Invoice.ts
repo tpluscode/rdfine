@@ -15,11 +15,11 @@ export interface Invoice extends Schema.Intangible, RdfResource {
   customer: Schema.Organization | Schema.Person;
   minimumPaymentDue: Schema.MonetaryAmount | Schema.PriceSpecification;
   paymentDue: Date;
-  paymentDueDate: Date | Date;
+  paymentDueDate: Date;
   paymentMethod: Schema.PaymentMethod;
   paymentMethodId: string;
-  paymentStatus: Schema.PaymentStatusType;
-  paymentStatusLiteral: string;
+  paymentStatus: string;
+  paymentStatusTerm: Schema.PaymentStatusType;
   provider: Schema.Organization | Schema.Person;
   referencesOrder: Schema.Order;
   scheduledPaymentDate: Date;
@@ -48,15 +48,15 @@ export default function InvoiceMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     paymentDue!: Date;
     @property.literal()
-    paymentDueDate!: Date | Date;
+    paymentDueDate!: Date;
     @property()
     paymentMethod!: Schema.PaymentMethod;
     @property.literal()
     paymentMethodId!: string;
-    @property.resource()
-    paymentStatus!: Schema.PaymentStatusType;
-    @property.literal({ path: schema.paymentStatus })
-    paymentStatusLiteral!: string;
+    @property.literal()
+    paymentStatus!: string;
+    @property({ path: schema.paymentStatus })
+    paymentStatusTerm!: Schema.PaymentStatusType;
     @property.resource()
     provider!: Schema.Organization | Schema.Person;
     @property.resource()

@@ -6,20 +6,20 @@ import type * as Schema from '.';
 import ProductMixin from './Product';
 
 export interface ProductModel extends Schema.Product, RdfResource {
-  isVariantOf: ProductModel;
-  predecessorOf: ProductModel;
-  successorOf: ProductModel;
+  isVariantOf: Schema.ProductModel;
+  predecessorOf: Schema.ProductModel;
+  successorOf: Schema.ProductModel;
 }
 
 export default function ProductModelMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ProductModelClass extends ProductMixin(Resource) implements ProductModel {
     @property.resource()
-    isVariantOf!: ProductModel;
+    isVariantOf!: Schema.ProductModel;
     @property.resource()
-    predecessorOf!: ProductModel;
+    predecessorOf!: Schema.ProductModel;
     @property.resource()
-    successorOf!: ProductModel;
+    successorOf!: Schema.ProductModel;
   }
   return ProductModelClass
 }

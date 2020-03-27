@@ -8,8 +8,8 @@ import PerformingGroupMixin from './PerformingGroup';
 export interface MusicGroup extends Schema.PerformingGroup, RdfResource {
   album: Schema.MusicAlbum;
   albums: Schema.MusicAlbum;
-  genre: rdf.Term;
-  genreLiteral: string;
+  genre: string;
+  genreTerm: rdf.NamedNode;
   musicGroupMember: Schema.Person;
   track: Schema.ItemList | Schema.MusicRecording;
   tracks: Schema.MusicRecording;
@@ -22,10 +22,10 @@ export default function MusicGroupMixin<Base extends Constructor>(Resource: Base
     album!: Schema.MusicAlbum;
     @property.resource()
     albums!: Schema.MusicAlbum;
-    @property()
-    genre!: rdf.Term;
-    @property.literal({ path: schema.genre })
-    genreLiteral!: string;
+    @property.literal()
+    genre!: string;
+    @property({ path: schema.genre })
+    genreTerm!: rdf.NamedNode;
     @property.resource()
     musicGroupMember!: Schema.Person;
     @property.resource()

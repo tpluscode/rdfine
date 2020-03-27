@@ -5,7 +5,7 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResourc
 import type * as Schema from '.';
 
 export interface Thing extends RdfResource {
-  additionalType: rdf.Term;
+  additionalType: rdf.NamedNode;
   alternateName: string;
   description: string;
   disambiguatingDescription: string;
@@ -15,16 +15,16 @@ export interface Thing extends RdfResource {
   mainEntityOfPage: Schema.CreativeWork;
   name: string;
   potentialAction: Schema.Action;
-  sameAs: rdf.Term;
+  sameAs: rdf.NamedNode;
   subjectOf: Schema.CreativeWork | Schema.Event;
-  url: rdf.Term;
+  url: rdf.NamedNode;
 }
 
 export default function ThingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ThingClass extends Resource implements Thing {
     @property()
-    additionalType!: rdf.Term;
+    additionalType!: rdf.NamedNode;
     @property.literal()
     alternateName!: string;
     @property.literal()
@@ -44,11 +44,11 @@ export default function ThingMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     potentialAction!: Schema.Action;
     @property()
-    sameAs!: rdf.Term;
+    sameAs!: rdf.NamedNode;
     @property.resource()
     subjectOf!: Schema.CreativeWork | Schema.Event;
     @property()
-    url!: rdf.Term;
+    url!: rdf.NamedNode;
   }
   return ThingClass
 }

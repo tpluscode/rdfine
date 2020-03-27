@@ -12,23 +12,23 @@ export interface Place extends Schema.Thing, RdfResource {
   aggregateRating: Schema.AggregateRating;
   amenityFeature: Schema.LocationFeatureSpecification;
   branchCode: string;
-  containedIn: Place;
-  containedInPlace: Place;
-  containsPlace: Place;
+  containedIn: Schema.Place;
+  containedInPlace: Schema.Place;
+  containsPlace: Schema.Place;
   event: Schema.Event;
   events: Schema.Event;
   faxNumber: string;
   geo: Schema.GeoCoordinates | Schema.GeoShape;
-  geoContains: Place;
-  geoCoveredBy: Place;
-  geoCovers: Place;
-  geoCrosses: Place;
-  geoDisjoint: Place;
-  geoEquals: Place;
-  geoIntersects: Place;
-  geoOverlaps: Place;
-  geoTouches: Place;
-  geoWithin: Place;
+  geoContains: Schema.Place;
+  geoCoveredBy: Schema.Place;
+  geoCovers: Schema.Place;
+  geoCrosses: Schema.Place;
+  geoDisjoint: Schema.Place;
+  geoEquals: Schema.Place;
+  geoIntersects: Schema.Place;
+  geoOverlaps: Schema.Place;
+  geoTouches: Schema.Place;
+  geoWithin: Schema.Place;
   globalLocationNumber: string;
   hasMap: Schema.Map;
   isAccessibleForFree: boolean;
@@ -36,8 +36,8 @@ export interface Place extends Schema.Thing, RdfResource {
   latitude: number | string;
   logo: Schema.ImageObject;
   longitude: number | string;
-  map: rdf.Term;
-  maps: rdf.Term;
+  map: rdf.NamedNode;
+  maps: rdf.NamedNode;
   maximumAttendeeCapacity: number;
   openingHoursSpecification: Schema.OpeningHoursSpecification;
   photo: Schema.ImageObject | Schema.Photograph;
@@ -67,11 +67,11 @@ export default function PlaceMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     branchCode!: string;
     @property.resource()
-    containedIn!: Place;
+    containedIn!: Schema.Place;
     @property.resource()
-    containedInPlace!: Place;
+    containedInPlace!: Schema.Place;
     @property.resource()
-    containsPlace!: Place;
+    containsPlace!: Schema.Place;
     @property.resource()
     event!: Schema.Event;
     @property.resource()
@@ -81,25 +81,25 @@ export default function PlaceMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     geo!: Schema.GeoCoordinates | Schema.GeoShape;
     @property.resource()
-    geoContains!: Place;
+    geoContains!: Schema.Place;
     @property.resource()
-    geoCoveredBy!: Place;
+    geoCoveredBy!: Schema.Place;
     @property.resource()
-    geoCovers!: Place;
+    geoCovers!: Schema.Place;
     @property.resource()
-    geoCrosses!: Place;
+    geoCrosses!: Schema.Place;
     @property.resource()
-    geoDisjoint!: Place;
+    geoDisjoint!: Schema.Place;
     @property.resource()
-    geoEquals!: Place;
+    geoEquals!: Schema.Place;
     @property.resource()
-    geoIntersects!: Place;
+    geoIntersects!: Schema.Place;
     @property.resource()
-    geoOverlaps!: Place;
+    geoOverlaps!: Schema.Place;
     @property.resource()
-    geoTouches!: Place;
+    geoTouches!: Schema.Place;
     @property.resource()
-    geoWithin!: Place;
+    geoWithin!: Schema.Place;
     @property.literal()
     globalLocationNumber!: string;
     @property.resource()
@@ -115,9 +115,9 @@ export default function PlaceMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     longitude!: number | string;
     @property()
-    map!: rdf.Term;
+    map!: rdf.NamedNode;
     @property()
-    maps!: rdf.Term;
+    maps!: rdf.NamedNode;
     @property.literal({ type: Number })
     maximumAttendeeCapacity!: number;
     @property.resource()

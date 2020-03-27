@@ -10,7 +10,7 @@ export interface Permit extends Schema.Intangible, RdfResource {
   issuedThrough: Schema.Service;
   permitAudience: Schema.Audience;
   validFor: Schema.Duration;
-  validFrom: Date | Date;
+  validFrom: Date;
   validIn: Schema.AdministrativeArea;
   validUntil: Date;
 }
@@ -27,7 +27,7 @@ export default function PermitMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     validFor!: Schema.Duration;
     @property.literal()
-    validFrom!: Date | Date;
+    validFrom!: Date;
     @property.resource()
     validIn!: Schema.AdministrativeArea;
     @property.literal()

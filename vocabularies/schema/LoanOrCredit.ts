@@ -19,7 +19,7 @@ export default function LoanOrCreditMixin<Base extends Constructor>(Resource: Ba
   class LoanOrCreditClass extends FinancialProductMixin(Resource) implements LoanOrCredit {
     @property.resource()
     amount!: Schema.MonetaryAmount;
-    @property.literal({ type: Number, path: schema.amount })
+    @property.literal({ path: schema.amount, type: Number })
     amountLiteral!: number;
     @property.literal()
     currency!: string;

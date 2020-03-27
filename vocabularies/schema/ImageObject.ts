@@ -11,7 +11,7 @@ export interface ImageObject extends Schema.MediaObject, RdfResource {
   exifData: Schema.PropertyValue;
   exifDataLiteral: string;
   representativeOfPage: boolean;
-  thumbnail: ImageObject;
+  thumbnail: Schema.ImageObject;
 }
 
 export default function ImageObjectMixin<Base extends Constructor>(Resource: Base) {
@@ -28,7 +28,7 @@ export default function ImageObjectMixin<Base extends Constructor>(Resource: Bas
     @property.literal({ type: Boolean })
     representativeOfPage!: boolean;
     @property.resource()
-    thumbnail!: ImageObject;
+    thumbnail!: Schema.ImageObject;
   }
   return ImageObjectClass
 }

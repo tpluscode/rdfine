@@ -1,12 +1,13 @@
 import { shrink } from '@zazuko/rdf-vocabularies'
 import { SingleContextClownface } from 'clownface'
 
-function nameOf(term: SingleContextClownface): string {
+export function nameOf(term: SingleContextClownface): string {
   const shrunk = shrink(term.value)
 
   return shrunk.split(':')[1]
 }
 
+/*
 export default {
   mixin(term: SingleContextClownface) {
     return `${nameOf(term)}Mixin`
@@ -20,3 +21,4 @@ export default {
     return `${nameOf(term)}Class`
   },
 }
+*/

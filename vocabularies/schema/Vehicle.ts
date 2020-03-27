@@ -8,12 +8,12 @@ import ProductMixin from './Product';
 export interface Vehicle extends Schema.Product, RdfResource {
   cargoVolume: Schema.QuantitativeValue;
   dateVehicleFirstRegistered: Date;
-  driveWheelConfiguration: Schema.DriveWheelConfigurationValue;
-  driveWheelConfigurationLiteral: string;
+  driveWheelConfiguration: string;
+  driveWheelConfigurationTerm: Schema.DriveWheelConfigurationValue;
   fuelConsumption: Schema.QuantitativeValue;
   fuelEfficiency: Schema.QuantitativeValue;
-  fuelType: Schema.QualitativeValue;
-  fuelTypeLiteral: string;
+  fuelType: string;
+  fuelTypeTerm: RdfResource | Schema.QualitativeValue;
   knownVehicleDamages: string;
   mileageFromOdometer: Schema.QuantitativeValue;
   numberOfAirbags: number | string;
@@ -36,8 +36,8 @@ export interface Vehicle extends Schema.Product, RdfResource {
   vehicleModelDate: Date;
   vehicleSeatingCapacity: Schema.QuantitativeValue;
   vehicleSeatingCapacityLiteral: number;
-  vehicleTransmission: Schema.QualitativeValue;
-  vehicleTransmissionLiteral: string;
+  vehicleTransmission: string;
+  vehicleTransmissionTerm: RdfResource | Schema.QualitativeValue;
 }
 
 export default function VehicleMixin<Base extends Constructor>(Resource: Base) {
@@ -47,18 +47,18 @@ export default function VehicleMixin<Base extends Constructor>(Resource: Base) {
     cargoVolume!: Schema.QuantitativeValue;
     @property.literal()
     dateVehicleFirstRegistered!: Date;
-    @property.resource()
-    driveWheelConfiguration!: Schema.DriveWheelConfigurationValue;
-    @property.literal({ path: schema.driveWheelConfiguration })
-    driveWheelConfigurationLiteral!: string;
+    @property.literal()
+    driveWheelConfiguration!: string;
+    @property({ path: schema.driveWheelConfiguration })
+    driveWheelConfigurationTerm!: Schema.DriveWheelConfigurationValue;
     @property.resource()
     fuelConsumption!: Schema.QuantitativeValue;
     @property.resource()
     fuelEfficiency!: Schema.QuantitativeValue;
-    @property.resource()
-    fuelType!: Schema.QualitativeValue;
-    @property.literal({ path: schema.fuelType })
-    fuelTypeLiteral!: string;
+    @property.literal()
+    fuelType!: string;
+    @property({ path: schema.fuelType })
+    fuelTypeTerm!: RdfResource | Schema.QualitativeValue;
     @property.literal()
     knownVehicleDamages!: string;
     @property.resource()
@@ -67,19 +67,19 @@ export default function VehicleMixin<Base extends Constructor>(Resource: Base) {
     numberOfAirbags!: number | string;
     @property.resource()
     numberOfAxles!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.numberOfAxles })
+    @property.literal({ path: schema.numberOfAxles, type: Number })
     numberOfAxlesLiteral!: number;
     @property.resource()
     numberOfDoors!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.numberOfDoors })
+    @property.literal({ path: schema.numberOfDoors, type: Number })
     numberOfDoorsLiteral!: number;
     @property.resource()
     numberOfForwardGears!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.numberOfForwardGears })
+    @property.literal({ path: schema.numberOfForwardGears, type: Number })
     numberOfForwardGearsLiteral!: number;
     @property.resource()
     numberOfPreviousOwners!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.numberOfPreviousOwners })
+    @property.literal({ path: schema.numberOfPreviousOwners, type: Number })
     numberOfPreviousOwnersLiteral!: number;
     @property.literal()
     productionDate!: Date;
@@ -101,12 +101,12 @@ export default function VehicleMixin<Base extends Constructor>(Resource: Base) {
     vehicleModelDate!: Date;
     @property.resource()
     vehicleSeatingCapacity!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.vehicleSeatingCapacity })
+    @property.literal({ path: schema.vehicleSeatingCapacity, type: Number })
     vehicleSeatingCapacityLiteral!: number;
-    @property.resource()
-    vehicleTransmission!: Schema.QualitativeValue;
-    @property.literal({ path: schema.vehicleTransmission })
-    vehicleTransmissionLiteral!: string;
+    @property.literal()
+    vehicleTransmission!: string;
+    @property({ path: schema.vehicleTransmission })
+    vehicleTransmissionTerm!: RdfResource | Schema.QualitativeValue;
   }
   return VehicleClass
 }
