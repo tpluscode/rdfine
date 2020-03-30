@@ -50,7 +50,6 @@ The easiest way is to pipe the output from [@zazuko/rdf-vocabularies CLI](https:
 npm i -g @zazuko/rdf-vocabularies
 rdf-vocab prefix foaf | rdfine-gen \
   --format application/n-triples \
-  --namespace http://xmlns.com/foaf/0.1/ \
   --prefix foaf 
 ```
 
@@ -62,7 +61,6 @@ If the given vocabulary is dereferencable form the web, curl can be used to fetc
 curl http://xmlns.com/foaf/0.1/ -H accept:application/rdf+xml -H | \
   rdfine-gen \
   --format application/rdf+xml \
-  --namespace http://xmlns.com/foaf/0.1/ \
   --prefix foaf 
 ```
 
