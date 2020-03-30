@@ -1,4 +1,5 @@
 import { SingleContextClownface } from 'clownface'
+import { Term } from 'rdf-js'
 import { Context } from '../index'
 
 export { TypeMap } from './TypeMap'
@@ -26,6 +27,8 @@ export interface ExternalResourceType {
   module: string
   mixinName: string
   qualifiedName: string
+  qualifier: string
+  package: string
 }
 
 export interface EnumerationType {
@@ -43,7 +46,7 @@ export interface EnumerationMember {
 
 export interface TermType {
   type: 'Term'
-  termType: string
+  termType: Term['termType'] | 'Term'
 }
 
 export type TypeMeta = LiteralType | ResourceType | ExternalResourceType | EnumerationType | EnumerationMember | TermType

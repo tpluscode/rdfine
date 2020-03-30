@@ -20,8 +20,8 @@ export async function generate(project: Project, types: TypeMetaCollection, stra
     isExportEquals: false,
   }).getExpression() as ArrayLiteralExpression
 
-  const writers = strategies.reduce((moduleWriters, strategy) => {
-    return strategy.findTermsToGenerate(types, context)
+  const writers = strategies.reduce((moduleWriters, findTermsToGenerate) => {
+    return findTermsToGenerate(types, context)
       .reduce((moduleWriters, writer) => {
         if (moduleWriters.has(writer.node.value)) {
           log.debug(`Type ${writer.node.value} has already been selected by another strategy`)

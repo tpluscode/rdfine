@@ -2,27 +2,30 @@ import { ClassDeclaration, DecoratorStructure, InterfaceDeclaration, OptionalKin
 import { JavascriptProperty } from './JsProperties'
 import { Context } from '../index'
 import { TypeMeta } from '../types'
+import { MixinModule } from '../MixinGenerator/MixinModule'
 
 interface PropertyWriterInit {
   interfaceDeclaration: InterfaceDeclaration
   classDeclaration: ClassDeclaration
   context: Context
+  module: MixinModule
 }
 
 export class PropertyWriter {
   private readonly __interface: InterfaceDeclaration;
   private readonly __class: ClassDeclaration;
   private readonly __context: Context
+  private readonly __module: MixinModule;
 
-  public constructor({ interfaceDeclaration, classDeclaration, context }: PropertyWriterInit) {
+  public constructor({ interfaceDeclaration, classDeclaration, context, module }: PropertyWriterInit) {
     this.__interface = interfaceDeclaration
     this.__class = classDeclaration
     this.__context = context
+    this.__module = module
   }
 
   public addProperty(prop: JavascriptProperty) {
     let type
-    let rdfTerm = false
     const propertyTypes = prop.range
       .reduce<string[]>((result, range) => {
       const returnType = this.__getJsReturnType(range)
@@ -36,19 +39,16 @@ export class PropertyWriter {
 
     if (propertyTypes.length === 0) {
       type = 'rdf.Term'
-      rdfTerm = true
-      this.__context.log.warn('Could not determine types for property %s', prop.id)
+      this.__context.log.warn('Could not determine types for property %s', prop.term.value)
     } else {
       if (propertyTypes.includes('rdf.NamedNode')) {
         if (propertyTypes.length > 1) {
           propertyTypes.splice(propertyTypes.indexOf('rdf.NamedNode'), 1, 'RdfResource')
-        } else {
-          rdfTerm = true
         }
       }
 
       type = propertyTypes.join(' | ')
-      this.__context.log.debug('Generating Property %s => %s: %s', prop.term, prop.name, type)
+      this.__context.log.debug('Generating Property %s => %s: %s', prop.term.value, prop.name, type)
     }
 
     this.__interface.addProperty({
@@ -62,7 +62,7 @@ export class PropertyWriter {
       type,
     })
 
-    classProp.addDecorator(this.__createDecorator(prop, propertyTypes, rdfTerm))
+    classProp.addDecorator(this.__createDecorator(prop, propertyTypes))
   }
 
   private __getJsReturnType(range: TypeMeta): string | null {
@@ -80,11 +80,22 @@ export class PropertyWriter {
     return null
   }
 
-  private __createDecorator(prop: JavascriptProperty, propertyTypes: string[], rdfTerm: boolean): OptionalKind<DecoratorStructure> {
+  private __createDecorator(prop: JavascriptProperty, propertyTypes: string[]): OptionalKind<DecoratorStructure> {
     let name: string
     const decoratorOptions: string[] = []
-    if (prop.name !== prop.term) {
-      decoratorOptions.push(`path: ${this.__context.prefix}.${prop.term}`)
+    if (prop.name !== prop.termName) {
+      decoratorOptions.push(`path: ${prop.prefixedTerm}`)
+    }
+
+    if (prop.semantics === 'strict' && prop.range.length === 1) {
+      const resourceRange = prop.range[0]
+      if (resourceRange.type === 'Resource') {
+        this.__module.addMixinImport(resourceRange)
+        decoratorOptions.push(`as: [${resourceRange.mixinName}]`)
+      } else if (resourceRange.type === 'ExternalResource') {
+        this.__module.addMixinImport(resourceRange)
+        decoratorOptions.push(`as: [${resourceRange.mixinName}]`)
+      }
     }
 
     switch (prop.type) {

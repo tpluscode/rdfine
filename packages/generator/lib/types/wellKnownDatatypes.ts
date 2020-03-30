@@ -1,4 +1,4 @@
-type DatatypeName = 'boolean' | 'string' | 'number' | 'Date'
+export type DatatypeName = 'boolean' | 'string' | 'number' | 'Date'
 
 export const wellKnownDatatypes: Record<string, DatatypeName> = {
   'xsd:boolean': 'boolean',

@@ -1,17 +1,22 @@
 import { SingleContextClownface } from 'clownface'
+import { shrink } from '@zazuko/rdf-vocabularies'
+import { Term } from 'rdf-js'
 import { TypeMeta, TypeMetaCollection } from '../types'
 import { Context } from '../index'
 import { nameOf } from '../util/nameOf'
+import { Range } from './index'
 
 export interface JavascriptProperty {
-  id: string
+  semantics: 'strict' | 'loose' | undefined
   name: string
   range: TypeMeta[]
-  term: string
+  term: Term
+  termName: string
+  prefixedTerm: string
   type: 'resource' | 'term' | 'literal'
 }
 
-function groupRangeTypes(range: SingleContextClownface[], types: TypeMetaCollection, { log }: Context) {
+function groupRangeTypes(range: Range[], types: TypeMetaCollection, { log }: Context) {
   const grouped = {
     resource: [] as TypeMeta[],
     literal: [] as TypeMeta[],
@@ -19,9 +24,9 @@ function groupRangeTypes(range: SingleContextClownface[], types: TypeMetaCollect
   }
 
   for (const rangeType of range) {
-    const meta = types.get(rangeType)
+    const meta = types.get(rangeType.term)
     if (!meta) {
-      log.warn(`Skipping unrecognized property type ${rangeType.value}`)
+      log.warn(`Skipping unrecognized property type ${rangeType.term.value}`)
       continue
     }
 
@@ -41,22 +46,27 @@ function groupRangeTypes(range: SingleContextClownface[], types: TypeMetaCollect
   return grouped
 }
 
-export function * toJavascriptProperties(prop: SingleContextClownface, range: SingleContextClownface[], types: TypeMetaCollection, context: Context): Iterable<JavascriptProperty> {
+export function * toJavascriptProperties(prop: SingleContextClownface, range: Range[], types: TypeMetaCollection, context: Context): Iterable<JavascriptProperty> {
   const ranges = groupRangeTypes(range, types, context)
   const baseProperty: Omit<JavascriptProperty, 'type' | 'range'> = {
-    id: prop.value,
+    semantics: undefined,
+    term: prop.term,
     name: nameOf(prop),
-    term: nameOf(prop),
+    termName: nameOf(prop),
+    prefixedTerm: (shrink(prop.value) || nameOf(prop)).replace(':', '.'),
   }
   let resourceProperty: JavascriptProperty | null = null
   let literalProperty: JavascriptProperty | null = null
   let termProperty: JavascriptProperty | null = null
 
   if (ranges.resource.length) {
+    const semantics = range.every(r => r.strictSemantics) ? 'strict' : 'loose'
+
     resourceProperty = {
       ...baseProperty,
       range: ranges.resource,
       type: 'resource',
+      semantics,
     }
   }
 

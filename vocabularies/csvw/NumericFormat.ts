@@ -16,7 +16,7 @@ export default function NumericFormatMixin<Base extends Constructor>(Resource: B
   class NumericFormatClass extends Resource implements NumericFormat {
     @property.literal()
     decimalChar!: string;
-    @property.resource()
+    @property.resource({ as: [NumericFormatMixin] })
     groupChar!: Csvw.NumericFormat;
     @property.literal({ path: csvw.groupChar })
     groupCharLiteral!: string;

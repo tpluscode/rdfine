@@ -7,10 +7,11 @@ import { expand, prefixes } from '@zazuko/rdf-vocabularies'
 import { IndentationText, Project, QuoteKind, SourceFile } from 'ts-morph'
 import FileSystem from './util/FileSystem'
 import * as generator from './generator'
-import { EnumerationGenerator } from './EnumerationGenerator'
+import * as EnumerationGenerator from './EnumerationGenerator'
 import { EnumerationType, ResourceType, TypeMap, TypeMetaCollection } from './types'
-import { MixinGenerator } from './MixinGenerator'
+import * as MixinGenerator from './MixinGenerator'
 import * as factories from './types/metaFactories'
+import { toUpperInitial } from './util/string'
 
 export interface Context {
   vocabulary: Clownface
@@ -24,7 +25,7 @@ export interface Context {
 }
 
 export interface ModuleStrategy {
-  findTermsToGenerate(types: TypeMetaCollection, context: Context): GeneratedModule[]
+  (types: TypeMetaCollection, context: Context): GeneratedModule[]
 }
 
 export interface GeneratedModule {
@@ -78,8 +79,8 @@ export async function generate(options: GeneratorOptions, logger: Debugger) {
   })
 
   const strategies: ModuleStrategy[] = [
-    new EnumerationGenerator(),
-    new MixinGenerator(),
+    EnumerationGenerator.findTermsToGenerate,
+    MixinGenerator.findTermsToGenerate,
   ]
 
   const namespace = nsBuilder(prefixes[options.prefix])
@@ -96,16 +97,15 @@ export async function generate(options: GeneratorOptions, logger: Debugger) {
   const context = {
     vocabulary,
     prefix: options.prefix,
-    defaultExport: options.prefix.replace(/^\w/, first => first.toUpperCase()),
+    defaultExport: toUpperInitial(options.prefix),
     log,
   }
   const types = new TypeMap({
-    graph: vocabulary,
     excluded: excludedTerms,
-    overrides: options.types,
     context,
     factories: [
-      factories.knownDatatypes(options.types),
+      factories.overrides(options.types),
+      factories.datatypes,
       factories.enumerationTypes,
       factories.resourceTypes,
       factories.enumerationMembers,

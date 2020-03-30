@@ -13,7 +13,7 @@ export class EnumerationModule implements GeneratedModule {
     this.type = type
   }
 
-  writeModule(enumFile: SourceFile, types: TypeMetaCollection, context: Context) {
+  writeModule(enumFile: SourceFile, types: TypeMetaCollection, context: Pick<Context, 'prefix' | 'log'>) {
     context.log.debug('Generating enumeration %s', this.type.name)
 
     enumFile.addImportDeclaration({

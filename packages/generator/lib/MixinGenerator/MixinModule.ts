@@ -8,21 +8,74 @@ import { JavascriptProperty } from '../property/JsProperties'
 export class MixinModule implements GeneratedModule {
   type: ResourceType
   node: SingleContextClownface;
-  superClasses: (ResourceType | ExternalResourceType)[]
+  superClasses: Array<ResourceType | ExternalResourceType>
   properties: JavascriptProperty[]
+  private namespaceImports: Record<string, string> = {}
+  private mixinImports: Array<ResourceType | ExternalResourceType> = []
 
   public constructor(clas: SingleContextClownface, type: ResourceType, superClasses: (ResourceType | ExternalResourceType)[], properties: JavascriptProperty[]) {
     this.node = clas
     this.type = type
     this.superClasses = superClasses
+    this.superClasses.forEach(this.addMixinImport.bind(this))
     this.properties = properties
   }
 
-  writeModule(mixinFile: SourceFile, types: TypeMetaCollection, context: Context) {
+  addMixinImport(type: ExternalResourceType | ResourceType) {
+    const mixinImportExists = this.mixinImports.find(current => current.module === type.module)
+    if (!mixinImportExists) {
+      this.mixinImports.push(type)
+    }
+
+    if ('package' in type && !this.namespaceImports[type.package]) {
+      this.namespaceImports[type.package] = type.qualifier
+    }
+  }
+
+  writeModule(mixinFile: SourceFile, types: TypeMetaCollection, context: Pick<Context, 'log' | 'prefix' | 'vocabulary' | 'defaultExport'>) {
     context.log.debug(`Generating mixin ${this.type.qualifiedName}`)
 
-    const rdfineImports = ['Constructor', 'namespace', 'RdfResource', 'RdfResourceImpl']
     const mixinName = this.type.mixinName
+    const interfaceDeclaration = this.createInterface(mixinFile)
+    const classDeclaration = this.createMixinFunction(mixinFile, context)
+
+    const propertyWriter = new PropertyWriter({
+      interfaceDeclaration,
+      classDeclaration,
+      context,
+      module: this,
+    })
+    this.properties.forEach(propertyWriter.addProperty.bind(propertyWriter))
+
+    const implementationClass = mixinFile.addClass({
+      name: `${this.type.localName}Impl`,
+      extends: `${mixinName}(RdfResourceImpl)`,
+    })
+    implementationClass.addConstructor({
+      parameters: [
+        { name: 'arg', type: 'ResourceNode' },
+        { name: 'init', type: `Initializer<${this.type.localName}>`, hasQuestionToken: true }],
+      statements: [
+        'super(arg, init)',
+        `this.types.add(${context.prefix}.${this.type.localName})`,
+      ],
+    })
+
+    mixinFile.addStatements([
+      `${mixinName}.shouldApply = (r: RdfResource) => r.types.has(${context.prefix}.${this.type.localName})`,
+      `${mixinName}.Class = ${this.type.localName}Impl`,
+    ])
+
+    this.addImports(mixinFile, context)
+
+    return {
+      mainModuleExport: this.type.localName,
+      mainModuleMixinExport: mixinName,
+    }
+  }
+
+  private addImports(mixinFile: SourceFile, context: Context) {
+    const rdfineImports = ['Constructor', 'namespace', 'RdfResource', 'RdfResourceImpl']
 
     if (Object.keys(this.properties).some(Boolean)) {
       rdfineImports.push('property')
@@ -51,48 +104,23 @@ export class MixinModule implements GeneratedModule {
       moduleSpecifier: '.',
       isTypeOnly: true,
     })
-    this.superClasses.forEach(superClass => {
-      if (!superClass.module) return
+
+    Object.entries(this.namespaceImports)
+      .forEach(([moduleSpecifier, namespaceImport]) => {
+        mixinFile.addImportDeclaration({
+          moduleSpecifier,
+          namespaceImport,
+          isTypeOnly: true,
+        })
+      })
+    this.mixinImports.forEach(superClass => {
+      if (!superClass.module || superClass.module === this.type.module) return
 
       mixinFile.addImportDeclaration({
         moduleSpecifier: superClass.module,
         defaultImport: superClass.mixinName,
       })
     })
-
-    const interfaceDeclaration = this.createInterface(mixinFile)
-    const classDeclaration = this.createMixinFunction(mixinFile, context)
-
-    const propertyWriter = new PropertyWriter({
-      interfaceDeclaration,
-      classDeclaration,
-      context,
-    })
-    this.properties.forEach(propertyWriter.addProperty.bind(propertyWriter))
-
-    const implementationClass = mixinFile.addClass({
-      name: `${this.type.localName}Impl`,
-      extends: `${mixinName}(RdfResourceImpl)`,
-    })
-    implementationClass.addConstructor({
-      parameters: [
-        { name: 'arg', type: 'ResourceNode' },
-        { name: 'init', type: `Initializer<${this.type.localName}>`, hasQuestionToken: true }],
-      statements: [
-        'super(arg, init)',
-        `this.types.add(${context.prefix}.${this.type.localName})`,
-      ],
-    })
-
-    mixinFile.addStatements([
-      `${mixinName}.shouldApply = (r: RdfResource) => r.types.has(${context.prefix}.${this.type.localName})`,
-      `${mixinName}.Class = ${this.type.localName}Impl`,
-    ])
-
-    return {
-      mainModuleExport: this.type.localName,
-      mainModuleMixinExport: mixinName,
-    }
   }
 
   private createMixinFunction(mixinFile: SourceFile, context: Context) {

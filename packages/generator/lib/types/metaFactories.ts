@@ -1,20 +1,34 @@
 import { SingleContextClownface } from 'clownface'
-import { shrink } from '@zazuko/rdf-vocabularies'
-import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
-import { EnumerationMember, EnumerationType, LiteralType, ResourceType, TypeMetaFactory } from './index'
+import { expand, shrink } from '@zazuko/rdf-vocabularies'
+import { hydra, rdf, rdfs } from '@tpluscode/rdf-ns-builders'
+import once from 'once'
+import {
+  EnumerationMember,
+  EnumerationType,
+  ExternalResourceType,
+  LiteralType,
+  ResourceType, TermType,
+} from './index'
 import { Context } from '../index'
 import { toUpperInitial } from '../util/string'
 import { isEnumerationType } from './util'
-import { wellKnownDatatypes } from './wellKnownDatatypes'
+import { DatatypeName, wellKnownDatatypes } from './wellKnownDatatypes'
 
-export function resourceTypes(term: SingleContextClownface, context: Context): ResourceType | null {
-  if (!term.has(rdf.type, rdfs.Class).values.length) {
+export function resourceTypes(term: SingleContextClownface, context: Pick<Context, 'prefix'>): ExternalResourceType | ResourceType | null {
+  if (!term.has(rdf.type, [rdfs.Class, hydra.Class]).values.length) {
     return null
   }
 
   const [prefix, localName] = shrink(term.value).split(':')
   if (prefix !== context.prefix) {
-    return null
+    return {
+      type: 'ExternalResource',
+      mixinName: `${localName}Mixin`,
+      module: `@rdfine/${prefix}/${localName}`,
+      package: `@rdfine/${prefix}`,
+      qualifiedName: toUpperInitial(`${prefix}.${localName}`),
+      qualifier: toUpperInitial(prefix),
+    }
   }
 
   return {
@@ -26,7 +40,7 @@ export function resourceTypes(term: SingleContextClownface, context: Context): R
   }
 }
 
-export function enumerationTypes(term: SingleContextClownface, context: Context): EnumerationType | null {
+export function enumerationTypes(term: SingleContextClownface, context: Pick<Context, 'prefix'>): EnumerationType | null {
   if (!term.has(rdf.type, rdfs.Class).values.length || !isEnumerationType(term)) {
     return null
   }
@@ -57,100 +71,74 @@ export function enumerationMembers(term: SingleContextClownface): EnumerationMem
   return null
 }
 
-export function knownDatatypes(userDatatypes: typeof wellKnownDatatypes): TypeMetaFactory<LiteralType> {
-  const datatypes: typeof wellKnownDatatypes = {
-    ...wellKnownDatatypes,
-    ...userDatatypes,
+function datatypeToLiteralType(name: DatatypeName): LiteralType | null {
+  let nativeType: any
+  switch (name) {
+    case 'string':
+      nativeType = String
+      break
+    case 'boolean':
+      nativeType = Boolean
+      break
+    case 'number':
+      nativeType = Number
+      break
+    case 'Date':
+      nativeType = Date
+      break
+    default:
+      return null
   }
 
-  return (term: SingleContextClownface) => {
-    const mapped = datatypes[shrink(term.value)]
-    if (!mapped) return null
+  return {
+    type: 'Literal',
+    nativeName: name,
+    nativeType,
+  }
+}
 
-    let nativeType: any
-    switch (mapped) {
-      case 'string':
-        nativeType = String
-        break
-      case 'boolean':
-        nativeType = Boolean
-        break
-      case 'number':
-        nativeType = Number
-        break
-      case 'Date':
-        nativeType = Date
-        break
-      default:
-        return null
-    }
-
+export function datatypes(term: SingleContextClownface): LiteralType | null {
+  if (term.has(rdf.type, rdfs.Datatype).values.length) {
     return {
       type: 'Literal',
-      nativeName: mapped,
-      nativeType,
+      nativeName: 'string',
+      nativeType: String,
     }
   }
+
+  const mapped = wellKnownDatatypes[shrink(term.value)]
+
+  return datatypeToLiteralType(mapped)
 }
 
-/*
-export function knownDatatypes(datatypes: TypeMap): TypeMetaFactory {
-  return range => {
-    const mapped = datatypes[shrink(range.type.value)]
-    switch (mapped) {
-      case 'number':
-      case 'boolean':
-      case 'string':
-      case 'Date':
-        return datatypes[shrink(range.type.value)]
-      case 'NamedNode':
-        return `rdf.${mapped}`
+export function overrides(overrideMap: Record<string, DatatypeName | 'NamedNode'> = {}) {
+  const overridesMappedToUris = once((prefix: string) => {
+    return Object.entries(overrideMap)
+      .reduce((newMap, [key, override]) => {
+        let typeUri: string
+        if (key.includes(':')) {
+          typeUri = expand(key)
+        } else {
+          typeUri = expand(`${prefix}:${key}`)
+        }
+
+        return {
+          ...newMap,
+          [typeUri]: override,
+        }
+      }, {})
+  }) as ((prefix: string) => Record<string, DatatypeName | 'NamedNode'>)
+
+  return (node: SingleContextClownface, context: Pick<Context, 'prefix'>): TermType | LiteralType | null => {
+    const override = overridesMappedToUris(context.prefix)[node.value]
+
+    if (override === 'NamedNode') {
+      return {
+        type: 'Term',
+        termType: 'NamedNode',
+      }
     }
 
-    return null
+    return datatypeToLiteralType(override)
   }
 }
-
-export function anyLiteral(): RangeMapper {
-  return range => {
-    if (range.isLiteral) {
-      return 'string'
-    }
-
-    return null
-  }
-}
-
-export function selfInterfaceName(typeName: string): RangeMapper {
-  return range => {
-    const name = nameOf.term(range.type)
-    if (name === typeName) {
-      return name
-    }
-
-    return null
-  }
-}
-
-export function externalTerm(prefix: string): RangeMapper {
-  return range => {
-    const term = range.type.term
-    if (term.equals(rdfs.Resource) || term.equals(owl.Thing)) {
-      return 'RdfResource'
-    }
-
-    const shrunk = shrink(term.value).split(':')
-    if (shrunk[0] !== prefix) {
-      return `${prefix.replace(/^\w/, initial => initial.toUpperCase())}.${shrunk[1]}`
-    }
-
-    return null
-  }
-}
-
-export function classToPrefixedName(namespace: string): RangeMapper {
-  return range => {
-    return `${namespace}.${nameOf.term(range.type)}`
-  }
-}
-*/
