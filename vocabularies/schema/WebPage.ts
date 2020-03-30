@@ -11,10 +11,10 @@ export interface WebPage extends Schema.CreativeWork, RdfResource {
   lastReviewed: Date;
   mainContentOfPage: Schema.WebPageElement;
   primaryImageOfPage: Schema.ImageObject;
-  relatedLink: rdf.Term;
+  relatedLink: rdf.NamedNode;
   reviewedBy: Schema.Organization | Schema.Person;
-  significantLink: rdf.Term;
-  significantLinks: rdf.Term;
+  significantLink: rdf.NamedNode;
+  significantLinks: rdf.NamedNode;
   speakable: Schema.SpeakableSpecification;
   specialty: Schema.Specialty;
 }
@@ -33,13 +33,13 @@ export default function WebPageMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     primaryImageOfPage!: Schema.ImageObject;
     @property()
-    relatedLink!: rdf.Term;
+    relatedLink!: rdf.NamedNode;
     @property.resource()
     reviewedBy!: Schema.Organization | Schema.Person;
     @property()
-    significantLink!: rdf.Term;
+    significantLink!: rdf.NamedNode;
     @property()
-    significantLinks!: rdf.Term;
+    significantLinks!: rdf.NamedNode;
     @property.resource()
     speakable!: Schema.SpeakableSpecification;
     @property()

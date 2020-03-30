@@ -1,3 +1,4 @@
+import { prefixes } from '@zazuko/rdf-vocabularies'
 import { Project, VariableDeclarationKind } from 'ts-morph'
 import { Context } from './index'
 
@@ -13,7 +14,7 @@ export function generateNamespace({ project }: { project: Project}, context: Con
     declarationKind: VariableDeclarationKind.Const,
     declarations: [{
       name: context.prefix,
-      initializer: `namespace('${context.namespace().value}')`,
+      initializer: `namespace('${prefixes[context.prefix]}')`,
     }],
     isExported: true,
   })

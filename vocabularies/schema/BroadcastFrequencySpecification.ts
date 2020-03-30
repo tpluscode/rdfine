@@ -15,7 +15,7 @@ export default function BroadcastFrequencySpecificationMixin<Base extends Constr
   class BroadcastFrequencySpecificationClass extends IntangibleMixin(Resource) implements BroadcastFrequencySpecification {
     @property.resource()
     broadcastFrequencyValue!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.broadcastFrequencyValue })
+    @property.literal({ path: schema.broadcastFrequencyValue, type: Number })
     broadcastFrequencyValueLiteral!: number;
   }
   return BroadcastFrequencySpecificationClass

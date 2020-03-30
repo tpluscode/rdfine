@@ -16,9 +16,9 @@ export interface Person extends Schema.Thing, RdfResource {
   birthDate: Date;
   birthPlace: Schema.Place;
   brand: Schema.Brand | Schema.Organization;
-  children: Person;
-  colleague: Person;
-  colleagues: Person;
+  children: Schema.Person;
+  colleague: Schema.Person;
+  colleagues: Schema.Person;
   contactPoint: Schema.ContactPoint;
   contactPoints: Schema.ContactPoint;
   deathDate: Date;
@@ -27,8 +27,8 @@ export interface Person extends Schema.Thing, RdfResource {
   email: string;
   familyName: string;
   faxNumber: string;
-  follows: Person;
-  funder: Schema.Organization | Person;
+  follows: Schema.Person;
+  funder: Schema.Organization | Schema.Person;
   givenName: string;
   globalLocationNumber: string;
   hasOccupation: Schema.Occupation;
@@ -40,23 +40,23 @@ export interface Person extends Schema.Thing, RdfResource {
   honorificSuffix: string;
   interactionStatistic: Schema.InteractionCounter;
   isicV4: string;
-  knows: Person;
+  knows: Schema.Person;
   makesOffer: Schema.Offer;
   memberOf: Schema.Organization | Schema.ProgramMembership;
   naics: string;
   nationality: Schema.Country;
   netWorth: Schema.MonetaryAmount | Schema.PriceSpecification;
   owns: Schema.OwnershipInfo | Schema.Product;
-  parent: Person;
-  parents: Person;
+  parent: Schema.Person;
+  parents: Schema.Person;
   performerIn: Schema.Event;
   publishingPrinciples: Schema.CreativeWork;
-  relatedTo: Person;
+  relatedTo: Schema.Person;
   seeks: Schema.Demand;
-  sibling: Person;
-  siblings: Person;
-  sponsor: Schema.Organization | Person;
-  spouse: Person;
+  sibling: Schema.Person;
+  siblings: Schema.Person;
+  sponsor: Schema.Organization | Schema.Person;
+  spouse: Schema.Person;
   taxID: string;
   telephone: string;
   vatID: string;
@@ -89,11 +89,11 @@ export default function PersonMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     brand!: Schema.Brand | Schema.Organization;
     @property.resource()
-    children!: Person;
+    children!: Schema.Person;
     @property.resource()
-    colleague!: Person;
+    colleague!: Schema.Person;
     @property.resource()
-    colleagues!: Person;
+    colleagues!: Schema.Person;
     @property.resource()
     contactPoint!: Schema.ContactPoint;
     @property.resource()
@@ -111,9 +111,9 @@ export default function PersonMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     faxNumber!: string;
     @property.resource()
-    follows!: Person;
+    follows!: Schema.Person;
     @property.resource()
-    funder!: Schema.Organization | Person;
+    funder!: Schema.Organization | Schema.Person;
     @property.literal()
     givenName!: string;
     @property.literal()
@@ -137,7 +137,7 @@ export default function PersonMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     isicV4!: string;
     @property.resource()
-    knows!: Person;
+    knows!: Schema.Person;
     @property.resource()
     makesOffer!: Schema.Offer;
     @property.resource()
@@ -151,25 +151,25 @@ export default function PersonMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     owns!: Schema.OwnershipInfo | Schema.Product;
     @property.resource()
-    parent!: Person;
+    parent!: Schema.Person;
     @property.resource()
-    parents!: Person;
+    parents!: Schema.Person;
     @property.resource()
     performerIn!: Schema.Event;
     @property.resource()
     publishingPrinciples!: Schema.CreativeWork;
     @property.resource()
-    relatedTo!: Person;
+    relatedTo!: Schema.Person;
     @property.resource()
     seeks!: Schema.Demand;
     @property.resource()
-    sibling!: Person;
+    sibling!: Schema.Person;
     @property.resource()
-    siblings!: Person;
+    siblings!: Schema.Person;
     @property.resource()
-    sponsor!: Schema.Organization | Person;
+    sponsor!: Schema.Organization | Schema.Person;
     @property.resource()
-    spouse!: Person;
+    spouse!: Schema.Person;
     @property.literal()
     taxID!: string;
     @property.literal()

@@ -7,7 +7,7 @@ import IntangibleMixin from './Intangible';
 
 export interface OrderItem extends Schema.Intangible, RdfResource {
   orderDelivery: Schema.ParcelDelivery;
-  orderedItem: OrderItem | Schema.Product | Schema.Service;
+  orderedItem: Schema.OrderItem | Schema.Product | Schema.Service;
   orderItemNumber: string;
   orderItemStatus: Schema.OrderStatus;
   orderQuantity: number;
@@ -19,7 +19,7 @@ export default function OrderItemMixin<Base extends Constructor>(Resource: Base)
     @property.resource()
     orderDelivery!: Schema.ParcelDelivery;
     @property.resource()
-    orderedItem!: OrderItem | Schema.Product | Schema.Service;
+    orderedItem!: Schema.OrderItem | Schema.Product | Schema.Service;
     @property.literal()
     orderItemNumber!: string;
     @property()

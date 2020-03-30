@@ -6,7 +6,7 @@ import type * as Schema from '.';
 import RoomMixin from './Room';
 
 export interface HotelRoom extends Schema.Room, RdfResource {
-  bed: Schema.BedDetails | Schema.BedType;
+  bed: Schema.BedDetails;
   bedLiteral: string;
   occupancy: Schema.QuantitativeValue;
 }
@@ -15,7 +15,7 @@ export default function HotelRoomMixin<Base extends Constructor>(Resource: Base)
   @namespace(schema)
   class HotelRoomClass extends RoomMixin(Resource) implements HotelRoom {
     @property.resource()
-    bed!: Schema.BedDetails | Schema.BedType;
+    bed!: Schema.BedDetails;
     @property.literal({ path: schema.bed })
     bedLiteral!: string;
     @property.resource()

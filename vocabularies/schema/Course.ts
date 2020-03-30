@@ -7,10 +7,10 @@ import CreativeWorkMixin from './CreativeWork';
 
 export interface Course extends Schema.CreativeWork, RdfResource {
   courseCode: string;
-  coursePrerequisites: Schema.AlignmentObject | Course;
+  coursePrerequisites: Schema.AlignmentObject | Schema.Course;
   coursePrerequisitesLiteral: string;
-  educationalCredentialAwarded: rdf.Term;
-  educationalCredentialAwardedLiteral: string;
+  educationalCredentialAwarded: string;
+  educationalCredentialAwardedTerm: rdf.NamedNode;
   hasCourseInstance: Schema.CourseInstance;
 }
 
@@ -20,13 +20,13 @@ export default function CourseMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     courseCode!: string;
     @property.resource()
-    coursePrerequisites!: Schema.AlignmentObject | Course;
+    coursePrerequisites!: Schema.AlignmentObject | Schema.Course;
     @property.literal({ path: schema.coursePrerequisites })
     coursePrerequisitesLiteral!: string;
-    @property()
-    educationalCredentialAwarded!: rdf.Term;
-    @property.literal({ path: schema.educationalCredentialAwarded })
-    educationalCredentialAwardedLiteral!: string;
+    @property.literal()
+    educationalCredentialAwarded!: string;
+    @property({ path: schema.educationalCredentialAwarded })
+    educationalCredentialAwardedTerm!: rdf.NamedNode;
     @property.resource()
     hasCourseInstance!: Schema.CourseInstance;
   }

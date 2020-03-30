@@ -15,9 +15,9 @@ export interface Event extends Schema.Thing, RdfResource {
   composer: Schema.Organization | Schema.Person;
   contributor: Schema.Organization | Schema.Person;
   director: Schema.Person;
-  doorTime: Date | Date;
+  doorTime: Date;
   duration: Schema.Duration;
-  endDate: Date | Date;
+  endDate: Date;
   eventStatus: Schema.EventStatusType;
   funder: Schema.Organization | Schema.Person;
   inLanguage: Schema.Language;
@@ -35,10 +35,10 @@ export interface Event extends Schema.Thing, RdfResource {
   remainingAttendeeCapacity: number;
   review: Schema.Review;
   sponsor: Schema.Organization | Schema.Person;
-  startDate: Date | Date;
-  subEvent: Event;
-  subEvents: Event;
-  superEvent: Event;
+  startDate: Date;
+  subEvent: Schema.Event;
+  subEvents: Schema.Event;
+  superEvent: Schema.Event;
   translator: Schema.Organization | Schema.Person;
   typicalAgeRange: string;
   workFeatured: Schema.CreativeWork;
@@ -67,11 +67,11 @@ export default function EventMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     director!: Schema.Person;
     @property.literal()
-    doorTime!: Date | Date;
+    doorTime!: Date;
     @property.resource()
     duration!: Schema.Duration;
     @property.literal()
-    endDate!: Date | Date;
+    endDate!: Date;
     @property()
     eventStatus!: Schema.EventStatusType;
     @property.resource()
@@ -107,13 +107,13 @@ export default function EventMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     sponsor!: Schema.Organization | Schema.Person;
     @property.literal()
-    startDate!: Date | Date;
+    startDate!: Date;
     @property.resource()
-    subEvent!: Event;
+    subEvent!: Schema.Event;
     @property.resource()
-    subEvents!: Event;
+    subEvents!: Schema.Event;
     @property.resource()
-    superEvent!: Event;
+    superEvent!: Schema.Event;
     @property.resource()
     translator!: Schema.Organization | Schema.Person;
     @property.literal()

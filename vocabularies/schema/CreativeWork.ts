@@ -24,7 +24,7 @@ export interface CreativeWork extends Schema.Thing, RdfResource {
   award: string;
   awards: string;
   character: Schema.Person;
-  citation: CreativeWork;
+  citation: Schema.CreativeWork;
   citationLiteral: string;
   comment: Schema.Comment;
   commentCount: number;
@@ -35,38 +35,38 @@ export interface CreativeWork extends Schema.Thing, RdfResource {
   copyrightHolder: Schema.Organization | Schema.Person;
   copyrightYear: number;
   creator: Schema.Organization | Schema.Person;
-  dateCreated: Date | Date;
-  dateModified: Date | Date;
-  datePublished: Date | Date;
-  discussionUrl: rdf.Term;
+  dateCreated: Date;
+  dateModified: Date;
+  datePublished: Date;
+  discussionUrl: rdf.NamedNode;
   editor: Schema.Person;
   educationalAlignment: Schema.AlignmentObject;
   educationalUse: string;
   encoding: Schema.MediaObject;
-  encodingFormat: rdf.Term;
-  encodingFormatLiteral: string;
+  encodingFormat: string;
+  encodingFormatTerm: rdf.NamedNode;
   encodings: Schema.MediaObject;
-  exampleOfWork: CreativeWork;
+  exampleOfWork: Schema.CreativeWork;
   expires: Date;
-  fileFormat: rdf.Term;
-  fileFormatLiteral: string;
+  fileFormat: string;
+  fileFormatTerm: rdf.NamedNode;
   funder: Schema.Organization | Schema.Person;
-  genre: rdf.Term;
-  genreLiteral: string;
-  hasPart: CreativeWork;
+  genre: string;
+  genreTerm: rdf.NamedNode;
+  hasPart: Schema.CreativeWork;
   headline: string;
   inLanguage: Schema.Language;
   inLanguageLiteral: string;
   interactionStatistic: Schema.InteractionCounter;
   interactivityType: string;
   isAccessibleForFree: boolean;
-  isBasedOn: CreativeWork | Schema.Product;
-  isBasedOnUrl: CreativeWork | Schema.Product;
+  isBasedOn: Schema.CreativeWork | Schema.Product;
+  isBasedOnUrl: Schema.CreativeWork | Schema.Product;
   isFamilyFriendly: boolean;
-  isPartOf: CreativeWork;
+  isPartOf: Schema.CreativeWork;
   keywords: string;
   learningResourceType: string;
-  license: CreativeWork;
+  license: Schema.CreativeWork;
   locationCreated: Schema.Place;
   mainEntity: Schema.Thing;
   material: Schema.Product;
@@ -78,28 +78,28 @@ export interface CreativeWork extends Schema.Thing, RdfResource {
   provider: Schema.Organization | Schema.Person;
   publication: Schema.PublicationEvent;
   publisher: Schema.Organization | Schema.Person;
-  publishingPrinciples: CreativeWork;
+  publishingPrinciples: Schema.CreativeWork;
   recordedAt: Schema.Event;
   releasedEvent: Schema.PublicationEvent;
   review: Schema.Review;
   reviews: Schema.Review;
-  schemaVersion: rdf.Term;
-  schemaVersionLiteral: string;
+  schemaVersion: string;
+  schemaVersionTerm: rdf.NamedNode;
   sourceOrganization: Schema.Organization;
   spatial: Schema.Place;
   spatialCoverage: Schema.Place;
   sponsor: Schema.Organization | Schema.Person;
   temporal: Date | string;
-  temporalCoverage: rdf.Term;
-  temporalCoverageLiteral: Date | string;
+  temporalCoverage: Date | string;
+  temporalCoverageTerm: rdf.NamedNode;
   text: string;
-  thumbnailUrl: rdf.Term;
+  thumbnailUrl: rdf.NamedNode;
   timeRequired: Schema.Duration;
   translator: Schema.Organization | Schema.Person;
   typicalAgeRange: string;
   version: number | string;
   video: Schema.Clip | Schema.VideoObject;
-  workExample: CreativeWork;
+  workExample: Schema.CreativeWork;
 }
 
 export default function CreativeWorkMixin<Base extends Constructor>(Resource: Base) {
@@ -142,7 +142,7 @@ export default function CreativeWorkMixin<Base extends Constructor>(Resource: Ba
     @property.resource()
     character!: Schema.Person;
     @property.resource()
-    citation!: CreativeWork;
+    citation!: Schema.CreativeWork;
     @property.literal({ path: schema.citation })
     citationLiteral!: string;
     @property.resource()
@@ -164,13 +164,13 @@ export default function CreativeWorkMixin<Base extends Constructor>(Resource: Ba
     @property.resource()
     creator!: Schema.Organization | Schema.Person;
     @property.literal()
-    dateCreated!: Date | Date;
+    dateCreated!: Date;
     @property.literal()
-    dateModified!: Date | Date;
+    dateModified!: Date;
     @property.literal()
-    datePublished!: Date | Date;
+    datePublished!: Date;
     @property()
-    discussionUrl!: rdf.Term;
+    discussionUrl!: rdf.NamedNode;
     @property.resource()
     editor!: Schema.Person;
     @property.resource()
@@ -179,28 +179,28 @@ export default function CreativeWorkMixin<Base extends Constructor>(Resource: Ba
     educationalUse!: string;
     @property.resource()
     encoding!: Schema.MediaObject;
-    @property()
-    encodingFormat!: rdf.Term;
-    @property.literal({ path: schema.encodingFormat })
-    encodingFormatLiteral!: string;
+    @property.literal()
+    encodingFormat!: string;
+    @property({ path: schema.encodingFormat })
+    encodingFormatTerm!: rdf.NamedNode;
     @property.resource()
     encodings!: Schema.MediaObject;
     @property.resource()
-    exampleOfWork!: CreativeWork;
+    exampleOfWork!: Schema.CreativeWork;
     @property.literal()
     expires!: Date;
-    @property()
-    fileFormat!: rdf.Term;
-    @property.literal({ path: schema.fileFormat })
-    fileFormatLiteral!: string;
+    @property.literal()
+    fileFormat!: string;
+    @property({ path: schema.fileFormat })
+    fileFormatTerm!: rdf.NamedNode;
     @property.resource()
     funder!: Schema.Organization | Schema.Person;
-    @property()
-    genre!: rdf.Term;
-    @property.literal({ path: schema.genre })
-    genreLiteral!: string;
+    @property.literal()
+    genre!: string;
+    @property({ path: schema.genre })
+    genreTerm!: rdf.NamedNode;
     @property.resource()
-    hasPart!: CreativeWork;
+    hasPart!: Schema.CreativeWork;
     @property.literal()
     headline!: string;
     @property.resource()
@@ -214,19 +214,19 @@ export default function CreativeWorkMixin<Base extends Constructor>(Resource: Ba
     @property.literal({ type: Boolean })
     isAccessibleForFree!: boolean;
     @property.resource()
-    isBasedOn!: CreativeWork | Schema.Product;
+    isBasedOn!: Schema.CreativeWork | Schema.Product;
     @property.resource()
-    isBasedOnUrl!: CreativeWork | Schema.Product;
+    isBasedOnUrl!: Schema.CreativeWork | Schema.Product;
     @property.literal({ type: Boolean })
     isFamilyFriendly!: boolean;
     @property.resource()
-    isPartOf!: CreativeWork;
+    isPartOf!: Schema.CreativeWork;
     @property.literal()
     keywords!: string;
     @property.literal()
     learningResourceType!: string;
     @property.resource()
-    license!: CreativeWork;
+    license!: Schema.CreativeWork;
     @property.resource()
     locationCreated!: Schema.Place;
     @property.resource()
@@ -250,7 +250,7 @@ export default function CreativeWorkMixin<Base extends Constructor>(Resource: Ba
     @property.resource()
     publisher!: Schema.Organization | Schema.Person;
     @property.resource()
-    publishingPrinciples!: CreativeWork;
+    publishingPrinciples!: Schema.CreativeWork;
     @property.resource()
     recordedAt!: Schema.Event;
     @property.resource()
@@ -259,10 +259,10 @@ export default function CreativeWorkMixin<Base extends Constructor>(Resource: Ba
     review!: Schema.Review;
     @property.resource()
     reviews!: Schema.Review;
-    @property()
-    schemaVersion!: rdf.Term;
-    @property.literal({ path: schema.schemaVersion })
-    schemaVersionLiteral!: string;
+    @property.literal()
+    schemaVersion!: string;
+    @property({ path: schema.schemaVersion })
+    schemaVersionTerm!: rdf.NamedNode;
     @property.resource()
     sourceOrganization!: Schema.Organization;
     @property.resource()
@@ -273,14 +273,14 @@ export default function CreativeWorkMixin<Base extends Constructor>(Resource: Ba
     sponsor!: Schema.Organization | Schema.Person;
     @property.literal()
     temporal!: Date | string;
-    @property()
-    temporalCoverage!: rdf.Term;
-    @property.literal({ path: schema.temporalCoverage })
-    temporalCoverageLiteral!: Date | string;
+    @property.literal()
+    temporalCoverage!: Date | string;
+    @property({ path: schema.temporalCoverage })
+    temporalCoverageTerm!: rdf.NamedNode;
     @property.literal()
     text!: string;
     @property()
-    thumbnailUrl!: rdf.Term;
+    thumbnailUrl!: rdf.NamedNode;
     @property.resource()
     timeRequired!: Schema.Duration;
     @property.resource()
@@ -292,7 +292,7 @@ export default function CreativeWorkMixin<Base extends Constructor>(Resource: Ba
     @property.resource()
     video!: Schema.Clip | Schema.VideoObject;
     @property.resource()
-    workExample!: CreativeWork;
+    workExample!: Schema.CreativeWork;
   }
   return CreativeWorkClass
 }

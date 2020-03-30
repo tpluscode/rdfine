@@ -6,7 +6,7 @@ import type * as Csvw from '.';
 
 export interface NumericFormat extends RdfResource {
   decimalChar: string;
-  groupChar: NumericFormat;
+  groupChar: Csvw.NumericFormat;
   groupCharLiteral: string;
   pattern: string;
 }
@@ -16,8 +16,8 @@ export default function NumericFormatMixin<Base extends Constructor>(Resource: B
   class NumericFormatClass extends Resource implements NumericFormat {
     @property.literal()
     decimalChar!: string;
-    @property.resource()
-    groupChar!: NumericFormat;
+    @property.resource({ as: [NumericFormatMixin] })
+    groupChar!: Csvw.NumericFormat;
     @property.literal({ path: csvw.groupChar })
     groupCharLiteral!: string;
     @property.literal()

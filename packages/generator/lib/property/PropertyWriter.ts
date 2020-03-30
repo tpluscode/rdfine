@@ -1,58 +1,54 @@
 import { ClassDeclaration, DecoratorStructure, InterfaceDeclaration, OptionalKind } from 'ts-morph'
-import { EntityProperty, RangeMapper } from './index'
-import { fromEntityProperty, JavascriptProperty } from './JsProperties'
+import { JavascriptProperty } from './JsProperties'
 import { Context } from '../index'
-import nameOf from '../util/nameOf'
+import { TypeMeta } from '../types'
+import { MixinModule } from '../MixinGenerator/MixinModule'
 
 interface PropertyWriterInit {
   interfaceDeclaration: InterfaceDeclaration
   classDeclaration: ClassDeclaration
-  rangeMappers: RangeMapper[]
   context: Context
+  module: MixinModule
 }
 
 export class PropertyWriter {
   private readonly __interface: InterfaceDeclaration;
   private readonly __class: ClassDeclaration;
-  private readonly __rangeMappers: RangeMapper[]
   private readonly __context: Context
+  private readonly __module: MixinModule;
 
-  public constructor({ interfaceDeclaration, classDeclaration, rangeMappers, context }: PropertyWriterInit) {
+  public constructor({ interfaceDeclaration, classDeclaration, context, module }: PropertyWriterInit) {
     this.__interface = interfaceDeclaration
     this.__class = classDeclaration
-    this.__rangeMappers = rangeMappers
     this.__context = context
+    this.__module = module
   }
 
-  public addProperty(prop: EntityProperty): void {
-    const jsProps = fromEntityProperty(prop)
-
-    ;[...jsProps].forEach(jsProp => this.__addProperty(jsProp))
-  }
-
-  private __addProperty(prop: JavascriptProperty) {
+  public addProperty(prop: JavascriptProperty) {
     let type
-    let rdfTerm = false
     const propertyTypes = prop.range
-      .filter(range => !this.__context.excludedTypes.includes(nameOf.term(range.type)))
-      .map(range => this.__rangeMappers.map(toReturnType => toReturnType(range)).filter(Boolean).shift())
-      .filter(Boolean) as string[]
+      .reduce<string[]>((result, range) => {
+      const returnType = this.__getJsReturnType(range)
+      if (returnType && !result.includes(returnType)) {
+        result.push(returnType)
+      }
+
+      return result
+    }, [])
+      .sort((l, r) => l.localeCompare(r))
 
     if (propertyTypes.length === 0) {
       type = 'rdf.Term'
-      rdfTerm = true
-      this.__context.log.warn('Could not determine types for property %s', prop.name)
+      this.__context.log.warn('Could not determine types for property %s', prop.term.value)
     } else {
       if (propertyTypes.includes('rdf.NamedNode')) {
         if (propertyTypes.length > 1) {
           propertyTypes.splice(propertyTypes.indexOf('rdf.NamedNode'), 1, 'RdfResource')
-        } else {
-          rdfTerm = true
         }
       }
 
       type = propertyTypes.join(' | ')
-      this.__context.log.debug('Generating Property %s => %s: %s', prop.term, prop.name, type)
+      this.__context.log.debug('Generating Property %s => %s: %s', prop.term.value, prop.name, type)
     }
 
     this.__interface.addProperty({
@@ -66,51 +62,70 @@ export class PropertyWriter {
       type,
     })
 
-    classProp.addDecorator(this.__createDecorator(prop, propertyTypes, rdfTerm))
+    classProp.addDecorator(this.__createDecorator(prop, propertyTypes))
   }
 
-  private __createDecorator(prop: JavascriptProperty, propertyTypes: string[], rdfTerm: boolean): OptionalKind<DecoratorStructure> {
-    if (rdfTerm) {
-      return {
-        name: 'property',
-        arguments: [],
-      }
+  private __getJsReturnType(range: TypeMeta): string | null {
+    switch (range.type) {
+      case 'Literal':
+        return range.nativeName
+      case 'Resource':
+      case 'ExternalResource':
+      case 'Enumeration':
+        return range.qualifiedName
+      case 'Term':
+        return `rdf.${range.termType}`
     }
 
-    if (prop.type === 'resource') {
-      return {
-        name: 'property.resource',
-        arguments: [],
-      }
-    }
+    return null
+  }
 
-    if (prop.type === 'term') {
-      return {
-        name: 'property',
-        arguments: [],
-      }
-    }
-
+  private __createDecorator(prop: JavascriptProperty, propertyTypes: string[]): OptionalKind<DecoratorStructure> {
+    let name: string
     const decoratorOptions: string[] = []
-    const uniqueTypes = [...new Set(propertyTypes)]
+    if (prop.name !== prop.termName) {
+      decoratorOptions.push(`path: ${prop.prefixedTerm}`)
+    }
 
-    if (uniqueTypes.length === 1) {
-      switch (uniqueTypes.shift()) {
-        case 'boolean':
-          decoratorOptions.push('type: Boolean')
-          break
-        case 'number':
-          decoratorOptions.push('type: Number')
-          break
+    if (prop.semantics === 'strict' && prop.range.length === 1) {
+      const resourceRange = prop.range[0]
+      if (resourceRange.type === 'Resource') {
+        this.__module.addMixinImport(resourceRange)
+        decoratorOptions.push(`as: [${resourceRange.mixinName}]`)
+      } else if (resourceRange.type === 'ExternalResource') {
+        this.__module.addMixinImport(resourceRange)
+        decoratorOptions.push(`as: [${resourceRange.mixinName}]`)
       }
     }
 
-    if (prop.addPath) {
-      decoratorOptions.push(`path: ${this.__context.prefix}.${prop.term}`)
+    switch (prop.type) {
+      case 'literal': {
+        name = 'property.literal'
+
+        const uniqueTypes = [...new Set(propertyTypes)]
+
+        if (uniqueTypes.length === 1) {
+          switch (uniqueTypes.shift()) {
+            case 'boolean':
+              decoratorOptions.push('type: Boolean')
+              break
+            case 'number':
+              decoratorOptions.push('type: Number')
+              break
+          }
+        }
+      }
+        break
+      case 'resource':
+        name = 'property.resource'
+        break
+      case 'term':
+        name = 'property'
+        break
     }
 
     return {
-      name: 'property.literal',
+      name,
       arguments: Object.keys(decoratorOptions).length ? [`{ ${decoratorOptions.join(', ')} }`] : [],
     }
   }

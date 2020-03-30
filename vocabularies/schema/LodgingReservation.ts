@@ -6,11 +6,11 @@ import type * as Schema from '.';
 import ReservationMixin from './Reservation';
 
 export interface LodgingReservation extends Schema.Reservation, RdfResource {
-  checkinTime: Date | Date;
-  checkoutTime: Date | Date;
+  checkinTime: Date;
+  checkoutTime: Date;
   lodgingUnitDescription: string;
-  lodgingUnitType: Schema.QualitativeValue;
-  lodgingUnitTypeLiteral: string;
+  lodgingUnitType: string;
+  lodgingUnitTypeTerm: Schema.QualitativeValue;
   numAdults: Schema.QuantitativeValue;
   numAdultsLiteral: number;
   numChildren: Schema.QuantitativeValue;
@@ -21,22 +21,22 @@ export default function LodgingReservationMixin<Base extends Constructor>(Resour
   @namespace(schema)
   class LodgingReservationClass extends ReservationMixin(Resource) implements LodgingReservation {
     @property.literal()
-    checkinTime!: Date | Date;
+    checkinTime!: Date;
     @property.literal()
-    checkoutTime!: Date | Date;
+    checkoutTime!: Date;
     @property.literal()
     lodgingUnitDescription!: string;
-    @property.resource()
-    lodgingUnitType!: Schema.QualitativeValue;
-    @property.literal({ path: schema.lodgingUnitType })
-    lodgingUnitTypeLiteral!: string;
+    @property.literal()
+    lodgingUnitType!: string;
+    @property({ path: schema.lodgingUnitType })
+    lodgingUnitTypeTerm!: Schema.QualitativeValue;
     @property.resource()
     numAdults!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.numAdults })
+    @property.literal({ path: schema.numAdults, type: Number })
     numAdultsLiteral!: number;
     @property.resource()
     numChildren!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.numChildren })
+    @property.literal({ path: schema.numChildren, type: Number })
     numChildrenLiteral!: number;
   }
   return LodgingReservationClass

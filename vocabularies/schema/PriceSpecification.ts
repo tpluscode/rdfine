@@ -7,13 +7,13 @@ import StructuredValueMixin from './StructuredValue';
 
 export interface PriceSpecification extends Schema.StructuredValue, RdfResource {
   eligibleQuantity: Schema.QuantitativeValue;
-  eligibleTransactionVolume: PriceSpecification;
+  eligibleTransactionVolume: Schema.PriceSpecification;
   maxPrice: number;
   minPrice: number;
   price: number | string;
   priceCurrency: string;
-  validFrom: Date | Date;
-  validThrough: Date | Date;
+  validFrom: Date;
+  validThrough: Date;
   valueAddedTaxIncluded: boolean;
 }
 
@@ -23,7 +23,7 @@ export default function PriceSpecificationMixin<Base extends Constructor>(Resour
     @property.resource()
     eligibleQuantity!: Schema.QuantitativeValue;
     @property.resource()
-    eligibleTransactionVolume!: PriceSpecification;
+    eligibleTransactionVolume!: Schema.PriceSpecification;
     @property.literal({ type: Number })
     maxPrice!: number;
     @property.literal({ type: Number })
@@ -33,9 +33,9 @@ export default function PriceSpecificationMixin<Base extends Constructor>(Resour
     @property.literal()
     priceCurrency!: string;
     @property.literal()
-    validFrom!: Date | Date;
+    validFrom!: Date;
     @property.literal()
-    validThrough!: Date | Date;
+    validThrough!: Date;
     @property.literal({ type: Boolean })
     valueAddedTaxIncluded!: boolean;
   }

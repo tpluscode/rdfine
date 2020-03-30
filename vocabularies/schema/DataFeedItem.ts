@@ -6,9 +6,9 @@ import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
 export interface DataFeedItem extends Schema.Intangible, RdfResource {
-  dateCreated: Date | Date;
-  dateDeleted: Date | Date;
-  dateModified: Date | Date;
+  dateCreated: Date;
+  dateDeleted: Date;
+  dateModified: Date;
   item: Schema.Thing;
 }
 
@@ -16,11 +16,11 @@ export default function DataFeedItemMixin<Base extends Constructor>(Resource: Ba
   @namespace(schema)
   class DataFeedItemClass extends IntangibleMixin(Resource) implements DataFeedItem {
     @property.literal()
-    dateCreated!: Date | Date;
+    dateCreated!: Date;
     @property.literal()
-    dateDeleted!: Date | Date;
+    dateDeleted!: Date;
     @property.literal()
-    dateModified!: Date | Date;
+    dateModified!: Date;
     @property.resource()
     item!: Schema.Thing;
   }

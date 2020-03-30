@@ -3,6 +3,12 @@ import type * as rdf from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Csvw from '.';
+import DatatypeMixin from './Datatype';
+import DialectMixin from './Dialect';
+import TableMixin from './Table';
+import DirectionMixin from './Direction';
+import SchemaMixin from './Schema';
+import TransformationMixin from './Transformation';
 
 export interface TableGroup extends RdfResource {
   aboutUrl: string;
@@ -30,13 +36,13 @@ export default function TableGroupMixin<Base extends Constructor>(Resource: Base
   class TableGroupClass extends Resource implements TableGroup {
     @property.literal()
     aboutUrl!: string;
-    @property.resource()
+    @property.resource({ as: [DatatypeMixin] })
     datatype!: Csvw.Datatype;
     @property.literal({ path: csvw.datatype })
     datatypeLiteral!: string;
     @property.literal()
     default!: string;
-    @property.resource()
+    @property.resource({ as: [DialectMixin] })
     dialect!: Csvw.Dialect;
     @property.literal()
     lang!: string;
@@ -52,15 +58,15 @@ export default function TableGroupMixin<Base extends Constructor>(Resource: Base
     required!: boolean;
     @property.literal()
     separator!: string;
-    @property.resource()
+    @property.resource({ as: [TableMixin] })
     table!: Csvw.Table;
-    @property.resource()
+    @property.resource({ as: [DirectionMixin] })
     tableDirection!: Csvw.Direction;
-    @property.resource()
+    @property.resource({ as: [SchemaMixin] })
     tableSchema!: Csvw.Schema;
-    @property.resource()
+    @property.resource({ as: [DirectionMixin] })
     textDirection!: Csvw.Direction;
-    @property.resource()
+    @property.resource({ as: [TransformationMixin] })
     transformations!: Csvw.Transformation;
     @property.literal()
     valueUrl!: string;

@@ -8,14 +8,14 @@ import CreativeWorkMixin from './CreativeWork';
 export interface CreativeWorkSeason extends Schema.CreativeWork, RdfResource {
   actor: Schema.Person;
   director: Schema.Person;
-  endDate: Date | Date;
+  endDate: Date;
   episode: Schema.Episode;
   episodes: Schema.Episode;
   numberOfEpisodes: number;
   partOfSeries: Schema.CreativeWorkSeries;
   productionCompany: Schema.Organization;
   seasonNumber: number | string;
-  startDate: Date | Date;
+  startDate: Date;
   trailer: Schema.VideoObject;
 }
 
@@ -27,7 +27,7 @@ export default function CreativeWorkSeasonMixin<Base extends Constructor>(Resour
     @property.resource()
     director!: Schema.Person;
     @property.literal()
-    endDate!: Date | Date;
+    endDate!: Date;
     @property.resource()
     episode!: Schema.Episode;
     @property.resource()
@@ -41,7 +41,7 @@ export default function CreativeWorkSeasonMixin<Base extends Constructor>(Resour
     @property.literal()
     seasonNumber!: number | string;
     @property.literal()
-    startDate!: Date | Date;
+    startDate!: Date;
     @property.resource()
     trailer!: Schema.VideoObject;
   }

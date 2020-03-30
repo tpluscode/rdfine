@@ -7,9 +7,9 @@ import IntangibleMixin from './Intangible';
 
 export interface ListItem extends Schema.Intangible, RdfResource {
   item: Schema.Thing;
-  nextItem: ListItem;
+  nextItem: Schema.ListItem;
   position: number | string;
-  previousItem: ListItem;
+  previousItem: Schema.ListItem;
 }
 
 export default function ListItemMixin<Base extends Constructor>(Resource: Base) {
@@ -18,11 +18,11 @@ export default function ListItemMixin<Base extends Constructor>(Resource: Base) 
     @property.resource()
     item!: Schema.Thing;
     @property.resource()
-    nextItem!: ListItem;
+    nextItem!: Schema.ListItem;
     @property.literal()
     position!: number | string;
     @property.resource()
-    previousItem!: ListItem;
+    previousItem!: Schema.ListItem;
   }
   return ListItemClass
 }

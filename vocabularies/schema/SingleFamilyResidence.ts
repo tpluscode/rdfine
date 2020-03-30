@@ -16,7 +16,7 @@ export default function SingleFamilyResidenceMixin<Base extends Constructor>(Res
   class SingleFamilyResidenceClass extends HouseMixin(Resource) implements SingleFamilyResidence {
     @property.resource()
     numberOfRooms!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.numberOfRooms })
+    @property.literal({ path: schema.numberOfRooms, type: Number })
     numberOfRoomsLiteral!: number;
     @property.resource()
     occupancy!: Schema.QuantitativeValue;

@@ -7,7 +7,7 @@ import CreativeWorkMixin from './CreativeWork';
 
 export interface MenuSection extends Schema.CreativeWork, RdfResource {
   hasMenuItem: Schema.MenuItem;
-  hasMenuSection: MenuSection;
+  hasMenuSection: Schema.MenuSection;
 }
 
 export default function MenuSectionMixin<Base extends Constructor>(Resource: Base) {
@@ -16,7 +16,7 @@ export default function MenuSectionMixin<Base extends Constructor>(Resource: Bas
     @property.resource()
     hasMenuItem!: Schema.MenuItem;
     @property.resource()
-    hasMenuSection!: MenuSection;
+    hasMenuSection!: Schema.MenuSection;
   }
   return MenuSectionClass
 }

@@ -8,7 +8,7 @@ import ThingMixin from './Thing';
 export interface Action extends Schema.Thing, RdfResource {
   actionStatus: Schema.ActionStatusType;
   agent: Schema.Organization | Schema.Person;
-  endTime: Date | Date;
+  endTime: Date;
   error: Schema.Thing;
   instrument: Schema.Thing;
   location: Schema.Place | Schema.PostalAddress;
@@ -16,7 +16,7 @@ export interface Action extends Schema.Thing, RdfResource {
   object: Schema.Thing;
   participant: Schema.Organization | Schema.Person;
   result: Schema.Thing;
-  startTime: Date | Date;
+  startTime: Date;
   target: Schema.EntryPoint;
 }
 
@@ -28,7 +28,7 @@ export default function ActionMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     agent!: Schema.Organization | Schema.Person;
     @property.literal()
-    endTime!: Date | Date;
+    endTime!: Date;
     @property.resource()
     error!: Schema.Thing;
     @property.resource()
@@ -44,7 +44,7 @@ export default function ActionMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     result!: Schema.Thing;
     @property.literal()
-    startTime!: Date | Date;
+    startTime!: Date;
     @property.resource()
     target!: Schema.EntryPoint;
   }

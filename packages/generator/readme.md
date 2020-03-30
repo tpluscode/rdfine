@@ -96,7 +96,7 @@ The process can be further tweaked by adding a `rdfine` key to package.json. Her
 }
 ```
 
-`namespace` and `prefix` can be used in place of the CLI params.
+`namespace` and `prefix` can be used in place of the CLI params. The former is optional if the vocabulary is known to [@zazuko/rdf-vocabularies](https://npm.im/@zazuko/rdf-vocabularies)
 
 `types` maps non-standard property ranges to built-in JS types. The keys are prefixed name of the given datatype or class. The values is one of the following: `( 'string', 'number', 'boolean', 'Date', 'NamedNode' )`.
 

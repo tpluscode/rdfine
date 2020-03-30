@@ -1,34 +1,29 @@
 import { Clownface, SingleContextClownface } from 'clownface'
 import { Context } from '../index'
 import { owl, rdfs, schema } from '@tpluscode/rdf-ns-builders'
-import nameOf from '../util/nameOf'
-import { isDatatype } from '../util/subClasses'
 
-export interface EntityRange {
-  type: SingleContextClownface
-  isLiteral: boolean
+export type Range = {
+  term: SingleContextClownface
+  strictSemantics: boolean
 }
 
-export interface EntityProperty {
-  name: string
-  range: EntityRange[]
-}
-
-export interface RangeMapper {
-  (range: EntityRange): string | null
-}
-
-function findDirectRanges(prop: SingleContextClownface): SingleContextClownface[] {
-  return prop.out([schema.rangeIncludes, rdfs.range])
+function findDirectRanges(prop: SingleContextClownface): Range[] {
+  const looseSemantics = prop.out(schema.rangeIncludes)
     .filter(node => node.term.termType === 'NamedNode')
-    .toArray()
+    .map(term => ({ term, strictSemantics: false }))
+
+  const strictSemantics = prop.out(rdfs.range)
+    .filter(node => node.term.termType === 'NamedNode')
+    .map(term => ({ term, strictSemantics: true }))
+
+  return [...strictSemantics, ...looseSemantics]
 }
 
-function findUnionedRanges(prop: SingleContextClownface): SingleContextClownface[] {
+function findUnionedRanges(prop: SingleContextClownface): Range[] {
   const lists = prop.out(rdfs.range)
     .out([owl.unionOf, owl.disjointUnionOf])
 
-  return [...lists.list()]
+  return [...lists.list()].map(term => ({ term, strictSemantics: true }))
 }
 
 function flatUnique(...terms: SingleContextClownface[][]): SingleContextClownface[] {
@@ -38,6 +33,17 @@ function flatUnique(...terms: SingleContextClownface[][]): SingleContextClownfac
       return set
     }, set)
   }, new Set<SingleContextClownface>())]
+}
+
+function flatUniqueRanges(...terms: Range[][]): Range[] {
+  return [...terms.reduce((map, terms) => {
+    return terms.reduce((map, range) => {
+      if (!map.has(range.term.value)) {
+        map.set(range.term.value, range)
+      }
+      return map
+    }, map)
+  }, new Map<string, Range>()).values()]
 }
 
 function findDirectDomain(clas: SingleContextClownface, vocabulary: Clownface): SingleContextClownface[] {
@@ -57,7 +63,7 @@ function findUnionedDomains(clas: SingleContextClownface, vocabulary: Clownface)
     .map(pair => pair.prop)
 }
 
-export function findProperties({ clas }: {clas: SingleContextClownface}, context: Context): EntityProperty[] {
+export function findProperties(clas: SingleContextClownface, context: Pick<Context, 'vocabulary'>) {
   const directDomains = findDirectDomain(clas, context.vocabulary)
   const unionDomains = findUnionedDomains(clas, context.vocabulary)
 
@@ -67,14 +73,11 @@ export function findProperties({ clas }: {clas: SingleContextClownface}, context
       const owlUnionRanges = findUnionedRanges(prop)
 
       return {
-        name: nameOf.term(prop),
-        range: flatUnique(directRanges, owlUnionRanges).map(range => ({
-          type: range,
-          isLiteral: isDatatype(range, context.typeMappings),
-        })),
+        term: prop,
+        range: flatUniqueRanges(directRanges, owlUnionRanges),
       }
     })
     .sort((left, right) => {
-      return left.name.localeCompare(right.name)
+      return left.term.value.localeCompare(right.term.value)
     })
 }

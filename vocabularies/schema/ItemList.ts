@@ -8,8 +8,8 @@ import IntangibleMixin from './Intangible';
 export interface ItemList extends Schema.Intangible, RdfResource {
   itemListElement: Schema.ListItem | Schema.Thing;
   itemListElementLiteral: string;
-  itemListOrder: Schema.ItemListOrderType;
-  itemListOrderLiteral: string;
+  itemListOrder: string;
+  itemListOrderTerm: Schema.ItemListOrderType;
   numberOfItems: number;
 }
 
@@ -20,10 +20,10 @@ export default function ItemListMixin<Base extends Constructor>(Resource: Base) 
     itemListElement!: Schema.ListItem | Schema.Thing;
     @property.literal({ path: schema.itemListElement })
     itemListElementLiteral!: string;
-    @property.resource()
-    itemListOrder!: Schema.ItemListOrderType;
-    @property.literal({ path: schema.itemListOrder })
-    itemListOrderLiteral!: string;
+    @property.literal()
+    itemListOrder!: string;
+    @property({ path: schema.itemListOrder })
+    itemListOrderTerm!: Schema.ItemListOrderType;
     @property.literal({ type: Number })
     numberOfItems!: number;
   }

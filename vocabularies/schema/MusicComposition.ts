@@ -8,12 +8,12 @@ import CreativeWorkMixin from './CreativeWork';
 export interface MusicComposition extends Schema.CreativeWork, RdfResource {
   composer: Schema.Organization | Schema.Person;
   firstPerformance: Schema.Event;
-  includedComposition: MusicComposition;
+  includedComposition: Schema.MusicComposition;
   iswcCode: string;
   lyricist: Schema.Person;
   lyrics: Schema.CreativeWork;
   musicalKey: string;
-  musicArrangement: MusicComposition;
+  musicArrangement: Schema.MusicComposition;
   musicCompositionForm: string;
   recordedAs: Schema.MusicRecording;
 }
@@ -26,7 +26,7 @@ export default function MusicCompositionMixin<Base extends Constructor>(Resource
     @property.resource()
     firstPerformance!: Schema.Event;
     @property.resource()
-    includedComposition!: MusicComposition;
+    includedComposition!: Schema.MusicComposition;
     @property.literal()
     iswcCode!: string;
     @property.resource()
@@ -36,7 +36,7 @@ export default function MusicCompositionMixin<Base extends Constructor>(Resource
     @property.literal()
     musicalKey!: string;
     @property.resource()
-    musicArrangement!: MusicComposition;
+    musicArrangement!: Schema.MusicComposition;
     @property.literal()
     musicCompositionForm!: string;
     @property.resource()

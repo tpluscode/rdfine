@@ -7,16 +7,16 @@ import CreativeWorkMixin from './CreativeWork';
 
 export interface VisualArtwork extends Schema.CreativeWork, RdfResource {
   artEdition: number | string;
-  artform: rdf.Term;
-  artformLiteral: string;
-  artMedium: rdf.Term;
-  artMediumLiteral: string;
-  artworkSurface: rdf.Term;
-  artworkSurfaceLiteral: string;
+  artform: string;
+  artformTerm: rdf.NamedNode;
+  artMedium: string;
+  artMediumTerm: rdf.NamedNode;
+  artworkSurface: string;
+  artworkSurfaceTerm: rdf.NamedNode;
   depth: Schema.Distance | Schema.QuantitativeValue;
   height: Schema.Distance | Schema.QuantitativeValue;
-  surface: rdf.Term;
-  surfaceLiteral: string;
+  surface: string;
+  surfaceTerm: rdf.NamedNode;
   width: Schema.Distance | Schema.QuantitativeValue;
 }
 
@@ -25,26 +25,26 @@ export default function VisualArtworkMixin<Base extends Constructor>(Resource: B
   class VisualArtworkClass extends CreativeWorkMixin(Resource) implements VisualArtwork {
     @property.literal()
     artEdition!: number | string;
-    @property()
-    artform!: rdf.Term;
-    @property.literal({ path: schema.artform })
-    artformLiteral!: string;
-    @property()
-    artMedium!: rdf.Term;
-    @property.literal({ path: schema.artMedium })
-    artMediumLiteral!: string;
-    @property()
-    artworkSurface!: rdf.Term;
-    @property.literal({ path: schema.artworkSurface })
-    artworkSurfaceLiteral!: string;
+    @property.literal()
+    artform!: string;
+    @property({ path: schema.artform })
+    artformTerm!: rdf.NamedNode;
+    @property.literal()
+    artMedium!: string;
+    @property({ path: schema.artMedium })
+    artMediumTerm!: rdf.NamedNode;
+    @property.literal()
+    artworkSurface!: string;
+    @property({ path: schema.artworkSurface })
+    artworkSurfaceTerm!: rdf.NamedNode;
     @property.resource()
     depth!: Schema.Distance | Schema.QuantitativeValue;
     @property.resource()
     height!: Schema.Distance | Schema.QuantitativeValue;
-    @property()
-    surface!: rdf.Term;
-    @property.literal({ path: schema.surface })
-    surfaceLiteral!: string;
+    @property.literal()
+    surface!: string;
+    @property({ path: schema.surface })
+    surfaceTerm!: rdf.NamedNode;
     @property.resource()
     width!: Schema.Distance | Schema.QuantitativeValue;
   }

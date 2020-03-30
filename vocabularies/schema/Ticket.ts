@@ -6,13 +6,13 @@ import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
 export interface Ticket extends Schema.Intangible, RdfResource {
-  dateIssued: Date | Date;
+  dateIssued: Date;
   issuedBy: Schema.Organization;
   priceCurrency: string;
   ticketedSeat: Schema.Seat;
   ticketNumber: string;
-  ticketToken: rdf.Term;
-  ticketTokenLiteral: string;
+  ticketToken: string;
+  ticketTokenTerm: rdf.NamedNode;
   totalPrice: Schema.PriceSpecification;
   totalPriceLiteral: number | string;
   underName: Schema.Organization | Schema.Person;
@@ -22,7 +22,7 @@ export default function TicketMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TicketClass extends IntangibleMixin(Resource) implements Ticket {
     @property.literal()
-    dateIssued!: Date | Date;
+    dateIssued!: Date;
     @property.resource()
     issuedBy!: Schema.Organization;
     @property.literal()
@@ -31,10 +31,10 @@ export default function TicketMixin<Base extends Constructor>(Resource: Base) {
     ticketedSeat!: Schema.Seat;
     @property.literal()
     ticketNumber!: string;
-    @property()
-    ticketToken!: rdf.Term;
-    @property.literal({ path: schema.ticketToken })
-    ticketTokenLiteral!: string;
+    @property.literal()
+    ticketToken!: string;
+    @property({ path: schema.ticketToken })
+    ticketTokenTerm!: rdf.NamedNode;
     @property.resource()
     totalPrice!: Schema.PriceSpecification;
     @property.literal({ path: schema.totalPrice })

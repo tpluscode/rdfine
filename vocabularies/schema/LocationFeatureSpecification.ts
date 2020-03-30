@@ -7,8 +7,8 @@ import PropertyValueMixin from './PropertyValue';
 
 export interface LocationFeatureSpecification extends Schema.PropertyValue, RdfResource {
   hoursAvailable: Schema.OpeningHoursSpecification;
-  validFrom: Date | Date;
-  validThrough: Date | Date;
+  validFrom: Date;
+  validThrough: Date;
 }
 
 export default function LocationFeatureSpecificationMixin<Base extends Constructor>(Resource: Base) {
@@ -17,9 +17,9 @@ export default function LocationFeatureSpecificationMixin<Base extends Construct
     @property.resource()
     hoursAvailable!: Schema.OpeningHoursSpecification;
     @property.literal()
-    validFrom!: Date | Date;
+    validFrom!: Date;
     @property.literal()
-    validThrough!: Date | Date;
+    validThrough!: Date;
   }
   return LocationFeatureSpecificationClass
 }

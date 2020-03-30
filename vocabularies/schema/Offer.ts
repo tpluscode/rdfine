@@ -6,15 +6,15 @@ import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
 export interface Offer extends Schema.Intangible, RdfResource {
-  acceptedPaymentMethod: Schema.LoanOrCredit | Schema.PaymentMethod;
-  addOn: Offer;
+  acceptedPaymentMethod: Schema.LoanOrCredit;
+  addOn: Schema.Offer;
   advanceBookingRequirement: Schema.QuantitativeValue;
   aggregateRating: Schema.AggregateRating;
   areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
   areaServedLiteral: string;
   availability: Schema.ItemAvailability;
-  availabilityEnds: Date | Date | Date;
-  availabilityStarts: Date | Date | Date;
+  availabilityEnds: Date;
+  availabilityStarts: Date;
   availableAtOrFrom: Schema.Place;
   availableDeliveryMethod: Schema.DeliveryMethod;
   businessFunction: Schema.BusinessFunction;
@@ -46,8 +46,8 @@ export interface Offer extends Schema.Intangible, RdfResource {
   seller: Schema.Organization | Schema.Person;
   serialNumber: string;
   sku: string;
-  validFrom: Date | Date;
-  validThrough: Date | Date;
+  validFrom: Date;
+  validThrough: Date;
   warranty: Schema.WarrantyPromise;
 }
 
@@ -55,9 +55,9 @@ export default function OfferMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OfferClass extends IntangibleMixin(Resource) implements Offer {
     @property.resource()
-    acceptedPaymentMethod!: Schema.LoanOrCredit | Schema.PaymentMethod;
+    acceptedPaymentMethod!: Schema.LoanOrCredit;
     @property.resource()
-    addOn!: Offer;
+    addOn!: Schema.Offer;
     @property.resource()
     advanceBookingRequirement!: Schema.QuantitativeValue;
     @property.resource()
@@ -69,9 +69,9 @@ export default function OfferMixin<Base extends Constructor>(Resource: Base) {
     @property()
     availability!: Schema.ItemAvailability;
     @property.literal()
-    availabilityEnds!: Date | Date | Date;
+    availabilityEnds!: Date;
     @property.literal()
-    availabilityStarts!: Date | Date | Date;
+    availabilityStarts!: Date;
     @property.resource()
     availableAtOrFrom!: Schema.Place;
     @property()
@@ -135,9 +135,9 @@ export default function OfferMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     sku!: string;
     @property.literal()
-    validFrom!: Date | Date;
+    validFrom!: Date;
     @property.literal()
-    validThrough!: Date | Date;
+    validThrough!: Date;
     @property.resource()
     warranty!: Schema.WarrantyPromise;
   }

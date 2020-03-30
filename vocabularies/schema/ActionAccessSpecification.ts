@@ -6,8 +6,8 @@ import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
 export interface ActionAccessSpecification extends Schema.Intangible, RdfResource {
-  availabilityEnds: Date | Date | Date;
-  availabilityStarts: Date | Date | Date;
+  availabilityEnds: Date;
+  availabilityStarts: Date;
   category: Schema.Thing;
   categoryLiteral: string;
   eligibleRegion: Schema.GeoShape | Schema.Place;
@@ -21,9 +21,9 @@ export default function ActionAccessSpecificationMixin<Base extends Constructor>
   @namespace(schema)
   class ActionAccessSpecificationClass extends IntangibleMixin(Resource) implements ActionAccessSpecification {
     @property.literal()
-    availabilityEnds!: Date | Date | Date;
+    availabilityEnds!: Date;
     @property.literal()
-    availabilityStarts!: Date | Date | Date;
+    availabilityStarts!: Date;
     @property.resource()
     category!: Schema.Thing;
     @property.literal({ path: schema.category })
@@ -36,7 +36,7 @@ export default function ActionAccessSpecificationMixin<Base extends Constructor>
     expectsAcceptanceOf!: Schema.Offer;
     @property.resource()
     requiresSubscription!: Schema.MediaSubscription;
-    @property.literal({ type: Boolean, path: schema.requiresSubscription })
+    @property.literal({ path: schema.requiresSubscription, type: Boolean })
     requiresSubscriptionLiteral!: boolean;
   }
   return ActionAccessSpecificationClass

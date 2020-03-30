@@ -14,7 +14,6 @@
     "generate": "rdf-vocab prefix schema | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
   },
   "rdfine": {
-    "namespace": "http://schema.org/",
     "prefix": "schema",
     "types": {
       "schema:CssSelectorType": "string",
@@ -29,12 +28,11 @@
       "Enumeration",
       "GeospatialGeometry",
       "MedicalBusiness",
-      "PhysicalActivityCategory",
-      "URL",
       "VirtualLocation"
     ]
   },
   "dependencies": {
+    "@rdfjs/namespace": "^1.1.0",
     "@tpluscode/rdf-ns-builders": "^0.1.0",
     "@tpluscode/rdfine": "^0.3.7"
   },
@@ -79,5 +77,5 @@
   "bugs": {
     "url": "https://github.com/tpluscode/rdfine/issues"
   },
-  "homepage": "https://github.com/tpluscode/rdfine#readme"
+  "homepage": "https://github.com/tpluscode/rdfine/tree/master/vocabularies/schema#readme"
 }

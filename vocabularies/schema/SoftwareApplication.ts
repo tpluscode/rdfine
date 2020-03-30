@@ -6,51 +6,51 @@ import type * as Schema from '.';
 import CreativeWorkMixin from './CreativeWork';
 
 export interface SoftwareApplication extends Schema.CreativeWork, RdfResource {
-  applicationCategory: rdf.Term;
-  applicationCategoryLiteral: string;
-  applicationSubCategory: rdf.Term;
-  applicationSubCategoryLiteral: string;
+  applicationCategory: string;
+  applicationCategoryTerm: rdf.NamedNode;
+  applicationSubCategory: string;
+  applicationSubCategoryTerm: rdf.NamedNode;
   applicationSuite: string;
   availableOnDevice: string;
   countriesNotSupported: string;
   countriesSupported: string;
   device: string;
-  downloadUrl: rdf.Term;
-  featureList: rdf.Term;
-  featureListLiteral: string;
+  downloadUrl: rdf.NamedNode;
+  featureList: string;
+  featureListTerm: rdf.NamedNode;
   fileSize: string;
-  installUrl: rdf.Term;
-  memoryRequirements: rdf.Term;
-  memoryRequirementsLiteral: string;
+  installUrl: rdf.NamedNode;
+  memoryRequirements: string;
+  memoryRequirementsTerm: rdf.NamedNode;
   operatingSystem: string;
   permissions: string;
   processorRequirements: string;
-  releaseNotes: rdf.Term;
-  releaseNotesLiteral: string;
-  requirements: rdf.Term;
-  requirementsLiteral: string;
+  releaseNotes: string;
+  releaseNotesTerm: rdf.NamedNode;
+  requirements: string;
+  requirementsTerm: rdf.NamedNode;
   screenshot: Schema.ImageObject;
-  softwareAddOn: SoftwareApplication;
+  softwareAddOn: Schema.SoftwareApplication;
   softwareHelp: Schema.CreativeWork;
-  softwareRequirements: rdf.Term;
-  softwareRequirementsLiteral: string;
+  softwareRequirements: string;
+  softwareRequirementsTerm: rdf.NamedNode;
   softwareVersion: string;
-  storageRequirements: rdf.Term;
-  storageRequirementsLiteral: string;
+  storageRequirements: string;
+  storageRequirementsTerm: rdf.NamedNode;
   supportingData: Schema.DataFeed;
 }
 
 export default function SoftwareApplicationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SoftwareApplicationClass extends CreativeWorkMixin(Resource) implements SoftwareApplication {
-    @property()
-    applicationCategory!: rdf.Term;
-    @property.literal({ path: schema.applicationCategory })
-    applicationCategoryLiteral!: string;
-    @property()
-    applicationSubCategory!: rdf.Term;
-    @property.literal({ path: schema.applicationSubCategory })
-    applicationSubCategoryLiteral!: string;
+    @property.literal()
+    applicationCategory!: string;
+    @property({ path: schema.applicationCategory })
+    applicationCategoryTerm!: rdf.NamedNode;
+    @property.literal()
+    applicationSubCategory!: string;
+    @property({ path: schema.applicationSubCategory })
+    applicationSubCategoryTerm!: rdf.NamedNode;
     @property.literal()
     applicationSuite!: string;
     @property.literal()
@@ -62,49 +62,49 @@ export default function SoftwareApplicationMixin<Base extends Constructor>(Resou
     @property.literal()
     device!: string;
     @property()
-    downloadUrl!: rdf.Term;
-    @property()
-    featureList!: rdf.Term;
-    @property.literal({ path: schema.featureList })
-    featureListLiteral!: string;
+    downloadUrl!: rdf.NamedNode;
+    @property.literal()
+    featureList!: string;
+    @property({ path: schema.featureList })
+    featureListTerm!: rdf.NamedNode;
     @property.literal()
     fileSize!: string;
     @property()
-    installUrl!: rdf.Term;
-    @property()
-    memoryRequirements!: rdf.Term;
-    @property.literal({ path: schema.memoryRequirements })
-    memoryRequirementsLiteral!: string;
+    installUrl!: rdf.NamedNode;
+    @property.literal()
+    memoryRequirements!: string;
+    @property({ path: schema.memoryRequirements })
+    memoryRequirementsTerm!: rdf.NamedNode;
     @property.literal()
     operatingSystem!: string;
     @property.literal()
     permissions!: string;
     @property.literal()
     processorRequirements!: string;
-    @property()
-    releaseNotes!: rdf.Term;
-    @property.literal({ path: schema.releaseNotes })
-    releaseNotesLiteral!: string;
-    @property()
-    requirements!: rdf.Term;
-    @property.literal({ path: schema.requirements })
-    requirementsLiteral!: string;
+    @property.literal()
+    releaseNotes!: string;
+    @property({ path: schema.releaseNotes })
+    releaseNotesTerm!: rdf.NamedNode;
+    @property.literal()
+    requirements!: string;
+    @property({ path: schema.requirements })
+    requirementsTerm!: rdf.NamedNode;
     @property.resource()
     screenshot!: Schema.ImageObject;
     @property.resource()
-    softwareAddOn!: SoftwareApplication;
+    softwareAddOn!: Schema.SoftwareApplication;
     @property.resource()
     softwareHelp!: Schema.CreativeWork;
-    @property()
-    softwareRequirements!: rdf.Term;
-    @property.literal({ path: schema.softwareRequirements })
-    softwareRequirementsLiteral!: string;
+    @property.literal()
+    softwareRequirements!: string;
+    @property({ path: schema.softwareRequirements })
+    softwareRequirementsTerm!: rdf.NamedNode;
     @property.literal()
     softwareVersion!: string;
-    @property()
-    storageRequirements!: rdf.Term;
-    @property.literal({ path: schema.storageRequirements })
-    storageRequirementsLiteral!: string;
+    @property.literal()
+    storageRequirements!: string;
+    @property({ path: schema.storageRequirements })
+    storageRequirementsTerm!: rdf.NamedNode;
     @property.resource()
     supportingData!: Schema.DataFeed;
   }

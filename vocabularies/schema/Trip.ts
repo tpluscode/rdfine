@@ -6,8 +6,8 @@ import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
 export interface Trip extends Schema.Intangible, RdfResource {
-  arrivalTime: Date | Date;
-  departureTime: Date | Date;
+  arrivalTime: Date;
+  departureTime: Date;
   offers: Schema.Demand | Schema.Offer;
   provider: Schema.Organization | Schema.Person;
 }
@@ -16,9 +16,9 @@ export default function TripMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TripClass extends IntangibleMixin(Resource) implements Trip {
     @property.literal()
-    arrivalTime!: Date | Date;
+    arrivalTime!: Date;
     @property.literal()
-    departureTime!: Date | Date;
+    departureTime!: Date;
     @property.resource()
     offers!: Schema.Demand | Schema.Offer;
     @property.resource()

@@ -3,6 +3,11 @@ import type * as rdf from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
 import type * as Csvw from '.';
+import ColumnMixin from './Column';
+import DatatypeMixin from './Datatype';
+import ForeignKeyMixin from './ForeignKey';
+import DirectionMixin from './Direction';
+import TransformationMixin from './Transformation';
 
 export interface Schema extends RdfResource {
   aboutUrl: string;
@@ -29,15 +34,15 @@ export default function SchemaMixin<Base extends Constructor>(Resource: Base) {
   class SchemaClass extends Resource implements Schema {
     @property.literal()
     aboutUrl!: string;
-    @property.resource()
+    @property.resource({ as: [ColumnMixin] })
     column!: Csvw.Column;
-    @property.resource()
+    @property.resource({ as: [DatatypeMixin] })
     datatype!: Csvw.Datatype;
     @property.literal({ path: csvw.datatype })
     datatypeLiteral!: string;
     @property.literal()
     default!: string;
-    @property.resource()
+    @property.resource({ as: [ForeignKeyMixin] })
     foreignKey!: Csvw.ForeignKey;
     @property.literal()
     lang!: string;
@@ -55,9 +60,9 @@ export default function SchemaMixin<Base extends Constructor>(Resource: Base) {
     rowTitle!: string;
     @property.literal()
     separator!: string;
-    @property.resource()
+    @property.resource({ as: [DirectionMixin] })
     textDirection!: Csvw.Direction;
-    @property.resource()
+    @property.resource({ as: [TransformationMixin] })
     transformations!: Csvw.Transformation;
     @property.literal()
     valueUrl!: string;

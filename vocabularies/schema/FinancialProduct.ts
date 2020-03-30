@@ -8,8 +8,8 @@ import ServiceMixin from './Service';
 export interface FinancialProduct extends Schema.Service, RdfResource {
   annualPercentageRate: Schema.QuantitativeValue;
   annualPercentageRateLiteral: number;
-  feesAndCommissionsSpecification: rdf.Term;
-  feesAndCommissionsSpecificationLiteral: string;
+  feesAndCommissionsSpecification: string;
+  feesAndCommissionsSpecificationTerm: rdf.NamedNode;
   interestRate: Schema.QuantitativeValue;
   interestRateLiteral: number;
 }
@@ -19,15 +19,15 @@ export default function FinancialProductMixin<Base extends Constructor>(Resource
   class FinancialProductClass extends ServiceMixin(Resource) implements FinancialProduct {
     @property.resource()
     annualPercentageRate!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.annualPercentageRate })
+    @property.literal({ path: schema.annualPercentageRate, type: Number })
     annualPercentageRateLiteral!: number;
-    @property()
-    feesAndCommissionsSpecification!: rdf.Term;
-    @property.literal({ path: schema.feesAndCommissionsSpecification })
-    feesAndCommissionsSpecificationLiteral!: string;
+    @property.literal()
+    feesAndCommissionsSpecification!: string;
+    @property({ path: schema.feesAndCommissionsSpecification })
+    feesAndCommissionsSpecificationTerm!: rdf.NamedNode;
     @property.resource()
     interestRate!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.interestRate })
+    @property.literal({ path: schema.interestRate, type: Number })
     interestRateLiteral!: number;
   }
   return FinancialProductClass

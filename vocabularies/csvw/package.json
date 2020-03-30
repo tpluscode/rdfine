@@ -13,10 +13,13 @@
 		"generate": "rdf-vocab prefix csvw | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
 	},
 	"rdfine": {
-		"namespace": "http://www.w3.org/ns/csvw#",
-		"prefix": "csvw"
+		"prefix": "csvw",
+    "types": {
+      "uriTemplate": "string"
+    }
 	},
 	"dependencies": {
+    "@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.1.0",
 		"@tpluscode/rdfine": "^0.3.7"
 	},
@@ -61,5 +64,5 @@
 	"bugs": {
 		"url": "https://github.com/tpluscode/rdfine/issues"
 	},
-	"homepage": "https://github.com/tpluscode/rdfine#readme"
+  "homepage": "https://github.com/tpluscode/rdfine/tree/master/vocabularies/csvw#readme"
 }

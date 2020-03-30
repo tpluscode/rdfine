@@ -21,14 +21,14 @@ export interface Product extends Schema.Thing, RdfResource {
   gtin14: string;
   gtin8: string;
   height: Schema.Distance | Schema.QuantitativeValue;
-  isAccessoryOrSparePartFor: Product;
-  isConsumableFor: Product;
-  isRelatedTo: Product | Schema.Service;
-  isSimilarTo: Product | Schema.Service;
+  isAccessoryOrSparePartFor: Schema.Product;
+  isConsumableFor: Schema.Product;
+  isRelatedTo: Schema.Product | Schema.Service;
+  isSimilarTo: Schema.Product | Schema.Service;
   itemCondition: Schema.OfferItemCondition;
   logo: Schema.ImageObject;
   manufacturer: Schema.Organization;
-  material: Product;
+  material: Schema.Product;
   materialLiteral: string;
   model: Schema.ProductModel;
   modelLiteral: string;
@@ -80,13 +80,13 @@ export default function ProductMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     height!: Schema.Distance | Schema.QuantitativeValue;
     @property.resource()
-    isAccessoryOrSparePartFor!: Product;
+    isAccessoryOrSparePartFor!: Schema.Product;
     @property.resource()
-    isConsumableFor!: Product;
+    isConsumableFor!: Schema.Product;
     @property.resource()
-    isRelatedTo!: Product | Schema.Service;
+    isRelatedTo!: Schema.Product | Schema.Service;
     @property.resource()
-    isSimilarTo!: Product | Schema.Service;
+    isSimilarTo!: Schema.Product | Schema.Service;
     @property()
     itemCondition!: Schema.OfferItemCondition;
     @property.resource()
@@ -94,7 +94,7 @@ export default function ProductMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     manufacturer!: Schema.Organization;
     @property.resource()
-    material!: Product;
+    material!: Schema.Product;
     @property.literal({ path: schema.material })
     materialLiteral!: string;
     @property.resource()

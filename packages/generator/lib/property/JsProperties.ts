@@ -1,66 +1,96 @@
-import { EntityProperty, EntityRange } from './index'
-import { isEnumerationType } from '../util/subClasses'
+import { SingleContextClownface } from 'clownface'
+import { shrink } from '@zazuko/rdf-vocabularies'
+import { Term } from 'rdf-js'
+import { TypeMeta, TypeMetaCollection } from '../types'
+import { Context } from '../index'
+import { nameOf } from '../util/nameOf'
+import { Range } from './index'
 
 export interface JavascriptProperty {
+  semantics: 'strict' | 'loose' | undefined
   name: string
-  range: EntityRange[]
-  addPath?: boolean
-  term: string
+  range: TypeMeta[]
+  term: Term
+  termName: string
+  prefixedTerm: string
   type: 'resource' | 'term' | 'literal'
 }
 
-interface RangesSplit {
-  objectProperties: EntityRange[]
-  datatypeProperties: EntityRange[]
-}
+function groupRangeTypes(range: Range[], types: TypeMetaCollection, { log }: Context) {
+  const grouped = {
+    resource: [] as TypeMeta[],
+    literal: [] as TypeMeta[],
+    term: [] as TypeMeta[],
+  }
 
-function splitRanges(ranges: EntityRange[]): RangesSplit {
-  return ranges.reduce<RangesSplit>((split, range) => {
-    if (range.isLiteral) {
-      split.datatypeProperties.push(range)
-    } else {
-      split.objectProperties.push(range)
+  for (const rangeType of range) {
+    const meta = types.get(rangeType.term)
+    if (!meta) {
+      log.warn(`Skipping unrecognized property type ${rangeType.term.value}`)
+      continue
     }
 
-    return split
-  }, {
-    objectProperties: [],
-    datatypeProperties: [],
-  })
+    switch (meta.type) {
+      case 'Literal':
+        grouped.literal.push(meta)
+        continue
+      case 'Resource':
+      case 'ExternalResource':
+        grouped.resource.push(meta)
+        continue
+      default:
+        grouped.term.push(meta)
+    }
+  }
+
+  return grouped
 }
 
-export function * fromEntityProperty(prop: EntityProperty): Iterable<JavascriptProperty> {
-  const ranges = splitRanges(prop.range)
+export function * toJavascriptProperties(prop: SingleContextClownface, range: Range[], types: TypeMetaCollection, context: Context): Iterable<JavascriptProperty> {
+  const ranges = groupRangeTypes(range, types, context)
+  const baseProperty: Omit<JavascriptProperty, 'type' | 'range'> = {
+    semantics: undefined,
+    term: prop.term,
+    name: nameOf(prop),
+    termName: nameOf(prop),
+    prefixedTerm: (shrink(prop.value) || nameOf(prop)).replace(':', '.'),
+  }
+  let resourceProperty: JavascriptProperty | null = null
+  let literalProperty: JavascriptProperty | null = null
+  let termProperty: JavascriptProperty | null = null
 
-  if (ranges.datatypeProperties.length && ranges.objectProperties.length) {
-    yield {
-      name: prop.name,
-      term: prop.name,
-      range: ranges.objectProperties,
+  if (ranges.resource.length) {
+    const semantics = range.every(r => r.strictSemantics) ? 'strict' : 'loose'
+
+    resourceProperty = {
+      ...baseProperty,
+      range: ranges.resource,
       type: 'resource',
+      semantics,
     }
+  }
 
-    yield {
-      name: prop.name + 'Literal',
-      term: prop.name,
-      range: ranges.datatypeProperties,
-      addPath: true,
+  if (ranges.literal.length) {
+    const name = ranges.resource.length ? `${baseProperty.name}Literal` : baseProperty.name
+    literalProperty = {
+      ...baseProperty,
+      name,
+      range: ranges.literal,
       type: 'literal',
     }
-
-    return
   }
 
-  let type: JavascriptProperty['type'] = 'literal'
-  if (ranges.objectProperties.length) {
-    const isEnumeration = ranges.objectProperties.every(range => isEnumerationType(range.type))
-    type = isEnumeration ? 'term' : 'resource'
+  if ((ranges.term.length && !ranges.resource.length) || (!ranges.literal.length && !ranges.resource.length)) {
+    const name = ranges.literal.length ? `${baseProperty.name}Term` : baseProperty.name
+    termProperty = {
+      ...baseProperty,
+      name,
+      range: ranges.term,
+      type: 'term',
+    }
   }
 
-  yield {
-    name: prop.name,
-    term: prop.name,
-    range: prop.range,
-    type,
-  }
+  if (resourceProperty) yield resourceProperty
+  if (literalProperty) yield literalProperty
+  if (termProperty) yield termProperty
 }

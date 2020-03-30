@@ -1,6 +1,6 @@
-import { TypeMap } from '../index'
+export type DatatypeName = 'boolean' | 'string' | 'number' | 'Date'
 
-export const defaultMappings: TypeMap = {
+export const wellKnownDatatypes: Record<string, DatatypeName> = {
   'xsd:boolean': 'boolean',
   'xsd:decimal': 'number',
   'xsd:int': 'number',
@@ -14,6 +14,7 @@ export const defaultMappings: TypeMap = {
   'xsd:dateTime': 'Date',
   'xsd:string': 'string',
   'schema:Boolean': 'boolean',
+  'schema:Float': 'number',
   'schema:Number': 'number',
   'schema:Integer': 'number',
   'schema:Date': 'Date',

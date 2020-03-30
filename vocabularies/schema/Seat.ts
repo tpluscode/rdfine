@@ -6,8 +6,8 @@ import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
 export interface Seat extends Schema.Intangible, RdfResource {
-  seatingType: Schema.QualitativeValue;
-  seatingTypeLiteral: string;
+  seatingType: string;
+  seatingTypeTerm: Schema.QualitativeValue;
   seatNumber: string;
   seatRow: string;
   seatSection: string;
@@ -16,10 +16,10 @@ export interface Seat extends Schema.Intangible, RdfResource {
 export default function SeatMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SeatClass extends IntangibleMixin(Resource) implements Seat {
-    @property.resource()
-    seatingType!: Schema.QualitativeValue;
-    @property.literal({ path: schema.seatingType })
-    seatingTypeLiteral!: string;
+    @property.literal()
+    seatingType!: string;
+    @property({ path: schema.seatingType })
+    seatingTypeTerm!: Schema.QualitativeValue;
     @property.literal()
     seatNumber!: string;
     @property.literal()

@@ -16,7 +16,7 @@ export default function ApartmentMixin<Base extends Constructor>(Resource: Base)
   class ApartmentClass extends AccommodationMixin(Resource) implements Apartment {
     @property.resource()
     numberOfRooms!: Schema.QuantitativeValue;
-    @property.literal({ type: Number, path: schema.numberOfRooms })
+    @property.literal({ path: schema.numberOfRooms, type: Number })
     numberOfRoomsLiteral!: number;
     @property.resource()
     occupancy!: Schema.QuantitativeValue;

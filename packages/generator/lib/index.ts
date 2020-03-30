@@ -1,22 +1,119 @@
-import { Clownface } from 'clownface'
-import { NamespaceBuilder } from '@rdfjs/namespace'
+import cf, { Clownface, SingleContextClownface } from 'clownface'
 import { Debugger } from 'debug'
-import { NamedNode } from 'rdf-js'
-
-type PropertyType = 'string' | 'number' | 'boolean' | 'Date' | NamedNode['termType']
-
-export type TypeMap = Record<string, PropertyType>
+import { Stream } from 'rdf-js'
+import rdf from 'rdf-ext'
+import nsBuilder from '@rdfjs/namespace'
+import { expand, prefixes } from '@zazuko/rdf-vocabularies'
+import { IndentationText, Project, QuoteKind, SourceFile } from 'ts-morph'
+import FileSystem from './util/FileSystem'
+import * as generator from './generator'
+import * as EnumerationGenerator from './EnumerationGenerator'
+import { EnumerationType, ResourceType, TypeMap, TypeMetaCollection } from './types'
+import * as MixinGenerator from './MixinGenerator'
+import * as factories from './types/metaFactories'
+import { toUpperInitial } from './util/string'
 
 export interface Context {
   vocabulary: Clownface
-  namespace: NamespaceBuilder
   prefix: string
   defaultExport: string
-  typeMappings: TypeMap
-  excludedTypes: string[]
   log: {
     debug: Debugger
     warn: Debugger
     error: Debugger
   }
+}
+
+export interface ModuleStrategy {
+  (types: TypeMetaCollection, context: Context): GeneratedModule[]
+}
+
+export interface GeneratedModule {
+  node: SingleContextClownface
+  type: ResourceType | EnumerationType
+  writeModule(sourceFile: SourceFile, types: TypeMetaCollection, context: Context): {
+    mainModuleExport?: string
+    mainModuleMixinExport?: string
+  }
+}
+
+interface GeneratorOptions {
+  stream: Stream
+  namespace: string
+  outDir: string
+  prefix: string
+  exclude: string[]
+  types: Record<string, any>
+}
+
+function assertOptions(options: Record<string, any>) {
+  ['stream', 'outDir', 'prefix']
+    .forEach(arg => {
+      if (!options[arg]) {
+        throw new Error(`Missing ${arg} parameter`)
+      }
+    })
+}
+
+export async function generate(options: GeneratorOptions, logger: Debugger) {
+  assertOptions(options)
+
+  if (options.namespace) {
+    prefixes[options.prefix] = options.namespace
+  }
+
+  if (!prefixes[options.prefix]) {
+    throw new Error(`The prefix ${options.prefix} is not known to @zazuko/rdf-vocabularies. It has to provided as parameter`)
+  }
+
+  const dataset = await rdf.dataset().import(options.stream)
+  const vocabulary = cf({ dataset })
+
+  const project = new Project({
+    fileSystem: new FileSystem(options.outDir),
+    manipulationSettings: {
+      useTrailingCommas: true,
+      indentationText: IndentationText.TwoSpaces,
+      quoteKind: QuoteKind.Single,
+    },
+  })
+
+  const strategies: ModuleStrategy[] = [
+    EnumerationGenerator.findTermsToGenerate,
+    MixinGenerator.findTermsToGenerate,
+  ]
+
+  const namespace = nsBuilder(prefixes[options.prefix])
+  const excludedTerms = options.exclude
+    .map(excludedTerm => {
+      return excludedTerm.includes(':') ? rdf.namedNode(expand(excludedTerm)) : namespace(excludedTerm)
+    })
+
+  const log = {
+    debug: logger,
+    error: logger.extend('error'),
+    warn: logger.extend('warn'),
+  }
+  const context = {
+    vocabulary,
+    prefix: options.prefix,
+    defaultExport: toUpperInitial(options.prefix),
+    log,
+  }
+  const types = new TypeMap({
+    excluded: excludedTerms,
+    context,
+    factories: [
+      factories.overrides(options.types),
+      factories.datatypes,
+      factories.enumerationTypes,
+      factories.resourceTypes,
+      factories.enumerationMembers,
+    ],
+  })
+
+  log.error.enabled = true
+  log.warn.enabled = true
+
+  await generator.generate(project, types, strategies, context)
 }

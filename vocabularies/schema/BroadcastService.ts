@@ -16,7 +16,7 @@ export interface BroadcastService extends Schema.Service, RdfResource {
   hasBroadcastChannel: Schema.BroadcastChannel;
   inLanguage: Schema.Language;
   inLanguageLiteral: string;
-  parentService: BroadcastService;
+  parentService: Schema.BroadcastService;
   videoFormat: string;
 }
 
@@ -44,7 +44,7 @@ export default function BroadcastServiceMixin<Base extends Constructor>(Resource
     @property.literal({ path: schema.inLanguage })
     inLanguageLiteral!: string;
     @property.resource()
-    parentService!: BroadcastService;
+    parentService!: Schema.BroadcastService;
     @property.literal()
     videoFormat!: string;
   }
