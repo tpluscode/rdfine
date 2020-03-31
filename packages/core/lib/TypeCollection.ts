@@ -1,4 +1,4 @@
-import { DatasetCore } from 'rdf-js'
+import { DatasetCore, Term } from 'rdf-js'
 import cf, { SingleContextClownface } from 'clownface'
 import { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { rdf } from '@tpluscode/rdf-ns-builders'
@@ -27,7 +27,7 @@ export interface TypeCollection<D extends DatasetCore> extends Set<RdfResource<D
 export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
   private readonly __resource: RdfResource<D>
   private readonly __allGraphs: boolean
-  private __graph: SingleContextClownface<D>
+  private __graph: SingleContextClownface<Term, D>
 
   add(value: RdfResource<D> | ResourceIdentifier | string): this {
     this.__resource._selfGraph.addOut(rdf.type, getNode(value))

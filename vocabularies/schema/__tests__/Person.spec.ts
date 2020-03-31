@@ -1,7 +1,7 @@
 import PersonMixin from '../Person';
-import { RdfResourceImpl } from '@tpluscode/rdfine';
+import RdfResource from '@tpluscode/rdfine';
 
-class Person extends PersonMixin(RdfResourceImpl) {}
+class Person extends PersonMixin(RdfResource) {}
 
 describe('Person', () => {
   describe('givenName', () => {

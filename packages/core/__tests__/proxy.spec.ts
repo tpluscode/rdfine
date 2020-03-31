@@ -11,7 +11,7 @@ import { property, ResourceIndexer } from '../index'
 const ex = namespace('http://example.com/')
 
 describe('proxy', () => {
-  let node: SingleContextClownface<DatasetExt, NamedNode>
+  let node: SingleContextClownface<NamedNode, DatasetExt>
 
   beforeEach(() => {
     node = cf({ dataset: $rdf.dataset() })

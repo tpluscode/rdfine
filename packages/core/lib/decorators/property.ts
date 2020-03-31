@@ -45,8 +45,8 @@ function getObjects(node: SingleContextClownface, path: EdgeTraversal[]): SafeCl
 
 type ArrayOrSingle<T> = T | T[]
 export type ObjectOrFactory<TSelf, T, TTerm extends Term> =
-  ArrayOrSingle<T | TTerm | SingleContextClownface<DatasetCore, TTerm>> |
-  ((self: TSelf) => ArrayOrSingle<T | TTerm | SingleContextClownface<DatasetCore, TTerm>>)
+  ArrayOrSingle<T | TTerm | SingleContextClownface<TTerm>> |
+  ((self: TSelf) => ArrayOrSingle<T | TTerm | SingleContextClownface<TTerm>>)
 
 interface PropertyDecoratorOptions<T extends RdfResource, TValue, TTerm extends Term> extends AccessorOptions {
   fromTerm: (this: T, obj: SingleContextClownface) => TValue

@@ -1,7 +1,6 @@
 import $rdf from 'rdf-ext'
 import cf, { SingleContextClownface } from 'clownface'
 import ns from '@rdfjs/namespace'
-import { DatasetCore } from 'rdf-js'
 import TypeCollection from '../lib/TypeCollection'
 import RdfResourceImpl, { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { parse } from './_helpers'
@@ -11,7 +10,7 @@ const ex = ns('http://example.com/')
 const nullResource = {} as RdfResource
 
 describe('TypeCollection', () => {
-  let node: SingleContextClownface<DatasetCore, ResourceIdentifier>
+  let node: SingleContextClownface<ResourceIdentifier>
 
   describe('size', () => {
     it('returns 0 when no types', () => {
@@ -378,7 +377,7 @@ describe('TypeCollection', () => {
 })
 
 describe('TypeCollection', () => {
-  let node: SingleContextClownface<DatasetCore, ResourceIdentifier>
+  let node: SingleContextClownface<ResourceIdentifier>
 
   describe('allGraphs = true', () => {
     describe('size', () => {

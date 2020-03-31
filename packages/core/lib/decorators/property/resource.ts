@@ -1,12 +1,12 @@
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import { BlankNode, DatasetCore, NamedNode, Term } from 'rdf-js'
+import { BlankNode, NamedNode, Term } from 'rdf-js'
 import { SingleContextClownface } from 'clownface'
 import { Initializer, RdfResource, ResourceIdentifier } from '../../../RdfResource'
 import { AccessorOptions, ObjectOrFactory, propertyDecorator } from '../property'
 import { Constructor, Mixin } from '../../ResourceFactory'
 import * as compare from '../../compare'
 
-type InitialValue = SingleContextClownface<DatasetCore, ResourceIdentifier> | RdfResource
+type InitialValue = SingleContextClownface<ResourceIdentifier> | RdfResource
 
 interface ResourceOptions<R extends RdfResource> {
   as?: Mixin[] | [Constructor, ...Mixin[]]
@@ -26,7 +26,7 @@ function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptio
         return value.id
       }
 
-      let valueNode: SingleContextClownface<any, BlankNode | NamedNode>
+      let valueNode: SingleContextClownface<BlankNode | NamedNode>
 
       if (value.id) {
         valueNode = this._selfGraph.node(value.id)
