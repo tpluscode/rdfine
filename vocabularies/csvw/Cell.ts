@@ -1,7 +1,8 @@
-import { Constructor, namespace, RdfResource, RdfResourceImpl } from '@tpluscode/rdfine';
+import { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
 import type * as rdf from 'rdf-js';
 import { csvw } from './lib/namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/lib/RdfResource';
+import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '.';
 
 export interface Cell extends RdfResource {

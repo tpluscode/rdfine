@@ -1,5 +1,5 @@
 import { DatasetCore, Literal } from 'rdf-js'
-import { RdfResource, ResourceNode } from './RdfResource'
+import { RdfResource, ResourceNode } from '../RdfResource'
 import { createProxy } from './proxy'
 
 export type AnyFunction<A = any> = (...input: any[]) => A

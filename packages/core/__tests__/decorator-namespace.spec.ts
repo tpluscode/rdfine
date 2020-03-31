@@ -2,8 +2,8 @@ import builder from '@rdfjs/namespace'
 import { prefixes } from '@zazuko/rdf-vocabularies'
 import cf from 'clownface'
 import $rdf from 'rdf-ext'
-import { Constructor, namespace, property, RdfResourceImpl } from '..'
-import RdfResource from '../lib/RdfResource'
+import { Constructor, namespace, property } from '../index'
+import RdfResource from '../RdfResource'
 
 const schema = builder(prefixes.schema)
 const rdfs = builder(prefixes.rdfs)
@@ -60,7 +60,7 @@ describe('decorator', () => {
 
       it('applies only to owned properties', () => {
         // given
-        class TwoNamespaces extends SchemaMixin(RdfsMixin(RdfResourceImpl)) {}
+        class TwoNamespaces extends SchemaMixin(RdfsMixin(RdfResource)) {}
         const node = cf({
           dataset: $rdf.dataset(),
           term: $rdf.blankNode(),

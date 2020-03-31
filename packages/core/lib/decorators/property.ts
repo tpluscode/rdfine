@@ -1,6 +1,6 @@
 import { DatasetCore, Term } from 'rdf-js'
 import { Context } from 'clownface/lib/Context'
-import RdfResourceImpl, { RdfResource } from '../RdfResource'
+import RdfResourceImpl, { RdfResource } from '../../RdfResource'
 import { EdgeTraversal, EdgeTraversalFactory, PropRef, toEdgeTraversals } from '../path'
 import cf, { SafeClownface, SingleContextClownface } from 'clownface'
 import { isList, enumerateList } from '../rdf-list'

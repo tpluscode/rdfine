@@ -10,10 +10,9 @@ import {
   crossBoundaries,
   Constructor,
   RdfResource as IRdfResource,
-  fromObject,
-  ResourceFactoryImpl,
-} from '..'
-import RdfResource from '../lib/RdfResource'
+} from '../index'
+import RdfResource, { fromObject } from '../RdfResource'
+import ResourceFactoryImpl from '../lib/ResourceFactory'
 import { parse, vocabs } from './_helpers'
 
 const { ex, foaf, schema, rdf } = vocabs

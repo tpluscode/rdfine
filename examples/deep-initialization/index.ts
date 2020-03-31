@@ -5,13 +5,12 @@ import * as Schema from '@rdfine/schema'
 import Person from '@rdfine/schema/Person'
 import Occupation from '@rdfine/schema/Occupation'
 import OrganizationMixin from '@rdfine/schema/Organization'
-import { Initializer } from '@tpluscode/rdfine/lib/RdfResource'
-import { RdfResourceImpl, fromObject } from '@tpluscode/rdfine'
+import RdfResource, { Initializer, fromObject } from '@tpluscode/rdfine/RdfResource'
 import { schema } from '@tpluscode/rdf-ns-builders'
 import namespace from '@rdfjs/namespace'
 
 // Have rdfine recognize the necessary schema.org terms
-RdfResourceImpl.factory.addMixin(Person, Occupation, OrganizationMixin)
+RdfResource.factory.addMixin(Person, Occupation, OrganizationMixin)
 
 const bigBangTheory = namespace('http://tbbt.example.com/')
 

@@ -75,13 +75,14 @@ export class MixinModule implements GeneratedModule {
   }
 
   private addImports(mixinFile: SourceFile, context: Context) {
-    const rdfineImports = ['Constructor', 'namespace', 'RdfResource', 'RdfResourceImpl']
+    const rdfineImports = ['Constructor', 'namespace', 'RdfResource']
 
     if (Object.keys(this.properties).some(Boolean)) {
       rdfineImports.push('property')
     }
 
     mixinFile.addImportDeclaration({
+      defaultImport: 'RdfResourceImpl',
       namedImports: rdfineImports,
       moduleSpecifier: '@tpluscode/rdfine',
     })
@@ -96,7 +97,7 @@ export class MixinModule implements GeneratedModule {
     })
     mixinFile.addImportDeclaration({
       namedImports: ['Initializer', 'ResourceNode'],
-      moduleSpecifier: '@tpluscode/rdfine/lib/RdfResource',
+      moduleSpecifier: '@tpluscode/rdfine/RdfResource',
       isTypeOnly: true,
     })
     mixinFile.addImportDeclaration({

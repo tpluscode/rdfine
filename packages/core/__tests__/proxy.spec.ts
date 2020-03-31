@@ -4,9 +4,9 @@ import namespace from '@rdfjs/namespace'
 import { literal } from '@rdfjs/data-model'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { createProxy } from '../lib/proxy'
-import RdfResourceImpl, { RdfResource } from '../lib/RdfResource'
+import RdfResourceImpl, { RdfResource } from '../RdfResource'
 import { Literal, NamedNode } from 'rdf-js'
-import { property, ResourceIndexer } from '..'
+import { property, ResourceIndexer } from '../index'
 
 const ex = namespace('http://example.com/')
 

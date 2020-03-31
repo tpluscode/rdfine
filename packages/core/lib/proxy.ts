@@ -1,6 +1,6 @@
 import { DatasetCore, Literal, Term } from 'rdf-js'
 import { SingleContextClownface } from 'clownface'
-import { RdfResource } from './RdfResource'
+import { RdfResource } from '../RdfResource'
 import * as rdfList from './rdf-list'
 import { ResourceIndexer } from './ResourceFactory'
 

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "es2019",
-    "declaration": false,
+    "declaration": true,
     "lib": [
       "es6",
       "esnext",

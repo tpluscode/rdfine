@@ -1,4 +1,4 @@
-import { RdfResource } from '../../RdfResource'
+import { RdfResource } from '../../../RdfResource'
 import { Literal, NamedNode, Term } from 'rdf-js'
 import { fromLiteral } from '../../conversion'
 import { xsd } from '@tpluscode/rdf-ns-builders'

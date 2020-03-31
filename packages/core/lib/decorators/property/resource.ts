@@ -1,7 +1,7 @@
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import { BlankNode, DatasetCore, NamedNode, Term } from 'rdf-js'
 import { SingleContextClownface } from 'clownface'
-import { Initializer, RdfResource, ResourceIdentifier } from '../../RdfResource'
+import { Initializer, RdfResource, ResourceIdentifier } from '../../../RdfResource'
 import { AccessorOptions, ObjectOrFactory, propertyDecorator } from '../property'
 import { Constructor, Mixin } from '../../ResourceFactory'
 import * as compare from '../../compare'

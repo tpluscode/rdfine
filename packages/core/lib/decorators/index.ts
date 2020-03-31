@@ -1,4 +1,4 @@
-import { RdfResource } from '../RdfResource'
+import { RdfResource } from '../../RdfResource'
 import { Constructor } from '../ResourceFactory'
 
 // From the TC39 Decorators proposal
@@ -18,3 +18,6 @@ export interface ClassDescriptor {
   elements: ClassElement[]
   finisher?: <T extends RdfResource>(clazz: Constructor<T>) => undefined | Constructor<T>
 }
+
+export { namespace } from './namespace'
+export { property } from './property'

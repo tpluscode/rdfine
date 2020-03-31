@@ -15,7 +15,8 @@
     "@rdfjs/data-model": "^1.1.2",
     "@rdfjs/fetch": "^2.0.0",
     "clownface": "^0.12.1",
-    "debug": "^4.1.1"
+    "debug": "^4.1.1",
+    "esm": "^3.2.25"
   },
   "devDependencies": {
     "@tpluscode/rdf-string": "^0.2.8",

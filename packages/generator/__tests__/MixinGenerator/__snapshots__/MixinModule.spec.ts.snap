@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MixinModule does not try import self when property has range of enclosing class: toMatchSnapshot 1`] = `
-"import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from \\"@tpluscode/rdfine\\";
+"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import type * as rdf from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/lib/RdfResource\\";
+import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
 
 export interface Class extends RdfResource {
@@ -32,10 +32,10 @@ ClassMixin.Class = ClassImpl
 `;
 
 exports[`MixinModule generates a mixin class with external super classes: toMatchSnapshot 1`] = `
-"import { Constructor, namespace, RdfResource, RdfResourceImpl } from \\"@tpluscode/rdfine\\";
+"import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
 import type * as rdf from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/lib/RdfResource\\";
+import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
 import type * as Schema from \\"@rdfine/schema\\";
 import PersonMixin from \\"@rdfine/schema/Person\\";
@@ -62,10 +62,10 @@ ClassMixin.Class = ClassImpl
 `;
 
 exports[`MixinModule generates a mixin class without props: toMatchSnapshot 1`] = `
-"import { Constructor, namespace, RdfResource, RdfResourceImpl } from \\"@tpluscode/rdfine\\";
+"import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
 import type * as rdf from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/lib/RdfResource\\";
+import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
 
 export interface Class extends RdfResource {
@@ -90,10 +90,10 @@ ClassMixin.Class = ClassImpl
 `;
 
 exports[`MixinModule generates property with automatic external type cast when predicate has strict semantics: toMatchSnapshot 1`] = `
-"import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from \\"@tpluscode/rdfine\\";
+"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import type * as rdf from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/lib/RdfResource\\";
+import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
 import type * as Example from \\"@rdfine/example\\";
 import FooMixin from \\"@rdfine/example/Foo\\";
@@ -123,10 +123,10 @@ ClassMixin.Class = ClassImpl
 `;
 
 exports[`MixinModule generates property with automatic type cast when predicate has strict semantics: toMatchSnapshot 1`] = `
-"import { Constructor, namespace, RdfResource, RdfResourceImpl, property } from \\"@tpluscode/rdfine\\";
+"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import type * as rdf from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/lib/RdfResource\\";
+import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
 import FooMixin from \\"./Foo\\";
 

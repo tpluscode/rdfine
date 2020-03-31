@@ -3,12 +3,12 @@ import fetch from '@rdfjs/fetch'
 import { namedNode } from '@rdfjs/data-model'
 import { turtle } from '@tpluscode/rdf-string'
 import schemaMixins, * as Schema from '@rdfine/schema'
-import { RdfResourceImpl } from '@tpluscode/rdfine'
+import RdfResource from '@tpluscode/rdfine'
 
 const howard = 'http://zazuko.github.io/tbbt-ld/data/person/howard-wolowitz.ttl'
 
 // Have rdfine recognize schema.org terms
-RdfResourceImpl.factory.addMixin(...schemaMixins)
+RdfResource.factory.addMixin(...schemaMixins)
 
 async function main() {
   // download the triples about Howard
@@ -20,7 +20,7 @@ async function main() {
   // use factory to create a resource object
   // it will be automatically wrapped as a Schema.Person
   // the <Schema.Person> is just syntactic sugar to make TypeScript happy
-  const person = RdfResourceImpl.factory.createEntity<Schema.Person>({
+  const person = RdfResource.factory.createEntity<Schema.Person>({
     dataset,
     term: namedNode(howard),
   })

@@ -1,7 +1,7 @@
 /* global BigInt */
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import { property } from '..'
-import RdfResource from '../lib/RdfResource'
+import { property } from '../index'
+import RdfResource from '../RdfResource'
 import { parse, vocabs } from './_helpers'
 import { Literal } from 'rdf-js'
 import { blankNode, literal, namedNode } from '@rdfjs/data-model'
