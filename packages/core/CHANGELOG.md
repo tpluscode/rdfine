@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.3.7...@tpluscode/rdfine@0.4.0) (2020-04-01)
+
+
+### Features
+
+* **build:** only package es modules and esm node export ([4d5fa5b](https://github.com/tpluscode/rdfine/commit/4d5fa5b))
+
+
+### BREAKING CHANGES
+
+* **build:** some exports have been moved
+
+
+
+
+
 ## [0.3.7](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.3.6...@tpluscode/rdfine@0.3.7) (2020-03-25)
 
 

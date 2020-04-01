@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0](https://github.com/tpluscode/rdfine/compare/@rdfine/schema@0.0.2...@rdfine/schema@0.1.0) (2020-04-01)
+
+
+### Bug Fixes
+
+* **vocabularies:** missing @rdfjs/namespace dependency ([a1a8bad](https://github.com/tpluscode/rdfine/commit/a1a8bad))
+* use same method to slugify dimension table id ([9d9205f](https://github.com/tpluscode/rdfine/commit/9d9205f))
+* **generator:** do not require namespace for common namespaces ([d5d68ed](https://github.com/tpluscode/rdfine/commit/d5d68ed))
+
+
+### Features
+
+* **build:** only package es modules and esm node export ([4d5fa5b](https://github.com/tpluscode/rdfine/commit/4d5fa5b))
+* **generator:** add mixin cast to rdf:range properties ([fa4e188](https://github.com/tpluscode/rdfine/commit/fa4e188))
+
+
+### BREAKING CHANGES
+
+* **build:** some exports have been moved
+
+
+
+
+
 ## [0.0.2](https://github.com/tpluscode/rdfine/compare/@rdfine/schema@0.0.1...@rdfine/schema@0.0.2) (2020-03-25)
 
 

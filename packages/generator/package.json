@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/generator",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Generates rdfine entities from RDF vocabulary",
   "main": "index.js",
   "bin": {
@@ -45,8 +45,8 @@
     "@types/rdfjs__parser-n3": "^1.1.2",
     "@zazuko/rdf-vocabularies": "^2020.3.17",
     "jest": "^25.1.0",
-    "typescript": "^3.8.3",
-    "string-to-stream": "^3.0.1"
+    "string-to-stream": "^3.0.1",
+    "typescript": "^3.8.3"
   },
   "repository": {
     "type": "git",

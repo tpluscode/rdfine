@@ -1,6 +1,6 @@
 {
 	"name": "@rdfine/csvw",
-	"version": "0.0.2",
+	"version": "0.1.0",
 	"main": "main.js",
 	"module": "index.js",
 	"types": "index.d.ts",
@@ -12,15 +12,15 @@
 	},
 	"rdfine": {
 		"prefix": "csvw",
-    "types": {
-      "uriTemplate": "string"
-    }
+		"types": {
+			"uriTemplate": "string"
+		}
 	},
 	"dependencies": {
-    "@rdfjs/namespace": "^1.1.0",
+		"@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.1.0",
-		"@tpluscode/rdfine": "^0.3.7",
-    "esm": "^3.2.25"
+		"@tpluscode/rdfine": "^0.4.0",
+		"esm": "^3.2.25"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -29,10 +29,10 @@
 		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
 		"@babel/preset-env": "^7.8.3",
 		"@babel/preset-typescript": "^7.8.3",
-		"@rdfine/generator": "^0.0.2",
+		"@rdfine/generator": "^0.1.0",
 		"@rdfjs/dataset": "^1.0.1",
 		"@types/clownface": "^0.12.9",
-    "@types/esm": "^3.2",
+		"@types/esm": "^3.2",
 		"@types/rdf-js": "^2.0.11",
 		"@types/rdfjs__dataset": "^1.0.0",
 		"@zazuko/rdf-vocabularies": "^2020.3.23",
@@ -64,5 +64,5 @@
 	"bugs": {
 		"url": "https://github.com/tpluscode/rdfine/issues"
 	},
-  "homepage": "https://github.com/tpluscode/rdfine/tree/master/vocabularies/csvw#readme"
+	"homepage": "https://github.com/tpluscode/rdfine/tree/master/vocabularies/csvw#readme"
 }
