@@ -4,7 +4,7 @@ import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import ResourceMixin from '@rdfine/rdfs/Resource';
+import RdfsResourceMixin from '@rdfine/rdfs/Resource';
 import ApiDocumentationMixin from './ApiDocumentation';
 import CollectionMixin from './Collection';
 import OperationMixin from './Operation';
@@ -25,7 +25,7 @@ export interface Resource extends Rdfs.Resource, RdfResource {
 
 export default function ResourceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
-  class ResourceClass extends ResourceMixin(Resource) implements Resource {
+  class ResourceClass extends RdfsResourceMixin(Resource) implements Resource {
     @property.resource({ as: [ApiDocumentationMixin] })
     apiDocumentation!: Hydra.ApiDocumentation;
     @property.resource({ as: [CollectionMixin] })

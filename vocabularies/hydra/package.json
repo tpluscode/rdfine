@@ -17,6 +17,7 @@
     }
 	},
 	"dependencies": {
+		"@rdfine/rdfs": "*",
 		"@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.1.0",
 		"@tpluscode/rdfine": "^0.4.0",
