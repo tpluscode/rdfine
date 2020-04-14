@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -13,7 +12,7 @@ export interface Ticket extends Schema.Intangible, RdfResource {
   ticketedSeat: Schema.Seat;
   ticketNumber: string;
   ticketToken: string;
-  ticketTokenTerm: rdf.NamedNode;
+  ticketTokenTerm: RDF.NamedNode;
   totalPrice: Schema.PriceSpecification;
   totalPriceLiteral: number | string;
   underName: Schema.Organization | Schema.Person;
@@ -35,7 +34,7 @@ export default function TicketMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     ticketToken!: string;
     @property({ path: schema.ticketToken })
-    ticketTokenTerm!: rdf.NamedNode;
+    ticketTokenTerm!: RDF.NamedNode;
     @property.resource()
     totalPrice!: Schema.PriceSpecification;
     @property.literal({ path: schema.totalPrice })

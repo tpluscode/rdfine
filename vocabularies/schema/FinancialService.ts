@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -8,7 +7,7 @@ import LocalBusinessMixin from './LocalBusiness';
 
 export interface FinancialService extends Schema.LocalBusiness, RdfResource {
   feesAndCommissionsSpecification: string;
-  feesAndCommissionsSpecificationTerm: rdf.NamedNode;
+  feesAndCommissionsSpecificationTerm: RDF.NamedNode;
 }
 
 export default function FinancialServiceMixin<Base extends Constructor>(Resource: Base) {
@@ -17,7 +16,7 @@ export default function FinancialServiceMixin<Base extends Constructor>(Resource
     @property.literal()
     feesAndCommissionsSpecification!: string;
     @property({ path: schema.feesAndCommissionsSpecification })
-    feesAndCommissionsSpecificationTerm!: rdf.NamedNode;
+    feesAndCommissionsSpecificationTerm!: RDF.NamedNode;
   }
   return FinancialServiceClass
 }

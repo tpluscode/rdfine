@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -8,36 +7,36 @@ import CreativeWorkMixin from './CreativeWork';
 
 export interface SoftwareApplication extends Schema.CreativeWork, RdfResource {
   applicationCategory: string;
-  applicationCategoryTerm: rdf.NamedNode;
+  applicationCategoryTerm: RDF.NamedNode;
   applicationSubCategory: string;
-  applicationSubCategoryTerm: rdf.NamedNode;
+  applicationSubCategoryTerm: RDF.NamedNode;
   applicationSuite: string;
   availableOnDevice: string;
   countriesNotSupported: string;
   countriesSupported: string;
   device: string;
-  downloadUrl: rdf.NamedNode;
+  downloadUrl: RDF.NamedNode;
   featureList: string;
-  featureListTerm: rdf.NamedNode;
+  featureListTerm: RDF.NamedNode;
   fileSize: string;
-  installUrl: rdf.NamedNode;
+  installUrl: RDF.NamedNode;
   memoryRequirements: string;
-  memoryRequirementsTerm: rdf.NamedNode;
+  memoryRequirementsTerm: RDF.NamedNode;
   operatingSystem: string;
   permissions: string;
   processorRequirements: string;
   releaseNotes: string;
-  releaseNotesTerm: rdf.NamedNode;
+  releaseNotesTerm: RDF.NamedNode;
   requirements: string;
-  requirementsTerm: rdf.NamedNode;
+  requirementsTerm: RDF.NamedNode;
   screenshot: Schema.ImageObject;
   softwareAddOn: Schema.SoftwareApplication;
   softwareHelp: Schema.CreativeWork;
   softwareRequirements: string;
-  softwareRequirementsTerm: rdf.NamedNode;
+  softwareRequirementsTerm: RDF.NamedNode;
   softwareVersion: string;
   storageRequirements: string;
-  storageRequirementsTerm: rdf.NamedNode;
+  storageRequirementsTerm: RDF.NamedNode;
   supportingData: Schema.DataFeed;
 }
 
@@ -47,11 +46,11 @@ export default function SoftwareApplicationMixin<Base extends Constructor>(Resou
     @property.literal()
     applicationCategory!: string;
     @property({ path: schema.applicationCategory })
-    applicationCategoryTerm!: rdf.NamedNode;
+    applicationCategoryTerm!: RDF.NamedNode;
     @property.literal()
     applicationSubCategory!: string;
     @property({ path: schema.applicationSubCategory })
-    applicationSubCategoryTerm!: rdf.NamedNode;
+    applicationSubCategoryTerm!: RDF.NamedNode;
     @property.literal()
     applicationSuite!: string;
     @property.literal()
@@ -63,19 +62,19 @@ export default function SoftwareApplicationMixin<Base extends Constructor>(Resou
     @property.literal()
     device!: string;
     @property()
-    downloadUrl!: rdf.NamedNode;
+    downloadUrl!: RDF.NamedNode;
     @property.literal()
     featureList!: string;
     @property({ path: schema.featureList })
-    featureListTerm!: rdf.NamedNode;
+    featureListTerm!: RDF.NamedNode;
     @property.literal()
     fileSize!: string;
     @property()
-    installUrl!: rdf.NamedNode;
+    installUrl!: RDF.NamedNode;
     @property.literal()
     memoryRequirements!: string;
     @property({ path: schema.memoryRequirements })
-    memoryRequirementsTerm!: rdf.NamedNode;
+    memoryRequirementsTerm!: RDF.NamedNode;
     @property.literal()
     operatingSystem!: string;
     @property.literal()
@@ -85,11 +84,11 @@ export default function SoftwareApplicationMixin<Base extends Constructor>(Resou
     @property.literal()
     releaseNotes!: string;
     @property({ path: schema.releaseNotes })
-    releaseNotesTerm!: rdf.NamedNode;
+    releaseNotesTerm!: RDF.NamedNode;
     @property.literal()
     requirements!: string;
     @property({ path: schema.requirements })
-    requirementsTerm!: rdf.NamedNode;
+    requirementsTerm!: RDF.NamedNode;
     @property.resource()
     screenshot!: Schema.ImageObject;
     @property.resource()
@@ -99,13 +98,13 @@ export default function SoftwareApplicationMixin<Base extends Constructor>(Resou
     @property.literal()
     softwareRequirements!: string;
     @property({ path: schema.softwareRequirements })
-    softwareRequirementsTerm!: rdf.NamedNode;
+    softwareRequirementsTerm!: RDF.NamedNode;
     @property.literal()
     softwareVersion!: string;
     @property.literal()
     storageRequirements!: string;
     @property({ path: schema.storageRequirements })
-    storageRequirementsTerm!: rdf.NamedNode;
+    storageRequirementsTerm!: RDF.NamedNode;
     @property.resource()
     supportingData!: Schema.DataFeed;
   }

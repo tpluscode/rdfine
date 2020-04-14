@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -9,7 +8,7 @@ import IntangibleMixin from './Intangible';
 export interface EntryPoint extends Schema.Intangible, RdfResource {
   actionApplication: Schema.SoftwareApplication;
   actionPlatform: string;
-  actionPlatformTerm: rdf.NamedNode;
+  actionPlatformTerm: RDF.NamedNode;
   application: Schema.SoftwareApplication;
   contentType: string;
   encodingType: string;
@@ -25,7 +24,7 @@ export default function EntryPointMixin<Base extends Constructor>(Resource: Base
     @property.literal()
     actionPlatform!: string;
     @property({ path: schema.actionPlatform })
-    actionPlatformTerm!: rdf.NamedNode;
+    actionPlatformTerm!: RDF.NamedNode;
     @property.resource()
     application!: Schema.SoftwareApplication;
     @property.literal()

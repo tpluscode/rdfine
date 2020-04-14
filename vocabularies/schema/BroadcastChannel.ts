@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -12,7 +11,7 @@ export interface BroadcastChannel extends Schema.Intangible, RdfResource {
   broadcastFrequencyLiteral: string;
   broadcastServiceTier: string;
   genre: string;
-  genreTerm: rdf.NamedNode;
+  genreTerm: RDF.NamedNode;
   inBroadcastLineup: Schema.CableOrSatelliteService;
   providesBroadcastService: Schema.BroadcastService;
 }
@@ -31,7 +30,7 @@ export default function BroadcastChannelMixin<Base extends Constructor>(Resource
     @property.literal()
     genre!: string;
     @property({ path: schema.genre })
-    genreTerm!: rdf.NamedNode;
+    genreTerm!: RDF.NamedNode;
     @property.resource()
     inBroadcastLineup!: Schema.CableOrSatelliteService;
     @property.resource()

@@ -1,27 +1,27 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import type * as rdf from 'rdf-js';
+import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '.';
 
 export interface Row extends RdfResource {
-  describes: rdf.Term;
+  describes: RDF.Term;
   primaryKey: string;
-  referencedRow: rdf.Term;
-  title: rdf.Term;
+  referencedRow: RDF.Term;
+  title: RDF.Term;
 }
 
 export default function RowMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class RowClass extends Resource implements Row {
     @property()
-    describes!: rdf.Term;
+    describes!: RDF.Term;
     @property.literal()
     primaryKey!: string;
     @property()
-    referencedRow!: rdf.Term;
+    referencedRow!: RDF.Term;
     @property()
-    title!: rdf.Term;
+    title!: RDF.Term;
   }
   return RowClass
 }

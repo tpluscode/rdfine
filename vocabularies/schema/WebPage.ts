@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -12,10 +11,10 @@ export interface WebPage extends Schema.CreativeWork, RdfResource {
   lastReviewed: Date;
   mainContentOfPage: Schema.WebPageElement;
   primaryImageOfPage: Schema.ImageObject;
-  relatedLink: rdf.NamedNode;
+  relatedLink: RDF.NamedNode;
   reviewedBy: Schema.Organization | Schema.Person;
-  significantLink: rdf.NamedNode;
-  significantLinks: rdf.NamedNode;
+  significantLink: RDF.NamedNode;
+  significantLinks: RDF.NamedNode;
   speakable: Schema.SpeakableSpecification;
   specialty: Schema.Specialty;
 }
@@ -34,13 +33,13 @@ export default function WebPageMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     primaryImageOfPage!: Schema.ImageObject;
     @property()
-    relatedLink!: rdf.NamedNode;
+    relatedLink!: RDF.NamedNode;
     @property.resource()
     reviewedBy!: Schema.Organization | Schema.Person;
     @property()
-    significantLink!: rdf.NamedNode;
+    significantLink!: RDF.NamedNode;
     @property()
-    significantLinks!: rdf.NamedNode;
+    significantLinks!: RDF.NamedNode;
     @property.resource()
     speakable!: Schema.SpeakableSpecification;
     @property()

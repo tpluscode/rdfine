@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -8,7 +7,7 @@ import LocalBusinessMixin from './LocalBusiness';
 
 export interface FoodEstablishment extends Schema.LocalBusiness, RdfResource {
   acceptsReservations: boolean | string;
-  acceptsReservationsTerm: rdf.NamedNode;
+  acceptsReservationsTerm: RDF.NamedNode;
   hasMenu: Schema.Menu;
   hasMenuLiteral: string;
   menu: Schema.Menu;
@@ -23,7 +22,7 @@ export default function FoodEstablishmentMixin<Base extends Constructor>(Resourc
     @property.literal()
     acceptsReservations!: boolean | string;
     @property({ path: schema.acceptsReservations })
-    acceptsReservationsTerm!: rdf.NamedNode;
+    acceptsReservationsTerm!: RDF.NamedNode;
     @property.resource()
     hasMenu!: Schema.Menu;
     @property.literal({ path: schema.hasMenu })

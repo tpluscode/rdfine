@@ -1,12 +1,11 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
 
 export interface Thing extends RdfResource {
-  additionalType: rdf.NamedNode;
+  additionalType: RDF.NamedNode;
   alternateName: string;
   description: string;
   disambiguatingDescription: string;
@@ -16,16 +15,16 @@ export interface Thing extends RdfResource {
   mainEntityOfPage: Schema.CreativeWork;
   name: string;
   potentialAction: Schema.Action;
-  sameAs: rdf.NamedNode;
+  sameAs: RDF.NamedNode;
   subjectOf: Schema.CreativeWork | Schema.Event;
-  url: rdf.NamedNode;
+  url: RDF.NamedNode;
 }
 
 export default function ThingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ThingClass extends Resource implements Thing {
     @property()
-    additionalType!: rdf.NamedNode;
+    additionalType!: RDF.NamedNode;
     @property.literal()
     alternateName!: string;
     @property.literal()
@@ -45,11 +44,11 @@ export default function ThingMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     potentialAction!: Schema.Action;
     @property()
-    sameAs!: rdf.NamedNode;
+    sameAs!: RDF.NamedNode;
     @property.resource()
     subjectOf!: Schema.CreativeWork | Schema.Event;
     @property()
-    url!: rdf.NamedNode;
+    url!: RDF.NamedNode;
   }
   return ThingClass
 }

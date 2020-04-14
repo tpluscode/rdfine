@@ -1,5 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import type * as rdf from 'rdf-js';
+import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '.';
@@ -8,7 +8,7 @@ export interface Transformation extends RdfResource {
   scriptFormat: string;
   source: string;
   targetFormat: string;
-  title: rdf.Term;
+  title: RDF.Term;
   url: string;
 }
 
@@ -22,7 +22,7 @@ export default function TransformationMixin<Base extends Constructor>(Resource: 
     @property.literal()
     targetFormat!: string;
     @property()
-    title!: rdf.Term;
+    title!: RDF.Term;
     @property.literal()
     url!: string;
   }

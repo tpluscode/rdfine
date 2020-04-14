@@ -38,7 +38,7 @@ export class PropertyWriter {
       .sort((l, r) => l.localeCompare(r))
 
     if (propertyTypes.length === 0) {
-      type = 'rdf.Term'
+      type = 'RDF.Term'
       this.__context.log.warn('Could not determine types for property %s', prop.term.value)
     } else {
       if (propertyTypes.includes('rdf.NamedNode')) {
@@ -78,7 +78,7 @@ export class PropertyWriter {
       case 'Enumeration':
         return range.qualifiedName
       case 'Term':
-        return `rdf.${range.termType}`
+        return `RDF.${range.termType}`
     }
 
     return null

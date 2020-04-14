@@ -1,5 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import type * as rdf from 'rdf-js';
+import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '.';
@@ -21,7 +21,7 @@ export interface Column extends RdfResource {
   separator: string;
   suppressOutput: boolean;
   textDirection: Csvw.Direction;
-  title: rdf.Term;
+  title: RDF.Term;
   transformations: Array<Csvw.Transformation>;
   valueUrl: string;
   virtual: boolean;
@@ -57,7 +57,7 @@ export default function ColumnMixin<Base extends Constructor>(Resource: Base) {
     @property.resource({ as: [DirectionMixin] })
     textDirection!: Csvw.Direction;
     @property()
-    title!: rdf.Term;
+    title!: RDF.Term;
     @property.resource({ values: 'array', as: [TransformationMixin] })
     transformations!: Array<Csvw.Transformation>;
     @property.literal()

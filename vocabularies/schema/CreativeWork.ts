@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -39,21 +38,21 @@ export interface CreativeWork extends Schema.Thing, RdfResource {
   dateCreated: Date;
   dateModified: Date;
   datePublished: Date;
-  discussionUrl: rdf.NamedNode;
+  discussionUrl: RDF.NamedNode;
   editor: Schema.Person;
   educationalAlignment: Schema.AlignmentObject;
   educationalUse: string;
   encoding: Schema.MediaObject;
   encodingFormat: string;
-  encodingFormatTerm: rdf.NamedNode;
+  encodingFormatTerm: RDF.NamedNode;
   encodings: Schema.MediaObject;
   exampleOfWork: Schema.CreativeWork;
   expires: Date;
   fileFormat: string;
-  fileFormatTerm: rdf.NamedNode;
+  fileFormatTerm: RDF.NamedNode;
   funder: Schema.Organization | Schema.Person;
   genre: string;
-  genreTerm: rdf.NamedNode;
+  genreTerm: RDF.NamedNode;
   hasPart: Schema.CreativeWork;
   headline: string;
   inLanguage: Schema.Language;
@@ -85,16 +84,16 @@ export interface CreativeWork extends Schema.Thing, RdfResource {
   review: Schema.Review;
   reviews: Schema.Review;
   schemaVersion: string;
-  schemaVersionTerm: rdf.NamedNode;
+  schemaVersionTerm: RDF.NamedNode;
   sourceOrganization: Schema.Organization;
   spatial: Schema.Place;
   spatialCoverage: Schema.Place;
   sponsor: Schema.Organization | Schema.Person;
   temporal: Date | string;
   temporalCoverage: Date | string;
-  temporalCoverageTerm: rdf.NamedNode;
+  temporalCoverageTerm: RDF.NamedNode;
   text: string;
-  thumbnailUrl: rdf.NamedNode;
+  thumbnailUrl: RDF.NamedNode;
   timeRequired: Schema.Duration;
   translator: Schema.Organization | Schema.Person;
   typicalAgeRange: string;
@@ -171,7 +170,7 @@ export default function CreativeWorkMixin<Base extends Constructor>(Resource: Ba
     @property.literal()
     datePublished!: Date;
     @property()
-    discussionUrl!: rdf.NamedNode;
+    discussionUrl!: RDF.NamedNode;
     @property.resource()
     editor!: Schema.Person;
     @property.resource()
@@ -183,7 +182,7 @@ export default function CreativeWorkMixin<Base extends Constructor>(Resource: Ba
     @property.literal()
     encodingFormat!: string;
     @property({ path: schema.encodingFormat })
-    encodingFormatTerm!: rdf.NamedNode;
+    encodingFormatTerm!: RDF.NamedNode;
     @property.resource()
     encodings!: Schema.MediaObject;
     @property.resource()
@@ -193,13 +192,13 @@ export default function CreativeWorkMixin<Base extends Constructor>(Resource: Ba
     @property.literal()
     fileFormat!: string;
     @property({ path: schema.fileFormat })
-    fileFormatTerm!: rdf.NamedNode;
+    fileFormatTerm!: RDF.NamedNode;
     @property.resource()
     funder!: Schema.Organization | Schema.Person;
     @property.literal()
     genre!: string;
     @property({ path: schema.genre })
-    genreTerm!: rdf.NamedNode;
+    genreTerm!: RDF.NamedNode;
     @property.resource()
     hasPart!: Schema.CreativeWork;
     @property.literal()
@@ -263,7 +262,7 @@ export default function CreativeWorkMixin<Base extends Constructor>(Resource: Ba
     @property.literal()
     schemaVersion!: string;
     @property({ path: schema.schemaVersion })
-    schemaVersionTerm!: rdf.NamedNode;
+    schemaVersionTerm!: RDF.NamedNode;
     @property.resource()
     sourceOrganization!: Schema.Organization;
     @property.resource()
@@ -277,11 +276,11 @@ export default function CreativeWorkMixin<Base extends Constructor>(Resource: Ba
     @property.literal()
     temporalCoverage!: Date | string;
     @property({ path: schema.temporalCoverage })
-    temporalCoverageTerm!: rdf.NamedNode;
+    temporalCoverageTerm!: RDF.NamedNode;
     @property.literal()
     text!: string;
     @property()
-    thumbnailUrl!: rdf.NamedNode;
+    thumbnailUrl!: RDF.NamedNode;
     @property.resource()
     timeRequired!: Schema.Duration;
     @property.resource()

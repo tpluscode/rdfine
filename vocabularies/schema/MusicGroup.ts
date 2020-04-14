@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -10,7 +9,7 @@ export interface MusicGroup extends Schema.PerformingGroup, RdfResource {
   album: Schema.MusicAlbum;
   albums: Schema.MusicAlbum;
   genre: string;
-  genreTerm: rdf.NamedNode;
+  genreTerm: RDF.NamedNode;
   musicGroupMember: Schema.Person;
   track: Schema.ItemList | Schema.MusicRecording;
   tracks: Schema.MusicRecording;
@@ -26,7 +25,7 @@ export default function MusicGroupMixin<Base extends Constructor>(Resource: Base
     @property.literal()
     genre!: string;
     @property({ path: schema.genre })
-    genreTerm!: rdf.NamedNode;
+    genreTerm!: RDF.NamedNode;
     @property.resource()
     musicGroupMember!: Schema.Person;
     @property.resource()

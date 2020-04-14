@@ -1,5 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import type * as rdf from 'rdf-js';
+import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '.';
@@ -19,7 +19,7 @@ export interface Table extends RdfResource {
   dialect: Csvw.Dialect;
   foreignKey: Csvw.ForeignKey;
   lang: string;
-  note: rdf.Term;
+  note: RDF.Term;
   null: string;
   ordered: boolean;
   propertyUrl: string;
@@ -53,7 +53,7 @@ export default function TableMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     lang!: string;
     @property()
-    note!: rdf.Term;
+    note!: RDF.Term;
     @property.literal()
     null!: string;
     @property.literal({ type: Boolean })
