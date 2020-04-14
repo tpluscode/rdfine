@@ -83,7 +83,7 @@ export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
   public constructor(resource: RdfResource<D>, allGraphs = false) {
     this.__resource = resource
     this.__allGraphs = allGraphs
-    this.__graph = allGraphs ? resource._unionGraph : resource._selfGraph
+    this.__graph = allGraphs ? cf({ dataset: resource._selfGraph.dataset, term: resource._selfGraph.term, graph: undefined }) : resource._selfGraph
   }
 
   private get __values() {

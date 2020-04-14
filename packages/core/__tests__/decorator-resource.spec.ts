@@ -4,6 +4,7 @@ import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
 import rdfExt from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { defaultGraph, literal } from '@rdfjs/data-model'
+import { turtle } from '@tpluscode/rdf-string'
 import {
   property,
   namespace,
@@ -433,6 +434,13 @@ describe('decorator', () => {
           as: [Resource],
         })
         allAboutAllFriends!: this[]
+
+        @property.resource({
+          path: foaf.knows,
+          subjectFromAllGraphs: true,
+          as: [Resource],
+        })
+        allFriends!: this[]
       }
 
       function namedGraphTests(newResource: (dataset: DatasetExt, term: NamedNode, graph?: NamedNode | DefaultGraph) => Resource<DatasetExt>) {
@@ -544,6 +552,35 @@ describe('decorator', () => {
 
             // then
             expect(instance.allAboutAllFriends).toHaveLength(2)
+          })
+
+          it('when merging subjects, preserves the graph', async () => {
+            // given
+            const dataset = await parse(turtle`
+              ${ex.John} a ${schema.Person} .
+            
+              ${ex.WillGraph} {
+                ${ex.John} ${foaf.knows} ${ex.Will} .
+                ${ex.Will} ${schema.name} "Will" .
+              }
+              
+              ${ex.SindyGraph} {
+                ${ex.John} ${foaf.knows} ${ex.Sindy} .
+              }
+              
+              ${ex.UnreachableGraph} {
+                ${ex.Sindy} ${schema.name} "Sindy" .
+              }
+            `)
+
+            // when
+            const instance = newResource(dataset, ex.John)
+            const friendNames = instance.allFriends.map(friend => friend.name)
+
+            // then
+            expect(friendNames).toEqual(
+              expect.arrayContaining([literal('Will'), undefined]),
+            )
           })
         })
 
