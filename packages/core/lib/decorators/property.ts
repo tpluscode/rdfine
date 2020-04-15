@@ -51,7 +51,12 @@ function getNodeFromEveryGraph(node: SingleContextClownface): SingleContextClown
     }, set)
   }, new TermSet())
 
-  return [...graphs.values()].map(graph => cf({
+  const graphNodes = [...graphs.values()]
+  if (!graphNodes.length) {
+    return [node]
+  }
+
+  return graphNodes.map(graph => cf({
     dataset: node.dataset,
     term: node.term,
     graph,
