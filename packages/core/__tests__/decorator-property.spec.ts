@@ -713,6 +713,17 @@ describe('decorator', () => {
             )
           })
 
+          it('returns self when dataset is empty', async () => {
+            // given
+            const dataset = rdfExt.dataset()
+
+            // when
+            const instance = newResource(dataset, ex.John)
+
+            // then
+            expect(instance.allKnownFriends).toEqual([])
+          })
+
           it('returns value from default graph if unspecified', async () => {
             // given
             const dataset = await parse(`
