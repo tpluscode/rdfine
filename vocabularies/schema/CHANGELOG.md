@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/tpluscode/rdfine/compare/@rdfine/schema@0.1.0...@rdfine/schema@0.1.1) (2020-04-15)
+
+
+### Bug Fixes
+
+* subject from all graph did not work ([9d3497b](https://github.com/tpluscode/rdfine/commit/9d3497bdfb88abd907f36a3d701d847eaf9a688c))
+
+
+
+
+
 # [0.1.0](https://github.com/tpluscode/rdfine/compare/@rdfine/schema@0.0.2...@rdfine/schema@0.1.0) (2020-04-01)
 
 
