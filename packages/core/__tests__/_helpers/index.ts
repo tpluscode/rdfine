@@ -4,11 +4,12 @@ import Parser from '@rdfjs/parser-n3'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import ns, { NamespaceBuilder } from '@rdfjs/namespace'
 import { prefixes } from '@zazuko/rdf-vocabularies'
+import { TurtleTemplateResult } from '@tpluscode/rdf-string'
 
 const parser = new Parser()
 
-export function parse(quads: string): Promise<DatasetExt> {
-  const stream = stringToStream(quads)
+export function parse(quads: string | TurtleTemplateResult): Promise<DatasetExt> {
+  const stream = stringToStream(quads.toString())
 
   return rdf.dataset().import(parser.import(stream))
 }

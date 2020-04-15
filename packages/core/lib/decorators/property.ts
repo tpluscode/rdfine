@@ -1,4 +1,5 @@
-import { DatasetCore, Term } from 'rdf-js'
+import { DatasetCore, Quad, Term } from 'rdf-js'
+import TermSet from '@rdfjs/term-set'
 import { Context } from 'clownface/lib/Context'
 import RdfResourceImpl, { RdfResource } from '../../RdfResource'
 import { EdgeTraversal, EdgeTraversalFactory, PropRef, toEdgeTraversals } from '../path'
@@ -22,7 +23,7 @@ interface NamedGraphsOptions {
   subjectFromAllGraphs: boolean
 }
 
-function getObjects(node: SingleContextClownface, path: EdgeTraversal[]): SafeClownface {
+function getObjects(subjects: SingleContextClownface[], path: EdgeTraversal[]): SafeClownface {
   const nodes = path.reduce((subjects, edge) => {
     const objects: SingleContextClownface[] = []
 
@@ -31,16 +32,30 @@ function getObjects(node: SingleContextClownface, path: EdgeTraversal[]): SafeCl
     })
 
     return objects
-  }, [node])
+  }, subjects)
 
   const context = nodes.reduce((contexts, node) => {
     return contexts.concat(node._context)
   }, [] as Context<DatasetCore, Term>[])
 
   return cf({
-    dataset: node.dataset,
+    dataset: subjects[0].dataset,
     _context: context,
   }) as any as SafeClownface
+}
+
+function getNodeFromEveryGraph(node: SingleContextClownface): SingleContextClownface[] {
+  const graphs = node.datasets.reduce<Set<Quad['graph']>>((set, dataset) => {
+    return [...dataset].reduce((set, quad) => {
+      return set.add(quad.graph)
+    }, set)
+  }, new TermSet())
+
+  return [...graphs.values()].map(graph => cf({
+    dataset: node.dataset,
+    term: node.term,
+    graph,
+  }))
 }
 
 type ArrayOrSingle<T> = T | T[]
@@ -67,7 +82,7 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
 
   Object.defineProperty(proto, name, {
     get(this: T & RdfResourceImpl): unknown {
-      const rootNode = subjectFromAllGraphs ? this._unionGraph : this._selfGraph
+      const rootNode = subjectFromAllGraphs ? getNodeFromEveryGraph(this._selfGraph) : [this._selfGraph]
       const path = getPath()
       const nodes = getObjects(rootNode, path)
       const crossesBoundaries = path.some(edge => edge.crossesGraphBoundaries)
@@ -118,7 +133,7 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
       const path = getPath()
       const subject = path.length === 1
         ? this._selfGraph
-        : getObjects(this._selfGraph, path.slice(0, path.length - 1))
+        : getObjects([this._selfGraph], path.slice(0, path.length - 1))
 
       const lastPredicate = path[path.length - 1].predicate
 

@@ -2,7 +2,7 @@
 import { defaultGraph } from '@rdfjs/data-model'
 import { NamespaceBuilder } from '@rdfjs/namespace'
 import { NamedNode, DatasetCore, BlankNode, DefaultGraph, Quad_Graph, Term } from 'rdf-js'
-import cf, { SingleContextClownface } from 'clownface'
+import cf, { SafeClownface, SingleContextClownface } from 'clownface'
 import ResourceFactoryImpl, { Constructor, Mixin, ResourceFactory, ResourceIndexer } from './lib/ResourceFactory'
 import once from 'once'
 import TypeCollectionCtor, { TypeCollection } from './lib/TypeCollection'
@@ -16,7 +16,7 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly id: ResourceIdentifier
   readonly types: TypeCollection<D>
   readonly _selfGraph: SingleContextClownface<ResourceIdentifier, D>
-  readonly _unionGraph: SingleContextClownface<ResourceIdentifier, D>
+  readonly _unionGraph: SafeClownface<ResourceIdentifier, D>
   readonly _graphId: Quad_Graph
   hasType (type: string | NamedNode): boolean
   _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]]): T & ResourceIndexer
@@ -24,7 +24,7 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
   public readonly _selfGraph: SingleContextClownface<ResourceIdentifier, D>
-  public readonly _unionGraph: SingleContextClownface<ResourceIdentifier, D>
+  public readonly _unionGraph: SafeClownface<ResourceIdentifier, D>
   public readonly __initialized: boolean = false
   private readonly __initializeProperties: (() => boolean)
   public static __ns?: NamespaceBuilder
