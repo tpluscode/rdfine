@@ -163,8 +163,8 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
 
       const termsArray = valueArray.map(value => {
         if (!assertSetValue(value)) {
-          const pathStr = path.map(edge => `<${edge.predicate}>`).join('/')
-          throw new Error(`Unexpected value for path ${pathStr}. Expecting a ${valueTypeName} or RDF/JS term`)
+          const pathStr = path.map(edge => `<${edge.predicate.value}>`).join('/')
+          throw new Error(`Unexpected value for path ${pathStr}. Expecting a ${valueTypeName} or RDF/JS term.`)
         }
 
         if (typeof value === 'object' && 'termType' in value) {

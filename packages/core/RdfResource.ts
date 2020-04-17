@@ -1,7 +1,7 @@
 /* eslint-disable camelcase,@typescript-eslint/camelcase */
 import { defaultGraph } from '@rdfjs/data-model'
 import { NamespaceBuilder } from '@rdfjs/namespace'
-import { NamedNode, DatasetCore, BlankNode, DefaultGraph, Quad_Graph, Term } from 'rdf-js'
+import { NamedNode, DatasetCore, BlankNode, DefaultGraph, Quad_Graph, Term, Literal } from 'rdf-js'
 import cf, { SafeClownface, SingleContextClownface } from 'clownface'
 import ResourceFactoryImpl, { Constructor, Mixin, ResourceFactory, ResourceIndexer } from './lib/ResourceFactory'
 import once from 'once'
@@ -125,9 +125,9 @@ interface BaseInitializer {
 
 export type Initializer<T> = Partial<Omit<{
   [P in keyof T]?:
-  T[P] extends (infer U)[] ? U extends RdfResource ? Initializer<UserDefinedInterface<U>>[] : T[P] :
-    T[P] extends RdfResource ? Initializer<UserDefinedInterface<T[P]> & BaseInitializer> :
-      T[P]
+  T[P] extends (infer U)[] ? U extends RdfResource ? Initializer<UserDefinedInterface<U>>[] | (NamedNode | BlankNode)[] : T[P] | Literal :
+    T[P] extends RdfResource ? Initializer<UserDefinedInterface<T[P]> & BaseInitializer> | NamedNode | BlankNode :
+      T[P] | Literal
 }, keyof RdfResource>> & BaseInitializer
 
 type PartialRecursive<T> = T extends object ? { [K in keyof T]?: PartialRecursive<T[K]> } : T
