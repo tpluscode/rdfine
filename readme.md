@@ -12,7 +12,10 @@ Core library to define the JavaScript object model for RDF classes and propertie
 ### Generated model packages for selected vocabularies:
 
 * [@rdfine/csvw](vocabularies/csvw) - [Metadata Vocabulary for Tabular Data](https://www.w3.org/TR/tabular-metadata/)
-* [@rdfine/schema](vocabularies/csvw) - http://schema.org/
+* [@rdfine/hydra](vocabularies/hydra) - [Hydra Core Vocabulary](https://www.hydra-cg.com/spec/latest/core/)
+* [@rdfine/rdf](vocabularies/rdf) - [The RDF Concepts Vocabulary](https://www.w3.org/TR/rdf11-concepts/)
+* [@rdfine/rdfs](vocabularies/rdfs) - [The RDF Schema vocabulary](https://www.w3.org/TR/rdf-schema/)
+* [@rdfine/schema](vocabularies/schema) - http://schema.org/
 
 ### [@rdfine/generator](packages/generator)
 
