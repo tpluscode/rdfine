@@ -6,6 +6,7 @@
     "test": "lerna run test --stream --no-prefix",
     "example": "lerna run start --scope rdfine-example --stream --no-prefix",
     "generate": "lerna run generate --stream --no-prefix",
+    "build": "lerna run prepack",
     "release": "lerna publish from-package -y"
   },
   "devDependencies": {
