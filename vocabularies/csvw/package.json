@@ -35,6 +35,8 @@
 		"@babel/preset-typescript": "^7.8.3",
 		"@rdfine/generator": "^0.1.1",
 		"@rdfjs/dataset": "^1.0.1",
+    "@types/clownface": "^0.12.13",
+		"@types/rdf-js": "^2.0.12",
 		"@zazuko/rdf-vocabularies": "^2020.3.23",
 		"clownface": "^0.12.1",
 		"eslint": "^6.8.0",
@@ -64,5 +66,6 @@
 	"bugs": {
 		"url": "https://github.com/tpluscode/rdfine/issues"
 	},
-	"homepage": "https://github.com/tpluscode/rdfine/tree/master/vocabularies/csvw#readme"
+	"homepage": "https://github.com/tpluscode/rdfine/tree/master/vocabularies/csvw#readme",
+	"gitHead": "b5e454d19800773d6ed81cd40f336819ef955f1b"
 }
