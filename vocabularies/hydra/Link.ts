@@ -4,23 +4,23 @@ import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '.';
 import type * as Rdf from '@rdfine/rdf';
-import PropertyMixin from '@rdfine/rdf/Property';
+import RdfPropertyMixin from '@rdfine/rdf/Property';
 import ResourceMixin from './Resource';
 import OperationMixin from './Operation';
 
 export interface Link extends Rdf.Property, Hydra.Resource, RdfResource {
   description: string;
-  supportedOperation: Hydra.Operation;
+  supportedOperation: Array<Hydra.Operation>;
   title: string;
 }
 
 export default function LinkMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
-  class LinkClass extends ResourceMixin(PropertyMixin(Resource)) implements Link {
+  class LinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements Link {
     @property.literal()
     description!: string;
-    @property.resource({ as: [OperationMixin] })
-    supportedOperation!: Hydra.Operation;
+    @property.resource({ values: 'array', as: [OperationMixin] })
+    supportedOperation!: Array<Hydra.Operation>;
     @property.literal()
     title!: string;
   }

@@ -11,8 +11,8 @@ import SupportedPropertyMixin from './SupportedProperty';
 
 export interface Class extends Rdfs.Class, Hydra.Resource, RdfResource {
   description: string;
-  supportedOperation: Hydra.Operation;
-  supportedProperty: Hydra.SupportedProperty;
+  supportedOperation: Array<Hydra.Operation>;
+  supportedProperty: Array<Hydra.SupportedProperty>;
   title: string;
 }
 
@@ -21,10 +21,10 @@ export default function ClassMixin<Base extends Constructor>(Resource: Base) {
   class ClassClass extends ResourceMixin(RdfsClassMixin(Resource)) implements Class {
     @property.literal()
     description!: string;
-    @property.resource({ as: [OperationMixin] })
-    supportedOperation!: Hydra.Operation;
-    @property.resource({ as: [SupportedPropertyMixin] })
-    supportedProperty!: Hydra.SupportedProperty;
+    @property.resource({ values: 'array', as: [OperationMixin] })
+    supportedOperation!: Array<Hydra.Operation>;
+    @property.resource({ values: 'array', as: [SupportedPropertyMixin] })
+    supportedProperty!: Array<Hydra.SupportedProperty>;
     @property.literal()
     title!: string;
   }

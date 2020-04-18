@@ -10,8 +10,8 @@ import ClassMixin from './Class';
 export interface ApiDocumentation extends Hydra.Resource, RdfResource {
   description: string;
   entrypoint: Hydra.Resource;
-  possibleStatus: Hydra.Status;
-  supportedClass: Hydra.Class;
+  possibleStatus: Array<Hydra.Status>;
+  supportedClass: Array<Hydra.Class>;
   title: string;
 }
 
@@ -22,10 +22,10 @@ export default function ApiDocumentationMixin<Base extends Constructor>(Resource
     description!: string;
     @property.resource({ as: [ResourceMixin] })
     entrypoint!: Hydra.Resource;
-    @property.resource({ as: [StatusMixin] })
-    possibleStatus!: Hydra.Status;
-    @property.resource({ as: [ClassMixin] })
-    supportedClass!: Hydra.Class;
+    @property.resource({ values: 'array', as: [StatusMixin] })
+    possibleStatus!: Array<Hydra.Status>;
+    @property.resource({ values: 'array', as: [ClassMixin] })
+    supportedClass!: Array<Hydra.Class>;
     @property.literal()
     title!: string;
   }

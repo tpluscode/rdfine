@@ -12,7 +12,14 @@
     "generate": "rdf-vocab prefix rdfs | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
   },
 	"rdfine": {
-		"prefix": "rdfs"
+		"prefix": "rdfs",
+    "types": {
+      "Literal": "string"
+    },
+    "properties": {
+      "member": { "values": "array" },
+      "seeAlso": { "values": "array" }
+    }
 	},
 	"dependencies": {
     "@rdfine/rdf": "*",

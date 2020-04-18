@@ -13,10 +13,20 @@
 	"rdfine": {
 		"prefix": "hydra",
     "properties": {
-      "member": { "values": "array" }
+      "collection": { "values": "array" },
+      "manages": { "values": "array" },
+      "mapping": { "values": "array" },
+      "member": { "values": "array" },
+      "operation": { "values": "array" },
+      "possibleStatus": { "values": "array" },
+      "supportedClass": { "values": "array" },
+      "supportedOperation": { "values": "array" },
+      "supportedProperty": { "values": "array" },
+      "view": { "values": "array" }
     }
 	},
 	"dependencies": {
+		"@rdfine/rdf": "*",
 		"@rdfine/rdfs": "*",
 		"@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.1.0",

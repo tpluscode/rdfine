@@ -6,18 +6,18 @@ import type * as Hydra from '.';
 import ResourceMixin from './Resource';
 
 export interface Collection extends Hydra.Resource, RdfResource {
-  manages: RDF.Term;
-  member: Hydra.Resource;
+  manages: Array<RDF.Term>;
+  member: Array<Hydra.Resource>;
   totalItems: number;
 }
 
 export default function CollectionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class CollectionClass extends ResourceMixin(Resource) implements Collection {
-    @property()
-    manages!: RDF.Term;
-    @property.resource({ as: [ResourceMixin] })
-    member!: Hydra.Resource;
+    @property({ values: 'array' })
+    manages!: Array<RDF.Term>;
+    @property.resource({ values: 'array', as: [ResourceMixin] })
+    member!: Array<Hydra.Resource>;
     @property.literal({ type: Number })
     totalItems!: number;
   }

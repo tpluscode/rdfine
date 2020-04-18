@@ -4,9 +4,9 @@ import { rdf } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Rdf from '.';
 
-export interface List<T = RDF.Term> extends RdfResource {
-  first: T;
-  rest: Rdf.List<T>;
+export interface List extends RdfResource {
+  first: RDF.Term;
+  rest: Rdf.List;
 }
 
 export default function ListMixin<Base extends Constructor>(Resource: Base) {

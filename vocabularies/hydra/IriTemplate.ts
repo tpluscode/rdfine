@@ -7,15 +7,15 @@ import ResourceMixin from './Resource';
 import IriTemplateMappingMixin from './IriTemplateMapping';
 
 export interface IriTemplate extends Hydra.Resource, RdfResource {
-  mapping: Hydra.IriTemplateMapping;
+  mapping: Array<Hydra.IriTemplateMapping>;
   template: string;
 }
 
 export default function IriTemplateMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class IriTemplateClass extends ResourceMixin(Resource) implements IriTemplate {
-    @property.resource({ as: [IriTemplateMappingMixin] })
-    mapping!: Hydra.IriTemplateMapping;
+    @property.resource({ values: 'array', as: [IriTemplateMappingMixin] })
+    mapping!: Array<Hydra.IriTemplateMapping>;
     @property.literal()
     template!: string;
   }

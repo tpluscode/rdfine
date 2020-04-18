@@ -12,15 +12,15 @@ import IriTemplateMixin from './IriTemplate';
 
 export interface Resource extends Rdfs.Resource, RdfResource {
   apiDocumentation: Hydra.ApiDocumentation;
-  collection: Hydra.Collection;
+  collection: Array<Hydra.Collection>;
   first: Hydra.Resource;
   freetextQuery: string;
   last: Hydra.Resource;
   next: Hydra.Resource;
-  operation: Hydra.Operation;
+  operation: Array<Hydra.Operation>;
   previous: Hydra.Resource;
   search: Hydra.IriTemplate;
-  view: Hydra.Resource;
+  view: Array<Hydra.Resource>;
 }
 
 export default function ResourceMixin<Base extends Constructor>(Resource: Base) {
@@ -28,8 +28,8 @@ export default function ResourceMixin<Base extends Constructor>(Resource: Base) 
   class ResourceClass extends RdfsResourceMixin(Resource) implements Resource {
     @property.resource({ as: [ApiDocumentationMixin] })
     apiDocumentation!: Hydra.ApiDocumentation;
-    @property.resource({ as: [CollectionMixin] })
-    collection!: Hydra.Collection;
+    @property.resource({ values: 'array', as: [CollectionMixin] })
+    collection!: Array<Hydra.Collection>;
     @property.resource({ as: [ResourceMixin] })
     first!: Hydra.Resource;
     @property.literal()
@@ -38,14 +38,14 @@ export default function ResourceMixin<Base extends Constructor>(Resource: Base) 
     last!: Hydra.Resource;
     @property.resource({ as: [ResourceMixin] })
     next!: Hydra.Resource;
-    @property.resource({ as: [OperationMixin] })
-    operation!: Hydra.Operation;
+    @property.resource({ values: 'array', as: [OperationMixin] })
+    operation!: Array<Hydra.Operation>;
     @property.resource({ as: [ResourceMixin] })
     previous!: Hydra.Resource;
     @property.resource({ as: [IriTemplateMixin] })
     search!: Hydra.IriTemplate;
-    @property.resource({ as: [ResourceMixin] })
-    view!: Hydra.Resource;
+    @property.resource({ values: 'array', as: [ResourceMixin] })
+    view!: Array<Hydra.Resource>;
   }
   return ResourceClass
 }

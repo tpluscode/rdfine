@@ -11,7 +11,7 @@ export interface Operation extends Hydra.Resource, RdfResource {
   expects: Hydra.Class | Hydra.Resource;
   expectsHeader: string;
   method: string;
-  possibleStatus: Hydra.Status;
+  possibleStatus: Array<Hydra.Status>;
   returns: Hydra.Class | Hydra.Resource;
   returnsHeader: string;
   title: string;
@@ -28,8 +28,8 @@ export default function OperationMixin<Base extends Constructor>(Resource: Base)
     expectsHeader!: string;
     @property.literal()
     method!: string;
-    @property.resource({ as: [StatusMixin] })
-    possibleStatus!: Hydra.Status;
+    @property.resource({ values: 'array', as: [StatusMixin] })
+    possibleStatus!: Array<Hydra.Status>;
     @property.resource()
     returns!: Hydra.Class | Hydra.Resource;
     @property.literal()
