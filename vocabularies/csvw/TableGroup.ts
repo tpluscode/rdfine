@@ -1,5 +1,4 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -28,7 +27,7 @@ export interface TableGroup extends RdfResource {
   tableDirection: Csvw.Direction;
   tableSchema: Csvw.Schema;
   textDirection: Csvw.Direction;
-  transformations: Csvw.Transformation;
+  transformations: Array<Csvw.Transformation>;
   valueUrl: string;
 }
 
@@ -67,8 +66,8 @@ export default function TableGroupMixin<Base extends Constructor>(Resource: Base
     tableSchema!: Csvw.Schema;
     @property.resource({ as: [DirectionMixin] })
     textDirection!: Csvw.Direction;
-    @property.resource({ as: [TransformationMixin] })
-    transformations!: Csvw.Transformation;
+    @property.resource({ values: 'array', as: [TransformationMixin] })
+    transformations!: Array<Csvw.Transformation>;
     @property.literal()
     valueUrl!: string;
   }

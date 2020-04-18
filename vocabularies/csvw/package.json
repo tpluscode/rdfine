@@ -14,7 +14,11 @@
 		"prefix": "csvw",
 		"types": {
 			"uriTemplate": "string"
-		}
+		},
+    "properties": {
+      "column": { "values": "list" },
+      "transformations": { "values": "array" }
+    }
 	},
 	"dependencies": {
 		"@rdfjs/namespace": "^1.1.0",
