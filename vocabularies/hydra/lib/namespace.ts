@@ -1,3 +1,1 @@
-import namespace from '@rdfjs/namespace';
-
-export const hydra = namespace('http://www.w3.org/ns/hydra/core#');
+export { hydra } from '@tpluscode/rdf-ns-builders';

@@ -1,9 +1,18 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
+import * as namespaces from '@tpluscode/rdf-ns-builders'
 import { Project, VariableDeclarationKind } from 'ts-morph'
 import { Context } from './index'
 
 export function generateNamespace({ project }: { project: Project}, context: Context) {
   const nsFile = project.createSourceFile('lib/namespace.ts', {}, { overwrite: true })
+
+  if (context.prefix in namespaces) {
+    nsFile.addExportDeclaration({
+      namedExports: [context.prefix],
+      moduleSpecifier: '@tpluscode/rdf-ns-builders',
+    })
+    return
+  }
 
   nsFile.addImportDeclaration({
     defaultImport: 'namespace',

@@ -1,3 +1,1 @@
-import namespace from '@rdfjs/namespace';
-
-export const schema = namespace('http://schema.org/');
+export { schema } from '@tpluscode/rdf-ns-builders';
