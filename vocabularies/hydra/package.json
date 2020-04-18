@@ -1,6 +1,6 @@
 {
 	"name": "@rdfine/hydra",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"main": "main.js",
 	"module": "index.js",
 	"types": "index.d.ts",
@@ -12,22 +12,42 @@
 	},
 	"rdfine": {
 		"prefix": "hydra",
-    "properties": {
-      "collection": { "values": "array" },
-      "manages": { "values": "array" },
-      "mapping": { "values": "array" },
-      "member": { "values": "array" },
-      "operation": { "values": "array" },
-      "possibleStatus": { "values": "array" },
-      "supportedClass": { "values": "array" },
-      "supportedOperation": { "values": "array" },
-      "supportedProperty": { "values": "array" },
-      "view": { "values": "array" }
-    }
+		"properties": {
+			"collection": {
+				"values": "array"
+			},
+			"manages": {
+				"values": "array"
+			},
+			"mapping": {
+				"values": "array"
+			},
+			"member": {
+				"values": "array"
+			},
+			"operation": {
+				"values": "array"
+			},
+			"possibleStatus": {
+				"values": "array"
+			},
+			"supportedClass": {
+				"values": "array"
+			},
+			"supportedOperation": {
+				"values": "array"
+			},
+			"supportedProperty": {
+				"values": "array"
+			},
+			"view": {
+				"values": "array"
+			}
+		}
 	},
 	"dependencies": {
-		"@rdfine/rdf": "*",
-		"@rdfine/rdfs": "*",
+		"@rdfine/rdf": "^0.1.0",
+		"@rdfine/rdfs": "^0.1.0",
 		"@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.1.0",
 		"@tpluscode/rdfine": "^0.4.0",
@@ -40,7 +60,7 @@
 		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
 		"@babel/preset-env": "^7.8.3",
 		"@babel/preset-typescript": "^7.8.3",
-		"@rdfine/generator": "^0.1.0",
+		"@rdfine/generator": "^0.2.0",
 		"@rdfjs/dataset": "^1.0.1",
 		"@zazuko/rdf-vocabularies": "^2020.3.23",
 		"clownface": "^0.12.1",

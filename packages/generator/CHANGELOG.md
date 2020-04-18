@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/tpluscode/rdfine/compare/@rdfine/generator@0.1.1...@rdfine/generator@0.2.0) (2020-04-18)
+
+
+### Bug Fixes
+
+* **generator:** avoid conflict with rdf as vocabulary package ([090aa5e](https://github.com/tpluscode/rdfine/commit/090aa5e3789bf9eac745ed2b609320f677ed32b0))
+
+
+### Features
+
+* **generator:** overriding property value to generate array/list getters ([394581b](https://github.com/tpluscode/rdfine/commit/394581b639e770b032ea4bf767ba37c06d47d693))
+
+
+
+
+
 ## [0.1.1](https://github.com/tpluscode/rdfine/compare/@rdfine/generator@0.1.0...@rdfine/generator@0.1.1) (2020-04-15)
 
 **Note:** Version bump only for package @rdfine/generator

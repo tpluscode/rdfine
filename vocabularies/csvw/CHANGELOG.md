@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/tpluscode/rdfine/compare/@rdfine/csvw@0.1.3...@rdfine/csvw@0.2.0) (2020-04-18)
+
+
+### Bug Fixes
+
+* **generator:** avoid conflict with rdf as vocabulary package ([090aa5e](https://github.com/tpluscode/rdfine/commit/090aa5e3789bf9eac745ed2b609320f677ed32b0))
+
+
+### Features
+
+* **csvw:** make column and transformations array properties ([6bde90f](https://github.com/tpluscode/rdfine/commit/6bde90fc5a7a9a12e949d0d382dc2da185c10eda))
+
+
+### BREAKING CHANGES
+
+* **csvw:** changed property return types
+
+
+
+
+
 ## [0.1.3](https://github.com/tpluscode/rdfine/compare/@rdfine/csvw@0.1.2...@rdfine/csvw@0.1.3) (2020-04-18)
 
 **Note:** Version bump only for package @rdfine/csvw
