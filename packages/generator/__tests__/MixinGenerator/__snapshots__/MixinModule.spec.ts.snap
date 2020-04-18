@@ -2,7 +2,7 @@
 
 exports[`MixinModule does not try import self when property has range of enclosing class: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import type * as rdf from \\"rdf-js\\";
+import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
@@ -33,7 +33,7 @@ ClassMixin.Class = ClassImpl
 
 exports[`MixinModule generates a mixin class with external super classes: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
-import type * as rdf from \\"rdf-js\\";
+import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
@@ -63,7 +63,7 @@ ClassMixin.Class = ClassImpl
 
 exports[`MixinModule generates a mixin class without props: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
-import type * as rdf from \\"rdf-js\\";
+import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
@@ -91,7 +91,7 @@ ClassMixin.Class = ClassImpl
 
 exports[`MixinModule generates array property: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import type * as rdf from \\"rdf-js\\";
+import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
@@ -122,7 +122,7 @@ ClassMixin.Class = ClassImpl
 
 exports[`MixinModule generates list property: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import type * as rdf from \\"rdf-js\\";
+import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
@@ -153,7 +153,7 @@ ClassMixin.Class = ClassImpl
 
 exports[`MixinModule generates property with automatic external type cast when predicate has strict semantics: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import type * as rdf from \\"rdf-js\\";
+import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
@@ -186,7 +186,7 @@ ClassMixin.Class = ClassImpl
 
 exports[`MixinModule generates property with automatic type cast when predicate has strict semantics: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import type * as rdf from \\"rdf-js\\";
+import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
