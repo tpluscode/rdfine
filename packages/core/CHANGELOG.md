@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.2...@tpluscode/rdfine@0.4.3) (2020-04-18)
+
+
+### Bug Fixes
+
+* **core:** make it possible initialize with RDF/JS terms ([56e13bd](https://github.com/tpluscode/rdfine/commit/56e13bd088a5826682bb26060fb4660ace883740))
+
+
+
+
+
 ## [0.4.2](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.1...@tpluscode/rdfine@0.4.2) (2020-04-15)
 
 
