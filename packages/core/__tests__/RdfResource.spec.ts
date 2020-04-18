@@ -1,7 +1,7 @@
 import cf from 'clownface'
 import $rdf from 'rdf-ext'
-import { defaultGraph } from '@rdfjs/data-model'
-import RdfResource from '../RdfResource'
+import { defaultGraph, namedNode, literal, blankNode } from '@rdfjs/data-model'
+import RdfResource, { Initializer } from '../RdfResource'
 import { parse, vocabs } from './_helpers'
 import { property } from '../index'
 
@@ -126,6 +126,95 @@ describe('RdfResource', () => {
       expect(resource.name).toEqual('baz')
       expect(resource.id.termType).toEqual('BlankNode')
       expect(resource.types.size).toEqual(0)
+    })
+
+    it('allows RDF/JS literal to initialize literal properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Resource extends RdfResource {
+        name: string
+      }
+      class ResourceImpl extends RdfResource implements Resource {
+        @property.literal({ path: ex.name })
+        name!: string;
+      }
+      const initializer: Initializer<Resource> = {
+        name: literal('baz'),
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.name).toEqual('baz')
+    })
+
+    it('allows RDF/JS named node to initialize resource properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Resource extends RdfResource {
+        other: Resource
+      }
+      class ResourceImpl extends RdfResource implements Resource {
+        @property.resource({ path: ex.other })
+        other!: Resource;
+      }
+      const initializer: Initializer<Resource> = {
+        other: namedNode('baz'),
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.other.id).toEqual(namedNode('baz'))
+    })
+
+    it('allows RDF/JS blank node to initialize resource properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Resource extends RdfResource {
+        other: Resource
+      }
+      class ResourceImpl extends RdfResource implements Resource {
+        @property.resource({ path: ex.other })
+        other!: Resource;
+      }
+      const initializer: Initializer<Resource> = {
+        other: blankNode(),
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.other.id.termType).toEqual('BlankNode')
+    })
+
+    it('allows RDF/JS nodes to initialize array resource properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Resource extends RdfResource {
+        others: Resource[]
+      }
+      class ResourceImpl extends RdfResource implements Resource {
+        @property.resource({ path: ex.other, values: 'array' })
+        others!: Resource[];
+      }
+      const initializer: Initializer<Resource> = {
+        others: [blankNode(), namedNode('baz')],
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.others.map(o => o.id)).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ termType: 'BlankNode' }),
+          namedNode('baz'),
+        ]),
+      )
     })
 
     it('add additional types', () => {
