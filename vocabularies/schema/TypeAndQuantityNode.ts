@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -11,7 +10,7 @@ export interface TypeAndQuantityNode extends Schema.StructuredValue, RdfResource
   businessFunction: Schema.BusinessFunction;
   typeOfGood: Schema.Product | Schema.Service;
   unitCode: string;
-  unitCodeTerm: rdf.NamedNode;
+  unitCodeTerm: RDF.NamedNode;
   unitText: string;
 }
 
@@ -27,7 +26,7 @@ export default function TypeAndQuantityNodeMixin<Base extends Constructor>(Resou
     @property.literal()
     unitCode!: string;
     @property({ path: schema.unitCode })
-    unitCodeTerm!: rdf.NamedNode;
+    unitCodeTerm!: RDF.NamedNode;
     @property.literal()
     unitText!: string;
   }

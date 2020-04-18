@@ -3,6 +3,14 @@ import { expandMapKeys } from '../../lib/util/overrideMap'
 
 describe('util/overrideMap', () => {
   describe('expandMapKeys', () => {
+    it('returns empty object when map is falsy', () => {
+      // when
+      const result = expandMapKeys(null, 'ex')
+
+      // then
+      expect(result).toEqual({})
+    })
+
     it('expands prefixed names of known vocabularies', () => {
       // given
       const map = {

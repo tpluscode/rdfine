@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -15,7 +14,7 @@ export interface ServiceChannel extends Schema.Intangible, RdfResource {
   servicePhone: Schema.ContactPoint;
   servicePostalAddress: Schema.PostalAddress;
   serviceSmsNumber: Schema.ContactPoint;
-  serviceUrl: rdf.NamedNode;
+  serviceUrl: RDF.NamedNode;
 }
 
 export default function ServiceChannelMixin<Base extends Constructor>(Resource: Base) {
@@ -38,7 +37,7 @@ export default function ServiceChannelMixin<Base extends Constructor>(Resource: 
     @property.resource()
     serviceSmsNumber!: Schema.ContactPoint;
     @property()
-    serviceUrl!: rdf.NamedNode;
+    serviceUrl!: RDF.NamedNode;
   }
   return ServiceChannelClass
 }

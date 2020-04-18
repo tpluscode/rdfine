@@ -1,13 +1,12 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
 import CreativeWorkMixin from './CreativeWork';
 
 export interface SoftwareSourceCode extends Schema.CreativeWork, RdfResource {
-  codeRepository: rdf.NamedNode;
+  codeRepository: RDF.NamedNode;
   codeSampleType: string;
   programmingLanguage: Schema.ComputerLanguage;
   programmingLanguageLiteral: string;
@@ -21,7 +20,7 @@ export default function SoftwareSourceCodeMixin<Base extends Constructor>(Resour
   @namespace(schema)
   class SoftwareSourceCodeClass extends CreativeWorkMixin(Resource) implements SoftwareSourceCode {
     @property()
-    codeRepository!: rdf.NamedNode;
+    codeRepository!: RDF.NamedNode;
     @property.literal()
     codeSampleType!: string;
     @property.resource()

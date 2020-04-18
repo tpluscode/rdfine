@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -18,7 +17,7 @@ export interface ParcelDelivery extends Schema.Intangible, RdfResource {
   partOfOrder: Schema.Order;
   provider: Schema.Organization | Schema.Person;
   trackingNumber: string;
-  trackingUrl: rdf.NamedNode;
+  trackingUrl: RDF.NamedNode;
 }
 
 export default function ParcelDeliveryMixin<Base extends Constructor>(Resource: Base) {
@@ -47,7 +46,7 @@ export default function ParcelDeliveryMixin<Base extends Constructor>(Resource: 
     @property.literal()
     trackingNumber!: string;
     @property()
-    trackingUrl!: rdf.NamedNode;
+    trackingUrl!: RDF.NamedNode;
   }
   return ParcelDeliveryClass
 }

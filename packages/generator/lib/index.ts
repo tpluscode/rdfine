@@ -49,8 +49,8 @@ interface GeneratorOptions {
   outDir: string
   prefix: string
   exclude: string[]
-  types: Record<string, any>
-  properties: PropertyOverrides
+  types?: Record<string, any>
+  properties?: PropertyOverrides
 }
 
 function assertOptions(options: Record<string, any>) {

@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -9,9 +8,9 @@ import IntangibleMixin from './Intangible';
 export interface Role extends Schema.Intangible, RdfResource {
   endDate: Date;
   namedPosition: string;
-  namedPositionTerm: rdf.NamedNode;
+  namedPositionTerm: RDF.NamedNode;
   roleName: string;
-  roleNameTerm: rdf.NamedNode;
+  roleNameTerm: RDF.NamedNode;
   startDate: Date;
 }
 
@@ -23,11 +22,11 @@ export default function RoleMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     namedPosition!: string;
     @property({ path: schema.namedPosition })
-    namedPositionTerm!: rdf.NamedNode;
+    namedPositionTerm!: RDF.NamedNode;
     @property.literal()
     roleName!: string;
     @property({ path: schema.roleName })
-    roleNameTerm!: rdf.NamedNode;
+    roleNameTerm!: RDF.NamedNode;
     @property.literal()
     startDate!: Date;
   }

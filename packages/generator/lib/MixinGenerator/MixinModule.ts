@@ -87,7 +87,7 @@ export class MixinModule implements GeneratedModule {
       moduleSpecifier: '@tpluscode/rdfine',
     })
     mixinFile.addImportDeclaration({
-      namespaceImport: 'rdf',
+      namespaceImport: 'RDF',
       moduleSpecifier: 'rdf-js',
       isTypeOnly: true,
     })

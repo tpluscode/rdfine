@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -8,7 +7,7 @@ import EventMixin from './Event';
 
 export interface CourseInstance extends Schema.Event, RdfResource {
   courseMode: string;
-  courseModeTerm: rdf.NamedNode;
+  courseModeTerm: RDF.NamedNode;
   instructor: Schema.Person;
 }
 
@@ -18,7 +17,7 @@ export default function CourseInstanceMixin<Base extends Constructor>(Resource: 
     @property.literal()
     courseMode!: string;
     @property({ path: schema.courseMode })
-    courseModeTerm!: rdf.NamedNode;
+    courseModeTerm!: RDF.NamedNode;
     @property.resource()
     instructor!: Schema.Person;
   }

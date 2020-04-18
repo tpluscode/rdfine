@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -37,8 +36,8 @@ export interface Place extends Schema.Thing, RdfResource {
   latitude: number | string;
   logo: Schema.ImageObject;
   longitude: number | string;
-  map: rdf.NamedNode;
-  maps: rdf.NamedNode;
+  map: RDF.NamedNode;
+  maps: RDF.NamedNode;
   maximumAttendeeCapacity: number;
   openingHoursSpecification: Schema.OpeningHoursSpecification;
   photo: Schema.ImageObject | Schema.Photograph;
@@ -116,9 +115,9 @@ export default function PlaceMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     longitude!: number | string;
     @property()
-    map!: rdf.NamedNode;
+    map!: RDF.NamedNode;
     @property()
-    maps!: rdf.NamedNode;
+    maps!: RDF.NamedNode;
     @property.literal({ type: Number })
     maximumAttendeeCapacity!: number;
     @property.resource()

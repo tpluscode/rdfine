@@ -14,20 +14,20 @@ import { isEnumerationType } from './util'
 import { DatatypeName, wellKnownDatatypes } from './wellKnownDatatypes'
 
 export function resourceTypes(term: SingleContextClownface, context: Pick<Context, 'prefix'>): ExternalResourceType | ResourceType | null {
-  if (!term.has(rdf.type, [rdfs.Class, hydra.Class]).values.length) {
-    return null
-  }
-
   const [prefix, localName] = shrink(term.value).split(':')
   if (prefix !== context.prefix) {
     return {
       type: 'ExternalResource',
-      mixinName: `${localName}Mixin`,
+      mixinName: `${toUpperInitial(prefix)}${localName}Mixin`,
       module: `@rdfine/${prefix}/${localName}`,
       package: `@rdfine/${prefix}`,
       qualifiedName: toUpperInitial(`${prefix}.${localName}`),
       qualifier: toUpperInitial(prefix),
     }
+  }
+
+  if (!term.has(rdf.type, [rdfs.Class, hydra.Class]).values.length) {
+    return null
   }
 
   return {

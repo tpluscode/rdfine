@@ -1,6 +1,5 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
-import type * as rdf from 'rdf-js';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
@@ -14,7 +13,7 @@ export interface Vehicle extends Schema.Product, RdfResource {
   fuelConsumption: Schema.QuantitativeValue;
   fuelEfficiency: Schema.QuantitativeValue;
   fuelType: string;
-  fuelTypeTerm: RdfResource | Schema.QualitativeValue;
+  fuelTypeTerm: RDF.NamedNode | Schema.QualitativeValue;
   knownVehicleDamages: string;
   mileageFromOdometer: Schema.QuantitativeValue;
   numberOfAirbags: number | string;
@@ -38,7 +37,7 @@ export interface Vehicle extends Schema.Product, RdfResource {
   vehicleSeatingCapacity: Schema.QuantitativeValue;
   vehicleSeatingCapacityLiteral: number;
   vehicleTransmission: string;
-  vehicleTransmissionTerm: RdfResource | Schema.QualitativeValue;
+  vehicleTransmissionTerm: RDF.NamedNode | Schema.QualitativeValue;
 }
 
 export default function VehicleMixin<Base extends Constructor>(Resource: Base) {
@@ -59,7 +58,7 @@ export default function VehicleMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     fuelType!: string;
     @property({ path: schema.fuelType })
-    fuelTypeTerm!: RdfResource | Schema.QualitativeValue;
+    fuelTypeTerm!: RDF.NamedNode | Schema.QualitativeValue;
     @property.literal()
     knownVehicleDamages!: string;
     @property.resource()
@@ -107,7 +106,7 @@ export default function VehicleMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     vehicleTransmission!: string;
     @property({ path: schema.vehicleTransmission })
-    vehicleTransmissionTerm!: RdfResource | Schema.QualitativeValue;
+    vehicleTransmissionTerm!: RDF.NamedNode | Schema.QualitativeValue;
   }
   return VehicleClass
 }
