@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/tpluscode/rdfine/compare/@rdfine/schema@0.1.3...@rdfine/schema@0.2.0) (2020-04-18)
+
+
+### Bug Fixes
+
+* **generator:** avoid conflict with rdf as vocabulary package ([090aa5e](https://github.com/tpluscode/rdfine/commit/090aa5e3789bf9eac745ed2b609320f677ed32b0))
+
+
+### Features
+
+* **schema:** some properties related to HowTo should be arrays ([e066998](https://github.com/tpluscode/rdfine/commit/e0669988afab0fad10c6f50d95bf872c42046510))
+
+
+### BREAKING CHANGES
+
+* **schema:** changed property return types
+
+
+
+
+
 ## [0.1.3](https://github.com/tpluscode/rdfine/compare/@rdfine/schema@0.1.2...@rdfine/schema@0.1.3) (2020-04-18)
 
 **Note:** Version bump only for package @rdfine/schema

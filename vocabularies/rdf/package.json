@@ -1,15 +1,15 @@
 {
 	"name": "@rdfine/rdf",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"main": "main.js",
 	"module": "index.js",
 	"types": "index.d.ts",
-  "scripts": {
-    "prepack": "npm run build",
-    "clean": "find . -name '*.ts' -maxdepth 1 -delete",
-    "build": "tsc -p tsconfig.build.json",
-    "generate": "rdf-vocab prefix rdf | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
-  },
+	"scripts": {
+		"prepack": "npm run build",
+		"clean": "find . -name '*.ts' -maxdepth 1 -delete",
+		"build": "tsc -p tsconfig.build.json",
+		"generate": "rdf-vocab prefix rdf | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
+	},
 	"rdfine": {
 		"prefix": "rdf",
 		"types": {
@@ -23,7 +23,7 @@
 	"dependencies": {
 		"@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.1.0",
-    "@tpluscode/rdfine": "^0.4.0",
+		"@tpluscode/rdfine": "^0.4.0",
 		"esm": "^3.2.25"
 	},
 	"devDependencies": {
@@ -33,10 +33,10 @@
 		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
 		"@babel/preset-env": "^7.8.3",
 		"@babel/preset-typescript": "^7.8.3",
-    "@rdfine/generator": "^0.1.0",
-    "@types/clownface": "^0.12.13",
+		"@rdfine/generator": "^0.2.0",
 		"@rdfjs/dataset": "^1.0.1",
-    "@types/rdf-js": "^2.0.12",
+		"@types/clownface": "^0.12.13",
+		"@types/rdf-js": "^2.0.12",
 		"@zazuko/rdf-vocabularies": "^2020.3.23",
 		"clownface": "^0.12.1",
 		"eslint": "^6.8.0",
