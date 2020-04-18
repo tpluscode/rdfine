@@ -74,7 +74,7 @@ export class MixinModule implements GeneratedModule {
     }
   }
 
-  private addImports(mixinFile: SourceFile, context: Context) {
+  private addImports(mixinFile: SourceFile, context: Omit<Context, 'properties'>) {
     const rdfineImports = ['Constructor', 'namespace', 'RdfResource']
 
     if (Object.keys(this.properties).some(Boolean)) {
@@ -124,7 +124,7 @@ export class MixinModule implements GeneratedModule {
     })
   }
 
-  private createMixinFunction(mixinFile: SourceFile, context: Context) {
+  private createMixinFunction(mixinFile: SourceFile, context: Omit<Context, 'properties'>) {
     const mixinFunction = mixinFile.addFunction({
       name: this.type.mixinName,
       typeParameters: [{

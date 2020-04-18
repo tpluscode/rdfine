@@ -14,6 +14,7 @@ export interface JavascriptProperty {
   termName: string
   prefixedTerm: string
   type: 'resource' | 'term' | 'literal'
+  values?: 'array' | 'list'
 }
 
 function groupRangeTypes(range: Range[], types: TypeMetaCollection, { log }: Context) {
@@ -58,6 +59,11 @@ export function * toJavascriptProperties(prop: SingleContextClownface, range: Ra
   let resourceProperty: JavascriptProperty | null = null
   let literalProperty: JavascriptProperty | null = null
   let termProperty: JavascriptProperty | null = null
+
+  const override = context.properties[prop.term.value]
+  if (override && override.values) {
+    baseProperty.values = override.values
+  }
 
   if (ranges.resource.length) {
     const semantics = range.every(r => r.strictSemantics) ? 'strict' : 'loose'
