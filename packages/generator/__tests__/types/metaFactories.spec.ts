@@ -77,15 +77,11 @@ describe('meta factory', () => {
     it('assumes unprefixed name to be from current namespace', () => {
       // given
       const overrides = factories.overrides({
-        Type: 'string',
+        [ex.Type.value]: 'string',
       })
 
       // when
-      const meta = overrides(
-        graph.node(ex.Type),
-        {
-          prefix: 'ex',
-        })
+      const meta = overrides(graph.node(ex.Type))
 
       // then
       expect(meta).toEqual({
@@ -98,13 +94,11 @@ describe('meta factory', () => {
     it('creates a NamedNode term type', () => {
       // given
       const overrides = factories.overrides({
-        Type: 'NamedNode',
+        [ex.Type.value]: 'NamedNode',
       })
 
       // when
-      const meta = overrides(graph.node(ex.Type), {
-        prefix: 'ex',
-      })
+      const meta = overrides(graph.node(ex.Type))
 
       // then
       expect(meta).toEqual({
@@ -116,13 +110,11 @@ describe('meta factory', () => {
     it('expands prefixed type name', () => {
       // given
       const overrides = factories.overrides({
-        'schema:foo': 'NamedNode',
+        [schema.foo.value]: 'NamedNode',
       })
 
       // when
-      const meta = overrides(graph.node(schema.foo), {
-        prefix: 'ex',
-      })
+      const meta = overrides(graph.node(schema.foo))
 
       // then
       expect(meta).toEqual({

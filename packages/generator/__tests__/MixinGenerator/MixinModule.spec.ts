@@ -107,6 +107,80 @@ describe('MixinModule', () => {
     expect(sourceFile).toMatchSnapshot()
   })
 
+  it('generates array property', () => {
+    // given
+    const module = new MixinModule(vocabulary.node(ex.Class), {
+      type: 'Resource',
+      localName: 'Class',
+      qualifiedName: 'Example.Class',
+      module: './Class',
+      mixinName: 'ClassMixin',
+    }, [], [{
+      term: ex.foo,
+      name: 'foo',
+      type: 'resource',
+      prefixedTerm: 'ex.foo',
+      semantics: 'loose',
+      termName: 'foo',
+      values: 'array',
+      range: [{
+        type: 'Resource',
+        mixinName: 'FooMixin',
+        module: './Foo',
+        localName: 'Foo',
+        qualifiedName: 'Example.Foo',
+      }],
+    }])
+
+    // when
+    module.writeModule(sourceFile, new FakeTypeCollection(), {
+      prefix: 'ex',
+      defaultExport: 'Example',
+      log: fakeLog(),
+      vocabulary,
+    })
+
+    // then
+    expect(sourceFile).toMatchSnapshot()
+  })
+
+  it('generates list property', () => {
+    // given
+    const module = new MixinModule(vocabulary.node(ex.Class), {
+      type: 'Resource',
+      localName: 'Class',
+      qualifiedName: 'Example.Class',
+      module: './Class',
+      mixinName: 'ClassMixin',
+    }, [], [{
+      term: ex.foo,
+      name: 'foo',
+      type: 'resource',
+      prefixedTerm: 'ex.foo',
+      semantics: 'loose',
+      termName: 'foo',
+      values: 'list',
+      range: [{
+        type: 'Resource',
+        mixinName: 'FooMixin',
+        module: './Foo',
+        localName: 'Foo',
+        qualifiedName: 'Example.Foo',
+      }],
+    }])
+
+    // when
+    module.writeModule(sourceFile, new FakeTypeCollection(), {
+      prefix: 'ex',
+      defaultExport: 'Example',
+      log: fakeLog(),
+      vocabulary,
+    })
+
+    // then
+    expect(sourceFile).toMatchSnapshot()
+  })
+
   it('does not try import self when property has range of enclosing class', () => {
     // given
     const generateType = {

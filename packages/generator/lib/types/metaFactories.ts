@@ -1,7 +1,6 @@
 import { SingleContextClownface } from 'clownface'
-import { expand, shrink } from '@zazuko/rdf-vocabularies'
+import { shrink } from '@zazuko/rdf-vocabularies'
 import { hydra, rdf, rdfs } from '@tpluscode/rdf-ns-builders'
-import once from 'once'
 import {
   EnumerationMember,
   EnumerationType,
@@ -112,25 +111,8 @@ export function datatypes(term: SingleContextClownface): LiteralType | null {
 }
 
 export function overrides(overrideMap: Record<string, DatatypeName | 'NamedNode'> = {}) {
-  const overridesMappedToUris = once((prefix: string) => {
-    return Object.entries(overrideMap)
-      .reduce((newMap, [key, override]) => {
-        let typeUri: string
-        if (key.includes(':')) {
-          typeUri = expand(key)
-        } else {
-          typeUri = expand(`${prefix}:${key}`)
-        }
-
-        return {
-          ...newMap,
-          [typeUri]: override,
-        }
-      }, {})
-  }) as ((prefix: string) => Record<string, DatatypeName | 'NamedNode'>)
-
-  return (node: SingleContextClownface, context: Pick<Context, 'prefix'>): TermType | LiteralType | null => {
-    const override = overridesMappedToUris(context.prefix)[node.value]
+  return (node: SingleContextClownface): TermType | LiteralType | null => {
+    const override = overrideMap[node.value]
 
     if (override === 'NamedNode') {
       return {

@@ -7,14 +7,14 @@ import { MixinModule } from '../MixinGenerator/MixinModule'
 interface PropertyWriterInit {
   interfaceDeclaration: InterfaceDeclaration
   classDeclaration: ClassDeclaration
-  context: Context
+  context: Omit<Context, 'properties'>
   module: MixinModule
 }
 
 export class PropertyWriter {
   private readonly __interface: InterfaceDeclaration;
   private readonly __class: ClassDeclaration;
-  private readonly __context: Context
+  private readonly __context: Omit<Context, 'properties'>
   private readonly __module: MixinModule;
 
   public constructor({ interfaceDeclaration, classDeclaration, context, module }: PropertyWriterInit) {
@@ -51,6 +51,10 @@ export class PropertyWriter {
       this.__context.log.debug('Generating Property %s => %s: %s', prop.term.value, prop.name, type)
     }
 
+    if (prop.values) {
+      type = `Array<${type}>`
+    }
+
     this.__interface.addProperty({
       name: prop.name,
       type,
@@ -85,6 +89,10 @@ export class PropertyWriter {
     const decoratorOptions: string[] = []
     if (prop.name !== prop.termName) {
       decoratorOptions.push(`path: ${prop.prefixedTerm}`)
+    }
+
+    if (prop.values) {
+      decoratorOptions.push(`values: '${prop.values}'`)
     }
 
     if (prop.semantics === 'strict' && prop.range.length === 1) {

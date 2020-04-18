@@ -12,6 +12,7 @@ import { EnumerationType, ResourceType, TypeMap, TypeMetaCollection } from './ty
 import * as MixinGenerator from './MixinGenerator'
 import * as factories from './types/metaFactories'
 import { toUpperInitial } from './util/string'
+import { expandMapKeys } from './util/overrideMap'
 
 export interface Context {
   vocabulary: Clownface
@@ -22,7 +23,12 @@ export interface Context {
     warn: Debugger
     error: Debugger
   }
+  properties: PropertyOverrides
 }
+
+type PropertyOverrides = Record<string, {
+  values?: 'array' | 'list'
+}>
 
 export interface ModuleStrategy {
   (types: TypeMetaCollection, context: Context): GeneratedModule[]
@@ -44,6 +50,7 @@ interface GeneratorOptions {
   prefix: string
   exclude: string[]
   types: Record<string, any>
+  properties: PropertyOverrides
 }
 
 function assertOptions(options: Record<string, any>) {
@@ -99,12 +106,13 @@ export async function generate(options: GeneratorOptions, logger: Debugger) {
     prefix: options.prefix,
     defaultExport: toUpperInitial(options.prefix),
     log,
+    properties: expandMapKeys(options.properties, prefixes[options.prefix]),
   }
   const types = new TypeMap({
     excluded: excludedTerms,
     context,
     factories: [
-      factories.overrides(options.types),
+      factories.overrides(expandMapKeys(options.types, prefixes[options.prefix])),
       factories.datatypes,
       factories.enumerationTypes,
       factories.resourceTypes,
