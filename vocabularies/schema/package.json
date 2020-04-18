@@ -18,6 +18,20 @@
       "schema:URL": "NamedNode",
       "schema:XPathType": "string"
     },
+    "properties": {
+      "itemListElement": {
+        "values": "array"
+      },
+      "step": {
+        "values": "array"
+      },
+      "steps": {
+        "values": "array"
+      },
+      "tool": {
+        "values": "array"
+      }
+    },
     "exclude": [
       "Class",
       "DataType",

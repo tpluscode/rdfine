@@ -1,5 +1,4 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -7,8 +6,8 @@ import type * as Schema from '.';
 import IntangibleMixin from './Intangible';
 
 export interface ItemList extends Schema.Intangible, RdfResource {
-  itemListElement: Schema.ListItem | Schema.Thing;
-  itemListElementLiteral: string;
+  itemListElement: Array<Schema.ListItem | Schema.Thing>;
+  itemListElementLiteral: Array<string>;
   itemListOrder: string;
   itemListOrderTerm: Schema.ItemListOrderType;
   numberOfItems: number;
@@ -17,10 +16,10 @@ export interface ItemList extends Schema.Intangible, RdfResource {
 export default function ItemListMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ItemListClass extends IntangibleMixin(Resource) implements ItemList {
-    @property.resource()
-    itemListElement!: Schema.ListItem | Schema.Thing;
-    @property.literal({ path: schema.itemListElement })
-    itemListElementLiteral!: string;
+    @property.resource({ values: 'array' })
+    itemListElement!: Array<Schema.ListItem | Schema.Thing>;
+    @property.literal({ path: schema.itemListElement, values: 'array' })
+    itemListElementLiteral!: Array<string>;
     @property.literal()
     itemListOrder!: string;
     @property({ path: schema.itemListOrder })

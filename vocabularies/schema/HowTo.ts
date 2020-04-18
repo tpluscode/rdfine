@@ -1,5 +1,4 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -11,14 +10,14 @@ export interface HowTo extends Schema.CreativeWork, RdfResource {
   estimatedCostLiteral: string;
   performTime: Schema.Duration;
   prepTime: Schema.Duration;
-  step: Schema.CreativeWork | Schema.HowToSection | Schema.HowToStep;
-  stepLiteral: string;
-  steps: Schema.CreativeWork | Schema.ItemList;
-  stepsLiteral: string;
+  step: Array<Schema.CreativeWork | Schema.HowToSection | Schema.HowToStep>;
+  stepLiteral: Array<string>;
+  steps: Array<Schema.CreativeWork | Schema.ItemList>;
+  stepsLiteral: Array<string>;
   supply: Schema.HowToSupply;
   supplyLiteral: string;
-  tool: Schema.HowToTool;
-  toolLiteral: string;
+  tool: Array<Schema.HowToTool>;
+  toolLiteral: Array<string>;
   totalTime: Schema.Duration;
   yield: Schema.QuantitativeValue;
   yieldLiteral: string;
@@ -35,22 +34,22 @@ export default function HowToMixin<Base extends Constructor>(Resource: Base) {
     performTime!: Schema.Duration;
     @property.resource()
     prepTime!: Schema.Duration;
-    @property.resource()
-    step!: Schema.CreativeWork | Schema.HowToSection | Schema.HowToStep;
-    @property.literal({ path: schema.step })
-    stepLiteral!: string;
-    @property.resource()
-    steps!: Schema.CreativeWork | Schema.ItemList;
-    @property.literal({ path: schema.steps })
-    stepsLiteral!: string;
+    @property.resource({ values: 'array' })
+    step!: Array<Schema.CreativeWork | Schema.HowToSection | Schema.HowToStep>;
+    @property.literal({ path: schema.step, values: 'array' })
+    stepLiteral!: Array<string>;
+    @property.resource({ values: 'array' })
+    steps!: Array<Schema.CreativeWork | Schema.ItemList>;
+    @property.literal({ path: schema.steps, values: 'array' })
+    stepsLiteral!: Array<string>;
     @property.resource()
     supply!: Schema.HowToSupply;
     @property.literal({ path: schema.supply })
     supplyLiteral!: string;
-    @property.resource()
-    tool!: Schema.HowToTool;
-    @property.literal({ path: schema.tool })
-    toolLiteral!: string;
+    @property.resource({ values: 'array' })
+    tool!: Array<Schema.HowToTool>;
+    @property.literal({ path: schema.tool, values: 'array' })
+    toolLiteral!: Array<string>;
     @property.resource()
     totalTime!: Schema.Duration;
     @property.resource()

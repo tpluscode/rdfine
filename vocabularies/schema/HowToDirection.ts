@@ -1,5 +1,4 @@
-import { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
-import RdfResourceImpl from '@tpluscode/rdfine/RdfResource';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import type * as rdf from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -15,8 +14,8 @@ export interface HowToDirection extends Schema.CreativeWork, Schema.ListItem, Rd
   prepTime: Schema.Duration;
   supply: Schema.HowToSupply;
   supplyLiteral: string;
-  tool: Schema.HowToTool;
-  toolLiteral: string;
+  tool: Array<Schema.HowToTool>;
+  toolLiteral: Array<string>;
   totalTime: Schema.Duration;
 }
 
@@ -37,10 +36,10 @@ export default function HowToDirectionMixin<Base extends Constructor>(Resource: 
     supply!: Schema.HowToSupply;
     @property.literal({ path: schema.supply })
     supplyLiteral!: string;
-    @property.resource()
-    tool!: Schema.HowToTool;
-    @property.literal({ path: schema.tool })
-    toolLiteral!: string;
+    @property.resource({ values: 'array' })
+    tool!: Array<Schema.HowToTool>;
+    @property.literal({ path: schema.tool, values: 'array' })
+    toolLiteral!: Array<string>;
     @property.resource()
     totalTime!: Schema.Duration;
   }
