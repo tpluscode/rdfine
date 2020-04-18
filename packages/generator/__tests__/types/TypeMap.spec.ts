@@ -19,6 +19,7 @@ describe('TypeMap', () => {
       prefix: 'ex',
       vocabulary,
       defaultExport: 'Example',
+      properties: {},
     }
   })
 
