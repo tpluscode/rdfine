@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.4...@tpluscode/rdfine@0.4.5) (2020-04-19)
+
+
+### Bug Fixes
+
+* **core:** initializing term properties with raw nodes ([eb6aa49](https://github.com/tpluscode/rdfine/commit/eb6aa492e8b81684247487bb3a8e982690ed4d5f))
+
+
+
+
+
 ## [0.4.4](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.3...@tpluscode/rdfine@0.4.4) (2020-04-19)
 
 
