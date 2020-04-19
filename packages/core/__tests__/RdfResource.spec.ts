@@ -1,5 +1,6 @@
 import cf from 'clownface'
 import $rdf from 'rdf-ext'
+import { NamedNode, Term } from 'rdf-js'
 import { defaultGraph, namedNode, literal, blankNode } from '@rdfjs/data-model'
 import RdfResource, { Initializer } from '../RdfResource'
 import { parse, vocabs } from './_helpers'
@@ -212,6 +213,68 @@ describe('RdfResource', () => {
 
       // then
       expect(resource.other.id).toEqual(namedNode('baz'))
+    })
+
+    it('allows clownface named node to initialize named node properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Resource extends RdfResource {
+        other: NamedNode
+        others: NamedNode[]
+      }
+      class ResourceImpl extends RdfResource implements Resource {
+        @property({ path: ex.other })
+        other!: NamedNode;
+
+        @property({ path: ex.others, values: 'array' })
+        others!: NamedNode[];
+      }
+      const initializer: Initializer<Resource> = {
+        other: node.namedNode('bar'),
+        others: [node.namedNode('baz')],
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.other).toEqual(namedNode('bar'))
+      expect(resource.others).toEqual(
+        expect.arrayContaining([namedNode('baz')]),
+      )
+    })
+
+    it('allows clownface node to initialize term properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Resource extends RdfResource {
+        other: Term
+        others: Term[]
+      }
+      class ResourceImpl extends RdfResource implements Resource {
+        @property({ path: ex.other, values: 'array' })
+        other!: Term;
+
+        @property({ path: ex.others, values: 'array' })
+        others!: Term[];
+      }
+      const initializer: Initializer<Resource> = {
+        other: node.blankNode(),
+        others: [node.blankNode(), literal('foo'), namedNode('bar'), node.namedNode('baz')],
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.others).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ termType: 'BlankNode' }),
+          literal('foo'),
+          namedNode('bar'),
+          namedNode('baz'),
+        ]),
+      )
     })
 
     it('allows RDF/JS blank node to initialize resource properties', () => {

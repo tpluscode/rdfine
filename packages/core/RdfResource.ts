@@ -123,14 +123,16 @@ interface BaseInitializer {
   id?: RdfResource['id']
 }
 
-type InitialNode = NamedNode | BlankNode | SingleContextClownface<NamedNode | BlankNode>
-type InitialLiteral = Literal | SingleContextClownface<Literal>
+type InitialNode<Node extends Term = NamedNode | BlankNode> = Node | SingleContextClownface<Node>
+type InitialLiteral = InitialNode<Literal>
 
 export type Initializer<T> = Partial<Omit<{
   [P in keyof T]?:
-  T[P] extends (infer U)[] ? U extends RdfResource ? Initializer<UserDefinedInterface<U>>[] | InitialNode[] : T[P] | InitialLiteral[] :
-    T[P] extends RdfResource ? Initializer<UserDefinedInterface<T[P]> & BaseInitializer> | InitialNode :
-      T[P] | InitialLiteral
+  T[P] extends (infer U)[] ? U extends RdfResource ? Initializer<UserDefinedInterface<U>>[] | InitialNode[]
+    : U extends Term ? T[P] | InitialNode<Term>[] : T[P] | InitialLiteral[]
+    : T[P] extends RdfResource ? Initializer<UserDefinedInterface<T[P]> & BaseInitializer> | InitialNode :
+      T[P] extends Term ? T[P] | InitialNode<T[P]>
+        : T[P] | InitialLiteral
 }, keyof RdfResource>> & BaseInitializer
 
 type PartialRecursive<T> = T extends object ? { [K in keyof T]?: PartialRecursive<T[K]> } : T
