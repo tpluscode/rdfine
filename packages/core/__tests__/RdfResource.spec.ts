@@ -149,6 +149,50 @@ describe('RdfResource', () => {
       expect(resource.name).toEqual('baz')
     })
 
+    it('allows RDF/JS literal to initialize literal array properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Resource extends RdfResource {
+        names: string[]
+      }
+      class ResourceImpl extends RdfResource implements Resource {
+        @property.literal({ path: ex.name, values: 'array' })
+        names!: string[];
+      }
+      const initializer: Initializer<Resource> = {
+        names: [literal('bar'), node.literal('baz')],
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.names).toEqual(
+        expect.arrayContaining(['bar', 'baz']),
+      )
+    })
+
+    it('allows clownface literal to initialize literal properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Resource extends RdfResource {
+        name: string
+      }
+      class ResourceImpl extends RdfResource implements Resource {
+        @property.literal({ path: ex.name })
+        name!: string;
+      }
+      const initializer: Initializer<Resource> = {
+        name: node.literal('baz'),
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.name).toEqual('baz')
+    })
+
     it('allows RDF/JS named node to initialize resource properties', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
@@ -202,7 +246,7 @@ describe('RdfResource', () => {
         others!: Resource[];
       }
       const initializer: Initializer<Resource> = {
-        others: [blankNode(), namedNode('baz')],
+        others: [blankNode(), namedNode('bar'), node.blankNode(), node.namedNode('baz')],
       }
 
       // when
@@ -211,6 +255,8 @@ describe('RdfResource', () => {
       // then
       expect(resource.others.map(o => o.id)).toEqual(
         expect.arrayContaining([
+          expect.objectContaining({ termType: 'BlankNode' }),
+          namedNode('bar'),
           expect.objectContaining({ termType: 'BlankNode' }),
           namedNode('baz'),
         ]),
