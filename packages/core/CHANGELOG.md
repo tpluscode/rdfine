@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.4](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.3...@tpluscode/rdfine@0.4.4) (2020-04-19)
+
+
+### Features
+
+* initializing with clownface objects ([c3ac5a5](https://github.com/tpluscode/rdfine/commit/c3ac5a55913225bd19d9ff58e0fe50c635d34e8d))
+
+
+
+
+
 ## [0.4.3](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.2...@tpluscode/rdfine@0.4.3) (2020-04-18)
 
 
