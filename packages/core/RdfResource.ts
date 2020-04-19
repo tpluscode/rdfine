@@ -123,11 +123,14 @@ interface BaseInitializer {
   id?: RdfResource['id']
 }
 
+type InitialNode = NamedNode | BlankNode | SingleContextClownface<NamedNode | BlankNode>
+type InitialLiteral = Literal | SingleContextClownface<Literal>
+
 export type Initializer<T> = Partial<Omit<{
   [P in keyof T]?:
-  T[P] extends (infer U)[] ? U extends RdfResource ? Initializer<UserDefinedInterface<U>>[] | (NamedNode | BlankNode)[] : T[P] | Literal :
-    T[P] extends RdfResource ? Initializer<UserDefinedInterface<T[P]> & BaseInitializer> | NamedNode | BlankNode :
-      T[P] | Literal
+  T[P] extends (infer U)[] ? U extends RdfResource ? Initializer<UserDefinedInterface<U>>[] | InitialNode[] : T[P] | InitialLiteral[] :
+    T[P] extends RdfResource ? Initializer<UserDefinedInterface<T[P]> & BaseInitializer> | InitialNode :
+      T[P] | InitialLiteral
 }, keyof RdfResource>> & BaseInitializer
 
 type PartialRecursive<T> = T extends object ? { [K in keyof T]?: PartialRecursive<T[K]> } : T
