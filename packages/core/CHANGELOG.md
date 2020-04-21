@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.7](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.6...@tpluscode/rdfine@0.4.7) (2020-04-21)
+
+
+### Features
+
+* add a handy getter to check blank node resource ([#54](https://github.com/tpluscode/rdfine/issues/54)) ([d3d5731](https://github.com/tpluscode/rdfine/commit/d3d5731a2955a6abe373c5b01db88d905183d21f))
+
+
+
+
+
 ## [0.4.6](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.5...@tpluscode/rdfine@0.4.6) (2020-04-21)
 
 

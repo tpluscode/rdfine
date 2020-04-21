@@ -1,6 +1,6 @@
 {
 	"name": "@rdfine/rdf",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"main": "main.js",
 	"module": "index.js",
 	"types": "index.d.ts",
@@ -23,7 +23,7 @@
 	"dependencies": {
 		"@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.1.0",
-		"@tpluscode/rdfine": "^0.4.6",
+		"@tpluscode/rdfine": "^0.4.7",
 		"esm": "^3.2.25"
 	},
 	"devDependencies": {
