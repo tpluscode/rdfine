@@ -25,6 +25,7 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly _unionGraph: SafeClownface<ResourceIdentifier, D>
   readonly _graphId: Quad_Graph
   readonly _parent?: RdfResource<D>
+  readonly isAnonymous: boolean
   hasType (type: string | NamedNode): boolean
   _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D>): T & ResourceIndexer
 }
@@ -106,6 +107,10 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
 
   public get types(): TypeCollection<D> {
     return new TypeCollectionCtor(this)
+  }
+
+  public get isAnonymous() {
+    return this.id.termType === 'BlankNode'
   }
 
   public hasType(type: string | NamedNode): boolean {

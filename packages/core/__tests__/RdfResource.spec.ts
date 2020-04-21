@@ -346,4 +346,28 @@ describe('RdfResource', () => {
       expect([...resource.types][0].id.value).toEqual(ex.Bar.value)
     })
   })
+
+  describe('isAnonymous', () => {
+    it('true for blank node', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset(), graph: ex.graph }).blankNode()
+
+      // when
+      const res = new RdfResource(node)
+
+      // then
+      expect(res.isAnonymous).toBe(true)
+    })
+
+    it('false for named node', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset(), graph: ex.graph }).namedNode(ex.foo)
+
+      // when
+      const res = new RdfResource(node)
+
+      // then
+      expect(res.isAnonymous).toBe(false)
+    })
+  })
 })
