@@ -17,7 +17,7 @@ function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptio
   return propertyDecorator<R, RdfResource, ResourceIdentifier>({
     ...options,
     fromTerm(this: RdfResource, obj) {
-      return this._create(obj, options.as)
+      return this._create(obj, options.as, { parent: this })
     },
     toTerm(this: R, valueActual) {
       const value = valueActual as RdfResource | Initializer<R>

@@ -100,6 +100,32 @@ describe('decorator', () => {
           ex.Sindy.value,
         ])
       })
+
+      it('sets itself as parent of created resource', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:res foaf:friend ex:friend .
+        `)
+
+        @namespace(foaf)
+        class Resource extends RdfResource {
+          @property.resource()
+          friend!: RdfResource
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+        const friend = instance.friend
+
+        // then
+        expect(friend._parent).toBe(instance)
+      })
     })
 
     describe('setter', () => {

@@ -21,7 +21,14 @@ export type Mixin<T extends AnyFunction = any> = InstanceType<ReturnType<T>>
 
 export interface ResourceFactory<D extends DatasetCore = DatasetCore, R extends RdfResource<D> = RdfResource<D>, T extends AnyFunction = any> {
   addMixin(...mixins: (Mixin<T> & ShouldApply)[]): void
-  createEntity<S>(term: ResourceNode<D>, typeAndMixins?: Mixin<T>[] | [Constructor, ...Mixin<T>[]]): R & S & ResourceIndexer<D, R>
+  createEntity<S>(
+    term: ResourceNode<D>,
+    typeAndMixins?: Mixin<T>[] | [Constructor, ...Mixin<T>[]],
+    options?: ResourceCreationOptions<D>): R & S & ResourceIndexer<D, R>
+}
+
+export interface ResourceCreationOptions<D extends DatasetCore> {
+  parent?: RdfResource<D>
 }
 
 export default class <D extends DatasetCore = DatasetCore, R extends RdfResource<D> = RdfResource<D>, T extends AnyFunction = any> implements ResourceFactory<D, R, T> {
@@ -38,7 +45,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     })
   }
 
-  public createEntity<S>(term: ResourceNode<D>, typeAndMixins: Mixin<T>[] | [Constructor, ...Mixin<T>[]] = []): R & S & ResourceIndexer<D, R> {
+  public createEntity<S>(term: ResourceNode<D>, typeAndMixins: Mixin<T>[] | [Constructor, ...Mixin<T>[]] = [], options: ResourceCreationOptions<D> = {}): R & S & ResourceIndexer<D, R> {
     let BaseClass = this.BaseClass
     let explicitMixins: Mixin[] = typeAndMixins
     if (typeAndMixins.length > 0) {
@@ -63,6 +70,6 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     const Type = mixins.reduce<Constructor>((Mixed: Constructor, Next: Mixin<T>) => Next(Mixed), BaseClass)
     ;(Type as any).__mixins = mixins
 
-    return createProxy(new Type(term)) as R & S & ResourceIndexer<D, R>
+    return createProxy(new Type(term, {}, options.parent)) as R & S & ResourceIndexer<D, R>
   }
 }
