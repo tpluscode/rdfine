@@ -3,7 +3,13 @@ import { defaultGraph } from '@rdfjs/data-model'
 import { NamespaceBuilder } from '@rdfjs/namespace'
 import { NamedNode, DatasetCore, BlankNode, DefaultGraph, Quad_Graph, Term, Literal } from 'rdf-js'
 import cf, { SafeClownface, SingleContextClownface } from 'clownface'
-import ResourceFactoryImpl, { Constructor, Mixin, ResourceFactory, ResourceIndexer } from './lib/ResourceFactory'
+import ResourceFactoryImpl, {
+  Constructor,
+  Mixin,
+  ResourceCreationOptions,
+  ResourceFactory,
+  ResourceIndexer,
+} from './lib/ResourceFactory'
 import once from 'once'
 import TypeCollectionCtor, { TypeCollection } from './lib/TypeCollection'
 
@@ -18,14 +24,16 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly _selfGraph: SingleContextClownface<ResourceIdentifier, D>
   readonly _unionGraph: SafeClownface<ResourceIdentifier, D>
   readonly _graphId: Quad_Graph
+  readonly _parent?: RdfResource<D>
   hasType (type: string | NamedNode): boolean
-  _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]]): T & ResourceIndexer
+  _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D>): T & ResourceIndexer
 }
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
   public readonly _selfGraph: SingleContextClownface<ResourceIdentifier, D>
   public readonly _unionGraph: SafeClownface<ResourceIdentifier, D>
   public readonly __initialized: boolean = false
+  public readonly _parent?: RdfResource<D>
   private readonly __initializeProperties: (() => boolean)
   public static __ns?: NamespaceBuilder
   public static factory: ResourceFactory = new ResourceFactoryImpl(RdfResourceImpl)
@@ -42,7 +50,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     }
   }
 
-  public constructor(graph: ResourceNode<D>, init: Initializer<any> = {}) {
+  public constructor(graph: ResourceNode<D>, init: Initializer<any> = {}, parent?: RdfResource<D>) {
     if (graph.term.termType !== 'BlankNode' && graph.term.termType !== 'NamedNode') {
       throw new Error(`RdfResource cannot be initialized from a ${graph.term.termType} node`)
     }
@@ -83,6 +91,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       return true
     })
 
+    this._parent = parent
     this.__initialized = this.__initializeProperties()
     RdfResourceImpl._userInitializeProperties(this, init)
   }
@@ -111,8 +120,8 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return this.id.equals(other.id)
   }
 
-  public _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]]): T & ResourceIndexer {
-    return (this.constructor as Constructor).factory.createEntity<T>(term, mixins)
+  public _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D> = {}): T & ResourceIndexer {
+    return (this.constructor as Constructor).factory.createEntity<T>(term, mixins, options)
   }
 }
 
