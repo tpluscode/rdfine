@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4](https://github.com/tpluscode/rdfine/compare/@rdfine/hydra@0.1.3...@rdfine/hydra@0.1.4) (2020-04-21)
+
+**Note:** Version bump only for package @rdfine/hydra
+
+
+
+
+
 ## [0.1.3](https://github.com/tpluscode/rdfine/compare/@rdfine/hydra@0.1.2...@rdfine/hydra@0.1.3) (2020-04-19)
 
 **Note:** Version bump only for package @rdfine/hydra

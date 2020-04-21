@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.6](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.5...@tpluscode/rdfine@0.4.6) (2020-04-21)
+
+
+### Features
+
+* keep track of parent resource ([ef48ec5](https://github.com/tpluscode/rdfine/commit/ef48ec5d757feaff7ced5e6af94207e68fca04e0))
+
+
+
+
+
 ## [0.4.5](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.4...@tpluscode/rdfine@0.4.5) (2020-04-19)
 
 
