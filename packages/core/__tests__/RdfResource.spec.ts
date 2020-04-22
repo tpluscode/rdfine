@@ -1,4 +1,4 @@
-import cf from 'clownface'
+import cf, { Clownface } from 'clownface'
 import $rdf from 'rdf-ext'
 import { NamedNode, Term } from 'rdf-js'
 import { defaultGraph, namedNode, literal, blankNode } from '@rdfjs/data-model'
@@ -368,6 +368,143 @@ describe('RdfResource', () => {
 
       // then
       expect(res.isAnonymous).toBe(false)
+    })
+  })
+
+  describe('getters', () => {
+    let graph: Clownface
+
+    beforeEach(() => {
+      graph = cf({ dataset: $rdf.dataset() })
+    })
+
+    describe('get', () => {
+      it('returns object resource', () => {
+        // given
+        const node = graph.blankNode()
+        node.addOut(ex.foo, ex.bar)
+        const resource = new RdfResource(node)
+
+        // when
+        const object = resource.get(ex.foo)
+
+        // then
+        expect(object).toBeInstanceOf(RdfResource)
+        expect(object?.id.value).toEqual(ex.bar.value)
+      })
+
+      it('throws when property has no value and calling strict', () => {
+        // given
+        const node = graph.blankNode()
+        const resource = new RdfResource(node)
+
+        // then
+        expect(() => {
+          // when
+          return resource.get(ex.foo, { strict: true })
+        }).toThrow()
+      })
+
+      it('returns null when property has no value and calling not strict', () => {
+        // given
+        const node = graph.blankNode()
+        const resource = new RdfResource(node)
+
+        // when
+        const object = resource.get(ex.foo, { strict: false })
+
+        // then
+        expect(object).toBeNull()
+      })
+    })
+
+    describe('getArray', () => {
+      it('returns empty array when property has no value and calling not strict', () => {
+        // given
+        const node = graph.blankNode()
+        const resource = new RdfResource(node)
+
+        // when
+        const object = resource.getArray(ex.foo, { strict: false })
+
+        // then
+        expect(object.length).toBe(0)
+      })
+    })
+
+    describe('getBoolean', () => {
+      it('throws when value is not boolean', () => {
+        const node = graph.blankNode()
+        node.addOut(ex.foo, ex.bar)
+        const resource = new RdfResource(node)
+
+        // then
+        expect(() => resource.getBoolean(ex.foo)).toThrow()
+      })
+
+      it('return false when value is undefined', () => {
+        const node = graph.blankNode()
+        const resource = new RdfResource(node)
+
+        // then
+        expect(resource.getBoolean(ex.foo)).toBeFalsy()
+      })
+
+      it('return the value when it is set', () => {
+        const node = graph.blankNode()
+        node.addOut(ex.foo, true)
+        const resource = new RdfResource(node)
+
+        // then
+        expect(resource.getBoolean(ex.foo)).toBeTruthy()
+      })
+    })
+
+    describe('getNumber', () => {
+      it('throws when value is not number', () => {
+        const node = graph.blankNode()
+        node.addOut(ex.foo, ex.bar)
+        const resource = new RdfResource(node)
+
+        // then
+        expect(() => resource.getNumber(ex.foo)).toThrow()
+      })
+
+      it('return null when value is undefined', () => {
+        const node = graph.blankNode()
+        const resource = new RdfResource(node)
+
+        // then
+        expect(resource.getNumber('foo')).toBeNull()
+      })
+
+      it('parses the literal', () => {
+        const node = graph.blankNode()
+        node.addOut(ex.foo, node.literal(10.5))
+        const resource = new RdfResource(node)
+
+        // then
+        expect(resource.getNumber(ex.foo)).toBe(10.5)
+      })
+    })
+
+    describe('getString', () => {
+      it('returns string value of literal', () => {
+        const node = graph.blankNode()
+        node.addOut(ex.foo, 123)
+        const resource = new RdfResource(node)
+
+        // then
+        expect(resource.getString(ex.foo)).toBe('123')
+      })
+
+      it('return null when value is undefined', () => {
+        const node = graph.blankNode()
+        const resource = new RdfResource(node)
+
+        // then
+        expect(resource.getString(ex.foo)).toBeNull()
+      })
     })
   })
 })

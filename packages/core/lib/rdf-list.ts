@@ -1,6 +1,7 @@
 import { Clownface, SingleContextClownface } from 'clownface'
-import { RdfResource } from '../RdfResource'
 import { rdf } from '@tpluscode/rdf-ns-builders'
+import { DatasetCore, Term } from 'rdf-js'
+import { RdfResource } from '../RdfResource'
 
 function isLast(node: Clownface): boolean {
   return rdf.nil.equals(node.term)
@@ -12,7 +13,7 @@ export function isList(node: Clownface): boolean {
   return isLastListNode || isListNode
 }
 
-export function enumerateList<T>(parent: RdfResource, listNode: SingleContextClownface, fromTerm: (obj: SingleContextClownface) => T) {
+export function enumerateList<T, D extends DatasetCore = DatasetCore>(parent: RdfResource<D>, listNode: SingleContextClownface<Term, D>, fromTerm: (obj: SingleContextClownface<Term, D>) => T | T[]): T[] {
   const items: T[] = []
 
   let current = listNode
@@ -25,7 +26,13 @@ export function enumerateList<T>(parent: RdfResource, listNode: SingleContextClo
       return fromTerm.call(parent, first)
     })
 
-    items.push(...firstItem)
+    firstItem.forEach(item => {
+      if (Array.isArray(item)) {
+        throw new Error('Malformed RDF List had multiple rdf:first objects')
+      }
+
+      items.push(item)
+    })
 
     current = current.out(rdf.rest).map((quad, index) => {
       if (index > 0) {
