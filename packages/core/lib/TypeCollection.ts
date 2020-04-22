@@ -2,13 +2,13 @@ import { DatasetCore, Term } from 'rdf-js'
 import cf, { SingleContextClownface } from 'clownface'
 import { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import { namedNode } from '@rdfjs/data-model'
+import RDF from '@rdfjs/data-model'
 import { onlyUnique } from './filter'
 import * as compare from './compare'
 
 function getNode(value: RdfResource | ResourceIdentifier | string): ResourceIdentifier {
   if (typeof value === 'string') {
-    return namedNode(value)
+    return RDF.namedNode(value)
   }
 
   if ('termType' in value) {

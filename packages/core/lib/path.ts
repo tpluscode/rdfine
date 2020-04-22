@@ -1,5 +1,5 @@
 import { NamedNode } from 'rdf-js'
-import { namedNode } from '@rdfjs/data-model'
+import RDF from '@rdfjs/data-model'
 import cf, { SingleContextClownface } from 'clownface'
 import { NamespaceBuilder } from '@rdfjs/namespace'
 
@@ -23,7 +23,7 @@ function namespacedPredicate(term: string, namespace?: NamespaceBuilder): NamedN
 function predicate(termOrString: PropRef, namespace?: NamespaceBuilder): NamedNode {
   if (typeof termOrString === 'string') {
     if (termOrString.match(/^(http|urn):\/\//)) {
-      return namedNode(termOrString)
+      return RDF.namedNode(termOrString)
     }
 
     return namespacedPredicate(termOrString, namespace)
