@@ -13,7 +13,7 @@ function nodeToValue(target: RdfResource) {
           return rdfList.enumerateList(target, obj, fromTerm)
         }
 
-        return target._create(obj)
+        return target._create(obj, [], { parent: target })
       default:
         return obj.term
     }
@@ -29,7 +29,7 @@ export function createProxy<T extends RdfResource<D>, D extends DatasetCore = Da
         return (target as any)[property.toString()]
       }
 
-      const objects = target._selfGraph.out(target._selfGraph.namedNode(property.toString()))
+      const objects = target._getObjects(property.toString())
 
       if (objects.values.length === 0) {
         return undefined

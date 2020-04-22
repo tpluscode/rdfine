@@ -109,7 +109,7 @@ describe('proxy', () => {
       )
     })
 
-    it('returns enumerated RDF list of literals', () => {
+    it('returns enumerated RDF list of resources', () => {
       // given
       const resource = new RdfResourceImpl(node)
       const proxy = createProxy(resource)
@@ -126,6 +126,19 @@ describe('proxy', () => {
       expect(listItems.map(l => l.id.value)).toEqual(
         expect.arrayContaining([ex.jane.value, ex.jane.value, ex.john.value]),
       )
+    })
+
+    it('attaches proxied resource as parent of objects', () => {
+      // given
+      const resource = new RdfResourceImpl(node)
+      const proxy = createProxy(resource)
+      node.addOut(ex.foo, ex.bar)
+
+      // when
+      const child = proxy[ex.foo.value] as RdfResource
+
+      // then
+      expect(child._parent).toBe(resource)
     })
   })
 

@@ -1,4 +1,4 @@
-/* eslint-disable camelcase,@typescript-eslint/camelcase */
+/* eslint-disable camelcase,@typescript-eslint/camelcase,no-dupe-class-members */
 import { defaultGraph } from '@rdfjs/data-model'
 import { NamespaceBuilder } from '@rdfjs/namespace'
 import { NamedNode, DatasetCore, BlankNode, DefaultGraph, Quad_Graph, Term, Literal } from 'rdf-js'
@@ -12,11 +12,16 @@ import ResourceFactoryImpl, {
 } from './lib/ResourceFactory'
 import once from 'once'
 import TypeCollectionCtor, { TypeCollection } from './lib/TypeCollection'
+import { xsd } from '@tpluscode/rdf-ns-builders'
 
 type ObjectOrFactory<T> = T | ((self: RdfResource) => T)
 
 export type ResourceIdentifier = BlankNode | NamedNode
 export type ResourceNode<D extends DatasetCore = DatasetCore> = { dataset: D; term: Term; graph?: NamedNode | DefaultGraph }
+
+export interface GetOptions {
+  strict: boolean
+}
 
 export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly id: ResourceIdentifier
@@ -27,6 +32,35 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly _parent?: RdfResource<D>
   readonly isAnonymous: boolean
   hasType (type: string | NamedNode): boolean
+  /**
+   * Gets the value of a property
+   * @param property
+   */
+  get<T extends RdfResource = RdfResource> (property: string | NamedNode): T
+  get<T extends RdfResource = RdfResource> (property: string | NamedNode, options?: GetOptions): T | null
+  /**
+   * Gets the value of a property and ensures that an array will be returned
+   * @param property
+   */
+  getArray<T extends RdfResource = RdfResource> (property: string | NamedNode, options?: GetOptions): T[]
+  /**
+   * Gets the property value if it's boolean. Throws if it's not
+   * @param property
+   */
+  getBoolean (property: string | NamedNode, options?: GetOptions): boolean
+  /**
+   * Gets the property value if it's a string. Throws if it's not
+   * @param property
+   */
+  getString (property: string | NamedNode): string
+  getString (property: string | NamedNode, options?: GetOptions): string | null
+  /**
+   * Gets the property value if it's a number. Throws if it's not
+   * @param property
+   */
+  getNumber (property: string | NamedNode): number | null
+  getNumber (property: string | NamedNode, options?: GetOptions): number | null
+  _getObjects(property: string | NamedNode, options?: GetOptions): SafeClownface<Term, D>
   _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D>): T & ResourceIndexer
 }
 
@@ -123,6 +157,84 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     }
 
     return this.id.equals(other.id)
+  }
+
+  public get<T extends RdfResource = RdfResource>(property: string | NamedNode, options?: GetOptions): T | RdfResource<D> | null {
+    const objects = this.getArray<T>(property, options)
+
+    if (objects.length > 0) {
+      return objects[0]
+    }
+
+    return null
+  }
+
+  public getArray<T extends RdfResource = RdfResource>(property: string | NamedNode, options?: GetOptions): T[] {
+    const values = this._getObjects(property, options)
+      .map(obj => {
+        return this._create<T>(obj, [], { parent: this })
+      })
+
+    if (!values.length) {
+      return []
+    }
+
+    return values
+  }
+
+  public getNumber(property: string | NamedNode): number
+  public getNumber(property: string | NamedNode, options?: GetOptions): number | null {
+    const [value] = this._getObjects(property, options).toArray()
+
+    if (typeof value === 'undefined') {
+      return null
+    }
+
+    if (value.term.termType === 'Literal') {
+      return parseFloat(value.value)
+    }
+
+    throw new Error(`Expected property '${property}' to be a number but found '${value}'`)
+  }
+
+  public getString(property: string | NamedNode): string
+  public getString(property: string | NamedNode, options?: GetOptions): string | null {
+    const [value] = this._getObjects(property, options).toArray()
+
+    if (typeof value === 'undefined') {
+      return null
+    }
+
+    if (value.term.termType === 'Literal') {
+      return value.value
+    }
+
+    throw new Error(`Expected property '${property}' to be a literal but found '${value}'`)
+  }
+
+  public getBoolean(property: string | NamedNode, options?: GetOptions): boolean {
+    const [value] = this._getObjects(property, options).toArray()
+
+    if (typeof value === 'undefined') {
+      return false
+    }
+
+    if (value.term.termType === 'Literal' && xsd.boolean.equals(value.term.datatype)) {
+      return value.term.equals(this._selfGraph.literal(true).term)
+    }
+
+    throw new Error(`Expected property '${property}' to be a boolean but found '${value}'`)
+  }
+
+  public _getObjects(property: string | NamedNode, { strict }: GetOptions = { strict: false }): SafeClownface<Term, D> {
+    const propertyNode = typeof property === 'string' ? this._selfGraph.namedNode(property) : property
+    const objects = this._selfGraph.out(propertyNode)
+
+    if (!objects.terms.length && strict) {
+      throw new Error(`Value for predicate <${property}> was missing`)
+    }
+
+    return objects
   }
 
   public _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D> = {}): T & ResourceIndexer {
