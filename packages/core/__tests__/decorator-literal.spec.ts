@@ -4,7 +4,7 @@ import { property } from '../index'
 import RdfResource from '../RdfResource'
 import { parse, vocabs } from './_helpers'
 import { Literal } from 'rdf-js'
-import { blankNode, literal, namedNode } from '@rdfjs/data-model'
+import RDF from '@rdfjs/data-model'
 import rdfExt from 'rdf-ext'
 
 const { ex, schema } = vocabs
@@ -157,7 +157,7 @@ describe('decorator', () => {
         })
 
         // when
-        instance.name = literal('John', 'en-gb')
+        instance.name = RDF.literal('John', 'en-gb')
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
@@ -301,7 +301,7 @@ describe('decorator', () => {
         }) as any
 
         // when
-        instance.name = literal('Jane', ex.Name)
+        instance.name = RDF.literal('Jane', ex.Name)
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
@@ -383,7 +383,7 @@ describe('decorator', () => {
 
         // the
         expect(() => {
-          instance.name = namedNode('foo')
+          instance.name = RDF.namedNode('foo')
         }).toThrow()
       })
 
@@ -409,7 +409,7 @@ describe('decorator', () => {
 
         // the
         expect(() => {
-          instance.name = blankNode('foo')
+          instance.name = RDF.blankNode('foo')
         }).toThrow()
       })
 
@@ -497,7 +497,7 @@ describe('decorator', () => {
         class Resource extends RdfResource {
           @property.literal({
             path: schema.name,
-            initial: literal('foo'),
+            initial: RDF.literal('foo'),
           })
           name!: string
         }

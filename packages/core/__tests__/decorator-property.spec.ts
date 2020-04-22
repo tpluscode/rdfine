@@ -4,7 +4,7 @@ import { namespace, property, crossBoundaries } from '../index'
 import RdfResource from '../RdfResource'
 import { parse, vocabs } from './_helpers'
 import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
-import { literal, namedNode } from '@rdfjs/data-model'
+import * as RDF from '@rdfjs/data-model'
 import rdfExt from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 
@@ -490,8 +490,8 @@ describe('decorator', () => {
 
         // when
         instance.name = [
-          literal('Jan', 'pl'),
-          literal('Jean', 'fr'),
+          RDF.literal('Jan', 'pl'),
+          RDF.literal('Jean', 'fr'),
         ]
 
         // then
@@ -551,7 +551,7 @@ describe('decorator', () => {
           dataset,
           term: ex.res,
         })
-        instance.friendsWorkplaceName = literal('Google')
+        instance.friendsWorkplaceName = RDF.literal('Google')
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
@@ -613,7 +613,7 @@ describe('decorator', () => {
         class Resource extends RdfResource {
           @property({
             path: schema.name,
-            initial: literal('foo'),
+            initial: RDF.literal('foo'),
           })
           name!: Literal
         }
@@ -657,7 +657,7 @@ describe('decorator', () => {
         class Resource extends RdfResource {
           @property({
             path: schema.name,
-            initial: (self: Resource) => namedNode(`${self.id.value}/child`),
+            initial: (self: Resource) => RDF.namedNode(`${self.id.value}/child`),
           })
           child!: NamedNode
         }

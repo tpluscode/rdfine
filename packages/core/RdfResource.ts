@@ -1,5 +1,5 @@
 /* eslint-disable camelcase,@typescript-eslint/camelcase,no-dupe-class-members */
-import { defaultGraph } from '@rdfjs/data-model'
+import RDF from '@rdfjs/data-model'
 import { NamespaceBuilder } from '@rdfjs/namespace'
 import { NamedNode, DatasetCore, BlankNode, DefaultGraph, Quad_Graph, Term, Literal } from 'rdf-js'
 import cf, { SafeClownface, SingleContextClownface } from 'clownface'
@@ -99,7 +99,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       this._selfGraph = selfGraph
       this._unionGraph = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: undefined })
     } else {
-      this._selfGraph = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: defaultGraph() })
+      this._selfGraph = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: RDF.defaultGraph() })
       this._unionGraph = cf({ dataset: selfGraph.dataset, term: selfGraph.term })
     }
 
