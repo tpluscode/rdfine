@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.8](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.7...@tpluscode/rdfine@0.4.8) (2020-04-22)
+
+
+### Features
+
+* add more helpful getters to base class ([2e67a81](https://github.com/tpluscode/rdfine/commit/2e67a8148d1555e8adb6741980052b0496acb04f))
+
+
+
+
+
 ## [0.4.7](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.6...@tpluscode/rdfine@0.4.7) (2020-04-21)
 
 
