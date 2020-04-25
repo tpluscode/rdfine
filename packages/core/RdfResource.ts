@@ -171,6 +171,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
 
   public getArray<T extends RdfResource = RdfResource>(property: string | NamedNode, options?: GetOptions): T[] {
     const values = this._getObjects(property, options)
+      .filter(obj => obj.term.termType === 'NamedNode' || obj.term.termType === 'BlankNode')
       .map(obj => {
         return this._create<T>(obj, [], { parent: this })
       })
