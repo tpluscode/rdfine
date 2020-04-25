@@ -430,6 +430,19 @@ describe('RdfResource', () => {
         // then
         expect(object.length).toBe(0)
       })
+
+      it('skips literals', () => {
+        // given
+        const node = graph.blankNode()
+        node.addOut(ex.foo, graph.literal('bar'))
+        const resource = new RdfResource(node)
+
+        // when
+        const object = resource.getArray(ex.foo, { strict: false })
+
+        // then
+        expect(object.length).toBe(0)
+      })
     })
 
     describe('getBoolean', () => {
