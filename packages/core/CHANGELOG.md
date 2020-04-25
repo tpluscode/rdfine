@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.8...@tpluscode/rdfine@0.4.9) (2020-04-25)
+
+
+### Bug Fixes
+
+* method getArray should only read resources ([451201e](https://github.com/tpluscode/rdfine/commit/451201e01e75eb6855cc400e02041bdb6a35e16c))
+
+
+
+
+
 ## [0.4.8](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.7...@tpluscode/rdfine@0.4.8) (2020-04-22)
 
 
