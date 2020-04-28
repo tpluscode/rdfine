@@ -16,8 +16,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "moduleResolution": "node",
-    "esModuleInterop": true,
-    "allowJs": true
+    "esModuleInterop": true
   },
   "include": [
     "**/*.ts",
