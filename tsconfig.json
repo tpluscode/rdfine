@@ -9,7 +9,7 @@
       "WebWorker"
     ],
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": false,
+    "emitDecoratorMetadata": true,
     "strictNullChecks": true,
     "strict": true,
     "noImplicitAny": true,
