@@ -24,7 +24,7 @@
     "@types/clownface": "^0.12.13",
     "@types/rdf-js": "^2.0.12",
     "@types/rdfjs__namespace": "^1.1.1",
-    "clownface": "^0.12.1",
+    "clownface": "^0.12.3",
     "esm": "^3.2.25",
     "once": "^1.4.0"
   },
