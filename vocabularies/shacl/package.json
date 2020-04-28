@@ -11,7 +11,12 @@
 		"generate": "rdf-vocab prefix sh | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
 	},
 	"rdfine": {
-		"prefix": "sh"
+		"prefix": "sh",
+    "properties": {
+      "property": {
+        "values": "array"
+      }
+    }
 	},
 	"dependencies": {
 		"@rdfine/owl": "^0.0.2",
