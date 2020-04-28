@@ -15,7 +15,7 @@ import RdfsClassMixin from '@rdfine/rdfs/Class';
 import RdfPropertyMixin from '@rdfine/rdf/Property';
 
 export interface Shape extends Rdfs.Resource, RdfResource {
-  property: Sh.PropertyShape;
+  property: Array<Sh.PropertyShape>;
   rule: Sh.Rule;
   severity: Sh.Severity;
   sparql: Sh.SPARQLConstraint;
@@ -29,8 +29,8 @@ export interface Shape extends Rdfs.Resource, RdfResource {
 export default function ShapeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class ShapeClass extends RdfsResourceMixin(Resource) implements Shape {
-    @property.resource({ as: [PropertyShapeMixin] })
-    property!: Sh.PropertyShape;
+    @property.resource({ values: 'array', as: [PropertyShapeMixin] })
+    property!: Array<Sh.PropertyShape>;
     @property.resource({ as: [RuleMixin] })
     rule!: Sh.Rule;
     @property.resource({ as: [SeverityMixin] })
