@@ -1,5 +1,5 @@
 {
-	"name": "@rdfine/shacl",
+	"name": "@rdfine/owl",
 	"version": "0.0.0",
 	"main": "main.js",
 	"module": "index.js",
@@ -8,15 +8,18 @@
 		"prepack": "npm run build",
 		"clean": "find . -name '*.ts' -maxdepth 1 -delete",
 		"build": "tsc -p tsconfig.build.json",
-		"generate": "rdf-vocab prefix sh | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
+		"generate": "rdf-vocab prefix owl | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
 	},
 	"rdfine": {
-		"prefix": "sh"
+		"prefix": "owl",
+    "types": {
+      "Thing": "NamedNode",
+      "rdfs:Literal": "string"
+    }
 	},
 	"dependencies": {
-		"@rdfine/owl": "*",
-		"@rdfine/rdf": "*",
-		"@rdfine/rdfs": "*",
+    "@rdfine/rdf": "*",
+    "@rdfine/rdfs": "*",
 		"@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.1.0",
 		"@tpluscode/rdfine": "^0.4.9",
