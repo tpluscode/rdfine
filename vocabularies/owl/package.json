@@ -1,6 +1,6 @@
 {
 	"name": "@rdfine/owl",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"main": "main.js",
 	"module": "index.js",
 	"types": "index.d.ts",
@@ -18,8 +18,8 @@
 		}
 	},
 	"dependencies": {
-		"@rdfine/rdf": "*",
-		"@rdfine/rdfs": "*",
+		"@rdfine/rdf": "^0.1.8",
+		"@rdfine/rdfs": "^0.1.8",
 		"@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.1.0",
 		"@tpluscode/rdfine": "^0.4.9",

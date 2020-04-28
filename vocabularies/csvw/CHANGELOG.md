@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.8](https://github.com/tpluscode/rdfine/compare/@rdfine/csvw@0.2.7...@rdfine/csvw@0.2.8) (2020-04-28)
+
+**Note:** Version bump only for package @rdfine/csvw
+
+
+
+
+
 ## [0.2.7](https://github.com/tpluscode/rdfine/compare/@rdfine/csvw@0.2.6...@rdfine/csvw@0.2.7) (2020-04-25)
 
 **Note:** Version bump only for package @rdfine/csvw

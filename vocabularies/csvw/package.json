@@ -1,6 +1,6 @@
 {
 	"name": "@rdfine/csvw",
-	"version": "0.2.7",
+	"version": "0.2.8",
 	"main": "main.js",
 	"module": "index.js",
 	"types": "index.d.ts",
