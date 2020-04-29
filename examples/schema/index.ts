@@ -2,13 +2,13 @@ import factory from '@rdfjs/dataset'
 import fetch from '@rdfjs/fetch'
 import { namedNode } from '@rdfjs/data-model'
 import { turtle } from '@tpluscode/rdf-string'
-import schemaMixins, * as Schema from '@rdfine/schema'
+import * as Schema from '@rdfine/schema'
 import RdfResource from '@tpluscode/rdfine'
 
 const howard = 'http://zazuko.github.io/tbbt-ld/data/person/howard-wolowitz.ttl'
 
 // Have rdfine recognize schema.org terms
-RdfResource.factory.addMixin(...schemaMixins)
+RdfResource.factory.addMixin(...Object.values(Schema))
 
 async function main() {
   // download the triples about Howard

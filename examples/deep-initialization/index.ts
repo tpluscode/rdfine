@@ -2,15 +2,13 @@ import rdf from '@rdfjs/dataset'
 import clownface from 'clownface'
 import { turtle } from '@tpluscode/rdf-string'
 import * as Schema from '@rdfine/schema'
-import Person from '@rdfine/schema/Person'
-import Occupation from '@rdfine/schema/Occupation'
-import OrganizationMixin from '@rdfine/schema/Organization'
+import { PersonDependencies } from '@rdfine/schema/dependencies/Person'
 import RdfResource, { Initializer, fromObject } from '@tpluscode/rdfine/RdfResource'
 import { schema } from '@tpluscode/rdf-ns-builders'
 import namespace from '@rdfjs/namespace'
 
 // Have rdfine recognize the necessary schema.org terms
-RdfResource.factory.addMixin(Person, Occupation, OrganizationMixin)
+RdfResource.factory.addMixin(...PersonDependencies)
 
 const bigBangTheory = namespace('http://tbbt.example.com/')
 
@@ -19,7 +17,7 @@ async function main() {
   const graph = clownface({ dataset, term: bigBangTheory.Howard })
 
   // the person gets initialized with it whole subgraph
-  const howard: Schema.Person = new Person.Class(graph, {
+  const howard: Schema.Person = new Schema.PersonMixin.Class(graph, {
     givenName: 'Howard',
     familyName: 'Wolowitz',
     knows: {
@@ -38,7 +36,7 @@ async function main() {
   })
 
   // existing entities can also be used
-  const penny = new Person.Class(graph.node(bigBangTheory.Penny), {
+  const penny = new Schema.PersonMixin.Class(graph.node(bigBangTheory.Penny), {
     knows: howard as Initializer<Schema.Person>, // otherwise TypeScript goes ballistic
   })
   penny.name = 'Penny'
