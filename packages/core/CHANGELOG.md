@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.12](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.11...@tpluscode/rdfine@0.4.12) (2020-04-29)
+
+
+### Features
+
+* add option to resource decorator to add assert implied types ([90f1b7a](https://github.com/tpluscode/rdfine/commit/90f1b7a2431e751e6d9b247f8f4562305c57926b))
+
+
+
+
+
 ## [0.4.11](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.10...@tpluscode/rdfine@0.4.11) (2020-04-28)
 
 **Note:** Version bump only for package @tpluscode/rdfine

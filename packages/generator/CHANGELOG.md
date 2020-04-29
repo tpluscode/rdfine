@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/tpluscode/rdfine/compare/@rdfine/generator@0.2.1...@rdfine/generator@0.2.2) (2020-04-29)
+
+
+### Bug Fixes
+
+* **generator:** do not generate default exports for mixins ([840a302](https://github.com/tpluscode/rdfine/commit/840a30288963744c6340123d4e00664c7c5741e5))
+
+
+### Features
+
+* **generator:** generate dependency modules for every mixin ([08976d0](https://github.com/tpluscode/rdfine/commit/08976d0686e2f9fb7293571fb279422596327733))
+
+
+
+
+
 ## [0.2.1](https://github.com/tpluscode/rdfine/compare/@rdfine/generator@0.2.0...@rdfine/generator@0.2.1) (2020-04-18)
 
 

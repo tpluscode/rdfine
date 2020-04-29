@@ -1,6 +1,6 @@
 {
 	"name": "@rdfine/owl",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"main": "main.js",
 	"module": "index.js",
 	"types": "index.d.ts",
@@ -18,11 +18,11 @@
 		}
 	},
 	"dependencies": {
-		"@rdfine/rdf": "^0.1.10",
-		"@rdfine/rdfs": "^0.1.10",
+		"@rdfine/rdf": "^0.1.11",
+		"@rdfine/rdfs": "^0.1.11",
 		"@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.1.0",
-		"@tpluscode/rdfine": "^0.4.11",
+		"@tpluscode/rdfine": "^0.4.12",
 		"esm": "^3.2.25"
 	},
 	"devDependencies": {
@@ -32,7 +32,7 @@
 		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
 		"@babel/preset-env": "^7.8.3",
 		"@babel/preset-typescript": "^7.8.3",
-		"@rdfine/generator": "^0.2.1",
+		"@rdfine/generator": "^0.2.2",
 		"@rdfjs/dataset": "^1.0.1",
 		"@types/clownface": "^0.12.13",
 		"@types/rdf-js": "^2.0.12",
