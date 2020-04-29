@@ -1,4 +1,4 @@
-import { Project, SourceFile } from 'ts-morph'
+import { Project } from 'ts-morph'
 import cf, { Clownface } from 'clownface'
 import $rdf from 'rdf-ext'
 import { MixinModule } from '../../lib/MixinGenerator/MixinModule'
@@ -7,15 +7,13 @@ import { ex } from '../_helpers/prefix'
 import { fakeLog } from '../_helpers/util'
 
 describe('MixinModule', () => {
-  let sourceFile: SourceFile
+  let project: Project
   let vocabulary: Clownface
 
   beforeEach(() => {
-    const project = new Project({
+    project = new Project({
       useInMemoryFileSystem: true,
     })
-
-    sourceFile = project.createSourceFile('./enum.ts')
 
     vocabulary = cf({ dataset: $rdf.dataset() })
   })
@@ -31,7 +29,7 @@ describe('MixinModule', () => {
     }, [], [])
 
     // when
-    module.writeModule(sourceFile, new FakeTypeCollection(), {
+    module.writeModule(project, new FakeTypeCollection(), {
       prefix: 'ex',
       defaultExport: 'Example',
       log: fakeLog(),
@@ -39,7 +37,7 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(sourceFile).toMatchSnapshot()
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
   it('generates a mixin class with external super classes', () => {
@@ -57,10 +55,11 @@ describe('MixinModule', () => {
       qualifiedName: 'Schema.Person',
       package: '@rdfine/schema',
       qualifier: 'Schema',
+      alias: 'SchemaPersonMixin',
     }], [])
 
     // when
-    module.writeModule(sourceFile, new FakeTypeCollection(), {
+    module.writeModule(project, new FakeTypeCollection(), {
       prefix: 'ex',
       defaultExport: 'Example',
       log: fakeLog(),
@@ -68,7 +67,7 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(sourceFile).toMatchSnapshot()
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
   it('generates property with automatic type cast when predicate has strict semantics', () => {
@@ -96,7 +95,7 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(sourceFile, new FakeTypeCollection(), {
+    module.writeModule(project, new FakeTypeCollection(), {
       prefix: 'ex',
       defaultExport: 'Example',
       log: fakeLog(),
@@ -104,7 +103,7 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(sourceFile).toMatchSnapshot()
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
   it('generates array property', () => {
@@ -133,7 +132,7 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(sourceFile, new FakeTypeCollection(), {
+    module.writeModule(project, new FakeTypeCollection(), {
       prefix: 'ex',
       defaultExport: 'Example',
       log: fakeLog(),
@@ -141,7 +140,7 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(sourceFile).toMatchSnapshot()
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
   it('generates list property', () => {
@@ -170,7 +169,7 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(sourceFile, new FakeTypeCollection(), {
+    module.writeModule(project, new FakeTypeCollection(), {
       prefix: 'ex',
       defaultExport: 'Example',
       log: fakeLog(),
@@ -178,7 +177,7 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(sourceFile).toMatchSnapshot()
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
   it('does not try import self when property has range of enclosing class', () => {
@@ -201,7 +200,7 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(sourceFile, new FakeTypeCollection(), {
+    module.writeModule(project, new FakeTypeCollection(), {
       prefix: 'ex',
       defaultExport: 'Example',
       log: fakeLog(),
@@ -209,7 +208,7 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(sourceFile).toMatchSnapshot()
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
   it('generates property with automatic external type cast when predicate has strict semantics', () => {
@@ -234,11 +233,12 @@ describe('MixinModule', () => {
         qualifiedName: 'Example.Foo',
         package: '@rdfine/example',
         qualifier: 'Example',
+        alias: 'ExampleFooMixin',
       }],
     }])
 
     // when
-    module.writeModule(sourceFile, new FakeTypeCollection(), {
+    module.writeModule(project, new FakeTypeCollection(), {
       prefix: 'ex',
       defaultExport: 'Example',
       log: fakeLog(),
@@ -246,6 +246,6 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(sourceFile).toMatchSnapshot()
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 })

@@ -64,11 +64,12 @@ describe('meta factory', () => {
       // then
       expect(meta).toEqual({
         type: 'ExternalResource',
-        mixinName: 'SchemaPersonMixin',
+        mixinName: 'PersonMixin',
         package: '@rdfine/schema',
         module: '@rdfine/schema/Person',
         qualifiedName: 'Schema.Person',
         qualifier: 'Schema',
+        alias: 'SchemaPersonMixin',
       } as ExternalResourceType)
     })
   })
