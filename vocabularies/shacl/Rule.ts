@@ -4,17 +4,16 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import RdfsResourceMixin from '@rdfine/rdfs/Resource';
-import ShapeMixin from './Shape';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
 
 export interface Rule extends Rdfs.Resource, RdfResource {
   condition: Sh.Shape;
 }
 
-export default function RuleMixin<Base extends Constructor>(Resource: Base) {
+export function RuleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class RuleClass extends RdfsResourceMixin(Resource) implements Rule {
-    @property.resource({ as: [ShapeMixin] })
+    @property.resource({ implicitTypes: [sh.Shape] })
     condition!: Sh.Shape;
   }
   return RuleClass

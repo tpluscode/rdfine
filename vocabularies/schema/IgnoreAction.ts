@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import AssessActionMixin from './AssessAction';
+import { AssessActionMixin } from './AssessAction';
 
 export interface IgnoreAction extends Schema.AssessAction, RdfResource {
 }
 
-export default function IgnoreActionMixin<Base extends Constructor>(Resource: Base) {
+export function IgnoreActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class IgnoreActionClass extends AssessActionMixin(Resource) implements IgnoreAction {
   }

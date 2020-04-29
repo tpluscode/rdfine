@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
-import JSExecutableMixin from './JSExecutable';
-import TargetMixin from './Target';
+import { JSExecutableMixin } from './JSExecutable';
+import { TargetMixin } from './Target';
 
 export interface JSTarget extends Sh.JSExecutable, Sh.Target, RdfResource {
 }
 
-export default function JSTargetMixin<Base extends Constructor>(Resource: Base) {
+export function JSTargetMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class JSTargetClass extends TargetMixin(JSExecutableMixin(Resource)) implements JSTarget {
   }

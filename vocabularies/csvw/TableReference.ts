@@ -10,7 +10,7 @@ export interface TableReference extends RdfResource {
   schemaReference: string;
 }
 
-export default function TableReferenceMixin<Base extends Constructor>(Resource: Base) {
+export function TableReferenceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class TableReferenceClass extends Resource implements TableReference {
     @property.literal()

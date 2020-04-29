@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface Role extends Schema.Intangible, RdfResource {
   endDate: Date;
@@ -14,7 +14,7 @@ export interface Role extends Schema.Intangible, RdfResource {
   startDate: Date;
 }
 
-export default function RoleMixin<Base extends Constructor>(Resource: Base) {
+export function RoleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RoleClass extends IntangibleMixin(Resource) implements Role {
     @property.literal()

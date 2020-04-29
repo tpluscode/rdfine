@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
-import JSExecutableMixin from './JSExecutable';
-import ValidatorMixin from './Validator';
+import { JSExecutableMixin } from './JSExecutable';
+import { ValidatorMixin } from './Validator';
 
 export interface JSValidator extends Sh.JSExecutable, Sh.Validator, RdfResource {
 }
 
-export default function JSValidatorMixin<Base extends Constructor>(Resource: Base) {
+export function JSValidatorMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class JSValidatorClass extends ValidatorMixin(JSExecutableMixin(Resource)) implements JSValidator {
   }

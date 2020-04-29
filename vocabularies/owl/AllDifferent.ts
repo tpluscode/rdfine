@@ -5,14 +5,14 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import type * as Rdf from '@rdfine/rdf';
-import RdfsResourceMixin from '@rdfine/rdfs/Resource';
-import RdfListMixin from '@rdfine/rdf/List';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import { ListMixin as RdfListMixin } from '@rdfine/rdf/List';
 
 export interface AllDifferent extends Rdfs.Resource, RdfResource {
   distinctMembers: Rdf.List;
 }
 
-export default function AllDifferentMixin<Base extends Constructor>(Resource: Base) {
+export function AllDifferentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class AllDifferentClass extends RdfsResourceMixin(Resource) implements AllDifferent {
     @property.resource({ as: [RdfListMixin] })

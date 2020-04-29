@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ThingMixin from './Thing';
+import { ThingMixin } from './Thing';
 
 export interface Place extends Schema.Thing, RdfResource {
   additionalProperty: Schema.PropertyValue;
@@ -51,7 +51,7 @@ export interface Place extends Schema.Thing, RdfResource {
   telephone: string;
 }
 
-export default function PlaceMixin<Base extends Constructor>(Resource: Base) {
+export function PlaceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PlaceClass extends ThingMixin(Resource) implements Place {
     @property.resource()

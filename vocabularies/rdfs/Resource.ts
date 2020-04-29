@@ -12,7 +12,7 @@ export interface Resource extends RdfResource {
   seeAlso: Array<Rdfs.Resource>;
 }
 
-export default function ResourceMixin<Base extends Constructor>(Resource: Base) {
+export function ResourceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdfs)
   class ResourceClass extends Resource implements Resource {
     @property.literal()

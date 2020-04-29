@@ -4,12 +4,12 @@ import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import RdfsResourceMixin from '@rdfine/rdfs/Resource';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
 
 export interface AllDisjointProperties extends Rdfs.Resource, RdfResource {
 }
 
-export default function AllDisjointPropertiesMixin<Base extends Constructor>(Resource: Base) {
+export function AllDisjointPropertiesMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class AllDisjointPropertiesClass extends RdfsResourceMixin(Resource) implements AllDisjointProperties {
   }

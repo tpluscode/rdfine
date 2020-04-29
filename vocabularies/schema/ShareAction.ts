@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CommunicateActionMixin from './CommunicateAction';
+import { CommunicateActionMixin } from './CommunicateAction';
 
 export interface ShareAction extends Schema.CommunicateAction, RdfResource {
 }
 
-export default function ShareActionMixin<Base extends Constructor>(Resource: Base) {
+export function ShareActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ShareActionClass extends CommunicateActionMixin(Resource) implements ShareAction {
   }

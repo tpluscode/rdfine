@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ProductMixin from './Product';
+import { ProductMixin } from './Product';
 
 export interface SomeProducts extends Schema.Product, RdfResource {
   inventoryLevel: Schema.QuantitativeValue;
 }
 
-export default function SomeProductsMixin<Base extends Constructor>(Resource: Base) {
+export function SomeProductsMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SomeProductsClass extends ProductMixin(Resource) implements SomeProducts {
     @property.resource()

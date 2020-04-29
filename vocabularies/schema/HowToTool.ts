@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import HowToItemMixin from './HowToItem';
+import { HowToItemMixin } from './HowToItem';
 
 export interface HowToTool extends Schema.HowToItem, RdfResource {
 }
 
-export default function HowToToolMixin<Base extends Constructor>(Resource: Base) {
+export function HowToToolMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class HowToToolClass extends HowToItemMixin(Resource) implements HowToTool {
   }

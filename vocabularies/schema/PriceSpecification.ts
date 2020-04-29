@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import StructuredValueMixin from './StructuredValue';
+import { StructuredValueMixin } from './StructuredValue';
 
 export interface PriceSpecification extends Schema.StructuredValue, RdfResource {
   eligibleQuantity: Schema.QuantitativeValue;
@@ -17,7 +17,7 @@ export interface PriceSpecification extends Schema.StructuredValue, RdfResource 
   valueAddedTaxIncluded: boolean;
 }
 
-export default function PriceSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function PriceSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PriceSpecificationClass extends StructuredValueMixin(Resource) implements PriceSpecification {
     @property.resource()

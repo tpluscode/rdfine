@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ActionMixin from './Action';
+import { ActionMixin } from './Action';
 
 export interface TradeAction extends Schema.Action, RdfResource {
   price: number | string;
@@ -11,7 +11,7 @@ export interface TradeAction extends Schema.Action, RdfResource {
   priceSpecification: Schema.PriceSpecification;
 }
 
-export default function TradeActionMixin<Base extends Constructor>(Resource: Base) {
+export function TradeActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TradeActionClass extends ActionMixin(Resource) implements TradeAction {
     @property.literal()

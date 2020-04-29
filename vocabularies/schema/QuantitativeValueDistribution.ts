@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import StructuredValueMixin from './StructuredValue';
+import { StructuredValueMixin } from './StructuredValue';
 
 export interface QuantitativeValueDistribution extends Schema.StructuredValue, RdfResource {
   duration: Schema.Duration;
@@ -14,7 +14,7 @@ export interface QuantitativeValueDistribution extends Schema.StructuredValue, R
   percentile90: number;
 }
 
-export default function QuantitativeValueDistributionMixin<Base extends Constructor>(Resource: Base) {
+export function QuantitativeValueDistributionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class QuantitativeValueDistributionClass extends StructuredValueMixin(Resource) implements QuantitativeValueDistribution {
     @property.resource()

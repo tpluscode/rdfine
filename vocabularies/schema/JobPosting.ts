@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface JobPosting extends Schema.Intangible, RdfResource {
   baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification;
@@ -30,7 +30,7 @@ export interface JobPosting extends Schema.Intangible, RdfResource {
   workHours: string;
 }
 
-export default function JobPostingMixin<Base extends Constructor>(Resource: Base) {
+export function JobPostingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class JobPostingClass extends IntangibleMixin(Resource) implements JobPosting {
     @property.resource()

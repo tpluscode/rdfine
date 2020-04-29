@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import DatasetMixin from './Dataset';
+import { DatasetMixin } from './Dataset';
 
 export interface DataFeed extends Schema.Dataset, RdfResource {
   dataFeedElement: Schema.DataFeedItem | Schema.Thing;
   dataFeedElementLiteral: string;
 }
 
-export default function DataFeedMixin<Base extends Constructor>(Resource: Base) {
+export function DataFeedMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DataFeedClass extends DatasetMixin(Resource) implements DataFeed {
     @property.resource()

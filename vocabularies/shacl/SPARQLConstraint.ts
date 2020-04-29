@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
-import SPARQLSelectExecutableMixin from './SPARQLSelectExecutable';
+import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable';
 
 export interface SPARQLConstraint extends Sh.SPARQLSelectExecutable, RdfResource {
 }
 
-export default function SPARQLConstraintMixin<Base extends Constructor>(Resource: Base) {
+export function SPARQLConstraintMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class SPARQLConstraintClass extends SPARQLSelectExecutableMixin(Resource) implements SPARQLConstraint {
   }

@@ -3,8 +3,8 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
-import ListItemMixin from './ListItem';
+import { CreativeWorkMixin } from './CreativeWork';
+import { ListItemMixin } from './ListItem';
 
 export interface HowToDirection extends Schema.CreativeWork, Schema.ListItem, RdfResource {
   afterMedia: Schema.MediaObject;
@@ -19,7 +19,7 @@ export interface HowToDirection extends Schema.CreativeWork, Schema.ListItem, Rd
   totalTime: Schema.Duration;
 }
 
-export default function HowToDirectionMixin<Base extends Constructor>(Resource: Base) {
+export function HowToDirectionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class HowToDirectionClass extends ListItemMixin(CreativeWorkMixin(Resource)) implements HowToDirection {
     @property.resource()

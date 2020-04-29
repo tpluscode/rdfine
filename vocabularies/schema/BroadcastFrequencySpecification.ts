@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface BroadcastFrequencySpecification extends Schema.Intangible, RdfResource {
   broadcastFrequencyValue: Schema.QuantitativeValue;
   broadcastFrequencyValueLiteral: number;
 }
 
-export default function BroadcastFrequencySpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function BroadcastFrequencySpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BroadcastFrequencySpecificationClass extends IntangibleMixin(Resource) implements BroadcastFrequencySpecification {
     @property.resource()

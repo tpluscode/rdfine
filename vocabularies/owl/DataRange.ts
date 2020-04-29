@@ -4,12 +4,12 @@ import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import RdfsDatatypeMixin from '@rdfine/rdfs/Datatype';
+import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/Datatype';
 
 export interface DataRange extends Rdfs.Datatype, RdfResource {
 }
 
-export default function DataRangeMixin<Base extends Constructor>(Resource: Base) {
+export function DataRangeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class DataRangeClass extends RdfsDatatypeMixin(Resource) implements DataRange {
   }

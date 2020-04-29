@@ -4,13 +4,13 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import RdfsResourceMixin from '@rdfine/rdfs/Resource';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
 
 export interface JSExecutable extends Rdfs.Resource, RdfResource {
   jsFunctionName: string;
 }
 
-export default function JSExecutableMixin<Base extends Constructor>(Resource: Base) {
+export function JSExecutableMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class JSExecutableClass extends RdfsResourceMixin(Resource) implements JSExecutable {
     @property.literal()

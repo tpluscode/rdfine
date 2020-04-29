@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import TransferActionMixin from './TransferAction';
+import { TransferActionMixin } from './TransferAction';
 
 export interface LendAction extends Schema.TransferAction, RdfResource {
   borrower: Schema.Person;
 }
 
-export default function LendActionMixin<Base extends Constructor>(Resource: Base) {
+export function LendActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LendActionClass extends TransferActionMixin(Resource) implements LendAction {
     @property.resource()

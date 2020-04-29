@@ -101,7 +101,7 @@ export class PropertyWriter {
         this.__module.addMixinImport(resourceRange)
 
         if (this.__module.type.localName === resourceRange.localName) {
-          decoratorOptions.push(`as: [${resourceRange.localName}]`)
+          decoratorOptions.push(`as: [${resourceRange.mixinName}]`)
         } else {
           decoratorOptions.push(`implicitTypes: [${this.__context.prefix}.${resourceRange.localName}]`)
         }

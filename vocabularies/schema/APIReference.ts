@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import TechArticleMixin from './TechArticle';
+import { TechArticleMixin } from './TechArticle';
 
 export interface APIReference extends Schema.TechArticle, RdfResource {
   assembly: string;
@@ -13,7 +13,7 @@ export interface APIReference extends Schema.TechArticle, RdfResource {
   targetPlatform: string;
 }
 
-export default function APIReferenceMixin<Base extends Constructor>(Resource: Base) {
+export function APIReferenceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class APIReferenceClass extends TechArticleMixin(Resource) implements APIReference {
     @property.literal()

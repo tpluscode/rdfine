@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import StructuredValueMixin from './StructuredValue';
+import { StructuredValueMixin } from './StructuredValue';
 
 export interface ContactPoint extends Schema.StructuredValue, RdfResource {
   areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
@@ -21,7 +21,7 @@ export interface ContactPoint extends Schema.StructuredValue, RdfResource {
   telephone: string;
 }
 
-export default function ContactPointMixin<Base extends Constructor>(Resource: Base) {
+export function ContactPointMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ContactPointClass extends StructuredValueMixin(Resource) implements ContactPoint {
     @property.resource()

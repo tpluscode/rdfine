@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import FinancialProductMixin from './FinancialProduct';
+import { FinancialProductMixin } from './FinancialProduct';
 
 export interface InvestmentOrDeposit extends Schema.FinancialProduct, RdfResource {
   amount: Schema.MonetaryAmount;
   amountLiteral: number;
 }
 
-export default function InvestmentOrDepositMixin<Base extends Constructor>(Resource: Base) {
+export function InvestmentOrDepositMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class InvestmentOrDepositClass extends FinancialProductMixin(Resource) implements InvestmentOrDeposit {
     @property.resource()

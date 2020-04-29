@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ProductMixin from './Product';
+import { ProductMixin } from './Product';
 
 export interface ProductModel extends Schema.Product, RdfResource {
   isVariantOf: Schema.ProductModel;
@@ -11,7 +11,7 @@ export interface ProductModel extends Schema.Product, RdfResource {
   successorOf: Schema.ProductModel;
 }
 
-export default function ProductModelMixin<Base extends Constructor>(Resource: Base) {
+export function ProductModelMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ProductModelClass extends ProductMixin(Resource) implements ProductModel {
     @property.resource()

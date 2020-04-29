@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface ProgramMembership extends Schema.Intangible, RdfResource {
   hostingOrganization: Schema.Organization;
@@ -13,7 +13,7 @@ export interface ProgramMembership extends Schema.Intangible, RdfResource {
   programName: string;
 }
 
-export default function ProgramMembershipMixin<Base extends Constructor>(Resource: Base) {
+export function ProgramMembershipMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ProgramMembershipClass extends IntangibleMixin(Resource) implements ProgramMembership {
     @property.resource()

@@ -12,7 +12,7 @@ export interface Transformation extends RdfResource {
   url: string;
 }
 
-export default function TransformationMixin<Base extends Constructor>(Resource: Base) {
+export function TransformationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class TransformationClass extends Resource implements Transformation {
     @property.literal()

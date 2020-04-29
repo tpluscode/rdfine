@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import InformActionMixin from './InformAction';
+import { InformActionMixin } from './InformAction';
 
 export interface ConfirmAction extends Schema.InformAction, RdfResource {
 }
 
-export default function ConfirmActionMixin<Base extends Constructor>(Resource: Base) {
+export function ConfirmActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ConfirmActionClass extends InformActionMixin(Resource) implements ConfirmAction {
   }

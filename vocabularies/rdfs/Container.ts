@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { rdfs } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Rdfs from '.';
-import ResourceMixin from './Resource';
+import { ResourceMixin } from './Resource';
 
 export interface Container extends Rdfs.Resource, RdfResource {
 }
 
-export default function ContainerMixin<Base extends Constructor>(Resource: Base) {
+export function ContainerMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdfs)
   class ContainerClass extends ResourceMixin(Resource) implements Container {
   }

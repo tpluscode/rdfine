@@ -7,7 +7,7 @@ import type * as Owl from '.';
 export interface NamedIndividual extends RdfResource {
 }
 
-export default function NamedIndividualMixin<Base extends Constructor>(Resource: Base) {
+export function NamedIndividualMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class NamedIndividualClass extends Resource implements NamedIndividual {
   }

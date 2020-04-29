@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
-import SPARQLAskExecutableMixin from './SPARQLAskExecutable';
-import SPARQLSelectExecutableMixin from './SPARQLSelectExecutable';
-import TargetMixin from './Target';
+import { SPARQLAskExecutableMixin } from './SPARQLAskExecutable';
+import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable';
+import { TargetMixin } from './Target';
 
 export interface SPARQLTarget extends Sh.SPARQLAskExecutable, Sh.SPARQLSelectExecutable, Sh.Target, RdfResource {
 }
 
-export default function SPARQLTargetMixin<Base extends Constructor>(Resource: Base) {
+export function SPARQLTargetMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class SPARQLTargetClass extends TargetMixin(SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(Resource))) implements SPARQLTarget {
   }

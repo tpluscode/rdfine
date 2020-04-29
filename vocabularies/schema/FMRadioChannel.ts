@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import RadioChannelMixin from './RadioChannel';
+import { RadioChannelMixin } from './RadioChannel';
 
 export interface FMRadioChannel extends Schema.RadioChannel, RdfResource {
 }
 
-export default function FMRadioChannelMixin<Base extends Constructor>(Resource: Base) {
+export function FMRadioChannelMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class FMRadioChannelClass extends RadioChannelMixin(Resource) implements FMRadioChannel {
   }

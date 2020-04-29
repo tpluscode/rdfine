@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
-import ListItemMixin from './ListItem';
+import { CreativeWorkMixin } from './CreativeWork';
+import { ListItemMixin } from './ListItem';
 
 export interface HowToTip extends Schema.CreativeWork, Schema.ListItem, RdfResource {
 }
 
-export default function HowToTipMixin<Base extends Constructor>(Resource: Base) {
+export function HowToTipMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class HowToTipClass extends ListItemMixin(CreativeWorkMixin(Resource)) implements HowToTip {
   }

@@ -3,8 +3,7 @@ import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
-import ParameterizableMixin from './Parameterizable';
-import ValidatorMixin from './Validator';
+import { ParameterizableMixin } from './Parameterizable';
 
 export interface ConstraintComponent extends Sh.Parameterizable, RdfResource {
   nodeValidator: Sh.Validator;
@@ -12,14 +11,14 @@ export interface ConstraintComponent extends Sh.Parameterizable, RdfResource {
   validator: Sh.Validator;
 }
 
-export default function ConstraintComponentMixin<Base extends Constructor>(Resource: Base) {
+export function ConstraintComponentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class ConstraintComponentClass extends ParameterizableMixin(Resource) implements ConstraintComponent {
-    @property.resource({ as: [ValidatorMixin] })
+    @property.resource({ implicitTypes: [sh.Validator] })
     nodeValidator!: Sh.Validator;
-    @property.resource({ as: [ValidatorMixin] })
+    @property.resource({ implicitTypes: [sh.Validator] })
     propertyValidator!: Sh.Validator;
-    @property.resource({ as: [ValidatorMixin] })
+    @property.resource({ implicitTypes: [sh.Validator] })
     validator!: Sh.Validator;
   }
   return ConstraintComponentClass

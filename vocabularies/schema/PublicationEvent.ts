@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import EventMixin from './Event';
+import { EventMixin } from './Event';
 
 export interface PublicationEvent extends Schema.Event, RdfResource {
   free: boolean;
@@ -11,7 +11,7 @@ export interface PublicationEvent extends Schema.Event, RdfResource {
   publishedOn: Schema.BroadcastService;
 }
 
-export default function PublicationEventMixin<Base extends Constructor>(Resource: Base) {
+export function PublicationEventMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PublicationEventClass extends EventMixin(Resource) implements PublicationEvent {
     @property.literal({ type: Boolean })

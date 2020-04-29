@@ -3,19 +3,18 @@ import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '.';
-import TableReferenceMixin from './TableReference';
 
 export interface ForeignKey extends RdfResource {
   columnReference: string;
   reference: Csvw.TableReference;
 }
 
-export default function ForeignKeyMixin<Base extends Constructor>(Resource: Base) {
+export function ForeignKeyMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class ForeignKeyClass extends Resource implements ForeignKey {
     @property.literal()
     columnReference!: string;
-    @property.resource({ as: [TableReferenceMixin] })
+    @property.resource({ implicitTypes: [csvw.TableReference] })
     reference!: Csvw.TableReference;
   }
   return ForeignKeyClass

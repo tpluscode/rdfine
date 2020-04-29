@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface Order extends Schema.Intangible, RdfResource {
   acceptedOffer: Schema.Offer;
@@ -30,7 +30,7 @@ export interface Order extends Schema.Intangible, RdfResource {
   seller: Schema.Organization | Schema.Person;
 }
 
-export default function OrderMixin<Base extends Constructor>(Resource: Base) {
+export function OrderMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OrderClass extends IntangibleMixin(Resource) implements Order {
     @property.resource()

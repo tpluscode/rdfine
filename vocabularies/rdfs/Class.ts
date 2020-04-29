@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { rdfs } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Rdfs from '.';
-import ResourceMixin from './Resource';
+import { ResourceMixin } from './Resource';
 
 export interface Class extends Rdfs.Resource, RdfResource {
   subClassOf: Rdfs.Class;
 }
 
-export default function ClassMixin<Base extends Constructor>(Resource: Base) {
+export function ClassMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdfs)
   class ClassClass extends ResourceMixin(Resource) implements Class {
     @property.resource({ as: [ClassMixin] })

@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import PlaceMixin from './Place';
+import { PlaceMixin } from './Place';
 
 export interface TouristAttraction extends Schema.Place, RdfResource {
   availableLanguage: Schema.Language;
@@ -12,7 +12,7 @@ export interface TouristAttraction extends Schema.Place, RdfResource {
   touristTypeLiteral: string;
 }
 
-export default function TouristAttractionMixin<Base extends Constructor>(Resource: Base) {
+export function TouristAttractionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TouristAttractionClass extends PlaceMixin(Resource) implements TouristAttraction {
     @property.resource()

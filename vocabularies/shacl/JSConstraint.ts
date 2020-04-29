@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
-import JSExecutableMixin from './JSExecutable';
+import { JSExecutableMixin } from './JSExecutable';
 
 export interface JSConstraint extends Sh.JSExecutable, RdfResource {
 }
 
-export default function JSConstraintMixin<Base extends Constructor>(Resource: Base) {
+export function JSConstraintMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class JSConstraintClass extends JSExecutableMixin(Resource) implements JSConstraint {
   }

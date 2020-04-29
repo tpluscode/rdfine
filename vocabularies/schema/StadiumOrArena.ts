@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CivicStructureMixin from './CivicStructure';
-import SportsActivityLocationMixin from './SportsActivityLocation';
+import { CivicStructureMixin } from './CivicStructure';
+import { SportsActivityLocationMixin } from './SportsActivityLocation';
 
 export interface StadiumOrArena extends Schema.CivicStructure, Schema.SportsActivityLocation, RdfResource {
 }
 
-export default function StadiumOrArenaMixin<Base extends Constructor>(Resource: Base) {
+export function StadiumOrArenaMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class StadiumOrArenaClass extends SportsActivityLocationMixin(CivicStructureMixin(Resource)) implements StadiumOrArena {
   }

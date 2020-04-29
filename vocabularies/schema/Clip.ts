@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Clip extends Schema.CreativeWork, RdfResource {
   actor: Schema.Person;
@@ -17,7 +17,7 @@ export interface Clip extends Schema.CreativeWork, RdfResource {
   partOfSeries: Schema.CreativeWorkSeries;
 }
 
-export default function ClipMixin<Base extends Constructor>(Resource: Base) {
+export function ClipMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ClipClass extends CreativeWorkMixin(Resource) implements Clip {
     @property.resource()

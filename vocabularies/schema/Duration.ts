@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import QuantityMixin from './Quantity';
+import { QuantityMixin } from './Quantity';
 
 export interface Duration extends Schema.Quantity, RdfResource {
 }
 
-export default function DurationMixin<Base extends Constructor>(Resource: Base) {
+export function DurationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DurationClass extends QuantityMixin(Resource) implements Duration {
   }

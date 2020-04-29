@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import LegalServiceMixin from './LegalService';
+import { LegalServiceMixin } from './LegalService';
 
 export interface Notary extends Schema.LegalService, RdfResource {
 }
 
-export default function NotaryMixin<Base extends Constructor>(Resource: Base) {
+export function NotaryMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class NotaryClass extends LegalServiceMixin(Resource) implements Notary {
   }

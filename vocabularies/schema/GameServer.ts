@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface GameServer extends Schema.Intangible, RdfResource {
   game: Schema.VideoGame;
@@ -11,7 +11,7 @@ export interface GameServer extends Schema.Intangible, RdfResource {
   serverStatus: Schema.GameServerStatus;
 }
 
-export default function GameServerMixin<Base extends Constructor>(Resource: Base) {
+export function GameServerMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GameServerClass extends IntangibleMixin(Resource) implements GameServer {
     @property.resource()

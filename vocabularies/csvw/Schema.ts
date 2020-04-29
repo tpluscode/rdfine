@@ -3,11 +3,6 @@ import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '.';
-import ColumnMixin from './Column';
-import DatatypeMixin from './Datatype';
-import ForeignKeyMixin from './ForeignKey';
-import DirectionMixin from './Direction';
-import TransformationMixin from './Transformation';
 
 export interface Schema extends RdfResource {
   aboutUrl: string;
@@ -29,20 +24,20 @@ export interface Schema extends RdfResource {
   valueUrl: string;
 }
 
-export default function SchemaMixin<Base extends Constructor>(Resource: Base) {
+export function SchemaMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class SchemaClass extends Resource implements Schema {
     @property.literal()
     aboutUrl!: string;
-    @property.resource({ values: 'list', as: [ColumnMixin] })
+    @property.resource({ values: 'list', implicitTypes: [csvw.Column] })
     column!: Array<Csvw.Column>;
-    @property.resource({ as: [DatatypeMixin] })
+    @property.resource({ implicitTypes: [csvw.Datatype] })
     datatype!: Csvw.Datatype;
     @property.literal({ path: csvw.datatype })
     datatypeLiteral!: string;
     @property.literal()
     default!: string;
-    @property.resource({ as: [ForeignKeyMixin] })
+    @property.resource({ implicitTypes: [csvw.ForeignKey] })
     foreignKey!: Csvw.ForeignKey;
     @property.literal()
     lang!: string;
@@ -60,9 +55,9 @@ export default function SchemaMixin<Base extends Constructor>(Resource: Base) {
     rowTitle!: string;
     @property.literal()
     separator!: string;
-    @property.resource({ as: [DirectionMixin] })
+    @property.resource({ implicitTypes: [csvw.Direction] })
     textDirection!: Csvw.Direction;
-    @property.resource({ values: 'array', as: [TransformationMixin] })
+    @property.resource({ values: 'array', implicitTypes: [csvw.Transformation] })
     transformations!: Array<Csvw.Transformation>;
     @property.literal()
     valueUrl!: string;

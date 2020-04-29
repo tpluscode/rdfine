@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import AccommodationMixin from './Accommodation';
+import { AccommodationMixin } from './Accommodation';
 
 export interface Apartment extends Schema.Accommodation, RdfResource {
   numberOfRooms: Schema.QuantitativeValue;
@@ -11,7 +11,7 @@ export interface Apartment extends Schema.Accommodation, RdfResource {
   occupancy: Schema.QuantitativeValue;
 }
 
-export default function ApartmentMixin<Base extends Constructor>(Resource: Base) {
+export function ApartmentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ApartmentClass extends AccommodationMixin(Resource) implements Apartment {
     @property.resource()

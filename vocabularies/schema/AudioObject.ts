@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import MediaObjectMixin from './MediaObject';
+import { MediaObjectMixin } from './MediaObject';
 
 export interface AudioObject extends Schema.MediaObject, RdfResource {
   caption: Schema.MediaObject;
@@ -11,7 +11,7 @@ export interface AudioObject extends Schema.MediaObject, RdfResource {
   transcript: string;
 }
 
-export default function AudioObjectMixin<Base extends Constructor>(Resource: Base) {
+export function AudioObjectMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AudioObjectClass extends MediaObjectMixin(Resource) implements AudioObject {
     @property.resource()

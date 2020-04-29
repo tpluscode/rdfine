@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import SoftwareApplicationMixin from './SoftwareApplication';
+import { SoftwareApplicationMixin } from './SoftwareApplication';
 
 export interface WebApplication extends Schema.SoftwareApplication, RdfResource {
   browserRequirements: string;
 }
 
-export default function WebApplicationMixin<Base extends Constructor>(Resource: Base) {
+export function WebApplicationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WebApplicationClass extends SoftwareApplicationMixin(Resource) implements WebApplication {
     @property.literal()

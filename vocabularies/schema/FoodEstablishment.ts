@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import LocalBusinessMixin from './LocalBusiness';
+import { LocalBusinessMixin } from './LocalBusiness';
 
 export interface FoodEstablishment extends Schema.LocalBusiness, RdfResource {
   acceptsReservations: boolean | string;
@@ -16,7 +16,7 @@ export interface FoodEstablishment extends Schema.LocalBusiness, RdfResource {
   starRating: Schema.Rating;
 }
 
-export default function FoodEstablishmentMixin<Base extends Constructor>(Resource: Base) {
+export function FoodEstablishmentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class FoodEstablishmentClass extends LocalBusinessMixin(Resource) implements FoodEstablishment {
     @property.literal()

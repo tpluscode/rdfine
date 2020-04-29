@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Question extends Schema.CreativeWork, RdfResource {
   acceptedAnswer: Schema.Answer | Schema.ItemList;
@@ -13,7 +13,7 @@ export interface Question extends Schema.CreativeWork, RdfResource {
   upvoteCount: number;
 }
 
-export default function QuestionMixin<Base extends Constructor>(Resource: Base) {
+export function QuestionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class QuestionClass extends CreativeWorkMixin(Resource) implements Question {
     @property.resource()

@@ -7,7 +7,7 @@ import type * as Rdf from '.';
 export interface Seq extends RdfResource {
 }
 
-export default function SeqMixin<Base extends Constructor>(Resource: Base) {
+export function SeqMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdf)
   class SeqClass extends Resource implements Seq {
   }

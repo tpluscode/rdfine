@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '.';
-import ResourceMixin from './Resource';
+import { ResourceMixin } from './Resource';
 
 export interface Collection extends Hydra.Resource, RdfResource {
   manages: Array<RDF.Term>;
@@ -11,12 +11,12 @@ export interface Collection extends Hydra.Resource, RdfResource {
   totalItems: number;
 }
 
-export default function CollectionMixin<Base extends Constructor>(Resource: Base) {
+export function CollectionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class CollectionClass extends ResourceMixin(Resource) implements Collection {
     @property({ values: 'array' })
     manages!: Array<RDF.Term>;
-    @property.resource({ values: 'array', as: [ResourceMixin] })
+    @property.resource({ values: 'array', implicitTypes: [hydra.Resource] })
     member!: Array<Hydra.Resource>;
     @property.literal({ type: Number })
     totalItems!: number;

@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import OrganizationRoleMixin from './OrganizationRole';
+import { OrganizationRoleMixin } from './OrganizationRole';
 
 export interface EmployeeRole extends Schema.OrganizationRole, RdfResource {
   baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification;
@@ -11,7 +11,7 @@ export interface EmployeeRole extends Schema.OrganizationRole, RdfResource {
   salaryCurrency: string;
 }
 
-export default function EmployeeRoleMixin<Base extends Constructor>(Resource: Base) {
+export function EmployeeRoleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class EmployeeRoleClass extends OrganizationRoleMixin(Resource) implements EmployeeRole {
     @property.resource()

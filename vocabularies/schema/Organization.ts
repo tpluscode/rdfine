@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ThingMixin from './Thing';
+import { ThingMixin } from './Thing';
 
 export interface Organization extends Schema.Thing, RdfResource {
   address: Schema.PostalAddress;
@@ -62,7 +62,7 @@ export interface Organization extends Schema.Thing, RdfResource {
   vatID: string;
 }
 
-export default function OrganizationMixin<Base extends Constructor>(Resource: Base) {
+export function OrganizationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OrganizationClass extends ThingMixin(Resource) implements Organization {
     @property.resource()

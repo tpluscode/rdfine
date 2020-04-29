@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface MediaSubscription extends Schema.Intangible, RdfResource {
   authenticator: Schema.Organization;
   expectsAcceptanceOf: Schema.Offer;
 }
 
-export default function MediaSubscriptionMixin<Base extends Constructor>(Resource: Base) {
+export function MediaSubscriptionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MediaSubscriptionClass extends IntangibleMixin(Resource) implements MediaSubscription {
     @property.resource()

@@ -4,9 +4,8 @@ import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '.';
 import type * as Rdf from '@rdfine/rdf';
-import RdfPropertyMixin from '@rdfine/rdf/Property';
-import ResourceMixin from './Resource';
-import OperationMixin from './Operation';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
+import { ResourceMixin } from './Resource';
 
 export interface TemplatedLink extends Rdf.Property, Hydra.Resource, RdfResource {
   description: string;
@@ -14,12 +13,12 @@ export interface TemplatedLink extends Rdf.Property, Hydra.Resource, RdfResource
   title: string;
 }
 
-export default function TemplatedLinkMixin<Base extends Constructor>(Resource: Base) {
+export function TemplatedLinkMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class TemplatedLinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements TemplatedLink {
     @property.literal()
     description!: string;
-    @property.resource({ values: 'array', as: [OperationMixin] })
+    @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
     supportedOperation!: Array<Hydra.Operation>;
     @property.literal()
     title!: string;

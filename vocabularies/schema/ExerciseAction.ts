@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import PlayActionMixin from './PlayAction';
+import { PlayActionMixin } from './PlayAction';
 
 export interface ExerciseAction extends Schema.PlayAction, RdfResource {
   course: Schema.Place;
@@ -17,7 +17,7 @@ export interface ExerciseAction extends Schema.PlayAction, RdfResource {
   toLocation: Schema.Place;
 }
 
-export default function ExerciseActionMixin<Base extends Constructor>(Resource: Base) {
+export function ExerciseActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ExerciseActionClass extends PlayActionMixin(Resource) implements ExerciseAction {
     @property.resource()

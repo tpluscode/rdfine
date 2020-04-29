@@ -7,7 +7,7 @@ import type * as Rdf from '.';
 export interface Bag extends RdfResource {
 }
 
-export default function BagMixin<Base extends Constructor>(Resource: Base) {
+export function BagMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdf)
   class BagClass extends Resource implements Bag {
   }

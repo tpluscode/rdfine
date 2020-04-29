@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import TradeActionMixin from './TradeAction';
+import { TradeActionMixin } from './TradeAction';
 
 export interface BuyAction extends Schema.TradeAction, RdfResource {
   seller: Schema.Organization | Schema.Person;
@@ -11,7 +11,7 @@ export interface BuyAction extends Schema.TradeAction, RdfResource {
   warrantyPromise: Schema.WarrantyPromise;
 }
 
-export default function BuyActionMixin<Base extends Constructor>(Resource: Base) {
+export function BuyActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BuyActionClass extends TradeActionMixin(Resource) implements BuyAction {
     @property.resource()

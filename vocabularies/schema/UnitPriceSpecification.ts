@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import PriceSpecificationMixin from './PriceSpecification';
+import { PriceSpecificationMixin } from './PriceSpecification';
 
 export interface UnitPriceSpecification extends Schema.PriceSpecification, RdfResource {
   billingIncrement: number;
@@ -14,7 +14,7 @@ export interface UnitPriceSpecification extends Schema.PriceSpecification, RdfRe
   unitText: string;
 }
 
-export default function UnitPriceSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function UnitPriceSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class UnitPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements UnitPriceSpecification {
     @property.literal({ type: Number })

@@ -3,12 +3,6 @@ import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '.';
-import DatatypeMixin from './Datatype';
-import DialectMixin from './Dialect';
-import TableMixin from './Table';
-import DirectionMixin from './Direction';
-import SchemaMixin from './Schema';
-import TransformationMixin from './Transformation';
 
 export interface TableGroup extends RdfResource {
   aboutUrl: string;
@@ -31,18 +25,18 @@ export interface TableGroup extends RdfResource {
   valueUrl: string;
 }
 
-export default function TableGroupMixin<Base extends Constructor>(Resource: Base) {
+export function TableGroupMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class TableGroupClass extends Resource implements TableGroup {
     @property.literal()
     aboutUrl!: string;
-    @property.resource({ as: [DatatypeMixin] })
+    @property.resource({ implicitTypes: [csvw.Datatype] })
     datatype!: Csvw.Datatype;
     @property.literal({ path: csvw.datatype })
     datatypeLiteral!: string;
     @property.literal()
     default!: string;
-    @property.resource({ as: [DialectMixin] })
+    @property.resource({ implicitTypes: [csvw.Dialect] })
     dialect!: Csvw.Dialect;
     @property.literal()
     lang!: string;
@@ -58,15 +52,15 @@ export default function TableGroupMixin<Base extends Constructor>(Resource: Base
     required!: boolean;
     @property.literal()
     separator!: string;
-    @property.resource({ as: [TableMixin] })
+    @property.resource({ implicitTypes: [csvw.Table] })
     table!: Csvw.Table;
-    @property.resource({ as: [DirectionMixin] })
+    @property.resource({ implicitTypes: [csvw.Direction] })
     tableDirection!: Csvw.Direction;
-    @property.resource({ as: [SchemaMixin] })
+    @property.resource({ implicitTypes: [csvw.Schema] })
     tableSchema!: Csvw.Schema;
-    @property.resource({ as: [DirectionMixin] })
+    @property.resource({ implicitTypes: [csvw.Direction] })
     textDirection!: Csvw.Direction;
-    @property.resource({ values: 'array', as: [TransformationMixin] })
+    @property.resource({ values: 'array', implicitTypes: [csvw.Transformation] })
     transformations!: Array<Csvw.Transformation>;
     @property.literal()
     valueUrl!: string;

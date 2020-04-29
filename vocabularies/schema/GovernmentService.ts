@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ServiceMixin from './Service';
+import { ServiceMixin } from './Service';
 
 export interface GovernmentService extends Schema.Service, RdfResource {
   serviceOperator: Schema.Organization;
 }
 
-export default function GovernmentServiceMixin<Base extends Constructor>(Resource: Base) {
+export function GovernmentServiceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GovernmentServiceClass extends ServiceMixin(Resource) implements GovernmentService {
     @property.resource()

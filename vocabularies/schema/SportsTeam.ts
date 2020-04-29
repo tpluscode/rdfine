@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import SportsOrganizationMixin from './SportsOrganization';
+import { SportsOrganizationMixin } from './SportsOrganization';
 
 export interface SportsTeam extends Schema.SportsOrganization, RdfResource {
   athlete: Schema.Person;
   coach: Schema.Person;
 }
 
-export default function SportsTeamMixin<Base extends Constructor>(Resource: Base) {
+export function SportsTeamMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SportsTeamClass extends SportsOrganizationMixin(Resource) implements SportsTeam {
     @property.resource()

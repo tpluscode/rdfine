@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '.';
-import ObjectPropertyMixin from './ObjectProperty';
+import { ObjectPropertyMixin } from './ObjectProperty';
 
 export interface TransitiveProperty extends Owl.ObjectProperty, RdfResource {
 }
 
-export default function TransitivePropertyMixin<Base extends Constructor>(Resource: Base) {
+export function TransitivePropertyMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class TransitivePropertyClass extends ObjectPropertyMixin(Resource) implements TransitiveProperty {
   }

@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface Permit extends Schema.Intangible, RdfResource {
   issuedBy: Schema.Organization;
@@ -15,7 +15,7 @@ export interface Permit extends Schema.Intangible, RdfResource {
   validUntil: Date;
 }
 
-export default function PermitMixin<Base extends Constructor>(Resource: Base) {
+export function PermitMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PermitClass extends IntangibleMixin(Resource) implements Permit {
     @property.resource()

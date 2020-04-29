@@ -20,7 +20,7 @@ export interface Dialect extends RdfResource {
   trim: boolean;
 }
 
-export default function DialectMixin<Base extends Constructor>(Resource: Base) {
+export function DialectMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class DialectClass extends Resource implements Dialect {
     @property.literal()

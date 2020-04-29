@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import OrganizationMixin from './Organization';
+import { OrganizationMixin } from './Organization';
 
 export interface WorkersUnion extends Schema.Organization, RdfResource {
 }
 
-export default function WorkersUnionMixin<Base extends Constructor>(Resource: Base) {
+export function WorkersUnionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WorkersUnionClass extends OrganizationMixin(Resource) implements WorkersUnion {
   }

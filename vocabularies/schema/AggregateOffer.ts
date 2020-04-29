@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import OfferMixin from './Offer';
+import { OfferMixin } from './Offer';
 
 export interface AggregateOffer extends Schema.Offer, RdfResource {
   highPrice: number | string;
@@ -12,7 +12,7 @@ export interface AggregateOffer extends Schema.Offer, RdfResource {
   offers: Schema.Demand | Schema.Offer;
 }
 
-export default function AggregateOfferMixin<Base extends Constructor>(Resource: Base) {
+export function AggregateOfferMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AggregateOfferClass extends OfferMixin(Resource) implements AggregateOffer {
     @property.literal()

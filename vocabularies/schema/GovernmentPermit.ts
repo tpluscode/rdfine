@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import PermitMixin from './Permit';
+import { PermitMixin } from './Permit';
 
 export interface GovernmentPermit extends Schema.Permit, RdfResource {
 }
 
-export default function GovernmentPermitMixin<Base extends Constructor>(Resource: Base) {
+export function GovernmentPermitMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GovernmentPermitClass extends PermitMixin(Resource) implements GovernmentPermit {
   }

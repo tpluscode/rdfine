@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface BedDetails extends Schema.Intangible, RdfResource {
   numberOfBeds: number;
@@ -11,7 +11,7 @@ export interface BedDetails extends Schema.Intangible, RdfResource {
   typeOfBedTerm: Schema.BedType;
 }
 
-export default function BedDetailsMixin<Base extends Constructor>(Resource: Base) {
+export function BedDetailsMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BedDetailsClass extends IntangibleMixin(Resource) implements BedDetails {
     @property.literal({ type: Number })

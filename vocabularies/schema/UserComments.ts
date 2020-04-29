@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import UserInteractionMixin from './UserInteraction';
+import { UserInteractionMixin } from './UserInteraction';
 
 export interface UserComments extends Schema.UserInteraction, RdfResource {
   commentText: string;
@@ -13,7 +13,7 @@ export interface UserComments extends Schema.UserInteraction, RdfResource {
   replyToUrl: RDF.NamedNode;
 }
 
-export default function UserCommentsMixin<Base extends Constructor>(Resource: Base) {
+export function UserCommentsMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class UserCommentsClass extends UserInteractionMixin(Resource) implements UserComments {
     @property.literal()

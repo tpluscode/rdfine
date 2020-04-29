@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface MusicPlaylist extends Schema.CreativeWork, RdfResource {
   numTracks: number;
@@ -11,7 +11,7 @@ export interface MusicPlaylist extends Schema.CreativeWork, RdfResource {
   tracks: Schema.MusicRecording;
 }
 
-export default function MusicPlaylistMixin<Base extends Constructor>(Resource: Base) {
+export function MusicPlaylistMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MusicPlaylistClass extends CreativeWorkMixin(Resource) implements MusicPlaylist {
     @property.literal({ type: Number })

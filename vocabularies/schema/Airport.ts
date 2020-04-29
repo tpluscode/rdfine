@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CivicStructureMixin from './CivicStructure';
+import { CivicStructureMixin } from './CivicStructure';
 
 export interface Airport extends Schema.CivicStructure, RdfResource {
   iataCode: string;
   icaoCode: string;
 }
 
-export default function AirportMixin<Base extends Constructor>(Resource: Base) {
+export function AirportMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AirportClass extends CivicStructureMixin(Resource) implements Airport {
     @property.literal()

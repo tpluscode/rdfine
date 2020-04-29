@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import UserInteractionMixin from './UserInteraction';
+import { UserInteractionMixin } from './UserInteraction';
 
 export interface UserCheckins extends Schema.UserInteraction, RdfResource {
 }
 
-export default function UserCheckinsMixin<Base extends Constructor>(Resource: Base) {
+export function UserCheckinsMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class UserCheckinsClass extends UserInteractionMixin(Resource) implements UserCheckins {
   }

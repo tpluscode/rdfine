@@ -5,14 +5,9 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import type * as Rdf from '@rdfine/rdf';
-import RdfsResourceMixin from '@rdfine/rdfs/Resource';
-import PropertyShapeMixin from './PropertyShape';
-import RuleMixin from './Rule';
-import SeverityMixin from './Severity';
-import SPARQLConstraintMixin from './SPARQLConstraint';
-import TargetMixin from './Target';
-import RdfsClassMixin from '@rdfine/rdfs/Class';
-import RdfPropertyMixin from '@rdfine/rdf/Property';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/Class';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
 
 export interface Shape extends Rdfs.Resource, RdfResource {
   property: Array<Sh.PropertyShape>;
@@ -26,18 +21,18 @@ export interface Shape extends Rdfs.Resource, RdfResource {
   targetSubjectsOf: Rdf.Property;
 }
 
-export default function ShapeMixin<Base extends Constructor>(Resource: Base) {
+export function ShapeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class ShapeClass extends RdfsResourceMixin(Resource) implements Shape {
-    @property.resource({ values: 'array', as: [PropertyShapeMixin] })
+    @property.resource({ values: 'array', implicitTypes: [sh.PropertyShape] })
     property!: Array<Sh.PropertyShape>;
-    @property.resource({ as: [RuleMixin] })
+    @property.resource({ implicitTypes: [sh.Rule] })
     rule!: Sh.Rule;
-    @property.resource({ as: [SeverityMixin] })
+    @property.resource({ implicitTypes: [sh.Severity] })
     severity!: Sh.Severity;
-    @property.resource({ as: [SPARQLConstraintMixin] })
+    @property.resource({ implicitTypes: [sh.SPARQLConstraint] })
     sparql!: Sh.SPARQLConstraint;
-    @property.resource({ as: [TargetMixin] })
+    @property.resource({ implicitTypes: [sh.Target] })
     target!: Sh.Target;
     @property.resource({ as: [RdfsClassMixin] })
     targetClass!: Rdfs.Class;

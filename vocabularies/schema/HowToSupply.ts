@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import HowToItemMixin from './HowToItem';
+import { HowToItemMixin } from './HowToItem';
 
 export interface HowToSupply extends Schema.HowToItem, RdfResource {
   estimatedCost: Schema.MonetaryAmount;
   estimatedCostLiteral: string;
 }
 
-export default function HowToSupplyMixin<Base extends Constructor>(Resource: Base) {
+export function HowToSupplyMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class HowToSupplyClass extends HowToItemMixin(Resource) implements HowToSupply {
     @property.resource()

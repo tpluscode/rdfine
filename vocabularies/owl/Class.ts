@@ -5,8 +5,8 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import type * as Rdf from '@rdfine/rdf';
-import RdfsClassMixin from '@rdfine/rdfs/Class';
-import RdfListMixin from '@rdfine/rdf/List';
+import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/Class';
+import { ListMixin as RdfListMixin } from '@rdfine/rdf/List';
 
 export interface Class extends Rdfs.Class, RdfResource {
   complementOf: Owl.Class;
@@ -15,7 +15,7 @@ export interface Class extends Rdfs.Class, RdfResource {
   hasKey: Rdf.List;
 }
 
-export default function ClassMixin<Base extends Constructor>(Resource: Base) {
+export function ClassMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class ClassClass extends RdfsClassMixin(Resource) implements Class {
     @property.resource({ as: [ClassMixin] })

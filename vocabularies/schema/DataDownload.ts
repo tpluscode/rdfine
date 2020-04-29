@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import MediaObjectMixin from './MediaObject';
+import { MediaObjectMixin } from './MediaObject';
 
 export interface DataDownload extends Schema.MediaObject, RdfResource {
 }
 
-export default function DataDownloadMixin<Base extends Constructor>(Resource: Base) {
+export function DataDownloadMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DataDownloadClass extends MediaObjectMixin(Resource) implements DataDownload {
   }

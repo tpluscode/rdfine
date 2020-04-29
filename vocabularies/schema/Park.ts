@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CivicStructureMixin from './CivicStructure';
+import { CivicStructureMixin } from './CivicStructure';
 
 export interface Park extends Schema.CivicStructure, RdfResource {
 }
 
-export default function ParkMixin<Base extends Constructor>(Resource: Base) {
+export function ParkMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ParkClass extends CivicStructureMixin(Resource) implements Park {
   }

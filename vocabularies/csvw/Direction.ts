@@ -7,7 +7,7 @@ import type * as Csvw from '.';
 export interface Direction extends RdfResource {
 }
 
-export default function DirectionMixin<Base extends Constructor>(Resource: Base) {
+export function DirectionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class DirectionClass extends Resource implements Direction {
   }

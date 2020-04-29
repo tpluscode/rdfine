@@ -1,4 +1,4 @@
-import PersonMixin from '../Person';
+import { PersonMixin } from '../index';
 import RdfResource from '@tpluscode/rdfine';
 
 class Person extends PersonMixin(RdfResource) {}

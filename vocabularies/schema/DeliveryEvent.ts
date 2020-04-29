@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import EventMixin from './Event';
+import { EventMixin } from './Event';
 
 export interface DeliveryEvent extends Schema.Event, RdfResource {
   accessCode: string;
@@ -12,7 +12,7 @@ export interface DeliveryEvent extends Schema.Event, RdfResource {
   hasDeliveryMethod: Schema.DeliveryMethod;
 }
 
-export default function DeliveryEventMixin<Base extends Constructor>(Resource: Base) {
+export function DeliveryEventMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DeliveryEventClass extends EventMixin(Resource) implements DeliveryEvent {
     @property.literal()

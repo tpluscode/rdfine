@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ServiceMixin from './Service';
+import { ServiceMixin } from './Service';
 
 export interface FinancialProduct extends Schema.Service, RdfResource {
   annualPercentageRate: Schema.QuantitativeValue;
@@ -14,7 +14,7 @@ export interface FinancialProduct extends Schema.Service, RdfResource {
   interestRateLiteral: number;
 }
 
-export default function FinancialProductMixin<Base extends Constructor>(Resource: Base) {
+export function FinancialProductMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class FinancialProductClass extends ServiceMixin(Resource) implements FinancialProduct {
     @property.resource()

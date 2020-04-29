@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import InteractActionMixin from './InteractAction';
+import { InteractActionMixin } from './InteractAction';
 
 export interface BefriendAction extends Schema.InteractAction, RdfResource {
 }
 
-export default function BefriendActionMixin<Base extends Constructor>(Resource: Base) {
+export function BefriendActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BefriendActionClass extends InteractActionMixin(Resource) implements BefriendAction {
   }

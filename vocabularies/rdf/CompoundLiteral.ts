@@ -9,7 +9,7 @@ export interface CompoundLiteral extends RdfResource {
   language: RDF.Term;
 }
 
-export default function CompoundLiteralMixin<Base extends Constructor>(Resource: Base) {
+export function CompoundLiteralMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdf)
   class CompoundLiteralClass extends Resource implements CompoundLiteral {
     @property()

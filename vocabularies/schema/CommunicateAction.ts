@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import InteractActionMixin from './InteractAction';
+import { InteractActionMixin } from './InteractAction';
 
 export interface CommunicateAction extends Schema.InteractAction, RdfResource {
   about: Schema.Thing;
@@ -13,7 +13,7 @@ export interface CommunicateAction extends Schema.InteractAction, RdfResource {
   recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
 }
 
-export default function CommunicateActionMixin<Base extends Constructor>(Resource: Base) {
+export function CommunicateActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CommunicateActionClass extends InteractActionMixin(Resource) implements CommunicateAction {
     @property.resource()

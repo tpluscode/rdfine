@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '.';
-import ResourceMixin from './Resource';
+import { ResourceMixin } from './Resource';
 
 export interface VariableRepresentation extends Hydra.Resource, RdfResource {
 }
 
-export default function VariableRepresentationMixin<Base extends Constructor>(Resource: Base) {
+export function VariableRepresentationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class VariableRepresentationClass extends ResourceMixin(Resource) implements VariableRepresentation {
   }

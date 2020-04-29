@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface BroadcastChannel extends Schema.Intangible, RdfResource {
   broadcastChannelId: string;
@@ -16,7 +16,7 @@ export interface BroadcastChannel extends Schema.Intangible, RdfResource {
   providesBroadcastService: Schema.BroadcastService;
 }
 
-export default function BroadcastChannelMixin<Base extends Constructor>(Resource: Base) {
+export function BroadcastChannelMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BroadcastChannelClass extends IntangibleMixin(Resource) implements BroadcastChannel {
     @property.literal()

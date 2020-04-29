@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '.';
-import StatusMixin from './Status';
+import { StatusMixin } from './Status';
 
 export interface Error extends Hydra.Status, RdfResource {
 }
 
-export default function ErrorMixin<Base extends Constructor>(Resource: Base) {
+export function ErrorMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class ErrorClass extends StatusMixin(Resource) implements Error {
   }

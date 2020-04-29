@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import MusicPlaylistMixin from './MusicPlaylist';
+import { MusicPlaylistMixin } from './MusicPlaylist';
 
 export interface MusicRelease extends Schema.MusicPlaylist, RdfResource {
   catalogNumber: string;
@@ -14,7 +14,7 @@ export interface MusicRelease extends Schema.MusicPlaylist, RdfResource {
   releaseOf: Schema.MusicAlbum;
 }
 
-export default function MusicReleaseMixin<Base extends Constructor>(Resource: Base) {
+export function MusicReleaseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MusicReleaseClass extends MusicPlaylistMixin(Resource) implements MusicRelease {
     @property.literal()

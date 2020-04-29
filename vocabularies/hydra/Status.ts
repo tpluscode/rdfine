@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '.';
-import ResourceMixin from './Resource';
+import { ResourceMixin } from './Resource';
 
 export interface Status extends Hydra.Resource, RdfResource {
   description: string;
@@ -11,7 +11,7 @@ export interface Status extends Hydra.Resource, RdfResource {
   title: string;
 }
 
-export default function StatusMixin<Base extends Constructor>(Resource: Base) {
+export function StatusMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class StatusClass extends ResourceMixin(Resource) implements Status {
     @property.literal()

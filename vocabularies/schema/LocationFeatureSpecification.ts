@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import PropertyValueMixin from './PropertyValue';
+import { PropertyValueMixin } from './PropertyValue';
 
 export interface LocationFeatureSpecification extends Schema.PropertyValue, RdfResource {
   hoursAvailable: Schema.OpeningHoursSpecification;
@@ -11,7 +11,7 @@ export interface LocationFeatureSpecification extends Schema.PropertyValue, RdfR
   validThrough: Date;
 }
 
-export default function LocationFeatureSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function LocationFeatureSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LocationFeatureSpecificationClass extends PropertyValueMixin(Resource) implements LocationFeatureSpecification {
     @property.resource()

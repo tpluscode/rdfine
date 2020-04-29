@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import StructuredValueMixin from './StructuredValue';
+import { StructuredValueMixin } from './StructuredValue';
 
 export interface NutritionInformation extends Schema.StructuredValue, RdfResource {
   calories: Schema.Energy;
@@ -20,7 +20,7 @@ export interface NutritionInformation extends Schema.StructuredValue, RdfResourc
   unsaturatedFatContent: Schema.Mass;
 }
 
-export default function NutritionInformationMixin<Base extends Constructor>(Resource: Base) {
+export function NutritionInformationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class NutritionInformationClass extends StructuredValueMixin(Resource) implements NutritionInformation {
     @property.resource()

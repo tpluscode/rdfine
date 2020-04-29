@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import UseActionMixin from './UseAction';
+import { UseActionMixin } from './UseAction';
 
 export interface WearAction extends Schema.UseAction, RdfResource {
 }
 
-export default function WearActionMixin<Base extends Constructor>(Resource: Base) {
+export function WearActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WearActionClass extends UseActionMixin(Resource) implements WearAction {
   }

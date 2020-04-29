@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface Reservation extends Schema.Intangible, RdfResource {
   bookingAgent: Schema.Organization | Schema.Person;
@@ -22,7 +22,7 @@ export interface Reservation extends Schema.Intangible, RdfResource {
   underName: Schema.Organization | Schema.Person;
 }
 
-export default function ReservationMixin<Base extends Constructor>(Resource: Base) {
+export function ReservationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ReservationClass extends IntangibleMixin(Resource) implements Reservation {
     @property.resource()

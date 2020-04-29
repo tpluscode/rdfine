@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import UpdateActionMixin from './UpdateAction';
+import { UpdateActionMixin } from './UpdateAction';
 
 export interface ReplaceAction extends Schema.UpdateAction, RdfResource {
   replacee: Schema.Thing;
   replacer: Schema.Thing;
 }
 
-export default function ReplaceActionMixin<Base extends Constructor>(Resource: Base) {
+export function ReplaceActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ReplaceActionClass extends UpdateActionMixin(Resource) implements ReplaceAction {
     @property.resource()

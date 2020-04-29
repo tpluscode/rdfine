@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CivicStructureMixin from './CivicStructure';
-import EntertainmentBusinessMixin from './EntertainmentBusiness';
+import { CivicStructureMixin } from './CivicStructure';
+import { EntertainmentBusinessMixin } from './EntertainmentBusiness';
 
 export interface MovieTheater extends Schema.CivicStructure, Schema.EntertainmentBusiness, RdfResource {
   screenCount: number;
 }
 
-export default function MovieTheaterMixin<Base extends Constructor>(Resource: Base) {
+export function MovieTheaterMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MovieTheaterClass extends EntertainmentBusinessMixin(CivicStructureMixin(Resource)) implements MovieTheater {
     @property.literal({ type: Number })

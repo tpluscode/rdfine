@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ChooseActionMixin from './ChooseAction';
+import { ChooseActionMixin } from './ChooseAction';
 
 export interface VoteAction extends Schema.ChooseAction, RdfResource {
   candidate: Schema.Person;
 }
 
-export default function VoteActionMixin<Base extends Constructor>(Resource: Base) {
+export function VoteActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class VoteActionClass extends ChooseActionMixin(Resource) implements VoteAction {
     @property.resource()

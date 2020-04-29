@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import EpisodeMixin from './Episode';
+import { EpisodeMixin } from './Episode';
 
 export interface TVEpisode extends Schema.Episode, RdfResource {
   countryOfOrigin: Schema.Country;
   partOfTVSeries: Schema.TVSeries;
 }
 
-export default function TVEpisodeMixin<Base extends Constructor>(Resource: Base) {
+export function TVEpisodeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TVEpisodeClass extends EpisodeMixin(Resource) implements TVEpisode {
     @property.resource()

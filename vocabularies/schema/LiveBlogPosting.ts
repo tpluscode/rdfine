@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import BlogPostingMixin from './BlogPosting';
+import { BlogPostingMixin } from './BlogPosting';
 
 export interface LiveBlogPosting extends Schema.BlogPosting, RdfResource {
   coverageEndTime: Date;
@@ -11,7 +11,7 @@ export interface LiveBlogPosting extends Schema.BlogPosting, RdfResource {
   liveBlogUpdate: Schema.BlogPosting;
 }
 
-export default function LiveBlogPostingMixin<Base extends Constructor>(Resource: Base) {
+export function LiveBlogPostingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LiveBlogPostingClass extends BlogPostingMixin(Resource) implements LiveBlogPosting {
     @property.literal()

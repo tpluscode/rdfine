@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Game extends Schema.CreativeWork, RdfResource {
   characterAttribute: Schema.Thing;
@@ -13,7 +13,7 @@ export interface Game extends Schema.CreativeWork, RdfResource {
   quest: Schema.Thing;
 }
 
-export default function GameMixin<Base extends Constructor>(Resource: Base) {
+export function GameMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GameClass extends CreativeWorkMixin(Resource) implements Game {
     @property.resource()

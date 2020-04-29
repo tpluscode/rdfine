@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import InteractActionMixin from './InteractAction';
+import { InteractActionMixin } from './InteractAction';
 
 export interface LeaveAction extends Schema.InteractAction, RdfResource {
   event: Schema.Event;
 }
 
-export default function LeaveActionMixin<Base extends Constructor>(Resource: Base) {
+export function LeaveActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LeaveActionClass extends InteractActionMixin(Resource) implements LeaveAction {
     @property.resource()

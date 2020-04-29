@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CommentMixin from './Comment';
+import { CommentMixin } from './Comment';
 
 export interface Answer extends Schema.Comment, RdfResource {
 }
 
-export default function AnswerMixin<Base extends Constructor>(Resource: Base) {
+export function AnswerMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AnswerClass extends CommentMixin(Resource) implements Answer {
   }

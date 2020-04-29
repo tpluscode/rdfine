@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ChurchMixin from './Church';
+import { ChurchMixin } from './Church';
 
 export interface CatholicChurch extends Schema.Church, RdfResource {
 }
 
-export default function CatholicChurchMixin<Base extends Constructor>(Resource: Base) {
+export function CatholicChurchMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CatholicChurchClass extends ChurchMixin(Resource) implements CatholicChurch {
   }

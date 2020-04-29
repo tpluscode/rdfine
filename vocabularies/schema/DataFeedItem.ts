@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface DataFeedItem extends Schema.Intangible, RdfResource {
   dateCreated: Date;
@@ -12,7 +12,7 @@ export interface DataFeedItem extends Schema.Intangible, RdfResource {
   item: Schema.Thing;
 }
 
-export default function DataFeedItemMixin<Base extends Constructor>(Resource: Base) {
+export function DataFeedItemMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DataFeedItemClass extends IntangibleMixin(Resource) implements DataFeedItem {
     @property.literal()

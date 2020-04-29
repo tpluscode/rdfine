@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ThingMixin from './Thing';
+import { ThingMixin } from './Thing';
 
 export interface Event extends Schema.Thing, RdfResource {
   about: Schema.Thing;
@@ -45,7 +45,7 @@ export interface Event extends Schema.Thing, RdfResource {
   workPerformed: Schema.CreativeWork;
 }
 
-export default function EventMixin<Base extends Constructor>(Resource: Base) {
+export function EventMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class EventClass extends ThingMixin(Resource) implements Event {
     @property.resource()

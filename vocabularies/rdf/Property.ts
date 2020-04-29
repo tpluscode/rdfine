@@ -7,7 +7,7 @@ import type * as Rdf from '.';
 export interface Property extends RdfResource {
 }
 
-export default function PropertyMixin<Base extends Constructor>(Resource: Base) {
+export function PropertyMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdf)
   class PropertyClass extends Resource implements Property {
   }
