@@ -14,7 +14,7 @@ export interface Class extends RdfResource {
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
-        @property.resource({ as: [Class] })
+        @property.resource({ as: [ClassMixin] })
         foo!: Example.Class;
     }
     return ClassClass
@@ -33,6 +33,7 @@ ClassMixin.Class = ClassImpl
 
 exports[`MixinModule generates a dependencies module with property mixin types but skipping external mixins: toMatchSnapshot 1`] = `
 "import { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
+import { ClassMixin } from \\"../Class\\";
 import { FriendMixin } from \\"../Friend\\";
 
 export const ClassDependencies = [
@@ -44,10 +45,11 @@ export const ClassDependencies = [
 exports[`MixinModule generates a dependencies module with super classes but without externals: toMatchSnapshot 1`] = `
 "import { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import { SuperMixin } from \\"../Example\\";
+import { ClassMixin } from \\"../Class\\";
 
 export const ClassDependencies = [
-    ClassMixin as Mixin,
-    SuperMixin as Mixin];
+    SuperMixin as Mixin,
+    ClassMixin as Mixin];
 "
 `;
 
