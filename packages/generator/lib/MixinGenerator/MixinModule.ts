@@ -80,7 +80,7 @@ export class MixinModule implements GeneratedModule {
   }
 
   private generateDependenciesModule(depsModule: SourceFile, types: TypeMetaCollection) {
-    const exports: string[] = [`${this.type.mixinName} as Mixin`]
+    const exports: string[] = []
     const imported: Map<string, ResourceType | ExternalResourceType> = new Map()
 
     depsModule.addImportDeclaration({
@@ -97,7 +97,7 @@ export class MixinModule implements GeneratedModule {
 
           return toImport
         }, toImport)
-    }, [...this.mixinImports])
+    }, [...this.mixinImports, this.type])
 
     while (toImport.length) {
       const next = toImport.splice(0, 1)[0]
