@@ -1,5 +1,5 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import { ArrayLiteralExpression, Project } from 'ts-morph'
+import { Project } from 'ts-morph'
 import { generateNamespace } from './namespace'
 import { Context, GeneratedModule, ModuleStrategy } from './index'
 import { TypeMetaCollection } from './types'
@@ -10,15 +10,6 @@ export async function generate(project: Project, types: TypeMetaCollection, stra
   log.debug('Generating vocabulary <%s>', prefixes[prefix])
   generateNamespace({ project }, context)
   const indexModule = project.createSourceFile('index.ts', {}, { overwrite: true })
-
-  indexModule.addImportDeclaration({
-    namedImports: ['Mixin'],
-    moduleSpecifier: '@tpluscode/rdfine/lib/ResourceFactory',
-  })
-  const defaultExport = indexModule.addExportAssignment({
-    expression: '[]',
-    isExportEquals: false,
-  }).getExpression() as ArrayLiteralExpression
 
   const writers = strategies.reduce((moduleWriters, findTermsToGenerate) => {
     return findTermsToGenerate(types, context)
@@ -50,19 +41,9 @@ export async function generate(project: Project, types: TypeMetaCollection, stra
 
           const result = moduleWriter.writeModule(sourceFile, types, context)
           if (result.mainModuleExport) {
-            const namedExports = [result.mainModuleExport]
             indexModule.addExportDeclaration({
-              namedExports,
               moduleSpecifier,
-            })
-          }
-
-          if (moduleWriter.type.type === 'Resource') {
-            indexModule.addImportDeclaration({
-              defaultImport: moduleWriter.type.mixinName,
-              moduleSpecifier,
-            })
-            defaultExport.addElement(`${moduleWriter.type.mixinName} as Mixin`, { useNewLines: true })
+            }).toNamespaceExport()
           }
         } catch (e) {
           context.log.error('Failed to generate type %s\n%s', moduleWriter.node.value, e.message)

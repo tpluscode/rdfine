@@ -117,9 +117,15 @@ export class MixinModule implements GeneratedModule {
     this.mixinImports.forEach(superClass => {
       if (!superClass.module || superClass.module === this.type.module) return
 
+      const namedImports: string[] = []
+      if (superClass.type === 'ExternalResource') {
+        namedImports.push(`${superClass.mixinName} as ${superClass.alias}`)
+      } else {
+        namedImports.push(superClass.mixinName)
+      }
       mixinFile.addImportDeclaration({
         moduleSpecifier: superClass.module,
-        defaultImport: superClass.mixinName,
+        namedImports,
       })
     })
   }
@@ -135,12 +141,14 @@ export class MixinModule implements GeneratedModule {
         name: 'Resource',
         type: 'Base',
       }],
-      isDefaultExport: true,
+      isExported: true,
     })
 
     const baseClass = this.superClasses
       .reduce((type, superClass) => {
-        return `${superClass.mixinName}(${type})`
+        const mixinName = superClass.type === 'ExternalResource' ? superClass.alias : superClass.mixinName
+
+        return `${mixinName}(${type})`
       },
       'Resource')
 

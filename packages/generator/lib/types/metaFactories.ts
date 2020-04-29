@@ -18,7 +18,8 @@ export function resourceTypes(term: SingleContextClownface, context: Pick<Contex
   if (prefix !== context.prefix) {
     return {
       type: 'ExternalResource',
-      mixinName: `${toUpperInitial(prefix)}${localName}Mixin`,
+      mixinName: `${localName}Mixin`,
+      alias: `${toUpperInitial(prefix)}${localName}Mixin`,
       module: `@rdfine/${prefix}/${localName}`,
       package: `@rdfine/${prefix}`,
       qualifiedName: toUpperInitial(`${prefix}.${localName}`),
