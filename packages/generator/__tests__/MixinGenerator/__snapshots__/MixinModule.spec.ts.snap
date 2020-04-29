@@ -31,6 +31,26 @@ ClassMixin.Class = ClassImpl
 "
 `;
 
+exports[`MixinModule generates a dependencies module with property mixin types but skipping external mixins: toMatchSnapshot 1`] = `
+"import { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
+import { FriendMixin } from \\"../Friend\\";
+
+export const ClassDependencies = [
+    ClassMixin as Mixin,
+    FriendMixin as Mixin];
+"
+`;
+
+exports[`MixinModule generates a dependencies module with super classes but without externals: toMatchSnapshot 1`] = `
+"import { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
+import { SuperMixin } from \\"../Example\\";
+
+export const ClassDependencies = [
+    ClassMixin as Mixin,
+    SuperMixin as Mixin];
+"
+`;
+
 exports[`MixinModule generates a mixin class with external super classes: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
 import type * as RDF from \\"rdf-js\\";

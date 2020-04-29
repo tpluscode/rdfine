@@ -248,4 +248,84 @@ describe('MixinModule', () => {
     // then
     expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
+
+  it('generates a dependencies module with property mixin types but skipping external mixins', () => {
+    // given
+    const module = new MixinModule(vocabulary.node(ex.Class), {
+      type: 'Resource',
+      localName: 'Class',
+      qualifiedName: 'Example.Class',
+      module: './Class',
+      mixinName: 'ClassMixin',
+    }, [], [{
+      term: ex.foo,
+      name: 'foo',
+      type: 'resource' as const,
+      prefixedTerm: 'ex.foo',
+      semantics: 'loose' as const,
+      termName: 'foo',
+      range: [{
+        type: 'ExternalResource' as const,
+        mixinName: 'FooMixin',
+        module: '@rdfine/example/Foo',
+        qualifiedName: 'Example.Foo',
+        package: '@rdfine/example',
+        qualifier: 'Example',
+        alias: 'ExampleFooMixin',
+      }, {
+        type: 'Resource' as const,
+        localName: 'Friend',
+        module: './Friend',
+        qualifiedName: 'Example.Friend',
+        mixinName: 'FriendMixin',
+      }],
+    }])
+
+    // when
+    module.writeModule(project, new FakeTypeCollection(), {
+      prefix: 'ex',
+      defaultExport: 'Example',
+      log: fakeLog(),
+      vocabulary,
+    })
+
+    // then
+    expect(project.getSourceFile('dependencies/Class.ts')).toMatchSnapshot()
+  })
+
+  it('generates a dependencies module with super classes but without externals', () => {
+    // given
+    const module = new MixinModule(vocabulary.node(ex.Class), {
+      type: 'Resource',
+      localName: 'Class',
+      qualifiedName: 'Example.Class',
+      module: './Class',
+      mixinName: 'ClassMixin',
+    }, [{
+      type: 'Resource' as const,
+      mixinName: 'SuperMixin',
+      qualifiedName: 'Example.Super',
+      module: './Example',
+      localName: 'Super',
+    }, {
+      type: 'ExternalResource' as const,
+      mixinName: 'ExternMixin',
+      qualifiedName: 'Example.Extern',
+      module: 'Extern',
+      alias: 'FooExtern',
+      package: 'Extern',
+      qualifier: 'Foo',
+    }], [])
+
+    // when
+    module.writeModule(project, new FakeTypeCollection(), {
+      prefix: 'ex',
+      defaultExport: 'Example',
+      log: fakeLog(),
+      vocabulary,
+    })
+
+    // then
+    expect(project.getSourceFile('dependencies/Class.ts')).toMatchSnapshot()
+  })
 })
