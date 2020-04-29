@@ -10,6 +10,7 @@ type InitialValue = SingleContextClownface<ResourceIdentifier> | RdfResource
 
 interface ResourceOptions<R extends RdfResource> {
   as?: Mixin[] | [Constructor, ...Mixin[]]
+  implicitTypes?: NamedNode[]
   initial?: ObjectOrFactory<R, InitialValue | RdfResource, ResourceIdentifier>
 }
 
@@ -17,6 +18,10 @@ function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptio
   return propertyDecorator<R, RdfResource, ResourceIdentifier>({
     ...options,
     fromTerm(this: RdfResource, obj) {
+      if (options.implicitTypes) {
+        obj.addOut(rdf.type, options.implicitTypes)
+      }
+
       return this._create(obj, options.as, { parent: this })
     },
     toTerm(this: R, valueActual) {
