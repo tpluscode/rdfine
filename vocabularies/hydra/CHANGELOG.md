@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/tpluscode/rdfine/compare/@rdfine/hydra@0.1.11...@rdfine/hydra@0.2.0) (2020-04-29)
+
+
+### Features
+
+* **vocabs:** re-generated vocabularies to latest structure ([69b526e](https://github.com/tpluscode/rdfine/commit/69b526e69e7094ec7563f69525c60822ae1572b2))
+
+
+
+
+
 ## [0.1.11](https://github.com/tpluscode/rdfine/compare/@rdfine/hydra@0.1.10...@rdfine/hydra@0.1.11) (2020-04-29)
 
 **Note:** Version bump only for package @rdfine/hydra

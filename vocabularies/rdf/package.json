@@ -1,6 +1,6 @@
 {
 	"name": "@rdfine/rdf",
-	"version": "0.1.11",
+	"version": "0.2.0",
 	"main": "main.js",
 	"module": "index.js",
 	"types": "index.d.ts",
@@ -33,7 +33,7 @@
 		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
 		"@babel/preset-env": "^7.8.3",
 		"@babel/preset-typescript": "^7.8.3",
-		"@rdfine/generator": "^0.2.2",
+		"@rdfine/generator": "^0.2.3",
 		"@rdfjs/dataset": "^1.0.1",
 		"@types/clownface": "^0.12.13",
 		"@types/rdf-js": "^2.0.12",

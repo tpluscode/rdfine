@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/tpluscode/rdfine/compare/@rdfine/generator@0.2.2...@rdfine/generator@0.2.3) (2020-04-29)
+
+
+### Bug Fixes
+
+* **generator:** avoid duplicate mixin export in dependency modules ([30dcf20](https://github.com/tpluscode/rdfine/commit/30dcf20b903c5f853f47a87d0c9f78e60e0f3449))
+* **generator:** interface annotated on decorators instead of class ([c64ebdb](https://github.com/tpluscode/rdfine/commit/c64ebdb3694697d8aaedfd470c98a148dab21334))
+
+
+
+
+
 ## [0.2.2](https://github.com/tpluscode/rdfine/compare/@rdfine/generator@0.2.1...@rdfine/generator@0.2.2) (2020-04-29)
 
 
