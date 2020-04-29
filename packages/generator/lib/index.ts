@@ -4,7 +4,7 @@ import { Stream } from 'rdf-js'
 import rdf from 'rdf-ext'
 import nsBuilder from '@rdfjs/namespace'
 import { expand, prefixes } from '@zazuko/rdf-vocabularies'
-import { IndentationText, Project, QuoteKind, SourceFile } from 'ts-morph'
+import { IndentationText, Project, QuoteKind } from 'ts-morph'
 import FileSystem from './util/FileSystem'
 import * as generator from './generator'
 import * as EnumerationGenerator from './EnumerationGenerator'
@@ -37,7 +37,7 @@ export interface ModuleStrategy {
 export interface GeneratedModule {
   node: SingleContextClownface
   type: ResourceType | EnumerationType
-  writeModule(sourceFile: SourceFile, types: TypeMetaCollection, context: Context): {
+  writeModule(project: Project, types: TypeMetaCollection, context: Context): {
     mainModuleExport?: string
     mainModuleMixinExport?: string
   }

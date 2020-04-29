@@ -37,9 +37,8 @@ export async function generate(project: Project, types: TypeMetaCollection, stra
       return previous.then(async () => {
         try {
           const moduleSpecifier = moduleWriter.type.module
-          const sourceFile = project.createSourceFile(`${moduleWriter.type.module}.ts`, {}, { overwrite: true })
 
-          const result = moduleWriter.writeModule(sourceFile, types, context)
+          const result = moduleWriter.writeModule(project, types, context)
           if (result.mainModuleExport) {
             indexModule.addExportDeclaration({
               moduleSpecifier,

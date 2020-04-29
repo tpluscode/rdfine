@@ -1,9 +1,10 @@
-import { SourceFile } from 'ts-morph'
+import { Project, SourceFile, VariableDeclarationKind } from 'ts-morph'
 import { Context, GeneratedModule } from '../index'
 import { SingleContextClownface } from 'clownface'
 import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types'
 import { PropertyWriter } from '../property/PropertyWriter'
 import { JavascriptProperty } from '../property/JsProperties'
+import { getSuperClasses } from './index'
 
 export class MixinModule implements GeneratedModule {
   type: ResourceType
@@ -32,8 +33,11 @@ export class MixinModule implements GeneratedModule {
     }
   }
 
-  writeModule(mixinFile: SourceFile, types: TypeMetaCollection, context: Pick<Context, 'log' | 'prefix' | 'vocabulary' | 'defaultExport'>) {
+  writeModule(project: Project, types: TypeMetaCollection, context: Pick<Context, 'log' | 'prefix' | 'vocabulary' | 'defaultExport'>) {
     context.log.debug(`Generating mixin ${this.type.qualifiedName}`)
+
+    const mixinFile = project.createSourceFile(`${this.type.module}.ts`, {}, { overwrite: true })
+    const depsModule = project.createSourceFile(`dependencies/${this.type.module}.ts`, {}, { overwrite: true })
 
     const mixinName = this.type.mixinName
     const interfaceDeclaration = this.createInterface(mixinFile)
@@ -67,11 +71,65 @@ export class MixinModule implements GeneratedModule {
     ])
 
     this.addImports(mixinFile, context)
+    this.generateDependenciesModule(depsModule, types)
 
     return {
       mainModuleExport: this.type.localName,
       mainModuleMixinExport: mixinName,
     }
+  }
+
+  private generateDependenciesModule(depsModule: SourceFile, types: TypeMetaCollection) {
+    const exports: string[] = [`${this.type.mixinName} as Mixin`]
+    const imported: Map<string, ResourceType | ExternalResourceType> = new Map()
+
+    depsModule.addImportDeclaration({
+      namedImports: ['Mixin'],
+      moduleSpecifier: '@tpluscode/rdfine/lib/ResourceFactory',
+    })
+
+    const toImport = this.properties.reduce((toImport, prop) => {
+      return prop.range
+        .reduce((toImport, range) => {
+          if (range.type === 'Resource') {
+            toImport.push(range)
+          }
+
+          return toImport
+        }, toImport)
+    }, [...this.mixinImports])
+
+    while (toImport.length) {
+      const next = toImport.splice(0, 1)[0]
+      if (imported.has(next.mixinName)) continue
+
+      imported.set(next.mixinName, next)
+      getSuperClasses(this.node, types)
+        .filter(sc => sc.type === 'Resource')
+        .forEach(sc => toImport.push(sc))
+    }
+
+    imported
+      .forEach(mi => {
+        if (mi.type !== 'Resource') {
+          return
+        }
+
+        depsModule.addImportDeclaration({
+          namedImports: [`${mi.mixinName}`],
+          moduleSpecifier: `.${mi.module}`,
+        })
+        exports.push(`${mi.mixinName} as Mixin`)
+      })
+
+    depsModule.addVariableStatement({
+      isExported: true,
+      declarationKind: VariableDeclarationKind.Const,
+      declarations: [{
+        name: `${this.type.localName}Dependencies`,
+        initializer: `[\n${exports.join(',\n')}]`,
+      }],
+    })
   }
 
   private addImports(mixinFile: SourceFile, context: Omit<Context, 'properties'>) {
@@ -117,17 +175,22 @@ export class MixinModule implements GeneratedModule {
     this.mixinImports.forEach(superClass => {
       if (!superClass.module || superClass.module === this.type.module) return
 
-      const namedImports: string[] = []
       if (superClass.type === 'ExternalResource') {
-        namedImports.push(`${superClass.mixinName} as ${superClass.alias}`)
-      } else {
-        namedImports.push(superClass.mixinName)
+        mixinFile.addImportDeclaration({
+          moduleSpecifier: superClass.module,
+          namedImports: [`${superClass.mixinName} as ${superClass.alias}`],
+        })
       }
-      mixinFile.addImportDeclaration({
-        moduleSpecifier: superClass.module,
-        namedImports,
-      })
     })
+
+    this.superClasses
+      .filter(sc => sc.type === 'Resource')
+      .forEach(superClass => {
+        mixinFile.addImportDeclaration({
+          moduleSpecifier: superClass.module,
+          namedImports: [superClass.mixinName],
+        })
+      })
   }
 
   private createMixinFunction(mixinFile: SourceFile, context: Omit<Context, 'properties'>) {
