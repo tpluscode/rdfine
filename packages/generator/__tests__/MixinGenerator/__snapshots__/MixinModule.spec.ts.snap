@@ -11,10 +11,10 @@ export interface Class extends RdfResource {
     foo: Example.Class;
 }
 
-export default function ClassMixin<Base extends Constructor>(Resource: Base) {
+export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
-        @property.resource({ as: [ClassMixin] })
+        @property.resource({ as: [Class] })
         foo!: Example.Class;
     }
     return ClassClass
@@ -31,6 +31,26 @@ ClassMixin.Class = ClassImpl
 "
 `;
 
+exports[`MixinModule generates a dependencies module with property mixin types but skipping external mixins: toMatchSnapshot 1`] = `
+"import { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
+import { FriendMixin } from \\"../Friend\\";
+
+export const ClassDependencies = [
+    ClassMixin as Mixin,
+    FriendMixin as Mixin];
+"
+`;
+
+exports[`MixinModule generates a dependencies module with super classes but without externals: toMatchSnapshot 1`] = `
+"import { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
+import { SuperMixin } from \\"../Example\\";
+
+export const ClassDependencies = [
+    ClassMixin as Mixin,
+    SuperMixin as Mixin];
+"
+`;
+
 exports[`MixinModule generates a mixin class with external super classes: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
 import type * as RDF from \\"rdf-js\\";
@@ -38,14 +58,14 @@ import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
 import type * as Schema from \\"@rdfine/schema\\";
-import PersonMixin from \\"@rdfine/schema/Person\\";
+import { PersonMixin as SchemaPersonMixin } from \\"@rdfine/schema/Person\\";
 
 export interface Class extends Schema.Person, RdfResource {
 }
 
-export default function ClassMixin<Base extends Constructor>(Resource: Base) {
+export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
-    class ClassClass extends PersonMixin(Resource) implements Class {
+    class ClassClass extends SchemaPersonMixin(Resource) implements Class {
     }
     return ClassClass
 }
@@ -71,7 +91,7 @@ import type * as Example from \\".\\";
 export interface Class extends RdfResource {
 }
 
-export default function ClassMixin<Base extends Constructor>(Resource: Base) {
+export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
     }
@@ -100,7 +120,7 @@ export interface Class extends RdfResource {
     foo: Array<Example.Foo>;
 }
 
-export default function ClassMixin<Base extends Constructor>(Resource: Base) {
+export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
         @property.resource({ values: 'array' })
@@ -131,7 +151,7 @@ export interface Class extends RdfResource {
     foo: Array<Example.Foo>;
 }
 
-export default function ClassMixin<Base extends Constructor>(Resource: Base) {
+export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
         @property.resource({ values: 'list' })
@@ -158,16 +178,16 @@ import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
 import type * as Example from \\"@rdfine/example\\";
-import FooMixin from \\"@rdfine/example/Foo\\";
+import { FooMixin as ExampleFooMixin } from \\"@rdfine/example/Foo\\";
 
 export interface Class extends RdfResource {
     foo: Example.Foo;
 }
 
-export default function ClassMixin<Base extends Constructor>(Resource: Base) {
+export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
-        @property.resource({ as: [FooMixin] })
+        @property.resource({ as: [ExampleFooMixin] })
         foo!: Example.Foo;
     }
     return ClassClass
@@ -190,16 +210,15 @@ import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type * as Example from \\".\\";
-import FooMixin from \\"./Foo\\";
 
 export interface Class extends RdfResource {
     foo: Example.Foo;
 }
 
-export default function ClassMixin<Base extends Constructor>(Resource: Base) {
+export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
-        @property.resource({ as: [FooMixin] })
+        @property.resource({ implicitTypes: [ex.Foo] })
         foo!: Example.Foo;
     }
     return ClassClass

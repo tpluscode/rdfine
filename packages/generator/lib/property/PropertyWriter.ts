@@ -99,10 +99,15 @@ export class PropertyWriter {
       const resourceRange = prop.range[0]
       if (resourceRange.type === 'Resource') {
         this.__module.addMixinImport(resourceRange)
-        decoratorOptions.push(`as: [${resourceRange.mixinName}]`)
+
+        if (this.__module.type.localName === resourceRange.localName) {
+          decoratorOptions.push(`as: [${resourceRange.localName}]`)
+        } else {
+          decoratorOptions.push(`implicitTypes: [${this.__context.prefix}.${resourceRange.localName}]`)
+        }
       } else if (resourceRange.type === 'ExternalResource') {
         this.__module.addMixinImport(resourceRange)
-        decoratorOptions.push(`as: [${resourceRange.mixinName}]`)
+        decoratorOptions.push(`as: [${resourceRange.alias}]`)
       }
     }
 

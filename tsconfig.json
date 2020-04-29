@@ -9,15 +9,14 @@
       "WebWorker"
     ],
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": false,
+    "emitDecoratorMetadata": true,
     "strictNullChecks": true,
     "strict": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "moduleResolution": "node",
-    "esModuleInterop": true,
-    "allowJs": true
+    "esModuleInterop": true
   },
   "include": [
     "**/*.ts",

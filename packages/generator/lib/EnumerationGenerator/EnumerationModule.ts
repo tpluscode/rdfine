@@ -1,4 +1,4 @@
-import { ObjectLiteralExpression, SourceFile } from 'ts-morph'
+import { ObjectLiteralExpression, Project } from 'ts-morph'
 import { SingleContextClownface } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import { Context, GeneratedModule } from '../index'
@@ -13,8 +13,9 @@ export class EnumerationModule implements GeneratedModule {
     this.type = type
   }
 
-  writeModule(enumFile: SourceFile, types: TypeMetaCollection, context: Pick<Context, 'prefix' | 'log'>) {
+  writeModule(project: Project, types: TypeMetaCollection, context: Pick<Context, 'prefix' | 'log'>) {
     context.log.debug('Generating enumeration %s', this.type.name)
+    const enumFile = project.createSourceFile(`${this.type.module}.ts`, {}, { overwrite: true })
 
     enumFile.addImportDeclaration({
       namedImports: ['NamedNode'],

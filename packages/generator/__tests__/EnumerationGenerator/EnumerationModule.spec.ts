@@ -1,22 +1,20 @@
 import cf, { Clownface } from 'clownface'
 import $rdf from 'rdf-ext'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import { Project, SourceFile } from 'ts-morph'
+import { Project } from 'ts-morph'
 import { EnumerationModule } from '../../lib/EnumerationGenerator/EnumerationModule'
 import { fakeLog } from '../_helpers/util'
 import { FakeTypeCollection } from '../_helpers/FakeTypeCollection'
 import { ex } from '../_helpers/prefix'
 
 describe('EnumerationModule', () => {
-  let sourceFile: SourceFile
+  let project: Project
   let graph: Clownface
 
   beforeEach(() => {
-    const project = new Project({
+    project = new Project({
       useInMemoryFileSystem: true,
     })
-
-    sourceFile = project.createSourceFile('./enum.ts')
 
     graph = cf({ dataset: $rdf.dataset() })
   })
@@ -37,12 +35,12 @@ describe('EnumerationModule', () => {
     })
 
     // when
-    module.writeModule(sourceFile, types, {
+    module.writeModule(project, types, {
       log: fakeLog(),
       prefix: 'ex',
     })
 
     // then
-    expect(sourceFile).toMatchSnapshot()
+    expect(project.getSourceFile('./Enum.ts')).toMatchSnapshot()
   })
 })

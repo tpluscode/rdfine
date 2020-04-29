@@ -126,6 +126,34 @@ describe('decorator', () => {
         // then
         expect(friend._parent).toBe(instance)
       })
+
+      it('assert types implicitly added to decorator', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:res foaf:friend ex:friend .
+        `)
+
+        @namespace(foaf)
+        class Resource extends RdfResource {
+          @property.resource({ implicitTypes: [schema.Person, foaf.Person] })
+          friend!: RdfResource
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+        const friend = instance.friend
+
+        // then
+        expect([...friend.types.values()].map(r => r.id)).toEqual(
+          expect.arrayContaining([schema.Person, foaf.Person]),
+        )
+      })
     })
 
     describe('setter', () => {

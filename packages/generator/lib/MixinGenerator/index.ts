@@ -6,7 +6,7 @@ import { MixinModule } from './MixinModule'
 import { findProperties } from '../property'
 import { toJavascriptProperties } from '../property/JsProperties'
 
-function getSuperClasses(clas: SingleContextClownface, types: TypeMetaCollection) {
+export function getSuperClasses(clas: SingleContextClownface, types: TypeMetaCollection) {
   return clas.out(rdfs.subClassOf)
     .toArray()
     .reduce<(ResourceType | ExternalResourceType)[]>((selected, candidate) => {
