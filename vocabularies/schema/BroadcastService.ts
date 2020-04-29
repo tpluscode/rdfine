@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ServiceMixin from './Service';
+import { ServiceMixin } from './Service';
 
 export interface BroadcastService extends Schema.Service, RdfResource {
   area: Schema.Place;
@@ -20,7 +20,7 @@ export interface BroadcastService extends Schema.Service, RdfResource {
   videoFormat: string;
 }
 
-export default function BroadcastServiceMixin<Base extends Constructor>(Resource: Base) {
+export function BroadcastServiceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BroadcastServiceClass extends ServiceMixin(Resource) implements BroadcastService {
     @property.resource()

@@ -11,7 +11,7 @@ export interface NumericFormat extends RdfResource {
   pattern: string;
 }
 
-export default function NumericFormatMixin<Base extends Constructor>(Resource: Base) {
+export function NumericFormatMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class NumericFormatClass extends Resource implements NumericFormat {
     @property.literal()

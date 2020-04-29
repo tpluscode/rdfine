@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import PriceSpecificationMixin from './PriceSpecification';
+import { PriceSpecificationMixin } from './PriceSpecification';
 
 export interface DeliveryChargeSpecification extends Schema.PriceSpecification, RdfResource {
   appliesToDeliveryMethod: Schema.DeliveryMethod;
@@ -13,7 +13,7 @@ export interface DeliveryChargeSpecification extends Schema.PriceSpecification, 
   eligibleRegionLiteral: string;
 }
 
-export default function DeliveryChargeSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function DeliveryChargeSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DeliveryChargeSpecificationClass extends PriceSpecificationMixin(Resource) implements DeliveryChargeSpecification {
     @property()

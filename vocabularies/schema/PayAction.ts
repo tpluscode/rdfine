@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import TradeActionMixin from './TradeAction';
+import { TradeActionMixin } from './TradeAction';
 
 export interface PayAction extends Schema.TradeAction, RdfResource {
   recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
 }
 
-export default function PayActionMixin<Base extends Constructor>(Resource: Base) {
+export function PayActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PayActionClass extends TradeActionMixin(Resource) implements PayAction {
     @property.resource()

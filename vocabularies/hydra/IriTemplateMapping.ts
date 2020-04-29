@@ -4,9 +4,8 @@ import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '.';
 import type * as Rdf from '@rdfine/rdf';
-import ResourceMixin from './Resource';
-import RdfPropertyMixin from '@rdfine/rdf/Property';
-import VariableRepresentationMixin from './VariableRepresentation';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
+import { ResourceMixin } from './Resource';
 
 export interface IriTemplateMapping extends Hydra.Resource, RdfResource {
   property: Rdf.Property;
@@ -15,7 +14,7 @@ export interface IriTemplateMapping extends Hydra.Resource, RdfResource {
   variableRepresentation: Hydra.VariableRepresentation;
 }
 
-export default function IriTemplateMappingMixin<Base extends Constructor>(Resource: Base) {
+export function IriTemplateMappingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class IriTemplateMappingClass extends ResourceMixin(Resource) implements IriTemplateMapping {
     @property.resource({ as: [RdfPropertyMixin] })
@@ -24,7 +23,7 @@ export default function IriTemplateMappingMixin<Base extends Constructor>(Resour
     required!: boolean;
     @property.literal()
     variable!: string;
-    @property.resource({ as: [VariableRepresentationMixin] })
+    @property.resource({ implicitTypes: [hydra.VariableRepresentation] })
     variableRepresentation!: Hydra.VariableRepresentation;
   }
   return IriTemplateMappingClass

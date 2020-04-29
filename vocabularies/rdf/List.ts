@@ -9,7 +9,7 @@ export interface List extends RdfResource {
   rest: Rdf.List;
 }
 
-export default function ListMixin<Base extends Constructor>(Resource: Base) {
+export function ListMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdf)
   class ListClass extends Resource implements List {
     @property()

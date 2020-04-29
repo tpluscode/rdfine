@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface Seat extends Schema.Intangible, RdfResource {
   seatingType: string;
@@ -13,7 +13,7 @@ export interface Seat extends Schema.Intangible, RdfResource {
   seatSection: string;
 }
 
-export default function SeatMixin<Base extends Constructor>(Resource: Base) {
+export function SeatMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SeatClass extends IntangibleMixin(Resource) implements Seat {
     @property.literal()

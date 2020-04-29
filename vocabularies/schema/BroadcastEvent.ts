@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import PublicationEventMixin from './PublicationEvent';
+import { PublicationEventMixin } from './PublicationEvent';
 
 export interface BroadcastEvent extends Schema.PublicationEvent, RdfResource {
   broadcastOfEvent: Schema.Event;
@@ -11,7 +11,7 @@ export interface BroadcastEvent extends Schema.PublicationEvent, RdfResource {
   videoFormat: string;
 }
 
-export default function BroadcastEventMixin<Base extends Constructor>(Resource: Base) {
+export function BroadcastEventMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BroadcastEventClass extends PublicationEventMixin(Resource) implements BroadcastEvent {
     @property.resource()

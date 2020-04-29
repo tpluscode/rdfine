@@ -3,18 +3,17 @@ import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
-import SPARQLSelectExecutableMixin from './SPARQLSelectExecutable';
-import ValidatorMixin from './Validator';
-import ResultAnnotationMixin from './ResultAnnotation';
+import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable';
+import { ValidatorMixin } from './Validator';
 
 export interface SPARQLSelectValidator extends Sh.SPARQLSelectExecutable, Sh.Validator, RdfResource {
   resultAnnotation: Sh.ResultAnnotation;
 }
 
-export default function SPARQLSelectValidatorMixin<Base extends Constructor>(Resource: Base) {
+export function SPARQLSelectValidatorMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class SPARQLSelectValidatorClass extends ValidatorMixin(SPARQLSelectExecutableMixin(Resource)) implements SPARQLSelectValidator {
-    @property.resource({ as: [ResultAnnotationMixin] })
+    @property.resource({ implicitTypes: [sh.ResultAnnotation] })
     resultAnnotation!: Sh.ResultAnnotation;
   }
   return SPARQLSelectValidatorClass

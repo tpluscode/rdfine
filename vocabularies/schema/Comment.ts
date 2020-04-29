@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Comment extends Schema.CreativeWork, RdfResource {
   downvoteCount: number;
@@ -11,7 +11,7 @@ export interface Comment extends Schema.CreativeWork, RdfResource {
   upvoteCount: number;
 }
 
-export default function CommentMixin<Base extends Constructor>(Resource: Base) {
+export function CommentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CommentClass extends CreativeWorkMixin(Resource) implements Comment {
     @property.literal({ type: Number })

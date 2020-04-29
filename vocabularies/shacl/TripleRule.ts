@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
-import RuleMixin from './Rule';
+import { RuleMixin } from './Rule';
 
 export interface TripleRule extends Sh.Rule, RdfResource {
   object: RDF.Term;
@@ -11,7 +11,7 @@ export interface TripleRule extends Sh.Rule, RdfResource {
   subject: RDF.Term;
 }
 
-export default function TripleRuleMixin<Base extends Constructor>(Resource: Base) {
+export function TripleRuleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class TripleRuleClass extends RuleMixin(Resource) implements TripleRule {
     @property()

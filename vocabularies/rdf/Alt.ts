@@ -7,7 +7,7 @@ import type * as Rdf from '.';
 export interface Alt extends RdfResource {
 }
 
-export default function AltMixin<Base extends Constructor>(Resource: Base) {
+export function AltMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdf)
   class AltClass extends Resource implements Alt {
   }

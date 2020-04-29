@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import StructuredValueMixin from './StructuredValue';
+import { StructuredValueMixin } from './StructuredValue';
 
 export interface OpeningHoursSpecification extends Schema.StructuredValue, RdfResource {
   closes: Date;
@@ -13,7 +13,7 @@ export interface OpeningHoursSpecification extends Schema.StructuredValue, RdfRe
   validThrough: Date;
 }
 
-export default function OpeningHoursSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function OpeningHoursSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OpeningHoursSpecificationClass extends StructuredValueMixin(Resource) implements OpeningHoursSpecification {
     @property.literal()

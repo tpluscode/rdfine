@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import InformActionMixin from './InformAction';
+import { InformActionMixin } from './InformAction';
 
 export interface RsvpAction extends Schema.InformAction, RdfResource {
   additionalNumberOfGuests: number;
@@ -11,7 +11,7 @@ export interface RsvpAction extends Schema.InformAction, RdfResource {
   rsvpResponse: Schema.RsvpResponseType;
 }
 
-export default function RsvpActionMixin<Base extends Constructor>(Resource: Base) {
+export function RsvpActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RsvpActionClass extends InformActionMixin(Resource) implements RsvpAction {
     @property.literal({ type: Number })

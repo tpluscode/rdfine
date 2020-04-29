@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import TransferActionMixin from './TransferAction';
+import { TransferActionMixin } from './TransferAction';
 
 export interface DownloadAction extends Schema.TransferAction, RdfResource {
 }
 
-export default function DownloadActionMixin<Base extends Constructor>(Resource: Base) {
+export function DownloadActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DownloadActionClass extends TransferActionMixin(Resource) implements DownloadAction {
   }

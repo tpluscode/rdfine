@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ConsumeActionMixin from './ConsumeAction';
+import { ConsumeActionMixin } from './ConsumeAction';
 
 export interface InstallAction extends Schema.ConsumeAction, RdfResource {
 }
 
-export default function InstallActionMixin<Base extends Constructor>(Resource: Base) {
+export function InstallActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class InstallActionClass extends ConsumeActionMixin(Resource) implements InstallAction {
   }

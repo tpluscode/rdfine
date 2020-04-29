@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ReactActionMixin from './ReactAction';
+import { ReactActionMixin } from './ReactAction';
 
 export interface EndorseAction extends Schema.ReactAction, RdfResource {
   endorsee: Schema.Organization | Schema.Person;
 }
 
-export default function EndorseActionMixin<Base extends Constructor>(Resource: Base) {
+export function EndorseActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class EndorseActionClass extends ReactActionMixin(Resource) implements EndorseAction {
     @property.resource()

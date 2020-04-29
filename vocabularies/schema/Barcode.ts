@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ImageObjectMixin from './ImageObject';
+import { ImageObjectMixin } from './ImageObject';
 
 export interface Barcode extends Schema.ImageObject, RdfResource {
 }
 
-export default function BarcodeMixin<Base extends Constructor>(Resource: Base) {
+export function BarcodeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BarcodeClass extends ImageObjectMixin(Resource) implements Barcode {
   }

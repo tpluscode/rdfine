@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import TripMixin from './Trip';
+import { TripMixin } from './Trip';
 
 export interface BusTrip extends Schema.Trip, RdfResource {
   arrivalBusStop: Schema.BusStation | Schema.BusStop;
@@ -12,7 +12,7 @@ export interface BusTrip extends Schema.Trip, RdfResource {
   departureBusStop: Schema.BusStation | Schema.BusStop;
 }
 
-export default function BusTripMixin<Base extends Constructor>(Resource: Base) {
+export function BusTripMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BusTripClass extends TripMixin(Resource) implements BusTrip {
     @property.resource()

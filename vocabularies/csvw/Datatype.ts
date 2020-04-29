@@ -16,7 +16,7 @@ export interface Datatype extends RdfResource {
   minLength: number;
 }
 
-export default function DatatypeMixin<Base extends Constructor>(Resource: Base) {
+export function DatatypeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class DatatypeClass extends Resource implements Datatype {
     @property.literal()

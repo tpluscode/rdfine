@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface VisualArtwork extends Schema.CreativeWork, RdfResource {
   artEdition: number | string;
@@ -20,7 +20,7 @@ export interface VisualArtwork extends Schema.CreativeWork, RdfResource {
   width: Schema.Distance | Schema.QuantitativeValue;
 }
 
-export default function VisualArtworkMixin<Base extends Constructor>(Resource: Base) {
+export function VisualArtworkMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class VisualArtworkClass extends CreativeWorkMixin(Resource) implements VisualArtwork {
     @property.literal()

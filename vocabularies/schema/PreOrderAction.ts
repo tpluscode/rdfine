@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import TradeActionMixin from './TradeAction';
+import { TradeActionMixin } from './TradeAction';
 
 export interface PreOrderAction extends Schema.TradeAction, RdfResource {
 }
 
-export default function PreOrderActionMixin<Base extends Constructor>(Resource: Base) {
+export function PreOrderActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PreOrderActionClass extends TradeActionMixin(Resource) implements PreOrderAction {
   }

@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import GeoShapeMixin from './GeoShape';
+import { GeoShapeMixin } from './GeoShape';
 
 export interface GeoCircle extends Schema.GeoShape, RdfResource {
   geoMidpoint: Schema.GeoCoordinates;
@@ -11,7 +11,7 @@ export interface GeoCircle extends Schema.GeoShape, RdfResource {
   geoRadiusLiteral: number | string;
 }
 
-export default function GeoCircleMixin<Base extends Constructor>(Resource: Base) {
+export function GeoCircleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GeoCircleClass extends GeoShapeMixin(Resource) implements GeoCircle {
     @property.resource()

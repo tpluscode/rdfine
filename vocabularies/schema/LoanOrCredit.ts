@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import FinancialProductMixin from './FinancialProduct';
+import { FinancialProductMixin } from './FinancialProduct';
 
 export interface LoanOrCredit extends Schema.FinancialProduct, RdfResource {
   amount: Schema.MonetaryAmount;
@@ -14,7 +14,7 @@ export interface LoanOrCredit extends Schema.FinancialProduct, RdfResource {
   requiredCollateralLiteral: string;
 }
 
-export default function LoanOrCreditMixin<Base extends Constructor>(Resource: Base) {
+export function LoanOrCreditMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LoanOrCreditClass extends FinancialProductMixin(Resource) implements LoanOrCredit {
     @property.resource()

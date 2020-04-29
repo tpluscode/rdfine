@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import AudienceMixin from './Audience';
+import { AudienceMixin } from './Audience';
 
 export interface PeopleAudience extends Schema.Audience, RdfResource {
   requiredGender: string;
@@ -14,7 +14,7 @@ export interface PeopleAudience extends Schema.Audience, RdfResource {
   suggestedMinAge: number;
 }
 
-export default function PeopleAudienceMixin<Base extends Constructor>(Resource: Base) {
+export function PeopleAudienceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PeopleAudienceClass extends AudienceMixin(Resource) implements PeopleAudience {
     @property.literal()

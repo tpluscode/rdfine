@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface Brand extends Schema.Intangible, RdfResource {
   aggregateRating: Schema.AggregateRating;
@@ -12,7 +12,7 @@ export interface Brand extends Schema.Intangible, RdfResource {
   slogan: string;
 }
 
-export default function BrandMixin<Base extends Constructor>(Resource: Base) {
+export function BrandMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BrandClass extends IntangibleMixin(Resource) implements Brand {
     @property.resource()

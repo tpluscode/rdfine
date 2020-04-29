@@ -4,12 +4,12 @@ import { rdfs } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Rdfs from '.';
 import type * as Rdf from '@rdfine/rdf';
-import RdfPropertyMixin from '@rdfine/rdf/Property';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
 
 export interface ContainerMembershipProperty extends Rdf.Property, RdfResource {
 }
 
-export default function ContainerMembershipPropertyMixin<Base extends Constructor>(Resource: Base) {
+export function ContainerMembershipPropertyMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdfs)
   class ContainerMembershipPropertyClass extends RdfPropertyMixin(Resource) implements ContainerMembershipProperty {
   }

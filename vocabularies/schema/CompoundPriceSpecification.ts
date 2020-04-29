@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import PriceSpecificationMixin from './PriceSpecification';
+import { PriceSpecificationMixin } from './PriceSpecification';
 
 export interface CompoundPriceSpecification extends Schema.PriceSpecification, RdfResource {
   priceComponent: Schema.UnitPriceSpecification;
 }
 
-export default function CompoundPriceSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function CompoundPriceSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CompoundPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements CompoundPriceSpecification {
     @property.resource()

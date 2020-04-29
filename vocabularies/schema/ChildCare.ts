@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import LocalBusinessMixin from './LocalBusiness';
+import { LocalBusinessMixin } from './LocalBusiness';
 
 export interface ChildCare extends Schema.LocalBusiness, RdfResource {
 }
 
-export default function ChildCareMixin<Base extends Constructor>(Resource: Base) {
+export function ChildCareMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ChildCareClass extends LocalBusinessMixin(Resource) implements ChildCare {
   }

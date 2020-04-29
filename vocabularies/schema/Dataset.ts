@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Dataset extends Schema.CreativeWork, RdfResource {
   catalog: Schema.DataCatalog;
@@ -14,7 +14,7 @@ export interface Dataset extends Schema.CreativeWork, RdfResource {
   issn: string;
 }
 
-export default function DatasetMixin<Base extends Constructor>(Resource: Base) {
+export function DatasetMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DatasetClass extends CreativeWorkMixin(Resource) implements Dataset {
     @property.resource()

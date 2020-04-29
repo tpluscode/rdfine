@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ClipMixin from './Clip';
+import { ClipMixin } from './Clip';
 
 export interface RadioClip extends Schema.Clip, RdfResource {
 }
 
-export default function RadioClipMixin<Base extends Constructor>(Resource: Base) {
+export function RadioClipMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RadioClipClass extends ClipMixin(Resource) implements RadioClip {
   }

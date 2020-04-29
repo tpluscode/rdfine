@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ReviewMixin from './Review';
+import { ReviewMixin } from './Review';
 
 export interface ClaimReview extends Schema.Review, RdfResource {
   claimReviewed: string;
 }
 
-export default function ClaimReviewMixin<Base extends Constructor>(Resource: Base) {
+export function ClaimReviewMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ClaimReviewClass extends ReviewMixin(Resource) implements ClaimReview {
     @property.literal()

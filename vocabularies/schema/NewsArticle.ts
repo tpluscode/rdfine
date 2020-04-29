@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ArticleMixin from './Article';
+import { ArticleMixin } from './Article';
 
 export interface NewsArticle extends Schema.Article, RdfResource {
   dateline: string;
@@ -13,7 +13,7 @@ export interface NewsArticle extends Schema.Article, RdfResource {
   printSection: string;
 }
 
-export default function NewsArticleMixin<Base extends Constructor>(Resource: Base) {
+export function NewsArticleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class NewsArticleClass extends ArticleMixin(Resource) implements NewsArticle {
     @property.literal()

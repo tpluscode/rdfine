@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import PlaceMixin from './Place';
+import { PlaceMixin } from './Place';
 
 export interface Landform extends Schema.Place, RdfResource {
 }
 
-export default function LandformMixin<Base extends Constructor>(Resource: Base) {
+export function LandformMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LandformClass extends PlaceMixin(Resource) implements Landform {
   }

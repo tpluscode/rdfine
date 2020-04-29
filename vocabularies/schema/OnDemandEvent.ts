@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import PublicationEventMixin from './PublicationEvent';
+import { PublicationEventMixin } from './PublicationEvent';
 
 export interface OnDemandEvent extends Schema.PublicationEvent, RdfResource {
 }
 
-export default function OnDemandEventMixin<Base extends Constructor>(Resource: Base) {
+export function OnDemandEventMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OnDemandEventClass extends PublicationEventMixin(Resource) implements OnDemandEvent {
   }

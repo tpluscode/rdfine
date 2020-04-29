@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ServiceMixin from './Service';
+import { ServiceMixin } from './Service';
 
 export interface Taxi extends Schema.Service, RdfResource {
 }
 
-export default function TaxiMixin<Base extends Constructor>(Resource: Base) {
+export function TaxiMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TaxiClass extends ServiceMixin(Resource) implements Taxi {
   }

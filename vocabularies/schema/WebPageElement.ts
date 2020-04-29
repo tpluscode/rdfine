@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface WebPageElement extends Schema.CreativeWork, RdfResource {
   cssSelector: string;
   xpath: string;
 }
 
-export default function WebPageElementMixin<Base extends Constructor>(Resource: Base) {
+export function WebPageElementMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WebPageElementClass extends CreativeWorkMixin(Resource) implements WebPageElement {
     @property.literal()

@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
-import PropertyShapeMixin from './PropertyShape';
+import { PropertyShapeMixin } from './PropertyShape';
 
 export interface Parameter extends Sh.PropertyShape, RdfResource {
   optional: boolean;
 }
 
-export default function ParameterMixin<Base extends Constructor>(Resource: Base) {
+export function ParameterMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class ParameterClass extends PropertyShapeMixin(Resource) implements Parameter {
     @property.literal({ type: Boolean })

@@ -3,8 +3,8 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import OrganizationMixin from './Organization';
-import PlaceMixin from './Place';
+import { OrganizationMixin } from './Organization';
+import { PlaceMixin } from './Place';
 
 export interface LocalBusiness extends Schema.Organization, Schema.Place, RdfResource {
   branchOf: Schema.Organization;
@@ -14,7 +14,7 @@ export interface LocalBusiness extends Schema.Organization, Schema.Place, RdfRes
   priceRange: string;
 }
 
-export default function LocalBusinessMixin<Base extends Constructor>(Resource: Base) {
+export function LocalBusinessMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LocalBusinessClass extends PlaceMixin(OrganizationMixin(Resource)) implements LocalBusiness {
     @property.resource()

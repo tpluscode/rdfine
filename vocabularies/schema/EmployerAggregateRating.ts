@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import AggregateRatingMixin from './AggregateRating';
+import { AggregateRatingMixin } from './AggregateRating';
 
 export interface EmployerAggregateRating extends Schema.AggregateRating, RdfResource {
 }
 
-export default function EmployerAggregateRatingMixin<Base extends Constructor>(Resource: Base) {
+export function EmployerAggregateRatingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class EmployerAggregateRatingClass extends AggregateRatingMixin(Resource) implements EmployerAggregateRating {
   }

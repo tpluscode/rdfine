@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import FinancialServiceMixin from './FinancialService';
+import { FinancialServiceMixin } from './FinancialService';
 
 export interface AutomatedTeller extends Schema.FinancialService, RdfResource {
 }
 
-export default function AutomatedTellerMixin<Base extends Constructor>(Resource: Base) {
+export function AutomatedTellerMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AutomatedTellerClass extends FinancialServiceMixin(Resource) implements AutomatedTeller {
   }

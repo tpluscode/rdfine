@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface Quantity extends Schema.Intangible, RdfResource {
 }
 
-export default function QuantityMixin<Base extends Constructor>(Resource: Base) {
+export function QuantityMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class QuantityClass extends IntangibleMixin(Resource) implements Quantity {
   }

@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
-import ItemListMixin from './ItemList';
-import ListItemMixin from './ListItem';
+import { CreativeWorkMixin } from './CreativeWork';
+import { ItemListMixin } from './ItemList';
+import { ListItemMixin } from './ListItem';
 
 export interface HowToStep extends Schema.CreativeWork, Schema.ItemList, Schema.ListItem, RdfResource {
 }
 
-export default function HowToStepMixin<Base extends Constructor>(Resource: Base) {
+export function HowToStepMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class HowToStepClass extends ListItemMixin(ItemListMixin(CreativeWorkMixin(Resource))) implements HowToStep {
   }

@@ -5,12 +5,12 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import type * as Rdf from '@rdfine/rdf';
-import ClassMixin from './Class';
-import RdfsClassMixin from '@rdfine/rdfs/Class';
-import RdfsResourceMixin from '@rdfine/rdfs/Resource';
-import RdfsDatatypeMixin from '@rdfine/rdfs/Datatype';
-import RdfListMixin from '@rdfine/rdf/List';
-import RdfPropertyMixin from '@rdfine/rdf/Property';
+import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/Class';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/Datatype';
+import { ListMixin as RdfListMixin } from '@rdfine/rdf/List';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
+import { ClassMixin } from './Class';
 
 export interface Restriction extends Owl.Class, RdfResource {
   allValuesFrom: Rdfs.Class;
@@ -29,7 +29,7 @@ export interface Restriction extends Owl.Class, RdfResource {
   someValuesFrom: Rdfs.Class;
 }
 
-export default function RestrictionMixin<Base extends Constructor>(Resource: Base) {
+export function RestrictionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class RestrictionClass extends ClassMixin(Resource) implements Restriction {
     @property.resource({ as: [RdfsClassMixin] })
@@ -48,7 +48,7 @@ export default function RestrictionMixin<Base extends Constructor>(Resource: Bas
     minCardinality!: number;
     @property.literal({ type: Number })
     minQualifiedCardinality!: number;
-    @property.resource({ as: [ClassMixin] })
+    @property.resource({ implicitTypes: [owl.Class] })
     onClass!: Owl.Class;
     @property.resource({ as: [RdfsDatatypeMixin] })
     onDataRange!: Rdfs.Datatype;

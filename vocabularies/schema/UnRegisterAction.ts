@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import InteractActionMixin from './InteractAction';
+import { InteractActionMixin } from './InteractAction';
 
 export interface UnRegisterAction extends Schema.InteractAction, RdfResource {
 }
 
-export default function UnRegisterActionMixin<Base extends Constructor>(Resource: Base) {
+export function UnRegisterActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class UnRegisterActionClass extends InteractActionMixin(Resource) implements UnRegisterAction {
   }

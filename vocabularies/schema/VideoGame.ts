@@ -3,8 +3,8 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import GameMixin from './Game';
-import SoftwareApplicationMixin from './SoftwareApplication';
+import { GameMixin } from './Game';
+import { SoftwareApplicationMixin } from './SoftwareApplication';
 
 export interface VideoGame extends Schema.Game, Schema.SoftwareApplication, RdfResource {
   actor: Schema.Person;
@@ -21,7 +21,7 @@ export interface VideoGame extends Schema.Game, Schema.SoftwareApplication, RdfR
   trailer: Schema.VideoObject;
 }
 
-export default function VideoGameMixin<Base extends Constructor>(Resource: Base) {
+export function VideoGameMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class VideoGameClass extends SoftwareApplicationMixin(GameMixin(Resource)) implements VideoGame {
     @property.resource()

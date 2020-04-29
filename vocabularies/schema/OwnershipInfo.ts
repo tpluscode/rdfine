@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import StructuredValueMixin from './StructuredValue';
+import { StructuredValueMixin } from './StructuredValue';
 
 export interface OwnershipInfo extends Schema.StructuredValue, RdfResource {
   acquiredFrom: Schema.Organization | Schema.Person;
@@ -12,7 +12,7 @@ export interface OwnershipInfo extends Schema.StructuredValue, RdfResource {
   typeOfGood: Schema.Product | Schema.Service;
 }
 
-export default function OwnershipInfoMixin<Base extends Constructor>(Resource: Base) {
+export function OwnershipInfoMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OwnershipInfoClass extends StructuredValueMixin(Resource) implements OwnershipInfo {
     @property.resource()

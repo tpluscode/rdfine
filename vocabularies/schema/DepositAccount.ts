@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import BankAccountMixin from './BankAccount';
-import InvestmentOrDepositMixin from './InvestmentOrDeposit';
+import { BankAccountMixin } from './BankAccount';
+import { InvestmentOrDepositMixin } from './InvestmentOrDeposit';
 
 export interface DepositAccount extends Schema.BankAccount, Schema.InvestmentOrDeposit, RdfResource {
 }
 
-export default function DepositAccountMixin<Base extends Constructor>(Resource: Base) {
+export function DepositAccountMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DepositAccountClass extends InvestmentOrDepositMixin(BankAccountMixin(Resource)) implements DepositAccount {
   }

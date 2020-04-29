@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import TradeActionMixin from './TradeAction';
+import { TradeActionMixin } from './TradeAction';
 
 export interface RentAction extends Schema.TradeAction, RdfResource {
   landlord: Schema.Organization | Schema.Person;
   realEstateAgent: Schema.RealEstateAgent;
 }
 
-export default function RentActionMixin<Base extends Constructor>(Resource: Base) {
+export function RentActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RentActionClass extends TradeActionMixin(Resource) implements RentAction {
     @property.resource()

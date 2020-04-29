@@ -4,10 +4,7 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import RdfsResourceMixin from '@rdfine/rdfs/Resource';
-import SeverityMixin from './Severity';
-import ConstraintComponentMixin from './ConstraintComponent';
-import ShapeMixin from './Shape';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
 
 export interface AbstractResult extends Rdfs.Resource, RdfResource {
   detail: Sh.AbstractResult;
@@ -21,7 +18,7 @@ export interface AbstractResult extends Rdfs.Resource, RdfResource {
   value: RDF.Term;
 }
 
-export default function AbstractResultMixin<Base extends Constructor>(Resource: Base) {
+export function AbstractResultMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class AbstractResultClass extends RdfsResourceMixin(Resource) implements AbstractResult {
     @property.resource({ as: [AbstractResultMixin] })
@@ -32,13 +29,13 @@ export default function AbstractResultMixin<Base extends Constructor>(Resource: 
     resultMessage!: RDF.Term;
     @property.resource({ as: [RdfsResourceMixin] })
     resultPath!: Rdfs.Resource;
-    @property.resource({ as: [SeverityMixin] })
+    @property.resource({ implicitTypes: [sh.Severity] })
     resultSeverity!: Sh.Severity;
     @property()
     sourceConstraint!: RDF.Term;
-    @property.resource({ as: [ConstraintComponentMixin] })
+    @property.resource({ implicitTypes: [sh.ConstraintComponent] })
     sourceConstraintComponent!: Sh.ConstraintComponent;
-    @property.resource({ as: [ShapeMixin] })
+    @property.resource({ implicitTypes: [sh.Shape] })
     sourceShape!: Sh.Shape;
     @property()
     value!: RDF.Term;

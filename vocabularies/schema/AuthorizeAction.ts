@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import AllocateActionMixin from './AllocateAction';
+import { AllocateActionMixin } from './AllocateAction';
 
 export interface AuthorizeAction extends Schema.AllocateAction, RdfResource {
   recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
 }
 
-export default function AuthorizeActionMixin<Base extends Constructor>(Resource: Base) {
+export function AuthorizeActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AuthorizeActionClass extends AllocateActionMixin(Resource) implements AuthorizeAction {
     @property.resource()

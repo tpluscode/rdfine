@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface Occupation extends Schema.Intangible, RdfResource {
   estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution;
@@ -14,7 +14,7 @@ export interface Occupation extends Schema.Intangible, RdfResource {
   skills: string;
 }
 
-export default function OccupationMixin<Base extends Constructor>(Resource: Base) {
+export function OccupationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OccupationClass extends IntangibleMixin(Resource) implements Occupation {
     @property.resource()

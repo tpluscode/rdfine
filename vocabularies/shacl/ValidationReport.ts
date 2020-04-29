@@ -4,8 +4,7 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import RdfsResourceMixin from '@rdfine/rdfs/Resource';
-import ValidationResultMixin from './ValidationResult';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
 
 export interface ValidationReport extends Rdfs.Resource, RdfResource {
   conforms: boolean;
@@ -13,12 +12,12 @@ export interface ValidationReport extends Rdfs.Resource, RdfResource {
   shapesGraphWellFormed: boolean;
 }
 
-export default function ValidationReportMixin<Base extends Constructor>(Resource: Base) {
+export function ValidationReportMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class ValidationReportClass extends RdfsResourceMixin(Resource) implements ValidationReport {
     @property.literal({ type: Boolean })
     conforms!: boolean;
-    @property.resource({ as: [ValidationResultMixin] })
+    @property.resource({ implicitTypes: [sh.ValidationResult] })
     result!: Sh.ValidationResult;
     @property.literal({ type: Boolean })
     shapesGraphWellFormed!: boolean;

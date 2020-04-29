@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import EducationalOrganizationMixin from './EducationalOrganization';
+import { EducationalOrganizationMixin } from './EducationalOrganization';
 
 export interface Preschool extends Schema.EducationalOrganization, RdfResource {
 }
 
-export default function PreschoolMixin<Base extends Constructor>(Resource: Base) {
+export function PreschoolMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PreschoolClass extends EducationalOrganizationMixin(Resource) implements Preschool {
   }

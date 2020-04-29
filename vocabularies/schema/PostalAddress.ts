@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ContactPointMixin from './ContactPoint';
+import { ContactPointMixin } from './ContactPoint';
 
 export interface PostalAddress extends Schema.ContactPoint, RdfResource {
   addressCountry: Schema.Country;
@@ -15,7 +15,7 @@ export interface PostalAddress extends Schema.ContactPoint, RdfResource {
   streetAddress: string;
 }
 
-export default function PostalAddressMixin<Base extends Constructor>(Resource: Base) {
+export function PostalAddressMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PostalAddressClass extends ContactPointMixin(Resource) implements PostalAddress {
     @property.resource()

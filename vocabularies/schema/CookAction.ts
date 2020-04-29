@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreateActionMixin from './CreateAction';
+import { CreateActionMixin } from './CreateAction';
 
 export interface CookAction extends Schema.CreateAction, RdfResource {
   foodEstablishment: Schema.FoodEstablishment | Schema.Place;
@@ -11,7 +11,7 @@ export interface CookAction extends Schema.CreateAction, RdfResource {
   recipe: Schema.Recipe;
 }
 
-export default function CookActionMixin<Base extends Constructor>(Resource: Base) {
+export function CookActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CookActionClass extends CreateActionMixin(Resource) implements CookAction {
     @property.resource()

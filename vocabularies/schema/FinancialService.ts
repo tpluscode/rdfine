@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import LocalBusinessMixin from './LocalBusiness';
+import { LocalBusinessMixin } from './LocalBusiness';
 
 export interface FinancialService extends Schema.LocalBusiness, RdfResource {
   feesAndCommissionsSpecification: string;
   feesAndCommissionsSpecificationTerm: RDF.NamedNode;
 }
 
-export default function FinancialServiceMixin<Base extends Constructor>(Resource: Base) {
+export function FinancialServiceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class FinancialServiceClass extends LocalBusinessMixin(Resource) implements FinancialService {
     @property.literal()

@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import AudienceMixin from './Audience';
+import { AudienceMixin } from './Audience';
 
 export interface BusinessAudience extends Schema.Audience, RdfResource {
   numberOfEmployees: Schema.QuantitativeValue;
@@ -11,7 +11,7 @@ export interface BusinessAudience extends Schema.Audience, RdfResource {
   yearsInOperation: Schema.QuantitativeValue;
 }
 
-export default function BusinessAudienceMixin<Base extends Constructor>(Resource: Base) {
+export function BusinessAudienceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BusinessAudienceClass extends AudienceMixin(Resource) implements BusinessAudience {
     @property.resource()

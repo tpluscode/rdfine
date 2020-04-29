@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import AdministrativeAreaMixin from './AdministrativeArea';
+import { AdministrativeAreaMixin } from './AdministrativeArea';
 
 export interface Country extends Schema.AdministrativeArea, RdfResource {
 }
 
-export default function CountryMixin<Base extends Constructor>(Resource: Base) {
+export function CountryMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CountryClass extends AdministrativeAreaMixin(Resource) implements Country {
   }

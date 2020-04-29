@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
-import SPARQLAskExecutableMixin from './SPARQLAskExecutable';
-import ValidatorMixin from './Validator';
+import { SPARQLAskExecutableMixin } from './SPARQLAskExecutable';
+import { ValidatorMixin } from './Validator';
 
 export interface SPARQLAskValidator extends Sh.SPARQLAskExecutable, Sh.Validator, RdfResource {
 }
 
-export default function SPARQLAskValidatorMixin<Base extends Constructor>(Resource: Base) {
+export function SPARQLAskValidatorMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class SPARQLAskValidatorClass extends ValidatorMixin(SPARQLAskExecutableMixin(Resource)) implements SPARQLAskValidator {
   }

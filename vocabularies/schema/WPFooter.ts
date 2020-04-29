@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import WebPageElementMixin from './WebPageElement';
+import { WebPageElementMixin } from './WebPageElement';
 
 export interface WPFooter extends Schema.WebPageElement, RdfResource {
 }
 
-export default function WPFooterMixin<Base extends Constructor>(Resource: Base) {
+export function WPFooterMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WPFooterClass extends WebPageElementMixin(Resource) implements WPFooter {
   }

@@ -7,7 +7,7 @@ import type * as Csvw from '.';
 export interface Cell extends RdfResource {
 }
 
-export default function CellMixin<Base extends Constructor>(Resource: Base) {
+export function CellMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class CellClass extends Resource implements Cell {
   }

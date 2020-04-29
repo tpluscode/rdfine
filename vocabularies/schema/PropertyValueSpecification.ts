@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface PropertyValueSpecification extends Schema.Intangible, RdfResource {
   defaultValue: Schema.Thing;
@@ -20,7 +20,7 @@ export interface PropertyValueSpecification extends Schema.Intangible, RdfResour
   valueRequired: boolean;
 }
 
-export default function PropertyValueSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function PropertyValueSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PropertyValueSpecificationClass extends IntangibleMixin(Resource) implements PropertyValueSpecification {
     @property.resource()

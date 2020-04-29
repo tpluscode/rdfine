@@ -4,7 +4,7 @@ import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import RdfsResourceMixin from '@rdfine/rdfs/Resource';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
 
 export interface Ontology extends Rdfs.Resource, RdfResource {
   backwardCompatibleWith: Owl.Ontology;
@@ -14,7 +14,7 @@ export interface Ontology extends Rdfs.Resource, RdfResource {
   versionIRI: Owl.Ontology;
 }
 
-export default function OntologyMixin<Base extends Constructor>(Resource: Base) {
+export function OntologyMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class OntologyClass extends RdfsResourceMixin(Resource) implements Ontology {
     @property.resource({ as: [OntologyMixin] })

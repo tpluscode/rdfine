@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Review extends Schema.CreativeWork, RdfResource {
   itemReviewed: Schema.Thing;
@@ -12,7 +12,7 @@ export interface Review extends Schema.CreativeWork, RdfResource {
   reviewRating: Schema.Rating;
 }
 
-export default function ReviewMixin<Base extends Constructor>(Resource: Base) {
+export function ReviewMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ReviewClass extends CreativeWorkMixin(Resource) implements Review {
     @property.resource()

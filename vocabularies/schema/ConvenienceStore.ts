@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import StoreMixin from './Store';
+import { StoreMixin } from './Store';
 
 export interface ConvenienceStore extends Schema.Store, RdfResource {
 }
 
-export default function ConvenienceStoreMixin<Base extends Constructor>(Resource: Base) {
+export function ConvenienceStoreMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ConvenienceStoreClass extends StoreMixin(Resource) implements ConvenienceStore {
   }

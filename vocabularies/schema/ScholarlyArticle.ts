@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ArticleMixin from './Article';
+import { ArticleMixin } from './Article';
 
 export interface ScholarlyArticle extends Schema.Article, RdfResource {
 }
 
-export default function ScholarlyArticleMixin<Base extends Constructor>(Resource: Base) {
+export function ScholarlyArticleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ScholarlyArticleClass extends ArticleMixin(Resource) implements ScholarlyArticle {
   }

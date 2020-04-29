@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface MusicRecording extends Schema.CreativeWork, RdfResource {
   byArtist: Schema.MusicGroup | Schema.Person;
@@ -14,7 +14,7 @@ export interface MusicRecording extends Schema.CreativeWork, RdfResource {
   recordingOf: Schema.MusicComposition;
 }
 
-export default function MusicRecordingMixin<Base extends Constructor>(Resource: Base) {
+export function MusicRecordingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MusicRecordingClass extends CreativeWorkMixin(Resource) implements MusicRecording {
     @property.resource()

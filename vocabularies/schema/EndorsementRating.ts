@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import RatingMixin from './Rating';
+import { RatingMixin } from './Rating';
 
 export interface EndorsementRating extends Schema.Rating, RdfResource {
 }
 
-export default function EndorsementRatingMixin<Base extends Constructor>(Resource: Base) {
+export function EndorsementRatingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class EndorsementRatingClass extends RatingMixin(Resource) implements EndorsementRating {
   }

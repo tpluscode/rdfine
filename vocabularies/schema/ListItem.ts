@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface ListItem extends Schema.Intangible, RdfResource {
   item: Schema.Thing;
@@ -12,7 +12,7 @@ export interface ListItem extends Schema.Intangible, RdfResource {
   previousItem: Schema.ListItem;
 }
 
-export default function ListItemMixin<Base extends Constructor>(Resource: Base) {
+export function ListItemMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ListItemClass extends IntangibleMixin(Resource) implements ListItem {
     @property.resource()

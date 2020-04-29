@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface ServiceChannel extends Schema.Intangible, RdfResource {
   availableLanguage: Schema.Language;
@@ -17,7 +17,7 @@ export interface ServiceChannel extends Schema.Intangible, RdfResource {
   serviceUrl: RDF.NamedNode;
 }
 
-export default function ServiceChannelMixin<Base extends Constructor>(Resource: Base) {
+export function ServiceChannelMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ServiceChannelClass extends IntangibleMixin(Resource) implements ServiceChannel {
     @property.resource()

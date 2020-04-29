@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import BroadcastChannelMixin from './BroadcastChannel';
+import { BroadcastChannelMixin } from './BroadcastChannel';
 
 export interface TelevisionChannel extends Schema.BroadcastChannel, RdfResource {
 }
 
-export default function TelevisionChannelMixin<Base extends Constructor>(Resource: Base) {
+export function TelevisionChannelMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TelevisionChannelClass extends BroadcastChannelMixin(Resource) implements TelevisionChannel {
   }

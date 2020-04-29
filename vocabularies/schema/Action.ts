@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ThingMixin from './Thing';
+import { ThingMixin } from './Thing';
 
 export interface Action extends Schema.Thing, RdfResource {
   actionStatus: Schema.ActionStatusType;
@@ -20,7 +20,7 @@ export interface Action extends Schema.Thing, RdfResource {
   target: Schema.EntryPoint;
 }
 
-export default function ActionMixin<Base extends Constructor>(Resource: Base) {
+export function ActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ActionClass extends ThingMixin(Resource) implements Action {
     @property()

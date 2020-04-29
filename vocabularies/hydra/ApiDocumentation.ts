@@ -3,9 +3,7 @@ import type * as RDF from 'rdf-js';
 import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '.';
-import ResourceMixin from './Resource';
-import StatusMixin from './Status';
-import ClassMixin from './Class';
+import { ResourceMixin } from './Resource';
 
 export interface ApiDocumentation extends Hydra.Resource, RdfResource {
   description: string;
@@ -15,16 +13,16 @@ export interface ApiDocumentation extends Hydra.Resource, RdfResource {
   title: string;
 }
 
-export default function ApiDocumentationMixin<Base extends Constructor>(Resource: Base) {
+export function ApiDocumentationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class ApiDocumentationClass extends ResourceMixin(Resource) implements ApiDocumentation {
     @property.literal()
     description!: string;
-    @property.resource({ as: [ResourceMixin] })
+    @property.resource({ implicitTypes: [hydra.Resource] })
     entrypoint!: Hydra.Resource;
-    @property.resource({ values: 'array', as: [StatusMixin] })
+    @property.resource({ values: 'array', implicitTypes: [hydra.Status] })
     possibleStatus!: Array<Hydra.Status>;
-    @property.resource({ values: 'array', as: [ClassMixin] })
+    @property.resource({ values: 'array', implicitTypes: [hydra.Class] })
     supportedClass!: Array<Hydra.Class>;
     @property.literal()
     title!: string;

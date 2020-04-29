@@ -4,11 +4,7 @@ import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import RdfsResourceMixin from '@rdfine/rdfs/Resource';
-import ApiDocumentationMixin from './ApiDocumentation';
-import CollectionMixin from './Collection';
-import OperationMixin from './Operation';
-import IriTemplateMixin from './IriTemplate';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
 
 export interface Resource extends Rdfs.Resource, RdfResource {
   apiDocumentation: Hydra.ApiDocumentation;
@@ -23,12 +19,12 @@ export interface Resource extends Rdfs.Resource, RdfResource {
   view: Array<Hydra.Resource>;
 }
 
-export default function ResourceMixin<Base extends Constructor>(Resource: Base) {
+export function ResourceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class ResourceClass extends RdfsResourceMixin(Resource) implements Resource {
-    @property.resource({ as: [ApiDocumentationMixin] })
+    @property.resource({ implicitTypes: [hydra.ApiDocumentation] })
     apiDocumentation!: Hydra.ApiDocumentation;
-    @property.resource({ values: 'array', as: [CollectionMixin] })
+    @property.resource({ values: 'array', implicitTypes: [hydra.Collection] })
     collection!: Array<Hydra.Collection>;
     @property.resource({ as: [ResourceMixin] })
     first!: Hydra.Resource;
@@ -38,11 +34,11 @@ export default function ResourceMixin<Base extends Constructor>(Resource: Base) 
     last!: Hydra.Resource;
     @property.resource({ as: [ResourceMixin] })
     next!: Hydra.Resource;
-    @property.resource({ values: 'array', as: [OperationMixin] })
+    @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
     operation!: Array<Hydra.Operation>;
     @property.resource({ as: [ResourceMixin] })
     previous!: Hydra.Resource;
-    @property.resource({ as: [IriTemplateMixin] })
+    @property.resource({ implicitTypes: [hydra.IriTemplate] })
     search!: Hydra.IriTemplate;
     @property.resource({ values: 'array', as: [ResourceMixin] })
     view!: Array<Hydra.Resource>;

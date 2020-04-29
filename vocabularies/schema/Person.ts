@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ThingMixin from './Thing';
+import { ThingMixin } from './Thing';
 
 export interface Person extends Schema.Thing, RdfResource {
   additionalName: string;
@@ -65,7 +65,7 @@ export interface Person extends Schema.Thing, RdfResource {
   worksFor: Schema.Organization;
 }
 
-export default function PersonMixin<Base extends Constructor>(Resource: Base) {
+export function PersonMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PersonClass extends ThingMixin(Resource) implements Person {
     @property.literal()

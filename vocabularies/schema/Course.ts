@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Course extends Schema.CreativeWork, RdfResource {
   courseCode: string;
@@ -14,7 +14,7 @@ export interface Course extends Schema.CreativeWork, RdfResource {
   hasCourseInstance: Schema.CourseInstance;
 }
 
-export default function CourseMixin<Base extends Constructor>(Resource: Base) {
+export function CourseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CourseClass extends CreativeWorkMixin(Resource) implements Course {
     @property.literal()

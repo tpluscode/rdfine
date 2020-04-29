@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface ActionAccessSpecification extends Schema.Intangible, RdfResource {
   availabilityEnds: Date;
@@ -17,7 +17,7 @@ export interface ActionAccessSpecification extends Schema.Intangible, RdfResourc
   requiresSubscriptionLiteral: boolean;
 }
 
-export default function ActionAccessSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function ActionAccessSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ActionAccessSpecificationClass extends IntangibleMixin(Resource) implements ActionAccessSpecification {
     @property.literal()

@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ServiceMixin from './Service';
+import { ServiceMixin } from './Service';
 
 export interface CableOrSatelliteService extends Schema.Service, RdfResource {
 }
 
-export default function CableOrSatelliteServiceMixin<Base extends Constructor>(Resource: Base) {
+export function CableOrSatelliteServiceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CableOrSatelliteServiceClass extends ServiceMixin(Resource) implements CableOrSatelliteService {
   }

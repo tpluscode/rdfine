@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ActionMixin from './Action';
+import { ActionMixin } from './Action';
 
 export interface SearchAction extends Schema.Action, RdfResource {
   query: string;
 }
 
-export default function SearchActionMixin<Base extends Constructor>(Resource: Base) {
+export function SearchActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SearchActionClass extends ActionMixin(Resource) implements SearchAction {
     @property.literal()

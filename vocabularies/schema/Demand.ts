@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface Demand extends Schema.Intangible, RdfResource {
   acceptedPaymentMethod: Schema.LoanOrCredit;
@@ -41,7 +41,7 @@ export interface Demand extends Schema.Intangible, RdfResource {
   warranty: Schema.WarrantyPromise;
 }
 
-export default function DemandMixin<Base extends Constructor>(Resource: Base) {
+export function DemandMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DemandClass extends IntangibleMixin(Resource) implements Demand {
     @property.resource()

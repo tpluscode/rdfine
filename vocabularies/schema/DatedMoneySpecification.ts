@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import StructuredValueMixin from './StructuredValue';
+import { StructuredValueMixin } from './StructuredValue';
 
 export interface DatedMoneySpecification extends Schema.StructuredValue, RdfResource {
   amount: Schema.MonetaryAmount;
@@ -13,7 +13,7 @@ export interface DatedMoneySpecification extends Schema.StructuredValue, RdfReso
   startDate: Date;
 }
 
-export default function DatedMoneySpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function DatedMoneySpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DatedMoneySpecificationClass extends StructuredValueMixin(Resource) implements DatedMoneySpecification {
     @property.resource()

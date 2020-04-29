@@ -10,7 +10,7 @@ export interface Statement extends RdfResource {
   subject: RDF.Term;
 }
 
-export default function StatementMixin<Base extends Constructor>(Resource: Base) {
+export function StatementMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdf)
   class StatementClass extends Resource implements Statement {
     @property()

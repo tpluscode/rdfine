@@ -3,16 +3,16 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
-import ItemListMixin from './ItemList';
-import ListItemMixin from './ListItem';
+import { CreativeWorkMixin } from './CreativeWork';
+import { ItemListMixin } from './ItemList';
+import { ListItemMixin } from './ListItem';
 
 export interface HowToSection extends Schema.CreativeWork, Schema.ItemList, Schema.ListItem, RdfResource {
   steps: Array<Schema.CreativeWork | Schema.ItemList>;
   stepsLiteral: Array<string>;
 }
 
-export default function HowToSectionMixin<Base extends Constructor>(Resource: Base) {
+export function HowToSectionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class HowToSectionClass extends ListItemMixin(ItemListMixin(CreativeWorkMixin(Resource))) implements HowToSection {
     @property.resource({ values: 'array' })

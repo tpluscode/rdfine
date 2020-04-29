@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ReactActionMixin from './ReactAction';
+import { ReactActionMixin } from './ReactAction';
 
 export interface DisagreeAction extends Schema.ReactAction, RdfResource {
 }
 
-export default function DisagreeActionMixin<Base extends Constructor>(Resource: Base) {
+export function DisagreeActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DisagreeActionClass extends ReactActionMixin(Resource) implements DisagreeAction {
   }

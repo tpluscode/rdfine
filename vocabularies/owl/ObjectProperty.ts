@@ -4,15 +4,15 @@ import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '.';
 import type * as Rdf from '@rdfine/rdf';
-import RdfPropertyMixin from '@rdfine/rdf/Property';
-import RdfListMixin from '@rdfine/rdf/List';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
+import { ListMixin as RdfListMixin } from '@rdfine/rdf/List';
 
 export interface ObjectProperty extends Rdf.Property, RdfResource {
   inverseOf: Owl.ObjectProperty;
   propertyChainAxiom: Rdf.List;
 }
 
-export default function ObjectPropertyMixin<Base extends Constructor>(Resource: Base) {
+export function ObjectPropertyMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class ObjectPropertyClass extends RdfPropertyMixin(Resource) implements ObjectProperty {
     @property.resource({ as: [ObjectPropertyMixin] })

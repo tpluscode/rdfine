@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ResidenceMixin from './Residence';
+import { ResidenceMixin } from './Residence';
 
 export interface ApartmentComplex extends Schema.Residence, RdfResource {
   petsAllowed: boolean | string;
 }
 
-export default function ApartmentComplexMixin<Base extends Constructor>(Resource: Base) {
+export function ApartmentComplexMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ApartmentComplexClass extends ResidenceMixin(Resource) implements ApartmentComplex {
     @property.literal()

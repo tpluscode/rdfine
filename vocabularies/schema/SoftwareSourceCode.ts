@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface SoftwareSourceCode extends Schema.CreativeWork, RdfResource {
   codeRepository: RDF.NamedNode;
@@ -16,7 +16,7 @@ export interface SoftwareSourceCode extends Schema.CreativeWork, RdfResource {
   targetProduct: Schema.SoftwareApplication;
 }
 
-export default function SoftwareSourceCodeMixin<Base extends Constructor>(Resource: Base) {
+export function SoftwareSourceCodeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SoftwareSourceCodeClass extends CreativeWorkMixin(Resource) implements SoftwareSourceCode {
     @property()

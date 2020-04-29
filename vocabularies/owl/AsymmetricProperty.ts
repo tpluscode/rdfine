@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '.';
-import ObjectPropertyMixin from './ObjectProperty';
+import { ObjectPropertyMixin } from './ObjectProperty';
 
 export interface AsymmetricProperty extends Owl.ObjectProperty, RdfResource {
 }
 
-export default function AsymmetricPropertyMixin<Base extends Constructor>(Resource: Base) {
+export function AsymmetricPropertyMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class AsymmetricPropertyClass extends ObjectPropertyMixin(Resource) implements AsymmetricProperty {
   }

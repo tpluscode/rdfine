@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ReservationMixin from './Reservation';
+import { ReservationMixin } from './Reservation';
 
 export interface TaxiReservation extends Schema.Reservation, RdfResource {
   partySize: Schema.QuantitativeValue;
@@ -12,7 +12,7 @@ export interface TaxiReservation extends Schema.Reservation, RdfResource {
   pickupTime: Date;
 }
 
-export default function TaxiReservationMixin<Base extends Constructor>(Resource: Base) {
+export function TaxiReservationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TaxiReservationClass extends ReservationMixin(Resource) implements TaxiReservation {
     @property.resource()

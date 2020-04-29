@@ -3,9 +3,6 @@ import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '.';
-import DatatypeMixin from './Datatype';
-import DirectionMixin from './Direction';
-import TransformationMixin from './Transformation';
 
 export interface Column extends RdfResource {
   aboutUrl: string;
@@ -27,12 +24,12 @@ export interface Column extends RdfResource {
   virtual: boolean;
 }
 
-export default function ColumnMixin<Base extends Constructor>(Resource: Base) {
+export function ColumnMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class ColumnClass extends Resource implements Column {
     @property.literal()
     aboutUrl!: string;
-    @property.resource({ as: [DatatypeMixin] })
+    @property.resource({ implicitTypes: [csvw.Datatype] })
     datatype!: Csvw.Datatype;
     @property.literal({ path: csvw.datatype })
     datatypeLiteral!: string;
@@ -54,11 +51,11 @@ export default function ColumnMixin<Base extends Constructor>(Resource: Base) {
     separator!: string;
     @property.literal({ type: Boolean })
     suppressOutput!: boolean;
-    @property.resource({ as: [DirectionMixin] })
+    @property.resource({ implicitTypes: [csvw.Direction] })
     textDirection!: Csvw.Direction;
     @property()
     title!: RDF.Term;
-    @property.resource({ values: 'array', as: [TransformationMixin] })
+    @property.resource({ values: 'array', implicitTypes: [csvw.Transformation] })
     transformations!: Array<Csvw.Transformation>;
     @property.literal()
     valueUrl!: string;

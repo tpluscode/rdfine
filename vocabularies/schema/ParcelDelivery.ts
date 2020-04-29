@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface ParcelDelivery extends Schema.Intangible, RdfResource {
   carrier: Schema.Organization;
@@ -20,7 +20,7 @@ export interface ParcelDelivery extends Schema.Intangible, RdfResource {
   trackingUrl: RDF.NamedNode;
 }
 
-export default function ParcelDeliveryMixin<Base extends Constructor>(Resource: Base) {
+export function ParcelDeliveryMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ParcelDeliveryClass extends IntangibleMixin(Resource) implements ParcelDelivery {
     @property.resource()

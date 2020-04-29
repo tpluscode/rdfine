@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CollectionPageMixin from './CollectionPage';
+import { CollectionPageMixin } from './CollectionPage';
 
 export interface MediaGallery extends Schema.CollectionPage, RdfResource {
 }
 
-export default function MediaGalleryMixin<Base extends Constructor>(Resource: Base) {
+export function MediaGalleryMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MediaGalleryClass extends CollectionPageMixin(Resource) implements MediaGallery {
   }

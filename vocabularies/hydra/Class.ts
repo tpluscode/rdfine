@@ -4,10 +4,8 @@ import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import RdfsClassMixin from '@rdfine/rdfs/Class';
-import ResourceMixin from './Resource';
-import OperationMixin from './Operation';
-import SupportedPropertyMixin from './SupportedProperty';
+import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/Class';
+import { ResourceMixin } from './Resource';
 
 export interface Class extends Rdfs.Class, Hydra.Resource, RdfResource {
   description: string;
@@ -16,14 +14,14 @@ export interface Class extends Rdfs.Class, Hydra.Resource, RdfResource {
   title: string;
 }
 
-export default function ClassMixin<Base extends Constructor>(Resource: Base) {
+export function ClassMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class ClassClass extends ResourceMixin(RdfsClassMixin(Resource)) implements Class {
     @property.literal()
     description!: string;
-    @property.resource({ values: 'array', as: [OperationMixin] })
+    @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
     supportedOperation!: Array<Hydra.Operation>;
-    @property.resource({ values: 'array', as: [SupportedPropertyMixin] })
+    @property.resource({ values: 'array', implicitTypes: [hydra.SupportedProperty] })
     supportedProperty!: Array<Hydra.SupportedProperty>;
     @property.literal()
     title!: string;

@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ResidenceMixin from './Residence';
+import { ResidenceMixin } from './Residence';
 
 export interface GatedResidenceCommunity extends Schema.Residence, RdfResource {
 }
 
-export default function GatedResidenceCommunityMixin<Base extends Constructor>(Resource: Base) {
+export function GatedResidenceCommunityMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GatedResidenceCommunityClass extends ResidenceMixin(Resource) implements GatedResidenceCommunity {
   }

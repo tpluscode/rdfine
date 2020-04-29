@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import AddActionMixin from './AddAction';
+import { AddActionMixin } from './AddAction';
 
 export interface InsertAction extends Schema.AddAction, RdfResource {
   toLocation: Schema.Place;
 }
 
-export default function InsertActionMixin<Base extends Constructor>(Resource: Base) {
+export function InsertActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class InsertActionClass extends AddActionMixin(Resource) implements InsertAction {
     @property.resource()

@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import RoleMixin from './Role';
+import { RoleMixin } from './Role';
 
 export interface OrganizationRole extends Schema.Role, RdfResource {
   numberedPosition: number;
 }
 
-export default function OrganizationRoleMixin<Base extends Constructor>(Resource: Base) {
+export function OrganizationRoleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OrganizationRoleClass extends RoleMixin(Resource) implements OrganizationRole {
     @property.literal({ type: Number })

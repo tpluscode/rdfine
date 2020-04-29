@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface Trip extends Schema.Intangible, RdfResource {
   arrivalTime: Date;
@@ -12,7 +12,7 @@ export interface Trip extends Schema.Intangible, RdfResource {
   provider: Schema.Organization | Schema.Person;
 }
 
-export default function TripMixin<Base extends Constructor>(Resource: Base) {
+export function TripMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TripClass extends IntangibleMixin(Resource) implements Trip {
     @property.literal()

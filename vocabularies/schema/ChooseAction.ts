@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import AssessActionMixin from './AssessAction';
+import { AssessActionMixin } from './AssessAction';
 
 export interface ChooseAction extends Schema.AssessAction, RdfResource {
   actionOption: Schema.Thing;
@@ -12,7 +12,7 @@ export interface ChooseAction extends Schema.AssessAction, RdfResource {
   optionLiteral: string;
 }
 
-export default function ChooseActionMixin<Base extends Constructor>(Resource: Base) {
+export function ChooseActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ChooseActionClass extends AssessActionMixin(Resource) implements ChooseAction {
     @property.resource()

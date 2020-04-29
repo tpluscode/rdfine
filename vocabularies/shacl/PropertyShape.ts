@@ -4,9 +4,8 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import ShapeMixin from './Shape';
-import PropertyGroupMixin from './PropertyGroup';
-import RdfsResourceMixin from '@rdfine/rdfs/Resource';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import { ShapeMixin } from './Shape';
 
 export interface PropertyShape extends Sh.Shape, RdfResource {
   defaultValue: RDF.Term;
@@ -16,14 +15,14 @@ export interface PropertyShape extends Sh.Shape, RdfResource {
   path: Rdfs.Resource;
 }
 
-export default function PropertyShapeMixin<Base extends Constructor>(Resource: Base) {
+export function PropertyShapeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class PropertyShapeClass extends ShapeMixin(Resource) implements PropertyShape {
     @property()
     defaultValue!: RDF.Term;
     @property()
     description!: RDF.Term;
-    @property.resource({ as: [PropertyGroupMixin] })
+    @property.resource({ implicitTypes: [sh.PropertyGroup] })
     group!: Sh.PropertyGroup;
     @property()
     name!: RDF.Term;

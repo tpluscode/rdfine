@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import HealthAndBeautyBusinessMixin from './HealthAndBeautyBusiness';
-import SportsActivityLocationMixin from './SportsActivityLocation';
+import { HealthAndBeautyBusinessMixin } from './HealthAndBeautyBusiness';
+import { SportsActivityLocationMixin } from './SportsActivityLocation';
 
 export interface HealthClub extends Schema.HealthAndBeautyBusiness, Schema.SportsActivityLocation, RdfResource {
 }
 
-export default function HealthClubMixin<Base extends Constructor>(Resource: Base) {
+export function HealthClubMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class HealthClubClass extends SportsActivityLocationMixin(HealthAndBeautyBusinessMixin(Resource)) implements HealthClub {
   }

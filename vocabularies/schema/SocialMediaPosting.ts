@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ArticleMixin from './Article';
+import { ArticleMixin } from './Article';
 
 export interface SocialMediaPosting extends Schema.Article, RdfResource {
   sharedContent: Schema.CreativeWork;
 }
 
-export default function SocialMediaPostingMixin<Base extends Constructor>(Resource: Base) {
+export function SocialMediaPostingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SocialMediaPostingClass extends ArticleMixin(Resource) implements SocialMediaPosting {
     @property.resource()

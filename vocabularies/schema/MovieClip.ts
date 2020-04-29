@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import ClipMixin from './Clip';
+import { ClipMixin } from './Clip';
 
 export interface MovieClip extends Schema.Clip, RdfResource {
 }
 
-export default function MovieClipMixin<Base extends Constructor>(Resource: Base) {
+export function MovieClipMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MovieClipClass extends ClipMixin(Resource) implements MovieClip {
   }

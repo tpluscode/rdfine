@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import DigitalDocumentMixin from './DigitalDocument';
+import { DigitalDocumentMixin } from './DigitalDocument';
 
 export interface SpreadsheetDigitalDocument extends Schema.DigitalDocument, RdfResource {
 }
 
-export default function SpreadsheetDigitalDocumentMixin<Base extends Constructor>(Resource: Base) {
+export function SpreadsheetDigitalDocumentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SpreadsheetDigitalDocumentClass extends DigitalDocumentMixin(Resource) implements SpreadsheetDigitalDocument {
   }

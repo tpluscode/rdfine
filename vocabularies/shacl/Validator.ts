@@ -4,12 +4,12 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import RdfsResourceMixin from '@rdfine/rdfs/Resource';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
 
 export interface Validator extends Rdfs.Resource, RdfResource {
 }
 
-export default function ValidatorMixin<Base extends Constructor>(Resource: Base) {
+export function ValidatorMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class ValidatorClass extends RdfsResourceMixin(Resource) implements Validator {
   }

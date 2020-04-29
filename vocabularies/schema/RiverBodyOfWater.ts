@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import BodyOfWaterMixin from './BodyOfWater';
+import { BodyOfWaterMixin } from './BodyOfWater';
 
 export interface RiverBodyOfWater extends Schema.BodyOfWater, RdfResource {
 }
 
-export default function RiverBodyOfWaterMixin<Base extends Constructor>(Resource: Base) {
+export function RiverBodyOfWaterMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RiverBodyOfWaterClass extends BodyOfWaterMixin(Resource) implements RiverBodyOfWater {
   }

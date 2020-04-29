@@ -20,7 +20,7 @@ export interface Thing extends RdfResource {
   url: RDF.NamedNode;
 }
 
-export default function ThingMixin<Base extends Constructor>(Resource: Base) {
+export function ThingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ThingClass extends Resource implements Thing {
     @property()

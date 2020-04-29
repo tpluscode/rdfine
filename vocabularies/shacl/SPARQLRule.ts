@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
-import RuleMixin from './Rule';
-import SPARQLConstructExecutableMixin from './SPARQLConstructExecutable';
+import { RuleMixin } from './Rule';
+import { SPARQLConstructExecutableMixin } from './SPARQLConstructExecutable';
 
 export interface SPARQLRule extends Sh.Rule, Sh.SPARQLConstructExecutable, RdfResource {
 }
 
-export default function SPARQLRuleMixin<Base extends Constructor>(Resource: Base) {
+export function SPARQLRuleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class SPARQLRuleClass extends SPARQLConstructExecutableMixin(RuleMixin(Resource)) implements SPARQLRule {
   }

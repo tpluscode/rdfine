@@ -11,7 +11,7 @@ export interface Row extends RdfResource {
   title: RDF.Term;
 }
 
-export default function RowMixin<Base extends Constructor>(Resource: Base) {
+export function RowMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class RowClass extends Resource implements Row {
     @property()

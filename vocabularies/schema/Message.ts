@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Message extends Schema.CreativeWork, RdfResource {
   bccRecipient: Schema.ContactPoint | Schema.Organization | Schema.Person;
@@ -17,7 +17,7 @@ export interface Message extends Schema.CreativeWork, RdfResource {
   toRecipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
 }
 
-export default function MessageMixin<Base extends Constructor>(Resource: Base) {
+export function MessageMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MessageClass extends CreativeWorkMixin(Resource) implements Message {
     @property.resource()

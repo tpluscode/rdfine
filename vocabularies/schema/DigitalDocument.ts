@@ -3,13 +3,13 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface DigitalDocument extends Schema.CreativeWork, RdfResource {
   hasDigitalDocumentPermission: Schema.DigitalDocumentPermission;
 }
 
-export default function DigitalDocumentMixin<Base extends Constructor>(Resource: Base) {
+export function DigitalDocumentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DigitalDocumentClass extends CreativeWorkMixin(Resource) implements DigitalDocument {
     @property.resource()

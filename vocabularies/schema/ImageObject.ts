@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import MediaObjectMixin from './MediaObject';
+import { MediaObjectMixin } from './MediaObject';
 
 export interface ImageObject extends Schema.MediaObject, RdfResource {
   caption: Schema.MediaObject;
@@ -14,7 +14,7 @@ export interface ImageObject extends Schema.MediaObject, RdfResource {
   thumbnail: Schema.ImageObject;
 }
 
-export default function ImageObjectMixin<Base extends Constructor>(Resource: Base) {
+export function ImageObjectMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ImageObjectClass extends MediaObjectMixin(Resource) implements ImageObject {
     @property.resource()

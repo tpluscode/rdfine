@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import StructuredValueMixin from './StructuredValue';
+import { StructuredValueMixin } from './StructuredValue';
 
 export interface GeoCoordinates extends Schema.StructuredValue, RdfResource {
   address: Schema.PostalAddress;
@@ -16,7 +16,7 @@ export interface GeoCoordinates extends Schema.StructuredValue, RdfResource {
   postalCode: string;
 }
 
-export default function GeoCoordinatesMixin<Base extends Constructor>(Resource: Base) {
+export function GeoCoordinatesMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GeoCoordinatesClass extends StructuredValueMixin(Resource) implements GeoCoordinates {
     @property.resource()

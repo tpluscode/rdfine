@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import HowToMixin from './HowTo';
+import { HowToMixin } from './HowTo';
 
 export interface Recipe extends Schema.HowTo, RdfResource {
   cookingMethod: string;
@@ -20,7 +20,7 @@ export interface Recipe extends Schema.HowTo, RdfResource {
   suitableForDiet: Schema.RestrictedDiet;
 }
 
-export default function RecipeMixin<Base extends Constructor>(Resource: Base) {
+export function RecipeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RecipeClass extends HowToMixin(Resource) implements Recipe {
     @property.literal()

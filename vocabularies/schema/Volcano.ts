@@ -3,12 +3,12 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import LandformMixin from './Landform';
+import { LandformMixin } from './Landform';
 
 export interface Volcano extends Schema.Landform, RdfResource {
 }
 
-export default function VolcanoMixin<Base extends Constructor>(Resource: Base) {
+export function VolcanoMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class VolcanoClass extends LandformMixin(Resource) implements Volcano {
   }

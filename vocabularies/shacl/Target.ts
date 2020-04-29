@@ -4,12 +4,12 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import RdfsResourceMixin from '@rdfine/rdfs/Resource';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
 
 export interface Target extends Rdfs.Resource, RdfResource {
 }
 
-export default function TargetMixin<Base extends Constructor>(Resource: Base) {
+export function TargetMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class TargetClass extends RdfsResourceMixin(Resource) implements Target {
   }

@@ -4,12 +4,12 @@ import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '.';
 import type * as Rdfs from '@rdfine/rdfs';
-import RdfsClassMixin from '@rdfine/rdfs/Class';
+import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/Class';
 
 export interface DeprecatedClass extends Rdfs.Class, RdfResource {
 }
 
-export default function DeprecatedClassMixin<Base extends Constructor>(Resource: Base) {
+export function DeprecatedClassMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class DeprecatedClassClass extends RdfsClassMixin(Resource) implements DeprecatedClass {
   }

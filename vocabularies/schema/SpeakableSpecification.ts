@@ -3,14 +3,14 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import IntangibleMixin from './Intangible';
+import { IntangibleMixin } from './Intangible';
 
 export interface SpeakableSpecification extends Schema.Intangible, RdfResource {
   cssSelector: string;
   xpath: string;
 }
 
-export default function SpeakableSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function SpeakableSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SpeakableSpecificationClass extends IntangibleMixin(Resource) implements SpeakableSpecification {
     @property.literal()

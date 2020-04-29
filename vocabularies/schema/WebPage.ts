@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface WebPage extends Schema.CreativeWork, RdfResource {
   breadcrumb: Schema.BreadcrumbList;
@@ -19,7 +19,7 @@ export interface WebPage extends Schema.CreativeWork, RdfResource {
   specialty: Schema.Specialty;
 }
 
-export default function WebPageMixin<Base extends Constructor>(Resource: Base) {
+export function WebPageMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WebPageClass extends CreativeWorkMixin(Resource) implements WebPage {
     @property.resource()

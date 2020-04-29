@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import StructuredValueMixin from './StructuredValue';
+import { StructuredValueMixin } from './StructuredValue';
 
 export interface PropertyValue extends Schema.StructuredValue, RdfResource {
   maxValue: number;
@@ -18,7 +18,7 @@ export interface PropertyValue extends Schema.StructuredValue, RdfResource {
   valueReference: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue;
 }
 
-export default function PropertyValueMixin<Base extends Constructor>(Resource: Base) {
+export function PropertyValueMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PropertyValueClass extends StructuredValueMixin(Resource) implements PropertyValue {
     @property.literal({ type: Number })

@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '.';
-import CreativeWorkMixin from './CreativeWork';
+import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Blog extends Schema.CreativeWork, RdfResource {
   blogPost: Schema.BlogPosting;
@@ -11,7 +11,7 @@ export interface Blog extends Schema.CreativeWork, RdfResource {
   issn: string;
 }
 
-export default function BlogMixin<Base extends Constructor>(Resource: Base) {
+export function BlogMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BlogClass extends CreativeWorkMixin(Resource) implements Blog {
     @property.resource()
