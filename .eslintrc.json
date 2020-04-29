@@ -10,6 +10,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "symbol-description": "off"
+    "symbol-description": "off",
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/__tests__/**"]}]
   }
 }
