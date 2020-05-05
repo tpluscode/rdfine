@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
@@ -21,6 +22,8 @@ class AnnotationImpl extends AnnotationMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(owl.Annotation)
   }
+
+  static readonly __mixins: Mixin[] = [AnnotationMixin, RdfsResourceMixin];
 }
-AnnotationMixin.shouldApply = (r: RdfResource) => r.types.has(owl.Annotation)
+AnnotationMixin.appliesTo = owl.Annotation
 AnnotationMixin.Class = AnnotationImpl

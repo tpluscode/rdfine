@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { HouseMixin } from './House';
 
@@ -29,6 +30,8 @@ class SingleFamilyResidenceImpl extends SingleFamilyResidenceMixin(RdfResourceIm
     super(arg, init)
     this.types.add(schema.SingleFamilyResidence)
   }
+
+  static readonly __mixins: Mixin[] = [SingleFamilyResidenceMixin, HouseMixin];
 }
-SingleFamilyResidenceMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SingleFamilyResidence)
+SingleFamilyResidenceMixin.appliesTo = schema.SingleFamilyResidence
 SingleFamilyResidenceMixin.Class = SingleFamilyResidenceImpl

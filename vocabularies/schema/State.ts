@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { AdministrativeAreaMixin } from './AdministrativeArea';
 
@@ -20,6 +21,8 @@ class StateImpl extends StateMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.State)
   }
+
+  static readonly __mixins: Mixin[] = [StateMixin, AdministrativeAreaMixin];
 }
-StateMixin.shouldApply = (r: RdfResource) => r.types.has(schema.State)
+StateMixin.appliesTo = schema.State
 StateMixin.Class = StateImpl

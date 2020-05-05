@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { BankAccountMixin } from './BankAccount';
 import { InvestmentOrDepositMixin } from './InvestmentOrDeposit';
@@ -21,6 +22,8 @@ class DepositAccountImpl extends DepositAccountMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.DepositAccount)
   }
+
+  static readonly __mixins: Mixin[] = [DepositAccountMixin, BankAccountMixin, InvestmentOrDepositMixin];
 }
-DepositAccountMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DepositAccount)
+DepositAccountMixin.appliesTo = schema.DepositAccount
 DepositAccountMixin.Class = DepositAccountImpl

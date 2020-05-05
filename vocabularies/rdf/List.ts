@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { rdf } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdf from '.';
 
 export interface List extends RdfResource {
@@ -25,6 +26,8 @@ class ListImpl extends ListMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(rdf.List)
   }
+
+  static readonly __mixins: Mixin[] = [ListMixin];
 }
-ListMixin.shouldApply = (r: RdfResource) => r.types.has(rdf.List)
+ListMixin.appliesTo = rdf.List
 ListMixin.Class = ListImpl

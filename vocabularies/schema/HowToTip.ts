@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 import { ListItemMixin } from './ListItem';
@@ -21,6 +22,8 @@ class HowToTipImpl extends HowToTipMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.HowToTip)
   }
+
+  static readonly __mixins: Mixin[] = [HowToTipMixin, CreativeWorkMixin, ListItemMixin];
 }
-HowToTipMixin.shouldApply = (r: RdfResource) => r.types.has(schema.HowToTip)
+HowToTipMixin.appliesTo = schema.HowToTip
 HowToTipMixin.Class = HowToTipImpl

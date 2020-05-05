@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ReviewMixin } from './Review';
 
@@ -23,6 +24,8 @@ class ClaimReviewImpl extends ClaimReviewMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.ClaimReview)
   }
+
+  static readonly __mixins: Mixin[] = [ClaimReviewMixin, ReviewMixin];
 }
-ClaimReviewMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ClaimReview)
+ClaimReviewMixin.appliesTo = schema.ClaimReview
 ClaimReviewMixin.Class = ClaimReviewImpl

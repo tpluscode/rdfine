@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
@@ -27,6 +28,8 @@ class ParameterizableImpl extends ParameterizableMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(sh.Parameterizable)
   }
+
+  static readonly __mixins: Mixin[] = [ParameterizableMixin, RdfsResourceMixin];
 }
-ParameterizableMixin.shouldApply = (r: RdfResource) => r.types.has(sh.Parameterizable)
+ParameterizableMixin.appliesTo = sh.Parameterizable
 ParameterizableMixin.Class = ParameterizableImpl

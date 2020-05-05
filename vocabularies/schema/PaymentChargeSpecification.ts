@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { PriceSpecificationMixin } from './PriceSpecification';
 
@@ -26,6 +27,8 @@ class PaymentChargeSpecificationImpl extends PaymentChargeSpecificationMixin(Rdf
     super(arg, init)
     this.types.add(schema.PaymentChargeSpecification)
   }
+
+  static readonly __mixins: Mixin[] = [PaymentChargeSpecificationMixin, PriceSpecificationMixin];
 }
-PaymentChargeSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PaymentChargeSpecification)
+PaymentChargeSpecificationMixin.appliesTo = schema.PaymentChargeSpecification
 PaymentChargeSpecificationMixin.Class = PaymentChargeSpecificationImpl

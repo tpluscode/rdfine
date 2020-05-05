@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import { ObjectPropertyMixin } from './ObjectProperty';
 
@@ -20,6 +21,8 @@ class IrreflexivePropertyImpl extends IrreflexivePropertyMixin(RdfResourceImpl) 
     super(arg, init)
     this.types.add(owl.IrreflexiveProperty)
   }
+
+  static readonly __mixins: Mixin[] = [IrreflexivePropertyMixin, ObjectPropertyMixin];
 }
-IrreflexivePropertyMixin.shouldApply = (r: RdfResource) => r.types.has(owl.IrreflexiveProperty)
+IrreflexivePropertyMixin.appliesTo = owl.IrreflexiveProperty
 IrreflexivePropertyMixin.Class = IrreflexivePropertyImpl

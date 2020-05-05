@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '.';
 
 export interface ForeignKey extends RdfResource {
@@ -25,6 +26,8 @@ class ForeignKeyImpl extends ForeignKeyMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(csvw.ForeignKey)
   }
+
+  static readonly __mixins: Mixin[] = [ForeignKeyMixin];
 }
-ForeignKeyMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.ForeignKey)
+ForeignKeyMixin.appliesTo = csvw.ForeignKey
 ForeignKeyMixin.Class = ForeignKeyImpl

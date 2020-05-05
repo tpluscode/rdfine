@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/Datatype';
@@ -21,6 +22,8 @@ class DataRangeImpl extends DataRangeMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(owl.DataRange)
   }
+
+  static readonly __mixins: Mixin[] = [DataRangeMixin, RdfsDatatypeMixin];
 }
-DataRangeMixin.shouldApply = (r: RdfResource) => r.types.has(owl.DataRange)
+DataRangeMixin.appliesTo = owl.DataRange
 DataRangeMixin.Class = DataRangeImpl

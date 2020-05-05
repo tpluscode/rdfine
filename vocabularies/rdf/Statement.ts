@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { rdf } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdf from '.';
 
 export interface Statement extends RdfResource {
@@ -28,6 +29,8 @@ class StatementImpl extends StatementMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(rdf.Statement)
   }
+
+  static readonly __mixins: Mixin[] = [StatementMixin];
 }
-StatementMixin.shouldApply = (r: RdfResource) => r.types.has(rdf.Statement)
+StatementMixin.appliesTo = rdf.Statement
 StatementMixin.Class = StatementImpl

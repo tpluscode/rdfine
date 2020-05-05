@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { GeoShapeMixin } from './GeoShape';
 
@@ -29,6 +30,8 @@ class GeoCircleImpl extends GeoCircleMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.GeoCircle)
   }
+
+  static readonly __mixins: Mixin[] = [GeoCircleMixin, GeoShapeMixin];
 }
-GeoCircleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.GeoCircle)
+GeoCircleMixin.appliesTo = schema.GeoCircle
 GeoCircleMixin.Class = GeoCircleImpl

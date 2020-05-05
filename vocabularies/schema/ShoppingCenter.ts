@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { LocalBusinessMixin } from './LocalBusiness';
 
@@ -20,6 +21,8 @@ class ShoppingCenterImpl extends ShoppingCenterMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.ShoppingCenter)
   }
+
+  static readonly __mixins: Mixin[] = [ShoppingCenterMixin, LocalBusinessMixin];
 }
-ShoppingCenterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ShoppingCenter)
+ShoppingCenterMixin.appliesTo = schema.ShoppingCenter
 ShoppingCenterMixin.Class = ShoppingCenterImpl

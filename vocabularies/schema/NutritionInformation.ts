@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
@@ -56,6 +57,8 @@ class NutritionInformationImpl extends NutritionInformationMixin(RdfResourceImpl
     super(arg, init)
     this.types.add(schema.NutritionInformation)
   }
+
+  static readonly __mixins: Mixin[] = [NutritionInformationMixin, StructuredValueMixin];
 }
-NutritionInformationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.NutritionInformation)
+NutritionInformationMixin.appliesTo = schema.NutritionInformation
 NutritionInformationMixin.Class = NutritionInformationImpl

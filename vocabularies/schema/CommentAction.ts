@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CommunicateActionMixin } from './CommunicateAction';
 
@@ -23,6 +24,8 @@ class CommentActionImpl extends CommentActionMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.CommentAction)
   }
+
+  static readonly __mixins: Mixin[] = [CommentActionMixin, CommunicateActionMixin];
 }
-CommentActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CommentAction)
+CommentActionMixin.appliesTo = schema.CommentAction
 CommentActionMixin.Class = CommentActionImpl

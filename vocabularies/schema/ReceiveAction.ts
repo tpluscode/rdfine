@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { TransferActionMixin } from './TransferAction';
 
@@ -26,6 +27,8 @@ class ReceiveActionImpl extends ReceiveActionMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.ReceiveAction)
   }
+
+  static readonly __mixins: Mixin[] = [ReceiveActionMixin, TransferActionMixin];
 }
-ReceiveActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ReceiveAction)
+ReceiveActionMixin.appliesTo = schema.ReceiveAction
 ReceiveActionMixin.Class = ReceiveActionImpl

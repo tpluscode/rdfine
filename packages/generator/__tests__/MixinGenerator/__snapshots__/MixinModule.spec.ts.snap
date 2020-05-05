@@ -5,6 +5,7 @@ exports[`MixinModule does not try import self when property has range of enclosi
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\".\\";
 
 export interface Class extends RdfResource {
@@ -25,8 +26,10 @@ class ClassImpl extends ClassMixin(RdfResourceImpl) {
         super(arg, init)
         this.types.add(ex.Class)
     }
+
+    static readonly __mixins: Mixin[] = [ClassMixin];
 }
-ClassMixin.shouldApply = (r: RdfResource) => r.types.has(ex.Class)
+ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 "
 `;
@@ -58,6 +61,7 @@ exports[`MixinModule generates a mixin class with external super classes: toMatc
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\".\\";
 import type * as Schema from \\"@rdfine/schema\\";
 import { PersonMixin as SchemaPersonMixin } from \\"@rdfine/schema/Person\\";
@@ -77,8 +81,10 @@ class ClassImpl extends ClassMixin(RdfResourceImpl) {
         super(arg, init)
         this.types.add(ex.Class)
     }
+
+    static readonly __mixins: Mixin[] = [ClassMixin, SchemaPersonMixin];
 }
-ClassMixin.shouldApply = (r: RdfResource) => r.types.has(ex.Class)
+ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 "
 `;
@@ -88,6 +94,7 @@ exports[`MixinModule generates a mixin class without props: toMatchSnapshot 1`] 
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\".\\";
 
 export interface Class extends RdfResource {
@@ -105,8 +112,10 @@ class ClassImpl extends ClassMixin(RdfResourceImpl) {
         super(arg, init)
         this.types.add(ex.Class)
     }
+
+    static readonly __mixins: Mixin[] = [ClassMixin];
 }
-ClassMixin.shouldApply = (r: RdfResource) => r.types.has(ex.Class)
+ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 "
 `;
@@ -116,6 +125,7 @@ exports[`MixinModule generates array property: toMatchSnapshot 1`] = `
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\".\\";
 
 export interface Class extends RdfResource {
@@ -136,8 +146,10 @@ class ClassImpl extends ClassMixin(RdfResourceImpl) {
         super(arg, init)
         this.types.add(ex.Class)
     }
+
+    static readonly __mixins: Mixin[] = [ClassMixin];
 }
-ClassMixin.shouldApply = (r: RdfResource) => r.types.has(ex.Class)
+ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 "
 `;
@@ -147,6 +159,7 @@ exports[`MixinModule generates list property: toMatchSnapshot 1`] = `
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\".\\";
 
 export interface Class extends RdfResource {
@@ -167,8 +180,10 @@ class ClassImpl extends ClassMixin(RdfResourceImpl) {
         super(arg, init)
         this.types.add(ex.Class)
     }
+
+    static readonly __mixins: Mixin[] = [ClassMixin];
 }
-ClassMixin.shouldApply = (r: RdfResource) => r.types.has(ex.Class)
+ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 "
 `;
@@ -178,6 +193,7 @@ exports[`MixinModule generates property with automatic external type cast when p
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\".\\";
 import type * as Example from \\"@rdfine/example\\";
 import { FooMixin as ExampleFooMixin } from \\"@rdfine/example/Foo\\";
@@ -200,8 +216,10 @@ class ClassImpl extends ClassMixin(RdfResourceImpl) {
         super(arg, init)
         this.types.add(ex.Class)
     }
+
+    static readonly __mixins: Mixin[] = [ClassMixin];
 }
-ClassMixin.shouldApply = (r: RdfResource) => r.types.has(ex.Class)
+ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 "
 `;
@@ -211,6 +229,7 @@ exports[`MixinModule generates property with automatic type cast when predicate 
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\".\\";
 
 export interface Class extends RdfResource {
@@ -231,8 +250,10 @@ class ClassImpl extends ClassMixin(RdfResourceImpl) {
         super(arg, init)
         this.types.add(ex.Class)
     }
+
+    static readonly __mixins: Mixin[] = [ClassMixin];
 }
-ClassMixin.shouldApply = (r: RdfResource) => r.types.has(ex.Class)
+ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 "
 `;

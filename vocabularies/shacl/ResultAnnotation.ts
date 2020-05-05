@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import type * as Rdf from '@rdfine/rdf';
@@ -32,6 +33,8 @@ class ResultAnnotationImpl extends ResultAnnotationMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(sh.ResultAnnotation)
   }
+
+  static readonly __mixins: Mixin[] = [ResultAnnotationMixin, RdfsResourceMixin];
 }
-ResultAnnotationMixin.shouldApply = (r: RdfResource) => r.types.has(sh.ResultAnnotation)
+ResultAnnotationMixin.appliesTo = sh.ResultAnnotation
 ResultAnnotationMixin.Class = ResultAnnotationImpl

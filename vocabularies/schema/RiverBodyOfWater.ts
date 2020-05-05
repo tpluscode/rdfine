@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { BodyOfWaterMixin } from './BodyOfWater';
 
@@ -20,6 +21,8 @@ class RiverBodyOfWaterImpl extends RiverBodyOfWaterMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.RiverBodyOfWater)
   }
+
+  static readonly __mixins: Mixin[] = [RiverBodyOfWaterMixin, BodyOfWaterMixin];
 }
-RiverBodyOfWaterMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RiverBodyOfWater)
+RiverBodyOfWaterMixin.appliesTo = schema.RiverBodyOfWater
 RiverBodyOfWaterMixin.Class = RiverBodyOfWaterImpl

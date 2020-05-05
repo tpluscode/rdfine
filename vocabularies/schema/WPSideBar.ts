@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { WebPageElementMixin } from './WebPageElement';
 
@@ -20,6 +21,8 @@ class WPSideBarImpl extends WPSideBarMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.WPSideBar)
   }
+
+  static readonly __mixins: Mixin[] = [WPSideBarMixin, WebPageElementMixin];
 }
-WPSideBarMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WPSideBar)
+WPSideBarMixin.appliesTo = schema.WPSideBar
 WPSideBarMixin.Class = WPSideBarImpl

@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ProductMixin } from './Product';
 
@@ -23,6 +24,8 @@ class IndividualProductImpl extends IndividualProductMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.IndividualProduct)
   }
+
+  static readonly __mixins: Mixin[] = [IndividualProductMixin, ProductMixin];
 }
-IndividualProductMixin.shouldApply = (r: RdfResource) => r.types.has(schema.IndividualProduct)
+IndividualProductMixin.appliesTo = schema.IndividualProduct
 IndividualProductMixin.Class = IndividualProductImpl

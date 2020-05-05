@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/Class';
@@ -21,6 +22,8 @@ class DeprecatedClassImpl extends DeprecatedClassMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(owl.DeprecatedClass)
   }
+
+  static readonly __mixins: Mixin[] = [DeprecatedClassMixin, RdfsClassMixin];
 }
-DeprecatedClassMixin.shouldApply = (r: RdfResource) => r.types.has(owl.DeprecatedClass)
+DeprecatedClassMixin.appliesTo = owl.DeprecatedClass
 DeprecatedClassMixin.Class = DeprecatedClassImpl

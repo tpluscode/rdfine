@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import { ObjectPropertyMixin } from './ObjectProperty';
 
@@ -20,6 +21,8 @@ class ReflexivePropertyImpl extends ReflexivePropertyMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(owl.ReflexiveProperty)
   }
+
+  static readonly __mixins: Mixin[] = [ReflexivePropertyMixin, ObjectPropertyMixin];
 }
-ReflexivePropertyMixin.shouldApply = (r: RdfResource) => r.types.has(owl.ReflexiveProperty)
+ReflexivePropertyMixin.appliesTo = owl.ReflexiveProperty
 ReflexivePropertyMixin.Class = ReflexivePropertyImpl

@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import { SPARQLAskExecutableMixin } from './SPARQLAskExecutable';
 import { ValidatorMixin } from './Validator';
@@ -21,6 +22,8 @@ class SPARQLAskValidatorImpl extends SPARQLAskValidatorMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(sh.SPARQLAskValidator)
   }
+
+  static readonly __mixins: Mixin[] = [SPARQLAskValidatorMixin, SPARQLAskExecutableMixin, ValidatorMixin];
 }
-SPARQLAskValidatorMixin.shouldApply = (r: RdfResource) => r.types.has(sh.SPARQLAskValidator)
+SPARQLAskValidatorMixin.appliesTo = sh.SPARQLAskValidator
 SPARQLAskValidatorMixin.Class = SPARQLAskValidatorImpl

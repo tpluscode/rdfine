@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { OrganizationMixin } from './Organization';
 import { PlaceMixin } from './Place';
@@ -36,6 +37,8 @@ class LocalBusinessImpl extends LocalBusinessMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.LocalBusiness)
   }
+
+  static readonly __mixins: Mixin[] = [LocalBusinessMixin, OrganizationMixin, PlaceMixin];
 }
-LocalBusinessMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LocalBusiness)
+LocalBusinessMixin.appliesTo = schema.LocalBusiness
 LocalBusinessMixin.Class = LocalBusinessImpl

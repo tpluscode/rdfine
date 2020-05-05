@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
@@ -47,6 +48,8 @@ class ClipImpl extends ClipMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.Clip)
   }
+
+  static readonly __mixins: Mixin[] = [ClipMixin, CreativeWorkMixin];
 }
-ClipMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Clip)
+ClipMixin.appliesTo = schema.Clip
 ClipMixin.Class = ClipImpl

@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { InteractActionMixin } from './InteractAction';
 
@@ -20,6 +21,8 @@ class UnRegisterActionImpl extends UnRegisterActionMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.UnRegisterAction)
   }
+
+  static readonly __mixins: Mixin[] = [UnRegisterActionMixin, InteractActionMixin];
 }
-UnRegisterActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UnRegisterAction)
+UnRegisterActionMixin.appliesTo = schema.UnRegisterAction
 UnRegisterActionMixin.Class = UnRegisterActionImpl

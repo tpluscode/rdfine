@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { rdf } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdf from '.';
 
 export interface Alt extends RdfResource {
@@ -19,6 +20,8 @@ class AltImpl extends AltMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(rdf.Alt)
   }
+
+  static readonly __mixins: Mixin[] = [AltMixin];
 }
-AltMixin.shouldApply = (r: RdfResource) => r.types.has(rdf.Alt)
+AltMixin.appliesTo = rdf.Alt
 AltMixin.Class = AltImpl

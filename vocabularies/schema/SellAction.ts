@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { TradeActionMixin } from './TradeAction';
 
@@ -26,6 +27,8 @@ class SellActionImpl extends SellActionMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.SellAction)
   }
+
+  static readonly __mixins: Mixin[] = [SellActionMixin, TradeActionMixin];
 }
-SellActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SellAction)
+SellActionMixin.appliesTo = schema.SellAction
 SellActionMixin.Class = SellActionImpl

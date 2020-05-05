@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { AllocateActionMixin } from './AllocateAction';
 
@@ -20,6 +21,8 @@ class AcceptActionImpl extends AcceptActionMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.AcceptAction)
   }
+
+  static readonly __mixins: Mixin[] = [AcceptActionMixin, AllocateActionMixin];
 }
-AcceptActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.AcceptAction)
+AcceptActionMixin.appliesTo = schema.AcceptAction
 AcceptActionMixin.Class = AcceptActionImpl

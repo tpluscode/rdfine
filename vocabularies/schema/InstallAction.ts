@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ConsumeActionMixin } from './ConsumeAction';
 
@@ -20,6 +21,8 @@ class InstallActionImpl extends InstallActionMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.InstallAction)
   }
+
+  static readonly __mixins: Mixin[] = [InstallActionMixin, ConsumeActionMixin];
 }
-InstallActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.InstallAction)
+InstallActionMixin.appliesTo = schema.InstallAction
 InstallActionMixin.Class = InstallActionImpl

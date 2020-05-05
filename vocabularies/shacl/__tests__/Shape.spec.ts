@@ -1,27 +1,50 @@
 import clownface from 'clownface'
-import rdf from '@rdfjs/dataset'
+import $rdf from '@rdfjs/dataset'
 import RDF from '@rdfjs/data-model'
+import RdfResource, { Constructor } from '@tpluscode/rdfine'
+import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
+import { ResourceMixin } from '@rdfine/rdfs/Resource'
 import { ShapeMixin } from '../Shape';
 import { ShapeDependencies } from '../dependencies/Shape'
-import { sh } from '../lib/namespace';
-import RdfResource from '@tpluscode/rdfine';
+import { sh } from '../lib/namespace'
+import { PropertyShapeMixin } from '../PropertyShape'
+
+RdfResource.factory.addMixin(...ShapeDependencies)
+RdfResource.factory.addMixin(ResourceMixin)
 
 describe('Shape', () => {
   describe('property', () => {
     it('should return instances of shape', async () => {
       // given
-      const dataset = rdf.dataset()
+      const dataset = $rdf.dataset()
       const graph = clownface({ dataset, term: RDF.namedNode('http://example.com/shape') })
         .addOut(sh.property, property => {
           property.addOut(sh.name, 'Foo')
         })
-      RdfResource.factory.addMixin(...ShapeDependencies)
 
       // when
       const shape = new ShapeMixin.Class(graph)
 
       // then
       expect(shape.property[0].name).toEqual(RDF.literal('Foo'))
+    })
+  })
+
+  describe('__mixins', () => {
+    it('does not contain duplicate mixins', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const graph = clownface({ dataset, term: RDF.namedNode('http://example.com/shape') })
+        .addOut(rdf.type, [rdfs.Resource, sh.PropertyShape])
+
+      // when
+      const shape = RdfResource.factory.createEntity(graph)
+      const propType = shape.constructor as Constructor
+
+      // then
+      expect(propType.__mixins).toEqual(
+        expect.arrayContaining([PropertyShapeMixin, ResourceMixin]),
+      )
     })
   })
 })

@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { OrganizationRoleMixin } from './OrganizationRole';
 
@@ -29,6 +30,8 @@ class EmployeeRoleImpl extends EmployeeRoleMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.EmployeeRole)
   }
+
+  static readonly __mixins: Mixin[] = [EmployeeRoleMixin, OrganizationRoleMixin];
 }
-EmployeeRoleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EmployeeRole)
+EmployeeRoleMixin.appliesTo = schema.EmployeeRole
 EmployeeRoleMixin.Class = EmployeeRoleImpl

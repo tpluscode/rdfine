@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ConsumeActionMixin } from './ConsumeAction';
 
@@ -20,6 +21,8 @@ class ViewActionImpl extends ViewActionMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.ViewAction)
   }
+
+  static readonly __mixins: Mixin[] = [ViewActionMixin, ConsumeActionMixin];
 }
-ViewActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ViewAction)
+ViewActionMixin.appliesTo = schema.ViewAction
 ViewActionMixin.Class = ViewActionImpl

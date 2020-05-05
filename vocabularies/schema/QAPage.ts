@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { WebPageMixin } from './WebPage';
 
@@ -20,6 +21,8 @@ class QAPageImpl extends QAPageMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.QAPage)
   }
+
+  static readonly __mixins: Mixin[] = [QAPageMixin, WebPageMixin];
 }
-QAPageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.QAPage)
+QAPageMixin.appliesTo = schema.QAPage
 QAPageMixin.Class = QAPageImpl

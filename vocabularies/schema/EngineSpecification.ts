@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
@@ -26,6 +27,8 @@ class EngineSpecificationImpl extends EngineSpecificationMixin(RdfResourceImpl) 
     super(arg, init)
     this.types.add(schema.EngineSpecification)
   }
+
+  static readonly __mixins: Mixin[] = [EngineSpecificationMixin, StructuredValueMixin];
 }
-EngineSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.EngineSpecification)
+EngineSpecificationMixin.appliesTo = schema.EngineSpecification
 EngineSpecificationMixin.Class = EngineSpecificationImpl

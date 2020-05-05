@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { PlaceOfWorshipMixin } from './PlaceOfWorship';
 
@@ -20,6 +21,8 @@ class BuddhistTempleImpl extends BuddhistTempleMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.BuddhistTemple)
   }
+
+  static readonly __mixins: Mixin[] = [BuddhistTempleMixin, PlaceOfWorshipMixin];
 }
-BuddhistTempleMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BuddhistTemple)
+BuddhistTempleMixin.appliesTo = schema.BuddhistTemple
 BuddhistTempleMixin.Class = BuddhistTempleImpl

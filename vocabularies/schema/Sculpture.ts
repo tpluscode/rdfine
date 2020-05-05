@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
@@ -20,6 +21,8 @@ class SculptureImpl extends SculptureMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.Sculpture)
   }
+
+  static readonly __mixins: Mixin[] = [SculptureMixin, CreativeWorkMixin];
 }
-SculptureMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Sculpture)
+SculptureMixin.appliesTo = schema.Sculpture
 SculptureMixin.Class = SculptureImpl
