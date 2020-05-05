@@ -72,6 +72,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   private readonly __initializeProperties: (() => boolean)
   public static __ns?: NamespaceBuilder
   public static factory: ResourceFactory = new ResourceFactoryImpl(RdfResourceImpl)
+  public static __mixins: Mixin[] = []
 
   private static _userInitializeProperties(resource: RdfResourceImpl, init: Initializer<RdfResource> = {}): void {
     Object.entries(init)
