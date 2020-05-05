@@ -406,6 +406,7 @@ describe('decorator', () => {
           })
           name!: NameResource
         }
+        Resource.factory = new ResourceFactoryImpl(RdfResource)
 
         // when
         const instance = new Resource({
@@ -496,6 +497,9 @@ describe('decorator', () => {
         })
         allFriends!: this[]
       }
+      beforeEach(() => {
+        Resource.factory = new ResourceFactoryImpl(RdfResource)
+      })
 
       function namedGraphTests(newResource: (dataset: DatasetExt, term: NamedNode, graph?: NamedNode | DefaultGraph) => Resource<DatasetExt>) {
         describe('getter', () => {
