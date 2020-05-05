@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { InteractActionMixin } from './InteractAction';
 
@@ -23,6 +24,8 @@ class JoinActionImpl extends JoinActionMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.JoinAction)
   }
+
+  static readonly __mixins: Mixin[] = [JoinActionMixin, InteractActionMixin];
 }
-JoinActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.JoinAction)
+JoinActionMixin.appliesTo = schema.JoinAction
 JoinActionMixin.Class = JoinActionImpl

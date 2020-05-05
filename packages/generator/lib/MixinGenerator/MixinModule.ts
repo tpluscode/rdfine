@@ -40,6 +40,7 @@ export class MixinModule implements GeneratedModule {
     const depsModule = project.createSourceFile(`dependencies/${this.type.module}.ts`, {}, { overwrite: true })
 
     const mixinName = this.type.mixinName
+    const implName = `${this.type.localName}Impl`
     const interfaceDeclaration = this.createInterface(mixinFile)
     const classDeclaration = this.createMixinFunction(mixinFile, context)
 
@@ -52,7 +53,7 @@ export class MixinModule implements GeneratedModule {
     this.properties.forEach(propertyWriter.addProperty.bind(propertyWriter))
 
     const implementationClass = mixinFile.addClass({
-      name: `${this.type.localName}Impl`,
+      name: implName,
       extends: `${mixinName}(RdfResourceImpl)`,
     })
     implementationClass.addConstructor({
@@ -65,9 +66,20 @@ export class MixinModule implements GeneratedModule {
       ],
     })
 
+    const mixinNames = this.superClasses.reduce((mixins, sc) => {
+      return [...mixins, sc.type === 'Resource' ? sc.mixinName : sc.alias]
+    }, [this.type.mixinName])
+    implementationClass.addProperty({
+      isStatic: true,
+      isReadonly: true,
+      name: '__mixins',
+      type: 'Mixin[]',
+      initializer: `[${mixinNames.join(', ')}]`,
+    })
+
     mixinFile.addStatements([
-      `${mixinName}.shouldApply = (r: RdfResource) => r.types.has(${context.prefix}.${this.type.localName})`,
-      `${mixinName}.Class = ${this.type.localName}Impl`,
+      `${mixinName}.appliesTo = ${context.prefix}.${this.type.localName}`,
+      `${mixinName}.Class = ${implName}`,
     ])
 
     this.addImports(mixinFile, context)
@@ -156,6 +168,11 @@ export class MixinModule implements GeneratedModule {
     mixinFile.addImportDeclaration({
       namedImports: ['Initializer', 'ResourceNode'],
       moduleSpecifier: '@tpluscode/rdfine/RdfResource',
+      isTypeOnly: true,
+    })
+    mixinFile.addImportDeclaration({
+      namedImports: ['Mixin'],
+      moduleSpecifier: '@tpluscode/rdfine/lib/ResourceFactory',
       isTypeOnly: true,
     })
     mixinFile.addImportDeclaration({

@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
@@ -26,6 +27,8 @@ class WarrantyPromiseImpl extends WarrantyPromiseMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.WarrantyPromise)
   }
+
+  static readonly __mixins: Mixin[] = [WarrantyPromiseMixin, StructuredValueMixin];
 }
-WarrantyPromiseMixin.shouldApply = (r: RdfResource) => r.types.has(schema.WarrantyPromise)
+WarrantyPromiseMixin.appliesTo = schema.WarrantyPromise
 WarrantyPromiseMixin.Class = WarrantyPromiseImpl

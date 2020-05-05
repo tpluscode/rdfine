@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import { SPARQLAskExecutableMixin } from './SPARQLAskExecutable';
 import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable';
@@ -22,6 +23,8 @@ class SPARQLTargetTypeImpl extends SPARQLTargetTypeMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(sh.SPARQLTargetType)
   }
+
+  static readonly __mixins: Mixin[] = [SPARQLTargetTypeMixin, SPARQLAskExecutableMixin, SPARQLSelectExecutableMixin, TargetTypeMixin];
 }
-SPARQLTargetTypeMixin.shouldApply = (r: RdfResource) => r.types.has(sh.SPARQLTargetType)
+SPARQLTargetTypeMixin.appliesTo = sh.SPARQLTargetType
 SPARQLTargetTypeMixin.Class = SPARQLTargetTypeImpl

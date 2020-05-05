@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import { RuleMixin } from './Rule';
 
@@ -29,6 +30,8 @@ class TripleRuleImpl extends TripleRuleMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(sh.TripleRule)
   }
+
+  static readonly __mixins: Mixin[] = [TripleRuleMixin, RuleMixin];
 }
-TripleRuleMixin.shouldApply = (r: RdfResource) => r.types.has(sh.TripleRule)
+TripleRuleMixin.appliesTo = sh.TripleRule
 TripleRuleMixin.Class = TripleRuleImpl

@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { HealthAndBeautyBusinessMixin } from './HealthAndBeautyBusiness';
 
@@ -20,6 +21,8 @@ class DaySpaImpl extends DaySpaMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.DaySpa)
   }
+
+  static readonly __mixins: Mixin[] = [DaySpaMixin, HealthAndBeautyBusinessMixin];
 }
-DaySpaMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DaySpa)
+DaySpaMixin.appliesTo = schema.DaySpa
 DaySpaMixin.Class = DaySpaImpl

@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { TripMixin } from './Trip';
 
@@ -74,6 +75,8 @@ class FlightImpl extends FlightMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.Flight)
   }
+
+  static readonly __mixins: Mixin[] = [FlightMixin, TripMixin];
 }
-FlightMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Flight)
+FlightMixin.appliesTo = schema.Flight
 FlightMixin.Class = FlightImpl

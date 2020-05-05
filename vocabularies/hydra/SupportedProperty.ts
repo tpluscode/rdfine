@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
@@ -40,6 +41,8 @@ class SupportedPropertyImpl extends SupportedPropertyMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(hydra.SupportedProperty)
   }
+
+  static readonly __mixins: Mixin[] = [SupportedPropertyMixin, ResourceMixin];
 }
-SupportedPropertyMixin.shouldApply = (r: RdfResource) => r.types.has(hydra.SupportedProperty)
+SupportedPropertyMixin.appliesTo = hydra.SupportedProperty
 SupportedPropertyMixin.Class = SupportedPropertyImpl

@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { FinancialProductMixin } from './FinancialProduct';
 
@@ -38,6 +39,8 @@ class LoanOrCreditImpl extends LoanOrCreditMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.LoanOrCredit)
   }
+
+  static readonly __mixins: Mixin[] = [LoanOrCreditMixin, FinancialProductMixin];
 }
-LoanOrCreditMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LoanOrCredit)
+LoanOrCreditMixin.appliesTo = schema.LoanOrCredit
 LoanOrCreditMixin.Class = LoanOrCreditImpl

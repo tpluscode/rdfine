@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { UserInteractionMixin } from './UserInteraction';
 
@@ -35,6 +36,8 @@ class UserCommentsImpl extends UserCommentsMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.UserComments)
   }
+
+  static readonly __mixins: Mixin[] = [UserCommentsMixin, UserInteractionMixin];
 }
-UserCommentsMixin.shouldApply = (r: RdfResource) => r.types.has(schema.UserComments)
+UserCommentsMixin.appliesTo = schema.UserComments
 UserCommentsMixin.Class = UserCommentsImpl

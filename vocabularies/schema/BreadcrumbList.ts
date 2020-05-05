@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ItemListMixin } from './ItemList';
 
@@ -20,6 +21,8 @@ class BreadcrumbListImpl extends BreadcrumbListMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.BreadcrumbList)
   }
+
+  static readonly __mixins: Mixin[] = [BreadcrumbListMixin, ItemListMixin];
 }
-BreadcrumbListMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BreadcrumbList)
+BreadcrumbListMixin.appliesTo = schema.BreadcrumbList
 BreadcrumbListMixin.Class = BreadcrumbListImpl

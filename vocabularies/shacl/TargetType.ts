@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/Class';
@@ -22,6 +23,8 @@ class TargetTypeImpl extends TargetTypeMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(sh.TargetType)
   }
+
+  static readonly __mixins: Mixin[] = [TargetTypeMixin, RdfsClassMixin, ParameterizableMixin];
 }
-TargetTypeMixin.shouldApply = (r: RdfResource) => r.types.has(sh.TargetType)
+TargetTypeMixin.appliesTo = sh.TargetType
 TargetTypeMixin.Class = TargetTypeImpl

@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
@@ -23,6 +24,8 @@ class DataCatalogImpl extends DataCatalogMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.DataCatalog)
   }
+
+  static readonly __mixins: Mixin[] = [DataCatalogMixin, CreativeWorkMixin];
 }
-DataCatalogMixin.shouldApply = (r: RdfResource) => r.types.has(schema.DataCatalog)
+DataCatalogMixin.appliesTo = schema.DataCatalog
 DataCatalogMixin.Class = DataCatalogImpl

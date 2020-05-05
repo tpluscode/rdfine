@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/Class';
@@ -34,6 +35,8 @@ class ClassImpl extends ClassMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(hydra.Class)
   }
+
+  static readonly __mixins: Mixin[] = [ClassMixin, RdfsClassMixin, ResourceMixin];
 }
-ClassMixin.shouldApply = (r: RdfResource) => r.types.has(hydra.Class)
+ClassMixin.appliesTo = hydra.Class
 ClassMixin.Class = ClassImpl

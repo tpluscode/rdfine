@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
@@ -149,6 +150,8 @@ class OfferImpl extends OfferMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.Offer)
   }
+
+  static readonly __mixins: Mixin[] = [OfferMixin, IntangibleMixin];
 }
-OfferMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Offer)
+OfferMixin.appliesTo = schema.Offer
 OfferMixin.Class = OfferImpl

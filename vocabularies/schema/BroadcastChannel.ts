@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
@@ -44,6 +45,8 @@ class BroadcastChannelImpl extends BroadcastChannelMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.BroadcastChannel)
   }
+
+  static readonly __mixins: Mixin[] = [BroadcastChannelMixin, IntangibleMixin];
 }
-BroadcastChannelMixin.shouldApply = (r: RdfResource) => r.types.has(schema.BroadcastChannel)
+BroadcastChannelMixin.appliesTo = schema.BroadcastChannel
 BroadcastChannelMixin.Class = BroadcastChannelImpl

@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { InformActionMixin } from './InformAction';
 
@@ -29,6 +30,8 @@ class RsvpActionImpl extends RsvpActionMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.RsvpAction)
   }
+
+  static readonly __mixins: Mixin[] = [RsvpActionMixin, InformActionMixin];
 }
-RsvpActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RsvpAction)
+RsvpActionMixin.appliesTo = schema.RsvpAction
 RsvpActionMixin.Class = RsvpActionImpl

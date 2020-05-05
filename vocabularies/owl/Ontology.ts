@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
@@ -36,6 +37,8 @@ class OntologyImpl extends OntologyMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(owl.Ontology)
   }
+
+  static readonly __mixins: Mixin[] = [OntologyMixin, RdfsResourceMixin];
 }
-OntologyMixin.shouldApply = (r: RdfResource) => r.types.has(owl.Ontology)
+OntologyMixin.appliesTo = owl.Ontology
 OntologyMixin.Class = OntologyImpl

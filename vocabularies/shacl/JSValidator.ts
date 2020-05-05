@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import { JSExecutableMixin } from './JSExecutable';
 import { ValidatorMixin } from './Validator';
@@ -21,6 +22,8 @@ class JSValidatorImpl extends JSValidatorMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(sh.JSValidator)
   }
+
+  static readonly __mixins: Mixin[] = [JSValidatorMixin, JSExecutableMixin, ValidatorMixin];
 }
-JSValidatorMixin.shouldApply = (r: RdfResource) => r.types.has(sh.JSValidator)
+JSValidatorMixin.appliesTo = sh.JSValidator
 JSValidatorMixin.Class = JSValidatorImpl

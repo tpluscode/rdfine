@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { BlogPostingMixin } from './BlogPosting';
 
@@ -29,6 +30,8 @@ class LiveBlogPostingImpl extends LiveBlogPostingMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.LiveBlogPosting)
   }
+
+  static readonly __mixins: Mixin[] = [LiveBlogPostingMixin, BlogPostingMixin];
 }
-LiveBlogPostingMixin.shouldApply = (r: RdfResource) => r.types.has(schema.LiveBlogPosting)
+LiveBlogPostingMixin.appliesTo = schema.LiveBlogPosting
 LiveBlogPostingMixin.Class = LiveBlogPostingImpl

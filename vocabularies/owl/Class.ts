@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import type * as Rdf from '@rdfine/rdf';
@@ -35,6 +36,8 @@ class ClassImpl extends ClassMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(owl.Class)
   }
+
+  static readonly __mixins: Mixin[] = [ClassMixin, RdfsClassMixin];
 }
-ClassMixin.shouldApply = (r: RdfResource) => r.types.has(owl.Class)
+ClassMixin.appliesTo = owl.Class
 ClassMixin.Class = ClassImpl

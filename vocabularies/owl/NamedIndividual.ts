@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 
 export interface NamedIndividual extends RdfResource {
@@ -19,6 +20,8 @@ class NamedIndividualImpl extends NamedIndividualMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(owl.NamedIndividual)
   }
+
+  static readonly __mixins: Mixin[] = [NamedIndividualMixin];
 }
-NamedIndividualMixin.shouldApply = (r: RdfResource) => r.types.has(owl.NamedIndividual)
+NamedIndividualMixin.appliesTo = owl.NamedIndividual
 NamedIndividualMixin.Class = NamedIndividualImpl

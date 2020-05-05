@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 import { SeriesMixin } from './Series';
@@ -30,6 +31,8 @@ class CreativeWorkSeriesImpl extends CreativeWorkSeriesMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.CreativeWorkSeries)
   }
+
+  static readonly __mixins: Mixin[] = [CreativeWorkSeriesMixin, CreativeWorkMixin, SeriesMixin];
 }
-CreativeWorkSeriesMixin.shouldApply = (r: RdfResource) => r.types.has(schema.CreativeWorkSeries)
+CreativeWorkSeriesMixin.appliesTo = schema.CreativeWorkSeries
 CreativeWorkSeriesMixin.Class = CreativeWorkSeriesImpl

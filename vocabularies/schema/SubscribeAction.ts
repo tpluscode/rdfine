@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { InteractActionMixin } from './InteractAction';
 
@@ -20,6 +21,8 @@ class SubscribeActionImpl extends SubscribeActionMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.SubscribeAction)
   }
+
+  static readonly __mixins: Mixin[] = [SubscribeActionMixin, InteractActionMixin];
 }
-SubscribeActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.SubscribeAction)
+SubscribeActionMixin.appliesTo = schema.SubscribeAction
 SubscribeActionMixin.Class = SubscribeActionImpl

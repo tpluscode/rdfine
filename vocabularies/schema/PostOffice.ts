@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { GovernmentOfficeMixin } from './GovernmentOffice';
 
@@ -20,6 +21,8 @@ class PostOfficeImpl extends PostOfficeMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.PostOffice)
   }
+
+  static readonly __mixins: Mixin[] = [PostOfficeMixin, GovernmentOfficeMixin];
 }
-PostOfficeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PostOffice)
+PostOfficeMixin.appliesTo = schema.PostOffice
 PostOfficeMixin.Class = PostOfficeImpl

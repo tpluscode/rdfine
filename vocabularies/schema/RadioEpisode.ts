@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { EpisodeMixin } from './Episode';
 
@@ -20,6 +21,8 @@ class RadioEpisodeImpl extends RadioEpisodeMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.RadioEpisode)
   }
+
+  static readonly __mixins: Mixin[] = [RadioEpisodeMixin, EpisodeMixin];
 }
-RadioEpisodeMixin.shouldApply = (r: RdfResource) => r.types.has(schema.RadioEpisode)
+RadioEpisodeMixin.appliesTo = schema.RadioEpisode
 RadioEpisodeMixin.Class = RadioEpisodeImpl

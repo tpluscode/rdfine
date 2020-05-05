@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { WebPageMixin } from './WebPage';
 
@@ -20,6 +21,8 @@ class ContactPageImpl extends ContactPageMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.ContactPage)
   }
+
+  static readonly __mixins: Mixin[] = [ContactPageMixin, WebPageMixin];
 }
-ContactPageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.ContactPage)
+ContactPageMixin.appliesTo = schema.ContactPage
 ContactPageMixin.Class = ContactPageImpl

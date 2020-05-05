@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '.';
 
 export interface Schema extends RdfResource {
@@ -70,6 +71,8 @@ class SchemaImpl extends SchemaMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(csvw.Schema)
   }
+
+  static readonly __mixins: Mixin[] = [SchemaMixin];
 }
-SchemaMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Schema)
+SchemaMixin.appliesTo = csvw.Schema
 SchemaMixin.Class = SchemaImpl

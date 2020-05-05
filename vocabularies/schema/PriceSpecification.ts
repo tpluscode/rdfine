@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
@@ -47,6 +48,8 @@ class PriceSpecificationImpl extends PriceSpecificationMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.PriceSpecification)
   }
+
+  static readonly __mixins: Mixin[] = [PriceSpecificationMixin, StructuredValueMixin];
 }
-PriceSpecificationMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PriceSpecification)
+PriceSpecificationMixin.appliesTo = schema.PriceSpecification
 PriceSpecificationMixin.Class = PriceSpecificationImpl

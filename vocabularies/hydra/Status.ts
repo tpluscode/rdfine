@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
 import { ResourceMixin } from './Resource';
 
@@ -29,6 +30,8 @@ class StatusImpl extends StatusMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(hydra.Status)
   }
+
+  static readonly __mixins: Mixin[] = [StatusMixin, ResourceMixin];
 }
-StatusMixin.shouldApply = (r: RdfResource) => r.types.has(hydra.Status)
+StatusMixin.appliesTo = hydra.Status
 StatusMixin.Class = StatusImpl

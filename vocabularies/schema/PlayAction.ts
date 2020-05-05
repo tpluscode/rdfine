@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ActionMixin } from './Action';
 
@@ -26,6 +27,8 @@ class PlayActionImpl extends PlayActionMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.PlayAction)
   }
+
+  static readonly __mixins: Mixin[] = [PlayActionMixin, ActionMixin];
 }
-PlayActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PlayAction)
+PlayActionMixin.appliesTo = schema.PlayAction
 PlayActionMixin.Class = PlayActionImpl

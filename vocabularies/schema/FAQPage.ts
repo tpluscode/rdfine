@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { WebPageMixin } from './WebPage';
 
@@ -20,6 +21,8 @@ class FAQPageImpl extends FAQPageMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.FAQPage)
   }
+
+  static readonly __mixins: Mixin[] = [FAQPageMixin, WebPageMixin];
 }
-FAQPageMixin.shouldApply = (r: RdfResource) => r.types.has(schema.FAQPage)
+FAQPageMixin.appliesTo = schema.FAQPage
 FAQPageMixin.Class = FAQPageImpl

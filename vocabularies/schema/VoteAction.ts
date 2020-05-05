@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ChooseActionMixin } from './ChooseAction';
 
@@ -23,6 +24,8 @@ class VoteActionImpl extends VoteActionMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.VoteAction)
   }
+
+  static readonly __mixins: Mixin[] = [VoteActionMixin, ChooseActionMixin];
 }
-VoteActionMixin.shouldApply = (r: RdfResource) => r.types.has(schema.VoteAction)
+VoteActionMixin.appliesTo = schema.VoteAction
 VoteActionMixin.Class = VoteActionImpl

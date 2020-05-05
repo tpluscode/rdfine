@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '.';
 
 export interface Direction extends RdfResource {
@@ -19,6 +20,8 @@ class DirectionImpl extends DirectionMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(csvw.Direction)
   }
+
+  static readonly __mixins: Mixin[] = [DirectionMixin];
 }
-DirectionMixin.shouldApply = (r: RdfResource) => r.types.has(csvw.Direction)
+DirectionMixin.appliesTo = csvw.Direction
 DirectionMixin.Class = DirectionImpl

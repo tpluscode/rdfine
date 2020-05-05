@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import { RuleMixin } from './Rule';
 import { SPARQLConstructExecutableMixin } from './SPARQLConstructExecutable';
@@ -21,6 +22,8 @@ class SPARQLRuleImpl extends SPARQLRuleMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(sh.SPARQLRule)
   }
+
+  static readonly __mixins: Mixin[] = [SPARQLRuleMixin, RuleMixin, SPARQLConstructExecutableMixin];
 }
-SPARQLRuleMixin.shouldApply = (r: RdfResource) => r.types.has(sh.SPARQLRule)
+SPARQLRuleMixin.appliesTo = sh.SPARQLRule
 SPARQLRuleMixin.Class = SPARQLRuleImpl

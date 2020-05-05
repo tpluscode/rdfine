@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
@@ -34,6 +35,8 @@ class IriTemplateMappingImpl extends IriTemplateMappingMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(hydra.IriTemplateMapping)
   }
+
+  static readonly __mixins: Mixin[] = [IriTemplateMappingMixin, ResourceMixin];
 }
-IriTemplateMappingMixin.shouldApply = (r: RdfResource) => r.types.has(hydra.IriTemplateMapping)
+IriTemplateMappingMixin.appliesTo = hydra.IriTemplateMapping
 IriTemplateMappingMixin.Class = IriTemplateMappingImpl

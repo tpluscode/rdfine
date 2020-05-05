@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ThingMixin } from './Thing';
 
@@ -131,6 +132,8 @@ class EventImpl extends EventMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.Event)
   }
+
+  static readonly __mixins: Mixin[] = [EventMixin, ThingMixin];
 }
-EventMixin.shouldApply = (r: RdfResource) => r.types.has(schema.Event)
+EventMixin.appliesTo = schema.Event
 EventMixin.Class = EventImpl

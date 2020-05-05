@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { OrganizationMixin } from './Organization';
 
@@ -20,6 +21,8 @@ class PerformingGroupImpl extends PerformingGroupMixin(RdfResourceImpl) {
     super(arg, init)
     this.types.add(schema.PerformingGroup)
   }
+
+  static readonly __mixins: Mixin[] = [PerformingGroupMixin, OrganizationMixin];
 }
-PerformingGroupMixin.shouldApply = (r: RdfResource) => r.types.has(schema.PerformingGroup)
+PerformingGroupMixin.appliesTo = schema.PerformingGroup
 PerformingGroupMixin.Class = PerformingGroupImpl

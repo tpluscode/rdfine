@@ -2,6 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
@@ -21,6 +22,8 @@ class AllDisjointPropertiesImpl extends AllDisjointPropertiesMixin(RdfResourceIm
     super(arg, init)
     this.types.add(owl.AllDisjointProperties)
   }
+
+  static readonly __mixins: Mixin[] = [AllDisjointPropertiesMixin, RdfsResourceMixin];
 }
-AllDisjointPropertiesMixin.shouldApply = (r: RdfResource) => r.types.has(owl.AllDisjointProperties)
+AllDisjointPropertiesMixin.appliesTo = owl.AllDisjointProperties
 AllDisjointPropertiesMixin.Class = AllDisjointPropertiesImpl
