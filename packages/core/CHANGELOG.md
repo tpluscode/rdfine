@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.13](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.12...@tpluscode/rdfine@0.4.13) (2020-05-05)
+
+
+### Features
+
+* **core:** improve performance by memoizing runtime classes ([1cdc7ee](https://github.com/tpluscode/rdfine/commit/1cdc7ee11bbb8489f417bd15f5a4fab5aee7094d))
+
+
+
+
+
 ## [0.4.12](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.11...@tpluscode/rdfine@0.4.12) (2020-04-29)
 
 

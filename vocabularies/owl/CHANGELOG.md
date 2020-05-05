@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/tpluscode/rdfine/compare/@rdfine/owl@0.1.1...@rdfine/owl@0.1.2) (2020-05-05)
+
+
+### Features
+
+* generate mixins for specific rdf type to boost perf ([06bf552](https://github.com/tpluscode/rdfine/commit/06bf552f50f516a62f7c2bb05b9f17beb2159aee))
+
+
+
+
+
 ## [0.1.1](https://github.com/tpluscode/rdfine/compare/@rdfine/owl@0.1.0...@rdfine/owl@0.1.1) (2020-04-29)
 
 **Note:** Version bump only for package @rdfine/owl

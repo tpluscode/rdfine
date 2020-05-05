@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4](https://github.com/tpluscode/rdfine/compare/@rdfine/generator@0.2.3...@rdfine/generator@0.2.4) (2020-05-05)
+
+
+### Features
+
+* generate mixins for specific rdf type to boost perf ([06bf552](https://github.com/tpluscode/rdfine/commit/06bf552f50f516a62f7c2bb05b9f17beb2159aee))
+
+
+
+
+
 ## [0.2.3](https://github.com/tpluscode/rdfine/compare/@rdfine/generator@0.2.2...@rdfine/generator@0.2.3) (2020-04-29)
 
 
