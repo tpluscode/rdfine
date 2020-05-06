@@ -86,7 +86,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
       }
 
       return selected
-    }, new Set([...explicitMixins, ...BaseClass.__mixins]))
+    }, new Set(explicitMixins))
 
     const Type = this.__extend(BaseClass, [...mixins])
 
