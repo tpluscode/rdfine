@@ -1,4 +1,4 @@
-import { DatasetCore, Literal, NamedNode, Term } from 'rdf-js'
+import { DatasetCore, Literal, NamedNode } from 'rdf-js'
 import cf from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import { RdfResource, ResourceNode } from '../RdfResource'
@@ -77,7 +77,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
       }
     }
 
-    BaseClass = this.__getBaseClass(BaseClass, graphPointer.out(rdf.type).terms)
+    BaseClass = this.__getBaseClass(BaseClass, graphPointer.out(rdf.type).values)
     const entity = new BaseClass(term)
 
     const mixins = [...this.__mixins].reduce<Set<Mixin<T>>>((selected, next) => {
@@ -93,7 +93,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     return createProxy(new Type(term, {}, options.parent)) as R & S & ResourceIndexer<D, R>
   }
 
-  private __getBaseClass(baseClass: Constructor, types: Term[]) {
+  private __getBaseClass(baseClass: Constructor, types: string[]) {
     const cacheKey = types.toString()
     const cached = this.__typeCache.get(cacheKey)
     if (cached) {
@@ -101,7 +101,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     }
 
     const rdfTypeMixins = types.reduce<Set<Mixin<T>>>((mixins, type) => {
-      const typeMixins = this.__typeMixins.get(type.value)
+      const typeMixins = this.__typeMixins.get(type)
       if (typeMixins) {
         typeMixins.forEach(m => mixins.add(m))
       }
