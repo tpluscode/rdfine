@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/tpluscode/rdfine/compare/@rdfine/rdfs@0.2.2...@rdfine/rdfs@0.2.3) (2020-05-06)
+
+**Note:** Version bump only for package @rdfine/rdfs
+
+
+
+
+
 ## [0.2.2](https://github.com/tpluscode/rdfine/compare/@rdfine/rdfs@0.2.1...@rdfine/rdfs@0.2.2) (2020-05-05)
 
 

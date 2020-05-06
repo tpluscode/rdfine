@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.14](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.13...@tpluscode/rdfine@0.4.14) (2020-05-06)
+
+
+### Bug Fixes
+
+* **core:** slight perf boost by skipping unnecessary mixins ([101f7a3](https://github.com/tpluscode/rdfine/commit/101f7a3c8bfd186d082dee117ea7d9a37d707de5))
+* **core:** type cache incorrectly created ([21e16e6](https://github.com/tpluscode/rdfine/commit/21e16e6fac15a9adfa43a429bc65bbe5ab5e4d89))
+
+
+
+
+
 ## [0.4.13](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.12...@tpluscode/rdfine@0.4.13) (2020-05-05)
 
 
