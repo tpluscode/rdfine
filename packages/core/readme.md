@@ -206,8 +206,7 @@ The last line above will print triples equivalent to those below
     ```
     {
       "presets": [
-        [
-          "@babel/env"
+        "@babel/env"
       ],
       "plugins": [
         [
