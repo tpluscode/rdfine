@@ -1,6 +1,6 @@
 {
 	"name": "@rdfine/hydra",
-	"version": "0.2.3",
+	"version": "0.2.4",
 	"main": "main.js",
 	"module": "index.js",
 	"types": "index.d.ts",
@@ -46,11 +46,11 @@
 		}
 	},
 	"dependencies": {
-		"@rdfine/rdf": "^0.2.3",
-		"@rdfine/rdfs": "^0.2.3",
+		"@rdfine/rdf": "^0.2.4",
+		"@rdfine/rdfs": "^0.2.4",
 		"@rdfjs/namespace": "^1.1.0",
-    "@tpluscode/rdf-ns-builders": "^0.3",
-		"@tpluscode/rdfine": "^0.4.14",
+		"@tpluscode/rdf-ns-builders": "^0.3",
+		"@tpluscode/rdfine": "^0.4.15",
 		"esm": "^3.2.25"
 	},
 	"devDependencies": {
@@ -60,7 +60,7 @@
 		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
 		"@babel/preset-env": "^7.8.3",
 		"@babel/preset-typescript": "^7.8.3",
-		"@rdfine/generator": "^0.2.4",
+		"@rdfine/generator": "^0.2.5",
 		"@rdfjs/dataset": "^1.0.1",
 		"@types/clownface": "^0.12.13",
 		"@types/rdf-js": "^2.0.12",
