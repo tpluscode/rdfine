@@ -2,13 +2,13 @@ module.exports = {
   roots: [
     '<rootDir>',
   ],
-  transform: {
-    '\\.ts$': ['babel-jest', { configFile: '../../babel.config.json' }],
-  },
-  testRegex: 'spec\\.ts$',
+  testRegex: './packages/core/.+/*spec\\.ts$',
   coveragePathIgnorePatterns: [
-    '<rootDir>/src/__tests__/_helpers',
     '<rootDir>/node_modules/',
+    '_helpers',
   ],
   coverageDirectory: 'coverage/babel',
+  setupFilesAfterEnv: [
+    './packages/generator/__tests__/_helpers/matchers.ts',
+  ],
 }
