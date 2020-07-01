@@ -2,15 +2,25 @@
   "name": "@tpluscode/rdfine",
   "version": "0.4.15",
   "description": "RDF/JS idiomatic, native, effective",
-  "main": "main.js",
-  "module": "index.js",
+  "main": "index.js",
+  "module": "index.mjs",
+  "browser": "index.mjs",
   "types": "index.d.ts",
+  "exports": {
+    "./": {
+      "require": "./index.js",
+      "import": "./index.mjs"
+    },
+    "./RdfResource": {
+      "require": "./RdfResource.js",
+      "import": "./RdfResource.mjs"
+    }
+  },
   "scripts": {
     "prepack": "npm run build",
-    "build": "tsc -p tsconfig.build.json",
-    "test": "run-p test:*",
-    "test:ts-node": "jest --coverage",
-    "test:babel": "jest --coverage -c jest.babel.config.js"
+    "build": "run-p build:*",
+    "build:cjs": "tsc -p tsconfig.build.json",
+    "build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs --config-file ../../babel.config.json"
   },
   "repository": {
     "type": "git",
@@ -20,37 +30,36 @@
     "@rdfjs/data-model": "^1.1.2",
     "@rdfjs/namespace": "^1.1.0",
     "@rdfjs/term-set": "^1.0.1",
-    "@tpluscode/rdf-ns-builders": "^0.3",
+    "@tpluscode/rdf-ns-builders": "^0.3.6",
     "@types/clownface": "^0.12.13",
-    "@types/rdf-js": "^2.0.12",
+    "@types/rdf-js": "^3",
     "@types/rdfjs__namespace": "^1.1.1",
     "clownface": "^0.12.3",
-    "esm": "^3.2.25",
     "once": "^1.4.0"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-proposal-decorators": "^7.8.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
-    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "@babel/preset-typescript": "^7.8.3",
+    "@babel/cli": "^7.10.3",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-decorators": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
     "@rdfjs/dataset": "^1.0.1",
     "@rdfjs/parser-n3": "^1.1.3",
-    "@tpluscode/rdf-string": "^0.2.13",
+    "@tpluscode/rdf-string": "^0.2.16",
     "@types/node": "^12",
     "@types/once": "^1.4.0",
     "@types/rdf-ext": "^1.3.5",
     "@types/rdfjs__dataset": "^1.0.0",
     "@types/rdfjs__parser-n3": "^1.1.2",
     "@types/rdfjs__term-set": "^1",
-    "@zazuko/rdf-vocabularies": "^2020.3.17",
-    "jest": "^25.1.0",
+    "@zazuko/rdf-vocabularies": "^2020.6.29",
+    "babel-plugin-add-import-extension": "github:tpluscode/babel-plugin-add-import-extension#type-only-export",
     "npm-run-all": "^4.1.5",
     "rdf-ext": "^1.3.0",
     "string-to-stream": "^3.0.1",
-    "ts-jest": "^25.2.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.5"
   },
   "keywords": [
     "rdf",

@@ -1,14 +1,21 @@
 {
 	"name": "@rdfine/hydra",
 	"version": "0.2.4",
-	"main": "main.js",
-	"module": "index.js",
+	"main": "inde.js",
+	"module": "index.mjs",
+	"browser": "index.mjs",
 	"types": "index.d.ts",
+  "exports": {
+    "require": "./index.js",
+    "import": "./index.mjs"
+  },
 	"scripts": {
 		"prepack": "npm run build",
 		"clean": "find . -name '*.ts' -maxdepth 1 -delete",
-		"build": "tsc -p tsconfig.build.json",
-		"generate": "rdf-vocab prefix hydra | ts-node node_modules/@rdfine/generator/bin/rdfine-gen.ts --format application/n-quads"
+    "build": "run-s build:*",
+    "build:cjs": "tsc -p tsconfig.build.json",
+    "build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs --config-file ../../babel.config.json",
+		"generate": "rdf-vocab prefix hydra | rdfine-gen --format application/n-quads"
 	},
 	"rdfine": {
 		"prefix": "hydra",
@@ -49,9 +56,8 @@
 		"@rdfine/rdf": "^0.2.4",
 		"@rdfine/rdfs": "^0.2.4",
 		"@rdfjs/namespace": "^1.1.0",
-		"@tpluscode/rdf-ns-builders": "^0.3",
-		"@tpluscode/rdfine": "^0.4.15",
-		"esm": "^3.2.25"
+		"@tpluscode/rdf-ns-builders": "^0.3.6",
+		"@tpluscode/rdfine": "^0.4.15"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -63,14 +69,13 @@
 		"@rdfine/generator": "^0.2.5",
 		"@rdfjs/dataset": "^1.0.1",
 		"@types/clownface": "^0.12.13",
-		"@types/rdf-js": "^2.0.12",
-		"@zazuko/rdf-vocabularies": "^2020.3.23",
+		"@types/rdf-js": "^3",
+		"@zazuko/rdf-vocabularies": "^2020.6.29",
 		"clownface": "^0.12.1",
 		"eslint": "^6.8.0",
-		"jest": "^25.1.0",
+		"jest": "^26.1.0",
 		"npm-run-all": "^4.1.5",
-		"ts-jest": "^25.2.1",
-		"ts-node": "^8.8.1",
+		"ts-jest": "^26.1.1",
 		"typescript": "next"
 	},
 	"repository": {

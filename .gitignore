@@ -4,5 +4,6 @@ coverage/
 *.d.ts
 *.d.ts.map
 *.js
+*.mjs
 !*.config.js
 !main.js
