@@ -4,7 +4,7 @@ module.exports = {
   ],
   testRegex: 'spec\\.ts$',
   coveragePathIgnorePatterns: [
-    '<rootDir>/__tests__/_helpers',
+    '<rootDir>/src/__tests__/_helpers',
     '<rootDir>/node_modules/',
   ],
   coverageDirectory: 'coverage/babel',

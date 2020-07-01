@@ -1,9 +1,6 @@
 {
-  "packages": [
-    "examples",
-    "packages/*",
-    "vocabularies/*"
-  ],
+  "useWorkspaces": true,
+  "npmClient": "yarn",
   "command": {
     "publish": {
       "conventionalCommits": true
