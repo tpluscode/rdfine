@@ -2,6 +2,9 @@ module.exports = {
   roots: [
     '<rootDir>',
   ],
+  transform: {
+    '\\.ts$': ['babel-jest', { configFile: '../../babel.config.json' }],
+  },
   testRegex: 'spec\\.ts$',
   coveragePathIgnorePatterns: [
     '<rootDir>/src/__tests__/_helpers',
