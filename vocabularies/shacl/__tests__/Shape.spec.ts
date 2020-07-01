@@ -5,11 +5,11 @@ import RdfResource, { Constructor } from '@tpluscode/rdfine'
 import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
 import { ResourceMixin } from '@rdfine/rdfs/Resource'
 import { ShapeMixin } from '../Shape';
-import { ShapeDependencies } from '../dependencies/Shape'
+import { ShapeBundle } from '../bundles'
 import { sh } from '../lib/namespace'
 import { PropertyShapeMixin } from '../PropertyShape'
 
-RdfResource.factory.addMixin(...ShapeDependencies)
+RdfResource.factory.addMixin(...ShapeBundle)
 RdfResource.factory.addMixin(ResourceMixin)
 
 describe('Shape', () => {

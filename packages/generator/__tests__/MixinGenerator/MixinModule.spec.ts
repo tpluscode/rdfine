@@ -249,7 +249,7 @@ describe('MixinModule', () => {
     expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('generates a dependencies module with property mixin types but skipping external mixins', () => {
+  it('generates a bundle module with property mixin types but skipping external mixins', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -290,10 +290,11 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('dependencies/Class.ts')).toMatchSnapshot()
+    expect(project.getSourceFile('bundles/Class.ts')).toMatchSnapshot()
+    expect(project.getSourceFile('bundles/index.ts')).toMatchSnapshot()
   })
 
-  it('generates a dependencies module with super classes but without externals', () => {
+  it('generates a bundle module with super classes but without externals', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -326,6 +327,7 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('dependencies/Class.ts')).toMatchSnapshot()
+    expect(project.getSourceFile('bundles/Class.ts')).toMatchSnapshot()
+    expect(project.getSourceFile('bundles/index.ts')).toMatchSnapshot()
   })
 })

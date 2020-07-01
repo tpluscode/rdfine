@@ -13,6 +13,7 @@ export interface SupportedProperty extends Hydra.Resource, RdfResource {
   property: Rdf.Property;
   readable: boolean;
   required: boolean;
+  supportedOperation: Array<Hydra.Operation>;
   title: string;
   writeable: boolean;
 }
@@ -28,6 +29,8 @@ export function SupportedPropertyMixin<Base extends Constructor>(Resource: Base)
     readable!: boolean;
     @property.literal({ type: Boolean })
     required!: boolean;
+    @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
+    supportedOperation!: Array<Hydra.Operation>;
     @property.literal()
     title!: string;
     @property.literal({ type: Boolean })

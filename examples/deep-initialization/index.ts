@@ -2,13 +2,13 @@ import rdf from '@rdfjs/dataset'
 import clownface from 'clownface'
 import { turtle } from '@tpluscode/rdf-string'
 import * as Schema from '@rdfine/schema'
-import { PersonDependencies } from '@rdfine/schema/dependencies/Person'
+import { PersonBundle } from '@rdfine/schema/bundles'
 import RdfResource, { Initializer, fromObject } from '@tpluscode/rdfine/RdfResource'
 import { schema } from '@tpluscode/rdf-ns-builders'
 import namespace from '@rdfjs/namespace'
 
 // Have rdfine recognize the necessary schema.org terms
-RdfResource.factory.addMixin(...PersonDependencies)
+RdfResource.factory.addMixin(...PersonBundle)
 
 const bigBangTheory = namespace('http://tbbt.example.com/')
 

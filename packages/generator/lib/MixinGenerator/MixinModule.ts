@@ -37,7 +37,8 @@ export class MixinModule implements GeneratedModule {
     context.log.debug(`Generating mixin ${this.type.qualifiedName}`)
 
     const mixinFile = project.createSourceFile(`${this.type.module}.ts`, {}, { overwrite: true })
-    const depsModule = project.createSourceFile(`dependencies/${this.type.module}.ts`, {}, { overwrite: true })
+    const bundleModule = project.createSourceFile(`bundles/${this.type.module}.ts`, {}, { overwrite: true })
+    const bundleIndex = project.getSourceFile('bundles/index.ts') || project.createSourceFile('bundles/index.ts')
 
     const mixinName = this.type.mixinName
     const implName = `${this.type.localName}Impl`
@@ -83,7 +84,7 @@ export class MixinModule implements GeneratedModule {
     ])
 
     this.addImports(mixinFile, context)
-    this.generateDependenciesModule(depsModule, types)
+    this.generateDependenciesModule(bundleModule, bundleIndex, types)
 
     return {
       mainModuleExport: this.type.localName,
@@ -91,9 +92,15 @@ export class MixinModule implements GeneratedModule {
     }
   }
 
-  private generateDependenciesModule(depsModule: SourceFile, types: TypeMetaCollection) {
+  private generateDependenciesModule(depsModule: SourceFile, bundleIndex: SourceFile, types: TypeMetaCollection) {
     const exports: string[] = []
     const imported: Map<string, ResourceType | ExternalResourceType> = new Map()
+    const name = `${this.type.localName}Bundle`
+
+    bundleIndex.addExportDeclaration({
+      moduleSpecifier: `./${this.type.localName}`,
+      namedExports: [name],
+    })
 
     depsModule.addImportDeclaration({
       namedImports: ['Mixin'],
@@ -138,7 +145,7 @@ export class MixinModule implements GeneratedModule {
       isExported: true,
       declarationKind: VariableDeclarationKind.Const,
       declarations: [{
-        name: `${this.type.localName}Dependencies`,
+        name,
         initializer: `[\n${exports.join(',\n')}]`,
       }],
     })
