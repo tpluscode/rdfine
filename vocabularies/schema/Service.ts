@@ -31,6 +31,7 @@ export interface Service extends Schema.Intangible, RdfResource {
   serviceAudience: Schema.Audience;
   serviceOutput: Schema.Thing;
   serviceType: string;
+  serviceTypeTerm: RDF.Term;
   slogan: string;
 }
 
@@ -85,6 +86,8 @@ export function ServiceMixin<Base extends Constructor>(Resource: Base) {
     serviceOutput!: Schema.Thing;
     @property.literal()
     serviceType!: string;
+    @property({ path: schema.serviceType })
+    serviceTypeTerm!: RDF.Term;
     @property.literal()
     slogan!: string;
   }

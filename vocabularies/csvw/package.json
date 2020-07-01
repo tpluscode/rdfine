@@ -6,8 +6,14 @@
 	"browser": "index.mjs",
 	"types": "index.d.ts",
   "exports": {
-    "require": "./index.js",
-    "import": "./index.mjs"
+    "./": {
+      "require": "./index.js",
+      "import": "./index.mjs"
+    },
+    "./bundles": {
+      "require": "./bundles/index.js",
+      "import": "./bundles/index.mjs"
+    }
   },
 	"scripts": {
 		"prepack": "npm run build",

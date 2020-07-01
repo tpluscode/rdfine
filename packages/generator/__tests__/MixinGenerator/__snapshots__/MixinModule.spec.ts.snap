@@ -34,25 +34,35 @@ ClassMixin.Class = ClassImpl
 "
 `;
 
-exports[`MixinModule generates a dependencies module with property mixin types but skipping external mixins: toMatchSnapshot 1`] = `
+exports[`MixinModule generates a bundle module with property mixin types but skipping external mixins: toMatchSnapshot 1`] = `
 "import { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import { ClassMixin } from \\"../Class\\";
 import { FriendMixin } from \\"../Friend\\";
 
-export const ClassDependencies = [
+export const ClassBundle = [
     ClassMixin as Mixin,
     FriendMixin as Mixin];
 "
 `;
 
-exports[`MixinModule generates a dependencies module with super classes but without externals: toMatchSnapshot 1`] = `
+exports[`MixinModule generates a bundle module with property mixin types but skipping external mixins: toMatchSnapshot 2`] = `
+"export { ClassBundle } from \\"./Class\\";
+"
+`;
+
+exports[`MixinModule generates a bundle module with super classes but without externals: toMatchSnapshot 1`] = `
 "import { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import { SuperMixin } from \\"../Example\\";
 import { ClassMixin } from \\"../Class\\";
 
-export const ClassDependencies = [
+export const ClassBundle = [
     SuperMixin as Mixin,
     ClassMixin as Mixin];
+"
+`;
+
+exports[`MixinModule generates a bundle module with super classes but without externals: toMatchSnapshot 2`] = `
+"export { ClassBundle } from \\"./Class\\";
 "
 `;
 
