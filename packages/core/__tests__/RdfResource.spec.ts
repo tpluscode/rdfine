@@ -55,6 +55,21 @@ describe('RdfResource', () => {
       // then
       expect(areEqual).toBe(false)
     })
+
+    it('returns true if "same" blank node is from from same dataset', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const foo = cf({ dataset }).blankNode('foo')
+      const bar = cf({ dataset }).blankNode('foo')
+      const left = new RdfResource(foo)
+      const right = new RdfResource(bar)
+
+      // when
+      const areEqual = left.equals(right)
+
+      // then
+      expect(areEqual).toBe(true)
+    })
   })
 
   describe('_graphId', () => {

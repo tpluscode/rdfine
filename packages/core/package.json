@@ -20,7 +20,7 @@
     "prepack": "npm run build",
     "build": "run-p build:*",
     "build:cjs": "tsc -p tsconfig.build.json",
-    "build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs --config-file ../../babel.config.json"
+    "build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs"
   },
   "repository": {
     "type": "git",
