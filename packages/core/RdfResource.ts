@@ -31,6 +31,7 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly _graphId: Quad_Graph
   readonly _parent?: RdfResource<D>
   readonly isAnonymous: boolean
+  equals(other: RdfResource | undefined | null): boolean
   hasType (type: string | NamedNode): boolean
   /**
    * Gets the value of a property
@@ -157,7 +158,13 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       return false
     }
 
-    return this.id.equals(other.id)
+    const idsEqual = this.id.equals(other.id)
+
+    if (this.isAnonymous || other.isAnonymous) {
+      return idsEqual && this._selfGraph.dataset === other._selfGraph.dataset
+    }
+
+    return idsEqual
   }
 
   public get<T extends RdfResource = RdfResource>(property: string | NamedNode, options?: GetOptions): T | RdfResource<D> | null {
