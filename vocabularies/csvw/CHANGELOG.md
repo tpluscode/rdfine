@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/tpluscode/rdfine/compare/@rdfine/csvw@0.4.0...@rdfine/csvw@0.4.1) (2020-07-03)
+
+
+### Bug Fixes
+
+* **generator:** import mixins only from index ([5470637](https://github.com/tpluscode/rdfine/commit/5470637ee51480bafa76e28d92a92a169d86d180))
+
+
+
+
+
 # [0.4.0](https://github.com/tpluscode/rdfine/compare/@rdfine/csvw@0.3.4...@rdfine/csvw@0.4.0) (2020-07-03)
 
 

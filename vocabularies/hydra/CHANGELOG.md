@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/tpluscode/rdfine/compare/@rdfine/hydra@0.3.0...@rdfine/hydra@0.3.1) (2020-07-03)
+
+
+### Bug Fixes
+
+* **generator:** import mixins only from index ([5470637](https://github.com/tpluscode/rdfine/commit/5470637ee51480bafa76e28d92a92a169d86d180))
+
+
+
+
+
 # [0.3.0](https://github.com/tpluscode/rdfine/compare/@rdfine/hydra@0.2.4...@rdfine/hydra@0.3.0) (2020-07-03)
 
 
