@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/tpluscode/rdfine/compare/@rdfine/shacl@0.1.4...@rdfine/shacl@0.2.0) (2020-07-03)
+
+
+### Features
+
+* rename dependencies to bundles ([d67afbe](https://github.com/tpluscode/rdfine/commit/d67afbe596bc1d91c1a030cb233bb44ca04a0fc7))
+
+
+### BREAKING CHANGES
+
+* imports need to be updated
+
+
+
+
+
 ## [0.1.4](https://github.com/tpluscode/rdfine/compare/@rdfine/shacl@0.1.3...@rdfine/shacl@0.1.4) (2020-06-08)
 
 **Note:** Version bump only for package @rdfine/shacl
