@@ -4,15 +4,14 @@ import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
-import type * as Rdf from '@rdfine/rdf';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
+import * as Rdf from '@rdfine/rdf';
 
 export interface OntologyProperty extends Rdf.Property, RdfResource {
 }
 
 export function OntologyPropertyMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
-  class OntologyPropertyClass extends RdfPropertyMixin(Resource) implements OntologyProperty {
+  class OntologyPropertyClass extends Rdf.PropertyMixin(Resource) implements OntologyProperty {
   }
   return OntologyPropertyClass
 }
@@ -23,7 +22,7 @@ class OntologyPropertyImpl extends OntologyPropertyMixin(RdfResourceImpl) {
     this.types.add(owl.OntologyProperty)
   }
 
-  static readonly __mixins: Mixin[] = [OntologyPropertyMixin, RdfPropertyMixin];
+  static readonly __mixins: Mixin[] = [OntologyPropertyMixin, Rdf.PropertyMixin];
 }
 OntologyPropertyMixin.appliesTo = owl.OntologyProperty
 OntologyPropertyMixin.Class = OntologyPropertyImpl

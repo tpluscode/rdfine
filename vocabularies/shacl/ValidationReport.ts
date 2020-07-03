@@ -4,8 +4,7 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import * as Rdfs from '@rdfine/rdfs';
 
 export interface ValidationReport extends Rdfs.Resource, RdfResource {
   conforms: boolean;
@@ -15,7 +14,7 @@ export interface ValidationReport extends Rdfs.Resource, RdfResource {
 
 export function ValidationReportMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
-  class ValidationReportClass extends RdfsResourceMixin(Resource) implements ValidationReport {
+  class ValidationReportClass extends Rdfs.ResourceMixin(Resource) implements ValidationReport {
     @property.literal({ type: Boolean })
     conforms!: boolean;
     @property.resource({ implicitTypes: [sh.ValidationResult] })
@@ -32,7 +31,7 @@ class ValidationReportImpl extends ValidationReportMixin(RdfResourceImpl) {
     this.types.add(sh.ValidationReport)
   }
 
-  static readonly __mixins: Mixin[] = [ValidationReportMixin, RdfsResourceMixin];
+  static readonly __mixins: Mixin[] = [ValidationReportMixin, Rdfs.ResourceMixin];
 }
 ValidationReportMixin.appliesTo = sh.ValidationReport
 ValidationReportMixin.Class = ValidationReportImpl

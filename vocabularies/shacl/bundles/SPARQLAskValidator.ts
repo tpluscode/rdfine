@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { SPARQLAskExecutableMixin } from '../SPARQLAskExecutable';
 import { ValidatorMixin } from '../Validator';
 import { SPARQLAskValidatorMixin } from '../SPARQLAskValidator';

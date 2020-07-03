@@ -4,8 +4,7 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import * as Rdfs from '@rdfine/rdfs';
 
 export interface Rule extends Rdfs.Resource, RdfResource {
   condition: Sh.Shape;
@@ -13,7 +12,7 @@ export interface Rule extends Rdfs.Resource, RdfResource {
 
 export function RuleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
-  class RuleClass extends RdfsResourceMixin(Resource) implements Rule {
+  class RuleClass extends Rdfs.ResourceMixin(Resource) implements Rule {
     @property.resource({ implicitTypes: [sh.Shape] })
     condition!: Sh.Shape;
   }
@@ -26,7 +25,7 @@ class RuleImpl extends RuleMixin(RdfResourceImpl) {
     this.types.add(sh.Rule)
   }
 
-  static readonly __mixins: Mixin[] = [RuleMixin, RdfsResourceMixin];
+  static readonly __mixins: Mixin[] = [RuleMixin, Rdfs.ResourceMixin];
 }
 RuleMixin.appliesTo = sh.Rule
 RuleMixin.Class = RuleImpl

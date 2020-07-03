@@ -69,7 +69,7 @@ describe('meta factory', () => {
         module: '@rdfine/schema/Person',
         qualifiedName: 'Schema.Person',
         qualifier: 'Schema',
-        alias: 'SchemaPersonMixin',
+        qualifiedMixinName: 'Schema.PersonMixin',
       } as ExternalResourceType)
     })
   })

@@ -4,8 +4,7 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import * as Rdfs from '@rdfine/rdfs';
 
 export interface JSLibrary extends Rdfs.Resource, RdfResource {
   jsLibraryURL: string;
@@ -13,7 +12,7 @@ export interface JSLibrary extends Rdfs.Resource, RdfResource {
 
 export function JSLibraryMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
-  class JSLibraryClass extends RdfsResourceMixin(Resource) implements JSLibrary {
+  class JSLibraryClass extends Rdfs.ResourceMixin(Resource) implements JSLibrary {
     @property.literal()
     jsLibraryURL!: string;
   }
@@ -26,7 +25,7 @@ class JSLibraryImpl extends JSLibraryMixin(RdfResourceImpl) {
     this.types.add(sh.JSLibrary)
   }
 
-  static readonly __mixins: Mixin[] = [JSLibraryMixin, RdfsResourceMixin];
+  static readonly __mixins: Mixin[] = [JSLibraryMixin, Rdfs.ResourceMixin];
 }
 JSLibraryMixin.appliesTo = sh.JSLibrary
 JSLibraryMixin.Class = JSLibraryImpl

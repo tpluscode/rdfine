@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { ParameterizableMixin } from '../Parameterizable';
 import { ValidatorMixin } from '../Validator';
 import { ConstraintComponentMixin } from '../ConstraintComponent';

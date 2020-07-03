@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { DatasetMixin } from '../Dataset';
 import { DataFeedMixin } from '../DataFeed';
 import { DataFeedItemMixin } from '../DataFeedItem';

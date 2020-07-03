@@ -4,15 +4,14 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import * as Rdfs from '@rdfine/rdfs';
 
 export interface PropertyGroup extends Rdfs.Resource, RdfResource {
 }
 
 export function PropertyGroupMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
-  class PropertyGroupClass extends RdfsResourceMixin(Resource) implements PropertyGroup {
+  class PropertyGroupClass extends Rdfs.ResourceMixin(Resource) implements PropertyGroup {
   }
   return PropertyGroupClass
 }
@@ -23,7 +22,7 @@ class PropertyGroupImpl extends PropertyGroupMixin(RdfResourceImpl) {
     this.types.add(sh.PropertyGroup)
   }
 
-  static readonly __mixins: Mixin[] = [PropertyGroupMixin, RdfsResourceMixin];
+  static readonly __mixins: Mixin[] = [PropertyGroupMixin, Rdfs.ResourceMixin];
 }
 PropertyGroupMixin.appliesTo = sh.PropertyGroup
 PropertyGroupMixin.Class = PropertyGroupImpl

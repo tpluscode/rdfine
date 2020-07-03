@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { FinancialProductMixin } from '../FinancialProduct';
 import { InvestmentOrDepositMixin } from '../InvestmentOrDeposit';
 import { MonetaryAmountMixin } from '../MonetaryAmount';

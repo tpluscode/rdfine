@@ -4,8 +4,7 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import * as Rdfs from '@rdfine/rdfs';
 
 export interface AbstractResult extends Rdfs.Resource, RdfResource {
   detail: Sh.AbstractResult;
@@ -21,14 +20,14 @@ export interface AbstractResult extends Rdfs.Resource, RdfResource {
 
 export function AbstractResultMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
-  class AbstractResultClass extends RdfsResourceMixin(Resource) implements AbstractResult {
+  class AbstractResultClass extends Rdfs.ResourceMixin(Resource) implements AbstractResult {
     @property.resource({ as: [AbstractResultMixin] })
     detail!: Sh.AbstractResult;
     @property()
     focusNode!: RDF.Term;
     @property()
     resultMessage!: RDF.Term;
-    @property.resource({ as: [RdfsResourceMixin] })
+    @property.resource({ as: [Rdfs.ResourceMixin] })
     resultPath!: Rdfs.Resource;
     @property.resource({ implicitTypes: [sh.Severity] })
     resultSeverity!: Sh.Severity;
@@ -50,7 +49,7 @@ class AbstractResultImpl extends AbstractResultMixin(RdfResourceImpl) {
     this.types.add(sh.AbstractResult)
   }
 
-  static readonly __mixins: Mixin[] = [AbstractResultMixin, RdfsResourceMixin];
+  static readonly __mixins: Mixin[] = [AbstractResultMixin, Rdfs.ResourceMixin];
 }
 AbstractResultMixin.appliesTo = sh.AbstractResult
 AbstractResultMixin.Class = AbstractResultImpl

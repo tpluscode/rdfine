@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { DatatypeMixin } from '../Datatype';
 import { DirectionMixin } from '../Direction';
 import { TransformationMixin } from '../Transformation';

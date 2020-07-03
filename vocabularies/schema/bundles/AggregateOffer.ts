@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { OfferMixin } from '../Offer';
 import { AggregateOfferMixin } from '../AggregateOffer';
 import { DemandMixin } from '../Demand';

@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { HowToMixin } from '../HowTo';
 import { RecipeMixin } from '../Recipe';
 import { DurationMixin } from '../Duration';

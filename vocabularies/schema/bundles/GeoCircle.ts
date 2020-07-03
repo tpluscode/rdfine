@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { GeoShapeMixin } from '../GeoShape';
 import { GeoCircleMixin } from '../GeoCircle';
 import { GeoCoordinatesMixin } from '../GeoCoordinates';

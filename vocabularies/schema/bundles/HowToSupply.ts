@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { HowToItemMixin } from '../HowToItem';
 import { HowToSupplyMixin } from '../HowToSupply';
 import { MonetaryAmountMixin } from '../MonetaryAmount';

@@ -4,8 +4,7 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/Class';
+import * as Rdfs from '@rdfine/rdfs';
 import { ParameterizableMixin } from './Parameterizable';
 
 export interface Function extends Sh.Parameterizable, RdfResource {
@@ -15,7 +14,7 @@ export interface Function extends Sh.Parameterizable, RdfResource {
 export function FunctionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class FunctionClass extends ParameterizableMixin(Resource) implements Function {
-    @property.resource({ as: [RdfsClassMixin] })
+    @property.resource({ as: [Rdfs.ClassMixin] })
     returnType!: Rdfs.Class;
   }
   return FunctionClass

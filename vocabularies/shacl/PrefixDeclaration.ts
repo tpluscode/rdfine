@@ -4,8 +4,7 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import * as Rdfs from '@rdfine/rdfs';
 
 export interface PrefixDeclaration extends Rdfs.Resource, RdfResource {
   namespace: string;
@@ -14,7 +13,7 @@ export interface PrefixDeclaration extends Rdfs.Resource, RdfResource {
 
 export function PrefixDeclarationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
-  class PrefixDeclarationClass extends RdfsResourceMixin(Resource) implements PrefixDeclaration {
+  class PrefixDeclarationClass extends Rdfs.ResourceMixin(Resource) implements PrefixDeclaration {
     @property.literal()
     namespace!: string;
     @property.literal()
@@ -29,7 +28,7 @@ class PrefixDeclarationImpl extends PrefixDeclarationMixin(RdfResourceImpl) {
     this.types.add(sh.PrefixDeclaration)
   }
 
-  static readonly __mixins: Mixin[] = [PrefixDeclarationMixin, RdfsResourceMixin];
+  static readonly __mixins: Mixin[] = [PrefixDeclarationMixin, Rdfs.ResourceMixin];
 }
 PrefixDeclarationMixin.appliesTo = sh.PrefixDeclaration
 PrefixDeclarationMixin.Class = PrefixDeclarationImpl

@@ -4,8 +4,7 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/Class';
+import * as Rdfs from '@rdfine/rdfs';
 import { ParameterizableMixin } from './Parameterizable';
 
 export interface TargetType extends Rdfs.Class, Sh.Parameterizable, RdfResource {
@@ -13,7 +12,7 @@ export interface TargetType extends Rdfs.Class, Sh.Parameterizable, RdfResource 
 
 export function TargetTypeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
-  class TargetTypeClass extends ParameterizableMixin(RdfsClassMixin(Resource)) implements TargetType {
+  class TargetTypeClass extends ParameterizableMixin(Rdfs.ClassMixin(Resource)) implements TargetType {
   }
   return TargetTypeClass
 }
@@ -24,7 +23,7 @@ class TargetTypeImpl extends TargetTypeMixin(RdfResourceImpl) {
     this.types.add(sh.TargetType)
   }
 
-  static readonly __mixins: Mixin[] = [TargetTypeMixin, RdfsClassMixin, ParameterizableMixin];
+  static readonly __mixins: Mixin[] = [TargetTypeMixin, Rdfs.ClassMixin, ParameterizableMixin];
 }
 TargetTypeMixin.appliesTo = sh.TargetType
 TargetTypeMixin.Class = TargetTypeImpl

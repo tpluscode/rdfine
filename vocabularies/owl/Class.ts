@@ -4,10 +4,8 @@ import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import type * as Rdf from '@rdfine/rdf';
-import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/Class';
-import { ListMixin as RdfListMixin } from '@rdfine/rdf/List';
+import * as Rdfs from '@rdfine/rdfs';
+import * as Rdf from '@rdfine/rdf';
 
 export interface Class extends Rdfs.Class, RdfResource {
   complementOf: Owl.Class;
@@ -18,14 +16,14 @@ export interface Class extends Rdfs.Class, RdfResource {
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
-  class ClassClass extends RdfsClassMixin(Resource) implements Class {
+  class ClassClass extends Rdfs.ClassMixin(Resource) implements Class {
     @property.resource({ as: [ClassMixin] })
     complementOf!: Owl.Class;
-    @property.resource({ as: [RdfListMixin] })
+    @property.resource({ as: [Rdf.ListMixin] })
     disjointUnionOf!: Rdf.List;
     @property.resource({ as: [ClassMixin] })
     disjointWith!: Owl.Class;
-    @property.resource({ as: [RdfListMixin] })
+    @property.resource({ as: [Rdf.ListMixin] })
     hasKey!: Rdf.List;
   }
   return ClassClass
@@ -37,7 +35,7 @@ class ClassImpl extends ClassMixin(RdfResourceImpl) {
     this.types.add(owl.Class)
   }
 
-  static readonly __mixins: Mixin[] = [ClassMixin, RdfsClassMixin];
+  static readonly __mixins: Mixin[] = [ClassMixin, Rdfs.ClassMixin];
 }
 ClassMixin.appliesTo = owl.Class
 ClassMixin.Class = ClassImpl

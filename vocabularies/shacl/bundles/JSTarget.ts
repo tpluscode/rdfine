@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { JSExecutableMixin } from '../JSExecutable';
 import { TargetMixin } from '../Target';
 import { JSTargetMixin } from '../JSTarget';

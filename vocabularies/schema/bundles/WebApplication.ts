@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { SoftwareApplicationMixin } from '../SoftwareApplication';
 import { WebApplicationMixin } from '../WebApplication';
 

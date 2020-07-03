@@ -4,8 +4,7 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import * as Rdfs from '@rdfine/rdfs';
 
 export interface JSExecutable extends Rdfs.Resource, RdfResource {
   jsFunctionName: string;
@@ -13,7 +12,7 @@ export interface JSExecutable extends Rdfs.Resource, RdfResource {
 
 export function JSExecutableMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
-  class JSExecutableClass extends RdfsResourceMixin(Resource) implements JSExecutable {
+  class JSExecutableClass extends Rdfs.ResourceMixin(Resource) implements JSExecutable {
     @property.literal()
     jsFunctionName!: string;
   }
@@ -26,7 +25,7 @@ class JSExecutableImpl extends JSExecutableMixin(RdfResourceImpl) {
     this.types.add(sh.JSExecutable)
   }
 
-  static readonly __mixins: Mixin[] = [JSExecutableMixin, RdfsResourceMixin];
+  static readonly __mixins: Mixin[] = [JSExecutableMixin, Rdfs.ResourceMixin];
 }
 JSExecutableMixin.appliesTo = sh.JSExecutable
 JSExecutableMixin.Class = JSExecutableImpl

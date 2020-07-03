@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { OntologyPropertyMixin } from '../OntologyProperty';
 
 export const OntologyPropertyBundle = [

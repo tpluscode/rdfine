@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { OrganizationRoleMixin } from '../OrganizationRole';
 import { EmployeeRoleMixin } from '../EmployeeRole';
 import { MonetaryAmountMixin } from '../MonetaryAmount';

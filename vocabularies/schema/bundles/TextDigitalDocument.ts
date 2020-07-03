@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { DigitalDocumentMixin } from '../DigitalDocument';
 import { TextDigitalDocumentMixin } from '../TextDigitalDocument';
 

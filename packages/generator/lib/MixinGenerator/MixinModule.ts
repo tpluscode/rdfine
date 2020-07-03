@@ -38,7 +38,7 @@ export class MixinModule implements GeneratedModule {
 
     const mixinFile = project.createSourceFile(`${this.type.module}.ts`, {}, { overwrite: true })
     const bundleModule = project.createSourceFile(`bundles/${this.type.module}.ts`, {}, { overwrite: true })
-    const bundleIndex = project.getSourceFile('bundles/index.ts') || project.createSourceFile('bundles/index.ts')
+    const bundleIndex = project.getSourceFile('bundles/index.ts') || project.createSourceFile('bundles/index.ts', {}, { overwrite: true })
 
     const mixinName = this.type.mixinName
     const implName = `${this.type.localName}Impl`
@@ -68,7 +68,7 @@ export class MixinModule implements GeneratedModule {
     })
 
     const mixinNames = this.superClasses.reduce((mixins, sc) => {
-      return [...mixins, sc.type === 'Resource' ? sc.mixinName : sc.alias]
+      return [...mixins, sc.type === 'Resource' ? sc.mixinName : sc.qualifiedMixinName]
     }, [this.type.mixinName])
     implementationClass.addProperty({
       isStatic: true,
@@ -105,6 +105,7 @@ export class MixinModule implements GeneratedModule {
     depsModule.addImportDeclaration({
       namedImports: ['Mixin'],
       moduleSpecifier: '@tpluscode/rdfine/lib/ResourceFactory',
+      isTypeOnly: true,
     })
 
     const toImport = this.properties.reduce((toImport, prop) => {
@@ -193,19 +194,8 @@ export class MixinModule implements GeneratedModule {
         mixinFile.addImportDeclaration({
           moduleSpecifier,
           namespaceImport,
-          isTypeOnly: true,
         })
       })
-    this.mixinImports.forEach(superClass => {
-      if (!superClass.module || superClass.module === this.type.module) return
-
-      if (superClass.type === 'ExternalResource') {
-        mixinFile.addImportDeclaration({
-          moduleSpecifier: superClass.module,
-          namedImports: [`${superClass.mixinName} as ${superClass.alias}`],
-        })
-      }
-    })
 
     this.superClasses
       .filter(sc => sc.type === 'Resource')
@@ -233,7 +223,7 @@ export class MixinModule implements GeneratedModule {
 
     const baseClass = this.superClasses
       .reduce((type, superClass) => {
-        const mixinName = superClass.type === 'ExternalResource' ? superClass.alias : superClass.mixinName
+        const mixinName = superClass.type === 'ExternalResource' ? superClass.qualifiedMixinName : superClass.mixinName
 
         return `${mixinName}(${type})`
       },

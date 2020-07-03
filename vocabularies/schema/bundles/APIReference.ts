@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { TechArticleMixin } from '../TechArticle';
 import { APIReferenceMixin } from '../APIReference';
 
