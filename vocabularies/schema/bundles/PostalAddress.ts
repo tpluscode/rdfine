@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { ContactPointMixin } from '../ContactPoint';
 import { PostalAddressMixin } from '../PostalAddress';
 import { CountryMixin } from '../Country';

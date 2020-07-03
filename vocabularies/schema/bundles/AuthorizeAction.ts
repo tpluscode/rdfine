@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { AllocateActionMixin } from '../AllocateAction';
 import { AuthorizeActionMixin } from '../AuthorizeAction';
 import { AudienceMixin } from '../Audience';

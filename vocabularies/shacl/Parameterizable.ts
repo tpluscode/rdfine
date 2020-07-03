@@ -4,8 +4,7 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import * as Rdfs from '@rdfine/rdfs';
 
 export interface Parameterizable extends Rdfs.Resource, RdfResource {
   labelTemplate: RDF.Term;
@@ -14,7 +13,7 @@ export interface Parameterizable extends Rdfs.Resource, RdfResource {
 
 export function ParameterizableMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
-  class ParameterizableClass extends RdfsResourceMixin(Resource) implements Parameterizable {
+  class ParameterizableClass extends Rdfs.ResourceMixin(Resource) implements Parameterizable {
     @property()
     labelTemplate!: RDF.Term;
     @property.resource({ implicitTypes: [sh.Parameter] })
@@ -29,7 +28,7 @@ class ParameterizableImpl extends ParameterizableMixin(RdfResourceImpl) {
     this.types.add(sh.Parameterizable)
   }
 
-  static readonly __mixins: Mixin[] = [ParameterizableMixin, RdfsResourceMixin];
+  static readonly __mixins: Mixin[] = [ParameterizableMixin, Rdfs.ResourceMixin];
 }
 ParameterizableMixin.appliesTo = sh.Parameterizable
 ParameterizableMixin.Class = ParameterizableImpl

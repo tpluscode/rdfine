@@ -4,8 +4,7 @@ import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
-import type * as Rdf from '@rdfine/rdf';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
+import * as Rdf from '@rdfine/rdf';
 import { ResourceMixin } from './Resource';
 
 export interface Link extends Rdf.Property, Hydra.Resource, RdfResource {
@@ -16,7 +15,7 @@ export interface Link extends Rdf.Property, Hydra.Resource, RdfResource {
 
 export function LinkMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
-  class LinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements Link {
+  class LinkClass extends ResourceMixin(Rdf.PropertyMixin(Resource)) implements Link {
     @property.literal()
     description!: string;
     @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
@@ -33,7 +32,7 @@ class LinkImpl extends LinkMixin(RdfResourceImpl) {
     this.types.add(hydra.Link)
   }
 
-  static readonly __mixins: Mixin[] = [LinkMixin, RdfPropertyMixin, ResourceMixin];
+  static readonly __mixins: Mixin[] = [LinkMixin, Rdf.PropertyMixin, ResourceMixin];
 }
 LinkMixin.appliesTo = hydra.Link
 LinkMixin.Class = LinkImpl

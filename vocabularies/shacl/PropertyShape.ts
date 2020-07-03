@@ -4,8 +4,7 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import * as Rdfs from '@rdfine/rdfs';
 import { ShapeMixin } from './Shape';
 
 export interface PropertyShape extends Sh.Shape, RdfResource {
@@ -27,7 +26,7 @@ export function PropertyShapeMixin<Base extends Constructor>(Resource: Base) {
     group!: Sh.PropertyGroup;
     @property()
     name!: RDF.Term;
-    @property.resource({ as: [RdfsResourceMixin] })
+    @property.resource({ as: [Rdfs.ResourceMixin] })
     path!: Rdfs.Resource;
   }
   return PropertyShapeClass

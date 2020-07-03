@@ -29,7 +29,7 @@ export interface ExternalResourceType {
   qualifiedName: string
   qualifier: string
   package: string
-  alias: string
+  qualifiedMixinName: string
 }
 
 export interface EnumerationType {

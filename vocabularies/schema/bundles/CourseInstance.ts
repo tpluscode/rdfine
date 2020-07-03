@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { EventMixin } from '../Event';
 import { CourseInstanceMixin } from '../CourseInstance';
 import { PersonMixin } from '../Person';

@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { FunctionMixin } from '../Function';
 import { SPARQLAskExecutableMixin } from '../SPARQLAskExecutable';
 import { SPARQLSelectExecutableMixin } from '../SPARQLSelectExecutable';

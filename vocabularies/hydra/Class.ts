@@ -4,8 +4,7 @@ import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/Class';
+import * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin } from './Resource';
 
 export interface Class extends Rdfs.Class, Hydra.Resource, RdfResource {
@@ -17,7 +16,7 @@ export interface Class extends Rdfs.Class, Hydra.Resource, RdfResource {
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
-  class ClassClass extends ResourceMixin(RdfsClassMixin(Resource)) implements Class {
+  class ClassClass extends ResourceMixin(Rdfs.ClassMixin(Resource)) implements Class {
     @property.literal()
     description!: string;
     @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
@@ -36,7 +35,7 @@ class ClassImpl extends ClassMixin(RdfResourceImpl) {
     this.types.add(hydra.Class)
   }
 
-  static readonly __mixins: Mixin[] = [ClassMixin, RdfsClassMixin, ResourceMixin];
+  static readonly __mixins: Mixin[] = [ClassMixin, Rdfs.ClassMixin, ResourceMixin];
 }
 ClassMixin.appliesTo = hydra.Class
 ClassMixin.Class = ClassImpl

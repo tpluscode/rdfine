@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { ReservationMixin } from '../Reservation';
 import { TaxiReservationMixin } from '../TaxiReservation';
 import { QuantitativeValueMixin } from '../QuantitativeValue';

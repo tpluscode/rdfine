@@ -4,13 +4,8 @@ import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import type * as Rdf from '@rdfine/rdf';
-import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/Class';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
-import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/Datatype';
-import { ListMixin as RdfListMixin } from '@rdfine/rdf/List';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
+import * as Rdfs from '@rdfine/rdfs';
+import * as Rdf from '@rdfine/rdf';
 import { ClassMixin } from './Class';
 
 export interface Restriction extends Owl.Class, RdfResource {
@@ -33,13 +28,13 @@ export interface Restriction extends Owl.Class, RdfResource {
 export function RestrictionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class RestrictionClass extends ClassMixin(Resource) implements Restriction {
-    @property.resource({ as: [RdfsClassMixin] })
+    @property.resource({ as: [Rdfs.ClassMixin] })
     allValuesFrom!: Rdfs.Class;
     @property.literal({ type: Number })
     cardinality!: number;
-    @property.resource({ as: [RdfsResourceMixin] })
+    @property.resource({ as: [Rdfs.ResourceMixin] })
     hasSelf!: Rdfs.Resource;
-    @property.resource({ as: [RdfsResourceMixin] })
+    @property.resource({ as: [Rdfs.ResourceMixin] })
     hasValue!: Rdfs.Resource;
     @property.literal({ type: Number })
     maxCardinality!: number;
@@ -51,15 +46,15 @@ export function RestrictionMixin<Base extends Constructor>(Resource: Base) {
     minQualifiedCardinality!: number;
     @property.resource({ implicitTypes: [owl.Class] })
     onClass!: Owl.Class;
-    @property.resource({ as: [RdfsDatatypeMixin] })
+    @property.resource({ as: [Rdfs.DatatypeMixin] })
     onDataRange!: Rdfs.Datatype;
-    @property.resource({ as: [RdfListMixin] })
+    @property.resource({ as: [Rdf.ListMixin] })
     onProperties!: Rdf.List;
-    @property.resource({ as: [RdfPropertyMixin] })
+    @property.resource({ as: [Rdf.PropertyMixin] })
     onProperty!: Rdf.Property;
     @property.literal({ type: Number })
     qualifiedCardinality!: number;
-    @property.resource({ as: [RdfsClassMixin] })
+    @property.resource({ as: [Rdfs.ClassMixin] })
     someValuesFrom!: Rdfs.Class;
   }
   return RestrictionClass

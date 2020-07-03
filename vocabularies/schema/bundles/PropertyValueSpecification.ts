@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { IntangibleMixin } from '../Intangible';
 import { PropertyValueSpecificationMixin } from '../PropertyValueSpecification';
 import { ThingMixin } from '../Thing';

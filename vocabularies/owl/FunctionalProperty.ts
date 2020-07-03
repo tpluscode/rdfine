@@ -4,15 +4,14 @@ import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
-import type * as Rdf from '@rdfine/rdf';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
+import * as Rdf from '@rdfine/rdf';
 
 export interface FunctionalProperty extends Rdf.Property, RdfResource {
 }
 
 export function FunctionalPropertyMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
-  class FunctionalPropertyClass extends RdfPropertyMixin(Resource) implements FunctionalProperty {
+  class FunctionalPropertyClass extends Rdf.PropertyMixin(Resource) implements FunctionalProperty {
   }
   return FunctionalPropertyClass
 }
@@ -23,7 +22,7 @@ class FunctionalPropertyImpl extends FunctionalPropertyMixin(RdfResourceImpl) {
     this.types.add(owl.FunctionalProperty)
   }
 
-  static readonly __mixins: Mixin[] = [FunctionalPropertyMixin, RdfPropertyMixin];
+  static readonly __mixins: Mixin[] = [FunctionalPropertyMixin, Rdf.PropertyMixin];
 }
 FunctionalPropertyMixin.appliesTo = owl.FunctionalProperty
 FunctionalPropertyMixin.Class = FunctionalPropertyImpl

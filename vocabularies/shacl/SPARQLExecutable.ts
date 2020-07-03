@@ -4,10 +4,8 @@ import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import type * as Owl from '@rdfine/owl';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
-import { OntologyMixin as OwlOntologyMixin } from '@rdfine/owl/Ontology';
+import * as Rdfs from '@rdfine/rdfs';
+import * as Owl from '@rdfine/owl';
 
 export interface SPARQLExecutable extends Rdfs.Resource, RdfResource {
   prefixes: Owl.Ontology;
@@ -15,8 +13,8 @@ export interface SPARQLExecutable extends Rdfs.Resource, RdfResource {
 
 export function SPARQLExecutableMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
-  class SPARQLExecutableClass extends RdfsResourceMixin(Resource) implements SPARQLExecutable {
-    @property.resource({ as: [OwlOntologyMixin] })
+  class SPARQLExecutableClass extends Rdfs.ResourceMixin(Resource) implements SPARQLExecutable {
+    @property.resource({ as: [Owl.OntologyMixin] })
     prefixes!: Owl.Ontology;
   }
   return SPARQLExecutableClass
@@ -28,7 +26,7 @@ class SPARQLExecutableImpl extends SPARQLExecutableMixin(RdfResourceImpl) {
     this.types.add(sh.SPARQLExecutable)
   }
 
-  static readonly __mixins: Mixin[] = [SPARQLExecutableMixin, RdfsResourceMixin];
+  static readonly __mixins: Mixin[] = [SPARQLExecutableMixin, Rdfs.ResourceMixin];
 }
 SPARQLExecutableMixin.appliesTo = sh.SPARQLExecutable
 SPARQLExecutableMixin.Class = SPARQLExecutableImpl

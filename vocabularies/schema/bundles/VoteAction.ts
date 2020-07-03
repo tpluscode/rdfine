@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { ChooseActionMixin } from '../ChooseAction';
 import { VoteActionMixin } from '../VoteAction';
 import { PersonMixin } from '../Person';

@@ -4,8 +4,7 @@ import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
-import type * as Rdf from '@rdfine/rdf';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
+import * as Rdf from '@rdfine/rdf';
 import { ResourceMixin } from './Resource';
 
 export interface SupportedProperty extends Hydra.Resource, RdfResource {
@@ -23,7 +22,7 @@ export function SupportedPropertyMixin<Base extends Constructor>(Resource: Base)
   class SupportedPropertyClass extends ResourceMixin(Resource) implements SupportedProperty {
     @property.literal()
     description!: string;
-    @property.resource({ as: [RdfPropertyMixin] })
+    @property.resource({ as: [Rdf.PropertyMixin] })
     property!: Rdf.Property;
     @property.literal({ type: Boolean })
     readable!: boolean;

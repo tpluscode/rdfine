@@ -4,8 +4,7 @@ import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/Resource';
+import * as Rdfs from '@rdfine/rdfs';
 
 export interface Ontology extends Rdfs.Resource, RdfResource {
   backwardCompatibleWith: Owl.Ontology;
@@ -17,7 +16,7 @@ export interface Ontology extends Rdfs.Resource, RdfResource {
 
 export function OntologyMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
-  class OntologyClass extends RdfsResourceMixin(Resource) implements Ontology {
+  class OntologyClass extends Rdfs.ResourceMixin(Resource) implements Ontology {
     @property.resource({ as: [OntologyMixin] })
     backwardCompatibleWith!: Owl.Ontology;
     @property.resource({ as: [OntologyMixin] })
@@ -38,7 +37,7 @@ class OntologyImpl extends OntologyMixin(RdfResourceImpl) {
     this.types.add(owl.Ontology)
   }
 
-  static readonly __mixins: Mixin[] = [OntologyMixin, RdfsResourceMixin];
+  static readonly __mixins: Mixin[] = [OntologyMixin, Rdfs.ResourceMixin];
 }
 OntologyMixin.appliesTo = owl.Ontology
 OntologyMixin.Class = OntologyImpl

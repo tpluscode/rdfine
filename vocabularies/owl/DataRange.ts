@@ -4,15 +4,14 @@ import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
-import type * as Rdfs from '@rdfine/rdfs';
-import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/Datatype';
+import * as Rdfs from '@rdfine/rdfs';
 
 export interface DataRange extends Rdfs.Datatype, RdfResource {
 }
 
 export function DataRangeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
-  class DataRangeClass extends RdfsDatatypeMixin(Resource) implements DataRange {
+  class DataRangeClass extends Rdfs.DatatypeMixin(Resource) implements DataRange {
   }
   return DataRangeClass
 }
@@ -23,7 +22,7 @@ class DataRangeImpl extends DataRangeMixin(RdfResourceImpl) {
     this.types.add(owl.DataRange)
   }
 
-  static readonly __mixins: Mixin[] = [DataRangeMixin, RdfsDatatypeMixin];
+  static readonly __mixins: Mixin[] = [DataRangeMixin, Rdfs.DatatypeMixin];
 }
 DataRangeMixin.appliesTo = owl.DataRange
 DataRangeMixin.Class = DataRangeImpl

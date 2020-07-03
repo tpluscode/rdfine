@@ -11,12 +11,14 @@
     "lib"
   ],
   "scripts": {
-    "prepare": "tsc -p tsconfig.build.json"
+    "prepare": "yarn build",
+    "build": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
     "@rdfjs/formats-common": "^2.1.0",
     "@rdfjs/namespace": "^1.1.0",
     "@tpluscode/rdf-ns-builders": "^0.3.6",
+    "@zazuko/rdf-vocabularies": "^2020.3.17",
     "clownface": "^0.12.1",
     "commander": "^5.0.0",
     "debug": "^4.1.1",
@@ -42,7 +44,6 @@
     "@types/rdfjs__formats-common": "^2.0.0",
     "@types/rdfjs__namespace": "^1.1.1",
     "@types/rdfjs__parser-n3": "^1.1.2",
-    "@zazuko/rdf-vocabularies": "^2020.3.17",
     "string-to-stream": "^3.0.1",
     "typescript": "^3.8.3"
   },

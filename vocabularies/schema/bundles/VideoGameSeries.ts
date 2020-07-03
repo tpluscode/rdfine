@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { CreativeWorkSeriesMixin } from '../CreativeWorkSeries';
 import { VideoGameSeriesMixin } from '../VideoGameSeries';
 import { PersonMixin } from '../Person';

@@ -4,8 +4,7 @@ import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
-import type * as Rdf from '@rdfine/rdf';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/Property';
+import * as Rdf from '@rdfine/rdf';
 import { ResourceMixin } from './Resource';
 
 export interface TemplatedLink extends Rdf.Property, Hydra.Resource, RdfResource {
@@ -16,7 +15,7 @@ export interface TemplatedLink extends Rdf.Property, Hydra.Resource, RdfResource
 
 export function TemplatedLinkMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
-  class TemplatedLinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements TemplatedLink {
+  class TemplatedLinkClass extends ResourceMixin(Rdf.PropertyMixin(Resource)) implements TemplatedLink {
     @property.literal()
     description!: string;
     @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
@@ -33,7 +32,7 @@ class TemplatedLinkImpl extends TemplatedLinkMixin(RdfResourceImpl) {
     this.types.add(hydra.TemplatedLink)
   }
 
-  static readonly __mixins: Mixin[] = [TemplatedLinkMixin, RdfPropertyMixin, ResourceMixin];
+  static readonly __mixins: Mixin[] = [TemplatedLinkMixin, Rdf.PropertyMixin, ResourceMixin];
 }
 TemplatedLinkMixin.appliesTo = hydra.TemplatedLink
 TemplatedLinkMixin.Class = TemplatedLinkImpl

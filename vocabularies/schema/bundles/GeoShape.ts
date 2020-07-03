@@ -1,4 +1,4 @@
-import { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { StructuredValueMixin } from '../StructuredValue';
 import { GeoShapeMixin } from '../GeoShape';
 import { PostalAddressMixin } from '../PostalAddress';
