@@ -1,5 +1,5 @@
 {
   "extends": "../../tsconfig",
   "files": ["index.ts"],
-  "include": ["dependencies"]
+  "include": ["bundles"]
 }
