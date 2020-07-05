@@ -1,7 +1,7 @@
 import { Clownface, SingleContextClownface } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import { DatasetCore, Term } from 'rdf-js'
-import { RdfResource } from '../RdfResource'
+import type { RdfResource } from '../RdfResource'
 
 function isLast(node: Clownface): boolean {
   return rdf.nil.equals(node.term)

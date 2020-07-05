@@ -1,5 +1,5 @@
-import { RdfResource } from '../../RdfResource'
-import { Constructor } from '../ResourceFactory'
+import type { RdfResource } from '../../RdfResource'
+import type { Constructor } from '../ResourceFactory'
 
 // From the TC39 Decorators proposal
 export interface ClassElement {

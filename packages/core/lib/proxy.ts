@@ -1,8 +1,8 @@
 import { DatasetCore, Literal, Term } from 'rdf-js'
 import { SingleContextClownface } from 'clownface'
-import { RdfResource } from '../RdfResource'
+import type { RdfResource } from '../RdfResource'
 import * as rdfList from './rdf-list'
-import { ResourceIndexer } from './ResourceFactory'
+import type { ResourceIndexer } from './ResourceFactory'
 
 function nodeToValue(target: RdfResource) {
   const fromTerm = (obj: SingleContextClownface): any => {
