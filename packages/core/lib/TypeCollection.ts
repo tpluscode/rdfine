@@ -1,6 +1,6 @@
 import { DatasetCore, Term } from 'rdf-js'
 import cf, { SingleContextClownface } from 'clownface'
-import { RdfResource, ResourceIdentifier } from '../RdfResource'
+import type { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import RDF from '@rdfjs/data-model'
 import { onlyUnique } from './filter'

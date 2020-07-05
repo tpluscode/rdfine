@@ -3,7 +3,8 @@ import RDF from '@rdfjs/data-model'
 import { NamespaceBuilder } from '@rdfjs/namespace'
 import { NamedNode, DatasetCore, BlankNode, DefaultGraph, Quad_Graph, Term, Literal } from 'rdf-js'
 import cf, { SafeClownface, SingleContextClownface } from 'clownface'
-import ResourceFactoryImpl, {
+import ResourceFactoryImpl from './lib/ResourceFactory'
+import type {
   Constructor,
   Mixin,
   ResourceCreationOptions,
@@ -11,7 +12,8 @@ import ResourceFactoryImpl, {
   ResourceIndexer,
 } from './lib/ResourceFactory'
 import once from 'once'
-import TypeCollectionCtor, { TypeCollection } from './lib/TypeCollection'
+import type { TypeCollection } from './lib/TypeCollection'
+import TypeCollectionCtor from './lib/TypeCollection'
 import { xsd } from '@tpluscode/rdf-ns-builders'
 
 type ObjectOrFactory<T> = T | ((self: RdfResource) => T)

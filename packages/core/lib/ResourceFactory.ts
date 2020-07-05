@@ -1,7 +1,7 @@
 import { DatasetCore, Literal, NamedNode } from 'rdf-js'
 import cf from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import { RdfResource, ResourceNode } from '../RdfResource'
+import type { RdfResource, ResourceNode } from '../RdfResource'
 import { createProxy } from './proxy'
 
 export type AnyFunction<A = any> = (...input: any[]) => A

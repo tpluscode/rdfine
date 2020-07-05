@@ -1,9 +1,10 @@
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import { BlankNode, NamedNode, Term } from 'rdf-js'
 import { SingleContextClownface } from 'clownface'
-import { Initializer, RdfResource, ResourceIdentifier } from '../../../RdfResource'
-import { AccessorOptions, ObjectOrFactory, propertyDecorator } from '../property'
-import { Constructor, Mixin } from '../../ResourceFactory'
+import type { Initializer, RdfResource, ResourceIdentifier } from '../../../RdfResource'
+import type { AccessorOptions, ObjectOrFactory } from '.'
+import { propertyDecorator } from '.'
+import type { Constructor, Mixin } from '../../ResourceFactory'
 import * as compare from '../../compare'
 
 type InitialValue = SingleContextClownface<ResourceIdentifier> | RdfResource
