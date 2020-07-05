@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/tpluscode/rdfine/compare/@rdfine/owl@0.2.1...@rdfine/owl@0.2.2) (2020-07-05)
+
+
+### Bug Fixes
+
+* **build:** bundles partially missing in package ([e8b9816](https://github.com/tpluscode/rdfine/commit/e8b9816cc583f1f756a649107bdcd3fabebb5880))
+
+
+
+
+
 ## [0.2.1](https://github.com/tpluscode/rdfine/compare/@rdfine/owl@0.2.0...@rdfine/owl@0.2.1) (2020-07-03)
 
 

@@ -1,6 +1,6 @@
 {
 	"name": "@rdfine/rdf",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"main": "inde.js",
 	"module": "index.mjs",
 	"browser": "index.mjs",
@@ -35,7 +35,7 @@
 	"dependencies": {
 		"@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.3.6",
-		"@tpluscode/rdfine": "^0.4.16"
+		"@tpluscode/rdfine": "^0.4.17"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-class-properties": "^7.8.3",

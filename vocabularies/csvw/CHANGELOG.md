@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://github.com/tpluscode/rdfine/compare/@rdfine/csvw@0.4.1...@rdfine/csvw@0.4.2) (2020-07-05)
+
+
+### Bug Fixes
+
+* **build:** bundles partially missing in package ([e8b9816](https://github.com/tpluscode/rdfine/commit/e8b9816cc583f1f756a649107bdcd3fabebb5880))
+
+
+
+
+
 ## [0.4.1](https://github.com/tpluscode/rdfine/compare/@rdfine/csvw@0.4.0...@rdfine/csvw@0.4.1) (2020-07-03)
 
 
