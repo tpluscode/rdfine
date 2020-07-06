@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/tpluscode/rdfine/compare/@rdfine/csvw@0.4.2...@rdfine/csvw@0.4.3) (2020-07-06)
+
+
+### Bug Fixes
+
+* **build:** exports field did not work in newer node ([531da7b](https://github.com/tpluscode/rdfine/commit/531da7bd23faa2ad5b1bacec1c5a76e44d6190ab))
+
+
+
+
+
 ## [0.4.2](https://github.com/tpluscode/rdfine/compare/@rdfine/csvw@0.4.1...@rdfine/csvw@0.4.2) (2020-07-05)
 
 

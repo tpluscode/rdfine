@@ -1,6 +1,6 @@
 {
 	"name": "@rdfine/owl",
-	"version": "0.2.2",
+	"version": "0.2.3",
 	"main": "index.js",
 	"module": "index.mjs",
 	"browser": "index.mjs",
@@ -30,11 +30,11 @@
 		}
 	},
 	"dependencies": {
-		"@rdfine/rdf": "^0.3.2",
-		"@rdfine/rdfs": "^0.3.2",
+		"@rdfine/rdf": "^0.3.3",
+		"@rdfine/rdfs": "^0.3.3",
 		"@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.3.6",
-		"@tpluscode/rdfine": "^0.4.17"
+		"@tpluscode/rdfine": "^0.4.18"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-class-properties": "^7.8.3",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.18](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.17...@tpluscode/rdfine@0.4.18) (2020-07-06)
+
+
+### Bug Fixes
+
+* **build:** exports field did not work in newer node ([531da7b](https://github.com/tpluscode/rdfine/commit/531da7bd23faa2ad5b1bacec1c5a76e44d6190ab))
+
+
+
+
+
 ## [0.4.17](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.16...@tpluscode/rdfine@0.4.17) (2020-07-05)
 
 
