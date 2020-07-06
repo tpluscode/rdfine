@@ -1,7 +1,7 @@
 {
 	"name": "@rdfine/hydra",
 	"version": "0.3.2",
-	"main": "inde.js",
+	"main": "index.js",
 	"module": "index.mjs",
 	"browser": "index.mjs",
 	"types": "index.d.ts",

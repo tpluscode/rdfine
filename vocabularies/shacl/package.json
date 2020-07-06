@@ -1,7 +1,7 @@
 {
 	"name": "@rdfine/shacl",
 	"version": "0.2.2",
-	"main": "inde.js",
+	"main": "index.js",
 	"module": "index.mjs",
 	"browser": "index.mjs",
 	"types": "index.d.ts",

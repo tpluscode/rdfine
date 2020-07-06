@@ -1,7 +1,7 @@
 {
   "name": "@rdfine/schema",
   "version": "0.4.2",
-  "main": "inde.js",
+  "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",
   "types": "index.d.ts",
