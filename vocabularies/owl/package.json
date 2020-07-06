@@ -5,7 +5,7 @@
 	"module": "index.mjs",
 	"browser": "index.mjs",
 	"exports": {
-		"./": {
+		".": {
 			"require": "./index.js",
 			"import": "./index.mjs"
 		},
