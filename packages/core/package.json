@@ -1,6 +1,6 @@
 {
   "name": "@tpluscode/rdfine",
-  "version": "0.4.19",
+  "version": "0.4.20",
   "description": "RDF/JS idiomatic, native, effective",
   "main": "index.js",
   "module": "index.mjs",

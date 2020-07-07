@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.20](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.19...@tpluscode/rdfine@0.4.20) (2020-07-07)
+
+
+### Bug Fixes
+
+* unable to initialize arrays with http properties ([2791c90](https://github.com/tpluscode/rdfine/commit/2791c90efad7348c61f45a85ca0dfabe79632f60))
+
+
+
+
+
 ## [0.4.19](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.18...@tpluscode/rdfine@0.4.19) (2020-07-07)
 
 
