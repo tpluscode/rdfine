@@ -39,13 +39,13 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
    * Gets the value of a property
    * @param property
    */
-  get<T extends RdfResource = RdfResource> (property: string | NamedNode): T
-  get<T extends RdfResource = RdfResource> (property: string | NamedNode, options?: GetOptions): T | null
+  get<T extends RdfResource<D> = RdfResource<D>> (property: string | NamedNode): T
+  get<T extends RdfResource<D> = RdfResource<D>> (property: string | NamedNode, options?: GetOptions): T | null
   /**
    * Gets the value of a property and ensures that an array will be returned
    * @param property
    */
-  getArray<T extends RdfResource = RdfResource> (property: string | NamedNode, options?: GetOptions): T[]
+  getArray<T extends RdfResource<D> = RdfResource<D>> (property: string | NamedNode, options?: GetOptions): T[]
   /**
    * Gets the property value if it's boolean. Throws if it's not
    * @param property
@@ -64,7 +64,7 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   getNumber (property: string | NamedNode): number | null
   getNumber (property: string | NamedNode, options?: GetOptions): number | null
   _getObjects(property: string | NamedNode, options?: GetOptions): SafeClownface<Term, D>
-  _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D>): T & ResourceIndexer
+  _create<T extends RdfResource<D>>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
 }
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
@@ -81,7 +81,21 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     Object.entries(init)
       .filter(([prop]) => prop !== 'id' && prop !== 'types')
       .forEach(([prop, value]) => {
-        (resource as any)[prop] = value
+        if (!prop.startsWith('http')) {
+          // use decorated setter property
+          (resource as any)[prop] = value
+          return
+        }
+        if (typeof value !== 'object' || 'termType' in value) {
+          // use node or native value directly as object
+          resource._selfGraph.addOut(resource._selfGraph.namedNode(prop), value)
+          return
+        }
+
+        // create and initialize an object resource
+        const term = value.id ? resource._selfGraph.node(value.id) : resource._selfGraph.blankNode()
+        const valueResource = resource._create(term, [], { initializer: value })
+        resource._selfGraph.addOut(resource._selfGraph.namedNode(prop), valueResource.id)
       })
 
     if (init.types && Array.isArray(init.types)) {
@@ -155,7 +169,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return this.types.has(type)
   }
 
-  public equals(other: RdfResource | undefined | null): boolean {
+  public equals(other: RdfResource<any> | undefined | null): boolean {
     if (!other) {
       return false
     }
@@ -169,7 +183,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return idsEqual
   }
 
-  public get<T extends RdfResource = RdfResource>(property: string | NamedNode, options?: GetOptions): T | RdfResource<D> | null {
+  public get<T extends RdfResource<D> = RdfResource<D>>(property: string | NamedNode, options?: GetOptions): T | RdfResource<D> | null {
     const objects = this.getArray<T>(property, options)
 
     if (objects.length > 0) {
@@ -179,7 +193,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return null
   }
 
-  public getArray<T extends RdfResource = RdfResource>(property: string | NamedNode, options?: GetOptions): T[] {
+  public getArray<T extends RdfResource<D> = RdfResource<D>>(property: string | NamedNode, options?: GetOptions): T[] {
     const values = this._getObjects(property, options)
       .filter(obj => obj.term.termType === 'NamedNode' || obj.term.termType === 'BlankNode')
       .map(obj => {
@@ -248,7 +262,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return objects
   }
 
-  public _create<T extends RdfResource>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D> = {}): T & ResourceIndexer {
+  public _create<T extends RdfResource<D>>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D, T> = {}): T & ResourceIndexer {
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins, options)
   }
 }

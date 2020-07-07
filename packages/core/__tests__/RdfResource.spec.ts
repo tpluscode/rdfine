@@ -2,6 +2,7 @@ import cf, { Clownface } from 'clownface'
 import $rdf from 'rdf-ext'
 import { NamedNode, Term } from 'rdf-js'
 import { defaultGraph, namedNode, literal, blankNode } from '@rdfjs/data-model'
+import { skos } from '@tpluscode/rdf-ns-builders'
 import RdfResource, { Initializer } from '../RdfResource'
 import { parse, vocabs } from './_helpers'
 import { property } from '../index'
@@ -359,6 +360,66 @@ describe('RdfResource', () => {
       // then
       expect(resource.types.size).toEqual(1)
       expect([...resource.types][0].id.value).toEqual(ex.Bar.value)
+    })
+
+    it('allows arbitrary string as RDF property', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+
+      // when
+      const resource = new RdfResource(node, {
+        [skos.prefLabel.value]: 'Foo',
+        [skos.broader.value]: {
+          [skos.prefLabel.value]: 'Bar',
+        },
+      })
+
+      // then
+      expect(resource.getString(skos.prefLabel)).toEqual('Foo')
+      expect(resource.get(skos.broader)!.getString(skos.prefLabel)).toEqual('Bar')
+    })
+
+    it('assigns id to nested resource assigned to arbitrary URI', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+
+      // when
+      const resource = new RdfResource(node, {
+        [skos.prefLabel.value]: 'Foo',
+        [skos.broader.value]: {
+          id: ex.Bar,
+        },
+      })
+
+      // then
+      expect(resource.getString(skos.prefLabel)).toEqual('Foo')
+      expect(resource.get(skos.broader)!.id.value).toEqual(ex.Bar.value)
+    })
+
+    it('assigns named node to arbitrary URI property', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+
+      // when
+      const resource = new RdfResource(node, {
+        [skos.broader.value]: ex.Bar,
+      })
+
+      // then
+      expect(resource.get(skos.broader)!.id.value).toEqual(ex.Bar.value)
+    })
+
+    it('assigns literal node to arbitrary URI property', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+
+      // when
+      const resource = new RdfResource(node, {
+        [skos.prefLabel.value]: $rdf.literal('Foo', 'en'),
+      })
+
+      // then
+      expect(resource._selfGraph.dataset).toMatchSnapshot()
     })
   })
 

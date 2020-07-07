@@ -1,4 +1,4 @@
-import { DatasetCore, Literal, Term } from 'rdf-js'
+import { Literal, Term } from 'rdf-js'
 import { SingleContextClownface } from 'clownface'
 import type { RdfResource } from '../RdfResource'
 import * as rdfList from './rdf-list'
@@ -22,7 +22,7 @@ function nodeToValue(target: RdfResource) {
   return fromTerm
 }
 
-export function createProxy<T extends RdfResource<D>, D extends DatasetCore = DatasetCore>(resource: T): T & ResourceIndexer {
+export function createProxy<T extends RdfResource<any>>(resource: T): T & ResourceIndexer {
   return new Proxy(resource, {
     get(target, property) {
       if (property in target) {

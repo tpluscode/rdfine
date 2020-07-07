@@ -236,8 +236,8 @@ const standardProperty =
     }
   }
 
-export function propertyDecorator<T extends RdfResource, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>) {
-  return (protoOrDescriptor: RdfResource|ClassElement, name?: PropertyKey): any =>
+export function propertyDecorator<T extends RdfResource<any>, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>) {
+  return (protoOrDescriptor: RdfResource<any>|ClassElement, name?: PropertyKey): any =>
     (name !== undefined)
       ? legacyProperty(options, protoOrDescriptor as any, name)
       : standardProperty(options, protoOrDescriptor as ClassElement)
@@ -247,7 +247,7 @@ interface TermOptions <TSelf>{
   initial?: ObjectOrFactory<TSelf, Term, Term>
 }
 
-export function property<R extends RdfResource>(options: AccessorOptions & TermOptions<R> = {}) {
+export function property<R extends RdfResource<any>>(options: AccessorOptions & TermOptions<R> = {}) {
   return propertyDecorator<R, Term, Term>({
     ...options,
     fromTerm: (obj) => obj.term,
