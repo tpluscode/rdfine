@@ -86,16 +86,21 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
           (resource as any)[prop] = value
           return
         }
-        if (typeof value !== 'object' || 'termType' in value) {
-          // use node or native value directly as object
-          resource._selfGraph.addOut(resource._selfGraph.namedNode(prop), value)
-          return
-        }
 
-        // create and initialize an object resource
-        const term = value.id ? resource._selfGraph.node(value.id) : resource._selfGraph.blankNode()
-        const valueResource = resource._create(term, [], { initializer: value })
-        resource._selfGraph.addOut(resource._selfGraph.namedNode(prop), valueResource.id)
+        const values = Array.isArray(value) ? value : [value]
+        const pointers = values.map(value => {
+          if (typeof value !== 'object' || 'termType' in value) {
+            // use node or native value directly as object
+            return resource._selfGraph.node(value)
+          }
+
+          // create and initialize an object resource
+          const term = value.id ? resource._selfGraph.node(value.id) : resource._selfGraph.blankNode()
+          const childResource = resource._create(term, [], { initializer: value })
+          return childResource._selfGraph
+        })
+
+        resource._selfGraph.addOut(resource._selfGraph.namedNode(prop), pointers)
       })
 
     if (init.types && Array.isArray(init.types)) {
