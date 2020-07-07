@@ -1,7 +1,7 @@
 import { DatasetCore, Literal, NamedNode } from 'rdf-js'
 import cf from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import type { RdfResource, ResourceNode } from '../RdfResource'
+import type { Initializer, RdfResource, ResourceNode } from '../RdfResource'
 import { createProxy } from './proxy'
 
 export type AnyFunction<A = any> = (...input: any[]) => A
@@ -19,7 +19,7 @@ type SingleTypeMixin = {
 
 type MaybeArray<T> = T | T[]
 
-export interface ResourceIndexer<D extends DatasetCore = DatasetCore, T extends RdfResource<D> = RdfResource<D>> {
+export interface ResourceIndexer<D extends DatasetCore = DatasetCore, T extends RdfResource<any> = RdfResource<any>> {
   [ prop: string ]: null | undefined | MaybeArray<T | Literal | T & ResourceIndexer>
 }
 
@@ -29,12 +29,13 @@ export interface ResourceFactory<D extends DatasetCore = DatasetCore, R extends 
   addMixin(...mixins: (EvaluatedMixin | SingleTypeMixin)[]): void
   createEntity<S>(
     term: ResourceNode<D>,
-    typeAndMixins?: Mixin<T>[] | [Constructor, ...Mixin<T>[]],
-    options?: ResourceCreationOptions<D>): R & S & ResourceIndexer<D, R>
+    typeAndMixins?: Mixin<T>[] | [Constructor, ...Mixin<T>[]], // TODO: move mixins into options object
+    options?: ResourceCreationOptions<D, R & S>): R & S & ResourceIndexer<D, R>
 }
 
-export interface ResourceCreationOptions<D extends DatasetCore> {
+export interface ResourceCreationOptions<D extends DatasetCore, R extends RdfResource<any>> {
   parent?: RdfResource<D>
+  initializer?: Initializer<R>
 }
 
 export default class <D extends DatasetCore = DatasetCore, R extends RdfResource<D> = RdfResource<D>, T extends AnyFunction = any> implements ResourceFactory<D, R, T> {
@@ -65,7 +66,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     })
   }
 
-  public createEntity<S>(term: ResourceNode<D>, typeAndMixins: Mixin<T>[] | [Constructor, ...Mixin<T>[]] = [], options: ResourceCreationOptions<D> = {}): R & S & ResourceIndexer<D, R> {
+  public createEntity<S>(term: ResourceNode<D>, typeAndMixins: Mixin<T>[] | [Constructor, ...Mixin<T>[]] = [], options: ResourceCreationOptions<D, R & S> = {}): R & S & ResourceIndexer<D, R> {
     const graphPointer = cf(term)
     let BaseClass = this.BaseClass
     let explicitMixins: Mixin[] = typeAndMixins
@@ -90,7 +91,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
 
     const Type = this.__extend(BaseClass, [...mixins])
 
-    return createProxy(new Type(term, {}, options.parent)) as R & S & ResourceIndexer<D, R>
+    return createProxy(new Type(term, options.initializer, options.parent)) as R & S & ResourceIndexer<D, R>
   }
 
   private __getBaseClass(baseClass: Constructor, types: string[]) {

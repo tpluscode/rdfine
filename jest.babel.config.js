@@ -10,5 +10,6 @@ module.exports = {
   coverageDirectory: 'coverage/babel',
   setupFilesAfterEnv: [
     './packages/generator/__tests__/_helpers/matchers.ts',
+    './packages/core/__tests__/_helpers/matchers.ts',
   ],
 }
