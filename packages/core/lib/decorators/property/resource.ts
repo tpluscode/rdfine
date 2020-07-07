@@ -43,13 +43,9 @@ function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptio
         valueNode.addOut(rdf.type, value.types)
       }
 
-      const valueResource = this._create(valueNode)
-
-      Object.entries(value)
-        .filter(([prop]) => prop !== 'id' && prop !== 'types')
-        .forEach(([prop, propValue]) => {
-          valueResource[prop] = propValue as any
-        })
+      this._create(valueNode, [], {
+        initializer: value,
+      })
 
       return valueNode.term
     },

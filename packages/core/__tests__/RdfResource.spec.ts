@@ -406,6 +406,59 @@ describe('RdfResource', () => {
       expect(resource.get(skos.broader)!.getString(skos.prefLabel)).toEqual('Bar')
     })
 
+    it('initializes annotated property with nested array of resources which use http properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      class SkosResource extends RdfResource {
+        @property.resource({ path: skos.broader, values: 'array' })
+        broader!: SkosResource[]
+      }
+
+      // when
+      const resource = new SkosResource(node, {
+        broader: [{
+          [skos.prefLabel.value]: 'Bar',
+        }],
+      })
+
+      // then
+      expect(resource.broader[0].getString(skos.prefLabel)).toEqual('Bar')
+    })
+
+    it('initializes annotated property with a resource using http properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      class SkosResource extends RdfResource {
+        @property.resource({ path: skos.broader })
+        broader!: SkosResource
+      }
+
+      // when
+      const resource = new SkosResource(node, {
+        broader: {
+          [skos.prefLabel.value]: 'Bar',
+        },
+      })
+
+      // then
+      expect(resource.broader.getString(skos.prefLabel)).toEqual('Bar')
+    })
+
+    it('initializes nested array resources which use http properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+
+      // when
+      const resource = new RdfResource(node, {
+        [skos.broader.value]: [{
+          [skos.prefLabel.value]: 'Bar',
+        }],
+      })
+
+      // then
+      expect(resource.get(skos.broader)!.getString(skos.prefLabel)).toEqual('Bar')
+    })
+
     it('assigns id to nested resource assigned to arbitrary URI', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
