@@ -33,7 +33,7 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly _graphId: Quad_Graph
   readonly _parent?: RdfResource<D>
   readonly isAnonymous: boolean
-  equals(other: RdfResource | undefined | null): boolean
+  equals(other: RdfResource | ResourceIdentifier | SingleContextClownface<ResourceIdentifier> | undefined | null): boolean
   hasType (type: string | NamedNode): boolean
   /**
    * Gets the value of a property
@@ -169,15 +169,19 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return this.types.has(type)
   }
 
-  public equals(other: RdfResource<any> | undefined | null): boolean {
+  public equals(other: RdfResource<any> | ResourceIdentifier | SingleContextClownface<ResourceIdentifier> | undefined | null): boolean {
     if (!other) {
       return false
     }
+    if ('termType' in other) {
+      return this.id.equals(other)
+    }
 
-    const idsEqual = this.id.equals(other.id)
+    const otherPointer = '_context' in other ? other : other._selfGraph
+    const idsEqual = this.id.equals(otherPointer.term)
 
-    if (this.isAnonymous || other.isAnonymous) {
-      return idsEqual && this._selfGraph.dataset === other._selfGraph.dataset
+    if (this.isAnonymous || otherPointer.term.termType === 'BlankNode') {
+      return idsEqual && this._selfGraph.dataset === otherPointer.dataset
     }
 
     return idsEqual

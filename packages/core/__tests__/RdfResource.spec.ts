@@ -45,6 +45,33 @@ describe('RdfResource', () => {
       expect(areEqual).toBe(true)
     })
 
+    it('compares id with term value', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).namedNode('urn:foo:bar')
+      const left = new RdfResource(node)
+      const right = $rdf.namedNode('urn:foo:bar')
+
+      // when
+      const areEqual = left.equals(right)
+
+      // then
+      expect(areEqual).toBe(true)
+    })
+
+    it('compares id with graph pointer value', () => {
+      // given
+      const graph = cf({ dataset: $rdf.dataset() })
+      const node = graph.namedNode('urn:foo:bar')
+      const left = new RdfResource(node)
+      const right = graph.namedNode('urn:foo:bar')
+
+      // when
+      const areEqual = left.equals(right)
+
+      // then
+      expect(areEqual).toBe(true)
+    })
+
     it('returns false if other resource is falsy', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() }).namedNode('urn:foo:bar')
