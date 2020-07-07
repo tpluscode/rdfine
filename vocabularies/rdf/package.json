@@ -1,6 +1,6 @@
 {
 	"name": "@rdfine/rdf",
-	"version": "0.3.3",
+	"version": "0.3.4",
 	"main": "index.js",
 	"module": "index.mjs",
 	"browser": "index.mjs",
@@ -35,7 +35,7 @@
 	"dependencies": {
 		"@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.3.6",
-		"@tpluscode/rdfine": "^0.4.18"
+		"@tpluscode/rdfine": "^0.4.19"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -44,7 +44,7 @@
 		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
 		"@babel/preset-env": "^7.8.3",
 		"@babel/preset-typescript": "^7.8.3",
-		"@rdfine/generator": "^0.3.1",
+		"@rdfine/generator": "^0.3.2",
 		"@rdfjs/dataset": "^1.0.1",
 		"@types/clownface": "^0.12.13",
 		"@types/rdf-js": "^3",

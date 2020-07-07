@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.19](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.18...@tpluscode/rdfine@0.4.19) (2020-07-07)
+
+
+### Features
+
+* comparing resources also with nodes and pointers ([bfaf2dd](https://github.com/tpluscode/rdfine/commit/bfaf2ddec346cd97df2223284b8518f9dbc4b167))
+* initializing resource with any property ([0c5f763](https://github.com/tpluscode/rdfine/commit/0c5f763595aa9b149c677b9e713106eb2a3d1123))
+
+
+
+
+
 ## [0.4.18](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.17...@tpluscode/rdfine@0.4.18) (2020-07-06)
 
 
