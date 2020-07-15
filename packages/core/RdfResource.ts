@@ -1,8 +1,7 @@
 /* eslint-disable camelcase,@typescript-eslint/camelcase,no-dupe-class-members */
-import RDF from '@rdfjs/data-model'
 import { NamespaceBuilder } from '@rdfjs/namespace'
-import { NamedNode, DatasetCore, BlankNode, DefaultGraph, Quad_Graph, Term, Literal } from 'rdf-js'
-import cf, { SafeClownface, SingleContextClownface } from 'clownface'
+import { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from 'rdf-js'
+import type { SafeClownface, SingleContextClownface } from 'clownface'
 import ResourceFactoryImpl from './lib/ResourceFactory'
 import type {
   Constructor,
@@ -19,7 +18,7 @@ import { xsd } from '@tpluscode/rdf-ns-builders'
 type ObjectOrFactory<T> = T | ((self: RdfResource) => T)
 
 export type ResourceIdentifier = BlankNode | NamedNode
-export type ResourceNode<D extends DatasetCore = DatasetCore> = { dataset: D; term: Term; graph?: NamedNode | DefaultGraph }
+export type ResourceNode<D extends DatasetCore = DatasetCore> = SingleContextClownface<ResourceIdentifier, D>
 
 export interface GetOptions {
   strict: boolean
@@ -28,8 +27,8 @@ export interface GetOptions {
 export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly id: ResourceIdentifier
   readonly types: TypeCollection<D>
-  readonly _selfGraph: SingleContextClownface<ResourceIdentifier, D>
-  readonly _unionGraph: SafeClownface<ResourceIdentifier, D>
+  readonly pointer: SingleContextClownface<ResourceIdentifier, D>
+  readonly unionGraphPointer: SafeClownface<ResourceIdentifier, D>
   readonly _graphId: Quad_Graph
   readonly _parent?: RdfResource<D>
   readonly isAnonymous: boolean
@@ -64,12 +63,12 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   getNumber (property: string | NamedNode): number | null
   getNumber (property: string | NamedNode, options?: GetOptions): number | null
   _getObjects(property: string | NamedNode, options?: GetOptions): SafeClownface<Term, D>
-  _create<T extends RdfResource<D>>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
+  _create<T extends RdfResource<D>>(term: SingleContextClownface<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
 }
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
-  public readonly _selfGraph: SingleContextClownface<ResourceIdentifier, D>
-  public readonly _unionGraph: SafeClownface<ResourceIdentifier, D>
+  public readonly pointer: SingleContextClownface<ResourceIdentifier, D>
+  public readonly unionGraphPointer: SafeClownface<ResourceIdentifier, D>
   public readonly __initialized: boolean = false
   public readonly _parent?: RdfResource<D>
   private readonly __initializeProperties: (() => boolean)
@@ -91,16 +90,16 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
         const pointers = values.map(value => {
           if (typeof value !== 'object' || 'termType' in value) {
             // use node or native value directly as object
-            return resource._selfGraph.node(value)
+            return resource.pointer.node(value)
           }
 
           // create and initialize an object resource
-          const term = value.id ? resource._selfGraph.node(value.id) : resource._selfGraph.blankNode()
+          const term = value.id ? resource.pointer.node(value.id) : resource.pointer.blankNode()
           const childResource = resource._create(term, [], { initializer: value })
-          return childResource._selfGraph
+          return childResource.pointer
         })
 
-        resource._selfGraph.addOut(resource._selfGraph.namedNode(prop), pointers)
+        resource.pointer.addOut(resource.pointer.namedNode(prop), pointers)
       })
 
     if (init.types && Array.isArray(init.types)) {
@@ -108,22 +107,17 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     }
   }
 
-  public constructor(graph: ResourceNode<D>, init: Initializer<any> = {}, parent?: RdfResource<D>) {
-    if (graph.term.termType !== 'BlankNode' && graph.term.termType !== 'NamedNode') {
-      throw new Error(`RdfResource cannot be initialized from a ${graph.term.termType} node`)
+  public constructor(pointer: ResourceNode<D>, init: Initializer<any> = {}, parent?: RdfResource<D>) {
+    if (pointer.term.termType !== 'BlankNode' && pointer.term.termType !== 'NamedNode') {
+      throw new Error(`RdfResource cannot be initialized from a ${(pointer.term as any).termType} node`)
     }
 
-    const selfGraph = cf({
-      ...graph,
-      term: graph.term,
-    })
-
-    if (selfGraph._context[0].graph) {
-      this._selfGraph = selfGraph
-      this._unionGraph = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: undefined })
+    if (pointer._context[0].graph) {
+      this.pointer = pointer
+      this.unionGraphPointer = pointer.fromUnionGraph()
     } else {
-      this._selfGraph = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: RDF.defaultGraph() })
-      this._unionGraph = cf({ dataset: selfGraph.dataset, term: selfGraph.term })
+      this.pointer = pointer.fromDefaultGraph()
+      this.unionGraphPointer = pointer
     }
 
     this.__initializeProperties = once(() => {
@@ -155,11 +149,11 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   }
 
   public get id(): ResourceIdentifier {
-    return this._selfGraph.term
+    return this.pointer.term
   }
 
   public get _graphId(): Quad_Graph {
-    return this._selfGraph._context[0].graph!
+    return this.pointer._context[0].graph!
   }
 
   public get types(): TypeCollection<D> {
@@ -182,11 +176,11 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       return this.id.equals(other)
     }
 
-    const otherPointer = '_context' in other ? other : other._selfGraph
+    const otherPointer = '_context' in other ? other : other.pointer
     const idsEqual = this.id.equals(otherPointer.term)
 
     if (this.isAnonymous || otherPointer.term.termType === 'BlankNode') {
-      return idsEqual && this._selfGraph.dataset === otherPointer.dataset
+      return idsEqual && this.pointer.dataset === otherPointer.dataset
     }
 
     return idsEqual
@@ -254,15 +248,15 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     }
 
     if (value.term.termType === 'Literal' && xsd.boolean.equals(value.term.datatype)) {
-      return value.term.equals(this._selfGraph.literal(true).term)
+      return value.term.equals(this.pointer.literal(true).term)
     }
 
     throw new Error(`Expected property '${property}' to be a boolean but found '${value}'`)
   }
 
   public _getObjects(property: string | NamedNode, { strict }: GetOptions = { strict: false }): SafeClownface<Term, D> {
-    const propertyNode = typeof property === 'string' ? this._selfGraph.namedNode(property) : property
-    const objects = this._selfGraph.out(propertyNode)
+    const propertyNode = typeof property === 'string' ? this.pointer.namedNode(property) : property
+    const objects = this.pointer.out(propertyNode)
 
     if (!objects.terms.length && strict) {
       throw new Error(`Value for predicate <${property}> was missing`)
@@ -271,7 +265,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return objects
   }
 
-  public _create<T extends RdfResource<D>>(term: ResourceNode<D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D, T> = {}): T & ResourceIndexer {
+  public _create<T extends RdfResource<D>>(term: SingleContextClownface<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D, T> = {}): T & ResourceIndexer {
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins, options)
   }
 }

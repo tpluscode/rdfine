@@ -499,7 +499,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource._selfGraph.dataset).toMatchSnapshot()
+      expect(resource.pointer.dataset).toMatchSnapshot()
     })
   })
 

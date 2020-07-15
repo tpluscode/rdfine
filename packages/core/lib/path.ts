@@ -1,6 +1,6 @@
 import { NamedNode } from 'rdf-js'
 import RDF from '@rdfjs/data-model'
-import cf, { SingleContextClownface } from 'clownface'
+import type { SingleContextClownface } from 'clownface'
 import { NamespaceBuilder } from '@rdfjs/namespace'
 
 export type PropRef = string | NamedNode
@@ -52,11 +52,7 @@ function anyGraph(prop: NamedNode): EdgeTraversal {
 
       allQuads.forEach((quad) => {
         if (!graphNodes.has(quad.graph.value)) {
-          graphNodes.set(quad.graph.value, cf({
-            dataset: subject.dataset,
-            term: quad.subject,
-            graph: quad.graph,
-          }))
+          graphNodes.set(quad.graph.value, subject.from(quad.graph))
         }
       })
     })

@@ -1,10 +1,9 @@
-import { DatasetCore, Quad, Term } from 'rdf-js'
+import { Quad, Term } from 'rdf-js'
 import TermSet from '@rdfjs/term-set'
-import { Context } from 'clownface/lib/Context'
 import RdfResourceImpl from '../../../RdfResource'
 import type { RdfResource } from '../../../RdfResource'
 import { EdgeTraversal, EdgeTraversalFactory, PropRef, toEdgeTraversals } from '../../path'
-import cf, { SafeClownface, SingleContextClownface } from 'clownface'
+import type { SingleContextClownface } from 'clownface'
 import { isList, enumerateList } from '../../rdf-list'
 import type { ClassElement } from '../index'
 import literalPropertyDecorator from '../property/literal'
@@ -26,7 +25,7 @@ interface NamedGraphsOptions {
   subjectFromAllGraphs: boolean
 }
 
-function getObjects(subjects: SingleContextClownface[], path: EdgeTraversal[]): SafeClownface {
+function getObjects(subjects: SingleContextClownface[], path: EdgeTraversal[]): SingleContextClownface[] {
   const nodes = path.reduce((subjects, edge) => {
     const objects: SingleContextClownface[] = []
 
@@ -37,14 +36,9 @@ function getObjects(subjects: SingleContextClownface[], path: EdgeTraversal[]): 
     return objects
   }, subjects)
 
-  const context = nodes.reduce((contexts, node) => {
-    return contexts.concat(node._context)
-  }, [] as Context<DatasetCore, Term>[])
-
-  return cf({
-    dataset: subjects[0].dataset,
-    _context: context,
-  }) as any as SafeClownface
+  return nodes.reduce((contexts, node) => {
+    return contexts.concat(node.toArray())
+  }, [] as SingleContextClownface[])
 }
 
 function getNodeFromEveryGraph(node: SingleContextClownface): SingleContextClownface[] {
@@ -59,11 +53,7 @@ function getNodeFromEveryGraph(node: SingleContextClownface): SingleContextClown
     return [node]
   }
 
-  return graphNodes.map(graph => cf({
-    dataset: node.dataset,
-    term: node.term,
-    graph,
-  }))
+  return graphNodes.map(graph => node.from(graph))
 }
 
 type ArrayOrSingle<T> = T | T[]
@@ -95,7 +85,7 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
 
   Object.defineProperty(proto, name, {
     get(this: T & RdfResourceImpl): unknown {
-      const rootNode = subjectFromAllGraphs ? getNodeFromEveryGraph(this._selfGraph) : [this._selfGraph]
+      const rootNode = subjectFromAllGraphs ? getNodeFromEveryGraph(this.pointer) : [this.pointer]
       const path = getPath()
       const nodes = getObjects(rootNode, path)
       const crossesBoundaries = path.some(edge => edge.crossesGraphBoundaries)
@@ -144,10 +134,15 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
       }
 
       const path = getPath()
-      const subject = path.length === 1
-        ? this._selfGraph
-        : getObjects([this._selfGraph], path.slice(0, path.length - 1))
+      const subjects = path.length === 1
+        ? this.pointer.toArray()
+        : getObjects([this.pointer], path.slice(0, path.length - 1))
 
+      if (subjects.length > 1) {
+        throw new Error('Cannot set value to multiple nodes at once')
+      }
+
+      const subject = subjects[0]
       const lastPredicate = path[path.length - 1].predicate
 
       subject.out(lastPredicate).forEach(obj => {
@@ -183,7 +178,7 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
           return value.term
         }
 
-        if (typeof value === 'object' && '_selfGraph' in value) {
+        if (typeof value === 'object' && 'pointer' in value) {
           return value.id
         }
 

@@ -26,10 +26,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         const friend = instance.friend
 
         // then
@@ -53,10 +53,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.likes!.termType).toEqual('BlankNode')
@@ -77,10 +77,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         const name = instance.name
 
         // then
@@ -103,10 +103,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(() => instance.children).toThrow()
@@ -150,10 +150,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.children).toHaveLength(2)
@@ -176,10 +176,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         const friend = instance.friend
 
         // then
@@ -209,10 +209,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.friendsWorkplaceName!.value).toEqual('RDF Software House')
@@ -233,10 +233,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         const friend = instance.colleague
 
         // then
@@ -252,10 +252,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         const getName = () => instance.name
 
         // then
@@ -271,10 +271,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.foo).toEqual('bar')
@@ -290,10 +290,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.foo).toEqual(
@@ -311,10 +311,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.foo).toEqual(
@@ -332,10 +332,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.foo).toEqual(
@@ -353,10 +353,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.foo).toEqual(
@@ -379,10 +379,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.letters.map(l => l.value)).toEqual(['a', 'b', 'c'])
@@ -402,10 +402,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.letters).toEqual([])
@@ -425,10 +425,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(() => instance.friend).toThrow()
@@ -501,10 +501,10 @@ describe('decorator', () => {
           name?: Term | null
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // when
         instance.name = cf({ dataset }).has(rdf.type, ex.BlankNodeName).term
@@ -527,10 +527,10 @@ describe('decorator', () => {
           name?: Term[]
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // when
         instance.name = []
@@ -553,10 +553,10 @@ describe('decorator', () => {
           name?: Term[]
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // when
         instance.name = [
@@ -582,10 +582,10 @@ describe('decorator', () => {
           name?: any
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // when
         const setArray = () => { instance.name = [] }
@@ -617,10 +617,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         instance.friendsWorkplaceName = RDF.literal('Google')
 
         // then
@@ -641,10 +641,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         instance.friend = []
 
         // then
@@ -665,10 +665,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         instance.friend = null
 
         // then
@@ -689,10 +689,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.name.value).toEqual('foo')
@@ -705,16 +705,16 @@ describe('decorator', () => {
         class Resource extends RdfResource {
           @property({
             path: schema.name,
-            initial: (self: Resource) => self._selfGraph.blankNode('foo'),
+            initial: (self: Resource) => self.pointer.blankNode('foo'),
           })
           name!: Literal
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.name.value).toEqual('foo')
@@ -733,10 +733,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.child.value).toEqual('http://example.com/res/child')
@@ -866,7 +866,7 @@ describe('decorator', () => {
             instance.friend = ex.Holly
 
             // then
-            expect(instance._unionGraph.dataset.toCanonical()).toMatchSnapshot()
+            expect(instance.unionGraphPointer.dataset.toCanonical()).toMatchSnapshot()
           })
 
           it('sets value to default graph if unspecified', async () => {
@@ -885,7 +885,7 @@ describe('decorator', () => {
             instance.friend = ex.Holly
 
             // then
-            expect(instance._unionGraph.dataset.toCanonical()).toMatchSnapshot()
+            expect(instance.unionGraphPointer.dataset.toCanonical()).toMatchSnapshot()
           })
         })
 
@@ -899,16 +899,10 @@ describe('decorator', () => {
             instance.friend = ex.Holly
 
             // then
-            expect(instance._unionGraph.dataset.toCanonical()).toMatchSnapshot()
+            expect(instance.unionGraphPointer.dataset.toCanonical()).toMatchSnapshot()
           })
         })
       }
-
-      describe('constructed from plain object', () => {
-        namedGraphTests((dataset, term, graph) => {
-          return new Resource({ dataset, term, graph })
-        })
-      })
 
       describe('constructed from clownface graph', () => {
         namedGraphTests((dataset, term, graph) => {

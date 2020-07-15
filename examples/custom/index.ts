@@ -1,4 +1,5 @@
 import program from 'commander'
+import cf from '@rdf-esm/clownface'
 import { namedNode } from '@rdfjs/data-model'
 import fetch from '@rdfjs/fetch'
 import formats from '@rdfjs/formats-common'
@@ -17,10 +18,10 @@ program
 
     const dataset = await response.dataset()
 
-    const collection = HydraResource.factory.createEntity<Collection>({
+    const collection = HydraResource.factory.createEntity<Collection>(cf({
       dataset,
       term: namedNode(uri),
-    })
+    }))
 
     collection.members.forEach(m => {
       console.log(m.id)

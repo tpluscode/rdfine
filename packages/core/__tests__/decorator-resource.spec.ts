@@ -246,7 +246,7 @@ describe('decorator', () => {
         const john = new Resource({ dataset, term: ex.john })
 
         // when
-        john.spouse = john._selfGraph.blankNode()
+        john.spouse = john.pointer.blankNode()
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
@@ -396,7 +396,7 @@ describe('decorator', () => {
           @property.resource({
             path: foaf.friend,
             initial: (self: Resource) => {
-              const name = new NameResource(self._selfGraph.blankNode())
+              const name = new NameResource(self.pointer.blankNode())
               name.first = 'John'
               name.last = 'Doe'
               name.person = self
@@ -451,7 +451,7 @@ describe('decorator', () => {
           @property.resource({
             path: foaf.friend,
             initial: (self: Resource) => {
-              return self._selfGraph.namedNode('http://example.com/friend')
+              return self.pointer.namedNode('http://example.com/friend')
             },
           })
           friend!: RdfResource

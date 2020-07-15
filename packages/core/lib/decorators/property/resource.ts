@@ -1,6 +1,6 @@
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import { BlankNode, NamedNode, Term } from 'rdf-js'
-import { SingleContextClownface } from 'clownface'
+import type { SingleContextClownface } from 'clownface'
 import type { Initializer, RdfResource, ResourceIdentifier } from '../../../RdfResource'
 import type { AccessorOptions, ObjectOrFactory } from '.'
 import { propertyDecorator } from '.'
@@ -28,16 +28,16 @@ function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptio
     toTerm(this: R, valueActual) {
       const value = valueActual as RdfResource | Initializer<R>
 
-      if ('_selfGraph' in value) {
+      if ('pointer' in value) {
         return value.id
       }
 
       let valueNode: SingleContextClownface<BlankNode | NamedNode>
 
       if (value.id) {
-        valueNode = this._selfGraph.node(value.id)
+        valueNode = this.pointer.node(value.id)
       } else {
-        valueNode = this._selfGraph.blankNode()
+        valueNode = this.pointer.blankNode()
       }
       if (value.types && Array.isArray(value.types)) {
         valueNode.addOut(rdf.type, value.types)

@@ -1,5 +1,5 @@
 import { DatasetCore, Term } from 'rdf-js'
-import cf, { SingleContextClownface } from 'clownface'
+import type { SafeClownface, SingleContextClownface } from 'clownface'
 import type { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import RDF from '@rdfjs/data-model'
@@ -30,7 +30,7 @@ export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
   private __graph: SingleContextClownface<Term, D>
 
   add(value: RdfResource<D> | ResourceIdentifier | string): this {
-    this.__resource._selfGraph.addOut(rdf.type, getNode(value))
+    this.__resource.pointer.addOut(rdf.type, getNode(value))
     return this
   }
 
@@ -83,21 +83,14 @@ export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
   public constructor(resource: RdfResource<D>, allGraphs = false) {
     this.__resource = resource
     this.__allGraphs = allGraphs
-    this.__graph = allGraphs ? cf({ dataset: resource._selfGraph.dataset, term: resource._selfGraph.term, graph: undefined }) : resource._selfGraph
+    this.__graph = allGraphs ? resource.pointer.fromUnionGraph() : resource.pointer
   }
 
   private get __values() {
     const graphId = !this.__allGraphs ? this.__resource._graphId : null
-    const typeQuads = this.__graph.dataset.match(this.__resource.id, rdf.type, null, graphId)
+    const types: SafeClownface<Term, D> = this.__resource.pointer.from(graphId).out(rdf.type)
 
-    return [...typeQuads]
-      .map(quad => {
-        return cf({
-          dataset: this.__graph.dataset,
-          term: quad.object,
-          graph: quad.graph,
-        })
-      })
+    return types
       .map(type => this.__resource._create<RdfResource<D>>(type))
       .filter(onlyUnique(compare.resources(false)))
   }
