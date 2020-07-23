@@ -1,5 +1,5 @@
 import program from 'commander'
-import cf from '@rdf-esm/clownface'
+import cf from 'clownface'
 import { namedNode } from '@rdfjs/data-model'
 import fetch from '@rdfjs/fetch'
 import formats from '@rdfjs/formats-common'

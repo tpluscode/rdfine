@@ -1,4 +1,5 @@
-import ns, { NamespaceBuilder } from '@rdfjs/namespace'
+import ns from '@rdf-esm/namespace'
+import type { NamespaceBuilder } from '@rdf-esm/namespace'
 import type { RdfResource } from '../../RdfResource'
 import type { ClassDescriptor } from '.'
 

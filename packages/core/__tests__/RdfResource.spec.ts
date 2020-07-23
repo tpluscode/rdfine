@@ -1,7 +1,7 @@
-import cf, { Clownface } from 'clownface'
+import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { NamedNode, Term } from 'rdf-js'
-import { defaultGraph, namedNode, literal, blankNode } from '@rdfjs/data-model'
+import { defaultGraph, namedNode, literal, blankNode } from '@rdf-esm/data-model'
 import { skos } from '@tpluscode/rdf-ns-builders'
 import RdfResource, { Initializer } from '../RdfResource'
 import { parse, vocabs } from './_helpers'
@@ -15,7 +15,7 @@ describe('RdfResource', () => {
       expect(() => {
         const node = cf({ dataset: $rdf.dataset() }).literal('foo')
 
-        return new RdfResource(node)
+        return new RdfResource(node as any)
       }).toThrow()
     })
 
@@ -528,7 +528,7 @@ describe('RdfResource', () => {
   })
 
   describe('getters', () => {
-    let graph: Clownface
+    let graph: AnyPointer
 
     beforeEach(() => {
       graph = cf({ dataset: $rdf.dataset() })

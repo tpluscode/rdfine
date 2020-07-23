@@ -1,9 +1,8 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import cf, { SingleContextClownface } from 'clownface'
-import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
+import cf, { GraphPointer } from 'clownface'
+import { DatasetCore, Literal, NamedNode, Term } from 'rdf-js'
 import rdfExt from 'rdf-ext'
-import DatasetExt from 'rdf-ext/lib/Dataset'
-import { defaultGraph, literal } from '@rdfjs/data-model'
+import { defaultGraph, literal } from '@rdf-esm/data-model'
 import { turtle } from '@tpluscode/rdf-string'
 import {
   property,
@@ -36,10 +35,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         const friend = instance.friend
 
         // then
@@ -63,10 +62,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         const friend = instance.friend
 
         // then
@@ -88,10 +87,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.friends.map(l => l.id.value)).toEqual([
@@ -117,10 +116,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         const friend = instance.friend
 
         // then
@@ -143,10 +142,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         const friend = instance.friend
 
         // then
@@ -171,8 +170,8 @@ describe('decorator', () => {
           @property.resource({ path: schema.spouse })
           spouse?: RdfResource
         }
-        const john = new Resource({ dataset, term: ex.john })
-        const jane = new Resource({ dataset, term: ex.jane })
+        const john = new Resource(cf({ dataset, term: ex.john }))
+        const jane = new Resource(cf({ dataset, term: ex.jane }))
 
         // when
         john.spouse = jane
@@ -197,7 +196,7 @@ describe('decorator', () => {
           @property.resource({ path: schema.spouse })
           spouse?: RdfResource | null
         }
-        const john = new Resource({ dataset, term: ex.john })
+        const john = new Resource(cf({ dataset, term: ex.john }))
 
         // when
         john.spouse = null
@@ -220,7 +219,7 @@ describe('decorator', () => {
           @property.resource({ path: schema.spouse })
           spouse?: RdfResource | NamedNode
         }
-        const john = new Resource({ dataset, term: ex.john })
+        const john = new Resource(cf({ dataset, term: ex.john }))
 
         // when
         john.spouse = ex.jane
@@ -241,9 +240,9 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.resource({ path: schema.spouse })
-          spouse?: RdfResource | SingleContextClownface
+          spouse?: RdfResource | GraphPointer
         }
-        const john = new Resource({ dataset, term: ex.john })
+        const john = new Resource(cf({ dataset, term: ex.john }))
 
         // when
         john.spouse = john.pointer.blankNode()
@@ -268,7 +267,7 @@ describe('decorator', () => {
           @property.resource({ path: foaf.knows, values: 'list' })
           knows?: (RdfResource | NamedNode)[]
         }
-        const john = new Resource({ dataset, term: ex.john })
+        const john = new Resource(cf({ dataset, term: ex.john }))
 
         // when
         john.knows = [
@@ -293,7 +292,7 @@ describe('decorator', () => {
           @property.resource({ path: foaf.knows, values: 'array' })
           knows?: (RdfResource | NamedNode)[]
         }
-        const john = new Resource({ dataset, term: ex.john })
+        const john = new Resource(cf({ dataset, term: ex.john }))
 
         // when
         john.knows = [
@@ -319,7 +318,7 @@ describe('decorator', () => {
           @property.resource({ path: schema.spouse })
           spouse?: RdfResource | Term
         }
-        const lois = new Resource({ dataset, term: ex.lois })
+        const lois = new Resource(cf({ dataset, term: ex.lois }))
 
         // when
         lois.spouse = cf({ dataset }).has(rdf.type, ex.Superman).term
@@ -358,7 +357,7 @@ describe('decorator', () => {
         class TestResourceBase extends RdfResource {}
         TestResourceBase.factory = new ResourceFactoryImpl(TestResourceBase)
         TestResourceBase.factory.addMixin(Mixin)
-        const lois = TestResourceBase.factory.createEntity<Person>({ dataset, term: ex.Lois })
+        const lois = TestResourceBase.factory.createEntity<Person>(cf({ dataset, term: ex.Lois }))
 
         // when
         lois.knows = fromObject({
@@ -409,10 +408,10 @@ describe('decorator', () => {
         Resource.factory = new ResourceFactoryImpl(RdfResource)
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         const name = instance.name
 
         // then
@@ -435,10 +434,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.employer.id).toEqual(ex.Google)
@@ -459,10 +458,10 @@ describe('decorator', () => {
 
         // when
         // eslint-disable-next-line no-new
-        new Resource({
+        new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
@@ -501,11 +500,10 @@ describe('decorator', () => {
         Resource.factory = new ResourceFactoryImpl(RdfResource)
       })
 
-      function namedGraphTests(newResource: (dataset: DatasetExt, term: NamedNode, graph?: NamedNode | DefaultGraph) => Resource<DatasetExt>) {
-        describe('getter', () => {
-          it('does not cross named graph boundary by default', async () => {
-            // given
-            const dataset = await parse(`
+      describe('getter', () => {
+        it('does not cross named graph boundary by default', async () => {
+          // given
+          const dataset = await parse(`
               @prefix ex: <${prefixes.ex}> .
               @prefix foaf: <${prefixes.foaf}> .
               @prefix schema: <${prefixes.schema}> .
@@ -515,16 +513,16 @@ describe('decorator', () => {
               ex:Will schema:name "William" ex:Will .
             `)
 
-            // when
-            const instance = newResource(dataset, ex.John, ex.John)
+          // when
+          const instance = new Resource(cf({ dataset, term: ex.John, graph: ex.John }))
 
-            // then
-            expect(instance.friend.name).toBeUndefined()
-          })
+          // then
+          expect(instance.friend.name).toBeUndefined()
+        })
 
-          it('crosses named graph boundary when explicitly annotated', async () => {
-            // given
-            const dataset = await parse(`
+        it('crosses named graph boundary when explicitly annotated', async () => {
+          // given
+          const dataset = await parse(`
               @prefix ex: <${prefixes.ex}> .
               @prefix foaf: <${prefixes.foaf}> .
               @prefix schema: <${prefixes.schema}> .
@@ -535,23 +533,23 @@ describe('decorator', () => {
               ex:Will foaf:knows ex:John ex:Will .
             `)
 
-            // when
-            const instance = newResource(dataset, ex.John, ex.John)
+          // when
+          const instance = new Resource(cf({ dataset, term: ex.John, graph: ex.John }))
 
-            // then
-            expect(instance.allAboutFriends).toHaveLength(2)
-            const friends = instance.allAboutFriends
-            expect(friends.map(will => will._graphId)).toEqual(
-              expect.arrayContaining([ex.John, ex.Will]),
-            )
-            expect(friends.map(will => will.name)).toEqual(
-              expect.arrayContaining([literal('William')]),
-            )
-          })
+          // then
+          expect(instance.allAboutFriends).toHaveLength(2)
+          const friends = instance.allAboutFriends
+          expect(friends.map(will => will._graphId)).toEqual(
+            expect.arrayContaining([ex.John, ex.Will]),
+          )
+          expect(friends.map(will => will.name)).toEqual(
+            expect.arrayContaining([literal('William')]),
+          )
+        })
 
-          it('when crossing named graph boundaries returns separate resource object for each named graph', async () => {
-            // given
-            const dataset = await parse(`
+        it('when crossing named graph boundaries returns separate resource object for each named graph', async () => {
+          // given
+          const dataset = await parse(`
               @prefix ex: <${prefixes.ex}> .
               @prefix foaf: <${prefixes.foaf}> .
               @prefix schema: <${prefixes.schema}> .
@@ -563,20 +561,20 @@ describe('decorator', () => {
               ex:Will schema:employee ex:Google ex:WillJob .
             `)
 
-            // when
-            const instance = newResource(dataset, ex.John)
+          // when
+          const instance = new Resource(cf({ dataset, term: ex.John }))
 
-            // then
-            expect(instance.allAboutFriends).toHaveLength(4)
-            const wills = instance.allAboutFriends
-            expect(wills.map(w => w._graphId)).toEqual(
-              expect.arrayContaining([defaultGraph(), ex.WillName, ex.WillFriends, ex.WillJob]),
-            )
-          })
+          // then
+          expect(instance.allAboutFriends).toHaveLength(4)
+          const wills = instance.allAboutFriends
+          expect(wills.map(w => w._graphId)).toEqual(
+            expect.arrayContaining([defaultGraph(), ex.WillName, ex.WillFriends, ex.WillJob]),
+          )
+        })
 
-          it('when crossing named graph boundaries does not merge subject from other graphs', async () => {
-            // given
-            const dataset = await parse(`
+        it('when crossing named graph boundaries does not merge subject from other graphs', async () => {
+          // given
+          const dataset = await parse(`
               @prefix ex: <${prefixes.ex}> .
               @prefix foaf: <${prefixes.foaf}> .
               @prefix schema: <${prefixes.schema}> .
@@ -585,17 +583,17 @@ describe('decorator', () => {
               ex:John foaf:knows ex:Sindy ex:JohnGraph .              
             `)
 
-            // when
-            const instance = newResource(dataset, ex.John)
+          // when
+          const instance = new Resource(cf({ dataset, term: ex.John }))
 
-            // then
-            expect(instance.name).toBeUndefined()
-            expect(instance.allAboutFriends).toHaveLength(1)
-          })
+          // then
+          expect(instance.name).toBeUndefined()
+          expect(instance.allAboutFriends).toHaveLength(1)
+        })
 
-          it('when crossing named graph boundaries can also merge subject from other graphs', async () => {
-            // given
-            const dataset = await parse(`
+        it('when crossing named graph boundaries can also merge subject from other graphs', async () => {
+          // given
+          const dataset = await parse(`
               @prefix ex: <${prefixes.ex}> .
               @prefix foaf: <${prefixes.foaf}> .
               @prefix schema: <${prefixes.schema}> .
@@ -605,16 +603,16 @@ describe('decorator', () => {
               ex:John foaf:knows ex:Sindy ex:JohnGraph .    
             `)
 
-            // when
-            const instance = newResource(dataset, ex.John)
+          // when
+          const instance = new Resource(cf({ dataset, term: ex.John }))
 
-            // then
-            expect(instance.allAboutAllFriends).toHaveLength(2)
-          })
+          // then
+          expect(instance.allAboutAllFriends).toHaveLength(2)
+        })
 
-          it('when merging subjects, preserves the graph', async () => {
-            // given
-            const dataset = await parse(turtle`
+        it('when merging subjects, preserves the graph', async () => {
+          // given
+          const dataset = await parse(turtle`
               ${ex.John} a ${schema.Person} .
             
               ${ex.WillGraph} {
@@ -631,21 +629,21 @@ describe('decorator', () => {
               }
             `)
 
-            // when
-            const instance = newResource(dataset, ex.John)
-            const friendNames = instance.allFriends.map(friend => friend.name)
+          // when
+          const instance = new Resource(cf({ dataset, term: ex.John }))
+          const friendNames = instance.allFriends.map(friend => friend.name)
 
-            // then
-            expect(friendNames).toEqual(
-              expect.arrayContaining([literal('Will'), undefined]),
-            )
-          })
+          // then
+          expect(friendNames).toEqual(
+            expect.arrayContaining([literal('Will'), undefined]),
+          )
         })
+      })
 
-        describe('setter', () => {
-          it('assert link quad in subject\'s graph', async () => {
-            // given
-            const dataset = await parse(`
+      describe('setter', () => {
+        it('assert link quad in subject\'s graph', async () => {
+          // given
+          const dataset = await parse(`
               @prefix ex: <${prefixes.ex}> .
               @prefix foaf: <${prefixes.foaf}> .
               @prefix schema: <${prefixes.schema}> .
@@ -655,25 +653,12 @@ describe('decorator', () => {
               ex:Will schema:name "William" ex:Will .
             `)
 
-            // when
-            const john = newResource(dataset, ex.John, ex.John)
-            john.friend = newResource(dataset, ex.Will, ex.Will)
+          // when
+          const john = new Resource(cf({ dataset, term: ex.John, graph: ex.John }))
+          john.friend = new Resource(cf({ dataset, term: ex.Will, graph: ex.Will }))
 
-            // then
-            expect(dataset.toCanonical()).toMatchSnapshot()
-          })
-        })
-      }
-
-      describe('constructed from plain object', () => {
-        namedGraphTests((dataset, term, graph) => {
-          return new Resource({ dataset, term, graph })
-        })
-      })
-
-      describe('constructed from clownface graph', () => {
-        namedGraphTests((dataset, term, graph) => {
-          return new Resource(cf({ dataset, term, graph }))
+          // then
+          expect(dataset.toCanonical()).toMatchSnapshot()
         })
       })
     })

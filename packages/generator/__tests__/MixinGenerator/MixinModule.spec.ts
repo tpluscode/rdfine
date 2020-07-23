@@ -1,5 +1,5 @@
 import { Project } from 'ts-morph'
-import cf, { Clownface } from 'clownface'
+import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { xsd } from '@tpluscode/rdf-ns-builders'
 import { MixinModule } from '../../lib/MixinGenerator/MixinModule'
@@ -9,7 +9,7 @@ import { fakeLog } from '../_helpers/util'
 
 describe('MixinModule', () => {
   let project: Project
-  let vocabulary: Clownface
+  let vocabulary: AnyPointer
 
   beforeEach(() => {
     project = new Project({

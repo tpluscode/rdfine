@@ -1,11 +1,11 @@
 import { Literal, Term } from 'rdf-js'
-import type { SingleContextClownface } from 'clownface'
+import type { GraphPointer } from 'clownface'
 import type { RdfResource } from '../RdfResource'
 import * as rdfList from './rdf-list'
 import type { ResourceIndexer } from './ResourceFactory'
 
 function nodeToValue(target: RdfResource) {
-  const fromTerm = (obj: SingleContextClownface): any => {
+  const fromTerm = (obj: GraphPointer): any => {
     switch (obj.term.termType) {
       case 'BlankNode':
       case 'NamedNode':

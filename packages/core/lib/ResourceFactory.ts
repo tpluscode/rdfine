@@ -1,5 +1,5 @@
 import { DatasetCore, Literal, NamedNode, Term } from 'rdf-js'
-import type { SingleContextClownface } from 'clownface'
+import type { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import type { Initializer, RdfResource, ResourceNode } from '../RdfResource'
 import { createProxy } from './proxy'
@@ -28,7 +28,7 @@ export type Mixin<T extends AnyFunction = any> = InstanceType<ReturnType<T>>
 export interface ResourceFactory<D extends DatasetCore = DatasetCore, R extends RdfResource<D> = RdfResource<D>, T extends AnyFunction = any> {
   addMixin(...mixins: (EvaluatedMixin | SingleTypeMixin)[]): void
   createEntity<S>(
-    term: SingleContextClownface<Term, D>,
+    term: GraphPointer<Term, D>,
     typeAndMixins?: Mixin<T>[] | [Constructor, ...Mixin<T>[]], // TODO: move mixins into options object
     options?: ResourceCreationOptions<D, R & S>): R & S & ResourceIndexer<D, R>
 }

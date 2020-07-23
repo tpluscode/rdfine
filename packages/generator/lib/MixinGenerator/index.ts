@@ -1,4 +1,4 @@
-import { SingleContextClownface } from 'clownface'
+import { GraphPointer } from 'clownface'
 import { Context } from '../index'
 import { rdf, rdfs, hydra } from '@tpluscode/rdf-ns-builders'
 import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types'
@@ -6,7 +6,7 @@ import { MixinModule } from './MixinModule'
 import { findProperties } from '../property'
 import { toJavascriptProperties } from '../property/JsProperties'
 
-export function getSuperClasses(clas: SingleContextClownface, types: TypeMetaCollection) {
+export function getSuperClasses(clas: GraphPointer, types: TypeMetaCollection) {
   return clas.out(rdfs.subClassOf)
     .toArray()
     .reduce<(ResourceType | ExternalResourceType)[]>((selected, candidate) => {
@@ -19,7 +19,7 @@ export function getSuperClasses(clas: SingleContextClownface, types: TypeMetaCol
   }, [])
 }
 
-function * getProperties(clas: SingleContextClownface, types: TypeMetaCollection, context: Context) {
+function * getProperties(clas: GraphPointer, types: TypeMetaCollection, context: Context) {
   for (const { term, range } of findProperties(clas, context)) {
     for (const jsProperty of toJavascriptProperties(term, range, types, context)) {
       yield jsProperty

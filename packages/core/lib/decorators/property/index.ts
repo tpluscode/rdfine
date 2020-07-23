@@ -1,9 +1,9 @@
 import { Quad, Term } from 'rdf-js'
-import TermSet from '@rdfjs/term-set'
+import TermSet from '@rdf-esm/term-set'
 import RdfResourceImpl from '../../../RdfResource'
 import type { RdfResource } from '../../../RdfResource'
 import { EdgeTraversal, EdgeTraversalFactory, PropRef, toEdgeTraversals } from '../../path'
-import type { SingleContextClownface } from 'clownface'
+import cf, { GraphPointer } from 'clownface'
 import { isList, enumerateList } from '../../rdf-list'
 import type { ClassElement } from '../index'
 import literalPropertyDecorator from '../property/literal'
@@ -25,9 +25,9 @@ interface NamedGraphsOptions {
   subjectFromAllGraphs: boolean
 }
 
-function getObjects(subjects: SingleContextClownface[], path: EdgeTraversal[]): SingleContextClownface[] {
+function getObjects(subjects: GraphPointer[], path: EdgeTraversal[]): GraphPointer[] {
   const nodes = path.reduce((subjects, edge) => {
-    const objects: SingleContextClownface[] = []
+    const objects: GraphPointer[] = []
 
     subjects.forEach(subject => {
       objects.push(...edge(subject))
@@ -38,10 +38,10 @@ function getObjects(subjects: SingleContextClownface[], path: EdgeTraversal[]): 
 
   return nodes.reduce((contexts, node) => {
     return contexts.concat(node.toArray())
-  }, [] as SingleContextClownface[])
+  }, [] as GraphPointer[])
 }
 
-function getNodeFromEveryGraph(node: SingleContextClownface): SingleContextClownface[] {
+function getNodeFromEveryGraph(node: GraphPointer): GraphPointer[] {
   const graphs = node.datasets.reduce<Set<Quad['graph']>>((set, dataset) => {
     return [...dataset].reduce((set, quad) => {
       return set.add(quad.graph)
@@ -53,18 +53,24 @@ function getNodeFromEveryGraph(node: SingleContextClownface): SingleContextClown
     return [node]
   }
 
-  return graphNodes.map(graph => node.from(graph))
+  // TODO: when clownface gets graph feature
+  // return graphNodes.map(graph => node.fromGraph(graph))
+  return graphNodes.map(graph => cf({
+    dataset: node.dataset,
+    term: node.term,
+    graph,
+  }))
 }
 
 type ArrayOrSingle<T> = T | T[]
 export type ObjectOrFactory<TSelf, T, TTerm extends Term> =
-  ArrayOrSingle<T | TTerm | SingleContextClownface<TTerm>> |
-  ((self: TSelf) => ArrayOrSingle<T | TTerm | SingleContextClownface<TTerm>>)
+  ArrayOrSingle<T | TTerm | GraphPointer<TTerm>> |
+  ((self: TSelf) => ArrayOrSingle<T | TTerm | GraphPointer<TTerm>>)
 
 interface PropertyDecoratorOptions<T extends RdfResource, TValue, TTerm extends Term> extends AccessorOptions {
-  fromTerm: (this: T, obj: SingleContextClownface) => TValue
+  fromTerm: (this: T, obj: GraphPointer) => TValue
   toTerm: (this: T, value: TValue) => TTerm
-  assertSetValue: (value: RdfResource | Term | SingleContextClownface | TValue) => boolean
+  assertSetValue: (value: RdfResource | Term | GraphPointer | TValue) => boolean
   valueTypeName: string
   initial?: ObjectOrFactory<T, TValue, TTerm>
   compare: (left: TValue, right: TValue) => boolean
@@ -128,7 +134,7 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
       return values.includes('single') ? returnValues[0] : returnValues
     },
 
-    set(this: T & RdfResourceImpl, value: ArrayOrSingle<RdfResource | Term | SingleContextClownface>) {
+    set(this: T & RdfResourceImpl, value: ArrayOrSingle<RdfResource | Term | GraphPointer>) {
       if (!values.includes('array') && !values.includes('list') && Array.isArray(value)) {
         throw new Error(`${name}: Cannot set array to a non-array property`)
       }
@@ -157,7 +163,7 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
         return
       }
 
-      let valueArray: Array<RdfResource | Term | SingleContextClownface | TValue>
+      let valueArray: Array<RdfResource | Term | GraphPointer | TValue>
       if (Array.isArray(value)) {
         valueArray = value
       } else {

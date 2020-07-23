@@ -1,11 +1,11 @@
-import { SingleContextClownface } from 'clownface'
+import { GraphPointer } from 'clownface'
 import { NamedNode, Term } from 'rdf-js'
 import { Context } from '../index'
 
 export { TypeMap } from './TypeMap'
 
 export interface TypeMetaFactory<T extends TypeMeta = TypeMeta> {
-  (term: SingleContextClownface<NamedNode>, context: Context): T | null
+  (term: GraphPointer<NamedNode>, context: Context): T | null
 }
 
 export interface LiteralType {
@@ -54,7 +54,7 @@ export interface TermType {
 export type TypeMeta = LiteralType | ResourceType | ExternalResourceType | EnumerationType | EnumerationMember | TermType
 
 export type TypeMetaCollection = {
-  get(key: SingleContextClownface): TypeMeta | undefined
-  getOrThrow(key: SingleContextClownface): TypeMeta
-  set(key: SingleContextClownface, value: TypeMeta): TypeMetaCollection
+  get(key: GraphPointer): TypeMeta | undefined
+  getOrThrow(key: GraphPointer): TypeMeta
+  set(key: GraphPointer, value: TypeMeta): TypeMetaCollection
 }

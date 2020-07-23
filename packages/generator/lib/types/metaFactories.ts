@@ -1,4 +1,4 @@
-import { SingleContextClownface } from 'clownface'
+import { GraphPointer } from 'clownface'
 import { shrink } from '@zazuko/rdf-vocabularies'
 import { hydra, rdf, rdfs } from '@tpluscode/rdf-ns-builders'
 import {
@@ -14,7 +14,7 @@ import { isEnumerationType } from './util'
 import { DatatypeName, wellKnownDatatypes } from './wellKnownDatatypes'
 import { NamedNode } from 'rdf-js'
 
-export function resourceTypes(term: SingleContextClownface, context: Pick<Context, 'prefix'>): ExternalResourceType | ResourceType | null {
+export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix'>): ExternalResourceType | ResourceType | null {
   const [prefix, localName] = shrink(term.value).split(':')
   if (prefix !== context.prefix) {
     return {
@@ -41,7 +41,7 @@ export function resourceTypes(term: SingleContextClownface, context: Pick<Contex
   }
 }
 
-export function enumerationTypes(term: SingleContextClownface, context: Pick<Context, 'prefix'>): EnumerationType | null {
+export function enumerationTypes(term: GraphPointer, context: Pick<Context, 'prefix'>): EnumerationType | null {
   if (!term.has(rdf.type, rdfs.Class).values.length || !isEnumerationType(term)) {
     return null
   }
@@ -59,7 +59,7 @@ export function enumerationTypes(term: SingleContextClownface, context: Pick<Con
   }
 }
 
-export function enumerationMembers(term: SingleContextClownface): EnumerationMember | null {
+export function enumerationMembers(term: GraphPointer): EnumerationMember | null {
   if (term.out(rdf.type).toArray().find(isEnumerationType)) {
     const [prefix, name] = shrink(term.value).split(':')
     return {
@@ -98,7 +98,7 @@ function datatypeToLiteralType(name: DatatypeName): LiteralType | null {
   }
 }
 
-export function datatypes(term: SingleContextClownface<NamedNode>): LiteralType | null {
+export function datatypes(term: GraphPointer<NamedNode>): LiteralType | null {
   const wellKnownDatatype = wellKnownDatatypes[shrink(term.value)]
 
   if (term.has(rdf.type, rdfs.Datatype).values.length) {
@@ -114,7 +114,7 @@ export function datatypes(term: SingleContextClownface<NamedNode>): LiteralType 
 }
 
 export function overrides(overrideMap: Record<string, TypeOverride> = {}) {
-  return (node: SingleContextClownface<NamedNode>): TermType | LiteralType | null => {
+  return (node: GraphPointer<NamedNode>): TermType | LiteralType | null => {
     const override = overrideMap[node.value]
 
     if (override === 'NamedNode') {

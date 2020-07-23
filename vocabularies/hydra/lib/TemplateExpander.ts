@@ -1,5 +1,5 @@
 import type { RdfResource } from '@tpluscode/rdfine'
-import type { Clownface } from 'clownface';
+import type { AnyPointer } from 'clownface';
 import URITemplate from 'es6-url-template'
 import { URL } from 'url'
 import { IriTemplate, IriTemplateMapping } from '../'
@@ -55,10 +55,10 @@ export class TemplateExpander {
     }
   }
 
-  public expand(model: Clownface | RdfResource): string {
+  public expand(model: AnyPointer | RdfResource): string {
     const uriTemplate = new URITemplate(this.__template.template)
 
-    const variables = this.buildExpansionModel(this.__template.mapping, 'id' in model ? model._selfGraph : model)
+    const variables = this.buildExpansionModel(this.__template.mapping, 'id' in model ? model.pointer : model)
     const expanded = uriTemplate.expand(variables)
 
     if (this.__template._parent && !this.__template._parent.isAnonymous) {
@@ -68,7 +68,7 @@ export class TemplateExpander {
     return expanded
   }
 
-  private buildExpansionModel(mappings: IriTemplateMapping[], templateValues: Clownface): Record<string, string[]> {
+  private buildExpansionModel(mappings: IriTemplateMapping[], templateValues: AnyPointer): Record<string, string[]> {
     return mappings.reduce<Record<string, string[]>>((model, mapping) => {
       const values = templateValues.out(mapping.property.id)
         .map(({ term }) => this.__mapper.mapValue(term))

@@ -1,4 +1,4 @@
-import cf, { Clownface } from 'clownface'
+import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import { Project } from 'ts-morph'
@@ -9,7 +9,7 @@ import { ex } from '../_helpers/prefix'
 
 describe('EnumerationModule', () => {
   let project: Project
-  let graph: Clownface
+  let graph: AnyPointer
 
   beforeEach(() => {
     project = new Project({

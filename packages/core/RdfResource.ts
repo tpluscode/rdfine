@@ -1,7 +1,7 @@
 /* eslint-disable camelcase,@typescript-eslint/camelcase,no-dupe-class-members */
-import { NamespaceBuilder } from '@rdfjs/namespace'
+import type { NamespaceBuilder } from '@rdf-esm/namespace'
 import { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from 'rdf-js'
-import type { SafeClownface, SingleContextClownface } from 'clownface'
+import cf, { MultiPointer, GraphPointer } from 'clownface'
 import ResourceFactoryImpl from './lib/ResourceFactory'
 import type {
   Constructor,
@@ -14,11 +14,12 @@ import once from 'once'
 import type { TypeCollection } from './lib/TypeCollection'
 import TypeCollectionCtor from './lib/TypeCollection'
 import { xsd } from '@tpluscode/rdf-ns-builders'
+import { defaultGraphInstance } from '@rdf-esm/data-model'
 
 type ObjectOrFactory<T> = T | ((self: RdfResource) => T)
 
 export type ResourceIdentifier = BlankNode | NamedNode
-export type ResourceNode<D extends DatasetCore = DatasetCore> = SingleContextClownface<ResourceIdentifier, D>
+export type ResourceNode<D extends DatasetCore = DatasetCore> = GraphPointer<ResourceIdentifier, D>
 
 export interface GetOptions {
   strict: boolean
@@ -27,12 +28,12 @@ export interface GetOptions {
 export interface RdfResource<D extends DatasetCore = DatasetCore> {
   readonly id: ResourceIdentifier
   readonly types: TypeCollection<D>
-  readonly pointer: SingleContextClownface<ResourceIdentifier, D>
-  readonly unionGraphPointer: SafeClownface<ResourceIdentifier, D>
+  readonly pointer: GraphPointer<ResourceIdentifier, D>
+  readonly unionGraphPointer: MultiPointer<ResourceIdentifier, D>
   readonly _graphId: Quad_Graph
   readonly _parent?: RdfResource<D>
   readonly isAnonymous: boolean
-  equals(other: RdfResource | ResourceIdentifier | SingleContextClownface<ResourceIdentifier> | undefined | null): boolean
+  equals(other: RdfResource | ResourceIdentifier | GraphPointer<ResourceIdentifier> | undefined | null): boolean
   hasType (type: string | NamedNode): boolean
   /**
    * Gets the value of a property
@@ -62,13 +63,13 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
    */
   getNumber (property: string | NamedNode): number | null
   getNumber (property: string | NamedNode, options?: GetOptions): number | null
-  _getObjects(property: string | NamedNode, options?: GetOptions): SafeClownface<Term, D>
-  _create<T extends RdfResource<D>>(term: SingleContextClownface<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
+  _getObjects(property: string | NamedNode, options?: GetOptions): MultiPointer<Term, D>
+  _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
 }
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
-  public readonly pointer: SingleContextClownface<ResourceIdentifier, D>
-  public readonly unionGraphPointer: SafeClownface<ResourceIdentifier, D>
+  public readonly pointer: GraphPointer<ResourceIdentifier, D>
+  public readonly unionGraphPointer: MultiPointer<ResourceIdentifier, D>
   public readonly __initialized: boolean = false
   public readonly _parent?: RdfResource<D>
   private readonly __initializeProperties: (() => boolean)
@@ -112,12 +113,26 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       throw new Error(`RdfResource cannot be initialized from a ${(pointer.term as any).termType} node`)
     }
 
+    /* TODO: when clownface gets graph feature
     if (pointer._context[0].graph) {
       this.pointer = pointer
-      this.unionGraphPointer = pointer.fromUnionGraph()
+      this.unionGraphPointer = pointer.fromGraph(null)
     } else {
-      this.pointer = pointer.fromDefaultGraph()
+      this.pointer = pointer.fromGraph(pointer.defaultGraph)
       this.unionGraphPointer = pointer
+    } */
+
+    const selfGraph = cf({
+      ...pointer,
+      term: pointer.term,
+    })
+
+    if (selfGraph._context[0].graph) {
+      this.pointer = selfGraph
+      this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: undefined })
+    } else {
+      this.pointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: defaultGraphInstance })
+      this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term })
     }
 
     this.__initializeProperties = once(() => {
@@ -168,7 +183,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return this.types.has(type)
   }
 
-  public equals(other: RdfResource<any> | ResourceIdentifier | SingleContextClownface<ResourceIdentifier> | undefined | null): boolean {
+  public equals(other: RdfResource<any> | ResourceIdentifier | GraphPointer<ResourceIdentifier> | undefined | null): boolean {
     if (!other) {
       return false
     }
@@ -254,7 +269,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     throw new Error(`Expected property '${property}' to be a boolean but found '${value}'`)
   }
 
-  public _getObjects(property: string | NamedNode, { strict }: GetOptions = { strict: false }): SafeClownface<Term, D> {
+  public _getObjects(property: string | NamedNode, { strict }: GetOptions = { strict: false }): MultiPointer<Term, D> {
     const propertyNode = typeof property === 'string' ? this.pointer.namedNode(property) : property
     const objects = this.pointer.out(propertyNode)
 
@@ -265,7 +280,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return objects
   }
 
-  public _create<T extends RdfResource<D>>(term: SingleContextClownface<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D, T> = {}): T & ResourceIndexer {
+  public _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D, T> = {}): T & ResourceIndexer {
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins, options)
   }
 }
@@ -277,7 +292,7 @@ interface BaseInitializer {
   id?: RdfResource['id']
 }
 
-type InitialNode<Node extends Term = NamedNode | BlankNode> = Node | SingleContextClownface<Node>
+type InitialNode<Node extends Term = NamedNode | BlankNode> = Node | GraphPointer<Node>
 type InitialLiteral = InitialNode<Literal>
 
 export type Initializer<T> = Partial<Omit<{

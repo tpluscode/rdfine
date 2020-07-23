@@ -4,7 +4,7 @@ import { namespace, property, crossBoundaries } from '../index'
 import RdfResource from '../RdfResource'
 import { parse, vocabs } from './_helpers'
 import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
-import * as RDF from '@rdfjs/data-model'
+import * as RDF from '@rdf-esm/data-model'
 import rdfExt from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 
@@ -127,10 +127,10 @@ describe('decorator', () => {
         }
 
         // when
-        const { children } = new Resource({
+        const { children } = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(children).toBeInstanceOf(Array)
@@ -448,10 +448,10 @@ describe('decorator', () => {
         }
 
         // when
-        const { friends } = new Resource({
+        const { friends } = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(friends).toBeInstanceOf(Array)
@@ -471,10 +471,10 @@ describe('decorator', () => {
         }
 
         // when
-        const { friends } = new Resource({
+        const { friends } = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(friends.length).toBe(3)

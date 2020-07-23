@@ -187,7 +187,7 @@
   dependencies:
     "@babel/types" "^7.10.4"
 
-"@babel/helper-plugin-utils@^7.0.0", "@babel/helper-plugin-utils@^7.10.3", "@babel/helper-plugin-utils@^7.10.4", "@babel/helper-plugin-utils@^7.8.0":
+"@babel/helper-plugin-utils@^7.0.0", "@babel/helper-plugin-utils@^7.10.4", "@babel/helper-plugin-utils@^7.8.0":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.10.4.tgz#2f75a831269d4f677de49986dff59927533cf375"
   integrity sha512-O4KCvQA6lLiMU9l2eawBPMf1xPP8xPfB3iEQw150hOVTqj/rfXz0ThTb4HEzqQfs2Bmo5Ay8BzxfzVtBrr9dVg==
@@ -2191,12 +2191,33 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@rdf-esm/data-model@^0.5.3":
+"@rdf-esm/data-model@^0.5.1", "@rdf-esm/data-model@^0.5.3":
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/@rdf-esm/data-model/-/data-model-0.5.3.tgz#a6027aeb582e79cbad20a9c38750876c47fdded1"
   integrity sha512-3LEd0RCWNykk10fDEVqfasikjLeDxeaFYWmF86D+f4pmhAUD7r+4RstGW7Lgcd0zOfjxMCx+ZRLQf3Etwfrz7g==
   dependencies:
     "@rdfjs/data-model" "^1.1.2"
+
+"@rdf-esm/namespace@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@rdf-esm/namespace/-/namespace-0.5.1.tgz#92070405e37ad1a4adabf59bb300c3e7db45117a"
+  integrity sha512-n6aJy2uAu/r4VeC73Mts3mOvKl2tZ34AJHD8St6RtlSAneX4/PjXSwpX5F14Tiqc46RaXbIDBryDdhG/UrYbkQ==
+  dependencies:
+    "@rdf-esm/data-model" "^0.5.1"
+    "@rdfjs/namespace" "^1.1.0"
+
+"@rdf-esm/term-set@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@rdf-esm/term-set/-/term-set-0.5.0.tgz#a4f0dae0de23f5e639aeb9dd8e1423c38bef4d4d"
+  integrity sha512-vWh8VtGUX1n4pEHmr/NyNzE0+yqCOcx3vUYbMVpk0Q0mgAB2n3+8yl/RXE8203z3PXsS4C1UPlO6YCSPbQS2rw==
+  dependencies:
+    "@rdf-esm/to-ntriples" "^0.5.0"
+    "@rdfjs/term-set" "^1.0.1"
+
+"@rdf-esm/to-ntriples@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@rdf-esm/to-ntriples/-/to-ntriples-0.5.0.tgz#4a2c294e6d740509571e3b0efde8277c4824b928"
+  integrity sha512-VIcqRv68V/s0NS6bFy58CcsHwV0UCM/DHhAc1MYLB/yue1nyhKsX4uyu/SB5gbbY2r4BIH4G6O+arxf59KzgwQ==
 
 "@rdfjs/data-model@^1.0.1", "@rdfjs/data-model@^1.1.0", "@rdfjs/data-model@^1.1.1", "@rdfjs/data-model@^1.1.2":
   version "1.1.2"
@@ -2402,10 +2423,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/clownface@^0.12.13", "@types/clownface@^0.12.9":
-  version "0.12.15"
-  resolved "https://registry.yarnpkg.com/@types/clownface/-/clownface-0.12.15.tgz#1b26ac58ce071d854c8daf01ba56e9f32e23e5a3"
-  integrity sha512-7JTN/PZcgnkGp/6x0xi33NsWAR4Y19HC83MRJ/GvdYuheva9BLfrbwXqHrN9xWpwmLi7UeZbwxeEj3CORwyxrg==
+"@types/clownface@^1":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/clownface/-/clownface-1.0.0.tgz#e73483c15477b7f1d8e238dcc3edc872516b93e1"
+  integrity sha512-mSb1tpiRYzIDRl3bubv0uVDxk0cb5Q80wT1ns7GbQ4sZ8QRNnyb/K4PnDEo2bKlBDFB1zgTa3/UQtRP32b5v0g==
   dependencies:
     "@types/rdf-js" "*"
 
@@ -3037,11 +3058,12 @@ babel-jest@^26.1.0:
     graceful-fs "^4.2.4"
     slash "^3.0.0"
 
-"babel-plugin-add-import-extension@github:tpluscode/babel-plugin-add-import-extension#type-only-export":
-  version "1.3.2"
-  resolved "https://codeload.github.com/tpluscode/babel-plugin-add-import-extension/tar.gz/a999d4dd95d04aeb4602e970d4abf06fe3a05281"
+babel-plugin-add-import-extension@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-add-import-extension/-/babel-plugin-add-import-extension-1.4.3.tgz#9a153095f3c8bb820abbf168bbc71aba837e4e4a"
+  integrity sha512-NiKs80ucIlktWtQ6VGovyVprpgaDxqlo3fT2e2vIyF6k3+02YMmQt+QrBDOq/YImkK/pIXb/SKaO+FxKsfvNlA==
   dependencies:
-    "@babel/helper-plugin-utils" "^7.10.3"
+    "@babel/helper-plugin-utils" "^7.10.4"
 
 babel-plugin-dynamic-import-node@^2.3.3:
   version "2.3.3"
@@ -3531,10 +3553,10 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
-clownface@^0.12.1, clownface@^0.12.3:
-  version "0.12.4"
-  resolved "https://registry.yarnpkg.com/clownface/-/clownface-0.12.4.tgz#32b835453a0b86ab74a78a3bd4622da79d7e8265"
-  integrity sha512-Y2SSy8pME3gg79sDoIj1AYUlrQNoq19DfEfiu7S4wv3R6P+wlXXhDmq7I78SOnYglwJudqhh7FgLbMMx//+ryw==
+clownface@^1:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/clownface/-/clownface-1.0.0.tgz#77c8937241f02c08a49ac0370cb8628cde324e91"
+  integrity sha512-8gAAqdD5ueYt62FHE9Zd4OTrcYEfiyQlxV/5NYxzKY5uO/HZbTv1+jhFHgYa3XD7BC+mkg+LFR9Mh168wj9aQQ==
   dependencies:
     "@rdfjs/data-model" "^1.1.0"
     "@rdfjs/namespace" "^1.0.0"

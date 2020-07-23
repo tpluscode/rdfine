@@ -1,14 +1,14 @@
 import { ObjectLiteralExpression, Project } from 'ts-morph'
-import { SingleContextClownface } from 'clownface'
+import { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import { Context, GeneratedModule } from '../index'
 import { EnumerationType, TypeMetaCollection } from '../types'
 
 export class EnumerationModule implements GeneratedModule {
   type: EnumerationType
-  node: SingleContextClownface;
+  node: GraphPointer;
 
-  public constructor(enumeration: SingleContextClownface, type: EnumerationType) {
+  public constructor(enumeration: GraphPointer, type: EnumerationType) {
     this.node = enumeration
     this.type = type
   }

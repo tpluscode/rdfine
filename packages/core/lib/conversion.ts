@@ -1,11 +1,11 @@
 import { Literal } from 'rdf-js'
-import rdf from '@rdfjs/data-model'
+import rdf from '@rdf-esm/data-model'
 import { xsd } from '@tpluscode/rdf-ns-builders'
-import { SingleContextClownface } from 'clownface'
+import { GraphPointer } from 'clownface'
 
 const trueLiteral: Literal = rdf.literal('true', xsd.boolean)
 
-export function fromLiteral(type: BooleanConstructor | StringConstructor | NumberConstructor, obj: SingleContextClownface) {
+export function fromLiteral(type: BooleanConstructor | StringConstructor | NumberConstructor, obj: GraphPointer) {
   if (type === Boolean) {
     return trueLiteral.equals(obj.term)
   }

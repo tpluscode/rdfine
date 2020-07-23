@@ -18,7 +18,7 @@
     "@tpluscode/rdf-ns-builders": "^0.3.6",
     "@tpluscode/rdf-string": "^0.2.16",
     "@tpluscode/rdfine": "^0.4.22",
-    "clownface": "^0.12.1",
+    "clownface": "^1",
     "debug": "^4.1.1"
   },
   "devDependencies": {

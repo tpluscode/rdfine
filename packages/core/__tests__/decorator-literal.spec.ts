@@ -3,11 +3,12 @@ import { prefixes } from '@zazuko/rdf-vocabularies'
 import { property } from '../index'
 import RdfResource from '../RdfResource'
 import { parse, vocabs } from './_helpers'
-import { Literal } from 'rdf-js'
-import RDF from '@rdfjs/data-model'
+import { BlankNode, Literal, NamedNode } from 'rdf-js'
+import RDF from '@rdf-esm/data-model'
 import rdfExt from 'rdf-ext'
 import { xsd } from '@tpluscode/rdf-ns-builders'
 import { turtle } from '@tpluscode/rdf-string'
+import cf, { GraphPointer } from 'clownface'
 
 const { ex, schema } = vocabs
 
@@ -28,10 +29,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.name).toEqual('John Doe')
@@ -56,10 +57,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.single).toStrictEqual(false)
@@ -81,10 +82,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.age).toStrictEqual(30)
@@ -105,10 +106,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.age).toStrictEqual(30.6)
@@ -128,10 +129,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.letters).toEqual(['a', 'b', 'c'])
@@ -151,10 +152,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.age).toStrictEqual('30.3')
@@ -174,10 +175,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.age).toStrictEqual('30.3')
@@ -199,10 +200,10 @@ describe('decorator', () => {
           name?: string | Literal
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // when
         instance.name = RDF.literal('John', 'en-gb')
@@ -226,10 +227,10 @@ describe('decorator', () => {
           married?: boolean
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // when
         instance.married = false
@@ -247,10 +248,10 @@ describe('decorator', () => {
           age!: number
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // when
         instance.age = 30
@@ -268,10 +269,10 @@ describe('decorator', () => {
           age!: number
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // when
         instance.age = 30.4
@@ -289,10 +290,10 @@ describe('decorator', () => {
           age!: bigint
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // when
         instance.age = BigInt(9007199254740991)
@@ -316,10 +317,10 @@ describe('decorator', () => {
           name?: string
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // when
         instance.name = 'Jane'
@@ -340,13 +341,13 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
-          name?: string
+          name?: string | Literal
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }) as any
+        }))
 
         // when
         instance.name = RDF.literal('Jane', ex.Name)
@@ -367,16 +368,16 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
-          name?: string
+          name?: string | GraphPointer<Literal>
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }) as any
+        }))
 
         // when
-        instance.name = instance._selfGraph.literal('Jane', ex.Name)
+        instance.name = instance.pointer.literal('Jane', ex.Name)
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
@@ -397,10 +398,10 @@ describe('decorator', () => {
           name: string | null = null
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // when
         instance.name = null
@@ -421,13 +422,13 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
-          name?: string
+          name?: string | NamedNode
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }) as any
+        }))
 
         // the
         expect(() => {
@@ -447,13 +448,13 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
-          name?: string
+          name?: string | BlankNode
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }) as any
+        }))
 
         // the
         expect(() => {
@@ -476,14 +477,14 @@ describe('decorator', () => {
           name?: string
         }
 
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }) as any
+        }))
 
         // the
         expect(() => {
-          instance.name = instance
+          instance.name = instance as any
         }).toThrow()
       })
 
@@ -501,10 +502,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         instance.age = '20'
 
         // then
@@ -525,10 +526,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
         instance.age = 20
 
         // then
@@ -549,10 +550,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.name).toEqual('foo')
@@ -577,10 +578,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.name).toEqual('bar')
@@ -599,10 +600,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.name).toEqual('foo')
@@ -621,10 +622,10 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource({
+        const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        })
+        }))
 
         // then
         expect(instance.name).toEqual(instance.id.value)
