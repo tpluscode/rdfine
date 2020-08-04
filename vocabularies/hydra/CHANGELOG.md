@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6](https://github.com/tpluscode/rdfine/compare/@rdfine/hydra@0.3.5...@rdfine/hydra@0.3.6) (2020-08-04)
+
+
+### Features
+
+* **hydra:** added template expansion to Hydra IriTemplate ([1f3a206](https://github.com/tpluscode/rdfine/commit/1f3a20611b2b766ff3db5ff690dbdc49c21751ae))
+
+
+
+
+
 ## [0.3.5](https://github.com/tpluscode/rdfine/compare/@rdfine/hydra@0.3.4...@rdfine/hydra@0.3.5) (2020-07-07)
 
 **Note:** Version bump only for package @rdfine/hydra
