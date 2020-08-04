@@ -54,5 +54,40 @@ describe('IriTemplate', () => {
   // then
   expect(expanded).toEqual(expected)
 })
+
+    it('does not expand variables with no values', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const pointer = clownface({ dataset }).blankNode()
+      const iriTemplate = new IriTemplateMixin.Class(pointer, {
+        template: 'http://example.com/find/{?foo,bar,baz}',
+        mapping: [
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'foo',
+            property: ex.foo,
+          },
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'bar',
+            property: ex.bar,
+          },
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'baz',
+            property: ex.baz,
+          },
+        ],
+      })
+
+      // when
+      const bindings = clownface({ dataset })
+        .blankNode()
+        .addOut(ex.bar, RDF.literal('bar'))
+      const expanded = iriTemplate.expand(bindings)
+
+      // then
+      expect(expanded).toEqual('http://example.com/find/?bar=bar')
+    })
   })
 })

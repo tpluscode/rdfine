@@ -73,6 +73,10 @@ export class TemplateExpander {
       const values = templateValues.out(mapping.property.id)
         .map(({ term }) => this.__mapper.mapValue(term))
 
+      if (values.length === 0) {
+        return model
+      }
+
       return {
         ...model,
         [mapping.variable]: values,
