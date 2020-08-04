@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7](https://github.com/tpluscode/rdfine/compare/@rdfine/hydra@0.3.6...@rdfine/hydra@0.3.7) (2020-08-04)
+
+
+### Bug Fixes
+
+* **hydra:** do not expand variables with no values ([98a8ec0](https://github.com/tpluscode/rdfine/commit/98a8ec0e46dd556971eb20b591417bc2098ee226))
+
+
+
+
+
 ## [0.3.6](https://github.com/tpluscode/rdfine/compare/@rdfine/hydra@0.3.5...@rdfine/hydra@0.3.6) (2020-08-04)
 
 
