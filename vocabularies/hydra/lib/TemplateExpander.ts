@@ -1,5 +1,5 @@
 import type { RdfResource } from '@tpluscode/rdfine'
-import type { SingleContextClownface } from 'clownface';
+import type { Clownface } from 'clownface';
 import URITemplate from 'es6-url-template'
 import { URL } from 'url'
 import { IriTemplate, IriTemplateMapping } from '../'
@@ -55,7 +55,7 @@ export class TemplateExpander {
     }
   }
 
-  public expand(model: SingleContextClownface | RdfResource): string {
+  public expand(model: Clownface | RdfResource): string {
     const uriTemplate = new URITemplate(this.__template.template)
 
     const variables = this.buildExpansionModel(this.__template.mapping, 'id' in model ? model._selfGraph : model)
@@ -68,7 +68,7 @@ export class TemplateExpander {
     return expanded
   }
 
-  private buildExpansionModel(mappings: IriTemplateMapping[], templateValues: SingleContextClownface): Record<string, string[]> {
+  private buildExpansionModel(mappings: IriTemplateMapping[], templateValues: Clownface): Record<string, string[]> {
     return mappings.reduce<Record<string, string[]>>((model, mapping) => {
       const values = templateValues.out(mapping.property.id)
         .map(({ term }) => this.__mapper.mapValue(term))

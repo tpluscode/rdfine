@@ -3,7 +3,7 @@ import type * as RDF from 'rdf-js';
 import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type { SingleContextClownface } from 'clownface';
+import type { Clownface, SingleContextClownface } from 'clownface';
 import type { Term } from 'rdf-js';
 import type * as Hydra from '.';
 import { ResourceMixin } from './Resource';
@@ -26,7 +26,7 @@ export function IriTemplateMixin<Base extends Constructor>(Resource: Base) {
     @property()
     public variableRepresentation!: Term;
 
-    public expand(model: SingleContextClownface | RdfResource): string {
+    public expand(model: Clownface | RdfResource): string {
       return new TemplateExpander(this).expand(model)
     }
   }
