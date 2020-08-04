@@ -3,7 +3,7 @@ import DatasetExt from 'rdf-ext/lib/Dataset'
 import { SourceFile } from 'ts-morph'
 
 expect.extend({
-  toMatchSnapshot(received: DatasetExt | SourceFile | object) {
+  toMatchSnapshot(received: DatasetExt | SourceFile) {
     if (typeof received === 'object' && received && 'toCanonical' in received) {
       return toMatchSnapshot.call(
         this as any,
@@ -12,7 +12,7 @@ expect.extend({
       )
     }
 
-    if (received instanceof SourceFile) {
+    if (typeof received === 'object' && 'saveSync' in received) {
       received.saveSync()
       const contents = received.getProject().getFileSystem().readFileSync(received.getFilePath())
       return toMatchSnapshot.call(
