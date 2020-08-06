@@ -2,7 +2,7 @@ import ns, { NamespaceBuilder } from '@rdfjs/namespace'
 import type { RdfResource } from '../../RdfResource'
 import type { ClassDescriptor } from '.'
 
-type Constructor<T = RdfResource> = {
+type Constructor<T = RdfResource<any>> = {
   new (...args: any[]): T
   __ns?: any
 };

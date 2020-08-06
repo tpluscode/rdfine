@@ -4,6 +4,7 @@ import cf from 'clownface'
 import $rdf from 'rdf-ext'
 import { Constructor, namespace, property } from '../index'
 import RdfResource from '../RdfResource'
+import DatasetExt from 'rdf-ext/lib/Dataset'
 
 const schema = builder(prefixes.schema)
 const rdfs = builder(prefixes.rdfs)
@@ -28,6 +29,20 @@ describe('decorator', () => {
       const foaf = builder(prefixes.foaf)
       @namespace(foaf)
       class WithNamespace extends RdfResource {
+      }
+
+      // when
+      const ns = WithNamespace.__ns!()
+
+      // then
+      expect(ns.value).toEqual(foaf('').value)
+    })
+
+    it('can be used on class extending specific dataset type', () => {
+      // given
+      const foaf = builder(prefixes.foaf)
+      @namespace(foaf)
+      class WithNamespace extends RdfResource<DatasetExt> {
       }
 
       // when
