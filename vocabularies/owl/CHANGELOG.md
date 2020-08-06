@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.6](https://github.com/tpluscode/rdfine/compare/@rdfine/owl@0.2.5...@rdfine/owl@0.2.6) (2020-08-06)
+
+**Note:** Version bump only for package @rdfine/owl
+
+
+
+
+
 ## [0.2.5](https://github.com/tpluscode/rdfine/compare/@rdfine/owl@0.2.4...@rdfine/owl@0.2.5) (2020-07-07)
 
 **Note:** Version bump only for package @rdfine/owl
