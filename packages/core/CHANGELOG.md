@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.22](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.21...@tpluscode/rdfine@0.4.22) (2020-08-07)
+
+
+### Bug Fixes
+
+* mixin cannot be defined to use specific dataset ([1420094](https://github.com/tpluscode/rdfine/commit/1420094b2d691df45fe24337b852965f2cc2c6dd))
+
+
+
+
+
 ## [0.4.21](https://github.com/tpluscode/rdfine/compare/@tpluscode/rdfine@0.4.20...@tpluscode/rdfine@0.4.21) (2020-08-06)
 
 
