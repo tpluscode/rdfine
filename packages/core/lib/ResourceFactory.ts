@@ -5,7 +5,7 @@ import type { Initializer, RdfResource, ResourceNode } from '../RdfResource'
 import { createProxy } from './proxy'
 
 export type AnyFunction<A = any> = (...input: any[]) => A
-export interface Constructor<A extends RdfResource = RdfResource> {
+export interface Constructor<A extends RdfResource<any> = RdfResource> {
   new (...input: any[]): A
   factory: ResourceFactory
   __mixins: Mixin[]
