@@ -9,6 +9,7 @@ import { propertyDecorator } from '.'
 interface LiteralOptions<R extends RdfResource> {
   type?: typeof Boolean | typeof String | typeof Number
   initial?: ObjectOrFactory<R, string | boolean | number | bigint, Literal>
+  datatype?: NamedNode
 }
 
 const trueLiteral: Literal = rdf.literal('true', xsd.boolean)
@@ -24,20 +25,22 @@ export default function<R extends RdfResource> (options: AccessorOptions & Liter
       return fromLiteral(type, obj)
     },
     toTerm(value) {
-      let datatype: NamedNode | undefined
-      switch (typeof value) {
-        case 'number':
-          if (Number.isInteger(value)) {
-            datatype = xsd.integer
-          } else {
-            datatype = xsd.float
-          }
-          break
-        case 'boolean':
-          datatype = trueLiteral.datatype
-          break
-        case 'bigint':
-          datatype = xsd.long
+      let datatype = options.datatype
+      if (!datatype) {
+        switch (typeof value) {
+          case 'number':
+            if (Number.isInteger(value)) {
+              datatype = xsd.integer
+            } else {
+              datatype = xsd.float
+            }
+            break
+          case 'boolean':
+            datatype = trueLiteral.datatype
+            break
+          case 'bigint':
+            datatype = xsd.long
+        }
       }
 
       return rdf.literal(value.toString(), datatype)
