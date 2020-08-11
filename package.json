@@ -9,11 +9,10 @@
     "example": "lerna run start --scope rdfine-example --stream --no-prefix",
     "generate": "lerna run generate --stream --no-prefix",
     "build": "lerna run prepack",
-    "release": "lerna publish from-package -y"
+    "release": "changeset"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.2.0",
-    "@commitlint/config-conventional": "^8.2.0",
+    "@changesets/cli": "^2.10.0",
     "@tpluscode/eslint-config": "0.1.0",
     "@types/clownface": "^0.12.13",
     "@types/jest": "^26.0.3",
@@ -42,19 +41,12 @@
   ],
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
     "*.{js,ts}": [
-      "eslint --fix --quiet",
-      "git add"
-    ]
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
+      "eslint --fix --quiet"
     ]
   }
 }
