@@ -25,7 +25,7 @@ export class TypeMap implements TypeMetaCollection {
     this.__context = context
   }
 
-  get(key: SingleContextClownface, noFallback = false): TypeMeta | undefined {
+  get(key: SingleContextClownface<NamedNode>, noFallback = false): TypeMeta | undefined {
     if (this.__excluded.includes(key.value)) {
       return undefined
     }
@@ -49,7 +49,7 @@ export class TypeMap implements TypeMetaCollection {
     return this
   }
 
-  getOrThrow(key: SingleContextClownface) {
+  getOrThrow(key: SingleContextClownface<NamedNode>) {
     const type = this.get(key, true)
     if (type) {
       return type
@@ -58,7 +58,7 @@ export class TypeMap implements TypeMetaCollection {
     throw new Error(`Type ${key.value} not found`)
   }
 
-  private __create(term: SingleContextClownface, noFallback: boolean): TypeMeta | null {
+  private __create(term: SingleContextClownface<NamedNode>, noFallback: boolean): TypeMeta | null {
     for (const create of this.__factories) {
       const found = create(term, this.__context)
       if (found) return found

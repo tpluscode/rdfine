@@ -1,8 +1,9 @@
 import { ClassDeclaration, DecoratorStructure, InterfaceDeclaration, OptionalKind } from 'ts-morph'
 import { JavascriptProperty } from './JsProperties'
 import { Context } from '../index'
-import { TypeMeta } from '../types'
+import { TypeMeta, LiteralType } from '../types'
 import { MixinModule } from '../MixinGenerator/MixinModule'
+import TermSet from '@rdfjs/term-set'
 
 interface PropertyWriterInit {
   interfaceDeclaration: InterfaceDeclaration
@@ -116,6 +117,12 @@ export class PropertyWriter {
         name = 'property.literal'
 
         const uniqueTypes = [...new Set(propertyTypes)]
+        const uniqueDatatypes = prop.range.reduce<TermSet>((set, range: LiteralType | object) => {
+          if ('datatype' in range && range.datatype) {
+            set.add(range.datatype)
+          }
+          return set
+        }, new TermSet())
 
         if (uniqueTypes.length === 1) {
           switch (uniqueTypes.shift()) {
@@ -126,6 +133,11 @@ export class PropertyWriter {
               decoratorOptions.push('type: Number')
               break
           }
+        }
+
+        if (uniqueDatatypes.size) {
+          const [datatype] = [...uniqueDatatypes.values()]
+          decoratorOptions.push(`datatype: $rdf.namedNode('${datatype.value}')`)
         }
       }
         break

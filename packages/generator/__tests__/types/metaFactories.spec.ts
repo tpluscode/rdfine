@@ -108,6 +108,24 @@ describe('meta factory', () => {
       } as TermType)
     })
 
+    it('creates a string literal with self as datatype when overridden', () => {
+      // given
+      const overrides = factories.overrides({
+        [ex.Type.value]: 'Datatype',
+      })
+
+      // when
+      const meta = overrides(graph.node(ex.Type))
+
+      // then
+      expect(meta).toEqual({
+        type: 'Literal',
+        nativeType: String,
+        datatype: ex.Type,
+        nativeName: 'string',
+      } as LiteralType)
+    })
+
     it('expands prefixed type name', () => {
       // given
       const overrides = factories.overrides({
