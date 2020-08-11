@@ -1,17 +1,18 @@
 import { SingleContextClownface } from 'clownface'
-import { Term } from 'rdf-js'
+import { NamedNode, Term } from 'rdf-js'
 import { Context } from '../index'
 
 export { TypeMap } from './TypeMap'
 
 export interface TypeMetaFactory<T extends TypeMeta = TypeMeta> {
-  (term: SingleContextClownface, context: Context): T | null
+  (term: SingleContextClownface<NamedNode>, context: Context): T | null
 }
 
 export interface LiteralType {
   type: 'Literal'
   nativeName: string
   nativeType: typeof Number | typeof String | typeof Boolean | typeof Date
+  datatype?: NamedNode
 }
 
 export interface ResourceType {

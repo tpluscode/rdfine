@@ -1,6 +1,6 @@
 import { SingleContextClownface } from 'clownface'
 import { shrink } from '@zazuko/rdf-vocabularies'
-import { hydra, rdf, rdfs } from '@tpluscode/rdf-ns-builders'
+import { hydra, rdf, rdfs, schema } from '@tpluscode/rdf-ns-builders'
 import {
   EnumerationMember,
   EnumerationType,
@@ -8,10 +8,11 @@ import {
   LiteralType,
   ResourceType, TermType,
 } from './index'
-import { Context } from '../index'
+import type { Context, TypeOverride } from '../index'
 import { toUpperInitial } from '../util/string'
 import { isEnumerationType } from './util'
 import { DatatypeName, wellKnownDatatypes } from './wellKnownDatatypes'
+import { NamedNode } from 'rdf-js'
 
 export function resourceTypes(term: SingleContextClownface, context: Pick<Context, 'prefix'>): ExternalResourceType | ResourceType | null {
   const [prefix, localName] = shrink(term.value).split(':')
@@ -28,6 +29,10 @@ export function resourceTypes(term: SingleContextClownface, context: Pick<Contex
   }
 
   if (!term.has(rdf.type, [rdfs.Class, hydra.Class]).values.length) {
+    return null
+  }
+
+  if (term.has(rdfs.subClassOf, schema.Text).values.length) {
     return null
   }
 
@@ -111,14 +116,23 @@ export function datatypes(term: SingleContextClownface): LiteralType | null {
   return datatypeToLiteralType(mapped)
 }
 
-export function overrides(overrideMap: Record<string, DatatypeName | 'NamedNode'> = {}) {
-  return (node: SingleContextClownface): TermType | LiteralType | null => {
+export function overrides(overrideMap: Record<string, TypeOverride> = {}) {
+  return (node: SingleContextClownface<NamedNode>): TermType | LiteralType | null => {
     const override = overrideMap[node.value]
 
     if (override === 'NamedNode') {
       return {
         type: 'Term',
         termType: 'NamedNode',
+      }
+    }
+
+    if (override === 'Datatype') {
+      return {
+        type: 'Literal',
+        nativeName: 'string',
+        nativeType: String,
+        datatype: node.term,
       }
     }
 

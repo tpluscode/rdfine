@@ -13,6 +13,7 @@ import * as MixinGenerator from './MixinGenerator'
 import * as factories from './types/metaFactories'
 import { toUpperInitial } from './util/string'
 import { expandMapKeys } from './util/overrideMap'
+import { DatatypeName } from './types/wellKnownDatatypes'
 
 export interface Context {
   vocabulary: Clownface
@@ -43,13 +44,15 @@ export interface GeneratedModule {
   }
 }
 
+export type TypeOverride = DatatypeName | 'NamedNode' | 'Datatype'
+
 interface GeneratorOptions {
   stream: Stream
   namespace: string
   outDir: string
   prefix: string
   exclude: string[]
-  types?: Record<string, any>
+  types?: Record<string, TypeOverride>
   properties?: PropertyOverrides
 }
 

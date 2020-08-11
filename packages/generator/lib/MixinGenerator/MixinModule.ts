@@ -164,6 +164,11 @@ export class MixinModule implements GeneratedModule {
       namedImports: rdfineImports,
       moduleSpecifier: '@tpluscode/rdfine',
     })
+
+    mixinFile.addImportDeclaration({
+      namespaceImport: '$rdf',
+      moduleSpecifier: '@rdf-esm/data-model',
+    })
     mixinFile.addImportDeclaration({
       namespaceImport: 'RDF',
       moduleSpecifier: 'rdf-js',
