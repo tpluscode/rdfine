@@ -39,7 +39,6 @@
 	},
 	"dependencies": {
 		"@rdfine/rdf": "^0.3.7",
-		"@rdfjs/namespace": "^1.1.0",
 		"@tpluscode/rdf-ns-builders": "^0.3.6",
 		"@tpluscode/rdfine": "^0.4.22"
 	},
