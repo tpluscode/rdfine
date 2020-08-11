@@ -45,6 +45,16 @@ exports[`decorator literal setter replaces string object value: toMatchSnapshot 
 "
 `;
 
+exports[`decorator literal setter sets a literal with the annotated type: toMatchSnapshot 1`] = `
+"<http://example.com/res> <http://example.com/age> \\"20\\"^^<http://www.w3.org/2001/XMLSchema#double> .
+"
+`;
+
+exports[`decorator literal setter sets a numeric literal with the annotated type: toMatchSnapshot 1`] = `
+"<http://example.com/res> <http://example.com/age> \\"20\\"^^<http://www.w3.org/2001/XMLSchema#double> .
+"
+`;
+
 exports[`decorator literal setter sets xsd:float literal for float number: toMatchSnapshot 1`] = `
 "<http://example.com/res> <http://example.com/age> \\"30.4\\"^^<http://www.w3.org/2001/XMLSchema#float> .
 "

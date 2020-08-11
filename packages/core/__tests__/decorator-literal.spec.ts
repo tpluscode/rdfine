@@ -6,6 +6,8 @@ import { parse, vocabs } from './_helpers'
 import { Literal } from 'rdf-js'
 import RDF from '@rdfjs/data-model'
 import rdfExt from 'rdf-ext'
+import { xsd } from '@tpluscode/rdf-ns-builders'
+import { turtle } from '@tpluscode/rdf-string'
 
 const { ex, schema } = vocabs
 
@@ -133,6 +135,52 @@ describe('decorator', () => {
 
         // then
         expect(instance.letters).toEqual(['a', 'b', 'c'])
+      })
+
+      it('returns string value of typed literal', async () => {
+        // given
+        const dataset = await parse(turtle`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:res ex:age "30.3"^^${xsd.double} .
+        `)
+        class Resource extends RdfResource {
+          @property.literal({ path: ex.age, datatype: xsd.double })
+          age!: string
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.age).toStrictEqual('30.3')
+      })
+
+      it('returns string value of typed literal with different datatype', async () => {
+        // given
+        const dataset = await parse(turtle`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:res ex:age "30.3"^^${xsd.float} .
+        `)
+        class Resource extends RdfResource {
+          @property.literal({ path: ex.age, datatype: xsd.double })
+          age!: string
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(instance.age).toStrictEqual('30.3')
       })
     })
 
@@ -437,6 +485,54 @@ describe('decorator', () => {
         expect(() => {
           instance.name = instance
         }).toThrow()
+      })
+
+      it('sets a literal with the annotated type', async () => {
+        // given
+        const dataset = await parse(turtle`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:res ex:age "30.3"^^${xsd.float} .
+        `)
+        class Resource extends RdfResource {
+          @property.literal({ path: ex.age, datatype: xsd.double })
+          age!: string
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+        instance.age = '20'
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('sets a numeric literal with the annotated type', async () => {
+        // given
+        const dataset = await parse(turtle`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:res ex:age "30.3"^^${xsd.float} .
+        `)
+        class Resource extends RdfResource {
+          @property.literal({ path: ex.age, type: Number, datatype: xsd.double })
+          age!: number
+        }
+
+        // when
+        const instance = new Resource({
+          dataset,
+          term: ex.res,
+        })
+        instance.age = 20
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
     })
 
