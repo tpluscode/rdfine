@@ -135,7 +135,7 @@ export class PropertyWriter {
           }
         }
 
-        if (uniqueDatatypes.size) {
+        if (uniqueDatatypes.size === 1) {
           const [datatype] = [...uniqueDatatypes.values()]
           decoratorOptions.push(`datatype: $rdf.namedNode('${datatype.value}')`)
         }

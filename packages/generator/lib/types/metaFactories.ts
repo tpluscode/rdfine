@@ -1,6 +1,6 @@
 import { SingleContextClownface } from 'clownface'
 import { shrink } from '@zazuko/rdf-vocabularies'
-import { hydra, rdf, rdfs, schema } from '@tpluscode/rdf-ns-builders'
+import { hydra, rdf, rdfs } from '@tpluscode/rdf-ns-builders'
 import {
   EnumerationMember,
   EnumerationType,
@@ -29,10 +29,6 @@ export function resourceTypes(term: SingleContextClownface, context: Pick<Contex
   }
 
   if (!term.has(rdf.type, [rdfs.Class, hydra.Class]).values.length) {
-    return null
-  }
-
-  if (term.has(rdfs.subClassOf, schema.Text).values.length) {
     return null
   }
 
