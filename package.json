@@ -7,6 +7,7 @@
     "test:ts-node": "jest --coverage",
     "test:babel": "jest --coverage -c jest.babel.config.js",
     "example": "lerna run start --scope rdfine-example --stream --no-prefix",
+    "pregenerate": "yarn prepare",
     "generate": "lerna run generate --stream --no-prefix",
     "build": "lerna run prepack",
     "release": "changeset"

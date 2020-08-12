@@ -1,6 +1,7 @@
 import { Project } from 'ts-morph'
 import cf, { Clownface } from 'clownface'
 import $rdf from 'rdf-ext'
+import { xsd } from '@tpluscode/rdf-ns-builders'
 import { MixinModule } from '../../lib/MixinGenerator/MixinModule'
 import { FakeTypeCollection } from '../_helpers/FakeTypeCollection'
 import { ex } from '../_helpers/prefix'
@@ -234,6 +235,86 @@ describe('MixinModule', () => {
         package: '@rdfine/example',
         qualifier: 'Example',
         qualifiedMixinName: 'Example.FooMixin',
+      }],
+    }])
+
+    // when
+    module.writeModule(project, new FakeTypeCollection(), {
+      prefix: 'ex',
+      defaultExport: 'Example',
+      log: fakeLog(),
+      vocabulary,
+    })
+
+    // then
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
+  })
+
+  it('generates property with datatype-annotated literal', () => {
+    // given
+    const module = new MixinModule(vocabulary.node(ex.Class), {
+      type: 'Resource',
+      localName: 'Class',
+      qualifiedName: 'Example.Class',
+      module: './Class',
+      mixinName: 'ClassMixin',
+    }, [], [{
+      term: ex.foo,
+      name: 'foo',
+      type: 'literal' as const,
+      prefixedTerm: 'ex.foo',
+      semantics: 'strict' as const,
+      termName: 'foo',
+      range: [{
+        type: 'Literal' as const,
+        nativeName: 'string',
+        nativeType: String,
+        datatype: xsd.anyURI,
+      }, {
+        type: 'Literal' as const,
+        nativeName: 'string',
+        nativeType: Number,
+        datatype: xsd.anyURI,
+      }],
+    }])
+
+    // when
+    module.writeModule(project, new FakeTypeCollection(), {
+      prefix: 'ex',
+      defaultExport: 'Example',
+      log: fakeLog(),
+      vocabulary,
+    })
+
+    // then
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
+  })
+
+  it('does not add datatype annotation to literal property when datatype is ambiguous', () => {
+    // given
+    const module = new MixinModule(vocabulary.node(ex.Class), {
+      type: 'Resource',
+      localName: 'Class',
+      qualifiedName: 'Example.Class',
+      module: './Class',
+      mixinName: 'ClassMixin',
+    }, [], [{
+      term: ex.foo,
+      name: 'foo',
+      type: 'literal' as const,
+      prefixedTerm: 'ex.foo',
+      semantics: 'strict' as const,
+      termName: 'foo',
+      range: [{
+        type: 'Literal' as const,
+        nativeName: 'string',
+        nativeType: String,
+        datatype: xsd.anyURI,
+      }, {
+        type: 'Literal' as const,
+        nativeName: 'string',
+        nativeType: Number,
+        datatype: xsd.int,
       }],
     }])
 
