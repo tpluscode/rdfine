@@ -98,18 +98,19 @@ function datatypeToLiteralType(name: DatatypeName): LiteralType | null {
   }
 }
 
-export function datatypes(term: SingleContextClownface): LiteralType | null {
+export function datatypes(term: SingleContextClownface<NamedNode>): LiteralType | null {
+  const wellKnownDatatype = wellKnownDatatypes[shrink(term.value)]
+
   if (term.has(rdf.type, rdfs.Datatype).values.length) {
     return {
       type: 'Literal',
       nativeName: 'string',
       nativeType: String,
+      datatype: !wellKnownDatatype ? term.term : undefined,
     }
   }
 
-  const mapped = wellKnownDatatypes[shrink(term.value)]
-
-  return datatypeToLiteralType(mapped)
+  return datatypeToLiteralType(wellKnownDatatype)
 }
 
 export function overrides(overrideMap: Record<string, TypeOverride> = {}) {
