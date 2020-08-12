@@ -143,7 +143,7 @@ describe('meta factory', () => {
     })
   })
 
-  describe('welldatatypes', () => {
+  describe('datatypes', () => {
     it('returns null for something unexpected', () => {
       // when
       const meta = factories.datatypes(graph.node(ex.foo))
@@ -185,6 +185,19 @@ describe('meta factory', () => {
         nativeType: Boolean,
         type: 'Literal',
         nativeName: 'boolean',
+      } as LiteralType)
+    })
+
+    it('returns an object for typed datatype', () => {
+      // when
+      const meta = factories.datatypes(graph.node(ex.Foo).addOut(rdf.type, rdfs.Datatype))
+
+      // then
+      expect(meta).toEqual({
+        nativeType: String,
+        type: 'Literal',
+        nativeName: 'string',
+        datatype: ex.Foo,
       } as LiteralType)
     })
   })
