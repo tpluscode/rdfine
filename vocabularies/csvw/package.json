@@ -1,83 +1,83 @@
 {
-	"name": "@rdfine/csvw",
-	"version": "0.4.7",
-	"main": "index.js",
-	"module": "index.mjs",
-	"browser": "index.mjs",
-	"types": "index.d.ts",
-	"exports": {
-		".": {
-			"require": "./index.js",
-			"import": "./index.mjs"
-		},
-		"./bundles": {
-			"require": "./bundles/index.js",
-			"import": "./bundles/index.mjs"
-		}
-	},
-	"scripts": {
-		"prepack": "npm run build",
-		"clean": "find . -name '*.ts' -maxdepth 1 -delete",
-		"build": "run-s build:*",
-		"build:cjs": "tsc -p tsconfig.build.json",
-		"build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs --config-file ../../babel.config.json",
-		"generate": "rdf-vocab prefix csvw | node ../../packages/generator/bin/rdfine-gen.js --format application/n-quads"
-	},
-	"rdfine": {
-		"prefix": "csvw",
-		"types": {
-			"uriTemplate": "string"
-		},
-		"properties": {
-			"column": {
-				"values": "list"
-			},
-			"transformations": {
-				"values": "array"
-			}
-		}
-	},
-	"dependencies": {
-		"@tpluscode/rdf-ns-builders": "^0.3.6",
-		"@tpluscode/rdfine": "^0.4.22"
-	},
-	"devDependencies": {
-		"@babel/plugin-proposal-class-properties": "^7.8.3",
-		"@babel/plugin-proposal-decorators": "^7.8.3",
-		"@babel/plugin-proposal-object-rest-spread": "^7.8.3",
-		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
-		"@babel/preset-env": "^7.8.3",
-		"@babel/preset-typescript": "^7.8.3",
-		"@rdfine/generator": "^0.3.2",
-		"@rdfjs/dataset": "^1.0.1",
-		"@types/clownface": "^0.12.13",
-		"@types/rdf-js": "^3",
-		"@zazuko/rdf-vocabularies": "^2020.6.29",
-		"clownface": "^0.12.1",
-		"eslint": "^6.8.0",
-		"npm-run-all": "^4.1.5",
-		"typescript": "next"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/tpluscode/rdfine.git"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"keywords": [
-		"rdf",
-		"rdfjs",
-		"entity",
-		"decorator",
-		"clownface",
-		"graph"
-	],
-	"author": "tpluscode",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/tpluscode/rdfine/issues"
-	},
-	"homepage": "https://github.com/tpluscode/rdfine/tree/master/vocabularies/csvw#readme",
-	"gitHead": "b5e454d19800773d6ed81cd40f336819ef955f1b"
+  "name": "@rdfine/csvw",
+  "version": "0.4.8",
+  "main": "index.js",
+  "module": "index.mjs",
+  "browser": "index.mjs",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "import": "./index.mjs"
+    },
+    "./bundles": {
+      "require": "./bundles/index.js",
+      "import": "./bundles/index.mjs"
+    }
+  },
+  "scripts": {
+    "prepack": "npm run build",
+    "clean": "find . -name '*.ts' -maxdepth 1 -delete",
+    "build": "run-s build:*",
+    "build:cjs": "tsc -p tsconfig.build.json",
+    "build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs --config-file ../../babel.config.json",
+    "generate": "rdf-vocab prefix csvw | node ../../packages/generator/bin/rdfine-gen.js --format application/n-quads"
+  },
+  "rdfine": {
+    "prefix": "csvw",
+    "types": {
+      "uriTemplate": "string"
+    },
+    "properties": {
+      "column": {
+        "values": "list"
+      },
+      "transformations": {
+        "values": "array"
+      }
+    }
+  },
+  "dependencies": {
+    "@tpluscode/rdf-ns-builders": "^0.3.6",
+    "@tpluscode/rdfine": "^0.4.23"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@rdfine/generator": "^0.3.3",
+    "@rdfjs/dataset": "^1.0.1",
+    "@types/clownface": "^0.12.13",
+    "@types/rdf-js": "^3",
+    "@zazuko/rdf-vocabularies": "^2020.6.29",
+    "clownface": "^0.12.1",
+    "eslint": "^6.8.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "next"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tpluscode/rdfine.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "rdf",
+    "rdfjs",
+    "entity",
+    "decorator",
+    "clownface",
+    "graph"
+  ],
+  "author": "tpluscode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tpluscode/rdfine/issues"
+  },
+  "homepage": "https://github.com/tpluscode/rdfine/tree/master/vocabularies/csvw#readme",
+  "gitHead": "b5e454d19800773d6ed81cd40f336819ef955f1b"
 }
