@@ -2191,6 +2191,13 @@
   dependencies:
     "@types/node" ">= 8"
 
+"@rdf-esm/data-model@^0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@rdf-esm/data-model/-/data-model-0.5.3.tgz#a6027aeb582e79cbad20a9c38750876c47fdded1"
+  integrity sha512-3LEd0RCWNykk10fDEVqfasikjLeDxeaFYWmF86D+f4pmhAUD7r+4RstGW7Lgcd0zOfjxMCx+ZRLQf3Etwfrz7g==
+  dependencies:
+    "@rdfjs/data-model" "^1.1.2"
+
 "@rdfjs/data-model@^1.0.1", "@rdfjs/data-model@^1.1.0", "@rdfjs/data-model@^1.1.1", "@rdfjs/data-model@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@rdfjs/data-model/-/data-model-1.1.2.tgz#e2f48a422c7e837b8a7d96d240732be3287df713"

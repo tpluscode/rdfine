@@ -122,7 +122,7 @@ describe('MixinModule', () => {
       prefixedTerm: 'ex.foo',
       semantics: 'loose',
       termName: 'foo',
-      values: 'array',
+      values: ['array'],
       range: [{
         type: 'Resource',
         mixinName: 'FooMixin',
@@ -159,7 +159,44 @@ describe('MixinModule', () => {
       prefixedTerm: 'ex.foo',
       semantics: 'loose',
       termName: 'foo',
-      values: 'list',
+      values: ['list'],
+      range: [{
+        type: 'Resource',
+        mixinName: 'FooMixin',
+        module: './Foo',
+        localName: 'Foo',
+        qualifiedName: 'Example.Foo',
+      }],
+    }])
+
+    // when
+    module.writeModule(project, new FakeTypeCollection(), {
+      prefix: 'ex',
+      defaultExport: 'Example',
+      log: fakeLog(),
+      vocabulary,
+    })
+
+    // then
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
+  })
+
+  it('generates list/single property', () => {
+    // given
+    const module = new MixinModule(vocabulary.node(ex.Class), {
+      type: 'Resource',
+      localName: 'Class',
+      qualifiedName: 'Example.Class',
+      module: './Class',
+      mixinName: 'ClassMixin',
+    }, [], [{
+      term: ex.foo,
+      name: 'foo',
+      type: 'resource',
+      prefixedTerm: 'ex.foo',
+      semantics: 'loose',
+      termName: 'foo',
+      values: ['list', 'single'],
       range: [{
         type: 'Resource',
         mixinName: 'FooMixin',
