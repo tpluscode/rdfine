@@ -13,8 +13,10 @@ import { rdf } from '@tpluscode/rdf-ns-builders'
 import { onlyUnique } from '../../filter'
 import * as compare from '../../compare'
 
+type PropertyReturnKind = 'single' | 'array' | 'list'
+
 export interface AccessorOptions {
-  values?: 'array' | 'list'
+  values?: PropertyReturnKind | PropertyReturnKind[]
   path?: ArrayOrSingle<PropRef | EdgeTraversalFactory>
   strict?: true
   subjectFromAllGraphs?: true
@@ -80,7 +82,12 @@ interface PropertyDecoratorOptions<T extends RdfResource, TValue, TTerm extends 
 
 function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto: any, name: string, options: PropertyDecoratorOptions<T, TValue, TTerm>) {
   const { fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict, compare, subjectFromAllGraphs } = options
-  let values = options.values || 'single'
+  let values: PropertyReturnKind[] = ['single']
+  if (Array.isArray(options.values)) {
+    values = options.values
+  } else if (options.values) {
+    values = [options.values]
+  }
 
   const getPath = () => Array.isArray(options.path)
     ? toEdgeTraversals(proto, options.path)
@@ -93,7 +100,7 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
       const nodes = getObjects(rootNode, path)
       const crossesBoundaries = path.some(edge => edge.crossesGraphBoundaries)
       if (subjectFromAllGraphs || crossesBoundaries) {
-        values = 'array' as const
+        values = ['array']
       }
 
       const returnValues = nodes.map((obj, index) => {
@@ -108,19 +115,19 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
         return fromTerm.call(this, obj)
       }).filter(onlyUnique(compare))
 
-      if (values === 'array') {
+      if (values.includes('array') && returnValues.length !== 1) {
         return returnValues
       }
 
-      if (values === 'list') {
+      if (values.includes('list') && Array.isArray(returnValues[0])) {
         return returnValues[0] || []
       }
 
-      if (returnValues.length > 1) {
+      if (returnValues.length > 1 && !values.includes('array')) {
         throw new Error(`${name}: Multiple terms found where 0..1 was expected`)
       }
 
-      if (Array.isArray(returnValues[0])) {
+      if (Array.isArray(returnValues[0]) && !values.includes('list')) {
         throw new Error(`${name}: RDF List found where 0..1 object was expected`)
       }
 
@@ -128,11 +135,11 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
         throw new Error(`Object not found for property ${name}`)
       }
 
-      return returnValues[0]
+      return values.includes('single') ? returnValues[0] : returnValues
     },
 
     set(this: T & RdfResourceImpl, value: ArrayOrSingle<RdfResource | Term | SingleContextClownface>) {
-      if (values === 'single' && Array.isArray(value)) {
+      if (!values.includes('array') && !values.includes('list') && Array.isArray(value)) {
         throw new Error(`${name}: Cannot set array to a non-array property`)
       }
 
@@ -183,7 +190,7 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
         return toTerm.call(this, value)
       })
 
-      if (values === 'list') {
+      if (values.includes('list')) {
         if (termsArray.length === 0) {
           subject.addOut(lastPredicate, rdf.nil)
         } else {
