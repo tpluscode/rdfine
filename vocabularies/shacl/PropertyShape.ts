@@ -12,6 +12,7 @@ export interface PropertyShape extends Sh.Shape, RdfResource {
   defaultValue: RDF.Term;
   description: RDF.Term;
   group: Sh.PropertyGroup;
+  languageIn: Array<string>;
   name: RDF.Term;
   path: Rdfs.Resource | Array<Rdfs.Resource>;
 }
@@ -25,6 +26,8 @@ export function PropertyShapeMixin<Base extends Constructor>(Resource: Base) {
     description!: RDF.Term;
     @property.resource({ implicitTypes: [sh.PropertyGroup] })
     group!: Sh.PropertyGroup;
+    @property.literal({ values: 'list' })
+    languageIn!: Array<string>;
     @property()
     name!: RDF.Term;
     @property.resource({ values: ['list', 'single'], as: [Rdfs.ResourceMixin] })

@@ -1,0 +1,15 @@
+<http://www.w3.org/ns/shacl#in> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/shacl#Shape> .
+
+<http://www.w3.org/ns/shacl#and> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/shacl#Shape> .
+<http://www.w3.org/ns/shacl#and> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/shacl#Shape> .
+
+<http://www.w3.org/ns/shacl#or> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/shacl#Shape> .
+<http://www.w3.org/ns/shacl#or> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/shacl#Shape> .
+
+<http://www.w3.org/ns/shacl#xone> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/shacl#Shape> .
+<http://www.w3.org/ns/shacl#xone> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/shacl#Shape> .
+
+<http://www.w3.org/ns/shacl#languageIn> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/shacl#PropertyShape> .
+<http://www.w3.org/ns/shacl#languageIn> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+
+<http://www.w3.org/ns/shacl#sh:ignoredProperties> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2000/01/rdf-schema#Resource> .

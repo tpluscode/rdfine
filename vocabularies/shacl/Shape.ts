@@ -9,6 +9,9 @@ import * as Rdfs from '@rdfine/rdfs';
 import * as Rdf from '@rdfine/rdf';
 
 export interface Shape extends Rdfs.Resource, RdfResource {
+  and: Array<Sh.Shape>;
+  in: Array<RDF.Term>;
+  or: Array<Sh.Shape>;
   property: Array<Sh.PropertyShape>;
   rule: Sh.Rule;
   severity: Sh.Severity;
@@ -18,11 +21,18 @@ export interface Shape extends Rdfs.Resource, RdfResource {
   targetNode: RDF.Term;
   targetObjectsOf: Rdf.Property;
   targetSubjectsOf: Rdf.Property;
+  xone: Array<Sh.Shape>;
 }
 
 export function ShapeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class ShapeClass extends Rdfs.ResourceMixin(Resource) implements Shape {
+    @property.resource({ values: 'list', as: [ShapeMixin] })
+    and!: Array<Sh.Shape>;
+    @property({ values: 'list' })
+    in!: Array<RDF.Term>;
+    @property.resource({ values: 'list', as: [ShapeMixin] })
+    or!: Array<Sh.Shape>;
     @property.resource({ values: 'array', implicitTypes: [sh.PropertyShape] })
     property!: Array<Sh.PropertyShape>;
     @property.resource({ implicitTypes: [sh.Rule] })
@@ -41,6 +51,8 @@ export function ShapeMixin<Base extends Constructor>(Resource: Base) {
     targetObjectsOf!: Rdf.Property;
     @property.resource({ as: [Rdf.PropertyMixin] })
     targetSubjectsOf!: Rdf.Property;
+    @property.resource({ values: 'list', as: [ShapeMixin] })
+    xone!: Array<Sh.Shape>;
   }
   return ShapeClass
 }
