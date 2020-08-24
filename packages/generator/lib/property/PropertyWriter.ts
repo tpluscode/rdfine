@@ -52,8 +52,12 @@ export class PropertyWriter {
       this.__context.log.debug('Generating Property %s => %s: %s', prop.term.value, prop.name, type)
     }
 
-    if (prop.values) {
-      type = `Array<${type}>`
+    if (prop.values?.includes('list') || prop.values?.includes('array')) {
+      if (prop.values?.includes('single')) {
+        type = `${type} | Array<${type}>`
+      } else {
+        type = `Array<${type}>`
+      }
     }
 
     this.__interface.addProperty({
@@ -93,7 +97,11 @@ export class PropertyWriter {
     }
 
     if (prop.values) {
-      decoratorOptions.push(`values: '${prop.values}'`)
+      if (prop.values.length === 1) {
+        decoratorOptions.push(`values: '${prop.values}'`)
+      } else {
+        decoratorOptions.push(`values: [${prop.values.map(v => `'${v}'`).join(', ')}]`)
+      }
     }
 
     if (prop.semantics === 'strict' && prop.range.length === 1) {

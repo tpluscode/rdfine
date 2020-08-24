@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -12,7 +13,7 @@ export interface PropertyShape extends Sh.Shape, RdfResource {
   description: RDF.Term;
   group: Sh.PropertyGroup;
   name: RDF.Term;
-  path: Rdfs.Resource;
+  path: Rdfs.Resource | Array<Rdfs.Resource>;
 }
 
 export function PropertyShapeMixin<Base extends Constructor>(Resource: Base) {
@@ -26,8 +27,8 @@ export function PropertyShapeMixin<Base extends Constructor>(Resource: Base) {
     group!: Sh.PropertyGroup;
     @property()
     name!: RDF.Term;
-    @property.resource({ as: [Rdfs.ResourceMixin] })
-    path!: Rdfs.Resource;
+    @property.resource({ values: ['list', 'single'], as: [Rdfs.ResourceMixin] })
+    path!: Rdfs.Resource | Array<Rdfs.Resource>;
   }
   return PropertyShapeClass
 }

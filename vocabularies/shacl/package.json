@@ -28,10 +28,14 @@
     "properties": {
       "property": {
         "values": "array"
+      },
+      "path": {
+        "values": ["list", "single"]
       }
     }
   },
   "dependencies": {
+    "@rdf-esm/data-model": "^0.5.3",
     "@rdfine/owl": "^0.2.8",
     "@rdfine/rdf": "^0.3.8",
     "@rdfine/rdfs": "^0.3.8",

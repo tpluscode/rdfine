@@ -6,6 +6,8 @@ import { Context } from '../index'
 import { nameOf } from '../util/nameOf'
 import { Range } from './index'
 
+type PropertyReturnKind = 'array' | 'list' | 'single'
+
 export interface JavascriptProperty {
   semantics: 'strict' | 'loose' | undefined
   name: string
@@ -14,7 +16,7 @@ export interface JavascriptProperty {
   termName: string
   prefixedTerm: string
   type: 'resource' | 'term' | 'literal'
-  values?: 'array' | 'list'
+  values?: PropertyReturnKind[]
 }
 
 function groupRangeTypes(range: Range[], types: TypeMetaCollection, { log }: Context) {
@@ -62,7 +64,7 @@ export function * toJavascriptProperties(prop: SingleContextClownface, range: Ra
 
   const override = context.properties[prop.term.value]
   if (override && override.values) {
-    baseProperty.values = override.values
+    baseProperty.values = Array.isArray(override.values) ? override.values : [override.values]
   }
 
   if (ranges.resource.length) {

@@ -28,7 +28,7 @@ export interface Context {
 }
 
 type PropertyOverrides = Record<string, {
-  values?: 'array' | 'list'
+  values?: 'array' | 'list' | 'single' | Array<'array' | 'list' | 'single'>
 }>
 
 export interface ModuleStrategy {
