@@ -112,6 +112,30 @@ describe('decorator', () => {
         expect(() => instance.children).toThrow()
       })
 
+      it('does not throw for multiple values when allowed', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          @prefix schema: <${prefixes.schema}> .
+          
+          ex:res schema:children ex:Hansel, ex:Gretel .
+        `)
+        class Resource extends RdfResource {
+          @property({ path: schema.children, values: ['single', 'array'] })
+          children?: Literal | Literal[]
+        }
+
+        // when
+        const { children } = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(children).toBeInstanceOf(Array)
+      })
+
       it('return array when annotated', async () => {
         // given
         const dataset = await parse(`
@@ -408,6 +432,52 @@ describe('decorator', () => {
 
         // then
         expect(() => instance.friend).toThrow()
+      })
+
+      it('does not throw when rdf list is allowed', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:res foaf:knows ( ex:Will ex:Joe ex:Sindy ) .
+        `)
+        class Resource extends RdfResource {
+          @property({ path: foaf.knows, values: ['single', 'list'] })
+          friends!: Term | Term[]
+        }
+
+        // when
+        const { friends } = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(friends).toBeInstanceOf(Array)
+      })
+
+      it('returns list elements when allowed values are array or list', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:res foaf:knows ( ex:Will ex:Joe ex:Sindy ) .
+        `)
+        class Resource extends RdfResource {
+          @property({ path: foaf.knows, values: ['list', 'array'] })
+          friends!: Term[]
+        }
+
+        // when
+        const { friends } = new Resource({
+          dataset,
+          term: ex.res,
+        })
+
+        // then
+        expect(friends.length).toBe(3)
       })
     })
 
