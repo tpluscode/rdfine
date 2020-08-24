@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.3.0
+
+### Minor Changes
+
+- bbf822f: Generating properties which can be single value or list
+
+### Patch Changes
+
+- aa90114: Added properties for SHACL List-values predicates
+- Updated dependencies [c1e1e19]
+  - @tpluscode/rdfine@0.4.24
+
 ## 0.2.8
 
 ### Patch Changes

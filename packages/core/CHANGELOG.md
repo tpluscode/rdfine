@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.4.24
+
+### Patch Changes
+
+- c1e1e19: Allow properties to return both arrays/lists as well as single values
+
 ## 0.4.23
 
 ### Patch Changes

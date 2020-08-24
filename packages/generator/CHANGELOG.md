@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.3.4
+
+### Patch Changes
+
+- bbf822f: Generating properties which can be single value or list
+
 ## 0.3.3
 
 ### Patch Changes
