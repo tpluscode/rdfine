@@ -26,17 +26,12 @@ export class EnumerationModule implements GeneratedModule {
       moduleSpecifier: './lib/namespace',
     })
 
-    enumFile.addTypeAlias({
-      name: this.type.name,
-      type: 'NamedNode',
-      isExported: true,
-    })
-
     const enumeration = enumFile.addExportAssignment({
       expression: '{}',
       isExportEquals: false,
     }).getExpression() as ObjectLiteralExpression
 
+    let enumerationType = ''
     this.node.in(rdf.type)
       .forEach(enumMember => {
         const memberType = types.get(enumMember)
@@ -46,11 +41,26 @@ export class EnumerationModule implements GeneratedModule {
         }
 
         context.log.debug('Adding enum member %s', memberType.prefixedName)
+
+        const nodeType = `NamedNode<'${enumMember.value}'>`
         enumeration.addPropertyAssignment({
           name: memberType.termName,
           initializer: memberType.prefixedName,
+          trailingTrivia: ` as ${nodeType}`,
         })
+
+        if (enumerationType === '') {
+          enumerationType = `\n${nodeType}`
+        } else {
+          enumerationType += `\n| ${nodeType}`
+        }
       })
+
+    enumFile.addTypeAlias({
+      name: this.type.name,
+      type: enumerationType || 'NamedNode',
+      isExported: true,
+    })
 
     return {
       mainModuleExport: this.type.name,

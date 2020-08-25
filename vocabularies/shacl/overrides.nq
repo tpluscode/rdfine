@@ -64,3 +64,5 @@
 <http://www.w3.org/ns/shacl#lessThanOrEquals> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/shacl#PropertyShape> .
 
 <http://www.w3.org/ns/shacl#labelTemplate> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+
+<http://www.w3.org/ns/shacl#NodeKind> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://schema.org/Enumeration> .

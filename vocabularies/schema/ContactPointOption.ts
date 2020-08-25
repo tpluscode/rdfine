@@ -1,9 +1,11 @@
 import { NamedNode } from 'rdf-js';
 import { schema } from './lib/namespace';
 
-export type ContactPointOption = NamedNode;
-
 export default {
-  HearingImpairedSupported: schema.HearingImpairedSupported,
-  TollFree: schema.TollFree,
+  HearingImpairedSupported: schema.HearingImpairedSupported as NamedNode<'http://schema.org/HearingImpairedSupported'>,
+  TollFree: schema.TollFree as NamedNode<'http://schema.org/TollFree'>,
 };
+
+export type ContactPointOption =
+  NamedNode<'http://schema.org/HearingImpairedSupported'>
+  | NamedNode<'http://schema.org/TollFree'>;

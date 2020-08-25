@@ -1,10 +1,13 @@
 import { NamedNode } from 'rdf-js';
 import { schema } from './lib/namespace';
 
-export type ItemListOrderType = NamedNode;
-
 export default {
-  ItemListOrderAscending: schema.ItemListOrderAscending,
-  ItemListOrderDescending: schema.ItemListOrderDescending,
-  ItemListUnordered: schema.ItemListUnordered,
+  ItemListOrderAscending: schema.ItemListOrderAscending as NamedNode<'http://schema.org/ItemListOrderAscending'>,
+  ItemListOrderDescending: schema.ItemListOrderDescending as NamedNode<'http://schema.org/ItemListOrderDescending'>,
+  ItemListUnordered: schema.ItemListUnordered as NamedNode<'http://schema.org/ItemListUnordered'>,
 };
+
+export type ItemListOrderType =
+  NamedNode<'http://schema.org/ItemListOrderAscending'>
+  | NamedNode<'http://schema.org/ItemListOrderDescending'>
+  | NamedNode<'http://schema.org/ItemListUnordered'>;

@@ -1,6 +1,6 @@
 import { NamedNode } from 'rdf-js';
 import { schema } from './lib/namespace';
 
-export type LockerDelivery = NamedNode;
-
 export default {};
+
+export type LockerDelivery = NamedNode;

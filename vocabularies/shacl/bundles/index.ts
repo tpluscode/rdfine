@@ -9,7 +9,6 @@ export { JSRuleBundle } from './JSRule';
 export { JSTargetBundle } from './JSTarget';
 export { JSTargetTypeBundle } from './JSTargetType';
 export { JSValidatorBundle } from './JSValidator';
-export { NodeKindBundle } from './NodeKind';
 export { NodeShapeBundle } from './NodeShape';
 export { ParameterBundle } from './Parameter';
 export { ParameterizableBundle } from './Parameterizable';

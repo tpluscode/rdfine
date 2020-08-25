@@ -17,7 +17,7 @@ export function NodeShapeMixin<Base extends Constructor>(Resource: Base) {
   class NodeShapeClass extends ShapeMixin(Resource) implements NodeShape {
     @property.resource({ as: [NodeShapeMixin] })
     node!: Sh.NodeShape;
-    @property.resource({ implicitTypes: [sh.NodeKind] })
+    @property()
     nodeKind!: Sh.NodeKind;
   }
   return NodeShapeClass

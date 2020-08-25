@@ -43,4 +43,28 @@ describe('EnumerationModule', () => {
     // then
     expect(project.getSourceFile('./Enum.ts')).toMatchSnapshot()
   })
+
+  it('uses plain NamedNode for enumerations without members', () => {
+    // given
+    const types = new FakeTypeCollection([
+    ])
+
+    const enumeration = graph.node(ex.Enum)
+      .addIn(rdf.type, [ex.Member1, ex.Member2])
+    const module = new EnumerationModule(enumeration, {
+      name: 'Enum',
+      module: './Enum',
+      qualifiedName: 'Ex.Enum',
+      type: 'Enumeration',
+    })
+
+    // when
+    module.writeModule(project, types, {
+      log: fakeLog(),
+      prefix: 'ex',
+    })
+
+    // then
+    expect(project.getSourceFile('./Enum.ts')).toMatchSnapshot()
+  })
 })

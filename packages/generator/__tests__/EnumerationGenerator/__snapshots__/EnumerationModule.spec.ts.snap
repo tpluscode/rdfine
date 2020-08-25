@@ -1,13 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`EnumerationModule uses plain NamedNode for enumerations without members: toMatchSnapshot 1`] = `
+"import { NamedNode } from \\"rdf-js\\";
+import { ex } from \\"./lib/namespace\\";
+
+export default {};
+
+export type Enum = NamedNode;
+"
+`;
+
 exports[`EnumerationModule writes a module with enumeration members: toMatchSnapshot 1`] = `
 "import { NamedNode } from \\"rdf-js\\";
 import { ex } from \\"./lib/namespace\\";
 
-export type Enum = NamedNode;
-
 export default {
-    Member1: ex.Member1
+    Member1: ex.Member1 as NamedNode<'http://example.com/Member1'>
 };
+
+export type Enum = 
+    NamedNode<'http://example.com/Member1'>;
 "
 `;
