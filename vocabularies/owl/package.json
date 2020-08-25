@@ -12,6 +12,10 @@
     "./bundles": {
       "require": "./bundles/index.js",
       "import": "./bundles/index.mjs"
+    },
+    "./lib/namespace": {
+      "require": "./lib/namespace.js",
+      "import": "./lib/namespace.mjs"
     }
   },
   "scripts": {
