@@ -10,7 +10,7 @@ import * as Rdfs from '@rdfine/rdfs';
 export interface AbstractResult extends Rdfs.Resource, RdfResource {
   detail: Sh.AbstractResult;
   focusNode: RDF.Term;
-  resultMessage: RDF.Term;
+  resultMessage: string;
   resultPath: Rdfs.Resource;
   resultSeverity: Sh.Severity;
   sourceConstraint: RDF.Term;
@@ -26,8 +26,8 @@ export function AbstractResultMixin<Base extends Constructor>(Resource: Base) {
     detail!: Sh.AbstractResult;
     @property()
     focusNode!: RDF.Term;
-    @property()
-    resultMessage!: RDF.Term;
+    @property.literal()
+    resultMessage!: string;
     @property.resource({ as: [Rdfs.ResourceMixin] })
     resultPath!: Rdfs.Resource;
     @property.resource({ implicitTypes: [sh.Severity] })

@@ -26,7 +26,7 @@ describe('Shape', () => {
       const shape = new ShapeMixin.Class(graph)
 
       // then
-      expect(shape.property[0].name).toEqual(RDF.literal('Foo'))
+      expect(shape.property[0].name).toEqual('Foo')
     })
   })
 

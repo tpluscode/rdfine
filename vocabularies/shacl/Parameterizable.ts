@@ -8,15 +8,15 @@ import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
 export interface Parameterizable extends Rdfs.Resource, RdfResource {
-  labelTemplate: RDF.Term;
+  labelTemplate: string;
   parameter: Sh.Parameter;
 }
 
 export function ParameterizableMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class ParameterizableClass extends Rdfs.ResourceMixin(Resource) implements Parameterizable {
-    @property()
-    labelTemplate!: RDF.Term;
+    @property.literal()
+    labelTemplate!: string;
     @property.resource({ implicitTypes: [sh.Parameter] })
     parameter!: Sh.Parameter;
   }
