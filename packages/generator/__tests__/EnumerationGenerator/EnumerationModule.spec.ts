@@ -23,6 +23,7 @@ describe('EnumerationModule', () => {
     // given
     const types = new FakeTypeCollection([
       [ex.Member1, { type: 'EnumerationMember', termName: 'Member1', prefixedName: 'ex.Member1' }],
+      [ex.Member2, { type: 'EnumerationMember', termName: 'Member2', prefixedName: 'ex.Member2' }],
     ])
 
     const enumeration = graph.node(ex.Enum)

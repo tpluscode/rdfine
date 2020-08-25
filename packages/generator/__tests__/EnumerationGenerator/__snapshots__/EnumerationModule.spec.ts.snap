@@ -15,10 +15,12 @@ exports[`EnumerationModule writes a module with enumeration members: toMatchSnap
 import { ex } from \\"./lib/namespace\\";
 
 export default {
-    Member1: ex.Member1 as NamedNode<'http://example.com/Member1'>
+    Member1: ex.Member1 as NamedNode<'http://example.com/Member1'>,
+    Member2: ex.Member2 as NamedNode<'http://example.com/Member2'>
 };
 
 export type Enum = 
-    NamedNode<'http://example.com/Member1'>;
+    NamedNode<'http://example.com/Member1'>
+    | NamedNode<'http://example.com/Member2'>;
 "
 `;
