@@ -10,6 +10,8 @@ import * as Rdf from '@rdfine/rdf';
 
 export interface Shape extends Rdfs.Resource, RdfResource {
   and: Array<Sh.Shape>;
+  class: Rdfs.Class;
+  closed: boolean;
   in: Array<RDF.Term>;
   or: Array<Sh.Shape>;
   property: Array<Sh.PropertyShape>;
@@ -29,6 +31,10 @@ export function ShapeMixin<Base extends Constructor>(Resource: Base) {
   class ShapeClass extends Rdfs.ResourceMixin(Resource) implements Shape {
     @property.resource({ values: 'list', as: [ShapeMixin] })
     and!: Array<Sh.Shape>;
+    @property.resource({ as: [Rdfs.ClassMixin] })
+    class!: Rdfs.Class;
+    @property.literal({ type: Boolean })
+    closed!: boolean;
     @property({ values: 'list' })
     in!: Array<RDF.Term>;
     @property.resource({ values: 'list', as: [ShapeMixin] })
