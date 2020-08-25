@@ -29,6 +29,7 @@ export interface PropertyShape extends Sh.Shape, RdfResource {
   minInclusive: number;
   minLength: number;
   name: string;
+  order: number;
   path: Rdfs.Resource | Array<Rdfs.Resource>;
   pattern: string;
   uniqueLang: boolean;
@@ -75,6 +76,8 @@ export function PropertyShapeMixin<Base extends Constructor>(Resource: Base) {
     minLength!: number;
     @property.literal()
     name!: string;
+    @property.literal({ type: Number })
+    order!: number;
     @property.resource({ values: ['list', 'single'], as: [Rdfs.ResourceMixin] })
     path!: Rdfs.Resource | Array<Rdfs.Resource>;
     @property.literal()

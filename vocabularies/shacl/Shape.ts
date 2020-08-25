@@ -13,6 +13,8 @@ export interface Shape extends Rdfs.Resource, RdfResource {
   class: Rdfs.Class;
   closed: boolean;
   in: Array<RDF.Term>;
+  node: Sh.NodeShape;
+  nodeKind: Sh.NodeKind;
   or: Array<Sh.Shape>;
   property: Array<Sh.PropertyShape>;
   rule: Sh.Rule;
@@ -37,6 +39,10 @@ export function ShapeMixin<Base extends Constructor>(Resource: Base) {
     closed!: boolean;
     @property({ values: 'list' })
     in!: Array<RDF.Term>;
+    @property.resource({ implicitTypes: [sh.NodeShape] })
+    node!: Sh.NodeShape;
+    @property()
+    nodeKind!: Sh.NodeKind;
     @property.resource({ values: 'list', as: [ShapeMixin] })
     or!: Array<Sh.Shape>;
     @property.resource({ values: 'array', implicitTypes: [sh.PropertyShape] })

@@ -55,9 +55,13 @@
 
 <http://www.w3.org/ns/shacl#class> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/shacl#Shape> .
 
-<http://www.w3.org/ns/shacl#nodeKind> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://www.w3.org/ns/shacl#nodeKind> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/shacl#Shape> .
 
-<http://www.w3.org/ns/shacl#node> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://www.w3.org/ns/shacl#node> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/shacl#Shape> .
+
+<http://www.w3.org/ns/shacl#order> <http://schema.org/domainIncludes> <http://www.w3.org/ns/shacl#PropertyShape> .
+<http://www.w3.org/ns/shacl#order> <http://schema.org/domainIncludes> <http://www.w3.org/ns/shacl#PropertyGroup> .
+<http://www.w3.org/ns/shacl#order> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#integer> .
 
 <http://www.w3.org/ns/shacl#disjoint> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/shacl#PropertyShape> .
 <http://www.w3.org/ns/shacl#lessThan> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/shacl#PropertyShape> .

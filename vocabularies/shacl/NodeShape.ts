@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
@@ -8,17 +8,11 @@ import type * as Sh from '.';
 import { ShapeMixin } from './Shape';
 
 export interface NodeShape extends Sh.Shape, RdfResource {
-  node: Sh.NodeShape;
-  nodeKind: Sh.NodeKind;
 }
 
 export function NodeShapeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class NodeShapeClass extends ShapeMixin(Resource) implements NodeShape {
-    @property.resource({ as: [NodeShapeMixin] })
-    node!: Sh.NodeShape;
-    @property()
-    nodeKind!: Sh.NodeKind;
   }
   return NodeShapeClass
 }

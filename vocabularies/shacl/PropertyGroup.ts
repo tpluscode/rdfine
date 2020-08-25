@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './lib/namespace';
@@ -8,11 +8,14 @@ import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
 export interface PropertyGroup extends Rdfs.Resource, RdfResource {
+  order: number;
 }
 
 export function PropertyGroupMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class PropertyGroupClass extends Rdfs.ResourceMixin(Resource) implements PropertyGroup {
+    @property.literal({ type: Number })
+    order!: number;
   }
   return PropertyGroupClass
 }
