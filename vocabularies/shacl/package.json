@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/shacl",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",
@@ -73,7 +73,7 @@
     "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
-    "@rdfine/generator": "^0.3.4",
+    "@rdfine/generator": "^0.3.5",
     "@rdfjs/data-model": "^1.1.2",
     "@rdfjs/dataset": "^1.0.1",
     "@types/clownface": "^0.12.13",

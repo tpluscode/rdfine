@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.4.9
+
+### Patch Changes
+
+- 4a53697: Enumerations are now generated as typed named nodes
+
 ## 0.4.8
 
 ### Patch Changes

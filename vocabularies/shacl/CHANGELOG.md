@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.4.0
+
+### Minor Changes
+
+- e2bed16: Added most missing properties and adjusted some return types
+
+### Patch Changes
+
+- 4a53697: Enumerations are now generated as typed named nodes
+
 ## 0.3.0
 
 ### Minor Changes
