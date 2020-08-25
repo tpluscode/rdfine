@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.4.1
+
+### Patch Changes
+
+- 57f6781: Missing sh:order property
+- 57f6781: sh:node and sh:nodeKind moved to base class
+
 ## 0.4.0
 
 ### Minor Changes
