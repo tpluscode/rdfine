@@ -1,12 +1,17 @@
 import { NamedNode } from 'rdf-js';
 import { schema } from './lib/namespace';
 
-export type PaymentStatusType = NamedNode;
-
 export default {
-  PaymentAutomaticallyApplied: schema.PaymentAutomaticallyApplied,
-  PaymentComplete: schema.PaymentComplete,
-  PaymentDeclined: schema.PaymentDeclined,
-  PaymentDue: schema.PaymentDue,
-  PaymentPastDue: schema.PaymentPastDue,
+  PaymentAutomaticallyApplied: schema.PaymentAutomaticallyApplied as NamedNode<'http://schema.org/PaymentAutomaticallyApplied'>,
+  PaymentComplete: schema.PaymentComplete as NamedNode<'http://schema.org/PaymentComplete'>,
+  PaymentDeclined: schema.PaymentDeclined as NamedNode<'http://schema.org/PaymentDeclined'>,
+  PaymentDue: schema.PaymentDue as NamedNode<'http://schema.org/PaymentDue'>,
+  PaymentPastDue: schema.PaymentPastDue as NamedNode<'http://schema.org/PaymentPastDue'>,
 };
+
+export type PaymentStatusType =
+  NamedNode<'http://schema.org/PaymentAutomaticallyApplied'>
+  | NamedNode<'http://schema.org/PaymentComplete'>
+  | NamedNode<'http://schema.org/PaymentDeclined'>
+  | NamedNode<'http://schema.org/PaymentDue'>
+  | NamedNode<'http://schema.org/PaymentPastDue'>;

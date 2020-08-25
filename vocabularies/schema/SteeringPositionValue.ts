@@ -1,9 +1,11 @@
 import { NamedNode } from 'rdf-js';
 import { schema } from './lib/namespace';
 
-export type SteeringPositionValue = NamedNode;
-
 export default {
-  LeftHandDriving: schema.LeftHandDriving,
-  RightHandDriving: schema.RightHandDriving,
+  LeftHandDriving: schema.LeftHandDriving as NamedNode<'http://schema.org/LeftHandDriving'>,
+  RightHandDriving: schema.RightHandDriving as NamedNode<'http://schema.org/RightHandDriving'>,
 };
+
+export type SteeringPositionValue =
+  NamedNode<'http://schema.org/LeftHandDriving'>
+  | NamedNode<'http://schema.org/RightHandDriving'>;

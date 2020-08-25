@@ -1,9 +1,11 @@
 import { NamedNode } from 'rdf-js';
 import { schema } from './lib/namespace';
 
-export type GenderType = NamedNode;
-
 export default {
-  Female: schema.Female,
-  Male: schema.Male,
+  Female: schema.Female as NamedNode<'http://schema.org/Female'>,
+  Male: schema.Male as NamedNode<'http://schema.org/Male'>,
 };
+
+export type GenderType =
+  NamedNode<'http://schema.org/Female'>
+  | NamedNode<'http://schema.org/Male'>;

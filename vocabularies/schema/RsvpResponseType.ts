@@ -1,10 +1,13 @@
 import { NamedNode } from 'rdf-js';
 import { schema } from './lib/namespace';
 
-export type RsvpResponseType = NamedNode;
-
 export default {
-  RsvpResponseMaybe: schema.RsvpResponseMaybe,
-  RsvpResponseNo: schema.RsvpResponseNo,
-  RsvpResponseYes: schema.RsvpResponseYes,
+  RsvpResponseMaybe: schema.RsvpResponseMaybe as NamedNode<'http://schema.org/RsvpResponseMaybe'>,
+  RsvpResponseNo: schema.RsvpResponseNo as NamedNode<'http://schema.org/RsvpResponseNo'>,
+  RsvpResponseYes: schema.RsvpResponseYes as NamedNode<'http://schema.org/RsvpResponseYes'>,
 };
+
+export type RsvpResponseType =
+  NamedNode<'http://schema.org/RsvpResponseMaybe'>
+  | NamedNode<'http://schema.org/RsvpResponseNo'>
+  | NamedNode<'http://schema.org/RsvpResponseYes'>;
