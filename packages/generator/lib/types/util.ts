@@ -1,8 +1,8 @@
-import { SingleContextClownface } from 'clownface'
+import { GraphPointer } from 'clownface'
 import { TypeMap } from '../types'
 import { rdf, rdfs, schema } from '@tpluscode/rdf-ns-builders'
 
-export function isDatatype(term: SingleContextClownface, typeMappings: TypeMap): boolean {
+export function isDatatype(term: GraphPointer, typeMappings: TypeMap): boolean {
   if (term.has(rdf.type, rdfs.Datatype).values.length) {
     return true
   }
@@ -22,7 +22,7 @@ export function isDatatype(term: SingleContextClownface, typeMappings: TypeMap):
   return false
 }
 
-export function isEnumerationType(term: SingleContextClownface) {
+export function isEnumerationType(term: GraphPointer) {
   if (term.has(rdfs.subClassOf, schema.Enumeration).values.length > 0) {
     return true
   }

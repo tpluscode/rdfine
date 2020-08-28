@@ -1,4 +1,4 @@
-import cf, { Clownface, SingleContextClownface } from 'clownface'
+import cf, { AnyPointer, GraphPointer } from 'clownface'
 import { Debugger } from 'debug'
 import { Stream } from 'rdf-js'
 import rdf from 'rdf-ext'
@@ -16,7 +16,7 @@ import { expandMapKeys } from './util/overrideMap'
 import { DatatypeName } from './types/wellKnownDatatypes'
 
 export interface Context {
-  vocabulary: Clownface
+  vocabulary: AnyPointer
   prefix: string
   defaultExport: string
   log: {
@@ -36,7 +36,7 @@ export interface ModuleStrategy {
 }
 
 export interface GeneratedModule {
-  node: SingleContextClownface
+  node: GraphPointer
   type: ResourceType | EnumerationType
   writeModule(project: Project, types: TypeMetaCollection, context: Context): {
     mainModuleExport?: string

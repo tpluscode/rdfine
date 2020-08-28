@@ -11,4 +11,7 @@ module.exports = {
   setupFilesAfterEnv: [
     './__tests__/helpers/matchers.ts',
   ],
+  moduleNameMapper: {
+    '@rdf-esm/(.*)': '@rdfjs/$1',
+  },
 }

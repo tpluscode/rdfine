@@ -1,13 +1,13 @@
 import { NamedNode } from 'rdf-js'
-import RDF from '@rdfjs/data-model'
-import cf, { SingleContextClownface } from 'clownface'
-import { NamespaceBuilder } from '@rdfjs/namespace'
+import RDF from '@rdf-esm/data-model'
+import cf, { GraphPointer } from 'clownface'
+import type { NamespaceBuilder } from '@rdf-esm/namespace'
 
 export type PropRef = string | NamedNode
 export type EdgeTraversalFactory = (ns: NamespaceBuilder) => EdgeTraversal
 
 export interface EdgeTraversal {
-  (subject: SingleContextClownface): SingleContextClownface[]
+  (subject: GraphPointer): GraphPointer[]
   predicate: NamedNode
   crossesGraphBoundaries: boolean
 }
@@ -43,7 +43,7 @@ function sameGraph(prop: NamedNode): EdgeTraversal {
 
 function anyGraph(prop: NamedNode): EdgeTraversal {
   const edge: EdgeTraversal = subject => {
-    const graphNodes = new Map<string, SingleContextClownface>()
+    const graphNodes = new Map<string, GraphPointer>()
 
     subject.out(prop).forEach(node => {
       const quadsWithSubject = subject.dataset.match(node.term)
@@ -52,6 +52,8 @@ function anyGraph(prop: NamedNode): EdgeTraversal {
 
       allQuads.forEach((quad) => {
         if (!graphNodes.has(quad.graph.value)) {
+          // TODO: when clownface gets graph feature
+          // graphNodes.set(quad.graph.value, subject.from(quad.graph))
           graphNodes.set(quad.graph.value, cf({
             dataset: subject.dataset,
             term: quad.subject,

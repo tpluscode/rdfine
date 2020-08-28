@@ -2,7 +2,7 @@ import { RdfResource } from '../../../RdfResource'
 import { Literal, NamedNode, Term } from 'rdf-js'
 import { fromLiteral } from '../../conversion'
 import { xsd } from '@tpluscode/rdf-ns-builders'
-import rdf from '@rdfjs/data-model'
+import rdf from '@rdf-esm/data-model'
 import type { AccessorOptions, ObjectOrFactory } from '.'
 import { propertyDecorator } from '.'
 

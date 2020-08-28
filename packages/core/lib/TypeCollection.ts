@@ -1,8 +1,8 @@
 import { DatasetCore, Term } from 'rdf-js'
-import cf, { SingleContextClownface } from 'clownface'
+import cf, { GraphPointer } from 'clownface'
 import type { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import RDF from '@rdfjs/data-model'
+import RDF from '@rdf-esm/data-model'
 import { onlyUnique } from './filter'
 import * as compare from './compare'
 
@@ -27,10 +27,10 @@ export interface TypeCollection<D extends DatasetCore> extends Set<RdfResource<D
 export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
   private readonly __resource: RdfResource<D>
   private readonly __allGraphs: boolean
-  private __graph: SingleContextClownface<Term, D>
+  private __graph: GraphPointer<Term, D>
 
   add(value: RdfResource<D> | ResourceIdentifier | string): this {
-    this.__resource._selfGraph.addOut(rdf.type, getNode(value))
+    this.__resource.pointer.addOut(rdf.type, getNode(value))
     return this
   }
 
@@ -83,14 +83,19 @@ export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
   public constructor(resource: RdfResource<D>, allGraphs = false) {
     this.__resource = resource
     this.__allGraphs = allGraphs
-    this.__graph = allGraphs ? cf({ dataset: resource._selfGraph.dataset, term: resource._selfGraph.term, graph: undefined }) : resource._selfGraph
+    // TODO: when clownface gets graph feature
+    // this.__graph = allGraphs ? resource.pointer.fromUnionGraph() : resource.pointer
+    this.__graph = allGraphs ? cf({ dataset: resource.pointer.dataset, term: resource.pointer.term, graph: undefined }) : resource.pointer
   }
 
   private get __values() {
     const graphId = !this.__allGraphs ? this.__resource._graphId : null
+    // TODO: when clownface gets graph feature
+    // const types: MultiPointer<Term, D> = this.__resource.pointer.from(graphId).out(rdf.type)
+
     const typeQuads = this.__graph.dataset.match(this.__resource.id, rdf.type, null, graphId)
 
-    return [...typeQuads]
+    const types = [...typeQuads]
       .map(quad => {
         return cf({
           dataset: this.__graph.dataset,
@@ -98,6 +103,8 @@ export default class <D extends DatasetCore> implements Set<RdfResource<D>> {
           graph: quad.graph,
         })
       })
+
+    return types
       .map(type => this.__resource._create<RdfResource<D>>(type))
       .filter(onlyUnique(compare.resources(false)))
   }

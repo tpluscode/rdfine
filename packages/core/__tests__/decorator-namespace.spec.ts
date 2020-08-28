@@ -1,4 +1,4 @@
-import builder from '@rdfjs/namespace'
+import builder from '@rdf-esm/namespace'
 import { prefixes } from '@zazuko/rdf-vocabularies'
 import cf from 'clownface'
 import $rdf from 'rdf-ext'

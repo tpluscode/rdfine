@@ -1,7 +1,7 @@
-import cf, { SingleContextClownface } from 'clownface'
+import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import namespace from '@rdfjs/namespace'
-import { literal } from '@rdfjs/data-model'
+import namespace from '@rdf-esm/namespace'
+import { literal } from '@rdf-esm/data-model'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { createProxy } from '../lib/proxy'
 import RdfResourceImpl, { RdfResource } from '../RdfResource'
@@ -11,7 +11,7 @@ import { property, ResourceIndexer } from '../index'
 const ex = namespace('http://example.com/')
 
 describe('proxy', () => {
-  let node: SingleContextClownface<NamedNode, DatasetExt>
+  let node: GraphPointer<NamedNode, DatasetExt>
 
   beforeEach(() => {
     node = cf({ dataset: $rdf.dataset() })

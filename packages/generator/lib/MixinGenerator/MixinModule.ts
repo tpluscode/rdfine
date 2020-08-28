@@ -1,6 +1,6 @@
 import { Project, SourceFile, VariableDeclarationKind } from 'ts-morph'
 import { Context, GeneratedModule } from '../index'
-import { SingleContextClownface } from 'clownface'
+import { GraphPointer } from 'clownface'
 import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types'
 import { PropertyWriter } from '../property/PropertyWriter'
 import { JavascriptProperty } from '../property/JsProperties'
@@ -8,13 +8,13 @@ import { getSuperClasses } from './index'
 
 export class MixinModule implements GeneratedModule {
   type: ResourceType
-  node: SingleContextClownface;
+  node: GraphPointer;
   superClasses: Array<ResourceType | ExternalResourceType>
   properties: JavascriptProperty[]
   private namespaceImports: Record<string, string> = {}
   private mixinImports: Array<ResourceType | ExternalResourceType> = []
 
-  public constructor(clas: SingleContextClownface, type: ResourceType, superClasses: (ResourceType | ExternalResourceType)[], properties: JavascriptProperty[]) {
+  public constructor(clas: GraphPointer, type: ResourceType, superClasses: (ResourceType | ExternalResourceType)[], properties: JavascriptProperty[]) {
     this.node = clas
     this.type = type
     this.superClasses = superClasses

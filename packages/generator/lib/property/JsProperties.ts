@@ -1,4 +1,4 @@
-import { SingleContextClownface } from 'clownface'
+import { GraphPointer } from 'clownface'
 import { shrink } from '@zazuko/rdf-vocabularies'
 import { Term } from 'rdf-js'
 import { TypeMeta, TypeMetaCollection } from '../types'
@@ -49,7 +49,7 @@ function groupRangeTypes(range: Range[], types: TypeMetaCollection, { log }: Con
   return grouped
 }
 
-export function * toJavascriptProperties(prop: SingleContextClownface, range: Range[], types: TypeMetaCollection, context: Context): Iterable<JavascriptProperty> {
+export function * toJavascriptProperties(prop: GraphPointer, range: Range[], types: TypeMetaCollection, context: Context): Iterable<JavascriptProperty> {
   const ranges = groupRangeTypes(range, types, context)
   const baseProperty: Omit<JavascriptProperty, 'type' | 'range'> = {
     semantics: undefined,

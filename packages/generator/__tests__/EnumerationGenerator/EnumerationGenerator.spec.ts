@@ -1,4 +1,4 @@
-import cf, { Clownface } from 'clownface'
+import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
 import { findTermsToGenerate } from '../../lib/EnumerationGenerator'
@@ -6,7 +6,7 @@ import { FakeTypeCollection } from '../_helpers/FakeTypeCollection'
 import { ex } from '../_helpers/prefix'
 
 describe('EnumerationGenerator', () => {
-  let vocabulary: Clownface
+  let vocabulary: AnyPointer
 
   beforeEach(() => {
     vocabulary = cf({ dataset: $rdf.dataset() })
@@ -28,10 +28,10 @@ describe('EnumerationGenerator', () => {
     })
 
     // then
-    expect(result).toEqual(
+    expect(result.map(m => m.node.value)).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ node: vocabulary.node(ex.Enum1) }),
-        expect.objectContaining({ node: vocabulary.node(ex.Enum2) }),
+        vocabulary.node(ex.Enum1).value,
+        vocabulary.node(ex.Enum2).value,
       ]),
     )
   })

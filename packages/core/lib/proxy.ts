@@ -1,11 +1,11 @@
 import { Literal, Term } from 'rdf-js'
-import { SingleContextClownface } from 'clownface'
+import type { GraphPointer } from 'clownface'
 import type { RdfResource } from '../RdfResource'
 import * as rdfList from './rdf-list'
 import type { ResourceIndexer } from './ResourceFactory'
 
 function nodeToValue(target: RdfResource) {
-  const fromTerm = (obj: SingleContextClownface): any => {
+  const fromTerm = (obj: GraphPointer): any => {
     switch (obj.term.termType) {
       case 'BlankNode':
       case 'NamedNode':
@@ -64,11 +64,11 @@ export function createProxy<T extends RdfResource<any>>(resource: T): T & Resour
           return [...values, value.id]
         }, [] as Term[])
 
-      const predicate = target._selfGraph.namedNode(property.toString())
-      target._selfGraph.deleteOut(predicate)
+      const predicate = target.pointer.namedNode(property.toString())
+      target.pointer.deleteOut(predicate)
 
       if (values.length) {
-        target._selfGraph.addOut(predicate, valueNodes)
+        target.pointer.addOut(predicate, valueNodes)
       }
 
       return true

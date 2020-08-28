@@ -1,4 +1,4 @@
-import { SingleContextClownface } from 'clownface'
+import { GraphPointer } from 'clownface'
 import { NamedNode } from 'rdf-js'
 import { TypeMeta, TypeMetaCollection } from '../../lib/types'
 
@@ -9,18 +9,18 @@ export class FakeTypeCollection implements TypeMetaCollection {
     this.__map = new Map<string, any>(types.map(([key, value]) => ([key.value, value])))
   }
 
-  get(key: SingleContextClownface): (TypeMeta | undefined) {
+  get(key: GraphPointer): (TypeMeta | undefined) {
     return this.__map.get(key.value)
   }
 
-  getOrThrow(key: SingleContextClownface): TypeMeta {
+  getOrThrow(key: GraphPointer): TypeMeta {
     const found = this.get(key)
     if (found) return found
 
     throw new Error('Not found')
   }
 
-  set(key: SingleContextClownface, value: TypeMeta): TypeMetaCollection {
+  set(key: GraphPointer, value: TypeMeta): TypeMetaCollection {
     return this
   }
 }

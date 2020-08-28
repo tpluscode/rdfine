@@ -1,7 +1,7 @@
 import { shrink } from '@zazuko/rdf-vocabularies'
-import { SingleContextClownface } from 'clownface'
+import { GraphPointer } from 'clownface'
 
-export function nameOf(term: SingleContextClownface): string {
+export function nameOf(term: GraphPointer): string {
   const shrunk = shrink(term.value)
 
   return shrunk.split(':')[1]
@@ -9,15 +9,15 @@ export function nameOf(term: SingleContextClownface): string {
 
 /*
 export default {
-  mixin(term: SingleContextClownface) {
+  mixin(term: GraphPointer) {
     return `${nameOf(term)}Mixin`
   },
 
-  term(term: SingleContextClownface) {
+  term(term: GraphPointer) {
     return nameOf(term)
   },
 
-  'class'(term: SingleContextClownface) {
+  'class'(term: GraphPointer) {
     return `${nameOf(term)}Class`
   },
 }

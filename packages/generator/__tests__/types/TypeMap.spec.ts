@@ -1,6 +1,6 @@
 import $rdf from 'rdf-ext'
 import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
-import cf, { Clownface } from 'clownface'
+import cf, { AnyPointer } from 'clownface'
 import { TypeMap } from '../../lib/types/TypeMap'
 import { Context } from '../../lib'
 import { fakeLog } from '../_helpers/util'
@@ -9,7 +9,7 @@ import { ex } from '../_helpers/prefix'
 
 describe('TypeMap', () => {
   let context: Context
-  let vocabulary: Clownface
+  let vocabulary: AnyPointer
 
   beforeEach(() => {
     const dataset = $rdf.dataset()

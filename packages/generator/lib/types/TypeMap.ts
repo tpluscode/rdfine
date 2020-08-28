@@ -1,5 +1,5 @@
 import { NamedNode } from 'rdf-js'
-import { Clownface, SingleContextClownface } from 'clownface'
+import { AnyPointer, GraphPointer } from 'clownface'
 import { Context } from '../index'
 import { TypeMeta, TypeMetaCollection, TypeMetaFactory } from './index'
 
@@ -15,7 +15,7 @@ export class TypeMap implements TypeMetaCollection {
   private readonly __context: Context
   private readonly __factories: TypeMetaFactory[];
 
-  private get __graph(): Clownface {
+  private get __graph(): AnyPointer {
     return this.__context.vocabulary
   }
 
@@ -25,7 +25,7 @@ export class TypeMap implements TypeMetaCollection {
     this.__context = context
   }
 
-  get(key: SingleContextClownface<NamedNode>, noFallback = false): TypeMeta | undefined {
+  get(key: GraphPointer<NamedNode>, noFallback = false): TypeMeta | undefined {
     if (this.__excluded.includes(key.value)) {
       return undefined
     }
@@ -40,7 +40,7 @@ export class TypeMap implements TypeMetaCollection {
     return this.__map.get(key.value)
   }
 
-  set(key: SingleContextClownface, value: TypeMeta): this {
+  set(key: GraphPointer, value: TypeMeta): this {
     if (this.__map.has(key.value)) {
       throw new Error(`Type ${key} has already been added`)
     }
@@ -49,7 +49,7 @@ export class TypeMap implements TypeMetaCollection {
     return this
   }
 
-  getOrThrow(key: SingleContextClownface<NamedNode>) {
+  getOrThrow(key: GraphPointer<NamedNode>) {
     const type = this.get(key, true)
     if (type) {
       return type
@@ -58,7 +58,7 @@ export class TypeMap implements TypeMetaCollection {
     throw new Error(`Type ${key.value} not found`)
   }
 
-  private __create(term: SingleContextClownface<NamedNode>, noFallback: boolean): TypeMeta | null {
+  private __create(term: GraphPointer<NamedNode>, noFallback: boolean): TypeMeta | null {
     for (const create of this.__factories) {
       const found = create(term, this.__context)
       if (found) return found

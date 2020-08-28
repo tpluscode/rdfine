@@ -1,4 +1,4 @@
-import cf, { Clownface } from 'clownface'
+import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { rdf, rdfs, schema, xsd } from '@tpluscode/rdf-ns-builders'
 import { ex } from '../_helpers/prefix'
@@ -13,7 +13,7 @@ import {
 import * as factories from '../../lib/types/metaFactories'
 
 describe('meta factory', () => {
-  let graph: Clownface
+  let graph: AnyPointer
 
   beforeEach(() => {
     graph = cf({ dataset: $rdf.dataset() })
