@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/rdfs",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",
@@ -42,9 +42,9 @@
     }
   },
   "dependencies": {
-    "@rdfine/rdf": "^0.3.8",
+    "@rdfine/rdf": "^0.3.9",
     "@tpluscode/rdf-ns-builders": "^0.3.6",
-    "@tpluscode/rdfine": "^0.4.23"
+    "@tpluscode/rdfine": "^0.5.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.8.3",

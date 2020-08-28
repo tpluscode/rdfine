@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.0
+
+### Minor Changes
+
+- 98d991a: Update clownface, renamed pointer property
+
 ## 0.4.24
 
 ### Patch Changes

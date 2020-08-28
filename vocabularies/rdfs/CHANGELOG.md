@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.3.9
+
+### Patch Changes
+
+- 1f452df: Added export definition for namespace module
+- Updated dependencies [1f452df]
+- Updated dependencies [98d991a]
+  - @rdfine/rdf@0.3.9
+  - @tpluscode/rdfine@0.5.0
+
 ## 0.3.8
 
 ### Patch Changes
