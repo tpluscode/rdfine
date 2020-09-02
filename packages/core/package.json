@@ -14,6 +14,10 @@
     "./RdfResource": {
       "require": "./RdfResource.js",
       "import": "./RdfResource.mjs"
+    },
+    "./lib/TypeCollection": {
+      "require": "./lib/TypeCollection.js",
+      "import": "./lib/TypeCollection.mjs"
     }
   },
   "scripts": {
