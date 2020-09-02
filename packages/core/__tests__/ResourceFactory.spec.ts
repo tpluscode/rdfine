@@ -1,6 +1,7 @@
 import cf from 'clownface'
 import { foaf, schema } from '@tpluscode/rdf-ns-builders'
 import { turtle } from '@tpluscode/rdf-string'
+import $rdf from 'rdf-ext'
 import ResourceFactory, { Constructor } from '../lib/ResourceFactory'
 import { parse, vocabs } from './_helpers'
 import RdfResourceImpl from '../RdfResource'
@@ -87,5 +88,26 @@ describe('ResourceFactory', () => {
     // then
     expect(entity).toHaveProperty('foafName')
     expect(entity).toHaveProperty('schemaName')
+  })
+
+  it('returns correct type for changed base class in subsequent calls', () => {
+    // given
+    class Foo extends RdfResourceImpl {
+      get bar() {
+        return 'baz'
+      }
+    }
+
+    const term = cf({
+      dataset: $rdf.dataset(),
+      term: ex.res,
+    })
+
+    // when
+    factory.createEntity(term)
+    const entity = factory.createEntity(term, [Foo])
+
+    // then
+    expect(entity.bar).toBe('baz')
   })
 })

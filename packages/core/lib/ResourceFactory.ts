@@ -94,7 +94,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
   }
 
   private __getBaseClass(baseClass: Constructor, types: string[]) {
-    const cacheKey = types.toString()
+    const cacheKey = [baseClass.name, ...types].toString()
     const cached = this.__typeCache.get(cacheKey)
     if (cached) {
       return cached
