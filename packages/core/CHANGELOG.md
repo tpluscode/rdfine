@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.2
+
+### Patch Changes
+
+- 1abc238: Add export declaration for TypeCollection
+
 ## 0.5.1
 
 ### Patch Changes
