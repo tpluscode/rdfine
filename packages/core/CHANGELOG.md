@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.1
+
+### Patch Changes
+
+- a9e85e3: Add export of ResourceFactory
+
 ## 0.5.0
 
 ### Minor Changes
