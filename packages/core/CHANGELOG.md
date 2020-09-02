@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.3
+
+### Patch Changes
+
+- da8114f: Construct correct base class when overriding in factory call
+
 ## 0.5.2
 
 ### Patch Changes
