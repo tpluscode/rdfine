@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.4
+
+### Patch Changes
+
+- 6c016d1: Added support for xsd date/dateTime/time
+
 ## 0.5.3
 
 ### Patch Changes

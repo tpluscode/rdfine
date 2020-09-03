@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.3.12
+
+### Patch Changes
+
+- 6c016d1: Added datatype to IRI Template
+- Updated dependencies [6c016d1]
+  - @tpluscode/rdfine@0.5.4
+
 ## 0.3.11
 
 ### Patch Changes

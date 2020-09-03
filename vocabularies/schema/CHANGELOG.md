@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.4.11
+
+### Patch Changes
+
+- 6c016d1: Added support for xsd date/dateTime/time
+- Updated dependencies [6c016d1]
+  - @tpluscode/rdfine@0.5.4
+
 ## 0.4.10
 
 ### Patch Changes
