@@ -26,11 +26,11 @@ export function MessageMixin<Base extends Constructor>(Resource: Base) {
     bccRecipient!: Schema.ContactPoint | Schema.Organization | Schema.Person;
     @property.resource()
     ccRecipient!: Schema.ContactPoint | Schema.Organization | Schema.Person;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateRead!: Date;
-    @property.literal()
+    @property.literal({ type: Date })
     dateReceived!: Date;
-    @property.literal()
+    @property.literal({ type: Date })
     dateSent!: Date;
     @property.resource()
     messageAttachment!: Schema.CreativeWork;

@@ -21,7 +21,7 @@ export function DatasetMixin<Base extends Constructor>(Resource: Base) {
   class DatasetClass extends CreativeWorkMixin(Resource) implements Dataset {
     @property.resource()
     catalog!: Schema.DataCatalog;
-    @property.literal()
+    @property.literal({ type: Date })
     datasetTimeInterval!: Date;
     @property.resource()
     distribution!: Schema.DataDownload;

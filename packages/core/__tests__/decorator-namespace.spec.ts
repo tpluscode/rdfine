@@ -1,13 +1,10 @@
-import builder from '@rdf-esm/namespace'
 import { prefixes } from '@zazuko/rdf-vocabularies'
 import cf from 'clownface'
 import $rdf from 'rdf-ext'
 import { Constructor, namespace, property } from '../index'
 import RdfResource from '../RdfResource'
 import DatasetExt from 'rdf-ext/lib/Dataset'
-
-const schema = builder(prefixes.schema)
-const rdfs = builder(prefixes.rdfs)
+import { foaf, rdfs, schema } from '@tpluscode/rdf-ns-builders'
 
 describe('decorator', () => {
   describe('namespace', () => {
@@ -26,7 +23,6 @@ describe('decorator', () => {
 
     it('sets namespace property from builder', () => {
       // given
-      const foaf = builder(prefixes.foaf)
       @namespace(foaf)
       class WithNamespace extends RdfResource {
       }
@@ -40,7 +36,6 @@ describe('decorator', () => {
 
     it('can be used on class extending specific dataset type', () => {
       // given
-      const foaf = builder(prefixes.foaf)
       @namespace(foaf)
       class WithNamespace extends RdfResource<DatasetExt> {
       }

@@ -140,6 +140,9 @@ export class PropertyWriter {
             case 'number':
               decoratorOptions.push('type: Number')
               break
+            case 'Date':
+              decoratorOptions.push('type: Date')
+              break
           }
         }
 

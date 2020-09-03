@@ -24,9 +24,9 @@ export function DatedMoneySpecificationMixin<Base extends Constructor>(Resource:
     amountLiteral!: number;
     @property.literal()
     currency!: string;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate!: Date;
   }
   return DatedMoneySpecificationClass

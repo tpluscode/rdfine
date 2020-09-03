@@ -91,7 +91,7 @@ export function OrganizationMixin<Base extends Constructor>(Resource: Base) {
     contactPoints!: Schema.ContactPoint;
     @property.resource()
     department!: Schema.Organization;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dissolutionDate!: Date;
     @property.literal()
     duns!: string;
@@ -111,7 +111,7 @@ export function OrganizationMixin<Base extends Constructor>(Resource: Base) {
     founder!: Schema.Person;
     @property.resource()
     founders!: Schema.Person;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     foundingDate!: Date;
     @property.resource()
     foundingLocation!: Schema.Place;

@@ -65,7 +65,7 @@ export function FlightMixin<Base extends Constructor>(Resource: Base) {
     mealService!: string;
     @property.resource()
     seller!: Schema.Organization | Schema.Person;
-    @property.literal()
+    @property.literal({ type: Date })
     webCheckinTime!: Date;
   }
   return FlightClass

@@ -28,7 +28,7 @@ export function WebPageMixin<Base extends Constructor>(Resource: Base) {
     breadcrumb!: Schema.BreadcrumbList;
     @property.literal({ path: schema.breadcrumb })
     breadcrumbLiteral!: string;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     lastReviewed!: Date;
     @property.resource()
     mainContentOfPage!: Schema.WebPageElement;

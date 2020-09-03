@@ -202,6 +202,41 @@ ClassMixin.Class = ClassImpl
 "
 `;
 
+exports[`MixinModule generates date property: toMatchSnapshot 1`] = `
+"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
+import * as $rdf from \\"@rdf-esm/data-model\\";
+import type * as RDF from \\"rdf-js\\";
+import { ex } from \\"./lib/namespace\\";
+import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
+import type * as Example from \\".\\";
+
+export interface Class extends RdfResource {
+    foo: Date;
+}
+
+export function ClassMixin<Base extends Constructor>(Resource: Base) {
+    @namespace(ex)
+    class ClassClass extends Resource implements Class {
+        @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+        foo!: Date;
+    }
+    return ClassClass
+}
+
+class ClassImpl extends ClassMixin(RdfResourceImpl) {
+    constructor(arg: ResourceNode, init?: Initializer<Class>) {
+        super(arg, init)
+        this.types.add(ex.Class)
+    }
+
+    static readonly __mixins: Mixin[] = [ClassMixin];
+}
+ClassMixin.appliesTo = ex.Class
+ClassMixin.Class = ClassImpl
+"
+`;
+
 exports[`MixinModule generates list property: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";

@@ -26,9 +26,9 @@ export function MonetaryAmountMixin<Base extends Constructor>(Resource: Base) {
     maxValue!: number;
     @property.literal({ type: Number })
     minValue!: number;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validFrom!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validThrough!: Date;
     @property.resource()
     value!: Schema.StructuredValue;

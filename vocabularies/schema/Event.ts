@@ -68,11 +68,11 @@ export function EventMixin<Base extends Constructor>(Resource: Base) {
     contributor!: Schema.Organization | Schema.Person;
     @property.resource()
     director!: Schema.Person;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     doorTime!: Date;
     @property.resource()
     duration!: Schema.Duration;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate!: Date;
     @property()
     eventStatus!: Schema.EventStatusType;
@@ -98,7 +98,7 @@ export function EventMixin<Base extends Constructor>(Resource: Base) {
     performer!: Schema.Organization | Schema.Person;
     @property.resource()
     performers!: Schema.Organization | Schema.Person;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     previousStartDate!: Date;
     @property.resource()
     recordedIn!: Schema.CreativeWork;
@@ -108,7 +108,7 @@ export function EventMixin<Base extends Constructor>(Resource: Base) {
     review!: Schema.Review;
     @property.resource()
     sponsor!: Schema.Organization | Schema.Person;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate!: Date;
     @property.resource()
     subEvent!: Schema.Event;

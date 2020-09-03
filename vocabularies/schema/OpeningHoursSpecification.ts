@@ -18,15 +18,15 @@ export interface OpeningHoursSpecification extends Schema.StructuredValue, RdfRe
 export function OpeningHoursSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OpeningHoursSpecificationClass extends StructuredValueMixin(Resource) implements OpeningHoursSpecification {
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     closes!: Date;
     @property()
     dayOfWeek!: Schema.DayOfWeek;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     opens!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validFrom!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validThrough!: Date;
   }
   return OpeningHoursSpecificationClass

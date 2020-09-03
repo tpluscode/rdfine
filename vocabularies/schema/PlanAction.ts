@@ -14,7 +14,7 @@ export interface PlanAction extends Schema.OrganizeAction, RdfResource {
 export function PlanActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PlanActionClass extends OrganizeActionMixin(Resource) implements PlanAction {
-    @property.literal()
+    @property.literal({ type: Date })
     scheduledTime!: Date;
   }
   return PlanActionClass

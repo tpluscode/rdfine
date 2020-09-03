@@ -28,7 +28,7 @@ export function CreativeWorkSeasonMixin<Base extends Constructor>(Resource: Base
     actor!: Schema.Person;
     @property.resource()
     director!: Schema.Person;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate!: Date;
     @property.resource()
     episode!: Schema.Episode;
@@ -42,7 +42,7 @@ export function CreativeWorkSeasonMixin<Base extends Constructor>(Resource: Base
     productionCompany!: Schema.Organization;
     @property.literal()
     seasonNumber!: number | string;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate!: Date;
     @property.resource()
     trailer!: Schema.VideoObject;

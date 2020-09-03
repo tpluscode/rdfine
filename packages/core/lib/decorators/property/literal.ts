@@ -7,14 +7,14 @@ import type { AccessorOptions, ObjectOrFactory } from '.'
 import { propertyDecorator } from '.'
 
 interface LiteralOptions<R extends RdfResource> {
-  type?: typeof Boolean | typeof String | typeof Number
-  initial?: ObjectOrFactory<R, string | boolean | number | bigint, Literal>
+  type?: BooleanConstructor | StringConstructor | NumberConstructor | DateConstructor
+  initial?: ObjectOrFactory<R, string | boolean | number | bigint | Date, Literal>
   datatype?: NamedNode
 }
 
 const trueLiteral: Literal = rdf.literal('true', xsd.boolean)
 
-type LiteralValues = string | number | boolean | bigint
+type LiteralValues = string | number | boolean | bigint | Date
 
 export default function<R extends RdfResource> (options: AccessorOptions & LiteralOptions<R> = {}) {
   const type = options.type || String
@@ -26,6 +26,8 @@ export default function<R extends RdfResource> (options: AccessorOptions & Liter
     },
     toTerm(value) {
       let datatype = options.datatype
+      let literal = value.toString()
+
       if (!datatype) {
         switch (typeof value) {
           case 'number':
@@ -40,13 +42,30 @@ export default function<R extends RdfResource> (options: AccessorOptions & Liter
             break
           case 'bigint':
             datatype = xsd.long
+            break
+          default: {
+            if (value instanceof Date) {
+              datatype = xsd.dateTime
+            }
+          }
         }
       }
 
-      return rdf.literal(value.toString(), datatype)
+      if (value instanceof Date) {
+        literal = value.toISOString()
+        if (xsd.date.equals(datatype)) {
+          literal = literal.substr(0, 10)
+        }
+      }
+
+      return rdf.literal(literal, datatype)
     },
     valueTypeName: type.name,
     assertSetValue: (value) => {
+      if (value instanceof Date) {
+        return true
+      }
+
       if (typeof value === 'object') {
         let term: Term
         if ('id' in value) {

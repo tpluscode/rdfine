@@ -55,7 +55,7 @@ export function OrderMixin<Base extends Constructor>(Resource: Base) {
     isGift!: boolean;
     @property.resource()
     merchant!: Schema.Organization | Schema.Person;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     orderDate!: Date;
     @property.resource()
     orderDelivery!: Schema.ParcelDelivery;
@@ -67,9 +67,9 @@ export function OrderMixin<Base extends Constructor>(Resource: Base) {
     orderStatus!: Schema.OrderStatus;
     @property.resource()
     partOfInvoice!: Schema.Invoice;
-    @property.literal()
+    @property.literal({ type: Date })
     paymentDue!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     paymentDueDate!: Date;
     @property()
     paymentMethod!: Schema.PaymentMethod;

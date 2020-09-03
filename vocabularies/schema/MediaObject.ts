@@ -50,7 +50,7 @@ export function MediaObjectMixin<Base extends Constructor>(Resource: Base) {
     encodingFormat!: string;
     @property({ path: schema.encodingFormat })
     encodingFormatTerm!: RDF.NamedNode;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     endTime!: Date;
     @property.resource()
     height!: Schema.Distance | Schema.QuantitativeValue;
@@ -64,9 +64,9 @@ export function MediaObjectMixin<Base extends Constructor>(Resource: Base) {
     requiresSubscription!: Schema.MediaSubscription;
     @property.literal({ path: schema.requiresSubscription, type: Boolean })
     requiresSubscriptionLiteral!: boolean;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     startTime!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     uploadDate!: Date;
     @property.resource()
     width!: Schema.Distance | Schema.QuantitativeValue;

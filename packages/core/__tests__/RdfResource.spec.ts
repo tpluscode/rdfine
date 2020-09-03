@@ -4,10 +4,8 @@ import { NamedNode, Term } from 'rdf-js'
 import { defaultGraph, namedNode, literal, blankNode } from '@rdf-esm/data-model'
 import { skos } from '@tpluscode/rdf-ns-builders'
 import RdfResource, { Initializer } from '../RdfResource'
-import { parse, vocabs } from './_helpers'
+import { parse, ex } from './_helpers'
 import { property } from '../index'
-
-const { ex } = vocabs
 
 describe('RdfResource', () => {
   describe('constructor', () => {

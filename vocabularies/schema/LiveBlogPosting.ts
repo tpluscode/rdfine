@@ -16,9 +16,9 @@ export interface LiveBlogPosting extends Schema.BlogPosting, RdfResource {
 export function LiveBlogPostingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LiveBlogPostingClass extends BlogPostingMixin(Resource) implements LiveBlogPosting {
-    @property.literal()
+    @property.literal({ type: Date })
     coverageEndTime!: Date;
-    @property.literal()
+    @property.literal({ type: Date })
     coverageStartTime!: Date;
     @property.resource()
     liveBlogUpdate!: Schema.BlogPosting;

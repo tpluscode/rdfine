@@ -3,10 +3,8 @@ import { foaf, schema } from '@tpluscode/rdf-ns-builders'
 import { turtle } from '@tpluscode/rdf-string'
 import $rdf from 'rdf-ext'
 import ResourceFactory, { Constructor } from '../lib/ResourceFactory'
-import { parse, vocabs } from './_helpers'
+import { parse, ex } from './_helpers'
 import RdfResourceImpl from '../RdfResource'
-
-const { ex } = vocabs
 
 function NeverApply() {
   return class {

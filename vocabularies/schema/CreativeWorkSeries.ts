@@ -17,11 +17,11 @@ export interface CreativeWorkSeries extends Schema.CreativeWork, Schema.Series, 
 export function CreativeWorkSeriesMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CreativeWorkSeriesClass extends SeriesMixin(CreativeWorkMixin(Resource)) implements CreativeWorkSeries {
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate!: Date;
     @property.literal()
     issn!: string;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate!: Date;
   }
   return CreativeWorkSeriesClass

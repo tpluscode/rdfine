@@ -2,13 +2,12 @@ import { prefixes } from '@zazuko/rdf-vocabularies'
 import cf from 'clownface'
 import { namespace, property, crossBoundaries } from '../index'
 import RdfResource from '../RdfResource'
-import { parse, vocabs } from './_helpers'
+import { parse, ex } from './_helpers'
 import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
 import * as RDF from '@rdf-esm/data-model'
 import rdfExt from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
-
-const { ex, foaf, schema, rdf } = vocabs
+import { foaf, schema, rdf } from '@tpluscode/rdf-ns-builders'
 
 describe('decorator', () => {
   describe('term', () => {

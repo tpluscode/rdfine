@@ -19,9 +19,9 @@ export function OwnershipInfoMixin<Base extends Constructor>(Resource: Base) {
   class OwnershipInfoClass extends StructuredValueMixin(Resource) implements OwnershipInfo {
     @property.resource()
     acquiredFrom!: Schema.Organization | Schema.Person;
-    @property.literal()
+    @property.literal({ type: Date })
     ownedFrom!: Date;
-    @property.literal()
+    @property.literal({ type: Date })
     ownedThrough!: Date;
     @property.resource()
     typeOfGood!: Schema.Product | Schema.Service;

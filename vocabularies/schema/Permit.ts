@@ -28,11 +28,11 @@ export function PermitMixin<Base extends Constructor>(Resource: Base) {
     permitAudience!: Schema.Audience;
     @property.resource()
     validFor!: Schema.Duration;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validFrom!: Date;
     @property.resource()
     validIn!: Schema.AdministrativeArea;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validUntil!: Date;
   }
   return PermitClass

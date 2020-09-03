@@ -1,14 +1,12 @@
 import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import namespace from '@rdf-esm/namespace'
 import { literal } from '@rdf-esm/data-model'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { createProxy } from '../lib/proxy'
 import RdfResourceImpl, { RdfResource } from '../RdfResource'
 import { Literal, NamedNode } from 'rdf-js'
 import { property, ResourceIndexer } from '../index'
-
-const ex = namespace('http://example.com/')
+import { ex } from './_helpers'
 
 describe('proxy', () => {
   let node: GraphPointer<NamedNode, DatasetExt>
