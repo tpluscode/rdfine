@@ -29,7 +29,7 @@ export function ActionMixin<Base extends Constructor>(Resource: Base) {
     actionStatus!: Schema.ActionStatusType;
     @property.resource()
     agent!: Schema.Organization | Schema.Person;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     endTime!: Date;
     @property.resource()
     error!: Schema.Thing;
@@ -45,7 +45,7 @@ export function ActionMixin<Base extends Constructor>(Resource: Base) {
     participant!: Schema.Organization | Schema.Person;
     @property.resource()
     result!: Schema.Thing;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     startTime!: Date;
     @property.resource()
     target!: Schema.EntryPoint;

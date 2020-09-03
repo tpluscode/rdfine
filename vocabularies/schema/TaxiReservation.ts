@@ -23,7 +23,7 @@ export function TaxiReservationMixin<Base extends Constructor>(Resource: Base) {
     partySizeLiteral!: number;
     @property.resource()
     pickupLocation!: Schema.Place;
-    @property.literal()
+    @property.literal({ type: Date })
     pickupTime!: Date;
   }
   return TaxiReservationClass

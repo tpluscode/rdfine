@@ -1,6 +1,6 @@
 import { GraphPointer } from 'clownface'
 import { shrink } from '@zazuko/rdf-vocabularies'
-import { hydra, rdf, rdfs } from '@tpluscode/rdf-ns-builders'
+import { hydra, rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
 import {
   EnumerationMember,
   EnumerationType,
@@ -74,6 +74,8 @@ export function enumerationMembers(term: GraphPointer): EnumerationMember | null
 
 function datatypeToLiteralType(name: DatatypeName): LiteralType | null {
   let nativeType: any
+  let datatype: NamedNode | undefined
+  let nativeName = name
   switch (name) {
     case 'string':
       nativeType = String
@@ -84,8 +86,18 @@ function datatypeToLiteralType(name: DatatypeName): LiteralType | null {
     case 'number':
       nativeType = Number
       break
+    case 'DateTime':
+      nativeType = Date
+      nativeName = 'Date'
+      break
     case 'Date':
       nativeType = Date
+      datatype = xsd.date
+      break
+    case 'Time':
+      nativeType = Date
+      datatype = xsd.time
+      nativeName = 'Date'
       break
     default:
       return null
@@ -93,8 +105,9 @@ function datatypeToLiteralType(name: DatatypeName): LiteralType | null {
 
   return {
     type: 'Literal',
-    nativeName: name,
+    nativeName,
     nativeType,
+    datatype,
   }
 }
 

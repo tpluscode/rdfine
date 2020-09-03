@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -21,7 +22,7 @@ export function IriTemplateMixin<Base extends Constructor>(Resource: Base) {
   class IriTemplateClass extends ResourceMixin(Resource) implements IriTemplate {
     @property.resource({ values: 'array', implicitTypes: [hydra.IriTemplateMapping] })
     mapping!: Array<Hydra.IriTemplateMapping>;
-    @property.literal()
+    @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/ns/hydra/core#Rfc6570Template') })
     template!: string;
     @property()
     public variableRepresentation!: Term;

@@ -17,13 +17,13 @@ export interface FoodEstablishmentReservation extends Schema.Reservation, RdfRes
 export function FoodEstablishmentReservationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class FoodEstablishmentReservationClass extends ReservationMixin(Resource) implements FoodEstablishmentReservation {
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     endTime!: Date;
     @property.resource()
     partySize!: Schema.QuantitativeValue;
     @property.literal({ path: schema.partySize, type: Number })
     partySizeLiteral!: number;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     startTime!: Date;
   }
   return FoodEstablishmentReservationClass

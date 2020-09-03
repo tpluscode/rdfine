@@ -22,9 +22,9 @@ export interface ActionAccessSpecification extends Schema.Intangible, RdfResourc
 export function ActionAccessSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ActionAccessSpecificationClass extends IntangibleMixin(Resource) implements ActionAccessSpecification {
-    @property.literal()
+    @property.literal({ type: Date })
     availabilityEnds!: Date;
-    @property.literal()
+    @property.literal({ type: Date })
     availabilityStarts!: Date;
     @property.resource()
     category!: Schema.Thing;

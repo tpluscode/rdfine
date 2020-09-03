@@ -29,11 +29,11 @@ export function ReservationMixin<Base extends Constructor>(Resource: Base) {
   class ReservationClass extends IntangibleMixin(Resource) implements Reservation {
     @property.resource()
     bookingAgent!: Schema.Organization | Schema.Person;
-    @property.literal()
+    @property.literal({ type: Date })
     bookingTime!: Date;
     @property.resource()
     broker!: Schema.Organization | Schema.Person;
-    @property.literal()
+    @property.literal({ type: Date })
     modifiedTime!: Date;
     @property.literal()
     priceCurrency!: string;

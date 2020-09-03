@@ -17,11 +17,11 @@ export interface DataFeedItem extends Schema.Intangible, RdfResource {
 export function DataFeedItemMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DataFeedItemClass extends IntangibleMixin(Resource) implements DataFeedItem {
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateCreated!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateDeleted!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateModified!: Date;
     @property.resource()
     item!: Schema.Thing;

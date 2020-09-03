@@ -1,12 +1,10 @@
 import $rdf from 'rdf-ext'
 import cf, { GraphPointer } from 'clownface'
-import ns from '@rdf-esm/namespace'
 import TypeCollection from '../lib/TypeCollection'
 import RdfResourceImpl, { RdfResource, ResourceIdentifier } from '../RdfResource'
-import { parse } from './_helpers'
+import { parse, ex } from './_helpers'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 
-const ex = ns('http://example.com/')
 const nullResource = {} as RdfResource
 
 describe('TypeCollection', () => {

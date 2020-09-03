@@ -65,6 +65,7 @@
   "dependencies": {
     "@rdfine/rdf": "^0.3.9",
     "@rdfine/rdfs": "^0.3.9",
+    "@rdf-esm/data-model": "^0.5.3",
     "@tpluscode/rdf-ns-builders": "^0.3.6",
     "@tpluscode/rdfine": "^0.5.0",
     "es6-url-template": "^1.0.4"

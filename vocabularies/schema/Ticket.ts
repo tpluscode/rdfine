@@ -23,7 +23,7 @@ export interface Ticket extends Schema.Intangible, RdfResource {
 export function TicketMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TicketClass extends IntangibleMixin(Resource) implements Ticket {
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateIssued!: Date;
     @property.resource()
     issuedBy!: Schema.Organization;

@@ -19,11 +19,11 @@ export function RentalCarReservationMixin<Base extends Constructor>(Resource: Ba
   class RentalCarReservationClass extends ReservationMixin(Resource) implements RentalCarReservation {
     @property.resource()
     dropoffLocation!: Schema.Place;
-    @property.literal()
+    @property.literal({ type: Date })
     dropoffTime!: Date;
     @property.resource()
     pickupLocation!: Schema.Place;
-    @property.literal()
+    @property.literal({ type: Date })
     pickupTime!: Date;
   }
   return RentalCarReservationClass

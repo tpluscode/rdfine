@@ -34,9 +34,9 @@ export function PriceSpecificationMixin<Base extends Constructor>(Resource: Base
     price!: number | string;
     @property.literal()
     priceCurrency!: string;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validFrom!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validThrough!: Date;
     @property.literal({ type: Boolean })
     valueAddedTaxIncluded!: boolean;

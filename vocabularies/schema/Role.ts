@@ -19,7 +19,7 @@ export interface Role extends Schema.Intangible, RdfResource {
 export function RoleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RoleClass extends IntangibleMixin(Resource) implements Role {
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate!: Date;
     @property.literal()
     namedPosition!: string;
@@ -29,7 +29,7 @@ export function RoleMixin<Base extends Constructor>(Resource: Base) {
     roleName!: string;
     @property({ path: schema.roleName })
     roleNameTerm!: RDF.NamedNode;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate!: Date;
   }
   return RoleClass

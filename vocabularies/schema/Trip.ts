@@ -17,9 +17,9 @@ export interface Trip extends Schema.Intangible, RdfResource {
 export function TripMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TripClass extends IntangibleMixin(Resource) implements Trip {
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     arrivalTime!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     departureTime!: Date;
     @property.resource()
     offers!: Schema.Demand | Schema.Offer;

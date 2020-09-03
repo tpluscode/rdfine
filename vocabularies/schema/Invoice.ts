@@ -47,9 +47,9 @@ export function InvoiceMixin<Base extends Constructor>(Resource: Base) {
     customer!: Schema.Organization | Schema.Person;
     @property.resource()
     minimumPaymentDue!: Schema.MonetaryAmount | Schema.PriceSpecification;
-    @property.literal()
+    @property.literal({ type: Date })
     paymentDue!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     paymentDueDate!: Date;
     @property()
     paymentMethod!: Schema.PaymentMethod;
@@ -63,7 +63,7 @@ export function InvoiceMixin<Base extends Constructor>(Resource: Base) {
     provider!: Schema.Organization | Schema.Person;
     @property.resource()
     referencesOrder!: Schema.Order;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     scheduledPaymentDate!: Date;
     @property.resource()
     totalPaymentDue!: Schema.MonetaryAmount | Schema.PriceSpecification;

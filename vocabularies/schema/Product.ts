@@ -109,11 +109,11 @@ export function ProductMixin<Base extends Constructor>(Resource: Base) {
     offers!: Schema.Demand | Schema.Offer;
     @property.literal()
     productID!: string;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     productionDate!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     purchaseDate!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     releaseDate!: Date;
     @property.resource()
     review!: Schema.Review;

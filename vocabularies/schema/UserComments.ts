@@ -20,7 +20,7 @@ export function UserCommentsMixin<Base extends Constructor>(Resource: Base) {
   class UserCommentsClass extends UserInteractionMixin(Resource) implements UserComments {
     @property.literal()
     commentText!: string;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     commentTime!: Date;
     @property.resource()
     creator!: Schema.Organization | Schema.Person;

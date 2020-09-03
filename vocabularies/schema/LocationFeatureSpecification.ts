@@ -18,9 +18,9 @@ export function LocationFeatureSpecificationMixin<Base extends Constructor>(Reso
   class LocationFeatureSpecificationClass extends PropertyValueMixin(Resource) implements LocationFeatureSpecification {
     @property.resource()
     hoursAvailable!: Schema.OpeningHoursSpecification;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validFrom!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validThrough!: Date;
   }
   return LocationFeatureSpecificationClass

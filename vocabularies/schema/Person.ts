@@ -84,7 +84,7 @@ export function PersonMixin<Base extends Constructor>(Resource: Base) {
     award!: string;
     @property.literal()
     awards!: string;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     birthDate!: Date;
     @property.resource()
     birthPlace!: Schema.Place;
@@ -100,7 +100,7 @@ export function PersonMixin<Base extends Constructor>(Resource: Base) {
     contactPoint!: Schema.ContactPoint;
     @property.resource()
     contactPoints!: Schema.ContactPoint;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     deathDate!: Date;
     @property.resource()
     deathPlace!: Schema.Place;

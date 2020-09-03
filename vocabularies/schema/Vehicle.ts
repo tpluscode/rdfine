@@ -47,7 +47,7 @@ export function VehicleMixin<Base extends Constructor>(Resource: Base) {
   class VehicleClass extends ProductMixin(Resource) implements Vehicle {
     @property.resource()
     cargoVolume!: Schema.QuantitativeValue;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateVehicleFirstRegistered!: Date;
     @property.literal()
     driveWheelConfiguration!: string;
@@ -83,9 +83,9 @@ export function VehicleMixin<Base extends Constructor>(Resource: Base) {
     numberOfPreviousOwners!: Schema.QuantitativeValue;
     @property.literal({ path: schema.numberOfPreviousOwners, type: Number })
     numberOfPreviousOwnersLiteral!: number;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     productionDate!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     purchaseDate!: Date;
     @property()
     steeringPosition!: Schema.SteeringPositionValue;
@@ -99,7 +99,7 @@ export function VehicleMixin<Base extends Constructor>(Resource: Base) {
     vehicleInteriorColor!: string;
     @property.literal()
     vehicleInteriorType!: string;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     vehicleModelDate!: Date;
     @property.resource()
     vehicleSeatingCapacity!: Schema.QuantitativeValue;

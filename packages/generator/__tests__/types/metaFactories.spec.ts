@@ -173,10 +173,36 @@ describe('meta factory', () => {
         nativeType: Date,
         type: 'Literal',
         nativeName: 'Date',
+        datatype: xsd.date,
       } as LiteralType)
     })
 
-    it('returns an object for xsd:date', () => {
+    it('returns an object for xsd:time', () => {
+      // when
+      const meta = factories.datatypes(graph.node(xsd.time))
+
+      // then
+      expect(meta).toEqual({
+        nativeType: Date,
+        type: 'Literal',
+        nativeName: 'Date',
+        datatype: xsd.time,
+      } as LiteralType)
+    })
+
+    it('returns an object for xsd:dateTime', () => {
+      // when
+      const meta = factories.datatypes(graph.node(xsd.dateTime))
+
+      // then
+      expect(meta).toEqual({
+        nativeType: Date,
+        type: 'Literal',
+        nativeName: 'Date',
+      } as LiteralType)
+    })
+
+    it('returns an object for xsd:boolean', () => {
       // when
       const meta = factories.datatypes(graph.node(xsd.boolean))
 

@@ -22,9 +22,9 @@ export interface LodgingReservation extends Schema.Reservation, RdfResource {
 export function LodgingReservationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LodgingReservationClass extends ReservationMixin(Resource) implements LodgingReservation {
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     checkinTime!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     checkoutTime!: Date;
     @property.literal()
     lodgingUnitDescription!: string;

@@ -41,7 +41,7 @@ export function JobPostingMixin<Base extends Constructor>(Resource: Base) {
     baseSalaryLiteral!: number;
     @property.literal()
     benefits!: string;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     datePosted!: Date;
     @property.literal()
     employmentType!: string;
@@ -75,7 +75,7 @@ export function JobPostingMixin<Base extends Constructor>(Resource: Base) {
     specialCommitments!: string;
     @property.literal()
     title!: string;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validThrough!: Date;
     @property.literal()
     workHours!: string;

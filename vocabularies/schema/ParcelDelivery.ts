@@ -31,9 +31,9 @@ export function ParcelDeliveryMixin<Base extends Constructor>(Resource: Base) {
     deliveryAddress!: Schema.PostalAddress;
     @property.resource()
     deliveryStatus!: Schema.DeliveryEvent;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     expectedArrivalFrom!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     expectedArrivalUntil!: Date;
     @property()
     hasDeliveryMethod!: Schema.DeliveryMethod;

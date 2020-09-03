@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';

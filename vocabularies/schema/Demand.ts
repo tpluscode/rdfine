@@ -56,9 +56,9 @@ export function DemandMixin<Base extends Constructor>(Resource: Base) {
     areaServedLiteral!: string;
     @property()
     availability!: Schema.ItemAvailability;
-    @property.literal()
+    @property.literal({ type: Date })
     availabilityEnds!: Date;
-    @property.literal()
+    @property.literal({ type: Date })
     availabilityStarts!: Date;
     @property.resource()
     availableAtOrFrom!: Schema.Place;
@@ -106,9 +106,9 @@ export function DemandMixin<Base extends Constructor>(Resource: Base) {
     serialNumber!: string;
     @property.literal()
     sku!: string;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validFrom!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validThrough!: Date;
     @property.resource()
     warranty!: Schema.WarrantyPromise;

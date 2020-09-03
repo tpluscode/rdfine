@@ -13,9 +13,8 @@ import {
 } from '../index'
 import RdfResource, { fromObject } from '../RdfResource'
 import ResourceFactoryImpl from '../lib/ResourceFactory'
-import { parse, vocabs } from './_helpers'
-
-const { ex, foaf, schema, rdf } = vocabs
+import { parse, ex } from './_helpers'
+import { foaf, schema, rdf } from '@tpluscode/rdf-ns-builders'
 
 describe('decorator', () => {
   describe('resource', () => {

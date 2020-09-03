@@ -3,7 +3,6 @@ import rdf from 'rdf-ext'
 import Parser from '@rdfjs/parser-n3'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import ns from '@rdf-esm/namespace'
-import type { NamespaceBuilder } from '@rdf-esm/namespace'
 import { prefixes } from '@zazuko/rdf-vocabularies'
 import { TurtleTemplateResult } from '@tpluscode/rdf-string'
 
@@ -16,14 +15,4 @@ export function parse(quads: string | TurtleTemplateResult): Promise<DatasetExt>
 }
 
 prefixes.ex = 'http://example.com/'
-
-const vocab = Object.entries(prefixes)
-  .reduce((map, [key, value]) => {
-    return {
-      ...map,
-      [key]: ns(value),
-    }
-  }, {}) as {
-  [P in keyof typeof prefixes]: NamespaceBuilder;
-}
-export const vocabs = { ...vocab }
+export const ex = ns(prefixes.ex)

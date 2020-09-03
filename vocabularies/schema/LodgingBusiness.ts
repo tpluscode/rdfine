@@ -31,9 +31,9 @@ export function LodgingBusinessMixin<Base extends Constructor>(Resource: Base) {
     availableLanguage!: Schema.Language;
     @property.literal({ path: schema.availableLanguage })
     availableLanguageLiteral!: string;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     checkinTime!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     checkoutTime!: Date;
     @property.resource()
     numberOfRooms!: Schema.QuantitativeValue;

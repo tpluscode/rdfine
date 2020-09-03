@@ -165,11 +165,11 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base) {
     copyrightYear!: number;
     @property.resource()
     creator!: Schema.Organization | Schema.Person;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateCreated!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateModified!: Date;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     datePublished!: Date;
     @property()
     discussionUrl!: RDF.NamedNode;
@@ -189,7 +189,7 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base) {
     encodings!: Schema.MediaObject;
     @property.resource()
     exampleOfWork!: Schema.CreativeWork;
-    @property.literal()
+    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     expires!: Date;
     @property.literal()
     fileFormat!: string;

@@ -19,9 +19,9 @@ export function DeliveryEventMixin<Base extends Constructor>(Resource: Base) {
   class DeliveryEventClass extends EventMixin(Resource) implements DeliveryEvent {
     @property.literal()
     accessCode!: string;
-    @property.literal()
+    @property.literal({ type: Date })
     availableFrom!: Date;
-    @property.literal()
+    @property.literal({ type: Date })
     availableThrough!: Date;
     @property()
     hasDeliveryMethod!: Schema.DeliveryMethod;
