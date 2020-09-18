@@ -3,7 +3,7 @@ import $rdf from 'rdf-ext'
 import { NamedNode, Term } from 'rdf-js'
 import { defaultGraph, namedNode, literal, blankNode } from '@rdf-esm/data-model'
 import { skos } from '@tpluscode/rdf-ns-builders'
-import RdfResource, { Initializer } from '../RdfResource'
+import RdfResource, { Initializer, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
 import { property } from '../index'
 
@@ -402,6 +402,28 @@ describe('RdfResource', () => {
       // then
       expect(resource.getString(skos.prefLabel)).toEqual('Foo')
       expect(resource.get(skos.broader)!.getString(skos.prefLabel)).toEqual('Bar')
+    })
+
+    it('allows arbitrary string as RDF property using typed initializer', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      class Concept extends RdfResource {
+        @property.literal({ path: skos.prefLabel })
+        prefLabel!: string;
+
+        // eslint-disable-next-line no-useless-constructor
+        constructor(pointer: ResourceNode, init: Initializer<Concept>) {
+          super(pointer, init)
+        }
+      }
+
+      // when
+      const resource = new Concept(node, {
+        [skos.prefLabel.value]: 'Foo',
+      })
+
+      // then
+      expect(resource.prefLabel).toEqual('Foo')
     })
 
     it('initializes annotated property with nested array of resources which use http properties', () => {

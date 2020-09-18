@@ -287,7 +287,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
 
 type UserDefinedInterface<T extends RdfResource> = Omit<T, keyof RdfResource>
 
-interface BaseInitializer {
+type BaseInitializer = Record<string, any> & {
   types?: NamedNode[] | TypeCollection<any>
   id?: RdfResource['id']
 }

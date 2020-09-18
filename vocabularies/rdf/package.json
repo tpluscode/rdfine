@@ -37,7 +37,7 @@
     ]
   },
   "dependencies": {
-    "@tpluscode/rdf-ns-builders": "^0.3.6",
+    "@tpluscode/rdf-ns-builders": "^0.4",
     "@tpluscode/rdfine": "^0.5.0"
   },
   "devDependencies": {
@@ -50,7 +50,7 @@
     "@rdfine/generator": "^0.3.3",
     "@rdfjs/dataset": "^1.0.1",
     "@types/clownface": "^1",
-    "@types/rdf-js": "^3",
+    "@types/rdf-js": "^4",
     "@zazuko/rdf-vocabularies": "^2020.3.23",
     "clownface": "^1",
     "eslint": "^6.8.0",
