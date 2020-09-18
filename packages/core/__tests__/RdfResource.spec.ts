@@ -445,6 +445,23 @@ describe('RdfResource', () => {
       expect(resource.broader[0].getString(skos.prefLabel)).toEqual('Bar')
     })
 
+    it('initializes T|T[] property with IRI', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      class SkosResource extends RdfResource {
+        @property.resource({ path: skos.broader, values: 'array' })
+        broader!: SkosResource[] | SkosResource
+      }
+
+      // when
+      const resource = new SkosResource(node, {
+        broader: ex.Foo,
+      })
+
+      // then
+      expect(resource.pointer.dataset).toMatchSnapshot()
+    })
+
     it('initializes annotated property with a resource using http properties', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
