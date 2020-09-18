@@ -8,38 +8,38 @@ import type * as Schema from '.';
 import { PlayActionMixin } from './PlayAction';
 
 export interface ExerciseAction extends Schema.PlayAction, RdfResource {
-  course: Schema.Place;
-  distance: Schema.Distance;
-  exerciseCourse: Schema.Place;
-  fromLocation: Schema.Place;
-  opponent: Schema.Person;
-  sportsActivityLocation: Schema.SportsActivityLocation;
-  sportsEvent: Schema.SportsEvent;
-  sportsTeam: Schema.SportsTeam;
-  toLocation: Schema.Place;
+  course: Schema.Place | undefined;
+  distance: Schema.Distance | undefined;
+  exerciseCourse: Schema.Place | undefined;
+  fromLocation: Schema.Place | undefined;
+  opponent: Schema.Person | undefined;
+  sportsActivityLocation: Schema.SportsActivityLocation | undefined;
+  sportsEvent: Schema.SportsEvent | undefined;
+  sportsTeam: Schema.SportsTeam | undefined;
+  toLocation: Schema.Place | undefined;
 }
 
 export function ExerciseActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ExerciseActionClass extends PlayActionMixin(Resource) implements ExerciseAction {
     @property.resource()
-    course!: Schema.Place;
+    course: Schema.Place | undefined;
     @property.resource()
-    distance!: Schema.Distance;
+    distance: Schema.Distance | undefined;
     @property.resource()
-    exerciseCourse!: Schema.Place;
+    exerciseCourse: Schema.Place | undefined;
     @property.resource()
-    fromLocation!: Schema.Place;
+    fromLocation: Schema.Place | undefined;
     @property.resource()
-    opponent!: Schema.Person;
+    opponent: Schema.Person | undefined;
     @property.resource()
-    sportsActivityLocation!: Schema.SportsActivityLocation;
+    sportsActivityLocation: Schema.SportsActivityLocation | undefined;
     @property.resource()
-    sportsEvent!: Schema.SportsEvent;
+    sportsEvent: Schema.SportsEvent | undefined;
     @property.resource()
-    sportsTeam!: Schema.SportsTeam;
+    sportsTeam: Schema.SportsTeam | undefined;
     @property.resource()
-    toLocation!: Schema.Place;
+    toLocation: Schema.Place | undefined;
   }
   return ExerciseActionClass
 }

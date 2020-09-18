@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -6,38 +7,38 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '.';
 
 export interface Datatype extends RdfResource {
-  base: string;
-  format: string;
-  length: number;
-  maxExclusive: number;
-  maxInclusive: number;
-  maxLength: number;
-  minExclusive: number;
-  minInclusive: number;
-  minLength: number;
+  base: string | undefined;
+  format: string | undefined;
+  length: number | undefined;
+  maxExclusive: number | undefined;
+  maxInclusive: number | undefined;
+  maxLength: number | undefined;
+  minExclusive: number | undefined;
+  minInclusive: number | undefined;
+  minLength: number | undefined;
 }
 
 export function DatatypeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class DatatypeClass extends Resource implements Datatype {
     @property.literal()
-    base!: string;
+    base: string | undefined;
     @property.literal()
-    format!: string;
+    format: string | undefined;
     @property.literal({ type: Number })
-    length!: number;
+    length: number | undefined;
     @property.literal({ type: Number })
-    maxExclusive!: number;
+    maxExclusive: number | undefined;
     @property.literal({ type: Number })
-    maxInclusive!: number;
+    maxInclusive: number | undefined;
     @property.literal({ type: Number })
-    maxLength!: number;
+    maxLength: number | undefined;
     @property.literal({ type: Number })
-    minExclusive!: number;
+    minExclusive: number | undefined;
     @property.literal({ type: Number })
-    minInclusive!: number;
+    minInclusive: number | undefined;
     @property.literal({ type: Number })
-    minLength!: number;
+    minLength: number | undefined;
   }
   return DatatypeClass
 }

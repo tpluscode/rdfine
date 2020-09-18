@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface OwnershipInfo extends Schema.StructuredValue, RdfResource {
-  acquiredFrom: Schema.Organization | Schema.Person;
-  ownedFrom: Date;
-  ownedThrough: Date;
-  typeOfGood: Schema.Product | Schema.Service;
+  acquiredFrom: Schema.Organization | Schema.Person | undefined;
+  ownedFrom: Date | undefined;
+  ownedThrough: Date | undefined;
+  typeOfGood: Schema.Product | Schema.Service | undefined;
 }
 
 export function OwnershipInfoMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OwnershipInfoClass extends StructuredValueMixin(Resource) implements OwnershipInfo {
     @property.resource()
-    acquiredFrom!: Schema.Organization | Schema.Person;
+    acquiredFrom: Schema.Organization | Schema.Person | undefined;
     @property.literal({ type: Date })
-    ownedFrom!: Date;
+    ownedFrom: Date | undefined;
     @property.literal({ type: Date })
-    ownedThrough!: Date;
+    ownedThrough: Date | undefined;
     @property.resource()
-    typeOfGood!: Schema.Product | Schema.Service;
+    typeOfGood: Schema.Product | Schema.Service | undefined;
   }
   return OwnershipInfoClass
 }

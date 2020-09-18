@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { ReviewMixin } from './Review';
 
 export interface ClaimReview extends Schema.Review, RdfResource {
-  claimReviewed: string;
+  claimReviewed: string | undefined;
 }
 
 export function ClaimReviewMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ClaimReviewClass extends ReviewMixin(Resource) implements ClaimReview {
     @property.literal()
-    claimReviewed!: string;
+    claimReviewed: string | undefined;
   }
   return ClaimReviewClass
 }

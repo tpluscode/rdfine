@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { FinancialProductMixin } from './FinancialProduct';
 
 export interface LoanOrCredit extends Schema.FinancialProduct, RdfResource {
-  amount: Schema.MonetaryAmount;
-  amountLiteral: number;
-  currency: string;
-  loanTerm: Schema.QuantitativeValue;
-  requiredCollateral: Schema.Thing;
-  requiredCollateralLiteral: string;
+  amount: Schema.MonetaryAmount | undefined;
+  amountLiteral: number | undefined;
+  currency: string | undefined;
+  loanTerm: Schema.QuantitativeValue | undefined;
+  requiredCollateral: Schema.Thing | undefined;
+  requiredCollateralLiteral: string | undefined;
 }
 
 export function LoanOrCreditMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LoanOrCreditClass extends FinancialProductMixin(Resource) implements LoanOrCredit {
     @property.resource()
-    amount!: Schema.MonetaryAmount;
+    amount: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.amount, type: Number })
-    amountLiteral!: number;
+    amountLiteral: number | undefined;
     @property.literal()
-    currency!: string;
+    currency: string | undefined;
     @property.resource()
-    loanTerm!: Schema.QuantitativeValue;
+    loanTerm: Schema.QuantitativeValue | undefined;
     @property.resource()
-    requiredCollateral!: Schema.Thing;
+    requiredCollateral: Schema.Thing | undefined;
     @property.literal({ path: schema.requiredCollateral })
-    requiredCollateralLiteral!: string;
+    requiredCollateralLiteral: string | undefined;
   }
   return LoanOrCreditClass
 }

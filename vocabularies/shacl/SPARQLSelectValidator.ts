@@ -9,14 +9,14 @@ import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable';
 import { ValidatorMixin } from './Validator';
 
 export interface SPARQLSelectValidator extends Sh.SPARQLSelectExecutable, Sh.Validator, RdfResource {
-  resultAnnotation: Sh.ResultAnnotation;
+  resultAnnotation: Sh.ResultAnnotation | undefined;
 }
 
 export function SPARQLSelectValidatorMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class SPARQLSelectValidatorClass extends ValidatorMixin(SPARQLSelectExecutableMixin(Resource)) implements SPARQLSelectValidator {
     @property.resource({ implicitTypes: [sh.ResultAnnotation] })
-    resultAnnotation!: Sh.ResultAnnotation;
+    resultAnnotation: Sh.ResultAnnotation | undefined;
   }
   return SPARQLSelectValidatorClass
 }

@@ -8,140 +8,140 @@ import type * as Schema from '.';
 import { ThingMixin } from './Thing';
 
 export interface Place extends Schema.Thing, RdfResource {
-  additionalProperty: Schema.PropertyValue;
-  address: Schema.PostalAddress;
-  addressLiteral: string;
-  aggregateRating: Schema.AggregateRating;
-  amenityFeature: Schema.LocationFeatureSpecification;
-  branchCode: string;
-  containedIn: Schema.Place;
-  containedInPlace: Schema.Place;
-  containsPlace: Schema.Place;
-  event: Schema.Event;
-  events: Schema.Event;
-  faxNumber: string;
-  geo: Schema.GeoCoordinates | Schema.GeoShape;
-  geoContains: Schema.Place;
-  geoCoveredBy: Schema.Place;
-  geoCovers: Schema.Place;
-  geoCrosses: Schema.Place;
-  geoDisjoint: Schema.Place;
-  geoEquals: Schema.Place;
-  geoIntersects: Schema.Place;
-  geoOverlaps: Schema.Place;
-  geoTouches: Schema.Place;
-  geoWithin: Schema.Place;
-  globalLocationNumber: string;
-  hasMap: Schema.Map;
-  isAccessibleForFree: boolean;
-  isicV4: string;
-  latitude: number | string;
-  logo: Schema.ImageObject;
-  longitude: number | string;
-  map: RDF.NamedNode;
-  maps: RDF.NamedNode;
-  maximumAttendeeCapacity: number;
-  openingHoursSpecification: Schema.OpeningHoursSpecification;
-  photo: Schema.ImageObject | Schema.Photograph;
-  photos: Schema.ImageObject | Schema.Photograph;
-  publicAccess: boolean;
-  review: Schema.Review;
-  reviews: Schema.Review;
-  slogan: string;
-  smokingAllowed: boolean;
-  specialOpeningHoursSpecification: Schema.OpeningHoursSpecification;
-  telephone: string;
+  additionalProperty: Schema.PropertyValue | undefined;
+  address: Schema.PostalAddress | undefined;
+  addressLiteral: string | undefined;
+  aggregateRating: Schema.AggregateRating | undefined;
+  amenityFeature: Schema.LocationFeatureSpecification | undefined;
+  branchCode: string | undefined;
+  containedIn: Schema.Place | undefined;
+  containedInPlace: Schema.Place | undefined;
+  containsPlace: Schema.Place | undefined;
+  event: Schema.Event | undefined;
+  events: Schema.Event | undefined;
+  faxNumber: string | undefined;
+  geo: Schema.GeoCoordinates | Schema.GeoShape | undefined;
+  geoContains: Schema.Place | undefined;
+  geoCoveredBy: Schema.Place | undefined;
+  geoCovers: Schema.Place | undefined;
+  geoCrosses: Schema.Place | undefined;
+  geoDisjoint: Schema.Place | undefined;
+  geoEquals: Schema.Place | undefined;
+  geoIntersects: Schema.Place | undefined;
+  geoOverlaps: Schema.Place | undefined;
+  geoTouches: Schema.Place | undefined;
+  geoWithin: Schema.Place | undefined;
+  globalLocationNumber: string | undefined;
+  hasMap: Schema.Map | undefined;
+  isAccessibleForFree: boolean | undefined;
+  isicV4: string | undefined;
+  latitude: number | string | undefined;
+  logo: Schema.ImageObject | undefined;
+  longitude: number | string | undefined;
+  map: RDF.NamedNode | undefined;
+  maps: RDF.NamedNode | undefined;
+  maximumAttendeeCapacity: number | undefined;
+  openingHoursSpecification: Schema.OpeningHoursSpecification | undefined;
+  photo: Schema.ImageObject | Schema.Photograph | undefined;
+  photos: Schema.ImageObject | Schema.Photograph | undefined;
+  publicAccess: boolean | undefined;
+  review: Schema.Review | undefined;
+  reviews: Schema.Review | undefined;
+  slogan: string | undefined;
+  smokingAllowed: boolean | undefined;
+  specialOpeningHoursSpecification: Schema.OpeningHoursSpecification | undefined;
+  telephone: string | undefined;
 }
 
 export function PlaceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PlaceClass extends ThingMixin(Resource) implements Place {
     @property.resource()
-    additionalProperty!: Schema.PropertyValue;
+    additionalProperty: Schema.PropertyValue | undefined;
     @property.resource()
-    address!: Schema.PostalAddress;
+    address: Schema.PostalAddress | undefined;
     @property.literal({ path: schema.address })
-    addressLiteral!: string;
+    addressLiteral: string | undefined;
     @property.resource()
-    aggregateRating!: Schema.AggregateRating;
+    aggregateRating: Schema.AggregateRating | undefined;
     @property.resource()
-    amenityFeature!: Schema.LocationFeatureSpecification;
+    amenityFeature: Schema.LocationFeatureSpecification | undefined;
     @property.literal()
-    branchCode!: string;
+    branchCode: string | undefined;
     @property.resource()
-    containedIn!: Schema.Place;
+    containedIn: Schema.Place | undefined;
     @property.resource()
-    containedInPlace!: Schema.Place;
+    containedInPlace: Schema.Place | undefined;
     @property.resource()
-    containsPlace!: Schema.Place;
+    containsPlace: Schema.Place | undefined;
     @property.resource()
-    event!: Schema.Event;
+    event: Schema.Event | undefined;
     @property.resource()
-    events!: Schema.Event;
+    events: Schema.Event | undefined;
     @property.literal()
-    faxNumber!: string;
+    faxNumber: string | undefined;
     @property.resource()
-    geo!: Schema.GeoCoordinates | Schema.GeoShape;
+    geo: Schema.GeoCoordinates | Schema.GeoShape | undefined;
     @property.resource()
-    geoContains!: Schema.Place;
+    geoContains: Schema.Place | undefined;
     @property.resource()
-    geoCoveredBy!: Schema.Place;
+    geoCoveredBy: Schema.Place | undefined;
     @property.resource()
-    geoCovers!: Schema.Place;
+    geoCovers: Schema.Place | undefined;
     @property.resource()
-    geoCrosses!: Schema.Place;
+    geoCrosses: Schema.Place | undefined;
     @property.resource()
-    geoDisjoint!: Schema.Place;
+    geoDisjoint: Schema.Place | undefined;
     @property.resource()
-    geoEquals!: Schema.Place;
+    geoEquals: Schema.Place | undefined;
     @property.resource()
-    geoIntersects!: Schema.Place;
+    geoIntersects: Schema.Place | undefined;
     @property.resource()
-    geoOverlaps!: Schema.Place;
+    geoOverlaps: Schema.Place | undefined;
     @property.resource()
-    geoTouches!: Schema.Place;
+    geoTouches: Schema.Place | undefined;
     @property.resource()
-    geoWithin!: Schema.Place;
+    geoWithin: Schema.Place | undefined;
     @property.literal()
-    globalLocationNumber!: string;
+    globalLocationNumber: string | undefined;
     @property.resource()
-    hasMap!: Schema.Map;
+    hasMap: Schema.Map | undefined;
     @property.literal({ type: Boolean })
-    isAccessibleForFree!: boolean;
+    isAccessibleForFree: boolean | undefined;
     @property.literal()
-    isicV4!: string;
+    isicV4: string | undefined;
     @property.literal()
-    latitude!: number | string;
+    latitude: number | string | undefined;
     @property.resource()
-    logo!: Schema.ImageObject;
+    logo: Schema.ImageObject | undefined;
     @property.literal()
-    longitude!: number | string;
+    longitude: number | string | undefined;
     @property()
-    map!: RDF.NamedNode;
+    map: RDF.NamedNode | undefined;
     @property()
-    maps!: RDF.NamedNode;
+    maps: RDF.NamedNode | undefined;
     @property.literal({ type: Number })
-    maximumAttendeeCapacity!: number;
+    maximumAttendeeCapacity: number | undefined;
     @property.resource()
-    openingHoursSpecification!: Schema.OpeningHoursSpecification;
+    openingHoursSpecification: Schema.OpeningHoursSpecification | undefined;
     @property.resource()
-    photo!: Schema.ImageObject | Schema.Photograph;
+    photo: Schema.ImageObject | Schema.Photograph | undefined;
     @property.resource()
-    photos!: Schema.ImageObject | Schema.Photograph;
+    photos: Schema.ImageObject | Schema.Photograph | undefined;
     @property.literal({ type: Boolean })
-    publicAccess!: boolean;
+    publicAccess: boolean | undefined;
     @property.resource()
-    review!: Schema.Review;
+    review: Schema.Review | undefined;
     @property.resource()
-    reviews!: Schema.Review;
+    reviews: Schema.Review | undefined;
     @property.literal()
-    slogan!: string;
+    slogan: string | undefined;
     @property.literal({ type: Boolean })
-    smokingAllowed!: boolean;
+    smokingAllowed: boolean | undefined;
     @property.resource()
-    specialOpeningHoursSpecification!: Schema.OpeningHoursSpecification;
+    specialOpeningHoursSpecification: Schema.OpeningHoursSpecification | undefined;
     @property.literal()
-    telephone!: string;
+    telephone: string | undefined;
   }
   return PlaceClass
 }

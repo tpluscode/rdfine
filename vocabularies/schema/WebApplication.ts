@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { SoftwareApplicationMixin } from './SoftwareApplication';
 
 export interface WebApplication extends Schema.SoftwareApplication, RdfResource {
-  browserRequirements: string;
+  browserRequirements: string | undefined;
 }
 
 export function WebApplicationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WebApplicationClass extends SoftwareApplicationMixin(Resource) implements WebApplication {
     @property.literal()
-    browserRequirements!: string;
+    browserRequirements: string | undefined;
   }
   return WebApplicationClass
 }

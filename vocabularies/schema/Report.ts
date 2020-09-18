@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { ArticleMixin } from './Article';
 
 export interface Report extends Schema.Article, RdfResource {
-  reportNumber: string;
+  reportNumber: string | undefined;
 }
 
 export function ReportMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ReportClass extends ArticleMixin(Resource) implements Report {
     @property.literal()
-    reportNumber!: string;
+    reportNumber: string | undefined;
   }
   return ReportClass
 }

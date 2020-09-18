@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface BedDetails extends Schema.Intangible, RdfResource {
-  numberOfBeds: number;
-  typeOfBed: string;
-  typeOfBedTerm: Schema.BedType;
+  numberOfBeds: number | undefined;
+  typeOfBed: string | undefined;
+  typeOfBedTerm: Schema.BedType | undefined;
 }
 
 export function BedDetailsMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BedDetailsClass extends IntangibleMixin(Resource) implements BedDetails {
     @property.literal({ type: Number })
-    numberOfBeds!: number;
+    numberOfBeds: number | undefined;
     @property.literal()
-    typeOfBed!: string;
+    typeOfBed: string | undefined;
     @property({ path: schema.typeOfBed })
-    typeOfBedTerm!: Schema.BedType;
+    typeOfBedTerm: Schema.BedType | undefined;
   }
   return BedDetailsClass
 }

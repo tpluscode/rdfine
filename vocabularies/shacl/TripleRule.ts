@@ -8,20 +8,20 @@ import type * as Sh from '.';
 import { RuleMixin } from './Rule';
 
 export interface TripleRule extends Sh.Rule, RdfResource {
-  object: RDF.Term;
-  predicate: RDF.Term;
-  subject: RDF.Term;
+  object: RDF.Term | undefined;
+  predicate: RDF.Term | undefined;
+  subject: RDF.Term | undefined;
 }
 
 export function TripleRuleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class TripleRuleClass extends RuleMixin(Resource) implements TripleRule {
     @property()
-    object!: RDF.Term;
+    object: RDF.Term | undefined;
     @property()
-    predicate!: RDF.Term;
+    predicate: RDF.Term | undefined;
     @property()
-    subject!: RDF.Term;
+    subject: RDF.Term | undefined;
   }
   return TripleRuleClass
 }

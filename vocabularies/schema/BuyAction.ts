@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { TradeActionMixin } from './TradeAction';
 
 export interface BuyAction extends Schema.TradeAction, RdfResource {
-  seller: Schema.Organization | Schema.Person;
-  vendor: Schema.Organization | Schema.Person;
-  warrantyPromise: Schema.WarrantyPromise;
+  seller: Schema.Organization | Schema.Person | undefined;
+  vendor: Schema.Organization | Schema.Person | undefined;
+  warrantyPromise: Schema.WarrantyPromise | undefined;
 }
 
 export function BuyActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BuyActionClass extends TradeActionMixin(Resource) implements BuyAction {
     @property.resource()
-    seller!: Schema.Organization | Schema.Person;
+    seller: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    vendor!: Schema.Organization | Schema.Person;
+    vendor: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    warrantyPromise!: Schema.WarrantyPromise;
+    warrantyPromise: Schema.WarrantyPromise | undefined;
   }
   return BuyActionClass
 }

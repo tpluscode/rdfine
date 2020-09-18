@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { MediaObjectMixin } from './MediaObject';
 
 export interface AudioObject extends Schema.MediaObject, RdfResource {
-  caption: Schema.MediaObject;
-  captionLiteral: string;
-  transcript: string;
+  caption: Schema.MediaObject | undefined;
+  captionLiteral: string | undefined;
+  transcript: string | undefined;
 }
 
 export function AudioObjectMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AudioObjectClass extends MediaObjectMixin(Resource) implements AudioObject {
     @property.resource()
-    caption!: Schema.MediaObject;
+    caption: Schema.MediaObject | undefined;
     @property.literal({ path: schema.caption })
-    captionLiteral!: string;
+    captionLiteral: string | undefined;
     @property.literal()
-    transcript!: string;
+    transcript: string | undefined;
   }
   return AudioObjectClass
 }

@@ -8,89 +8,89 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface Service extends Schema.Intangible, RdfResource {
-  aggregateRating: Schema.AggregateRating;
-  areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
-  areaServedLiteral: string;
-  audience: Schema.Audience;
-  availableChannel: Schema.ServiceChannel;
-  award: string;
-  brand: Schema.Brand | Schema.Organization;
-  broker: Schema.Organization | Schema.Person;
-  category: Schema.Thing;
-  categoryLiteral: string;
-  hasOfferCatalog: Schema.OfferCatalog;
-  hoursAvailable: Schema.OpeningHoursSpecification;
-  isRelatedTo: Schema.Product | Schema.Service;
-  isSimilarTo: Schema.Product | Schema.Service;
-  logo: Schema.ImageObject;
-  offers: Schema.Demand | Schema.Offer;
-  produces: Schema.Thing;
-  provider: Schema.Organization | Schema.Person;
-  providerMobility: string;
-  review: Schema.Review;
-  serviceArea: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
-  serviceAudience: Schema.Audience;
-  serviceOutput: Schema.Thing;
-  serviceType: string;
-  serviceTypeTerm: RDF.Term;
-  slogan: string;
+  aggregateRating: Schema.AggregateRating | undefined;
+  areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
+  areaServedLiteral: string | undefined;
+  audience: Schema.Audience | undefined;
+  availableChannel: Schema.ServiceChannel | undefined;
+  award: string | undefined;
+  brand: Schema.Brand | Schema.Organization | undefined;
+  broker: Schema.Organization | Schema.Person | undefined;
+  category: Schema.Thing | undefined;
+  categoryLiteral: string | undefined;
+  hasOfferCatalog: Schema.OfferCatalog | undefined;
+  hoursAvailable: Schema.OpeningHoursSpecification | undefined;
+  isRelatedTo: Schema.Product | Schema.Service | undefined;
+  isSimilarTo: Schema.Product | Schema.Service | undefined;
+  logo: Schema.ImageObject | undefined;
+  offers: Schema.Demand | Schema.Offer | undefined;
+  produces: Schema.Thing | undefined;
+  provider: Schema.Organization | Schema.Person | undefined;
+  providerMobility: string | undefined;
+  review: Schema.Review | undefined;
+  serviceArea: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
+  serviceAudience: Schema.Audience | undefined;
+  serviceOutput: Schema.Thing | undefined;
+  serviceType: string | undefined;
+  serviceTypeTerm: RDF.Term | undefined;
+  slogan: string | undefined;
 }
 
 export function ServiceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ServiceClass extends IntangibleMixin(Resource) implements Service {
     @property.resource()
-    aggregateRating!: Schema.AggregateRating;
+    aggregateRating: Schema.AggregateRating | undefined;
     @property.resource()
-    areaServed!: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
+    areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
     @property.literal({ path: schema.areaServed })
-    areaServedLiteral!: string;
+    areaServedLiteral: string | undefined;
     @property.resource()
-    audience!: Schema.Audience;
+    audience: Schema.Audience | undefined;
     @property.resource()
-    availableChannel!: Schema.ServiceChannel;
+    availableChannel: Schema.ServiceChannel | undefined;
     @property.literal()
-    award!: string;
+    award: string | undefined;
     @property.resource()
-    brand!: Schema.Brand | Schema.Organization;
+    brand: Schema.Brand | Schema.Organization | undefined;
     @property.resource()
-    broker!: Schema.Organization | Schema.Person;
+    broker: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    category!: Schema.Thing;
+    category: Schema.Thing | undefined;
     @property.literal({ path: schema.category })
-    categoryLiteral!: string;
+    categoryLiteral: string | undefined;
     @property.resource()
-    hasOfferCatalog!: Schema.OfferCatalog;
+    hasOfferCatalog: Schema.OfferCatalog | undefined;
     @property.resource()
-    hoursAvailable!: Schema.OpeningHoursSpecification;
+    hoursAvailable: Schema.OpeningHoursSpecification | undefined;
     @property.resource()
-    isRelatedTo!: Schema.Product | Schema.Service;
+    isRelatedTo: Schema.Product | Schema.Service | undefined;
     @property.resource()
-    isSimilarTo!: Schema.Product | Schema.Service;
+    isSimilarTo: Schema.Product | Schema.Service | undefined;
     @property.resource()
-    logo!: Schema.ImageObject;
+    logo: Schema.ImageObject | undefined;
     @property.resource()
-    offers!: Schema.Demand | Schema.Offer;
+    offers: Schema.Demand | Schema.Offer | undefined;
     @property.resource()
-    produces!: Schema.Thing;
+    produces: Schema.Thing | undefined;
     @property.resource()
-    provider!: Schema.Organization | Schema.Person;
+    provider: Schema.Organization | Schema.Person | undefined;
     @property.literal()
-    providerMobility!: string;
+    providerMobility: string | undefined;
     @property.resource()
-    review!: Schema.Review;
+    review: Schema.Review | undefined;
     @property.resource()
-    serviceArea!: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
+    serviceArea: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
     @property.resource()
-    serviceAudience!: Schema.Audience;
+    serviceAudience: Schema.Audience | undefined;
     @property.resource()
-    serviceOutput!: Schema.Thing;
+    serviceOutput: Schema.Thing | undefined;
     @property.literal()
-    serviceType!: string;
+    serviceType: string | undefined;
     @property({ path: schema.serviceType })
-    serviceTypeTerm!: RDF.Term;
+    serviceTypeTerm: RDF.Term | undefined;
     @property.literal()
-    slogan!: string;
+    slogan: string | undefined;
   }
   return ServiceClass
 }

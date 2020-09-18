@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { rdfs } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -6,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdfs from '.';
 
 export interface Resource extends RdfResource {
-  comment: string;
-  isDefinedBy: Rdfs.Resource;
-  label: string;
+  comment: string | undefined;
+  isDefinedBy: Rdfs.Resource | undefined;
+  label: string | undefined;
   member: Array<Rdfs.Resource>;
   seeAlso: Array<Rdfs.Resource>;
 }
@@ -17,11 +18,11 @@ export function ResourceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdfs)
   class ResourceClass extends Resource implements Resource {
     @property.literal()
-    comment!: string;
+    comment: string | undefined;
     @property.resource({ as: [ResourceMixin] })
-    isDefinedBy!: Rdfs.Resource;
+    isDefinedBy: Rdfs.Resource | undefined;
     @property.literal()
-    label!: string;
+    label: string | undefined;
     @property.resource({ values: 'array', as: [ResourceMixin] })
     member!: Array<Rdfs.Resource>;
     @property.resource({ values: 'array', as: [ResourceMixin] })

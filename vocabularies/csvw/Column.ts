@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -6,62 +7,62 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '.';
 
 export interface Column extends RdfResource {
-  aboutUrl: string;
-  datatype: Csvw.Datatype;
-  datatypeLiteral: string;
-  default: string;
-  lang: string;
-  name: string;
-  null: string;
-  ordered: boolean;
-  propertyUrl: string;
-  required: boolean;
-  separator: string;
-  suppressOutput: boolean;
-  textDirection: Csvw.Direction;
-  title: RDF.Term;
+  aboutUrl: string | undefined;
+  datatype: Csvw.Datatype | undefined;
+  datatypeLiteral: string | undefined;
+  default: string | undefined;
+  lang: string | undefined;
+  name: string | undefined;
+  null: string | undefined;
+  ordered: boolean | undefined;
+  propertyUrl: string | undefined;
+  required: boolean | undefined;
+  separator: string | undefined;
+  suppressOutput: boolean | undefined;
+  textDirection: Csvw.Direction | undefined;
+  title: RDF.Term | undefined;
   transformations: Array<Csvw.Transformation>;
-  valueUrl: string;
-  virtual: boolean;
+  valueUrl: string | undefined;
+  virtual: boolean | undefined;
 }
 
 export function ColumnMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class ColumnClass extends Resource implements Column {
     @property.literal()
-    aboutUrl!: string;
+    aboutUrl: string | undefined;
     @property.resource({ implicitTypes: [csvw.Datatype] })
-    datatype!: Csvw.Datatype;
+    datatype: Csvw.Datatype | undefined;
     @property.literal({ path: csvw.datatype })
-    datatypeLiteral!: string;
+    datatypeLiteral: string | undefined;
     @property.literal()
-    default!: string;
+    default: string | undefined;
     @property.literal()
-    lang!: string;
+    lang: string | undefined;
     @property.literal()
-    name!: string;
+    name: string | undefined;
     @property.literal()
-    null!: string;
+    null: string | undefined;
     @property.literal({ type: Boolean })
-    ordered!: boolean;
+    ordered: boolean | undefined;
     @property.literal()
-    propertyUrl!: string;
+    propertyUrl: string | undefined;
     @property.literal({ type: Boolean })
-    required!: boolean;
+    required: boolean | undefined;
     @property.literal()
-    separator!: string;
+    separator: string | undefined;
     @property.literal({ type: Boolean })
-    suppressOutput!: boolean;
+    suppressOutput: boolean | undefined;
     @property.resource({ implicitTypes: [csvw.Direction] })
-    textDirection!: Csvw.Direction;
+    textDirection: Csvw.Direction | undefined;
     @property()
-    title!: RDF.Term;
+    title: RDF.Term | undefined;
     @property.resource({ values: 'array', implicitTypes: [csvw.Transformation] })
     transformations!: Array<Csvw.Transformation>;
     @property.literal()
-    valueUrl!: string;
+    valueUrl: string | undefined;
     @property.literal({ type: Boolean })
-    virtual!: boolean;
+    virtual: boolean | undefined;
   }
   return ColumnClass
 }

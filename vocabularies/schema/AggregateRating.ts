@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { RatingMixin } from './Rating';
 
 export interface AggregateRating extends Schema.Rating, RdfResource {
-  itemReviewed: Schema.Thing;
-  ratingCount: number;
-  reviewCount: number;
+  itemReviewed: Schema.Thing | undefined;
+  ratingCount: number | undefined;
+  reviewCount: number | undefined;
 }
 
 export function AggregateRatingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AggregateRatingClass extends RatingMixin(Resource) implements AggregateRating {
     @property.resource()
-    itemReviewed!: Schema.Thing;
+    itemReviewed: Schema.Thing | undefined;
     @property.literal({ type: Number })
-    ratingCount!: number;
+    ratingCount: number | undefined;
     @property.literal({ type: Number })
-    reviewCount!: number;
+    reviewCount: number | undefined;
   }
   return AggregateRatingClass
 }

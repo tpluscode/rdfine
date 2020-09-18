@@ -10,9 +10,9 @@ import { IntangibleMixin } from './Intangible';
 export interface ItemList extends Schema.Intangible, RdfResource {
   itemListElement: Array<Schema.ListItem | Schema.Thing>;
   itemListElementLiteral: Array<string>;
-  itemListOrder: string;
-  itemListOrderTerm: Schema.ItemListOrderType;
-  numberOfItems: number;
+  itemListOrder: string | undefined;
+  itemListOrderTerm: Schema.ItemListOrderType | undefined;
+  numberOfItems: number | undefined;
 }
 
 export function ItemListMixin<Base extends Constructor>(Resource: Base) {
@@ -23,11 +23,11 @@ export function ItemListMixin<Base extends Constructor>(Resource: Base) {
     @property.literal({ path: schema.itemListElement, values: 'array' })
     itemListElementLiteral!: Array<string>;
     @property.literal()
-    itemListOrder!: string;
+    itemListOrder: string | undefined;
     @property({ path: schema.itemListOrder })
-    itemListOrderTerm!: Schema.ItemListOrderType;
+    itemListOrderTerm: Schema.ItemListOrderType | undefined;
     @property.literal({ type: Number })
-    numberOfItems!: number;
+    numberOfItems: number | undefined;
   }
   return ItemListClass
 }

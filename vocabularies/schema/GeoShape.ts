@@ -8,41 +8,41 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface GeoShape extends Schema.StructuredValue, RdfResource {
-  address: Schema.PostalAddress;
-  addressLiteral: string;
-  addressCountry: Schema.Country;
-  addressCountryLiteral: string;
-  box: string;
-  circle: string;
-  elevation: number | string;
-  line: string;
-  polygon: string;
-  postalCode: string;
+  address: Schema.PostalAddress | undefined;
+  addressLiteral: string | undefined;
+  addressCountry: Schema.Country | undefined;
+  addressCountryLiteral: string | undefined;
+  box: string | undefined;
+  circle: string | undefined;
+  elevation: number | string | undefined;
+  line: string | undefined;
+  polygon: string | undefined;
+  postalCode: string | undefined;
 }
 
 export function GeoShapeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GeoShapeClass extends StructuredValueMixin(Resource) implements GeoShape {
     @property.resource()
-    address!: Schema.PostalAddress;
+    address: Schema.PostalAddress | undefined;
     @property.literal({ path: schema.address })
-    addressLiteral!: string;
+    addressLiteral: string | undefined;
     @property.resource()
-    addressCountry!: Schema.Country;
+    addressCountry: Schema.Country | undefined;
     @property.literal({ path: schema.addressCountry })
-    addressCountryLiteral!: string;
+    addressCountryLiteral: string | undefined;
     @property.literal()
-    box!: string;
+    box: string | undefined;
     @property.literal()
-    circle!: string;
+    circle: string | undefined;
     @property.literal()
-    elevation!: number | string;
+    elevation: number | string | undefined;
     @property.literal()
-    line!: string;
+    line: string | undefined;
     @property.literal()
-    polygon!: string;
+    polygon: string | undefined;
     @property.literal()
-    postalCode!: string;
+    postalCode: string | undefined;
   }
   return GeoShapeClass
 }

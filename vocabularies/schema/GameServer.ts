@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface GameServer extends Schema.Intangible, RdfResource {
-  game: Schema.VideoGame;
-  playersOnline: number;
-  serverStatus: Schema.GameServerStatus;
+  game: Schema.VideoGame | undefined;
+  playersOnline: number | undefined;
+  serverStatus: Schema.GameServerStatus | undefined;
 }
 
 export function GameServerMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GameServerClass extends IntangibleMixin(Resource) implements GameServer {
     @property.resource()
-    game!: Schema.VideoGame;
+    game: Schema.VideoGame | undefined;
     @property.literal({ type: Number })
-    playersOnline!: number;
+    playersOnline: number | undefined;
     @property()
-    serverStatus!: Schema.GameServerStatus;
+    serverStatus: Schema.GameServerStatus | undefined;
   }
   return GameServerClass
 }

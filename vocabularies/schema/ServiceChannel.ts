@@ -8,38 +8,38 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface ServiceChannel extends Schema.Intangible, RdfResource {
-  availableLanguage: Schema.Language;
-  availableLanguageLiteral: string;
-  processingTime: Schema.Duration;
-  providesService: Schema.Service;
-  serviceLocation: Schema.Place;
-  servicePhone: Schema.ContactPoint;
-  servicePostalAddress: Schema.PostalAddress;
-  serviceSmsNumber: Schema.ContactPoint;
-  serviceUrl: RDF.NamedNode;
+  availableLanguage: Schema.Language | undefined;
+  availableLanguageLiteral: string | undefined;
+  processingTime: Schema.Duration | undefined;
+  providesService: Schema.Service | undefined;
+  serviceLocation: Schema.Place | undefined;
+  servicePhone: Schema.ContactPoint | undefined;
+  servicePostalAddress: Schema.PostalAddress | undefined;
+  serviceSmsNumber: Schema.ContactPoint | undefined;
+  serviceUrl: RDF.NamedNode | undefined;
 }
 
 export function ServiceChannelMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ServiceChannelClass extends IntangibleMixin(Resource) implements ServiceChannel {
     @property.resource()
-    availableLanguage!: Schema.Language;
+    availableLanguage: Schema.Language | undefined;
     @property.literal({ path: schema.availableLanguage })
-    availableLanguageLiteral!: string;
+    availableLanguageLiteral: string | undefined;
     @property.resource()
-    processingTime!: Schema.Duration;
+    processingTime: Schema.Duration | undefined;
     @property.resource()
-    providesService!: Schema.Service;
+    providesService: Schema.Service | undefined;
     @property.resource()
-    serviceLocation!: Schema.Place;
+    serviceLocation: Schema.Place | undefined;
     @property.resource()
-    servicePhone!: Schema.ContactPoint;
+    servicePhone: Schema.ContactPoint | undefined;
     @property.resource()
-    servicePostalAddress!: Schema.PostalAddress;
+    servicePostalAddress: Schema.PostalAddress | undefined;
     @property.resource()
-    serviceSmsNumber!: Schema.ContactPoint;
+    serviceSmsNumber: Schema.ContactPoint | undefined;
     @property()
-    serviceUrl!: RDF.NamedNode;
+    serviceUrl: RDF.NamedNode | undefined;
   }
   return ServiceChannelClass
 }

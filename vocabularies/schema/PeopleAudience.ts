@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { AudienceMixin } from './Audience';
 
 export interface PeopleAudience extends Schema.Audience, RdfResource {
-  requiredGender: string;
-  requiredMaxAge: number;
-  requiredMinAge: number;
-  suggestedGender: string;
-  suggestedMaxAge: number;
-  suggestedMinAge: number;
+  requiredGender: string | undefined;
+  requiredMaxAge: number | undefined;
+  requiredMinAge: number | undefined;
+  suggestedGender: string | undefined;
+  suggestedMaxAge: number | undefined;
+  suggestedMinAge: number | undefined;
 }
 
 export function PeopleAudienceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PeopleAudienceClass extends AudienceMixin(Resource) implements PeopleAudience {
     @property.literal()
-    requiredGender!: string;
+    requiredGender: string | undefined;
     @property.literal({ type: Number })
-    requiredMaxAge!: number;
+    requiredMaxAge: number | undefined;
     @property.literal({ type: Number })
-    requiredMinAge!: number;
+    requiredMinAge: number | undefined;
     @property.literal()
-    suggestedGender!: string;
+    suggestedGender: string | undefined;
     @property.literal({ type: Number })
-    suggestedMaxAge!: number;
+    suggestedMaxAge: number | undefined;
     @property.literal({ type: Number })
-    suggestedMinAge!: number;
+    suggestedMinAge: number | undefined;
   }
   return PeopleAudienceClass
 }

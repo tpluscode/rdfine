@@ -8,15 +8,15 @@ import type * as Hydra from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
 export interface Resource extends Rdfs.Resource, RdfResource {
-  apiDocumentation: Hydra.ApiDocumentation;
+  apiDocumentation: Hydra.ApiDocumentation | undefined;
   collection: Array<Hydra.Collection>;
-  first: Hydra.Resource;
-  freetextQuery: string;
-  last: Hydra.Resource;
-  next: Hydra.Resource;
+  first: Hydra.Resource | undefined;
+  freetextQuery: string | undefined;
+  last: Hydra.Resource | undefined;
+  next: Hydra.Resource | undefined;
   operation: Array<Hydra.Operation>;
-  previous: Hydra.Resource;
-  search: Hydra.IriTemplate;
+  previous: Hydra.Resource | undefined;
+  search: Hydra.IriTemplate | undefined;
   view: Array<Hydra.Resource>;
 }
 
@@ -24,23 +24,23 @@ export function ResourceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class ResourceClass extends Rdfs.ResourceMixin(Resource) implements Resource {
     @property.resource({ implicitTypes: [hydra.ApiDocumentation] })
-    apiDocumentation!: Hydra.ApiDocumentation;
+    apiDocumentation: Hydra.ApiDocumentation | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Collection] })
     collection!: Array<Hydra.Collection>;
     @property.resource({ as: [ResourceMixin] })
-    first!: Hydra.Resource;
+    first: Hydra.Resource | undefined;
     @property.literal()
-    freetextQuery!: string;
+    freetextQuery: string | undefined;
     @property.resource({ as: [ResourceMixin] })
-    last!: Hydra.Resource;
+    last: Hydra.Resource | undefined;
     @property.resource({ as: [ResourceMixin] })
-    next!: Hydra.Resource;
+    next: Hydra.Resource | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
     operation!: Array<Hydra.Operation>;
     @property.resource({ as: [ResourceMixin] })
-    previous!: Hydra.Resource;
+    previous: Hydra.Resource | undefined;
     @property.resource({ implicitTypes: [hydra.IriTemplate] })
-    search!: Hydra.IriTemplate;
+    search: Hydra.IriTemplate | undefined;
     @property.resource({ values: 'array', as: [ResourceMixin] })
     view!: Array<Hydra.Resource>;
   }

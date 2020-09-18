@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { QuantitativeValueDistributionMixin } from './QuantitativeValueDistribution';
 
 export interface MonetaryAmountDistribution extends Schema.QuantitativeValueDistribution, RdfResource {
-  currency: string;
+  currency: string | undefined;
 }
 
 export function MonetaryAmountDistributionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MonetaryAmountDistributionClass extends QuantitativeValueDistributionMixin(Resource) implements MonetaryAmountDistribution {
     @property.literal()
-    currency!: string;
+    currency: string | undefined;
   }
   return MonetaryAmountDistributionClass
 }

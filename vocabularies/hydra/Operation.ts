@@ -8,35 +8,35 @@ import type * as Hydra from '.';
 import { ResourceMixin } from './Resource';
 
 export interface Operation extends Hydra.Resource, RdfResource {
-  description: string;
-  expects: Hydra.Class | Hydra.Resource;
-  expectsHeader: string;
-  method: string;
+  description: string | undefined;
+  expects: Hydra.Class | Hydra.Resource | undefined;
+  expectsHeader: string | undefined;
+  method: string | undefined;
   possibleStatus: Array<Hydra.Status>;
-  returns: Hydra.Class | Hydra.Resource;
-  returnsHeader: string;
-  title: string;
+  returns: Hydra.Class | Hydra.Resource | undefined;
+  returnsHeader: string | undefined;
+  title: string | undefined;
 }
 
 export function OperationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class OperationClass extends ResourceMixin(Resource) implements Operation {
     @property.literal()
-    description!: string;
+    description: string | undefined;
     @property.resource()
-    expects!: Hydra.Class | Hydra.Resource;
+    expects: Hydra.Class | Hydra.Resource | undefined;
     @property.literal()
-    expectsHeader!: string;
+    expectsHeader: string | undefined;
     @property.literal()
-    method!: string;
+    method: string | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Status] })
     possibleStatus!: Array<Hydra.Status>;
     @property.resource()
-    returns!: Hydra.Class | Hydra.Resource;
+    returns: Hydra.Class | Hydra.Resource | undefined;
     @property.literal()
-    returnsHeader!: string;
+    returnsHeader: string | undefined;
     @property.literal()
-    title!: string;
+    title: string | undefined;
   }
   return OperationClass
 }

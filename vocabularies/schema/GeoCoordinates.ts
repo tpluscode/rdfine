@@ -8,35 +8,35 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface GeoCoordinates extends Schema.StructuredValue, RdfResource {
-  address: Schema.PostalAddress;
-  addressLiteral: string;
-  addressCountry: Schema.Country;
-  addressCountryLiteral: string;
-  elevation: number | string;
-  latitude: number | string;
-  longitude: number | string;
-  postalCode: string;
+  address: Schema.PostalAddress | undefined;
+  addressLiteral: string | undefined;
+  addressCountry: Schema.Country | undefined;
+  addressCountryLiteral: string | undefined;
+  elevation: number | string | undefined;
+  latitude: number | string | undefined;
+  longitude: number | string | undefined;
+  postalCode: string | undefined;
 }
 
 export function GeoCoordinatesMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GeoCoordinatesClass extends StructuredValueMixin(Resource) implements GeoCoordinates {
     @property.resource()
-    address!: Schema.PostalAddress;
+    address: Schema.PostalAddress | undefined;
     @property.literal({ path: schema.address })
-    addressLiteral!: string;
+    addressLiteral: string | undefined;
     @property.resource()
-    addressCountry!: Schema.Country;
+    addressCountry: Schema.Country | undefined;
     @property.literal({ path: schema.addressCountry })
-    addressCountryLiteral!: string;
+    addressCountryLiteral: string | undefined;
     @property.literal()
-    elevation!: number | string;
+    elevation: number | string | undefined;
     @property.literal()
-    latitude!: number | string;
+    latitude: number | string | undefined;
     @property.literal()
-    longitude!: number | string;
+    longitude: number | string | undefined;
     @property.literal()
-    postalCode!: string;
+    postalCode: string | undefined;
   }
   return GeoCoordinatesClass
 }

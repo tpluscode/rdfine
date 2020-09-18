@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { PlayActionMixin } from './PlayAction';
 
 export interface PerformAction extends Schema.PlayAction, RdfResource {
-  entertainmentBusiness: Schema.EntertainmentBusiness;
+  entertainmentBusiness: Schema.EntertainmentBusiness | undefined;
 }
 
 export function PerformActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PerformActionClass extends PlayActionMixin(Resource) implements PerformAction {
     @property.resource()
-    entertainmentBusiness!: Schema.EntertainmentBusiness;
+    entertainmentBusiness: Schema.EntertainmentBusiness | undefined;
   }
   return PerformActionClass
 }

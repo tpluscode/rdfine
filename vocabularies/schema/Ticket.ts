@@ -8,41 +8,41 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface Ticket extends Schema.Intangible, RdfResource {
-  dateIssued: Date;
-  issuedBy: Schema.Organization;
-  priceCurrency: string;
-  ticketedSeat: Schema.Seat;
-  ticketNumber: string;
-  ticketToken: string;
-  ticketTokenTerm: RDF.NamedNode;
-  totalPrice: Schema.PriceSpecification;
-  totalPriceLiteral: number | string;
-  underName: Schema.Organization | Schema.Person;
+  dateIssued: Date | undefined;
+  issuedBy: Schema.Organization | undefined;
+  priceCurrency: string | undefined;
+  ticketedSeat: Schema.Seat | undefined;
+  ticketNumber: string | undefined;
+  ticketToken: string | undefined;
+  ticketTokenTerm: RDF.NamedNode | undefined;
+  totalPrice: Schema.PriceSpecification | undefined;
+  totalPriceLiteral: number | string | undefined;
+  underName: Schema.Organization | Schema.Person | undefined;
 }
 
 export function TicketMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TicketClass extends IntangibleMixin(Resource) implements Ticket {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    dateIssued!: Date;
+    dateIssued: Date | undefined;
     @property.resource()
-    issuedBy!: Schema.Organization;
+    issuedBy: Schema.Organization | undefined;
     @property.literal()
-    priceCurrency!: string;
+    priceCurrency: string | undefined;
     @property.resource()
-    ticketedSeat!: Schema.Seat;
+    ticketedSeat: Schema.Seat | undefined;
     @property.literal()
-    ticketNumber!: string;
+    ticketNumber: string | undefined;
     @property.literal()
-    ticketToken!: string;
+    ticketToken: string | undefined;
     @property({ path: schema.ticketToken })
-    ticketTokenTerm!: RDF.NamedNode;
+    ticketTokenTerm: RDF.NamedNode | undefined;
     @property.resource()
-    totalPrice!: Schema.PriceSpecification;
+    totalPrice: Schema.PriceSpecification | undefined;
     @property.literal({ path: schema.totalPrice })
-    totalPriceLiteral!: number | string;
+    totalPriceLiteral: number | string | undefined;
     @property.resource()
-    underName!: Schema.Organization | Schema.Person;
+    underName: Schema.Organization | Schema.Person | undefined;
   }
   return TicketClass
 }

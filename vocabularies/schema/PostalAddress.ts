@@ -8,32 +8,32 @@ import type * as Schema from '.';
 import { ContactPointMixin } from './ContactPoint';
 
 export interface PostalAddress extends Schema.ContactPoint, RdfResource {
-  addressCountry: Schema.Country;
-  addressCountryLiteral: string;
-  addressLocality: string;
-  addressRegion: string;
-  postalCode: string;
-  postOfficeBoxNumber: string;
-  streetAddress: string;
+  addressCountry: Schema.Country | undefined;
+  addressCountryLiteral: string | undefined;
+  addressLocality: string | undefined;
+  addressRegion: string | undefined;
+  postalCode: string | undefined;
+  postOfficeBoxNumber: string | undefined;
+  streetAddress: string | undefined;
 }
 
 export function PostalAddressMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PostalAddressClass extends ContactPointMixin(Resource) implements PostalAddress {
     @property.resource()
-    addressCountry!: Schema.Country;
+    addressCountry: Schema.Country | undefined;
     @property.literal({ path: schema.addressCountry })
-    addressCountryLiteral!: string;
+    addressCountryLiteral: string | undefined;
     @property.literal()
-    addressLocality!: string;
+    addressLocality: string | undefined;
     @property.literal()
-    addressRegion!: string;
+    addressRegion: string | undefined;
     @property.literal()
-    postalCode!: string;
+    postalCode: string | undefined;
     @property.literal()
-    postOfficeBoxNumber!: string;
+    postOfficeBoxNumber: string | undefined;
     @property.literal()
-    streetAddress!: string;
+    streetAddress: string | undefined;
   }
   return PostalAddressClass
 }

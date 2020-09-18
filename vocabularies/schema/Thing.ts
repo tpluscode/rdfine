@@ -7,50 +7,50 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 
 export interface Thing extends RdfResource {
-  additionalType: RDF.NamedNode;
-  alternateName: string;
-  description: string;
-  disambiguatingDescription: string;
-  identifier: Schema.PropertyValue;
-  identifierLiteral: string;
-  image: Schema.ImageObject;
-  mainEntityOfPage: Schema.CreativeWork;
-  name: string;
-  potentialAction: Schema.Action;
-  sameAs: RDF.NamedNode;
-  subjectOf: Schema.CreativeWork | Schema.Event;
-  url: RDF.NamedNode;
+  additionalType: RDF.NamedNode | undefined;
+  alternateName: string | undefined;
+  description: string | undefined;
+  disambiguatingDescription: string | undefined;
+  identifier: Schema.PropertyValue | undefined;
+  identifierLiteral: string | undefined;
+  image: Schema.ImageObject | undefined;
+  mainEntityOfPage: Schema.CreativeWork | undefined;
+  name: string | undefined;
+  potentialAction: Schema.Action | undefined;
+  sameAs: RDF.NamedNode | undefined;
+  subjectOf: Schema.CreativeWork | Schema.Event | undefined;
+  url: RDF.NamedNode | undefined;
 }
 
 export function ThingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ThingClass extends Resource implements Thing {
     @property()
-    additionalType!: RDF.NamedNode;
+    additionalType: RDF.NamedNode | undefined;
     @property.literal()
-    alternateName!: string;
+    alternateName: string | undefined;
     @property.literal()
-    description!: string;
+    description: string | undefined;
     @property.literal()
-    disambiguatingDescription!: string;
+    disambiguatingDescription: string | undefined;
     @property.resource()
-    identifier!: Schema.PropertyValue;
+    identifier: Schema.PropertyValue | undefined;
     @property.literal({ path: schema.identifier })
-    identifierLiteral!: string;
+    identifierLiteral: string | undefined;
     @property.resource()
-    image!: Schema.ImageObject;
+    image: Schema.ImageObject | undefined;
     @property.resource()
-    mainEntityOfPage!: Schema.CreativeWork;
+    mainEntityOfPage: Schema.CreativeWork | undefined;
     @property.literal()
-    name!: string;
+    name: string | undefined;
     @property.resource()
-    potentialAction!: Schema.Action;
+    potentialAction: Schema.Action | undefined;
     @property()
-    sameAs!: RDF.NamedNode;
+    sameAs: RDF.NamedNode | undefined;
     @property.resource()
-    subjectOf!: Schema.CreativeWork | Schema.Event;
+    subjectOf: Schema.CreativeWork | Schema.Event | undefined;
     @property()
-    url!: RDF.NamedNode;
+    url: RDF.NamedNode | undefined;
   }
   return ThingClass
 }

@@ -8,77 +8,77 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface Order extends Schema.Intangible, RdfResource {
-  acceptedOffer: Schema.Offer;
-  billingAddress: Schema.PostalAddress;
-  broker: Schema.Organization | Schema.Person;
-  confirmationNumber: string;
-  customer: Schema.Organization | Schema.Person;
-  discount: number | string;
-  discountCode: string;
-  discountCurrency: string;
-  isGift: boolean;
-  merchant: Schema.Organization | Schema.Person;
-  orderDate: Date;
-  orderDelivery: Schema.ParcelDelivery;
-  orderedItem: Schema.OrderItem | Schema.Product | Schema.Service;
-  orderNumber: string;
-  orderStatus: Schema.OrderStatus;
-  partOfInvoice: Schema.Invoice;
-  paymentDue: Date;
-  paymentDueDate: Date;
-  paymentMethod: Schema.PaymentMethod;
-  paymentMethodId: string;
-  paymentUrl: RDF.NamedNode;
-  seller: Schema.Organization | Schema.Person;
+  acceptedOffer: Schema.Offer | undefined;
+  billingAddress: Schema.PostalAddress | undefined;
+  broker: Schema.Organization | Schema.Person | undefined;
+  confirmationNumber: string | undefined;
+  customer: Schema.Organization | Schema.Person | undefined;
+  discount: number | string | undefined;
+  discountCode: string | undefined;
+  discountCurrency: string | undefined;
+  isGift: boolean | undefined;
+  merchant: Schema.Organization | Schema.Person | undefined;
+  orderDate: Date | undefined;
+  orderDelivery: Schema.ParcelDelivery | undefined;
+  orderedItem: Schema.OrderItem | Schema.Product | Schema.Service | undefined;
+  orderNumber: string | undefined;
+  orderStatus: Schema.OrderStatus | undefined;
+  partOfInvoice: Schema.Invoice | undefined;
+  paymentDue: Date | undefined;
+  paymentDueDate: Date | undefined;
+  paymentMethod: Schema.PaymentMethod | undefined;
+  paymentMethodId: string | undefined;
+  paymentUrl: RDF.NamedNode | undefined;
+  seller: Schema.Organization | Schema.Person | undefined;
 }
 
 export function OrderMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OrderClass extends IntangibleMixin(Resource) implements Order {
     @property.resource()
-    acceptedOffer!: Schema.Offer;
+    acceptedOffer: Schema.Offer | undefined;
     @property.resource()
-    billingAddress!: Schema.PostalAddress;
+    billingAddress: Schema.PostalAddress | undefined;
     @property.resource()
-    broker!: Schema.Organization | Schema.Person;
+    broker: Schema.Organization | Schema.Person | undefined;
     @property.literal()
-    confirmationNumber!: string;
+    confirmationNumber: string | undefined;
     @property.resource()
-    customer!: Schema.Organization | Schema.Person;
+    customer: Schema.Organization | Schema.Person | undefined;
     @property.literal()
-    discount!: number | string;
+    discount: number | string | undefined;
     @property.literal()
-    discountCode!: string;
+    discountCode: string | undefined;
     @property.literal()
-    discountCurrency!: string;
+    discountCurrency: string | undefined;
     @property.literal({ type: Boolean })
-    isGift!: boolean;
+    isGift: boolean | undefined;
     @property.resource()
-    merchant!: Schema.Organization | Schema.Person;
+    merchant: Schema.Organization | Schema.Person | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    orderDate!: Date;
+    orderDate: Date | undefined;
     @property.resource()
-    orderDelivery!: Schema.ParcelDelivery;
+    orderDelivery: Schema.ParcelDelivery | undefined;
     @property.resource()
-    orderedItem!: Schema.OrderItem | Schema.Product | Schema.Service;
+    orderedItem: Schema.OrderItem | Schema.Product | Schema.Service | undefined;
     @property.literal()
-    orderNumber!: string;
+    orderNumber: string | undefined;
     @property()
-    orderStatus!: Schema.OrderStatus;
+    orderStatus: Schema.OrderStatus | undefined;
     @property.resource()
-    partOfInvoice!: Schema.Invoice;
+    partOfInvoice: Schema.Invoice | undefined;
     @property.literal({ type: Date })
-    paymentDue!: Date;
+    paymentDue: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    paymentDueDate!: Date;
+    paymentDueDate: Date | undefined;
     @property()
-    paymentMethod!: Schema.PaymentMethod;
+    paymentMethod: Schema.PaymentMethod | undefined;
     @property.literal()
-    paymentMethodId!: string;
+    paymentMethodId: string | undefined;
     @property()
-    paymentUrl!: RDF.NamedNode;
+    paymentUrl: RDF.NamedNode | undefined;
     @property.resource()
-    seller!: Schema.Organization | Schema.Person;
+    seller: Schema.Organization | Schema.Person | undefined;
   }
   return OrderClass
 }

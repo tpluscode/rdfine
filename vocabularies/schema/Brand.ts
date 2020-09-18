@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface Brand extends Schema.Intangible, RdfResource {
-  aggregateRating: Schema.AggregateRating;
-  logo: Schema.ImageObject;
-  review: Schema.Review;
-  slogan: string;
+  aggregateRating: Schema.AggregateRating | undefined;
+  logo: Schema.ImageObject | undefined;
+  review: Schema.Review | undefined;
+  slogan: string | undefined;
 }
 
 export function BrandMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BrandClass extends IntangibleMixin(Resource) implements Brand {
     @property.resource()
-    aggregateRating!: Schema.AggregateRating;
+    aggregateRating: Schema.AggregateRating | undefined;
     @property.resource()
-    logo!: Schema.ImageObject;
+    logo: Schema.ImageObject | undefined;
     @property.resource()
-    review!: Schema.Review;
+    review: Schema.Review | undefined;
     @property.literal()
-    slogan!: string;
+    slogan: string | undefined;
   }
   return BrandClass
 }

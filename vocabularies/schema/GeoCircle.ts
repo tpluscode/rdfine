@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { GeoShapeMixin } from './GeoShape';
 
 export interface GeoCircle extends Schema.GeoShape, RdfResource {
-  geoMidpoint: Schema.GeoCoordinates;
-  geoRadius: Schema.Distance;
-  geoRadiusLiteral: number | string;
+  geoMidpoint: Schema.GeoCoordinates | undefined;
+  geoRadius: Schema.Distance | undefined;
+  geoRadiusLiteral: number | string | undefined;
 }
 
 export function GeoCircleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GeoCircleClass extends GeoShapeMixin(Resource) implements GeoCircle {
     @property.resource()
-    geoMidpoint!: Schema.GeoCoordinates;
+    geoMidpoint: Schema.GeoCoordinates | undefined;
     @property.resource()
-    geoRadius!: Schema.Distance;
+    geoRadius: Schema.Distance | undefined;
     @property.literal({ path: schema.geoRadius })
-    geoRadiusLiteral!: number | string;
+    geoRadiusLiteral: number | string | undefined;
   }
   return GeoCircleClass
 }

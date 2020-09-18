@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { ReservationMixin } from './Reservation';
 
 export interface RentalCarReservation extends Schema.Reservation, RdfResource {
-  dropoffLocation: Schema.Place;
-  dropoffTime: Date;
-  pickupLocation: Schema.Place;
-  pickupTime: Date;
+  dropoffLocation: Schema.Place | undefined;
+  dropoffTime: Date | undefined;
+  pickupLocation: Schema.Place | undefined;
+  pickupTime: Date | undefined;
 }
 
 export function RentalCarReservationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RentalCarReservationClass extends ReservationMixin(Resource) implements RentalCarReservation {
     @property.resource()
-    dropoffLocation!: Schema.Place;
+    dropoffLocation: Schema.Place | undefined;
     @property.literal({ type: Date })
-    dropoffTime!: Date;
+    dropoffTime: Date | undefined;
     @property.resource()
-    pickupLocation!: Schema.Place;
+    pickupLocation: Schema.Place | undefined;
     @property.literal({ type: Date })
-    pickupTime!: Date;
+    pickupTime: Date | undefined;
   }
   return RentalCarReservationClass
 }

@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { EventMixin } from './Event';
 
 export interface SportsEvent extends Schema.Event, RdfResource {
-  awayTeam: Schema.Person | Schema.SportsTeam;
-  competitor: Schema.Person | Schema.SportsTeam;
-  homeTeam: Schema.Person | Schema.SportsTeam;
+  awayTeam: Schema.Person | Schema.SportsTeam | undefined;
+  competitor: Schema.Person | Schema.SportsTeam | undefined;
+  homeTeam: Schema.Person | Schema.SportsTeam | undefined;
 }
 
 export function SportsEventMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SportsEventClass extends EventMixin(Resource) implements SportsEvent {
     @property.resource()
-    awayTeam!: Schema.Person | Schema.SportsTeam;
+    awayTeam: Schema.Person | Schema.SportsTeam | undefined;
     @property.resource()
-    competitor!: Schema.Person | Schema.SportsTeam;
+    competitor: Schema.Person | Schema.SportsTeam | undefined;
     @property.resource()
-    homeTeam!: Schema.Person | Schema.SportsTeam;
+    homeTeam: Schema.Person | Schema.SportsTeam | undefined;
   }
   return SportsEventClass
 }

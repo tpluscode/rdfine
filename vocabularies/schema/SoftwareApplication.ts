@@ -8,107 +8,107 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface SoftwareApplication extends Schema.CreativeWork, RdfResource {
-  applicationCategory: string;
-  applicationCategoryTerm: RDF.NamedNode;
-  applicationSubCategory: string;
-  applicationSubCategoryTerm: RDF.NamedNode;
-  applicationSuite: string;
-  availableOnDevice: string;
-  countriesNotSupported: string;
-  countriesSupported: string;
-  device: string;
-  downloadUrl: RDF.NamedNode;
-  featureList: string;
-  featureListTerm: RDF.NamedNode;
-  fileSize: string;
-  installUrl: RDF.NamedNode;
-  memoryRequirements: string;
-  memoryRequirementsTerm: RDF.NamedNode;
-  operatingSystem: string;
-  permissions: string;
-  processorRequirements: string;
-  releaseNotes: string;
-  releaseNotesTerm: RDF.NamedNode;
-  requirements: string;
-  requirementsTerm: RDF.NamedNode;
-  screenshot: Schema.ImageObject;
-  softwareAddOn: Schema.SoftwareApplication;
-  softwareHelp: Schema.CreativeWork;
-  softwareRequirements: string;
-  softwareRequirementsTerm: RDF.NamedNode;
-  softwareVersion: string;
-  storageRequirements: string;
-  storageRequirementsTerm: RDF.NamedNode;
-  supportingData: Schema.DataFeed;
+  applicationCategory: string | undefined;
+  applicationCategoryTerm: RDF.NamedNode | undefined;
+  applicationSubCategory: string | undefined;
+  applicationSubCategoryTerm: RDF.NamedNode | undefined;
+  applicationSuite: string | undefined;
+  availableOnDevice: string | undefined;
+  countriesNotSupported: string | undefined;
+  countriesSupported: string | undefined;
+  device: string | undefined;
+  downloadUrl: RDF.NamedNode | undefined;
+  featureList: string | undefined;
+  featureListTerm: RDF.NamedNode | undefined;
+  fileSize: string | undefined;
+  installUrl: RDF.NamedNode | undefined;
+  memoryRequirements: string | undefined;
+  memoryRequirementsTerm: RDF.NamedNode | undefined;
+  operatingSystem: string | undefined;
+  permissions: string | undefined;
+  processorRequirements: string | undefined;
+  releaseNotes: string | undefined;
+  releaseNotesTerm: RDF.NamedNode | undefined;
+  requirements: string | undefined;
+  requirementsTerm: RDF.NamedNode | undefined;
+  screenshot: Schema.ImageObject | undefined;
+  softwareAddOn: Schema.SoftwareApplication | undefined;
+  softwareHelp: Schema.CreativeWork | undefined;
+  softwareRequirements: string | undefined;
+  softwareRequirementsTerm: RDF.NamedNode | undefined;
+  softwareVersion: string | undefined;
+  storageRequirements: string | undefined;
+  storageRequirementsTerm: RDF.NamedNode | undefined;
+  supportingData: Schema.DataFeed | undefined;
 }
 
 export function SoftwareApplicationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SoftwareApplicationClass extends CreativeWorkMixin(Resource) implements SoftwareApplication {
     @property.literal()
-    applicationCategory!: string;
+    applicationCategory: string | undefined;
     @property({ path: schema.applicationCategory })
-    applicationCategoryTerm!: RDF.NamedNode;
+    applicationCategoryTerm: RDF.NamedNode | undefined;
     @property.literal()
-    applicationSubCategory!: string;
+    applicationSubCategory: string | undefined;
     @property({ path: schema.applicationSubCategory })
-    applicationSubCategoryTerm!: RDF.NamedNode;
+    applicationSubCategoryTerm: RDF.NamedNode | undefined;
     @property.literal()
-    applicationSuite!: string;
+    applicationSuite: string | undefined;
     @property.literal()
-    availableOnDevice!: string;
+    availableOnDevice: string | undefined;
     @property.literal()
-    countriesNotSupported!: string;
+    countriesNotSupported: string | undefined;
     @property.literal()
-    countriesSupported!: string;
+    countriesSupported: string | undefined;
     @property.literal()
-    device!: string;
+    device: string | undefined;
     @property()
-    downloadUrl!: RDF.NamedNode;
+    downloadUrl: RDF.NamedNode | undefined;
     @property.literal()
-    featureList!: string;
+    featureList: string | undefined;
     @property({ path: schema.featureList })
-    featureListTerm!: RDF.NamedNode;
+    featureListTerm: RDF.NamedNode | undefined;
     @property.literal()
-    fileSize!: string;
+    fileSize: string | undefined;
     @property()
-    installUrl!: RDF.NamedNode;
+    installUrl: RDF.NamedNode | undefined;
     @property.literal()
-    memoryRequirements!: string;
+    memoryRequirements: string | undefined;
     @property({ path: schema.memoryRequirements })
-    memoryRequirementsTerm!: RDF.NamedNode;
+    memoryRequirementsTerm: RDF.NamedNode | undefined;
     @property.literal()
-    operatingSystem!: string;
+    operatingSystem: string | undefined;
     @property.literal()
-    permissions!: string;
+    permissions: string | undefined;
     @property.literal()
-    processorRequirements!: string;
+    processorRequirements: string | undefined;
     @property.literal()
-    releaseNotes!: string;
+    releaseNotes: string | undefined;
     @property({ path: schema.releaseNotes })
-    releaseNotesTerm!: RDF.NamedNode;
+    releaseNotesTerm: RDF.NamedNode | undefined;
     @property.literal()
-    requirements!: string;
+    requirements: string | undefined;
     @property({ path: schema.requirements })
-    requirementsTerm!: RDF.NamedNode;
+    requirementsTerm: RDF.NamedNode | undefined;
     @property.resource()
-    screenshot!: Schema.ImageObject;
+    screenshot: Schema.ImageObject | undefined;
     @property.resource()
-    softwareAddOn!: Schema.SoftwareApplication;
+    softwareAddOn: Schema.SoftwareApplication | undefined;
     @property.resource()
-    softwareHelp!: Schema.CreativeWork;
+    softwareHelp: Schema.CreativeWork | undefined;
     @property.literal()
-    softwareRequirements!: string;
+    softwareRequirements: string | undefined;
     @property({ path: schema.softwareRequirements })
-    softwareRequirementsTerm!: RDF.NamedNode;
+    softwareRequirementsTerm: RDF.NamedNode | undefined;
     @property.literal()
-    softwareVersion!: string;
+    softwareVersion: string | undefined;
     @property.literal()
-    storageRequirements!: string;
+    storageRequirements: string | undefined;
     @property({ path: schema.storageRequirements })
-    storageRequirementsTerm!: RDF.NamedNode;
+    storageRequirementsTerm: RDF.NamedNode | undefined;
     @property.resource()
-    supportingData!: Schema.DataFeed;
+    supportingData: Schema.DataFeed | undefined;
   }
   return SoftwareApplicationClass
 }

@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface MediaSubscription extends Schema.Intangible, RdfResource {
-  authenticator: Schema.Organization;
-  expectsAcceptanceOf: Schema.Offer;
+  authenticator: Schema.Organization | undefined;
+  expectsAcceptanceOf: Schema.Offer | undefined;
 }
 
 export function MediaSubscriptionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MediaSubscriptionClass extends IntangibleMixin(Resource) implements MediaSubscription {
     @property.resource()
-    authenticator!: Schema.Organization;
+    authenticator: Schema.Organization | undefined;
     @property.resource()
-    expectsAcceptanceOf!: Schema.Offer;
+    expectsAcceptanceOf: Schema.Offer | undefined;
   }
   return MediaSubscriptionClass
 }

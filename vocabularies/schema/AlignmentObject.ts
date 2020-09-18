@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface AlignmentObject extends Schema.Intangible, RdfResource {
-  alignmentType: string;
-  educationalFramework: string;
-  targetDescription: string;
-  targetName: string;
-  targetUrl: RDF.NamedNode;
+  alignmentType: string | undefined;
+  educationalFramework: string | undefined;
+  targetDescription: string | undefined;
+  targetName: string | undefined;
+  targetUrl: RDF.NamedNode | undefined;
 }
 
 export function AlignmentObjectMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AlignmentObjectClass extends IntangibleMixin(Resource) implements AlignmentObject {
     @property.literal()
-    alignmentType!: string;
+    alignmentType: string | undefined;
     @property.literal()
-    educationalFramework!: string;
+    educationalFramework: string | undefined;
     @property.literal()
-    targetDescription!: string;
+    targetDescription: string | undefined;
     @property.literal()
-    targetName!: string;
+    targetName: string | undefined;
     @property()
-    targetUrl!: RDF.NamedNode;
+    targetUrl: RDF.NamedNode | undefined;
   }
   return AlignmentObjectClass
 }

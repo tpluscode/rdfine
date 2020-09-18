@@ -8,53 +8,53 @@ import type * as Schema from '.';
 import { CreativeWorkSeriesMixin } from './CreativeWorkSeries';
 
 export interface RadioSeries extends Schema.CreativeWorkSeries, RdfResource {
-  actor: Schema.Person;
-  actors: Schema.Person;
-  containsSeason: Schema.CreativeWorkSeason;
-  director: Schema.Person;
-  directors: Schema.Person;
-  episode: Schema.Episode;
-  episodes: Schema.Episode;
-  musicBy: Schema.MusicGroup | Schema.Person;
-  numberOfEpisodes: number;
-  numberOfSeasons: number;
-  productionCompany: Schema.Organization;
-  season: Schema.CreativeWorkSeason;
-  seasons: Schema.CreativeWorkSeason;
-  trailer: Schema.VideoObject;
+  actor: Schema.Person | undefined;
+  actors: Schema.Person | undefined;
+  containsSeason: Schema.CreativeWorkSeason | undefined;
+  director: Schema.Person | undefined;
+  directors: Schema.Person | undefined;
+  episode: Schema.Episode | undefined;
+  episodes: Schema.Episode | undefined;
+  musicBy: Schema.MusicGroup | Schema.Person | undefined;
+  numberOfEpisodes: number | undefined;
+  numberOfSeasons: number | undefined;
+  productionCompany: Schema.Organization | undefined;
+  season: Schema.CreativeWorkSeason | undefined;
+  seasons: Schema.CreativeWorkSeason | undefined;
+  trailer: Schema.VideoObject | undefined;
 }
 
 export function RadioSeriesMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RadioSeriesClass extends CreativeWorkSeriesMixin(Resource) implements RadioSeries {
     @property.resource()
-    actor!: Schema.Person;
+    actor: Schema.Person | undefined;
     @property.resource()
-    actors!: Schema.Person;
+    actors: Schema.Person | undefined;
     @property.resource()
-    containsSeason!: Schema.CreativeWorkSeason;
+    containsSeason: Schema.CreativeWorkSeason | undefined;
     @property.resource()
-    director!: Schema.Person;
+    director: Schema.Person | undefined;
     @property.resource()
-    directors!: Schema.Person;
+    directors: Schema.Person | undefined;
     @property.resource()
-    episode!: Schema.Episode;
+    episode: Schema.Episode | undefined;
     @property.resource()
-    episodes!: Schema.Episode;
+    episodes: Schema.Episode | undefined;
     @property.resource()
-    musicBy!: Schema.MusicGroup | Schema.Person;
+    musicBy: Schema.MusicGroup | Schema.Person | undefined;
     @property.literal({ type: Number })
-    numberOfEpisodes!: number;
+    numberOfEpisodes: number | undefined;
     @property.literal({ type: Number })
-    numberOfSeasons!: number;
+    numberOfSeasons: number | undefined;
     @property.resource()
-    productionCompany!: Schema.Organization;
+    productionCompany: Schema.Organization | undefined;
     @property.resource()
-    season!: Schema.CreativeWorkSeason;
+    season: Schema.CreativeWorkSeason | undefined;
     @property.resource()
-    seasons!: Schema.CreativeWorkSeason;
+    seasons: Schema.CreativeWorkSeason | undefined;
     @property.resource()
-    trailer!: Schema.VideoObject;
+    trailer: Schema.VideoObject | undefined;
   }
   return RadioSeriesClass
 }

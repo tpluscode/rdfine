@@ -9,26 +9,26 @@ import { OrganizationMixin } from './Organization';
 import { PlaceMixin } from './Place';
 
 export interface LocalBusiness extends Schema.Organization, Schema.Place, RdfResource {
-  branchOf: Schema.Organization;
-  currenciesAccepted: string;
-  openingHours: string;
-  paymentAccepted: string;
-  priceRange: string;
+  branchOf: Schema.Organization | undefined;
+  currenciesAccepted: string | undefined;
+  openingHours: string | undefined;
+  paymentAccepted: string | undefined;
+  priceRange: string | undefined;
 }
 
 export function LocalBusinessMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LocalBusinessClass extends PlaceMixin(OrganizationMixin(Resource)) implements LocalBusiness {
     @property.resource()
-    branchOf!: Schema.Organization;
+    branchOf: Schema.Organization | undefined;
     @property.literal()
-    currenciesAccepted!: string;
+    currenciesAccepted: string | undefined;
     @property.literal()
-    openingHours!: string;
+    openingHours: string | undefined;
     @property.literal()
-    paymentAccepted!: string;
+    paymentAccepted: string | undefined;
     @property.literal()
-    priceRange!: string;
+    priceRange: string | undefined;
   }
   return LocalBusinessClass
 }

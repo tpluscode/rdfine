@@ -8,38 +8,38 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Clip extends Schema.CreativeWork, RdfResource {
-  actor: Schema.Person;
-  actors: Schema.Person;
-  clipNumber: number | string;
-  director: Schema.Person;
-  directors: Schema.Person;
-  musicBy: Schema.MusicGroup | Schema.Person;
-  partOfEpisode: Schema.Episode;
-  partOfSeason: Schema.CreativeWorkSeason;
-  partOfSeries: Schema.CreativeWorkSeries;
+  actor: Schema.Person | undefined;
+  actors: Schema.Person | undefined;
+  clipNumber: number | string | undefined;
+  director: Schema.Person | undefined;
+  directors: Schema.Person | undefined;
+  musicBy: Schema.MusicGroup | Schema.Person | undefined;
+  partOfEpisode: Schema.Episode | undefined;
+  partOfSeason: Schema.CreativeWorkSeason | undefined;
+  partOfSeries: Schema.CreativeWorkSeries | undefined;
 }
 
 export function ClipMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ClipClass extends CreativeWorkMixin(Resource) implements Clip {
     @property.resource()
-    actor!: Schema.Person;
+    actor: Schema.Person | undefined;
     @property.resource()
-    actors!: Schema.Person;
+    actors: Schema.Person | undefined;
     @property.literal()
-    clipNumber!: number | string;
+    clipNumber: number | string | undefined;
     @property.resource()
-    director!: Schema.Person;
+    director: Schema.Person | undefined;
     @property.resource()
-    directors!: Schema.Person;
+    directors: Schema.Person | undefined;
     @property.resource()
-    musicBy!: Schema.MusicGroup | Schema.Person;
+    musicBy: Schema.MusicGroup | Schema.Person | undefined;
     @property.resource()
-    partOfEpisode!: Schema.Episode;
+    partOfEpisode: Schema.Episode | undefined;
     @property.resource()
-    partOfSeason!: Schema.CreativeWorkSeason;
+    partOfSeason: Schema.CreativeWorkSeason | undefined;
     @property.resource()
-    partOfSeries!: Schema.CreativeWorkSeries;
+    partOfSeries: Schema.CreativeWorkSeries | undefined;
   }
   return ClipClass
 }

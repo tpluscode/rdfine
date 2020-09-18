@@ -8,35 +8,35 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface SoftwareSourceCode extends Schema.CreativeWork, RdfResource {
-  codeRepository: RDF.NamedNode;
-  codeSampleType: string;
-  programmingLanguage: Schema.ComputerLanguage;
-  programmingLanguageLiteral: string;
-  runtime: string;
-  runtimePlatform: string;
-  sampleType: string;
-  targetProduct: Schema.SoftwareApplication;
+  codeRepository: RDF.NamedNode | undefined;
+  codeSampleType: string | undefined;
+  programmingLanguage: Schema.ComputerLanguage | undefined;
+  programmingLanguageLiteral: string | undefined;
+  runtime: string | undefined;
+  runtimePlatform: string | undefined;
+  sampleType: string | undefined;
+  targetProduct: Schema.SoftwareApplication | undefined;
 }
 
 export function SoftwareSourceCodeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SoftwareSourceCodeClass extends CreativeWorkMixin(Resource) implements SoftwareSourceCode {
     @property()
-    codeRepository!: RDF.NamedNode;
+    codeRepository: RDF.NamedNode | undefined;
     @property.literal()
-    codeSampleType!: string;
+    codeSampleType: string | undefined;
     @property.resource()
-    programmingLanguage!: Schema.ComputerLanguage;
+    programmingLanguage: Schema.ComputerLanguage | undefined;
     @property.literal({ path: schema.programmingLanguage })
-    programmingLanguageLiteral!: string;
+    programmingLanguageLiteral: string | undefined;
     @property.literal()
-    runtime!: string;
+    runtime: string | undefined;
     @property.literal()
-    runtimePlatform!: string;
+    runtimePlatform: string | undefined;
     @property.literal()
-    sampleType!: string;
+    sampleType: string | undefined;
     @property.resource()
-    targetProduct!: Schema.SoftwareApplication;
+    targetProduct: Schema.SoftwareApplication | undefined;
   }
   return SoftwareSourceCodeClass
 }

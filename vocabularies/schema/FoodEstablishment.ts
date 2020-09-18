@@ -8,35 +8,35 @@ import type * as Schema from '.';
 import { LocalBusinessMixin } from './LocalBusiness';
 
 export interface FoodEstablishment extends Schema.LocalBusiness, RdfResource {
-  acceptsReservations: boolean | string;
-  acceptsReservationsTerm: RDF.NamedNode;
-  hasMenu: Schema.Menu;
-  hasMenuLiteral: string;
-  menu: Schema.Menu;
-  menuLiteral: string;
-  servesCuisine: string;
-  starRating: Schema.Rating;
+  acceptsReservations: boolean | string | undefined;
+  acceptsReservationsTerm: RDF.NamedNode | undefined;
+  hasMenu: Schema.Menu | undefined;
+  hasMenuLiteral: string | undefined;
+  menu: Schema.Menu | undefined;
+  menuLiteral: string | undefined;
+  servesCuisine: string | undefined;
+  starRating: Schema.Rating | undefined;
 }
 
 export function FoodEstablishmentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class FoodEstablishmentClass extends LocalBusinessMixin(Resource) implements FoodEstablishment {
     @property.literal()
-    acceptsReservations!: boolean | string;
+    acceptsReservations: boolean | string | undefined;
     @property({ path: schema.acceptsReservations })
-    acceptsReservationsTerm!: RDF.NamedNode;
+    acceptsReservationsTerm: RDF.NamedNode | undefined;
     @property.resource()
-    hasMenu!: Schema.Menu;
+    hasMenu: Schema.Menu | undefined;
     @property.literal({ path: schema.hasMenu })
-    hasMenuLiteral!: string;
+    hasMenuLiteral: string | undefined;
     @property.resource()
-    menu!: Schema.Menu;
+    menu: Schema.Menu | undefined;
     @property.literal({ path: schema.menu })
-    menuLiteral!: string;
+    menuLiteral: string | undefined;
     @property.literal()
-    servesCuisine!: string;
+    servesCuisine: string | undefined;
     @property.resource()
-    starRating!: Schema.Rating;
+    starRating: Schema.Rating | undefined;
   }
   return FoodEstablishmentClass
 }

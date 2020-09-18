@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { CreateActionMixin } from './CreateAction';
 
 export interface CookAction extends Schema.CreateAction, RdfResource {
-  foodEstablishment: Schema.FoodEstablishment | Schema.Place;
-  foodEvent: Schema.FoodEvent;
-  recipe: Schema.Recipe;
+  foodEstablishment: Schema.FoodEstablishment | Schema.Place | undefined;
+  foodEvent: Schema.FoodEvent | undefined;
+  recipe: Schema.Recipe | undefined;
 }
 
 export function CookActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CookActionClass extends CreateActionMixin(Resource) implements CookAction {
     @property.resource()
-    foodEstablishment!: Schema.FoodEstablishment | Schema.Place;
+    foodEstablishment: Schema.FoodEstablishment | Schema.Place | undefined;
     @property.resource()
-    foodEvent!: Schema.FoodEvent;
+    foodEvent: Schema.FoodEvent | undefined;
     @property.resource()
-    recipe!: Schema.Recipe;
+    recipe: Schema.Recipe | undefined;
   }
   return CookActionClass
 }

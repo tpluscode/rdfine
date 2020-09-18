@@ -9,20 +9,20 @@ import { CreativeWorkMixin } from './CreativeWork';
 import { SeriesMixin } from './Series';
 
 export interface CreativeWorkSeries extends Schema.CreativeWork, Schema.Series, RdfResource {
-  endDate: Date;
-  issn: string;
-  startDate: Date;
+  endDate: Date | undefined;
+  issn: string | undefined;
+  startDate: Date | undefined;
 }
 
 export function CreativeWorkSeriesMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CreativeWorkSeriesClass extends SeriesMixin(CreativeWorkMixin(Resource)) implements CreativeWorkSeries {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    endDate!: Date;
+    endDate: Date | undefined;
     @property.literal()
-    issn!: string;
+    issn: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    startDate!: Date;
+    startDate: Date | undefined;
   }
   return CreativeWorkSeriesClass
 }

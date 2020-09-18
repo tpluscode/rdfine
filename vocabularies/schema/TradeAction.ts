@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { ActionMixin } from './Action';
 
 export interface TradeAction extends Schema.Action, RdfResource {
-  price: number | string;
-  priceCurrency: string;
-  priceSpecification: Schema.PriceSpecification;
+  price: number | string | undefined;
+  priceCurrency: string | undefined;
+  priceSpecification: Schema.PriceSpecification | undefined;
 }
 
 export function TradeActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TradeActionClass extends ActionMixin(Resource) implements TradeAction {
     @property.literal()
-    price!: number | string;
+    price: number | string | undefined;
     @property.literal()
-    priceCurrency!: string;
+    priceCurrency: string | undefined;
     @property.resource()
-    priceSpecification!: Schema.PriceSpecification;
+    priceSpecification: Schema.PriceSpecification | undefined;
   }
   return TradeActionClass
 }

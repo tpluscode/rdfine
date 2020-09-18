@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { SoftwareApplicationMixin } from './SoftwareApplication';
 
 export interface MobileApplication extends Schema.SoftwareApplication, RdfResource {
-  carrierRequirements: string;
+  carrierRequirements: string | undefined;
 }
 
 export function MobileApplicationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MobileApplicationClass extends SoftwareApplicationMixin(Resource) implements MobileApplication {
     @property.literal()
-    carrierRequirements!: string;
+    carrierRequirements: string | undefined;
   }
   return MobileApplicationClass
 }

@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { PriceSpecificationMixin } from './PriceSpecification';
 
 export interface CompoundPriceSpecification extends Schema.PriceSpecification, RdfResource {
-  priceComponent: Schema.UnitPriceSpecification;
+  priceComponent: Schema.UnitPriceSpecification | undefined;
 }
 
 export function CompoundPriceSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CompoundPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements CompoundPriceSpecification {
     @property.resource()
-    priceComponent!: Schema.UnitPriceSpecification;
+    priceComponent: Schema.UnitPriceSpecification | undefined;
   }
   return CompoundPriceSpecificationClass
 }

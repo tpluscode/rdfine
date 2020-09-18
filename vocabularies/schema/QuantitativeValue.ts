@@ -8,38 +8,38 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface QuantitativeValue extends Schema.StructuredValue, RdfResource {
-  additionalProperty: Schema.PropertyValue;
-  maxValue: number;
-  minValue: number;
-  unitCode: string;
-  unitCodeTerm: RDF.NamedNode;
-  unitText: string;
-  value: Schema.StructuredValue;
-  valueLiteral: boolean | number | string;
-  valueReference: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue;
+  additionalProperty: Schema.PropertyValue | undefined;
+  maxValue: number | undefined;
+  minValue: number | undefined;
+  unitCode: string | undefined;
+  unitCodeTerm: RDF.NamedNode | undefined;
+  unitText: string | undefined;
+  value: Schema.StructuredValue | undefined;
+  valueLiteral: boolean | number | string | undefined;
+  valueReference: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue | undefined;
 }
 
 export function QuantitativeValueMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class QuantitativeValueClass extends StructuredValueMixin(Resource) implements QuantitativeValue {
     @property.resource()
-    additionalProperty!: Schema.PropertyValue;
+    additionalProperty: Schema.PropertyValue | undefined;
     @property.literal({ type: Number })
-    maxValue!: number;
+    maxValue: number | undefined;
     @property.literal({ type: Number })
-    minValue!: number;
+    minValue: number | undefined;
     @property.literal()
-    unitCode!: string;
+    unitCode: string | undefined;
     @property({ path: schema.unitCode })
-    unitCodeTerm!: RDF.NamedNode;
+    unitCodeTerm: RDF.NamedNode | undefined;
     @property.literal()
-    unitText!: string;
+    unitText: string | undefined;
     @property.resource()
-    value!: Schema.StructuredValue;
+    value: Schema.StructuredValue | undefined;
     @property.literal({ path: schema.value })
-    valueLiteral!: boolean | number | string;
+    valueLiteral: boolean | number | string | undefined;
     @property.resource()
-    valueReference!: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue;
+    valueReference: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue | undefined;
   }
   return QuantitativeValueClass
 }

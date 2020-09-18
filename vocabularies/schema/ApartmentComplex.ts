@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { ResidenceMixin } from './Residence';
 
 export interface ApartmentComplex extends Schema.Residence, RdfResource {
-  petsAllowed: boolean | string;
+  petsAllowed: boolean | string | undefined;
 }
 
 export function ApartmentComplexMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ApartmentComplexClass extends ResidenceMixin(Resource) implements ApartmentComplex {
     @property.literal()
-    petsAllowed!: boolean | string;
+    petsAllowed: boolean | string | undefined;
   }
   return ApartmentComplexClass
 }

@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface PublicationVolume extends Schema.CreativeWork, RdfResource {
-  pageEnd: number | string;
-  pageStart: number | string;
-  pagination: string;
-  volumeNumber: number | string;
+  pageEnd: number | string | undefined;
+  pageStart: number | string | undefined;
+  pagination: string | undefined;
+  volumeNumber: number | string | undefined;
 }
 
 export function PublicationVolumeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PublicationVolumeClass extends CreativeWorkMixin(Resource) implements PublicationVolume {
     @property.literal()
-    pageEnd!: number | string;
+    pageEnd: number | string | undefined;
     @property.literal()
-    pageStart!: number | string;
+    pageStart: number | string | undefined;
     @property.literal()
-    pagination!: string;
+    pagination: string | undefined;
     @property.literal()
-    volumeNumber!: number | string;
+    volumeNumber: number | string | undefined;
   }
   return PublicationVolumeClass
 }

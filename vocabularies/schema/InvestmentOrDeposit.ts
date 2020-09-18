@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { FinancialProductMixin } from './FinancialProduct';
 
 export interface InvestmentOrDeposit extends Schema.FinancialProduct, RdfResource {
-  amount: Schema.MonetaryAmount;
-  amountLiteral: number;
+  amount: Schema.MonetaryAmount | undefined;
+  amountLiteral: number | undefined;
 }
 
 export function InvestmentOrDepositMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class InvestmentOrDepositClass extends FinancialProductMixin(Resource) implements InvestmentOrDeposit {
     @property.resource()
-    amount!: Schema.MonetaryAmount;
+    amount: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.amount, type: Number })
-    amountLiteral!: number;
+    amountLiteral: number | undefined;
   }
   return InvestmentOrDepositClass
 }

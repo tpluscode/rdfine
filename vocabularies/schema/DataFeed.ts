@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { DatasetMixin } from './Dataset';
 
 export interface DataFeed extends Schema.Dataset, RdfResource {
-  dataFeedElement: Schema.DataFeedItem | Schema.Thing;
-  dataFeedElementLiteral: string;
+  dataFeedElement: Schema.DataFeedItem | Schema.Thing | undefined;
+  dataFeedElementLiteral: string | undefined;
 }
 
 export function DataFeedMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DataFeedClass extends DatasetMixin(Resource) implements DataFeed {
     @property.resource()
-    dataFeedElement!: Schema.DataFeedItem | Schema.Thing;
+    dataFeedElement: Schema.DataFeedItem | Schema.Thing | undefined;
     @property.literal({ path: schema.dataFeedElement })
-    dataFeedElementLiteral!: string;
+    dataFeedElementLiteral: string | undefined;
   }
   return DataFeedClass
 }

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -6,50 +7,50 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '.';
 
 export interface Dialect extends RdfResource {
-  commentPrefix: string;
-  delimiter: string;
-  doubleQuote: boolean;
-  encoding: string;
-  header: boolean;
-  headerRowCount: number;
-  lineTerminators: string;
-  quoteChar: string;
-  skipBlankRows: boolean;
-  skipColumns: number;
-  skipInitialSpace: boolean;
-  skipRows: number;
-  trim: boolean;
+  commentPrefix: string | undefined;
+  delimiter: string | undefined;
+  doubleQuote: boolean | undefined;
+  encoding: string | undefined;
+  header: boolean | undefined;
+  headerRowCount: number | undefined;
+  lineTerminators: string | undefined;
+  quoteChar: string | undefined;
+  skipBlankRows: boolean | undefined;
+  skipColumns: number | undefined;
+  skipInitialSpace: boolean | undefined;
+  skipRows: number | undefined;
+  trim: boolean | undefined;
 }
 
 export function DialectMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class DialectClass extends Resource implements Dialect {
     @property.literal()
-    commentPrefix!: string;
+    commentPrefix: string | undefined;
     @property.literal()
-    delimiter!: string;
+    delimiter: string | undefined;
     @property.literal({ type: Boolean })
-    doubleQuote!: boolean;
+    doubleQuote: boolean | undefined;
     @property.literal()
-    encoding!: string;
+    encoding: string | undefined;
     @property.literal({ type: Boolean })
-    header!: boolean;
+    header: boolean | undefined;
     @property.literal({ type: Number })
-    headerRowCount!: number;
+    headerRowCount: number | undefined;
     @property.literal()
-    lineTerminators!: string;
+    lineTerminators: string | undefined;
     @property.literal()
-    quoteChar!: string;
+    quoteChar: string | undefined;
     @property.literal({ type: Boolean })
-    skipBlankRows!: boolean;
+    skipBlankRows: boolean | undefined;
     @property.literal({ type: Number })
-    skipColumns!: number;
+    skipColumns: number | undefined;
     @property.literal({ type: Boolean })
-    skipInitialSpace!: boolean;
+    skipInitialSpace: boolean | undefined;
     @property.literal({ type: Number })
-    skipRows!: number;
+    skipRows: number | undefined;
     @property.literal({ type: Boolean })
-    trim!: boolean;
+    trim: boolean | undefined;
   }
   return DialectClass
 }

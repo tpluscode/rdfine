@@ -8,65 +8,65 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface Invoice extends Schema.Intangible, RdfResource {
-  accountId: string;
-  billingPeriod: Schema.Duration;
-  broker: Schema.Organization | Schema.Person;
-  category: Schema.Thing;
-  categoryLiteral: string;
-  confirmationNumber: string;
-  customer: Schema.Organization | Schema.Person;
-  minimumPaymentDue: Schema.MonetaryAmount | Schema.PriceSpecification;
-  paymentDue: Date;
-  paymentDueDate: Date;
-  paymentMethod: Schema.PaymentMethod;
-  paymentMethodId: string;
-  paymentStatus: string;
-  paymentStatusTerm: Schema.PaymentStatusType;
-  provider: Schema.Organization | Schema.Person;
-  referencesOrder: Schema.Order;
-  scheduledPaymentDate: Date;
-  totalPaymentDue: Schema.MonetaryAmount | Schema.PriceSpecification;
+  accountId: string | undefined;
+  billingPeriod: Schema.Duration | undefined;
+  broker: Schema.Organization | Schema.Person | undefined;
+  category: Schema.Thing | undefined;
+  categoryLiteral: string | undefined;
+  confirmationNumber: string | undefined;
+  customer: Schema.Organization | Schema.Person | undefined;
+  minimumPaymentDue: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
+  paymentDue: Date | undefined;
+  paymentDueDate: Date | undefined;
+  paymentMethod: Schema.PaymentMethod | undefined;
+  paymentMethodId: string | undefined;
+  paymentStatus: string | undefined;
+  paymentStatusTerm: Schema.PaymentStatusType | undefined;
+  provider: Schema.Organization | Schema.Person | undefined;
+  referencesOrder: Schema.Order | undefined;
+  scheduledPaymentDate: Date | undefined;
+  totalPaymentDue: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
 }
 
 export function InvoiceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class InvoiceClass extends IntangibleMixin(Resource) implements Invoice {
     @property.literal()
-    accountId!: string;
+    accountId: string | undefined;
     @property.resource()
-    billingPeriod!: Schema.Duration;
+    billingPeriod: Schema.Duration | undefined;
     @property.resource()
-    broker!: Schema.Organization | Schema.Person;
+    broker: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    category!: Schema.Thing;
+    category: Schema.Thing | undefined;
     @property.literal({ path: schema.category })
-    categoryLiteral!: string;
+    categoryLiteral: string | undefined;
     @property.literal()
-    confirmationNumber!: string;
+    confirmationNumber: string | undefined;
     @property.resource()
-    customer!: Schema.Organization | Schema.Person;
+    customer: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    minimumPaymentDue!: Schema.MonetaryAmount | Schema.PriceSpecification;
+    minimumPaymentDue: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
     @property.literal({ type: Date })
-    paymentDue!: Date;
+    paymentDue: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    paymentDueDate!: Date;
+    paymentDueDate: Date | undefined;
     @property()
-    paymentMethod!: Schema.PaymentMethod;
+    paymentMethod: Schema.PaymentMethod | undefined;
     @property.literal()
-    paymentMethodId!: string;
+    paymentMethodId: string | undefined;
     @property.literal()
-    paymentStatus!: string;
+    paymentStatus: string | undefined;
     @property({ path: schema.paymentStatus })
-    paymentStatusTerm!: Schema.PaymentStatusType;
+    paymentStatusTerm: Schema.PaymentStatusType | undefined;
     @property.resource()
-    provider!: Schema.Organization | Schema.Person;
+    provider: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    referencesOrder!: Schema.Order;
+    referencesOrder: Schema.Order | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    scheduledPaymentDate!: Date;
+    scheduledPaymentDate: Date | undefined;
     @property.resource()
-    totalPaymentDue!: Schema.MonetaryAmount | Schema.PriceSpecification;
+    totalPaymentDue: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
   }
   return InvoiceClass
 }

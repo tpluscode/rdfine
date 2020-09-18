@@ -9,14 +9,14 @@ import { CivicStructureMixin } from './CivicStructure';
 import { OrganizationMixin } from './Organization';
 
 export interface EducationalOrganization extends Schema.CivicStructure, Schema.Organization, RdfResource {
-  alumni: Schema.Person;
+  alumni: Schema.Person | undefined;
 }
 
 export function EducationalOrganizationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class EducationalOrganizationClass extends OrganizationMixin(CivicStructureMixin(Resource)) implements EducationalOrganization {
     @property.resource()
-    alumni!: Schema.Person;
+    alumni: Schema.Person | undefined;
   }
   return EducationalOrganizationClass
 }

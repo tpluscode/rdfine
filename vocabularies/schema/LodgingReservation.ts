@@ -8,38 +8,38 @@ import type * as Schema from '.';
 import { ReservationMixin } from './Reservation';
 
 export interface LodgingReservation extends Schema.Reservation, RdfResource {
-  checkinTime: Date;
-  checkoutTime: Date;
-  lodgingUnitDescription: string;
-  lodgingUnitType: string;
-  lodgingUnitTypeTerm: Schema.QualitativeValue;
-  numAdults: Schema.QuantitativeValue;
-  numAdultsLiteral: number;
-  numChildren: Schema.QuantitativeValue;
-  numChildrenLiteral: number;
+  checkinTime: Date | undefined;
+  checkoutTime: Date | undefined;
+  lodgingUnitDescription: string | undefined;
+  lodgingUnitType: string | undefined;
+  lodgingUnitTypeTerm: Schema.QualitativeValue | undefined;
+  numAdults: Schema.QuantitativeValue | undefined;
+  numAdultsLiteral: number | undefined;
+  numChildren: Schema.QuantitativeValue | undefined;
+  numChildrenLiteral: number | undefined;
 }
 
 export function LodgingReservationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LodgingReservationClass extends ReservationMixin(Resource) implements LodgingReservation {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    checkinTime!: Date;
+    checkinTime: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    checkoutTime!: Date;
+    checkoutTime: Date | undefined;
     @property.literal()
-    lodgingUnitDescription!: string;
+    lodgingUnitDescription: string | undefined;
     @property.literal()
-    lodgingUnitType!: string;
+    lodgingUnitType: string | undefined;
     @property({ path: schema.lodgingUnitType })
-    lodgingUnitTypeTerm!: Schema.QualitativeValue;
+    lodgingUnitTypeTerm: Schema.QualitativeValue | undefined;
     @property.resource()
-    numAdults!: Schema.QuantitativeValue;
+    numAdults: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.numAdults, type: Number })
-    numAdultsLiteral!: number;
+    numAdultsLiteral: number | undefined;
     @property.resource()
-    numChildren!: Schema.QuantitativeValue;
+    numChildren: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.numChildren, type: Number })
-    numChildrenLiteral!: number;
+    numChildrenLiteral: number | undefined;
   }
   return LodgingReservationClass
 }

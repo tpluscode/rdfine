@@ -8,38 +8,38 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface PriceSpecification extends Schema.StructuredValue, RdfResource {
-  eligibleQuantity: Schema.QuantitativeValue;
-  eligibleTransactionVolume: Schema.PriceSpecification;
-  maxPrice: number;
-  minPrice: number;
-  price: number | string;
-  priceCurrency: string;
-  validFrom: Date;
-  validThrough: Date;
-  valueAddedTaxIncluded: boolean;
+  eligibleQuantity: Schema.QuantitativeValue | undefined;
+  eligibleTransactionVolume: Schema.PriceSpecification | undefined;
+  maxPrice: number | undefined;
+  minPrice: number | undefined;
+  price: number | string | undefined;
+  priceCurrency: string | undefined;
+  validFrom: Date | undefined;
+  validThrough: Date | undefined;
+  valueAddedTaxIncluded: boolean | undefined;
 }
 
 export function PriceSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PriceSpecificationClass extends StructuredValueMixin(Resource) implements PriceSpecification {
     @property.resource()
-    eligibleQuantity!: Schema.QuantitativeValue;
+    eligibleQuantity: Schema.QuantitativeValue | undefined;
     @property.resource()
-    eligibleTransactionVolume!: Schema.PriceSpecification;
+    eligibleTransactionVolume: Schema.PriceSpecification | undefined;
     @property.literal({ type: Number })
-    maxPrice!: number;
+    maxPrice: number | undefined;
     @property.literal({ type: Number })
-    minPrice!: number;
+    minPrice: number | undefined;
     @property.literal()
-    price!: number | string;
+    price: number | string | undefined;
     @property.literal()
-    priceCurrency!: string;
+    priceCurrency: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    validFrom!: Date;
+    validFrom: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    validThrough!: Date;
+    validThrough: Date | undefined;
     @property.literal({ type: Boolean })
-    valueAddedTaxIncluded!: boolean;
+    valueAddedTaxIncluded: boolean | undefined;
   }
   return PriceSpecificationClass
 }

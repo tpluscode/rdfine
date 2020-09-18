@@ -8,35 +8,35 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface BroadcastChannel extends Schema.Intangible, RdfResource {
-  broadcastChannelId: string;
-  broadcastFrequency: Schema.BroadcastFrequencySpecification;
-  broadcastFrequencyLiteral: string;
-  broadcastServiceTier: string;
-  genre: string;
-  genreTerm: RDF.NamedNode;
-  inBroadcastLineup: Schema.CableOrSatelliteService;
-  providesBroadcastService: Schema.BroadcastService;
+  broadcastChannelId: string | undefined;
+  broadcastFrequency: Schema.BroadcastFrequencySpecification | undefined;
+  broadcastFrequencyLiteral: string | undefined;
+  broadcastServiceTier: string | undefined;
+  genre: string | undefined;
+  genreTerm: RDF.NamedNode | undefined;
+  inBroadcastLineup: Schema.CableOrSatelliteService | undefined;
+  providesBroadcastService: Schema.BroadcastService | undefined;
 }
 
 export function BroadcastChannelMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BroadcastChannelClass extends IntangibleMixin(Resource) implements BroadcastChannel {
     @property.literal()
-    broadcastChannelId!: string;
+    broadcastChannelId: string | undefined;
     @property.resource()
-    broadcastFrequency!: Schema.BroadcastFrequencySpecification;
+    broadcastFrequency: Schema.BroadcastFrequencySpecification | undefined;
     @property.literal({ path: schema.broadcastFrequency })
-    broadcastFrequencyLiteral!: string;
+    broadcastFrequencyLiteral: string | undefined;
     @property.literal()
-    broadcastServiceTier!: string;
+    broadcastServiceTier: string | undefined;
     @property.literal()
-    genre!: string;
+    genre: string | undefined;
     @property({ path: schema.genre })
-    genreTerm!: RDF.NamedNode;
+    genreTerm: RDF.NamedNode | undefined;
     @property.resource()
-    inBroadcastLineup!: Schema.CableOrSatelliteService;
+    inBroadcastLineup: Schema.CableOrSatelliteService | undefined;
     @property.resource()
-    providesBroadcastService!: Schema.BroadcastService;
+    providesBroadcastService: Schema.BroadcastService | undefined;
   }
   return BroadcastChannelClass
 }

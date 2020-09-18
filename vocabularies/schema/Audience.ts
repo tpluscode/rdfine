@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface Audience extends Schema.Intangible, RdfResource {
-  audienceType: string;
-  geographicArea: Schema.AdministrativeArea;
+  audienceType: string | undefined;
+  geographicArea: Schema.AdministrativeArea | undefined;
 }
 
 export function AudienceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AudienceClass extends IntangibleMixin(Resource) implements Audience {
     @property.literal()
-    audienceType!: string;
+    audienceType: string | undefined;
     @property.resource()
-    geographicArea!: Schema.AdministrativeArea;
+    geographicArea: Schema.AdministrativeArea | undefined;
   }
   return AudienceClass
 }

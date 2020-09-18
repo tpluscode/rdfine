@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface DigitalDocument extends Schema.CreativeWork, RdfResource {
-  hasDigitalDocumentPermission: Schema.DigitalDocumentPermission;
+  hasDigitalDocumentPermission: Schema.DigitalDocumentPermission | undefined;
 }
 
 export function DigitalDocumentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DigitalDocumentClass extends CreativeWorkMixin(Resource) implements DigitalDocument {
     @property.resource()
-    hasDigitalDocumentPermission!: Schema.DigitalDocumentPermission;
+    hasDigitalDocumentPermission: Schema.DigitalDocumentPermission | undefined;
   }
   return DigitalDocumentClass
 }

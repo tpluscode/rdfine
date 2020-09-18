@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { HouseMixin } from './House';
 
 export interface SingleFamilyResidence extends Schema.House, RdfResource {
-  numberOfRooms: Schema.QuantitativeValue;
-  numberOfRoomsLiteral: number;
-  occupancy: Schema.QuantitativeValue;
+  numberOfRooms: Schema.QuantitativeValue | undefined;
+  numberOfRoomsLiteral: number | undefined;
+  occupancy: Schema.QuantitativeValue | undefined;
 }
 
 export function SingleFamilyResidenceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SingleFamilyResidenceClass extends HouseMixin(Resource) implements SingleFamilyResidence {
     @property.resource()
-    numberOfRooms!: Schema.QuantitativeValue;
+    numberOfRooms: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.numberOfRooms, type: Number })
-    numberOfRoomsLiteral!: number;
+    numberOfRoomsLiteral: number | undefined;
     @property.resource()
-    occupancy!: Schema.QuantitativeValue;
+    occupancy: Schema.QuantitativeValue | undefined;
   }
   return SingleFamilyResidenceClass
 }

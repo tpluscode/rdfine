@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { ProductMixin } from './Product';
 
 export interface ProductModel extends Schema.Product, RdfResource {
-  isVariantOf: Schema.ProductModel;
-  predecessorOf: Schema.ProductModel;
-  successorOf: Schema.ProductModel;
+  isVariantOf: Schema.ProductModel | undefined;
+  predecessorOf: Schema.ProductModel | undefined;
+  successorOf: Schema.ProductModel | undefined;
 }
 
 export function ProductModelMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ProductModelClass extends ProductMixin(Resource) implements ProductModel {
     @property.resource()
-    isVariantOf!: Schema.ProductModel;
+    isVariantOf: Schema.ProductModel | undefined;
     @property.resource()
-    predecessorOf!: Schema.ProductModel;
+    predecessorOf: Schema.ProductModel | undefined;
     @property.resource()
-    successorOf!: Schema.ProductModel;
+    successorOf: Schema.ProductModel | undefined;
   }
   return ProductModelClass
 }

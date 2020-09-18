@@ -12,8 +12,8 @@ import { TemplateExpander } from './lib/TemplateExpander';
 
 export interface IriTemplate extends Hydra.Resource, RdfResource {
   mapping: Array<Hydra.IriTemplateMapping>;
-  template: string;
-  variableRepresentation: Term;
+  template: string | undefined;
+  variableRepresentation: Hydra.VariableRepresentation | undefined;
   expand(model: GraphPointer | RdfResource): string;
 }
 
@@ -23,9 +23,9 @@ export function IriTemplateMixin<Base extends Constructor>(Resource: Base) {
     @property.resource({ values: 'array', implicitTypes: [hydra.IriTemplateMapping] })
     mapping!: Array<Hydra.IriTemplateMapping>;
     @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/ns/hydra/core#Rfc6570Template') })
-    template!: string;
-    @property()
-    public variableRepresentation!: Term;
+    template: string | undefined;
+    @property.resource({ implicitTypes: [hydra.VariableRepresentation] })
+    variableRepresentation: Hydra.VariableRepresentation | undefined;
 
     public expand(model: AnyPointer | RdfResource): string {
       return new TemplateExpander(this).expand(model)

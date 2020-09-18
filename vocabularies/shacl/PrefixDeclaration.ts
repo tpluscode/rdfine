@@ -8,17 +8,17 @@ import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
 export interface PrefixDeclaration extends Rdfs.Resource, RdfResource {
-  namespace: string;
-  prefix: string;
+  namespace: string | undefined;
+  prefix: string | undefined;
 }
 
 export function PrefixDeclarationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class PrefixDeclarationClass extends Rdfs.ResourceMixin(Resource) implements PrefixDeclaration {
     @property.literal()
-    namespace!: string;
+    namespace: string | undefined;
     @property.literal()
-    prefix!: string;
+    prefix: string | undefined;
   }
   return PrefixDeclarationClass
 }

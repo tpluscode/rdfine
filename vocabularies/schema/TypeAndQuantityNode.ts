@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface TypeAndQuantityNode extends Schema.StructuredValue, RdfResource {
-  amountOfThisGood: number;
-  businessFunction: Schema.BusinessFunction;
-  typeOfGood: Schema.Product | Schema.Service;
-  unitCode: string;
-  unitCodeTerm: RDF.NamedNode;
-  unitText: string;
+  amountOfThisGood: number | undefined;
+  businessFunction: Schema.BusinessFunction | undefined;
+  typeOfGood: Schema.Product | Schema.Service | undefined;
+  unitCode: string | undefined;
+  unitCodeTerm: RDF.NamedNode | undefined;
+  unitText: string | undefined;
 }
 
 export function TypeAndQuantityNodeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TypeAndQuantityNodeClass extends StructuredValueMixin(Resource) implements TypeAndQuantityNode {
     @property.literal({ type: Number })
-    amountOfThisGood!: number;
+    amountOfThisGood: number | undefined;
     @property()
-    businessFunction!: Schema.BusinessFunction;
+    businessFunction: Schema.BusinessFunction | undefined;
     @property.resource()
-    typeOfGood!: Schema.Product | Schema.Service;
+    typeOfGood: Schema.Product | Schema.Service | undefined;
     @property.literal()
-    unitCode!: string;
+    unitCode: string | undefined;
     @property({ path: schema.unitCode })
-    unitCodeTerm!: RDF.NamedNode;
+    unitCodeTerm: RDF.NamedNode | undefined;
     @property.literal()
-    unitText!: string;
+    unitText: string | undefined;
   }
   return TypeAndQuantityNodeClass
 }

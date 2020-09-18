@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { TradeActionMixin } from './TradeAction';
 
 export interface PayAction extends Schema.TradeAction, RdfResource {
-  recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
+  recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
 }
 
 export function PayActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PayActionClass extends TradeActionMixin(Resource) implements PayAction {
     @property.resource()
-    recipient!: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
+    recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
   return PayActionClass
 }

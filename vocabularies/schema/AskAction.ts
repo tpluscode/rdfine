@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { CommunicateActionMixin } from './CommunicateAction';
 
 export interface AskAction extends Schema.CommunicateAction, RdfResource {
-  question: Schema.Question;
+  question: Schema.Question | undefined;
 }
 
 export function AskActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AskActionClass extends CommunicateActionMixin(Resource) implements AskAction {
     @property.resource()
-    question!: Schema.Question;
+    question: Schema.Question | undefined;
   }
   return AskActionClass
 }

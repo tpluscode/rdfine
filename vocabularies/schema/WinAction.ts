@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { AchieveActionMixin } from './AchieveAction';
 
 export interface WinAction extends Schema.AchieveAction, RdfResource {
-  loser: Schema.Person;
+  loser: Schema.Person | undefined;
 }
 
 export function WinActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WinActionClass extends AchieveActionMixin(Resource) implements WinAction {
     @property.resource()
-    loser!: Schema.Person;
+    loser: Schema.Person | undefined;
   }
   return WinActionClass
 }

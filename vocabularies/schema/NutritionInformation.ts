@@ -8,47 +8,47 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface NutritionInformation extends Schema.StructuredValue, RdfResource {
-  calories: Schema.Energy;
-  carbohydrateContent: Schema.Mass;
-  cholesterolContent: Schema.Mass;
-  fatContent: Schema.Mass;
-  fiberContent: Schema.Mass;
-  proteinContent: Schema.Mass;
-  saturatedFatContent: Schema.Mass;
-  servingSize: string;
-  sodiumContent: Schema.Mass;
-  sugarContent: Schema.Mass;
-  transFatContent: Schema.Mass;
-  unsaturatedFatContent: Schema.Mass;
+  calories: Schema.Energy | undefined;
+  carbohydrateContent: Schema.Mass | undefined;
+  cholesterolContent: Schema.Mass | undefined;
+  fatContent: Schema.Mass | undefined;
+  fiberContent: Schema.Mass | undefined;
+  proteinContent: Schema.Mass | undefined;
+  saturatedFatContent: Schema.Mass | undefined;
+  servingSize: string | undefined;
+  sodiumContent: Schema.Mass | undefined;
+  sugarContent: Schema.Mass | undefined;
+  transFatContent: Schema.Mass | undefined;
+  unsaturatedFatContent: Schema.Mass | undefined;
 }
 
 export function NutritionInformationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class NutritionInformationClass extends StructuredValueMixin(Resource) implements NutritionInformation {
     @property.resource()
-    calories!: Schema.Energy;
+    calories: Schema.Energy | undefined;
     @property.resource()
-    carbohydrateContent!: Schema.Mass;
+    carbohydrateContent: Schema.Mass | undefined;
     @property.resource()
-    cholesterolContent!: Schema.Mass;
+    cholesterolContent: Schema.Mass | undefined;
     @property.resource()
-    fatContent!: Schema.Mass;
+    fatContent: Schema.Mass | undefined;
     @property.resource()
-    fiberContent!: Schema.Mass;
+    fiberContent: Schema.Mass | undefined;
     @property.resource()
-    proteinContent!: Schema.Mass;
+    proteinContent: Schema.Mass | undefined;
     @property.resource()
-    saturatedFatContent!: Schema.Mass;
+    saturatedFatContent: Schema.Mass | undefined;
     @property.literal()
-    servingSize!: string;
+    servingSize: string | undefined;
     @property.resource()
-    sodiumContent!: Schema.Mass;
+    sodiumContent: Schema.Mass | undefined;
     @property.resource()
-    sugarContent!: Schema.Mass;
+    sugarContent: Schema.Mass | undefined;
     @property.resource()
-    transFatContent!: Schema.Mass;
+    transFatContent: Schema.Mass | undefined;
     @property.resource()
-    unsaturatedFatContent!: Schema.Mass;
+    unsaturatedFatContent: Schema.Mass | undefined;
   }
   return NutritionInformationClass
 }

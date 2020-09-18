@@ -8,20 +8,20 @@ import type * as Hydra from '.';
 import { ResourceMixin } from './Resource';
 
 export interface Status extends Hydra.Resource, RdfResource {
-  description: string;
-  statusCode: number;
-  title: string;
+  description: string | undefined;
+  statusCode: number | undefined;
+  title: string | undefined;
 }
 
 export function StatusMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class StatusClass extends ResourceMixin(Resource) implements Status {
     @property.literal()
-    description!: string;
+    description: string | undefined;
     @property.literal({ type: Number })
-    statusCode!: number;
+    statusCode: number | undefined;
     @property.literal()
-    title!: string;
+    title: string | undefined;
   }
   return StatusClass
 }

@@ -9,20 +9,20 @@ import * as Rdf from '@rdfine/rdf';
 import { ResourceMixin } from './Resource';
 
 export interface TemplatedLink extends Rdf.Property, Hydra.Resource, RdfResource {
-  description: string;
+  description: string | undefined;
   supportedOperation: Array<Hydra.Operation>;
-  title: string;
+  title: string | undefined;
 }
 
 export function TemplatedLinkMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class TemplatedLinkClass extends ResourceMixin(Rdf.PropertyMixin(Resource)) implements TemplatedLink {
     @property.literal()
-    description!: string;
+    description: string | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
     supportedOperation!: Array<Hydra.Operation>;
     @property.literal()
-    title!: string;
+    title: string | undefined;
   }
   return TemplatedLinkClass
 }

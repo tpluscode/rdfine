@@ -8,53 +8,53 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface Reservation extends Schema.Intangible, RdfResource {
-  bookingAgent: Schema.Organization | Schema.Person;
-  bookingTime: Date;
-  broker: Schema.Organization | Schema.Person;
-  modifiedTime: Date;
-  priceCurrency: string;
-  programMembershipUsed: Schema.ProgramMembership;
-  provider: Schema.Organization | Schema.Person;
-  reservationFor: Schema.Thing;
-  reservationId: string;
-  reservationStatus: Schema.ReservationStatusType;
-  reservedTicket: Schema.Ticket;
-  totalPrice: Schema.PriceSpecification;
-  totalPriceLiteral: number | string;
-  underName: Schema.Organization | Schema.Person;
+  bookingAgent: Schema.Organization | Schema.Person | undefined;
+  bookingTime: Date | undefined;
+  broker: Schema.Organization | Schema.Person | undefined;
+  modifiedTime: Date | undefined;
+  priceCurrency: string | undefined;
+  programMembershipUsed: Schema.ProgramMembership | undefined;
+  provider: Schema.Organization | Schema.Person | undefined;
+  reservationFor: Schema.Thing | undefined;
+  reservationId: string | undefined;
+  reservationStatus: Schema.ReservationStatusType | undefined;
+  reservedTicket: Schema.Ticket | undefined;
+  totalPrice: Schema.PriceSpecification | undefined;
+  totalPriceLiteral: number | string | undefined;
+  underName: Schema.Organization | Schema.Person | undefined;
 }
 
 export function ReservationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ReservationClass extends IntangibleMixin(Resource) implements Reservation {
     @property.resource()
-    bookingAgent!: Schema.Organization | Schema.Person;
+    bookingAgent: Schema.Organization | Schema.Person | undefined;
     @property.literal({ type: Date })
-    bookingTime!: Date;
+    bookingTime: Date | undefined;
     @property.resource()
-    broker!: Schema.Organization | Schema.Person;
+    broker: Schema.Organization | Schema.Person | undefined;
     @property.literal({ type: Date })
-    modifiedTime!: Date;
+    modifiedTime: Date | undefined;
     @property.literal()
-    priceCurrency!: string;
+    priceCurrency: string | undefined;
     @property.resource()
-    programMembershipUsed!: Schema.ProgramMembership;
+    programMembershipUsed: Schema.ProgramMembership | undefined;
     @property.resource()
-    provider!: Schema.Organization | Schema.Person;
+    provider: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    reservationFor!: Schema.Thing;
+    reservationFor: Schema.Thing | undefined;
     @property.literal()
-    reservationId!: string;
+    reservationId: string | undefined;
     @property()
-    reservationStatus!: Schema.ReservationStatusType;
+    reservationStatus: Schema.ReservationStatusType | undefined;
     @property.resource()
-    reservedTicket!: Schema.Ticket;
+    reservedTicket: Schema.Ticket | undefined;
     @property.resource()
-    totalPrice!: Schema.PriceSpecification;
+    totalPrice: Schema.PriceSpecification | undefined;
     @property.literal({ path: schema.totalPrice })
-    totalPriceLiteral!: number | string;
+    totalPriceLiteral: number | string | undefined;
     @property.resource()
-    underName!: Schema.Organization | Schema.Person;
+    underName: Schema.Organization | Schema.Person | undefined;
   }
   return ReservationClass
 }

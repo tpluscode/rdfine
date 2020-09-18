@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { MusicPlaylistMixin } from './MusicPlaylist';
 
 export interface MusicRelease extends Schema.MusicPlaylist, RdfResource {
-  catalogNumber: string;
-  creditedTo: Schema.Organization | Schema.Person;
-  duration: Schema.Duration;
-  musicReleaseFormat: Schema.MusicReleaseFormatType;
-  recordLabel: Schema.Organization;
-  releaseOf: Schema.MusicAlbum;
+  catalogNumber: string | undefined;
+  creditedTo: Schema.Organization | Schema.Person | undefined;
+  duration: Schema.Duration | undefined;
+  musicReleaseFormat: Schema.MusicReleaseFormatType | undefined;
+  recordLabel: Schema.Organization | undefined;
+  releaseOf: Schema.MusicAlbum | undefined;
 }
 
 export function MusicReleaseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MusicReleaseClass extends MusicPlaylistMixin(Resource) implements MusicRelease {
     @property.literal()
-    catalogNumber!: string;
+    catalogNumber: string | undefined;
     @property.resource()
-    creditedTo!: Schema.Organization | Schema.Person;
+    creditedTo: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    duration!: Schema.Duration;
+    duration: Schema.Duration | undefined;
     @property()
-    musicReleaseFormat!: Schema.MusicReleaseFormatType;
+    musicReleaseFormat: Schema.MusicReleaseFormatType | undefined;
     @property.resource()
-    recordLabel!: Schema.Organization;
+    recordLabel: Schema.Organization | undefined;
     @property.resource()
-    releaseOf!: Schema.MusicAlbum;
+    releaseOf: Schema.MusicAlbum | undefined;
   }
   return MusicReleaseClass
 }

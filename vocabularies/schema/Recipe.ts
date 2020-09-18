@@ -8,47 +8,47 @@ import type * as Schema from '.';
 import { HowToMixin } from './HowTo';
 
 export interface Recipe extends Schema.HowTo, RdfResource {
-  cookingMethod: string;
-  cookTime: Schema.Duration;
-  ingredients: string;
-  nutrition: Schema.NutritionInformation;
-  recipeCategory: string;
-  recipeCuisine: string;
-  recipeIngredient: string;
-  recipeInstructions: Schema.CreativeWork | Schema.ItemList;
-  recipeInstructionsLiteral: string;
-  recipeYield: Schema.QuantitativeValue;
-  recipeYieldLiteral: string;
-  suitableForDiet: Schema.RestrictedDiet;
+  cookingMethod: string | undefined;
+  cookTime: Schema.Duration | undefined;
+  ingredients: string | undefined;
+  nutrition: Schema.NutritionInformation | undefined;
+  recipeCategory: string | undefined;
+  recipeCuisine: string | undefined;
+  recipeIngredient: string | undefined;
+  recipeInstructions: Schema.CreativeWork | Schema.ItemList | undefined;
+  recipeInstructionsLiteral: string | undefined;
+  recipeYield: Schema.QuantitativeValue | undefined;
+  recipeYieldLiteral: string | undefined;
+  suitableForDiet: Schema.RestrictedDiet | undefined;
 }
 
 export function RecipeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RecipeClass extends HowToMixin(Resource) implements Recipe {
     @property.literal()
-    cookingMethod!: string;
+    cookingMethod: string | undefined;
     @property.resource()
-    cookTime!: Schema.Duration;
+    cookTime: Schema.Duration | undefined;
     @property.literal()
-    ingredients!: string;
+    ingredients: string | undefined;
     @property.resource()
-    nutrition!: Schema.NutritionInformation;
+    nutrition: Schema.NutritionInformation | undefined;
     @property.literal()
-    recipeCategory!: string;
+    recipeCategory: string | undefined;
     @property.literal()
-    recipeCuisine!: string;
+    recipeCuisine: string | undefined;
     @property.literal()
-    recipeIngredient!: string;
+    recipeIngredient: string | undefined;
     @property.resource()
-    recipeInstructions!: Schema.CreativeWork | Schema.ItemList;
+    recipeInstructions: Schema.CreativeWork | Schema.ItemList | undefined;
     @property.literal({ path: schema.recipeInstructions })
-    recipeInstructionsLiteral!: string;
+    recipeInstructionsLiteral: string | undefined;
     @property.resource()
-    recipeYield!: Schema.QuantitativeValue;
+    recipeYield: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.recipeYield })
-    recipeYieldLiteral!: string;
+    recipeYieldLiteral: string | undefined;
     @property()
-    suitableForDiet!: Schema.RestrictedDiet;
+    suitableForDiet: Schema.RestrictedDiet | undefined;
   }
   return RecipeClass
 }

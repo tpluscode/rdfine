@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { FindActionMixin } from './FindAction';
 
 export interface TrackAction extends Schema.FindAction, RdfResource {
-  deliveryMethod: Schema.DeliveryMethod;
+  deliveryMethod: Schema.DeliveryMethod | undefined;
 }
 
 export function TrackActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TrackActionClass extends FindActionMixin(Resource) implements TrackAction {
     @property()
-    deliveryMethod!: Schema.DeliveryMethod;
+    deliveryMethod: Schema.DeliveryMethod | undefined;
   }
   return TrackActionClass
 }

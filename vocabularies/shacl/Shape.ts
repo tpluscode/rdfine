@@ -10,21 +10,21 @@ import * as Rdf from '@rdfine/rdf';
 
 export interface Shape extends Rdfs.Resource, RdfResource {
   and: Array<Sh.Shape>;
-  class: Rdfs.Class;
-  closed: boolean;
+  class: Rdfs.Class | undefined;
+  closed: boolean | undefined;
   in: Array<RDF.Term>;
-  node: Sh.NodeShape;
-  nodeKind: Sh.NodeKind;
+  node: Sh.NodeShape | undefined;
+  nodeKind: Sh.NodeKind | undefined;
   or: Array<Sh.Shape>;
   property: Array<Sh.PropertyShape>;
-  rule: Sh.Rule;
-  severity: Sh.Severity;
-  sparql: Sh.SPARQLConstraint;
-  target: Sh.Target;
+  rule: Sh.Rule | undefined;
+  severity: Sh.Severity | undefined;
+  sparql: Sh.SPARQLConstraint | undefined;
+  target: Sh.Target | undefined;
   targetClass: Array<Rdfs.Class>;
   targetNode: Array<RDF.Term>;
-  targetObjectsOf: Rdf.Property;
-  targetSubjectsOf: Rdf.Property;
+  targetObjectsOf: Rdf.Property | undefined;
+  targetSubjectsOf: Rdf.Property | undefined;
   xone: Array<Sh.Shape>;
 }
 
@@ -34,35 +34,35 @@ export function ShapeMixin<Base extends Constructor>(Resource: Base) {
     @property.resource({ values: 'list', as: [ShapeMixin] })
     and!: Array<Sh.Shape>;
     @property.resource({ as: [Rdfs.ClassMixin] })
-    class!: Rdfs.Class;
+    class: Rdfs.Class | undefined;
     @property.literal({ type: Boolean })
-    closed!: boolean;
+    closed: boolean | undefined;
     @property({ values: 'list' })
     in!: Array<RDF.Term>;
     @property.resource({ implicitTypes: [sh.NodeShape] })
-    node!: Sh.NodeShape;
+    node: Sh.NodeShape | undefined;
     @property()
-    nodeKind!: Sh.NodeKind;
+    nodeKind: Sh.NodeKind | undefined;
     @property.resource({ values: 'list', as: [ShapeMixin] })
     or!: Array<Sh.Shape>;
     @property.resource({ values: 'array', implicitTypes: [sh.PropertyShape] })
     property!: Array<Sh.PropertyShape>;
     @property.resource({ implicitTypes: [sh.Rule] })
-    rule!: Sh.Rule;
+    rule: Sh.Rule | undefined;
     @property.resource({ implicitTypes: [sh.Severity] })
-    severity!: Sh.Severity;
+    severity: Sh.Severity | undefined;
     @property.resource({ implicitTypes: [sh.SPARQLConstraint] })
-    sparql!: Sh.SPARQLConstraint;
+    sparql: Sh.SPARQLConstraint | undefined;
     @property.resource({ implicitTypes: [sh.Target] })
-    target!: Sh.Target;
+    target: Sh.Target | undefined;
     @property.resource({ values: 'array', as: [Rdfs.ClassMixin] })
     targetClass!: Array<Rdfs.Class>;
     @property({ values: 'array' })
     targetNode!: Array<RDF.Term>;
     @property.resource({ as: [Rdf.PropertyMixin] })
-    targetObjectsOf!: Rdf.Property;
+    targetObjectsOf: Rdf.Property | undefined;
     @property.resource({ as: [Rdf.PropertyMixin] })
-    targetSubjectsOf!: Rdf.Property;
+    targetSubjectsOf: Rdf.Property | undefined;
     @property.resource({ values: 'list', as: [ShapeMixin] })
     xone!: Array<Sh.Shape>;
   }

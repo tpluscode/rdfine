@@ -10,80 +10,80 @@ import * as Rdf from '@rdfine/rdf';
 import { ShapeMixin } from './Shape';
 
 export interface PropertyShape extends Sh.Shape, RdfResource {
-  datatype: Rdfs.Datatype;
-  defaultValue: RDF.Term;
-  description: string;
-  disjoint: Rdf.Property;
-  flags: string;
-  group: Sh.PropertyGroup;
-  hasValue: RDF.Term;
+  datatype: Rdfs.Datatype | undefined;
+  defaultValue: RDF.Term | undefined;
+  description: string | undefined;
+  disjoint: Rdf.Property | undefined;
+  flags: string | undefined;
+  group: Sh.PropertyGroup | undefined;
+  hasValue: RDF.Term | undefined;
   languageIn: Array<string>;
-  lessThan: Rdf.Property;
-  lessThanOrEquals: Rdf.Property;
-  maxCount: number;
-  maxExclusive: number;
-  maxInclusive: number;
-  maxLength: number;
-  minCount: number;
-  minExclusive: number;
-  minInclusive: number;
-  minLength: number;
-  name: string;
-  order: number;
-  path: Rdfs.Resource | Array<Rdfs.Resource>;
-  pattern: string;
-  uniqueLang: boolean;
+  lessThan: Rdf.Property | undefined;
+  lessThanOrEquals: Rdf.Property | undefined;
+  maxCount: number | undefined;
+  maxExclusive: number | undefined;
+  maxInclusive: number | undefined;
+  maxLength: number | undefined;
+  minCount: number | undefined;
+  minExclusive: number | undefined;
+  minInclusive: number | undefined;
+  minLength: number | undefined;
+  name: string | undefined;
+  order: number | undefined;
+  path: Rdfs.Resource | Array<Rdfs.Resource> | undefined;
+  pattern: string | undefined;
+  uniqueLang: boolean | undefined;
 }
 
 export function PropertyShapeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class PropertyShapeClass extends ShapeMixin(Resource) implements PropertyShape {
     @property.resource({ as: [Rdfs.DatatypeMixin] })
-    datatype!: Rdfs.Datatype;
+    datatype: Rdfs.Datatype | undefined;
     @property()
-    defaultValue!: RDF.Term;
+    defaultValue: RDF.Term | undefined;
     @property.literal()
-    description!: string;
+    description: string | undefined;
     @property.resource({ as: [Rdf.PropertyMixin] })
-    disjoint!: Rdf.Property;
+    disjoint: Rdf.Property | undefined;
     @property.literal()
-    flags!: string;
+    flags: string | undefined;
     @property.resource({ implicitTypes: [sh.PropertyGroup] })
-    group!: Sh.PropertyGroup;
+    group: Sh.PropertyGroup | undefined;
     @property()
-    hasValue!: RDF.Term;
+    hasValue: RDF.Term | undefined;
     @property.literal({ values: 'list' })
     languageIn!: Array<string>;
     @property.resource({ as: [Rdf.PropertyMixin] })
-    lessThan!: Rdf.Property;
+    lessThan: Rdf.Property | undefined;
     @property.resource({ as: [Rdf.PropertyMixin] })
-    lessThanOrEquals!: Rdf.Property;
+    lessThanOrEquals: Rdf.Property | undefined;
     @property.literal({ type: Number })
-    maxCount!: number;
+    maxCount: number | undefined;
     @property.literal({ type: Number })
-    maxExclusive!: number;
+    maxExclusive: number | undefined;
     @property.literal({ type: Number })
-    maxInclusive!: number;
+    maxInclusive: number | undefined;
     @property.literal({ type: Number })
-    maxLength!: number;
+    maxLength: number | undefined;
     @property.literal({ type: Number })
-    minCount!: number;
+    minCount: number | undefined;
     @property.literal({ type: Number })
-    minExclusive!: number;
+    minExclusive: number | undefined;
     @property.literal({ type: Number })
-    minInclusive!: number;
+    minInclusive: number | undefined;
     @property.literal({ type: Number })
-    minLength!: number;
+    minLength: number | undefined;
     @property.literal()
-    name!: string;
+    name: string | undefined;
     @property.literal({ type: Number })
-    order!: number;
+    order: number | undefined;
     @property.resource({ values: ['list', 'single'], as: [Rdfs.ResourceMixin] })
-    path!: Rdfs.Resource | Array<Rdfs.Resource>;
+    path: Rdfs.Resource | Array<Rdfs.Resource> | undefined;
     @property.literal()
-    pattern!: string;
+    pattern: string | undefined;
     @property.literal({ type: Boolean })
-    uniqueLang!: boolean;
+    uniqueLang: boolean | undefined;
   }
   return PropertyShapeClass
 }

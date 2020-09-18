@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { TradeActionMixin } from './TradeAction';
 
 export interface DonateAction extends Schema.TradeAction, RdfResource {
-  recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
+  recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
 }
 
 export function DonateActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DonateActionClass extends TradeActionMixin(Resource) implements DonateAction {
     @property.resource()
-    recipient!: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
+    recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
   return DonateActionClass
 }

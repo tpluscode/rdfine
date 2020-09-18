@@ -8,47 +8,47 @@ import type * as Schema from '.';
 import { ServiceMixin } from './Service';
 
 export interface BroadcastService extends Schema.Service, RdfResource {
-  area: Schema.Place;
-  broadcastAffiliateOf: Schema.Organization;
-  broadcastDisplayName: string;
-  broadcaster: Schema.Organization;
-  broadcastFrequency: Schema.BroadcastFrequencySpecification;
-  broadcastFrequencyLiteral: string;
-  broadcastTimezone: string;
-  hasBroadcastChannel: Schema.BroadcastChannel;
-  inLanguage: Schema.Language;
-  inLanguageLiteral: string;
-  parentService: Schema.BroadcastService;
-  videoFormat: string;
+  area: Schema.Place | undefined;
+  broadcastAffiliateOf: Schema.Organization | undefined;
+  broadcastDisplayName: string | undefined;
+  broadcaster: Schema.Organization | undefined;
+  broadcastFrequency: Schema.BroadcastFrequencySpecification | undefined;
+  broadcastFrequencyLiteral: string | undefined;
+  broadcastTimezone: string | undefined;
+  hasBroadcastChannel: Schema.BroadcastChannel | undefined;
+  inLanguage: Schema.Language | undefined;
+  inLanguageLiteral: string | undefined;
+  parentService: Schema.BroadcastService | undefined;
+  videoFormat: string | undefined;
 }
 
 export function BroadcastServiceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BroadcastServiceClass extends ServiceMixin(Resource) implements BroadcastService {
     @property.resource()
-    area!: Schema.Place;
+    area: Schema.Place | undefined;
     @property.resource()
-    broadcastAffiliateOf!: Schema.Organization;
+    broadcastAffiliateOf: Schema.Organization | undefined;
     @property.literal()
-    broadcastDisplayName!: string;
+    broadcastDisplayName: string | undefined;
     @property.resource()
-    broadcaster!: Schema.Organization;
+    broadcaster: Schema.Organization | undefined;
     @property.resource()
-    broadcastFrequency!: Schema.BroadcastFrequencySpecification;
+    broadcastFrequency: Schema.BroadcastFrequencySpecification | undefined;
     @property.literal({ path: schema.broadcastFrequency })
-    broadcastFrequencyLiteral!: string;
+    broadcastFrequencyLiteral: string | undefined;
     @property.literal()
-    broadcastTimezone!: string;
+    broadcastTimezone: string | undefined;
     @property.resource()
-    hasBroadcastChannel!: Schema.BroadcastChannel;
+    hasBroadcastChannel: Schema.BroadcastChannel | undefined;
     @property.resource()
-    inLanguage!: Schema.Language;
+    inLanguage: Schema.Language | undefined;
     @property.literal({ path: schema.inLanguage })
-    inLanguageLiteral!: string;
+    inLanguageLiteral: string | undefined;
     @property.resource()
-    parentService!: Schema.BroadcastService;
+    parentService: Schema.BroadcastService | undefined;
     @property.literal()
-    videoFormat!: string;
+    videoFormat: string | undefined;
   }
   return BroadcastServiceClass
 }

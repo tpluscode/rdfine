@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { MediaObjectMixin } from './MediaObject';
 
 export interface ImageObject extends Schema.MediaObject, RdfResource {
-  caption: Schema.MediaObject;
-  captionLiteral: string;
-  exifData: Schema.PropertyValue;
-  exifDataLiteral: string;
-  representativeOfPage: boolean;
-  thumbnail: Schema.ImageObject;
+  caption: Schema.MediaObject | undefined;
+  captionLiteral: string | undefined;
+  exifData: Schema.PropertyValue | undefined;
+  exifDataLiteral: string | undefined;
+  representativeOfPage: boolean | undefined;
+  thumbnail: Schema.ImageObject | undefined;
 }
 
 export function ImageObjectMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ImageObjectClass extends MediaObjectMixin(Resource) implements ImageObject {
     @property.resource()
-    caption!: Schema.MediaObject;
+    caption: Schema.MediaObject | undefined;
     @property.literal({ path: schema.caption })
-    captionLiteral!: string;
+    captionLiteral: string | undefined;
     @property.resource()
-    exifData!: Schema.PropertyValue;
+    exifData: Schema.PropertyValue | undefined;
     @property.literal({ path: schema.exifData })
-    exifDataLiteral!: string;
+    exifDataLiteral: string | undefined;
     @property.literal({ type: Boolean })
-    representativeOfPage!: boolean;
+    representativeOfPage: boolean | undefined;
     @property.resource()
-    thumbnail!: Schema.ImageObject;
+    thumbnail: Schema.ImageObject | undefined;
   }
   return ImageObjectClass
 }

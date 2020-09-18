@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { PropertyValueMixin } from './PropertyValue';
 
 export interface LocationFeatureSpecification extends Schema.PropertyValue, RdfResource {
-  hoursAvailable: Schema.OpeningHoursSpecification;
-  validFrom: Date;
-  validThrough: Date;
+  hoursAvailable: Schema.OpeningHoursSpecification | undefined;
+  validFrom: Date | undefined;
+  validThrough: Date | undefined;
 }
 
 export function LocationFeatureSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LocationFeatureSpecificationClass extends PropertyValueMixin(Resource) implements LocationFeatureSpecification {
     @property.resource()
-    hoursAvailable!: Schema.OpeningHoursSpecification;
+    hoursAvailable: Schema.OpeningHoursSpecification | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    validFrom!: Date;
+    validFrom: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    validThrough!: Date;
+    validThrough: Date | undefined;
   }
   return LocationFeatureSpecificationClass
 }

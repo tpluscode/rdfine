@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface SpeakableSpecification extends Schema.Intangible, RdfResource {
-  cssSelector: string;
-  xpath: string;
+  cssSelector: string | undefined;
+  xpath: string | undefined;
 }
 
 export function SpeakableSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SpeakableSpecificationClass extends IntangibleMixin(Resource) implements SpeakableSpecification {
     @property.literal()
-    cssSelector!: string;
+    cssSelector: string | undefined;
     @property.literal()
-    xpath!: string;
+    xpath: string | undefined;
   }
   return SpeakableSpecificationClass
 }

@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface DatedMoneySpecification extends Schema.StructuredValue, RdfResource {
-  amount: Schema.MonetaryAmount;
-  amountLiteral: number;
-  currency: string;
-  endDate: Date;
-  startDate: Date;
+  amount: Schema.MonetaryAmount | undefined;
+  amountLiteral: number | undefined;
+  currency: string | undefined;
+  endDate: Date | undefined;
+  startDate: Date | undefined;
 }
 
 export function DatedMoneySpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DatedMoneySpecificationClass extends StructuredValueMixin(Resource) implements DatedMoneySpecification {
     @property.resource()
-    amount!: Schema.MonetaryAmount;
+    amount: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.amount, type: Number })
-    amountLiteral!: number;
+    amountLiteral: number | undefined;
     @property.literal()
-    currency!: string;
+    currency: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    endDate!: Date;
+    endDate: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    startDate!: Date;
+    startDate: Date | undefined;
   }
   return DatedMoneySpecificationClass
 }

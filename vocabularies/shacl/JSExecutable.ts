@@ -8,14 +8,14 @@ import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
 export interface JSExecutable extends Rdfs.Resource, RdfResource {
-  jsFunctionName: string;
+  jsFunctionName: string | undefined;
 }
 
 export function JSExecutableMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class JSExecutableClass extends Rdfs.ResourceMixin(Resource) implements JSExecutable {
     @property.literal()
-    jsFunctionName!: string;
+    jsFunctionName: string | undefined;
   }
   return JSExecutableClass
 }

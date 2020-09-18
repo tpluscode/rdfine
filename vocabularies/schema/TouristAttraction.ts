@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { PlaceMixin } from './Place';
 
 export interface TouristAttraction extends Schema.Place, RdfResource {
-  availableLanguage: Schema.Language;
-  availableLanguageLiteral: string;
-  touristType: Schema.Audience;
-  touristTypeLiteral: string;
+  availableLanguage: Schema.Language | undefined;
+  availableLanguageLiteral: string | undefined;
+  touristType: Schema.Audience | undefined;
+  touristTypeLiteral: string | undefined;
 }
 
 export function TouristAttractionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TouristAttractionClass extends PlaceMixin(Resource) implements TouristAttraction {
     @property.resource()
-    availableLanguage!: Schema.Language;
+    availableLanguage: Schema.Language | undefined;
     @property.literal({ path: schema.availableLanguage })
-    availableLanguageLiteral!: string;
+    availableLanguageLiteral: string | undefined;
     @property.resource()
-    touristType!: Schema.Audience;
+    touristType: Schema.Audience | undefined;
     @property.literal({ path: schema.touristType })
-    touristTypeLiteral!: string;
+    touristTypeLiteral: string | undefined;
   }
   return TouristAttractionClass
 }

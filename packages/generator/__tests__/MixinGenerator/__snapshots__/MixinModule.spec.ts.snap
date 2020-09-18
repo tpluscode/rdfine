@@ -10,14 +10,14 @@ import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\".\\";
 
 export interface Class extends RdfResource {
-    foo: string;
+    foo: string | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
         @property.literal()
-        foo!: string;
+        foo: string | undefined;
     }
     return ClassClass
 }
@@ -45,14 +45,14 @@ import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\".\\";
 
 export interface Class extends RdfResource {
-    foo: Example.Class;
+    foo: Example.Class | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
         @property.resource({ as: [ClassMixin] })
-        foo!: Example.Class;
+        foo: Example.Class | undefined;
     }
     return ClassClass
 }
@@ -212,14 +212,14 @@ import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\".\\";
 
 export interface Class extends RdfResource {
-    foo: Date;
+    foo: Date | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
         @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-        foo!: Date;
+        foo: Date | undefined;
     }
     return ClassClass
 }
@@ -282,14 +282,14 @@ import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\".\\";
 
 export interface Class extends RdfResource {
-    foo: Example.Foo | Array<Example.Foo>;
+    foo: Example.Foo | Array<Example.Foo> | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
         @property.resource({ values: ['list', 'single'] })
-        foo!: Example.Foo | Array<Example.Foo>;
+        foo: Example.Foo | Array<Example.Foo> | undefined;
     }
     return ClassClass
 }
@@ -318,14 +318,14 @@ import type * as Example from \\".\\";
 import * as Example from \\"@rdfine/example\\";
 
 export interface Class extends RdfResource {
-    foo: Example.Foo;
+    foo: Example.Foo | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
         @property.resource({ as: [Example.FooMixin] })
-        foo!: Example.Foo;
+        foo: Example.Foo | undefined;
     }
     return ClassClass
 }
@@ -353,14 +353,14 @@ import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\".\\";
 
 export interface Class extends RdfResource {
-    foo: Example.Foo;
+    foo: Example.Foo | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
         @property.resource({ implicitTypes: [ex.Foo] })
-        foo!: Example.Foo;
+        foo: Example.Foo | undefined;
     }
     return ClassClass
 }
@@ -388,14 +388,14 @@ import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\".\\";
 
 export interface Class extends RdfResource {
-    foo: string;
+    foo: string | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
     @namespace(ex)
     class ClassClass extends Resource implements Class {
         @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#anyURI') })
-        foo!: string;
+        foo: string | undefined;
     }
     return ClassClass
 }

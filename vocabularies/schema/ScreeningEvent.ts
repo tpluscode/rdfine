@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { EventMixin } from './Event';
 
 export interface ScreeningEvent extends Schema.Event, RdfResource {
-  videoFormat: string;
-  workPresented: Schema.Movie;
+  videoFormat: string | undefined;
+  workPresented: Schema.Movie | undefined;
 }
 
 export function ScreeningEventMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ScreeningEventClass extends EventMixin(Resource) implements ScreeningEvent {
     @property.literal()
-    videoFormat!: string;
+    videoFormat: string | undefined;
     @property.resource()
-    workPresented!: Schema.Movie;
+    workPresented: Schema.Movie | undefined;
   }
   return ScreeningEventClass
 }

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -8,23 +9,23 @@ import * as Rdfs from '@rdfine/rdfs';
 import * as Rdf from '@rdfine/rdf';
 
 export interface NegativePropertyAssertion extends Rdfs.Resource, RdfResource {
-  assertionProperty: Rdf.Property;
-  sourceIndividual: RDF.NamedNode;
-  targetIndividual: RDF.NamedNode;
-  targetValue: string;
+  assertionProperty: Rdf.Property | undefined;
+  sourceIndividual: RDF.NamedNode | undefined;
+  targetIndividual: RDF.NamedNode | undefined;
+  targetValue: string | undefined;
 }
 
 export function NegativePropertyAssertionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class NegativePropertyAssertionClass extends Rdfs.ResourceMixin(Resource) implements NegativePropertyAssertion {
     @property.resource({ as: [Rdf.PropertyMixin] })
-    assertionProperty!: Rdf.Property;
+    assertionProperty: Rdf.Property | undefined;
     @property()
-    sourceIndividual!: RDF.NamedNode;
+    sourceIndividual: RDF.NamedNode | undefined;
     @property()
-    targetIndividual!: RDF.NamedNode;
+    targetIndividual: RDF.NamedNode | undefined;
     @property.literal()
-    targetValue!: string;
+    targetValue: string | undefined;
   }
   return NegativePropertyAssertionClass
 }

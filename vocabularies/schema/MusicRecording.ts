@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface MusicRecording extends Schema.CreativeWork, RdfResource {
-  byArtist: Schema.MusicGroup | Schema.Person;
-  duration: Schema.Duration;
-  inAlbum: Schema.MusicAlbum;
-  inPlaylist: Schema.MusicPlaylist;
-  isrcCode: string;
-  recordingOf: Schema.MusicComposition;
+  byArtist: Schema.MusicGroup | Schema.Person | undefined;
+  duration: Schema.Duration | undefined;
+  inAlbum: Schema.MusicAlbum | undefined;
+  inPlaylist: Schema.MusicPlaylist | undefined;
+  isrcCode: string | undefined;
+  recordingOf: Schema.MusicComposition | undefined;
 }
 
 export function MusicRecordingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MusicRecordingClass extends CreativeWorkMixin(Resource) implements MusicRecording {
     @property.resource()
-    byArtist!: Schema.MusicGroup | Schema.Person;
+    byArtist: Schema.MusicGroup | Schema.Person | undefined;
     @property.resource()
-    duration!: Schema.Duration;
+    duration: Schema.Duration | undefined;
     @property.resource()
-    inAlbum!: Schema.MusicAlbum;
+    inAlbum: Schema.MusicAlbum | undefined;
     @property.resource()
-    inPlaylist!: Schema.MusicPlaylist;
+    inPlaylist: Schema.MusicPlaylist | undefined;
     @property.literal()
-    isrcCode!: string;
+    isrcCode: string | undefined;
     @property.resource()
-    recordingOf!: Schema.MusicComposition;
+    recordingOf: Schema.MusicComposition | undefined;
   }
   return MusicRecordingClass
 }

@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface QuantitativeValueDistribution extends Schema.StructuredValue, RdfResource {
-  duration: Schema.Duration;
-  median: number;
-  percentile10: number;
-  percentile25: number;
-  percentile75: number;
-  percentile90: number;
+  duration: Schema.Duration | undefined;
+  median: number | undefined;
+  percentile10: number | undefined;
+  percentile25: number | undefined;
+  percentile75: number | undefined;
+  percentile90: number | undefined;
 }
 
 export function QuantitativeValueDistributionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class QuantitativeValueDistributionClass extends StructuredValueMixin(Resource) implements QuantitativeValueDistribution {
     @property.resource()
-    duration!: Schema.Duration;
+    duration: Schema.Duration | undefined;
     @property.literal({ type: Number })
-    median!: number;
+    median: number | undefined;
     @property.literal({ type: Number })
-    percentile10!: number;
+    percentile10: number | undefined;
     @property.literal({ type: Number })
-    percentile25!: number;
+    percentile25: number | undefined;
     @property.literal({ type: Number })
-    percentile75!: number;
+    percentile75: number | undefined;
     @property.literal({ type: Number })
-    percentile90!: number;
+    percentile90: number | undefined;
   }
   return QuantitativeValueDistributionClass
 }

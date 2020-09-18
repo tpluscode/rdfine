@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { CivicStructureMixin } from './CivicStructure';
 
 export interface Airport extends Schema.CivicStructure, RdfResource {
-  iataCode: string;
-  icaoCode: string;
+  iataCode: string | undefined;
+  icaoCode: string | undefined;
 }
 
 export function AirportMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AirportClass extends CivicStructureMixin(Resource) implements Airport {
     @property.literal()
-    iataCode!: string;
+    iataCode: string | undefined;
     @property.literal()
-    icaoCode!: string;
+    icaoCode: string | undefined;
   }
   return AirportClass
 }

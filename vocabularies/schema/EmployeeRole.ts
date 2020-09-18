@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { OrganizationRoleMixin } from './OrganizationRole';
 
 export interface EmployeeRole extends Schema.OrganizationRole, RdfResource {
-  baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification;
-  baseSalaryLiteral: number;
-  salaryCurrency: string;
+  baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
+  baseSalaryLiteral: number | undefined;
+  salaryCurrency: string | undefined;
 }
 
 export function EmployeeRoleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class EmployeeRoleClass extends OrganizationRoleMixin(Resource) implements EmployeeRole {
     @property.resource()
-    baseSalary!: Schema.MonetaryAmount | Schema.PriceSpecification;
+    baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
     @property.literal({ path: schema.baseSalary, type: Number })
-    baseSalaryLiteral!: number;
+    baseSalaryLiteral: number | undefined;
     @property.literal()
-    salaryCurrency!: string;
+    salaryCurrency: string | undefined;
   }
   return EmployeeRoleClass
 }

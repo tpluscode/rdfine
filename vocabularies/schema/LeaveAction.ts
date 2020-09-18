@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { InteractActionMixin } from './InteractAction';
 
 export interface LeaveAction extends Schema.InteractAction, RdfResource {
-  event: Schema.Event;
+  event: Schema.Event | undefined;
 }
 
 export function LeaveActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LeaveActionClass extends InteractActionMixin(Resource) implements LeaveAction {
     @property.resource()
-    event!: Schema.Event;
+    event: Schema.Event | undefined;
   }
   return LeaveActionClass
 }

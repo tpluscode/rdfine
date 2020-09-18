@@ -9,23 +9,23 @@ import * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin } from './Resource';
 
 export interface Class extends Rdfs.Class, Hydra.Resource, RdfResource {
-  description: string;
+  description: string | undefined;
   supportedOperation: Array<Hydra.Operation>;
   supportedProperty: Array<Hydra.SupportedProperty>;
-  title: string;
+  title: string | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class ClassClass extends ResourceMixin(Rdfs.ClassMixin(Resource)) implements Class {
     @property.literal()
-    description!: string;
+    description: string | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
     supportedOperation!: Array<Hydra.Operation>;
     @property.resource({ values: 'array', implicitTypes: [hydra.SupportedProperty] })
     supportedProperty!: Array<Hydra.SupportedProperty>;
     @property.literal()
-    title!: string;
+    title: string | undefined;
   }
   return ClassClass
 }

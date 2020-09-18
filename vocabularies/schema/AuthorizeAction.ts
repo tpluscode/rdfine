@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { AllocateActionMixin } from './AllocateAction';
 
 export interface AuthorizeAction extends Schema.AllocateAction, RdfResource {
-  recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
+  recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
 }
 
 export function AuthorizeActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AuthorizeActionClass extends AllocateActionMixin(Resource) implements AuthorizeAction {
     @property.resource()
-    recipient!: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
+    recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
   return AuthorizeActionClass
 }

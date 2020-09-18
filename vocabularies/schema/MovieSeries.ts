@@ -8,32 +8,32 @@ import type * as Schema from '.';
 import { CreativeWorkSeriesMixin } from './CreativeWorkSeries';
 
 export interface MovieSeries extends Schema.CreativeWorkSeries, RdfResource {
-  actor: Schema.Person;
-  actors: Schema.Person;
-  director: Schema.Person;
-  directors: Schema.Person;
-  musicBy: Schema.MusicGroup | Schema.Person;
-  productionCompany: Schema.Organization;
-  trailer: Schema.VideoObject;
+  actor: Schema.Person | undefined;
+  actors: Schema.Person | undefined;
+  director: Schema.Person | undefined;
+  directors: Schema.Person | undefined;
+  musicBy: Schema.MusicGroup | Schema.Person | undefined;
+  productionCompany: Schema.Organization | undefined;
+  trailer: Schema.VideoObject | undefined;
 }
 
 export function MovieSeriesMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MovieSeriesClass extends CreativeWorkSeriesMixin(Resource) implements MovieSeries {
     @property.resource()
-    actor!: Schema.Person;
+    actor: Schema.Person | undefined;
     @property.resource()
-    actors!: Schema.Person;
+    actors: Schema.Person | undefined;
     @property.resource()
-    director!: Schema.Person;
+    director: Schema.Person | undefined;
     @property.resource()
-    directors!: Schema.Person;
+    directors: Schema.Person | undefined;
     @property.resource()
-    musicBy!: Schema.MusicGroup | Schema.Person;
+    musicBy: Schema.MusicGroup | Schema.Person | undefined;
     @property.resource()
-    productionCompany!: Schema.Organization;
+    productionCompany: Schema.Organization | undefined;
     @property.resource()
-    trailer!: Schema.VideoObject;
+    trailer: Schema.VideoObject | undefined;
   }
   return MovieSeriesClass
 }

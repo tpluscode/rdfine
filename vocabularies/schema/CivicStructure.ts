@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { PlaceMixin } from './Place';
 
 export interface CivicStructure extends Schema.Place, RdfResource {
-  openingHours: string;
+  openingHours: string | undefined;
 }
 
 export function CivicStructureMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CivicStructureClass extends PlaceMixin(Resource) implements CivicStructure {
     @property.literal()
-    openingHours!: string;
+    openingHours: string | undefined;
   }
   return CivicStructureClass
 }

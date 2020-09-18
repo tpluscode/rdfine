@@ -8,32 +8,32 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface MonetaryAmount extends Schema.StructuredValue, RdfResource {
-  currency: string;
-  maxValue: number;
-  minValue: number;
-  validFrom: Date;
-  validThrough: Date;
-  value: Schema.StructuredValue;
-  valueLiteral: boolean | number | string;
+  currency: string | undefined;
+  maxValue: number | undefined;
+  minValue: number | undefined;
+  validFrom: Date | undefined;
+  validThrough: Date | undefined;
+  value: Schema.StructuredValue | undefined;
+  valueLiteral: boolean | number | string | undefined;
 }
 
 export function MonetaryAmountMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MonetaryAmountClass extends StructuredValueMixin(Resource) implements MonetaryAmount {
     @property.literal()
-    currency!: string;
+    currency: string | undefined;
     @property.literal({ type: Number })
-    maxValue!: number;
+    maxValue: number | undefined;
     @property.literal({ type: Number })
-    minValue!: number;
+    minValue: number | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    validFrom!: Date;
+    validFrom: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    validThrough!: Date;
+    validThrough: Date | undefined;
     @property.resource()
-    value!: Schema.StructuredValue;
+    value: Schema.StructuredValue | undefined;
     @property.literal({ path: schema.value })
-    valueLiteral!: boolean | number | string;
+    valueLiteral: boolean | number | string | undefined;
   }
   return MonetaryAmountClass
 }

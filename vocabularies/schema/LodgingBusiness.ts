@@ -8,41 +8,41 @@ import type * as Schema from '.';
 import { LocalBusinessMixin } from './LocalBusiness';
 
 export interface LodgingBusiness extends Schema.LocalBusiness, RdfResource {
-  amenityFeature: Schema.LocationFeatureSpecification;
-  audience: Schema.Audience;
-  availableLanguage: Schema.Language;
-  availableLanguageLiteral: string;
-  checkinTime: Date;
-  checkoutTime: Date;
-  numberOfRooms: Schema.QuantitativeValue;
-  numberOfRoomsLiteral: number;
-  petsAllowed: boolean | string;
-  starRating: Schema.Rating;
+  amenityFeature: Schema.LocationFeatureSpecification | undefined;
+  audience: Schema.Audience | undefined;
+  availableLanguage: Schema.Language | undefined;
+  availableLanguageLiteral: string | undefined;
+  checkinTime: Date | undefined;
+  checkoutTime: Date | undefined;
+  numberOfRooms: Schema.QuantitativeValue | undefined;
+  numberOfRoomsLiteral: number | undefined;
+  petsAllowed: boolean | string | undefined;
+  starRating: Schema.Rating | undefined;
 }
 
 export function LodgingBusinessMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LodgingBusinessClass extends LocalBusinessMixin(Resource) implements LodgingBusiness {
     @property.resource()
-    amenityFeature!: Schema.LocationFeatureSpecification;
+    amenityFeature: Schema.LocationFeatureSpecification | undefined;
     @property.resource()
-    audience!: Schema.Audience;
+    audience: Schema.Audience | undefined;
     @property.resource()
-    availableLanguage!: Schema.Language;
+    availableLanguage: Schema.Language | undefined;
     @property.literal({ path: schema.availableLanguage })
-    availableLanguageLiteral!: string;
+    availableLanguageLiteral: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    checkinTime!: Date;
+    checkinTime: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    checkoutTime!: Date;
+    checkoutTime: Date | undefined;
     @property.resource()
-    numberOfRooms!: Schema.QuantitativeValue;
+    numberOfRooms: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.numberOfRooms, type: Number })
-    numberOfRoomsLiteral!: number;
+    numberOfRoomsLiteral: number | undefined;
     @property.literal()
-    petsAllowed!: boolean | string;
+    petsAllowed: boolean | string | undefined;
     @property.resource()
-    starRating!: Schema.Rating;
+    starRating: Schema.Rating | undefined;
   }
   return LodgingBusinessClass
 }

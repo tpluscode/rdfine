@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { TechArticleMixin } from './TechArticle';
 
 export interface APIReference extends Schema.TechArticle, RdfResource {
-  assembly: string;
-  assemblyVersion: string;
-  executableLibraryName: string;
-  programmingModel: string;
-  targetPlatform: string;
+  assembly: string | undefined;
+  assemblyVersion: string | undefined;
+  executableLibraryName: string | undefined;
+  programmingModel: string | undefined;
+  targetPlatform: string | undefined;
 }
 
 export function APIReferenceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class APIReferenceClass extends TechArticleMixin(Resource) implements APIReference {
     @property.literal()
-    assembly!: string;
+    assembly: string | undefined;
     @property.literal()
-    assemblyVersion!: string;
+    assemblyVersion: string | undefined;
     @property.literal()
-    executableLibraryName!: string;
+    executableLibraryName: string | undefined;
     @property.literal()
-    programmingModel!: string;
+    programmingModel: string | undefined;
     @property.literal()
-    targetPlatform!: string;
+    targetPlatform: string | undefined;
   }
   return APIReferenceClass
 }

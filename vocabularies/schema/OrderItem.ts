@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface OrderItem extends Schema.Intangible, RdfResource {
-  orderDelivery: Schema.ParcelDelivery;
-  orderedItem: Schema.OrderItem | Schema.Product | Schema.Service;
-  orderItemNumber: string;
-  orderItemStatus: Schema.OrderStatus;
-  orderQuantity: number;
+  orderDelivery: Schema.ParcelDelivery | undefined;
+  orderedItem: Schema.OrderItem | Schema.Product | Schema.Service | undefined;
+  orderItemNumber: string | undefined;
+  orderItemStatus: Schema.OrderStatus | undefined;
+  orderQuantity: number | undefined;
 }
 
 export function OrderItemMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OrderItemClass extends IntangibleMixin(Resource) implements OrderItem {
     @property.resource()
-    orderDelivery!: Schema.ParcelDelivery;
+    orderDelivery: Schema.ParcelDelivery | undefined;
     @property.resource()
-    orderedItem!: Schema.OrderItem | Schema.Product | Schema.Service;
+    orderedItem: Schema.OrderItem | Schema.Product | Schema.Service | undefined;
     @property.literal()
-    orderItemNumber!: string;
+    orderItemNumber: string | undefined;
     @property()
-    orderItemStatus!: Schema.OrderStatus;
+    orderItemStatus: Schema.OrderStatus | undefined;
     @property.literal({ type: Number })
-    orderQuantity!: number;
+    orderQuantity: number | undefined;
   }
   return OrderItemClass
 }

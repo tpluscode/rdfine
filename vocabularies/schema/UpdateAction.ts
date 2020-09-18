@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { ActionMixin } from './Action';
 
 export interface UpdateAction extends Schema.Action, RdfResource {
-  collection: Schema.Thing;
-  targetCollection: Schema.Thing;
+  collection: Schema.Thing | undefined;
+  targetCollection: Schema.Thing | undefined;
 }
 
 export function UpdateActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class UpdateActionClass extends ActionMixin(Resource) implements UpdateAction {
     @property.resource()
-    collection!: Schema.Thing;
+    collection: Schema.Thing | undefined;
     @property.resource()
-    targetCollection!: Schema.Thing;
+    targetCollection: Schema.Thing | undefined;
   }
   return UpdateActionClass
 }

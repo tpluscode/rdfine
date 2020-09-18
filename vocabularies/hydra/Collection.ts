@@ -10,7 +10,7 @@ import { ResourceMixin } from './Resource';
 export interface Collection extends Hydra.Resource, RdfResource {
   manages: Array<RDF.Term>;
   member: Array<Hydra.Resource>;
-  totalItems: number;
+  totalItems: number | undefined;
 }
 
 export function CollectionMixin<Base extends Constructor>(Resource: Base) {
@@ -21,7 +21,7 @@ export function CollectionMixin<Base extends Constructor>(Resource: Base) {
     @property.resource({ values: 'array', implicitTypes: [hydra.Resource] })
     member!: Array<Hydra.Resource>;
     @property.literal({ type: Number })
-    totalItems!: number;
+    totalItems: number | undefined;
   }
   return CollectionClass
 }

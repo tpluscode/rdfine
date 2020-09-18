@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface OpeningHoursSpecification extends Schema.StructuredValue, RdfResource {
-  closes: Date;
-  dayOfWeek: Schema.DayOfWeek;
-  opens: Date;
-  validFrom: Date;
-  validThrough: Date;
+  closes: Date | undefined;
+  dayOfWeek: Schema.DayOfWeek | undefined;
+  opens: Date | undefined;
+  validFrom: Date | undefined;
+  validThrough: Date | undefined;
 }
 
 export function OpeningHoursSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OpeningHoursSpecificationClass extends StructuredValueMixin(Resource) implements OpeningHoursSpecification {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    closes!: Date;
+    closes: Date | undefined;
     @property()
-    dayOfWeek!: Schema.DayOfWeek;
+    dayOfWeek: Schema.DayOfWeek | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    opens!: Date;
+    opens: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    validFrom!: Date;
+    validFrom: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    validThrough!: Date;
+    validThrough: Date | undefined;
   }
   return OpeningHoursSpecificationClass
 }

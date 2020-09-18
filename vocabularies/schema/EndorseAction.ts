@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { ReactActionMixin } from './ReactAction';
 
 export interface EndorseAction extends Schema.ReactAction, RdfResource {
-  endorsee: Schema.Organization | Schema.Person;
+  endorsee: Schema.Organization | Schema.Person | undefined;
 }
 
 export function EndorseActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class EndorseActionClass extends ReactActionMixin(Resource) implements EndorseAction {
     @property.resource()
-    endorsee!: Schema.Organization | Schema.Person;
+    endorsee: Schema.Organization | Schema.Person | undefined;
   }
   return EndorseActionClass
 }

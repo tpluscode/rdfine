@@ -8,80 +8,80 @@ import type * as Schema from '.';
 import { CreativeWorkSeriesMixin } from './CreativeWorkSeries';
 
 export interface VideoGameSeries extends Schema.CreativeWorkSeries, RdfResource {
-  actor: Schema.Person;
-  actors: Schema.Person;
-  characterAttribute: Schema.Thing;
-  cheatCode: Schema.CreativeWork;
-  containsSeason: Schema.CreativeWorkSeason;
-  director: Schema.Person;
-  directors: Schema.Person;
-  episode: Schema.Episode;
-  episodes: Schema.Episode;
-  gameItem: Schema.Thing;
-  gameLocation: Schema.Place | Schema.PostalAddress;
-  gamePlatform: Schema.Thing;
-  gamePlatformLiteral: string;
-  musicBy: Schema.MusicGroup | Schema.Person;
-  numberOfEpisodes: number;
-  numberOfPlayers: Schema.QuantitativeValue;
-  numberOfSeasons: number;
-  playMode: Schema.GamePlayMode;
-  productionCompany: Schema.Organization;
-  quest: Schema.Thing;
-  season: Schema.CreativeWorkSeason;
-  seasons: Schema.CreativeWorkSeason;
-  trailer: Schema.VideoObject;
+  actor: Schema.Person | undefined;
+  actors: Schema.Person | undefined;
+  characterAttribute: Schema.Thing | undefined;
+  cheatCode: Schema.CreativeWork | undefined;
+  containsSeason: Schema.CreativeWorkSeason | undefined;
+  director: Schema.Person | undefined;
+  directors: Schema.Person | undefined;
+  episode: Schema.Episode | undefined;
+  episodes: Schema.Episode | undefined;
+  gameItem: Schema.Thing | undefined;
+  gameLocation: Schema.Place | Schema.PostalAddress | undefined;
+  gamePlatform: Schema.Thing | undefined;
+  gamePlatformLiteral: string | undefined;
+  musicBy: Schema.MusicGroup | Schema.Person | undefined;
+  numberOfEpisodes: number | undefined;
+  numberOfPlayers: Schema.QuantitativeValue | undefined;
+  numberOfSeasons: number | undefined;
+  playMode: Schema.GamePlayMode | undefined;
+  productionCompany: Schema.Organization | undefined;
+  quest: Schema.Thing | undefined;
+  season: Schema.CreativeWorkSeason | undefined;
+  seasons: Schema.CreativeWorkSeason | undefined;
+  trailer: Schema.VideoObject | undefined;
 }
 
 export function VideoGameSeriesMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class VideoGameSeriesClass extends CreativeWorkSeriesMixin(Resource) implements VideoGameSeries {
     @property.resource()
-    actor!: Schema.Person;
+    actor: Schema.Person | undefined;
     @property.resource()
-    actors!: Schema.Person;
+    actors: Schema.Person | undefined;
     @property.resource()
-    characterAttribute!: Schema.Thing;
+    characterAttribute: Schema.Thing | undefined;
     @property.resource()
-    cheatCode!: Schema.CreativeWork;
+    cheatCode: Schema.CreativeWork | undefined;
     @property.resource()
-    containsSeason!: Schema.CreativeWorkSeason;
+    containsSeason: Schema.CreativeWorkSeason | undefined;
     @property.resource()
-    director!: Schema.Person;
+    director: Schema.Person | undefined;
     @property.resource()
-    directors!: Schema.Person;
+    directors: Schema.Person | undefined;
     @property.resource()
-    episode!: Schema.Episode;
+    episode: Schema.Episode | undefined;
     @property.resource()
-    episodes!: Schema.Episode;
+    episodes: Schema.Episode | undefined;
     @property.resource()
-    gameItem!: Schema.Thing;
+    gameItem: Schema.Thing | undefined;
     @property.resource()
-    gameLocation!: Schema.Place | Schema.PostalAddress;
+    gameLocation: Schema.Place | Schema.PostalAddress | undefined;
     @property.resource()
-    gamePlatform!: Schema.Thing;
+    gamePlatform: Schema.Thing | undefined;
     @property.literal({ path: schema.gamePlatform })
-    gamePlatformLiteral!: string;
+    gamePlatformLiteral: string | undefined;
     @property.resource()
-    musicBy!: Schema.MusicGroup | Schema.Person;
+    musicBy: Schema.MusicGroup | Schema.Person | undefined;
     @property.literal({ type: Number })
-    numberOfEpisodes!: number;
+    numberOfEpisodes: number | undefined;
     @property.resource()
-    numberOfPlayers!: Schema.QuantitativeValue;
+    numberOfPlayers: Schema.QuantitativeValue | undefined;
     @property.literal({ type: Number })
-    numberOfSeasons!: number;
+    numberOfSeasons: number | undefined;
     @property()
-    playMode!: Schema.GamePlayMode;
+    playMode: Schema.GamePlayMode | undefined;
     @property.resource()
-    productionCompany!: Schema.Organization;
+    productionCompany: Schema.Organization | undefined;
     @property.resource()
-    quest!: Schema.Thing;
+    quest: Schema.Thing | undefined;
     @property.resource()
-    season!: Schema.CreativeWorkSeason;
+    season: Schema.CreativeWorkSeason | undefined;
     @property.resource()
-    seasons!: Schema.CreativeWorkSeason;
+    seasons: Schema.CreativeWorkSeason | undefined;
     @property.resource()
-    trailer!: Schema.VideoObject;
+    trailer: Schema.VideoObject | undefined;
   }
   return VideoGameSeriesClass
 }

@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { RoleMixin } from './Role';
 
 export interface OrganizationRole extends Schema.Role, RdfResource {
-  numberedPosition: number;
+  numberedPosition: number | undefined;
 }
 
 export function OrganizationRoleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OrganizationRoleClass extends RoleMixin(Resource) implements OrganizationRole {
     @property.literal({ type: Number })
-    numberedPosition!: number;
+    numberedPosition: number | undefined;
   }
   return OrganizationRoleClass
 }

@@ -8,20 +8,20 @@ import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
 export interface ValidationReport extends Rdfs.Resource, RdfResource {
-  conforms: boolean;
-  result: Sh.ValidationResult;
-  shapesGraphWellFormed: boolean;
+  conforms: boolean | undefined;
+  result: Sh.ValidationResult | undefined;
+  shapesGraphWellFormed: boolean | undefined;
 }
 
 export function ValidationReportMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class ValidationReportClass extends Rdfs.ResourceMixin(Resource) implements ValidationReport {
     @property.literal({ type: Boolean })
-    conforms!: boolean;
+    conforms: boolean | undefined;
     @property.resource({ implicitTypes: [sh.ValidationResult] })
-    result!: Sh.ValidationResult;
+    result: Sh.ValidationResult | undefined;
     @property.literal({ type: Boolean })
-    shapesGraphWellFormed!: boolean;
+    shapesGraphWellFormed: boolean | undefined;
   }
   return ValidationReportClass
 }

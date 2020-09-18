@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface ListItem extends Schema.Intangible, RdfResource {
-  item: Schema.Thing;
-  nextItem: Schema.ListItem;
-  position: number | string;
-  previousItem: Schema.ListItem;
+  item: Schema.Thing | undefined;
+  nextItem: Schema.ListItem | undefined;
+  position: number | string | undefined;
+  previousItem: Schema.ListItem | undefined;
 }
 
 export function ListItemMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ListItemClass extends IntangibleMixin(Resource) implements ListItem {
     @property.resource()
-    item!: Schema.Thing;
+    item: Schema.Thing | undefined;
     @property.resource()
-    nextItem!: Schema.ListItem;
+    nextItem: Schema.ListItem | undefined;
     @property.literal()
-    position!: number | string;
+    position: number | string | undefined;
     @property.resource()
-    previousItem!: Schema.ListItem;
+    previousItem: Schema.ListItem | undefined;
   }
   return ListItemClass
 }

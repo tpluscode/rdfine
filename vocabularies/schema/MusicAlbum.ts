@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { MusicPlaylistMixin } from './MusicPlaylist';
 
 export interface MusicAlbum extends Schema.MusicPlaylist, RdfResource {
-  albumProductionType: Schema.MusicAlbumProductionType;
-  albumRelease: Schema.MusicRelease;
-  albumReleaseType: Schema.MusicAlbumReleaseType;
-  byArtist: Schema.MusicGroup | Schema.Person;
+  albumProductionType: Schema.MusicAlbumProductionType | undefined;
+  albumRelease: Schema.MusicRelease | undefined;
+  albumReleaseType: Schema.MusicAlbumReleaseType | undefined;
+  byArtist: Schema.MusicGroup | Schema.Person | undefined;
 }
 
 export function MusicAlbumMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MusicAlbumClass extends MusicPlaylistMixin(Resource) implements MusicAlbum {
     @property()
-    albumProductionType!: Schema.MusicAlbumProductionType;
+    albumProductionType: Schema.MusicAlbumProductionType | undefined;
     @property.resource()
-    albumRelease!: Schema.MusicRelease;
+    albumRelease: Schema.MusicRelease | undefined;
     @property()
-    albumReleaseType!: Schema.MusicAlbumReleaseType;
+    albumReleaseType: Schema.MusicAlbumReleaseType | undefined;
     @property.resource()
-    byArtist!: Schema.MusicGroup | Schema.Person;
+    byArtist: Schema.MusicGroup | Schema.Person | undefined;
   }
   return MusicAlbumClass
 }

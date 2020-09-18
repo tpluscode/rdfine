@@ -9,17 +9,17 @@ import { CreativeWorkMixin } from './CreativeWork';
 import { CreativeWorkSeasonMixin } from './CreativeWorkSeason';
 
 export interface TVSeason extends Schema.CreativeWork, Schema.CreativeWorkSeason, RdfResource {
-  countryOfOrigin: Schema.Country;
-  partOfTVSeries: Schema.TVSeries;
+  countryOfOrigin: Schema.Country | undefined;
+  partOfTVSeries: Schema.TVSeries | undefined;
 }
 
 export function TVSeasonMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TVSeasonClass extends CreativeWorkSeasonMixin(CreativeWorkMixin(Resource)) implements TVSeason {
     @property.resource()
-    countryOfOrigin!: Schema.Country;
+    countryOfOrigin: Schema.Country | undefined;
     @property.resource()
-    partOfTVSeries!: Schema.TVSeries;
+    partOfTVSeries: Schema.TVSeries | undefined;
   }
   return TVSeasonClass
 }
