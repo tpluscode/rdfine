@@ -21,8 +21,8 @@ export interface Shape extends Rdfs.Resource, RdfResource {
   severity: Sh.Severity;
   sparql: Sh.SPARQLConstraint;
   target: Sh.Target;
-  targetClass: Rdfs.Class;
-  targetNode: RDF.Term;
+  targetClass: Array<Rdfs.Class>;
+  targetNode: Array<RDF.Term>;
   targetObjectsOf: Rdf.Property;
   targetSubjectsOf: Rdf.Property;
   xone: Array<Sh.Shape>;
@@ -55,10 +55,10 @@ export function ShapeMixin<Base extends Constructor>(Resource: Base) {
     sparql!: Sh.SPARQLConstraint;
     @property.resource({ implicitTypes: [sh.Target] })
     target!: Sh.Target;
-    @property.resource({ as: [Rdfs.ClassMixin] })
-    targetClass!: Rdfs.Class;
-    @property()
-    targetNode!: RDF.Term;
+    @property.resource({ values: 'array', as: [Rdfs.ClassMixin] })
+    targetClass!: Array<Rdfs.Class>;
+    @property({ values: 'array' })
+    targetNode!: Array<RDF.Term>;
     @property.resource({ as: [Rdf.PropertyMixin] })
     targetObjectsOf!: Rdf.Property;
     @property.resource({ as: [Rdf.PropertyMixin] })

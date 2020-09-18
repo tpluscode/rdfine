@@ -48,6 +48,12 @@
       "property": {
         "values": "array"
       },
+      "targetClass": {
+        "values": "array"
+      },
+      "targetNode": {
+        "values": "array"
+      },
       "path": {
         "values": [
           "list",
