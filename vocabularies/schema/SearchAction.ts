@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { ActionMixin } from './Action';
 
 export interface SearchAction extends Schema.Action, RdfResource {
-  query: string;
+  query: string | undefined;
 }
 
 export function SearchActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SearchActionClass extends ActionMixin(Resource) implements SearchAction {
     @property.literal()
-    query!: string;
+    query: string | undefined;
   }
   return SearchActionClass
 }

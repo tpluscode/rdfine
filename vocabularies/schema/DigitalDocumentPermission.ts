@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface DigitalDocumentPermission extends Schema.Intangible, RdfResource {
-  grantee: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
-  permissionType: Schema.DigitalDocumentPermissionType;
+  grantee: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
+  permissionType: Schema.DigitalDocumentPermissionType | undefined;
 }
 
 export function DigitalDocumentPermissionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DigitalDocumentPermissionClass extends IntangibleMixin(Resource) implements DigitalDocumentPermission {
     @property.resource()
-    grantee!: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
+    grantee: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
     @property()
-    permissionType!: Schema.DigitalDocumentPermissionType;
+    permissionType: Schema.DigitalDocumentPermissionType | undefined;
   }
   return DigitalDocumentPermissionClass
 }

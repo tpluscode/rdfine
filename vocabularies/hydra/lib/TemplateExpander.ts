@@ -48,7 +48,7 @@ export class TemplateExpander {
   constructor(template: IriTemplate) {
     this.__template = template
 
-    if (hydra.ExplicitRepresentation.equals(template.variableRepresentation)) {
+    if (template.variableRepresentation?.equals(hydra.ExplicitRepresentation)) {
       this.__mapper = new ExplicitRepresentationMapper()
     } else {
       this.__mapper = new BasicRepresentationMapper()
@@ -56,6 +56,10 @@ export class TemplateExpander {
   }
 
   public expand(model: AnyPointer | RdfResource): string {
+    if (!this.__template.template) {
+      return ''
+    }
+
     const uriTemplate = new URITemplate(this.__template.template)
 
     const variables = this.buildExpansionModel(this.__template.mapping, 'id' in model ? model.pointer : model)
@@ -70,7 +74,13 @@ export class TemplateExpander {
 
   private buildExpansionModel(mappings: IriTemplateMapping[], templateValues: AnyPointer): Record<string, string[]> {
     return mappings.reduce<Record<string, string[]>>((model, mapping) => {
-      const values = templateValues.out(mapping.property.id)
+      const { property, variable } = mapping
+
+      if (!property || !variable) {
+        return model
+      }
+
+      const values = templateValues.out(property.id)
         .map(({ term }) => this.__mapper.mapValue(term))
 
       if (values.length === 0) {
@@ -79,7 +89,7 @@ export class TemplateExpander {
 
       return {
         ...model,
-        [mapping.variable]: values,
+        [variable]: values,
       }
     }, {})
   }

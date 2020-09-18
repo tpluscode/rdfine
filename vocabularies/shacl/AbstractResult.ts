@@ -8,38 +8,38 @@ import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
 export interface AbstractResult extends Rdfs.Resource, RdfResource {
-  detail: Sh.AbstractResult;
-  focusNode: RDF.Term;
-  resultMessage: string;
-  resultPath: Rdfs.Resource;
-  resultSeverity: Sh.Severity;
-  sourceConstraint: RDF.Term;
-  sourceConstraintComponent: Sh.ConstraintComponent;
-  sourceShape: Sh.Shape;
-  value: RDF.Term;
+  detail: Sh.AbstractResult | undefined;
+  focusNode: RDF.Term | undefined;
+  resultMessage: string | undefined;
+  resultPath: Rdfs.Resource | undefined;
+  resultSeverity: Sh.Severity | undefined;
+  sourceConstraint: RDF.Term | undefined;
+  sourceConstraintComponent: Sh.ConstraintComponent | undefined;
+  sourceShape: Sh.Shape | undefined;
+  value: RDF.Term | undefined;
 }
 
 export function AbstractResultMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class AbstractResultClass extends Rdfs.ResourceMixin(Resource) implements AbstractResult {
     @property.resource({ as: [AbstractResultMixin] })
-    detail!: Sh.AbstractResult;
+    detail: Sh.AbstractResult | undefined;
     @property()
-    focusNode!: RDF.Term;
+    focusNode: RDF.Term | undefined;
     @property.literal()
-    resultMessage!: string;
+    resultMessage: string | undefined;
     @property.resource({ as: [Rdfs.ResourceMixin] })
-    resultPath!: Rdfs.Resource;
+    resultPath: Rdfs.Resource | undefined;
     @property.resource({ implicitTypes: [sh.Severity] })
-    resultSeverity!: Sh.Severity;
+    resultSeverity: Sh.Severity | undefined;
     @property()
-    sourceConstraint!: RDF.Term;
+    sourceConstraint: RDF.Term | undefined;
     @property.resource({ implicitTypes: [sh.ConstraintComponent] })
-    sourceConstraintComponent!: Sh.ConstraintComponent;
+    sourceConstraintComponent: Sh.ConstraintComponent | undefined;
     @property.resource({ implicitTypes: [sh.Shape] })
-    sourceShape!: Sh.Shape;
+    sourceShape: Sh.Shape | undefined;
     @property()
-    value!: RDF.Term;
+    value: RDF.Term | undefined;
   }
   return AbstractResultClass
 }

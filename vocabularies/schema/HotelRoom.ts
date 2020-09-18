@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { RoomMixin } from './Room';
 
 export interface HotelRoom extends Schema.Room, RdfResource {
-  bed: Schema.BedDetails;
-  bedLiteral: string;
-  occupancy: Schema.QuantitativeValue;
+  bed: Schema.BedDetails | undefined;
+  bedLiteral: string | undefined;
+  occupancy: Schema.QuantitativeValue | undefined;
 }
 
 export function HotelRoomMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class HotelRoomClass extends RoomMixin(Resource) implements HotelRoom {
     @property.resource()
-    bed!: Schema.BedDetails;
+    bed: Schema.BedDetails | undefined;
     @property.literal({ path: schema.bed })
-    bedLiteral!: string;
+    bedLiteral: string | undefined;
     @property.resource()
-    occupancy!: Schema.QuantitativeValue;
+    occupancy: Schema.QuantitativeValue | undefined;
   }
   return HotelRoomClass
 }

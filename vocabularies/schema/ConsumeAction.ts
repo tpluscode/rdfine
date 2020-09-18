@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { ActionMixin } from './Action';
 
 export interface ConsumeAction extends Schema.Action, RdfResource {
-  actionAccessibilityRequirement: Schema.ActionAccessSpecification;
-  expectsAcceptanceOf: Schema.Offer;
+  actionAccessibilityRequirement: Schema.ActionAccessSpecification | undefined;
+  expectsAcceptanceOf: Schema.Offer | undefined;
 }
 
 export function ConsumeActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ConsumeActionClass extends ActionMixin(Resource) implements ConsumeAction {
     @property.resource()
-    actionAccessibilityRequirement!: Schema.ActionAccessSpecification;
+    actionAccessibilityRequirement: Schema.ActionAccessSpecification | undefined;
     @property.resource()
-    expectsAcceptanceOf!: Schema.Offer;
+    expectsAcceptanceOf: Schema.Offer | undefined;
   }
   return ConsumeActionClass
 }

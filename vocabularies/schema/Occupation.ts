@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface Occupation extends Schema.Intangible, RdfResource {
-  estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution;
-  estimatedSalaryLiteral: number;
-  experienceRequirements: string;
-  occupationLocation: Schema.AdministrativeArea;
-  responsibilities: string;
-  skills: string;
+  estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution | undefined;
+  estimatedSalaryLiteral: number | undefined;
+  experienceRequirements: string | undefined;
+  occupationLocation: Schema.AdministrativeArea | undefined;
+  responsibilities: string | undefined;
+  skills: string | undefined;
 }
 
 export function OccupationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OccupationClass extends IntangibleMixin(Resource) implements Occupation {
     @property.resource()
-    estimatedSalary!: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution;
+    estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution | undefined;
     @property.literal({ path: schema.estimatedSalary, type: Number })
-    estimatedSalaryLiteral!: number;
+    estimatedSalaryLiteral: number | undefined;
     @property.literal()
-    experienceRequirements!: string;
+    experienceRequirements: string | undefined;
     @property.resource()
-    occupationLocation!: Schema.AdministrativeArea;
+    occupationLocation: Schema.AdministrativeArea | undefined;
     @property.literal()
-    responsibilities!: string;
+    responsibilities: string | undefined;
     @property.literal()
-    skills!: string;
+    skills: string | undefined;
   }
   return OccupationClass
 }

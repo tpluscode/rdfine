@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface MenuSection extends Schema.CreativeWork, RdfResource {
-  hasMenuItem: Schema.MenuItem;
-  hasMenuSection: Schema.MenuSection;
+  hasMenuItem: Schema.MenuItem | undefined;
+  hasMenuSection: Schema.MenuSection | undefined;
 }
 
 export function MenuSectionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MenuSectionClass extends CreativeWorkMixin(Resource) implements MenuSection {
     @property.resource()
-    hasMenuItem!: Schema.MenuItem;
+    hasMenuItem: Schema.MenuItem | undefined;
     @property.resource()
-    hasMenuSection!: Schema.MenuSection;
+    hasMenuSection: Schema.MenuSection | undefined;
   }
   return MenuSectionClass
 }

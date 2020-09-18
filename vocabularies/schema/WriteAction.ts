@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { CreateActionMixin } from './CreateAction';
 
 export interface WriteAction extends Schema.CreateAction, RdfResource {
-  inLanguage: Schema.Language;
-  inLanguageLiteral: string;
-  language: Schema.Language;
+  inLanguage: Schema.Language | undefined;
+  inLanguageLiteral: string | undefined;
+  language: Schema.Language | undefined;
 }
 
 export function WriteActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WriteActionClass extends CreateActionMixin(Resource) implements WriteAction {
     @property.resource()
-    inLanguage!: Schema.Language;
+    inLanguage: Schema.Language | undefined;
     @property.literal({ path: schema.inLanguage })
-    inLanguageLiteral!: string;
+    inLanguageLiteral: string | undefined;
     @property.resource()
-    language!: Schema.Language;
+    language: Schema.Language | undefined;
   }
   return WriteActionClass
 }

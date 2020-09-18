@@ -8,14 +8,14 @@ import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
 export interface PropertyGroup extends Rdfs.Resource, RdfResource {
-  order: number;
+  order: number | undefined;
 }
 
 export function PropertyGroupMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class PropertyGroupClass extends Rdfs.ResourceMixin(Resource) implements PropertyGroup {
     @property.literal({ type: Number })
-    order!: number;
+    order: number | undefined;
   }
   return PropertyGroupClass
 }

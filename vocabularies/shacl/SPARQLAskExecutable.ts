@@ -8,14 +8,14 @@ import type * as Sh from '.';
 import { SPARQLExecutableMixin } from './SPARQLExecutable';
 
 export interface SPARQLAskExecutable extends Sh.SPARQLExecutable, RdfResource {
-  ask: string;
+  ask: string | undefined;
 }
 
 export function SPARQLAskExecutableMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class SPARQLAskExecutableClass extends SPARQLExecutableMixin(Resource) implements SPARQLAskExecutable {
     @property.literal()
-    ask!: string;
+    ask: string | undefined;
   }
   return SPARQLAskExecutableClass
 }

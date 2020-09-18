@@ -8,32 +8,32 @@ import type * as Schema from '.';
 import { PerformingGroupMixin } from './PerformingGroup';
 
 export interface MusicGroup extends Schema.PerformingGroup, RdfResource {
-  album: Schema.MusicAlbum;
-  albums: Schema.MusicAlbum;
-  genre: string;
-  genreTerm: RDF.NamedNode;
-  musicGroupMember: Schema.Person;
-  track: Schema.ItemList | Schema.MusicRecording;
-  tracks: Schema.MusicRecording;
+  album: Schema.MusicAlbum | undefined;
+  albums: Schema.MusicAlbum | undefined;
+  genre: string | undefined;
+  genreTerm: RDF.NamedNode | undefined;
+  musicGroupMember: Schema.Person | undefined;
+  track: Schema.ItemList | Schema.MusicRecording | undefined;
+  tracks: Schema.MusicRecording | undefined;
 }
 
 export function MusicGroupMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MusicGroupClass extends PerformingGroupMixin(Resource) implements MusicGroup {
     @property.resource()
-    album!: Schema.MusicAlbum;
+    album: Schema.MusicAlbum | undefined;
     @property.resource()
-    albums!: Schema.MusicAlbum;
+    albums: Schema.MusicAlbum | undefined;
     @property.literal()
-    genre!: string;
+    genre: string | undefined;
     @property({ path: schema.genre })
-    genreTerm!: RDF.NamedNode;
+    genreTerm: RDF.NamedNode | undefined;
     @property.resource()
-    musicGroupMember!: Schema.Person;
+    musicGroupMember: Schema.Person | undefined;
     @property.resource()
-    track!: Schema.ItemList | Schema.MusicRecording;
+    track: Schema.ItemList | Schema.MusicRecording | undefined;
     @property.resource()
-    tracks!: Schema.MusicRecording;
+    tracks: Schema.MusicRecording | undefined;
   }
   return MusicGroupClass
 }

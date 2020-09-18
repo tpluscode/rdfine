@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { UpdateActionMixin } from './UpdateAction';
 
 export interface ReplaceAction extends Schema.UpdateAction, RdfResource {
-  replacee: Schema.Thing;
-  replacer: Schema.Thing;
+  replacee: Schema.Thing | undefined;
+  replacer: Schema.Thing | undefined;
 }
 
 export function ReplaceActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ReplaceActionClass extends UpdateActionMixin(Resource) implements ReplaceAction {
     @property.resource()
-    replacee!: Schema.Thing;
+    replacee: Schema.Thing | undefined;
     @property.resource()
-    replacer!: Schema.Thing;
+    replacer: Schema.Thing | undefined;
   }
   return ReplaceActionClass
 }

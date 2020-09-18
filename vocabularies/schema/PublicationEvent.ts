@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { EventMixin } from './Event';
 
 export interface PublicationEvent extends Schema.Event, RdfResource {
-  free: boolean;
-  isAccessibleForFree: boolean;
-  publishedOn: Schema.BroadcastService;
+  free: boolean | undefined;
+  isAccessibleForFree: boolean | undefined;
+  publishedOn: Schema.BroadcastService | undefined;
 }
 
 export function PublicationEventMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PublicationEventClass extends EventMixin(Resource) implements PublicationEvent {
     @property.literal({ type: Boolean })
-    free!: boolean;
+    free: boolean | undefined;
     @property.literal({ type: Boolean })
-    isAccessibleForFree!: boolean;
+    isAccessibleForFree: boolean | undefined;
     @property.resource()
-    publishedOn!: Schema.BroadcastService;
+    publishedOn: Schema.BroadcastService | undefined;
   }
   return PublicationEventClass
 }

@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Game extends Schema.CreativeWork, RdfResource {
-  characterAttribute: Schema.Thing;
-  gameItem: Schema.Thing;
-  gameLocation: Schema.Place | Schema.PostalAddress;
-  numberOfPlayers: Schema.QuantitativeValue;
-  quest: Schema.Thing;
+  characterAttribute: Schema.Thing | undefined;
+  gameItem: Schema.Thing | undefined;
+  gameLocation: Schema.Place | Schema.PostalAddress | undefined;
+  numberOfPlayers: Schema.QuantitativeValue | undefined;
+  quest: Schema.Thing | undefined;
 }
 
 export function GameMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GameClass extends CreativeWorkMixin(Resource) implements Game {
     @property.resource()
-    characterAttribute!: Schema.Thing;
+    characterAttribute: Schema.Thing | undefined;
     @property.resource()
-    gameItem!: Schema.Thing;
+    gameItem: Schema.Thing | undefined;
     @property.resource()
-    gameLocation!: Schema.Place | Schema.PostalAddress;
+    gameLocation: Schema.Place | Schema.PostalAddress | undefined;
     @property.resource()
-    numberOfPlayers!: Schema.QuantitativeValue;
+    numberOfPlayers: Schema.QuantitativeValue | undefined;
     @property.resource()
-    quest!: Schema.Thing;
+    quest: Schema.Thing | undefined;
   }
   return GameClass
 }

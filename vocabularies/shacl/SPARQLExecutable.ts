@@ -9,14 +9,14 @@ import * as Rdfs from '@rdfine/rdfs';
 import * as Owl from '@rdfine/owl';
 
 export interface SPARQLExecutable extends Rdfs.Resource, RdfResource {
-  prefixes: Owl.Ontology;
+  prefixes: Owl.Ontology | undefined;
 }
 
 export function SPARQLExecutableMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class SPARQLExecutableClass extends Rdfs.ResourceMixin(Resource) implements SPARQLExecutable {
     @property.resource({ as: [Owl.OntologyMixin] })
-    prefixes!: Owl.Ontology;
+    prefixes: Owl.Ontology | undefined;
   }
   return SPARQLExecutableClass
 }

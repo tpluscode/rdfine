@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { TripMixin } from './Trip';
 
 export interface BusTrip extends Schema.Trip, RdfResource {
-  arrivalBusStop: Schema.BusStation | Schema.BusStop;
-  busName: string;
-  busNumber: string;
-  departureBusStop: Schema.BusStation | Schema.BusStop;
+  arrivalBusStop: Schema.BusStation | Schema.BusStop | undefined;
+  busName: string | undefined;
+  busNumber: string | undefined;
+  departureBusStop: Schema.BusStation | Schema.BusStop | undefined;
 }
 
 export function BusTripMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BusTripClass extends TripMixin(Resource) implements BusTrip {
     @property.resource()
-    arrivalBusStop!: Schema.BusStation | Schema.BusStop;
+    arrivalBusStop: Schema.BusStation | Schema.BusStop | undefined;
     @property.literal()
-    busName!: string;
+    busName: string | undefined;
     @property.literal()
-    busNumber!: string;
+    busNumber: string | undefined;
     @property.resource()
-    departureBusStop!: Schema.BusStation | Schema.BusStop;
+    departureBusStop: Schema.BusStation | Schema.BusStop | undefined;
   }
   return BusTripClass
 }

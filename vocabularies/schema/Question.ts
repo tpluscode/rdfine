@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Question extends Schema.CreativeWork, RdfResource {
-  acceptedAnswer: Schema.Answer | Schema.ItemList;
-  answerCount: number;
-  downvoteCount: number;
-  suggestedAnswer: Schema.Answer | Schema.ItemList;
-  upvoteCount: number;
+  acceptedAnswer: Schema.Answer | Schema.ItemList | undefined;
+  answerCount: number | undefined;
+  downvoteCount: number | undefined;
+  suggestedAnswer: Schema.Answer | Schema.ItemList | undefined;
+  upvoteCount: number | undefined;
 }
 
 export function QuestionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class QuestionClass extends CreativeWorkMixin(Resource) implements Question {
     @property.resource()
-    acceptedAnswer!: Schema.Answer | Schema.ItemList;
+    acceptedAnswer: Schema.Answer | Schema.ItemList | undefined;
     @property.literal({ type: Number })
-    answerCount!: number;
+    answerCount: number | undefined;
     @property.literal({ type: Number })
-    downvoteCount!: number;
+    downvoteCount: number | undefined;
     @property.resource()
-    suggestedAnswer!: Schema.Answer | Schema.ItemList;
+    suggestedAnswer: Schema.Answer | Schema.ItemList | undefined;
     @property.literal({ type: Number })
-    upvoteCount!: number;
+    upvoteCount: number | undefined;
   }
   return QuestionClass
 }

@@ -8,34 +8,34 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface HowTo extends Schema.CreativeWork, RdfResource {
-  estimatedCost: Schema.MonetaryAmount;
-  estimatedCostLiteral: string;
-  performTime: Schema.Duration;
-  prepTime: Schema.Duration;
+  estimatedCost: Schema.MonetaryAmount | undefined;
+  estimatedCostLiteral: string | undefined;
+  performTime: Schema.Duration | undefined;
+  prepTime: Schema.Duration | undefined;
   step: Array<Schema.CreativeWork | Schema.HowToSection | Schema.HowToStep>;
   stepLiteral: Array<string>;
   steps: Array<Schema.CreativeWork | Schema.ItemList>;
   stepsLiteral: Array<string>;
-  supply: Schema.HowToSupply;
-  supplyLiteral: string;
+  supply: Schema.HowToSupply | undefined;
+  supplyLiteral: string | undefined;
   tool: Array<Schema.HowToTool>;
   toolLiteral: Array<string>;
-  totalTime: Schema.Duration;
-  yield: Schema.QuantitativeValue;
-  yieldLiteral: string;
+  totalTime: Schema.Duration | undefined;
+  yield: Schema.QuantitativeValue | undefined;
+  yieldLiteral: string | undefined;
 }
 
 export function HowToMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class HowToClass extends CreativeWorkMixin(Resource) implements HowTo {
     @property.resource()
-    estimatedCost!: Schema.MonetaryAmount;
+    estimatedCost: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.estimatedCost })
-    estimatedCostLiteral!: string;
+    estimatedCostLiteral: string | undefined;
     @property.resource()
-    performTime!: Schema.Duration;
+    performTime: Schema.Duration | undefined;
     @property.resource()
-    prepTime!: Schema.Duration;
+    prepTime: Schema.Duration | undefined;
     @property.resource({ values: 'array' })
     step!: Array<Schema.CreativeWork | Schema.HowToSection | Schema.HowToStep>;
     @property.literal({ path: schema.step, values: 'array' })
@@ -45,19 +45,19 @@ export function HowToMixin<Base extends Constructor>(Resource: Base) {
     @property.literal({ path: schema.steps, values: 'array' })
     stepsLiteral!: Array<string>;
     @property.resource()
-    supply!: Schema.HowToSupply;
+    supply: Schema.HowToSupply | undefined;
     @property.literal({ path: schema.supply })
-    supplyLiteral!: string;
+    supplyLiteral: string | undefined;
     @property.resource({ values: 'array' })
     tool!: Array<Schema.HowToTool>;
     @property.literal({ path: schema.tool, values: 'array' })
     toolLiteral!: Array<string>;
     @property.resource()
-    totalTime!: Schema.Duration;
+    totalTime: Schema.Duration | undefined;
     @property.resource()
-    yield!: Schema.QuantitativeValue;
+    yield: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.yield })
-    yieldLiteral!: string;
+    yieldLiteral: string | undefined;
   }
   return HowToClass
 }

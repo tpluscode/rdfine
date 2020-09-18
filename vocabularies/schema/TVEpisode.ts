@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { EpisodeMixin } from './Episode';
 
 export interface TVEpisode extends Schema.Episode, RdfResource {
-  countryOfOrigin: Schema.Country;
-  partOfTVSeries: Schema.TVSeries;
+  countryOfOrigin: Schema.Country | undefined;
+  partOfTVSeries: Schema.TVSeries | undefined;
 }
 
 export function TVEpisodeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TVEpisodeClass extends EpisodeMixin(Resource) implements TVEpisode {
     @property.resource()
-    countryOfOrigin!: Schema.Country;
+    countryOfOrigin: Schema.Country | undefined;
     @property.resource()
-    partOfTVSeries!: Schema.TVSeries;
+    partOfTVSeries: Schema.TVSeries | undefined;
   }
   return TVEpisodeClass
 }

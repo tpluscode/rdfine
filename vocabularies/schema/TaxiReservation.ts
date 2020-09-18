@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { ReservationMixin } from './Reservation';
 
 export interface TaxiReservation extends Schema.Reservation, RdfResource {
-  partySize: Schema.QuantitativeValue;
-  partySizeLiteral: number;
-  pickupLocation: Schema.Place;
-  pickupTime: Date;
+  partySize: Schema.QuantitativeValue | undefined;
+  partySizeLiteral: number | undefined;
+  pickupLocation: Schema.Place | undefined;
+  pickupTime: Date | undefined;
 }
 
 export function TaxiReservationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TaxiReservationClass extends ReservationMixin(Resource) implements TaxiReservation {
     @property.resource()
-    partySize!: Schema.QuantitativeValue;
+    partySize: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.partySize, type: Number })
-    partySizeLiteral!: number;
+    partySizeLiteral: number | undefined;
     @property.resource()
-    pickupLocation!: Schema.Place;
+    pickupLocation: Schema.Place | undefined;
     @property.literal({ type: Date })
-    pickupTime!: Date;
+    pickupTime: Date | undefined;
   }
   return TaxiReservationClass
 }

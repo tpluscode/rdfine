@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { BlogPostingMixin } from './BlogPosting';
 
 export interface LiveBlogPosting extends Schema.BlogPosting, RdfResource {
-  coverageEndTime: Date;
-  coverageStartTime: Date;
-  liveBlogUpdate: Schema.BlogPosting;
+  coverageEndTime: Date | undefined;
+  coverageStartTime: Date | undefined;
+  liveBlogUpdate: Schema.BlogPosting | undefined;
 }
 
 export function LiveBlogPostingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LiveBlogPostingClass extends BlogPostingMixin(Resource) implements LiveBlogPosting {
     @property.literal({ type: Date })
-    coverageEndTime!: Date;
+    coverageEndTime: Date | undefined;
     @property.literal({ type: Date })
-    coverageStartTime!: Date;
+    coverageStartTime: Date | undefined;
     @property.resource()
-    liveBlogUpdate!: Schema.BlogPosting;
+    liveBlogUpdate: Schema.BlogPosting | undefined;
   }
   return LiveBlogPostingClass
 }

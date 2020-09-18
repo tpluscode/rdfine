@@ -8,41 +8,41 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface PropertyValue extends Schema.StructuredValue, RdfResource {
-  maxValue: number;
-  minValue: number;
-  propertyID: string;
-  propertyIDTerm: RDF.NamedNode;
-  unitCode: string;
-  unitCodeTerm: RDF.NamedNode;
-  unitText: string;
-  value: Schema.StructuredValue;
-  valueLiteral: boolean | number | string;
-  valueReference: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue;
+  maxValue: number | undefined;
+  minValue: number | undefined;
+  propertyID: string | undefined;
+  propertyIDTerm: RDF.NamedNode | undefined;
+  unitCode: string | undefined;
+  unitCodeTerm: RDF.NamedNode | undefined;
+  unitText: string | undefined;
+  value: Schema.StructuredValue | undefined;
+  valueLiteral: boolean | number | string | undefined;
+  valueReference: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue | undefined;
 }
 
 export function PropertyValueMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PropertyValueClass extends StructuredValueMixin(Resource) implements PropertyValue {
     @property.literal({ type: Number })
-    maxValue!: number;
+    maxValue: number | undefined;
     @property.literal({ type: Number })
-    minValue!: number;
+    minValue: number | undefined;
     @property.literal()
-    propertyID!: string;
+    propertyID: string | undefined;
     @property({ path: schema.propertyID })
-    propertyIDTerm!: RDF.NamedNode;
+    propertyIDTerm: RDF.NamedNode | undefined;
     @property.literal()
-    unitCode!: string;
+    unitCode: string | undefined;
     @property({ path: schema.unitCode })
-    unitCodeTerm!: RDF.NamedNode;
+    unitCodeTerm: RDF.NamedNode | undefined;
     @property.literal()
-    unitText!: string;
+    unitText: string | undefined;
     @property.resource()
-    value!: Schema.StructuredValue;
+    value: Schema.StructuredValue | undefined;
     @property.literal({ path: schema.value })
-    valueLiteral!: boolean | number | string;
+    valueLiteral: boolean | number | string | undefined;
     @property.resource()
-    valueReference!: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue;
+    valueReference: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue | undefined;
   }
   return PropertyValueClass
 }

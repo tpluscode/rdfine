@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface WebSite extends Schema.CreativeWork, RdfResource {
-  issn: string;
+  issn: string | undefined;
 }
 
 export function WebSiteMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WebSiteClass extends CreativeWorkMixin(Resource) implements WebSite {
     @property.literal()
-    issn!: string;
+    issn: string | undefined;
   }
   return WebSiteClass
 }

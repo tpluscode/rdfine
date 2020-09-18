@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { InteractActionMixin } from './InteractAction';
 
 export interface JoinAction extends Schema.InteractAction, RdfResource {
-  event: Schema.Event;
+  event: Schema.Event | undefined;
 }
 
 export function JoinActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class JoinActionClass extends InteractActionMixin(Resource) implements JoinAction {
     @property.resource()
-    event!: Schema.Event;
+    event: Schema.Event | undefined;
   }
   return JoinActionClass
 }

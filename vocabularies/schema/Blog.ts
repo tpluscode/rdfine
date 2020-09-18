@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Blog extends Schema.CreativeWork, RdfResource {
-  blogPost: Schema.BlogPosting;
-  blogPosts: Schema.BlogPosting;
-  issn: string;
+  blogPost: Schema.BlogPosting | undefined;
+  blogPosts: Schema.BlogPosting | undefined;
+  issn: string | undefined;
 }
 
 export function BlogMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BlogClass extends CreativeWorkMixin(Resource) implements Blog {
     @property.resource()
-    blogPost!: Schema.BlogPosting;
+    blogPost: Schema.BlogPosting | undefined;
     @property.resource()
-    blogPosts!: Schema.BlogPosting;
+    blogPosts: Schema.BlogPosting | undefined;
     @property.literal()
-    issn!: string;
+    issn: string | undefined;
   }
   return BlogClass
 }

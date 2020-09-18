@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface MenuItem extends Schema.Intangible, RdfResource {
-  menuAddOn: Schema.MenuItem | Schema.MenuSection;
-  nutrition: Schema.NutritionInformation;
-  offers: Schema.Demand | Schema.Offer;
-  suitableForDiet: Schema.RestrictedDiet;
+  menuAddOn: Schema.MenuItem | Schema.MenuSection | undefined;
+  nutrition: Schema.NutritionInformation | undefined;
+  offers: Schema.Demand | Schema.Offer | undefined;
+  suitableForDiet: Schema.RestrictedDiet | undefined;
 }
 
 export function MenuItemMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MenuItemClass extends IntangibleMixin(Resource) implements MenuItem {
     @property.resource()
-    menuAddOn!: Schema.MenuItem | Schema.MenuSection;
+    menuAddOn: Schema.MenuItem | Schema.MenuSection | undefined;
     @property.resource()
-    nutrition!: Schema.NutritionInformation;
+    nutrition: Schema.NutritionInformation | undefined;
     @property.resource()
-    offers!: Schema.Demand | Schema.Offer;
+    offers: Schema.Demand | Schema.Offer | undefined;
     @property()
-    suitableForDiet!: Schema.RestrictedDiet;
+    suitableForDiet: Schema.RestrictedDiet | undefined;
   }
   return MenuItemClass
 }

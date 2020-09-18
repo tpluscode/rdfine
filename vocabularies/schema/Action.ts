@@ -8,47 +8,47 @@ import type * as Schema from '.';
 import { ThingMixin } from './Thing';
 
 export interface Action extends Schema.Thing, RdfResource {
-  actionStatus: Schema.ActionStatusType;
-  agent: Schema.Organization | Schema.Person;
-  endTime: Date;
-  error: Schema.Thing;
-  instrument: Schema.Thing;
-  location: Schema.Place | Schema.PostalAddress;
-  locationLiteral: string;
-  object: Schema.Thing;
-  participant: Schema.Organization | Schema.Person;
-  result: Schema.Thing;
-  startTime: Date;
-  target: Schema.EntryPoint;
+  actionStatus: Schema.ActionStatusType | undefined;
+  agent: Schema.Organization | Schema.Person | undefined;
+  endTime: Date | undefined;
+  error: Schema.Thing | undefined;
+  instrument: Schema.Thing | undefined;
+  location: Schema.Place | Schema.PostalAddress | undefined;
+  locationLiteral: string | undefined;
+  object: Schema.Thing | undefined;
+  participant: Schema.Organization | Schema.Person | undefined;
+  result: Schema.Thing | undefined;
+  startTime: Date | undefined;
+  target: Schema.EntryPoint | undefined;
 }
 
 export function ActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ActionClass extends ThingMixin(Resource) implements Action {
     @property()
-    actionStatus!: Schema.ActionStatusType;
+    actionStatus: Schema.ActionStatusType | undefined;
     @property.resource()
-    agent!: Schema.Organization | Schema.Person;
+    agent: Schema.Organization | Schema.Person | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    endTime!: Date;
+    endTime: Date | undefined;
     @property.resource()
-    error!: Schema.Thing;
+    error: Schema.Thing | undefined;
     @property.resource()
-    instrument!: Schema.Thing;
+    instrument: Schema.Thing | undefined;
     @property.resource()
-    location!: Schema.Place | Schema.PostalAddress;
+    location: Schema.Place | Schema.PostalAddress | undefined;
     @property.literal({ path: schema.location })
-    locationLiteral!: string;
+    locationLiteral: string | undefined;
     @property.resource()
-    object!: Schema.Thing;
+    object: Schema.Thing | undefined;
     @property.resource()
-    participant!: Schema.Organization | Schema.Person;
+    participant: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    result!: Schema.Thing;
+    result: Schema.Thing | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    startTime!: Date;
+    startTime: Date | undefined;
     @property.resource()
-    target!: Schema.EntryPoint;
+    target: Schema.EntryPoint | undefined;
   }
   return ActionClass
 }

@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { TradeActionMixin } from './TradeAction';
 
 export interface OrderAction extends Schema.TradeAction, RdfResource {
-  deliveryMethod: Schema.DeliveryMethod;
+  deliveryMethod: Schema.DeliveryMethod | undefined;
 }
 
 export function OrderActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OrderActionClass extends TradeActionMixin(Resource) implements OrderAction {
     @property()
-    deliveryMethod!: Schema.DeliveryMethod;
+    deliveryMethod: Schema.DeliveryMethod | undefined;
   }
   return OrderActionClass
 }

@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Course extends Schema.CreativeWork, RdfResource {
-  courseCode: string;
-  coursePrerequisites: Schema.AlignmentObject | Schema.Course;
-  coursePrerequisitesLiteral: string;
-  educationalCredentialAwarded: string;
-  educationalCredentialAwardedTerm: RDF.NamedNode;
-  hasCourseInstance: Schema.CourseInstance;
+  courseCode: string | undefined;
+  coursePrerequisites: Schema.AlignmentObject | Schema.Course | undefined;
+  coursePrerequisitesLiteral: string | undefined;
+  educationalCredentialAwarded: string | undefined;
+  educationalCredentialAwardedTerm: RDF.NamedNode | undefined;
+  hasCourseInstance: Schema.CourseInstance | undefined;
 }
 
 export function CourseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CourseClass extends CreativeWorkMixin(Resource) implements Course {
     @property.literal()
-    courseCode!: string;
+    courseCode: string | undefined;
     @property.resource()
-    coursePrerequisites!: Schema.AlignmentObject | Schema.Course;
+    coursePrerequisites: Schema.AlignmentObject | Schema.Course | undefined;
     @property.literal({ path: schema.coursePrerequisites })
-    coursePrerequisitesLiteral!: string;
+    coursePrerequisitesLiteral: string | undefined;
     @property.literal()
-    educationalCredentialAwarded!: string;
+    educationalCredentialAwarded: string | undefined;
     @property({ path: schema.educationalCredentialAwarded })
-    educationalCredentialAwardedTerm!: RDF.NamedNode;
+    educationalCredentialAwardedTerm: RDF.NamedNode | undefined;
     @property.resource()
-    hasCourseInstance!: Schema.CourseInstance;
+    hasCourseInstance: Schema.CourseInstance | undefined;
   }
   return CourseClass
 }

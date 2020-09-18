@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { AssessActionMixin } from './AssessAction';
 
 export interface ReviewAction extends Schema.AssessAction, RdfResource {
-  resultReview: Schema.Review;
+  resultReview: Schema.Review | undefined;
 }
 
 export function ReviewActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ReviewActionClass extends AssessActionMixin(Resource) implements ReviewAction {
     @property.resource()
-    resultReview!: Schema.Review;
+    resultReview: Schema.Review | undefined;
   }
   return ReviewActionClass
 }

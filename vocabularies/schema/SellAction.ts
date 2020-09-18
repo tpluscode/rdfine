@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { TradeActionMixin } from './TradeAction';
 
 export interface SellAction extends Schema.TradeAction, RdfResource {
-  buyer: Schema.Person;
-  warrantyPromise: Schema.WarrantyPromise;
+  buyer: Schema.Person | undefined;
+  warrantyPromise: Schema.WarrantyPromise | undefined;
 }
 
 export function SellActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SellActionClass extends TradeActionMixin(Resource) implements SellAction {
     @property.resource()
-    buyer!: Schema.Person;
+    buyer: Schema.Person | undefined;
     @property.resource()
-    warrantyPromise!: Schema.WarrantyPromise;
+    warrantyPromise: Schema.WarrantyPromise | undefined;
   }
   return SellActionClass
 }

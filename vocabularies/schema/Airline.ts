@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { OrganizationMixin } from './Organization';
 
 export interface Airline extends Schema.Organization, RdfResource {
-  boardingPolicy: Schema.BoardingPolicyType;
-  iataCode: string;
+  boardingPolicy: Schema.BoardingPolicyType | undefined;
+  iataCode: string | undefined;
 }
 
 export function AirlineMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AirlineClass extends OrganizationMixin(Resource) implements Airline {
     @property()
-    boardingPolicy!: Schema.BoardingPolicyType;
+    boardingPolicy: Schema.BoardingPolicyType | undefined;
     @property.literal()
-    iataCode!: string;
+    iataCode: string | undefined;
   }
   return AirlineClass
 }

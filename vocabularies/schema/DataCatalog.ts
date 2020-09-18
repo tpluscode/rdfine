@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface DataCatalog extends Schema.CreativeWork, RdfResource {
-  dataset: Schema.Dataset;
+  dataset: Schema.Dataset | undefined;
 }
 
 export function DataCatalogMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DataCatalogClass extends CreativeWorkMixin(Resource) implements DataCatalog {
     @property.resource()
-    dataset!: Schema.Dataset;
+    dataset: Schema.Dataset | undefined;
   }
   return DataCatalogClass
 }

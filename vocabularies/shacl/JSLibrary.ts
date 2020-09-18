@@ -8,14 +8,14 @@ import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
 export interface JSLibrary extends Rdfs.Resource, RdfResource {
-  jsLibraryURL: string;
+  jsLibraryURL: string | undefined;
 }
 
 export function JSLibraryMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class JSLibraryClass extends Rdfs.ResourceMixin(Resource) implements JSLibrary {
     @property.literal()
-    jsLibraryURL!: string;
+    jsLibraryURL: string | undefined;
   }
   return JSLibraryClass
 }

@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { ReservationMixin } from './Reservation';
 
 export interface FoodEstablishmentReservation extends Schema.Reservation, RdfResource {
-  endTime: Date;
-  partySize: Schema.QuantitativeValue;
-  partySizeLiteral: number;
-  startTime: Date;
+  endTime: Date | undefined;
+  partySize: Schema.QuantitativeValue | undefined;
+  partySizeLiteral: number | undefined;
+  startTime: Date | undefined;
 }
 
 export function FoodEstablishmentReservationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class FoodEstablishmentReservationClass extends ReservationMixin(Resource) implements FoodEstablishmentReservation {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    endTime!: Date;
+    endTime: Date | undefined;
     @property.resource()
-    partySize!: Schema.QuantitativeValue;
+    partySize: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.partySize, type: Number })
-    partySizeLiteral!: number;
+    partySizeLiteral: number | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    startTime!: Date;
+    startTime: Date | undefined;
   }
   return FoodEstablishmentReservationClass
 }

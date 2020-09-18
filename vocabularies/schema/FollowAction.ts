@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { InteractActionMixin } from './InteractAction';
 
 export interface FollowAction extends Schema.InteractAction, RdfResource {
-  followee: Schema.Organization | Schema.Person;
+  followee: Schema.Organization | Schema.Person | undefined;
 }
 
 export function FollowActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class FollowActionClass extends InteractActionMixin(Resource) implements FollowAction {
     @property.resource()
-    followee!: Schema.Organization | Schema.Person;
+    followee: Schema.Organization | Schema.Person | undefined;
   }
   return FollowActionClass
 }

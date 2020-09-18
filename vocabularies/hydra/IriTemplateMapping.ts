@@ -9,23 +9,23 @@ import * as Rdf from '@rdfine/rdf';
 import { ResourceMixin } from './Resource';
 
 export interface IriTemplateMapping extends Hydra.Resource, RdfResource {
-  property: Rdf.Property;
-  required: boolean;
-  variable: string;
-  variableRepresentation: Hydra.VariableRepresentation;
+  property: Rdf.Property | undefined;
+  required: boolean | undefined;
+  variable: string | undefined;
+  variableRepresentation: Hydra.VariableRepresentation | undefined;
 }
 
 export function IriTemplateMappingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class IriTemplateMappingClass extends ResourceMixin(Resource) implements IriTemplateMapping {
     @property.resource({ as: [Rdf.PropertyMixin] })
-    property!: Rdf.Property;
+    property: Rdf.Property | undefined;
     @property.literal({ type: Boolean })
-    required!: boolean;
+    required: boolean | undefined;
     @property.literal()
-    variable!: string;
+    variable: string | undefined;
     @property.resource({ implicitTypes: [hydra.VariableRepresentation] })
-    variableRepresentation!: Hydra.VariableRepresentation;
+    variableRepresentation: Hydra.VariableRepresentation | undefined;
   }
   return IriTemplateMappingClass
 }

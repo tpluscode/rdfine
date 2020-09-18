@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { TripMixin } from './Trip';
 
 export interface TrainTrip extends Schema.Trip, RdfResource {
-  arrivalPlatform: string;
-  arrivalStation: Schema.TrainStation;
-  departurePlatform: string;
-  departureStation: Schema.TrainStation;
-  trainName: string;
-  trainNumber: string;
+  arrivalPlatform: string | undefined;
+  arrivalStation: Schema.TrainStation | undefined;
+  departurePlatform: string | undefined;
+  departureStation: Schema.TrainStation | undefined;
+  trainName: string | undefined;
+  trainNumber: string | undefined;
 }
 
 export function TrainTripMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TrainTripClass extends TripMixin(Resource) implements TrainTrip {
     @property.literal()
-    arrivalPlatform!: string;
+    arrivalPlatform: string | undefined;
     @property.resource()
-    arrivalStation!: Schema.TrainStation;
+    arrivalStation: Schema.TrainStation | undefined;
     @property.literal()
-    departurePlatform!: string;
+    departurePlatform: string | undefined;
     @property.resource()
-    departureStation!: Schema.TrainStation;
+    departureStation: Schema.TrainStation | undefined;
     @property.literal()
-    trainName!: string;
+    trainName: string | undefined;
     @property.literal()
-    trainNumber!: string;
+    trainNumber: string | undefined;
   }
   return TrainTripClass
 }

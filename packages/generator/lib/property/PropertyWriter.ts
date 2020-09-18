@@ -52,12 +52,16 @@ export class PropertyWriter {
       this.__context.log.debug('Generating Property %s => %s: %s', prop.term.value, prop.name, type)
     }
 
+    let hasExclamationToken = false
     if (prop.values?.includes('list') || prop.values?.includes('array')) {
       if (prop.values?.includes('single')) {
-        type = `${type} | Array<${type}>`
+        type = `${type} | Array<${type}> | undefined`
       } else {
+        hasExclamationToken = true
         type = `Array<${type}>`
       }
+    } else {
+      type = `${type} | undefined`
     }
 
     this.__interface.addProperty({
@@ -67,7 +71,7 @@ export class PropertyWriter {
 
     const classProp = this.__class.addProperty({
       name: prop.name,
-      hasExclamationToken: true,
+      hasExclamationToken,
       type,
     })
 

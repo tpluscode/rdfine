@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { PublicationEventMixin } from './PublicationEvent';
 
 export interface BroadcastEvent extends Schema.PublicationEvent, RdfResource {
-  broadcastOfEvent: Schema.Event;
-  isLiveBroadcast: boolean;
-  videoFormat: string;
+  broadcastOfEvent: Schema.Event | undefined;
+  isLiveBroadcast: boolean | undefined;
+  videoFormat: string | undefined;
 }
 
 export function BroadcastEventMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BroadcastEventClass extends PublicationEventMixin(Resource) implements BroadcastEvent {
     @property.resource()
-    broadcastOfEvent!: Schema.Event;
+    broadcastOfEvent: Schema.Event | undefined;
     @property.literal({ type: Boolean })
-    isLiveBroadcast!: boolean;
+    isLiveBroadcast: boolean | undefined;
     @property.literal()
-    videoFormat!: string;
+    videoFormat: string | undefined;
   }
   return BroadcastEventClass
 }

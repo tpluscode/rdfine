@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { ArticleMixin } from './Article';
 
 export interface SocialMediaPosting extends Schema.Article, RdfResource {
-  sharedContent: Schema.CreativeWork;
+  sharedContent: Schema.CreativeWork | undefined;
 }
 
 export function SocialMediaPostingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SocialMediaPostingClass extends ArticleMixin(Resource) implements SocialMediaPosting {
     @property.resource()
-    sharedContent!: Schema.CreativeWork;
+    sharedContent: Schema.CreativeWork | undefined;
   }
   return SocialMediaPostingClass
 }

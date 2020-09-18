@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { ProductMixin } from './Product';
 
 export interface SomeProducts extends Schema.Product, RdfResource {
-  inventoryLevel: Schema.QuantitativeValue;
+  inventoryLevel: Schema.QuantitativeValue | undefined;
 }
 
 export function SomeProductsMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SomeProductsClass extends ProductMixin(Resource) implements SomeProducts {
     @property.resource()
-    inventoryLevel!: Schema.QuantitativeValue;
+    inventoryLevel: Schema.QuantitativeValue | undefined;
   }
   return SomeProductsClass
 }

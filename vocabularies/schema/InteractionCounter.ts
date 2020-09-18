@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface InteractionCounter extends Schema.StructuredValue, RdfResource {
-  interactionService: Schema.SoftwareApplication | Schema.WebSite;
-  interactionType: Schema.Action;
-  userInteractionCount: number;
+  interactionService: Schema.SoftwareApplication | Schema.WebSite | undefined;
+  interactionType: Schema.Action | undefined;
+  userInteractionCount: number | undefined;
 }
 
 export function InteractionCounterMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class InteractionCounterClass extends StructuredValueMixin(Resource) implements InteractionCounter {
     @property.resource()
-    interactionService!: Schema.SoftwareApplication | Schema.WebSite;
+    interactionService: Schema.SoftwareApplication | Schema.WebSite | undefined;
     @property.resource()
-    interactionType!: Schema.Action;
+    interactionType: Schema.Action | undefined;
     @property.literal({ type: Number })
-    userInteractionCount!: number;
+    userInteractionCount: number | undefined;
   }
   return InteractionCounterClass
 }

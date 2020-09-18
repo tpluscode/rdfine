@@ -8,14 +8,14 @@ import type * as Sh from '.';
 import { PropertyShapeMixin } from './PropertyShape';
 
 export interface Parameter extends Sh.PropertyShape, RdfResource {
-  optional: boolean;
+  optional: boolean | undefined;
 }
 
 export function ParameterMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class ParameterClass extends PropertyShapeMixin(Resource) implements Parameter {
     @property.literal({ type: Boolean })
-    optional!: boolean;
+    optional: boolean | undefined;
   }
   return ParameterClass
 }

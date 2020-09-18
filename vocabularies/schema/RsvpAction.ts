@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { InformActionMixin } from './InformAction';
 
 export interface RsvpAction extends Schema.InformAction, RdfResource {
-  additionalNumberOfGuests: number;
-  comment: Schema.Comment;
-  rsvpResponse: Schema.RsvpResponseType;
+  additionalNumberOfGuests: number | undefined;
+  comment: Schema.Comment | undefined;
+  rsvpResponse: Schema.RsvpResponseType | undefined;
 }
 
 export function RsvpActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RsvpActionClass extends InformActionMixin(Resource) implements RsvpAction {
     @property.literal({ type: Number })
-    additionalNumberOfGuests!: number;
+    additionalNumberOfGuests: number | undefined;
     @property.resource()
-    comment!: Schema.Comment;
+    comment: Schema.Comment | undefined;
     @property()
-    rsvpResponse!: Schema.RsvpResponseType;
+    rsvpResponse: Schema.RsvpResponseType | undefined;
   }
   return RsvpActionClass
 }

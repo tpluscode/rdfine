@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface WarrantyPromise extends Schema.StructuredValue, RdfResource {
-  durationOfWarranty: Schema.QuantitativeValue;
-  warrantyScope: Schema.WarrantyScope;
+  durationOfWarranty: Schema.QuantitativeValue | undefined;
+  warrantyScope: Schema.WarrantyScope | undefined;
 }
 
 export function WarrantyPromiseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WarrantyPromiseClass extends StructuredValueMixin(Resource) implements WarrantyPromise {
     @property.resource()
-    durationOfWarranty!: Schema.QuantitativeValue;
+    durationOfWarranty: Schema.QuantitativeValue | undefined;
     @property()
-    warrantyScope!: Schema.WarrantyScope;
+    warrantyScope: Schema.WarrantyScope | undefined;
   }
   return WarrantyPromiseClass
 }

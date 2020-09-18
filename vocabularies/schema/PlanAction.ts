@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { OrganizeActionMixin } from './OrganizeAction';
 
 export interface PlanAction extends Schema.OrganizeAction, RdfResource {
-  scheduledTime: Date;
+  scheduledTime: Date | undefined;
 }
 
 export function PlanActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PlanActionClass extends OrganizeActionMixin(Resource) implements PlanAction {
     @property.literal({ type: Date })
-    scheduledTime!: Date;
+    scheduledTime: Date | undefined;
   }
   return PlanActionClass
 }

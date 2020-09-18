@@ -8,47 +8,47 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface PropertyValueSpecification extends Schema.Intangible, RdfResource {
-  defaultValue: Schema.Thing;
-  defaultValueLiteral: string;
-  maxValue: number;
-  minValue: number;
-  multipleValues: boolean;
-  readonlyValue: boolean;
-  stepValue: number;
-  valueMaxLength: number;
-  valueMinLength: number;
-  valueName: string;
-  valuePattern: string;
-  valueRequired: boolean;
+  defaultValue: Schema.Thing | undefined;
+  defaultValueLiteral: string | undefined;
+  maxValue: number | undefined;
+  minValue: number | undefined;
+  multipleValues: boolean | undefined;
+  readonlyValue: boolean | undefined;
+  stepValue: number | undefined;
+  valueMaxLength: number | undefined;
+  valueMinLength: number | undefined;
+  valueName: string | undefined;
+  valuePattern: string | undefined;
+  valueRequired: boolean | undefined;
 }
 
 export function PropertyValueSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PropertyValueSpecificationClass extends IntangibleMixin(Resource) implements PropertyValueSpecification {
     @property.resource()
-    defaultValue!: Schema.Thing;
+    defaultValue: Schema.Thing | undefined;
     @property.literal({ path: schema.defaultValue })
-    defaultValueLiteral!: string;
+    defaultValueLiteral: string | undefined;
     @property.literal({ type: Number })
-    maxValue!: number;
+    maxValue: number | undefined;
     @property.literal({ type: Number })
-    minValue!: number;
+    minValue: number | undefined;
     @property.literal({ type: Boolean })
-    multipleValues!: boolean;
+    multipleValues: boolean | undefined;
     @property.literal({ type: Boolean })
-    readonlyValue!: boolean;
+    readonlyValue: boolean | undefined;
     @property.literal({ type: Number })
-    stepValue!: number;
+    stepValue: number | undefined;
     @property.literal({ type: Number })
-    valueMaxLength!: number;
+    valueMaxLength: number | undefined;
     @property.literal({ type: Number })
-    valueMinLength!: number;
+    valueMinLength: number | undefined;
     @property.literal()
-    valueName!: string;
+    valueName: string | undefined;
     @property.literal()
-    valuePattern!: string;
+    valuePattern: string | undefined;
     @property.literal({ type: Boolean })
-    valueRequired!: boolean;
+    valueRequired: boolean | undefined;
   }
   return PropertyValueSpecificationClass
 }

@@ -8,182 +8,182 @@ import type * as Schema from '.';
 import { ThingMixin } from './Thing';
 
 export interface Person extends Schema.Thing, RdfResource {
-  additionalName: string;
-  address: Schema.PostalAddress;
-  addressLiteral: string;
-  affiliation: Schema.Organization;
-  alumniOf: Schema.EducationalOrganization | Schema.Organization;
-  award: string;
-  awards: string;
-  birthDate: Date;
-  birthPlace: Schema.Place;
-  brand: Schema.Brand | Schema.Organization;
-  children: Schema.Person;
-  colleague: Schema.Person;
-  colleagues: Schema.Person;
-  contactPoint: Schema.ContactPoint;
-  contactPoints: Schema.ContactPoint;
-  deathDate: Date;
-  deathPlace: Schema.Place;
-  duns: string;
-  email: string;
-  familyName: string;
-  faxNumber: string;
-  follows: Schema.Person;
-  funder: Schema.Organization | Schema.Person;
-  givenName: string;
-  globalLocationNumber: string;
-  hasOccupation: Schema.Occupation;
-  hasOfferCatalog: Schema.OfferCatalog;
-  hasPOS: Schema.Place;
-  height: Schema.Distance | Schema.QuantitativeValue;
-  homeLocation: Schema.ContactPoint | Schema.Place;
-  honorificPrefix: string;
-  honorificSuffix: string;
-  interactionStatistic: Schema.InteractionCounter;
-  isicV4: string;
-  knows: Schema.Person;
-  makesOffer: Schema.Offer;
-  memberOf: Schema.Organization | Schema.ProgramMembership;
-  naics: string;
-  nationality: Schema.Country;
-  netWorth: Schema.MonetaryAmount | Schema.PriceSpecification;
-  owns: Schema.OwnershipInfo | Schema.Product;
-  parent: Schema.Person;
-  parents: Schema.Person;
-  performerIn: Schema.Event;
-  publishingPrinciples: Schema.CreativeWork;
-  relatedTo: Schema.Person;
-  seeks: Schema.Demand;
-  sibling: Schema.Person;
-  siblings: Schema.Person;
-  sponsor: Schema.Organization | Schema.Person;
-  spouse: Schema.Person;
-  taxID: string;
-  telephone: string;
-  vatID: string;
-  weight: Schema.QuantitativeValue;
-  workLocation: Schema.ContactPoint | Schema.Place;
-  worksFor: Schema.Organization;
+  additionalName: string | undefined;
+  address: Schema.PostalAddress | undefined;
+  addressLiteral: string | undefined;
+  affiliation: Schema.Organization | undefined;
+  alumniOf: Schema.EducationalOrganization | Schema.Organization | undefined;
+  award: string | undefined;
+  awards: string | undefined;
+  birthDate: Date | undefined;
+  birthPlace: Schema.Place | undefined;
+  brand: Schema.Brand | Schema.Organization | undefined;
+  children: Schema.Person | undefined;
+  colleague: Schema.Person | undefined;
+  colleagues: Schema.Person | undefined;
+  contactPoint: Schema.ContactPoint | undefined;
+  contactPoints: Schema.ContactPoint | undefined;
+  deathDate: Date | undefined;
+  deathPlace: Schema.Place | undefined;
+  duns: string | undefined;
+  email: string | undefined;
+  familyName: string | undefined;
+  faxNumber: string | undefined;
+  follows: Schema.Person | undefined;
+  funder: Schema.Organization | Schema.Person | undefined;
+  givenName: string | undefined;
+  globalLocationNumber: string | undefined;
+  hasOccupation: Schema.Occupation | undefined;
+  hasOfferCatalog: Schema.OfferCatalog | undefined;
+  hasPOS: Schema.Place | undefined;
+  height: Schema.Distance | Schema.QuantitativeValue | undefined;
+  homeLocation: Schema.ContactPoint | Schema.Place | undefined;
+  honorificPrefix: string | undefined;
+  honorificSuffix: string | undefined;
+  interactionStatistic: Schema.InteractionCounter | undefined;
+  isicV4: string | undefined;
+  knows: Schema.Person | undefined;
+  makesOffer: Schema.Offer | undefined;
+  memberOf: Schema.Organization | Schema.ProgramMembership | undefined;
+  naics: string | undefined;
+  nationality: Schema.Country | undefined;
+  netWorth: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
+  owns: Schema.OwnershipInfo | Schema.Product | undefined;
+  parent: Schema.Person | undefined;
+  parents: Schema.Person | undefined;
+  performerIn: Schema.Event | undefined;
+  publishingPrinciples: Schema.CreativeWork | undefined;
+  relatedTo: Schema.Person | undefined;
+  seeks: Schema.Demand | undefined;
+  sibling: Schema.Person | undefined;
+  siblings: Schema.Person | undefined;
+  sponsor: Schema.Organization | Schema.Person | undefined;
+  spouse: Schema.Person | undefined;
+  taxID: string | undefined;
+  telephone: string | undefined;
+  vatID: string | undefined;
+  weight: Schema.QuantitativeValue | undefined;
+  workLocation: Schema.ContactPoint | Schema.Place | undefined;
+  worksFor: Schema.Organization | undefined;
 }
 
 export function PersonMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PersonClass extends ThingMixin(Resource) implements Person {
     @property.literal()
-    additionalName!: string;
+    additionalName: string | undefined;
     @property.resource()
-    address!: Schema.PostalAddress;
+    address: Schema.PostalAddress | undefined;
     @property.literal({ path: schema.address })
-    addressLiteral!: string;
+    addressLiteral: string | undefined;
     @property.resource()
-    affiliation!: Schema.Organization;
+    affiliation: Schema.Organization | undefined;
     @property.resource()
-    alumniOf!: Schema.EducationalOrganization | Schema.Organization;
+    alumniOf: Schema.EducationalOrganization | Schema.Organization | undefined;
     @property.literal()
-    award!: string;
+    award: string | undefined;
     @property.literal()
-    awards!: string;
+    awards: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    birthDate!: Date;
+    birthDate: Date | undefined;
     @property.resource()
-    birthPlace!: Schema.Place;
+    birthPlace: Schema.Place | undefined;
     @property.resource()
-    brand!: Schema.Brand | Schema.Organization;
+    brand: Schema.Brand | Schema.Organization | undefined;
     @property.resource()
-    children!: Schema.Person;
+    children: Schema.Person | undefined;
     @property.resource()
-    colleague!: Schema.Person;
+    colleague: Schema.Person | undefined;
     @property.resource()
-    colleagues!: Schema.Person;
+    colleagues: Schema.Person | undefined;
     @property.resource()
-    contactPoint!: Schema.ContactPoint;
+    contactPoint: Schema.ContactPoint | undefined;
     @property.resource()
-    contactPoints!: Schema.ContactPoint;
+    contactPoints: Schema.ContactPoint | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    deathDate!: Date;
+    deathDate: Date | undefined;
     @property.resource()
-    deathPlace!: Schema.Place;
+    deathPlace: Schema.Place | undefined;
     @property.literal()
-    duns!: string;
+    duns: string | undefined;
     @property.literal()
-    email!: string;
+    email: string | undefined;
     @property.literal()
-    familyName!: string;
+    familyName: string | undefined;
     @property.literal()
-    faxNumber!: string;
+    faxNumber: string | undefined;
     @property.resource()
-    follows!: Schema.Person;
+    follows: Schema.Person | undefined;
     @property.resource()
-    funder!: Schema.Organization | Schema.Person;
+    funder: Schema.Organization | Schema.Person | undefined;
     @property.literal()
-    givenName!: string;
+    givenName: string | undefined;
     @property.literal()
-    globalLocationNumber!: string;
+    globalLocationNumber: string | undefined;
     @property.resource()
-    hasOccupation!: Schema.Occupation;
+    hasOccupation: Schema.Occupation | undefined;
     @property.resource()
-    hasOfferCatalog!: Schema.OfferCatalog;
+    hasOfferCatalog: Schema.OfferCatalog | undefined;
     @property.resource()
-    hasPOS!: Schema.Place;
+    hasPOS: Schema.Place | undefined;
     @property.resource()
-    height!: Schema.Distance | Schema.QuantitativeValue;
+    height: Schema.Distance | Schema.QuantitativeValue | undefined;
     @property.resource()
-    homeLocation!: Schema.ContactPoint | Schema.Place;
+    homeLocation: Schema.ContactPoint | Schema.Place | undefined;
     @property.literal()
-    honorificPrefix!: string;
+    honorificPrefix: string | undefined;
     @property.literal()
-    honorificSuffix!: string;
+    honorificSuffix: string | undefined;
     @property.resource()
-    interactionStatistic!: Schema.InteractionCounter;
+    interactionStatistic: Schema.InteractionCounter | undefined;
     @property.literal()
-    isicV4!: string;
+    isicV4: string | undefined;
     @property.resource()
-    knows!: Schema.Person;
+    knows: Schema.Person | undefined;
     @property.resource()
-    makesOffer!: Schema.Offer;
+    makesOffer: Schema.Offer | undefined;
     @property.resource()
-    memberOf!: Schema.Organization | Schema.ProgramMembership;
+    memberOf: Schema.Organization | Schema.ProgramMembership | undefined;
     @property.literal()
-    naics!: string;
+    naics: string | undefined;
     @property.resource()
-    nationality!: Schema.Country;
+    nationality: Schema.Country | undefined;
     @property.resource()
-    netWorth!: Schema.MonetaryAmount | Schema.PriceSpecification;
+    netWorth: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
     @property.resource()
-    owns!: Schema.OwnershipInfo | Schema.Product;
+    owns: Schema.OwnershipInfo | Schema.Product | undefined;
     @property.resource()
-    parent!: Schema.Person;
+    parent: Schema.Person | undefined;
     @property.resource()
-    parents!: Schema.Person;
+    parents: Schema.Person | undefined;
     @property.resource()
-    performerIn!: Schema.Event;
+    performerIn: Schema.Event | undefined;
     @property.resource()
-    publishingPrinciples!: Schema.CreativeWork;
+    publishingPrinciples: Schema.CreativeWork | undefined;
     @property.resource()
-    relatedTo!: Schema.Person;
+    relatedTo: Schema.Person | undefined;
     @property.resource()
-    seeks!: Schema.Demand;
+    seeks: Schema.Demand | undefined;
     @property.resource()
-    sibling!: Schema.Person;
+    sibling: Schema.Person | undefined;
     @property.resource()
-    siblings!: Schema.Person;
+    siblings: Schema.Person | undefined;
     @property.resource()
-    sponsor!: Schema.Organization | Schema.Person;
+    sponsor: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    spouse!: Schema.Person;
+    spouse: Schema.Person | undefined;
     @property.literal()
-    taxID!: string;
+    taxID: string | undefined;
     @property.literal()
-    telephone!: string;
+    telephone: string | undefined;
     @property.literal()
-    vatID!: string;
+    vatID: string | undefined;
     @property.resource()
-    weight!: Schema.QuantitativeValue;
+    weight: Schema.QuantitativeValue | undefined;
     @property.resource()
-    workLocation!: Schema.ContactPoint | Schema.Place;
+    workLocation: Schema.ContactPoint | Schema.Place | undefined;
     @property.resource()
-    worksFor!: Schema.Organization;
+    worksFor: Schema.Organization | undefined;
   }
   return PersonClass
 }

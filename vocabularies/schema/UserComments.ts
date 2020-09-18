@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { UserInteractionMixin } from './UserInteraction';
 
 export interface UserComments extends Schema.UserInteraction, RdfResource {
-  commentText: string;
-  commentTime: Date;
-  creator: Schema.Organization | Schema.Person;
-  discusses: Schema.CreativeWork;
-  replyToUrl: RDF.NamedNode;
+  commentText: string | undefined;
+  commentTime: Date | undefined;
+  creator: Schema.Organization | Schema.Person | undefined;
+  discusses: Schema.CreativeWork | undefined;
+  replyToUrl: RDF.NamedNode | undefined;
 }
 
 export function UserCommentsMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class UserCommentsClass extends UserInteractionMixin(Resource) implements UserComments {
     @property.literal()
-    commentText!: string;
+    commentText: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    commentTime!: Date;
+    commentTime: Date | undefined;
     @property.resource()
-    creator!: Schema.Organization | Schema.Person;
+    creator: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    discusses!: Schema.CreativeWork;
+    discusses: Schema.CreativeWork | undefined;
     @property()
-    replyToUrl!: RDF.NamedNode;
+    replyToUrl: RDF.NamedNode | undefined;
   }
   return UserCommentsClass
 }

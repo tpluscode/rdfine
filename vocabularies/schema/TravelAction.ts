@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { MoveActionMixin } from './MoveAction';
 
 export interface TravelAction extends Schema.MoveAction, RdfResource {
-  distance: Schema.Distance;
+  distance: Schema.Distance | undefined;
 }
 
 export function TravelActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TravelActionClass extends MoveActionMixin(Resource) implements TravelAction {
     @property.resource()
-    distance!: Schema.Distance;
+    distance: Schema.Distance | undefined;
   }
   return TravelActionClass
 }

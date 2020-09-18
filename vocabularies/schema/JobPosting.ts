@@ -8,77 +8,77 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface JobPosting extends Schema.Intangible, RdfResource {
-  baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification;
-  baseSalaryLiteral: number;
-  benefits: string;
-  datePosted: Date;
-  employmentType: string;
-  estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution;
-  estimatedSalaryLiteral: number;
-  experienceRequirements: string;
-  hiringOrganization: Schema.Organization;
-  incentiveCompensation: string;
-  incentives: string;
-  industry: string;
-  jobBenefits: string;
-  jobLocation: Schema.Place;
-  relevantOccupation: Schema.Occupation;
-  responsibilities: string;
-  salaryCurrency: string;
-  skills: string;
-  specialCommitments: string;
-  title: string;
-  validThrough: Date;
-  workHours: string;
+  baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
+  baseSalaryLiteral: number | undefined;
+  benefits: string | undefined;
+  datePosted: Date | undefined;
+  employmentType: string | undefined;
+  estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution | undefined;
+  estimatedSalaryLiteral: number | undefined;
+  experienceRequirements: string | undefined;
+  hiringOrganization: Schema.Organization | undefined;
+  incentiveCompensation: string | undefined;
+  incentives: string | undefined;
+  industry: string | undefined;
+  jobBenefits: string | undefined;
+  jobLocation: Schema.Place | undefined;
+  relevantOccupation: Schema.Occupation | undefined;
+  responsibilities: string | undefined;
+  salaryCurrency: string | undefined;
+  skills: string | undefined;
+  specialCommitments: string | undefined;
+  title: string | undefined;
+  validThrough: Date | undefined;
+  workHours: string | undefined;
 }
 
 export function JobPostingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class JobPostingClass extends IntangibleMixin(Resource) implements JobPosting {
     @property.resource()
-    baseSalary!: Schema.MonetaryAmount | Schema.PriceSpecification;
+    baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
     @property.literal({ path: schema.baseSalary, type: Number })
-    baseSalaryLiteral!: number;
+    baseSalaryLiteral: number | undefined;
     @property.literal()
-    benefits!: string;
+    benefits: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    datePosted!: Date;
+    datePosted: Date | undefined;
     @property.literal()
-    employmentType!: string;
+    employmentType: string | undefined;
     @property.resource()
-    estimatedSalary!: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution;
+    estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution | undefined;
     @property.literal({ path: schema.estimatedSalary, type: Number })
-    estimatedSalaryLiteral!: number;
+    estimatedSalaryLiteral: number | undefined;
     @property.literal()
-    experienceRequirements!: string;
+    experienceRequirements: string | undefined;
     @property.resource()
-    hiringOrganization!: Schema.Organization;
+    hiringOrganization: Schema.Organization | undefined;
     @property.literal()
-    incentiveCompensation!: string;
+    incentiveCompensation: string | undefined;
     @property.literal()
-    incentives!: string;
+    incentives: string | undefined;
     @property.literal()
-    industry!: string;
+    industry: string | undefined;
     @property.literal()
-    jobBenefits!: string;
+    jobBenefits: string | undefined;
     @property.resource()
-    jobLocation!: Schema.Place;
+    jobLocation: Schema.Place | undefined;
     @property.resource()
-    relevantOccupation!: Schema.Occupation;
+    relevantOccupation: Schema.Occupation | undefined;
     @property.literal()
-    responsibilities!: string;
+    responsibilities: string | undefined;
     @property.literal()
-    salaryCurrency!: string;
+    salaryCurrency: string | undefined;
     @property.literal()
-    skills!: string;
+    skills: string | undefined;
     @property.literal()
-    specialCommitments!: string;
+    specialCommitments: string | undefined;
     @property.literal()
-    title!: string;
+    title: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    validThrough!: Date;
+    validThrough: Date | undefined;
     @property.literal()
-    workHours!: string;
+    workHours: string | undefined;
   }
   return JobPostingClass
 }

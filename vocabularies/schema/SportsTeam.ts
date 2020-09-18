@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { SportsOrganizationMixin } from './SportsOrganization';
 
 export interface SportsTeam extends Schema.SportsOrganization, RdfResource {
-  athlete: Schema.Person;
-  coach: Schema.Person;
+  athlete: Schema.Person | undefined;
+  coach: Schema.Person | undefined;
 }
 
 export function SportsTeamMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SportsTeamClass extends SportsOrganizationMixin(Resource) implements SportsTeam {
     @property.resource()
-    athlete!: Schema.Person;
+    athlete: Schema.Person | undefined;
     @property.resource()
-    coach!: Schema.Person;
+    coach: Schema.Person | undefined;
   }
   return SportsTeamClass
 }

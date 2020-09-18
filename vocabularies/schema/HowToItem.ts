@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { ListItemMixin } from './ListItem';
 
 export interface HowToItem extends Schema.ListItem, RdfResource {
-  requiredQuantity: Schema.QuantitativeValue;
-  requiredQuantityLiteral: number | string;
+  requiredQuantity: Schema.QuantitativeValue | undefined;
+  requiredQuantityLiteral: number | string | undefined;
 }
 
 export function HowToItemMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class HowToItemClass extends ListItemMixin(Resource) implements HowToItem {
     @property.resource()
-    requiredQuantity!: Schema.QuantitativeValue;
+    requiredQuantity: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.requiredQuantity })
-    requiredQuantityLiteral!: number | string;
+    requiredQuantityLiteral: number | string | undefined;
   }
   return HowToItemClass
 }

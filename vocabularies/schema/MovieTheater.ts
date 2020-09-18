@@ -9,14 +9,14 @@ import { CivicStructureMixin } from './CivicStructure';
 import { EntertainmentBusinessMixin } from './EntertainmentBusiness';
 
 export interface MovieTheater extends Schema.CivicStructure, Schema.EntertainmentBusiness, RdfResource {
-  screenCount: number;
+  screenCount: number | undefined;
 }
 
 export function MovieTheaterMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MovieTheaterClass extends EntertainmentBusinessMixin(CivicStructureMixin(Resource)) implements MovieTheater {
     @property.literal({ type: Number })
-    screenCount!: number;
+    screenCount: number | undefined;
   }
   return MovieTheaterClass
 }

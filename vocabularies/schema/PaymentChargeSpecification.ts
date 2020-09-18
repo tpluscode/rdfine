@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { PriceSpecificationMixin } from './PriceSpecification';
 
 export interface PaymentChargeSpecification extends Schema.PriceSpecification, RdfResource {
-  appliesToDeliveryMethod: Schema.DeliveryMethod;
-  appliesToPaymentMethod: Schema.PaymentMethod;
+  appliesToDeliveryMethod: Schema.DeliveryMethod | undefined;
+  appliesToPaymentMethod: Schema.PaymentMethod | undefined;
 }
 
 export function PaymentChargeSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PaymentChargeSpecificationClass extends PriceSpecificationMixin(Resource) implements PaymentChargeSpecification {
     @property()
-    appliesToDeliveryMethod!: Schema.DeliveryMethod;
+    appliesToDeliveryMethod: Schema.DeliveryMethod | undefined;
     @property()
-    appliesToPaymentMethod!: Schema.PaymentMethod;
+    appliesToPaymentMethod: Schema.PaymentMethod | undefined;
   }
   return PaymentChargeSpecificationClass
 }

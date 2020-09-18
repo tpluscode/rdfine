@@ -16,7 +16,7 @@ describe('Order', () => {
       const order = new OrderMixin.Class(graph)
 
       // then
-      expect(order.orderStatus.termType).toEqual('NamedNode')
+      expect(order.orderStatus?.termType).toEqual('NamedNode')
     })
   })
 })

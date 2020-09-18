@@ -8,68 +8,68 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface MediaObject extends Schema.CreativeWork, RdfResource {
-  associatedArticle: Schema.NewsArticle;
-  bitrate: string;
-  contentSize: string;
-  contentUrl: RDF.NamedNode;
-  duration: Schema.Duration;
-  embedUrl: RDF.NamedNode;
-  encodesCreativeWork: Schema.CreativeWork;
-  encodingFormat: string;
-  encodingFormatTerm: RDF.NamedNode;
-  endTime: Date;
-  height: Schema.Distance | Schema.QuantitativeValue;
-  playerType: string;
-  productionCompany: Schema.Organization;
-  regionsAllowed: Schema.Place;
-  requiresSubscription: Schema.MediaSubscription;
-  requiresSubscriptionLiteral: boolean;
-  startTime: Date;
-  uploadDate: Date;
-  width: Schema.Distance | Schema.QuantitativeValue;
+  associatedArticle: Schema.NewsArticle | undefined;
+  bitrate: string | undefined;
+  contentSize: string | undefined;
+  contentUrl: RDF.NamedNode | undefined;
+  duration: Schema.Duration | undefined;
+  embedUrl: RDF.NamedNode | undefined;
+  encodesCreativeWork: Schema.CreativeWork | undefined;
+  encodingFormat: string | undefined;
+  encodingFormatTerm: RDF.NamedNode | undefined;
+  endTime: Date | undefined;
+  height: Schema.Distance | Schema.QuantitativeValue | undefined;
+  playerType: string | undefined;
+  productionCompany: Schema.Organization | undefined;
+  regionsAllowed: Schema.Place | undefined;
+  requiresSubscription: Schema.MediaSubscription | undefined;
+  requiresSubscriptionLiteral: boolean | undefined;
+  startTime: Date | undefined;
+  uploadDate: Date | undefined;
+  width: Schema.Distance | Schema.QuantitativeValue | undefined;
 }
 
 export function MediaObjectMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MediaObjectClass extends CreativeWorkMixin(Resource) implements MediaObject {
     @property.resource()
-    associatedArticle!: Schema.NewsArticle;
+    associatedArticle: Schema.NewsArticle | undefined;
     @property.literal()
-    bitrate!: string;
+    bitrate: string | undefined;
     @property.literal()
-    contentSize!: string;
+    contentSize: string | undefined;
     @property()
-    contentUrl!: RDF.NamedNode;
+    contentUrl: RDF.NamedNode | undefined;
     @property.resource()
-    duration!: Schema.Duration;
+    duration: Schema.Duration | undefined;
     @property()
-    embedUrl!: RDF.NamedNode;
+    embedUrl: RDF.NamedNode | undefined;
     @property.resource()
-    encodesCreativeWork!: Schema.CreativeWork;
+    encodesCreativeWork: Schema.CreativeWork | undefined;
     @property.literal()
-    encodingFormat!: string;
+    encodingFormat: string | undefined;
     @property({ path: schema.encodingFormat })
-    encodingFormatTerm!: RDF.NamedNode;
+    encodingFormatTerm: RDF.NamedNode | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    endTime!: Date;
+    endTime: Date | undefined;
     @property.resource()
-    height!: Schema.Distance | Schema.QuantitativeValue;
+    height: Schema.Distance | Schema.QuantitativeValue | undefined;
     @property.literal()
-    playerType!: string;
+    playerType: string | undefined;
     @property.resource()
-    productionCompany!: Schema.Organization;
+    productionCompany: Schema.Organization | undefined;
     @property.resource()
-    regionsAllowed!: Schema.Place;
+    regionsAllowed: Schema.Place | undefined;
     @property.resource()
-    requiresSubscription!: Schema.MediaSubscription;
+    requiresSubscription: Schema.MediaSubscription | undefined;
     @property.literal({ path: schema.requiresSubscription, type: Boolean })
-    requiresSubscriptionLiteral!: boolean;
+    requiresSubscriptionLiteral: boolean | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    startTime!: Date;
+    startTime: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    uploadDate!: Date;
+    uploadDate: Date | undefined;
     @property.resource()
-    width!: Schema.Distance | Schema.QuantitativeValue;
+    width: Schema.Distance | Schema.QuantitativeValue | undefined;
   }
   return MediaObjectClass
 }

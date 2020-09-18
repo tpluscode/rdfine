@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { ClipMixin } from './Clip';
 
 export interface TVClip extends Schema.Clip, RdfResource {
-  partOfTVSeries: Schema.TVSeries;
+  partOfTVSeries: Schema.TVSeries | undefined;
 }
 
 export function TVClipMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TVClipClass extends ClipMixin(Resource) implements TVClip {
     @property.resource()
-    partOfTVSeries!: Schema.TVSeries;
+    partOfTVSeries: Schema.TVSeries | undefined;
   }
   return TVClipClass
 }

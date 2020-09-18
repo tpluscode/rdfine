@@ -8,173 +8,173 @@ import type * as Schema from '.';
 import { ThingMixin } from './Thing';
 
 export interface Organization extends Schema.Thing, RdfResource {
-  address: Schema.PostalAddress;
-  addressLiteral: string;
-  aggregateRating: Schema.AggregateRating;
-  alumni: Schema.Person;
-  areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
-  areaServedLiteral: string;
-  award: string;
-  awards: string;
-  brand: Schema.Brand | Schema.Organization;
-  contactPoint: Schema.ContactPoint;
-  contactPoints: Schema.ContactPoint;
-  department: Schema.Organization;
-  dissolutionDate: Date;
-  duns: string;
-  email: string;
-  employee: Schema.Person;
-  employees: Schema.Person;
-  event: Schema.Event;
-  events: Schema.Event;
-  faxNumber: string;
-  founder: Schema.Person;
-  founders: Schema.Person;
-  foundingDate: Date;
-  foundingLocation: Schema.Place;
-  funder: Schema.Organization | Schema.Person;
-  globalLocationNumber: string;
-  hasOfferCatalog: Schema.OfferCatalog;
-  hasPOS: Schema.Place;
-  interactionStatistic: Schema.InteractionCounter;
-  isicV4: string;
-  legalName: string;
-  leiCode: string;
-  location: Schema.Place | Schema.PostalAddress;
-  locationLiteral: string;
-  logo: Schema.ImageObject;
-  makesOffer: Schema.Offer;
-  member: Schema.Organization | Schema.Person;
-  memberOf: Schema.Organization | Schema.ProgramMembership;
-  members: Schema.Organization | Schema.Person;
-  naics: string;
-  numberOfEmployees: Schema.QuantitativeValue;
-  owns: Schema.OwnershipInfo | Schema.Product;
-  parentOrganization: Schema.Organization;
-  publishingPrinciples: Schema.CreativeWork;
-  review: Schema.Review;
-  reviews: Schema.Review;
-  seeks: Schema.Demand;
-  serviceArea: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
-  slogan: string;
-  sponsor: Schema.Organization | Schema.Person;
-  subOrganization: Schema.Organization;
-  taxID: string;
-  telephone: string;
-  vatID: string;
+  address: Schema.PostalAddress | undefined;
+  addressLiteral: string | undefined;
+  aggregateRating: Schema.AggregateRating | undefined;
+  alumni: Schema.Person | undefined;
+  areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
+  areaServedLiteral: string | undefined;
+  award: string | undefined;
+  awards: string | undefined;
+  brand: Schema.Brand | Schema.Organization | undefined;
+  contactPoint: Schema.ContactPoint | undefined;
+  contactPoints: Schema.ContactPoint | undefined;
+  department: Schema.Organization | undefined;
+  dissolutionDate: Date | undefined;
+  duns: string | undefined;
+  email: string | undefined;
+  employee: Schema.Person | undefined;
+  employees: Schema.Person | undefined;
+  event: Schema.Event | undefined;
+  events: Schema.Event | undefined;
+  faxNumber: string | undefined;
+  founder: Schema.Person | undefined;
+  founders: Schema.Person | undefined;
+  foundingDate: Date | undefined;
+  foundingLocation: Schema.Place | undefined;
+  funder: Schema.Organization | Schema.Person | undefined;
+  globalLocationNumber: string | undefined;
+  hasOfferCatalog: Schema.OfferCatalog | undefined;
+  hasPOS: Schema.Place | undefined;
+  interactionStatistic: Schema.InteractionCounter | undefined;
+  isicV4: string | undefined;
+  legalName: string | undefined;
+  leiCode: string | undefined;
+  location: Schema.Place | Schema.PostalAddress | undefined;
+  locationLiteral: string | undefined;
+  logo: Schema.ImageObject | undefined;
+  makesOffer: Schema.Offer | undefined;
+  member: Schema.Organization | Schema.Person | undefined;
+  memberOf: Schema.Organization | Schema.ProgramMembership | undefined;
+  members: Schema.Organization | Schema.Person | undefined;
+  naics: string | undefined;
+  numberOfEmployees: Schema.QuantitativeValue | undefined;
+  owns: Schema.OwnershipInfo | Schema.Product | undefined;
+  parentOrganization: Schema.Organization | undefined;
+  publishingPrinciples: Schema.CreativeWork | undefined;
+  review: Schema.Review | undefined;
+  reviews: Schema.Review | undefined;
+  seeks: Schema.Demand | undefined;
+  serviceArea: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
+  slogan: string | undefined;
+  sponsor: Schema.Organization | Schema.Person | undefined;
+  subOrganization: Schema.Organization | undefined;
+  taxID: string | undefined;
+  telephone: string | undefined;
+  vatID: string | undefined;
 }
 
 export function OrganizationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OrganizationClass extends ThingMixin(Resource) implements Organization {
     @property.resource()
-    address!: Schema.PostalAddress;
+    address: Schema.PostalAddress | undefined;
     @property.literal({ path: schema.address })
-    addressLiteral!: string;
+    addressLiteral: string | undefined;
     @property.resource()
-    aggregateRating!: Schema.AggregateRating;
+    aggregateRating: Schema.AggregateRating | undefined;
     @property.resource()
-    alumni!: Schema.Person;
+    alumni: Schema.Person | undefined;
     @property.resource()
-    areaServed!: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
+    areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
     @property.literal({ path: schema.areaServed })
-    areaServedLiteral!: string;
+    areaServedLiteral: string | undefined;
     @property.literal()
-    award!: string;
+    award: string | undefined;
     @property.literal()
-    awards!: string;
+    awards: string | undefined;
     @property.resource()
-    brand!: Schema.Brand | Schema.Organization;
+    brand: Schema.Brand | Schema.Organization | undefined;
     @property.resource()
-    contactPoint!: Schema.ContactPoint;
+    contactPoint: Schema.ContactPoint | undefined;
     @property.resource()
-    contactPoints!: Schema.ContactPoint;
+    contactPoints: Schema.ContactPoint | undefined;
     @property.resource()
-    department!: Schema.Organization;
+    department: Schema.Organization | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    dissolutionDate!: Date;
+    dissolutionDate: Date | undefined;
     @property.literal()
-    duns!: string;
+    duns: string | undefined;
     @property.literal()
-    email!: string;
+    email: string | undefined;
     @property.resource()
-    employee!: Schema.Person;
+    employee: Schema.Person | undefined;
     @property.resource()
-    employees!: Schema.Person;
+    employees: Schema.Person | undefined;
     @property.resource()
-    event!: Schema.Event;
+    event: Schema.Event | undefined;
     @property.resource()
-    events!: Schema.Event;
+    events: Schema.Event | undefined;
     @property.literal()
-    faxNumber!: string;
+    faxNumber: string | undefined;
     @property.resource()
-    founder!: Schema.Person;
+    founder: Schema.Person | undefined;
     @property.resource()
-    founders!: Schema.Person;
+    founders: Schema.Person | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    foundingDate!: Date;
+    foundingDate: Date | undefined;
     @property.resource()
-    foundingLocation!: Schema.Place;
+    foundingLocation: Schema.Place | undefined;
     @property.resource()
-    funder!: Schema.Organization | Schema.Person;
+    funder: Schema.Organization | Schema.Person | undefined;
     @property.literal()
-    globalLocationNumber!: string;
+    globalLocationNumber: string | undefined;
     @property.resource()
-    hasOfferCatalog!: Schema.OfferCatalog;
+    hasOfferCatalog: Schema.OfferCatalog | undefined;
     @property.resource()
-    hasPOS!: Schema.Place;
+    hasPOS: Schema.Place | undefined;
     @property.resource()
-    interactionStatistic!: Schema.InteractionCounter;
+    interactionStatistic: Schema.InteractionCounter | undefined;
     @property.literal()
-    isicV4!: string;
+    isicV4: string | undefined;
     @property.literal()
-    legalName!: string;
+    legalName: string | undefined;
     @property.literal()
-    leiCode!: string;
+    leiCode: string | undefined;
     @property.resource()
-    location!: Schema.Place | Schema.PostalAddress;
+    location: Schema.Place | Schema.PostalAddress | undefined;
     @property.literal({ path: schema.location })
-    locationLiteral!: string;
+    locationLiteral: string | undefined;
     @property.resource()
-    logo!: Schema.ImageObject;
+    logo: Schema.ImageObject | undefined;
     @property.resource()
-    makesOffer!: Schema.Offer;
+    makesOffer: Schema.Offer | undefined;
     @property.resource()
-    member!: Schema.Organization | Schema.Person;
+    member: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    memberOf!: Schema.Organization | Schema.ProgramMembership;
+    memberOf: Schema.Organization | Schema.ProgramMembership | undefined;
     @property.resource()
-    members!: Schema.Organization | Schema.Person;
+    members: Schema.Organization | Schema.Person | undefined;
     @property.literal()
-    naics!: string;
+    naics: string | undefined;
     @property.resource()
-    numberOfEmployees!: Schema.QuantitativeValue;
+    numberOfEmployees: Schema.QuantitativeValue | undefined;
     @property.resource()
-    owns!: Schema.OwnershipInfo | Schema.Product;
+    owns: Schema.OwnershipInfo | Schema.Product | undefined;
     @property.resource()
-    parentOrganization!: Schema.Organization;
+    parentOrganization: Schema.Organization | undefined;
     @property.resource()
-    publishingPrinciples!: Schema.CreativeWork;
+    publishingPrinciples: Schema.CreativeWork | undefined;
     @property.resource()
-    review!: Schema.Review;
+    review: Schema.Review | undefined;
     @property.resource()
-    reviews!: Schema.Review;
+    reviews: Schema.Review | undefined;
     @property.resource()
-    seeks!: Schema.Demand;
+    seeks: Schema.Demand | undefined;
     @property.resource()
-    serviceArea!: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
+    serviceArea: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
     @property.literal()
-    slogan!: string;
+    slogan: string | undefined;
     @property.resource()
-    sponsor!: Schema.Organization | Schema.Person;
+    sponsor: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    subOrganization!: Schema.Organization;
+    subOrganization: Schema.Organization | undefined;
     @property.literal()
-    taxID!: string;
+    taxID: string | undefined;
     @property.literal()
-    telephone!: string;
+    telephone: string | undefined;
     @property.literal()
-    vatID!: string;
+    vatID: string | undefined;
   }
   return OrganizationClass
 }

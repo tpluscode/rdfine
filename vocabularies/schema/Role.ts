@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface Role extends Schema.Intangible, RdfResource {
-  endDate: Date;
-  namedPosition: string;
-  namedPositionTerm: RDF.NamedNode;
-  roleName: string;
-  roleNameTerm: RDF.NamedNode;
-  startDate: Date;
+  endDate: Date | undefined;
+  namedPosition: string | undefined;
+  namedPositionTerm: RDF.NamedNode | undefined;
+  roleName: string | undefined;
+  roleNameTerm: RDF.NamedNode | undefined;
+  startDate: Date | undefined;
 }
 
 export function RoleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RoleClass extends IntangibleMixin(Resource) implements Role {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    endDate!: Date;
+    endDate: Date | undefined;
     @property.literal()
-    namedPosition!: string;
+    namedPosition: string | undefined;
     @property({ path: schema.namedPosition })
-    namedPositionTerm!: RDF.NamedNode;
+    namedPositionTerm: RDF.NamedNode | undefined;
     @property.literal()
-    roleName!: string;
+    roleName: string | undefined;
     @property({ path: schema.roleName })
-    roleNameTerm!: RDF.NamedNode;
+    roleNameTerm: RDF.NamedNode | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    startDate!: Date;
+    startDate: Date | undefined;
   }
   return RoleClass
 }

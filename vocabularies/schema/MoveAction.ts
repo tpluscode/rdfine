@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { ActionMixin } from './Action';
 
 export interface MoveAction extends Schema.Action, RdfResource {
-  fromLocation: Schema.Place;
-  toLocation: Schema.Place;
+  fromLocation: Schema.Place | undefined;
+  toLocation: Schema.Place | undefined;
 }
 
 export function MoveActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MoveActionClass extends ActionMixin(Resource) implements MoveAction {
     @property.resource()
-    fromLocation!: Schema.Place;
+    fromLocation: Schema.Place | undefined;
     @property.resource()
-    toLocation!: Schema.Place;
+    toLocation: Schema.Place | undefined;
   }
   return MoveActionClass
 }

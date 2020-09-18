@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { HowToItemMixin } from './HowToItem';
 
 export interface HowToSupply extends Schema.HowToItem, RdfResource {
-  estimatedCost: Schema.MonetaryAmount;
-  estimatedCostLiteral: string;
+  estimatedCost: Schema.MonetaryAmount | undefined;
+  estimatedCostLiteral: string | undefined;
 }
 
 export function HowToSupplyMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class HowToSupplyClass extends HowToItemMixin(Resource) implements HowToSupply {
     @property.resource()
-    estimatedCost!: Schema.MonetaryAmount;
+    estimatedCost: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.estimatedCost })
-    estimatedCostLiteral!: string;
+    estimatedCostLiteral: string | undefined;
   }
   return HowToSupplyClass
 }

@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface Rating extends Schema.Intangible, RdfResource {
-  author: Schema.Organization | Schema.Person;
-  bestRating: number | string;
-  ratingValue: number | string;
-  reviewAspect: string;
-  worstRating: number | string;
+  author: Schema.Organization | Schema.Person | undefined;
+  bestRating: number | string | undefined;
+  ratingValue: number | string | undefined;
+  reviewAspect: string | undefined;
+  worstRating: number | string | undefined;
 }
 
 export function RatingMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RatingClass extends IntangibleMixin(Resource) implements Rating {
     @property.resource()
-    author!: Schema.Organization | Schema.Person;
+    author: Schema.Organization | Schema.Person | undefined;
     @property.literal()
-    bestRating!: number | string;
+    bestRating: number | string | undefined;
     @property.literal()
-    ratingValue!: number | string;
+    ratingValue: number | string | undefined;
     @property.literal()
-    reviewAspect!: string;
+    reviewAspect: string | undefined;
     @property.literal()
-    worstRating!: number | string;
+    worstRating: number | string | undefined;
   }
   return RatingClass
 }

@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { TransferActionMixin } from './TransferAction';
 
 export interface ReceiveAction extends Schema.TransferAction, RdfResource {
-  deliveryMethod: Schema.DeliveryMethod;
-  sender: Schema.Audience | Schema.Organization | Schema.Person;
+  deliveryMethod: Schema.DeliveryMethod | undefined;
+  sender: Schema.Audience | Schema.Organization | Schema.Person | undefined;
 }
 
 export function ReceiveActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ReceiveActionClass extends TransferActionMixin(Resource) implements ReceiveAction {
     @property()
-    deliveryMethod!: Schema.DeliveryMethod;
+    deliveryMethod: Schema.DeliveryMethod | undefined;
     @property.resource()
-    sender!: Schema.Audience | Schema.Organization | Schema.Person;
+    sender: Schema.Audience | Schema.Organization | Schema.Person | undefined;
   }
   return ReceiveActionClass
 }

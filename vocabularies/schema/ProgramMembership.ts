@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface ProgramMembership extends Schema.Intangible, RdfResource {
-  hostingOrganization: Schema.Organization;
-  member: Schema.Organization | Schema.Person;
-  members: Schema.Organization | Schema.Person;
-  membershipNumber: string;
-  programName: string;
+  hostingOrganization: Schema.Organization | undefined;
+  member: Schema.Organization | Schema.Person | undefined;
+  members: Schema.Organization | Schema.Person | undefined;
+  membershipNumber: string | undefined;
+  programName: string | undefined;
 }
 
 export function ProgramMembershipMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ProgramMembershipClass extends IntangibleMixin(Resource) implements ProgramMembership {
     @property.resource()
-    hostingOrganization!: Schema.Organization;
+    hostingOrganization: Schema.Organization | undefined;
     @property.resource()
-    member!: Schema.Organization | Schema.Person;
+    member: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    members!: Schema.Organization | Schema.Person;
+    members: Schema.Organization | Schema.Person | undefined;
     @property.literal()
-    membershipNumber!: string;
+    membershipNumber: string | undefined;
     @property.literal()
-    programName!: string;
+    programName: string | undefined;
   }
   return ProgramMembershipClass
 }

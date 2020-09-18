@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { ArticleMixin } from './Article';
 
 export interface TechArticle extends Schema.Article, RdfResource {
-  dependencies: string;
-  proficiencyLevel: string;
+  dependencies: string | undefined;
+  proficiencyLevel: string | undefined;
 }
 
 export function TechArticleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TechArticleClass extends ArticleMixin(Resource) implements TechArticle {
     @property.literal()
-    dependencies!: string;
+    dependencies: string | undefined;
     @property.literal()
-    proficiencyLevel!: string;
+    proficiencyLevel: string | undefined;
   }
   return TechArticleClass
 }

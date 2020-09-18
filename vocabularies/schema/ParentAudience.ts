@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { PeopleAudienceMixin } from './PeopleAudience';
 
 export interface ParentAudience extends Schema.PeopleAudience, RdfResource {
-  childMaxAge: number;
-  childMinAge: number;
+  childMaxAge: number | undefined;
+  childMinAge: number | undefined;
 }
 
 export function ParentAudienceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ParentAudienceClass extends PeopleAudienceMixin(Resource) implements ParentAudience {
     @property.literal({ type: Number })
-    childMaxAge!: number;
+    childMaxAge: number | undefined;
     @property.literal({ type: Number })
-    childMinAge!: number;
+    childMinAge: number | undefined;
   }
   return ParentAudienceClass
 }

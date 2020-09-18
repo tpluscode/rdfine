@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface EngineSpecification extends Schema.StructuredValue, RdfResource {
-  fuelType: string;
-  fuelTypeTerm: RDF.NamedNode | Schema.QualitativeValue;
+  fuelType: string | undefined;
+  fuelTypeTerm: RDF.NamedNode | Schema.QualitativeValue | undefined;
 }
 
 export function EngineSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class EngineSpecificationClass extends StructuredValueMixin(Resource) implements EngineSpecification {
     @property.literal()
-    fuelType!: string;
+    fuelType: string | undefined;
     @property({ path: schema.fuelType })
-    fuelTypeTerm!: RDF.NamedNode | Schema.QualitativeValue;
+    fuelTypeTerm: RDF.NamedNode | Schema.QualitativeValue | undefined;
   }
   return EngineSpecificationClass
 }

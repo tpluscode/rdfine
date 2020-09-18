@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { OfferMixin } from './Offer';
 
 export interface AggregateOffer extends Schema.Offer, RdfResource {
-  highPrice: number | string;
-  lowPrice: number | string;
-  offerCount: number;
-  offers: Schema.Demand | Schema.Offer;
+  highPrice: number | string | undefined;
+  lowPrice: number | string | undefined;
+  offerCount: number | undefined;
+  offers: Schema.Demand | Schema.Offer | undefined;
 }
 
 export function AggregateOfferMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AggregateOfferClass extends OfferMixin(Resource) implements AggregateOffer {
     @property.literal()
-    highPrice!: number | string;
+    highPrice: number | string | undefined;
     @property.literal()
-    lowPrice!: number | string;
+    lowPrice: number | string | undefined;
     @property.literal({ type: Number })
-    offerCount!: number;
+    offerCount: number | undefined;
     @property.resource()
-    offers!: Schema.Demand | Schema.Offer;
+    offers: Schema.Demand | Schema.Offer | undefined;
   }
   return AggregateOfferClass
 }

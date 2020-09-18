@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { EventMixin } from './Event';
 
 export interface DeliveryEvent extends Schema.Event, RdfResource {
-  accessCode: string;
-  availableFrom: Date;
-  availableThrough: Date;
-  hasDeliveryMethod: Schema.DeliveryMethod;
+  accessCode: string | undefined;
+  availableFrom: Date | undefined;
+  availableThrough: Date | undefined;
+  hasDeliveryMethod: Schema.DeliveryMethod | undefined;
 }
 
 export function DeliveryEventMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DeliveryEventClass extends EventMixin(Resource) implements DeliveryEvent {
     @property.literal()
-    accessCode!: string;
+    accessCode: string | undefined;
     @property.literal({ type: Date })
-    availableFrom!: Date;
+    availableFrom: Date | undefined;
     @property.literal({ type: Date })
-    availableThrough!: Date;
+    availableThrough: Date | undefined;
     @property()
-    hasDeliveryMethod!: Schema.DeliveryMethod;
+    hasDeliveryMethod: Schema.DeliveryMethod | undefined;
   }
   return DeliveryEventClass
 }

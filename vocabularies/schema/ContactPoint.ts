@@ -8,50 +8,50 @@ import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
 export interface ContactPoint extends Schema.StructuredValue, RdfResource {
-  areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
-  areaServedLiteral: string;
-  availableLanguage: Schema.Language;
-  availableLanguageLiteral: string;
-  contactOption: Schema.ContactPointOption;
-  contactType: string;
-  email: string;
-  faxNumber: string;
-  hoursAvailable: Schema.OpeningHoursSpecification;
-  productSupported: Schema.Product;
-  productSupportedLiteral: string;
-  serviceArea: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
-  telephone: string;
+  areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
+  areaServedLiteral: string | undefined;
+  availableLanguage: Schema.Language | undefined;
+  availableLanguageLiteral: string | undefined;
+  contactOption: Schema.ContactPointOption | undefined;
+  contactType: string | undefined;
+  email: string | undefined;
+  faxNumber: string | undefined;
+  hoursAvailable: Schema.OpeningHoursSpecification | undefined;
+  productSupported: Schema.Product | undefined;
+  productSupportedLiteral: string | undefined;
+  serviceArea: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
+  telephone: string | undefined;
 }
 
 export function ContactPointMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ContactPointClass extends StructuredValueMixin(Resource) implements ContactPoint {
     @property.resource()
-    areaServed!: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
+    areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
     @property.literal({ path: schema.areaServed })
-    areaServedLiteral!: string;
+    areaServedLiteral: string | undefined;
     @property.resource()
-    availableLanguage!: Schema.Language;
+    availableLanguage: Schema.Language | undefined;
     @property.literal({ path: schema.availableLanguage })
-    availableLanguageLiteral!: string;
+    availableLanguageLiteral: string | undefined;
     @property()
-    contactOption!: Schema.ContactPointOption;
+    contactOption: Schema.ContactPointOption | undefined;
     @property.literal()
-    contactType!: string;
+    contactType: string | undefined;
     @property.literal()
-    email!: string;
+    email: string | undefined;
     @property.literal()
-    faxNumber!: string;
+    faxNumber: string | undefined;
     @property.resource()
-    hoursAvailable!: Schema.OpeningHoursSpecification;
+    hoursAvailable: Schema.OpeningHoursSpecification | undefined;
     @property.resource()
-    productSupported!: Schema.Product;
+    productSupported: Schema.Product | undefined;
     @property.literal({ path: schema.productSupported })
-    productSupportedLiteral!: string;
+    productSupportedLiteral: string | undefined;
     @property.resource()
-    serviceArea!: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place;
+    serviceArea: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
     @property.literal()
-    telephone!: string;
+    telephone: string | undefined;
   }
   return ContactPointClass
 }

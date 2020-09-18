@@ -8,32 +8,32 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Article extends Schema.CreativeWork, RdfResource {
-  articleBody: string;
-  articleSection: string;
-  pageEnd: number | string;
-  pageStart: number | string;
-  pagination: string;
-  speakable: Schema.SpeakableSpecification;
-  wordCount: number;
+  articleBody: string | undefined;
+  articleSection: string | undefined;
+  pageEnd: number | string | undefined;
+  pageStart: number | string | undefined;
+  pagination: string | undefined;
+  speakable: Schema.SpeakableSpecification | undefined;
+  wordCount: number | undefined;
 }
 
 export function ArticleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ArticleClass extends CreativeWorkMixin(Resource) implements Article {
     @property.literal()
-    articleBody!: string;
+    articleBody: string | undefined;
     @property.literal()
-    articleSection!: string;
+    articleSection: string | undefined;
     @property.literal()
-    pageEnd!: number | string;
+    pageEnd: number | string | undefined;
     @property.literal()
-    pageStart!: number | string;
+    pageStart: number | string | undefined;
     @property.literal()
-    pagination!: string;
+    pagination: string | undefined;
     @property.resource()
-    speakable!: Schema.SpeakableSpecification;
+    speakable: Schema.SpeakableSpecification | undefined;
     @property.literal({ type: Number })
-    wordCount!: number;
+    wordCount: number | undefined;
   }
   return ArticleClass
 }

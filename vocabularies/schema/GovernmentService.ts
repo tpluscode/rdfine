@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { ServiceMixin } from './Service';
 
 export interface GovernmentService extends Schema.Service, RdfResource {
-  serviceOperator: Schema.Organization;
+  serviceOperator: Schema.Organization | undefined;
 }
 
 export function GovernmentServiceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GovernmentServiceClass extends ServiceMixin(Resource) implements GovernmentService {
     @property.resource()
-    serviceOperator!: Schema.Organization;
+    serviceOperator: Schema.Organization | undefined;
   }
   return GovernmentServiceClass
 }

@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Comment extends Schema.CreativeWork, RdfResource {
-  downvoteCount: number;
-  parentItem: Schema.Question;
-  upvoteCount: number;
+  downvoteCount: number | undefined;
+  parentItem: Schema.Question | undefined;
+  upvoteCount: number | undefined;
 }
 
 export function CommentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CommentClass extends CreativeWorkMixin(Resource) implements Comment {
     @property.literal({ type: Number })
-    downvoteCount!: number;
+    downvoteCount: number | undefined;
     @property.resource()
-    parentItem!: Schema.Question;
+    parentItem: Schema.Question | undefined;
     @property.literal({ type: Number })
-    upvoteCount!: number;
+    upvoteCount: number | undefined;
   }
   return CommentClass
 }

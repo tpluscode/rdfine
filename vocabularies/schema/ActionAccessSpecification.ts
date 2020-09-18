@@ -8,38 +8,38 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface ActionAccessSpecification extends Schema.Intangible, RdfResource {
-  availabilityEnds: Date;
-  availabilityStarts: Date;
-  category: Schema.Thing;
-  categoryLiteral: string;
-  eligibleRegion: Schema.GeoShape | Schema.Place;
-  eligibleRegionLiteral: string;
-  expectsAcceptanceOf: Schema.Offer;
-  requiresSubscription: Schema.MediaSubscription;
-  requiresSubscriptionLiteral: boolean;
+  availabilityEnds: Date | undefined;
+  availabilityStarts: Date | undefined;
+  category: Schema.Thing | undefined;
+  categoryLiteral: string | undefined;
+  eligibleRegion: Schema.GeoShape | Schema.Place | undefined;
+  eligibleRegionLiteral: string | undefined;
+  expectsAcceptanceOf: Schema.Offer | undefined;
+  requiresSubscription: Schema.MediaSubscription | undefined;
+  requiresSubscriptionLiteral: boolean | undefined;
 }
 
 export function ActionAccessSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ActionAccessSpecificationClass extends IntangibleMixin(Resource) implements ActionAccessSpecification {
     @property.literal({ type: Date })
-    availabilityEnds!: Date;
+    availabilityEnds: Date | undefined;
     @property.literal({ type: Date })
-    availabilityStarts!: Date;
+    availabilityStarts: Date | undefined;
     @property.resource()
-    category!: Schema.Thing;
+    category: Schema.Thing | undefined;
     @property.literal({ path: schema.category })
-    categoryLiteral!: string;
+    categoryLiteral: string | undefined;
     @property.resource()
-    eligibleRegion!: Schema.GeoShape | Schema.Place;
+    eligibleRegion: Schema.GeoShape | Schema.Place | undefined;
     @property.literal({ path: schema.eligibleRegion })
-    eligibleRegionLiteral!: string;
+    eligibleRegionLiteral: string | undefined;
     @property.resource()
-    expectsAcceptanceOf!: Schema.Offer;
+    expectsAcceptanceOf: Schema.Offer | undefined;
     @property.resource()
-    requiresSubscription!: Schema.MediaSubscription;
+    requiresSubscription: Schema.MediaSubscription | undefined;
     @property.literal({ path: schema.requiresSubscription, type: Boolean })
-    requiresSubscriptionLiteral!: boolean;
+    requiresSubscriptionLiteral: boolean | undefined;
   }
   return ActionAccessSpecificationClass
 }

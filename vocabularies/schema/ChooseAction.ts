@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { AssessActionMixin } from './AssessAction';
 
 export interface ChooseAction extends Schema.AssessAction, RdfResource {
-  actionOption: Schema.Thing;
-  actionOptionLiteral: string;
-  option: Schema.Thing;
-  optionLiteral: string;
+  actionOption: Schema.Thing | undefined;
+  actionOptionLiteral: string | undefined;
+  option: Schema.Thing | undefined;
+  optionLiteral: string | undefined;
 }
 
 export function ChooseActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ChooseActionClass extends AssessActionMixin(Resource) implements ChooseAction {
     @property.resource()
-    actionOption!: Schema.Thing;
+    actionOption: Schema.Thing | undefined;
     @property.literal({ path: schema.actionOption })
-    actionOptionLiteral!: string;
+    actionOptionLiteral: string | undefined;
     @property.resource()
-    option!: Schema.Thing;
+    option: Schema.Thing | undefined;
     @property.literal({ path: schema.option })
-    optionLiteral!: string;
+    optionLiteral: string | undefined;
   }
   return ChooseActionClass
 }

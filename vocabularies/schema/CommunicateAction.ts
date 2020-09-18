@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { InteractActionMixin } from './InteractAction';
 
 export interface CommunicateAction extends Schema.InteractAction, RdfResource {
-  about: Schema.Thing;
-  inLanguage: Schema.Language;
-  inLanguageLiteral: string;
-  language: Schema.Language;
-  recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
+  about: Schema.Thing | undefined;
+  inLanguage: Schema.Language | undefined;
+  inLanguageLiteral: string | undefined;
+  language: Schema.Language | undefined;
+  recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
 }
 
 export function CommunicateActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CommunicateActionClass extends InteractActionMixin(Resource) implements CommunicateAction {
     @property.resource()
-    about!: Schema.Thing;
+    about: Schema.Thing | undefined;
     @property.resource()
-    inLanguage!: Schema.Language;
+    inLanguage: Schema.Language | undefined;
     @property.literal({ path: schema.inLanguage })
-    inLanguageLiteral!: string;
+    inLanguageLiteral: string | undefined;
     @property.resource()
-    language!: Schema.Language;
+    language: Schema.Language | undefined;
     @property.resource()
-    recipient!: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person;
+    recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
   return CommunicateActionClass
 }

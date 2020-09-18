@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { ArticleMixin } from './Article';
 
 export interface NewsArticle extends Schema.Article, RdfResource {
-  dateline: string;
-  printColumn: string;
-  printEdition: string;
-  printPage: string;
-  printSection: string;
+  dateline: string | undefined;
+  printColumn: string | undefined;
+  printEdition: string | undefined;
+  printPage: string | undefined;
+  printSection: string | undefined;
 }
 
 export function NewsArticleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class NewsArticleClass extends ArticleMixin(Resource) implements NewsArticle {
     @property.literal()
-    dateline!: string;
+    dateline: string | undefined;
     @property.literal()
-    printColumn!: string;
+    printColumn: string | undefined;
     @property.literal()
-    printEdition!: string;
+    printEdition: string | undefined;
     @property.literal()
-    printPage!: string;
+    printPage: string | undefined;
     @property.literal()
-    printSection!: string;
+    printSection: string | undefined;
   }
   return NewsArticleClass
 }

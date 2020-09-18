@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { rdf } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -6,20 +7,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdf from '.';
 
 export interface Statement extends RdfResource {
-  object: RDF.Term;
-  predicate: RDF.Term;
-  subject: RDF.Term;
+  object: RDF.Term | undefined;
+  predicate: RDF.Term | undefined;
+  subject: RDF.Term | undefined;
 }
 
 export function StatementMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdf)
   class StatementClass extends Resource implements Statement {
     @property()
-    object!: RDF.Term;
+    object: RDF.Term | undefined;
     @property()
-    predicate!: RDF.Term;
+    predicate: RDF.Term | undefined;
     @property()
-    subject!: RDF.Term;
+    subject: RDF.Term | undefined;
   }
   return StatementClass
 }

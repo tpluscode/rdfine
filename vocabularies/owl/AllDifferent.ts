@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -8,14 +9,14 @@ import * as Rdfs from '@rdfine/rdfs';
 import * as Rdf from '@rdfine/rdf';
 
 export interface AllDifferent extends Rdfs.Resource, RdfResource {
-  distinctMembers: Rdf.List;
+  distinctMembers: Rdf.List | undefined;
 }
 
 export function AllDifferentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class AllDifferentClass extends Rdfs.ResourceMixin(Resource) implements AllDifferent {
     @property.resource({ as: [Rdf.ListMixin] })
-    distinctMembers!: Rdf.List;
+    distinctMembers: Rdf.List | undefined;
   }
   return AllDifferentClass
 }

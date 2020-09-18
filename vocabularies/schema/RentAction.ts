@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { TradeActionMixin } from './TradeAction';
 
 export interface RentAction extends Schema.TradeAction, RdfResource {
-  landlord: Schema.Organization | Schema.Person;
-  realEstateAgent: Schema.RealEstateAgent;
+  landlord: Schema.Organization | Schema.Person | undefined;
+  realEstateAgent: Schema.RealEstateAgent | undefined;
 }
 
 export function RentActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class RentActionClass extends TradeActionMixin(Resource) implements RentAction {
     @property.resource()
-    landlord!: Schema.Organization | Schema.Person;
+    landlord: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    realEstateAgent!: Schema.RealEstateAgent;
+    realEstateAgent: Schema.RealEstateAgent | undefined;
   }
   return RentActionClass
 }

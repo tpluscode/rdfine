@@ -8,35 +8,35 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface EntryPoint extends Schema.Intangible, RdfResource {
-  actionApplication: Schema.SoftwareApplication;
-  actionPlatform: string;
-  actionPlatformTerm: RDF.NamedNode;
-  application: Schema.SoftwareApplication;
-  contentType: string;
-  encodingType: string;
-  httpMethod: string;
-  urlTemplate: string;
+  actionApplication: Schema.SoftwareApplication | undefined;
+  actionPlatform: string | undefined;
+  actionPlatformTerm: RDF.NamedNode | undefined;
+  application: Schema.SoftwareApplication | undefined;
+  contentType: string | undefined;
+  encodingType: string | undefined;
+  httpMethod: string | undefined;
+  urlTemplate: string | undefined;
 }
 
 export function EntryPointMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class EntryPointClass extends IntangibleMixin(Resource) implements EntryPoint {
     @property.resource()
-    actionApplication!: Schema.SoftwareApplication;
+    actionApplication: Schema.SoftwareApplication | undefined;
     @property.literal()
-    actionPlatform!: string;
+    actionPlatform: string | undefined;
     @property({ path: schema.actionPlatform })
-    actionPlatformTerm!: RDF.NamedNode;
+    actionPlatformTerm: RDF.NamedNode | undefined;
     @property.resource()
-    application!: Schema.SoftwareApplication;
+    application: Schema.SoftwareApplication | undefined;
     @property.literal()
-    contentType!: string;
+    contentType: string | undefined;
     @property.literal()
-    encodingType!: string;
+    encodingType: string | undefined;
     @property.literal()
-    httpMethod!: string;
+    httpMethod: string | undefined;
     @property.literal()
-    urlTemplate!: string;
+    urlTemplate: string | undefined;
   }
   return EntryPointClass
 }

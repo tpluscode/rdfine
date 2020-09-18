@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Book extends Schema.CreativeWork, RdfResource {
-  bookEdition: string;
-  bookFormat: Schema.BookFormatType;
-  illustrator: Schema.Person;
-  isbn: string;
-  numberOfPages: number;
+  bookEdition: string | undefined;
+  bookFormat: Schema.BookFormatType | undefined;
+  illustrator: Schema.Person | undefined;
+  isbn: string | undefined;
+  numberOfPages: number | undefined;
 }
 
 export function BookMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BookClass extends CreativeWorkMixin(Resource) implements Book {
     @property.literal()
-    bookEdition!: string;
+    bookEdition: string | undefined;
     @property()
-    bookFormat!: Schema.BookFormatType;
+    bookFormat: Schema.BookFormatType | undefined;
     @property.resource()
-    illustrator!: Schema.Person;
+    illustrator: Schema.Person | undefined;
     @property.literal()
-    isbn!: string;
+    isbn: string | undefined;
     @property.literal({ type: Number })
-    numberOfPages!: number;
+    numberOfPages: number | undefined;
   }
   return BookClass
 }

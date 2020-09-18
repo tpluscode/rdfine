@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { AudienceMixin } from './Audience';
 
 export interface EducationalAudience extends Schema.Audience, RdfResource {
-  educationalRole: string;
+  educationalRole: string | undefined;
 }
 
 export function EducationalAudienceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class EducationalAudienceClass extends AudienceMixin(Resource) implements EducationalAudience {
     @property.literal()
-    educationalRole!: string;
+    educationalRole: string | undefined;
   }
   return EducationalAudienceClass
 }

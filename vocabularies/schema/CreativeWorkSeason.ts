@@ -8,44 +8,44 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface CreativeWorkSeason extends Schema.CreativeWork, RdfResource {
-  actor: Schema.Person;
-  director: Schema.Person;
-  endDate: Date;
-  episode: Schema.Episode;
-  episodes: Schema.Episode;
-  numberOfEpisodes: number;
-  partOfSeries: Schema.CreativeWorkSeries;
-  productionCompany: Schema.Organization;
-  seasonNumber: number | string;
-  startDate: Date;
-  trailer: Schema.VideoObject;
+  actor: Schema.Person | undefined;
+  director: Schema.Person | undefined;
+  endDate: Date | undefined;
+  episode: Schema.Episode | undefined;
+  episodes: Schema.Episode | undefined;
+  numberOfEpisodes: number | undefined;
+  partOfSeries: Schema.CreativeWorkSeries | undefined;
+  productionCompany: Schema.Organization | undefined;
+  seasonNumber: number | string | undefined;
+  startDate: Date | undefined;
+  trailer: Schema.VideoObject | undefined;
 }
 
 export function CreativeWorkSeasonMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CreativeWorkSeasonClass extends CreativeWorkMixin(Resource) implements CreativeWorkSeason {
     @property.resource()
-    actor!: Schema.Person;
+    actor: Schema.Person | undefined;
     @property.resource()
-    director!: Schema.Person;
+    director: Schema.Person | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    endDate!: Date;
+    endDate: Date | undefined;
     @property.resource()
-    episode!: Schema.Episode;
+    episode: Schema.Episode | undefined;
     @property.resource()
-    episodes!: Schema.Episode;
+    episodes: Schema.Episode | undefined;
     @property.literal({ type: Number })
-    numberOfEpisodes!: number;
+    numberOfEpisodes: number | undefined;
     @property.resource()
-    partOfSeries!: Schema.CreativeWorkSeries;
+    partOfSeries: Schema.CreativeWorkSeries | undefined;
     @property.resource()
-    productionCompany!: Schema.Organization;
+    productionCompany: Schema.Organization | undefined;
     @property.literal()
-    seasonNumber!: number | string;
+    seasonNumber: number | string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    startDate!: Date;
+    startDate: Date | undefined;
     @property.resource()
-    trailer!: Schema.VideoObject;
+    trailer: Schema.VideoObject | undefined;
   }
   return CreativeWorkSeasonClass
 }

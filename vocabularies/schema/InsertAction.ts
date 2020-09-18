@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { AddActionMixin } from './AddAction';
 
 export interface InsertAction extends Schema.AddAction, RdfResource {
-  toLocation: Schema.Place;
+  toLocation: Schema.Place | undefined;
 }
 
 export function InsertActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class InsertActionClass extends AddActionMixin(Resource) implements InsertAction {
     @property.resource()
-    toLocation!: Schema.Place;
+    toLocation: Schema.Place | undefined;
   }
   return InsertActionClass
 }

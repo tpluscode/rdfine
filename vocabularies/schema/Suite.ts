@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { AccommodationMixin } from './Accommodation';
 
 export interface Suite extends Schema.Accommodation, RdfResource {
-  bed: Schema.BedDetails;
-  bedLiteral: string;
-  numberOfRooms: Schema.QuantitativeValue;
-  numberOfRoomsLiteral: number;
-  occupancy: Schema.QuantitativeValue;
+  bed: Schema.BedDetails | undefined;
+  bedLiteral: string | undefined;
+  numberOfRooms: Schema.QuantitativeValue | undefined;
+  numberOfRoomsLiteral: number | undefined;
+  occupancy: Schema.QuantitativeValue | undefined;
 }
 
 export function SuiteMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class SuiteClass extends AccommodationMixin(Resource) implements Suite {
     @property.resource()
-    bed!: Schema.BedDetails;
+    bed: Schema.BedDetails | undefined;
     @property.literal({ path: schema.bed })
-    bedLiteral!: string;
+    bedLiteral: string | undefined;
     @property.resource()
-    numberOfRooms!: Schema.QuantitativeValue;
+    numberOfRooms: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.numberOfRooms, type: Number })
-    numberOfRoomsLiteral!: number;
+    numberOfRoomsLiteral: number | undefined;
     @property.resource()
-    occupancy!: Schema.QuantitativeValue;
+    occupancy: Schema.QuantitativeValue | undefined;
   }
   return SuiteClass
 }

@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { EventMixin } from './Event';
 
 export interface CourseInstance extends Schema.Event, RdfResource {
-  courseMode: string;
-  courseModeTerm: RDF.NamedNode;
-  instructor: Schema.Person;
+  courseMode: string | undefined;
+  courseModeTerm: RDF.NamedNode | undefined;
+  instructor: Schema.Person | undefined;
 }
 
 export function CourseInstanceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CourseInstanceClass extends EventMixin(Resource) implements CourseInstance {
     @property.literal()
-    courseMode!: string;
+    courseMode: string | undefined;
     @property({ path: schema.courseMode })
-    courseModeTerm!: RDF.NamedNode;
+    courseModeTerm: RDF.NamedNode | undefined;
     @property.resource()
-    instructor!: Schema.Person;
+    instructor: Schema.Person | undefined;
   }
   return CourseInstanceClass
 }

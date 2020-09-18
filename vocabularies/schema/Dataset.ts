@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Dataset extends Schema.CreativeWork, RdfResource {
-  catalog: Schema.DataCatalog;
-  datasetTimeInterval: Date;
-  distribution: Schema.DataDownload;
-  includedDataCatalog: Schema.DataCatalog;
-  includedInDataCatalog: Schema.DataCatalog;
-  issn: string;
+  catalog: Schema.DataCatalog | undefined;
+  datasetTimeInterval: Date | undefined;
+  distribution: Schema.DataDownload | undefined;
+  includedDataCatalog: Schema.DataCatalog | undefined;
+  includedInDataCatalog: Schema.DataCatalog | undefined;
+  issn: string | undefined;
 }
 
 export function DatasetMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DatasetClass extends CreativeWorkMixin(Resource) implements Dataset {
     @property.resource()
-    catalog!: Schema.DataCatalog;
+    catalog: Schema.DataCatalog | undefined;
     @property.literal({ type: Date })
-    datasetTimeInterval!: Date;
+    datasetTimeInterval: Date | undefined;
     @property.resource()
-    distribution!: Schema.DataDownload;
+    distribution: Schema.DataDownload | undefined;
     @property.resource()
-    includedDataCatalog!: Schema.DataCatalog;
+    includedDataCatalog: Schema.DataCatalog | undefined;
     @property.resource()
-    includedInDataCatalog!: Schema.DataCatalog;
+    includedInDataCatalog: Schema.DataCatalog | undefined;
     @property.literal()
-    issn!: string;
+    issn: string | undefined;
   }
   return DatasetClass
 }

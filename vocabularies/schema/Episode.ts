@@ -8,41 +8,41 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Episode extends Schema.CreativeWork, RdfResource {
-  actor: Schema.Person;
-  actors: Schema.Person;
-  director: Schema.Person;
-  directors: Schema.Person;
-  episodeNumber: number | string;
-  musicBy: Schema.MusicGroup | Schema.Person;
-  partOfSeason: Schema.CreativeWorkSeason;
-  partOfSeries: Schema.CreativeWorkSeries;
-  productionCompany: Schema.Organization;
-  trailer: Schema.VideoObject;
+  actor: Schema.Person | undefined;
+  actors: Schema.Person | undefined;
+  director: Schema.Person | undefined;
+  directors: Schema.Person | undefined;
+  episodeNumber: number | string | undefined;
+  musicBy: Schema.MusicGroup | Schema.Person | undefined;
+  partOfSeason: Schema.CreativeWorkSeason | undefined;
+  partOfSeries: Schema.CreativeWorkSeries | undefined;
+  productionCompany: Schema.Organization | undefined;
+  trailer: Schema.VideoObject | undefined;
 }
 
 export function EpisodeMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class EpisodeClass extends CreativeWorkMixin(Resource) implements Episode {
     @property.resource()
-    actor!: Schema.Person;
+    actor: Schema.Person | undefined;
     @property.resource()
-    actors!: Schema.Person;
+    actors: Schema.Person | undefined;
     @property.resource()
-    director!: Schema.Person;
+    director: Schema.Person | undefined;
     @property.resource()
-    directors!: Schema.Person;
+    directors: Schema.Person | undefined;
     @property.literal()
-    episodeNumber!: number | string;
+    episodeNumber: number | string | undefined;
     @property.resource()
-    musicBy!: Schema.MusicGroup | Schema.Person;
+    musicBy: Schema.MusicGroup | Schema.Person | undefined;
     @property.resource()
-    partOfSeason!: Schema.CreativeWorkSeason;
+    partOfSeason: Schema.CreativeWorkSeason | undefined;
     @property.resource()
-    partOfSeries!: Schema.CreativeWorkSeries;
+    partOfSeries: Schema.CreativeWorkSeries | undefined;
     @property.resource()
-    productionCompany!: Schema.Organization;
+    productionCompany: Schema.Organization | undefined;
     @property.resource()
-    trailer!: Schema.VideoObject;
+    trailer: Schema.VideoObject | undefined;
   }
   return EpisodeClass
 }

@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { OrganizationMixin } from './Organization';
 
 export interface Corporation extends Schema.Organization, RdfResource {
-  tickerSymbol: string;
+  tickerSymbol: string | undefined;
 }
 
 export function CorporationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CorporationClass extends OrganizationMixin(Resource) implements Corporation {
     @property.literal()
-    tickerSymbol!: string;
+    tickerSymbol: string | undefined;
   }
   return CorporationClass
 }

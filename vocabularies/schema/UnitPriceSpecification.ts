@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { PriceSpecificationMixin } from './PriceSpecification';
 
 export interface UnitPriceSpecification extends Schema.PriceSpecification, RdfResource {
-  billingIncrement: number;
-  priceType: string;
-  referenceQuantity: Schema.QuantitativeValue;
-  unitCode: string;
-  unitCodeTerm: RDF.NamedNode;
-  unitText: string;
+  billingIncrement: number | undefined;
+  priceType: string | undefined;
+  referenceQuantity: Schema.QuantitativeValue | undefined;
+  unitCode: string | undefined;
+  unitCodeTerm: RDF.NamedNode | undefined;
+  unitText: string | undefined;
 }
 
 export function UnitPriceSpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class UnitPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements UnitPriceSpecification {
     @property.literal({ type: Number })
-    billingIncrement!: number;
+    billingIncrement: number | undefined;
     @property.literal()
-    priceType!: string;
+    priceType: string | undefined;
     @property.resource()
-    referenceQuantity!: Schema.QuantitativeValue;
+    referenceQuantity: Schema.QuantitativeValue | undefined;
     @property.literal()
-    unitCode!: string;
+    unitCode: string | undefined;
     @property({ path: schema.unitCode })
-    unitCodeTerm!: RDF.NamedNode;
+    unitCodeTerm: RDF.NamedNode | undefined;
     @property.literal()
-    unitText!: string;
+    unitText: string | undefined;
   }
   return UnitPriceSpecificationClass
 }

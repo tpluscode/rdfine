@@ -8,26 +8,26 @@ import type * as Schema from '.';
 import { ReservationMixin } from './Reservation';
 
 export interface FlightReservation extends Schema.Reservation, RdfResource {
-  boardingGroup: string;
-  passengerPriorityStatus: string;
-  passengerPriorityStatusTerm: Schema.QualitativeValue;
-  passengerSequenceNumber: string;
-  securityScreening: string;
+  boardingGroup: string | undefined;
+  passengerPriorityStatus: string | undefined;
+  passengerPriorityStatusTerm: Schema.QualitativeValue | undefined;
+  passengerSequenceNumber: string | undefined;
+  securityScreening: string | undefined;
 }
 
 export function FlightReservationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class FlightReservationClass extends ReservationMixin(Resource) implements FlightReservation {
     @property.literal()
-    boardingGroup!: string;
+    boardingGroup: string | undefined;
     @property.literal()
-    passengerPriorityStatus!: string;
+    passengerPriorityStatus: string | undefined;
     @property({ path: schema.passengerPriorityStatus })
-    passengerPriorityStatusTerm!: Schema.QualitativeValue;
+    passengerPriorityStatusTerm: Schema.QualitativeValue | undefined;
     @property.literal()
-    passengerSequenceNumber!: string;
+    passengerSequenceNumber: string | undefined;
     @property.literal()
-    securityScreening!: string;
+    securityScreening: string | undefined;
   }
   return FlightReservationClass
 }

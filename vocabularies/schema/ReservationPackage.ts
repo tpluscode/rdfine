@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { ReservationMixin } from './Reservation';
 
 export interface ReservationPackage extends Schema.Reservation, RdfResource {
-  subReservation: Schema.Reservation;
+  subReservation: Schema.Reservation | undefined;
 }
 
 export function ReservationPackageMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ReservationPackageClass extends ReservationMixin(Resource) implements ReservationPackage {
     @property.resource()
-    subReservation!: Schema.Reservation;
+    subReservation: Schema.Reservation | undefined;
   }
   return ReservationPackageClass
 }

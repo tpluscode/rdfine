@@ -8,41 +8,41 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface MusicComposition extends Schema.CreativeWork, RdfResource {
-  composer: Schema.Organization | Schema.Person;
-  firstPerformance: Schema.Event;
-  includedComposition: Schema.MusicComposition;
-  iswcCode: string;
-  lyricist: Schema.Person;
-  lyrics: Schema.CreativeWork;
-  musicalKey: string;
-  musicArrangement: Schema.MusicComposition;
-  musicCompositionForm: string;
-  recordedAs: Schema.MusicRecording;
+  composer: Schema.Organization | Schema.Person | undefined;
+  firstPerformance: Schema.Event | undefined;
+  includedComposition: Schema.MusicComposition | undefined;
+  iswcCode: string | undefined;
+  lyricist: Schema.Person | undefined;
+  lyrics: Schema.CreativeWork | undefined;
+  musicalKey: string | undefined;
+  musicArrangement: Schema.MusicComposition | undefined;
+  musicCompositionForm: string | undefined;
+  recordedAs: Schema.MusicRecording | undefined;
 }
 
 export function MusicCompositionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MusicCompositionClass extends CreativeWorkMixin(Resource) implements MusicComposition {
     @property.resource()
-    composer!: Schema.Organization | Schema.Person;
+    composer: Schema.Organization | Schema.Person | undefined;
     @property.resource()
-    firstPerformance!: Schema.Event;
+    firstPerformance: Schema.Event | undefined;
     @property.resource()
-    includedComposition!: Schema.MusicComposition;
+    includedComposition: Schema.MusicComposition | undefined;
     @property.literal()
-    iswcCode!: string;
+    iswcCode: string | undefined;
     @property.resource()
-    lyricist!: Schema.Person;
+    lyricist: Schema.Person | undefined;
     @property.resource()
-    lyrics!: Schema.CreativeWork;
+    lyrics: Schema.CreativeWork | undefined;
     @property.literal()
-    musicalKey!: string;
+    musicalKey: string | undefined;
     @property.resource()
-    musicArrangement!: Schema.MusicComposition;
+    musicArrangement: Schema.MusicComposition | undefined;
     @property.literal()
-    musicCompositionForm!: string;
+    musicCompositionForm: string | undefined;
     @property.resource()
-    recordedAs!: Schema.MusicRecording;
+    recordedAs: Schema.MusicRecording | undefined;
   }
   return MusicCompositionClass
 }

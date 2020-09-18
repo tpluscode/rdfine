@@ -8,44 +8,44 @@ import type * as Schema from '.';
 import { MediaObjectMixin } from './MediaObject';
 
 export interface VideoObject extends Schema.MediaObject, RdfResource {
-  actor: Schema.Person;
-  actors: Schema.Person;
-  caption: Schema.MediaObject;
-  captionLiteral: string;
-  director: Schema.Person;
-  directors: Schema.Person;
-  musicBy: Schema.MusicGroup | Schema.Person;
-  thumbnail: Schema.ImageObject;
-  transcript: string;
-  videoFrameSize: string;
-  videoQuality: string;
+  actor: Schema.Person | undefined;
+  actors: Schema.Person | undefined;
+  caption: Schema.MediaObject | undefined;
+  captionLiteral: string | undefined;
+  director: Schema.Person | undefined;
+  directors: Schema.Person | undefined;
+  musicBy: Schema.MusicGroup | Schema.Person | undefined;
+  thumbnail: Schema.ImageObject | undefined;
+  transcript: string | undefined;
+  videoFrameSize: string | undefined;
+  videoQuality: string | undefined;
 }
 
 export function VideoObjectMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class VideoObjectClass extends MediaObjectMixin(Resource) implements VideoObject {
     @property.resource()
-    actor!: Schema.Person;
+    actor: Schema.Person | undefined;
     @property.resource()
-    actors!: Schema.Person;
+    actors: Schema.Person | undefined;
     @property.resource()
-    caption!: Schema.MediaObject;
+    caption: Schema.MediaObject | undefined;
     @property.literal({ path: schema.caption })
-    captionLiteral!: string;
+    captionLiteral: string | undefined;
     @property.resource()
-    director!: Schema.Person;
+    director: Schema.Person | undefined;
     @property.resource()
-    directors!: Schema.Person;
+    directors: Schema.Person | undefined;
     @property.resource()
-    musicBy!: Schema.MusicGroup | Schema.Person;
+    musicBy: Schema.MusicGroup | Schema.Person | undefined;
     @property.resource()
-    thumbnail!: Schema.ImageObject;
+    thumbnail: Schema.ImageObject | undefined;
     @property.literal()
-    transcript!: string;
+    transcript: string | undefined;
     @property.literal()
-    videoFrameSize!: string;
+    videoFrameSize: string | undefined;
     @property.literal()
-    videoQuality!: string;
+    videoQuality: string | undefined;
   }
   return VideoObjectClass
 }

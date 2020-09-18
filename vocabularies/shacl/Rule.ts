@@ -8,14 +8,14 @@ import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
 export interface Rule extends Rdfs.Resource, RdfResource {
-  condition: Sh.Shape;
+  condition: Sh.Shape | undefined;
 }
 
 export function RuleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class RuleClass extends Rdfs.ResourceMixin(Resource) implements Rule {
     @property.resource({ implicitTypes: [sh.Shape] })
-    condition!: Sh.Shape;
+    condition: Sh.Shape | undefined;
   }
   return RuleClass
 }

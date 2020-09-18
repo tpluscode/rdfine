@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface DataFeedItem extends Schema.Intangible, RdfResource {
-  dateCreated: Date;
-  dateDeleted: Date;
-  dateModified: Date;
-  item: Schema.Thing;
+  dateCreated: Date | undefined;
+  dateDeleted: Date | undefined;
+  dateModified: Date | undefined;
+  item: Schema.Thing | undefined;
 }
 
 export function DataFeedItemMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class DataFeedItemClass extends IntangibleMixin(Resource) implements DataFeedItem {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    dateCreated!: Date;
+    dateCreated: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    dateDeleted!: Date;
+    dateDeleted: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    dateModified!: Date;
+    dateModified: Date | undefined;
     @property.resource()
-    item!: Schema.Thing;
+    item: Schema.Thing | undefined;
   }
   return DataFeedItemClass
 }

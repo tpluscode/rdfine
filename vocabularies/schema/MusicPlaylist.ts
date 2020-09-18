@@ -8,20 +8,20 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface MusicPlaylist extends Schema.CreativeWork, RdfResource {
-  numTracks: number;
-  track: Schema.ItemList | Schema.MusicRecording;
-  tracks: Schema.MusicRecording;
+  numTracks: number | undefined;
+  track: Schema.ItemList | Schema.MusicRecording | undefined;
+  tracks: Schema.MusicRecording | undefined;
 }
 
 export function MusicPlaylistMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MusicPlaylistClass extends CreativeWorkMixin(Resource) implements MusicPlaylist {
     @property.literal({ type: Number })
-    numTracks!: number;
+    numTracks: number | undefined;
     @property.resource()
-    track!: Schema.ItemList | Schema.MusicRecording;
+    track: Schema.ItemList | Schema.MusicRecording | undefined;
     @property.resource()
-    tracks!: Schema.MusicRecording;
+    tracks: Schema.MusicRecording | undefined;
   }
   return MusicPlaylistClass
 }

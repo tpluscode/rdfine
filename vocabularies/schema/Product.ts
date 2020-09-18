@@ -8,125 +8,125 @@ import type * as Schema from '.';
 import { ThingMixin } from './Thing';
 
 export interface Product extends Schema.Thing, RdfResource {
-  additionalProperty: Schema.PropertyValue;
-  aggregateRating: Schema.AggregateRating;
-  audience: Schema.Audience;
-  award: string;
-  awards: string;
-  brand: Schema.Brand | Schema.Organization;
-  category: Schema.Thing;
-  categoryLiteral: string;
-  color: string;
-  depth: Schema.Distance | Schema.QuantitativeValue;
-  gtin12: string;
-  gtin13: string;
-  gtin14: string;
-  gtin8: string;
-  height: Schema.Distance | Schema.QuantitativeValue;
-  isAccessoryOrSparePartFor: Schema.Product;
-  isConsumableFor: Schema.Product;
-  isRelatedTo: Schema.Product | Schema.Service;
-  isSimilarTo: Schema.Product | Schema.Service;
-  itemCondition: Schema.OfferItemCondition;
-  logo: Schema.ImageObject;
-  manufacturer: Schema.Organization;
-  material: Schema.Product;
-  materialLiteral: string;
-  model: Schema.ProductModel;
-  modelLiteral: string;
-  mpn: string;
-  offers: Schema.Demand | Schema.Offer;
-  productID: string;
-  productionDate: Date;
-  purchaseDate: Date;
-  releaseDate: Date;
-  review: Schema.Review;
-  reviews: Schema.Review;
-  sku: string;
-  slogan: string;
-  weight: Schema.QuantitativeValue;
-  width: Schema.Distance | Schema.QuantitativeValue;
+  additionalProperty: Schema.PropertyValue | undefined;
+  aggregateRating: Schema.AggregateRating | undefined;
+  audience: Schema.Audience | undefined;
+  award: string | undefined;
+  awards: string | undefined;
+  brand: Schema.Brand | Schema.Organization | undefined;
+  category: Schema.Thing | undefined;
+  categoryLiteral: string | undefined;
+  color: string | undefined;
+  depth: Schema.Distance | Schema.QuantitativeValue | undefined;
+  gtin12: string | undefined;
+  gtin13: string | undefined;
+  gtin14: string | undefined;
+  gtin8: string | undefined;
+  height: Schema.Distance | Schema.QuantitativeValue | undefined;
+  isAccessoryOrSparePartFor: Schema.Product | undefined;
+  isConsumableFor: Schema.Product | undefined;
+  isRelatedTo: Schema.Product | Schema.Service | undefined;
+  isSimilarTo: Schema.Product | Schema.Service | undefined;
+  itemCondition: Schema.OfferItemCondition | undefined;
+  logo: Schema.ImageObject | undefined;
+  manufacturer: Schema.Organization | undefined;
+  material: Schema.Product | undefined;
+  materialLiteral: string | undefined;
+  model: Schema.ProductModel | undefined;
+  modelLiteral: string | undefined;
+  mpn: string | undefined;
+  offers: Schema.Demand | Schema.Offer | undefined;
+  productID: string | undefined;
+  productionDate: Date | undefined;
+  purchaseDate: Date | undefined;
+  releaseDate: Date | undefined;
+  review: Schema.Review | undefined;
+  reviews: Schema.Review | undefined;
+  sku: string | undefined;
+  slogan: string | undefined;
+  weight: Schema.QuantitativeValue | undefined;
+  width: Schema.Distance | Schema.QuantitativeValue | undefined;
 }
 
 export function ProductMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ProductClass extends ThingMixin(Resource) implements Product {
     @property.resource()
-    additionalProperty!: Schema.PropertyValue;
+    additionalProperty: Schema.PropertyValue | undefined;
     @property.resource()
-    aggregateRating!: Schema.AggregateRating;
+    aggregateRating: Schema.AggregateRating | undefined;
     @property.resource()
-    audience!: Schema.Audience;
+    audience: Schema.Audience | undefined;
     @property.literal()
-    award!: string;
+    award: string | undefined;
     @property.literal()
-    awards!: string;
+    awards: string | undefined;
     @property.resource()
-    brand!: Schema.Brand | Schema.Organization;
+    brand: Schema.Brand | Schema.Organization | undefined;
     @property.resource()
-    category!: Schema.Thing;
+    category: Schema.Thing | undefined;
     @property.literal({ path: schema.category })
-    categoryLiteral!: string;
+    categoryLiteral: string | undefined;
     @property.literal()
-    color!: string;
+    color: string | undefined;
     @property.resource()
-    depth!: Schema.Distance | Schema.QuantitativeValue;
+    depth: Schema.Distance | Schema.QuantitativeValue | undefined;
     @property.literal()
-    gtin12!: string;
+    gtin12: string | undefined;
     @property.literal()
-    gtin13!: string;
+    gtin13: string | undefined;
     @property.literal()
-    gtin14!: string;
+    gtin14: string | undefined;
     @property.literal()
-    gtin8!: string;
+    gtin8: string | undefined;
     @property.resource()
-    height!: Schema.Distance | Schema.QuantitativeValue;
+    height: Schema.Distance | Schema.QuantitativeValue | undefined;
     @property.resource()
-    isAccessoryOrSparePartFor!: Schema.Product;
+    isAccessoryOrSparePartFor: Schema.Product | undefined;
     @property.resource()
-    isConsumableFor!: Schema.Product;
+    isConsumableFor: Schema.Product | undefined;
     @property.resource()
-    isRelatedTo!: Schema.Product | Schema.Service;
+    isRelatedTo: Schema.Product | Schema.Service | undefined;
     @property.resource()
-    isSimilarTo!: Schema.Product | Schema.Service;
+    isSimilarTo: Schema.Product | Schema.Service | undefined;
     @property()
-    itemCondition!: Schema.OfferItemCondition;
+    itemCondition: Schema.OfferItemCondition | undefined;
     @property.resource()
-    logo!: Schema.ImageObject;
+    logo: Schema.ImageObject | undefined;
     @property.resource()
-    manufacturer!: Schema.Organization;
+    manufacturer: Schema.Organization | undefined;
     @property.resource()
-    material!: Schema.Product;
+    material: Schema.Product | undefined;
     @property.literal({ path: schema.material })
-    materialLiteral!: string;
+    materialLiteral: string | undefined;
     @property.resource()
-    model!: Schema.ProductModel;
+    model: Schema.ProductModel | undefined;
     @property.literal({ path: schema.model })
-    modelLiteral!: string;
+    modelLiteral: string | undefined;
     @property.literal()
-    mpn!: string;
+    mpn: string | undefined;
     @property.resource()
-    offers!: Schema.Demand | Schema.Offer;
+    offers: Schema.Demand | Schema.Offer | undefined;
     @property.literal()
-    productID!: string;
+    productID: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    productionDate!: Date;
+    productionDate: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    purchaseDate!: Date;
+    purchaseDate: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    releaseDate!: Date;
+    releaseDate: Date | undefined;
     @property.resource()
-    review!: Schema.Review;
+    review: Schema.Review | undefined;
     @property.resource()
-    reviews!: Schema.Review;
+    reviews: Schema.Review | undefined;
     @property.literal()
-    sku!: string;
+    sku: string | undefined;
     @property.literal()
-    slogan!: string;
+    slogan: string | undefined;
     @property.resource()
-    weight!: Schema.QuantitativeValue;
+    weight: Schema.QuantitativeValue | undefined;
     @property.resource()
-    width!: Schema.Distance | Schema.QuantitativeValue;
+    width: Schema.Distance | Schema.QuantitativeValue | undefined;
   }
   return ProductClass
 }

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -8,23 +9,23 @@ import * as Rdfs from '@rdfine/rdfs';
 import * as Rdf from '@rdfine/rdf';
 
 export interface Class extends Rdfs.Class, RdfResource {
-  complementOf: Owl.Class;
-  disjointUnionOf: Rdf.List;
-  disjointWith: Owl.Class;
-  hasKey: Rdf.List;
+  complementOf: Owl.Class | undefined;
+  disjointUnionOf: Rdf.List | undefined;
+  disjointWith: Owl.Class | undefined;
+  hasKey: Rdf.List | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
   @namespace(owl)
   class ClassClass extends Rdfs.ClassMixin(Resource) implements Class {
     @property.resource({ as: [ClassMixin] })
-    complementOf!: Owl.Class;
+    complementOf: Owl.Class | undefined;
     @property.resource({ as: [Rdf.ListMixin] })
-    disjointUnionOf!: Rdf.List;
+    disjointUnionOf: Rdf.List | undefined;
     @property.resource({ as: [ClassMixin] })
-    disjointWith!: Owl.Class;
+    disjointWith: Owl.Class | undefined;
     @property.resource({ as: [Rdf.ListMixin] })
-    hasKey!: Rdf.List;
+    hasKey: Rdf.List | undefined;
   }
   return ClassClass
 }

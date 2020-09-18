@@ -8,29 +8,29 @@ import type * as Schema from '.';
 import { PlaceMixin } from './Place';
 
 export interface Accommodation extends Schema.Place, RdfResource {
-  amenityFeature: Schema.LocationFeatureSpecification;
-  floorSize: Schema.QuantitativeValue;
-  numberOfRooms: Schema.QuantitativeValue;
-  numberOfRoomsLiteral: number;
-  permittedUsage: string;
-  petsAllowed: boolean | string;
+  amenityFeature: Schema.LocationFeatureSpecification | undefined;
+  floorSize: Schema.QuantitativeValue | undefined;
+  numberOfRooms: Schema.QuantitativeValue | undefined;
+  numberOfRoomsLiteral: number | undefined;
+  permittedUsage: string | undefined;
+  petsAllowed: boolean | string | undefined;
 }
 
 export function AccommodationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class AccommodationClass extends PlaceMixin(Resource) implements Accommodation {
     @property.resource()
-    amenityFeature!: Schema.LocationFeatureSpecification;
+    amenityFeature: Schema.LocationFeatureSpecification | undefined;
     @property.resource()
-    floorSize!: Schema.QuantitativeValue;
+    floorSize: Schema.QuantitativeValue | undefined;
     @property.resource()
-    numberOfRooms!: Schema.QuantitativeValue;
+    numberOfRooms: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.numberOfRooms, type: Number })
-    numberOfRoomsLiteral!: number;
+    numberOfRoomsLiteral: number | undefined;
     @property.literal()
-    permittedUsage!: string;
+    permittedUsage: string | undefined;
     @property.literal()
-    petsAllowed!: boolean | string;
+    petsAllowed: boolean | string | undefined;
   }
   return AccommodationClass
 }

@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Map extends Schema.CreativeWork, RdfResource {
-  mapType: Schema.MapCategoryType;
+  mapType: Schema.MapCategoryType | undefined;
 }
 
 export function MapMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MapClass extends CreativeWorkMixin(Resource) implements Map {
     @property()
-    mapType!: Schema.MapCategoryType;
+    mapType: Schema.MapCategoryType | undefined;
   }
   return MapClass
 }

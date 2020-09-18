@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
@@ -6,26 +7,26 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '.';
 
 export interface Transformation extends RdfResource {
-  scriptFormat: string;
-  source: string;
-  targetFormat: string;
-  title: RDF.Term;
-  url: string;
+  scriptFormat: string | undefined;
+  source: string | undefined;
+  targetFormat: string | undefined;
+  title: RDF.Term | undefined;
+  url: string | undefined;
 }
 
 export function TransformationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(csvw)
   class TransformationClass extends Resource implements Transformation {
     @property.literal()
-    scriptFormat!: string;
+    scriptFormat: string | undefined;
     @property.literal()
-    source!: string;
+    source: string | undefined;
     @property.literal()
-    targetFormat!: string;
+    targetFormat: string | undefined;
     @property()
-    title!: RDF.Term;
+    title: RDF.Term | undefined;
     @property.literal()
-    url!: string;
+    url: string | undefined;
   }
   return TransformationClass
 }

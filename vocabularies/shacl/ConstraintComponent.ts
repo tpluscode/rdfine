@@ -8,20 +8,20 @@ import type * as Sh from '.';
 import { ParameterizableMixin } from './Parameterizable';
 
 export interface ConstraintComponent extends Sh.Parameterizable, RdfResource {
-  nodeValidator: Sh.Validator;
-  propertyValidator: Sh.Validator;
-  validator: Sh.Validator;
+  nodeValidator: Sh.Validator | undefined;
+  propertyValidator: Sh.Validator | undefined;
+  validator: Sh.Validator | undefined;
 }
 
 export function ConstraintComponentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class ConstraintComponentClass extends ParameterizableMixin(Resource) implements ConstraintComponent {
     @property.resource({ implicitTypes: [sh.Validator] })
-    nodeValidator!: Sh.Validator;
+    nodeValidator: Sh.Validator | undefined;
     @property.resource({ implicitTypes: [sh.Validator] })
-    propertyValidator!: Sh.Validator;
+    propertyValidator: Sh.Validator | undefined;
     @property.resource({ implicitTypes: [sh.Validator] })
-    validator!: Sh.Validator;
+    validator: Sh.Validator | undefined;
   }
   return ConstraintComponentClass
 }

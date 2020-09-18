@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { CommunicateActionMixin } from './CommunicateAction';
 
 export interface ReplyAction extends Schema.CommunicateAction, RdfResource {
-  resultComment: Schema.Comment;
+  resultComment: Schema.Comment | undefined;
 }
 
 export function ReplyActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ReplyActionClass extends CommunicateActionMixin(Resource) implements ReplyAction {
     @property.resource()
-    resultComment!: Schema.Comment;
+    resultComment: Schema.Comment | undefined;
   }
   return ReplyActionClass
 }

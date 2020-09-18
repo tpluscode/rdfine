@@ -8,47 +8,47 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface ParcelDelivery extends Schema.Intangible, RdfResource {
-  carrier: Schema.Organization;
-  deliveryAddress: Schema.PostalAddress;
-  deliveryStatus: Schema.DeliveryEvent;
-  expectedArrivalFrom: Date;
-  expectedArrivalUntil: Date;
-  hasDeliveryMethod: Schema.DeliveryMethod;
-  itemShipped: Schema.Product;
-  originAddress: Schema.PostalAddress;
-  partOfOrder: Schema.Order;
-  provider: Schema.Organization | Schema.Person;
-  trackingNumber: string;
-  trackingUrl: RDF.NamedNode;
+  carrier: Schema.Organization | undefined;
+  deliveryAddress: Schema.PostalAddress | undefined;
+  deliveryStatus: Schema.DeliveryEvent | undefined;
+  expectedArrivalFrom: Date | undefined;
+  expectedArrivalUntil: Date | undefined;
+  hasDeliveryMethod: Schema.DeliveryMethod | undefined;
+  itemShipped: Schema.Product | undefined;
+  originAddress: Schema.PostalAddress | undefined;
+  partOfOrder: Schema.Order | undefined;
+  provider: Schema.Organization | Schema.Person | undefined;
+  trackingNumber: string | undefined;
+  trackingUrl: RDF.NamedNode | undefined;
 }
 
 export function ParcelDeliveryMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ParcelDeliveryClass extends IntangibleMixin(Resource) implements ParcelDelivery {
     @property.resource()
-    carrier!: Schema.Organization;
+    carrier: Schema.Organization | undefined;
     @property.resource()
-    deliveryAddress!: Schema.PostalAddress;
+    deliveryAddress: Schema.PostalAddress | undefined;
     @property.resource()
-    deliveryStatus!: Schema.DeliveryEvent;
+    deliveryStatus: Schema.DeliveryEvent | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    expectedArrivalFrom!: Date;
+    expectedArrivalFrom: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    expectedArrivalUntil!: Date;
+    expectedArrivalUntil: Date | undefined;
     @property()
-    hasDeliveryMethod!: Schema.DeliveryMethod;
+    hasDeliveryMethod: Schema.DeliveryMethod | undefined;
     @property.resource()
-    itemShipped!: Schema.Product;
+    itemShipped: Schema.Product | undefined;
     @property.resource()
-    originAddress!: Schema.PostalAddress;
+    originAddress: Schema.PostalAddress | undefined;
     @property.resource()
-    partOfOrder!: Schema.Order;
+    partOfOrder: Schema.Order | undefined;
     @property.resource()
-    provider!: Schema.Organization | Schema.Person;
+    provider: Schema.Organization | Schema.Person | undefined;
     @property.literal()
-    trackingNumber!: string;
+    trackingNumber: string | undefined;
     @property()
-    trackingUrl!: RDF.NamedNode;
+    trackingUrl: RDF.NamedNode | undefined;
   }
   return ParcelDeliveryClass
 }

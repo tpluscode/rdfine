@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { ChooseActionMixin } from './ChooseAction';
 
 export interface VoteAction extends Schema.ChooseAction, RdfResource {
-  candidate: Schema.Person;
+  candidate: Schema.Person | undefined;
 }
 
 export function VoteActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class VoteActionClass extends ChooseActionMixin(Resource) implements VoteAction {
     @property.resource()
-    candidate!: Schema.Person;
+    candidate: Schema.Person | undefined;
   }
   return VoteActionClass
 }

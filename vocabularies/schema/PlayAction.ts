@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { ActionMixin } from './Action';
 
 export interface PlayAction extends Schema.Action, RdfResource {
-  audience: Schema.Audience;
-  event: Schema.Event;
+  audience: Schema.Audience | undefined;
+  event: Schema.Event | undefined;
 }
 
 export function PlayActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PlayActionClass extends ActionMixin(Resource) implements PlayAction {
     @property.resource()
-    audience!: Schema.Audience;
+    audience: Schema.Audience | undefined;
     @property.resource()
-    event!: Schema.Event;
+    event: Schema.Event | undefined;
   }
   return PlayActionClass
 }

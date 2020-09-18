@@ -8,44 +8,44 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface WebPage extends Schema.CreativeWork, RdfResource {
-  breadcrumb: Schema.BreadcrumbList;
-  breadcrumbLiteral: string;
-  lastReviewed: Date;
-  mainContentOfPage: Schema.WebPageElement;
-  primaryImageOfPage: Schema.ImageObject;
-  relatedLink: RDF.NamedNode;
-  reviewedBy: Schema.Organization | Schema.Person;
-  significantLink: RDF.NamedNode;
-  significantLinks: RDF.NamedNode;
-  speakable: Schema.SpeakableSpecification;
-  specialty: Schema.Specialty;
+  breadcrumb: Schema.BreadcrumbList | undefined;
+  breadcrumbLiteral: string | undefined;
+  lastReviewed: Date | undefined;
+  mainContentOfPage: Schema.WebPageElement | undefined;
+  primaryImageOfPage: Schema.ImageObject | undefined;
+  relatedLink: RDF.NamedNode | undefined;
+  reviewedBy: Schema.Organization | Schema.Person | undefined;
+  significantLink: RDF.NamedNode | undefined;
+  significantLinks: RDF.NamedNode | undefined;
+  speakable: Schema.SpeakableSpecification | undefined;
+  specialty: Schema.Specialty | undefined;
 }
 
 export function WebPageMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WebPageClass extends CreativeWorkMixin(Resource) implements WebPage {
     @property.resource()
-    breadcrumb!: Schema.BreadcrumbList;
+    breadcrumb: Schema.BreadcrumbList | undefined;
     @property.literal({ path: schema.breadcrumb })
-    breadcrumbLiteral!: string;
+    breadcrumbLiteral: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
-    lastReviewed!: Date;
+    lastReviewed: Date | undefined;
     @property.resource()
-    mainContentOfPage!: Schema.WebPageElement;
+    mainContentOfPage: Schema.WebPageElement | undefined;
     @property.resource()
-    primaryImageOfPage!: Schema.ImageObject;
+    primaryImageOfPage: Schema.ImageObject | undefined;
     @property()
-    relatedLink!: RDF.NamedNode;
+    relatedLink: RDF.NamedNode | undefined;
     @property.resource()
-    reviewedBy!: Schema.Organization | Schema.Person;
+    reviewedBy: Schema.Organization | Schema.Person | undefined;
     @property()
-    significantLink!: RDF.NamedNode;
+    significantLink: RDF.NamedNode | undefined;
     @property()
-    significantLinks!: RDF.NamedNode;
+    significantLinks: RDF.NamedNode | undefined;
     @property.resource()
-    speakable!: Schema.SpeakableSpecification;
+    speakable: Schema.SpeakableSpecification | undefined;
     @property()
-    specialty!: Schema.Specialty;
+    specialty: Schema.Specialty | undefined;
   }
   return WebPageClass
 }

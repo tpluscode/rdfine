@@ -9,14 +9,14 @@ import * as Rdfs from '@rdfine/rdfs';
 import { ParameterizableMixin } from './Parameterizable';
 
 export interface Function extends Sh.Parameterizable, RdfResource {
-  returnType: Rdfs.Class;
+  returnType: Rdfs.Class | undefined;
 }
 
 export function FunctionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class FunctionClass extends ParameterizableMixin(Resource) implements Function {
     @property.resource({ as: [Rdfs.ClassMixin] })
-    returnType!: Rdfs.Class;
+    returnType: Rdfs.Class | undefined;
   }
   return FunctionClass
 }

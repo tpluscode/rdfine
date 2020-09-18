@@ -9,32 +9,32 @@ import * as Rdf from '@rdfine/rdf';
 import { ResourceMixin } from './Resource';
 
 export interface SupportedProperty extends Hydra.Resource, RdfResource {
-  description: string;
-  property: Rdf.Property;
-  readable: boolean;
-  required: boolean;
+  description: string | undefined;
+  property: Rdf.Property | undefined;
+  readable: boolean | undefined;
+  required: boolean | undefined;
   supportedOperation: Array<Hydra.Operation>;
-  title: string;
-  writeable: boolean;
+  title: string | undefined;
+  writeable: boolean | undefined;
 }
 
 export function SupportedPropertyMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class SupportedPropertyClass extends ResourceMixin(Resource) implements SupportedProperty {
     @property.literal()
-    description!: string;
+    description: string | undefined;
     @property.resource({ as: [Rdf.PropertyMixin] })
-    property!: Rdf.Property;
+    property: Rdf.Property | undefined;
     @property.literal({ type: Boolean })
-    readable!: boolean;
+    readable: boolean | undefined;
     @property.literal({ type: Boolean })
-    required!: boolean;
+    required: boolean | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
     supportedOperation!: Array<Hydra.Operation>;
     @property.literal()
-    title!: string;
+    title: string | undefined;
     @property.literal({ type: Boolean })
-    writeable!: boolean;
+    writeable: boolean | undefined;
   }
   return SupportedPropertyClass
 }

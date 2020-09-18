@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface BroadcastFrequencySpecification extends Schema.Intangible, RdfResource {
-  broadcastFrequencyValue: Schema.QuantitativeValue;
-  broadcastFrequencyValueLiteral: number;
+  broadcastFrequencyValue: Schema.QuantitativeValue | undefined;
+  broadcastFrequencyValueLiteral: number | undefined;
 }
 
 export function BroadcastFrequencySpecificationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BroadcastFrequencySpecificationClass extends IntangibleMixin(Resource) implements BroadcastFrequencySpecification {
     @property.resource()
-    broadcastFrequencyValue!: Schema.QuantitativeValue;
+    broadcastFrequencyValue: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.broadcastFrequencyValue, type: Number })
-    broadcastFrequencyValueLiteral!: number;
+    broadcastFrequencyValueLiteral: number | undefined;
   }
   return BroadcastFrequencySpecificationClass
 }

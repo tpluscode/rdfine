@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface WebPageElement extends Schema.CreativeWork, RdfResource {
-  cssSelector: string;
-  xpath: string;
+  cssSelector: string | undefined;
+  xpath: string | undefined;
 }
 
 export function WebPageElementMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class WebPageElementClass extends CreativeWorkMixin(Resource) implements WebPageElement {
     @property.literal()
-    cssSelector!: string;
+    cssSelector: string | undefined;
     @property.literal()
-    xpath!: string;
+    xpath: string | undefined;
   }
   return WebPageElementClass
 }

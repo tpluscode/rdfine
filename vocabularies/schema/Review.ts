@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Review extends Schema.CreativeWork, RdfResource {
-  itemReviewed: Schema.Thing;
-  reviewAspect: string;
-  reviewBody: string;
-  reviewRating: Schema.Rating;
+  itemReviewed: Schema.Thing | undefined;
+  reviewAspect: string | undefined;
+  reviewBody: string | undefined;
+  reviewRating: Schema.Rating | undefined;
 }
 
 export function ReviewMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ReviewClass extends CreativeWorkMixin(Resource) implements Review {
     @property.resource()
-    itemReviewed!: Schema.Thing;
+    itemReviewed: Schema.Thing | undefined;
     @property.literal()
-    reviewAspect!: string;
+    reviewAspect: string | undefined;
     @property.literal()
-    reviewBody!: string;
+    reviewBody: string | undefined;
     @property.resource()
-    reviewRating!: Schema.Rating;
+    reviewRating: Schema.Rating | undefined;
   }
   return ReviewClass
 }

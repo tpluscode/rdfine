@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { RoleMixin } from './Role';
 
 export interface PerformanceRole extends Schema.Role, RdfResource {
-  characterName: string;
+  characterName: string | undefined;
 }
 
 export function PerformanceRoleMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PerformanceRoleClass extends RoleMixin(Resource) implements PerformanceRole {
     @property.literal()
-    characterName!: string;
+    characterName: string | undefined;
   }
   return PerformanceRoleClass
 }

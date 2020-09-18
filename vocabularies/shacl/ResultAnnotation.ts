@@ -9,20 +9,20 @@ import * as Rdfs from '@rdfine/rdfs';
 import * as Rdf from '@rdfine/rdf';
 
 export interface ResultAnnotation extends Rdfs.Resource, RdfResource {
-  annotationProperty: Rdf.Property;
-  annotationValue: RDF.Term;
-  annotationVarName: string;
+  annotationProperty: Rdf.Property | undefined;
+  annotationValue: RDF.Term | undefined;
+  annotationVarName: string | undefined;
 }
 
 export function ResultAnnotationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(sh)
   class ResultAnnotationClass extends Rdfs.ResourceMixin(Resource) implements ResultAnnotation {
     @property.resource({ as: [Rdf.PropertyMixin] })
-    annotationProperty!: Rdf.Property;
+    annotationProperty: Rdf.Property | undefined;
     @property()
-    annotationValue!: RDF.Term;
+    annotationValue: RDF.Term | undefined;
     @property.literal()
-    annotationVarName!: string;
+    annotationVarName: string | undefined;
   }
   return ResultAnnotationClass
 }

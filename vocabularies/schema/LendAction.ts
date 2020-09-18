@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { TransferActionMixin } from './TransferAction';
 
 export interface LendAction extends Schema.TransferAction, RdfResource {
-  borrower: Schema.Person;
+  borrower: Schema.Person | undefined;
 }
 
 export function LendActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class LendActionClass extends TransferActionMixin(Resource) implements LendAction {
     @property.resource()
-    borrower!: Schema.Person;
+    borrower: Schema.Person | undefined;
   }
   return LendActionClass
 }

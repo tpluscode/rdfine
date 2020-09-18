@@ -8,38 +8,38 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Movie extends Schema.CreativeWork, RdfResource {
-  actor: Schema.Person;
-  actors: Schema.Person;
-  countryOfOrigin: Schema.Country;
-  director: Schema.Person;
-  directors: Schema.Person;
-  duration: Schema.Duration;
-  musicBy: Schema.MusicGroup | Schema.Person;
-  productionCompany: Schema.Organization;
-  trailer: Schema.VideoObject;
+  actor: Schema.Person | undefined;
+  actors: Schema.Person | undefined;
+  countryOfOrigin: Schema.Country | undefined;
+  director: Schema.Person | undefined;
+  directors: Schema.Person | undefined;
+  duration: Schema.Duration | undefined;
+  musicBy: Schema.MusicGroup | Schema.Person | undefined;
+  productionCompany: Schema.Organization | undefined;
+  trailer: Schema.VideoObject | undefined;
 }
 
 export function MovieMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class MovieClass extends CreativeWorkMixin(Resource) implements Movie {
     @property.resource()
-    actor!: Schema.Person;
+    actor: Schema.Person | undefined;
     @property.resource()
-    actors!: Schema.Person;
+    actors: Schema.Person | undefined;
     @property.resource()
-    countryOfOrigin!: Schema.Country;
+    countryOfOrigin: Schema.Country | undefined;
     @property.resource()
-    director!: Schema.Person;
+    director: Schema.Person | undefined;
     @property.resource()
-    directors!: Schema.Person;
+    directors: Schema.Person | undefined;
     @property.resource()
-    duration!: Schema.Duration;
+    duration: Schema.Duration | undefined;
     @property.resource()
-    musicBy!: Schema.MusicGroup | Schema.Person;
+    musicBy: Schema.MusicGroup | Schema.Person | undefined;
     @property.resource()
-    productionCompany!: Schema.Organization;
+    productionCompany: Schema.Organization | undefined;
     @property.resource()
-    trailer!: Schema.VideoObject;
+    trailer: Schema.VideoObject | undefined;
   }
   return MovieClass
 }

@@ -8,14 +8,14 @@ import type * as Schema from '.';
 import { CommunicateActionMixin } from './CommunicateAction';
 
 export interface InviteAction extends Schema.CommunicateAction, RdfResource {
-  event: Schema.Event;
+  event: Schema.Event | undefined;
 }
 
 export function InviteActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class InviteActionClass extends CommunicateActionMixin(Resource) implements InviteAction {
     @property.resource()
-    event!: Schema.Event;
+    event: Schema.Event | undefined;
   }
   return InviteActionClass
 }

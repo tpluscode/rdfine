@@ -8,26 +8,26 @@ import type * as Hydra from '.';
 import { ResourceMixin } from './Resource';
 
 export interface ApiDocumentation extends Hydra.Resource, RdfResource {
-  description: string;
-  entrypoint: Hydra.Resource;
+  description: string | undefined;
+  entrypoint: Hydra.Resource | undefined;
   possibleStatus: Array<Hydra.Status>;
   supportedClass: Array<Hydra.Class>;
-  title: string;
+  title: string | undefined;
 }
 
 export function ApiDocumentationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class ApiDocumentationClass extends ResourceMixin(Resource) implements ApiDocumentation {
     @property.literal()
-    description!: string;
+    description: string | undefined;
     @property.resource({ implicitTypes: [hydra.Resource] })
-    entrypoint!: Hydra.Resource;
+    entrypoint: Hydra.Resource | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Status] })
     possibleStatus!: Array<Hydra.Status>;
     @property.resource({ values: 'array', implicitTypes: [hydra.Class] })
     supportedClass!: Array<Hydra.Class>;
     @property.literal()
-    title!: string;
+    title: string | undefined;
   }
   return ApiDocumentationClass
 }

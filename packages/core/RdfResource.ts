@@ -285,7 +285,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   }
 }
 
-type UserDefinedInterface<T extends RdfResource> = Omit<T, keyof RdfResource>
+type UserDefinedInterface<T extends RdfResource | undefined> = Omit<T, keyof RdfResource>
 
 type BaseInitializer = Record<string, any> & {
   types?: NamedNode[] | TypeCollection<any>
@@ -295,13 +295,13 @@ type BaseInitializer = Record<string, any> & {
 type InitialNode<Node extends Term = NamedNode | BlankNode> = Node | GraphPointer<Node>
 type InitialLiteral = InitialNode<Literal>
 
-type InitializeSingle<T extends RdfResource> = Initializer<UserDefinedInterface<T> & BaseInitializer> | InitialNode
+type InitializeSingle<T extends RdfResource | undefined> = Initializer<UserDefinedInterface<T> & BaseInitializer> | InitialNode
 type InitializeArray<T extends RdfResource> = Array<InitializeSingle<T>>
 
-export type Initializer<T> = Partial<Omit<{
-  [P in keyof T]?: T[P] extends string
+export type Initializer<T> = Omit<{
+  [P in keyof Required<T>]?: T[P] extends string
     ? T[P] | InitialLiteral
-    : T[P] extends RdfResource
+    : T[P] extends (RdfResource | undefined)
       ? InitializeSingle<T[P]>
       : T[P] extends Term
         ? T[P] | InitialNode<T[P]>
@@ -312,7 +312,7 @@ export type Initializer<T> = Partial<Omit<{
               ? T[P] | InitialNode<Term>[]
               : T[P] | InitialLiteral[]
           : unknown
-}, keyof RdfResource>> & BaseInitializer
+}, keyof RdfResource> & BaseInitializer
 
 type PartialRecursive<T> = T extends object ? { [K in keyof T]?: PartialRecursive<T[K]> } : T
 

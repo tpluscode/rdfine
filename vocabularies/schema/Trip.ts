@@ -8,23 +8,23 @@ import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
 export interface Trip extends Schema.Intangible, RdfResource {
-  arrivalTime: Date;
-  departureTime: Date;
-  offers: Schema.Demand | Schema.Offer;
-  provider: Schema.Organization | Schema.Person;
+  arrivalTime: Date | undefined;
+  departureTime: Date | undefined;
+  offers: Schema.Demand | Schema.Offer | undefined;
+  provider: Schema.Organization | Schema.Person | undefined;
 }
 
 export function TripMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class TripClass extends IntangibleMixin(Resource) implements Trip {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    arrivalTime!: Date;
+    arrivalTime: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
-    departureTime!: Date;
+    departureTime: Date | undefined;
     @property.resource()
-    offers!: Schema.Demand | Schema.Offer;
+    offers: Schema.Demand | Schema.Offer | undefined;
     @property.resource()
-    provider!: Schema.Organization | Schema.Person;
+    provider: Schema.Organization | Schema.Person | undefined;
   }
   return TripClass
 }
