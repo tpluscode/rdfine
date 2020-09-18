@@ -4,3 +4,8 @@ exports[`RdfResource initializeProperties assigns literal node to arbitrary URI 
 "_:c14n0 <http://www.w3.org/2004/02/skos/core#prefLabel> \\"Foo\\"@en .
 "
 `;
+
+exports[`RdfResource initializeProperties initializes T|T[] property with IRI: toMatchSnapshot 1`] = `
+"_:c14n0 <http://www.w3.org/2004/02/skos/core#broader> <http://example.com/Foo> .
+"
+`;

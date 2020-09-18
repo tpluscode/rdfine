@@ -295,13 +295,23 @@ type BaseInitializer = Record<string, any> & {
 type InitialNode<Node extends Term = NamedNode | BlankNode> = Node | GraphPointer<Node>
 type InitialLiteral = InitialNode<Literal>
 
+type InitializeSingle<T extends RdfResource> = Initializer<UserDefinedInterface<T> & BaseInitializer> | InitialNode
+type InitializeArray<T extends RdfResource> = Array<InitializeSingle<T>>
+
 export type Initializer<T> = Partial<Omit<{
-  [P in keyof T]?:
-  T[P] extends (infer U)[] ? U extends RdfResource ? Initializer<UserDefinedInterface<U>>[] | InitialNode[]
-    : U extends Term ? T[P] | InitialNode<Term>[] : T[P] | InitialLiteral[]
-    : T[P] extends RdfResource ? Initializer<UserDefinedInterface<T[P]> & BaseInitializer> | InitialNode :
-      T[P] extends Term ? T[P] | InitialNode<T[P]>
-        : T[P] | InitialLiteral
+  [P in keyof T]?: T[P] extends string
+    ? T[P] | InitialLiteral
+    : T[P] extends RdfResource
+      ? InitializeSingle<T[P]>
+      : T[P] extends Term
+        ? T[P] | InitialNode<T[P]>
+        : Extract<T[P], Array<any>> extends (infer U)[]
+          ? U extends RdfResource
+            ? InitializeArray<U> | InitializeSingle<U>
+            : U extends Term
+              ? T[P] | InitialNode<Term>[]
+              : T[P] | InitialLiteral[]
+          : unknown
 }, keyof RdfResource>> & BaseInitializer
 
 type PartialRecursive<T> = T extends object ? { [K in keyof T]?: PartialRecursive<T[K]> } : T
