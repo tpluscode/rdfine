@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.6
+
+### Patch Changes
+
+- c5b2570: It was not possible to initialize T | T[] property
+
 ## 0.5.5
 
 ### Patch Changes
