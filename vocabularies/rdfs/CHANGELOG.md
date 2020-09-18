@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.3.10
+
+### Patch Changes
+
+- 7438e0b: Update to @types/rdf-js v4
+- Updated dependencies [7438e0b]
+  - @tpluscode/rdfine@0.5.5
+  - @rdfine/rdf@0.3.10
+
 ## 0.3.9
 
 ### Patch Changes

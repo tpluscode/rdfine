@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/shacl",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",
@@ -61,11 +61,11 @@
   },
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
-    "@rdfine/owl": "^0.2.9",
-    "@rdfine/rdf": "^0.3.9",
-    "@rdfine/rdfs": "^0.3.9",
+    "@rdfine/owl": "^0.2.10",
+    "@rdfine/rdf": "^0.3.10",
+    "@rdfine/rdfs": "^0.3.10",
     "@tpluscode/rdf-ns-builders": "^0.4",
-    "@tpluscode/rdfine": "^0.5.0"
+    "@tpluscode/rdfine": "^0.5.5"
   },
   "peerDependencies": {
     "@types/rdf-js": ">3"
@@ -77,7 +77,7 @@
     "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
-    "@rdfine/generator": "^0.3.5",
+    "@rdfine/generator": "^0.3.7",
     "@rdfjs/data-model": "^1.2",
     "@rdfjs/dataset": "^1.0.1",
     "@types/clownface": "^1",

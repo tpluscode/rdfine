@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.3.7
+
+### Patch Changes
+
+- 7438e0b: Update to @types/rdf-js v4
+
 ## 0.3.6
 
 ### Patch Changes
