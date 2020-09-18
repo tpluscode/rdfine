@@ -15,6 +15,10 @@ interface ResourceOptions<R extends RdfResource> {
   initial?: ObjectOrFactory<R, InitialValue | RdfResource, ResourceIdentifier>
 }
 
+function isRdfResource(maybeRdfResource: RdfResource | Initializer<unknown>): maybeRdfResource is RdfResource {
+  return '_graphId' in maybeRdfResource
+}
+
 function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptions & ResourceOptions<R> = {}) {
   return propertyDecorator<R, RdfResource, ResourceIdentifier>({
     ...options,
@@ -25,10 +29,10 @@ function resourcePropertyDecorator<R extends RdfResource>(options: AccessorOptio
 
       return this._create(obj, options.as, { parent: this })
     },
-    toTerm(this: R, valueActual) {
+    toTerm(this: R, valueActual): ResourceIdentifier {
       const value = valueActual as RdfResource | Initializer<R>
 
-      if ('pointer' in value) {
+      if (isRdfResource(value)) {
         return value.id
       }
 
