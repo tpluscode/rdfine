@@ -1,6 +1,6 @@
 {
   "name": "rdfine-example",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "private": true,
   "scripts": {
     "start": "run-s example:*",
@@ -10,7 +10,7 @@
     "example:deep": "ts-node deep-initialization/index.ts"
   },
   "dependencies": {
-    "@rdfine/schema": "^0.4.12",
+    "@rdfine/schema": "^0.5.0",
     "@rdfjs/data-model": "^1.2",
     "@rdfjs/dataset": "^1.0.1",
     "@rdfjs/fetch": "^2.0.0",

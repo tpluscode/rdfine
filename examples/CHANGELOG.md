@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.1.10
+
+### Patch Changes
+
+- Updated dependencies [57dfa37]
+  - @rdfine/schema@0.5.0
+
 ## 0.1.9
 
 ### Patch Changes

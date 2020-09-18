@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.4.0
+
+### Minor Changes
+
+- 57dfa37: All non-array properties are generated as possibly undefined
+
 ## 0.3.10
 
 ### Patch Changes

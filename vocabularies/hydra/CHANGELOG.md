@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.4.0
+
+### Minor Changes
+
+- 57dfa37: All non-array properties are generated as possibly undefined
+
+### Patch Changes
+
+- Updated dependencies [57dfa37]
+  - @rdfine/rdf@0.4.0
+  - @rdfine/rdfs@0.4.0
+
 ## 0.3.13
 
 ### Patch Changes

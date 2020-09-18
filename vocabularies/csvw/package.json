@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/csvw",
-  "version": "0.4.10",
+  "version": "0.5.0",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",
@@ -53,7 +53,7 @@
     "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
-    "@rdfine/generator": "^0.3.7",
+    "@rdfine/generator": "^0.4.0",
     "@rdfjs/dataset": "^1.0.1",
     "@types/clownface": "^1",
     "@types/rdf-js": "^4",

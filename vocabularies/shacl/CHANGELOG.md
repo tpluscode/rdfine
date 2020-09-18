@@ -1,5 +1,19 @@
 # Change Log
 
+## 0.5.0
+
+### Minor Changes
+
+- 57dfa37: All non-array properties are generated as possibly undefined
+
+### Patch Changes
+
+- 493549e: targetNode and targetClass must return arrays
+- Updated dependencies [57dfa37]
+  - @rdfine/owl@0.3.0
+  - @rdfine/rdf@0.4.0
+  - @rdfine/rdfs@0.4.0
+
 ## 0.4.3
 
 ### Patch Changes
