@@ -35,6 +35,18 @@ describe('proxy', () => {
       expect(value.id.value).toEqual('http://example.com/Proxied2')
     })
 
+    it('works with arbitrary symbol properties', () => {
+      // given
+      const Foo: unique symbol = Symbol('Foo')
+      const proxy = createProxy(new RdfResourceImpl(node)) as any
+
+      // when
+      proxy[Foo] = 'bar'
+
+      // then
+      expect(proxy[Foo]).toEqual('bar')
+    })
+
     it('returns raw literals', () => {
       // given
       const resource = new RdfResourceImpl(node)
