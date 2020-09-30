@@ -25,7 +25,7 @@ function nodeToValue(target: RdfResource) {
 export function createProxy<T extends RdfResource<any>>(resource: T): T & ResourceIndexer {
   return new Proxy(resource, {
     get(target, property) {
-      if (property in target) {
+      if (property in target || typeof property === 'symbol') {
         return (target as any)[property.toString()]
       }
 
@@ -41,7 +41,7 @@ export function createProxy<T extends RdfResource<any>>(resource: T): T & Resour
     },
 
     set(target: T, property: string | number | symbol, value: T | Literal | Array<T | Literal | null> | null): boolean {
-      if (property in target) {
+      if (property in target || typeof property === 'symbol') {
         (target as any)[property.toString()] = value
         return true
       }
