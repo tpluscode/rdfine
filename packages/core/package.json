@@ -36,7 +36,8 @@
     "@rdf-esm/term-set": "^0.5.0",
     "@tpluscode/rdf-ns-builders": "^0.4",
     "clownface": "^1",
-    "once": "^1.4.0"
+    "once": "^1.4.0",
+    "jsonld": "^3.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
@@ -58,6 +59,7 @@
     "@types/rdfjs__namespace": "^1.1.1",
     "@types/rdfjs__parser-n3": "^1.1.2",
     "@types/rdfjs__term-set": "^1",
+    "@types/jsonld": "^1.5.1",
     "@zazuko/rdf-vocabularies": "^2020.6.29",
     "babel-plugin-add-import-extension": "^1.4.3",
     "npm-run-all": "^4.1.5",

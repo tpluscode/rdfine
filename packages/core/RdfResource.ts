@@ -15,6 +15,8 @@ import type { TypeCollection } from './lib/TypeCollection'
 import TypeCollectionCtor from './lib/TypeCollection'
 import { xsd } from '@tpluscode/rdf-ns-builders'
 import { defaultGraphInstance } from '@rdf-esm/data-model'
+import * as jsonld from 'jsonld'
+import { JsonLdArray } from 'jsonld/jsonld-spec'
 
 type ObjectOrFactory<T> = T | ((self: RdfResource) => T)
 
@@ -63,6 +65,12 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
    */
   getNumber (property: string | NamedNode): number | null
   getNumber (property: string | NamedNode, options?: GetOptions): number | null
+
+  /***
+   * Returns a representation of the resource in the JSON-LD format, as a JS object
+   */
+  toJSON(): Promise<any>
+
   _getObjects(property: string | NamedNode, options?: GetOptions): MultiPointer<Term, D>
   _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
 }
@@ -282,6 +290,53 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
 
   public _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D, T> = {}): T & ResourceIndexer {
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins, options)
+  }
+
+  public async toJSON(): Promise<any> {
+    // First we serialize to JSON-LD from the dataset
+    const graphsOrItems = await jsonld.fromRDF(this.pointer.dataset)
+    // Then we'll set up some helper types to ensure compile time type-safety
+    // In the future we may want to add checks to make sure the data follows these requirements at runtime
+    // Then we handle whether the dataset that is backing our current pointer has multiple graphs by finding the one matching this._graphId
+    // Then we find the current item identifiable with this.id
+
+    type MinimalGraph = {
+      '@id': string
+      '@graph': any[]
+    }
+    type MultiGraph = [MinimalGraph]
+    // Difference between [T] and T[] is that [T] must have at least one item
+
+    const multipleGraphs = (graphs: JsonLdArray): graphs is MultiGraph => {
+      return '@graph' in graphs[0]
+    }
+
+    type MinimalItem = {
+      '@id': string
+    }
+
+    const currentItem = (items: MinimalItem[]): any => {
+      const resultItems = items.filter((item) => item['@id'] === this.id.value)
+
+      if (resultItems.length !== 1) {
+        // console.error("Result items", resultItems);
+        throw new Error(`Incorrect number of result items: ${resultItems.length} returned for current item id: ${this.id.value}\n`)
+      }
+      return resultItems[0]
+    }
+
+    if (multipleGraphs(graphsOrItems)) {
+      const itemGraphs = graphsOrItems.filter((g) => g['@id'] === this._graphId.value)
+      if (itemGraphs.length !== 1) {
+        throw new Error(`Incorrect number of graphs: ${itemGraphs.length} returned for current graph id: ${this._graphId.value}`)
+        // Possible additional error text: Either the current node is not contained in any graph, or it is contained in multiple
+      }
+      const items = itemGraphs[0]['@graph']
+      return currentItem(items)
+    } else {
+      // Should we do an additional check here to make sure each item really has an ID?
+      return currentItem(graphsOrItems as MinimalItem[])
+    }
   }
 }
 
