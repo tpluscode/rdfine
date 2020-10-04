@@ -33,6 +33,9 @@
       "collection": {
         "values": "array"
       },
+      "expects": {
+        "values": "array"
+      },
       "manages": {
         "values": "array"
       },

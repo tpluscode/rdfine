@@ -9,7 +9,7 @@ import { ResourceMixin } from './Resource';
 
 export interface Operation extends Hydra.Resource, RdfResource {
   description: string | undefined;
-  expects: Hydra.Class | Hydra.Resource | undefined;
+  expects: Array<Hydra.Class | Hydra.Resource>;
   expectsHeader: string | undefined;
   method: string | undefined;
   possibleStatus: Array<Hydra.Status>;
@@ -23,8 +23,8 @@ export function OperationMixin<Base extends Constructor>(Resource: Base) {
   class OperationClass extends ResourceMixin(Resource) implements Operation {
     @property.literal()
     description: string | undefined;
-    @property.resource()
-    expects: Hydra.Class | Hydra.Resource | undefined;
+    @property.resource({ values: 'array' })
+    expects!: Array<Hydra.Class | Hydra.Resource>;
     @property.literal()
     expectsHeader: string | undefined;
     @property.literal()
