@@ -1,0 +1,1 @@
+export { IriTemplateEx } from './IriTemplateEx'

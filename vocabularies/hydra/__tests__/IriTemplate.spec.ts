@@ -30,30 +30,30 @@ describe('IriTemplate', () => {
       ${'typed literal'}     | ${basic}       | ${RDF.literal('5.5', xsd.decimal)}           | ${'http://example.com/find/5.5'}
       ${'typed literal'}     | ${explicit}    | ${RDF.literal('5.5', xsd.decimal)}           | ${'http://example.com/find/%225.5%22%5E%5Ehttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23decimal'}
     `('should correctly represent $type with $representation', ({ representation, term, expected }) => {
-  // given
-  const dataset = $rdf.dataset()
-  const pointer = clownface({ dataset }).blankNode()
-  const iriTemplate = new IriTemplateMixin.Class(pointer, {
-    template: 'http://example.com/find/{value}',
-    variableRepresentation: RDF.namedNode(representation),
-    mapping: [
-      {
-        types: [hydra.IriTemplateMapping],
-        variable: 'value',
-        property: ex.value,
-      },
-    ],
-  })
+      // given
+      const dataset = $rdf.dataset()
+      const pointer = clownface({ dataset }).blankNode()
+      const iriTemplate = new IriTemplateMixin.Class(pointer, {
+        template: 'http://example.com/find/{value}',
+        variableRepresentation: RDF.namedNode(representation),
+        mapping: [
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'value',
+            property: ex.value,
+          },
+        ],
+      })
 
-  // when
-  const bindings = clownface({ dataset })
-    .blankNode()
-    .addOut(ex.value, term)
-  const expanded = iriTemplate.expand(bindings)
+      // when
+      const bindings = clownface({ dataset })
+        .blankNode()
+        .addOut(ex.value, term)
+      const expanded = iriTemplate.expand(bindings)
 
-  // then
-  expect(expanded).toEqual(expected)
-})
+      // then
+      expect(expanded).toEqual(expected)
+    })
 
     it('does not expand variables with no values', () => {
       // given

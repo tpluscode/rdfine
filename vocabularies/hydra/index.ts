@@ -12,3 +12,4 @@ export * from './Status';
 export * from './SupportedProperty';
 export * from './TemplatedLink';
 export * from './VariableRepresentation';
+export * from './extensions';

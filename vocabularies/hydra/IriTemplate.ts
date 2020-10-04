@@ -4,43 +4,36 @@ import type * as RDF from 'rdf-js';
 import { hydra } from './lib/namespace';
 import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type { AnyPointer, GraphPointer } from 'clownface';
-import type { Term } from 'rdf-js';
 import type * as Hydra from '.';
 import { ResourceMixin } from './Resource';
-import { TemplateExpander } from './lib/TemplateExpander';
+import { IriTemplateExMixin } from './extensions/IriTemplateEx';
 
 export interface IriTemplate extends Hydra.Resource, RdfResource {
   mapping: Array<Hydra.IriTemplateMapping>;
   template: string | undefined;
   variableRepresentation: Hydra.VariableRepresentation | undefined;
-  expand(model: GraphPointer | RdfResource): string;
 }
 
 export function IriTemplateMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
-  class IriTemplateClass extends ResourceMixin(Resource) implements IriTemplate {
+  class IriTemplateClass extends ResourceMixin(Resource) implements Partial<IriTemplate> {
     @property.resource({ values: 'array', implicitTypes: [hydra.IriTemplateMapping] })
     mapping!: Array<Hydra.IriTemplateMapping>;
     @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/ns/hydra/core#Rfc6570Template') })
     template: string | undefined;
     @property.resource({ implicitTypes: [hydra.VariableRepresentation] })
     variableRepresentation: Hydra.VariableRepresentation | undefined;
-
-    public expand(model: AnyPointer | RdfResource): string {
-      return new TemplateExpander(this).expand(model)
-    }
   }
   return IriTemplateClass
 }
 
-class IriTemplateImpl extends IriTemplateMixin(RdfResourceImpl) {
+class IriTemplateImpl extends IriTemplateExMixin(IriTemplateMixin(RdfResourceImpl)) {
   constructor(arg: ResourceNode, init?: Initializer<IriTemplate>) {
     super(arg, init)
     this.types.add(hydra.IriTemplate)
   }
 
-  static readonly __mixins: Mixin[] = [IriTemplateMixin, ResourceMixin];
+  static readonly __mixins: Mixin[] = [IriTemplateExMixin, IriTemplateMixin, ResourceMixin];
 }
 IriTemplateMixin.appliesTo = hydra.IriTemplate
 IriTemplateMixin.Class = IriTemplateImpl
