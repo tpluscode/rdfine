@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { BodyOfWaterMixin } from './BodyOfWater';
 
-export interface RiverBodyOfWater extends Schema.BodyOfWater, RdfResource {
+export interface RiverBodyOfWater<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BodyOfWater<D>, RdfResource<D> {
 }
 
 export function RiverBodyOfWaterMixin<Base extends Constructor>(Resource: Base) {

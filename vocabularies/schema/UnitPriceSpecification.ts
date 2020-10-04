@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { PriceSpecificationMixin } from './PriceSpecification';
 
-export interface UnitPriceSpecification extends Schema.PriceSpecification, RdfResource {
+export interface UnitPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, RdfResource<D> {
   billingIncrement: number | undefined;
   priceType: string | undefined;
-  referenceQuantity: Schema.QuantitativeValue | undefined;
+  referenceQuantity: Schema.QuantitativeValue<D> | undefined;
   unitCode: string | undefined;
   unitCodeTerm: RDF.NamedNode | undefined;
   unitText: string | undefined;

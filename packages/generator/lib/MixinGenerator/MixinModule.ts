@@ -253,12 +253,12 @@ export class MixinModule implements GeneratedModule {
 
   private createInterface(mixinFile: SourceFile) {
     const superInterfaces = this.superClasses
-      .map(superClass => `${superClass.qualifiedName}`)
+      .map(superClass => `${superClass.qualifiedName}<D>`)
 
     return mixinFile.addInterface({
-      name: this.type.localName,
+      name: `${this.type.localName}<D extends RDF.DatasetCore = RDF.DatasetCore>`,
       isExported: true,
-      extends: [...superInterfaces, 'RdfResource'],
+      extends: [...superInterfaces, 'RdfResource<D>'],
     })
   }
 }

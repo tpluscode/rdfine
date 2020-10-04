@@ -7,12 +7,12 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ServiceMixin } from './Service';
 
-export interface FinancialProduct extends Schema.Service, RdfResource {
-  annualPercentageRate: Schema.QuantitativeValue | undefined;
+export interface FinancialProduct<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, RdfResource<D> {
+  annualPercentageRate: Schema.QuantitativeValue<D> | undefined;
   annualPercentageRateLiteral: number | undefined;
   feesAndCommissionsSpecification: string | undefined;
   feesAndCommissionsSpecificationTerm: RDF.NamedNode | undefined;
-  interestRate: Schema.QuantitativeValue | undefined;
+  interestRate: Schema.QuantitativeValue<D> | undefined;
   interestRateLiteral: number | undefined;
 }
 

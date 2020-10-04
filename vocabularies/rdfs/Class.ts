@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdfs from '.';
 import { ResourceMixin } from './Resource';
 
-export interface Class extends Rdfs.Resource, RdfResource {
-  subClassOf: Rdfs.Class | undefined;
+export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+  subClassOf: Rdfs.Class<D> | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {

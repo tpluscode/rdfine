@@ -7,13 +7,13 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface Permit extends Schema.Intangible, RdfResource {
-  issuedBy: Schema.Organization | undefined;
-  issuedThrough: Schema.Service | undefined;
-  permitAudience: Schema.Audience | undefined;
-  validFor: Schema.Duration | undefined;
+export interface Permit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  issuedBy: Schema.Organization<D> | undefined;
+  issuedThrough: Schema.Service<D> | undefined;
+  permitAudience: Schema.Audience<D> | undefined;
+  validFor: Schema.Duration<D> | undefined;
   validFrom: Date | undefined;
-  validIn: Schema.AdministrativeArea | undefined;
+  validIn: Schema.AdministrativeArea<D> | undefined;
   validUntil: Date | undefined;
 }
 

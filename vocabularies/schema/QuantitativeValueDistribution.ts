@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface QuantitativeValueDistribution extends Schema.StructuredValue, RdfResource {
-  duration: Schema.Duration | undefined;
+export interface QuantitativeValueDistribution<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+  duration: Schema.Duration<D> | undefined;
   median: number | undefined;
   percentile10: number | undefined;
   percentile25: number | undefined;

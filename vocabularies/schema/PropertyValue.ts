@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface PropertyValue extends Schema.StructuredValue, RdfResource {
+export interface PropertyValue<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
   maxValue: number | undefined;
   minValue: number | undefined;
   propertyID: string | undefined;
@@ -15,9 +15,9 @@ export interface PropertyValue extends Schema.StructuredValue, RdfResource {
   unitCode: string | undefined;
   unitCodeTerm: RDF.NamedNode | undefined;
   unitText: string | undefined;
-  value: Schema.StructuredValue | undefined;
+  value: Schema.StructuredValue<D> | undefined;
   valueLiteral: boolean | number | string | undefined;
-  valueReference: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue | undefined;
+  valueReference: Schema.PropertyValue<D> | Schema.QuantitativeValue<D> | Schema.StructuredValue<D> | undefined;
 }
 
 export function PropertyValueMixin<Base extends Constructor>(Resource: Base) {

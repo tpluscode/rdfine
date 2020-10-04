@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import { ParameterizableMixin } from './Parameterizable';
 
-export interface ConstraintComponent extends Sh.Parameterizable, RdfResource {
-  nodeValidator: Sh.Validator | undefined;
-  propertyValidator: Sh.Validator | undefined;
-  validator: Sh.Validator | undefined;
+export interface ConstraintComponent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Parameterizable<D>, RdfResource<D> {
+  nodeValidator: Sh.Validator<D> | undefined;
+  propertyValidator: Sh.Validator<D> | undefined;
+  validator: Sh.Validator<D> | undefined;
 }
 
 export function ConstraintComponentMixin<Base extends Constructor>(Resource: Base) {

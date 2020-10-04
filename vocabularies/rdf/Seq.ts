@@ -6,7 +6,7 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdf from '.';
 
-export interface Seq extends RdfResource {
+export interface Seq<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
 
 export function SeqMixin<Base extends Constructor>(Resource: Base) {

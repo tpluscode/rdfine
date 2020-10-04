@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface OpeningHoursSpecification extends Schema.StructuredValue, RdfResource {
+export interface OpeningHoursSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
   closes: Date | undefined;
   dayOfWeek: Schema.DayOfWeek | undefined;
   opens: Date | undefined;

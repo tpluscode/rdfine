@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import { ObjectPropertyMixin } from './ObjectProperty';
 
-export interface ReflexiveProperty extends Owl.ObjectProperty, RdfResource {
+export interface ReflexiveProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, RdfResource<D> {
 }
 
 export function ReflexivePropertyMixin<Base extends Constructor>(Resource: Base) {

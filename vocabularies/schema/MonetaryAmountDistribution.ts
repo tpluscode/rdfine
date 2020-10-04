@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { QuantitativeValueDistributionMixin } from './QuantitativeValueDistribution';
 
-export interface MonetaryAmountDistribution extends Schema.QuantitativeValueDistribution, RdfResource {
+export interface MonetaryAmountDistribution<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.QuantitativeValueDistribution<D>, RdfResource<D> {
   currency: string | undefined;
 }
 

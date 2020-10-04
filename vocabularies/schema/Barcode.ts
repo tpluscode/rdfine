@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ImageObjectMixin } from './ImageObject';
 
-export interface Barcode extends Schema.ImageObject, RdfResource {
+export interface Barcode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ImageObject<D>, RdfResource<D> {
 }
 
 export function BarcodeMixin<Base extends Constructor>(Resource: Base) {

@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ArticleMixin } from './Article';
 
-export interface SocialMediaPosting extends Schema.Article, RdfResource {
-  sharedContent: Schema.CreativeWork | undefined;
+export interface SocialMediaPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, RdfResource<D> {
+  sharedContent: Schema.CreativeWork<D> | undefined;
 }
 
 export function SocialMediaPostingMixin<Base extends Constructor>(Resource: Base) {

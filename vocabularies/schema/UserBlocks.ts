@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { UserInteractionMixin } from './UserInteraction';
 
-export interface UserBlocks extends Schema.UserInteraction, RdfResource {
+export interface UserBlocks<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UserInteraction<D>, RdfResource<D> {
 }
 
 export function UserBlocksMixin<Base extends Constructor>(Resource: Base) {

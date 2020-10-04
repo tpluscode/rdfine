@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
 import { StatusMixin } from './Status';
 
-export interface Error extends Hydra.Status, RdfResource {
+export interface Error<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Status<D>, RdfResource<D> {
 }
 
 export function ErrorMixin<Base extends Constructor>(Resource: Base) {

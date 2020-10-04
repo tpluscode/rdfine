@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { SportsOrganizationMixin } from './SportsOrganization';
 
-export interface SportsTeam extends Schema.SportsOrganization, RdfResource {
-  athlete: Schema.Person | undefined;
-  coach: Schema.Person | undefined;
+export interface SportsTeam<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SportsOrganization<D>, RdfResource<D> {
+  athlete: Schema.Person<D> | undefined;
+  coach: Schema.Person<D> | undefined;
 }
 
 export function SportsTeamMixin<Base extends Constructor>(Resource: Base) {

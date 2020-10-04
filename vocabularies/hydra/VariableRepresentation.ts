@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
 import { ResourceMixin } from './Resource';
 
-export interface VariableRepresentation extends Hydra.Resource, RdfResource {
+export interface VariableRepresentation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
 }
 
 export function VariableRepresentationMixin<Base extends Constructor>(Resource: Base) {

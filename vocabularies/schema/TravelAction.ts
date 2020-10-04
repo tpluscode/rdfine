@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { MoveActionMixin } from './MoveAction';
 
-export interface TravelAction extends Schema.MoveAction, RdfResource {
-  distance: Schema.Distance | undefined;
+export interface TravelAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MoveAction<D>, RdfResource<D> {
+  distance: Schema.Distance<D> | undefined;
 }
 
 export function TravelActionMixin<Base extends Constructor>(Resource: Base) {

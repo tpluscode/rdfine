@@ -7,12 +7,12 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Game extends Schema.CreativeWork, RdfResource {
-  characterAttribute: Schema.Thing | undefined;
-  gameItem: Schema.Thing | undefined;
-  gameLocation: Schema.Place | Schema.PostalAddress | undefined;
-  numberOfPlayers: Schema.QuantitativeValue | undefined;
-  quest: Schema.Thing | undefined;
+export interface Game<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  characterAttribute: Schema.Thing<D> | undefined;
+  gameItem: Schema.Thing<D> | undefined;
+  gameLocation: Schema.Place<D> | Schema.PostalAddress<D> | undefined;
+  numberOfPlayers: Schema.QuantitativeValue<D> | undefined;
+  quest: Schema.Thing<D> | undefined;
 }
 
 export function GameMixin<Base extends Constructor>(Resource: Base) {

@@ -7,15 +7,15 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { LocalBusinessMixin } from './LocalBusiness';
 
-export interface FoodEstablishment extends Schema.LocalBusiness, RdfResource {
+export interface FoodEstablishment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
   acceptsReservations: boolean | string | undefined;
   acceptsReservationsTerm: RDF.NamedNode | undefined;
-  hasMenu: Schema.Menu | undefined;
+  hasMenu: Schema.Menu<D> | undefined;
   hasMenuLiteral: string | undefined;
-  menu: Schema.Menu | undefined;
+  menu: Schema.Menu<D> | undefined;
   menuLiteral: string | undefined;
   servesCuisine: string | undefined;
-  starRating: Schema.Rating | undefined;
+  starRating: Schema.Rating<D> | undefined;
 }
 
 export function FoodEstablishmentMixin<Base extends Constructor>(Resource: Base) {

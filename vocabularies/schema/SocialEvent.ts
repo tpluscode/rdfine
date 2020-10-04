@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { EventMixin } from './Event';
 
-export interface SocialEvent extends Schema.Event, RdfResource {
+export interface SocialEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
 }
 
 export function SocialEventMixin<Base extends Constructor>(Resource: Base) {

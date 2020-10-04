@@ -7,11 +7,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface ListItem extends Schema.Intangible, RdfResource {
-  item: Schema.Thing | undefined;
-  nextItem: Schema.ListItem | undefined;
+export interface ListItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  item: Schema.Thing<D> | undefined;
+  nextItem: Schema.ListItem<D> | undefined;
   position: number | string | undefined;
-  previousItem: Schema.ListItem | undefined;
+  previousItem: Schema.ListItem<D> | undefined;
 }
 
 export function ListItemMixin<Base extends Constructor>(Resource: Base) {

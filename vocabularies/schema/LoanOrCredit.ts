@@ -7,12 +7,12 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { FinancialProductMixin } from './FinancialProduct';
 
-export interface LoanOrCredit extends Schema.FinancialProduct, RdfResource {
-  amount: Schema.MonetaryAmount | undefined;
+export interface LoanOrCredit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialProduct<D>, RdfResource<D> {
+  amount: Schema.MonetaryAmount<D> | undefined;
   amountLiteral: number | undefined;
   currency: string | undefined;
-  loanTerm: Schema.QuantitativeValue | undefined;
-  requiredCollateral: Schema.Thing | undefined;
+  loanTerm: Schema.QuantitativeValue<D> | undefined;
+  requiredCollateral: Schema.Thing<D> | undefined;
   requiredCollateralLiteral: string | undefined;
 }
 

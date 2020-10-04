@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CommentMixin } from './Comment';
 
-export interface Answer extends Schema.Comment, RdfResource {
+export interface Answer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Comment<D>, RdfResource<D> {
 }
 
 export function AnswerMixin<Base extends Constructor>(Resource: Base) {

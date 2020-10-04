@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface Role extends Schema.Intangible, RdfResource {
+export interface Role<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
   endDate: Date | undefined;
   namedPosition: string | undefined;
   namedPositionTerm: RDF.NamedNode | undefined;

@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface MenuItem extends Schema.Intangible, RdfResource {
-  menuAddOn: Schema.MenuItem | Schema.MenuSection | undefined;
-  nutrition: Schema.NutritionInformation | undefined;
-  offers: Schema.Demand | Schema.Offer | undefined;
+export interface MenuItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  menuAddOn: Schema.MenuItem<D> | Schema.MenuSection<D> | undefined;
+  nutrition: Schema.NutritionInformation<D> | undefined;
+  offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
   suitableForDiet: Schema.RestrictedDiet | undefined;
 }
 

@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ProductMixin } from './Product';
 
-export interface IndividualProduct extends Schema.Product, RdfResource {
+export interface IndividualProduct<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Product<D>, RdfResource<D> {
   serialNumber: string | undefined;
 }
 

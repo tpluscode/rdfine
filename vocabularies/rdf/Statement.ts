@@ -6,7 +6,7 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdf from '.';
 
-export interface Statement extends RdfResource {
+export interface Statement<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   object: RDF.Term | undefined;
   predicate: RDF.Term | undefined;
   subject: RDF.Term | undefined;

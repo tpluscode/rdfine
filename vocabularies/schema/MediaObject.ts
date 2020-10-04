@@ -7,26 +7,26 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface MediaObject extends Schema.CreativeWork, RdfResource {
-  associatedArticle: Schema.NewsArticle | undefined;
+export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  associatedArticle: Schema.NewsArticle<D> | undefined;
   bitrate: string | undefined;
   contentSize: string | undefined;
   contentUrl: RDF.NamedNode | undefined;
-  duration: Schema.Duration | undefined;
+  duration: Schema.Duration<D> | undefined;
   embedUrl: RDF.NamedNode | undefined;
-  encodesCreativeWork: Schema.CreativeWork | undefined;
+  encodesCreativeWork: Schema.CreativeWork<D> | undefined;
   encodingFormat: string | undefined;
   encodingFormatTerm: RDF.NamedNode | undefined;
   endTime: Date | undefined;
-  height: Schema.Distance | Schema.QuantitativeValue | undefined;
+  height: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
   playerType: string | undefined;
-  productionCompany: Schema.Organization | undefined;
-  regionsAllowed: Schema.Place | undefined;
-  requiresSubscription: Schema.MediaSubscription | undefined;
+  productionCompany: Schema.Organization<D> | undefined;
+  regionsAllowed: Schema.Place<D> | undefined;
+  requiresSubscription: Schema.MediaSubscription<D> | undefined;
   requiresSubscriptionLiteral: boolean | undefined;
   startTime: Date | undefined;
   uploadDate: Date | undefined;
-  width: Schema.Distance | Schema.QuantitativeValue | undefined;
+  width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
 export function MediaObjectMixin<Base extends Constructor>(Resource: Base) {

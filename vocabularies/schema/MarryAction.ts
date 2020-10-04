@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { InteractActionMixin } from './InteractAction';
 
-export interface MarryAction extends Schema.InteractAction, RdfResource {
+export interface MarryAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, RdfResource<D> {
 }
 
 export function MarryActionMixin<Base extends Constructor>(Resource: Base) {

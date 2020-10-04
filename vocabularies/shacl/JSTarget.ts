@@ -8,7 +8,7 @@ import type * as Sh from '.';
 import { JSExecutableMixin } from './JSExecutable';
 import { TargetMixin } from './Target';
 
-export interface JSTarget extends Sh.JSExecutable, Sh.Target, RdfResource {
+export interface JSTarget<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, Sh.Target<D>, RdfResource<D> {
 }
 
 export function JSTargetMixin<Base extends Constructor>(Resource: Base) {

@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { PlaceMixin } from './Place';
 
-export interface Accommodation extends Schema.Place, RdfResource {
-  amenityFeature: Schema.LocationFeatureSpecification | undefined;
-  floorSize: Schema.QuantitativeValue | undefined;
-  numberOfRooms: Schema.QuantitativeValue | undefined;
+export interface Accommodation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, RdfResource<D> {
+  amenityFeature: Schema.LocationFeatureSpecification<D> | undefined;
+  floorSize: Schema.QuantitativeValue<D> | undefined;
+  numberOfRooms: Schema.QuantitativeValue<D> | undefined;
   numberOfRoomsLiteral: number | undefined;
   permittedUsage: string | undefined;
   petsAllowed: boolean | string | undefined;

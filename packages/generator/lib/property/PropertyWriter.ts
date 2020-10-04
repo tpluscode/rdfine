@@ -12,6 +12,31 @@ interface PropertyWriterInit {
   module: MixinModule
 }
 
+function __getJsReturnType(range: TypeMeta): string | null {
+  switch (range.type) {
+    case 'Literal':
+      return range.nativeName
+    case 'Resource':
+    case 'ExternalResource':
+      return `${range.qualifiedName}<D>`
+    case 'Enumeration':
+      return range.qualifiedName
+    case 'Term':
+      return `RDF.${range.termType}`
+  }
+
+  return null
+}
+
+function rangesToPropertyTypes(result: string[], range: TypeMeta) {
+  const returnType = __getJsReturnType(range)
+  if (returnType && !result.includes(returnType)) {
+    result.push(returnType)
+  }
+
+  return result
+}
+
 export class PropertyWriter {
   private readonly __interface: InterfaceDeclaration;
   private readonly __class: ClassDeclaration;
@@ -28,14 +53,7 @@ export class PropertyWriter {
   public addProperty(prop: JavascriptProperty) {
     let type
     const propertyTypes = prop.range
-      .reduce<string[]>((result, range) => {
-      const returnType = this.__getJsReturnType(range)
-      if (returnType && !result.includes(returnType)) {
-        result.push(returnType)
-      }
-
-      return result
-    }, [])
+      .reduce(rangesToPropertyTypes, [])
       .sort((l, r) => l.localeCompare(r))
 
     if (propertyTypes.length === 0) {
@@ -72,25 +90,10 @@ export class PropertyWriter {
     const classProp = this.__class.addProperty({
       name: prop.name,
       hasExclamationToken,
-      type,
+      type: type.replace(/<D>/g, ''),
     })
 
     classProp.addDecorator(this.__createDecorator(prop, propertyTypes))
-  }
-
-  private __getJsReturnType(range: TypeMeta): string | null {
-    switch (range.type) {
-      case 'Literal':
-        return range.nativeName
-      case 'Resource':
-      case 'ExternalResource':
-      case 'Enumeration':
-        return range.qualifiedName
-      case 'Term':
-        return `RDF.${range.termType}`
-    }
-
-    return null
   }
 
   private __createDecorator(prop: JavascriptProperty, propertyTypes: string[]): OptionalKind<DecoratorStructure> {
@@ -129,7 +132,7 @@ export class PropertyWriter {
         name = 'property.literal'
 
         const uniqueTypes = [...new Set(propertyTypes)]
-        const uniqueDatatypes = prop.range.reduce<TermSet>((set, range: LiteralType | object) => {
+        const uniqueDatatypes = prop.range.reduce<TermSet>((set, range: LiteralType | Record<string, any>) => {
           if ('datatype' in range && range.datatype) {
             set.add(range.datatype)
           }

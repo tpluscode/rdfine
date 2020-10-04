@@ -7,40 +7,40 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface Demand extends Schema.Intangible, RdfResource {
-  acceptedPaymentMethod: Schema.LoanOrCredit | undefined;
-  advanceBookingRequirement: Schema.QuantitativeValue | undefined;
-  areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
+export interface Demand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  acceptedPaymentMethod: Schema.LoanOrCredit<D> | undefined;
+  advanceBookingRequirement: Schema.QuantitativeValue<D> | undefined;
+  areaServed: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
   areaServedLiteral: string | undefined;
   availability: Schema.ItemAvailability | undefined;
   availabilityEnds: Date | undefined;
   availabilityStarts: Date | undefined;
-  availableAtOrFrom: Schema.Place | undefined;
+  availableAtOrFrom: Schema.Place<D> | undefined;
   availableDeliveryMethod: Schema.DeliveryMethod | undefined;
   businessFunction: Schema.BusinessFunction | undefined;
-  deliveryLeadTime: Schema.QuantitativeValue | undefined;
+  deliveryLeadTime: Schema.QuantitativeValue<D> | undefined;
   eligibleCustomerType: Schema.BusinessEntityType | undefined;
-  eligibleDuration: Schema.QuantitativeValue | undefined;
-  eligibleQuantity: Schema.QuantitativeValue | undefined;
-  eligibleRegion: Schema.GeoShape | Schema.Place | undefined;
+  eligibleDuration: Schema.QuantitativeValue<D> | undefined;
+  eligibleQuantity: Schema.QuantitativeValue<D> | undefined;
+  eligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   eligibleRegionLiteral: string | undefined;
-  eligibleTransactionVolume: Schema.PriceSpecification | undefined;
+  eligibleTransactionVolume: Schema.PriceSpecification<D> | undefined;
   gtin12: string | undefined;
   gtin13: string | undefined;
   gtin14: string | undefined;
   gtin8: string | undefined;
-  includesObject: Schema.TypeAndQuantityNode | undefined;
-  inventoryLevel: Schema.QuantitativeValue | undefined;
+  includesObject: Schema.TypeAndQuantityNode<D> | undefined;
+  inventoryLevel: Schema.QuantitativeValue<D> | undefined;
   itemCondition: Schema.OfferItemCondition | undefined;
-  itemOffered: Schema.AggregateOffer | Schema.CreativeWork | Schema.Event | Schema.MenuItem | Schema.Product | Schema.Service | Schema.Trip | undefined;
+  itemOffered: Schema.AggregateOffer<D> | Schema.CreativeWork<D> | Schema.Event<D> | Schema.MenuItem<D> | Schema.Product<D> | Schema.Service<D> | Schema.Trip<D> | undefined;
   mpn: string | undefined;
-  priceSpecification: Schema.PriceSpecification | undefined;
-  seller: Schema.Organization | Schema.Person | undefined;
+  priceSpecification: Schema.PriceSpecification<D> | undefined;
+  seller: Schema.Organization<D> | Schema.Person<D> | undefined;
   serialNumber: string | undefined;
   sku: string | undefined;
   validFrom: Date | undefined;
   validThrough: Date | undefined;
-  warranty: Schema.WarrantyPromise | undefined;
+  warranty: Schema.WarrantyPromise<D> | undefined;
 }
 
 export function DemandMixin<Base extends Constructor>(Resource: Base) {

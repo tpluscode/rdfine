@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { AudienceMixin } from './Audience';
 
-export interface BusinessAudience extends Schema.Audience, RdfResource {
-  numberOfEmployees: Schema.QuantitativeValue | undefined;
-  yearlyRevenue: Schema.QuantitativeValue | undefined;
-  yearsInOperation: Schema.QuantitativeValue | undefined;
+export interface BusinessAudience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Audience<D>, RdfResource<D> {
+  numberOfEmployees: Schema.QuantitativeValue<D> | undefined;
+  yearlyRevenue: Schema.QuantitativeValue<D> | undefined;
+  yearsInOperation: Schema.QuantitativeValue<D> | undefined;
 }
 
 export function BusinessAudienceMixin<Base extends Constructor>(Resource: Base) {

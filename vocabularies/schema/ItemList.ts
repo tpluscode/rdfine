@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface ItemList extends Schema.Intangible, RdfResource {
-  itemListElement: Array<Schema.ListItem | Schema.Thing>;
+export interface ItemList<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  itemListElement: Array<Schema.ListItem<D> | Schema.Thing<D>>;
   itemListElementLiteral: Array<string>;
   itemListOrder: string | undefined;
   itemListOrderTerm: Schema.ItemListOrderType | undefined;

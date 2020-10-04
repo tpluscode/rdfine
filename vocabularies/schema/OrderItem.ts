@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface OrderItem extends Schema.Intangible, RdfResource {
-  orderDelivery: Schema.ParcelDelivery | undefined;
-  orderedItem: Schema.OrderItem | Schema.Product | Schema.Service | undefined;
+export interface OrderItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  orderDelivery: Schema.ParcelDelivery<D> | undefined;
+  orderedItem: Schema.OrderItem<D> | Schema.Product<D> | Schema.Service<D> | undefined;
   orderItemNumber: string | undefined;
   orderItemStatus: Schema.OrderStatus | undefined;
   orderQuantity: number | undefined;

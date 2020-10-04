@@ -6,7 +6,7 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '.';
 
-export interface Transformation extends RdfResource {
+export interface Transformation<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   scriptFormat: string | undefined;
   source: string | undefined;
   targetFormat: string | undefined;

@@ -7,13 +7,13 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface MonetaryAmount extends Schema.StructuredValue, RdfResource {
+export interface MonetaryAmount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
   currency: string | undefined;
   maxValue: number | undefined;
   minValue: number | undefined;
   validFrom: Date | undefined;
   validThrough: Date | undefined;
-  value: Schema.StructuredValue | undefined;
+  value: Schema.StructuredValue<D> | undefined;
   valueLiteral: boolean | number | string | undefined;
 }
 

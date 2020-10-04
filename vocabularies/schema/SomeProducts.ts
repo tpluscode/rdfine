@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ProductMixin } from './Product';
 
-export interface SomeProducts extends Schema.Product, RdfResource {
-  inventoryLevel: Schema.QuantitativeValue | undefined;
+export interface SomeProducts<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Product<D>, RdfResource<D> {
+  inventoryLevel: Schema.QuantitativeValue<D> | undefined;
 }
 
 export function SomeProductsMixin<Base extends Constructor>(Resource: Base) {

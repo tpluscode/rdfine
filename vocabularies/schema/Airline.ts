@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { OrganizationMixin } from './Organization';
 
-export interface Airline extends Schema.Organization, RdfResource {
+export interface Airline<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, RdfResource<D> {
   boardingPolicy: Schema.BoardingPolicyType | undefined;
   iataCode: string | undefined;
 }

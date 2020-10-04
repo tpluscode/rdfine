@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ArticleMixin } from './Article';
 
-export interface TechArticle extends Schema.Article, RdfResource {
+export interface TechArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, RdfResource<D> {
   dependencies: string | undefined;
   proficiencyLevel: string | undefined;
 }

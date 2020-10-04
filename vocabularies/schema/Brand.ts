@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface Brand extends Schema.Intangible, RdfResource {
-  aggregateRating: Schema.AggregateRating | undefined;
-  logo: Schema.ImageObject | undefined;
-  review: Schema.Review | undefined;
+export interface Brand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  aggregateRating: Schema.AggregateRating<D> | undefined;
+  logo: Schema.ImageObject<D> | undefined;
+  review: Schema.Review<D> | undefined;
   slogan: string | undefined;
 }
 

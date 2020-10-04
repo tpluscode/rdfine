@@ -7,11 +7,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Question extends Schema.CreativeWork, RdfResource {
-  acceptedAnswer: Schema.Answer | Schema.ItemList | undefined;
+export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  acceptedAnswer: Schema.Answer<D> | Schema.ItemList<D> | undefined;
   answerCount: number | undefined;
   downvoteCount: number | undefined;
-  suggestedAnswer: Schema.Answer | Schema.ItemList | undefined;
+  suggestedAnswer: Schema.Answer<D> | Schema.ItemList<D> | undefined;
   upvoteCount: number | undefined;
 }
 

@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { LegalServiceMixin } from './LegalService';
 
-export interface Notary extends Schema.LegalService, RdfResource {
+export interface Notary<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LegalService<D>, RdfResource<D> {
 }
 
 export function NotaryMixin<Base extends Constructor>(Resource: Base) {

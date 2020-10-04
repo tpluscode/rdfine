@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { OrganizeActionMixin } from './OrganizeAction';
 
-export interface AllocateAction extends Schema.OrganizeAction, RdfResource {
+export interface AllocateAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OrganizeAction<D>, RdfResource<D> {
 }
 
 export function AllocateActionMixin<Base extends Constructor>(Resource: Base) {

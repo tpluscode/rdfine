@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import * as Rdf from '@rdfine/rdf';
 
-export interface OntologyProperty extends Rdf.Property, RdfResource {
+export interface OntologyProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, RdfResource<D> {
 }
 
 export function OntologyPropertyMixin<Base extends Constructor>(Resource: Base) {

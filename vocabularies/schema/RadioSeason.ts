@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkSeasonMixin } from './CreativeWorkSeason';
 
-export interface RadioSeason extends Schema.CreativeWorkSeason, RdfResource {
+export interface RadioSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeason<D>, RdfResource<D> {
 }
 
 export function RadioSeasonMixin<Base extends Constructor>(Resource: Base) {

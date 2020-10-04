@@ -7,17 +7,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface MusicComposition extends Schema.CreativeWork, RdfResource {
-  composer: Schema.Organization | Schema.Person | undefined;
-  firstPerformance: Schema.Event | undefined;
-  includedComposition: Schema.MusicComposition | undefined;
+export interface MusicComposition<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  composer: Schema.Organization<D> | Schema.Person<D> | undefined;
+  firstPerformance: Schema.Event<D> | undefined;
+  includedComposition: Schema.MusicComposition<D> | undefined;
   iswcCode: string | undefined;
-  lyricist: Schema.Person | undefined;
-  lyrics: Schema.CreativeWork | undefined;
+  lyricist: Schema.Person<D> | undefined;
+  lyrics: Schema.CreativeWork<D> | undefined;
   musicalKey: string | undefined;
-  musicArrangement: Schema.MusicComposition | undefined;
+  musicArrangement: Schema.MusicComposition<D> | undefined;
   musicCompositionForm: string | undefined;
-  recordedAs: Schema.MusicRecording | undefined;
+  recordedAs: Schema.MusicRecording<D> | undefined;
 }
 
 export function MusicCompositionMixin<Base extends Constructor>(Resource: Base) {

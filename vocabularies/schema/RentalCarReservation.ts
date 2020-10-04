@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ReservationMixin } from './Reservation';
 
-export interface RentalCarReservation extends Schema.Reservation, RdfResource {
-  dropoffLocation: Schema.Place | undefined;
+export interface RentalCarReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, RdfResource<D> {
+  dropoffLocation: Schema.Place<D> | undefined;
   dropoffTime: Date | undefined;
-  pickupLocation: Schema.Place | undefined;
+  pickupLocation: Schema.Place<D> | undefined;
   pickupTime: Date | undefined;
 }
 

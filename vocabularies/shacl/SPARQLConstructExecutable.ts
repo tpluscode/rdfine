@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import { SPARQLExecutableMixin } from './SPARQLExecutable';
 
-export interface SPARQLConstructExecutable extends Sh.SPARQLExecutable, RdfResource {
+export interface SPARQLConstructExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLExecutable<D>, RdfResource<D> {
   construct: string | undefined;
 }
 

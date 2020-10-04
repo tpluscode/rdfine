@@ -6,12 +6,12 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '.';
 
-export interface TableGroup extends RdfResource {
+export interface TableGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   aboutUrl: string | undefined;
-  datatype: Csvw.Datatype | undefined;
+  datatype: Csvw.Datatype<D> | undefined;
   datatypeLiteral: string | undefined;
   default: string | undefined;
-  dialect: Csvw.Dialect | undefined;
+  dialect: Csvw.Dialect<D> | undefined;
   lang: string | undefined;
   note: RDF.Term | undefined;
   null: string | undefined;
@@ -19,11 +19,11 @@ export interface TableGroup extends RdfResource {
   propertyUrl: string | undefined;
   required: boolean | undefined;
   separator: string | undefined;
-  table: Csvw.Table | undefined;
-  tableDirection: Csvw.Direction | undefined;
-  tableSchema: Csvw.Schema | undefined;
-  textDirection: Csvw.Direction | undefined;
-  transformations: Array<Csvw.Transformation>;
+  table: Csvw.Table<D> | undefined;
+  tableDirection: Csvw.Direction<D> | undefined;
+  tableSchema: Csvw.Schema<D> | undefined;
+  textDirection: Csvw.Direction<D> | undefined;
+  transformations: Array<Csvw.Transformation<D>>;
   valueUrl: string | undefined;
 }
 

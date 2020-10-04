@@ -8,17 +8,17 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 import { ListItemMixin } from './ListItem';
 
-export interface HowToDirection extends Schema.CreativeWork, Schema.ListItem, RdfResource {
-  afterMedia: Schema.MediaObject | undefined;
-  beforeMedia: Schema.MediaObject | undefined;
-  duringMedia: Schema.MediaObject | undefined;
-  performTime: Schema.Duration | undefined;
-  prepTime: Schema.Duration | undefined;
-  supply: Schema.HowToSupply | undefined;
+export interface HowToDirection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ListItem<D>, RdfResource<D> {
+  afterMedia: Schema.MediaObject<D> | undefined;
+  beforeMedia: Schema.MediaObject<D> | undefined;
+  duringMedia: Schema.MediaObject<D> | undefined;
+  performTime: Schema.Duration<D> | undefined;
+  prepTime: Schema.Duration<D> | undefined;
+  supply: Schema.HowToSupply<D> | undefined;
   supplyLiteral: string | undefined;
-  tool: Array<Schema.HowToTool>;
+  tool: Array<Schema.HowToTool<D>>;
   toolLiteral: Array<string>;
-  totalTime: Schema.Duration | undefined;
+  totalTime: Schema.Duration<D> | undefined;
 }
 
 export function HowToDirectionMixin<Base extends Constructor>(Resource: Base) {

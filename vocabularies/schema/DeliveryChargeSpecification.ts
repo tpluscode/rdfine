@@ -7,11 +7,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { PriceSpecificationMixin } from './PriceSpecification';
 
-export interface DeliveryChargeSpecification extends Schema.PriceSpecification, RdfResource {
+export interface DeliveryChargeSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, RdfResource<D> {
   appliesToDeliveryMethod: Schema.DeliveryMethod | undefined;
-  areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
+  areaServed: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
   areaServedLiteral: string | undefined;
-  eligibleRegion: Schema.GeoShape | Schema.Place | undefined;
+  eligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   eligibleRegionLiteral: string | undefined;
 }
 

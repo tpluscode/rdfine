@@ -8,11 +8,11 @@ import type * as Owl from '.';
 import * as Rdfs from '@rdfine/rdfs';
 import * as Rdf from '@rdfine/rdf';
 
-export interface Class extends Rdfs.Class, RdfResource {
-  complementOf: Owl.Class | undefined;
-  disjointUnionOf: Rdf.List | undefined;
-  disjointWith: Owl.Class | undefined;
-  hasKey: Rdf.List | undefined;
+export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, RdfResource<D> {
+  complementOf: Owl.Class<D> | undefined;
+  disjointUnionOf: Rdf.List<D> | undefined;
+  disjointWith: Owl.Class<D> | undefined;
+  hasKey: Rdf.List<D> | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {

@@ -7,13 +7,13 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Article extends Schema.CreativeWork, RdfResource {
+export interface Article<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
   articleBody: string | undefined;
   articleSection: string | undefined;
   pageEnd: number | string | undefined;
   pageStart: number | string | undefined;
   pagination: string | undefined;
-  speakable: Schema.SpeakableSpecification | undefined;
+  speakable: Schema.SpeakableSpecification<D> | undefined;
   wordCount: number | undefined;
 }
 

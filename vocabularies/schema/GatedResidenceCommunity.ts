@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ResidenceMixin } from './Residence';
 
-export interface GatedResidenceCommunity extends Schema.Residence, RdfResource {
+export interface GatedResidenceCommunity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Residence<D>, RdfResource<D> {
 }
 
 export function GatedResidenceCommunityMixin<Base extends Constructor>(Resource: Base) {

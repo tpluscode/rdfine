@@ -7,15 +7,15 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
-export interface AbstractResult extends Rdfs.Resource, RdfResource {
-  detail: Sh.AbstractResult | undefined;
+export interface AbstractResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+  detail: Sh.AbstractResult<D> | undefined;
   focusNode: RDF.Term | undefined;
   resultMessage: string | undefined;
-  resultPath: Rdfs.Resource | undefined;
-  resultSeverity: Sh.Severity | undefined;
+  resultPath: Rdfs.Resource<D> | undefined;
+  resultSeverity: Sh.Severity<D> | undefined;
   sourceConstraint: RDF.Term | undefined;
-  sourceConstraintComponent: Sh.ConstraintComponent | undefined;
-  sourceShape: Sh.Shape | undefined;
+  sourceConstraintComponent: Sh.ConstraintComponent<D> | undefined;
+  sourceShape: Sh.Shape<D> | undefined;
   value: RDF.Term | undefined;
 }
 

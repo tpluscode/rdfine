@@ -7,11 +7,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface EntryPoint extends Schema.Intangible, RdfResource {
-  actionApplication: Schema.SoftwareApplication | undefined;
+export interface EntryPoint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  actionApplication: Schema.SoftwareApplication<D> | undefined;
   actionPlatform: string | undefined;
   actionPlatformTerm: RDF.NamedNode | undefined;
-  application: Schema.SoftwareApplication | undefined;
+  application: Schema.SoftwareApplication<D> | undefined;
   contentType: string | undefined;
   encodingType: string | undefined;
   httpMethod: string | undefined;

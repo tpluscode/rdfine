@@ -6,9 +6,9 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdf from '.';
 
-export interface List extends RdfResource {
+export interface List<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   first: RDF.Term | undefined;
-  rest: Rdf.List | undefined;
+  rest: Rdf.List<D> | undefined;
 }
 
 export function ListMixin<Base extends Constructor>(Resource: Base) {

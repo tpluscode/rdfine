@@ -8,7 +8,7 @@ import type * as Sh from '.';
 import { JSExecutableMixin } from './JSExecutable';
 import { ValidatorMixin } from './Validator';
 
-export interface JSValidator extends Sh.JSExecutable, Sh.Validator, RdfResource {
+export interface JSValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, Sh.Validator<D>, RdfResource<D> {
 }
 
 export function JSValidatorMixin<Base extends Constructor>(Resource: Base) {

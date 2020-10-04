@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface PublicationVolume extends Schema.CreativeWork, RdfResource {
+export interface PublicationVolume<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
   pageEnd: number | string | undefined;
   pageStart: number | string | undefined;
   pagination: string | undefined;

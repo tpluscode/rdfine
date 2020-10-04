@@ -7,11 +7,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { MusicPlaylistMixin } from './MusicPlaylist';
 
-export interface MusicAlbum extends Schema.MusicPlaylist, RdfResource {
+export interface MusicAlbum<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MusicPlaylist<D>, RdfResource<D> {
   albumProductionType: Schema.MusicAlbumProductionType | undefined;
-  albumRelease: Schema.MusicRelease | undefined;
+  albumRelease: Schema.MusicRelease<D> | undefined;
   albumReleaseType: Schema.MusicAlbumReleaseType | undefined;
-  byArtist: Schema.MusicGroup | Schema.Person | undefined;
+  byArtist: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
 }
 
 export function MusicAlbumMixin<Base extends Constructor>(Resource: Base) {

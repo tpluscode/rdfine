@@ -33,5 +33,16 @@
   }
       }]
     }
+  }, {
+    "files": ["examples/**"],
+    "rules": {
+      "no-console": "off",
+      "import/no-extraneous-dependencies": "warn"
+    }
+  }, {
+    "files": ["vocabularies/shacl/Function.ts"],
+    "rules": {
+      "@typescript-eslint/ban-types": "off"
+    }
   }]
 }

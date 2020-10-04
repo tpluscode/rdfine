@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { PublicationEventMixin } from './PublicationEvent';
 
-export interface BroadcastEvent extends Schema.PublicationEvent, RdfResource {
-  broadcastOfEvent: Schema.Event | undefined;
+export interface BroadcastEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PublicationEvent<D>, RdfResource<D> {
+  broadcastOfEvent: Schema.Event<D> | undefined;
   isLiveBroadcast: boolean | undefined;
   videoFormat: string | undefined;
 }

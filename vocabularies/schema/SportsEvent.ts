@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { EventMixin } from './Event';
 
-export interface SportsEvent extends Schema.Event, RdfResource {
-  awayTeam: Schema.Person | Schema.SportsTeam | undefined;
-  competitor: Schema.Person | Schema.SportsTeam | undefined;
-  homeTeam: Schema.Person | Schema.SportsTeam | undefined;
+export interface SportsEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
+  awayTeam: Schema.Person<D> | Schema.SportsTeam<D> | undefined;
+  competitor: Schema.Person<D> | Schema.SportsTeam<D> | undefined;
+  homeTeam: Schema.Person<D> | Schema.SportsTeam<D> | undefined;
 }
 
 export function SportsEventMixin<Base extends Constructor>(Resource: Base) {

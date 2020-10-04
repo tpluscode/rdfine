@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkSeriesMixin } from './CreativeWorkSeries';
 
-export interface BookSeries extends Schema.CreativeWorkSeries, RdfResource {
+export interface BookSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeries<D>, RdfResource<D> {
 }
 
 export function BookSeriesMixin<Base extends Constructor>(Resource: Base) {

@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
 import { ResourceMixin } from './Resource';
 
-export interface Collection extends Hydra.Resource, RdfResource {
+export interface Collection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
   manages: Array<RDF.Term>;
-  member: Array<Hydra.Resource>;
+  member: Array<Hydra.Resource<D>>;
   totalItems: number | undefined;
 }
 

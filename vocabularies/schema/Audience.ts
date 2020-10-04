@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface Audience extends Schema.Intangible, RdfResource {
+export interface Audience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
   audienceType: string | undefined;
-  geographicArea: Schema.AdministrativeArea | undefined;
+  geographicArea: Schema.AdministrativeArea<D> | undefined;
 }
 
 export function AudienceMixin<Base extends Constructor>(Resource: Base) {

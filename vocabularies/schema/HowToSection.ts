@@ -9,8 +9,8 @@ import { CreativeWorkMixin } from './CreativeWork';
 import { ItemListMixin } from './ItemList';
 import { ListItemMixin } from './ListItem';
 
-export interface HowToSection extends Schema.CreativeWork, Schema.ItemList, Schema.ListItem, RdfResource {
-  steps: Array<Schema.CreativeWork | Schema.ItemList>;
+export interface HowToSection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ItemList<D>, Schema.ListItem<D>, RdfResource<D> {
+  steps: Array<Schema.CreativeWork<D> | Schema.ItemList<D>>;
   stepsLiteral: Array<string>;
 }
 

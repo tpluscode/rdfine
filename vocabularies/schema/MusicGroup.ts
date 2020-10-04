@@ -7,14 +7,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { PerformingGroupMixin } from './PerformingGroup';
 
-export interface MusicGroup extends Schema.PerformingGroup, RdfResource {
-  album: Schema.MusicAlbum | undefined;
-  albums: Schema.MusicAlbum | undefined;
+export interface MusicGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PerformingGroup<D>, RdfResource<D> {
+  album: Schema.MusicAlbum<D> | undefined;
+  albums: Schema.MusicAlbum<D> | undefined;
   genre: string | undefined;
   genreTerm: RDF.NamedNode | undefined;
-  musicGroupMember: Schema.Person | undefined;
-  track: Schema.ItemList | Schema.MusicRecording | undefined;
-  tracks: Schema.MusicRecording | undefined;
+  musicGroupMember: Schema.Person<D> | undefined;
+  track: Schema.ItemList<D> | Schema.MusicRecording<D> | undefined;
+  tracks: Schema.MusicRecording<D> | undefined;
 }
 
 export function MusicGroupMixin<Base extends Constructor>(Resource: Base) {

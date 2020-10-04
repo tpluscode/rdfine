@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface PropertyValueSpecification extends Schema.Intangible, RdfResource {
-  defaultValue: Schema.Thing | undefined;
+export interface PropertyValueSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  defaultValue: Schema.Thing<D> | undefined;
   defaultValueLiteral: string | undefined;
   maxValue: number | undefined;
   minValue: number | undefined;

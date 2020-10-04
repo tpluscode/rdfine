@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StoreMixin } from './Store';
 
-export interface GardenStore extends Schema.Store, RdfResource {
+export interface GardenStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, RdfResource<D> {
 }
 
 export function GardenStoreMixin<Base extends Constructor>(Resource: Base) {

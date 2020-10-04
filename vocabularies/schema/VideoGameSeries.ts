@@ -7,30 +7,30 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkSeriesMixin } from './CreativeWorkSeries';
 
-export interface VideoGameSeries extends Schema.CreativeWorkSeries, RdfResource {
-  actor: Schema.Person | undefined;
-  actors: Schema.Person | undefined;
-  characterAttribute: Schema.Thing | undefined;
-  cheatCode: Schema.CreativeWork | undefined;
-  containsSeason: Schema.CreativeWorkSeason | undefined;
-  director: Schema.Person | undefined;
-  directors: Schema.Person | undefined;
-  episode: Schema.Episode | undefined;
-  episodes: Schema.Episode | undefined;
-  gameItem: Schema.Thing | undefined;
-  gameLocation: Schema.Place | Schema.PostalAddress | undefined;
-  gamePlatform: Schema.Thing | undefined;
+export interface VideoGameSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeries<D>, RdfResource<D> {
+  actor: Schema.Person<D> | undefined;
+  actors: Schema.Person<D> | undefined;
+  characterAttribute: Schema.Thing<D> | undefined;
+  cheatCode: Schema.CreativeWork<D> | undefined;
+  containsSeason: Schema.CreativeWorkSeason<D> | undefined;
+  director: Schema.Person<D> | undefined;
+  directors: Schema.Person<D> | undefined;
+  episode: Schema.Episode<D> | undefined;
+  episodes: Schema.Episode<D> | undefined;
+  gameItem: Schema.Thing<D> | undefined;
+  gameLocation: Schema.Place<D> | Schema.PostalAddress<D> | undefined;
+  gamePlatform: Schema.Thing<D> | undefined;
   gamePlatformLiteral: string | undefined;
-  musicBy: Schema.MusicGroup | Schema.Person | undefined;
+  musicBy: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
   numberOfEpisodes: number | undefined;
-  numberOfPlayers: Schema.QuantitativeValue | undefined;
+  numberOfPlayers: Schema.QuantitativeValue<D> | undefined;
   numberOfSeasons: number | undefined;
   playMode: Schema.GamePlayMode | undefined;
-  productionCompany: Schema.Organization | undefined;
-  quest: Schema.Thing | undefined;
-  season: Schema.CreativeWorkSeason | undefined;
-  seasons: Schema.CreativeWorkSeason | undefined;
-  trailer: Schema.VideoObject | undefined;
+  productionCompany: Schema.Organization<D> | undefined;
+  quest: Schema.Thing<D> | undefined;
+  season: Schema.CreativeWorkSeason<D> | undefined;
+  seasons: Schema.CreativeWorkSeason<D> | undefined;
+  trailer: Schema.VideoObject<D> | undefined;
 }
 
 export function VideoGameSeriesMixin<Base extends Constructor>(Resource: Base) {

@@ -6,19 +6,19 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 
-export interface Thing extends RdfResource {
+export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   additionalType: RDF.NamedNode | undefined;
   alternateName: string | undefined;
   description: string | undefined;
   disambiguatingDescription: string | undefined;
-  identifier: Schema.PropertyValue | undefined;
+  identifier: Schema.PropertyValue<D> | undefined;
   identifierLiteral: string | undefined;
-  image: Schema.ImageObject | undefined;
-  mainEntityOfPage: Schema.CreativeWork | undefined;
+  image: Schema.ImageObject<D> | undefined;
+  mainEntityOfPage: Schema.CreativeWork<D> | undefined;
   name: string | undefined;
-  potentialAction: Schema.Action | undefined;
+  potentialAction: Schema.Action<D> | undefined;
   sameAs: RDF.NamedNode | undefined;
-  subjectOf: Schema.CreativeWork | Schema.Event | undefined;
+  subjectOf: Schema.CreativeWork<D> | Schema.Event<D> | undefined;
   url: RDF.NamedNode | undefined;
 }
 

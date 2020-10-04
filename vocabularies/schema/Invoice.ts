@@ -7,25 +7,25 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface Invoice extends Schema.Intangible, RdfResource {
+export interface Invoice<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
   accountId: string | undefined;
-  billingPeriod: Schema.Duration | undefined;
-  broker: Schema.Organization | Schema.Person | undefined;
-  category: Schema.Thing | undefined;
+  billingPeriod: Schema.Duration<D> | undefined;
+  broker: Schema.Organization<D> | Schema.Person<D> | undefined;
+  category: Schema.Thing<D> | undefined;
   categoryLiteral: string | undefined;
   confirmationNumber: string | undefined;
-  customer: Schema.Organization | Schema.Person | undefined;
-  minimumPaymentDue: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
+  customer: Schema.Organization<D> | Schema.Person<D> | undefined;
+  minimumPaymentDue: Schema.MonetaryAmount<D> | Schema.PriceSpecification<D> | undefined;
   paymentDue: Date | undefined;
   paymentDueDate: Date | undefined;
   paymentMethod: Schema.PaymentMethod | undefined;
   paymentMethodId: string | undefined;
   paymentStatus: string | undefined;
   paymentStatusTerm: Schema.PaymentStatusType | undefined;
-  provider: Schema.Organization | Schema.Person | undefined;
-  referencesOrder: Schema.Order | undefined;
+  provider: Schema.Organization<D> | Schema.Person<D> | undefined;
+  referencesOrder: Schema.Order<D> | undefined;
   scheduledPaymentDate: Date | undefined;
-  totalPaymentDue: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
+  totalPaymentDue: Schema.MonetaryAmount<D> | Schema.PriceSpecification<D> | undefined;
 }
 
 export function InvoiceMixin<Base extends Constructor>(Resource: Base) {

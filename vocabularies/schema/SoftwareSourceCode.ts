@@ -7,15 +7,15 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface SoftwareSourceCode extends Schema.CreativeWork, RdfResource {
+export interface SoftwareSourceCode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
   codeRepository: RDF.NamedNode | undefined;
   codeSampleType: string | undefined;
-  programmingLanguage: Schema.ComputerLanguage | undefined;
+  programmingLanguage: Schema.ComputerLanguage<D> | undefined;
   programmingLanguageLiteral: string | undefined;
   runtime: string | undefined;
   runtimePlatform: string | undefined;
   sampleType: string | undefined;
-  targetProduct: Schema.SoftwareApplication | undefined;
+  targetProduct: Schema.SoftwareApplication<D> | undefined;
 }
 
 export function SoftwareSourceCodeMixin<Base extends Constructor>(Resource: Base) {

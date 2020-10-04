@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { OrganizeActionMixin } from './OrganizeAction';
 
-export interface BookmarkAction extends Schema.OrganizeAction, RdfResource {
+export interface BookmarkAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OrganizeAction<D>, RdfResource<D> {
 }
 
 export function BookmarkActionMixin<Base extends Constructor>(Resource: Base) {

@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ReservationMixin } from './Reservation';
 
-export interface TaxiReservation extends Schema.Reservation, RdfResource {
-  partySize: Schema.QuantitativeValue | undefined;
+export interface TaxiReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, RdfResource<D> {
+  partySize: Schema.QuantitativeValue<D> | undefined;
   partySizeLiteral: number | undefined;
-  pickupLocation: Schema.Place | undefined;
+  pickupLocation: Schema.Place<D> | undefined;
   pickupTime: Date | undefined;
 }
 

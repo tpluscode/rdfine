@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
-export interface Rule extends Rdfs.Resource, RdfResource {
-  condition: Sh.Shape | undefined;
+export interface Rule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+  condition: Sh.Shape<D> | undefined;
 }
 
 export function RuleMixin<Base extends Constructor>(Resource: Base) {

@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CommunicateActionMixin } from './CommunicateAction';
 
-export interface CheckInAction extends Schema.CommunicateAction, RdfResource {
+export interface CheckInAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, RdfResource<D> {
 }
 
 export function CheckInActionMixin<Base extends Constructor>(Resource: Base) {

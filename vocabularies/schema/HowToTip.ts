@@ -8,7 +8,7 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 import { ListItemMixin } from './ListItem';
 
-export interface HowToTip extends Schema.CreativeWork, Schema.ListItem, RdfResource {
+export interface HowToTip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ListItem<D>, RdfResource<D> {
 }
 
 export function HowToTipMixin<Base extends Constructor>(Resource: Base) {

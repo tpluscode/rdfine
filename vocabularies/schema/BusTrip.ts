@@ -7,11 +7,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { TripMixin } from './Trip';
 
-export interface BusTrip extends Schema.Trip, RdfResource {
-  arrivalBusStop: Schema.BusStation | Schema.BusStop | undefined;
+export interface BusTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Trip<D>, RdfResource<D> {
+  arrivalBusStop: Schema.BusStation<D> | Schema.BusStop<D> | undefined;
   busName: string | undefined;
   busNumber: string | undefined;
-  departureBusStop: Schema.BusStation | Schema.BusStop | undefined;
+  departureBusStop: Schema.BusStation<D> | Schema.BusStop<D> | undefined;
 }
 
 export function BusTripMixin<Base extends Constructor>(Resource: Base) {

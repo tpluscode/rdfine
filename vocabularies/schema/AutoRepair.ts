@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { AutomotiveBusinessMixin } from './AutomotiveBusiness';
 
-export interface AutoRepair extends Schema.AutomotiveBusiness, RdfResource {
+export interface AutoRepair<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AutomotiveBusiness<D>, RdfResource<D> {
 }
 
 export function AutoRepairMixin<Base extends Constructor>(Resource: Base) {

@@ -3,7 +3,7 @@ import clownface from 'clownface'
 import { turtle } from '@tpluscode/rdf-string'
 import * as Schema from '@rdfine/schema'
 import { PersonBundle } from '@rdfine/schema/bundles'
-import RdfResource, { Initializer, fromObject } from '@tpluscode/rdfine/RdfResource'
+import RdfResource, { fromObject } from '@tpluscode/rdfine/RdfResource'
 import { schema } from '@tpluscode/rdf-ns-builders'
 import namespace from '@rdfjs/namespace'
 
@@ -37,12 +37,12 @@ async function main() {
 
   // existing entities can also be used
   const penny = new Schema.PersonMixin.Class(graph.node(bigBangTheory.Penny), {
-    knows: howard as Initializer<Schema.Person>, // otherwise TypeScript goes ballistic
+    knows: howard,
   })
   penny.name = 'Penny'
 
   // and individual properties initialized from plain objects
-  howard.spouse = fromObject({
+  howard.spouse = fromObject<Schema.Person>({
     id: bigBangTheory.Bernadette,
     types: [schema.Person],
     givenName: 'Bernadette',

@@ -6,12 +6,12 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdfs from '.';
 
-export interface Resource extends RdfResource {
+export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   comment: string | undefined;
-  isDefinedBy: Rdfs.Resource | undefined;
+  isDefinedBy: Rdfs.Resource<D> | undefined;
   label: string | undefined;
-  member: Array<Rdfs.Resource>;
-  seeAlso: Array<Rdfs.Resource>;
+  member: Array<Rdfs.Resource<D>>;
+  seeAlso: Array<Rdfs.Resource<D>>;
 }
 
 export function ResourceMixin<Base extends Constructor>(Resource: Base) {

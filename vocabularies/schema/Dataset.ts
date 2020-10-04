@@ -7,12 +7,12 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Dataset extends Schema.CreativeWork, RdfResource {
-  catalog: Schema.DataCatalog | undefined;
+export interface Dataset<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  catalog: Schema.DataCatalog<D> | undefined;
   datasetTimeInterval: Date | undefined;
-  distribution: Schema.DataDownload | undefined;
-  includedDataCatalog: Schema.DataCatalog | undefined;
-  includedInDataCatalog: Schema.DataCatalog | undefined;
+  distribution: Schema.DataDownload<D> | undefined;
+  includedDataCatalog: Schema.DataCatalog<D> | undefined;
+  includedInDataCatalog: Schema.DataCatalog<D> | undefined;
   issn: string | undefined;
 }
 

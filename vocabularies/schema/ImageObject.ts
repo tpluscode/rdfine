@@ -7,13 +7,13 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { MediaObjectMixin } from './MediaObject';
 
-export interface ImageObject extends Schema.MediaObject, RdfResource {
-  caption: Schema.MediaObject | undefined;
+export interface ImageObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, RdfResource<D> {
+  caption: Schema.MediaObject<D> | undefined;
   captionLiteral: string | undefined;
-  exifData: Schema.PropertyValue | undefined;
+  exifData: Schema.PropertyValue<D> | undefined;
   exifDataLiteral: string | undefined;
   representativeOfPage: boolean | undefined;
-  thumbnail: Schema.ImageObject | undefined;
+  thumbnail: Schema.ImageObject<D> | undefined;
 }
 
 export function ImageObjectMixin<Base extends Constructor>(Resource: Base) {

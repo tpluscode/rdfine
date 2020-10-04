@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import { ShapeMixin } from './Shape';
 
-export interface NodeShape extends Sh.Shape, RdfResource {
+export interface NodeShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Shape<D>, RdfResource<D> {
 }
 
 export function NodeShapeMixin<Base extends Constructor>(Resource: Base) {

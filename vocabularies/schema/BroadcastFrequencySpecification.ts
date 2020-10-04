@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface BroadcastFrequencySpecification extends Schema.Intangible, RdfResource {
-  broadcastFrequencyValue: Schema.QuantitativeValue | undefined;
+export interface BroadcastFrequencySpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  broadcastFrequencyValue: Schema.QuantitativeValue<D> | undefined;
   broadcastFrequencyValueLiteral: number | undefined;
 }
 

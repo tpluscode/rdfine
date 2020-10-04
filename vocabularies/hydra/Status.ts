@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
 import { ResourceMixin } from './Resource';
 
-export interface Status extends Hydra.Resource, RdfResource {
+export interface Status<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
   description: string | undefined;
   statusCode: number | undefined;
   title: string | undefined;

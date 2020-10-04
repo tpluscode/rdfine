@@ -7,17 +7,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { HowToMixin } from './HowTo';
 
-export interface Recipe extends Schema.HowTo, RdfResource {
+export interface Recipe<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HowTo<D>, RdfResource<D> {
   cookingMethod: string | undefined;
-  cookTime: Schema.Duration | undefined;
+  cookTime: Schema.Duration<D> | undefined;
   ingredients: string | undefined;
-  nutrition: Schema.NutritionInformation | undefined;
+  nutrition: Schema.NutritionInformation<D> | undefined;
   recipeCategory: string | undefined;
   recipeCuisine: string | undefined;
   recipeIngredient: string | undefined;
-  recipeInstructions: Schema.CreativeWork | Schema.ItemList | undefined;
+  recipeInstructions: Schema.CreativeWork<D> | Schema.ItemList<D> | undefined;
   recipeInstructionsLiteral: string | undefined;
-  recipeYield: Schema.QuantitativeValue | undefined;
+  recipeYield: Schema.QuantitativeValue<D> | undefined;
   recipeYieldLiteral: string | undefined;
   suitableForDiet: Schema.RestrictedDiet | undefined;
 }

@@ -8,7 +8,7 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 import { SeriesMixin } from './Series';
 
-export interface CreativeWorkSeries extends Schema.CreativeWork, Schema.Series, RdfResource {
+export interface CreativeWorkSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.Series<D>, RdfResource<D> {
   endDate: Date | undefined;
   issn: string | undefined;
   startDate: Date | undefined;

@@ -7,15 +7,15 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface BroadcastChannel extends Schema.Intangible, RdfResource {
+export interface BroadcastChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
   broadcastChannelId: string | undefined;
-  broadcastFrequency: Schema.BroadcastFrequencySpecification | undefined;
+  broadcastFrequency: Schema.BroadcastFrequencySpecification<D> | undefined;
   broadcastFrequencyLiteral: string | undefined;
   broadcastServiceTier: string | undefined;
   genre: string | undefined;
   genreTerm: RDF.NamedNode | undefined;
-  inBroadcastLineup: Schema.CableOrSatelliteService | undefined;
-  providesBroadcastService: Schema.BroadcastService | undefined;
+  inBroadcastLineup: Schema.CableOrSatelliteService<D> | undefined;
+  providesBroadcastService: Schema.BroadcastService<D> | undefined;
 }
 
 export function BroadcastChannelMixin<Base extends Constructor>(Resource: Base) {

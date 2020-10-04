@@ -7,22 +7,22 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface JobPosting extends Schema.Intangible, RdfResource {
-  baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
+export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  baseSalary: Schema.MonetaryAmount<D> | Schema.PriceSpecification<D> | undefined;
   baseSalaryLiteral: number | undefined;
   benefits: string | undefined;
   datePosted: Date | undefined;
   employmentType: string | undefined;
-  estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution | undefined;
+  estimatedSalary: Schema.MonetaryAmount<D> | Schema.MonetaryAmountDistribution<D> | undefined;
   estimatedSalaryLiteral: number | undefined;
   experienceRequirements: string | undefined;
-  hiringOrganization: Schema.Organization | undefined;
+  hiringOrganization: Schema.Organization<D> | undefined;
   incentiveCompensation: string | undefined;
   incentives: string | undefined;
   industry: string | undefined;
   jobBenefits: string | undefined;
-  jobLocation: Schema.Place | undefined;
-  relevantOccupation: Schema.Occupation | undefined;
+  jobLocation: Schema.Place<D> | undefined;
+  relevantOccupation: Schema.Occupation<D> | undefined;
   responsibilities: string | undefined;
   salaryCurrency: string | undefined;
   skills: string | undefined;

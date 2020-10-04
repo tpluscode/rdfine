@@ -8,8 +8,8 @@ import type * as Schema from '.';
 import { OrganizationMixin } from './Organization';
 import { PlaceMixin } from './Place';
 
-export interface LocalBusiness extends Schema.Organization, Schema.Place, RdfResource {
-  branchOf: Schema.Organization | undefined;
+export interface LocalBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, Schema.Place<D>, RdfResource<D> {
+  branchOf: Schema.Organization<D> | undefined;
   currenciesAccepted: string | undefined;
   openingHours: string | undefined;
   paymentAccepted: string | undefined;

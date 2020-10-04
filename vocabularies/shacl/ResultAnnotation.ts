@@ -8,8 +8,8 @@ import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 import * as Rdf from '@rdfine/rdf';
 
-export interface ResultAnnotation extends Rdfs.Resource, RdfResource {
-  annotationProperty: Rdf.Property | undefined;
+export interface ResultAnnotation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+  annotationProperty: Rdf.Property<D> | undefined;
   annotationValue: RDF.Term | undefined;
   annotationVarName: string | undefined;
 }

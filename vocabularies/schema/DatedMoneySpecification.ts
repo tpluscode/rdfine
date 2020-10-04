@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface DatedMoneySpecification extends Schema.StructuredValue, RdfResource {
-  amount: Schema.MonetaryAmount | undefined;
+export interface DatedMoneySpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+  amount: Schema.MonetaryAmount<D> | undefined;
   amountLiteral: number | undefined;
   currency: string | undefined;
   endDate: Date | undefined;

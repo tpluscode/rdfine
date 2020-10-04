@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import { DatasetCore, Literal, NamedNode, Term } from 'rdf-js'
 import type { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
@@ -19,8 +20,8 @@ type SingleTypeMixin = {
 
 type MaybeArray<T> = T | T[]
 
-export interface ResourceIndexer<D extends DatasetCore = DatasetCore, T extends RdfResource<any> = RdfResource<any>> {
-  [ prop: string ]: null | undefined | MaybeArray<T | Literal | T & ResourceIndexer>
+export interface ResourceIndexer<T extends RdfResource = RdfResource> {
+  [ prop: string ]: null | undefined | MaybeArray<T | Literal | T & ResourceIndexer<T>>
 }
 
 export type Mixin<T extends AnyFunction = any> = InstanceType<ReturnType<T>>
@@ -30,10 +31,10 @@ export interface ResourceFactory<D extends DatasetCore = DatasetCore, R extends 
   createEntity<S>(
     term: GraphPointer<Term, D>,
     typeAndMixins?: Mixin<T>[] | [Constructor, ...Mixin<T>[]], // TODO: move mixins into options object
-    options?: ResourceCreationOptions<D, R & S>): R & S & ResourceIndexer<D, R>
+    options?: ResourceCreationOptions<D, R & S>): R & S & ResourceIndexer<R>
 }
 
-export interface ResourceCreationOptions<D extends DatasetCore, R extends RdfResource<any>> {
+export interface ResourceCreationOptions<D extends DatasetCore, R extends RdfResource> {
   parent?: RdfResource<D>
   initializer?: Initializer<R>
 }
@@ -66,7 +67,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     })
   }
 
-  public createEntity<S>(pointer: ResourceNode<D>, typeAndMixins: Mixin<T>[] | [Constructor, ...Mixin<T>[]] = [], options: ResourceCreationOptions<D, R & S> = {}): R & S & ResourceIndexer<D, R> {
+  public createEntity<S>(pointer: ResourceNode<D>, typeAndMixins: Mixin<T>[] | [Constructor, ...Mixin<T>[]] = [], options: ResourceCreationOptions<D, R & S> = {}): R & S & ResourceIndexer<R> {
     let BaseClass = this.BaseClass
     let explicitMixins: Mixin[] = typeAndMixins
     if (typeAndMixins.length > 0) {
@@ -90,7 +91,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
 
     const Type = this.__extend(BaseClass, [...mixins])
 
-    return createProxy(new Type(pointer, options.initializer, options.parent)) as R & S & ResourceIndexer<D, R>
+    return createProxy(new Type(pointer, options.initializer, options.parent)) as R & S & ResourceIndexer<R>
   }
 
   private __getBaseClass(baseClass: Constructor, types: string[]) {

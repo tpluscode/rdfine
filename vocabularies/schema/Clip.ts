@@ -7,16 +7,16 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Clip extends Schema.CreativeWork, RdfResource {
-  actor: Schema.Person | undefined;
-  actors: Schema.Person | undefined;
+export interface Clip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  actor: Schema.Person<D> | undefined;
+  actors: Schema.Person<D> | undefined;
   clipNumber: number | string | undefined;
-  director: Schema.Person | undefined;
-  directors: Schema.Person | undefined;
-  musicBy: Schema.MusicGroup | Schema.Person | undefined;
-  partOfEpisode: Schema.Episode | undefined;
-  partOfSeason: Schema.CreativeWorkSeason | undefined;
-  partOfSeries: Schema.CreativeWorkSeries | undefined;
+  director: Schema.Person<D> | undefined;
+  directors: Schema.Person<D> | undefined;
+  musicBy: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
+  partOfEpisode: Schema.Episode<D> | undefined;
+  partOfSeason: Schema.CreativeWorkSeason<D> | undefined;
+  partOfSeries: Schema.CreativeWorkSeries<D> | undefined;
 }
 
 export function ClipMixin<Base extends Constructor>(Resource: Base) {

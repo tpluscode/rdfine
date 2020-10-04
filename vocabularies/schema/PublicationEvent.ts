@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { EventMixin } from './Event';
 
-export interface PublicationEvent extends Schema.Event, RdfResource {
+export interface PublicationEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
   free: boolean | undefined;
   isAccessibleForFree: boolean | undefined;
-  publishedOn: Schema.BroadcastService | undefined;
+  publishedOn: Schema.BroadcastService<D> | undefined;
 }
 
 export function PublicationEventMixin<Base extends Constructor>(Resource: Base) {

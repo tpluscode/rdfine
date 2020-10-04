@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ActionMixin } from './Action';
 
-export interface UpdateAction extends Schema.Action, RdfResource {
-  collection: Schema.Thing | undefined;
-  targetCollection: Schema.Thing | undefined;
+export interface UpdateAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, RdfResource<D> {
+  collection: Schema.Thing<D> | undefined;
+  targetCollection: Schema.Thing<D> | undefined;
 }
 
 export function UpdateActionMixin<Base extends Constructor>(Resource: Base) {

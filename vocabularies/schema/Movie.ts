@@ -7,16 +7,16 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Movie extends Schema.CreativeWork, RdfResource {
-  actor: Schema.Person | undefined;
-  actors: Schema.Person | undefined;
-  countryOfOrigin: Schema.Country | undefined;
-  director: Schema.Person | undefined;
-  directors: Schema.Person | undefined;
-  duration: Schema.Duration | undefined;
-  musicBy: Schema.MusicGroup | Schema.Person | undefined;
-  productionCompany: Schema.Organization | undefined;
-  trailer: Schema.VideoObject | undefined;
+export interface Movie<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  actor: Schema.Person<D> | undefined;
+  actors: Schema.Person<D> | undefined;
+  countryOfOrigin: Schema.Country<D> | undefined;
+  director: Schema.Person<D> | undefined;
+  directors: Schema.Person<D> | undefined;
+  duration: Schema.Duration<D> | undefined;
+  musicBy: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
+  productionCompany: Schema.Organization<D> | undefined;
+  trailer: Schema.VideoObject<D> | undefined;
 }
 
 export function MovieMixin<Base extends Constructor>(Resource: Base) {

@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { AudienceMixin } from './Audience';
 
-export interface PeopleAudience extends Schema.Audience, RdfResource {
+export interface PeopleAudience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Audience<D>, RdfResource<D> {
   requiredGender: string | undefined;
   requiredMaxAge: number | undefined;
   requiredMinAge: number | undefined;

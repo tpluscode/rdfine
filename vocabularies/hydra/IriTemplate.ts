@@ -8,10 +8,10 @@ import type * as Hydra from '.';
 import { ResourceMixin } from './Resource';
 import { IriTemplateExMixin } from './extensions/IriTemplateEx';
 
-export interface IriTemplate extends Hydra.Resource, RdfResource {
-  mapping: Array<Hydra.IriTemplateMapping>;
+export interface IriTemplate<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
+  mapping: Array<Hydra.IriTemplateMapping<D>>;
   template: string | undefined;
-  variableRepresentation: Hydra.VariableRepresentation | undefined;
+  variableRepresentation: Hydra.VariableRepresentation<D> | undefined;
 }
 
 export function IriTemplateMixin<Base extends Constructor>(Resource: Base) {

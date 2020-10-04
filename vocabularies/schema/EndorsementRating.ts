@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { RatingMixin } from './Rating';
 
-export interface EndorsementRating extends Schema.Rating, RdfResource {
+export interface EndorsementRating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Rating<D>, RdfResource<D> {
 }
 
 export function EndorsementRatingMixin<Base extends Constructor>(Resource: Base) {

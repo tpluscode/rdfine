@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
-export interface Annotation extends Rdfs.Resource, RdfResource {
+export interface Annotation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
 }
 
 export function AnnotationMixin<Base extends Constructor>(Resource: Base) {

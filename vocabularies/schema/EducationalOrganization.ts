@@ -8,8 +8,8 @@ import type * as Schema from '.';
 import { CivicStructureMixin } from './CivicStructure';
 import { OrganizationMixin } from './Organization';
 
-export interface EducationalOrganization extends Schema.CivicStructure, Schema.Organization, RdfResource {
-  alumni: Schema.Person | undefined;
+export interface EducationalOrganization<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.Organization<D>, RdfResource<D> {
+  alumni: Schema.Person<D> | undefined;
 }
 
 export function EducationalOrganizationMixin<Base extends Constructor>(Resource: Base) {

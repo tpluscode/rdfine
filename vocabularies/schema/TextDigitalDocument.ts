@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { DigitalDocumentMixin } from './DigitalDocument';
 
-export interface TextDigitalDocument extends Schema.DigitalDocument, RdfResource {
+export interface TextDigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DigitalDocument<D>, RdfResource<D> {
 }
 
 export function TextDigitalDocumentMixin<Base extends Constructor>(Resource: Base) {

@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { LocalBusinessMixin } from './LocalBusiness';
 
-export interface InternetCafe extends Schema.LocalBusiness, RdfResource {
+export interface InternetCafe<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
 }
 
 export function InternetCafeMixin<Base extends Constructor>(Resource: Base) {

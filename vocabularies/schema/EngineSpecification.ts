@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface EngineSpecification extends Schema.StructuredValue, RdfResource {
+export interface EngineSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
   fuelType: string | undefined;
   fuelTypeTerm: RDF.NamedNode | Schema.QualitativeValue | undefined;
 }

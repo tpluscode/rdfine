@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface MediaSubscription extends Schema.Intangible, RdfResource {
-  authenticator: Schema.Organization | undefined;
-  expectsAcceptanceOf: Schema.Offer | undefined;
+export interface MediaSubscription<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  authenticator: Schema.Organization<D> | undefined;
+  expectsAcceptanceOf: Schema.Offer<D> | undefined;
 }
 
 export function MediaSubscriptionMixin<Base extends Constructor>(Resource: Base) {

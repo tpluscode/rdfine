@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ItemListMixin } from './ItemList';
 
-export interface OfferCatalog extends Schema.ItemList, RdfResource {
+export interface OfferCatalog<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ItemList<D>, RdfResource<D> {
 }
 
 export function OfferCatalogMixin<Base extends Constructor>(Resource: Base) {

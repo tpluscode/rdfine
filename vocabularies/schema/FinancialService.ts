@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { LocalBusinessMixin } from './LocalBusiness';
 
-export interface FinancialService extends Schema.LocalBusiness, RdfResource {
+export interface FinancialService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
   feesAndCommissionsSpecification: string | undefined;
   feesAndCommissionsSpecificationTerm: RDF.NamedNode | undefined;
 }

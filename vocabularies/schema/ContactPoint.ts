@@ -7,19 +7,19 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface ContactPoint extends Schema.StructuredValue, RdfResource {
-  areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
+export interface ContactPoint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+  areaServed: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
   areaServedLiteral: string | undefined;
-  availableLanguage: Schema.Language | undefined;
+  availableLanguage: Schema.Language<D> | undefined;
   availableLanguageLiteral: string | undefined;
   contactOption: Schema.ContactPointOption | undefined;
   contactType: string | undefined;
   email: string | undefined;
   faxNumber: string | undefined;
-  hoursAvailable: Schema.OpeningHoursSpecification | undefined;
-  productSupported: Schema.Product | undefined;
+  hoursAvailable: Schema.OpeningHoursSpecification<D> | undefined;
+  productSupported: Schema.Product<D> | undefined;
   productSupportedLiteral: string | undefined;
-  serviceArea: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
+  serviceArea: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
   telephone: string | undefined;
 }
 

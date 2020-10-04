@@ -8,7 +8,7 @@ import type * as Schema from '.';
 import { CivicStructureMixin } from './CivicStructure';
 import { EmergencyServiceMixin } from './EmergencyService';
 
-export interface PoliceStation extends Schema.CivicStructure, Schema.EmergencyService, RdfResource {
+export interface PoliceStation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.EmergencyService<D>, RdfResource<D> {
 }
 
 export function PoliceStationMixin<Base extends Constructor>(Resource: Base) {

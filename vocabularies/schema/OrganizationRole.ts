@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { RoleMixin } from './Role';
 
-export interface OrganizationRole extends Schema.Role, RdfResource {
+export interface OrganizationRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Role<D>, RdfResource<D> {
   numberedPosition: number | undefined;
 }
 

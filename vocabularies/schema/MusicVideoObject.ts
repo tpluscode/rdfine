@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { MediaObjectMixin } from './MediaObject';
 
-export interface MusicVideoObject extends Schema.MediaObject, RdfResource {
+export interface MusicVideoObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, RdfResource<D> {
 }
 
 export function MusicVideoObjectMixin<Base extends Constructor>(Resource: Base) {

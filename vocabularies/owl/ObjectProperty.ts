@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import * as Rdf from '@rdfine/rdf';
 
-export interface ObjectProperty extends Rdf.Property, RdfResource {
-  inverseOf: Owl.ObjectProperty | undefined;
-  propertyChainAxiom: Rdf.List | undefined;
+export interface ObjectProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, RdfResource<D> {
+  inverseOf: Owl.ObjectProperty<D> | undefined;
+  propertyChainAxiom: Rdf.List<D> | undefined;
 }
 
 export function ObjectPropertyMixin<Base extends Constructor>(Resource: Base) {

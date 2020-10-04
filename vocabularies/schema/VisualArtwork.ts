@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface VisualArtwork extends Schema.CreativeWork, RdfResource {
+export interface VisualArtwork<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
   artEdition: number | string | undefined;
   artform: string | undefined;
   artformTerm: RDF.NamedNode | undefined;
@@ -15,11 +15,11 @@ export interface VisualArtwork extends Schema.CreativeWork, RdfResource {
   artMediumTerm: RDF.NamedNode | undefined;
   artworkSurface: string | undefined;
   artworkSurfaceTerm: RDF.NamedNode | undefined;
-  depth: Schema.Distance | Schema.QuantitativeValue | undefined;
-  height: Schema.Distance | Schema.QuantitativeValue | undefined;
+  depth: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
+  height: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
   surface: string | undefined;
   surfaceTerm: RDF.NamedNode | undefined;
-  width: Schema.Distance | Schema.QuantitativeValue | undefined;
+  width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
 export function VisualArtworkMixin<Base extends Constructor>(Resource: Base) {

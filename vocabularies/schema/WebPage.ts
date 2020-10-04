@@ -7,17 +7,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface WebPage extends Schema.CreativeWork, RdfResource {
-  breadcrumb: Schema.BreadcrumbList | undefined;
+export interface WebPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  breadcrumb: Schema.BreadcrumbList<D> | undefined;
   breadcrumbLiteral: string | undefined;
   lastReviewed: Date | undefined;
-  mainContentOfPage: Schema.WebPageElement | undefined;
-  primaryImageOfPage: Schema.ImageObject | undefined;
+  mainContentOfPage: Schema.WebPageElement<D> | undefined;
+  primaryImageOfPage: Schema.ImageObject<D> | undefined;
   relatedLink: RDF.NamedNode | undefined;
-  reviewedBy: Schema.Organization | Schema.Person | undefined;
+  reviewedBy: Schema.Organization<D> | Schema.Person<D> | undefined;
   significantLink: RDF.NamedNode | undefined;
   significantLinks: RDF.NamedNode | undefined;
-  speakable: Schema.SpeakableSpecification | undefined;
+  speakable: Schema.SpeakableSpecification<D> | undefined;
   specialty: Schema.Specialty | undefined;
 }
 

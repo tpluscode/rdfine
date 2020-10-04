@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { AchieveActionMixin } from './AchieveAction';
 
-export interface TieAction extends Schema.AchieveAction, RdfResource {
+export interface TieAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AchieveAction<D>, RdfResource<D> {
 }
 
 export function TieActionMixin<Base extends Constructor>(Resource: Base) {

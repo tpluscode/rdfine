@@ -8,8 +8,8 @@ import type * as Owl from '.';
 import * as Rdfs from '@rdfine/rdfs';
 import * as Rdf from '@rdfine/rdf';
 
-export interface NegativePropertyAssertion extends Rdfs.Resource, RdfResource {
-  assertionProperty: Rdf.Property | undefined;
+export interface NegativePropertyAssertion<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+  assertionProperty: Rdf.Property<D> | undefined;
   sourceIndividual: RDF.NamedNode | undefined;
   targetIndividual: RDF.NamedNode | undefined;
   targetValue: string | undefined;

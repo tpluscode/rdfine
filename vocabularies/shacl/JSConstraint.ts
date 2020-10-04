@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import { JSExecutableMixin } from './JSExecutable';
 
-export interface JSConstraint extends Sh.JSExecutable, RdfResource {
+export interface JSConstraint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, RdfResource<D> {
 }
 
 export function JSConstraintMixin<Base extends Constructor>(Resource: Base) {

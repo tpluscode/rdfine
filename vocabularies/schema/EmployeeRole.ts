@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { OrganizationRoleMixin } from './OrganizationRole';
 
-export interface EmployeeRole extends Schema.OrganizationRole, RdfResource {
-  baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
+export interface EmployeeRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OrganizationRole<D>, RdfResource<D> {
+  baseSalary: Schema.MonetaryAmount<D> | Schema.PriceSpecification<D> | undefined;
   baseSalaryLiteral: number | undefined;
   salaryCurrency: string | undefined;
 }

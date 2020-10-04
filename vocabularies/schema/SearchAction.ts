@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ActionMixin } from './Action';
 
-export interface SearchAction extends Schema.Action, RdfResource {
+export interface SearchAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, RdfResource<D> {
   query: string | undefined;
 }
 

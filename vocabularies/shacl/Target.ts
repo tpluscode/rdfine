@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
-export interface Target extends Rdfs.Resource, RdfResource {
+export interface Target<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
 }
 
 export function TargetMixin<Base extends Constructor>(Resource: Base) {
