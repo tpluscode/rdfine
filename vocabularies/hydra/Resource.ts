@@ -9,7 +9,7 @@ import * as Rdfs from '@rdfine/rdfs';
 
 export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
   apiDocumentation: Hydra.ApiDocumentation<D> | undefined;
-  collection: Array<Hydra.Collection<D>>;
+  collection: Array<Hydra.Collection<Hydra.Resource<D>, D>>;
   first: Hydra.Resource<D> | undefined;
   freetextQuery: string | undefined;
   last: Hydra.Resource<D> | undefined;
@@ -26,7 +26,7 @@ export function ResourceMixin<Base extends Constructor>(Resource: Base) {
     @property.resource({ implicitTypes: [hydra.ApiDocumentation] })
     apiDocumentation: Hydra.ApiDocumentation | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Collection] })
-    collection!: Array<Hydra.Collection>;
+    collection!: Array<Hydra.Collection<any, any>>;
     @property.resource({ as: [ResourceMixin] })
     first: Hydra.Resource | undefined;
     @property.literal()
