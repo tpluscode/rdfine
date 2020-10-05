@@ -7,15 +7,15 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { MediaObjectMixin } from './MediaObject';
 
-export interface VideoObject extends Schema.MediaObject, RdfResource {
-  actor: Schema.Person | undefined;
-  actors: Schema.Person | undefined;
-  caption: Schema.MediaObject | undefined;
+export interface VideoObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, RdfResource<D> {
+  actor: Schema.Person<D> | undefined;
+  actors: Schema.Person<D> | undefined;
+  caption: Schema.MediaObject<D> | undefined;
   captionLiteral: string | undefined;
-  director: Schema.Person | undefined;
-  directors: Schema.Person | undefined;
-  musicBy: Schema.MusicGroup | Schema.Person | undefined;
-  thumbnail: Schema.ImageObject | undefined;
+  director: Schema.Person<D> | undefined;
+  directors: Schema.Person<D> | undefined;
+  musicBy: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
+  thumbnail: Schema.ImageObject<D> | undefined;
   transcript: string | undefined;
   videoFrameSize: string | undefined;
   videoQuality: string | undefined;

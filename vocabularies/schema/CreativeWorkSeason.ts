@@ -7,18 +7,18 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface CreativeWorkSeason extends Schema.CreativeWork, RdfResource {
-  actor: Schema.Person | undefined;
-  director: Schema.Person | undefined;
+export interface CreativeWorkSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  actor: Schema.Person<D> | undefined;
+  director: Schema.Person<D> | undefined;
   endDate: Date | undefined;
-  episode: Schema.Episode | undefined;
-  episodes: Schema.Episode | undefined;
+  episode: Schema.Episode<D> | undefined;
+  episodes: Schema.Episode<D> | undefined;
   numberOfEpisodes: number | undefined;
-  partOfSeries: Schema.CreativeWorkSeries | undefined;
-  productionCompany: Schema.Organization | undefined;
+  partOfSeries: Schema.CreativeWorkSeries<D> | undefined;
+  productionCompany: Schema.Organization<D> | undefined;
   seasonNumber: number | string | undefined;
   startDate: Date | undefined;
-  trailer: Schema.VideoObject | undefined;
+  trailer: Schema.VideoObject<D> | undefined;
 }
 
 export function CreativeWorkSeasonMixin<Base extends Constructor>(Resource: Base) {

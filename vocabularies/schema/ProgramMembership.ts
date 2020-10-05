@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface ProgramMembership extends Schema.Intangible, RdfResource {
-  hostingOrganization: Schema.Organization | undefined;
-  member: Schema.Organization | Schema.Person | undefined;
-  members: Schema.Organization | Schema.Person | undefined;
+export interface ProgramMembership<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  hostingOrganization: Schema.Organization<D> | undefined;
+  member: Schema.Organization<D> | Schema.Person<D> | undefined;
+  members: Schema.Organization<D> | Schema.Person<D> | undefined;
   membershipNumber: string | undefined;
   programName: string | undefined;
 }

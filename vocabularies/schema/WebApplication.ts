@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { SoftwareApplicationMixin } from './SoftwareApplication';
 
-export interface WebApplication extends Schema.SoftwareApplication, RdfResource {
+export interface WebApplication<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SoftwareApplication<D>, RdfResource<D> {
   browserRequirements: string | undefined;
 }
 

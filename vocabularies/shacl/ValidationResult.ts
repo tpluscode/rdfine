@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import { AbstractResultMixin } from './AbstractResult';
 
-export interface ValidationResult extends Sh.AbstractResult, RdfResource {
+export interface ValidationResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.AbstractResult<D>, RdfResource<D> {
 }
 
 export function ValidationResultMixin<Base extends Constructor>(Resource: Base) {

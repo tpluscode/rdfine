@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface MenuSection extends Schema.CreativeWork, RdfResource {
-  hasMenuItem: Schema.MenuItem | undefined;
-  hasMenuSection: Schema.MenuSection | undefined;
+export interface MenuSection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  hasMenuItem: Schema.MenuItem<D> | undefined;
+  hasMenuSection: Schema.MenuSection<D> | undefined;
 }
 
 export function MenuSectionMixin<Base extends Constructor>(Resource: Base) {

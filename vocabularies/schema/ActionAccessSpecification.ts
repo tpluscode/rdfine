@@ -7,15 +7,15 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface ActionAccessSpecification extends Schema.Intangible, RdfResource {
+export interface ActionAccessSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
   availabilityEnds: Date | undefined;
   availabilityStarts: Date | undefined;
-  category: Schema.Thing | undefined;
+  category: Schema.Thing<D> | undefined;
   categoryLiteral: string | undefined;
-  eligibleRegion: Schema.GeoShape | Schema.Place | undefined;
+  eligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   eligibleRegionLiteral: string | undefined;
-  expectsAcceptanceOf: Schema.Offer | undefined;
-  requiresSubscription: Schema.MediaSubscription | undefined;
+  expectsAcceptanceOf: Schema.Offer<D> | undefined;
+  requiresSubscription: Schema.MediaSubscription<D> | undefined;
   requiresSubscriptionLiteral: boolean | undefined;
 }
 

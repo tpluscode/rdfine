@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { EventMixin } from './Event';
 
-export interface ScreeningEvent extends Schema.Event, RdfResource {
+export interface ScreeningEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
   videoFormat: string | undefined;
-  workPresented: Schema.Movie | undefined;
+  workPresented: Schema.Movie<D> | undefined;
 }
 
 export function ScreeningEventMixin<Base extends Constructor>(Resource: Base) {

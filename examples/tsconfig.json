@@ -6,8 +6,5 @@
     "lib": [
       "WebWorker"
     ]
-  },
-  "files": [
-    "index.ts"
-  ]
+  }
 }

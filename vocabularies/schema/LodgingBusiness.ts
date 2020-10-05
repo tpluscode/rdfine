@@ -7,17 +7,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { LocalBusinessMixin } from './LocalBusiness';
 
-export interface LodgingBusiness extends Schema.LocalBusiness, RdfResource {
-  amenityFeature: Schema.LocationFeatureSpecification | undefined;
-  audience: Schema.Audience | undefined;
-  availableLanguage: Schema.Language | undefined;
+export interface LodgingBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
+  amenityFeature: Schema.LocationFeatureSpecification<D> | undefined;
+  audience: Schema.Audience<D> | undefined;
+  availableLanguage: Schema.Language<D> | undefined;
   availableLanguageLiteral: string | undefined;
   checkinTime: Date | undefined;
   checkoutTime: Date | undefined;
-  numberOfRooms: Schema.QuantitativeValue | undefined;
+  numberOfRooms: Schema.QuantitativeValue<D> | undefined;
   numberOfRoomsLiteral: number | undefined;
   petsAllowed: boolean | string | undefined;
-  starRating: Schema.Rating | undefined;
+  starRating: Schema.Rating<D> | undefined;
 }
 
 export function LodgingBusinessMixin<Base extends Constructor>(Resource: Base) {

@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface InteractionCounter extends Schema.StructuredValue, RdfResource {
-  interactionService: Schema.SoftwareApplication | Schema.WebSite | undefined;
-  interactionType: Schema.Action | undefined;
+export interface InteractionCounter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+  interactionService: Schema.SoftwareApplication<D> | Schema.WebSite<D> | undefined;
+  interactionType: Schema.Action<D> | undefined;
   userInteractionCount: number | undefined;
 }
 

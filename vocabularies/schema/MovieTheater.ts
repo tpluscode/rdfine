@@ -8,7 +8,7 @@ import type * as Schema from '.';
 import { CivicStructureMixin } from './CivicStructure';
 import { EntertainmentBusinessMixin } from './EntertainmentBusiness';
 
-export interface MovieTheater extends Schema.CivicStructure, Schema.EntertainmentBusiness, RdfResource {
+export interface MovieTheater<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.EntertainmentBusiness<D>, RdfResource<D> {
   screenCount: number | undefined;
 }
 

@@ -7,15 +7,15 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ReservationMixin } from './Reservation';
 
-export interface LodgingReservation extends Schema.Reservation, RdfResource {
+export interface LodgingReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, RdfResource<D> {
   checkinTime: Date | undefined;
   checkoutTime: Date | undefined;
   lodgingUnitDescription: string | undefined;
   lodgingUnitType: string | undefined;
   lodgingUnitTypeTerm: Schema.QualitativeValue | undefined;
-  numAdults: Schema.QuantitativeValue | undefined;
+  numAdults: Schema.QuantitativeValue<D> | undefined;
   numAdultsLiteral: number | undefined;
-  numChildren: Schema.QuantitativeValue | undefined;
+  numChildren: Schema.QuantitativeValue<D> | undefined;
   numChildrenLiteral: number | undefined;
 }
 

@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface Rating extends Schema.Intangible, RdfResource {
-  author: Schema.Organization | Schema.Person | undefined;
+export interface Rating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  author: Schema.Organization<D> | Schema.Person<D> | undefined;
   bestRating: number | string | undefined;
   ratingValue: number | string | undefined;
   reviewAspect: string | undefined;

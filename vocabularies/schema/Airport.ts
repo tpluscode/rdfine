@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CivicStructureMixin } from './CivicStructure';
 
-export interface Airport extends Schema.CivicStructure, RdfResource {
+export interface Airport<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, RdfResource<D> {
   iataCode: string | undefined;
   icaoCode: string | undefined;
 }

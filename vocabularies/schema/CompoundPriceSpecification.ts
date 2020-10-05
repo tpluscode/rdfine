@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { PriceSpecificationMixin } from './PriceSpecification';
 
-export interface CompoundPriceSpecification extends Schema.PriceSpecification, RdfResource {
-  priceComponent: Schema.UnitPriceSpecification | undefined;
+export interface CompoundPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, RdfResource<D> {
+  priceComponent: Schema.UnitPriceSpecification<D> | undefined;
 }
 
 export function CompoundPriceSpecificationMixin<Base extends Constructor>(Resource: Base) {

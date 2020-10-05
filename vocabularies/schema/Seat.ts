@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface Seat extends Schema.Intangible, RdfResource {
+export interface Seat<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
   seatingType: string | undefined;
   seatingTypeTerm: Schema.QualitativeValue | undefined;
   seatNumber: string | undefined;

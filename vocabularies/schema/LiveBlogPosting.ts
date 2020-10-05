@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { BlogPostingMixin } from './BlogPosting';
 
-export interface LiveBlogPosting extends Schema.BlogPosting, RdfResource {
+export interface LiveBlogPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BlogPosting<D>, RdfResource<D> {
   coverageEndTime: Date | undefined;
   coverageStartTime: Date | undefined;
-  liveBlogUpdate: Schema.BlogPosting | undefined;
+  liveBlogUpdate: Schema.BlogPosting<D> | undefined;
 }
 
 export function LiveBlogPostingMixin<Base extends Constructor>(Resource: Base) {

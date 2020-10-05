@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
-export interface ValidationReport extends Rdfs.Resource, RdfResource {
+export interface ValidationReport<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
   conforms: boolean | undefined;
-  result: Sh.ValidationResult | undefined;
+  result: Sh.ValidationResult<D> | undefined;
   shapesGraphWellFormed: boolean | undefined;
 }
 

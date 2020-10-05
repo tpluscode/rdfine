@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { HowToItemMixin } from './HowToItem';
 
-export interface HowToSupply extends Schema.HowToItem, RdfResource {
-  estimatedCost: Schema.MonetaryAmount | undefined;
+export interface HowToSupply<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HowToItem<D>, RdfResource<D> {
+  estimatedCost: Schema.MonetaryAmount<D> | undefined;
   estimatedCostLiteral: string | undefined;
 }
 

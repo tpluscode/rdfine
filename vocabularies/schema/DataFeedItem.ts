@@ -7,11 +7,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface DataFeedItem extends Schema.Intangible, RdfResource {
+export interface DataFeedItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
   dateCreated: Date | undefined;
   dateDeleted: Date | undefined;
   dateModified: Date | undefined;
-  item: Schema.Thing | undefined;
+  item: Schema.Thing<D> | undefined;
 }
 
 export function DataFeedItemMixin<Base extends Constructor>(Resource: Base) {

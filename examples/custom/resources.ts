@@ -6,7 +6,7 @@ import ResourceFactoryImpl, { ResourceFactory } from '@tpluscode/rdfine/lib/Reso
 const hydra = ns(prefixes.hydra)
 
 export interface Collection extends RdfResource {
-  members: HydraResource[]
+  members: RdfResource[]
 }
 
 export function CollectionMixin<Base extends Constructor>(base: Base) {
@@ -18,9 +18,7 @@ export function CollectionMixin<Base extends Constructor>(base: Base) {
 
   return C
 }
-CollectionMixin.shouldApply = (res: RdfResource) => {
-  return res.hasType(hydra.Collection)
-}
+CollectionMixin.appliesTo = hydra.Collection
 
 export class HydraResource extends RdfResourceImpl {
   public static factory: ResourceFactory = new ResourceFactoryImpl(HydraResource)

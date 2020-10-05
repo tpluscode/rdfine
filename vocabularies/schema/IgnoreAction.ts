@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { AssessActionMixin } from './AssessAction';
 
-export interface IgnoreAction extends Schema.AssessAction, RdfResource {
+export interface IgnoreAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AssessAction<D>, RdfResource<D> {
 }
 
 export function IgnoreActionMixin<Base extends Constructor>(Resource: Base) {

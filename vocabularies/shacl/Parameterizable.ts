@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
-export interface Parameterizable extends Rdfs.Resource, RdfResource {
+export interface Parameterizable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
   labelTemplate: string | undefined;
-  parameter: Sh.Parameter | undefined;
+  parameter: Sh.Parameter<D> | undefined;
 }
 
 export function ParameterizableMixin<Base extends Constructor>(Resource: Base) {

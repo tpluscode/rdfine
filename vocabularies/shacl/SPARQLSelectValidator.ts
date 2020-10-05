@@ -8,8 +8,8 @@ import type * as Sh from '.';
 import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable';
 import { ValidatorMixin } from './Validator';
 
-export interface SPARQLSelectValidator extends Sh.SPARQLSelectExecutable, Sh.Validator, RdfResource {
-  resultAnnotation: Sh.ResultAnnotation | undefined;
+export interface SPARQLSelectValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLSelectExecutable<D>, Sh.Validator<D>, RdfResource<D> {
+  resultAnnotation: Sh.ResultAnnotation<D> | undefined;
 }
 
 export function SPARQLSelectValidatorMixin<Base extends Constructor>(Resource: Base) {

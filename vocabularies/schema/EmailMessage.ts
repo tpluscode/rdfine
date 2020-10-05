@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { MessageMixin } from './Message';
 
-export interface EmailMessage extends Schema.Message, RdfResource {
+export interface EmailMessage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Message<D>, RdfResource<D> {
 }
 
 export function EmailMessageMixin<Base extends Constructor>(Resource: Base) {

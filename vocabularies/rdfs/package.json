@@ -38,6 +38,9 @@
       },
       "seeAlso": {
         "values": "array"
+      },
+      "subClassOf": {
+        "values": "array"
       }
     }
   },

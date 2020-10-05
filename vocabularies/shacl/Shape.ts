@@ -8,24 +8,24 @@ import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 import * as Rdf from '@rdfine/rdf';
 
-export interface Shape extends Rdfs.Resource, RdfResource {
-  and: Array<Sh.Shape>;
-  class: Rdfs.Class | undefined;
+export interface Shape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+  and: Array<Sh.Shape<D>>;
+  class: Rdfs.Class<D> | undefined;
   closed: boolean | undefined;
   in: Array<RDF.Term>;
-  node: Sh.NodeShape | undefined;
+  node: Sh.NodeShape<D> | undefined;
   nodeKind: Sh.NodeKind | undefined;
-  or: Array<Sh.Shape>;
-  property: Array<Sh.PropertyShape>;
-  rule: Sh.Rule | undefined;
-  severity: Sh.Severity | undefined;
-  sparql: Sh.SPARQLConstraint | undefined;
-  target: Sh.Target | undefined;
-  targetClass: Array<Rdfs.Class>;
+  or: Array<Sh.Shape<D>>;
+  property: Array<Sh.PropertyShape<D>>;
+  rule: Sh.Rule<D> | undefined;
+  severity: Sh.Severity<D> | undefined;
+  sparql: Sh.SPARQLConstraint<D> | undefined;
+  target: Sh.Target<D> | undefined;
+  targetClass: Array<Rdfs.Class<D>>;
   targetNode: Array<RDF.Term>;
-  targetObjectsOf: Rdf.Property | undefined;
-  targetSubjectsOf: Rdf.Property | undefined;
-  xone: Array<Sh.Shape>;
+  targetObjectsOf: Rdf.Property<D> | undefined;
+  targetSubjectsOf: Rdf.Property<D> | undefined;
+  xone: Array<Sh.Shape<D>>;
 }
 
 export function ShapeMixin<Base extends Constructor>(Resource: Base) {

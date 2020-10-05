@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { WebPageElementMixin } from './WebPageElement';
 
-export interface WPSideBar extends Schema.WebPageElement, RdfResource {
+export interface WPSideBar<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, RdfResource<D> {
 }
 
 export function WPSideBarMixin<Base extends Constructor>(Resource: Base) {

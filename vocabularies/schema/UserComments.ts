@@ -7,11 +7,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { UserInteractionMixin } from './UserInteraction';
 
-export interface UserComments extends Schema.UserInteraction, RdfResource {
+export interface UserComments<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UserInteraction<D>, RdfResource<D> {
   commentText: string | undefined;
   commentTime: Date | undefined;
-  creator: Schema.Organization | Schema.Person | undefined;
-  discusses: Schema.CreativeWork | undefined;
+  creator: Schema.Organization<D> | Schema.Person<D> | undefined;
+  discusses: Schema.CreativeWork<D> | undefined;
   replyToUrl: RDF.NamedNode | undefined;
 }
 

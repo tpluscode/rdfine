@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { MoveActionMixin } from './MoveAction';
 
-export interface DepartAction extends Schema.MoveAction, RdfResource {
+export interface DepartAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MoveAction<D>, RdfResource<D> {
 }
 
 export function DepartActionMixin<Base extends Constructor>(Resource: Base) {

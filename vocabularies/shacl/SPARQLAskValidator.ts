@@ -8,7 +8,7 @@ import type * as Sh from '.';
 import { SPARQLAskExecutableMixin } from './SPARQLAskExecutable';
 import { ValidatorMixin } from './Validator';
 
-export interface SPARQLAskValidator extends Sh.SPARQLAskExecutable, Sh.Validator, RdfResource {
+export interface SPARQLAskValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLAskExecutable<D>, Sh.Validator<D>, RdfResource<D> {
 }
 
 export function SPARQLAskValidatorMixin<Base extends Constructor>(Resource: Base) {

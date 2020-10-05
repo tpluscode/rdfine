@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { RadioChannelMixin } from './RadioChannel';
 
-export interface FMRadioChannel extends Schema.RadioChannel, RdfResource {
+export interface FMRadioChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.RadioChannel<D>, RdfResource<D> {
 }
 
 export function FMRadioChannelMixin<Base extends Constructor>(Resource: Base) {

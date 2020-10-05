@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CivicStructureMixin } from './CivicStructure';
 
-export interface Bridge extends Schema.CivicStructure, RdfResource {
+export interface Bridge<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, RdfResource<D> {
 }
 
 export function BridgeMixin<Base extends Constructor>(Resource: Base) {

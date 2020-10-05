@@ -8,8 +8,8 @@ import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 import { ParameterizableMixin } from './Parameterizable';
 
-export interface Function extends Sh.Parameterizable, RdfResource {
-  returnType: Rdfs.Class | undefined;
+export interface Function<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Parameterizable<D>, RdfResource<D> {
+  returnType: Rdfs.Class<D> | undefined;
 }
 
 export function FunctionMixin<Base extends Constructor>(Resource: Base) {

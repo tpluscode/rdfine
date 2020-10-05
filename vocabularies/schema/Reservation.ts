@@ -7,21 +7,21 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface Reservation extends Schema.Intangible, RdfResource {
-  bookingAgent: Schema.Organization | Schema.Person | undefined;
+export interface Reservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  bookingAgent: Schema.Organization<D> | Schema.Person<D> | undefined;
   bookingTime: Date | undefined;
-  broker: Schema.Organization | Schema.Person | undefined;
+  broker: Schema.Organization<D> | Schema.Person<D> | undefined;
   modifiedTime: Date | undefined;
   priceCurrency: string | undefined;
-  programMembershipUsed: Schema.ProgramMembership | undefined;
-  provider: Schema.Organization | Schema.Person | undefined;
-  reservationFor: Schema.Thing | undefined;
+  programMembershipUsed: Schema.ProgramMembership<D> | undefined;
+  provider: Schema.Organization<D> | Schema.Person<D> | undefined;
+  reservationFor: Schema.Thing<D> | undefined;
   reservationId: string | undefined;
   reservationStatus: Schema.ReservationStatusType | undefined;
-  reservedTicket: Schema.Ticket | undefined;
-  totalPrice: Schema.PriceSpecification | undefined;
+  reservedTicket: Schema.Ticket<D> | undefined;
+  totalPrice: Schema.PriceSpecification<D> | undefined;
   totalPriceLiteral: number | string | undefined;
-  underName: Schema.Organization | Schema.Person | undefined;
+  underName: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
 export function ReservationMixin<Base extends Constructor>(Resource: Base) {

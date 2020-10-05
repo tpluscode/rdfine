@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { PriceSpecificationMixin } from './PriceSpecification';
 
-export interface PaymentChargeSpecification extends Schema.PriceSpecification, RdfResource {
+export interface PaymentChargeSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, RdfResource<D> {
   appliesToDeliveryMethod: Schema.DeliveryMethod | undefined;
   appliesToPaymentMethod: Schema.PaymentMethod | undefined;
 }

@@ -7,17 +7,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface Ticket extends Schema.Intangible, RdfResource {
+export interface Ticket<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
   dateIssued: Date | undefined;
-  issuedBy: Schema.Organization | undefined;
+  issuedBy: Schema.Organization<D> | undefined;
   priceCurrency: string | undefined;
-  ticketedSeat: Schema.Seat | undefined;
+  ticketedSeat: Schema.Seat<D> | undefined;
   ticketNumber: string | undefined;
   ticketToken: string | undefined;
   ticketTokenTerm: RDF.NamedNode | undefined;
-  totalPrice: Schema.PriceSpecification | undefined;
+  totalPrice: Schema.PriceSpecification<D> | undefined;
   totalPriceLiteral: number | string | undefined;
-  underName: Schema.Organization | Schema.Person | undefined;
+  underName: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
 export function TicketMixin<Base extends Constructor>(Resource: Base) {

@@ -7,16 +7,16 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { PlayActionMixin } from './PlayAction';
 
-export interface ExerciseAction extends Schema.PlayAction, RdfResource {
-  course: Schema.Place | undefined;
-  distance: Schema.Distance | undefined;
-  exerciseCourse: Schema.Place | undefined;
-  fromLocation: Schema.Place | undefined;
-  opponent: Schema.Person | undefined;
-  sportsActivityLocation: Schema.SportsActivityLocation | undefined;
-  sportsEvent: Schema.SportsEvent | undefined;
-  sportsTeam: Schema.SportsTeam | undefined;
-  toLocation: Schema.Place | undefined;
+export interface ExerciseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlayAction<D>, RdfResource<D> {
+  course: Schema.Place<D> | undefined;
+  distance: Schema.Distance<D> | undefined;
+  exerciseCourse: Schema.Place<D> | undefined;
+  fromLocation: Schema.Place<D> | undefined;
+  opponent: Schema.Person<D> | undefined;
+  sportsActivityLocation: Schema.SportsActivityLocation<D> | undefined;
+  sportsEvent: Schema.SportsEvent<D> | undefined;
+  sportsTeam: Schema.SportsTeam<D> | undefined;
+  toLocation: Schema.Place<D> | undefined;
 }
 
 export function ExerciseActionMixin<Base extends Constructor>(Resource: Base) {

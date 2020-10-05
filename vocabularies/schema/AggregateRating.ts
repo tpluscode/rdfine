@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { RatingMixin } from './Rating';
 
-export interface AggregateRating extends Schema.Rating, RdfResource {
-  itemReviewed: Schema.Thing | undefined;
+export interface AggregateRating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Rating<D>, RdfResource<D> {
+  itemReviewed: Schema.Thing<D> | undefined;
   ratingCount: number | undefined;
   reviewCount: number | undefined;
 }

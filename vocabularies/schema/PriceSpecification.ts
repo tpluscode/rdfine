@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface PriceSpecification extends Schema.StructuredValue, RdfResource {
-  eligibleQuantity: Schema.QuantitativeValue | undefined;
-  eligibleTransactionVolume: Schema.PriceSpecification | undefined;
+export interface PriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+  eligibleQuantity: Schema.QuantitativeValue<D> | undefined;
+  eligibleTransactionVolume: Schema.PriceSpecification<D> | undefined;
   maxPrice: number | undefined;
   minPrice: number | undefined;
   price: number | string | undefined;

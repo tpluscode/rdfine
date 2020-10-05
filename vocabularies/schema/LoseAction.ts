@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { AchieveActionMixin } from './AchieveAction';
 
-export interface LoseAction extends Schema.AchieveAction, RdfResource {
-  winner: Schema.Person | undefined;
+export interface LoseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AchieveAction<D>, RdfResource<D> {
+  winner: Schema.Person<D> | undefined;
 }
 
 export function LoseActionMixin<Base extends Constructor>(Resource: Base) {

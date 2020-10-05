@@ -8,7 +8,7 @@ import type * as Schema from '.';
 import { BankAccountMixin } from './BankAccount';
 import { InvestmentOrDepositMixin } from './InvestmentOrDeposit';
 
-export interface DepositAccount extends Schema.BankAccount, Schema.InvestmentOrDeposit, RdfResource {
+export interface DepositAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BankAccount<D>, Schema.InvestmentOrDeposit<D>, RdfResource<D> {
 }
 
 export function DepositAccountMixin<Base extends Constructor>(Resource: Base) {

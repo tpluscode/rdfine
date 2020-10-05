@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { TradeActionMixin } from './TradeAction';
 
-export interface TipAction extends Schema.TradeAction, RdfResource {
-  recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
+export interface TipAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, RdfResource<D> {
+  recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
 export function TipActionMixin<Base extends Constructor>(Resource: Base) {

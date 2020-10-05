@@ -7,15 +7,15 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface ServiceChannel extends Schema.Intangible, RdfResource {
-  availableLanguage: Schema.Language | undefined;
+export interface ServiceChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  availableLanguage: Schema.Language<D> | undefined;
   availableLanguageLiteral: string | undefined;
-  processingTime: Schema.Duration | undefined;
-  providesService: Schema.Service | undefined;
-  serviceLocation: Schema.Place | undefined;
-  servicePhone: Schema.ContactPoint | undefined;
-  servicePostalAddress: Schema.PostalAddress | undefined;
-  serviceSmsNumber: Schema.ContactPoint | undefined;
+  processingTime: Schema.Duration<D> | undefined;
+  providesService: Schema.Service<D> | undefined;
+  serviceLocation: Schema.Place<D> | undefined;
+  servicePhone: Schema.ContactPoint<D> | undefined;
+  servicePostalAddress: Schema.PostalAddress<D> | undefined;
+  serviceSmsNumber: Schema.ContactPoint<D> | undefined;
   serviceUrl: RDF.NamedNode | undefined;
 }
 

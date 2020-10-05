@@ -9,17 +9,17 @@ import * as Rdfs from '@rdfine/rdfs';
 import * as Rdf from '@rdfine/rdf';
 import { ShapeMixin } from './Shape';
 
-export interface PropertyShape extends Sh.Shape, RdfResource {
-  datatype: Rdfs.Datatype | undefined;
+export interface PropertyShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Shape<D>, RdfResource<D> {
+  datatype: Rdfs.Datatype<D> | undefined;
   defaultValue: RDF.Term | undefined;
   description: string | undefined;
-  disjoint: Rdf.Property | undefined;
+  disjoint: Rdf.Property<D> | undefined;
   flags: string | undefined;
-  group: Sh.PropertyGroup | undefined;
+  group: Sh.PropertyGroup<D> | undefined;
   hasValue: RDF.Term | undefined;
   languageIn: Array<string>;
-  lessThan: Rdf.Property | undefined;
-  lessThanOrEquals: Rdf.Property | undefined;
+  lessThan: Rdf.Property<D> | undefined;
+  lessThanOrEquals: Rdf.Property<D> | undefined;
   maxCount: number | undefined;
   maxExclusive: number | undefined;
   maxInclusive: number | undefined;
@@ -30,7 +30,7 @@ export interface PropertyShape extends Sh.Shape, RdfResource {
   minLength: number | undefined;
   name: string | undefined;
   order: number | undefined;
-  path: Rdfs.Resource | Array<Rdfs.Resource> | undefined;
+  path: Rdfs.Resource<D> | Array<Rdfs.Resource<D>> | undefined;
   pattern: string | undefined;
   uniqueLang: boolean | undefined;
 }

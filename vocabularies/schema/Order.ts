@@ -7,29 +7,29 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface Order extends Schema.Intangible, RdfResource {
-  acceptedOffer: Schema.Offer | undefined;
-  billingAddress: Schema.PostalAddress | undefined;
-  broker: Schema.Organization | Schema.Person | undefined;
+export interface Order<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  acceptedOffer: Schema.Offer<D> | undefined;
+  billingAddress: Schema.PostalAddress<D> | undefined;
+  broker: Schema.Organization<D> | Schema.Person<D> | undefined;
   confirmationNumber: string | undefined;
-  customer: Schema.Organization | Schema.Person | undefined;
+  customer: Schema.Organization<D> | Schema.Person<D> | undefined;
   discount: number | string | undefined;
   discountCode: string | undefined;
   discountCurrency: string | undefined;
   isGift: boolean | undefined;
-  merchant: Schema.Organization | Schema.Person | undefined;
+  merchant: Schema.Organization<D> | Schema.Person<D> | undefined;
   orderDate: Date | undefined;
-  orderDelivery: Schema.ParcelDelivery | undefined;
-  orderedItem: Schema.OrderItem | Schema.Product | Schema.Service | undefined;
+  orderDelivery: Schema.ParcelDelivery<D> | undefined;
+  orderedItem: Schema.OrderItem<D> | Schema.Product<D> | Schema.Service<D> | undefined;
   orderNumber: string | undefined;
   orderStatus: Schema.OrderStatus | undefined;
-  partOfInvoice: Schema.Invoice | undefined;
+  partOfInvoice: Schema.Invoice<D> | undefined;
   paymentDue: Date | undefined;
   paymentDueDate: Date | undefined;
   paymentMethod: Schema.PaymentMethod | undefined;
   paymentMethodId: string | undefined;
   paymentUrl: RDF.NamedNode | undefined;
-  seller: Schema.Organization | Schema.Person | undefined;
+  seller: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
 export function OrderMixin<Base extends Constructor>(Resource: Base) {

@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Book extends Schema.CreativeWork, RdfResource {
+export interface Book<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
   bookEdition: string | undefined;
   bookFormat: Schema.BookFormatType | undefined;
-  illustrator: Schema.Person | undefined;
+  illustrator: Schema.Person<D> | undefined;
   isbn: string | undefined;
   numberOfPages: number | undefined;
 }

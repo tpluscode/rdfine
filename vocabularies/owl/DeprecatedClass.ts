@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
-export interface DeprecatedClass extends Rdfs.Class, RdfResource {
+export interface DeprecatedClass<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, RdfResource<D> {
 }
 
 export function DeprecatedClassMixin<Base extends Constructor>(Resource: Base) {

@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ChooseActionMixin } from './ChooseAction';
 
-export interface VoteAction extends Schema.ChooseAction, RdfResource {
-  candidate: Schema.Person | undefined;
+export interface VoteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ChooseAction<D>, RdfResource<D> {
+  candidate: Schema.Person<D> | undefined;
 }
 
 export function VoteActionMixin<Base extends Constructor>(Resource: Base) {

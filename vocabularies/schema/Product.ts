@@ -7,45 +7,45 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ThingMixin } from './Thing';
 
-export interface Product extends Schema.Thing, RdfResource {
-  additionalProperty: Schema.PropertyValue | undefined;
-  aggregateRating: Schema.AggregateRating | undefined;
-  audience: Schema.Audience | undefined;
+export interface Product<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, RdfResource<D> {
+  additionalProperty: Schema.PropertyValue<D> | undefined;
+  aggregateRating: Schema.AggregateRating<D> | undefined;
+  audience: Schema.Audience<D> | undefined;
   award: string | undefined;
   awards: string | undefined;
-  brand: Schema.Brand | Schema.Organization | undefined;
-  category: Schema.Thing | undefined;
+  brand: Schema.Brand<D> | Schema.Organization<D> | undefined;
+  category: Schema.Thing<D> | undefined;
   categoryLiteral: string | undefined;
   color: string | undefined;
-  depth: Schema.Distance | Schema.QuantitativeValue | undefined;
+  depth: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
   gtin12: string | undefined;
   gtin13: string | undefined;
   gtin14: string | undefined;
   gtin8: string | undefined;
-  height: Schema.Distance | Schema.QuantitativeValue | undefined;
-  isAccessoryOrSparePartFor: Schema.Product | undefined;
-  isConsumableFor: Schema.Product | undefined;
-  isRelatedTo: Schema.Product | Schema.Service | undefined;
-  isSimilarTo: Schema.Product | Schema.Service | undefined;
+  height: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
+  isAccessoryOrSparePartFor: Schema.Product<D> | undefined;
+  isConsumableFor: Schema.Product<D> | undefined;
+  isRelatedTo: Schema.Product<D> | Schema.Service<D> | undefined;
+  isSimilarTo: Schema.Product<D> | Schema.Service<D> | undefined;
   itemCondition: Schema.OfferItemCondition | undefined;
-  logo: Schema.ImageObject | undefined;
-  manufacturer: Schema.Organization | undefined;
-  material: Schema.Product | undefined;
+  logo: Schema.ImageObject<D> | undefined;
+  manufacturer: Schema.Organization<D> | undefined;
+  material: Schema.Product<D> | undefined;
   materialLiteral: string | undefined;
-  model: Schema.ProductModel | undefined;
+  model: Schema.ProductModel<D> | undefined;
   modelLiteral: string | undefined;
   mpn: string | undefined;
-  offers: Schema.Demand | Schema.Offer | undefined;
+  offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
   productID: string | undefined;
   productionDate: Date | undefined;
   purchaseDate: Date | undefined;
   releaseDate: Date | undefined;
-  review: Schema.Review | undefined;
-  reviews: Schema.Review | undefined;
+  review: Schema.Review<D> | undefined;
+  reviews: Schema.Review<D> | undefined;
   sku: string | undefined;
   slogan: string | undefined;
-  weight: Schema.QuantitativeValue | undefined;
-  width: Schema.Distance | Schema.QuantitativeValue | undefined;
+  weight: Schema.QuantitativeValue<D> | undefined;
+  width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
 export function ProductMixin<Base extends Constructor>(Resource: Base) {

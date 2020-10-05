@@ -8,7 +8,7 @@ import type * as Sh from '.';
 import { FunctionMixin } from './Function';
 import { JSExecutableMixin } from './JSExecutable';
 
-export interface JSFunction extends Sh.Function, Sh.JSExecutable, RdfResource {
+export interface JSFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Function<D>, Sh.JSExecutable<D>, RdfResource<D> {
 }
 
 export function JSFunctionMixin<Base extends Constructor>(Resource: Base) {

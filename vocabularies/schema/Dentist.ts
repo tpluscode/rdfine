@@ -8,7 +8,7 @@ import type * as Schema from '.';
 import { LocalBusinessMixin } from './LocalBusiness';
 import { MedicalOrganizationMixin } from './MedicalOrganization';
 
-export interface Dentist extends Schema.LocalBusiness, Schema.MedicalOrganization, RdfResource {
+export interface Dentist<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, Schema.MedicalOrganization<D>, RdfResource<D> {
 }
 
 export function DentistMixin<Base extends Constructor>(Resource: Base) {

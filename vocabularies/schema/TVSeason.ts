@@ -8,9 +8,9 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 import { CreativeWorkSeasonMixin } from './CreativeWorkSeason';
 
-export interface TVSeason extends Schema.CreativeWork, Schema.CreativeWorkSeason, RdfResource {
-  countryOfOrigin: Schema.Country | undefined;
-  partOfTVSeries: Schema.TVSeries | undefined;
+export interface TVSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.CreativeWorkSeason<D>, RdfResource<D> {
+  countryOfOrigin: Schema.Country<D> | undefined;
+  partOfTVSeries: Schema.TVSeries<D> | undefined;
 }
 
 export function TVSeasonMixin<Base extends Constructor>(Resource: Base) {

@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { QuantityMixin } from './Quantity';
 
-export interface Mass extends Schema.Quantity, RdfResource {
+export interface Mass<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Quantity<D>, RdfResource<D> {
 }
 
 export function MassMixin<Base extends Constructor>(Resource: Base) {

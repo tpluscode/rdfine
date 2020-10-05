@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { RoomMixin } from './Room';
 
-export interface HotelRoom extends Schema.Room, RdfResource {
-  bed: Schema.BedDetails | undefined;
+export interface HotelRoom<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Room<D>, RdfResource<D> {
+  bed: Schema.BedDetails<D> | undefined;
   bedLiteral: string | undefined;
-  occupancy: Schema.QuantitativeValue | undefined;
+  occupancy: Schema.QuantitativeValue<D> | undefined;
 }
 
 export function HotelRoomMixin<Base extends Constructor>(Resource: Base) {

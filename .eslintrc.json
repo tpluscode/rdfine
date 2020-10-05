@@ -13,5 +13,36 @@
   "rules": {
     "symbol-description": "off",
     "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/__tests__/**"]}]
+  },
+  "overrides": [{
+    "files": ["vocabularies/**"],
+    "rules": {
+      "no-unused-vars": "warn",
+      "semi": "off",
+      "symbol-description": "off",
+      "lines-between-class-members": "off",
+      "@typescript-eslint/no-empty-interface": "warn",
+      "@typescript-eslint/member-delimiter-style": [2, {
+        "multiline": {
+          "delimiter": "semi",
+          "requireLast": true
+        },
+        "singleline": {
+          "delimiter": "semi",
+          "requireLast": false
   }
+      }]
+    }
+  }, {
+    "files": ["examples/**"],
+    "rules": {
+      "no-console": "off",
+      "import/no-extraneous-dependencies": "warn"
+    }
+  }, {
+    "files": ["vocabularies/shacl/Function.ts"],
+    "rules": {
+      "@typescript-eslint/ban-types": "off"
+    }
+  }]
 }

@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface WarrantyPromise extends Schema.StructuredValue, RdfResource {
-  durationOfWarranty: Schema.QuantitativeValue | undefined;
+export interface WarrantyPromise<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+  durationOfWarranty: Schema.QuantitativeValue<D> | undefined;
   warrantyScope: Schema.WarrantyScope | undefined;
 }
 

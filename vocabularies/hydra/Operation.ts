@@ -7,13 +7,13 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
 import { ResourceMixin } from './Resource';
 
-export interface Operation extends Hydra.Resource, RdfResource {
+export interface Operation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
   description: string | undefined;
-  expects: Hydra.Class | Hydra.Resource | undefined;
+  expects: Array<Hydra.Class<D> | Hydra.Resource<D>>;
   expectsHeader: string | undefined;
   method: string | undefined;
-  possibleStatus: Array<Hydra.Status>;
-  returns: Hydra.Class | Hydra.Resource | undefined;
+  possibleStatus: Array<Hydra.Status<D>>;
+  returns: Hydra.Class<D> | Hydra.Resource<D> | undefined;
   returnsHeader: string | undefined;
   title: string | undefined;
 }
@@ -23,8 +23,8 @@ export function OperationMixin<Base extends Constructor>(Resource: Base) {
   class OperationClass extends ResourceMixin(Resource) implements Operation {
     @property.literal()
     description: string | undefined;
-    @property.resource()
-    expects: Hydra.Class | Hydra.Resource | undefined;
+    @property.resource({ values: 'array' })
+    expects!: Array<Hydra.Class | Hydra.Resource>;
     @property.literal()
     expectsHeader: string | undefined;
     @property.literal()

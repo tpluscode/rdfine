@@ -7,19 +7,19 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ThingMixin } from './Thing';
 
-export interface Action extends Schema.Thing, RdfResource {
+export interface Action<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, RdfResource<D> {
   actionStatus: Schema.ActionStatusType | undefined;
-  agent: Schema.Organization | Schema.Person | undefined;
+  agent: Schema.Organization<D> | Schema.Person<D> | undefined;
   endTime: Date | undefined;
-  error: Schema.Thing | undefined;
-  instrument: Schema.Thing | undefined;
-  location: Schema.Place | Schema.PostalAddress | undefined;
+  error: Schema.Thing<D> | undefined;
+  instrument: Schema.Thing<D> | undefined;
+  location: Schema.Place<D> | Schema.PostalAddress<D> | undefined;
   locationLiteral: string | undefined;
-  object: Schema.Thing | undefined;
-  participant: Schema.Organization | Schema.Person | undefined;
-  result: Schema.Thing | undefined;
+  object: Schema.Thing<D> | undefined;
+  participant: Schema.Organization<D> | Schema.Person<D> | undefined;
+  result: Schema.Thing<D> | undefined;
   startTime: Date | undefined;
-  target: Schema.EntryPoint | undefined;
+  target: Schema.EntryPoint<D> | undefined;
 }
 
 export function ActionMixin<Base extends Constructor>(Resource: Base) {

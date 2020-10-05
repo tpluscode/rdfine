@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface DigitalDocumentPermission extends Schema.Intangible, RdfResource {
-  grantee: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
+export interface DigitalDocumentPermission<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  grantee: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
   permissionType: Schema.DigitalDocumentPermissionType | undefined;
 }
 

@@ -9,7 +9,7 @@ import { CreativeWorkMixin } from './CreativeWork';
 import { ItemListMixin } from './ItemList';
 import { ListItemMixin } from './ListItem';
 
-export interface HowToStep extends Schema.CreativeWork, Schema.ItemList, Schema.ListItem, RdfResource {
+export interface HowToStep<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ItemList<D>, Schema.ListItem<D>, RdfResource<D> {
 }
 
 export function HowToStepMixin<Base extends Constructor>(Resource: Base) {

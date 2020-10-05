@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import { PropertyShapeMixin } from './PropertyShape';
 
-export interface Parameter extends Sh.PropertyShape, RdfResource {
+export interface Parameter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.PropertyShape<D>, RdfResource<D> {
   optional: boolean | undefined;
 }
 

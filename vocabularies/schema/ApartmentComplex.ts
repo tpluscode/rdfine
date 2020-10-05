@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ResidenceMixin } from './Residence';
 
-export interface ApartmentComplex extends Schema.Residence, RdfResource {
+export interface ApartmentComplex<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Residence<D>, RdfResource<D> {
   petsAllowed: boolean | string | undefined;
 }
 

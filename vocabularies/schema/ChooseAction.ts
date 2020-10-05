@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { AssessActionMixin } from './AssessAction';
 
-export interface ChooseAction extends Schema.AssessAction, RdfResource {
-  actionOption: Schema.Thing | undefined;
+export interface ChooseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AssessAction<D>, RdfResource<D> {
+  actionOption: Schema.Thing<D> | undefined;
   actionOptionLiteral: string | undefined;
-  option: Schema.Thing | undefined;
+  option: Schema.Thing<D> | undefined;
   optionLiteral: string | undefined;
 }
 

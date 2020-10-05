@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { PermitMixin } from './Permit';
 
-export interface GovernmentPermit extends Schema.Permit, RdfResource {
+export interface GovernmentPermit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Permit<D>, RdfResource<D> {
 }
 
 export function GovernmentPermitMixin<Base extends Constructor>(Resource: Base) {

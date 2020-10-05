@@ -6,7 +6,7 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '.';
 
-export interface Dialect extends RdfResource {
+export interface Dialect<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   commentPrefix: string | undefined;
   delimiter: string | undefined;
   doubleQuote: boolean | undefined;

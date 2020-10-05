@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import { RuleMixin } from './Rule';
 
-export interface TripleRule extends Sh.Rule, RdfResource {
+export interface TripleRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Rule<D>, RdfResource<D> {
   object: RDF.Term | undefined;
   predicate: RDF.Term | undefined;
   subject: RDF.Term | undefined;

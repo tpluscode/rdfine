@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ActionMixin } from './Action';
 
-export interface ConsumeAction extends Schema.Action, RdfResource {
-  actionAccessibilityRequirement: Schema.ActionAccessSpecification | undefined;
-  expectsAcceptanceOf: Schema.Offer | undefined;
+export interface ConsumeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, RdfResource<D> {
+  actionAccessibilityRequirement: Schema.ActionAccessSpecification<D> | undefined;
+  expectsAcceptanceOf: Schema.Offer<D> | undefined;
 }
 
 export function ConsumeActionMixin<Base extends Constructor>(Resource: Base) {

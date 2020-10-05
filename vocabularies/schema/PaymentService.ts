@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { FinancialProductMixin } from './FinancialProduct';
 
-export interface PaymentService extends Schema.FinancialProduct, RdfResource {
+export interface PaymentService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialProduct<D>, RdfResource<D> {
 }
 
 export function PaymentServiceMixin<Base extends Constructor>(Resource: Base) {

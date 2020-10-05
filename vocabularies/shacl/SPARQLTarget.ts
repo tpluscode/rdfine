@@ -9,7 +9,7 @@ import { SPARQLAskExecutableMixin } from './SPARQLAskExecutable';
 import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable';
 import { TargetMixin } from './Target';
 
-export interface SPARQLTarget extends Sh.SPARQLAskExecutable, Sh.SPARQLSelectExecutable, Sh.Target, RdfResource {
+export interface SPARQLTarget<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLAskExecutable<D>, Sh.SPARQLSelectExecutable<D>, Sh.Target<D>, RdfResource<D> {
 }
 
 export function SPARQLTargetMixin<Base extends Constructor>(Resource: Base) {

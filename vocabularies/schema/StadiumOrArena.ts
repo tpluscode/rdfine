@@ -8,7 +8,7 @@ import type * as Schema from '.';
 import { CivicStructureMixin } from './CivicStructure';
 import { SportsActivityLocationMixin } from './SportsActivityLocation';
 
-export interface StadiumOrArena extends Schema.CivicStructure, Schema.SportsActivityLocation, RdfResource {
+export interface StadiumOrArena<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.SportsActivityLocation<D>, RdfResource<D> {
 }
 
 export function StadiumOrArenaMixin<Base extends Constructor>(Resource: Base) {

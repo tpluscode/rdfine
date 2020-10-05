@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { GovernmentOfficeMixin } from './GovernmentOffice';
 
-export interface PostOffice extends Schema.GovernmentOffice, RdfResource {
+export interface PostOffice<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentOffice<D>, RdfResource<D> {
 }
 
 export function PostOfficeMixin<Base extends Constructor>(Resource: Base) {

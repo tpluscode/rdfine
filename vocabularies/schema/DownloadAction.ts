@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { TransferActionMixin } from './TransferAction';
 
-export interface DownloadAction extends Schema.TransferAction, RdfResource {
+export interface DownloadAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, RdfResource<D> {
 }
 
 export function DownloadActionMixin<Base extends Constructor>(Resource: Base) {

@@ -7,11 +7,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface Trip extends Schema.Intangible, RdfResource {
+export interface Trip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
   arrivalTime: Date | undefined;
   departureTime: Date | undefined;
-  offers: Schema.Demand | Schema.Offer | undefined;
-  provider: Schema.Organization | Schema.Person | undefined;
+  offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
+  provider: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
 export function TripMixin<Base extends Constructor>(Resource: Base) {

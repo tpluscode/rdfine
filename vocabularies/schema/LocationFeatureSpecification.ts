@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { PropertyValueMixin } from './PropertyValue';
 
-export interface LocationFeatureSpecification extends Schema.PropertyValue, RdfResource {
-  hoursAvailable: Schema.OpeningHoursSpecification | undefined;
+export interface LocationFeatureSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PropertyValue<D>, RdfResource<D> {
+  hoursAvailable: Schema.OpeningHoursSpecification<D> | undefined;
   validFrom: Date | undefined;
   validThrough: Date | undefined;
 }

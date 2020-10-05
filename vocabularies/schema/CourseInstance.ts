@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { EventMixin } from './Event';
 
-export interface CourseInstance extends Schema.Event, RdfResource {
+export interface CourseInstance<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
   courseMode: string | undefined;
   courseModeTerm: RDF.NamedNode | undefined;
-  instructor: Schema.Person | undefined;
+  instructor: Schema.Person<D> | undefined;
 }
 
 export function CourseInstanceMixin<Base extends Constructor>(Resource: Base) {

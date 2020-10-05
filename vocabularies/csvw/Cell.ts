@@ -6,7 +6,7 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '.';
 
-export interface Cell extends RdfResource {
+export interface Cell<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
 
 export function CellMixin<Base extends Constructor>(Resource: Base) {

@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreateActionMixin } from './CreateAction';
 
-export interface CookAction extends Schema.CreateAction, RdfResource {
-  foodEstablishment: Schema.FoodEstablishment | Schema.Place | undefined;
-  foodEvent: Schema.FoodEvent | undefined;
-  recipe: Schema.Recipe | undefined;
+export interface CookAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, RdfResource<D> {
+  foodEstablishment: Schema.FoodEstablishment<D> | Schema.Place<D> | undefined;
+  foodEvent: Schema.FoodEvent<D> | undefined;
+  recipe: Schema.Recipe<D> | undefined;
 }
 
 export function CookActionMixin<Base extends Constructor>(Resource: Base) {

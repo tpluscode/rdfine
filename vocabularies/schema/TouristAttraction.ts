@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { PlaceMixin } from './Place';
 
-export interface TouristAttraction extends Schema.Place, RdfResource {
-  availableLanguage: Schema.Language | undefined;
+export interface TouristAttraction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, RdfResource<D> {
+  availableLanguage: Schema.Language<D> | undefined;
   availableLanguageLiteral: string | undefined;
-  touristType: Schema.Audience | undefined;
+  touristType: Schema.Audience<D> | undefined;
   touristTypeLiteral: string | undefined;
 }
 

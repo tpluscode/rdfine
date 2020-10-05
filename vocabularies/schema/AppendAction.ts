@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { InsertActionMixin } from './InsertAction';
 
-export interface AppendAction extends Schema.InsertAction, RdfResource {
+export interface AppendAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InsertAction<D>, RdfResource<D> {
 }
 
 export function AppendActionMixin<Base extends Constructor>(Resource: Base) {

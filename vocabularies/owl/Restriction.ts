@@ -9,21 +9,21 @@ import * as Rdfs from '@rdfine/rdfs';
 import * as Rdf from '@rdfine/rdf';
 import { ClassMixin } from './Class';
 
-export interface Restriction extends Owl.Class, RdfResource {
-  allValuesFrom: Rdfs.Class | undefined;
+export interface Restriction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.Class<D>, RdfResource<D> {
+  allValuesFrom: Rdfs.Class<D> | undefined;
   cardinality: number | undefined;
-  hasSelf: Rdfs.Resource | undefined;
-  hasValue: Rdfs.Resource | undefined;
+  hasSelf: Rdfs.Resource<D> | undefined;
+  hasValue: Rdfs.Resource<D> | undefined;
   maxCardinality: number | undefined;
   maxQualifiedCardinality: number | undefined;
   minCardinality: number | undefined;
   minQualifiedCardinality: number | undefined;
-  onClass: Owl.Class | undefined;
-  onDataRange: Rdfs.Datatype | undefined;
-  onProperties: Rdf.List | undefined;
-  onProperty: Rdf.Property | undefined;
+  onClass: Owl.Class<D> | undefined;
+  onDataRange: Rdfs.Datatype<D> | undefined;
+  onProperties: Rdf.List<D> | undefined;
+  onProperty: Rdf.Property<D> | undefined;
   qualifiedCardinality: number | undefined;
-  someValuesFrom: Rdfs.Class | undefined;
+  someValuesFrom: Rdfs.Class<D> | undefined;
 }
 
 export function RestrictionMixin<Base extends Constructor>(Resource: Base) {

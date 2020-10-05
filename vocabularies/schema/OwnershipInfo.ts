@@ -7,11 +7,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface OwnershipInfo extends Schema.StructuredValue, RdfResource {
-  acquiredFrom: Schema.Organization | Schema.Person | undefined;
+export interface OwnershipInfo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+  acquiredFrom: Schema.Organization<D> | Schema.Person<D> | undefined;
   ownedFrom: Date | undefined;
   ownedThrough: Date | undefined;
-  typeOfGood: Schema.Product | Schema.Service | undefined;
+  typeOfGood: Schema.Product<D> | Schema.Service<D> | undefined;
 }
 
 export function OwnershipInfoMixin<Base extends Constructor>(Resource: Base) {

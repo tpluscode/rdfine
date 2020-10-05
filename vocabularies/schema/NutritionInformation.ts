@@ -7,19 +7,19 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface NutritionInformation extends Schema.StructuredValue, RdfResource {
-  calories: Schema.Energy | undefined;
-  carbohydrateContent: Schema.Mass | undefined;
-  cholesterolContent: Schema.Mass | undefined;
-  fatContent: Schema.Mass | undefined;
-  fiberContent: Schema.Mass | undefined;
-  proteinContent: Schema.Mass | undefined;
-  saturatedFatContent: Schema.Mass | undefined;
+export interface NutritionInformation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+  calories: Schema.Energy<D> | undefined;
+  carbohydrateContent: Schema.Mass<D> | undefined;
+  cholesterolContent: Schema.Mass<D> | undefined;
+  fatContent: Schema.Mass<D> | undefined;
+  fiberContent: Schema.Mass<D> | undefined;
+  proteinContent: Schema.Mass<D> | undefined;
+  saturatedFatContent: Schema.Mass<D> | undefined;
   servingSize: string | undefined;
-  sodiumContent: Schema.Mass | undefined;
-  sugarContent: Schema.Mass | undefined;
-  transFatContent: Schema.Mass | undefined;
-  unsaturatedFatContent: Schema.Mass | undefined;
+  sodiumContent: Schema.Mass<D> | undefined;
+  sugarContent: Schema.Mass<D> | undefined;
+  transFatContent: Schema.Mass<D> | undefined;
+  unsaturatedFatContent: Schema.Mass<D> | undefined;
 }
 
 export function NutritionInformationMixin<Base extends Constructor>(Resource: Base) {

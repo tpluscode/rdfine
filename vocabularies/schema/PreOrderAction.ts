@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { TradeActionMixin } from './TradeAction';
 
-export interface PreOrderAction extends Schema.TradeAction, RdfResource {
+export interface PreOrderAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, RdfResource<D> {
 }
 
 export function PreOrderActionMixin<Base extends Constructor>(Resource: Base) {

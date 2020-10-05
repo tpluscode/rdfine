@@ -7,24 +7,24 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { TripMixin } from './Trip';
 
-export interface Flight extends Schema.Trip, RdfResource {
-  aircraft: Schema.Vehicle | undefined;
+export interface Flight<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Trip<D>, RdfResource<D> {
+  aircraft: Schema.Vehicle<D> | undefined;
   aircraftLiteral: string | undefined;
-  arrivalAirport: Schema.Airport | undefined;
+  arrivalAirport: Schema.Airport<D> | undefined;
   arrivalGate: string | undefined;
   arrivalTerminal: string | undefined;
   boardingPolicy: Schema.BoardingPolicyType | undefined;
-  carrier: Schema.Organization | undefined;
-  departureAirport: Schema.Airport | undefined;
+  carrier: Schema.Organization<D> | undefined;
+  departureAirport: Schema.Airport<D> | undefined;
   departureGate: string | undefined;
   departureTerminal: string | undefined;
-  estimatedFlightDuration: Schema.Duration | undefined;
+  estimatedFlightDuration: Schema.Duration<D> | undefined;
   estimatedFlightDurationLiteral: string | undefined;
-  flightDistance: Schema.Distance | undefined;
+  flightDistance: Schema.Distance<D> | undefined;
   flightDistanceLiteral: string | undefined;
   flightNumber: string | undefined;
   mealService: string | undefined;
-  seller: Schema.Organization | Schema.Person | undefined;
+  seller: Schema.Organization<D> | Schema.Person<D> | undefined;
   webCheckinTime: Date | undefined;
 }
 

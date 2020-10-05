@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface GeoShape extends Schema.StructuredValue, RdfResource {
-  address: Schema.PostalAddress | undefined;
+export interface GeoShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+  address: Schema.PostalAddress<D> | undefined;
   addressLiteral: string | undefined;
-  addressCountry: Schema.Country | undefined;
+  addressCountry: Schema.Country<D> | undefined;
   addressCountryLiteral: string | undefined;
   box: string | undefined;
   circle: string | undefined;

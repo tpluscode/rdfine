@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { GeoShapeMixin } from './GeoShape';
 
-export interface GeoCircle extends Schema.GeoShape, RdfResource {
-  geoMidpoint: Schema.GeoCoordinates | undefined;
-  geoRadius: Schema.Distance | undefined;
+export interface GeoCircle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GeoShape<D>, RdfResource<D> {
+  geoMidpoint: Schema.GeoCoordinates<D> | undefined;
+  geoRadius: Schema.Distance<D> | undefined;
   geoRadiusLiteral: number | string | undefined;
 }
 

@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ControlActionMixin } from './ControlAction';
 
-export interface DeactivateAction extends Schema.ControlAction, RdfResource {
+export interface DeactivateAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ControlAction<D>, RdfResource<D> {
 }
 
 export function DeactivateActionMixin<Base extends Constructor>(Resource: Base) {

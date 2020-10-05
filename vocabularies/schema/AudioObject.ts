@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { MediaObjectMixin } from './MediaObject';
 
-export interface AudioObject extends Schema.MediaObject, RdfResource {
-  caption: Schema.MediaObject | undefined;
+export interface AudioObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, RdfResource<D> {
+  caption: Schema.MediaObject<D> | undefined;
   captionLiteral: string | undefined;
   transcript: string | undefined;
 }

@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { SportsActivityLocationMixin } from './SportsActivityLocation';
 
-export interface PublicSwimmingPool extends Schema.SportsActivityLocation, RdfResource {
+export interface PublicSwimmingPool<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SportsActivityLocation<D>, RdfResource<D> {
 }
 
 export function PublicSwimmingPoolMixin<Base extends Constructor>(Resource: Base) {

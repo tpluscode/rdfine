@@ -7,12 +7,12 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { InteractActionMixin } from './InteractAction';
 
-export interface CommunicateAction extends Schema.InteractAction, RdfResource {
-  about: Schema.Thing | undefined;
-  inLanguage: Schema.Language | undefined;
+export interface CommunicateAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, RdfResource<D> {
+  about: Schema.Thing<D> | undefined;
+  inLanguage: Schema.Language<D> | undefined;
   inLanguageLiteral: string | undefined;
-  language: Schema.Language | undefined;
-  recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
+  language: Schema.Language<D> | undefined;
+  recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
 export function CommunicateActionMixin<Base extends Constructor>(Resource: Base) {

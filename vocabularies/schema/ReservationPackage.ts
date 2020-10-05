@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ReservationMixin } from './Reservation';
 
-export interface ReservationPackage extends Schema.Reservation, RdfResource {
-  subReservation: Schema.Reservation | undefined;
+export interface ReservationPackage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, RdfResource<D> {
+  subReservation: Schema.Reservation<D> | undefined;
 }
 
 export function ReservationPackageMixin<Base extends Constructor>(Resource: Base) {

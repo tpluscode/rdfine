@@ -7,13 +7,13 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Course extends Schema.CreativeWork, RdfResource {
+export interface Course<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
   courseCode: string | undefined;
-  coursePrerequisites: Schema.AlignmentObject | Schema.Course | undefined;
+  coursePrerequisites: Schema.AlignmentObject<D> | Schema.Course<D> | undefined;
   coursePrerequisitesLiteral: string | undefined;
   educationalCredentialAwarded: string | undefined;
   educationalCredentialAwardedTerm: RDF.NamedNode | undefined;
-  hasCourseInstance: Schema.CourseInstance | undefined;
+  hasCourseInstance: Schema.CourseInstance<D> | undefined;
 }
 
 export function CourseMixin<Base extends Constructor>(Resource: Base) {

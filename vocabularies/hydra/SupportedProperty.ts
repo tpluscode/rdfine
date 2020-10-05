@@ -8,12 +8,12 @@ import type * as Hydra from '.';
 import * as Rdf from '@rdfine/rdf';
 import { ResourceMixin } from './Resource';
 
-export interface SupportedProperty extends Hydra.Resource, RdfResource {
+export interface SupportedProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
   description: string | undefined;
-  property: Rdf.Property | undefined;
+  property: Rdf.Property<D> | undefined;
   readable: boolean | undefined;
   required: boolean | undefined;
-  supportedOperation: Array<Hydra.Operation>;
+  supportedOperation: Array<Hydra.Operation<D>>;
   title: string | undefined;
   writeable: boolean | undefined;
 }

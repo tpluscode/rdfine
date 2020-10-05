@@ -5,6 +5,7 @@ export { ErrorBundle } from './Error';
 export { IriTemplateBundle } from './IriTemplate';
 export { IriTemplateMappingBundle } from './IriTemplateMapping';
 export { LinkBundle } from './Link';
+export { ManagesBlockBundle } from './ManagesBlock';
 export { OperationBundle } from './Operation';
 export { PartialCollectionViewBundle } from './PartialCollectionView';
 export { ResourceBundle } from './Resource';

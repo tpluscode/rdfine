@@ -7,21 +7,21 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface HowTo extends Schema.CreativeWork, RdfResource {
-  estimatedCost: Schema.MonetaryAmount | undefined;
+export interface HowTo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  estimatedCost: Schema.MonetaryAmount<D> | undefined;
   estimatedCostLiteral: string | undefined;
-  performTime: Schema.Duration | undefined;
-  prepTime: Schema.Duration | undefined;
-  step: Array<Schema.CreativeWork | Schema.HowToSection | Schema.HowToStep>;
+  performTime: Schema.Duration<D> | undefined;
+  prepTime: Schema.Duration<D> | undefined;
+  step: Array<Schema.CreativeWork<D> | Schema.HowToSection<D> | Schema.HowToStep<D>>;
   stepLiteral: Array<string>;
-  steps: Array<Schema.CreativeWork | Schema.ItemList>;
+  steps: Array<Schema.CreativeWork<D> | Schema.ItemList<D>>;
   stepsLiteral: Array<string>;
-  supply: Schema.HowToSupply | undefined;
+  supply: Schema.HowToSupply<D> | undefined;
   supplyLiteral: string | undefined;
-  tool: Array<Schema.HowToTool>;
+  tool: Array<Schema.HowToTool<D>>;
   toolLiteral: Array<string>;
-  totalTime: Schema.Duration | undefined;
-  yield: Schema.QuantitativeValue | undefined;
+  totalTime: Schema.Duration<D> | undefined;
+  yield: Schema.QuantitativeValue<D> | undefined;
   yieldLiteral: string | undefined;
 }
 

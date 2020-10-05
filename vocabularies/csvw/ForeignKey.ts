@@ -6,9 +6,9 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '.';
 
-export interface ForeignKey extends RdfResource {
+export interface ForeignKey<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   columnReference: string | undefined;
-  reference: Csvw.TableReference | undefined;
+  reference: Csvw.TableReference<D> | undefined;
 }
 
 export function ForeignKeyMixin<Base extends Constructor>(Resource: Base) {

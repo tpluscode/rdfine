@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface BedDetails extends Schema.Intangible, RdfResource {
+export interface BedDetails<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
   numberOfBeds: number | undefined;
   typeOfBed: string | undefined;
   typeOfBedTerm: Schema.BedType | undefined;

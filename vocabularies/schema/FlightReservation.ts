@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ReservationMixin } from './Reservation';
 
-export interface FlightReservation extends Schema.Reservation, RdfResource {
+export interface FlightReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, RdfResource<D> {
   boardingGroup: string | undefined;
   passengerPriorityStatus: string | undefined;
   passengerPriorityStatusTerm: Schema.QualitativeValue | undefined;

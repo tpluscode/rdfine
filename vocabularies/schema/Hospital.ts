@@ -9,7 +9,7 @@ import { CivicStructureMixin } from './CivicStructure';
 import { EmergencyServiceMixin } from './EmergencyService';
 import { MedicalOrganizationMixin } from './MedicalOrganization';
 
-export interface Hospital extends Schema.CivicStructure, Schema.EmergencyService, Schema.MedicalOrganization, RdfResource {
+export interface Hospital<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.EmergencyService<D>, Schema.MedicalOrganization<D>, RdfResource<D> {
 }
 
 export function HospitalMixin<Base extends Constructor>(Resource: Base) {

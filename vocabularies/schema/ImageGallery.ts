@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { MediaGalleryMixin } from './MediaGallery';
 
-export interface ImageGallery extends Schema.MediaGallery, RdfResource {
+export interface ImageGallery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaGallery<D>, RdfResource<D> {
 }
 
 export function ImageGalleryMixin<Base extends Constructor>(Resource: Base) {

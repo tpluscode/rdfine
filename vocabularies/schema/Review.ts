@@ -7,11 +7,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Review extends Schema.CreativeWork, RdfResource {
-  itemReviewed: Schema.Thing | undefined;
+export interface Review<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  itemReviewed: Schema.Thing<D> | undefined;
   reviewAspect: string | undefined;
   reviewBody: string | undefined;
-  reviewRating: Schema.Rating | undefined;
+  reviewRating: Schema.Rating<D> | undefined;
 }
 
 export function ReviewMixin<Base extends Constructor>(Resource: Base) {

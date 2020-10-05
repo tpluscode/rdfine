@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface TypeAndQuantityNode extends Schema.StructuredValue, RdfResource {
+export interface TypeAndQuantityNode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
   amountOfThisGood: number | undefined;
   businessFunction: Schema.BusinessFunction | undefined;
-  typeOfGood: Schema.Product | Schema.Service | undefined;
+  typeOfGood: Schema.Product<D> | Schema.Service<D> | undefined;
   unitCode: string | undefined;
   unitCodeTerm: RDF.NamedNode | undefined;
   unitText: string | undefined;

@@ -8,7 +8,7 @@ import type * as Schema from '.';
 import { AutomotiveBusinessMixin } from './AutomotiveBusiness';
 import { StoreMixin } from './Store';
 
-export interface AutoPartsStore extends Schema.AutomotiveBusiness, Schema.Store, RdfResource {
+export interface AutoPartsStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AutomotiveBusiness<D>, Schema.Store<D>, RdfResource<D> {
 }
 
 export function AutoPartsStoreMixin<Base extends Constructor>(Resource: Base) {

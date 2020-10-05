@@ -7,21 +7,21 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkSeriesMixin } from './CreativeWorkSeries';
 
-export interface RadioSeries extends Schema.CreativeWorkSeries, RdfResource {
-  actor: Schema.Person | undefined;
-  actors: Schema.Person | undefined;
-  containsSeason: Schema.CreativeWorkSeason | undefined;
-  director: Schema.Person | undefined;
-  directors: Schema.Person | undefined;
-  episode: Schema.Episode | undefined;
-  episodes: Schema.Episode | undefined;
-  musicBy: Schema.MusicGroup | Schema.Person | undefined;
+export interface RadioSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeries<D>, RdfResource<D> {
+  actor: Schema.Person<D> | undefined;
+  actors: Schema.Person<D> | undefined;
+  containsSeason: Schema.CreativeWorkSeason<D> | undefined;
+  director: Schema.Person<D> | undefined;
+  directors: Schema.Person<D> | undefined;
+  episode: Schema.Episode<D> | undefined;
+  episodes: Schema.Episode<D> | undefined;
+  musicBy: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
   numberOfEpisodes: number | undefined;
   numberOfSeasons: number | undefined;
-  productionCompany: Schema.Organization | undefined;
-  season: Schema.CreativeWorkSeason | undefined;
-  seasons: Schema.CreativeWorkSeason | undefined;
-  trailer: Schema.VideoObject | undefined;
+  productionCompany: Schema.Organization<D> | undefined;
+  season: Schema.CreativeWorkSeason<D> | undefined;
+  seasons: Schema.CreativeWorkSeason<D> | undefined;
+  trailer: Schema.VideoObject<D> | undefined;
 }
 
 export function RadioSeriesMixin<Base extends Constructor>(Resource: Base) {

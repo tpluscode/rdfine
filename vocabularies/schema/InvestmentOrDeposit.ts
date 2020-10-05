@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { FinancialProductMixin } from './FinancialProduct';
 
-export interface InvestmentOrDeposit extends Schema.FinancialProduct, RdfResource {
-  amount: Schema.MonetaryAmount | undefined;
+export interface InvestmentOrDeposit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialProduct<D>, RdfResource<D> {
+  amount: Schema.MonetaryAmount<D> | undefined;
   amountLiteral: number | undefined;
 }
 

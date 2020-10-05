@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { InformActionMixin } from './InformAction';
 
-export interface RsvpAction extends Schema.InformAction, RdfResource {
+export interface RsvpAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InformAction<D>, RdfResource<D> {
   additionalNumberOfGuests: number | undefined;
-  comment: Schema.Comment | undefined;
+  comment: Schema.Comment<D> | undefined;
   rsvpResponse: Schema.RsvpResponseType | undefined;
 }
 

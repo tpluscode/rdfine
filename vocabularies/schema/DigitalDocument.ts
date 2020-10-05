@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface DigitalDocument extends Schema.CreativeWork, RdfResource {
-  hasDigitalDocumentPermission: Schema.DigitalDocumentPermission | undefined;
+export interface DigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  hasDigitalDocumentPermission: Schema.DigitalDocumentPermission<D> | undefined;
 }
 
 export function DigitalDocumentMixin<Base extends Constructor>(Resource: Base) {

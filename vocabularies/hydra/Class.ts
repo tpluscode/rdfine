@@ -8,10 +8,10 @@ import type * as Hydra from '.';
 import * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin } from './Resource';
 
-export interface Class extends Rdfs.Class, Hydra.Resource, RdfResource {
+export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, Hydra.Resource<D>, RdfResource<D> {
   description: string | undefined;
-  supportedOperation: Array<Hydra.Operation>;
-  supportedProperty: Array<Hydra.SupportedProperty>;
+  supportedOperation: Array<Hydra.Operation<D>>;
+  supportedProperty: Array<Hydra.SupportedProperty<D>>;
   title: string | undefined;
 }
 

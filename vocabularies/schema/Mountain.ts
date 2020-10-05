@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { LandformMixin } from './Landform';
 
-export interface Mountain extends Schema.Landform, RdfResource {
+export interface Mountain<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Landform<D>, RdfResource<D> {
 }
 
 export function MountainMixin<Base extends Constructor>(Resource: Base) {

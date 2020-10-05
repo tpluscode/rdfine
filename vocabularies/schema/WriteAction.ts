@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreateActionMixin } from './CreateAction';
 
-export interface WriteAction extends Schema.CreateAction, RdfResource {
-  inLanguage: Schema.Language | undefined;
+export interface WriteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, RdfResource<D> {
+  inLanguage: Schema.Language<D> | undefined;
   inLanguageLiteral: string | undefined;
-  language: Schema.Language | undefined;
+  language: Schema.Language<D> | undefined;
 }
 
 export function WriteActionMixin<Base extends Constructor>(Resource: Base) {

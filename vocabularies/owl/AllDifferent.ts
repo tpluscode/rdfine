@@ -8,8 +8,8 @@ import type * as Owl from '.';
 import * as Rdfs from '@rdfine/rdfs';
 import * as Rdf from '@rdfine/rdf';
 
-export interface AllDifferent extends Rdfs.Resource, RdfResource {
-  distinctMembers: Rdf.List | undefined;
+export interface AllDifferent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+  distinctMembers: Rdf.List<D> | undefined;
 }
 
 export function AllDifferentMixin<Base extends Constructor>(Resource: Base) {

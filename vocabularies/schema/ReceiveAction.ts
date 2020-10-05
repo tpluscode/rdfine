@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { TransferActionMixin } from './TransferAction';
 
-export interface ReceiveAction extends Schema.TransferAction, RdfResource {
+export interface ReceiveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, RdfResource<D> {
   deliveryMethod: Schema.DeliveryMethod | undefined;
-  sender: Schema.Audience | Schema.Organization | Schema.Person | undefined;
+  sender: Schema.Audience<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
 export function ReceiveActionMixin<Base extends Constructor>(Resource: Base) {

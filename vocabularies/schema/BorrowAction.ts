@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { TransferActionMixin } from './TransferAction';
 
-export interface BorrowAction extends Schema.TransferAction, RdfResource {
-  lender: Schema.Organization | Schema.Person | undefined;
+export interface BorrowAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, RdfResource<D> {
+  lender: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
 export function BorrowActionMixin<Base extends Constructor>(Resource: Base) {

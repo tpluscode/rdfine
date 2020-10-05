@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { AggregateRatingMixin } from './AggregateRating';
 
-export interface EmployerAggregateRating extends Schema.AggregateRating, RdfResource {
+export interface EmployerAggregateRating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AggregateRating<D>, RdfResource<D> {
 }
 
 export function EmployerAggregateRatingMixin<Base extends Constructor>(Resource: Base) {

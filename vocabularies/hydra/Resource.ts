@@ -7,17 +7,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
-export interface Resource extends Rdfs.Resource, RdfResource {
-  apiDocumentation: Hydra.ApiDocumentation | undefined;
-  collection: Array<Hydra.Collection>;
-  first: Hydra.Resource | undefined;
+export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+  apiDocumentation: Hydra.ApiDocumentation<D> | undefined;
+  collection: Array<Hydra.Collection<Hydra.Resource<D>, D>>;
+  first: Hydra.Resource<D> | undefined;
   freetextQuery: string | undefined;
-  last: Hydra.Resource | undefined;
-  next: Hydra.Resource | undefined;
-  operation: Array<Hydra.Operation>;
-  previous: Hydra.Resource | undefined;
-  search: Hydra.IriTemplate | undefined;
-  view: Array<Hydra.Resource>;
+  last: Hydra.Resource<D> | undefined;
+  next: Hydra.Resource<D> | undefined;
+  operation: Array<Hydra.Operation<D>>;
+  previous: Hydra.Resource<D> | undefined;
+  search: Hydra.IriTemplate<D> | undefined;
+  view: Array<Hydra.Resource<D>>;
 }
 
 export function ResourceMixin<Base extends Constructor>(Resource: Base) {
@@ -26,7 +26,7 @@ export function ResourceMixin<Base extends Constructor>(Resource: Base) {
     @property.resource({ implicitTypes: [hydra.ApiDocumentation] })
     apiDocumentation: Hydra.ApiDocumentation | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Collection] })
-    collection!: Array<Hydra.Collection>;
+    collection!: Array<Hydra.Collection<any, any>>;
     @property.resource({ as: [ResourceMixin] })
     first: Hydra.Resource | undefined;
     @property.literal()

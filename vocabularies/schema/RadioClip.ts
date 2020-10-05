@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ClipMixin } from './Clip';
 
-export interface RadioClip extends Schema.Clip, RdfResource {
+export interface RadioClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Clip<D>, RdfResource<D> {
 }
 
 export function RadioClipMixin<Base extends Constructor>(Resource: Base) {

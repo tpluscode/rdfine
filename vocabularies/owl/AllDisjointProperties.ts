@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
-export interface AllDisjointProperties extends Rdfs.Resource, RdfResource {
+export interface AllDisjointProperties<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
 }
 
 export function AllDisjointPropertiesMixin<Base extends Constructor>(Resource: Base) {

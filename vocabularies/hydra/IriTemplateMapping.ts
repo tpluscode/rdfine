@@ -8,11 +8,11 @@ import type * as Hydra from '.';
 import * as Rdf from '@rdfine/rdf';
 import { ResourceMixin } from './Resource';
 
-export interface IriTemplateMapping extends Hydra.Resource, RdfResource {
-  property: Rdf.Property | undefined;
+export interface IriTemplateMapping<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
+  property: Rdf.Property<D> | undefined;
   required: boolean | undefined;
   variable: string | undefined;
-  variableRepresentation: Hydra.VariableRepresentation | undefined;
+  variableRepresentation: Hydra.VariableRepresentation<D> | undefined;
 }
 
 export function IriTemplateMappingMixin<Base extends Constructor>(Resource: Base) {

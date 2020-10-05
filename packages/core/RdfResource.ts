@@ -1,4 +1,4 @@
-/* eslint-disable camelcase,@typescript-eslint/camelcase,no-dupe-class-members */
+/* eslint-disable camelcase,no-dupe-class-members,no-use-before-define */
 import type { NamespaceBuilder } from '@rdf-esm/namespace'
 import { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from 'rdf-js'
 import cf, { MultiPointer, GraphPointer } from 'clownface'
@@ -15,8 +15,6 @@ import type { TypeCollection } from './lib/TypeCollection'
 import TypeCollectionCtor from './lib/TypeCollection'
 import { xsd } from '@tpluscode/rdf-ns-builders'
 import { defaultGraphInstance } from '@rdf-esm/data-model'
-
-type ObjectOrFactory<T> = T | ((self: RdfResource) => T)
 
 export type ResourceIdentifier = BlankNode | NamedNode
 export type ResourceNode<D extends DatasetCore = DatasetCore> = GraphPointer<ResourceIdentifier, D>
@@ -66,6 +64,8 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   _getObjects(property: string | NamedNode, options?: GetOptions): MultiPointer<Term, D>
   _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
 }
+
+type ObjectOrFactory<T> = T | ((self: RdfResource) => T)
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
   public readonly pointer: GraphPointer<ResourceIdentifier, D>
@@ -314,6 +314,7 @@ export type Initializer<T> = Omit<{
           : unknown
 }, keyof RdfResource> & BaseInitializer
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 type PartialRecursive<T> = T extends object ? { [K in keyof T]?: PartialRecursive<T[K]> } : T
 
 export function fromObject<T extends RdfResource>(initializer: Initializer<UserDefinedInterface<T> & BaseInitializer>): T {

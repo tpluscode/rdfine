@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { WebPageMixin } from './WebPage';
 
-export interface SearchResultsPage extends Schema.WebPage, RdfResource {
+export interface SearchResultsPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, RdfResource<D> {
 }
 
 export function SearchResultsPageMixin<Base extends Constructor>(Resource: Base) {

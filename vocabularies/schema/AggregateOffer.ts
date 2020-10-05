@@ -7,11 +7,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { OfferMixin } from './Offer';
 
-export interface AggregateOffer extends Schema.Offer, RdfResource {
+export interface AggregateOffer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Offer<D>, RdfResource<D> {
   highPrice: number | string | undefined;
   lowPrice: number | string | undefined;
   offerCount: number | undefined;
-  offers: Schema.Demand | Schema.Offer | undefined;
+  offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
 }
 
 export function AggregateOfferMixin<Base extends Constructor>(Resource: Base) {

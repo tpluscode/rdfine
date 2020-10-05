@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { DatasetMixin } from './Dataset';
 
-export interface DataFeed extends Schema.Dataset, RdfResource {
-  dataFeedElement: Schema.DataFeedItem | Schema.Thing | undefined;
+export interface DataFeed<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Dataset<D>, RdfResource<D> {
+  dataFeedElement: Schema.DataFeedItem<D> | Schema.Thing<D> | undefined;
   dataFeedElementLiteral: string | undefined;
 }
 

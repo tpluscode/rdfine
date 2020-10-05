@@ -8,19 +8,19 @@ import type * as Schema from '.';
 import { GameMixin } from './Game';
 import { SoftwareApplicationMixin } from './SoftwareApplication';
 
-export interface VideoGame extends Schema.Game, Schema.SoftwareApplication, RdfResource {
-  actor: Schema.Person | undefined;
-  actors: Schema.Person | undefined;
-  cheatCode: Schema.CreativeWork | undefined;
-  director: Schema.Person | undefined;
-  directors: Schema.Person | undefined;
-  gamePlatform: Schema.Thing | undefined;
+export interface VideoGame<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Game<D>, Schema.SoftwareApplication<D>, RdfResource<D> {
+  actor: Schema.Person<D> | undefined;
+  actors: Schema.Person<D> | undefined;
+  cheatCode: Schema.CreativeWork<D> | undefined;
+  director: Schema.Person<D> | undefined;
+  directors: Schema.Person<D> | undefined;
+  gamePlatform: Schema.Thing<D> | undefined;
   gamePlatformLiteral: string | undefined;
-  gameServer: Schema.GameServer | undefined;
-  gameTip: Schema.CreativeWork | undefined;
-  musicBy: Schema.MusicGroup | Schema.Person | undefined;
+  gameServer: Schema.GameServer<D> | undefined;
+  gameTip: Schema.CreativeWork<D> | undefined;
+  musicBy: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
   playMode: Schema.GamePlayMode | undefined;
-  trailer: Schema.VideoObject | undefined;
+  trailer: Schema.VideoObject<D> | undefined;
 }
 
 export function VideoGameMixin<Base extends Constructor>(Resource: Base) {

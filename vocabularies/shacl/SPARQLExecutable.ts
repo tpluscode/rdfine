@@ -8,8 +8,8 @@ import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
 import * as Owl from '@rdfine/owl';
 
-export interface SPARQLExecutable extends Rdfs.Resource, RdfResource {
-  prefixes: Owl.Ontology | undefined;
+export interface SPARQLExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+  prefixes: Owl.Ontology<D> | undefined;
 }
 
 export function SPARQLExecutableMixin<Base extends Constructor>(Resource: Base) {

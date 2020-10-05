@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Blog extends Schema.CreativeWork, RdfResource {
-  blogPost: Schema.BlogPosting | undefined;
-  blogPosts: Schema.BlogPosting | undefined;
+export interface Blog<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  blogPost: Schema.BlogPosting<D> | undefined;
+  blogPosts: Schema.BlogPosting<D> | undefined;
   issn: string | undefined;
 }
 

@@ -8,7 +8,7 @@ import type * as Schema from '.';
 import { HealthAndBeautyBusinessMixin } from './HealthAndBeautyBusiness';
 import { SportsActivityLocationMixin } from './SportsActivityLocation';
 
-export interface HealthClub extends Schema.HealthAndBeautyBusiness, Schema.SportsActivityLocation, RdfResource {
+export interface HealthClub<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HealthAndBeautyBusiness<D>, Schema.SportsActivityLocation<D>, RdfResource<D> {
 }
 
 export function HealthClubMixin<Base extends Constructor>(Resource: Base) {

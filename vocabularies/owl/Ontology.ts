@@ -7,12 +7,12 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '.';
 import * as Rdfs from '@rdfine/rdfs';
 
-export interface Ontology extends Rdfs.Resource, RdfResource {
-  backwardCompatibleWith: Owl.Ontology | undefined;
-  imports: Owl.Ontology | undefined;
-  incompatibleWith: Owl.Ontology | undefined;
-  priorVersion: Owl.Ontology | undefined;
-  versionIRI: Owl.Ontology | undefined;
+export interface Ontology<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+  backwardCompatibleWith: Owl.Ontology<D> | undefined;
+  imports: Owl.Ontology<D> | undefined;
+  incompatibleWith: Owl.Ontology<D> | undefined;
+  priorVersion: Owl.Ontology<D> | undefined;
+  versionIRI: Owl.Ontology<D> | undefined;
 }
 
 export function OntologyMixin<Base extends Constructor>(Resource: Base) {

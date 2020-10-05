@@ -7,17 +7,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { IntangibleMixin } from './Intangible';
 
-export interface ParcelDelivery extends Schema.Intangible, RdfResource {
-  carrier: Schema.Organization | undefined;
-  deliveryAddress: Schema.PostalAddress | undefined;
-  deliveryStatus: Schema.DeliveryEvent | undefined;
+export interface ParcelDelivery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+  carrier: Schema.Organization<D> | undefined;
+  deliveryAddress: Schema.PostalAddress<D> | undefined;
+  deliveryStatus: Schema.DeliveryEvent<D> | undefined;
   expectedArrivalFrom: Date | undefined;
   expectedArrivalUntil: Date | undefined;
   hasDeliveryMethod: Schema.DeliveryMethod | undefined;
-  itemShipped: Schema.Product | undefined;
-  originAddress: Schema.PostalAddress | undefined;
-  partOfOrder: Schema.Order | undefined;
-  provider: Schema.Organization | Schema.Person | undefined;
+  itemShipped: Schema.Product<D> | undefined;
+  originAddress: Schema.PostalAddress<D> | undefined;
+  partOfOrder: Schema.Order<D> | undefined;
+  provider: Schema.Organization<D> | Schema.Person<D> | undefined;
   trackingNumber: string | undefined;
   trackingUrl: RDF.NamedNode | undefined;
 }

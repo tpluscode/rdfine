@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { WebPageElementMixin } from './WebPageElement';
 
-export interface WPAdBlock extends Schema.WebPageElement, RdfResource {
+export interface WPAdBlock<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, RdfResource<D> {
 }
 
 export function WPAdBlockMixin<Base extends Constructor>(Resource: Base) {

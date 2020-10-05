@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ReactActionMixin } from './ReactAction';
 
-export interface EndorseAction extends Schema.ReactAction, RdfResource {
-  endorsee: Schema.Organization | Schema.Person | undefined;
+export interface EndorseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ReactAction<D>, RdfResource<D> {
+  endorsee: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
 export function EndorseActionMixin<Base extends Constructor>(Resource: Base) {

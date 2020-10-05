@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ReviewMixin } from './Review';
 
-export interface ClaimReview extends Schema.Review, RdfResource {
+export interface ClaimReview<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Review<D>, RdfResource<D> {
   claimReviewed: string | undefined;
 }
 

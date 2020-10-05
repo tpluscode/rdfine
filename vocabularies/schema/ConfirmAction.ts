@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { InformActionMixin } from './InformAction';
 
-export interface ConfirmAction extends Schema.InformAction, RdfResource {
+export interface ConfirmAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InformAction<D>, RdfResource<D> {
 }
 
 export function ConfirmActionMixin<Base extends Constructor>(Resource: Base) {

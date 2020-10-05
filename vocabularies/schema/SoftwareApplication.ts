@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface SoftwareApplication extends Schema.CreativeWork, RdfResource {
+export interface SoftwareApplication<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
   applicationCategory: string | undefined;
   applicationCategoryTerm: RDF.NamedNode | undefined;
   applicationSubCategory: string | undefined;
@@ -31,15 +31,15 @@ export interface SoftwareApplication extends Schema.CreativeWork, RdfResource {
   releaseNotesTerm: RDF.NamedNode | undefined;
   requirements: string | undefined;
   requirementsTerm: RDF.NamedNode | undefined;
-  screenshot: Schema.ImageObject | undefined;
-  softwareAddOn: Schema.SoftwareApplication | undefined;
-  softwareHelp: Schema.CreativeWork | undefined;
+  screenshot: Schema.ImageObject<D> | undefined;
+  softwareAddOn: Schema.SoftwareApplication<D> | undefined;
+  softwareHelp: Schema.CreativeWork<D> | undefined;
   softwareRequirements: string | undefined;
   softwareRequirementsTerm: RDF.NamedNode | undefined;
   softwareVersion: string | undefined;
   storageRequirements: string | undefined;
   storageRequirementsTerm: RDF.NamedNode | undefined;
-  supportingData: Schema.DataFeed | undefined;
+  supportingData: Schema.DataFeed<D> | undefined;
 }
 
 export function SoftwareApplicationMixin<Base extends Constructor>(Resource: Base) {

@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ProductMixin } from './Product';
 
-export interface ProductModel extends Schema.Product, RdfResource {
-  isVariantOf: Schema.ProductModel | undefined;
-  predecessorOf: Schema.ProductModel | undefined;
-  successorOf: Schema.ProductModel | undefined;
+export interface ProductModel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Product<D>, RdfResource<D> {
+  isVariantOf: Schema.ProductModel<D> | undefined;
+  predecessorOf: Schema.ProductModel<D> | undefined;
+  successorOf: Schema.ProductModel<D> | undefined;
 }
 
 export function ProductModelMixin<Base extends Constructor>(Resource: Base) {

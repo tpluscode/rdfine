@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ContactPointMixin } from './ContactPoint';
 
-export interface PostalAddress extends Schema.ContactPoint, RdfResource {
-  addressCountry: Schema.Country | undefined;
+export interface PostalAddress<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ContactPoint<D>, RdfResource<D> {
+  addressCountry: Schema.Country<D> | undefined;
   addressCountryLiteral: string | undefined;
   addressLocality: string | undefined;
   addressRegion: string | undefined;

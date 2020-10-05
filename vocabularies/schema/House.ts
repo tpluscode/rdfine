@@ -7,8 +7,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { AccommodationMixin } from './Accommodation';
 
-export interface House extends Schema.Accommodation, RdfResource {
-  numberOfRooms: Schema.QuantitativeValue | undefined;
+export interface House<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Accommodation<D>, RdfResource<D> {
+  numberOfRooms: Schema.QuantitativeValue<D> | undefined;
   numberOfRoomsLiteral: number | undefined;
 }
 

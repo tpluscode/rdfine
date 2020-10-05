@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { EducationalOrganizationMixin } from './EducationalOrganization';
 
-export interface CollegeOrUniversity extends Schema.EducationalOrganization, RdfResource {
+export interface CollegeOrUniversity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.EducationalOrganization<D>, RdfResource<D> {
 }
 
 export function CollegeOrUniversityMixin<Base extends Constructor>(Resource: Base) {

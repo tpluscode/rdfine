@@ -7,9 +7,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ActionMixin } from './Action';
 
-export interface PlayAction extends Schema.Action, RdfResource {
-  audience: Schema.Audience | undefined;
-  event: Schema.Event | undefined;
+export interface PlayAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, RdfResource<D> {
+  audience: Schema.Audience<D> | undefined;
+  event: Schema.Event<D> | undefined;
 }
 
 export function PlayActionMixin<Base extends Constructor>(Resource: Base) {

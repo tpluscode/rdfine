@@ -7,18 +7,18 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { ServiceMixin } from './Service';
 
-export interface BroadcastService extends Schema.Service, RdfResource {
-  area: Schema.Place | undefined;
-  broadcastAffiliateOf: Schema.Organization | undefined;
+export interface BroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, RdfResource<D> {
+  area: Schema.Place<D> | undefined;
+  broadcastAffiliateOf: Schema.Organization<D> | undefined;
   broadcastDisplayName: string | undefined;
-  broadcaster: Schema.Organization | undefined;
-  broadcastFrequency: Schema.BroadcastFrequencySpecification | undefined;
+  broadcaster: Schema.Organization<D> | undefined;
+  broadcastFrequency: Schema.BroadcastFrequencySpecification<D> | undefined;
   broadcastFrequencyLiteral: string | undefined;
   broadcastTimezone: string | undefined;
-  hasBroadcastChannel: Schema.BroadcastChannel | undefined;
-  inLanguage: Schema.Language | undefined;
+  hasBroadcastChannel: Schema.BroadcastChannel<D> | undefined;
+  inLanguage: Schema.Language<D> | undefined;
   inLanguageLiteral: string | undefined;
-  parentService: Schema.BroadcastService | undefined;
+  parentService: Schema.BroadcastService<D> | undefined;
   videoFormat: string | undefined;
 }
 

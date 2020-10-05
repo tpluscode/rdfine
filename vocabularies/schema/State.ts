@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { AdministrativeAreaMixin } from './AdministrativeArea';
 
-export interface State extends Schema.AdministrativeArea, RdfResource {
+export interface State<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AdministrativeArea<D>, RdfResource<D> {
 }
 
 export function StateMixin<Base extends Constructor>(Resource: Base) {

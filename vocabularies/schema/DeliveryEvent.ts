@@ -7,7 +7,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { EventMixin } from './Event';
 
-export interface DeliveryEvent extends Schema.Event, RdfResource {
+export interface DeliveryEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
   accessCode: string | undefined;
   availableFrom: Date | undefined;
   availableThrough: Date | undefined;

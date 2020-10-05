@@ -7,10 +7,10 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '.';
 import { TradeActionMixin } from './TradeAction';
 
-export interface BuyAction extends Schema.TradeAction, RdfResource {
-  seller: Schema.Organization | Schema.Person | undefined;
-  vendor: Schema.Organization | Schema.Person | undefined;
-  warrantyPromise: Schema.WarrantyPromise | undefined;
+export interface BuyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, RdfResource<D> {
+  seller: Schema.Organization<D> | Schema.Person<D> | undefined;
+  vendor: Schema.Organization<D> | Schema.Person<D> | undefined;
+  warrantyPromise: Schema.WarrantyPromise<D> | undefined;
 }
 
 export function BuyActionMixin<Base extends Constructor>(Resource: Base) {

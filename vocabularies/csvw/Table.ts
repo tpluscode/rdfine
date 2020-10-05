@@ -6,26 +6,26 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '.';
 
-export interface Table extends RdfResource {
+export interface Table<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   aboutUrl: string | undefined;
-  datatype: Csvw.Datatype | undefined;
+  datatype: Csvw.Datatype<D> | undefined;
   datatypeLiteral: string | undefined;
   default: string | undefined;
-  dialect: Csvw.Dialect | undefined;
-  foreignKey: Csvw.ForeignKey | undefined;
+  dialect: Csvw.Dialect<D> | undefined;
+  foreignKey: Csvw.ForeignKey<D> | undefined;
   lang: string | undefined;
   note: RDF.Term | undefined;
   null: string | undefined;
   ordered: boolean | undefined;
   propertyUrl: string | undefined;
   required: boolean | undefined;
-  row: Csvw.Row | undefined;
+  row: Csvw.Row<D> | undefined;
   separator: string | undefined;
   suppressOutput: boolean | undefined;
-  tableDirection: Csvw.Direction | undefined;
-  tableSchema: Csvw.Schema | undefined;
-  textDirection: Csvw.Direction | undefined;
-  transformations: Array<Csvw.Transformation>;
+  tableDirection: Csvw.Direction<D> | undefined;
+  tableSchema: Csvw.Schema<D> | undefined;
+  textDirection: Csvw.Direction<D> | undefined;
+  transformations: Array<Csvw.Transformation<D>>;
   url: string | undefined;
   valueUrl: string | undefined;
 }
