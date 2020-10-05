@@ -8,7 +8,7 @@ import type * as Hydra from '.';
 import { ResourceMixin } from './Resource';
 
 export interface Collection<M extends RdfResource<any> = RdfResource<any>, D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
-  manages: Array<RDF.Term>;
+  manages: Array<Hydra.ManagesBlock<D>>;
   member: Array<Hydra.Resource<D> & M>;
   totalItems: number | undefined;
 }
@@ -16,8 +16,8 @@ export interface Collection<M extends RdfResource<any> = RdfResource<any>, D ext
 export function CollectionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(hydra)
   class CollectionClass extends ResourceMixin(Resource) implements Collection {
-    @property({ values: 'array' })
-    manages!: Array<RDF.Term>;
+    @property.resource({ values: 'array', implicitTypes: [hydra.ManagesBlock] })
+    manages!: Array<Hydra.ManagesBlock>;
     @property.resource({ values: 'array', implicitTypes: [hydra.Resource] })
     member!: Array<Hydra.Resource>;
     @property.literal({ type: Number })

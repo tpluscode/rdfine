@@ -5,6 +5,7 @@ export * from './Error';
 export * from './IriTemplate';
 export * from './IriTemplateMapping';
 export * from './Link';
+export * from './ManagesBlock';
 export * from './Operation';
 export * from './PartialCollectionView';
 export * from './Resource';
