@@ -8,14 +8,14 @@ import type * as Rdfs from '.';
 import { ResourceMixin } from './Resource';
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
-  subClassOf: Rdfs.Class<D> | undefined;
+  subClassOf: Array<Rdfs.Class<D>>;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
   @namespace(rdfs)
   class ClassClass extends ResourceMixin(Resource) implements Class {
-    @property.resource({ as: [ClassMixin] })
-    subClassOf: Rdfs.Class | undefined;
+    @property.resource({ values: 'array', as: [ClassMixin] })
+    subClassOf!: Array<Rdfs.Class>;
   }
   return ClassClass
 }
