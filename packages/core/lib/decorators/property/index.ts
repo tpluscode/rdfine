@@ -74,7 +74,7 @@ interface PropertyDecoratorOptions<T extends RdfResource, TValue, TTerm extends 
 
 export type PropertyMeta<T = any> = {
   initial?: ObjectOrFactory<T, unknown, Term>
-  options: PropertyDecoratorOptions<RdfResource, unknown, Term>
+  options: Omit<PropertyDecoratorOptions<RdfResource, unknown, Term>, 'values'> & { values: PropertyReturnKind[] }
 }
 
 function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto: any, name: string, options: PropertyDecoratorOptions<T, TValue, TTerm>) {
@@ -210,7 +210,10 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
 
   proto.constructor.__properties.set(name, {
     initial,
-    options,
+    options: {
+      ...options,
+      values,
+    },
   })
 }
 

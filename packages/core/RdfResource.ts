@@ -295,7 +295,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   }
 
   public toJSON<T extends RdfResource<any> = this>(): Jsonified<T> {
-    return toJSON<D>(this) as any
+    return toJSON(this as any) as any
   }
 }
 

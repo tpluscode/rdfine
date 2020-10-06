@@ -7,10 +7,10 @@ import {
   literal,
   blankNode,
 } from '@rdf-esm/data-model'
-import { skos, rdf, schema, foaf } from '@tpluscode/rdf-ns-builders'
+import { skos, rdf, schema, foaf, xsd } from '@tpluscode/rdf-ns-builders'
 import RdfResource, { Initializer, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
-import { property } from '../index'
+import { Constructor, property } from '../index'
 
 describe('RdfResource', () => {
   describe('constructor', () => {
@@ -747,8 +747,7 @@ describe('RdfResource', () => {
       // then
       expect(json).toBeValidJsonLd()
       expect(json.id).toEqual('_:john')
-      expect(json).toMatchInlineSnapshot(
-        `
+      expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
             "id": "@id",
@@ -756,8 +755,7 @@ describe('RdfResource', () => {
           },
           "id": "_:john",
         }
-      `,
-      )
+      `)
     })
 
     it("sets named node id property as '@id'", () => {
@@ -771,8 +769,7 @@ describe('RdfResource', () => {
       // then
       expect(json).toBeValidJsonLd()
       expect(json.id).toEqual('foo')
-      expect(json).toMatchInlineSnapshot(
-        `
+      expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
             "id": "@id",
@@ -780,8 +777,7 @@ describe('RdfResource', () => {
           },
           "id": "foo",
         }
-      `,
-      )
+      `)
     })
 
     it("sets types as '@type'", () => {
@@ -800,8 +796,7 @@ describe('RdfResource', () => {
       expect(json.type).toEqual(
         expect.arrayContaining([foaf.Person.value, schema.Person.value]),
       )
-      expect(json).toMatchInlineSnapshot(
-        `
+      expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
             "id": "@id",
@@ -813,8 +808,7 @@ describe('RdfResource', () => {
             "http://xmlns.com/foaf/0.1/Person",
           ],
         }
-      `,
-      )
+      `)
     })
 
     it("set known string properties as json keys and adds them to '@context'", () => {
@@ -824,10 +818,10 @@ describe('RdfResource', () => {
         .addOut(schema.givenName, 'John')
         .addOut(schema.familyName, 'Doe')
       class TestResource extends RdfResource {
-        @property({ path: schema.givenName })
+        @property.literal({ path: schema.givenName })
         name!: string;
 
-        @property({ path: schema.familyName })
+        @property.literal({ path: schema.familyName })
         lastName!: string;
       }
       const resource = new TestResource(node)
@@ -838,6 +832,7 @@ describe('RdfResource', () => {
       // then
       expect(json).toBeValidJsonLd()
       expect(json.name).toEqual('John')
+      expect(json['@context'].name).toEqual(schema.givenName.value)
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -850,8 +845,7 @@ describe('RdfResource', () => {
           "lastName": "Doe",
           "name": "John",
         }
-      `,
-      )
+      `)
     })
 
     it('set extract properties as json values with full property URL', () => {
@@ -861,7 +855,7 @@ describe('RdfResource', () => {
         .addOut(schema.givenName, 'John')
         .addOut(schema.familyName, 'Doe')
       class TestResource extends RdfResource {
-        @property({ path: schema.givenName })
+        @property.literal({ path: schema.givenName })
         name!: string;
       }
       const resource = new TestResource(node)
@@ -883,8 +877,339 @@ describe('RdfResource', () => {
           "id": "john",
           "name": "John",
         }
+      `)
+    })
+
+    it('maps various literals', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .blankNode()
+        .addOut(schema.age, 22)
+        .addOut(schema.contentSize, 22.5)
+        .addOut(
+          schema.datePublished,
+          literal(new Date().toISOString(), xsd.dateTime),
+        )
+        .addOut(schema.isLiveBroadcast, true)
+        .addOut(schema.contentUrl, 'http://example.com/foo')
+        .addOut(schema.name, literal('foo', 'en'))
+      class TestResource extends RdfResource {
+        @property.literal({ path: schema.age, type: Number })
+        age!: number;
+
+        @property.literal({ path: schema.contentSize, type: Number })
+        contentSize!: number;
+
+        @property.literal({ path: schema.datePublished, type: Date })
+        datePublished!: Date;
+
+        @property.literal({ path: schema.isLiveBroadcast, type: Boolean })
+        isLiveBroadcast!: boolean;
+
+        @property.literal({ path: schema.contentUrl, datatype: xsd.anyURI })
+        contentUrl!: string;
+
+        @property.literal({ path: schema.name })
+        name!: string;
+      }
+      const resource = new TestResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json.age).toEqual(22)
+      expect(json.contentSize).toEqual(22.5)
+      expect(json.isLiveBroadcast).toEqual(true)
+      expect(json.contentUrl).toEqual('http://example.com/foo')
+      expect(json).toMatchInlineSnapshot(
+        {
+          datePublished: {
+            '@value': expect.any(String),
+            '@type': xsd.dateTime.value,
+          },
+        },
+        `
+        Object {
+          "@context": Object {
+            "age": "http://schema.org/age",
+            "contentSize": "http://schema.org/contentSize",
+            "contentUrl": "http://schema.org/contentUrl",
+            "datePublished": "http://schema.org/datePublished",
+            "id": "@id",
+            "isLiveBroadcast": "http://schema.org/isLiveBroadcast",
+            "name": "http://schema.org/name",
+            "type": "@type",
+          },
+          "age": 22,
+          "contentSize": 22.5,
+          "contentUrl": "http://example.com/foo",
+          "datePublished": Object {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+            "@value": Any<String>,
+          },
+          "id": "_:b47",
+          "isLiveBroadcast": true,
+          "name": Object {
+            "@language": "en",
+            "@value": "foo",
+          },
+        }
       `,
       )
+    })
+
+    it('maps arrays of literals', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .blankNode()
+        .addOut(schema.alternateName, 'Foo')
+        .addOut(schema.alternateName, literal('Bar', 'de'))
+        .addOut(schema.alternateName, literal('Baz', 'fr'))
+      class TestResource extends RdfResource {
+        @property.literal({ path: schema.alternateName })
+        alternateNames!: string[];
+      }
+      const resource = new TestResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json.alternateNames).toHaveLength(3)
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "alternateNames": "http://schema.org/alternateName",
+            "id": "@id",
+            "type": "@type",
+          },
+          "alternateNames": Array [
+            "Foo",
+            Object {
+              "@language": "de",
+              "@value": "Bar",
+            },
+            Object {
+              "@language": "fr",
+              "@value": "Baz",
+            },
+          ],
+          "id": "_:b48",
+        }
+      `)
+    })
+
+    it('sets child resource as jsonified', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('john')
+        .addOut(schema.knows, namedNode('jane'), jane => {
+          jane.addOut(schema.givenName, 'Jane')
+        })
+      function PersonMixin<Base extends Constructor>(base: Base) {
+        class TestPerson extends base {
+          @property.literal({ path: schema.givenName })
+          name!: string;
+
+          @property.resource({ path: schema.knows, as: [PersonMixin] })
+          knows!: TestPerson;
+        }
+        return TestPerson
+      }
+      const resource = new (PersonMixin(RdfResource))(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json.knows?.name).toEqual('Jane')
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "knows": "http://schema.org/knows",
+            "type": "@type",
+          },
+          "id": "john",
+          "knows": Object {
+            "@context": Object {
+              "name": "http://schema.org/givenName",
+            },
+            "id": "jane",
+            "name": "Jane",
+          },
+        }
+      `)
+    })
+
+    it('sets array of child resource as jsonified', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('john')
+        .addOut(
+          schema.knows,
+          [namedNode('jane'), namedNode('jenny')],
+          friends => {
+            friends.forEach(friend =>
+              friend.addOut(schema.givenName, friend.value),
+            )
+          },
+        )
+      function PersonMixin<Base extends Constructor>(base: Base) {
+        class TestPerson extends base {
+          @property.literal({ path: schema.givenName })
+          name!: string;
+
+          @property.resource({
+            path: schema.knows,
+            as: [PersonMixin],
+            values: 'array',
+          })
+          knows!: TestPerson[];
+        }
+        return TestPerson
+      }
+      const resource = new (PersonMixin(RdfResource))(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json.knows![0].name).toEqual('jane')
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "knows": "http://schema.org/knows",
+            "type": "@type",
+          },
+          "id": "john",
+          "knows": Array [
+            Object {
+              "@context": Object {
+                "name": "http://schema.org/givenName",
+              },
+              "id": "jane",
+              "name": "jane",
+            },
+            Object {
+              "@context": Object {
+                "name": "http://schema.org/givenName",
+              },
+              "id": "jenny",
+              "name": "jenny",
+            },
+          ],
+        }
+      `)
+    })
+
+    it('sets RDF list of child resource as jsonified array and adds appropriate context', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('john')
+        .addList(schema.knows, [namedNode('jane'), namedNode('jenny')])
+      node.namedNode('jane').addOut(schema.givenName, 'jane')
+      node.namedNode('jenny').addOut(schema.givenName, 'jenny')
+      function PersonMixin<Base extends Constructor>(base: Base) {
+        class TestPerson extends base {
+          @property.literal({ path: schema.givenName })
+          name!: string;
+
+          @property.resource({
+            path: schema.knows,
+            as: [PersonMixin],
+            values: 'list',
+          })
+          knows!: TestPerson[];
+        }
+        return TestPerson
+      }
+      const resource = new (PersonMixin(RdfResource))(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json.knows![0].name).toEqual('jane')
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "knows": Object {
+              "@container": "@list",
+              "@id": "http://schema.org/knows",
+            },
+            "type": "@type",
+          },
+          "id": "john",
+          "knows": Array [
+            Object {
+              "@context": Object {
+                "name": "http://schema.org/givenName",
+              },
+              "id": "jane",
+              "name": "jane",
+            },
+            Object {
+              "@context": Object {
+                "name": "http://schema.org/givenName",
+              },
+              "id": "jenny",
+              "name": "jenny",
+            },
+          ],
+        }
+      `)
+    })
+
+    it('does not repeat same property in child resource context', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('john')
+        .addOut(schema.givenName, 'John')
+        .addOut(schema.knows, namedNode('jane'), jane => {
+          jane.addOut(schema.givenName, 'Jane')
+        })
+      function PersonMixin<Base extends Constructor>(base: Base) {
+        class TestPerson extends base {
+          @property.literal({ path: schema.givenName })
+          name!: string;
+
+          @property.resource({ path: schema.knows, as: [PersonMixin] })
+          knows!: TestPerson;
+        }
+        return TestPerson
+      }
+      const resource = new (PersonMixin(RdfResource))(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "knows": "http://schema.org/knows",
+            "name": "http://schema.org/givenName",
+            "type": "@type",
+          },
+          "id": "john",
+          "knows": Object {
+            "id": "jane",
+            "name": "Jane",
+          },
+          "name": "John",
+        }
+      `)
     })
   })
 })
