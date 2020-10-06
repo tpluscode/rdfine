@@ -1,8 +1,37 @@
 import TermMap from '@rdf-esm/term-map'
-import type { DatasetCore, Term } from 'rdf-js'
+import type { BlankNode, DatasetCore, Literal, NamedNode, Term } from 'rdf-js'
 import { namedNode } from '@rdf-esm/data-model'
 import type { Constructor } from './ResourceFactory'
 import type { RdfResource } from '../RdfResource'
+
+interface Context {
+  id: '@id'
+  type: '@type'
+}
+
+interface LiteralObject {
+  '@value': string
+  '@type': string
+}
+
+type JsonifiedResource<T extends RdfResource<any> | unknown> = Omit<{
+  [P in keyof Required<T>]?: T[P] extends string ? T[P]
+    : T[P] extends RdfResource<any>
+      ? JsonifiedResource<T[P]>
+      : T[P] extends (NamedNode | BlankNode)
+        ? JsonifiedResource<RdfResource<any>>
+        : T[P] extends Literal
+          ? LiteralObject
+          : Extract<T[P], Array<any>> extends (infer U)[]
+            ? U extends RdfResource<any>
+              ? JsonifiedResource<U> : unknown : unknown
+}, keyof RdfResource | '__initialized'> & {
+  '@context': Context
+  id: string
+  type: string[]
+}
+
+export type Jsonified<T extends RdfResource<any> | unknown> = JsonifiedResource<T> & Record<string, JsonifiedResource<RdfResource> & LiteralObject>
 
 function getObjectMap<D extends DatasetCore>(resource: RdfResource<D>) {
   return [...resource.pointer.dataset.match(resource.id)].reduce((map, quad) => {

@@ -17,6 +17,7 @@ import { xsd } from '@tpluscode/rdf-ns-builders'
 import { defaultGraphInstance } from '@rdf-esm/data-model'
 import type { PropertyMeta } from './lib/decorators/property'
 import { toJSON } from './lib/toJSON'
+import type { Jsonified } from './lib/toJSON'
 
 export type ResourceIdentifier = BlankNode | NamedNode
 export type ResourceNode<D extends DatasetCore = DatasetCore> = GraphPointer<ResourceIdentifier, D>
@@ -67,7 +68,7 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   /**
    * Returns JSON-LD-like object which represents the runtime interface of this resource
    */
-  toJSON (): this
+  toJSON<T extends RdfResource = this> (): Jsonified<RdfResource & T>
   _getObjects(property: string | NamedNode, options?: GetOptions): MultiPointer<Term, D>
   _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
 }
@@ -293,7 +294,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins, options)
   }
 
-  public toJSON(): this {
+  public toJSON<T extends RdfResource<any> = this>(): Jsonified<T> {
     return toJSON<D>(this) as any
   }
 }

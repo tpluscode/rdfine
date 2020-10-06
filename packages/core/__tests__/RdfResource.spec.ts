@@ -7,7 +7,7 @@ import {
   literal,
   blankNode,
 } from '@rdf-esm/data-model'
-import { skos, rdf, schema } from '@tpluscode/rdf-ns-builders'
+import { skos, rdf, schema, foaf } from '@tpluscode/rdf-ns-builders'
 import RdfResource, { Initializer, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
 import { property } from '../index'
@@ -746,6 +746,7 @@ describe('RdfResource', () => {
 
       // then
       expect(json).toBeValidJsonLd()
+      expect(json.id).toEqual('_:john')
       expect(json).toMatchInlineSnapshot(
         `
         Object {
@@ -769,6 +770,7 @@ describe('RdfResource', () => {
 
       // then
       expect(json).toBeValidJsonLd()
+      expect(json.id).toEqual('foo')
       expect(json).toMatchInlineSnapshot(
         `
         Object {
@@ -787,6 +789,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() })
         .blankNode('john')
         .addOut(rdf.type, schema.Person)
+        .addOut(rdf.type, foaf.Person)
       const resource = new RdfResource(node)
 
       // when
@@ -794,6 +797,9 @@ describe('RdfResource', () => {
 
       // then
       expect(json).toBeValidJsonLd()
+      expect(json.type).toEqual(
+        expect.arrayContaining([foaf.Person.value, schema.Person.value]),
+      )
       expect(json).toMatchInlineSnapshot(
         `
         Object {
@@ -804,6 +810,7 @@ describe('RdfResource', () => {
           "id": "_:john",
           "type": Array [
             "http://schema.org/Person",
+            "http://xmlns.com/foaf/0.1/Person",
           ],
         }
       `,
@@ -830,6 +837,7 @@ describe('RdfResource', () => {
 
       // then
       expect(json).toBeValidJsonLd()
+      expect(json.name).toEqual('John')
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -863,6 +871,7 @@ describe('RdfResource', () => {
 
       // then
       expect(json).toBeValidJsonLd()
+      expect(json[schema.familyName.value]).toEqual('Doe')
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
