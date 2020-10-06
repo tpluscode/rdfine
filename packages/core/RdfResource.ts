@@ -14,9 +14,9 @@ import once from 'once'
 import type { TypeCollection } from './lib/TypeCollection'
 import TypeCollectionCtor from './lib/TypeCollection'
 import { xsd } from '@tpluscode/rdf-ns-builders'
-import { defaultGraphInstance, namedNode } from '@rdf-esm/data-model'
-import TermMap from '@rdf-esm/term-map'
+import { defaultGraphInstance } from '@rdf-esm/data-model'
 import type { PropertyMeta } from './lib/decorators/property'
+import { toJSON } from './lib/toJSON'
 
 export type ResourceIdentifier = BlankNode | NamedNode
 export type ResourceNode<D extends DatasetCore = DatasetCore> = GraphPointer<ResourceIdentifier, D>
@@ -67,8 +67,7 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   /**
    * Returns JSON-LD-like object which represents the runtime interface of this resource
    */
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  toJSON (): object
+  toJSON (): this
   _getObjects(property: string | NamedNode, options?: GetOptions): MultiPointer<Term, D>
   _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
 }
@@ -294,52 +293,8 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins, options)
   }
 
-  public toJSON() {
-    const id = this.id.termType === 'NamedNode' ? this.id.value : `_:${this.id.value}`
-    const remainingQuads = [...this.pointer.dataset.match(this.id)].reduce((map, quad) => {
-      const quads = map.get(quad.predicate) || []
-      quads.push(quad.object)
-      map.set(quad.predicate, quads)
-      return map
-    }, new TermMap<Term, Term[]>())
-    const context: Record<string, string> = {
-      id: '@id',
-      type: '@type',
-    }
-
-    const json: Record<string, any> = {
-      '@context': context,
-      id,
-    }
-
-    const types = [...this.types]
-    if (types.length > 0) {
-      json.type = types.map(type => type.id.value)
-    }
-    const { __properties: properties } = (this.constructor as Constructor)
-
-    ;[...properties].forEach(([name, { options }]) => {
-      if (!options.path || Array.isArray(options.path) || typeof options.path === 'function') {
-        return
-      }
-
-      const predicate = typeof options.path === 'string' ? namedNode(options.path) : options.path
-
-      context[name] = predicate.value
-      json[name] = this.getString(options.path)
-      remainingQuads.delete(predicate)
-    })
-
-    ;[...remainingQuads].forEach(([predicate, quads]) => {
-      const [first] = quads
-      switch (first.termType) {
-        case 'Literal':
-          json[predicate.value] = first.value
-          break
-      }
-    })
-
-    return json
+  public toJSON(): this {
+    return toJSON<D>(this) as any
   }
 }
 
