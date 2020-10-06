@@ -4,12 +4,14 @@ import type { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import type { Initializer, RdfResource, ResourceNode } from '../RdfResource'
 import { createProxy } from './proxy'
+import type { PropertyMeta } from './decorators/property'
 
 export type AnyFunction<A = any> = (...input: any[]) => A
 export interface Constructor<A extends RdfResource<any> = RdfResource> {
   new (...input: any[]): A
   factory: ResourceFactory
   __mixins: Mixin[]
+  __properties: Map<string, PropertyMeta>
 }
 type EvaluatedMixin = {
   shouldApply: boolean | ((entity: RdfResource) => boolean)

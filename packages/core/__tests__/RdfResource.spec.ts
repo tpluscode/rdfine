@@ -1,8 +1,13 @@
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { NamedNode, Term } from 'rdf-js'
-import { defaultGraph, namedNode, literal, blankNode } from '@rdf-esm/data-model'
-import { skos } from '@tpluscode/rdf-ns-builders'
+import {
+  defaultGraph,
+  namedNode,
+  literal,
+  blankNode,
+} from '@rdf-esm/data-model'
+import { skos, rdf, schema } from '@tpluscode/rdf-ns-builders'
 import RdfResource, { Initializer, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
 import { property } from '../index'
@@ -123,7 +128,7 @@ describe('RdfResource', () => {
   })
 
   describe('types', () => {
-    it('returns an iterable set of resource\'s types', async () => {
+    it("returns an iterable set of resource's types", async () => {
       // given
       const dataset = await parse(`
         @prefix ex: <${ex().value}> .
@@ -139,9 +144,7 @@ describe('RdfResource', () => {
 
       // then
       expect([...tc.values()].map(r => r.id)).toEqual(
-        expect.arrayContaining([
-          ex.Type1, ex.Type2, ex.Type3, ex.Type4,
-        ]),
+        expect.arrayContaining([ex.Type1, ex.Type2, ex.Type3, ex.Type4]),
       )
     })
   })
@@ -209,9 +212,7 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.names).toEqual(
-        expect.arrayContaining(['bar', 'baz']),
-      )
+      expect(resource.names).toEqual(expect.arrayContaining(['bar', 'baz']))
     })
 
     it('allows clownface literal to initialize literal properties', () => {
@@ -301,7 +302,12 @@ describe('RdfResource', () => {
       }
       const initializer: Initializer<Resource> = {
         other: node.blankNode(),
-        others: [node.blankNode(), literal('foo'), namedNode('bar'), node.namedNode('baz')],
+        others: [
+          node.blankNode(),
+          literal('foo'),
+          namedNode('bar'),
+          node.namedNode('baz'),
+        ],
       }
 
       // when
@@ -350,7 +356,12 @@ describe('RdfResource', () => {
         others!: Resource[];
       }
       const initializer: Initializer<Resource> = {
-        others: [blankNode(), namedNode('bar'), node.blankNode(), node.namedNode('baz')],
+        others: [
+          blankNode(),
+          namedNode('bar'),
+          node.blankNode(),
+          node.namedNode('baz'),
+        ],
       }
 
       // when
@@ -401,7 +412,9 @@ describe('RdfResource', () => {
 
       // then
       expect(resource.getString(skos.prefLabel)).toEqual('Foo')
-      expect(resource.get(skos.broader)!.getString(skos.prefLabel)).toEqual('Bar')
+      expect(resource.get(skos.broader)!.getString(skos.prefLabel)).toEqual(
+        'Bar',
+      )
     })
 
     it('allows arbitrary string as RDF property using typed initializer', () => {
@@ -411,7 +424,7 @@ describe('RdfResource', () => {
         @property.literal({ path: skos.prefLabel })
         prefLabel!: string;
 
-        // eslint-disable-next-line no-useless-constructor
+        // eslint-disable-next-line no-useless-constructor,@typescript-eslint/no-useless-constructor
         constructor(pointer: ResourceNode, init: Initializer<Concept>) {
           super(pointer, init)
         }
@@ -431,14 +444,16 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
       class SkosResource extends RdfResource {
         @property.resource({ path: skos.broader, values: 'array' })
-        broader!: SkosResource[]
+        broader!: SkosResource[];
       }
 
       // when
       const resource = new SkosResource(node, {
-        broader: [{
-          [skos.prefLabel.value]: 'Bar',
-        }],
+        broader: [
+          {
+            [skos.prefLabel.value]: 'Bar',
+          },
+        ],
       })
 
       // then
@@ -450,7 +465,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
       class SkosResource extends RdfResource {
         @property.resource({ path: skos.broader, values: 'array' })
-        broader!: SkosResource[] | SkosResource
+        broader!: SkosResource[] | SkosResource;
       }
 
       // when
@@ -467,7 +482,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
       class SkosResource extends RdfResource {
         @property.resource({ path: skos.broader })
-        broader!: SkosResource
+        broader!: SkosResource;
       }
 
       // when
@@ -487,13 +502,17 @@ describe('RdfResource', () => {
 
       // when
       const resource = new RdfResource(node, {
-        [skos.broader.value]: [{
-          [skos.prefLabel.value]: 'Bar',
-        }],
+        [skos.broader.value]: [
+          {
+            [skos.prefLabel.value]: 'Bar',
+          },
+        ],
       })
 
       // then
-      expect(resource.get(skos.broader)!.getString(skos.prefLabel)).toEqual('Bar')
+      expect(resource.get(skos.broader)!.getString(skos.prefLabel)).toEqual(
+        'Bar',
+      )
     })
 
     it('assigns id to nested resource assigned to arbitrary URI', () => {
@@ -554,7 +573,9 @@ describe('RdfResource', () => {
 
     it('false for named node', () => {
       // given
-      const node = cf({ dataset: $rdf.dataset(), graph: ex.graph }).namedNode(ex.foo)
+      const node = cf({ dataset: $rdf.dataset(), graph: ex.graph }).namedNode(
+        ex.foo,
+      )
 
       // when
       const res = new RdfResource(node)
@@ -711,6 +732,150 @@ describe('RdfResource', () => {
         // then
         expect(resource.getString(ex.foo)).toBeNull()
       })
+    })
+  })
+
+  describe('toJSON', () => {
+    it("sets blank node id property as '@id'", () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode('john')
+      const resource = new RdfResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(
+        `
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "type": "@type",
+          },
+          "id": "_:john",
+        }
+      `,
+      )
+    })
+
+    it("sets named node id property as '@id'", () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).namedNode('foo')
+      const resource = new RdfResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(
+        `
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "type": "@type",
+          },
+          "id": "foo",
+        }
+      `,
+      )
+    })
+
+    it("sets types as '@type'", () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .blankNode('john')
+        .addOut(rdf.type, schema.Person)
+      const resource = new RdfResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(
+        `
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "type": "@type",
+          },
+          "id": "_:john",
+          "type": Array [
+            "http://schema.org/Person",
+          ],
+        }
+      `,
+      )
+    })
+
+    it("set known string properties as json keys and adds them to '@context'", () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('john')
+        .addOut(schema.givenName, 'John')
+        .addOut(schema.familyName, 'Doe')
+      class TestResource extends RdfResource {
+        @property({ path: schema.givenName })
+        name!: string;
+
+        @property({ path: schema.familyName })
+        lastName!: string;
+      }
+      const resource = new TestResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "lastName": "http://schema.org/familyName",
+            "name": "http://schema.org/givenName",
+            "type": "@type",
+          },
+          "id": "john",
+          "lastName": "Doe",
+          "name": "John",
+        }
+      `,
+      )
+    })
+
+    it('set extract properties as json values with full property URL', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('john')
+        .addOut(schema.givenName, 'John')
+        .addOut(schema.familyName, 'Doe')
+      class TestResource extends RdfResource {
+        @property({ path: schema.givenName })
+        name!: string;
+      }
+      const resource = new TestResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "name": "http://schema.org/givenName",
+            "type": "@type",
+          },
+          "http://schema.org/familyName": "Doe",
+          "id": "john",
+          "name": "John",
+        }
+      `,
+      )
     })
   })
 })

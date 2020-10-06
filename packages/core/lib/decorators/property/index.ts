@@ -13,16 +13,13 @@ import { onlyUnique } from '../../filter'
 import * as compare from '../../compare'
 
 type PropertyReturnKind = 'single' | 'array' | 'list'
+type ArrayOrSingle<T> = T | T[]
 
 export interface AccessorOptions {
   values?: PropertyReturnKind | PropertyReturnKind[]
   path?: ArrayOrSingle<PropRef | EdgeTraversalFactory>
   strict?: true
   subjectFromAllGraphs?: true
-}
-
-interface NamedGraphsOptions {
-  subjectFromAllGraphs: boolean
 }
 
 function getObjects(subjects: GraphPointer[], path: EdgeTraversal[]): GraphPointer[] {
@@ -62,7 +59,6 @@ function getNodeFromEveryGraph(node: GraphPointer): GraphPointer[] {
   }))
 }
 
-type ArrayOrSingle<T> = T | T[]
 export type ObjectOrFactory<TSelf, T, TTerm extends Term> =
   ArrayOrSingle<T | TTerm | GraphPointer<TTerm>> |
   ((self: TSelf) => ArrayOrSingle<T | TTerm | GraphPointer<TTerm>>)
@@ -74,6 +70,11 @@ interface PropertyDecoratorOptions<T extends RdfResource, TValue, TTerm extends 
   valueTypeName: string
   initial?: ObjectOrFactory<T, TValue, TTerm>
   compare: (left: TValue, right: TValue) => boolean
+}
+
+export type PropertyMeta<T = any> = {
+  initial?: ObjectOrFactory<T, unknown, Term>
+  options: PropertyDecoratorOptions<RdfResource, unknown, Term>
 }
 
 function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto: any, name: string, options: PropertyDecoratorOptions<T, TValue, TTerm>) {
@@ -203,22 +204,23 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
     },
   })
 
-  if (typeof initial !== 'undefined') {
-    if (!Object.hasOwnProperty.call(proto.constructor, '__defaults')) {
-      proto.constructor.__defaults = new Map()
-    }
-
-    proto.constructor.__defaults.set(name, initial)
+  if (!Object.hasOwnProperty.call(proto.constructor, '__properties')) {
+    proto.constructor.__properties = new Map()
   }
+
+  proto.constructor.__properties.set(name, {
+    initial,
+    options,
+  })
 }
 
 const legacyProperty =
-  <T extends RdfResource, TValue, TInitial, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>, proto: Record<string, unknown>, name: PropertyKey) => {
+  <T extends RdfResource, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>, proto: Record<string, unknown>, name: PropertyKey) => {
     createProperty(proto, name.toString(), options)
   }
 
 const standardProperty =
-  <T extends RdfResource, TValue, TInitial, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>, element: ClassElement) => {
+  <T extends RdfResource, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>, element: ClassElement) => {
     return {
       kind: 'field',
       key: Symbol(),

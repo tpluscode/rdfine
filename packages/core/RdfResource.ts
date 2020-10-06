@@ -14,7 +14,9 @@ import once from 'once'
 import type { TypeCollection } from './lib/TypeCollection'
 import TypeCollectionCtor from './lib/TypeCollection'
 import { xsd } from '@tpluscode/rdf-ns-builders'
-import { defaultGraphInstance } from '@rdf-esm/data-model'
+import { defaultGraphInstance, namedNode } from '@rdf-esm/data-model'
+import TermMap from '@rdf-esm/term-map'
+import type { PropertyMeta } from './lib/decorators/property'
 
 export type ResourceIdentifier = BlankNode | NamedNode
 export type ResourceNode<D extends DatasetCore = DatasetCore> = GraphPointer<ResourceIdentifier, D>
@@ -61,11 +63,15 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
    */
   getNumber (property: string | NamedNode): number | null
   getNumber (property: string | NamedNode, options?: GetOptions): number | null
+
+  /**
+   * Returns JSON-LD-like object which represents the runtime interface of this resource
+   */
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  toJSON (): object
   _getObjects(property: string | NamedNode, options?: GetOptions): MultiPointer<Term, D>
   _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
 }
-
-type ObjectOrFactory<T> = T | ((self: RdfResource) => T)
 
 export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
   public readonly pointer: GraphPointer<ResourceIdentifier, D>
@@ -76,6 +82,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   public static __ns?: NamespaceBuilder
   public static factory: ResourceFactory = new ResourceFactoryImpl(RdfResourceImpl)
   public static __mixins: Mixin[] = []
+  public static __properties = new Map()
 
   private static _userInitializeProperties(resource: RdfResourceImpl, init: Initializer<RdfResource> = {}): void {
     Object.entries(init)
@@ -137,8 +144,11 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
 
     this.__initializeProperties = once(() => {
       const self = this as any
-      const defaults: Map<string, ObjectOrFactory<any>> = self.constructor.__defaults || new Map<string, ObjectOrFactory<any>>()
-      defaults.forEach((value, key) => {
+      const properties: Map<string, PropertyMeta> = self.constructor.__properties || new Map()
+      const defaults = [...properties]
+        .map<[string, unknown]>(([prop, meta]) => [prop, meta.initial])
+        .filter(([, initial]) => !!initial)
+      defaults.forEach(([key, value]) => {
         const currentValue = self[key]
         const valueIsEmptyArray = Array.isArray(currentValue) && currentValue.length === 0
         const valueIsUndefined = typeof currentValue === 'undefined'
@@ -269,7 +279,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     throw new Error(`Expected property '${property}' to be a boolean but found '${value}'`)
   }
 
-  public _getObjects(property: string | NamedNode, { strict }: GetOptions = { strict: false }): MultiPointer<Term, D> {
+  public _getObjects(property: string | Term, { strict }: GetOptions = { strict: false }): MultiPointer<Term, D> {
     const propertyNode = typeof property === 'string' ? this.pointer.namedNode(property) : property
     const objects = this.pointer.out(propertyNode)
 
@@ -282,6 +292,54 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
 
   public _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D, T> = {}): T & ResourceIndexer {
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins, options)
+  }
+
+  public toJSON() {
+    const id = this.id.termType === 'NamedNode' ? this.id.value : `_:${this.id.value}`
+    const remainingQuads = [...this.pointer.dataset.match(this.id)].reduce((map, quad) => {
+      const quads = map.get(quad.predicate) || []
+      quads.push(quad.object)
+      map.set(quad.predicate, quads)
+      return map
+    }, new TermMap<Term, Term[]>())
+    const context: Record<string, string> = {
+      id: '@id',
+      type: '@type',
+    }
+
+    const json: Record<string, any> = {
+      '@context': context,
+      id,
+    }
+
+    const types = [...this.types]
+    if (types.length > 0) {
+      json.type = types.map(type => type.id.value)
+    }
+    const { __properties: properties } = (this.constructor as Constructor)
+
+    ;[...properties].forEach(([name, { options }]) => {
+      if (!options.path || Array.isArray(options.path) || typeof options.path === 'function') {
+        return
+      }
+
+      const predicate = typeof options.path === 'string' ? namedNode(options.path) : options.path
+
+      context[name] = predicate.value
+      json[name] = this.getString(options.path)
+      remainingQuads.delete(predicate)
+    })
+
+    ;[...remainingQuads].forEach(([predicate, quads]) => {
+      const [first] = quads
+      switch (first.termType) {
+        case 'Literal':
+          json[predicate.value] = first.value
+          break
+      }
+    })
+
+    return json
   }
 }
 
