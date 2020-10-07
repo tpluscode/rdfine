@@ -1,7 +1,6 @@
 import type { RdfResource } from '@tpluscode/rdfine'
 import type { AnyPointer } from 'clownface';
 import URITemplate from 'es6-url-template'
-import { URL } from 'url'
 import { IriTemplate, IriTemplateMapping } from '../'
 import { Term } from 'rdf-js';
 import { hydra } from './namespace';
