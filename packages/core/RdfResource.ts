@@ -26,7 +26,7 @@ export interface GetOptions {
   strict: boolean
 }
 
-export interface RdfResource<D extends DatasetCore = DatasetCore> {
+export interface RdfResourceCore<D extends DatasetCore = DatasetCore> {
   readonly id: ResourceIdentifier
   readonly types: TypeCollection<D>
   readonly pointer: GraphPointer<ResourceIdentifier, D>
@@ -68,12 +68,16 @@ export interface RdfResource<D extends DatasetCore = DatasetCore> {
   /**
    * Returns JSON-LD-like object which represents the runtime interface of this resource
    */
-  toJSON<T extends RdfResource = this> (): Jsonified<RdfResource & T>
+  toJSON<T extends RdfResourceCore = this> (): Jsonified<RdfResource & T>
   _getObjects(property: string | NamedNode, options?: GetOptions): MultiPointer<Term, D>
   _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
 }
 
-export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResource<D> {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface RdfResource<D extends DatasetCore = DatasetCore> extends RdfResourceCore<D> {
+}
+
+export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResourceCore<D> {
   public readonly pointer: GraphPointer<ResourceIdentifier, D>
   public readonly unionGraphPointer: MultiPointer<ResourceIdentifier, D>
   public readonly __initialized: boolean = false
@@ -290,11 +294,11 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return objects
   }
 
-  public _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D, T> = {}): T & ResourceIndexer {
+  public _create<T extends RdfResourceCore<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D, T> = {}): T & ResourceIndexer {
     return (this.constructor as Constructor).factory.createEntity<T>(term, mixins, options)
   }
 
-  public toJSON<T extends RdfResource<any> = this>(): Jsonified<T> {
+  public toJSON<T extends RdfResourceCore<any> = this>(): Jsonified<T> {
     return toJSON(this as any) as any
   }
 }

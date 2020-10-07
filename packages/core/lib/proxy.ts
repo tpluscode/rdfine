@@ -1,6 +1,6 @@
 import { Literal, Term } from 'rdf-js'
 import type { GraphPointer } from 'clownface'
-import type { RdfResource } from '../RdfResource'
+import type { RdfResource, RdfResourceCore } from '../RdfResource'
 import * as rdfList from './rdf-list'
 import type { ResourceIndexer } from './ResourceFactory'
 
@@ -22,7 +22,7 @@ function nodeToValue(target: RdfResource) {
   return fromTerm
 }
 
-export function createProxy<T extends RdfResource<any>>(resource: T): T & ResourceIndexer<T> {
+export function createProxy<T extends RdfResourceCore<any>>(resource: T): T & ResourceIndexer<T> {
   return new Proxy(resource, {
     get(target, property) {
       if (property in target || typeof property === 'symbol') {
