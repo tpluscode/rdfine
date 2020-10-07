@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.8
+
+### Patch Changes
+
+- 1ea983b: Extract base resource interface to allow augmentation
+
 ## 0.5.7
 
 ### Patch Changes
