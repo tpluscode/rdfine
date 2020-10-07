@@ -4,7 +4,7 @@ import { namedNode } from '@rdf-esm/data-model'
 import TermSet from '@rdf-esm/term-set'
 import { rdf, xsd } from '@tpluscode/rdf-ns-builders'
 import type { Constructor, ResourceIndexer } from './ResourceFactory'
-import type { RdfResource } from '../RdfResource'
+import type { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { enumerateList, isList } from './rdf-list'
 import { PropertyMeta } from './decorators/property'
 
@@ -55,13 +55,30 @@ type JsonifiedResource<T> = Omit<{
 
 export type Jsonified<T extends RdfResource<any> | unknown> = JsonifiedResource<T> & Record<string, JsonifiedResource<RdfResource> | LiteralObject<string>>
 
+function objectCanBeJsonified(term: Term): term is ResourceIdentifier | Literal {
+  switch (term.termType) {
+    case 'NamedNode':
+    case 'BlankNode':
+    case 'Literal':
+      return true
+    default:
+      return false
+  }
+}
+
 function getObjectMap<D extends DatasetCore>(resource: RdfResource<D>) {
   return [...resource.pointer.dataset.match(resource.id)].reduce((map, quad) => {
+    if (rdf.type.equals(quad.predicate)) {
+      return map
+    }
+
     const quads = map.get(quad.predicate) || []
-    quads.push(quad.object)
+    if (objectCanBeJsonified(quad.object)) {
+      quads.push(quad.object)
+    }
     map.set(quad.predicate, quads)
     return map
-  }, new TermMap<Term, Term[]>())
+  }, new TermMap<Term, Array<ResourceIdentifier | Literal>>())
 }
 
 function alreadyMapped(parentContext: Record<string, unknown> | undefined, name: string, prop: NamedNode) {
@@ -113,14 +130,22 @@ interface ToJsonContext {
   visitedResources?: Set<Term>
 }
 
-function jsonifyQuads() {
-  return (json: Record<string, any>, [predicate, objects]: [Term, Term[]]) => {
-    const [first] = objects
-    switch (first.termType) {
-      case 'Literal':
-        json[predicate.value] = first.value
-        break
+function jsonifyQuads(resource: RdfResource, context: ToJsonContext) {
+  return (json: Record<string, any>, [predicate, objects]: [Term, Array<ResourceIdentifier | Literal>]) => {
+    const mapped = objects.map(term => {
+      if (term.termType === 'Literal') {
+        return literalToJSON(term)
+      }
+
+      return toJSON(resource._create(resource.pointer.node(term)), context)
+    })
+
+    if (mapped.length === 1) {
+      json[predicate.value] = mapped[0]
+    } else {
+      json[predicate.value] = mapped
     }
+
     return json
   }
 }
@@ -232,9 +257,13 @@ export function toJSON(resource: RdfResource<any> & ResourceIndexer, { parentCon
   }
   const { __properties: properties } = (resource.constructor as Constructor)
 
-  const { contextPopulated } = [...properties]
-    .reduce(jsonifyProperties({ parentContexts, visitedResources, resource, remainingObjects, context }), { json })
-  ;[...remainingObjects].reduce(jsonifyQuads(), json)
+  const { contextPopulated } = [...properties].reduce(
+    jsonifyProperties({ parentContexts, visitedResources, resource, remainingObjects, context }),
+    { json })
+
+  ;[...remainingObjects].reduce(
+    jsonifyQuads(resource, { parentContexts: { ...parentContexts, ...context }, visitedResources }),
+    json)
 
   if (!contextEmpty || contextPopulated) {
     json['@context'] = context

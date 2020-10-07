@@ -848,12 +848,20 @@ describe('RdfResource', () => {
       `)
     })
 
-    it('set extract properties as json values with full property URL', () => {
+    it('set extra literal properties as json values with full property URL', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
         .addOut(schema.givenName, 'John')
         .addOut(schema.familyName, 'Doe')
+        .addOut(schema.age, 22)
+        .addOut(schema.contentSize, 22.5)
+        .addOut(
+          schema.datePublished,
+          literal(new Date().toISOString(), xsd.dateTime),
+        )
+        .addOut(schema.isLiveBroadcast, true)
+        .addOut(schema.name, literal('foo', 'en'))
       class TestResource extends RdfResource {
         @property.literal({ path: schema.givenName })
         name!: string;
@@ -865,17 +873,131 @@ describe('RdfResource', () => {
 
       // then
       expect(json).toBeValidJsonLd()
-      expect(json[schema.familyName.value]).toEqual('Doe')
-      expect(json).toMatchInlineSnapshot(`
+      expect(json).toMatchInlineSnapshot({
+        [schema.datePublished.value]: {
+          '@value': expect.any(String),
+          '@type': xsd.dateTime.value,
+        },
+      },
+      `
         Object {
           "@context": Object {
             "id": "@id",
             "name": "http://schema.org/givenName",
             "type": "@type",
           },
+          "http://schema.org/age": 22,
+          "http://schema.org/contentSize": 22.5,
+          "http://schema.org/datePublished": Object {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+            "@value": Any<String>,
+          },
           "http://schema.org/familyName": "Doe",
+          "http://schema.org/isLiveBroadcast": true,
+          "http://schema.org/name": Object {
+            "@language": "en",
+            "@value": "foo",
+          },
           "id": "john",
           "name": "John",
+        }
+      `)
+    })
+
+    it('set extra literal properties with multiple values', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('john')
+        .addOut(schema.name, literal('foo', 'en'))
+        .addOut(schema.name, literal('bar', 'de'))
+      const resource = new RdfResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "type": "@type",
+          },
+          "http://schema.org/name": Array [
+            Object {
+              "@language": "en",
+              "@value": "foo",
+            },
+            Object {
+              "@language": "de",
+              "@value": "bar",
+            },
+          ],
+          "id": "john",
+        }
+      `)
+    })
+
+    it('set extra named node properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('john')
+        .addOut(schema.knows, namedNode('jane'))
+      node.namedNode('jane').addOut(schema.name, 'jane')
+      const resource = new RdfResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "type": "@type",
+          },
+          "http://schema.org/knows": Object {
+            "http://schema.org/name": "jane",
+            "id": "jane",
+          },
+          "id": "john",
+        }
+      `)
+    })
+
+    it('set extra named node properties with multiple values', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('john')
+        .addOut(schema.knows, namedNode('jane'))
+        .addOut(schema.knows, namedNode('jenny'))
+      node.namedNode('jane').addOut(schema.name, 'jane')
+      node.namedNode('jenny').addOut(schema.name, 'jenny')
+      const resource = new RdfResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "type": "@type",
+          },
+          "http://schema.org/knows": Array [
+            Object {
+              "http://schema.org/name": "jane",
+              "id": "jane",
+            },
+            Object {
+              "http://schema.org/name": "jenny",
+              "id": "jenny",
+            },
+          ],
+          "id": "john",
         }
       `)
     })
