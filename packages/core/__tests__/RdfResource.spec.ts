@@ -1013,6 +1013,7 @@ describe('RdfResource', () => {
           literal(new Date().toISOString(), xsd.dateTime),
         )
         .addOut(schema.isLiveBroadcast, true)
+        .addOut(schema.isAccessibleForFree, false)
         .addOut(schema.contentUrl, 'http://example.com/foo')
         .addOut(schema.name, literal('foo', 'en'))
       class TestResource extends RdfResource {
@@ -1027,6 +1028,9 @@ describe('RdfResource', () => {
 
         @property.literal({ path: schema.isLiveBroadcast, type: Boolean })
         isLiveBroadcast!: boolean;
+
+        @property.literal({ path: schema.isAccessibleForFree, type: Boolean })
+        isAccessibleForFree!: boolean;
 
         @property.literal({ path: schema.contentUrl, datatype: xsd.anyURI })
         contentUrl!: string;
@@ -1044,6 +1048,7 @@ describe('RdfResource', () => {
       expect(json.age).toEqual(22)
       expect(json.contentSize).toEqual(22.5)
       expect(json.isLiveBroadcast).toEqual(true)
+      expect(json.isAccessibleForFree).toEqual(false)
       expect(json.contentUrl).toEqual('http://example.com/foo')
       expect(json).toMatchInlineSnapshot(
         {
@@ -1060,6 +1065,7 @@ describe('RdfResource', () => {
             "contentUrl": "http://schema.org/contentUrl",
             "datePublished": "http://schema.org/datePublished",
             "id": "@id",
+            "isAccessibleForFree": "http://schema.org/isAccessibleForFree",
             "isLiveBroadcast": "http://schema.org/isLiveBroadcast",
             "name": "http://schema.org/name",
             "type": "@type",
@@ -1072,6 +1078,7 @@ describe('RdfResource', () => {
             "@value": Any<String>,
           },
           "id": "_:b47",
+          "isAccessibleForFree": false,
           "isLiveBroadcast": true,
           "name": Object {
             "@language": "en",
