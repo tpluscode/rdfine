@@ -1,1 +1,1 @@
-export { IriTemplateEx } from './IriTemplateEx'
+export type { IriTemplateEx } from './IriTemplateEx'
