@@ -6,6 +6,7 @@ import { rdf, xsd } from '@tpluscode/rdf-ns-builders'
 import type { Constructor, ResourceIndexer } from './ResourceFactory'
 import type { RdfResource } from '../RdfResource'
 import { enumerateList, isList } from './rdf-list'
+import { PropertyMeta } from './decorators/property'
 
 type PropertyValue = RdfResource | Literal
 
@@ -112,6 +113,98 @@ interface ToJsonContext {
   visitedResources?: Set<Term>
 }
 
+function jsonifyQuads() {
+  return (json: Record<string, any>, [predicate, objects]: [Term, Term[]]) => {
+    const [first] = objects
+    switch (first.termType) {
+      case 'Literal':
+        json[predicate.value] = first.value
+        break
+    }
+    return json
+  }
+}
+
+interface JsonifyPropertiesAccumulator {
+  json: Record<string, any>
+  contextPopulated?: boolean
+}
+
+interface JsonifyPropertiesContext {
+  remainingObjects: Map<Term, Term[]>
+  context: Partial<Context>
+  resource: RdfResource
+}
+
+function jsonifyProperties({ parentContexts, visitedResources, remainingObjects, context, resource }: ToJsonContext & JsonifyPropertiesContext) {
+  return ({ json, contextPopulated = false }: JsonifyPropertiesAccumulator, [name, { options }]: [string, PropertyMeta]): JsonifyPropertiesAccumulator => {
+    if (!options.path || Array.isArray(options.path) || typeof options.path === 'function') {
+      return { json, contextPopulated }
+    }
+
+    let propertyAddedToContext = false
+    const predicate = typeof options.path === 'string' ? namedNode(options.path) : options.path
+    const terms = remainingObjects.get(predicate)
+    if (!terms) {
+      return { json, contextPopulated }
+    }
+
+    if (!alreadyMapped(parentContexts, name, predicate)) {
+      if (options.values.includes('list')) {
+        context[name] = {
+          '@container': '@list',
+          '@id': predicate.value,
+        }
+      } else {
+        context[name] = predicate.value
+      }
+      propertyAddedToContext = true
+    }
+
+    const propertyObjects = resource.pointer
+      .out(predicate)
+      .map(obj => {
+        if (obj.term.termType === 'Literal') {
+          return obj.term
+        }
+
+        if (isList(obj)) {
+          return enumerateList(resource, obj, options.fromTerm.bind(resource)) as PropertyValue[]
+        }
+
+        return options.fromTerm.call(resource, obj) as PropertyValue
+      })
+
+    const jsonValues = propertyObjects.map(function valueToJSON(obj): unknown {
+      if (Array.isArray(obj)) {
+        return obj.map(arrElement => valueToJSON(arrElement))
+      }
+
+      if ('termType' in obj) {
+        return literalToJSON(obj)
+      }
+
+      return toJSON(obj as any, {
+        parentContexts: { ...parentContexts, ...context },
+        visitedResources,
+      })
+    })
+
+    if (options.values.includes('array') && jsonValues.length !== 1) {
+      json[name] = jsonValues
+    } else if (options.values.includes('list') && Array.isArray(jsonValues[0])) {
+      json[name] = jsonValues[0] || []
+    } else if (jsonValues.length > 1) {
+      json[name] = jsonValues
+    } else {
+      json[name] = options.values.includes('single') ? jsonValues[0] : jsonValues
+    }
+    remainingObjects.delete(predicate)
+
+    return { json, contextPopulated: contextPopulated || propertyAddedToContext }
+  }
+}
+
 export function toJSON(resource: RdfResource<any> & ResourceIndexer, { parentContexts, visitedResources = new TermSet() }: ToJsonContext = {}) {
   const id = resource.id.termType === 'NamedNode' ? resource.id.value : `_:${resource.id.value}`
   const json: Record<string, any> = { id }
@@ -125,7 +218,7 @@ export function toJSON(resource: RdfResource<any> & ResourceIndexer, { parentCon
   }
   visitedResources.add(resource.id)
 
-  const remainingQuads = getObjectMap(resource)
+  const remainingObjects = getObjectMap(resource)
   let contextEmpty = true
   let context: Partial<Context>
   if (parentContexts) {
@@ -139,78 +232,11 @@ export function toJSON(resource: RdfResource<any> & ResourceIndexer, { parentCon
   }
   const { __properties: properties } = (resource.constructor as Constructor)
 
-  ;[...properties].forEach(([name, { options }]) => {
-    if (!options.path || Array.isArray(options.path) || typeof options.path === 'function') {
-      return
-    }
+  const { contextPopulated } = [...properties]
+    .reduce(jsonifyProperties({ parentContexts, visitedResources, resource, remainingObjects, context }), { json })
+  ;[...remainingObjects].reduce(jsonifyQuads(), json)
 
-    const predicate = typeof options.path === 'string' ? namedNode(options.path) : options.path
-    const terms = remainingQuads.get(predicate)
-    if (terms) {
-      if (!alreadyMapped(parentContexts, name, predicate)) {
-        if (options.values.includes('list')) {
-          context[name] = {
-            '@container': '@list',
-            '@id': predicate.value,
-          }
-        } else {
-          context[name] = predicate.value
-        }
-        contextEmpty = false
-      }
-
-      const propertyObjects = resource.pointer
-        .out(predicate)
-        .map(obj => {
-          if (obj.term.termType === 'Literal') {
-            return obj.term
-          }
-
-          if (isList(obj)) {
-            return enumerateList(resource, obj, options.fromTerm.bind(resource)) as PropertyValue[]
-          }
-
-          return options.fromTerm.call(resource, obj) as PropertyValue
-        })
-
-      const jsonValues = propertyObjects.map(function valueToJSON(obj): unknown {
-        if (Array.isArray(obj)) {
-          return obj.map(arrElement => valueToJSON(arrElement))
-        }
-
-        if ('termType' in obj) {
-          return literalToJSON(obj)
-        }
-
-        return toJSON(obj as any, {
-          parentContexts: { ...parentContexts, ...context },
-          visitedResources,
-        })
-      })
-
-      if (options.values.includes('array') && jsonValues.length !== 1) {
-        json[name] = jsonValues
-      } else if (options.values.includes('list') && Array.isArray(jsonValues[0])) {
-        json[name] = jsonValues[0] || []
-      } else if (jsonValues.length > 1) {
-        json[name] = jsonValues
-      } else {
-        json[name] = options.values.includes('single') ? jsonValues[0] : jsonValues
-      }
-    }
-    remainingQuads.delete(predicate)
-  })
-
-  ;[...remainingQuads].forEach(([predicate, quads]) => {
-    const [first] = quads
-    switch (first.termType) {
-      case 'Literal':
-        json[predicate.value] = first.value
-        break
-    }
-  })
-
-  if (!contextEmpty) {
+  if (!contextEmpty || contextPopulated) {
     json['@context'] = context
   }
 
