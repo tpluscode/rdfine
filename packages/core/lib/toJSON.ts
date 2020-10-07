@@ -67,7 +67,9 @@ function objectCanBeJsonified(term: Term): term is ResourceIdentifier | Literal 
 }
 
 function getObjectMap<D extends DatasetCore>(resource: RdfResource<D>) {
-  return [...resource.pointer.dataset.match(resource.id)].reduce((map, quad) => {
+  const graph = resource.pointer._context[0].graph
+
+  return [...resource.pointer.dataset.match(resource.id, null, null, graph)].reduce((map, quad) => {
     if (rdf.type.equals(quad.predicate)) {
       return map
     }
@@ -163,7 +165,7 @@ interface JsonifyPropertiesContext {
 
 function jsonifyProperties({ parentContexts, visitedResources, remainingObjects, context, resource }: ToJsonContext & JsonifyPropertiesContext) {
   return ({ json, contextPopulated = false }: JsonifyPropertiesAccumulator, [name, { options }]: [string, PropertyMeta]): JsonifyPropertiesAccumulator => {
-    if (!options.path || Array.isArray(options.path) || typeof options.path === 'function') {
+    if (!options.path || Array.isArray(options.path) || typeof options.path === 'function' || options.subjectFromAllGraphs) {
       return { json, contextPopulated }
     }
 

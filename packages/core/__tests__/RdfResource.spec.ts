@@ -10,7 +10,7 @@ import {
 import { skos, rdf, schema, foaf, xsd } from '@tpluscode/rdf-ns-builders'
 import RdfResource, { Initializer, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
-import { Constructor, property } from '../index'
+import { Constructor, crossBoundaries, property } from '../index'
 
 describe('RdfResource', () => {
   describe('constructor', () => {
@@ -1376,6 +1376,106 @@ describe('RdfResource', () => {
             "name": "Jane",
           },
           "name": "John",
+        }
+      `)
+    })
+
+    it('ignore annotated properties with path not being a single predicate', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('john')
+        .addOut(schema.knows, namedNode('jane'), jane => {
+          jane.addOut(schema.givenName, 'Jane')
+        })
+      class TestPerson extends RdfResource {
+        @property.literal({ path: [schema.knows, schema.givenName] })
+        friendsName!: string;
+
+        @property.resource({ path: schema.knows, subjectFromAllGraphs: true })
+        allFriendsFromAnywhere!: RdfResource;
+
+        @property.resource({ path: crossBoundaries(schema.knows) })
+        allFriends!: RdfResource;
+      }
+      const resource = new TestPerson(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "type": "@type",
+          },
+          "http://schema.org/knows": Object {
+            "http://schema.org/givenName": "Jane",
+            "id": "jane",
+          },
+          "id": "john",
+        }
+      `)
+    })
+
+    it('only serializes properties from same graph', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const node = cf({ dataset, graph: $rdf.namedNode('john') })
+        .namedNode('john')
+        .addOut(schema.givenName, 'John')
+      cf({ dataset, graph: $rdf.namedNode('also-john') })
+        .namedNode('john')
+        .addOut(schema.givenName, 'Other name')
+      class TestPerson extends RdfResource {
+        @property.literal({ path: schema.givenName })
+        name!: string;
+      }
+      const resource = new TestPerson(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "name": "http://schema.org/givenName",
+            "type": "@type",
+          },
+          "id": "john",
+          "name": "John",
+        }
+      `)
+    })
+
+    it('only serializes undecorated properties from same graph', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const node = cf({ dataset, graph: $rdf.namedNode('john') })
+        .namedNode('john')
+        .addOut(schema.givenName, 'John')
+      cf({ dataset, graph: $rdf.namedNode('also-john') })
+        .namedNode('john')
+        .addOut(schema.givenName, 'Other name')
+      const resource = new RdfResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "type": "@type",
+          },
+          "http://schema.org/givenName": "John",
+          "id": "john",
         }
       `)
     })
