@@ -7,7 +7,14 @@ import {
   literal,
   blankNode,
 } from '@rdf-esm/data-model'
-import { skos, rdf, schema, foaf, xsd } from '@tpluscode/rdf-ns-builders'
+import {
+  skos,
+  rdf,
+  schema,
+  foaf,
+  xsd,
+  dcterms,
+} from '@tpluscode/rdf-ns-builders'
 import RdfResource, { Initializer, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
 import { Constructor, crossBoundaries, property } from '../index'
@@ -873,13 +880,14 @@ describe('RdfResource', () => {
 
       // then
       expect(json).toBeValidJsonLd()
-      expect(json).toMatchInlineSnapshot({
-        [schema.datePublished.value]: {
-          '@value': expect.any(String),
-          '@type': xsd.dateTime.value,
+      expect(json).toMatchInlineSnapshot(
+        {
+          [schema.datePublished.value]: {
+            '@value': expect.any(String),
+            '@type': xsd.dateTime.value,
+          },
         },
-      },
-      `
+        `
         Object {
           "@context": Object {
             "id": "@id",
@@ -901,7 +909,8 @@ describe('RdfResource', () => {
           "id": "john",
           "name": "John",
         }
-      `)
+      `,
+      )
     })
 
     it('set extra literal properties with multiple values', () => {
@@ -1383,6 +1392,56 @@ describe('RdfResource', () => {
             "name": "Jane",
           },
           "name": "John",
+        }
+      `)
+    })
+
+    it('adds a child context property if it is mapped to a different predicate', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('article')
+        .addOut(dcterms.title, 'Using alcaeus')
+        .addOut(dcterms.creator, namedNode('john'), john => {
+          john.addOut(schema.givenName, 'John')
+        })
+      function PersonMixin<Base extends Constructor>(base: Base) {
+        class TestPerson extends base {
+          @property.literal({ path: schema.givenName })
+          name!: string;
+        }
+        return TestPerson
+      }
+      class TestResource extends RdfResource {
+        @property({ path: dcterms.title })
+        name!: string;
+
+        @property.resource({ path: dcterms.creator, as: [PersonMixin] })
+        creator!: RdfResource;
+      }
+      const resource = new TestResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "creator": "http://purl.org/dc/terms/creator",
+            "id": "@id",
+            "name": "http://purl.org/dc/terms/title",
+            "type": "@type",
+          },
+          "creator": Object {
+            "@context": Object {
+              "name": "http://schema.org/givenName",
+            },
+            "id": "john",
+            "name": "John",
+          },
+          "id": "article",
+          "name": "Using alcaeus",
         }
       `)
     })
