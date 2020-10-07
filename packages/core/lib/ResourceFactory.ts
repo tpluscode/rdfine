@@ -2,6 +2,7 @@
 import { DatasetCore, Literal, NamedNode, Term } from 'rdf-js'
 import type { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
+import type { NamespaceBuilder } from '@rdfjs/namespace'
 import type { Initializer, RdfResource, RdfResourceCore, ResourceNode } from '../RdfResource'
 import { createProxy } from './proxy'
 import type { PropertyMeta } from './decorators/property'
@@ -12,6 +13,7 @@ export interface Constructor<A extends RdfResourceCore<any> = RdfResourceCore> {
   factory: ResourceFactory
   __mixins: Mixin[]
   __properties: Map<string, PropertyMeta>
+  __ns?: NamespaceBuilder
 }
 type EvaluatedMixin = {
   shouldApply: boolean | ((entity: RdfResource) => boolean)

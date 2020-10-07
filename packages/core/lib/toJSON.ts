@@ -3,6 +3,7 @@ import type { BlankNode, DatasetCore, Literal, NamedNode, Term } from 'rdf-js'
 import { namedNode } from '@rdf-esm/data-model'
 import TermSet from '@rdf-esm/term-set'
 import { rdf, xsd } from '@tpluscode/rdf-ns-builders'
+import type { NamespaceBuilder } from '@rdfjs/namespace'
 import type { Constructor, ResourceIndexer } from './ResourceFactory'
 import type { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { enumerateList, isList } from './rdf-list'
@@ -161,16 +162,21 @@ interface JsonifyPropertiesContext {
   remainingObjects: Map<Term, Term[]>
   context: Partial<Context>
   resource: RdfResource
+  namespace: NamespaceBuilder | undefined
 }
 
-function jsonifyProperties({ parentContexts, visitedResources, remainingObjects, context, resource }: ToJsonContext & JsonifyPropertiesContext) {
+function jsonifyProperties(params: ToJsonContext & JsonifyPropertiesContext) {
+  const { parentContexts, visitedResources, remainingObjects, context, resource, namespace } = params
+
   return ({ json, contextPopulated = false }: JsonifyPropertiesAccumulator, [name, { options }]: [string, PropertyMeta]): JsonifyPropertiesAccumulator => {
-    if (!options.path || Array.isArray(options.path) || typeof options.path === 'function' || options.subjectFromAllGraphs) {
+    const path = options.path ? options.path : namespace ? namespace(name) : null
+
+    if (!path || Array.isArray(path) || typeof path === 'function' || options.subjectFromAllGraphs) {
       return { json, contextPopulated }
     }
 
     let propertyAddedToContext = false
-    const predicate = typeof options.path === 'string' ? namedNode(options.path) : options.path
+    const predicate = typeof path === 'string' ? namedNode(path) : path
     const terms = remainingObjects.get(predicate)
     if (!terms) {
       return { json, contextPopulated }
@@ -257,10 +263,10 @@ export function toJSON(resource: RdfResource<any> & ResourceIndexer, { parentCon
       type: '@type',
     }
   }
-  const { __properties: properties } = (resource.constructor as Constructor)
+  const { __properties: properties, __ns: namespace } = (resource.constructor as Constructor)
 
   const { contextPopulated } = [...properties].reduce(
-    jsonifyProperties({ parentContexts, visitedResources, resource, remainingObjects, context }),
+    jsonifyProperties({ parentContexts, visitedResources, resource, remainingObjects, context, namespace }),
     { json })
 
   ;[...remainingObjects].reduce(

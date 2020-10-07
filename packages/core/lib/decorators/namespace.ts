@@ -1,12 +1,8 @@
 import ns from '@rdf-esm/namespace'
 import type { NamespaceBuilder } from '@rdf-esm/namespace'
-import type { RdfResource } from '../../RdfResource'
+import type { Constructor } from '../ResourceFactory'
 import type { ClassDescriptor } from '.'
-
-type Constructor<T = RdfResource<any>> = {
-  new (...args: any[]): T
-  __ns?: any
-};
+import type { RdfResourceCore } from '../../RdfResource'
 
 function setNamespace(clazz: Constructor, stringOrNamespace: string | NamespaceBuilder) {
   clazz.__ns = typeof stringOrNamespace === 'string'
@@ -34,7 +30,7 @@ const standardNamespace =
   }
 
 export const namespace = (stringOrNamespace: string | NamespaceBuilder) =>
-  (classOrDescriptor: Constructor|ClassDescriptor) =>
+  (classOrDescriptor: Constructor<RdfResourceCore<any>>|ClassDescriptor) =>
     (typeof classOrDescriptor === 'function')
       ? legacyNamespace(stringOrNamespace, classOrDescriptor)
       : standardNamespace(stringOrNamespace, classOrDescriptor)

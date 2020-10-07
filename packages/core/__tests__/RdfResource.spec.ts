@@ -17,7 +17,7 @@ import {
 } from '@tpluscode/rdf-ns-builders'
 import RdfResource, { Initializer, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
-import { Constructor, crossBoundaries, property } from '../index'
+import { Constructor, crossBoundaries, namespace, property } from '../index'
 
 describe('RdfResource', () => {
   describe('constructor', () => {
@@ -851,6 +851,44 @@ describe('RdfResource', () => {
           "id": "john",
           "lastName": "Doe",
           "name": "John",
+        }
+      `)
+    })
+
+    it('serializes property correctly when @namespace decorator is used', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('john')
+        .addOut(schema.givenName, 'John')
+        .addOut(schema.familyName, 'Doe')
+      @namespace(schema)
+      class TestResource extends RdfResource {
+        @property.literal()
+        givenName!: string;
+
+        @property.literal()
+        familyName!: string;
+      }
+      const resource = new TestResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json.givenName).toEqual('John')
+      expect(json['@context'].givenName).toEqual(schema.givenName.value)
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "familyName": "http://schema.org/familyName",
+            "givenName": "http://schema.org/givenName",
+            "id": "@id",
+            "type": "@type",
+          },
+          "familyName": "Doe",
+          "givenName": "John",
+          "id": "john",
         }
       `)
     })
