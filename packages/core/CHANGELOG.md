@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.5.7
+
+### Patch Changes
+
+- d69277a: Generated resource types should all have generic dataset argument
+- 9986b77: Resource proxy now handles Symbols
+- fecafe1: Added a `toJSON` resource method which creates a JSON-LD object of object's graph
+
 ## 0.5.6
 
 ### Patch Changes

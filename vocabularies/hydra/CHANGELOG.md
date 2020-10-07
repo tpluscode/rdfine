@@ -1,5 +1,22 @@
 # Change Log
 
+## 0.5.0
+
+### Minor Changes
+
+- b45cc9d: hydra:expects must return an array
+
+### Patch Changes
+
+- d69277a: Generated resource types should all have generic dataset argument
+- Updated dependencies [150977e]
+- Updated dependencies [d69277a]
+- Updated dependencies [9986b77]
+- Updated dependencies [fecafe1]
+  - @rdfine/rdfs@0.5.0
+  - @tpluscode/rdfine@0.5.7
+  - @rdfine/rdf@0.4.1
+
 ## 0.4.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.4.1
+
+### Patch Changes
+
+- d69277a: Generated resource types should all have generic dataset argument
+
 ## 0.4.0
 
 ### Minor Changes

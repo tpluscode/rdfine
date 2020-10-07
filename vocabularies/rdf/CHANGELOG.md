@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.4.1
+
+### Patch Changes
+
+- d69277a: Generated resource types should all have generic dataset argument
+- Updated dependencies [d69277a]
+- Updated dependencies [9986b77]
+- Updated dependencies [fecafe1]
+  - @tpluscode/rdfine@0.5.7
+
 ## 0.4.0
 
 ### Minor Changes
