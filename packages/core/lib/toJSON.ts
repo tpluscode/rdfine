@@ -1,6 +1,7 @@
 import TermMap from '@rdf-esm/term-map'
 import type { BlankNode, DatasetCore, Literal, NamedNode, Term } from 'rdf-js'
 import { namedNode } from '@rdf-esm/data-model'
+import TermSet from '@rdf-esm/term-set'
 import { rdf, xsd } from '@tpluscode/rdf-ns-builders'
 import type { Constructor, ResourceIndexer } from './ResourceFactory'
 import type { RdfResource } from '../RdfResource'
@@ -106,8 +107,24 @@ function literalToJSON(obj: Literal): LiteralObject<any> {
   }
 }
 
-export function toJSON(resource: RdfResource<any> & ResourceIndexer, parentContexts?: Record<string, unknown>) {
+interface ToJsonContext {
+  parentContexts?: Record<string, unknown>
+  visitedResources?: Set<Term>
+}
+
+export function toJSON(resource: RdfResource<any> & ResourceIndexer, { parentContexts, visitedResources = new TermSet() }: ToJsonContext = {}) {
   const id = resource.id.termType === 'NamedNode' ? resource.id.value : `_:${resource.id.value}`
+  const json: Record<string, any> = { id }
+  const types = [...resource.types]
+  if (types.length > 0) {
+    json.type = types.map(type => type.id.value)
+  }
+
+  if (visitedResources.has(resource.id)) {
+    return json
+  }
+  visitedResources.add(resource.id)
+
   const remainingQuads = getObjectMap(resource)
   let contextEmpty = true
   let context: Partial<Context>
@@ -119,13 +136,6 @@ export function toJSON(resource: RdfResource<any> & ResourceIndexer, parentConte
       id: '@id',
       type: '@type',
     }
-  }
-
-  const json: Record<string, any> = { id }
-
-  const types = [...resource.types]
-  if (types.length > 0) {
-    json.type = types.map(type => type.id.value)
   }
   const { __properties: properties } = (resource.constructor as Constructor)
 
@@ -172,7 +182,10 @@ export function toJSON(resource: RdfResource<any> & ResourceIndexer, parentConte
           return literalToJSON(obj)
         }
 
-        return toJSON(obj as any, { ...parentContexts, ...context })
+        return toJSON(obj as any, {
+          parentContexts: { ...parentContexts, ...context },
+          visitedResources,
+        })
       })
 
       if (options.values.includes('array') && jsonValues.length !== 1) {

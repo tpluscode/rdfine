@@ -1046,6 +1046,52 @@ describe('RdfResource', () => {
       `)
     })
 
+    it("only outputs '@id' of cycled resource", () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('john')
+        .addOut(schema.givenName, 'John')
+        .addOut(schema.knows, namedNode('jane'), jane => {
+          jane.addOut(schema.knows, namedNode('john'))
+        })
+      function PersonMixin<Base extends Constructor>(base: Base) {
+        class TestPerson extends base {
+          @property.resource({ path: schema.givenName, as: [PersonMixin] })
+          name!: TestPerson;
+
+          @property.resource({ path: schema.knows, as: [PersonMixin] })
+          knows!: TestPerson;
+        }
+        return TestPerson
+      }
+      const resource = new (PersonMixin(RdfResource))(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json.knows?.knows?.id).toEqual('john')
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "knows": "http://schema.org/knows",
+            "name": "http://schema.org/givenName",
+            "type": "@type",
+          },
+          "id": "john",
+          "knows": Object {
+            "id": "jane",
+            "knows": Object {
+              "id": "john",
+            },
+          },
+          "name": "John",
+        }
+      `)
+    })
+
     it('sets array of child resource as jsonified', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
