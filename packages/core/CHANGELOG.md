@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.9
+
+### Patch Changes
+
+- 677f160: Use `@namespace` when serializing properties in `toJSON`
+
 ## 0.5.8
 
 ### Patch Changes

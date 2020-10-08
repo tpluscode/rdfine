@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.5.1
+
+### Patch Changes
+
+- 9fa04eb: do not import module 'url'
+- Updated dependencies [677f160]
+  - @tpluscode/rdfine@0.5.9
+
 ## 0.5.0
 
 ### Minor Changes
