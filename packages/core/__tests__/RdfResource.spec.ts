@@ -1583,5 +1583,52 @@ describe('RdfResource', () => {
         }
       `)
     })
+
+    it('uses property names for @namespace annotated mixin classes', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const node = cf({ dataset })
+        .namedNode('john')
+        .addOut(foaf.name, 'John')
+        .addOut(schema.age, 48)
+      function NameMixin<Base extends Constructor>(base: Base) {
+        @namespace(foaf)
+        class NameClass extends base {
+          @property.literal()
+          name!: string
+        }
+
+        return NameClass
+      }
+      function AgeMixin<Base extends Constructor>(base: Base) {
+        @namespace(schema)
+        class AgeClass extends base {
+          @property.literal()
+          age!: number
+        }
+
+        return AgeClass
+      }
+      const resource = RdfResource.factory.createEntity(node, [NameMixin, AgeMixin])
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "age": "http://schema.org/age",
+            "id": "@id",
+            "name": "http://xmlns.com/foaf/0.1/name",
+            "type": "@type",
+          },
+          "age": 48,
+          "id": "john",
+          "name": "John",
+        }
+      `)
+    })
   })
 })
