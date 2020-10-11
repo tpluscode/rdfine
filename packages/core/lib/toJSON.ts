@@ -155,7 +155,7 @@ function jsonifyQuads(resource: RdfResource, context: ToJsonContext) {
 
 interface JsonifyPropertiesAccumulator {
   json: Record<string, any>
-  contextPopulated?: boolean
+  contextPopulated: boolean
 }
 
 interface JsonifyPropertiesContext {
@@ -238,6 +238,19 @@ function jsonifyProperties(params: ToJsonContext & JsonifyPropertiesContext) {
   }
 }
 
+function * mixins(resource: RdfResource): Generator<Constructor> {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  let ctor: Constructor | Function = resource.constructor
+
+  while (ctor) {
+    if ('__properties' in ctor) {
+      yield ctor
+    }
+
+    ctor = Object.getPrototypeOf(ctor)
+  }
+}
+
 export function toJSON(resource: RdfResource<any> & ResourceIndexer, { parentContexts, visitedResources = new TermSet() }: ToJsonContext = {}) {
   const id = resource.id.termType === 'NamedNode' ? resource.id.value : `_:${resource.id.value}`
   const json: Record<string, any> = { id }
@@ -263,13 +276,15 @@ export function toJSON(resource: RdfResource<any> & ResourceIndexer, { parentCon
       type: '@type',
     }
   }
-  const { __properties: properties, __ns: namespace } = (resource.constructor as Constructor)
 
-  const { contextPopulated } = [...properties].reduce(
-    jsonifyProperties({ parentContexts, visitedResources, resource, remainingObjects, context, namespace }),
-    { json })
+  let contextPopulated = false
+  for (const { __properties: properties, __ns: namespace } of mixins(resource)) {
+    ({ contextPopulated } = [...properties].reduce(
+      jsonifyProperties({ parentContexts, visitedResources, resource, remainingObjects, context, namespace }),
+      { json, contextPopulated }))
+  }
 
-  ;[...remainingObjects].reduce(
+  [...remainingObjects].reduce(
     jsonifyQuads(resource, { parentContexts: { ...parentContexts, ...context }, visitedResources }),
     json)
 
