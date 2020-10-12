@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.5.2
+
+### Patch Changes
+
+- c1bf269: Missing export for IriTemplateEx
+- Updated dependencies [1aec204]
+  - @tpluscode/rdfine@0.5.10
+
 ## 0.5.1
 
 ### Patch Changes

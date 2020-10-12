@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.10
+
+### Patch Changes
+
+- 1aec204: toJSON did not walks the prototype chain
+
 ## 0.5.9
 
 ### Patch Changes

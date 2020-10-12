@@ -6,6 +6,7 @@ import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '.';
 import * as Rdfs from '@rdfine/rdfs';
+import { DatasetCore } from 'rdf-js';
 
 export interface AbstractResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
   detail: Sh.AbstractResult<D> | undefined;
@@ -44,8 +45,8 @@ export function AbstractResultMixin<Base extends Constructor>(Resource: Base) {
   return AbstractResultClass
 }
 
-class AbstractResultImpl extends AbstractResultMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AbstractResult>) {
+class AbstractResultImpl<D extends DatasetCore = DatasetCore> extends AbstractResultMixin(RdfResourceImpl) {
+  constructor(arg: ResourceNode<D>, init?: Initializer<AbstractResult>) {
     super(arg, init)
     this.types.add(sh.AbstractResult)
   }
@@ -53,4 +54,4 @@ class AbstractResultImpl extends AbstractResultMixin(RdfResourceImpl) {
   static readonly __mixins: Mixin[] = [AbstractResultMixin, Rdfs.ResourceMixin];
 }
 AbstractResultMixin.appliesTo = sh.AbstractResult
-AbstractResultMixin.Class = AbstractResultImpl
+AbstractResultMixin.Class = AbstractResultImpl as Constructor<>
