@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 1aec204: toJSON did not walks the prototype chain
+- 1aec204: toJSON did not walk the prototype chain
 
 ## 0.5.9
 
