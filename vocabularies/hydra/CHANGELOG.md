@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.3
+
+### Patch Changes
+
+- 9b15d16: es6-url-template did not import correctly in webpack
+
 ## 0.5.2
 
 ### Patch Changes
