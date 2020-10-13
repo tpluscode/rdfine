@@ -13,5 +13,6 @@ module.exports = {
   ],
   moduleNameMapper: {
     '@rdf-esm/(.*)': '@rdfjs/$1',
+    'es6-url-template': 'es6-url-template/url-template.cjs',
   },
 }

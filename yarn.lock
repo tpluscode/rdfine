@@ -4425,10 +4425,10 @@ es6-promisify@^5.0.0:
   dependencies:
     es6-promise "^4.0.3"
 
-es6-url-template@^3:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/es6-url-template/-/es6-url-template-3.0.0.tgz#3e5c5e5442baaedc02b8c3b9195901ccd0a5c51a"
-  integrity sha512-090QJpeIb9jIxd3CFO9FruxOtxkI338/uTqkQ77bdcpRjtEB+BTSzEzp9uuVLBaOe0U3LMgubpNcDfrQO/rusg==
+es6-url-template@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/es6-url-template/-/es6-url-template-3.0.1.tgz#dd798bc5fc2b8df3e80a2a43a7f9a6c904cd2df9"
+  integrity sha512-GxqRnENJY2xRa59oX8g+jg0uCxb7sGTiKhAeC1MDLWANmeg8floRri+hXYiRtciwtUju4osDKbScJVn4aNA75A==
 
 escalade@^3.0.1:
   version "3.0.1"
