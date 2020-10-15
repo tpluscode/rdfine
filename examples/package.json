@@ -16,7 +16,7 @@
     "@rdfjs/fetch": "^2.0.0",
     "@rdfjs/namespace": "^1.1.0",
     "@tpluscode/rdf-ns-builders": "^0.4",
-    "@tpluscode/rdf-string": "^0.2.16",
+    "@tpluscode/rdf-string": "^0.2.20",
     "@tpluscode/rdfine": "^0.5.5",
     "clownface": "^1",
     "debug": "^4.1.1"

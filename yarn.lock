@@ -2381,28 +2381,12 @@
   resolved "https://registry.yarnpkg.com/@tpluscode/eslint-config/-/eslint-config-0.1.1.tgz#5562e9753d4a4e9bd6ee4785baeaf9e6c7f42bfc"
   integrity sha512-gv7CE+3iQ6YNoEofgzMKWUgOHxY7Kozq06M4ls0PkOScOmvCoHTFD2XvPtqmADmXezQsMcZyM6VsHEilgHoasw==
 
-"@tpluscode/rdf-ns-builders@^0.3.6":
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/@tpluscode/rdf-ns-builders/-/rdf-ns-builders-0.3.6.tgz#6ca1432ac0854019678f0156afef7c1692ca000c"
-  integrity sha512-ukD9X9bPstcaOcyJFKiImM8A5DkWSVVxgE/FUbm0aK8jpPMeeg9PlSqjM+vwSHOc+Bfmi0tnjq9DHeV/DSZzAA==
-  dependencies:
-    "@rdfjs/namespace" "^1.1.0"
-
 "@tpluscode/rdf-ns-builders@^0.4":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@tpluscode/rdf-ns-builders/-/rdf-ns-builders-0.4.0.tgz#338ffc6aac3fafad3708c35ef69138196534ec3a"
   integrity sha512-q1m16FJCqGI6E+uqSo9NvEja4l5oJvB3UEtjEZ5yutGx6kaHihaPMBpF3E8k7NY8HHWyMuRKdl9XymrvDEtEng==
   dependencies:
     "@rdf-esm/namespace" "^0.5.1"
-
-"@tpluscode/rdf-string@^0.2.16":
-  version "0.2.16"
-  resolved "https://registry.yarnpkg.com/@tpluscode/rdf-string/-/rdf-string-0.2.16.tgz#964caaebac205f557cda3401ecbccf7a3484b7be"
-  integrity sha512-P2hFa1cBX4KyOhEo4rV41CJZcQlRBTmwBBcJIxrSTktSGv/uh2E3NoWqWE9WWRbmKq6LOToK1dItslRVkR0M+Q==
-  dependencies:
-    "@rdfjs/data-model" "^1.1.2"
-    "@tpluscode/rdf-ns-builders" "^0.3.6"
-    "@zazuko/rdf-vocabularies" "^2020.6.29"
 
 "@tpluscode/rdf-string@^0.2.20":
   version "0.2.20"
