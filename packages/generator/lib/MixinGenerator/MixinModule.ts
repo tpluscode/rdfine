@@ -33,7 +33,9 @@ export class MixinModule implements GeneratedModule {
     }
   }
 
-  writeModule(project: Project, types: TypeMetaCollection, context: Pick<Context, 'log' | 'prefix' | 'vocabulary' | 'defaultExport'>) {
+  writeModule(params: { project: Project; types: TypeMetaCollection; context: Pick<Context, 'log' | 'prefix' | 'vocabulary' | 'defaultExport'>; indexModule: SourceFile }) {
+    const { project, types, context, indexModule } = params
+
     context.log.debug(`Generating mixin ${this.type.qualifiedName}`)
 
     const mixinFile = project.createSourceFile(`${this.type.module}.ts`, {}, { overwrite: true })
@@ -86,10 +88,9 @@ export class MixinModule implements GeneratedModule {
     this.addImports(mixinFile, context)
     this.generateDependenciesModule(bundleModule, bundleIndex, types)
 
-    return {
-      mainModuleExport: this.type.localName,
-      mainModuleMixinExport: mixinName,
-    }
+    indexModule.addExportDeclaration({
+      moduleSpecifier: this.type.module,
+    }).toNamespaceExport()
   }
 
   private generateDependenciesModule(depsModule: SourceFile, bundleIndex: SourceFile, types: TypeMetaCollection) {

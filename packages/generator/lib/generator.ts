@@ -36,14 +36,7 @@ export async function generate(project: Project, types: TypeMetaCollection, stra
     .reduce((previous, moduleWriter) => {
       return previous.then(async () => {
         try {
-          const moduleSpecifier = moduleWriter.type.module
-
-          const result = moduleWriter.writeModule(project, types, context)
-          if (result.mainModuleExport) {
-            indexModule.addExportDeclaration({
-              moduleSpecifier,
-            }).toNamespaceExport()
-          }
+          moduleWriter.writeModule({ project, types, context, indexModule })
         } catch (e) {
           context.log.error('Failed to generate type %s\n%s', moduleWriter.node.value, e.message)
         }

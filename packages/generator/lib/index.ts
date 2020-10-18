@@ -4,7 +4,7 @@ import { Stream } from 'rdf-js'
 import rdf from 'rdf-ext'
 import nsBuilder from '@rdfjs/namespace'
 import { expand, prefixes } from '@zazuko/rdf-vocabularies'
-import { IndentationText, Project, QuoteKind } from 'ts-morph'
+import { IndentationText, Project, QuoteKind, SourceFile } from 'ts-morph'
 import FileSystem from './util/FileSystem'
 import * as generator from './generator'
 import * as EnumerationGenerator from './EnumerationGenerator'
@@ -14,6 +14,10 @@ import * as factories from './types/metaFactories'
 import { toUpperInitial } from './util/string'
 import { expandMapKeys } from './util/overrideMap'
 import { DatatypeName } from './types/wellKnownDatatypes'
+
+type PropertyOverrides = Record<string, {
+  values?: 'array' | 'list' | 'single' | Array<'array' | 'list' | 'single'>
+}>
 
 export interface Context {
   vocabulary: AnyPointer
@@ -27,21 +31,14 @@ export interface Context {
   properties: PropertyOverrides
 }
 
-type PropertyOverrides = Record<string, {
-  values?: 'array' | 'list' | 'single' | Array<'array' | 'list' | 'single'>
-}>
-
-export interface ModuleStrategy {
-  (types: TypeMetaCollection, context: Context): GeneratedModule[]
-}
-
 export interface GeneratedModule {
   node: GraphPointer
   type: ResourceType | EnumerationType
-  writeModule(project: Project, types: TypeMetaCollection, context: Context): {
-    mainModuleExport?: string
-    mainModuleMixinExport?: string
-  }
+  writeModule(params: { project: Project; types: TypeMetaCollection; context: Context; indexModule: SourceFile }): void
+}
+
+export interface ModuleStrategy {
+  (types: TypeMetaCollection, context: Context): GeneratedModule[]
 }
 
 export type TypeOverride = DatatypeName | 'NamedNode' | 'Datatype'

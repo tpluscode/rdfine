@@ -1,4 +1,4 @@
-import { ObjectLiteralExpression, Project } from 'ts-morph'
+import { ObjectLiteralExpression, Project, SourceFile } from 'ts-morph'
 import { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import { Context, GeneratedModule } from '../index'
@@ -13,7 +13,7 @@ export class EnumerationModule implements GeneratedModule {
     this.type = type
   }
 
-  writeModule(project: Project, types: TypeMetaCollection, context: Pick<Context, 'prefix' | 'log'>) {
+  writeModule({ project, types, context, indexModule }: {project: Project; types: TypeMetaCollection; context: Pick<Context, 'prefix' | 'log'>; indexModule: SourceFile}) {
     context.log.debug('Generating enumeration %s', this.type.name)
     const enumFile = project.createSourceFile(`${this.type.module}.ts`, {}, { overwrite: true })
 
@@ -62,8 +62,12 @@ export class EnumerationModule implements GeneratedModule {
       isExported: true,
     })
 
-    return {
-      mainModuleExport: this.type.name,
-    }
+    indexModule.addExportDeclaration({
+      moduleSpecifier: this.type.module,
+    }).toNamespaceExport()
+    indexModule.addExportDeclaration({
+      moduleSpecifier: this.type.module,
+      namedExports: [`default as ${this.type.name}Enum`],
+    })
   }
 }

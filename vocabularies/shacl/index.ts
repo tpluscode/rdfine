@@ -10,6 +10,7 @@ export * from './JSTarget';
 export * from './JSTargetType';
 export * from './JSValidator';
 export * from './NodeKind';
+export { default as NodeKindEnum } from './NodeKind';
 export * from './NodeShape';
 export * from './Parameter';
 export * from './Parameterizable';
