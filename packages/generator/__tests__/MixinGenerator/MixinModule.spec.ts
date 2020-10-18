@@ -1,4 +1,4 @@
-import { Project } from 'ts-morph'
+import { Project, SourceFile } from 'ts-morph'
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { xsd } from '@tpluscode/rdf-ns-builders'
@@ -10,11 +10,13 @@ import { fakeLog } from '../_helpers/util'
 describe('MixinModule', () => {
   let project: Project
   let vocabulary: AnyPointer
+  let indexModule: SourceFile
 
   beforeEach(() => {
     project = new Project({
       useInMemoryFileSystem: true,
     })
+    indexModule = project.createSourceFile('index.ts')
 
     vocabulary = cf({ dataset: $rdf.dataset() })
   })
@@ -30,11 +32,16 @@ describe('MixinModule', () => {
     }, [], [])
 
     // when
-    module.writeModule(project, new FakeTypeCollection(), {
-      prefix: 'ex',
-      defaultExport: 'Example',
-      log: fakeLog(),
-      vocabulary,
+    module.writeModule({
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
+      indexModule,
     })
 
     // then
@@ -60,11 +67,16 @@ describe('MixinModule', () => {
     }], [])
 
     // when
-    module.writeModule(project, new FakeTypeCollection(), {
-      prefix: 'ex',
-      defaultExport: 'Example',
-      log: fakeLog(),
-      vocabulary,
+    module.writeModule({
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
+      indexModule,
     })
 
     // then
@@ -96,11 +108,16 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(project, new FakeTypeCollection(), {
-      prefix: 'ex',
-      defaultExport: 'Example',
-      log: fakeLog(),
-      vocabulary,
+    module.writeModule({
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
+      indexModule,
     })
 
     // then
@@ -133,11 +150,16 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(project, new FakeTypeCollection(), {
-      prefix: 'ex',
-      defaultExport: 'Example',
-      log: fakeLog(),
-      vocabulary,
+    module.writeModule({
+      project,
+      indexModule,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
     })
 
     // then
@@ -170,11 +192,16 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(project, new FakeTypeCollection(), {
-      prefix: 'ex',
-      defaultExport: 'Example',
-      log: fakeLog(),
-      vocabulary,
+    module.writeModule({
+      indexModule,
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
     })
 
     // then
@@ -207,11 +234,16 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(project, new FakeTypeCollection(), {
-      prefix: 'ex',
-      defaultExport: 'Example',
-      log: fakeLog(),
-      vocabulary,
+    module.writeModule({
+      indexModule,
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
     })
 
     // then
@@ -238,11 +270,16 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(project, new FakeTypeCollection(), {
-      prefix: 'ex',
-      defaultExport: 'Example',
-      log: fakeLog(),
-      vocabulary,
+    module.writeModule({
+      indexModule,
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
     })
 
     // then
@@ -276,11 +313,16 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(project, new FakeTypeCollection(), {
-      prefix: 'ex',
-      defaultExport: 'Example',
-      log: fakeLog(),
-      vocabulary,
+    module.writeModule({
+      indexModule,
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
     })
 
     // then
@@ -316,11 +358,16 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(project, new FakeTypeCollection(), {
-      prefix: 'ex',
-      defaultExport: 'Example',
-      log: fakeLog(),
-      vocabulary,
+    module.writeModule({
+      indexModule,
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
     })
 
     // then
@@ -351,11 +398,16 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(project, new FakeTypeCollection(), {
-      prefix: 'ex',
-      defaultExport: 'Example',
-      log: fakeLog(),
-      vocabulary,
+    module.writeModule({
+      indexModule,
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
     })
 
     // then
@@ -391,11 +443,16 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(project, new FakeTypeCollection(), {
-      prefix: 'ex',
-      defaultExport: 'Example',
-      log: fakeLog(),
-      vocabulary,
+    module.writeModule({
+      indexModule,
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
     })
 
     // then
@@ -435,11 +492,16 @@ describe('MixinModule', () => {
     }])
 
     // when
-    module.writeModule(project, new FakeTypeCollection(), {
-      prefix: 'ex',
-      defaultExport: 'Example',
-      log: fakeLog(),
-      vocabulary,
+    module.writeModule({
+      indexModule,
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
     })
 
     // then
@@ -472,11 +534,16 @@ describe('MixinModule', () => {
     }], [])
 
     // when
-    module.writeModule(project, new FakeTypeCollection(), {
-      prefix: 'ex',
-      defaultExport: 'Example',
-      log: fakeLog(),
-      vocabulary,
+    module.writeModule({
+      indexModule,
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
     })
 
     // then

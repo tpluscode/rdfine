@@ -1,7 +1,7 @@
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import { Project } from 'ts-morph'
+import { Project, SourceFile } from 'ts-morph'
 import { EnumerationModule } from '../../lib/EnumerationGenerator/EnumerationModule'
 import { fakeLog } from '../_helpers/util'
 import { FakeTypeCollection } from '../_helpers/FakeTypeCollection'
@@ -10,11 +10,13 @@ import { ex } from '../_helpers/prefix'
 describe('EnumerationModule', () => {
   let project: Project
   let graph: AnyPointer
+  let indexModule: SourceFile
 
   beforeEach(() => {
     project = new Project({
       useInMemoryFileSystem: true,
     })
+    indexModule = project.createSourceFile('index.ts')
 
     graph = cf({ dataset: $rdf.dataset() })
   })
@@ -36,9 +38,14 @@ describe('EnumerationModule', () => {
     })
 
     // when
-    module.writeModule(project, types, {
-      log: fakeLog(),
-      prefix: 'ex',
+    module.writeModule({
+      indexModule,
+      project,
+      types,
+      context: {
+        log: fakeLog(),
+        prefix: 'ex',
+      },
     })
 
     // then
@@ -60,9 +67,14 @@ describe('EnumerationModule', () => {
     })
 
     // when
-    module.writeModule(project, types, {
-      log: fakeLog(),
-      prefix: 'ex',
+    module.writeModule({
+      indexModule,
+      project,
+      types,
+      context: {
+        log: fakeLog(),
+        prefix: 'ex',
+      },
     })
 
     // then
