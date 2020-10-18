@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.5.4
+
+### Patch Changes
+
+- da5dec5: Update es6-url-template which exported cjs instead of esm
+- 9ebb692: Update es6-url-template
+
 ## 0.5.3
 
 ### Patch Changes

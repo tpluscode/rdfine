@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.4.2
+
+### Patch Changes
+
+- 5727c2b: Export enumerations from main module
+
 ## 0.4.1
 
 ### Patch Changes
