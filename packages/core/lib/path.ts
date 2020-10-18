@@ -3,14 +3,14 @@ import RDF from '@rdf-esm/data-model'
 import cf, { GraphPointer } from 'clownface'
 import type { NamespaceBuilder } from '@rdf-esm/namespace'
 
-export type PropRef = string | NamedNode
-export type EdgeTraversalFactory = (ns: NamespaceBuilder) => EdgeTraversal
-
 export interface EdgeTraversal {
   (subject: GraphPointer): GraphPointer[]
   predicate: NamedNode
   crossesGraphBoundaries: boolean
 }
+
+export type PropRef = string | NamedNode
+export type EdgeTraversalFactory = (ns: NamespaceBuilder) => EdgeTraversal
 
 function namespacedPredicate(term: string, namespace?: NamespaceBuilder): NamedNode {
   if (!namespace) {

@@ -6,6 +6,7 @@ export interface ClassElement {
   kind: 'field'|'method'
   key: PropertyKey
   placement: 'static'|'prototype'|'own'
+  // eslint-disable-next-line @typescript-eslint/ban-types
   initializer?: Function
   extras?: ClassElement[]
   finisher?: <T extends RdfResource>(clazz: Constructor<T>) => undefined | Constructor<T>

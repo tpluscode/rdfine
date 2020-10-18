@@ -4,10 +4,6 @@ import { Context } from '../index'
 
 export { TypeMap } from './TypeMap'
 
-export interface TypeMetaFactory<T extends TypeMeta = TypeMeta> {
-  (term: GraphPointer<NamedNode>, context: Context): T | null
-}
-
 export interface LiteralType {
   type: 'Literal'
   nativeName: string
@@ -52,6 +48,10 @@ export interface TermType {
 }
 
 export type TypeMeta = LiteralType | ResourceType | ExternalResourceType | EnumerationType | EnumerationMember | TermType
+
+export interface TypeMetaFactory<T extends TypeMeta = TypeMeta> {
+  (term: GraphPointer<NamedNode>, context: Context): T | null
+}
 
 export type TypeMetaCollection = {
   get(key: GraphPointer): TypeMeta | undefined

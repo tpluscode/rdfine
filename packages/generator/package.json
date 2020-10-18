@@ -19,6 +19,7 @@
     "@rdfjs/namespace": "^1.1.0",
     "@rdfjs/term-set": "^1.0.1",
     "@tpluscode/rdf-ns-builders": "^0.4",
+    "@ts-morph/common": "^0.5.1",
     "@zazuko/rdf-vocabularies": "^2020.3.17",
     "clownface": "^1",
     "commander": "^5.0.0",
