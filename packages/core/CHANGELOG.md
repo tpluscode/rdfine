@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.11
+
+### Patch Changes
+
+- 6000ce8: @property decorator was unusable with augmented RdfResource interface
+
 ## 0.5.10
 
 ### Patch Changes
