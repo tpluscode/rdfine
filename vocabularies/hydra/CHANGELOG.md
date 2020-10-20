@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.5
+
+### Patch Changes
+
+- d13a929: Relax hydra:Collection generic argument
+
 ## 0.5.4
 
 ### Patch Changes
