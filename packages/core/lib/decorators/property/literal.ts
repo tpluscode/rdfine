@@ -1,4 +1,4 @@
-import { RdfResource } from '../../../RdfResource'
+import { RdfResourceCore } from '../../../RdfResource'
 import { Literal, NamedNode, Term } from 'rdf-js'
 import { fromLiteral } from '../../conversion'
 import { xsd } from '@tpluscode/rdf-ns-builders'
@@ -6,7 +6,7 @@ import rdf from '@rdf-esm/data-model'
 import type { AccessorOptions, ObjectOrFactory } from '.'
 import { propertyDecorator } from '.'
 
-interface LiteralOptions<R extends RdfResource> {
+interface LiteralOptions<R extends RdfResourceCore> {
   type?: BooleanConstructor | StringConstructor | NumberConstructor | DateConstructor
   initial?: ObjectOrFactory<R, string | boolean | number | bigint | Date, Literal>
   datatype?: NamedNode
@@ -16,7 +16,7 @@ const trueLiteral: Literal = rdf.literal('true', xsd.boolean)
 
 type LiteralValues = string | number | boolean | bigint | Date
 
-export default function<R extends RdfResource> (options: AccessorOptions & LiteralOptions<R> = {}) {
+export default function<R extends RdfResourceCore> (options: AccessorOptions & LiteralOptions<R> = {}) {
   const type = options.type || String
 
   return propertyDecorator<R, LiteralValues, Literal>({

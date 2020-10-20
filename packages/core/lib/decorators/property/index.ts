@@ -1,7 +1,7 @@
 import { Quad, Term } from 'rdf-js'
 import TermSet from '@rdf-esm/term-set'
 import RdfResourceImpl from '../../../RdfResource'
-import type { RdfResource } from '../../../RdfResource'
+import type { RdfResourceCore } from '../../../RdfResource'
 import { EdgeTraversal, EdgeTraversalFactory, PropRef, toEdgeTraversals } from '../../path'
 import cf, { GraphPointer } from 'clownface'
 import { isList, enumerateList } from '../../rdf-list'
@@ -63,10 +63,10 @@ export type ObjectOrFactory<TSelf, T, TTerm extends Term> =
   ArrayOrSingle<T | TTerm | GraphPointer<TTerm>> |
   ((self: TSelf) => ArrayOrSingle<T | TTerm | GraphPointer<TTerm>>)
 
-interface PropertyDecoratorOptions<T extends RdfResource, TValue, TTerm extends Term> extends AccessorOptions {
+interface PropertyDecoratorOptions<T extends RdfResourceCore, TValue, TTerm extends Term> extends AccessorOptions {
   fromTerm: (this: T, obj: GraphPointer) => TValue
   toTerm: (this: T, value: TValue) => TTerm
-  assertSetValue: (value: RdfResource | Term | GraphPointer | TValue) => boolean
+  assertSetValue: (value: RdfResourceCore | Term | GraphPointer | TValue) => boolean
   valueTypeName: string
   initial?: ObjectOrFactory<T, TValue, TTerm>
   compare: (left: TValue, right: TValue) => boolean
@@ -74,10 +74,10 @@ interface PropertyDecoratorOptions<T extends RdfResource, TValue, TTerm extends 
 
 export type PropertyMeta<T = any> = {
   initial?: ObjectOrFactory<T, unknown, Term>
-  options: Omit<PropertyDecoratorOptions<RdfResource, unknown, Term>, 'values'> & { values: PropertyReturnKind[] }
+  options: Omit<PropertyDecoratorOptions<RdfResourceCore, unknown, Term>, 'values'> & { values: PropertyReturnKind[] }
 }
 
-function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto: any, name: string, options: PropertyDecoratorOptions<T, TValue, TTerm>) {
+function createProperty<T extends RdfResourceCore, TValue, TTerm extends Term>(proto: any, name: string, options: PropertyDecoratorOptions<T, TValue, TTerm>) {
   const { fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict, compare, subjectFromAllGraphs } = options
   let values: PropertyReturnKind[] = ['single']
   if (Array.isArray(options.values)) {
@@ -135,7 +135,7 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
       return values.includes('single') ? returnValues[0] : returnValues
     },
 
-    set(this: T & RdfResourceImpl, value: ArrayOrSingle<RdfResource | Term | GraphPointer>) {
+    set(this: T & RdfResourceImpl, value: ArrayOrSingle<RdfResourceCore | Term | GraphPointer>) {
       if (!values.includes('array') && !values.includes('list') && Array.isArray(value)) {
         throw new Error(`${name}: Cannot set array to a non-array property`)
       }
@@ -164,7 +164,7 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
         return
       }
 
-      let valueArray: Array<RdfResource | Term | GraphPointer | TValue>
+      let valueArray: Array<RdfResourceCore | Term | GraphPointer | TValue>
       if (Array.isArray(value)) {
         valueArray = value
       } else {
@@ -218,12 +218,12 @@ function createProperty<T extends RdfResource, TValue, TTerm extends Term>(proto
 }
 
 const legacyProperty =
-  <T extends RdfResource, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>, proto: Record<string, unknown>, name: PropertyKey) => {
+  <T extends RdfResourceCore, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>, proto: Record<string, unknown>, name: PropertyKey) => {
     createProperty(proto, name.toString(), options)
   }
 
 const standardProperty =
-  <T extends RdfResource, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>, element: ClassElement) => {
+  <T extends RdfResourceCore, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>, element: ClassElement) => {
     return {
       kind: 'field',
       key: Symbol(),
@@ -249,8 +249,8 @@ const standardProperty =
     }
   }
 
-export function propertyDecorator<T extends RdfResource<any>, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>) {
-  return (protoOrDescriptor: RdfResource<any>|ClassElement, name?: PropertyKey): any =>
+export function propertyDecorator<T extends RdfResourceCore<any>, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>) {
+  return (protoOrDescriptor: RdfResourceCore<any>|ClassElement, name?: PropertyKey): any =>
     (name !== undefined)
       ? legacyProperty(options, protoOrDescriptor as any, name)
       : standardProperty(options, protoOrDescriptor as ClassElement)
@@ -260,7 +260,7 @@ interface TermOptions <TSelf>{
   initial?: ObjectOrFactory<TSelf, Term, Term>
 }
 
-export function property<R extends RdfResource<any>>(options: AccessorOptions & TermOptions<R> = {}) {
+export function property<R extends RdfResourceCore<any>>(options: AccessorOptions & TermOptions<R> = {}) {
   return propertyDecorator<R, Term, Term>({
     ...options,
     fromTerm: (obj) => obj.term,
