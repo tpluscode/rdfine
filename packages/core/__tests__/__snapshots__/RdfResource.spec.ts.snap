@@ -5,6 +5,26 @@ exports[`RdfResource initializeProperties assigns literal node to arbitrary URI 
 "
 `;
 
+exports[`RdfResource initializeProperties can initialize child resource with object decomposition: toMatchSnapshot 1`] = `
+"_:c14n0 <http://example.com/bar> \\"bar\\" .
+_:c14n0 <http://example.com/foo> \\"foo\\" .
+_:c14n0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.com/Copy> .
+_:c14n1 <http://example.com/child> _:c14n0 .
+"
+`;
+
+exports[`RdfResource initializeProperties can initialize child resource with string blank node id: toMatchSnapshot 1`] = `
+"_:c14n1 <http://example.com/bar> _:c14n2 .
+_:c14n1 <http://example.com/foo> _:c14n0 .
+"
+`;
+
+exports[`RdfResource initializeProperties can initialize child resource with string named node id: toMatchSnapshot 1`] = `
+"_:c14n0 <http://example.com/bar> <http://example.com/Child> .
+_:c14n0 <http://example.com/foo> <http://example.com/Child> .
+"
+`;
+
 exports[`RdfResource initializeProperties initializes T|T[] property with IRI: toMatchSnapshot 1`] = `
 "_:c14n0 <http://www.w3.org/2004/02/skos/core#broader> <http://example.com/Foo> .
 "

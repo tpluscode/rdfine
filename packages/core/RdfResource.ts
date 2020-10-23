@@ -18,6 +18,7 @@ import { defaultGraphInstance } from '@rdf-esm/data-model'
 import type { PropertyMeta } from './lib/decorators/property'
 import { toJSON } from './lib/toJSON'
 import type { Jsonified } from './lib/toJSON'
+import { getPointer } from './lib/resource'
 
 export type ResourceIdentifier = BlankNode | NamedNode
 export type ResourceNode<D extends DatasetCore = DatasetCore> = GraphPointer<ResourceIdentifier, D>
@@ -106,7 +107,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
           }
 
           // create and initialize an object resource
-          const term = value.id ? resource.pointer.node(value.id) : resource.pointer.blankNode()
+          const term = getPointer(resource.pointer, value.id)
           const childResource = resource._create(term, [], { initializer: value })
           return childResource.pointer
         })
@@ -307,7 +308,7 @@ type UserDefinedInterface<T extends RdfResource | undefined> = Omit<T, keyof Rdf
 
 type BaseInitializer = Record<string, any> & {
   types?: NamedNode[] | TypeCollection<any>
-  id?: RdfResource['id']
+  id?: RdfResource['id'] | string
 }
 
 type InitialNode<Node extends Term = NamedNode | BlankNode> = Node | GraphPointer<Node>

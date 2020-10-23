@@ -564,6 +564,78 @@ describe('RdfResource', () => {
       // then
       expect(resource.pointer.dataset).toMatchSnapshot()
     })
+
+    it('can initialize child resource with object decomposition', () => {
+      // given
+      class Child extends RdfResource {
+        @property.literal({ path: ex.foo })
+        foo?: string
+
+        @property.literal({ path: ex.bar })
+        bar?: string
+      }
+      class Decomposed extends RdfResource {
+        @property.resource({ path: ex.child, as: [Child] })
+        child?: Decomposed
+      }
+      const child = new Child(cf({ dataset: $rdf.dataset() }).blankNode(), {
+        foo: 'foo',
+        bar: 'bar',
+      })
+
+      // when
+      const resource = new Decomposed(cf({ dataset: $rdf.dataset() }).blankNode(), {
+        child: {
+          ...child.toJSON(),
+          types: [ex.Copy],
+        },
+      })
+
+      // then
+      expect(resource.pointer.dataset).toMatchSnapshot()
+    })
+
+    it('can initialize child resource with string blank node id', () => {
+      // given
+      class Resource extends RdfResource {
+        @property.resource({ path: ex.foo })
+        foo!: RdfResource
+      }
+
+      // when
+      const resource = new Resource(cf({ dataset: $rdf.dataset() }).blankNode(), {
+        foo: {
+          id: '_:blank-one',
+        },
+        [ex.bar.value]: {
+          id: '_:blank-two',
+        },
+      })
+
+      // then
+      expect(resource.pointer.dataset).toMatchSnapshot()
+    })
+
+    it('can initialize child resource with string named node id', () => {
+      // given
+      class Resource extends RdfResource {
+        @property.resource({ path: ex.foo })
+        foo!: RdfResource
+      }
+
+      // when
+      const resource = new Resource(cf({ dataset: $rdf.dataset() }).blankNode(), {
+        foo: {
+          id: ex.Child.value,
+        },
+        [ex.bar.value]: {
+          id: ex.Child.value,
+        },
+      })
+
+      // then
+      expect(resource.pointer.dataset).toMatchSnapshot()
+    })
   })
 
   describe('isAnonymous', () => {
@@ -1052,7 +1124,7 @@ describe('RdfResource', () => {
     it('maps various literals', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
-        .blankNode()
+        .namedNode('test')
         .addOut(schema.age, 22)
         .addOut(schema.contentSize, 22.5)
         .addOut(
@@ -1124,7 +1196,7 @@ describe('RdfResource', () => {
             "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
             "@value": Any<String>,
           },
-          "id": "_:b47",
+          "id": "test",
           "isAccessibleForFree": false,
           "isLiveBroadcast": true,
           "name": Object {
@@ -1139,7 +1211,7 @@ describe('RdfResource', () => {
     it('maps arrays of literals', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
-        .blankNode()
+        .namedNode('test')
         .addOut(schema.alternateName, 'Foo')
         .addOut(schema.alternateName, literal('Bar', 'de'))
         .addOut(schema.alternateName, literal('Baz', 'fr'))
@@ -1173,7 +1245,7 @@ describe('RdfResource', () => {
               "@value": "Baz",
             },
           ],
-          "id": "_:b48",
+          "id": "test",
         }
       `)
     })

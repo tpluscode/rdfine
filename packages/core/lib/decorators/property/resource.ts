@@ -1,11 +1,12 @@
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import { BlankNode, NamedNode, Term } from 'rdf-js'
+import { NamedNode, Term } from 'rdf-js'
 import type { GraphPointer } from 'clownface'
 import type { Initializer, RdfResourceCore, ResourceIdentifier } from '../../../RdfResource'
 import type { AccessorOptions, ObjectOrFactory } from '.'
 import { propertyDecorator } from '.'
 import type { Constructor, Mixin } from '../../ResourceFactory'
 import * as compare from '../../compare'
+import { getPointer } from '../../resource'
 
 type InitialValue = GraphPointer<ResourceIdentifier> | RdfResourceCore
 
@@ -36,18 +37,12 @@ function resourcePropertyDecorator<R extends RdfResourceCore>(options: AccessorO
         return value.id
       }
 
-      let valueNode: GraphPointer<BlankNode | NamedNode>
-
-      if (value.id) {
-        valueNode = this.pointer.node(value.id)
-      } else {
-        valueNode = this.pointer.blankNode()
-      }
+      const valueNode = getPointer(this.pointer, value.id)
       if (value.types && Array.isArray(value.types)) {
         valueNode.addOut(rdf.type, value.types)
       }
 
-      this._create(valueNode, [], {
+      this._create(valueNode, options.as, {
         initializer: value,
       })
 
