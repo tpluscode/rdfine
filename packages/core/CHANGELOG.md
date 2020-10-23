@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.12
+
+### Patch Changes
+
+- 904b109: Handle initilizer with plain string id
+
 ## 0.5.11
 
 ### Patch Changes
