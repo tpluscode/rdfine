@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.13
+
+### Patch Changes
+
+- a45b17b: Use annotated types to initialize resource nodes
+
 ## 0.5.12
 
 ### Patch Changes
