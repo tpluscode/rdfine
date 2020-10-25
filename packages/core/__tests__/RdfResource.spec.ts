@@ -13,7 +13,7 @@ import {
   schema,
   foaf,
   xsd,
-  dcterms,
+  dcterms, rdfs,
 } from '@tpluscode/rdf-ns-builders'
 import RdfResource, { Initializer, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
@@ -630,6 +630,24 @@ describe('RdfResource', () => {
         },
         [ex.bar.value]: {
           id: ex.Child.value,
+        },
+      })
+
+      // then
+      expect(resource.pointer.dataset).toMatchSnapshot()
+    })
+
+    it('uses implicitTypes of annotated properties to initialize child resources', () => {
+      // given
+      class Resource extends RdfResource {
+        @property.resource({ path: ex.foo, implicitTypes: [ex.Foo, ex.Bar] })
+        foo!: RdfResource
+      }
+
+      // when
+      const resource = new Resource(cf({ dataset: $rdf.dataset() }).blankNode(), {
+        foo: {
+          [rdfs.label.value]: 'foo',
         },
       })
 
