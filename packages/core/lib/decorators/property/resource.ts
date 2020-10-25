@@ -42,6 +42,10 @@ function resourcePropertyDecorator<R extends RdfResourceCore>(options: AccessorO
         valueNode.addOut(rdf.type, value.types)
       }
 
+      if (options.implicitTypes) {
+        valueNode.addOut(rdf.type, options.implicitTypes)
+      }
+
       this._create(valueNode, options.as, {
         initializer: value,
       })
