@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.14
+
+### Patch Changes
+
+- 97309a8: toJSON: handle literals without datatype
+
 ## 0.5.13
 
 ### Patch Changes
