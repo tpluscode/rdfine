@@ -1,6 +1,6 @@
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { NamedNode, Term } from 'rdf-js'
+import { NamedNode, Term, Literal } from 'rdf-js'
 import {
   defaultGraph,
   namedNode,
@@ -1224,6 +1224,30 @@ describe('RdfResource', () => {
         }
       `,
       )
+    })
+
+    it('serializes literal without datatype as xsd:string', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() })
+        .namedNode('test')
+        .addOut(schema.name, {
+          value: 'John Doe',
+          termType: 'Literal',
+          equals(other: Literal) {
+            return other.equals(this)
+          },
+        } as Literal)
+      class TestResource extends RdfResource {
+        @property.literal({ path: schema.name })
+        name!: string;
+      }
+      const resource = new TestResource(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json.name).toEqual('John Doe')
     })
 
     it('maps arrays of literals', () => {

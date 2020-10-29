@@ -122,6 +122,11 @@ function literalToJSON(obj: Literal): LiteralObject<any> {
       '@language': obj.language,
     }
   }
+
+  if (!obj.datatype) {
+    return obj.value
+  }
+
   return {
     '@value': obj.value,
     '@type': obj.datatype.value,
