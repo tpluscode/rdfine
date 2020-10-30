@@ -30,6 +30,9 @@
   "rdfine": {
     "prefix": "sh",
     "properties": {
+      "hasValue": {
+        "values": "array"
+      },
       "languageIn": {
         "values": "list"
       },

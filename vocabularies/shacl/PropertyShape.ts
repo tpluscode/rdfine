@@ -16,7 +16,7 @@ export interface PropertyShape<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   disjoint: Rdf.Property<D> | undefined;
   flags: string | undefined;
   group: Sh.PropertyGroup<D> | undefined;
-  hasValue: RDF.Term | undefined;
+  hasValue: Array<RDF.Term>;
   languageIn: Array<string>;
   lessThan: Rdf.Property<D> | undefined;
   lessThanOrEquals: Rdf.Property<D> | undefined;
@@ -50,8 +50,8 @@ export function PropertyShapeMixin<Base extends Constructor>(Resource: Base) {
     flags: string | undefined;
     @property.resource({ implicitTypes: [sh.PropertyGroup] })
     group: Sh.PropertyGroup | undefined;
-    @property()
-    hasValue: RDF.Term | undefined;
+    @property({ values: 'array' })
+    hasValue!: Array<RDF.Term>;
     @property.literal({ values: 'list' })
     languageIn!: Array<string>;
     @property.resource({ as: [Rdf.PropertyMixin] })
