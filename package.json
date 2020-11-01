@@ -11,7 +11,7 @@
     "pregenerate": "yarn prepare",
     "generate": "lerna run generate --stream --no-prefix",
     "build": "lerna run prepack",
-    "release": "changeset"
+    "release": "changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.10.0",
