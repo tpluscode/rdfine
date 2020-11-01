@@ -115,6 +115,23 @@ function datatypeToLiteralType(name: DatatypeName): LiteralType | null {
   }
 }
 
+export function coreTerms(term: GraphPointer<NamedNode>): TermType | null {
+  if (term.term.equals(rdfs.Literal)) {
+    return {
+      type: 'Term',
+      termType: 'Literal',
+    }
+  }
+  if (term.term.equals(owl.Thing)) {
+    return {
+      type: 'Term',
+      termType: 'NamedNode',
+    }
+  }
+
+  return null
+}
+
 export function datatypes(term: GraphPointer<NamedNode>): LiteralType | null {
   const wellKnownDatatype = wellKnownDatatypes[shrink(term.value)]
 
