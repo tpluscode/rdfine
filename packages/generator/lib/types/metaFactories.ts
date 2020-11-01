@@ -14,7 +14,7 @@ import { isEnumerationType } from './util'
 import { DatatypeName, wellKnownDatatypes } from './wellKnownDatatypes'
 import { NamedNode } from 'rdf-js'
 
-export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix' | 'log'>): ExternalResourceType | ResourceType | null {
+export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix'>): ExternalResourceType | ResourceType | null {
   const [prefix, localName] = shrink(term.value).split(':')
   if (!localName) {
     return null
