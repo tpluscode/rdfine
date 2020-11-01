@@ -1,6 +1,6 @@
 import { GraphPointer } from 'clownface'
 import { shrink } from '@zazuko/rdf-vocabularies'
-import { hydra, rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
+import { hydra, owl, rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
 import {
   EnumerationMember,
   EnumerationType,
@@ -14,8 +14,12 @@ import { isEnumerationType } from './util'
 import { DatatypeName, wellKnownDatatypes } from './wellKnownDatatypes'
 import { NamedNode } from 'rdf-js'
 
-export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix'>): ExternalResourceType | ResourceType | null {
+export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix' | 'log'>): ExternalResourceType | ResourceType | null {
   const [prefix, localName] = shrink(term.value).split(':')
+  if (!localName) {
+    return null
+  }
+
   if (prefix !== context.prefix) {
     return {
       type: 'ExternalResource',
@@ -28,7 +32,7 @@ export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix
     }
   }
 
-  if (!term.has(rdf.type, [rdfs.Class, hydra.Class]).values.length) {
+  if (!term.has(rdf.type, [rdfs.Class, hydra.Class, owl.Class]).values.length) {
     return null
   }
 
