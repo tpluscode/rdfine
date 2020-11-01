@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.0
+
+### Minor Changes
+
+- 9b30de4: sh:hasValues must allow multiple terms
+
 ## 0.5.2
 
 ### Patch Changes

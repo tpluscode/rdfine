@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.4.3
+
+### Patch Changes
+
+- ac2b29a: Update to dual ESM version of @zazuko/rdf-vcabularies
+- f0be5e0: Require at least node 13 by package.json `engines`
+
 ## 0.4.2
 
 ### Patch Changes
