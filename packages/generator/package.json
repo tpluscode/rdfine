@@ -66,5 +66,8 @@
   "homepage": "https://github.com/tpluscode/rdfine/tree/master/packages/generator#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "engines": {
+    "node": ">=13"
   }
 }
