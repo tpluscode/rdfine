@@ -1,0 +1,62 @@
+{
+  "name": "@rdfine/wgs",
+  "version": "0.0.0",
+  "main": "index.js",
+  "module": "index.mjs",
+  "browser": "index.mjs",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "import": "./index.mjs"
+    },
+    "./bundles": {
+      "require": "./bundles/index.js",
+      "import": "./bundles/index.mjs"
+    },
+    "./lib/namespace": {
+      "require": "./lib/namespace.js",
+      "import": "./lib/namespace.mjs"
+    }
+  },
+  "scripts": {
+    "prepack": "npm run build",
+    "clean": "find . -name '*.ts' -maxdepth 1 -delete",
+    "build": "run-s build:*",
+    "build:cjs": "tsc -p tsconfig.build.json",
+    "build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs --config-file ../../babel.config.json",
+    "generate": "{ rdf-vocab prefix wgs ; cat ./overrides.nq ; } | node ../../packages/generator/bin/rdfine-gen.js --format application/n-quads"
+  },
+  "rdfine": {
+    "prefix": "wgs"
+  },
+  "dependencies": {
+    "@rdf-esm/data-model": "^0.5.3",
+    "@rdfine/foaf": "*",
+    "@rdfine/rdfs": "*",
+    "@tpluscode/rdf-ns-builders": "^0.4",
+    "@tpluscode/rdfine": "^0.5.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tpluscode/rdfine.git",
+    "directory": "vocabularies/wgs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "rdf",
+    "rdfjs",
+    "entity",
+    "decorator",
+    "clownface",
+    "graph"
+  ],
+  "author": "tpluscode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tpluscode/rdfine/issues"
+  },
+  "homepage": "https://github.com/tpluscode/rdfine/tree/master/vocabularies/wgs#readme"
+}
