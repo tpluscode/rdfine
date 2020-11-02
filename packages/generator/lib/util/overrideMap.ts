@@ -9,7 +9,7 @@ export function expandMapKeys<T>(overrideMap: Record<string, T> | null | undefin
     .reduce((newMap, [key, override]) => {
       let typeUri: string
       if (key.includes(':')) {
-        typeUri = expand(key)
+        typeUri = /https?:\/\//.test(key) ? key : expand(key)
       } else {
         typeUri = `${namespace}${key}`
       }
