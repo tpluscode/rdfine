@@ -8,6 +8,7 @@ import type * as Schema from '.';
 import { AudienceMixin } from './Audience';
 
 export interface PeopleAudience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Audience<D>, RdfResource<D> {
+  healthCondition: Schema.MedicalCondition<D> | undefined;
   requiredGender: string | undefined;
   requiredMaxAge: number | undefined;
   requiredMinAge: number | undefined;
@@ -19,6 +20,8 @@ export interface PeopleAudience<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 export function PeopleAudienceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class PeopleAudienceClass extends AudienceMixin(Resource) implements PeopleAudience {
+    @property.resource()
+    healthCondition: Schema.MedicalCondition | undefined;
     @property.literal()
     requiredGender: string | undefined;
     @property.literal({ type: Number })

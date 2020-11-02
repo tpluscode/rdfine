@@ -15,6 +15,7 @@ export interface BroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> e
   broadcastFrequency: Schema.BroadcastFrequencySpecification<D> | undefined;
   broadcastFrequencyLiteral: string | undefined;
   broadcastTimezone: string | undefined;
+  callSign: string | undefined;
   hasBroadcastChannel: Schema.BroadcastChannel<D> | undefined;
   inLanguage: Schema.Language<D> | undefined;
   inLanguageLiteral: string | undefined;
@@ -39,6 +40,8 @@ export function BroadcastServiceMixin<Base extends Constructor>(Resource: Base) 
     broadcastFrequencyLiteral: string | undefined;
     @property.literal()
     broadcastTimezone: string | undefined;
+    @property.literal()
+    callSign: string | undefined;
     @property.resource()
     hasBroadcastChannel: Schema.BroadcastChannel | undefined;
     @property.resource()

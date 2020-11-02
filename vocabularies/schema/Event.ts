@@ -20,6 +20,8 @@ export interface Event<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   doorTime: Date | undefined;
   duration: Schema.Duration<D> | undefined;
   endDate: Date | undefined;
+  eventAttendanceMode: Schema.EventAttendanceModeEnumeration | undefined;
+  eventSchedule: Schema.Schedule<D> | undefined;
   eventStatus: Schema.EventStatusType | undefined;
   funder: Schema.Organization<D> | Schema.Person<D> | undefined;
   inLanguage: Schema.Language<D> | undefined;
@@ -28,6 +30,8 @@ export interface Event<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   location: Schema.Place<D> | Schema.PostalAddress<D> | undefined;
   locationLiteral: string | undefined;
   maximumAttendeeCapacity: number | undefined;
+  maximumPhysicalAttendeeCapacity: number | undefined;
+  maximumVirtualAttendeeCapacity: number | undefined;
   offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
   organizer: Schema.Organization<D> | Schema.Person<D> | undefined;
   performer: Schema.Organization<D> | Schema.Person<D> | undefined;
@@ -75,6 +79,10 @@ export function EventMixin<Base extends Constructor>(Resource: Base) {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate: Date | undefined;
     @property()
+    eventAttendanceMode: Schema.EventAttendanceModeEnumeration | undefined;
+    @property.resource()
+    eventSchedule: Schema.Schedule | undefined;
+    @property()
     eventStatus: Schema.EventStatusType | undefined;
     @property.resource()
     funder: Schema.Organization | Schema.Person | undefined;
@@ -90,6 +98,10 @@ export function EventMixin<Base extends Constructor>(Resource: Base) {
     locationLiteral: string | undefined;
     @property.literal({ type: Number })
     maximumAttendeeCapacity: number | undefined;
+    @property.literal({ type: Number })
+    maximumPhysicalAttendeeCapacity: number | undefined;
+    @property.literal({ type: Number })
+    maximumVirtualAttendeeCapacity: number | undefined;
     @property.resource()
     offers: Schema.Demand | Schema.Offer | undefined;
     @property.resource()

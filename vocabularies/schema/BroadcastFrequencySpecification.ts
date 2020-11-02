@@ -10,6 +10,9 @@ import { IntangibleMixin } from './Intangible';
 export interface BroadcastFrequencySpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
   broadcastFrequencyValue: Schema.QuantitativeValue<D> | undefined;
   broadcastFrequencyValueLiteral: number | undefined;
+  broadcastSignalModulation: string | undefined;
+  broadcastSignalModulationTerm: Schema.QualitativeValue | undefined;
+  broadcastSubChannel: string | undefined;
 }
 
 export function BroadcastFrequencySpecificationMixin<Base extends Constructor>(Resource: Base) {
@@ -19,6 +22,12 @@ export function BroadcastFrequencySpecificationMixin<Base extends Constructor>(R
     broadcastFrequencyValue: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.broadcastFrequencyValue, type: Number })
     broadcastFrequencyValueLiteral: number | undefined;
+    @property.literal()
+    broadcastSignalModulation: string | undefined;
+    @property({ path: schema.broadcastSignalModulation })
+    broadcastSignalModulationTerm: Schema.QualitativeValue | undefined;
+    @property.literal()
+    broadcastSubChannel: string | undefined;
   }
   return BroadcastFrequencySpecificationClass
 }

@@ -13,10 +13,12 @@ export interface Clip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   clipNumber: number | string | undefined;
   director: Schema.Person<D> | undefined;
   directors: Schema.Person<D> | undefined;
+  endOffset: number | undefined;
   musicBy: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
   partOfEpisode: Schema.Episode<D> | undefined;
   partOfSeason: Schema.CreativeWorkSeason<D> | undefined;
   partOfSeries: Schema.CreativeWorkSeries<D> | undefined;
+  startOffset: number | undefined;
 }
 
 export function ClipMixin<Base extends Constructor>(Resource: Base) {
@@ -32,6 +34,8 @@ export function ClipMixin<Base extends Constructor>(Resource: Base) {
     director: Schema.Person | undefined;
     @property.resource()
     directors: Schema.Person | undefined;
+    @property.literal({ type: Number })
+    endOffset: number | undefined;
     @property.resource()
     musicBy: Schema.MusicGroup | Schema.Person | undefined;
     @property.resource()
@@ -40,6 +44,8 @@ export function ClipMixin<Base extends Constructor>(Resource: Base) {
     partOfSeason: Schema.CreativeWorkSeason | undefined;
     @property.resource()
     partOfSeries: Schema.CreativeWorkSeries | undefined;
+    @property.literal({ type: Number })
+    startOffset: number | undefined;
   }
   return ClipClass
 }

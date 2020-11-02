@@ -25,11 +25,14 @@ export interface Demand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   eligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   eligibleRegionLiteral: string | undefined;
   eligibleTransactionVolume: Schema.PriceSpecification<D> | undefined;
-  gtin12: string | undefined;
-  gtin13: string | undefined;
-  gtin14: string | undefined;
-  gtin8: string | undefined;
+  gtin: string | undefined;
+  'gtin12': string | undefined;
+  'gtin13': string | undefined;
+  'gtin14': string | undefined;
+  'gtin8': string | undefined;
   includesObject: Schema.TypeAndQuantityNode<D> | undefined;
+  ineligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
+  ineligibleRegionLiteral: string | undefined;
   inventoryLevel: Schema.QuantitativeValue<D> | undefined;
   itemCondition: Schema.OfferItemCondition | undefined;
   itemOffered: Schema.AggregateOffer<D> | Schema.CreativeWork<D> | Schema.Event<D> | Schema.MenuItem<D> | Schema.Product<D> | Schema.Service<D> | Schema.Trip<D> | undefined;
@@ -81,15 +84,21 @@ export function DemandMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     eligibleTransactionVolume: Schema.PriceSpecification | undefined;
     @property.literal()
-    gtin12: string | undefined;
+    gtin: string | undefined;
     @property.literal()
-    gtin13: string | undefined;
+    'gtin12': string | undefined;
     @property.literal()
-    gtin14: string | undefined;
+    'gtin13': string | undefined;
     @property.literal()
-    gtin8: string | undefined;
+    'gtin14': string | undefined;
+    @property.literal()
+    'gtin8': string | undefined;
     @property.resource()
     includesObject: Schema.TypeAndQuantityNode | undefined;
+    @property.resource()
+    ineligibleRegion: Schema.GeoShape | Schema.Place | undefined;
+    @property.literal({ path: schema.ineligibleRegion })
+    ineligibleRegionLiteral: string | undefined;
     @property.resource()
     inventoryLevel: Schema.QuantitativeValue | undefined;
     @property()

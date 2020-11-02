@@ -10,6 +10,8 @@ import { PublicationEventMixin } from './PublicationEvent';
 export interface BroadcastEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PublicationEvent<D>, RdfResource<D> {
   broadcastOfEvent: Schema.Event<D> | undefined;
   isLiveBroadcast: boolean | undefined;
+  subtitleLanguage: Schema.Language<D> | undefined;
+  subtitleLanguageLiteral: string | undefined;
   videoFormat: string | undefined;
 }
 
@@ -20,6 +22,10 @@ export function BroadcastEventMixin<Base extends Constructor>(Resource: Base) {
     broadcastOfEvent: Schema.Event | undefined;
     @property.literal({ type: Boolean })
     isLiveBroadcast: boolean | undefined;
+    @property.resource()
+    subtitleLanguage: Schema.Language | undefined;
+    @property.literal({ path: schema.subtitleLanguage })
+    subtitleLanguageLiteral: string | undefined;
     @property.literal()
     videoFormat: string | undefined;
   }

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
@@ -8,11 +8,14 @@ import type * as Schema from '.';
 import { PlaceMixin } from './Place';
 
 export interface Residence<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, RdfResource<D> {
+  accommodationFloorPlan: Schema.FloorPlan<D> | undefined;
 }
 
 export function ResidenceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ResidenceClass extends PlaceMixin(Resource) implements Residence {
+    @property.resource()
+    accommodationFloorPlan: Schema.FloorPlan | undefined;
   }
   return ResidenceClass
 }

@@ -8,6 +8,7 @@ import type * as Schema from '.';
 import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Book<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+  abridged: boolean | undefined;
   bookEdition: string | undefined;
   bookFormat: Schema.BookFormatType | undefined;
   illustrator: Schema.Person<D> | undefined;
@@ -18,6 +19,8 @@ export interface Book<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 export function BookMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BookClass extends CreativeWorkMixin(Resource) implements Book {
+    @property.literal({ type: Boolean })
+    abridged: boolean | undefined;
     @property.literal()
     bookEdition: string | undefined;
     @property()

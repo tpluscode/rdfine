@@ -10,6 +10,8 @@ import { SportsOrganizationMixin } from './SportsOrganization';
 export interface SportsTeam<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SportsOrganization<D>, RdfResource<D> {
   athlete: Schema.Person<D> | undefined;
   coach: Schema.Person<D> | undefined;
+  gender: string | undefined;
+  genderTerm: Schema.GenderType | undefined;
 }
 
 export function SportsTeamMixin<Base extends Constructor>(Resource: Base) {
@@ -19,6 +21,10 @@ export function SportsTeamMixin<Base extends Constructor>(Resource: Base) {
     athlete: Schema.Person | undefined;
     @property.resource()
     coach: Schema.Person | undefined;
+    @property.literal()
+    gender: string | undefined;
+    @property({ path: schema.gender })
+    genderTerm: Schema.GenderType | undefined;
   }
   return SportsTeamClass
 }

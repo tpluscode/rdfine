@@ -15,6 +15,7 @@ export * from './InverseFunctionalProperty';
 export * from './IrreflexiveProperty';
 export * from './NamedIndividual';
 export * from './NegativePropertyAssertion';
+export * from './Nothing';
 export * from './ObjectProperty';
 export * from './Ontology';
 export * from './OntologyProperty';

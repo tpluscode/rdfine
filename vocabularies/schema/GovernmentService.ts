@@ -8,12 +8,18 @@ import type * as Schema from '.';
 import { ServiceMixin } from './Service';
 
 export interface GovernmentService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, RdfResource<D> {
+  jurisdiction: Schema.AdministrativeArea<D> | undefined;
+  jurisdictionLiteral: string | undefined;
   serviceOperator: Schema.Organization<D> | undefined;
 }
 
 export function GovernmentServiceMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class GovernmentServiceClass extends ServiceMixin(Resource) implements GovernmentService {
+    @property.resource()
+    jurisdiction: Schema.AdministrativeArea | undefined;
+    @property.literal({ path: schema.jurisdiction })
+    jurisdictionLiteral: string | undefined;
     @property.resource()
     serviceOperator: Schema.Organization | undefined;
   }

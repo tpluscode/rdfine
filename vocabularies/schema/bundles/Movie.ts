@@ -6,6 +6,7 @@ import { CountryMixin } from '../Country';
 import { DurationMixin } from '../Duration';
 import { MusicGroupMixin } from '../MusicGroup';
 import { OrganizationMixin } from '../Organization';
+import { LanguageMixin } from '../Language';
 import { VideoObjectMixin } from '../VideoObject';
 
 export const MovieBundle = [
@@ -16,4 +17,5 @@ export const MovieBundle = [
   DurationMixin as Mixin,
   MusicGroupMixin as Mixin,
   OrganizationMixin as Mixin,
+  LanguageMixin as Mixin,
   VideoObjectMixin as Mixin];

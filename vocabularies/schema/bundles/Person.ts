@@ -12,6 +12,7 @@ import { OfferCatalogMixin } from '../OfferCatalog';
 import { DistanceMixin } from '../Distance';
 import { QuantitativeValueMixin } from '../QuantitativeValue';
 import { InteractionCounterMixin } from '../InteractionCounter';
+import { LanguageMixin } from '../Language';
 import { OfferMixin } from '../Offer';
 import { ProgramMembershipMixin } from '../ProgramMembership';
 import { CountryMixin } from '../Country';
@@ -37,6 +38,7 @@ export const PersonBundle = [
   DistanceMixin as Mixin,
   QuantitativeValueMixin as Mixin,
   InteractionCounterMixin as Mixin,
+  LanguageMixin as Mixin,
   OfferMixin as Mixin,
   ProgramMembershipMixin as Mixin,
   CountryMixin as Mixin,

@@ -8,7 +8,7 @@ import type * as Schema from '.';
 import { ProductMixin } from './Product';
 
 export interface ProductModel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Product<D>, RdfResource<D> {
-  isVariantOf: Schema.ProductModel<D> | undefined;
+  isVariantOf: Schema.ProductGroup<D> | Schema.ProductModel<D> | undefined;
   predecessorOf: Schema.ProductModel<D> | undefined;
   successorOf: Schema.ProductModel<D> | undefined;
 }
@@ -17,7 +17,7 @@ export function ProductModelMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class ProductModelClass extends ProductMixin(Resource) implements ProductModel {
     @property.resource()
-    isVariantOf: Schema.ProductModel | undefined;
+    isVariantOf: Schema.ProductGroup | Schema.ProductModel | undefined;
     @property.resource()
     predecessorOf: Schema.ProductModel | undefined;
     @property.resource()

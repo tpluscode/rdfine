@@ -9,6 +9,8 @@ import { StructuredValueMixin } from './StructuredValue';
 
 export interface PropertyValue<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
   maxValue: number | undefined;
+  measurementTechnique: string | undefined;
+  measurementTechniqueTerm: RDF.NamedNode | undefined;
   minValue: number | undefined;
   propertyID: string | undefined;
   propertyIDTerm: RDF.NamedNode | undefined;
@@ -25,6 +27,10 @@ export function PropertyValueMixin<Base extends Constructor>(Resource: Base) {
   class PropertyValueClass extends StructuredValueMixin(Resource) implements PropertyValue {
     @property.literal({ type: Number })
     maxValue: number | undefined;
+    @property.literal()
+    measurementTechnique: string | undefined;
+    @property({ path: schema.measurementTechnique })
+    measurementTechniqueTerm: RDF.NamedNode | undefined;
     @property.literal({ type: Number })
     minValue: number | undefined;
     @property.literal()

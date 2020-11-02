@@ -6,6 +6,7 @@ import { AggregateRatingMixin } from '../AggregateRating';
 import { OrganizationMixin } from '../Organization';
 import { AudienceMixin } from '../Audience';
 import { DurationMixin } from '../Duration';
+import { ScheduleMixin } from '../Schedule';
 import { LanguageMixin } from '../Language';
 import { PlaceMixin } from '../Place';
 import { PostalAddressMixin } from '../PostalAddress';
@@ -22,6 +23,7 @@ export const EventBundle = [
   OrganizationMixin as Mixin,
   AudienceMixin as Mixin,
   DurationMixin as Mixin,
+  ScheduleMixin as Mixin,
   LanguageMixin as Mixin,
   PlaceMixin as Mixin,
   PostalAddressMixin as Mixin,

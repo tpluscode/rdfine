@@ -12,6 +12,8 @@ export interface ProgramMembership<D extends RDF.DatasetCore = RDF.DatasetCore> 
   member: Schema.Organization<D> | Schema.Person<D> | undefined;
   members: Schema.Organization<D> | Schema.Person<D> | undefined;
   membershipNumber: string | undefined;
+  membershipPointsEarned: Schema.QuantitativeValue<D> | undefined;
+  membershipPointsEarnedLiteral: number | undefined;
   programName: string | undefined;
 }
 
@@ -26,6 +28,10 @@ export function ProgramMembershipMixin<Base extends Constructor>(Resource: Base)
     members: Schema.Organization | Schema.Person | undefined;
     @property.literal()
     membershipNumber: string | undefined;
+    @property.resource()
+    membershipPointsEarned: Schema.QuantitativeValue | undefined;
+    @property.literal({ path: schema.membershipPointsEarned, type: Number })
+    membershipPointsEarnedLiteral: number | undefined;
     @property.literal()
     programName: string | undefined;
   }

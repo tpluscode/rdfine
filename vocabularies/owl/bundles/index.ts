@@ -15,6 +15,7 @@ export { InverseFunctionalPropertyBundle } from './InverseFunctionalProperty';
 export { IrreflexivePropertyBundle } from './IrreflexiveProperty';
 export { NamedIndividualBundle } from './NamedIndividual';
 export { NegativePropertyAssertionBundle } from './NegativePropertyAssertion';
+export { NothingBundle } from './Nothing';
 export { ObjectPropertyBundle } from './ObjectProperty';
 export { OntologyBundle } from './Ontology';
 export { OntologyPropertyBundle } from './OntologyProperty';

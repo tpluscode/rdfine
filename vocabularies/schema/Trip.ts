@@ -10,8 +10,11 @@ import { IntangibleMixin } from './Intangible';
 export interface Trip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
   arrivalTime: Date | undefined;
   departureTime: Date | undefined;
+  itinerary: Schema.ItemList<D> | Schema.Place<D> | undefined;
   offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
+  partOfTrip: Schema.Trip<D> | undefined;
   provider: Schema.Organization<D> | Schema.Person<D> | undefined;
+  subTrip: Schema.Trip<D> | undefined;
 }
 
 export function TripMixin<Base extends Constructor>(Resource: Base) {
@@ -22,9 +25,15 @@ export function TripMixin<Base extends Constructor>(Resource: Base) {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     departureTime: Date | undefined;
     @property.resource()
+    itinerary: Schema.ItemList | Schema.Place | undefined;
+    @property.resource()
     offers: Schema.Demand | Schema.Offer | undefined;
     @property.resource()
+    partOfTrip: Schema.Trip | undefined;
+    @property.resource()
     provider: Schema.Organization | Schema.Person | undefined;
+    @property.resource()
+    subTrip: Schema.Trip | undefined;
   }
   return TripClass
 }

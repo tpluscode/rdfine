@@ -8,6 +8,7 @@ import type * as Schema from '.';
 import { ThingMixin } from './Thing';
 
 export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, RdfResource<D> {
+  actionableFeedbackPolicy: Schema.CreativeWork<D> | undefined;
   address: Schema.PostalAddress<D> | undefined;
   addressLiteral: string | undefined;
   aggregateRating: Schema.AggregateRating<D> | undefined;
@@ -19,12 +20,16 @@ export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   brand: Schema.Brand<D> | Schema.Organization<D> | undefined;
   contactPoint: Schema.ContactPoint<D> | undefined;
   contactPoints: Schema.ContactPoint<D> | undefined;
+  correctionsPolicy: Schema.CreativeWork<D> | undefined;
   department: Schema.Organization<D> | undefined;
   dissolutionDate: Date | undefined;
+  diversityPolicy: Schema.CreativeWork<D> | undefined;
+  diversityStaffingReport: Schema.Article<D> | undefined;
   duns: string | undefined;
   email: string | undefined;
   employee: Schema.Person<D> | undefined;
   employees: Schema.Person<D> | undefined;
+  ethicsPolicy: Schema.CreativeWork<D> | undefined;
   event: Schema.Event<D> | undefined;
   events: Schema.Event<D> | undefined;
   faxNumber: string | undefined;
@@ -34,10 +39,16 @@ export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   foundingLocation: Schema.Place<D> | undefined;
   funder: Schema.Organization<D> | Schema.Person<D> | undefined;
   globalLocationNumber: string | undefined;
+  hasCredential: RDF.Term | undefined;
+  hasMerchantReturnPolicy: Schema.MerchantReturnPolicy<D> | undefined;
   hasOfferCatalog: Schema.OfferCatalog<D> | undefined;
   hasPOS: Schema.Place<D> | undefined;
   interactionStatistic: Schema.InteractionCounter<D> | undefined;
-  isicV4: string | undefined;
+  'isicV4': string | undefined;
+  knowsAbout: Schema.Thing<D> | undefined;
+  knowsAboutLiteral: string | undefined;
+  knowsLanguage: Schema.Language<D> | undefined;
+  knowsLanguageLiteral: string | undefined;
   legalName: string | undefined;
   leiCode: string | undefined;
   location: Schema.Place<D> | Schema.PostalAddress<D> | undefined;
@@ -48,7 +59,10 @@ export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   memberOf: Schema.Organization<D> | Schema.ProgramMembership<D> | undefined;
   members: Schema.Organization<D> | Schema.Person<D> | undefined;
   naics: string | undefined;
+  nonprofitStatus: Schema.NonprofitType | undefined;
   numberOfEmployees: Schema.QuantitativeValue<D> | undefined;
+  ownershipFundingInfo: Schema.AboutPage<D> | Schema.CreativeWork<D> | undefined;
+  ownershipFundingInfoLiteral: string | undefined;
   owns: Schema.OwnershipInfo<D> | Schema.Product<D> | undefined;
   parentOrganization: Schema.Organization<D> | undefined;
   publishingPrinciples: Schema.CreativeWork<D> | undefined;
@@ -61,12 +75,15 @@ export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   subOrganization: Schema.Organization<D> | undefined;
   taxID: string | undefined;
   telephone: string | undefined;
+  unnamedSourcesPolicy: Schema.CreativeWork<D> | undefined;
   vatID: string | undefined;
 }
 
 export function OrganizationMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class OrganizationClass extends ThingMixin(Resource) implements Organization {
+    @property.resource()
+    actionableFeedbackPolicy: Schema.CreativeWork | undefined;
     @property.resource()
     address: Schema.PostalAddress | undefined;
     @property.literal({ path: schema.address })
@@ -90,9 +107,15 @@ export function OrganizationMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     contactPoints: Schema.ContactPoint | undefined;
     @property.resource()
+    correctionsPolicy: Schema.CreativeWork | undefined;
+    @property.resource()
     department: Schema.Organization | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dissolutionDate: Date | undefined;
+    @property.resource()
+    diversityPolicy: Schema.CreativeWork | undefined;
+    @property.resource()
+    diversityStaffingReport: Schema.Article | undefined;
     @property.literal()
     duns: string | undefined;
     @property.literal()
@@ -101,6 +124,8 @@ export function OrganizationMixin<Base extends Constructor>(Resource: Base) {
     employee: Schema.Person | undefined;
     @property.resource()
     employees: Schema.Person | undefined;
+    @property.resource()
+    ethicsPolicy: Schema.CreativeWork | undefined;
     @property.resource()
     event: Schema.Event | undefined;
     @property.resource()
@@ -119,6 +144,10 @@ export function OrganizationMixin<Base extends Constructor>(Resource: Base) {
     funder: Schema.Organization | Schema.Person | undefined;
     @property.literal()
     globalLocationNumber: string | undefined;
+    @property()
+    hasCredential: RDF.Term | undefined;
+    @property.resource()
+    hasMerchantReturnPolicy: Schema.MerchantReturnPolicy | undefined;
     @property.resource()
     hasOfferCatalog: Schema.OfferCatalog | undefined;
     @property.resource()
@@ -126,7 +155,15 @@ export function OrganizationMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     interactionStatistic: Schema.InteractionCounter | undefined;
     @property.literal()
-    isicV4: string | undefined;
+    'isicV4': string | undefined;
+    @property.resource()
+    knowsAbout: Schema.Thing | undefined;
+    @property.literal({ path: schema.knowsAbout })
+    knowsAboutLiteral: string | undefined;
+    @property.resource()
+    knowsLanguage: Schema.Language | undefined;
+    @property.literal({ path: schema.knowsLanguage })
+    knowsLanguageLiteral: string | undefined;
     @property.literal()
     legalName: string | undefined;
     @property.literal()
@@ -147,8 +184,14 @@ export function OrganizationMixin<Base extends Constructor>(Resource: Base) {
     members: Schema.Organization | Schema.Person | undefined;
     @property.literal()
     naics: string | undefined;
+    @property()
+    nonprofitStatus: Schema.NonprofitType | undefined;
     @property.resource()
     numberOfEmployees: Schema.QuantitativeValue | undefined;
+    @property.resource()
+    ownershipFundingInfo: Schema.AboutPage | Schema.CreativeWork | undefined;
+    @property.literal({ path: schema.ownershipFundingInfo })
+    ownershipFundingInfoLiteral: string | undefined;
     @property.resource()
     owns: Schema.OwnershipInfo | Schema.Product | undefined;
     @property.resource()
@@ -173,6 +216,8 @@ export function OrganizationMixin<Base extends Constructor>(Resource: Base) {
     taxID: string | undefined;
     @property.literal()
     telephone: string | undefined;
+    @property.resource()
+    unnamedSourcesPolicy: Schema.CreativeWork | undefined;
     @property.literal()
     vatID: string | undefined;
   }

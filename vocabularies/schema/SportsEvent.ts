@@ -11,6 +11,8 @@ export interface SportsEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   awayTeam: Schema.Person<D> | Schema.SportsTeam<D> | undefined;
   competitor: Schema.Person<D> | Schema.SportsTeam<D> | undefined;
   homeTeam: Schema.Person<D> | Schema.SportsTeam<D> | undefined;
+  sport: string | undefined;
+  sportTerm: RDF.NamedNode | undefined;
 }
 
 export function SportsEventMixin<Base extends Constructor>(Resource: Base) {
@@ -22,6 +24,10 @@ export function SportsEventMixin<Base extends Constructor>(Resource: Base) {
     competitor: Schema.Person | Schema.SportsTeam | undefined;
     @property.resource()
     homeTeam: Schema.Person | Schema.SportsTeam | undefined;
+    @property.literal()
+    sport: string | undefined;
+    @property({ path: schema.sport })
+    sportTerm: RDF.NamedNode | undefined;
   }
   return SportsEventClass
 }

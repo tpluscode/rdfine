@@ -10,6 +10,10 @@ import { EpisodeMixin } from './Episode';
 export interface TVEpisode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Episode<D>, RdfResource<D> {
   countryOfOrigin: Schema.Country<D> | undefined;
   partOfTVSeries: Schema.TVSeries<D> | undefined;
+  subtitleLanguage: Schema.Language<D> | undefined;
+  subtitleLanguageLiteral: string | undefined;
+  titleEIDR: string | undefined;
+  titleEIDRTerm: RDF.NamedNode | undefined;
 }
 
 export function TVEpisodeMixin<Base extends Constructor>(Resource: Base) {
@@ -19,6 +23,14 @@ export function TVEpisodeMixin<Base extends Constructor>(Resource: Base) {
     countryOfOrigin: Schema.Country | undefined;
     @property.resource()
     partOfTVSeries: Schema.TVSeries | undefined;
+    @property.resource()
+    subtitleLanguage: Schema.Language | undefined;
+    @property.literal({ path: schema.subtitleLanguage })
+    subtitleLanguageLiteral: string | undefined;
+    @property.literal()
+    titleEIDR: string | undefined;
+    @property({ path: schema.titleEIDR })
+    titleEIDRTerm: RDF.NamedNode | undefined;
   }
   return TVEpisodeClass
 }

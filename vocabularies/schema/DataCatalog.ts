@@ -9,6 +9,8 @@ import { CreativeWorkMixin } from './CreativeWork';
 
 export interface DataCatalog<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
   dataset: Schema.Dataset<D> | undefined;
+  measurementTechnique: string | undefined;
+  measurementTechniqueTerm: RDF.NamedNode | undefined;
 }
 
 export function DataCatalogMixin<Base extends Constructor>(Resource: Base) {
@@ -16,6 +18,10 @@ export function DataCatalogMixin<Base extends Constructor>(Resource: Base) {
   class DataCatalogClass extends CreativeWorkMixin(Resource) implements DataCatalog {
     @property.resource()
     dataset: Schema.Dataset | undefined;
+    @property.literal()
+    measurementTechnique: string | undefined;
+    @property({ path: schema.measurementTechnique })
+    measurementTechniqueTerm: RDF.NamedNode | undefined;
   }
   return DataCatalogClass
 }

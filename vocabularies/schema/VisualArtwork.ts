@@ -11,12 +11,17 @@ export interface VisualArtwork<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   artEdition: number | string | undefined;
   artform: string | undefined;
   artformTerm: RDF.NamedNode | undefined;
+  artist: Schema.Person<D> | undefined;
   artMedium: string | undefined;
   artMediumTerm: RDF.NamedNode | undefined;
   artworkSurface: string | undefined;
   artworkSurfaceTerm: RDF.NamedNode | undefined;
+  colorist: Schema.Person<D> | undefined;
   depth: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
   height: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
+  inker: Schema.Person<D> | undefined;
+  letterer: Schema.Person<D> | undefined;
+  penciler: Schema.Person<D> | undefined;
   surface: string | undefined;
   surfaceTerm: RDF.NamedNode | undefined;
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
@@ -31,6 +36,8 @@ export function VisualArtworkMixin<Base extends Constructor>(Resource: Base) {
     artform: string | undefined;
     @property({ path: schema.artform })
     artformTerm: RDF.NamedNode | undefined;
+    @property.resource()
+    artist: Schema.Person | undefined;
     @property.literal()
     artMedium: string | undefined;
     @property({ path: schema.artMedium })
@@ -40,9 +47,17 @@ export function VisualArtworkMixin<Base extends Constructor>(Resource: Base) {
     @property({ path: schema.artworkSurface })
     artworkSurfaceTerm: RDF.NamedNode | undefined;
     @property.resource()
+    colorist: Schema.Person | undefined;
+    @property.resource()
     depth: Schema.Distance | Schema.QuantitativeValue | undefined;
     @property.resource()
     height: Schema.Distance | Schema.QuantitativeValue | undefined;
+    @property.resource()
+    inker: Schema.Person | undefined;
+    @property.resource()
+    letterer: Schema.Person | undefined;
+    @property.resource()
+    penciler: Schema.Person | undefined;
     @property.literal()
     surface: string | undefined;
     @property({ path: schema.surface })

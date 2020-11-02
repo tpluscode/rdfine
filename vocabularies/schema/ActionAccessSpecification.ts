@@ -15,6 +15,8 @@ export interface ActionAccessSpecification<D extends RDF.DatasetCore = RDF.Datas
   eligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   eligibleRegionLiteral: string | undefined;
   expectsAcceptanceOf: Schema.Offer<D> | undefined;
+  ineligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
+  ineligibleRegionLiteral: string | undefined;
   requiresSubscription: Schema.MediaSubscription<D> | undefined;
   requiresSubscriptionLiteral: boolean | undefined;
 }
@@ -36,6 +38,10 @@ export function ActionAccessSpecificationMixin<Base extends Constructor>(Resourc
     eligibleRegionLiteral: string | undefined;
     @property.resource()
     expectsAcceptanceOf: Schema.Offer | undefined;
+    @property.resource()
+    ineligibleRegion: Schema.GeoShape | Schema.Place | undefined;
+    @property.literal({ path: schema.ineligibleRegion })
+    ineligibleRegionLiteral: string | undefined;
     @property.resource()
     requiresSubscription: Schema.MediaSubscription | undefined;
     @property.literal({ path: schema.requiresSubscription, type: Boolean })

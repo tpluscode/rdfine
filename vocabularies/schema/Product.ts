@@ -18,15 +18,19 @@ export interface Product<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   categoryLiteral: string | undefined;
   color: string | undefined;
   depth: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
-  gtin12: string | undefined;
-  gtin13: string | undefined;
-  gtin14: string | undefined;
-  gtin8: string | undefined;
+  gtin: string | undefined;
+  'gtin12': string | undefined;
+  'gtin13': string | undefined;
+  'gtin14': string | undefined;
+  'gtin8': string | undefined;
+  hasMerchantReturnPolicy: Schema.MerchantReturnPolicy<D> | undefined;
   height: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
+  inProductGroupWithID: string | undefined;
   isAccessoryOrSparePartFor: Schema.Product<D> | undefined;
   isConsumableFor: Schema.Product<D> | undefined;
   isRelatedTo: Schema.Product<D> | Schema.Service<D> | undefined;
   isSimilarTo: Schema.Product<D> | Schema.Service<D> | undefined;
+  isVariantOf: Schema.ProductGroup<D> | Schema.ProductModel<D> | undefined;
   itemCondition: Schema.OfferItemCondition | undefined;
   logo: Schema.ImageObject<D> | undefined;
   manufacturer: Schema.Organization<D> | undefined;
@@ -35,13 +39,17 @@ export interface Product<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   model: Schema.ProductModel<D> | undefined;
   modelLiteral: string | undefined;
   mpn: string | undefined;
+  nsn: string | undefined;
   offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
+  pattern: string | undefined;
   productID: string | undefined;
   productionDate: Date | undefined;
   purchaseDate: Date | undefined;
   releaseDate: Date | undefined;
   review: Schema.Review<D> | undefined;
   reviews: Schema.Review<D> | undefined;
+  size: Schema.QuantitativeValue<D> | undefined;
+  sizeLiteral: string | undefined;
   sku: string | undefined;
   slogan: string | undefined;
   weight: Schema.QuantitativeValue<D> | undefined;
@@ -72,15 +80,21 @@ export function ProductMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     depth: Schema.Distance | Schema.QuantitativeValue | undefined;
     @property.literal()
-    gtin12: string | undefined;
+    gtin: string | undefined;
     @property.literal()
-    gtin13: string | undefined;
+    'gtin12': string | undefined;
     @property.literal()
-    gtin14: string | undefined;
+    'gtin13': string | undefined;
     @property.literal()
-    gtin8: string | undefined;
+    'gtin14': string | undefined;
+    @property.literal()
+    'gtin8': string | undefined;
+    @property.resource()
+    hasMerchantReturnPolicy: Schema.MerchantReturnPolicy | undefined;
     @property.resource()
     height: Schema.Distance | Schema.QuantitativeValue | undefined;
+    @property.literal()
+    inProductGroupWithID: string | undefined;
     @property.resource()
     isAccessoryOrSparePartFor: Schema.Product | undefined;
     @property.resource()
@@ -89,6 +103,8 @@ export function ProductMixin<Base extends Constructor>(Resource: Base) {
     isRelatedTo: Schema.Product | Schema.Service | undefined;
     @property.resource()
     isSimilarTo: Schema.Product | Schema.Service | undefined;
+    @property.resource()
+    isVariantOf: Schema.ProductGroup | Schema.ProductModel | undefined;
     @property()
     itemCondition: Schema.OfferItemCondition | undefined;
     @property.resource()
@@ -105,8 +121,12 @@ export function ProductMixin<Base extends Constructor>(Resource: Base) {
     modelLiteral: string | undefined;
     @property.literal()
     mpn: string | undefined;
+    @property.literal()
+    nsn: string | undefined;
     @property.resource()
     offers: Schema.Demand | Schema.Offer | undefined;
+    @property.literal()
+    pattern: string | undefined;
     @property.literal()
     productID: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
@@ -119,6 +139,10 @@ export function ProductMixin<Base extends Constructor>(Resource: Base) {
     review: Schema.Review | undefined;
     @property.resource()
     reviews: Schema.Review | undefined;
+    @property.resource()
+    size: Schema.QuantitativeValue | undefined;
+    @property.literal({ path: schema.size })
+    sizeLiteral: string | undefined;
     @property.literal()
     sku: string | undefined;
     @property.literal()

@@ -14,6 +14,10 @@ export interface Dataset<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   includedDataCatalog: Schema.DataCatalog<D> | undefined;
   includedInDataCatalog: Schema.DataCatalog<D> | undefined;
   issn: string | undefined;
+  measurementTechnique: string | undefined;
+  measurementTechniqueTerm: RDF.NamedNode | undefined;
+  variableMeasured: Schema.PropertyValue<D> | undefined;
+  variableMeasuredLiteral: string | undefined;
 }
 
 export function DatasetMixin<Base extends Constructor>(Resource: Base) {
@@ -31,6 +35,14 @@ export function DatasetMixin<Base extends Constructor>(Resource: Base) {
     includedInDataCatalog: Schema.DataCatalog | undefined;
     @property.literal()
     issn: string | undefined;
+    @property.literal()
+    measurementTechnique: string | undefined;
+    @property({ path: schema.measurementTechnique })
+    measurementTechniqueTerm: RDF.NamedNode | undefined;
+    @property.resource()
+    variableMeasured: Schema.PropertyValue | undefined;
+    @property.literal({ path: schema.variableMeasured })
+    variableMeasuredLiteral: string | undefined;
   }
   return DatasetClass
 }

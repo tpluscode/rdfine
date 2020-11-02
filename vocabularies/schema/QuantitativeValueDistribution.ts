@@ -10,10 +10,10 @@ import { StructuredValueMixin } from './StructuredValue';
 export interface QuantitativeValueDistribution<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
   duration: Schema.Duration<D> | undefined;
   median: number | undefined;
-  percentile10: number | undefined;
-  percentile25: number | undefined;
-  percentile75: number | undefined;
-  percentile90: number | undefined;
+  'percentile10': number | undefined;
+  'percentile25': number | undefined;
+  'percentile75': number | undefined;
+  'percentile90': number | undefined;
 }
 
 export function QuantitativeValueDistributionMixin<Base extends Constructor>(Resource: Base) {
@@ -24,13 +24,13 @@ export function QuantitativeValueDistributionMixin<Base extends Constructor>(Res
     @property.literal({ type: Number })
     median: number | undefined;
     @property.literal({ type: Number })
-    percentile10: number | undefined;
+    'percentile10': number | undefined;
     @property.literal({ type: Number })
-    percentile25: number | undefined;
+    'percentile25': number | undefined;
     @property.literal({ type: Number })
-    percentile75: number | undefined;
+    'percentile75': number | undefined;
     @property.literal({ type: Number })
-    percentile90: number | undefined;
+    'percentile90': number | undefined;
   }
   return QuantitativeValueDistributionClass
 }
