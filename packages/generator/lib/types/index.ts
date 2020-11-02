@@ -17,6 +17,7 @@ export interface ResourceType {
   qualifiedName: string
   module: string
   mixinName: string
+  term: string
 }
 
 export interface ExternalResourceType {

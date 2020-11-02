@@ -1,6 +1,8 @@
 import { GraphPointer } from 'clownface'
 import { shrink } from '@zazuko/rdf-vocabularies'
 import { hydra, owl, rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
+import { NamedNode } from 'rdf-js'
+import { identifier } from 'safe-identifier'
 import {
   EnumerationMember,
   EnumerationType,
@@ -12,20 +14,21 @@ import type { Context, TypeOverride } from '../index'
 import { toUpperInitial } from '../util/string'
 import { isEnumerationType } from './util'
 import { DatatypeName, wellKnownDatatypes } from './wellKnownDatatypes'
-import { NamedNode } from 'rdf-js'
 
 export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix'>): ExternalResourceType | ResourceType | null {
-  const [prefix, localName] = shrink(term.value).split(':')
-  if (!localName) {
+  const [prefix, termName] = shrink(term.value).split(':')
+  if (!termName) {
     return null
   }
+
+  const localName = identifier(termName)
 
   if (prefix !== context.prefix) {
     return {
       type: 'ExternalResource',
       mixinName: `${localName}Mixin`,
       qualifiedMixinName: `${toUpperInitial(prefix)}.${localName}Mixin`,
-      module: `@rdfine/${prefix}/${localName}`,
+      module: `@rdfine/${prefix}/${termName}`,
       package: `@rdfine/${prefix}`,
       qualifiedName: toUpperInitial(`${prefix}.${localName}`),
       qualifier: toUpperInitial(prefix),
@@ -39,8 +42,9 @@ export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix
   return {
     type: 'Resource',
     localName,
+    term: termName,
     qualifiedName: toUpperInitial(`${prefix}.${localName}`),
-    module: `./${localName}`,
+    module: `./${termName}`,
     mixinName: `${localName}Mixin`,
   }
 }

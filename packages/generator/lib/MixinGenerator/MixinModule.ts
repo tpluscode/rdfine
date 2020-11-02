@@ -80,8 +80,11 @@ export class MixinModule implements GeneratedModule {
       initializer: `[${mixinNames.join(', ')}]`,
     })
 
+    const nsBuilderTerm = this.type.term === this.type.localName
+      ? `${context.prefix}.${this.type.term}`
+      : `${context.prefix}['${this.type.term}']`
     mixinFile.addStatements([
-      `${mixinName}.appliesTo = ${context.prefix}.${this.type.localName}`,
+      `${mixinName}.appliesTo = ${nsBuilderTerm}`,
       `${mixinName}.Class = ${implName}`,
     ])
 
@@ -99,7 +102,7 @@ export class MixinModule implements GeneratedModule {
     const name = `${this.type.localName}Bundle`
 
     bundleIndex.addExportDeclaration({
-      moduleSpecifier: `./${this.type.localName}`,
+      moduleSpecifier: `./${this.type.term}`,
       namedExports: [name],
     })
 

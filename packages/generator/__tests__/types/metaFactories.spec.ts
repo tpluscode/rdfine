@@ -63,6 +63,27 @@ describe('meta factory', () => {
         module: './Hello',
         qualifiedName: 'Ex.Hello',
         localName: 'Hello',
+        term: 'Hello',
+      } as ResourceType)
+    })
+
+    it('returns meta of term which is not a safe JS identifier', () => {
+      // given
+      const node = graph.node(ex['3DModel']).addOut(rdf.type, rdfs.Class)
+
+      // when
+      const meta = factories.resourceTypes(node, {
+        prefix: 'ex',
+      })
+
+      // then
+      expect(meta).toEqual({
+        type: 'Resource',
+        mixinName: '_3DModelMixin',
+        module: './3DModel',
+        qualifiedName: 'Ex._3DModel',
+        localName: '_3DModel',
+        term: '3DModel',
       } as ResourceType)
     })
 
@@ -84,6 +105,27 @@ describe('meta factory', () => {
         qualifiedName: 'Schema.Person',
         qualifier: 'Schema',
         qualifiedMixinName: 'Schema.PersonMixin',
+      } as ExternalResourceType)
+    })
+
+    it('returns meta of term from external vocabulary where term name is not safe JS idnetifier', () => {
+      // given
+      const node = graph.node(schema['3DModel']).addOut(rdf.type, rdfs.Class)
+
+      // when
+      const meta = factories.resourceTypes(node, {
+        prefix: 'ex',
+      })
+
+      // then
+      expect(meta).toEqual({
+        type: 'ExternalResource',
+        mixinName: '_3DModelMixin',
+        package: '@rdfine/schema',
+        module: '@rdfine/schema/3DModel',
+        qualifiedName: 'Schema._3DModel',
+        qualifier: 'Schema',
+        qualifiedMixinName: 'Schema._3DModelMixin',
       } as ExternalResourceType)
     })
   })
