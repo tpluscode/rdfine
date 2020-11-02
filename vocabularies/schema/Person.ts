@@ -18,6 +18,7 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   birthDate: Date | undefined;
   birthPlace: Schema.Place<D> | undefined;
   brand: Schema.Brand<D> | Schema.Organization<D> | undefined;
+  callSign: string | undefined;
   children: Schema.Person<D> | undefined;
   colleague: Schema.Person<D> | undefined;
   colleagues: Schema.Person<D> | undefined;
@@ -31,8 +32,11 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   faxNumber: string | undefined;
   follows: Schema.Person<D> | undefined;
   funder: Schema.Organization<D> | Schema.Person<D> | undefined;
+  gender: string | undefined;
+  genderTerm: Schema.GenderType | undefined;
   givenName: string | undefined;
   globalLocationNumber: string | undefined;
+  hasCredential: RDF.Term | undefined;
   hasOccupation: Schema.Occupation<D> | undefined;
   hasOfferCatalog: Schema.OfferCatalog<D> | undefined;
   hasPOS: Schema.Place<D> | undefined;
@@ -41,8 +45,13 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   honorificPrefix: string | undefined;
   honorificSuffix: string | undefined;
   interactionStatistic: Schema.InteractionCounter<D> | undefined;
-  isicV4: string | undefined;
+  'isicV4': string | undefined;
+  jobTitle: string | undefined;
   knows: Schema.Person<D> | undefined;
+  knowsAbout: Schema.Thing<D> | undefined;
+  knowsAboutLiteral: string | undefined;
+  knowsLanguage: Schema.Language<D> | undefined;
+  knowsLanguageLiteral: string | undefined;
   makesOffer: Schema.Offer<D> | undefined;
   memberOf: Schema.Organization<D> | Schema.ProgramMembership<D> | undefined;
   naics: string | undefined;
@@ -90,6 +99,8 @@ export function PersonMixin<Base extends Constructor>(Resource: Base) {
     birthPlace: Schema.Place | undefined;
     @property.resource()
     brand: Schema.Brand | Schema.Organization | undefined;
+    @property.literal()
+    callSign: string | undefined;
     @property.resource()
     children: Schema.Person | undefined;
     @property.resource()
@@ -117,9 +128,15 @@ export function PersonMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     funder: Schema.Organization | Schema.Person | undefined;
     @property.literal()
+    gender: string | undefined;
+    @property({ path: schema.gender })
+    genderTerm: Schema.GenderType | undefined;
+    @property.literal()
     givenName: string | undefined;
     @property.literal()
     globalLocationNumber: string | undefined;
+    @property()
+    hasCredential: RDF.Term | undefined;
     @property.resource()
     hasOccupation: Schema.Occupation | undefined;
     @property.resource()
@@ -137,9 +154,19 @@ export function PersonMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     interactionStatistic: Schema.InteractionCounter | undefined;
     @property.literal()
-    isicV4: string | undefined;
+    'isicV4': string | undefined;
+    @property.literal()
+    jobTitle: string | undefined;
     @property.resource()
     knows: Schema.Person | undefined;
+    @property.resource()
+    knowsAbout: Schema.Thing | undefined;
+    @property.literal({ path: schema.knowsAbout })
+    knowsAboutLiteral: string | undefined;
+    @property.resource()
+    knowsLanguage: Schema.Language | undefined;
+    @property.literal({ path: schema.knowsLanguage })
+    knowsLanguageLiteral: string | undefined;
     @property.resource()
     makesOffer: Schema.Offer | undefined;
     @property.resource()

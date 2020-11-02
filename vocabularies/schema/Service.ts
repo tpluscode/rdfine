@@ -32,8 +32,10 @@ export interface Service<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   serviceAudience: Schema.Audience<D> | undefined;
   serviceOutput: Schema.Thing<D> | undefined;
   serviceType: string | undefined;
-  serviceTypeTerm: RDF.Term | undefined;
+  serviceTypeTerm: Schema.GovernmentBenefitsType | undefined;
   slogan: string | undefined;
+  termsOfService: string | undefined;
+  termsOfServiceTerm: RDF.NamedNode | undefined;
 }
 
 export function ServiceMixin<Base extends Constructor>(Resource: Base) {
@@ -88,9 +90,13 @@ export function ServiceMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     serviceType: string | undefined;
     @property({ path: schema.serviceType })
-    serviceTypeTerm: RDF.Term | undefined;
+    serviceTypeTerm: Schema.GovernmentBenefitsType | undefined;
     @property.literal()
     slogan: string | undefined;
+    @property.literal()
+    termsOfService: string | undefined;
+    @property({ path: schema.termsOfService })
+    termsOfServiceTerm: RDF.NamedNode | undefined;
   }
   return ServiceClass
 }

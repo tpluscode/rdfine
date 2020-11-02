@@ -10,6 +10,8 @@ import { CreativeWorkMixin } from './CreativeWork';
 export interface Article<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
   articleBody: string | undefined;
   articleSection: string | undefined;
+  backstory: Schema.CreativeWork<D> | undefined;
+  backstoryLiteral: string | undefined;
   pageEnd: number | string | undefined;
   pageStart: number | string | undefined;
   pagination: string | undefined;
@@ -24,6 +26,10 @@ export function ArticleMixin<Base extends Constructor>(Resource: Base) {
     articleBody: string | undefined;
     @property.literal()
     articleSection: string | undefined;
+    @property.resource()
+    backstory: Schema.CreativeWork | undefined;
+    @property.literal({ path: schema.backstory })
+    backstoryLiteral: string | undefined;
     @property.literal()
     pageEnd: number | string | undefined;
     @property.literal()

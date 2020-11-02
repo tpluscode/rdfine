@@ -13,6 +13,8 @@ export interface DeliveryChargeSpecification<D extends RDF.DatasetCore = RDF.Dat
   areaServedLiteral: string | undefined;
   eligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   eligibleRegionLiteral: string | undefined;
+  ineligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
+  ineligibleRegionLiteral: string | undefined;
 }
 
 export function DeliveryChargeSpecificationMixin<Base extends Constructor>(Resource: Base) {
@@ -28,6 +30,10 @@ export function DeliveryChargeSpecificationMixin<Base extends Constructor>(Resou
     eligibleRegion: Schema.GeoShape | Schema.Place | undefined;
     @property.literal({ path: schema.eligibleRegion })
     eligibleRegionLiteral: string | undefined;
+    @property.resource()
+    ineligibleRegion: Schema.GeoShape | Schema.Place | undefined;
+    @property.literal({ path: schema.ineligibleRegion })
+    ineligibleRegionLiteral: string | undefined;
   }
   return DeliveryChargeSpecificationClass
 }

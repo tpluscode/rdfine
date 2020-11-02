@@ -32,9 +32,10 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   geoTouches: Schema.Place<D> | undefined;
   geoWithin: Schema.Place<D> | undefined;
   globalLocationNumber: string | undefined;
+  hasDriveThroughService: boolean | undefined;
   hasMap: Schema.Map<D> | undefined;
   isAccessibleForFree: boolean | undefined;
-  isicV4: string | undefined;
+  'isicV4': string | undefined;
   latitude: number | string | undefined;
   logo: Schema.ImageObject<D> | undefined;
   longitude: number | string | undefined;
@@ -51,6 +52,7 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   smokingAllowed: boolean | undefined;
   specialOpeningHoursSpecification: Schema.OpeningHoursSpecification<D> | undefined;
   telephone: string | undefined;
+  tourBookingPage: RDF.NamedNode | undefined;
 }
 
 export function PlaceMixin<Base extends Constructor>(Resource: Base) {
@@ -104,12 +106,14 @@ export function PlaceMixin<Base extends Constructor>(Resource: Base) {
     geoWithin: Schema.Place | undefined;
     @property.literal()
     globalLocationNumber: string | undefined;
+    @property.literal({ type: Boolean })
+    hasDriveThroughService: boolean | undefined;
     @property.resource()
     hasMap: Schema.Map | undefined;
     @property.literal({ type: Boolean })
     isAccessibleForFree: boolean | undefined;
     @property.literal()
-    isicV4: string | undefined;
+    'isicV4': string | undefined;
     @property.literal()
     latitude: number | string | undefined;
     @property.resource()
@@ -142,6 +146,8 @@ export function PlaceMixin<Base extends Constructor>(Resource: Base) {
     specialOpeningHoursSpecification: Schema.OpeningHoursSpecification | undefined;
     @property.literal()
     telephone: string | undefined;
+    @property()
+    tourBookingPage: RDF.NamedNode | undefined;
   }
   return PlaceClass
 }

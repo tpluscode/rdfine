@@ -16,6 +16,10 @@ export interface Movie<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   duration: Schema.Duration<D> | undefined;
   musicBy: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
   productionCompany: Schema.Organization<D> | undefined;
+  subtitleLanguage: Schema.Language<D> | undefined;
+  subtitleLanguageLiteral: string | undefined;
+  titleEIDR: string | undefined;
+  titleEIDRTerm: RDF.NamedNode | undefined;
   trailer: Schema.VideoObject<D> | undefined;
 }
 
@@ -38,6 +42,14 @@ export function MovieMixin<Base extends Constructor>(Resource: Base) {
     musicBy: Schema.MusicGroup | Schema.Person | undefined;
     @property.resource()
     productionCompany: Schema.Organization | undefined;
+    @property.resource()
+    subtitleLanguage: Schema.Language | undefined;
+    @property.literal({ path: schema.subtitleLanguage })
+    subtitleLanguageLiteral: string | undefined;
+    @property.literal()
+    titleEIDR: string | undefined;
+    @property({ path: schema.titleEIDR })
+    titleEIDRTerm: RDF.NamedNode | undefined;
     @property.resource()
     trailer: Schema.VideoObject | undefined;
   }

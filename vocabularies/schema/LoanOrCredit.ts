@@ -11,7 +11,13 @@ export interface LoanOrCredit<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   amount: Schema.MonetaryAmount<D> | undefined;
   amountLiteral: number | undefined;
   currency: string | undefined;
+  gracePeriod: Schema.Duration<D> | undefined;
+  loanRepaymentForm: Schema.RepaymentSpecification<D> | undefined;
   loanTerm: Schema.QuantitativeValue<D> | undefined;
+  loanType: string | undefined;
+  loanTypeTerm: RDF.NamedNode | undefined;
+  recourseLoan: boolean | undefined;
+  renegotiableLoan: boolean | undefined;
   requiredCollateral: Schema.Thing<D> | undefined;
   requiredCollateralLiteral: string | undefined;
 }
@@ -26,7 +32,19 @@ export function LoanOrCreditMixin<Base extends Constructor>(Resource: Base) {
     @property.literal()
     currency: string | undefined;
     @property.resource()
+    gracePeriod: Schema.Duration | undefined;
+    @property.resource()
+    loanRepaymentForm: Schema.RepaymentSpecification | undefined;
+    @property.resource()
     loanTerm: Schema.QuantitativeValue | undefined;
+    @property.literal()
+    loanType: string | undefined;
+    @property({ path: schema.loanType })
+    loanTypeTerm: RDF.NamedNode | undefined;
+    @property.literal({ type: Boolean })
+    recourseLoan: boolean | undefined;
+    @property.literal({ type: Boolean })
+    renegotiableLoan: boolean | undefined;
     @property.resource()
     requiredCollateral: Schema.Thing | undefined;
     @property.literal({ path: schema.requiredCollateral })

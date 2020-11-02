@@ -9,8 +9,12 @@ import { PlayActionMixin } from './PlayAction';
 
 export interface ExerciseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlayAction<D>, RdfResource<D> {
   course: Schema.Place<D> | undefined;
+  diet: Schema.Diet<D> | undefined;
   distance: Schema.Distance<D> | undefined;
   exerciseCourse: Schema.Place<D> | undefined;
+  exercisePlan: Schema.ExercisePlan<D> | undefined;
+  exerciseRelatedDiet: Schema.Diet<D> | undefined;
+  exerciseType: string | undefined;
   fromLocation: Schema.Place<D> | undefined;
   opponent: Schema.Person<D> | undefined;
   sportsActivityLocation: Schema.SportsActivityLocation<D> | undefined;
@@ -25,9 +29,17 @@ export function ExerciseActionMixin<Base extends Constructor>(Resource: Base) {
     @property.resource()
     course: Schema.Place | undefined;
     @property.resource()
+    diet: Schema.Diet | undefined;
+    @property.resource()
     distance: Schema.Distance | undefined;
     @property.resource()
     exerciseCourse: Schema.Place | undefined;
+    @property.resource()
+    exercisePlan: Schema.ExercisePlan | undefined;
+    @property.resource()
+    exerciseRelatedDiet: Schema.Diet | undefined;
+    @property.literal()
+    exerciseType: string | undefined;
     @property.resource()
     fromLocation: Schema.Place | undefined;
     @property.resource()

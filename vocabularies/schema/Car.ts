@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
@@ -8,11 +8,17 @@ import type * as Schema from '.';
 import { VehicleMixin } from './Vehicle';
 
 export interface Car<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Vehicle<D>, RdfResource<D> {
+  acrissCode: string | undefined;
+  roofLoad: Schema.QuantitativeValue<D> | undefined;
 }
 
 export function CarMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class CarClass extends VehicleMixin(Resource) implements Car {
+    @property.literal()
+    acrissCode: string | undefined;
+    @property.resource()
+    roofLoad: Schema.QuantitativeValue | undefined;
   }
   return CarClass
 }

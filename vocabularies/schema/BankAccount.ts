@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
@@ -8,11 +8,23 @@ import type * as Schema from '.';
 import { FinancialProductMixin } from './FinancialProduct';
 
 export interface BankAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialProduct<D>, RdfResource<D> {
+  accountMinimumInflow: Schema.MonetaryAmount<D> | undefined;
+  accountOverdraftLimit: Schema.MonetaryAmount<D> | undefined;
+  bankAccountType: string | undefined;
+  bankAccountTypeTerm: RDF.NamedNode | undefined;
 }
 
 export function BankAccountMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class BankAccountClass extends FinancialProductMixin(Resource) implements BankAccount {
+    @property.resource()
+    accountMinimumInflow: Schema.MonetaryAmount | undefined;
+    @property.resource()
+    accountOverdraftLimit: Schema.MonetaryAmount | undefined;
+    @property.literal()
+    bankAccountType: string | undefined;
+    @property({ path: schema.bankAccountType })
+    bankAccountTypeTerm: RDF.NamedNode | undefined;
   }
   return BankAccountClass
 }

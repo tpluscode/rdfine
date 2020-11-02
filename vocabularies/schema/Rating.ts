@@ -10,6 +10,7 @@ import { IntangibleMixin } from './Intangible';
 export interface Rating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
   author: Schema.Organization<D> | Schema.Person<D> | undefined;
   bestRating: number | string | undefined;
+  ratingExplanation: string | undefined;
   ratingValue: number | string | undefined;
   reviewAspect: string | undefined;
   worstRating: number | string | undefined;
@@ -22,6 +23,8 @@ export function RatingMixin<Base extends Constructor>(Resource: Base) {
     author: Schema.Organization | Schema.Person | undefined;
     @property.literal()
     bestRating: number | string | undefined;
+    @property.literal()
+    ratingExplanation: string | undefined;
     @property.literal()
     ratingValue: number | string | undefined;
     @property.literal()

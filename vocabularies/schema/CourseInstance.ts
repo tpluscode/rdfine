@@ -10,6 +10,7 @@ import { EventMixin } from './Event';
 export interface CourseInstance<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
   courseMode: string | undefined;
   courseModeTerm: RDF.NamedNode | undefined;
+  courseWorkload: string | undefined;
   instructor: Schema.Person<D> | undefined;
 }
 
@@ -20,6 +21,8 @@ export function CourseInstanceMixin<Base extends Constructor>(Resource: Base) {
     courseMode: string | undefined;
     @property({ path: schema.courseMode })
     courseModeTerm: RDF.NamedNode | undefined;
+    @property.literal()
+    courseWorkload: string | undefined;
     @property.resource()
     instructor: Schema.Person | undefined;
   }

@@ -13,10 +13,12 @@ import { OrganizationMixin } from '../Organization';
 import { CommentMixin } from '../Comment';
 import { PlaceMixin } from '../Place';
 import { RatingMixin } from '../Rating';
+import { CorrectionCommentMixin } from '../CorrectionComment';
 import { AlignmentObjectMixin } from '../AlignmentObject';
 import { LanguageMixin } from '../Language';
 import { InteractionCounterMixin } from '../InteractionCounter';
 import { ProductMixin } from '../Product';
+import { QuantitativeValueMixin } from '../QuantitativeValue';
 import { DemandMixin } from '../Demand';
 import { OfferMixin } from '../Offer';
 import { PublicationEventMixin } from '../PublicationEvent';
@@ -40,10 +42,12 @@ export const CreativeWorkBundle = [
   CommentMixin as Mixin,
   PlaceMixin as Mixin,
   RatingMixin as Mixin,
+  CorrectionCommentMixin as Mixin,
   AlignmentObjectMixin as Mixin,
   LanguageMixin as Mixin,
   InteractionCounterMixin as Mixin,
   ProductMixin as Mixin,
+  QuantitativeValueMixin as Mixin,
   DemandMixin as Mixin,
   OfferMixin as Mixin,
   PublicationEventMixin as Mixin,

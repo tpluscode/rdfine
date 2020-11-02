@@ -3,9 +3,11 @@ import { EpisodeMixin } from '../Episode';
 import { TVEpisodeMixin } from '../TVEpisode';
 import { CountryMixin } from '../Country';
 import { TVSeriesMixin } from '../TVSeries';
+import { LanguageMixin } from '../Language';
 
 export const TVEpisodeBundle = [
   EpisodeMixin as Mixin,
   TVEpisodeMixin as Mixin,
   CountryMixin as Mixin,
-  TVSeriesMixin as Mixin];
+  TVSeriesMixin as Mixin,
+  LanguageMixin as Mixin];

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './lib/namespace';
@@ -10,11 +10,20 @@ import { EmergencyServiceMixin } from './EmergencyService';
 import { MedicalOrganizationMixin } from './MedicalOrganization';
 
 export interface Hospital<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.EmergencyService<D>, Schema.MedicalOrganization<D>, RdfResource<D> {
+  availableService: Schema.MedicalProcedure<D> | Schema.MedicalTest<D> | Schema.MedicalTherapy<D> | undefined;
+  healthcareReportingData: Schema.CDCPMDRecord<D> | Schema.Dataset<D> | undefined;
+  medicalSpecialty: Schema.MedicalSpecialty | undefined;
 }
 
 export function HospitalMixin<Base extends Constructor>(Resource: Base) {
   @namespace(schema)
   class HospitalClass extends MedicalOrganizationMixin(EmergencyServiceMixin(CivicStructureMixin(Resource))) implements Hospital {
+    @property.resource()
+    availableService: Schema.MedicalProcedure | Schema.MedicalTest | Schema.MedicalTherapy | undefined;
+    @property.resource()
+    healthcareReportingData: Schema.CDCPMDRecord | Schema.Dataset | undefined;
+    @property()
+    medicalSpecialty: Schema.MedicalSpecialty | undefined;
   }
   return HospitalClass
 }

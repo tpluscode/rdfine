@@ -17,9 +17,11 @@ import { MenuItemMixin } from '../MenuItem';
 import { ProductMixin } from '../Product';
 import { ServiceMixin } from '../Service';
 import { TripMixin } from '../Trip';
+import { DurationMixin } from '../Duration';
 import { OrganizationMixin } from '../Organization';
 import { PersonMixin } from '../Person';
 import { ReviewMixin } from '../Review';
+import { OfferShippingDetailsMixin } from '../OfferShippingDetails';
 import { WarrantyPromiseMixin } from '../WarrantyPromise';
 
 export const OfferBundle = [
@@ -41,7 +43,9 @@ export const OfferBundle = [
   ProductMixin as Mixin,
   ServiceMixin as Mixin,
   TripMixin as Mixin,
+  DurationMixin as Mixin,
   OrganizationMixin as Mixin,
   PersonMixin as Mixin,
   ReviewMixin as Mixin,
+  OfferShippingDetailsMixin as Mixin,
   WarrantyPromiseMixin as Mixin];
