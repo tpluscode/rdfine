@@ -1,5 +1,16 @@
 # Change Log
 
+## 0.4.3
+
+### Patch Changes
+
+- 3c5269b: Generate Term properties for rdfs:Literal and owl:Thing
+- 6b62158: Handle class/mixin names which are not safe JS identifiers
+- 61ac4a4: Generate mixin modules from owl:Class
+- ac2b29a: Update to dual ESM version of @zazuko/rdf-vcabularies
+- 47be4da: Allow properties with non-alpha characters
+- f0be5e0: Require at least node 13 by package.json `engines`
+
 ## 0.4.2
 
 ### Patch Changes
