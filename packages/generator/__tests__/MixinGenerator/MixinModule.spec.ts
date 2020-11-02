@@ -29,6 +29,35 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
+    }, [], [])
+
+    // when
+    module.writeModule({
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
+      indexModule,
+    })
+
+    // then
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
+  })
+
+  it('generates a mixin class where term is not safe identifier', () => {
+    // given
+    const module = new MixinModule(vocabulary.node(ex.Class), {
+      type: 'Resource',
+      localName: '_3Class',
+      qualifiedName: 'Example._3Class',
+      module: './Class',
+      mixinName: '_3ClassMixin',
+      term: 'Class',
     }, [], [])
 
     // when
@@ -56,6 +85,7 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
     }, [{
       type: 'ExternalResource' as const,
       mixinName: 'PersonMixin',
@@ -91,6 +121,7 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
     }, [], [{
       term: ex.foo,
       name: 'foo',
@@ -104,6 +135,7 @@ describe('MixinModule', () => {
         module: './Foo',
         localName: 'Foo',
         qualifiedName: 'Example.Foo',
+        term: 'Foo',
       }],
     }])
 
@@ -132,6 +164,7 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
     }, [], [{
       term: ex.foo,
       name: 'foo',
@@ -146,6 +179,7 @@ describe('MixinModule', () => {
         module: './Foo',
         localName: 'Foo',
         qualifiedName: 'Example.Foo',
+        term: 'Foo',
       }],
     }])
 
@@ -174,6 +208,7 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
     }, [], [{
       term: ex.foo,
       name: 'foo',
@@ -188,6 +223,7 @@ describe('MixinModule', () => {
         module: './Foo',
         localName: 'Foo',
         qualifiedName: 'Example.Foo',
+        term: 'Foo',
       }],
     }])
 
@@ -216,6 +252,7 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
     }, [], [{
       term: ex.foo,
       name: 'foo',
@@ -230,6 +267,7 @@ describe('MixinModule', () => {
         module: './Foo',
         localName: 'Foo',
         qualifiedName: 'Example.Foo',
+        term: 'Foo',
       }],
     }])
 
@@ -258,6 +296,7 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
     }
     const module = new MixinModule(vocabulary.node(ex.Class), generateType, [], [{
       term: ex.foo,
@@ -294,6 +333,7 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
     }, [], [{
       term: ex.foo,
       name: 'foo',
@@ -337,6 +377,7 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
     }, [], [{
       term: ex.foo,
       name: 'foo',
@@ -382,6 +423,7 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
     }, [], [{
       term: ex.foo,
       name: 'foo',
@@ -422,6 +464,7 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
     }, [], [{
       term: ex('foo-bar'),
       name: 'foo-bar',
@@ -461,6 +504,7 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
     }, [], [{
       term: ex.foo,
       name: 'foo',
@@ -506,6 +550,7 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
     }, [], [{
       term: ex.foo,
       name: 'foo',
@@ -527,6 +572,7 @@ describe('MixinModule', () => {
         module: './Friend',
         qualifiedName: 'Example.Friend',
         mixinName: 'FriendMixin',
+        term: 'Friend',
       }],
     }])
 
@@ -556,12 +602,14 @@ describe('MixinModule', () => {
       qualifiedName: 'Example.Class',
       module: './Class',
       mixinName: 'ClassMixin',
+      term: 'Class',
     }, [{
       type: 'Resource' as const,
       mixinName: 'SuperMixin',
       qualifiedName: 'Example.Super',
       module: './Example',
       localName: 'Super',
+      term: 'Super',
     }, {
       type: 'ExternalResource' as const,
       mixinName: 'ExternMixin',

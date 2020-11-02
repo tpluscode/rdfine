@@ -102,6 +102,38 @@ exports[`MixinModule generates a bundle module with super classes but without ex
 "
 `;
 
+exports[`MixinModule generates a mixin class where term is not safe identifier: toMatchSnapshot 1`] = `
+"import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
+import * as $rdf from \\"@rdf-esm/data-model\\";
+import type * as RDF from \\"rdf-js\\";
+import { ex } from \\"./lib/namespace\\";
+import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
+import type * as Example from \\".\\";
+
+export interface _3Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+}
+
+export function _3ClassMixin<Base extends Constructor>(Resource: Base) {
+    @namespace(ex)
+    class _3ClassClass extends Resource implements _3Class {
+    }
+    return _3ClassClass
+}
+
+class _3ClassImpl extends _3ClassMixin(RdfResourceImpl) {
+    constructor(arg: ResourceNode, init?: Initializer<_3Class>) {
+        super(arg, init)
+        this.types.add(ex._3Class)
+    }
+
+    static readonly __mixins: Mixin[] = [_3ClassMixin];
+}
+_3ClassMixin.appliesTo = ex['Class']
+_3ClassMixin.Class = _3ClassImpl
+"
+`;
+
 exports[`MixinModule generates a mixin class with external super classes: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
