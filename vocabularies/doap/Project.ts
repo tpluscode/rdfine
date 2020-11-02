@@ -23,7 +23,7 @@ export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends Fo
   homepage: RDF.Term | undefined;
   implements: Doap.Specification<D> | undefined;
   language: RDF.Literal | undefined;
-  'mailing-list': RDF.Term | undefined;
+  'mailing-list': RDF.NamedNode | undefined;
   maintainer: Foaf.Person<D> | undefined;
   'old-homepage': RDF.Term | undefined;
   os: RDF.Literal | undefined;
@@ -37,7 +37,7 @@ export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends Fo
   tester: Foaf.Person<D> | undefined;
   translator: Foaf.Person<D> | undefined;
   vendor: Foaf.Organization<D> | undefined;
-  wiki: RDF.Term | undefined;
+  wiki: RDF.NamedNode | undefined;
 }
 
 export function ProjectMixin<Base extends Constructor>(Resource: Base) {
@@ -70,7 +70,7 @@ export function ProjectMixin<Base extends Constructor>(Resource: Base) {
     @property()
     language: RDF.Literal | undefined;
     @property()
-    'mailing-list': RDF.Term | undefined;
+    'mailing-list': RDF.NamedNode | undefined;
     @property.resource({ as: [Foaf.PersonMixin] })
     maintainer: Foaf.Person | undefined;
     @property()
@@ -98,7 +98,7 @@ export function ProjectMixin<Base extends Constructor>(Resource: Base) {
     @property.resource({ as: [Foaf.OrganizationMixin] })
     vendor: Foaf.Organization | undefined;
     @property()
-    wiki: RDF.Term | undefined;
+    wiki: RDF.NamedNode | undefined;
   }
   return ProjectClass
 }

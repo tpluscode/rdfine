@@ -28,7 +28,12 @@
     "generate": "rdf-vocab prefix doap | node ../../packages/generator/bin/rdfine-gen.js --format application/n-quads"
   },
   "rdfine": {
-    "prefix": "doap"
+    "prefix": "doap",
+    "types": {
+      "http://rdfs.org/sioc/types#Weblog": "NamedNode",
+      "http://rdfs.org/sioc/types#MailingList": "NamedNode",
+      "http://rdfs.org/sioc/types#Wiki": "NamedNode"
+    }
   },
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
