@@ -1,6 +1,6 @@
 import { GraphPointer } from 'clownface'
 import { Context } from '../index'
-import { rdf, rdfs, hydra } from '@tpluscode/rdf-ns-builders'
+import { rdf, rdfs, hydra, owl } from '@tpluscode/rdf-ns-builders'
 import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types'
 import { MixinModule } from './MixinModule'
 import { findProperties } from '../property'
@@ -29,7 +29,7 @@ function * getProperties(clas: GraphPointer, types: TypeMetaCollection, context:
 
 export function findTermsToGenerate(types: TypeMetaCollection, context: Context) {
   return context.vocabulary
-    .has(rdf.type, [rdfs.Class, hydra.Class])
+    .has(rdf.type, [rdfs.Class, hydra.Class, owl.Class])
     .filter(term => types.get(term)?.type === 'Resource')
     .map(term => {
       const meta = types.getOrThrow(term)

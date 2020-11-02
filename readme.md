@@ -12,12 +12,16 @@ Core library to define the JavaScript object model for RDF classes and propertie
 ### Generated model packages for selected vocabularies:
 
 * [@rdfine/csvw](vocabularies/csvw) - [Metadata Vocabulary for Tabular Data](https://www.w3.org/TR/tabular-metadata/)
+* [@rdfine/doap](vocabularies/doap) - [DOAP: Description Of A Project](https://github.com/ewilderj/doap)
+* [@rdfine/foaf](vocabularies/foaf) - [FOAF: Friend of a Friend](http://xmlns.com/foaf/spec/)
 * [@rdfine/hydra](vocabularies/hydra) - [Hydra Core Vocabulary](https://www.hydra-cg.com/spec/latest/core/)
 * [@rdfine/owl](vocabularies/owl) - [OWL Web Ontology Language](https://www.w3.org/OWL/)
 * [@rdfine/rdf](vocabularies/rdf) - [The RDF Concepts Vocabulary](https://www.w3.org/TR/rdf11-concepts/)
 * [@rdfine/rdfs](vocabularies/rdfs) - [The RDF Schema vocabulary](https://www.w3.org/TR/rdf-schema/)
 * [@rdfine/schema](vocabularies/schema) - http://schema.org/
 * [@rdfine/shacl](vocabularies/shacl) - [Shapes Constraint Language](https://www.w3.org/TR/shacl/)
+* [@rdfine/sioc](vocabularies/sioc) - [SIOC (Semantically-Interlinked Online Communities)](http://rdfs.org/sioc/spec/)
+* [@rdfine/wgs](vocabularies/wgs) - [WGS84 Geo Positioning: an RDF vocabulary](https://www.w3.org/2003/01/geo/)
 
 ### [@rdfine/generator](packages/generator)
 

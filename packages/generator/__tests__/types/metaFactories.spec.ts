@@ -1,6 +1,6 @@
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { rdf, rdfs, schema, xsd } from '@tpluscode/rdf-ns-builders'
+import { owl, rdf, rdfs, schema, xsd } from '@tpluscode/rdf-ns-builders'
 import { ex } from '../_helpers/prefix'
 import {
   EnumerationMember,
@@ -11,6 +11,7 @@ import {
   TermType,
 } from '../../lib/types'
 import * as factories from '../../lib/types/metaFactories'
+import { coreTerms } from '../../lib/types/metaFactories'
 
 describe('meta factory', () => {
   let graph: AnyPointer
@@ -23,6 +24,19 @@ describe('meta factory', () => {
     it('returns null for non-class', () => {
       // given
       const node = graph.node(ex.Type)
+
+      // when
+      const meta = factories.resourceTypes(node, {
+        prefix: 'ex',
+      })
+
+      // then
+      expect(meta).toBeNull()
+    })
+
+    it('returns null for type which is not from a known namespace', () => {
+      // given
+      const node = graph.namedNode('http://foo/bar')
 
       // when
       const meta = factories.resourceTypes(node, {
@@ -280,6 +294,24 @@ describe('meta factory', () => {
         prefixedName: 'ex.EnumerationMember',
         termName: 'EnumerationMember',
       } as EnumerationMember)
+    })
+  })
+
+  describe('coreTerms', () => {
+    [
+      [rdfs.Literal, 'Literal'],
+      [owl.Thing, 'NamedNode'],
+    ].forEach(([term, termType]) => {
+      it(`generates ${termType} property for ${term}`, () => {
+        // given
+        const pointer = graph.namedNode(term)
+
+        // when
+        const propType = coreTerms(pointer)
+
+        // then
+        expect(propType?.termType).toEqual(termType)
+      })
     })
   })
 })

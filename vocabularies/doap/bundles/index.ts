@@ -1,0 +1,13 @@
+export { ArchRepositoryBundle } from './ArchRepository';
+export { BazaarBranchBundle } from './BazaarBranch';
+export { BKRepositoryBundle } from './BKRepository';
+export { CVSRepositoryBundle } from './CVSRepository';
+export { DarcsRepositoryBundle } from './DarcsRepository';
+export { GitBranchBundle } from './GitBranch';
+export { GitRepositoryBundle } from './GitRepository';
+export { HgRepositoryBundle } from './HgRepository';
+export { ProjectBundle } from './Project';
+export { RepositoryBundle } from './Repository';
+export { SpecificationBundle } from './Specification';
+export { SVNRepositoryBundle } from './SVNRepository';
+export { VersionBundle } from './Version';

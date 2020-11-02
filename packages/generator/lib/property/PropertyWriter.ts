@@ -12,6 +12,8 @@ interface PropertyWriterInit {
   module: MixinModule
 }
 
+const plainNameRegex = /^[a-zA-Z]+$/
+
 function __getJsReturnType(range: TypeMeta): string | null {
   switch (range.type) {
     case 'Literal':
@@ -82,13 +84,15 @@ export class PropertyWriter {
       type = `${type} | undefined`
     }
 
+    const name = plainNameRegex.test(prop.name) ? prop.name : `'${prop.name}'`
+
     this.__interface.addProperty({
-      name: prop.name,
+      name,
       type,
     })
 
     const classProp = this.__class.addProperty({
-      name: prop.name,
+      name,
       hasExclamationToken,
       type: type.replace(/<D>/g, ''),
     })

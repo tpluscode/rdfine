@@ -19,7 +19,7 @@ export interface JavascriptProperty {
   values?: PropertyReturnKind[]
 }
 
-function groupRangeTypes(range: Range[], types: TypeMetaCollection, { log }: Context) {
+function groupRangeTypes(range: Range[], types: TypeMetaCollection, { log }: Pick<Context, 'log'>) {
   const grouped = {
     resource: [] as TypeMeta[],
     literal: [] as TypeMeta[],
@@ -49,14 +49,24 @@ function groupRangeTypes(range: Range[], types: TypeMetaCollection, { log }: Con
   return grouped
 }
 
-export function * toJavascriptProperties(prop: GraphPointer, range: Range[], types: TypeMetaCollection, context: Context): Iterable<JavascriptProperty> {
+function getPrefixedTerm(prop: GraphPointer) {
+  const shrunk = shrink(prop.value) || nameOf(prop)
+  const [prefix, term] = shrunk.split(':')
+  if (/^[a-zA-Z]+$/.test(term)) {
+    return `${prefix}.${term}`
+  }
+
+  return `${prefix}['${term}']`
+}
+
+export function * toJavascriptProperties(prop: GraphPointer, range: Range[], types: TypeMetaCollection, context: Pick<Context, 'log' | 'properties'>): Iterable<JavascriptProperty> {
   const ranges = groupRangeTypes(range, types, context)
   const baseProperty: Omit<JavascriptProperty, 'type' | 'range'> = {
     semantics: undefined,
     term: prop.term,
     name: nameOf(prop),
     termName: nameOf(prop),
-    prefixedTerm: (shrink(prop.value) || nameOf(prop)).replace(':', '.'),
+    prefixedTerm: getPrefixedTerm(prop),
   }
   let resourceProperty: JavascriptProperty | null = null
   let literalProperty: JavascriptProperty | null = null

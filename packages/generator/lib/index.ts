@@ -113,6 +113,7 @@ export async function generate(options: GeneratorOptions, logger: Debugger) {
     context,
     factories: [
       factories.overrides(expandMapKeys(options.types, prefixes[options.prefix])),
+      factories.coreTerms,
       factories.datatypes,
       factories.enumerationTypes,
       factories.resourceTypes,
