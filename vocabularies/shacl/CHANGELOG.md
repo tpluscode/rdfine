@@ -1,5 +1,16 @@
 # Change Log
 
+## 0.6.0
+
+### Minor Changes
+
+- 9b30de4: sh:hasValues must allow multiple terms
+
+### Patch Changes
+
+- Updated dependencies [fc82303]
+  - @rdfine/owl@0.3.2
+
 ## 0.5.2
 
 ### Patch Changes

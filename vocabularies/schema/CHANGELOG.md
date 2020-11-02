@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.3
+
+### Patch Changes
+
+- fc82303: Update vocabulary
+
 ## 0.5.2
 
 ### Patch Changes
