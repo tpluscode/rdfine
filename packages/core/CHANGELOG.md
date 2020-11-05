@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.15
+
+### Patch Changes
+
+- b88ea8f: Node terms were incorrectly serialized as string by toJSON
+
 ## 0.5.14
 
 ### Patch Changes
