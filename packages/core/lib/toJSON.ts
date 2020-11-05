@@ -9,7 +9,7 @@ import type { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { enumerateList, isList } from './rdf-list'
 import { PropertyMeta } from './decorators/property'
 
-type PropertyValue = RdfResource | Literal
+type PropertyValue = RdfResource | Term
 
 type ContextEntry = string | {
   '@container': '@list'
@@ -219,7 +219,18 @@ function jsonifyProperties(params: ToJsonContext & JsonifyPropertiesContext) {
       }
 
       if ('termType' in obj) {
-        return literalToJSON(obj)
+        switch (obj.termType) {
+          case 'Literal':
+            return literalToJSON(obj)
+          case 'BlankNode':
+          case 'NamedNode':
+            return toJSON(resource._create(resource.pointer.node(obj)), {
+              parentContexts: { ...parentContexts, ...context },
+              visitedResources,
+            })
+          default:
+            return 'null'
+        }
       }
 
       return toJSON(obj as any, {
