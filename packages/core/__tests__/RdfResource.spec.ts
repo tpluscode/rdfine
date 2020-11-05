@@ -13,7 +13,8 @@ import {
   schema,
   foaf,
   xsd,
-  dcterms, rdfs,
+  dcterms,
+  rdfs,
 } from '@tpluscode/rdf-ns-builders'
 import RdfResource, { Initializer, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
@@ -569,14 +570,14 @@ describe('RdfResource', () => {
       // given
       class Child extends RdfResource {
         @property.literal({ path: ex.foo })
-        foo?: string
+        foo?: string;
 
         @property.literal({ path: ex.bar })
-        bar?: string
+        bar?: string;
       }
       class Decomposed extends RdfResource {
         @property.resource({ path: ex.child, as: [Child] })
-        child?: Decomposed
+        child?: Decomposed;
       }
       const child = new Child(cf({ dataset: $rdf.dataset() }).blankNode(), {
         foo: 'foo',
@@ -584,12 +585,15 @@ describe('RdfResource', () => {
       })
 
       // when
-      const resource = new Decomposed(cf({ dataset: $rdf.dataset() }).blankNode(), {
-        child: {
-          ...child.toJSON(),
-          types: [ex.Copy],
+      const resource = new Decomposed(
+        cf({ dataset: $rdf.dataset() }).blankNode(),
+        {
+          child: {
+            ...child.toJSON(),
+            types: [ex.Copy],
+          },
         },
-      })
+      )
 
       // then
       expect(resource.pointer.dataset).toMatchSnapshot()
@@ -599,18 +603,21 @@ describe('RdfResource', () => {
       // given
       class Resource extends RdfResource {
         @property.resource({ path: ex.foo })
-        foo!: RdfResource
+        foo!: RdfResource;
       }
 
       // when
-      const resource = new Resource(cf({ dataset: $rdf.dataset() }).blankNode(), {
-        foo: {
-          id: '_:blank-one',
+      const resource = new Resource(
+        cf({ dataset: $rdf.dataset() }).blankNode(),
+        {
+          foo: {
+            id: '_:blank-one',
+          },
+          [ex.bar.value]: {
+            id: '_:blank-two',
+          },
         },
-        [ex.bar.value]: {
-          id: '_:blank-two',
-        },
-      })
+      )
 
       // then
       expect(resource.pointer.dataset).toMatchSnapshot()
@@ -620,18 +627,21 @@ describe('RdfResource', () => {
       // given
       class Resource extends RdfResource {
         @property.resource({ path: ex.foo })
-        foo!: RdfResource
+        foo!: RdfResource;
       }
 
       // when
-      const resource = new Resource(cf({ dataset: $rdf.dataset() }).blankNode(), {
-        foo: {
-          id: ex.Child.value,
+      const resource = new Resource(
+        cf({ dataset: $rdf.dataset() }).blankNode(),
+        {
+          foo: {
+            id: ex.Child.value,
+          },
+          [ex.bar.value]: {
+            id: ex.Child.value,
+          },
         },
-        [ex.bar.value]: {
-          id: ex.Child.value,
-        },
-      })
+      )
 
       // then
       expect(resource.pointer.dataset).toMatchSnapshot()
@@ -641,15 +651,18 @@ describe('RdfResource', () => {
       // given
       class Resource extends RdfResource {
         @property.resource({ path: ex.foo, implicitTypes: [ex.Foo, ex.Bar] })
-        foo!: RdfResource
+        foo!: RdfResource;
       }
 
       // when
-      const resource = new Resource(cf({ dataset: $rdf.dataset() }).blankNode(), {
-        foo: {
-          [rdfs.label.value]: 'foo',
+      const resource = new Resource(
+        cf({ dataset: $rdf.dataset() }).blankNode(),
+        {
+          foo: {
+            [rdfs.label.value]: 'foo',
+          },
         },
-      })
+      )
 
       // then
       expect(resource.pointer.dataset).toMatchSnapshot()
@@ -1709,7 +1722,7 @@ describe('RdfResource', () => {
         @namespace(foaf)
         class NameClass extends base {
           @property.literal()
-          name!: string
+          name!: string;
         }
 
         return NameClass
@@ -1718,12 +1731,15 @@ describe('RdfResource', () => {
         @namespace(schema)
         class AgeClass extends base {
           @property.literal()
-          age!: number
+          age!: number;
         }
 
         return AgeClass
       }
-      const resource = RdfResource.factory.createEntity(node, [NameMixin, AgeMixin])
+      const resource = RdfResource.factory.createEntity(node, [
+        NameMixin,
+        AgeMixin,
+      ])
 
       // when
       const json = resource.toJSON()
@@ -1741,6 +1757,49 @@ describe('RdfResource', () => {
           "age": 48,
           "id": "john",
           "name": "John",
+        }
+      `)
+    })
+
+    it('serialized resource term objects as child resources', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const node = cf({ dataset })
+        .namedNode('john')
+        .addOut(ex.foo, $rdf.blankNode('blank'))
+        .addOut(ex.foo, $rdf.namedNode('bar'))
+      function PersonMixin<Base extends Constructor>(base: Base) {
+        @namespace(ex)
+        class NameClass extends base {
+          @property({ values: 'array' })
+          foo!: Term[];
+        }
+
+        return NameClass
+      }
+      const resource = RdfResource.factory.createEntity(node, [PersonMixin])
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "foo": "http://example.com/foo",
+            "id": "@id",
+            "type": "@type",
+          },
+          "foo": Array [
+            Object {
+              "id": "_:blank",
+            },
+            Object {
+              "id": "bar",
+            },
+          ],
+          "id": "john",
         }
       `)
     })
