@@ -229,7 +229,7 @@ function jsonifyProperties(params: ToJsonContext & JsonifyPropertiesContext) {
               visitedResources,
             })
           default:
-            return 'null'
+            return null
         }
       }
 

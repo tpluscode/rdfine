@@ -1803,5 +1803,35 @@ describe('RdfResource', () => {
         }
       `)
     })
+
+    ;[
+      $rdf.variable('foo'),
+      // $rdf.quad(ex.foo, ex.bar, ex.baz), TODO: for when dataset indexed supports RDF*
+      $rdf.defaultGraph(),
+    ].forEach((node: Term) => {
+      it(`serializes ${node.termType} value as 'null'`, () => {
+        // given
+        const dataset = $rdf.dataset()
+        const person = cf({ dataset })
+          .namedNode('john')
+        function PersonMixin<Base extends Constructor>(base: Base) {
+          @namespace(ex)
+          class NameClass extends base {
+            @property({ initial: node })
+            foo!: Term;
+          }
+
+          return NameClass
+        }
+        const resource = RdfResource.factory.createEntity(person, [PersonMixin])
+
+        // when
+        const json = resource.toJSON()
+
+        // then
+        expect(json).toBeValidJsonLd()
+        expect(json.foo).toBeNull()
+      })
+    })
   })
 })
