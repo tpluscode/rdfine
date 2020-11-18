@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.1.11-next.0
+
+### Patch Changes
+
+- Updated dependencies [123df938]
+- Updated dependencies [123df938]
+- Updated dependencies [0db486f2]
+  - @tpluscode/rdfine@0.6.0-next.0
+  - @rdfine/schema@0.6.0-next.0
+
 ## 0.1.10
 
 ### Patch Changes
