@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { LoanOrCreditMixin } from '../LoanOrCredit';
-import { MortgageLoanMixin } from '../MortgageLoan';
-import { MonetaryAmountMixin } from '../MonetaryAmount';
+import { LoanOrCreditMixin } from '../lib/LoanOrCredit';
+import { MortgageLoanMixin } from '../lib/MortgageLoan';
+import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
 
 export const MortgageLoanBundle = [
   LoanOrCreditMixin as Mixin,

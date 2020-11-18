@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { SpeakableSpecificationMixin } from '../SpeakableSpecification';
+import { IntangibleMixin } from '../lib/Intangible';
+import { SpeakableSpecificationMixin } from '../lib/SpeakableSpecification';
 
 export const SpeakableSpecificationBundle = [
   IntangibleMixin as Mixin,

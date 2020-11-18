@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { InformActionMixin } from '../InformAction';
-import { ConfirmActionMixin } from '../ConfirmAction';
+import { InformActionMixin } from '../lib/InformAction';
+import { ConfirmActionMixin } from '../lib/ConfirmAction';
 
 export const ConfirmActionBundle = [
   InformActionMixin as Mixin,

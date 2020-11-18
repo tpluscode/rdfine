@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StructuredValueMixin } from '../StructuredValue';
-import { OfferShippingDetailsMixin } from '../OfferShippingDetails';
-import { ShippingDeliveryTimeMixin } from '../ShippingDeliveryTime';
-import { DefinedRegionMixin } from '../DefinedRegion';
-import { MonetaryAmountMixin } from '../MonetaryAmount';
+import { StructuredValueMixin } from '../lib/StructuredValue';
+import { OfferShippingDetailsMixin } from '../lib/OfferShippingDetails';
+import { ShippingDeliveryTimeMixin } from '../lib/ShippingDeliveryTime';
+import { DefinedRegionMixin } from '../lib/DefinedRegion';
+import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
 
 export const OfferShippingDetailsBundle = [
   StructuredValueMixin as Mixin,

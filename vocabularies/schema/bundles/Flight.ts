@@ -1,12 +1,12 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { TripMixin } from '../Trip';
-import { FlightMixin } from '../Flight';
-import { VehicleMixin } from '../Vehicle';
-import { AirportMixin } from '../Airport';
-import { OrganizationMixin } from '../Organization';
-import { DurationMixin } from '../Duration';
-import { DistanceMixin } from '../Distance';
-import { PersonMixin } from '../Person';
+import { TripMixin } from '../lib/Trip';
+import { FlightMixin } from '../lib/Flight';
+import { VehicleMixin } from '../lib/Vehicle';
+import { AirportMixin } from '../lib/Airport';
+import { OrganizationMixin } from '../lib/Organization';
+import { DurationMixin } from '../lib/Duration';
+import { DistanceMixin } from '../lib/Distance';
+import { PersonMixin } from '../lib/Person';
 
 export const FlightBundle = [
   TripMixin as Mixin,

@@ -1,23 +1,23 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { ServiceMixin } from '../Service';
-import { AggregateRatingMixin } from '../AggregateRating';
-import { AdministrativeAreaMixin } from '../AdministrativeArea';
-import { GeoShapeMixin } from '../GeoShape';
-import { PlaceMixin } from '../Place';
-import { AudienceMixin } from '../Audience';
-import { ServiceChannelMixin } from '../ServiceChannel';
-import { BrandMixin } from '../Brand';
-import { OrganizationMixin } from '../Organization';
-import { PersonMixin } from '../Person';
-import { ThingMixin } from '../Thing';
-import { OfferCatalogMixin } from '../OfferCatalog';
-import { OpeningHoursSpecificationMixin } from '../OpeningHoursSpecification';
-import { ProductMixin } from '../Product';
-import { ImageObjectMixin } from '../ImageObject';
-import { DemandMixin } from '../Demand';
-import { OfferMixin } from '../Offer';
-import { ReviewMixin } from '../Review';
+import { IntangibleMixin } from '../lib/Intangible';
+import { ServiceMixin } from '../lib/Service';
+import { AggregateRatingMixin } from '../lib/AggregateRating';
+import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
+import { GeoShapeMixin } from '../lib/GeoShape';
+import { PlaceMixin } from '../lib/Place';
+import { AudienceMixin } from '../lib/Audience';
+import { ServiceChannelMixin } from '../lib/ServiceChannel';
+import { BrandMixin } from '../lib/Brand';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
+import { ThingMixin } from '../lib/Thing';
+import { OfferCatalogMixin } from '../lib/OfferCatalog';
+import { OpeningHoursSpecificationMixin } from '../lib/OpeningHoursSpecification';
+import { ProductMixin } from '../lib/Product';
+import { ImageObjectMixin } from '../lib/ImageObject';
+import { DemandMixin } from '../lib/Demand';
+import { OfferMixin } from '../lib/Offer';
+import { ReviewMixin } from '../lib/Review';
 
 export const ServiceBundle = [
   IntangibleMixin as Mixin,

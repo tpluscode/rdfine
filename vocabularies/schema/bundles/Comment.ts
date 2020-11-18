@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { CommentMixin } from '../Comment';
-import { QuestionMixin } from '../Question';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { CommentMixin } from '../lib/Comment';
+import { QuestionMixin } from '../lib/Question';
 
 export const CommentBundle = [
   CreativeWorkMixin as Mixin,

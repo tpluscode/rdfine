@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MediaObjectMixin } from '../MediaObject';
-import { ImageObjectMixin } from '../ImageObject';
-import { PropertyValueMixin } from '../PropertyValue';
+import { MediaObjectMixin } from '../lib/MediaObject';
+import { ImageObjectMixin } from '../lib/ImageObject';
+import { PropertyValueMixin } from '../lib/PropertyValue';
 
 export const ImageObjectBundle = [
   MediaObjectMixin as Mixin,

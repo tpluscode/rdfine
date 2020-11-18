@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PlaceMixin } from '../Place';
-import { TouristAttractionMixin } from '../TouristAttraction';
-import { LanguageMixin } from '../Language';
-import { AudienceMixin } from '../Audience';
+import { PlaceMixin } from '../lib/Place';
+import { TouristAttractionMixin } from '../lib/TouristAttraction';
+import { LanguageMixin } from '../lib/Language';
+import { AudienceMixin } from '../lib/Audience';
 
 export const TouristAttractionBundle = [
   PlaceMixin as Mixin,

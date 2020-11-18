@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { InteractActionMixin } from '../InteractAction';
-import { SubscribeActionMixin } from '../SubscribeAction';
+import { InteractActionMixin } from '../lib/InteractAction';
+import { SubscribeActionMixin } from '../lib/SubscribeAction';
 
 export const SubscribeActionBundle = [
   InteractActionMixin as Mixin,

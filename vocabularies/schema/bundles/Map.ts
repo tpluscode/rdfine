@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { MapMixin } from '../Map';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { MapMixin } from '../lib/Map';
 
 export const MapBundle = [
   CreativeWorkMixin as Mixin,

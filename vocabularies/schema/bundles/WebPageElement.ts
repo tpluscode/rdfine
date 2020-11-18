@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { WebPageElementMixin } from '../WebPageElement';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { WebPageElementMixin } from '../lib/WebPageElement';
 
 export const WebPageElementBundle = [
   CreativeWorkMixin as Mixin,

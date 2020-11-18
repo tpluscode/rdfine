@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ShapeMixin } from '../Shape';
-import { NodeShapeMixin } from '../NodeShape';
-import { PropertyShapeMixin } from '../PropertyShape';
-import { RuleMixin } from '../Rule';
-import { SeverityMixin } from '../Severity';
-import { SPARQLConstraintMixin } from '../SPARQLConstraint';
-import { TargetMixin } from '../Target';
+import { ShapeMixin } from '../lib/Shape';
+import { NodeShapeMixin } from '../lib/NodeShape';
+import { PropertyShapeMixin } from '../lib/PropertyShape';
+import { RuleMixin } from '../lib/Rule';
+import { SeverityMixin } from '../lib/Severity';
+import { SPARQLConstraintMixin } from '../lib/SPARQLConstraint';
+import { TargetMixin } from '../lib/Target';
 
 export const ShapeBundle = [
   ShapeMixin as Mixin,

@@ -26,9 +26,10 @@ export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix
   if (prefix !== context.prefix) {
     return {
       type: 'ExternalResource',
-      mixinName: `${localName}Mixin`,
+      mixinName: toUpperInitial(`${prefix}${termName}Mixin`),
+      exportName: `${localName}Mixin`,
       qualifiedMixinName: `${toUpperInitial(prefix)}.${localName}Mixin`,
-      module: `@rdfine/${prefix}/${termName}`,
+      module: `@rdfine/${prefix}/lib/${termName}`,
       package: `@rdfine/${prefix}`,
       qualifiedName: toUpperInitial(`${prefix}.${localName}`),
       qualifier: toUpperInitial(prefix),
@@ -44,7 +45,7 @@ export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix
     localName,
     term: termName,
     qualifiedName: toUpperInitial(`${prefix}.${localName}`),
-    module: `./${termName}`,
+    module: `./lib/${termName}`,
     mixinName: `${localName}Mixin`,
   }
 }

@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MediaGalleryMixin } from '../MediaGallery';
-import { VideoGalleryMixin } from '../VideoGallery';
+import { MediaGalleryMixin } from '../lib/MediaGallery';
+import { VideoGalleryMixin } from '../lib/VideoGallery';
 
 export const VideoGalleryBundle = [
   MediaGalleryMixin as Mixin,

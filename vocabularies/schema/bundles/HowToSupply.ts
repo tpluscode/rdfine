@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { HowToItemMixin } from '../HowToItem';
-import { HowToSupplyMixin } from '../HowToSupply';
-import { MonetaryAmountMixin } from '../MonetaryAmount';
+import { HowToItemMixin } from '../lib/HowToItem';
+import { HowToSupplyMixin } from '../lib/HowToSupply';
+import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
 
 export const HowToSupplyBundle = [
   HowToItemMixin as Mixin,

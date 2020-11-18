@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PlayActionMixin } from '../PlayAction';
-import { PerformActionMixin } from '../PerformAction';
-import { EntertainmentBusinessMixin } from '../EntertainmentBusiness';
+import { PlayActionMixin } from '../lib/PlayAction';
+import { PerformActionMixin } from '../lib/PerformAction';
+import { EntertainmentBusinessMixin } from '../lib/EntertainmentBusiness';
 
 export const PerformActionBundle = [
   PlayActionMixin as Mixin,

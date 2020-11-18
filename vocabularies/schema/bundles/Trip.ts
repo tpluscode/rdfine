@@ -1,12 +1,12 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { TripMixin } from '../Trip';
-import { ItemListMixin } from '../ItemList';
-import { PlaceMixin } from '../Place';
-import { DemandMixin } from '../Demand';
-import { OfferMixin } from '../Offer';
-import { OrganizationMixin } from '../Organization';
-import { PersonMixin } from '../Person';
+import { IntangibleMixin } from '../lib/Intangible';
+import { TripMixin } from '../lib/Trip';
+import { ItemListMixin } from '../lib/ItemList';
+import { PlaceMixin } from '../lib/Place';
+import { DemandMixin } from '../lib/Demand';
+import { OfferMixin } from '../lib/Offer';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
 
 export const TripBundle = [
   IntangibleMixin as Mixin,

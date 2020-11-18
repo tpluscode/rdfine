@@ -1,14 +1,14 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PlayActionMixin } from '../PlayAction';
-import { ExerciseActionMixin } from '../ExerciseAction';
-import { PlaceMixin } from '../Place';
-import { DietMixin } from '../Diet';
-import { DistanceMixin } from '../Distance';
-import { ExercisePlanMixin } from '../ExercisePlan';
-import { PersonMixin } from '../Person';
-import { SportsActivityLocationMixin } from '../SportsActivityLocation';
-import { SportsEventMixin } from '../SportsEvent';
-import { SportsTeamMixin } from '../SportsTeam';
+import { PlayActionMixin } from '../lib/PlayAction';
+import { ExerciseActionMixin } from '../lib/ExerciseAction';
+import { PlaceMixin } from '../lib/Place';
+import { DietMixin } from '../lib/Diet';
+import { DistanceMixin } from '../lib/Distance';
+import { ExercisePlanMixin } from '../lib/ExercisePlan';
+import { PersonMixin } from '../lib/Person';
+import { SportsActivityLocationMixin } from '../lib/SportsActivityLocation';
+import { SportsEventMixin } from '../lib/SportsEvent';
+import { SportsTeamMixin } from '../lib/SportsTeam';
 
 export const ExerciseActionBundle = [
   PlayActionMixin as Mixin,

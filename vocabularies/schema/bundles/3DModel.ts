@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MediaObjectMixin } from '../MediaObject';
-import { _3DModelMixin } from '../3DModel';
+import { MediaObjectMixin } from '../lib/MediaObject';
+import { _3DModelMixin } from '../lib/3DModel';
 
 export const _3DModelBundle = [
   MediaObjectMixin as Mixin,

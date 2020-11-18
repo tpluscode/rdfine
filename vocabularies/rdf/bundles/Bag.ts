@@ -1,5 +1,5 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { BagMixin } from '../Bag';
+import { BagMixin } from '../lib/Bag';
 
 export const BagBundle = [
   BagMixin as Mixin];

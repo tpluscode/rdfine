@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { LocalBusinessMixin } from '../LocalBusiness';
-import { FoodEstablishmentMixin } from '../FoodEstablishment';
-import { MenuMixin } from '../Menu';
-import { RatingMixin } from '../Rating';
+import { LocalBusinessMixin } from '../lib/LocalBusiness';
+import { FoodEstablishmentMixin } from '../lib/FoodEstablishment';
+import { MenuMixin } from '../lib/Menu';
+import { RatingMixin } from '../lib/Rating';
 
 export const FoodEstablishmentBundle = [
   LocalBusinessMixin as Mixin,

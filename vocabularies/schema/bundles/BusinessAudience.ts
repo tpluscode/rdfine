@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AudienceMixin } from '../Audience';
-import { BusinessAudienceMixin } from '../BusinessAudience';
-import { QuantitativeValueMixin } from '../QuantitativeValue';
+import { AudienceMixin } from '../lib/Audience';
+import { BusinessAudienceMixin } from '../lib/BusinessAudience';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
 
 export const BusinessAudienceBundle = [
   AudienceMixin as Mixin,

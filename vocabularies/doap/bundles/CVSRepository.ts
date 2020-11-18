@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RepositoryMixin } from '../Repository';
-import { CVSRepositoryMixin } from '../CVSRepository';
+import { RepositoryMixin } from '../lib/Repository';
+import { CVSRepositoryMixin } from '../lib/CVSRepository';
 
 export const CVSRepositoryBundle = [
   RepositoryMixin as Mixin,

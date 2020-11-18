@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { OrganizationRoleMixin } from '../OrganizationRole';
-import { EmployeeRoleMixin } from '../EmployeeRole';
-import { MonetaryAmountMixin } from '../MonetaryAmount';
-import { PriceSpecificationMixin } from '../PriceSpecification';
+import { OrganizationRoleMixin } from '../lib/OrganizationRole';
+import { EmployeeRoleMixin } from '../lib/EmployeeRole';
+import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
+import { PriceSpecificationMixin } from '../lib/PriceSpecification';
 
 export const EmployeeRoleBundle = [
   OrganizationRoleMixin as Mixin,

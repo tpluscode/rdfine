@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MedicalOrganizationMixin } from '../MedicalOrganization';
-import { MedicalClinicMixin } from '../MedicalClinic';
-import { MedicalProcedureMixin } from '../MedicalProcedure';
-import { MedicalTestMixin } from '../MedicalTest';
-import { MedicalTherapyMixin } from '../MedicalTherapy';
+import { MedicalOrganizationMixin } from '../lib/MedicalOrganization';
+import { MedicalClinicMixin } from '../lib/MedicalClinic';
+import { MedicalProcedureMixin } from '../lib/MedicalProcedure';
+import { MedicalTestMixin } from '../lib/MedicalTest';
+import { MedicalTherapyMixin } from '../lib/MedicalTherapy';
 
 export const MedicalClinicBundle = [
   MedicalOrganizationMixin as Mixin,

@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { OrganizeActionMixin } from '../OrganizeAction';
-import { ApplyActionMixin } from '../ApplyAction';
+import { OrganizeActionMixin } from '../lib/OrganizeAction';
+import { ApplyActionMixin } from '../lib/ApplyAction';
 
 export const ApplyActionBundle = [
   OrganizeActionMixin as Mixin,

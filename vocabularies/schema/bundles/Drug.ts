@@ -1,13 +1,13 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SubstanceMixin } from '../Substance';
-import { DrugMixin } from '../Drug';
-import { DrugStrengthMixin } from '../DrugStrength';
-import { DoseScheduleMixin } from '../DoseSchedule';
-import { DrugClassMixin } from '../DrugClass';
-import { HealthInsurancePlanMixin } from '../HealthInsurancePlan';
-import { DrugLegalStatusMixin } from '../DrugLegalStatus';
-import { OrganizationMixin } from '../Organization';
-import { MaximumDoseScheduleMixin } from '../MaximumDoseSchedule';
+import { SubstanceMixin } from '../lib/Substance';
+import { DrugMixin } from '../lib/Drug';
+import { DrugStrengthMixin } from '../lib/DrugStrength';
+import { DoseScheduleMixin } from '../lib/DoseSchedule';
+import { DrugClassMixin } from '../lib/DrugClass';
+import { HealthInsurancePlanMixin } from '../lib/HealthInsurancePlan';
+import { DrugLegalStatusMixin } from '../lib/DrugLegalStatus';
+import { OrganizationMixin } from '../lib/Organization';
+import { MaximumDoseScheduleMixin } from '../lib/MaximumDoseSchedule';
 
 export const DrugBundle = [
   SubstanceMixin as Mixin,

@@ -39,7 +39,7 @@ export class MixinModule implements GeneratedModule {
     context.log.debug(`Generating mixin ${this.type.qualifiedName}`)
 
     const mixinFile = project.createSourceFile(`${this.type.module}.ts`, {}, { overwrite: true })
-    const bundleModule = project.createSourceFile(`bundles/${this.type.module}.ts`, {}, { overwrite: true })
+    const bundleModule = project.createSourceFile(`bundles/${this.type.term}.ts`, {}, { overwrite: true })
     const bundleIndex = project.getSourceFile('bundles/index.ts') || project.createSourceFile('bundles/index.ts', {}, { overwrite: true })
 
     const mixinName = this.type.mixinName
@@ -70,7 +70,7 @@ export class MixinModule implements GeneratedModule {
     })
 
     const mixinNames = this.superClasses.reduce((mixins, sc) => {
-      return [...mixins, sc.type === 'Resource' ? sc.mixinName : sc.qualifiedMixinName]
+      return [...mixins, sc.mixinName]
     }, [this.type.mixinName])
     implementationClass.addProperty({
       isStatic: true,
@@ -141,7 +141,7 @@ export class MixinModule implements GeneratedModule {
 
         depsModule.addImportDeclaration({
           namedImports: [`${mi.mixinName}`],
-          moduleSpecifier: `.${mi.module}`,
+          moduleSpecifier: `${mi.module.replace('./', '../lib/')}`,
         })
         exports.push(`${mi.mixinName} as Mixin`)
       })
@@ -180,7 +180,7 @@ export class MixinModule implements GeneratedModule {
     })
     mixinFile.addImportDeclaration({
       namedImports: [context.prefix],
-      moduleSpecifier: './lib/namespace',
+      moduleSpecifier: './namespace',
     })
     mixinFile.addImportDeclaration({
       namedImports: ['Initializer', 'ResourceNode'],
@@ -194,7 +194,7 @@ export class MixinModule implements GeneratedModule {
     })
     mixinFile.addImportDeclaration({
       namespaceImport: context.defaultExport,
-      moduleSpecifier: '.',
+      moduleSpecifier: '..',
       isTypeOnly: true,
     })
 
@@ -203,16 +203,28 @@ export class MixinModule implements GeneratedModule {
         mixinFile.addImportDeclaration({
           moduleSpecifier,
           namespaceImport,
+          isTypeOnly: true,
         })
       })
 
-    this.superClasses
-      .filter(sc => sc.type === 'Resource')
-      .forEach(superClass => {
-        mixinFile.addImportDeclaration({
-          moduleSpecifier: superClass.module,
-          namedImports: [superClass.mixinName],
-        })
+    this.mixinImports
+      .filter(imported => imported.type === 'ExternalResource' || this.superClasses.some(sc => sc.mixinName === imported.mixinName))
+      .forEach(imported => {
+        if (imported.type === 'Resource') {
+          mixinFile.addImportDeclaration({
+            moduleSpecifier: './' + imported.localName,
+            namedImports: [imported.mixinName],
+          })
+        } else {
+          const superImport = mixinFile.addImportDeclaration({
+            moduleSpecifier: imported.module,
+          })
+
+          superImport.addNamedImport({
+            name: imported.exportName,
+            alias: imported.mixinName,
+          })
+        }
       })
   }
 
@@ -231,12 +243,7 @@ export class MixinModule implements GeneratedModule {
     })
 
     const baseClass = this.superClasses
-      .reduce((type, superClass) => {
-        const mixinName = superClass.type === 'ExternalResource' ? superClass.qualifiedMixinName : superClass.mixinName
-
-        return `${mixinName}(${type})`
-      },
-      'Resource')
+      .reduce((type, superClass) => `${superClass.mixinName}(${type})`, 'Resource')
 
     const className = `${this.type.localName}Class`
     const mixinClass = mixinFunction.addClass({

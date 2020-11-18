@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { OnlineAccountMixin } from '../OnlineAccount';
-import { DocumentMixin } from '../Document';
-import { AgentMixin } from '../Agent';
+import { OnlineAccountMixin } from '../lib/OnlineAccount';
+import { DocumentMixin } from '../lib/Document';
+import { AgentMixin } from '../lib/Agent';
 
 export const AgentBundle = [
   OnlineAccountMixin as Mixin,

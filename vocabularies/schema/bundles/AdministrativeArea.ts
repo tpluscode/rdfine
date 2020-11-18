@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PlaceMixin } from '../Place';
-import { AdministrativeAreaMixin } from '../AdministrativeArea';
+import { PlaceMixin } from '../lib/Place';
+import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
 
 export const AdministrativeAreaBundle = [
   PlaceMixin as Mixin,

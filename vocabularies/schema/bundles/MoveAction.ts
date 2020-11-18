@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActionMixin } from '../Action';
-import { MoveActionMixin } from '../MoveAction';
-import { PlaceMixin } from '../Place';
+import { ActionMixin } from '../lib/Action';
+import { MoveActionMixin } from '../lib/MoveAction';
+import { PlaceMixin } from '../lib/Place';
 
 export const MoveActionBundle = [
   ActionMixin as Mixin,

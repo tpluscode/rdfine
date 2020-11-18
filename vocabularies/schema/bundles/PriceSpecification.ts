@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StructuredValueMixin } from '../StructuredValue';
-import { PriceSpecificationMixin } from '../PriceSpecification';
-import { QuantitativeValueMixin } from '../QuantitativeValue';
+import { StructuredValueMixin } from '../lib/StructuredValue';
+import { PriceSpecificationMixin } from '../lib/PriceSpecification';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
 
 export const PriceSpecificationBundle = [
   StructuredValueMixin as Mixin,

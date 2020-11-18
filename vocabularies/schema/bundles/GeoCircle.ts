@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { GeoShapeMixin } from '../GeoShape';
-import { GeoCircleMixin } from '../GeoCircle';
-import { GeoCoordinatesMixin } from '../GeoCoordinates';
-import { DistanceMixin } from '../Distance';
+import { GeoShapeMixin } from '../lib/GeoShape';
+import { GeoCircleMixin } from '../lib/GeoCircle';
+import { GeoCoordinatesMixin } from '../lib/GeoCoordinates';
+import { DistanceMixin } from '../lib/Distance';
 
 export const GeoCircleBundle = [
   GeoShapeMixin as Mixin,

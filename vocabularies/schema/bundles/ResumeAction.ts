@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ControlActionMixin } from '../ControlAction';
-import { ResumeActionMixin } from '../ResumeAction';
+import { ControlActionMixin } from '../lib/ControlAction';
+import { ResumeActionMixin } from '../lib/ResumeAction';
 
 export const ResumeActionBundle = [
   ControlActionMixin as Mixin,

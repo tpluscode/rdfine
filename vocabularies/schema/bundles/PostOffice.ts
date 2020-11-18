@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { GovernmentOfficeMixin } from '../GovernmentOffice';
-import { PostOfficeMixin } from '../PostOffice';
+import { GovernmentOfficeMixin } from '../lib/GovernmentOffice';
+import { PostOfficeMixin } from '../lib/PostOffice';
 
 export const PostOfficeBundle = [
   GovernmentOfficeMixin as Mixin,

@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { EpisodeMixin } from '../Episode';
-import { TVEpisodeMixin } from '../TVEpisode';
-import { CountryMixin } from '../Country';
-import { TVSeriesMixin } from '../TVSeries';
-import { LanguageMixin } from '../Language';
+import { EpisodeMixin } from '../lib/Episode';
+import { TVEpisodeMixin } from '../lib/TVEpisode';
+import { CountryMixin } from '../lib/Country';
+import { TVSeriesMixin } from '../lib/TVSeries';
+import { LanguageMixin } from '../lib/Language';
 
 export const TVEpisodeBundle = [
   EpisodeMixin as Mixin,

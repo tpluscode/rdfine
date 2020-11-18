@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { LifestyleModificationMixin } from '../LifestyleModification';
-import { PhysicalActivityMixin } from '../PhysicalActivity';
-import { AnatomicalStructureMixin } from '../AnatomicalStructure';
-import { AnatomicalSystemMixin } from '../AnatomicalSystem';
-import { SuperficialAnatomyMixin } from '../SuperficialAnatomy';
-import { ThingMixin } from '../Thing';
+import { LifestyleModificationMixin } from '../lib/LifestyleModification';
+import { PhysicalActivityMixin } from '../lib/PhysicalActivity';
+import { AnatomicalStructureMixin } from '../lib/AnatomicalStructure';
+import { AnatomicalSystemMixin } from '../lib/AnatomicalSystem';
+import { SuperficialAnatomyMixin } from '../lib/SuperficialAnatomy';
+import { ThingMixin } from '../lib/Thing';
 
 export const PhysicalActivityBundle = [
   LifestyleModificationMixin as Mixin,

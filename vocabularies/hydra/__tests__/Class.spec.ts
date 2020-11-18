@@ -6,7 +6,7 @@ import { NamedNode } from 'rdf-js'
 import namespace from '@rdfjs/namespace'
 import stringToStream from 'string-to-stream'
 import Parser from '@rdfjs/parser-n3'
-import { ClassMixin } from '../Class'
+import { ClassMixin } from '../lib/Class'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import * as graphs from './Class-spec-graphs'
 

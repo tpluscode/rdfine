@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ObjectPropertyMixin } from '../ObjectProperty';
-import { ReflexivePropertyMixin } from '../ReflexiveProperty';
+import { ObjectPropertyMixin } from '../lib/ObjectProperty';
+import { ReflexivePropertyMixin } from '../lib/ReflexiveProperty';
 
 export const ReflexivePropertyBundle = [
   ObjectPropertyMixin as Mixin,

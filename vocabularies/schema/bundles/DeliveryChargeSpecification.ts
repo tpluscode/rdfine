@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PriceSpecificationMixin } from '../PriceSpecification';
-import { DeliveryChargeSpecificationMixin } from '../DeliveryChargeSpecification';
-import { AdministrativeAreaMixin } from '../AdministrativeArea';
-import { GeoShapeMixin } from '../GeoShape';
-import { PlaceMixin } from '../Place';
+import { PriceSpecificationMixin } from '../lib/PriceSpecification';
+import { DeliveryChargeSpecificationMixin } from '../lib/DeliveryChargeSpecification';
+import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
+import { GeoShapeMixin } from '../lib/GeoShape';
+import { PlaceMixin } from '../lib/Place';
 
 export const DeliveryChargeSpecificationBundle = [
   PriceSpecificationMixin as Mixin,

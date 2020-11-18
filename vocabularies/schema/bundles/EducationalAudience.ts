@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AudienceMixin } from '../Audience';
-import { EducationalAudienceMixin } from '../EducationalAudience';
+import { AudienceMixin } from '../lib/Audience';
+import { EducationalAudienceMixin } from '../lib/EducationalAudience';
 
 export const EducationalAudienceBundle = [
   AudienceMixin as Mixin,

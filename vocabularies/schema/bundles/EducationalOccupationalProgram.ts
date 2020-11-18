@@ -1,16 +1,16 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { EducationalOccupationalProgramMixin } from '../EducationalOccupationalProgram';
-import { StructuredValueMixin } from '../StructuredValue';
-import { CategoryCodeMixin } from '../CategoryCode';
-import { DemandMixin } from '../Demand';
-import { OfferMixin } from '../Offer';
-import { AlignmentObjectMixin } from '../AlignmentObject';
-import { CourseMixin } from '../Course';
-import { OrganizationMixin } from '../Organization';
-import { PersonMixin } from '../Person';
-import { MonetaryAmountDistributionMixin } from '../MonetaryAmountDistribution';
-import { DurationMixin } from '../Duration';
+import { IntangibleMixin } from '../lib/Intangible';
+import { EducationalOccupationalProgramMixin } from '../lib/EducationalOccupationalProgram';
+import { StructuredValueMixin } from '../lib/StructuredValue';
+import { CategoryCodeMixin } from '../lib/CategoryCode';
+import { DemandMixin } from '../lib/Demand';
+import { OfferMixin } from '../lib/Offer';
+import { AlignmentObjectMixin } from '../lib/AlignmentObject';
+import { CourseMixin } from '../lib/Course';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
+import { MonetaryAmountDistributionMixin } from '../lib/MonetaryAmountDistribution';
+import { DurationMixin } from '../lib/Duration';
 
 export const EducationalOccupationalProgramBundle = [
   IntangibleMixin as Mixin,

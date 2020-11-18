@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ResourceMixin } from '../Resource';
-import { StatusMixin } from '../Status';
-import { ClassMixin } from '../Class';
-import { ApiDocumentationMixin } from '../ApiDocumentation';
+import { ResourceMixin } from '../lib/Resource';
+import { StatusMixin } from '../lib/Status';
+import { ClassMixin } from '../lib/Class';
+import { ApiDocumentationMixin } from '../lib/ApiDocumentation';
 
 export const ApiDocumentationBundle = [
   ResourceMixin as Mixin,

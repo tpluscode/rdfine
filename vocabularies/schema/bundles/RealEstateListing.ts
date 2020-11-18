@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { WebPageMixin } from '../WebPage';
-import { RealEstateListingMixin } from '../RealEstateListing';
-import { DurationMixin } from '../Duration';
-import { QuantitativeValueMixin } from '../QuantitativeValue';
+import { WebPageMixin } from '../lib/WebPage';
+import { RealEstateListingMixin } from '../lib/RealEstateListing';
+import { DurationMixin } from '../lib/Duration';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
 
 export const RealEstateListingBundle = [
   WebPageMixin as Mixin,

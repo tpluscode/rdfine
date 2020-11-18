@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { HealthPlanNetworkMixin } from '../HealthPlanNetwork';
+import { IntangibleMixin } from '../lib/Intangible';
+import { HealthPlanNetworkMixin } from '../lib/HealthPlanNetwork';
 
 export const HealthPlanNetworkBundle = [
   IntangibleMixin as Mixin,

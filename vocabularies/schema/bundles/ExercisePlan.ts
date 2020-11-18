@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { PhysicalActivityMixin } from '../PhysicalActivity';
-import { ExercisePlanMixin } from '../ExercisePlan';
-import { DurationMixin } from '../Duration';
-import { QuantitativeValueMixin } from '../QuantitativeValue';
-import { EnergyMixin } from '../Energy';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { PhysicalActivityMixin } from '../lib/PhysicalActivity';
+import { ExercisePlanMixin } from '../lib/ExercisePlan';
+import { DurationMixin } from '../lib/Duration';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
+import { EnergyMixin } from '../lib/Energy';
 
 export const ExercisePlanBundle = [
   CreativeWorkMixin as Mixin,

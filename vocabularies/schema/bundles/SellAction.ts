@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { TradeActionMixin } from '../TradeAction';
-import { SellActionMixin } from '../SellAction';
-import { PersonMixin } from '../Person';
-import { WarrantyPromiseMixin } from '../WarrantyPromise';
+import { TradeActionMixin } from '../lib/TradeAction';
+import { SellActionMixin } from '../lib/SellAction';
+import { PersonMixin } from '../lib/Person';
+import { WarrantyPromiseMixin } from '../lib/WarrantyPromise';
 
 export const SellActionBundle = [
   TradeActionMixin as Mixin,

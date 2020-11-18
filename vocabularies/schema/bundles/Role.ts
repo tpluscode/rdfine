@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { RoleMixin } from '../Role';
+import { IntangibleMixin } from '../lib/Intangible';
+import { RoleMixin } from '../lib/Role';
 
 export const RoleBundle = [
   IntangibleMixin as Mixin,

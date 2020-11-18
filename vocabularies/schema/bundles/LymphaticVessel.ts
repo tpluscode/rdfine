@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { VesselMixin } from '../Vessel';
-import { LymphaticVesselMixin } from '../LymphaticVessel';
-import { AnatomicalStructureMixin } from '../AnatomicalStructure';
-import { AnatomicalSystemMixin } from '../AnatomicalSystem';
+import { VesselMixin } from '../lib/Vessel';
+import { LymphaticVesselMixin } from '../lib/LymphaticVessel';
+import { AnatomicalStructureMixin } from '../lib/AnatomicalStructure';
+import { AnatomicalSystemMixin } from '../lib/AnatomicalSystem';
 
 export const LymphaticVesselBundle = [
   VesselMixin as Mixin,

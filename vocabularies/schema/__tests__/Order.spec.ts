@@ -2,7 +2,7 @@ import clownface from 'clownface'
 import rdf from '@rdfjs/dataset'
 import RDF from '@rdfjs/data-model'
 import { schema } from '@tpluscode/rdf-ns-builders';
-import { OrderMixin } from '../Order'
+import { OrderMixin } from '../lib/Order'
 
 describe('Order', () => {
   describe('status', () => {

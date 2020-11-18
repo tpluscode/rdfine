@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { WebPageElementMixin } from '../WebPageElement';
-import { WPSideBarMixin } from '../WPSideBar';
+import { WebPageElementMixin } from '../lib/WebPageElement';
+import { WPSideBarMixin } from '../lib/WPSideBar';
 
 export const WPSideBarBundle = [
   WebPageElementMixin as Mixin,

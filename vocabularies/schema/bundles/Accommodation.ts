@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PlaceMixin } from '../Place';
-import { AccommodationMixin } from '../Accommodation';
-import { FloorPlanMixin } from '../FloorPlan';
-import { LocationFeatureSpecificationMixin } from '../LocationFeatureSpecification';
-import { QuantitativeValueMixin } from '../QuantitativeValue';
-import { DurationMixin } from '../Duration';
+import { PlaceMixin } from '../lib/Place';
+import { AccommodationMixin } from '../lib/Accommodation';
+import { FloorPlanMixin } from '../lib/FloorPlan';
+import { LocationFeatureSpecificationMixin } from '../lib/LocationFeatureSpecification';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
+import { DurationMixin } from '../lib/Duration';
 
 export const AccommodationBundle = [
   PlaceMixin as Mixin,

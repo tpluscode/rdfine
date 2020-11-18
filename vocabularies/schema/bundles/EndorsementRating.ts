@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RatingMixin } from '../Rating';
-import { EndorsementRatingMixin } from '../EndorsementRating';
+import { RatingMixin } from '../lib/Rating';
+import { EndorsementRatingMixin } from '../lib/EndorsementRating';
 
 export const EndorsementRatingBundle = [
   RatingMixin as Mixin,

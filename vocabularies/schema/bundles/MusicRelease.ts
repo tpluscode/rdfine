@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MusicPlaylistMixin } from '../MusicPlaylist';
-import { MusicReleaseMixin } from '../MusicRelease';
-import { OrganizationMixin } from '../Organization';
-import { PersonMixin } from '../Person';
-import { DurationMixin } from '../Duration';
-import { MusicAlbumMixin } from '../MusicAlbum';
+import { MusicPlaylistMixin } from '../lib/MusicPlaylist';
+import { MusicReleaseMixin } from '../lib/MusicRelease';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
+import { DurationMixin } from '../lib/Duration';
+import { MusicAlbumMixin } from '../lib/MusicAlbum';
 
 export const MusicReleaseBundle = [
   MusicPlaylistMixin as Mixin,

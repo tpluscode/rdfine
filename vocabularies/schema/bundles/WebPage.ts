@@ -1,12 +1,12 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { WebPageMixin } from '../WebPage';
-import { BreadcrumbListMixin } from '../BreadcrumbList';
-import { WebPageElementMixin } from '../WebPageElement';
-import { ImageObjectMixin } from '../ImageObject';
-import { OrganizationMixin } from '../Organization';
-import { PersonMixin } from '../Person';
-import { SpeakableSpecificationMixin } from '../SpeakableSpecification';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { WebPageMixin } from '../lib/WebPage';
+import { BreadcrumbListMixin } from '../lib/BreadcrumbList';
+import { WebPageElementMixin } from '../lib/WebPageElement';
+import { ImageObjectMixin } from '../lib/ImageObject';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
+import { SpeakableSpecificationMixin } from '../lib/SpeakableSpecification';
 
 export const WebPageBundle = [
   CreativeWorkMixin as Mixin,

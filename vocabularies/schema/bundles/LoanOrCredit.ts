@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { FinancialProductMixin } from '../FinancialProduct';
-import { LoanOrCreditMixin } from '../LoanOrCredit';
-import { MonetaryAmountMixin } from '../MonetaryAmount';
-import { DurationMixin } from '../Duration';
-import { RepaymentSpecificationMixin } from '../RepaymentSpecification';
-import { QuantitativeValueMixin } from '../QuantitativeValue';
-import { ThingMixin } from '../Thing';
+import { FinancialProductMixin } from '../lib/FinancialProduct';
+import { LoanOrCreditMixin } from '../lib/LoanOrCredit';
+import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
+import { DurationMixin } from '../lib/Duration';
+import { RepaymentSpecificationMixin } from '../lib/RepaymentSpecification';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
+import { ThingMixin } from '../lib/Thing';
 
 export const LoanOrCreditBundle = [
   FinancialProductMixin as Mixin,

@@ -1,12 +1,12 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DatatypeMixin } from '../Datatype';
-import { DialectMixin } from '../Dialect';
-import { ForeignKeyMixin } from '../ForeignKey';
-import { RowMixin } from '../Row';
-import { DirectionMixin } from '../Direction';
-import { SchemaMixin } from '../Schema';
-import { TransformationMixin } from '../Transformation';
-import { TableMixin } from '../Table';
+import { DatatypeMixin } from '../lib/Datatype';
+import { DialectMixin } from '../lib/Dialect';
+import { ForeignKeyMixin } from '../lib/ForeignKey';
+import { RowMixin } from '../lib/Row';
+import { DirectionMixin } from '../lib/Direction';
+import { SchemaMixin } from '../lib/Schema';
+import { TransformationMixin } from '../lib/Transformation';
+import { TableMixin } from '../lib/Table';
 
 export const TableBundle = [
   DatatypeMixin as Mixin,

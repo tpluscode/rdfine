@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MedicalIntangibleMixin } from '../MedicalIntangible';
-import { DrugLegalStatusMixin } from '../DrugLegalStatus';
-import { AdministrativeAreaMixin } from '../AdministrativeArea';
+import { MedicalIntangibleMixin } from '../lib/MedicalIntangible';
+import { DrugLegalStatusMixin } from '../lib/DrugLegalStatus';
+import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
 
 export const DrugLegalStatusBundle = [
   MedicalIntangibleMixin as Mixin,

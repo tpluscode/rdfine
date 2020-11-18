@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { FunctionMixin } from '../Function';
-import { JSExecutableMixin } from '../JSExecutable';
-import { JSFunctionMixin } from '../JSFunction';
+import { FunctionMixin } from '../lib/Function';
+import { JSExecutableMixin } from '../lib/JSExecutable';
+import { JSFunctionMixin } from '../lib/JSFunction';
 
 export const JSFunctionBundle = [
   FunctionMixin as Mixin,

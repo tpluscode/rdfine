@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ResourceMixin } from '../Resource';
-import { ManagesBlockMixin } from '../ManagesBlock';
-import { CollectionMixin } from '../Collection';
+import { ResourceMixin } from '../lib/Resource';
+import { ManagesBlockMixin } from '../lib/ManagesBlock';
+import { CollectionMixin } from '../lib/Collection';
 
 export const CollectionBundle = [
   ResourceMixin as Mixin,

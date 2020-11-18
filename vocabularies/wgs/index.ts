@@ -1,2 +1,2 @@
-export * from './Point';
-export * from './SpatialThing';
+export * from './lib/Point';
+export * from './lib/SpatialThing';

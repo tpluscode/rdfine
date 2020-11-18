@@ -127,7 +127,7 @@ export class PropertyWriter {
         }
       } else if (resourceRange.type === 'ExternalResource') {
         this.__module.addMixinImport(resourceRange)
-        decoratorOptions.push(`as: [${resourceRange.qualifiedMixinName}]`)
+        decoratorOptions.push(`as: [${resourceRange.mixinName}]`)
       }
     }
 

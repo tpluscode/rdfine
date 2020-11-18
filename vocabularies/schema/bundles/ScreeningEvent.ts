@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { EventMixin } from '../Event';
-import { ScreeningEventMixin } from '../ScreeningEvent';
-import { LanguageMixin } from '../Language';
-import { MovieMixin } from '../Movie';
+import { EventMixin } from '../lib/Event';
+import { ScreeningEventMixin } from '../lib/ScreeningEvent';
+import { LanguageMixin } from '../lib/Language';
+import { MovieMixin } from '../lib/Movie';
 
 export const ScreeningEventBundle = [
   EventMixin as Mixin,

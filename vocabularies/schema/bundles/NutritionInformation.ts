@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StructuredValueMixin } from '../StructuredValue';
-import { NutritionInformationMixin } from '../NutritionInformation';
-import { EnergyMixin } from '../Energy';
-import { MassMixin } from '../Mass';
+import { StructuredValueMixin } from '../lib/StructuredValue';
+import { NutritionInformationMixin } from '../lib/NutritionInformation';
+import { EnergyMixin } from '../lib/Energy';
+import { MassMixin } from '../lib/Mass';
 
 export const NutritionInformationBundle = [
   StructuredValueMixin as Mixin,

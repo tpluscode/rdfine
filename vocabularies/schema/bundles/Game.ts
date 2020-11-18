@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { GameMixin } from '../Game';
-import { ThingMixin } from '../Thing';
-import { PlaceMixin } from '../Place';
-import { PostalAddressMixin } from '../PostalAddress';
-import { QuantitativeValueMixin } from '../QuantitativeValue';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { GameMixin } from '../lib/Game';
+import { ThingMixin } from '../lib/Thing';
+import { PlaceMixin } from '../lib/Place';
+import { PostalAddressMixin } from '../lib/PostalAddress';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
 
 export const GameBundle = [
   CreativeWorkMixin as Mixin,

@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { MediaSubscriptionMixin } from '../MediaSubscription';
-import { OrganizationMixin } from '../Organization';
-import { OfferMixin } from '../Offer';
+import { IntangibleMixin } from '../lib/Intangible';
+import { MediaSubscriptionMixin } from '../lib/MediaSubscription';
+import { OrganizationMixin } from '../lib/Organization';
+import { OfferMixin } from '../lib/Offer';
 
 export const MediaSubscriptionBundle = [
   IntangibleMixin as Mixin,

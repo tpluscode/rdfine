@@ -1,5 +1,5 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ResourceMixin } from '../Resource';
+import { ResourceMixin } from '../lib/Resource';
 
 export const ResourceBundle = [
   ResourceMixin as Mixin];

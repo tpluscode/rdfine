@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StructuredValueMixin } from '../StructuredValue';
-import { GeoShapeMixin } from '../GeoShape';
-import { PostalAddressMixin } from '../PostalAddress';
-import { CountryMixin } from '../Country';
+import { StructuredValueMixin } from '../lib/StructuredValue';
+import { GeoShapeMixin } from '../lib/GeoShape';
+import { PostalAddressMixin } from '../lib/PostalAddress';
+import { CountryMixin } from '../lib/Country';
 
 export const GeoShapeBundle = [
   StructuredValueMixin as Mixin,

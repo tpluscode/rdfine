@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RoleMixin } from '../Role';
-import { LinkRoleMixin } from '../LinkRole';
-import { LanguageMixin } from '../Language';
+import { RoleMixin } from '../lib/Role';
+import { LinkRoleMixin } from '../lib/LinkRole';
+import { LanguageMixin } from '../lib/Language';
 
 export const LinkRoleBundle = [
   RoleMixin as Mixin,

@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { FinancialProductMixin } from '../FinancialProduct';
-import { InvestmentOrDepositMixin } from '../InvestmentOrDeposit';
-import { MonetaryAmountMixin } from '../MonetaryAmount';
+import { FinancialProductMixin } from '../lib/FinancialProduct';
+import { InvestmentOrDepositMixin } from '../lib/InvestmentOrDeposit';
+import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
 
 export const InvestmentOrDepositBundle = [
   FinancialProductMixin as Mixin,

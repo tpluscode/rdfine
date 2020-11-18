@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { LocalBusinessMixin } from '../LocalBusiness';
-import { InternetCafeMixin } from '../InternetCafe';
+import { LocalBusinessMixin } from '../lib/LocalBusiness';
+import { InternetCafeMixin } from '../lib/InternetCafe';
 
 export const InternetCafeBundle = [
   LocalBusinessMixin as Mixin,

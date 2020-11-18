@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { LandformMixin } from '../Landform';
-import { ContinentMixin } from '../Continent';
+import { LandformMixin } from '../lib/Landform';
+import { ContinentMixin } from '../lib/Continent';
 
 export const ContinentBundle = [
   LandformMixin as Mixin,

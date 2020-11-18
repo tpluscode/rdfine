@@ -1,13 +1,13 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { MovieMixin } from '../Movie';
-import { PersonMixin } from '../Person';
-import { CountryMixin } from '../Country';
-import { DurationMixin } from '../Duration';
-import { MusicGroupMixin } from '../MusicGroup';
-import { OrganizationMixin } from '../Organization';
-import { LanguageMixin } from '../Language';
-import { VideoObjectMixin } from '../VideoObject';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { MovieMixin } from '../lib/Movie';
+import { PersonMixin } from '../lib/Person';
+import { CountryMixin } from '../lib/Country';
+import { DurationMixin } from '../lib/Duration';
+import { MusicGroupMixin } from '../lib/MusicGroup';
+import { OrganizationMixin } from '../lib/Organization';
+import { LanguageMixin } from '../lib/Language';
+import { VideoObjectMixin } from '../lib/VideoObject';
 
 export const MovieBundle = [
   CreativeWorkMixin as Mixin,

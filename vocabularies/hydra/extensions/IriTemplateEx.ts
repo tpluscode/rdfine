@@ -1,14 +1,14 @@
 import type { Constructor, RdfResource } from '@tpluscode/rdfine'
 import type { AnyPointer } from 'clownface'
-import type { IriTemplate } from '../IriTemplate'
+import type { IriTemplate } from '..'
 import { hydra } from '@tpluscode/rdf-ns-builders'
-import { TemplateExpander } from '../lib/TemplateExpander'
+import { TemplateExpander } from './TemplateExpander'
 
 export interface IriTemplateEx {
   expand(model: AnyPointer | RdfResource): string;
 }
 
-declare module '@rdfine/hydra/IriTemplate' {
+declare module '@rdfine/hydra' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface IriTemplate extends IriTemplateEx {
   }

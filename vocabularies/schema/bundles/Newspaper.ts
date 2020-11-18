@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PeriodicalMixin } from '../Periodical';
-import { NewspaperMixin } from '../Newspaper';
+import { PeriodicalMixin } from '../lib/Periodical';
+import { NewspaperMixin } from '../lib/Newspaper';
 
 export const NewspaperBundle = [
   PeriodicalMixin as Mixin,

@@ -1,12 +1,12 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkSeriesMixin } from '../CreativeWorkSeries';
-import { RadioSeriesMixin } from '../RadioSeries';
-import { PersonMixin } from '../Person';
-import { CreativeWorkSeasonMixin } from '../CreativeWorkSeason';
-import { EpisodeMixin } from '../Episode';
-import { MusicGroupMixin } from '../MusicGroup';
-import { OrganizationMixin } from '../Organization';
-import { VideoObjectMixin } from '../VideoObject';
+import { CreativeWorkSeriesMixin } from '../lib/CreativeWorkSeries';
+import { RadioSeriesMixin } from '../lib/RadioSeries';
+import { PersonMixin } from '../lib/Person';
+import { CreativeWorkSeasonMixin } from '../lib/CreativeWorkSeason';
+import { EpisodeMixin } from '../lib/Episode';
+import { MusicGroupMixin } from '../lib/MusicGroup';
+import { OrganizationMixin } from '../lib/Organization';
+import { VideoObjectMixin } from '../lib/VideoObject';
 
 export const RadioSeriesBundle = [
   CreativeWorkSeriesMixin as Mixin,

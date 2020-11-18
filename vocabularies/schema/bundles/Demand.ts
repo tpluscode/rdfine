@@ -1,23 +1,23 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { DemandMixin } from '../Demand';
-import { LoanOrCreditMixin } from '../LoanOrCredit';
-import { QuantitativeValueMixin } from '../QuantitativeValue';
-import { AdministrativeAreaMixin } from '../AdministrativeArea';
-import { GeoShapeMixin } from '../GeoShape';
-import { PlaceMixin } from '../Place';
-import { PriceSpecificationMixin } from '../PriceSpecification';
-import { TypeAndQuantityNodeMixin } from '../TypeAndQuantityNode';
-import { AggregateOfferMixin } from '../AggregateOffer';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { EventMixin } from '../Event';
-import { MenuItemMixin } from '../MenuItem';
-import { ProductMixin } from '../Product';
-import { ServiceMixin } from '../Service';
-import { TripMixin } from '../Trip';
-import { OrganizationMixin } from '../Organization';
-import { PersonMixin } from '../Person';
-import { WarrantyPromiseMixin } from '../WarrantyPromise';
+import { IntangibleMixin } from '../lib/Intangible';
+import { DemandMixin } from '../lib/Demand';
+import { LoanOrCreditMixin } from '../lib/LoanOrCredit';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
+import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
+import { GeoShapeMixin } from '../lib/GeoShape';
+import { PlaceMixin } from '../lib/Place';
+import { PriceSpecificationMixin } from '../lib/PriceSpecification';
+import { TypeAndQuantityNodeMixin } from '../lib/TypeAndQuantityNode';
+import { AggregateOfferMixin } from '../lib/AggregateOffer';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { EventMixin } from '../lib/Event';
+import { MenuItemMixin } from '../lib/MenuItem';
+import { ProductMixin } from '../lib/Product';
+import { ServiceMixin } from '../lib/Service';
+import { TripMixin } from '../lib/Trip';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
+import { WarrantyPromiseMixin } from '../lib/WarrantyPromise';
 
 export const DemandBundle = [
   IntangibleMixin as Mixin,

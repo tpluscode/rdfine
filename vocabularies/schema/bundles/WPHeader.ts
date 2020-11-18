@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { WebPageElementMixin } from '../WebPageElement';
-import { WPHeaderMixin } from '../WPHeader';
+import { WebPageElementMixin } from '../lib/WebPageElement';
+import { WPHeaderMixin } from '../lib/WPHeader';
 
 export const WPHeaderBundle = [
   WebPageElementMixin as Mixin,

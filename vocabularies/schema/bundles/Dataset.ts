@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { DatasetMixin } from '../Dataset';
-import { DataCatalogMixin } from '../DataCatalog';
-import { DataDownloadMixin } from '../DataDownload';
-import { PropertyValueMixin } from '../PropertyValue';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { DatasetMixin } from '../lib/Dataset';
+import { DataCatalogMixin } from '../lib/DataCatalog';
+import { DataDownloadMixin } from '../lib/DataDownload';
+import { PropertyValueMixin } from '../lib/PropertyValue';
 
 export const DatasetBundle = [
   CreativeWorkMixin as Mixin,

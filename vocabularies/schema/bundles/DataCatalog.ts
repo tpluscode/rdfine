@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { DataCatalogMixin } from '../DataCatalog';
-import { DatasetMixin } from '../Dataset';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { DataCatalogMixin } from '../lib/DataCatalog';
+import { DatasetMixin } from '../lib/Dataset';
 
 export const DataCatalogBundle = [
   CreativeWorkMixin as Mixin,

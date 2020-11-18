@@ -3,8 +3,8 @@ import $rdf from 'rdf-ext'
 import RDF from '@rdfjs/data-model'
 import RdfResource from '@tpluscode/rdfine'
 import { rdfs, skos } from '@tpluscode/rdf-ns-builders'
-import { ResourceMixin } from '@rdfine/rdfs/Resource'
-import { PropertyShape, PropertyShapeMixin } from '../PropertyShape';
+import { ResourceMixin } from '@rdfine/rdfs/lib/Resource'
+import { PropertyShape, PropertyShapeMixin } from '../lib/PropertyShape';
 import { PropertyShapeBundle } from '../bundles'
 
 RdfResource.factory.addMixin(...PropertyShapeBundle)

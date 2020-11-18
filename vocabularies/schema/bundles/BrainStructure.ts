@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AnatomicalStructureMixin } from '../AnatomicalStructure';
-import { BrainStructureMixin } from '../BrainStructure';
+import { AnatomicalStructureMixin } from '../lib/AnatomicalStructure';
+import { BrainStructureMixin } from '../lib/BrainStructure';
 
 export const BrainStructureBundle = [
   AnatomicalStructureMixin as Mixin,

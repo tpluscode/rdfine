@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { EventMixin } from '../Event';
-import { SportsEventMixin } from '../SportsEvent';
-import { PersonMixin } from '../Person';
-import { SportsTeamMixin } from '../SportsTeam';
+import { EventMixin } from '../lib/Event';
+import { SportsEventMixin } from '../lib/SportsEvent';
+import { PersonMixin } from '../lib/Person';
+import { SportsTeamMixin } from '../lib/SportsTeam';
 
 export const SportsEventBundle = [
   EventMixin as Mixin,

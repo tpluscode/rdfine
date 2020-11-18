@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreateActionMixin } from '../CreateAction';
-import { PhotographActionMixin } from '../PhotographAction';
+import { CreateActionMixin } from '../lib/CreateAction';
+import { PhotographActionMixin } from '../lib/PhotographAction';
 
 export const PhotographActionBundle = [
   CreateActionMixin as Mixin,
