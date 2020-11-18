@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { doap } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Doap from '..';
 import type * as Foaf from '@rdfine/foaf';
@@ -14,34 +14,34 @@ import { PersonMixin as FoafPersonMixin } from '@rdfine/foaf/lib/Person';
 import { ContainerMixin as SiocContainerMixin } from '@rdfine/sioc/lib/Container';
 import { OrganizationMixin as FoafOrganizationMixin } from '@rdfine/foaf/lib/Organization';
 
-export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Project<D>, RdfResource<D> {
+export interface Project<ID extends ResourceNode = ResourceNode> extends Foaf.Project<ID>, RdfResource<ID> {
   audience: RDF.Literal | undefined;
-  blog: Rdfs.Resource<D> | undefined;
+  blog: Rdfs.Resource<SiblingNode<ID>> | undefined;
   'bug-database': RDF.Term | undefined;
   category: RDF.Term | undefined;
-  developer: Foaf.Person<D> | undefined;
-  'developer-forum': Sioc.Container<D> | undefined;
-  documenter: Foaf.Person<D> | undefined;
+  developer: Foaf.Person<SiblingNode<ID>> | undefined;
+  'developer-forum': Sioc.Container<SiblingNode<ID>> | undefined;
+  documenter: Foaf.Person<SiblingNode<ID>> | undefined;
   'download-mirror': RDF.Term | undefined;
   'download-page': RDF.Term | undefined;
-  helper: Foaf.Person<D> | undefined;
+  helper: Foaf.Person<SiblingNode<ID>> | undefined;
   homepage: RDF.Term | undefined;
-  implements: Doap.Specification<D> | undefined;
+  implements: Doap.Specification<SiblingNode<ID>> | undefined;
   language: RDF.Literal | undefined;
   'mailing-list': RDF.NamedNode | undefined;
-  maintainer: Foaf.Person<D> | undefined;
+  maintainer: Foaf.Person<SiblingNode<ID>> | undefined;
   'old-homepage': RDF.Term | undefined;
   os: RDF.Literal | undefined;
   platform: RDF.Literal | undefined;
   'programming-language': RDF.Literal | undefined;
-  release: Doap.Version<D> | undefined;
-  repository: Doap.Repository<D> | undefined;
+  release: Doap.Version<SiblingNode<ID>> | undefined;
+  repository: Doap.Repository<SiblingNode<ID>> | undefined;
   screenshots: RDF.Term | undefined;
-  'service-endpoint': Rdfs.Resource<D> | undefined;
-  'support-forum': Sioc.Container<D> | undefined;
-  tester: Foaf.Person<D> | undefined;
-  translator: Foaf.Person<D> | undefined;
-  vendor: Foaf.Organization<D> | undefined;
+  'service-endpoint': Rdfs.Resource<SiblingNode<ID>> | undefined;
+  'support-forum': Sioc.Container<SiblingNode<ID>> | undefined;
+  tester: Foaf.Person<SiblingNode<ID>> | undefined;
+  translator: Foaf.Person<SiblingNode<ID>> | undefined;
+  vendor: Foaf.Organization<SiblingNode<ID>> | undefined;
   wiki: RDF.NamedNode | undefined;
 }
 

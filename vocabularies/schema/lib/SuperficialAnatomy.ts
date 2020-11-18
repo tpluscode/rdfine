@@ -2,16 +2,16 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalEntityMixin } from './MedicalEntity';
 
-export interface SuperficialAnatomy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, RdfResource<D> {
+export interface SuperficialAnatomy<ID extends ResourceNode = ResourceNode> extends Schema.MedicalEntity<ID>, RdfResource<ID> {
   associatedPathophysiology: string | undefined;
-  relatedAnatomy: Schema.AnatomicalStructure<D> | Schema.AnatomicalSystem<D> | undefined;
-  relatedCondition: Schema.MedicalCondition<D> | undefined;
-  relatedTherapy: Schema.MedicalTherapy<D> | undefined;
+  relatedAnatomy: Schema.AnatomicalStructure<SiblingNode<ID>> | Schema.AnatomicalSystem<SiblingNode<ID>> | undefined;
+  relatedCondition: Schema.MedicalCondition<SiblingNode<ID>> | undefined;
+  relatedTherapy: Schema.MedicalTherapy<SiblingNode<ID>> | undefined;
   significance: string | undefined;
 }
 

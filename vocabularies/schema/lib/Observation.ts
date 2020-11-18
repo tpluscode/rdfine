@@ -2,17 +2,17 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface Observation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Observation<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
   marginOfError: Date | undefined;
-  measuredProperty: Schema.Property<D> | undefined;
+  measuredProperty: Schema.Property<SiblingNode<ID>> | undefined;
   measuredValue: RDF.Term | undefined;
   observationDate: Date | undefined;
-  observedNode: Schema.StatisticalPopulation<D> | undefined;
+  observedNode: Schema.StatisticalPopulation<SiblingNode<ID>> | undefined;
 }
 
 export function ObservationMixin<Base extends Constructor>(Resource: Base) {

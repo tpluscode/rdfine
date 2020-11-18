@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface GeoShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
-  address: Schema.PostalAddress<D> | undefined;
+export interface GeoShape<ID extends ResourceNode = ResourceNode> extends Schema.StructuredValue<ID>, RdfResource<ID> {
+  address: Schema.PostalAddress<SiblingNode<ID>> | undefined;
   addressLiteral: string | undefined;
-  addressCountry: Schema.Country<D> | undefined;
+  addressCountry: Schema.Country<SiblingNode<ID>> | undefined;
   addressCountryLiteral: string | undefined;
   box: string | undefined;
   circle: string | undefined;

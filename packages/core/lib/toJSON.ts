@@ -1,11 +1,11 @@
 import TermMap from '@rdf-esm/term-map'
-import type { BlankNode, DatasetCore, Literal, NamedNode, Term } from 'rdf-js'
+import type { BlankNode, Literal, NamedNode, Term } from 'rdf-js'
 import { namedNode } from '@rdf-esm/data-model'
 import TermSet from '@rdf-esm/term-set'
 import { rdf, xsd } from '@tpluscode/rdf-ns-builders'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
 import type { Constructor, ResourceIndexer } from './ResourceFactory'
-import type { RdfResource, ResourceIdentifier } from '../RdfResource'
+import type { RdfResource, ResourceIdentifier, ResourceNode } from '../RdfResource'
 import { enumerateList, isList } from './rdf-list'
 import { PropertyMeta } from './decorators/property'
 
@@ -67,7 +67,7 @@ function objectCanBeJsonified(term: Term): term is ResourceIdentifier | Literal 
   }
 }
 
-function getObjectMap<D extends DatasetCore>(resource: RdfResource<D>) {
+function getObjectMap<D extends ResourceNode>(resource: RdfResource<D>) {
   const graph = resource.pointer._context[0].graph
 
   return [...resource.pointer.dataset.match(resource.id, null, null, graph)].reduce((map, quad) => {

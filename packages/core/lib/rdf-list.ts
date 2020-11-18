@@ -1,7 +1,7 @@
 import { AnyPointer, GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import { DatasetCore, Term } from 'rdf-js'
-import type { RdfResource } from '../RdfResource'
+import { Term } from 'rdf-js'
+import type { DatasetType, RdfResource, ResourceNode } from '../RdfResource'
 
 function isLast(node: AnyPointer): boolean {
   return rdf.nil.equals(node.term)
@@ -13,7 +13,7 @@ export function isList(node: AnyPointer): boolean {
   return isLastListNode || isListNode
 }
 
-export function enumerateList<T, D extends DatasetCore = DatasetCore>(parent: RdfResource<D>, listNode: GraphPointer<Term, D>, fromTerm: (obj: GraphPointer<Term, D>) => T | T[]): T[] {
+export function enumerateList<T, D extends ResourceNode = ResourceNode>(parent: RdfResource<D>, listNode: GraphPointer<Term, DatasetType<D>>, fromTerm: (obj: GraphPointer<Term, DatasetType<D>>) => T | T[]): T[] {
   const items: T[] = []
 
   let current = listNode

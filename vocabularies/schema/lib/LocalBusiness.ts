@@ -2,14 +2,14 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { OrganizationMixin } from './Organization';
 import { PlaceMixin } from './Place';
 
-export interface LocalBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, Schema.Place<D>, RdfResource<D> {
-  branchOf: Schema.Organization<D> | undefined;
+export interface LocalBusiness<ID extends ResourceNode = ResourceNode> extends Schema.Organization<ID>, Schema.Place<ID>, RdfResource<ID> {
+  branchOf: Schema.Organization<SiblingNode<ID>> | undefined;
   currenciesAccepted: string | undefined;
   openingHours: string | undefined;
   paymentAccepted: string | undefined;

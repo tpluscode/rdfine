@@ -2,14 +2,14 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import { SPARQLAskExecutableMixin } from './SPARQLAskExecutable';
 import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable';
 import { TargetMixin } from './Target';
 
-export interface SPARQLTarget<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLAskExecutable<D>, Sh.SPARQLSelectExecutable<D>, Sh.Target<D>, RdfResource<D> {
+export interface SPARQLTarget<ID extends ResourceNode = ResourceNode> extends Sh.SPARQLAskExecutable<ID>, Sh.SPARQLSelectExecutable<ID>, Sh.Target<ID>, RdfResource<ID> {
 }
 
 export function SPARQLTargetMixin<Base extends Constructor>(Resource: Base) {

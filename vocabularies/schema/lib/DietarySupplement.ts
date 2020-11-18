@@ -2,22 +2,22 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { SubstanceMixin } from './Substance';
 
-export interface DietarySupplement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Substance<D>, RdfResource<D> {
+export interface DietarySupplement<ID extends ResourceNode = ResourceNode> extends Schema.Substance<ID>, RdfResource<ID> {
   activeIngredient: string | undefined;
   isProprietary: boolean | undefined;
-  legalStatus: Schema.DrugLegalStatus<D> | undefined;
+  legalStatus: Schema.DrugLegalStatus<SiblingNode<ID>> | undefined;
   legalStatusLiteral: string | undefined;
-  manufacturer: Schema.Organization<D> | undefined;
-  maximumIntake: Schema.MaximumDoseSchedule<D> | undefined;
+  manufacturer: Schema.Organization<SiblingNode<ID>> | undefined;
+  maximumIntake: Schema.MaximumDoseSchedule<SiblingNode<ID>> | undefined;
   mechanismOfAction: string | undefined;
   nonProprietaryName: string | undefined;
   proprietaryName: string | undefined;
-  recommendedIntake: Schema.RecommendedDoseSchedule<D> | undefined;
+  recommendedIntake: Schema.RecommendedDoseSchedule<SiblingNode<ID>> | undefined;
   safetyConsideration: string | undefined;
   targetPopulation: string | undefined;
 }

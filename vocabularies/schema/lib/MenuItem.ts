@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface MenuItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
-  menuAddOn: Schema.MenuItem<D> | Schema.MenuSection<D> | undefined;
-  nutrition: Schema.NutritionInformation<D> | undefined;
-  offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
+export interface MenuItem<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
+  menuAddOn: Schema.MenuItem<SiblingNode<ID>> | Schema.MenuSection<SiblingNode<ID>> | undefined;
+  nutrition: Schema.NutritionInformation<SiblingNode<ID>> | undefined;
+  offers: Schema.Demand<SiblingNode<ID>> | Schema.Offer<SiblingNode<ID>> | undefined;
   suitableForDiet: Schema.RestrictedDiet | undefined;
 }
 

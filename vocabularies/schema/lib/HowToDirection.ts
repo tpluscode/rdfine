@@ -2,23 +2,23 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 import { ListItemMixin } from './ListItem';
 
-export interface HowToDirection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ListItem<D>, RdfResource<D> {
-  afterMedia: Schema.MediaObject<D> | undefined;
-  beforeMedia: Schema.MediaObject<D> | undefined;
-  duringMedia: Schema.MediaObject<D> | undefined;
-  performTime: Schema.Duration<D> | undefined;
-  prepTime: Schema.Duration<D> | undefined;
-  supply: Schema.HowToSupply<D> | undefined;
+export interface HowToDirection<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, Schema.ListItem<ID>, RdfResource<ID> {
+  afterMedia: Schema.MediaObject<SiblingNode<ID>> | undefined;
+  beforeMedia: Schema.MediaObject<SiblingNode<ID>> | undefined;
+  duringMedia: Schema.MediaObject<SiblingNode<ID>> | undefined;
+  performTime: Schema.Duration<SiblingNode<ID>> | undefined;
+  prepTime: Schema.Duration<SiblingNode<ID>> | undefined;
+  supply: Schema.HowToSupply<SiblingNode<ID>> | undefined;
   supplyLiteral: string | undefined;
-  tool: Array<Schema.HowToTool<D>>;
+  tool: Array<Schema.HowToTool<SiblingNode<ID>>>;
   toolLiteral: Array<string>;
-  totalTime: Schema.Duration<D> | undefined;
+  totalTime: Schema.Duration<SiblingNode<ID>> | undefined;
 }
 
 export function HowToDirectionMixin<Base extends Constructor>(Resource: Base) {

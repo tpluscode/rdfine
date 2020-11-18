@@ -2,20 +2,20 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface ServiceChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
-  availableLanguage: Schema.Language<D> | undefined;
+export interface ServiceChannel<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
+  availableLanguage: Schema.Language<SiblingNode<ID>> | undefined;
   availableLanguageLiteral: string | undefined;
-  processingTime: Schema.Duration<D> | undefined;
-  providesService: Schema.Service<D> | undefined;
-  serviceLocation: Schema.Place<D> | undefined;
-  servicePhone: Schema.ContactPoint<D> | undefined;
-  servicePostalAddress: Schema.PostalAddress<D> | undefined;
-  serviceSmsNumber: Schema.ContactPoint<D> | undefined;
+  processingTime: Schema.Duration<SiblingNode<ID>> | undefined;
+  providesService: Schema.Service<SiblingNode<ID>> | undefined;
+  serviceLocation: Schema.Place<SiblingNode<ID>> | undefined;
+  servicePhone: Schema.ContactPoint<SiblingNode<ID>> | undefined;
+  servicePostalAddress: Schema.PostalAddress<SiblingNode<ID>> | undefined;
+  serviceSmsNumber: Schema.ContactPoint<SiblingNode<ID>> | undefined;
   serviceUrl: RDF.NamedNode | undefined;
 }
 

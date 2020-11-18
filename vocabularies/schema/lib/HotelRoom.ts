@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { RoomMixin } from './Room';
 
-export interface HotelRoom<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Room<D>, RdfResource<D> {
-  bed: Schema.BedDetails<D> | undefined;
+export interface HotelRoom<ID extends ResourceNode = ResourceNode> extends Schema.Room<ID>, RdfResource<ID> {
+  bed: Schema.BedDetails<SiblingNode<ID>> | undefined;
   bedLiteral: string | undefined;
-  occupancy: Schema.QuantitativeValue<D> | undefined;
+  occupancy: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
 }
 
 export function HotelRoomMixin<Base extends Constructor>(Resource: Base) {

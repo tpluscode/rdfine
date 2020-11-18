@@ -2,25 +2,25 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { PlayActionMixin } from './PlayAction';
 
-export interface ExerciseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlayAction<D>, RdfResource<D> {
-  course: Schema.Place<D> | undefined;
-  diet: Schema.Diet<D> | undefined;
-  distance: Schema.Distance<D> | undefined;
-  exerciseCourse: Schema.Place<D> | undefined;
-  exercisePlan: Schema.ExercisePlan<D> | undefined;
-  exerciseRelatedDiet: Schema.Diet<D> | undefined;
+export interface ExerciseAction<ID extends ResourceNode = ResourceNode> extends Schema.PlayAction<ID>, RdfResource<ID> {
+  course: Schema.Place<SiblingNode<ID>> | undefined;
+  diet: Schema.Diet<SiblingNode<ID>> | undefined;
+  distance: Schema.Distance<SiblingNode<ID>> | undefined;
+  exerciseCourse: Schema.Place<SiblingNode<ID>> | undefined;
+  exercisePlan: Schema.ExercisePlan<SiblingNode<ID>> | undefined;
+  exerciseRelatedDiet: Schema.Diet<SiblingNode<ID>> | undefined;
   exerciseType: string | undefined;
-  fromLocation: Schema.Place<D> | undefined;
-  opponent: Schema.Person<D> | undefined;
-  sportsActivityLocation: Schema.SportsActivityLocation<D> | undefined;
-  sportsEvent: Schema.SportsEvent<D> | undefined;
-  sportsTeam: Schema.SportsTeam<D> | undefined;
-  toLocation: Schema.Place<D> | undefined;
+  fromLocation: Schema.Place<SiblingNode<ID>> | undefined;
+  opponent: Schema.Person<SiblingNode<ID>> | undefined;
+  sportsActivityLocation: Schema.SportsActivityLocation<SiblingNode<ID>> | undefined;
+  sportsEvent: Schema.SportsEvent<SiblingNode<ID>> | undefined;
+  sportsTeam: Schema.SportsTeam<SiblingNode<ID>> | undefined;
+  toLocation: Schema.Place<SiblingNode<ID>> | undefined;
 }
 
 export function ExerciseActionMixin<Base extends Constructor>(Resource: Base) {

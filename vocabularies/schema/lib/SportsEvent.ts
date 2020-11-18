@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { EventMixin } from './Event';
 
-export interface SportsEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
-  awayTeam: Schema.Person<D> | Schema.SportsTeam<D> | undefined;
-  competitor: Schema.Person<D> | Schema.SportsTeam<D> | undefined;
-  homeTeam: Schema.Person<D> | Schema.SportsTeam<D> | undefined;
+export interface SportsEvent<ID extends ResourceNode = ResourceNode> extends Schema.Event<ID>, RdfResource<ID> {
+  awayTeam: Schema.Person<SiblingNode<ID>> | Schema.SportsTeam<SiblingNode<ID>> | undefined;
+  competitor: Schema.Person<SiblingNode<ID>> | Schema.SportsTeam<SiblingNode<ID>> | undefined;
+  homeTeam: Schema.Person<SiblingNode<ID>> | Schema.SportsTeam<SiblingNode<ID>> | undefined;
   sport: string | undefined;
   sportTerm: RDF.NamedNode | undefined;
 }

@@ -2,14 +2,14 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { WebPageMixin } from './WebPage';
 
-export interface MedicalWebPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, RdfResource<D> {
+export interface MedicalWebPage<ID extends ResourceNode = ResourceNode> extends Schema.WebPage<ID>, RdfResource<ID> {
   aspect: string | undefined;
-  medicalAudience: Schema.MedicalAudience<D> | undefined;
+  medicalAudience: Schema.MedicalAudience<SiblingNode<ID>> | undefined;
 }
 
 export function MedicalWebPageMixin<Base extends Constructor>(Resource: Base) {

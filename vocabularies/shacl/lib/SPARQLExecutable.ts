@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -10,8 +10,8 @@ import type * as Owl from '@rdfine/owl';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 import { OntologyMixin as OwlOntologyMixin } from '@rdfine/owl/lib/Ontology';
 
-export interface SPARQLExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
-  prefixes: Owl.Ontology<D> | undefined;
+export interface SPARQLExecutable<ID extends ResourceNode = ResourceNode> extends Rdfs.Resource<ID>, RdfResource<ID> {
+  prefixes: Owl.Ontology<SiblingNode<ID>> | undefined;
 }
 
 export function SPARQLExecutableMixin<Base extends Constructor>(Resource: Base) {

@@ -2,14 +2,14 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '..';
 import type * as Foaf from '@rdfine/foaf';
 import { ItemMixin } from './Item';
 import { DocumentMixin as FoafDocumentMixin } from '@rdfine/foaf/lib/Document';
 
-export interface Post<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc.Item<D>, Foaf.Document<D>, RdfResource<D> {
+export interface Post<ID extends ResourceNode = ResourceNode> extends Sioc.Item<ID>, Foaf.Document<ID>, RdfResource<ID> {
   'content_encoded': RDF.Literal | undefined;
   'created_at': RDF.Literal | undefined;
   description: RDF.Literal | undefined;

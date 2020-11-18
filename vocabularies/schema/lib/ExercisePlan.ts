@@ -2,25 +2,25 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 import { PhysicalActivityMixin } from './PhysicalActivity';
 
-export interface ExercisePlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.PhysicalActivity<D>, RdfResource<D> {
-  activityDuration: Schema.Duration<D> | Schema.QuantitativeValue<D> | undefined;
-  activityFrequency: Schema.QuantitativeValue<D> | undefined;
+export interface ExercisePlan<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, Schema.PhysicalActivity<ID>, RdfResource<ID> {
+  activityDuration: Schema.Duration<SiblingNode<ID>> | Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
+  activityFrequency: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   activityFrequencyLiteral: string | undefined;
   additionalVariable: string | undefined;
   exerciseType: string | undefined;
-  intensity: Schema.QuantitativeValue<D> | undefined;
+  intensity: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   intensityLiteral: string | undefined;
-  repetitions: Schema.QuantitativeValue<D> | undefined;
+  repetitions: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   repetitionsLiteral: number | undefined;
-  restPeriods: Schema.QuantitativeValue<D> | undefined;
+  restPeriods: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   restPeriodsLiteral: string | undefined;
-  workload: Schema.Energy<D> | Schema.QuantitativeValue<D> | undefined;
+  workload: Schema.Energy<SiblingNode<ID>> | Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
 }
 
 export function ExercisePlanMixin<Base extends Constructor>(Resource: Base) {

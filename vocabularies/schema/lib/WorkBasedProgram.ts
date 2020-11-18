@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { EducationalOccupationalProgramMixin } from './EducationalOccupationalProgram';
 
-export interface WorkBasedProgram<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.EducationalOccupationalProgram<D>, RdfResource<D> {
-  occupationalCategory: Schema.CategoryCode<D> | undefined;
+export interface WorkBasedProgram<ID extends ResourceNode = ResourceNode> extends Schema.EducationalOccupationalProgram<ID>, RdfResource<ID> {
+  occupationalCategory: Schema.CategoryCode<SiblingNode<ID>> | undefined;
   occupationalCategoryLiteral: string | undefined;
-  trainingSalary: Schema.MonetaryAmountDistribution<D> | undefined;
+  trainingSalary: Schema.MonetaryAmountDistribution<SiblingNode<ID>> | undefined;
 }
 
 export function WorkBasedProgramMixin<Base extends Constructor>(Resource: Base) {

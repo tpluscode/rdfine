@@ -2,22 +2,22 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { LocalBusinessMixin } from './LocalBusiness';
 
-export interface LodgingBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
-  amenityFeature: Schema.LocationFeatureSpecification<D> | undefined;
-  audience: Schema.Audience<D> | undefined;
-  availableLanguage: Schema.Language<D> | undefined;
+export interface LodgingBusiness<ID extends ResourceNode = ResourceNode> extends Schema.LocalBusiness<ID>, RdfResource<ID> {
+  amenityFeature: Schema.LocationFeatureSpecification<SiblingNode<ID>> | undefined;
+  audience: Schema.Audience<SiblingNode<ID>> | undefined;
+  availableLanguage: Schema.Language<SiblingNode<ID>> | undefined;
   availableLanguageLiteral: string | undefined;
   checkinTime: Date | undefined;
   checkoutTime: Date | undefined;
-  numberOfRooms: Schema.QuantitativeValue<D> | undefined;
+  numberOfRooms: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   numberOfRoomsLiteral: number | undefined;
   petsAllowed: boolean | string | undefined;
-  starRating: Schema.Rating<D> | undefined;
+  starRating: Schema.Rating<SiblingNode<ID>> | undefined;
 }
 
 export function LodgingBusinessMixin<Base extends Constructor>(Resource: Base) {

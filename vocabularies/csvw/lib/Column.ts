@@ -2,13 +2,13 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '..';
 
-export interface Column<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Column<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
   aboutUrl: string | undefined;
-  datatype: Csvw.Datatype<D> | undefined;
+  datatype: Csvw.Datatype<SiblingNode<ID>> | undefined;
   datatypeLiteral: string | undefined;
   default: string | undefined;
   lang: string | undefined;
@@ -19,9 +19,9 @@ export interface Column<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf
   required: boolean | undefined;
   separator: string | undefined;
   suppressOutput: boolean | undefined;
-  textDirection: Csvw.Direction<D> | undefined;
+  textDirection: Csvw.Direction<SiblingNode<ID>> | undefined;
   title: RDF.Term | undefined;
-  transformations: Array<Csvw.Transformation<D>>;
+  transformations: Array<Csvw.Transformation<SiblingNode<ID>>>;
   valueUrl: string | undefined;
   virtual: boolean | undefined;
 }

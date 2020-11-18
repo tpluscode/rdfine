@@ -2,14 +2,14 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '..';
 import { SpaceMixin } from './Space';
 
-export interface Site<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc.Space<D>, RdfResource<D> {
-  'has_administrator': Sioc.UserAccount<D> | undefined;
-  'host_of': Sioc.Container<D> | undefined;
+export interface Site<ID extends ResourceNode = ResourceNode> extends Sioc.Space<ID>, RdfResource<ID> {
+  'has_administrator': Sioc.UserAccount<SiblingNode<ID>> | undefined;
+  'host_of': Sioc.Container<SiblingNode<ID>> | undefined;
 }
 
 export function SiteMixin<Base extends Constructor>(Resource: Base) {

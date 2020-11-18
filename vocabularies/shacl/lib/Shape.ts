@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -11,24 +11,24 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
-export interface Shape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
-  and: Array<Sh.Shape<D>>;
-  class: Rdfs.Class<D> | undefined;
+export interface Shape<ID extends ResourceNode = ResourceNode> extends Rdfs.Resource<ID>, RdfResource<ID> {
+  and: Array<Sh.Shape<SiblingNode<ID>>>;
+  class: Rdfs.Class<SiblingNode<ID>> | undefined;
   closed: boolean | undefined;
   in: Array<RDF.Term>;
-  node: Sh.NodeShape<D> | undefined;
+  node: Sh.NodeShape<SiblingNode<ID>> | undefined;
   nodeKind: Sh.NodeKind | undefined;
-  or: Array<Sh.Shape<D>>;
-  property: Array<Sh.PropertyShape<D>>;
-  rule: Sh.Rule<D> | undefined;
-  severity: Sh.Severity<D> | undefined;
-  sparql: Sh.SPARQLConstraint<D> | undefined;
-  target: Sh.Target<D> | undefined;
-  targetClass: Array<Rdfs.Class<D>>;
+  or: Array<Sh.Shape<SiblingNode<ID>>>;
+  property: Array<Sh.PropertyShape<SiblingNode<ID>>>;
+  rule: Sh.Rule<SiblingNode<ID>> | undefined;
+  severity: Sh.Severity<SiblingNode<ID>> | undefined;
+  sparql: Sh.SPARQLConstraint<SiblingNode<ID>> | undefined;
+  target: Sh.Target<SiblingNode<ID>> | undefined;
+  targetClass: Array<Rdfs.Class<SiblingNode<ID>>>;
   targetNode: Array<RDF.Term>;
-  targetObjectsOf: Rdf.Property<D> | undefined;
-  targetSubjectsOf: Rdf.Property<D> | undefined;
-  xone: Array<Sh.Shape<D>>;
+  targetObjectsOf: Rdf.Property<SiblingNode<ID>> | undefined;
+  targetSubjectsOf: Rdf.Property<SiblingNode<ID>> | undefined;
+  xone: Array<Sh.Shape<SiblingNode<ID>>>;
 }
 
 export function ShapeMixin<Base extends Constructor>(Resource: Base) {

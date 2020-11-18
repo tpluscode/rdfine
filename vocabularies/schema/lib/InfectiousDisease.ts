@@ -2,12 +2,12 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalConditionMixin } from './MedicalCondition';
 
-export interface InfectiousDisease<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalCondition<D>, RdfResource<D> {
+export interface InfectiousDisease<ID extends ResourceNode = ResourceNode> extends Schema.MedicalCondition<ID>, RdfResource<ID> {
   infectiousAgent: string | undefined;
   infectiousAgentClass: Schema.InfectiousAgentClass | undefined;
   transmissionMethod: string | undefined;

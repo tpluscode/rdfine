@@ -2,22 +2,22 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { HowToMixin } from './HowTo';
 
-export interface Recipe<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HowTo<D>, RdfResource<D> {
+export interface Recipe<ID extends ResourceNode = ResourceNode> extends Schema.HowTo<ID>, RdfResource<ID> {
   cookingMethod: string | undefined;
-  cookTime: Schema.Duration<D> | undefined;
+  cookTime: Schema.Duration<SiblingNode<ID>> | undefined;
   ingredients: string | undefined;
-  nutrition: Schema.NutritionInformation<D> | undefined;
+  nutrition: Schema.NutritionInformation<SiblingNode<ID>> | undefined;
   recipeCategory: string | undefined;
   recipeCuisine: string | undefined;
   recipeIngredient: string | undefined;
-  recipeInstructions: Schema.CreativeWork<D> | Schema.ItemList<D> | undefined;
+  recipeInstructions: Schema.CreativeWork<SiblingNode<ID>> | Schema.ItemList<SiblingNode<ID>> | undefined;
   recipeInstructionsLiteral: string | undefined;
-  recipeYield: Schema.QuantitativeValue<D> | undefined;
+  recipeYield: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   recipeYieldLiteral: string | undefined;
   suitableForDiet: Schema.RestrictedDiet | undefined;
 }

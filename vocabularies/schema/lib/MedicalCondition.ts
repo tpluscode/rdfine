@@ -2,29 +2,29 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalEntityMixin } from './MedicalEntity';
 
-export interface MedicalCondition<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, RdfResource<D> {
-  associatedAnatomy: Schema.AnatomicalStructure<D> | Schema.AnatomicalSystem<D> | Schema.SuperficialAnatomy<D> | undefined;
-  differentialDiagnosis: Schema.DDxElement<D> | undefined;
-  drug: Schema.Drug<D> | undefined;
+export interface MedicalCondition<ID extends ResourceNode = ResourceNode> extends Schema.MedicalEntity<ID>, RdfResource<ID> {
+  associatedAnatomy: Schema.AnatomicalStructure<SiblingNode<ID>> | Schema.AnatomicalSystem<SiblingNode<ID>> | Schema.SuperficialAnatomy<SiblingNode<ID>> | undefined;
+  differentialDiagnosis: Schema.DDxElement<SiblingNode<ID>> | undefined;
+  drug: Schema.Drug<SiblingNode<ID>> | undefined;
   epidemiology: string | undefined;
   expectedPrognosis: string | undefined;
   naturalProgression: string | undefined;
   pathophysiology: string | undefined;
   possibleComplication: string | undefined;
-  possibleTreatment: Schema.MedicalTherapy<D> | undefined;
-  primaryPrevention: Schema.MedicalTherapy<D> | undefined;
-  riskFactor: Schema.MedicalRiskFactor<D> | undefined;
-  secondaryPrevention: Schema.MedicalTherapy<D> | undefined;
-  signOrSymptom: Schema.MedicalSignOrSymptom<D> | undefined;
-  stage: Schema.MedicalConditionStage<D> | undefined;
+  possibleTreatment: Schema.MedicalTherapy<SiblingNode<ID>> | undefined;
+  primaryPrevention: Schema.MedicalTherapy<SiblingNode<ID>> | undefined;
+  riskFactor: Schema.MedicalRiskFactor<SiblingNode<ID>> | undefined;
+  secondaryPrevention: Schema.MedicalTherapy<SiblingNode<ID>> | undefined;
+  signOrSymptom: Schema.MedicalSignOrSymptom<SiblingNode<ID>> | undefined;
+  stage: Schema.MedicalConditionStage<SiblingNode<ID>> | undefined;
   status: string | undefined;
   statusTerm: Schema.EventStatusType | Schema.MedicalStudyStatus | undefined;
-  typicalTest: Schema.MedicalTest<D> | undefined;
+  typicalTest: Schema.MedicalTest<SiblingNode<ID>> | undefined;
 }
 
 export function MedicalConditionMixin<Base extends Constructor>(Resource: Base) {

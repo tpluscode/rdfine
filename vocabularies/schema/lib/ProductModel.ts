@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ProductMixin } from './Product';
 
-export interface ProductModel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Product<D>, RdfResource<D> {
-  isVariantOf: Schema.ProductGroup<D> | Schema.ProductModel<D> | undefined;
-  predecessorOf: Schema.ProductModel<D> | undefined;
-  successorOf: Schema.ProductModel<D> | undefined;
+export interface ProductModel<ID extends ResourceNode = ResourceNode> extends Schema.Product<ID>, RdfResource<ID> {
+  isVariantOf: Schema.ProductGroup<SiblingNode<ID>> | Schema.ProductModel<SiblingNode<ID>> | undefined;
+  predecessorOf: Schema.ProductModel<SiblingNode<ID>> | undefined;
+  successorOf: Schema.ProductModel<SiblingNode<ID>> | undefined;
 }
 
 export function ProductModelMixin<Base extends Constructor>(Resource: Base) {

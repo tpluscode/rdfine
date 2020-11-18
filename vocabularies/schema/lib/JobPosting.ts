@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
-  applicantLocationRequirements: Schema.AdministrativeArea<D> | undefined;
-  applicationContact: Schema.ContactPoint<D> | undefined;
-  baseSalary: Schema.MonetaryAmount<D> | Schema.PriceSpecification<D> | undefined;
+export interface JobPosting<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
+  applicantLocationRequirements: Schema.AdministrativeArea<SiblingNode<ID>> | undefined;
+  applicationContact: Schema.ContactPoint<SiblingNode<ID>> | undefined;
+  baseSalary: Schema.MonetaryAmount<SiblingNode<ID>> | Schema.PriceSpecification<SiblingNode<ID>> | undefined;
   baseSalaryLiteral: number | undefined;
   benefits: string | undefined;
   datePosted: Date | undefined;
@@ -18,25 +18,25 @@ export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   eligibilityToWorkRequirement: string | undefined;
   employerOverview: string | undefined;
   employmentType: string | undefined;
-  employmentUnit: Schema.Organization<D> | undefined;
-  estimatedSalary: Schema.MonetaryAmount<D> | Schema.MonetaryAmountDistribution<D> | undefined;
+  employmentUnit: Schema.Organization<SiblingNode<ID>> | undefined;
+  estimatedSalary: Schema.MonetaryAmount<SiblingNode<ID>> | Schema.MonetaryAmountDistribution<SiblingNode<ID>> | undefined;
   estimatedSalaryLiteral: number | undefined;
   experienceRequirements: string | undefined;
-  hiringOrganization: Schema.Organization<D> | undefined;
+  hiringOrganization: Schema.Organization<SiblingNode<ID>> | undefined;
   incentiveCompensation: string | undefined;
   incentives: string | undefined;
   industry: string | undefined;
   jobBenefits: string | undefined;
   jobImmediateStart: boolean | undefined;
-  jobLocation: Schema.Place<D> | undefined;
+  jobLocation: Schema.Place<SiblingNode<ID>> | undefined;
   jobLocationType: string | undefined;
   jobStartDate: Date | string | undefined;
-  occupationalCategory: Schema.CategoryCode<D> | undefined;
+  occupationalCategory: Schema.CategoryCode<SiblingNode<ID>> | undefined;
   occupationalCategoryLiteral: string | undefined;
   physicalRequirement: string | undefined;
   physicalRequirementTerm: RDF.NamedNode | undefined;
   qualifications: string | undefined;
-  relevantOccupation: Schema.Occupation<D> | undefined;
+  relevantOccupation: Schema.Occupation<SiblingNode<ID>> | undefined;
   responsibilities: string | undefined;
   salaryCurrency: string | undefined;
   securityClearanceRequirement: string | undefined;

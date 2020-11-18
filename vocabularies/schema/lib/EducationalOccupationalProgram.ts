@@ -2,12 +2,12 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface EducationalOccupationalProgram<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface EducationalOccupationalProgram<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
   applicationDeadline: Date | undefined;
   applicationStartDate: Date | undefined;
   dayOfWeek: Schema.DayOfWeek | undefined;
@@ -18,25 +18,25 @@ export interface EducationalOccupationalProgram<D extends RDF.DatasetCore = RDF.
   endDate: Date | undefined;
   financialAidEligible: string | undefined;
   maximumEnrollment: number | undefined;
-  numberOfCredits: Schema.StructuredValue<D> | undefined;
+  numberOfCredits: Schema.StructuredValue<SiblingNode<ID>> | undefined;
   numberOfCreditsLiteral: number | undefined;
-  occupationalCategory: Schema.CategoryCode<D> | undefined;
+  occupationalCategory: Schema.CategoryCode<SiblingNode<ID>> | undefined;
   occupationalCategoryLiteral: string | undefined;
   occupationalCredentialAwarded: string | undefined;
   occupationalCredentialAwardedTerm: RDF.NamedNode | undefined;
-  offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
-  programPrerequisites: Schema.AlignmentObject<D> | Schema.Course<D> | undefined;
+  offers: Schema.Demand<SiblingNode<ID>> | Schema.Offer<SiblingNode<ID>> | undefined;
+  programPrerequisites: Schema.AlignmentObject<SiblingNode<ID>> | Schema.Course<SiblingNode<ID>> | undefined;
   programPrerequisitesLiteral: string | undefined;
   programType: string | undefined;
-  provider: Schema.Organization<D> | Schema.Person<D> | undefined;
-  salaryUponCompletion: Schema.MonetaryAmountDistribution<D> | undefined;
+  provider: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
+  salaryUponCompletion: Schema.MonetaryAmountDistribution<SiblingNode<ID>> | undefined;
   startDate: Date | undefined;
-  termDuration: Schema.Duration<D> | undefined;
+  termDuration: Schema.Duration<SiblingNode<ID>> | undefined;
   termsPerYear: number | undefined;
   timeOfDay: string | undefined;
-  timeToComplete: Schema.Duration<D> | undefined;
-  trainingSalary: Schema.MonetaryAmountDistribution<D> | undefined;
-  typicalCreditsPerTerm: Schema.StructuredValue<D> | undefined;
+  timeToComplete: Schema.Duration<SiblingNode<ID>> | undefined;
+  trainingSalary: Schema.MonetaryAmountDistribution<SiblingNode<ID>> | undefined;
+  typicalCreditsPerTerm: Schema.StructuredValue<SiblingNode<ID>> | undefined;
   typicalCreditsPerTermLiteral: number | undefined;
 }
 

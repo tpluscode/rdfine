@@ -1,9 +1,9 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import cf from 'clownface'
+import cf, { GraphPointer } from 'clownface'
 import { namespace, property, crossBoundaries } from '../index'
 import RdfResource from '../RdfResource'
 import { parse, ex } from './_helpers'
-import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
+import { DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
 import * as RDF from '@rdf-esm/data-model'
 import rdfExt from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
@@ -744,7 +744,7 @@ describe('decorator', () => {
     })
 
     describe('over multiple graphs', () => {
-      class Resource<D extends DatasetCore> extends RdfResource<D> {
+      class Resource<D extends GraphPointer<NamedNode>> extends RdfResource<D> {
         @property({ path: foaf.knows })
         friend!: Term
 
@@ -760,7 +760,7 @@ describe('decorator', () => {
         allKnownFriends!: Term[]
       }
 
-      function namedGraphTests(newResource: (dataset: DatasetExt, term: NamedNode, graph?: NamedNode | DefaultGraph) => Resource<DatasetExt>) {
+      function namedGraphTests(newResource: (dataset: DatasetExt, term: NamedNode, graph?: NamedNode | DefaultGraph) => Resource<GraphPointer<NamedNode, DatasetExt>>) {
         describe('getter', () => {
           it('returns value from same graph', async () => {
             // given

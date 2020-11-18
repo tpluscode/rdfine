@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import { ParameterizableMixin } from './Parameterizable';
 
-export interface ConstraintComponent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Parameterizable<D>, RdfResource<D> {
-  nodeValidator: Sh.Validator<D> | undefined;
-  propertyValidator: Sh.Validator<D> | undefined;
-  validator: Sh.Validator<D> | undefined;
+export interface ConstraintComponent<ID extends ResourceNode = ResourceNode> extends Sh.Parameterizable<ID>, RdfResource<ID> {
+  nodeValidator: Sh.Validator<SiblingNode<ID>> | undefined;
+  propertyValidator: Sh.Validator<SiblingNode<ID>> | undefined;
+  validator: Sh.Validator<SiblingNode<ID>> | undefined;
 }
 
 export function ConstraintComponentMixin<Base extends Constructor>(Resource: Base) {

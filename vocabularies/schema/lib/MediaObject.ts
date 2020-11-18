@@ -2,31 +2,31 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
-  associatedArticle: Schema.NewsArticle<D> | undefined;
+export interface MediaObject<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, RdfResource<ID> {
+  associatedArticle: Schema.NewsArticle<SiblingNode<ID>> | undefined;
   bitrate: string | undefined;
   contentSize: string | undefined;
   contentUrl: RDF.NamedNode | undefined;
-  duration: Schema.Duration<D> | undefined;
+  duration: Schema.Duration<SiblingNode<ID>> | undefined;
   embedUrl: RDF.NamedNode | undefined;
-  encodesCreativeWork: Schema.CreativeWork<D> | undefined;
+  encodesCreativeWork: Schema.CreativeWork<SiblingNode<ID>> | undefined;
   encodingFormat: string | undefined;
   encodingFormatTerm: RDF.NamedNode | undefined;
   endTime: Date | undefined;
-  height: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
+  height: Schema.Distance<SiblingNode<ID>> | Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   playerType: string | undefined;
-  productionCompany: Schema.Organization<D> | undefined;
-  regionsAllowed: Schema.Place<D> | undefined;
-  requiresSubscription: Schema.MediaSubscription<D> | undefined;
+  productionCompany: Schema.Organization<SiblingNode<ID>> | undefined;
+  regionsAllowed: Schema.Place<SiblingNode<ID>> | undefined;
+  requiresSubscription: Schema.MediaSubscription<SiblingNode<ID>> | undefined;
   requiresSubscriptionLiteral: boolean | undefined;
   startTime: Date | undefined;
   uploadDate: Date | undefined;
-  width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
+  width: Schema.Distance<SiblingNode<ID>> | Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
 }
 
 export function MediaObjectMixin<Base extends Constructor>(Resource: Base) {

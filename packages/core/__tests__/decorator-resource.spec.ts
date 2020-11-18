@@ -468,7 +468,7 @@ describe('decorator', () => {
     })
 
     describe('over multiple graphs', () => {
-      class Resource<D extends DatasetCore> extends RdfResource<D> {
+      class Resource<D extends GraphPointer<NamedNode>> extends RdfResource<D> {
         @property.resource({ path: foaf.knows })
         friend!: this
 

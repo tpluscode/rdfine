@@ -2,16 +2,16 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { rdfs } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdfs from '..';
 
-export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Resource<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
   comment: string | undefined;
-  isDefinedBy: Rdfs.Resource<D> | undefined;
+  isDefinedBy: Rdfs.Resource<SiblingNode<ID>> | undefined;
   label: string | undefined;
-  member: Array<Rdfs.Resource<D>>;
-  seeAlso: Array<Rdfs.Resource<D>>;
+  member: Array<Rdfs.Resource<SiblingNode<ID>>>;
+  seeAlso: Array<Rdfs.Resource<SiblingNode<ID>>>;
 }
 
 export function ResourceMixin<Base extends Constructor>(Resource: Base) {

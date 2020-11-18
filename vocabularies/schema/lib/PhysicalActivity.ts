@@ -2,14 +2,14 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { LifestyleModificationMixin } from './LifestyleModification';
 
-export interface PhysicalActivity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LifestyleModification<D>, RdfResource<D> {
-  associatedAnatomy: Schema.AnatomicalStructure<D> | Schema.AnatomicalSystem<D> | Schema.SuperficialAnatomy<D> | undefined;
-  category: Schema.Thing<D> | undefined;
+export interface PhysicalActivity<ID extends ResourceNode = ResourceNode> extends Schema.LifestyleModification<ID>, RdfResource<ID> {
+  associatedAnatomy: Schema.AnatomicalStructure<SiblingNode<ID>> | Schema.AnatomicalSystem<SiblingNode<ID>> | Schema.SuperficialAnatomy<SiblingNode<ID>> | undefined;
+  category: Schema.Thing<SiblingNode<ID>> | undefined;
   categoryLiteral: string | undefined;
   epidemiology: string | undefined;
   pathophysiology: string | undefined;

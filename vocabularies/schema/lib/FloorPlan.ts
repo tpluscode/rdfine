@@ -2,23 +2,23 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface FloorPlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
-  amenityFeature: Schema.LocationFeatureSpecification<D> | undefined;
-  floorSize: Schema.QuantitativeValue<D> | undefined;
-  isPlanForApartment: Schema.Accommodation<D> | undefined;
-  numberOfAccommodationUnits: Schema.QuantitativeValue<D> | undefined;
-  numberOfAvailableAccommodationUnits: Schema.QuantitativeValue<D> | undefined;
+export interface FloorPlan<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
+  amenityFeature: Schema.LocationFeatureSpecification<SiblingNode<ID>> | undefined;
+  floorSize: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
+  isPlanForApartment: Schema.Accommodation<SiblingNode<ID>> | undefined;
+  numberOfAccommodationUnits: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
+  numberOfAvailableAccommodationUnits: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   numberOfBathroomsTotal: number | undefined;
-  numberOfBedrooms: Schema.QuantitativeValue<D> | undefined;
+  numberOfBedrooms: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   numberOfBedroomsLiteral: number | undefined;
   numberOfFullBathrooms: number | undefined;
   numberOfPartialBathrooms: number | undefined;
-  numberOfRooms: Schema.QuantitativeValue<D> | undefined;
+  numberOfRooms: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   numberOfRoomsLiteral: number | undefined;
   petsAllowed: boolean | string | undefined;
 }

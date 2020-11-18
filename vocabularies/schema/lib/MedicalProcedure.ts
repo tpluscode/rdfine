@@ -2,16 +2,16 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalEntityMixin } from './MedicalEntity';
 
-export interface MedicalProcedure<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, RdfResource<D> {
+export interface MedicalProcedure<ID extends ResourceNode = ResourceNode> extends Schema.MedicalEntity<ID>, RdfResource<ID> {
   bodyLocation: string | undefined;
   followup: string | undefined;
   howPerformed: string | undefined;
-  preparation: Schema.MedicalEntity<D> | undefined;
+  preparation: Schema.MedicalEntity<SiblingNode<ID>> | undefined;
   preparationLiteral: string | undefined;
   procedureType: Schema.MedicalProcedureType | undefined;
   status: string | undefined;

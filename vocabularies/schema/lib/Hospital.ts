@@ -2,16 +2,16 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CivicStructureMixin } from './CivicStructure';
 import { EmergencyServiceMixin } from './EmergencyService';
 import { MedicalOrganizationMixin } from './MedicalOrganization';
 
-export interface Hospital<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.EmergencyService<D>, Schema.MedicalOrganization<D>, RdfResource<D> {
-  availableService: Schema.MedicalProcedure<D> | Schema.MedicalTest<D> | Schema.MedicalTherapy<D> | undefined;
-  healthcareReportingData: Schema.CDCPMDRecord<D> | Schema.Dataset<D> | undefined;
+export interface Hospital<ID extends ResourceNode = ResourceNode> extends Schema.CivicStructure<ID>, Schema.EmergencyService<ID>, Schema.MedicalOrganization<ID>, RdfResource<ID> {
+  availableService: Schema.MedicalProcedure<SiblingNode<ID>> | Schema.MedicalTest<SiblingNode<ID>> | Schema.MedicalTherapy<SiblingNode<ID>> | undefined;
+  healthcareReportingData: Schema.CDCPMDRecord<SiblingNode<ID>> | Schema.Dataset<SiblingNode<ID>> | undefined;
   medicalSpecialty: Schema.MedicalSpecialty | undefined;
 }
 

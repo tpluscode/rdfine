@@ -2,22 +2,22 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface Ticket<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Ticket<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
   dateIssued: Date | undefined;
-  issuedBy: Schema.Organization<D> | undefined;
+  issuedBy: Schema.Organization<SiblingNode<ID>> | undefined;
   priceCurrency: string | undefined;
-  ticketedSeat: Schema.Seat<D> | undefined;
+  ticketedSeat: Schema.Seat<SiblingNode<ID>> | undefined;
   ticketNumber: string | undefined;
   ticketToken: string | undefined;
   ticketTokenTerm: RDF.NamedNode | undefined;
-  totalPrice: Schema.PriceSpecification<D> | undefined;
+  totalPrice: Schema.PriceSpecification<SiblingNode<ID>> | undefined;
   totalPriceLiteral: number | string | undefined;
-  underName: Schema.Organization<D> | Schema.Person<D> | undefined;
+  underName: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
 }
 
 export function TicketMixin<Base extends Constructor>(Resource: Base) {

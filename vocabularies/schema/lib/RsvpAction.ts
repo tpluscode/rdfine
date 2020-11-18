@@ -2,14 +2,14 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { InformActionMixin } from './InformAction';
 
-export interface RsvpAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InformAction<D>, RdfResource<D> {
+export interface RsvpAction<ID extends ResourceNode = ResourceNode> extends Schema.InformAction<ID>, RdfResource<ID> {
   additionalNumberOfGuests: number | undefined;
-  comment: Schema.Comment<D> | undefined;
+  comment: Schema.Comment<SiblingNode<ID>> | undefined;
   rsvpResponse: Schema.RsvpResponseType | undefined;
 }
 

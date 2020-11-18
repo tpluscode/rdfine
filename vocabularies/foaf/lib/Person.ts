@@ -2,30 +2,30 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '..';
 import type * as Wgs from '@rdfine/wgs';
 import { SpatialThingMixin as WgsSpatialThingMixin } from '@rdfine/wgs/lib/SpatialThing';
 import { AgentMixin } from './Agent';
 
-export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Wgs.SpatialThing<D>, Foaf.Agent<D>, RdfResource<D> {
+export interface Person<ID extends ResourceNode = ResourceNode> extends Wgs.SpatialThing<ID>, Foaf.Agent<ID>, RdfResource<ID> {
   currentProject: RDF.NamedNode | undefined;
   'family_name': RDF.Literal | undefined;
   familyName: RDF.Literal | undefined;
   firstName: RDF.Literal | undefined;
   geekcode: RDF.Literal | undefined;
-  img: Foaf.Image<D> | undefined;
-  knows: Foaf.Person<D> | undefined;
+  img: Foaf.Image<SiblingNode<ID>> | undefined;
+  knows: Foaf.Person<SiblingNode<ID>> | undefined;
   lastName: RDF.Literal | undefined;
   myersBriggs: RDF.Literal | undefined;
   pastProject: RDF.NamedNode | undefined;
   plan: RDF.Literal | undefined;
-  publications: Foaf.Document<D> | undefined;
-  schoolHomepage: Foaf.Document<D> | undefined;
+  publications: Foaf.Document<SiblingNode<ID>> | undefined;
+  schoolHomepage: Foaf.Document<SiblingNode<ID>> | undefined;
   surname: RDF.Literal | undefined;
-  workInfoHomepage: Foaf.Document<D> | undefined;
-  workplaceHomepage: Foaf.Document<D> | undefined;
+  workInfoHomepage: Foaf.Document<SiblingNode<ID>> | undefined;
+  workplaceHomepage: Foaf.Document<SiblingNode<ID>> | undefined;
 }
 
 export function PersonMixin<Base extends Constructor>(Resource: Base) {

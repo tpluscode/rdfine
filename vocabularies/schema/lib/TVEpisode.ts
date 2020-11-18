@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { EpisodeMixin } from './Episode';
 
-export interface TVEpisode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Episode<D>, RdfResource<D> {
-  countryOfOrigin: Schema.Country<D> | undefined;
-  partOfTVSeries: Schema.TVSeries<D> | undefined;
-  subtitleLanguage: Schema.Language<D> | undefined;
+export interface TVEpisode<ID extends ResourceNode = ResourceNode> extends Schema.Episode<ID>, RdfResource<ID> {
+  countryOfOrigin: Schema.Country<SiblingNode<ID>> | undefined;
+  partOfTVSeries: Schema.TVSeries<SiblingNode<ID>> | undefined;
+  subtitleLanguage: Schema.Language<SiblingNode<ID>> | undefined;
   subtitleLanguageLiteral: string | undefined;
   titleEIDR: string | undefined;
   titleEIDRTerm: RDF.NamedNode | undefined;

@@ -2,18 +2,18 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalEntityMixin } from './MedicalEntity';
 
-export interface MedicalStudy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, RdfResource<D> {
-  healthCondition: Schema.MedicalCondition<D> | undefined;
-  sponsor: Schema.Organization<D> | Schema.Person<D> | undefined;
+export interface MedicalStudy<ID extends ResourceNode = ResourceNode> extends Schema.MedicalEntity<ID>, RdfResource<ID> {
+  healthCondition: Schema.MedicalCondition<SiblingNode<ID>> | undefined;
+  sponsor: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
   status: string | undefined;
   statusTerm: Schema.EventStatusType | Schema.MedicalStudyStatus | undefined;
-  studyLocation: Schema.AdministrativeArea<D> | undefined;
-  studySubject: Schema.MedicalEntity<D> | undefined;
+  studyLocation: Schema.AdministrativeArea<SiblingNode<ID>> | undefined;
+  studySubject: Schema.MedicalEntity<SiblingNode<ID>> | undefined;
 }
 
 export function MedicalStudyMixin<Base extends Constructor>(Resource: Base) {

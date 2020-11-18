@@ -2,13 +2,13 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CommunicateActionMixin } from './CommunicateAction';
 
-export interface CommentAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, RdfResource<D> {
-  resultComment: Schema.Comment<D> | undefined;
+export interface CommentAction<ID extends ResourceNode = ResourceNode> extends Schema.CommunicateAction<ID>, RdfResource<ID> {
+  resultComment: Schema.Comment<SiblingNode<ID>> | undefined;
 }
 
 export function CommentActionMixin<Base extends Constructor>(Resource: Base) {

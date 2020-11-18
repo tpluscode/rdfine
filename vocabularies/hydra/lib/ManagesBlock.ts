@@ -2,16 +2,16 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
-export interface ManagesBlock<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
-  object: Hydra.Class<D> | undefined;
-  property: Rdf.Property<D> | undefined;
-  subject: Hydra.Resource<D> | undefined;
+export interface ManagesBlock<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
+  object: Hydra.Class<SiblingNode<ID>> | undefined;
+  property: Rdf.Property<SiblingNode<ID>> | undefined;
+  subject: Hydra.Resource<SiblingNode<ID>> | undefined;
 }
 
 export function ManagesBlockMixin<Base extends Constructor>(Resource: Base) {

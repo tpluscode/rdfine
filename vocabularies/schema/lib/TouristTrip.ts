@@ -2,13 +2,13 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TripMixin } from './Trip';
 
-export interface TouristTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Trip<D>, RdfResource<D> {
-  touristType: Schema.Audience<D> | undefined;
+export interface TouristTrip<ID extends ResourceNode = ResourceNode> extends Schema.Trip<ID>, RdfResource<ID> {
+  touristType: Schema.Audience<SiblingNode<ID>> | undefined;
   touristTypeLiteral: string | undefined;
 }
 

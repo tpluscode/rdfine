@@ -2,13 +2,13 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { PlaceMixin } from './Place';
 
-export interface Residence<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, RdfResource<D> {
-  accommodationFloorPlan: Schema.FloorPlan<D> | undefined;
+export interface Residence<ID extends ResourceNode = ResourceNode> extends Schema.Place<ID>, RdfResource<ID> {
+  accommodationFloorPlan: Schema.FloorPlan<SiblingNode<ID>> | undefined;
 }
 
 export function ResidenceMixin<Base extends Constructor>(Resource: Base) {

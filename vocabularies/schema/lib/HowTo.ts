@@ -2,26 +2,26 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface HowTo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
-  estimatedCost: Schema.MonetaryAmount<D> | undefined;
+export interface HowTo<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, RdfResource<ID> {
+  estimatedCost: Schema.MonetaryAmount<SiblingNode<ID>> | undefined;
   estimatedCostLiteral: string | undefined;
-  performTime: Schema.Duration<D> | undefined;
-  prepTime: Schema.Duration<D> | undefined;
-  step: Array<Schema.CreativeWork<D> | Schema.HowToSection<D> | Schema.HowToStep<D>>;
+  performTime: Schema.Duration<SiblingNode<ID>> | undefined;
+  prepTime: Schema.Duration<SiblingNode<ID>> | undefined;
+  step: Array<Schema.CreativeWork<SiblingNode<ID>> | Schema.HowToSection<SiblingNode<ID>> | Schema.HowToStep<SiblingNode<ID>>>;
   stepLiteral: Array<string>;
-  steps: Array<Schema.CreativeWork<D> | Schema.ItemList<D>>;
+  steps: Array<Schema.CreativeWork<SiblingNode<ID>> | Schema.ItemList<SiblingNode<ID>>>;
   stepsLiteral: Array<string>;
-  supply: Schema.HowToSupply<D> | undefined;
+  supply: Schema.HowToSupply<SiblingNode<ID>> | undefined;
   supplyLiteral: string | undefined;
-  tool: Array<Schema.HowToTool<D>>;
+  tool: Array<Schema.HowToTool<SiblingNode<ID>>>;
   toolLiteral: Array<string>;
-  totalTime: Schema.Duration<D> | undefined;
-  yield: Schema.QuantitativeValue<D> | undefined;
+  totalTime: Schema.Duration<SiblingNode<ID>> | undefined;
+  yield: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   yieldLiteral: string | undefined;
 }
 

@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 import { ItemListMixin } from './ItemList';
 import { ListItemMixin } from './ListItem';
 
-export interface HowToSection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ItemList<D>, Schema.ListItem<D>, RdfResource<D> {
-  steps: Array<Schema.CreativeWork<D> | Schema.ItemList<D>>;
+export interface HowToSection<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, Schema.ItemList<ID>, Schema.ListItem<ID>, RdfResource<ID> {
+  steps: Array<Schema.CreativeWork<SiblingNode<ID>> | Schema.ItemList<SiblingNode<ID>>>;
   stepsLiteral: Array<string>;
 }
 

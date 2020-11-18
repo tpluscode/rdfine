@@ -2,13 +2,13 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { RatingMixin } from './Rating';
 
-export interface AggregateRating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Rating<D>, RdfResource<D> {
-  itemReviewed: Schema.Thing<D> | undefined;
+export interface AggregateRating<ID extends ResourceNode = ResourceNode> extends Schema.Rating<ID>, RdfResource<ID> {
+  itemReviewed: Schema.Thing<SiblingNode<ID>> | undefined;
   ratingCount: number | undefined;
   reviewCount: number | undefined;
 }

@@ -2,29 +2,29 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TripMixin } from './Trip';
 
-export interface Flight<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Trip<D>, RdfResource<D> {
-  aircraft: Schema.Vehicle<D> | undefined;
+export interface Flight<ID extends ResourceNode = ResourceNode> extends Schema.Trip<ID>, RdfResource<ID> {
+  aircraft: Schema.Vehicle<SiblingNode<ID>> | undefined;
   aircraftLiteral: string | undefined;
-  arrivalAirport: Schema.Airport<D> | undefined;
+  arrivalAirport: Schema.Airport<SiblingNode<ID>> | undefined;
   arrivalGate: string | undefined;
   arrivalTerminal: string | undefined;
   boardingPolicy: Schema.BoardingPolicyType | undefined;
-  carrier: Schema.Organization<D> | undefined;
-  departureAirport: Schema.Airport<D> | undefined;
+  carrier: Schema.Organization<SiblingNode<ID>> | undefined;
+  departureAirport: Schema.Airport<SiblingNode<ID>> | undefined;
   departureGate: string | undefined;
   departureTerminal: string | undefined;
-  estimatedFlightDuration: Schema.Duration<D> | undefined;
+  estimatedFlightDuration: Schema.Duration<SiblingNode<ID>> | undefined;
   estimatedFlightDurationLiteral: string | undefined;
-  flightDistance: Schema.Distance<D> | undefined;
+  flightDistance: Schema.Distance<SiblingNode<ID>> | undefined;
   flightDistanceLiteral: string | undefined;
   flightNumber: string | undefined;
   mealService: string | undefined;
-  seller: Schema.Organization<D> | Schema.Person<D> | undefined;
+  seller: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
   webCheckinTime: Date | undefined;
 }
 

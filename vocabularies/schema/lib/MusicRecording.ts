@@ -2,18 +2,18 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface MusicRecording<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
-  byArtist: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
-  duration: Schema.Duration<D> | undefined;
-  inAlbum: Schema.MusicAlbum<D> | undefined;
-  inPlaylist: Schema.MusicPlaylist<D> | undefined;
+export interface MusicRecording<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, RdfResource<ID> {
+  byArtist: Schema.MusicGroup<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
+  duration: Schema.Duration<SiblingNode<ID>> | undefined;
+  inAlbum: Schema.MusicAlbum<SiblingNode<ID>> | undefined;
+  inPlaylist: Schema.MusicPlaylist<SiblingNode<ID>> | undefined;
   isrcCode: string | undefined;
-  recordingOf: Schema.MusicComposition<D> | undefined;
+  recordingOf: Schema.MusicComposition<SiblingNode<ID>> | undefined;
 }
 
 export function MusicRecordingMixin<Base extends Constructor>(Resource: Base) {

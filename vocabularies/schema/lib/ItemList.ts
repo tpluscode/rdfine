@@ -2,13 +2,13 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface ItemList<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
-  itemListElement: Array<Schema.ListItem<D> | Schema.Thing<D>>;
+export interface ItemList<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
+  itemListElement: Array<Schema.ListItem<SiblingNode<ID>> | Schema.Thing<SiblingNode<ID>>>;
   itemListElementLiteral: Array<string>;
   itemListOrder: string | undefined;
   itemListOrderTerm: Schema.ItemListOrderType | undefined;

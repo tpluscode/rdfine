@@ -20,7 +20,7 @@ function __getJsReturnType(range: TypeMeta): string | null {
       return range.nativeName
     case 'Resource':
     case 'ExternalResource':
-      return `${range.qualifiedName}<D>`
+      return `${range.qualifiedName}<SiblingNode<ID>>`
     case 'Enumeration':
       return range.qualifiedName
     case 'Term':
@@ -94,7 +94,7 @@ export class PropertyWriter {
     const classProp = this.__class.addProperty({
       name,
       hasExclamationToken,
-      type: type.replace(/<D>/g, ''),
+      type: type.replace(/<SiblingNode<ID>>/g, ''),
     })
 
     classProp.addDecorator(this.__createDecorator(prop, propertyTypes))

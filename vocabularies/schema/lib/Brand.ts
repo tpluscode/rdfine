@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface Brand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
-  aggregateRating: Schema.AggregateRating<D> | undefined;
-  logo: Schema.ImageObject<D> | undefined;
-  review: Schema.Review<D> | undefined;
+export interface Brand<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
+  aggregateRating: Schema.AggregateRating<SiblingNode<ID>> | undefined;
+  logo: Schema.ImageObject<SiblingNode<ID>> | undefined;
+  review: Schema.Review<SiblingNode<ID>> | undefined;
   slogan: string | undefined;
 }
 

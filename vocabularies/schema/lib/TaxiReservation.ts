@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ReservationMixin } from './Reservation';
 
-export interface TaxiReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, RdfResource<D> {
-  partySize: Schema.QuantitativeValue<D> | undefined;
+export interface TaxiReservation<ID extends ResourceNode = ResourceNode> extends Schema.Reservation<ID>, RdfResource<ID> {
+  partySize: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   partySizeLiteral: number | undefined;
-  pickupLocation: Schema.Place<D> | undefined;
+  pickupLocation: Schema.Place<SiblingNode<ID>> | undefined;
   pickupTime: Date | undefined;
 }
 

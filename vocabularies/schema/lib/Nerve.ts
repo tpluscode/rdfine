@@ -2,16 +2,16 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { AnatomicalStructureMixin } from './AnatomicalStructure';
 
-export interface Nerve<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AnatomicalStructure<D>, RdfResource<D> {
-  branch: Schema.AnatomicalStructure<D> | undefined;
-  nerveMotor: Schema.Muscle<D> | undefined;
-  sensoryUnit: Schema.AnatomicalStructure<D> | Schema.SuperficialAnatomy<D> | undefined;
-  sourcedFrom: Schema.BrainStructure<D> | undefined;
+export interface Nerve<ID extends ResourceNode = ResourceNode> extends Schema.AnatomicalStructure<ID>, RdfResource<ID> {
+  branch: Schema.AnatomicalStructure<SiblingNode<ID>> | undefined;
+  nerveMotor: Schema.Muscle<SiblingNode<ID>> | undefined;
+  sensoryUnit: Schema.AnatomicalStructure<SiblingNode<ID>> | Schema.SuperficialAnatomy<SiblingNode<ID>> | undefined;
+  sourcedFrom: Schema.BrainStructure<SiblingNode<ID>> | undefined;
 }
 
 export function NerveMixin<Base extends Constructor>(Resource: Base) {

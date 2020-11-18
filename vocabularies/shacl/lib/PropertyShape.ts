@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -12,17 +12,17 @@ import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
-export interface PropertyShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Shape<D>, RdfResource<D> {
-  datatype: Rdfs.Datatype<D> | undefined;
+export interface PropertyShape<ID extends ResourceNode = ResourceNode> extends Sh.Shape<ID>, RdfResource<ID> {
+  datatype: Rdfs.Datatype<SiblingNode<ID>> | undefined;
   defaultValue: RDF.Term | undefined;
   description: string | undefined;
-  disjoint: Rdf.Property<D> | undefined;
+  disjoint: Rdf.Property<SiblingNode<ID>> | undefined;
   flags: string | undefined;
-  group: Sh.PropertyGroup<D> | undefined;
+  group: Sh.PropertyGroup<SiblingNode<ID>> | undefined;
   hasValue: Array<RDF.Term>;
   languageIn: Array<string>;
-  lessThan: Rdf.Property<D> | undefined;
-  lessThanOrEquals: Rdf.Property<D> | undefined;
+  lessThan: Rdf.Property<SiblingNode<ID>> | undefined;
+  lessThanOrEquals: Rdf.Property<SiblingNode<ID>> | undefined;
   maxCount: number | undefined;
   maxExclusive: number | undefined;
   maxInclusive: number | undefined;
@@ -33,7 +33,7 @@ export interface PropertyShape<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   minLength: number | undefined;
   name: string | undefined;
   order: number | undefined;
-  path: Rdfs.Resource<D> | Array<Rdfs.Resource<D>> | undefined;
+  path: Rdfs.Resource<SiblingNode<ID>> | Array<Rdfs.Resource<SiblingNode<ID>>> | undefined;
   pattern: string | undefined;
   uniqueLang: boolean | undefined;
 }

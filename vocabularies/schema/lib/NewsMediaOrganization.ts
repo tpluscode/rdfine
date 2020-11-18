@@ -2,24 +2,24 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { OrganizationMixin } from './Organization';
 
-export interface NewsMediaOrganization<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, RdfResource<D> {
-  actionableFeedbackPolicy: Schema.CreativeWork<D> | undefined;
-  correctionsPolicy: Schema.CreativeWork<D> | undefined;
-  diversityPolicy: Schema.CreativeWork<D> | undefined;
-  diversityStaffingReport: Schema.Article<D> | undefined;
-  ethicsPolicy: Schema.CreativeWork<D> | undefined;
-  masthead: Schema.CreativeWork<D> | undefined;
-  missionCoveragePrioritiesPolicy: Schema.CreativeWork<D> | undefined;
-  noBylinesPolicy: Schema.CreativeWork<D> | undefined;
-  ownershipFundingInfo: Schema.AboutPage<D> | Schema.CreativeWork<D> | undefined;
+export interface NewsMediaOrganization<ID extends ResourceNode = ResourceNode> extends Schema.Organization<ID>, RdfResource<ID> {
+  actionableFeedbackPolicy: Schema.CreativeWork<SiblingNode<ID>> | undefined;
+  correctionsPolicy: Schema.CreativeWork<SiblingNode<ID>> | undefined;
+  diversityPolicy: Schema.CreativeWork<SiblingNode<ID>> | undefined;
+  diversityStaffingReport: Schema.Article<SiblingNode<ID>> | undefined;
+  ethicsPolicy: Schema.CreativeWork<SiblingNode<ID>> | undefined;
+  masthead: Schema.CreativeWork<SiblingNode<ID>> | undefined;
+  missionCoveragePrioritiesPolicy: Schema.CreativeWork<SiblingNode<ID>> | undefined;
+  noBylinesPolicy: Schema.CreativeWork<SiblingNode<ID>> | undefined;
+  ownershipFundingInfo: Schema.AboutPage<SiblingNode<ID>> | Schema.CreativeWork<SiblingNode<ID>> | undefined;
   ownershipFundingInfoLiteral: string | undefined;
-  unnamedSourcesPolicy: Schema.CreativeWork<D> | undefined;
-  verificationFactCheckingPolicy: Schema.CreativeWork<D> | undefined;
+  unnamedSourcesPolicy: Schema.CreativeWork<SiblingNode<ID>> | undefined;
+  verificationFactCheckingPolicy: Schema.CreativeWork<SiblingNode<ID>> | undefined;
 }
 
 export function NewsMediaOrganizationMixin<Base extends Constructor>(Resource: Base) {

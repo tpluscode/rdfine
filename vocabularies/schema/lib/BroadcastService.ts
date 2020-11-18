@@ -2,24 +2,24 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ServiceMixin } from './Service';
 
-export interface BroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, RdfResource<D> {
-  area: Schema.Place<D> | undefined;
-  broadcastAffiliateOf: Schema.Organization<D> | undefined;
+export interface BroadcastService<ID extends ResourceNode = ResourceNode> extends Schema.Service<ID>, RdfResource<ID> {
+  area: Schema.Place<SiblingNode<ID>> | undefined;
+  broadcastAffiliateOf: Schema.Organization<SiblingNode<ID>> | undefined;
   broadcastDisplayName: string | undefined;
-  broadcaster: Schema.Organization<D> | undefined;
-  broadcastFrequency: Schema.BroadcastFrequencySpecification<D> | undefined;
+  broadcaster: Schema.Organization<SiblingNode<ID>> | undefined;
+  broadcastFrequency: Schema.BroadcastFrequencySpecification<SiblingNode<ID>> | undefined;
   broadcastFrequencyLiteral: string | undefined;
   broadcastTimezone: string | undefined;
   callSign: string | undefined;
-  hasBroadcastChannel: Schema.BroadcastChannel<D> | undefined;
-  inLanguage: Schema.Language<D> | undefined;
+  hasBroadcastChannel: Schema.BroadcastChannel<SiblingNode<ID>> | undefined;
+  inLanguage: Schema.Language<SiblingNode<ID>> | undefined;
   inLanguageLiteral: string | undefined;
-  parentService: Schema.BroadcastService<D> | undefined;
+  parentService: Schema.BroadcastService<SiblingNode<ID>> | undefined;
   videoFormat: string | undefined;
 }
 

@@ -2,20 +2,20 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { LocalBusinessMixin } from './LocalBusiness';
 
-export interface FoodEstablishment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
+export interface FoodEstablishment<ID extends ResourceNode = ResourceNode> extends Schema.LocalBusiness<ID>, RdfResource<ID> {
   acceptsReservations: boolean | string | undefined;
   acceptsReservationsTerm: RDF.NamedNode | undefined;
-  hasMenu: Schema.Menu<D> | undefined;
+  hasMenu: Schema.Menu<SiblingNode<ID>> | undefined;
   hasMenuLiteral: string | undefined;
-  menu: Schema.Menu<D> | undefined;
+  menu: Schema.Menu<SiblingNode<ID>> | undefined;
   menuLiteral: string | undefined;
   servesCuisine: string | undefined;
-  starRating: Schema.Rating<D> | undefined;
+  starRating: Schema.Rating<SiblingNode<ID>> | undefined;
 }
 
 export function FoodEstablishmentMixin<Base extends Constructor>(Resource: Base) {

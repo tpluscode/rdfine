@@ -2,16 +2,16 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface RepaymentSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
-  downPayment: Schema.MonetaryAmount<D> | undefined;
+export interface RepaymentSpecification<ID extends ResourceNode = ResourceNode> extends Schema.StructuredValue<ID>, RdfResource<ID> {
+  downPayment: Schema.MonetaryAmount<SiblingNode<ID>> | undefined;
   downPaymentLiteral: number | undefined;
-  earlyPrepaymentPenalty: Schema.MonetaryAmount<D> | undefined;
-  loanPaymentAmount: Schema.MonetaryAmount<D> | undefined;
+  earlyPrepaymentPenalty: Schema.MonetaryAmount<SiblingNode<ID>> | undefined;
+  loanPaymentAmount: Schema.MonetaryAmount<SiblingNode<ID>> | undefined;
   loanPaymentFrequency: number | undefined;
   numberOfLoanPayments: number | undefined;
 }

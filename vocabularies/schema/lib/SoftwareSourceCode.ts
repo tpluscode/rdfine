@@ -2,20 +2,20 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface SoftwareSourceCode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface SoftwareSourceCode<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, RdfResource<ID> {
   codeRepository: RDF.NamedNode | undefined;
   codeSampleType: string | undefined;
-  programmingLanguage: Schema.ComputerLanguage<D> | undefined;
+  programmingLanguage: Schema.ComputerLanguage<SiblingNode<ID>> | undefined;
   programmingLanguageLiteral: string | undefined;
   runtime: string | undefined;
   runtimePlatform: string | undefined;
   sampleType: string | undefined;
-  targetProduct: Schema.SoftwareApplication<D> | undefined;
+  targetProduct: Schema.SoftwareApplication<SiblingNode<ID>> | undefined;
 }
 
 export function SoftwareSourceCodeMixin<Base extends Constructor>(Resource: Base) {

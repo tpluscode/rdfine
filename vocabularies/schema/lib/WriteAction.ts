@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreateActionMixin } from './CreateAction';
 
-export interface WriteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, RdfResource<D> {
-  inLanguage: Schema.Language<D> | undefined;
+export interface WriteAction<ID extends ResourceNode = ResourceNode> extends Schema.CreateAction<ID>, RdfResource<ID> {
+  inLanguage: Schema.Language<SiblingNode<ID>> | undefined;
   inLanguageLiteral: string | undefined;
-  language: Schema.Language<D> | undefined;
+  language: Schema.Language<SiblingNode<ID>> | undefined;
 }
 
 export function WriteActionMixin<Base extends Constructor>(Resource: Base) {
