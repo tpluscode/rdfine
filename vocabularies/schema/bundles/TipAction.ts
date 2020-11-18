@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { TradeActionMixin } from '../TradeAction';
-import { TipActionMixin } from '../TipAction';
-import { AudienceMixin } from '../Audience';
-import { ContactPointMixin } from '../ContactPoint';
-import { OrganizationMixin } from '../Organization';
-import { PersonMixin } from '../Person';
+import { TradeActionMixin } from '../lib/TradeAction';
+import { TipActionMixin } from '../lib/TipAction';
+import { AudienceMixin } from '../lib/Audience';
+import { ContactPointMixin } from '../lib/ContactPoint';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
 
 export const TipActionBundle = [
   TradeActionMixin as Mixin,

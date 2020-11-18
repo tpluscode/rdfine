@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ConsumeActionMixin } from '../ConsumeAction';
-import { InstallActionMixin } from '../InstallAction';
+import { ConsumeActionMixin } from '../lib/ConsumeAction';
+import { InstallActionMixin } from '../lib/InstallAction';
 
 export const InstallActionBundle = [
   ConsumeActionMixin as Mixin,

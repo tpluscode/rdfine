@@ -1,7 +1,7 @@
 import clownface from 'clownface'
 import $rdf from '@rdfjs/dataset'
 import RDF from '@rdfjs/data-model'
-import { IriTemplateMixin } from '../IriTemplate'
+import { IriTemplateMixin } from '../lib/IriTemplate'
 import { hydra } from '../lib/namespace';
 import namespace from '@rdfjs/namespace'
 import { xsd } from '@tpluscode/rdf-ns-builders';

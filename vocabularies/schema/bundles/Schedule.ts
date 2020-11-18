@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { ScheduleMixin } from '../Schedule';
-import { DurationMixin } from '../Duration';
+import { IntangibleMixin } from '../lib/Intangible';
+import { ScheduleMixin } from '../lib/Schedule';
+import { DurationMixin } from '../lib/Duration';
 
 export const ScheduleBundle = [
   IntangibleMixin as Mixin,

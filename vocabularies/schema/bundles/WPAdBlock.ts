@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { WebPageElementMixin } from '../WebPageElement';
-import { WPAdBlockMixin } from '../WPAdBlock';
+import { WebPageElementMixin } from '../lib/WebPageElement';
+import { WPAdBlockMixin } from '../lib/WPAdBlock';
 
 export const WPAdBlockBundle = [
   WebPageElementMixin as Mixin,

@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ProductMixin } from '../Product';
-import { IndividualProductMixin } from '../IndividualProduct';
+import { ProductMixin } from '../lib/Product';
+import { IndividualProductMixin } from '../lib/IndividualProduct';
 
 export const IndividualProductBundle = [
   ProductMixin as Mixin,

@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { OrganizationMixin } from '../Organization';
-import { WorkersUnionMixin } from '../WorkersUnion';
+import { OrganizationMixin } from '../lib/Organization';
+import { WorkersUnionMixin } from '../lib/WorkersUnion';
 
 export const WorkersUnionBundle = [
   OrganizationMixin as Mixin,

@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { MenuSectionMixin } from '../MenuSection';
-import { MenuItemMixin } from '../MenuItem';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { MenuSectionMixin } from '../lib/MenuSection';
+import { MenuItemMixin } from '../lib/MenuItem';
 
 export const MenuSectionBundle = [
   CreativeWorkMixin as Mixin,

@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PlaceOfWorshipMixin } from '../PlaceOfWorship';
-import { SynagogueMixin } from '../Synagogue';
+import { PlaceOfWorshipMixin } from '../lib/PlaceOfWorship';
+import { SynagogueMixin } from '../lib/Synagogue';
 
 export const SynagogueBundle = [
   PlaceOfWorshipMixin as Mixin,

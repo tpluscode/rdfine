@@ -1,5 +1,5 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AnnotationPropertyMixin } from '../AnnotationProperty';
+import { AnnotationPropertyMixin } from '../lib/AnnotationProperty';
 
 export const AnnotationPropertyBundle = [
   AnnotationPropertyMixin as Mixin];

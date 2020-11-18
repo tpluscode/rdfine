@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RepositoryMixin } from '../Repository';
-import { GitBranchMixin } from '../GitBranch';
+import { RepositoryMixin } from '../lib/Repository';
+import { GitBranchMixin } from '../lib/GitBranch';
 
 export const GitBranchBundle = [
   RepositoryMixin as Mixin,

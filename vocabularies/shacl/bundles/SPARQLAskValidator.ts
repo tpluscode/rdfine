@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SPARQLAskExecutableMixin } from '../SPARQLAskExecutable';
-import { ValidatorMixin } from '../Validator';
-import { SPARQLAskValidatorMixin } from '../SPARQLAskValidator';
+import { SPARQLAskExecutableMixin } from '../lib/SPARQLAskExecutable';
+import { ValidatorMixin } from '../lib/Validator';
+import { SPARQLAskValidatorMixin } from '../lib/SPARQLAskValidator';
 
 export const SPARQLAskValidatorBundle = [
   SPARQLAskExecutableMixin as Mixin,

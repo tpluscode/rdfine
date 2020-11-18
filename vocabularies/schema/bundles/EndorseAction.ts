@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ReactActionMixin } from '../ReactAction';
-import { EndorseActionMixin } from '../EndorseAction';
-import { OrganizationMixin } from '../Organization';
-import { PersonMixin } from '../Person';
+import { ReactActionMixin } from '../lib/ReactAction';
+import { EndorseActionMixin } from '../lib/EndorseAction';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
 
 export const EndorseActionBundle = [
   ReactActionMixin as Mixin,

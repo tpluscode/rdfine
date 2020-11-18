@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StoreMixin } from '../Store';
-import { ClothingStoreMixin } from '../ClothingStore';
+import { StoreMixin } from '../lib/Store';
+import { ClothingStoreMixin } from '../lib/ClothingStore';
 
 export const ClothingStoreBundle = [
   StoreMixin as Mixin,

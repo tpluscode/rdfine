@@ -15,7 +15,7 @@ export class EnumerationModule implements GeneratedModule {
 
   writeModule({ project, types, context, indexModule }: {project: Project; types: TypeMetaCollection; context: Pick<Context, 'prefix' | 'log'>; indexModule: SourceFile}) {
     context.log.debug('Generating enumeration %s', this.type.name)
-    const enumFile = project.createSourceFile(`${this.type.module}.ts`, {}, { overwrite: true })
+    const enumFile = project.createSourceFile(`lib/${this.type.module}.ts`, {}, { overwrite: true })
 
     enumFile.addImportDeclaration({
       namedImports: ['NamedNode'],
@@ -23,7 +23,7 @@ export class EnumerationModule implements GeneratedModule {
     })
     enumFile.addImportDeclaration({
       namedImports: [context.prefix],
-      moduleSpecifier: './lib/namespace',
+      moduleSpecifier: './namespace',
     })
 
     const enumeration = enumFile.addExportAssignment({
@@ -63,10 +63,10 @@ export class EnumerationModule implements GeneratedModule {
     })
 
     indexModule.addExportDeclaration({
-      moduleSpecifier: this.type.module,
+      moduleSpecifier: `./lib/${this.type.name}`,
     }).toNamespaceExport()
     indexModule.addExportDeclaration({
-      moduleSpecifier: this.type.module,
+      moduleSpecifier: `./lib/${this.type.name}`,
       namedExports: [`default as ${this.type.name}Enum`],
     })
   }

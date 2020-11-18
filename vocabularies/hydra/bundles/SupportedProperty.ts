@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ResourceMixin } from '../Resource';
-import { OperationMixin } from '../Operation';
-import { SupportedPropertyMixin } from '../SupportedProperty';
+import { ResourceMixin } from '../lib/Resource';
+import { OperationMixin } from '../lib/Operation';
+import { SupportedPropertyMixin } from '../lib/SupportedProperty';
 
 export const SupportedPropertyBundle = [
   ResourceMixin as Mixin,

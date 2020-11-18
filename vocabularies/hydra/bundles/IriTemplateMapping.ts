@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ResourceMixin } from '../Resource';
-import { VariableRepresentationMixin } from '../VariableRepresentation';
-import { IriTemplateMappingMixin } from '../IriTemplateMapping';
+import { ResourceMixin } from '../lib/Resource';
+import { VariableRepresentationMixin } from '../lib/VariableRepresentation';
+import { IriTemplateMappingMixin } from '../lib/IriTemplateMapping';
 
 export const IriTemplateMappingBundle = [
   ResourceMixin as Mixin,

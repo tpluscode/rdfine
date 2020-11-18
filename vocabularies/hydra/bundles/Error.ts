@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StatusMixin } from '../Status';
-import { ErrorMixin } from '../Error';
+import { StatusMixin } from '../lib/Status';
+import { ErrorMixin } from '../lib/Error';
 
 export const ErrorBundle = [
   StatusMixin as Mixin,

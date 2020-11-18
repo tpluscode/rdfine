@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MedicalTherapyMixin } from '../MedicalTherapy';
-import { OccupationalTherapyMixin } from '../OccupationalTherapy';
+import { MedicalTherapyMixin } from '../lib/MedicalTherapy';
+import { OccupationalTherapyMixin } from '../lib/OccupationalTherapy';
 
 export const OccupationalTherapyBundle = [
   MedicalTherapyMixin as Mixin,

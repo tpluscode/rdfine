@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ChooseActionMixin } from '../ChooseAction';
-import { VoteActionMixin } from '../VoteAction';
-import { PersonMixin } from '../Person';
+import { ChooseActionMixin } from '../lib/ChooseAction';
+import { VoteActionMixin } from '../lib/VoteAction';
+import { PersonMixin } from '../lib/Person';
 
 export const VoteActionBundle = [
   ChooseActionMixin as Mixin,

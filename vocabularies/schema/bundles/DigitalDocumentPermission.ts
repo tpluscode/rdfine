@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { DigitalDocumentPermissionMixin } from '../DigitalDocumentPermission';
-import { AudienceMixin } from '../Audience';
-import { ContactPointMixin } from '../ContactPoint';
-import { OrganizationMixin } from '../Organization';
-import { PersonMixin } from '../Person';
+import { IntangibleMixin } from '../lib/Intangible';
+import { DigitalDocumentPermissionMixin } from '../lib/DigitalDocumentPermission';
+import { AudienceMixin } from '../lib/Audience';
+import { ContactPointMixin } from '../lib/ContactPoint';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
 
 export const DigitalDocumentPermissionBundle = [
   IntangibleMixin as Mixin,

@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { UserInteractionMixin } from '../UserInteraction';
-import { UserCommentsMixin } from '../UserComments';
-import { OrganizationMixin } from '../Organization';
-import { PersonMixin } from '../Person';
-import { CreativeWorkMixin } from '../CreativeWork';
+import { UserInteractionMixin } from '../lib/UserInteraction';
+import { UserCommentsMixin } from '../lib/UserComments';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
 
 export const UserCommentsBundle = [
   UserInteractionMixin as Mixin,

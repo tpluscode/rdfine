@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { BrandMixin } from '../Brand';
-import { AggregateRatingMixin } from '../AggregateRating';
-import { ImageObjectMixin } from '../ImageObject';
-import { ReviewMixin } from '../Review';
+import { IntangibleMixin } from '../lib/Intangible';
+import { BrandMixin } from '../lib/Brand';
+import { AggregateRatingMixin } from '../lib/AggregateRating';
+import { ImageObjectMixin } from '../lib/ImageObject';
+import { ReviewMixin } from '../lib/Review';
 
 export const BrandBundle = [
   IntangibleMixin as Mixin,

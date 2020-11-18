@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RepositoryMixin } from '../Repository';
-import { ArchRepositoryMixin } from '../ArchRepository';
+import { RepositoryMixin } from '../lib/Repository';
+import { ArchRepositoryMixin } from '../lib/ArchRepository';
 
 export const ArchRepositoryBundle = [
   RepositoryMixin as Mixin,

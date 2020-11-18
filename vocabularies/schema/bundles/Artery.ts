@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { VesselMixin } from '../Vessel';
-import { ArteryMixin } from '../Artery';
-import { AnatomicalStructureMixin } from '../AnatomicalStructure';
+import { VesselMixin } from '../lib/Vessel';
+import { ArteryMixin } from '../lib/Artery';
+import { AnatomicalStructureMixin } from '../lib/AnatomicalStructure';
 
 export const ArteryBundle = [
   VesselMixin as Mixin,

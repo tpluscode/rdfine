@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ReservationMixin } from '../Reservation';
-import { EventReservationMixin } from '../EventReservation';
+import { ReservationMixin } from '../lib/Reservation';
+import { EventReservationMixin } from '../lib/EventReservation';
 
 export const EventReservationBundle = [
   ReservationMixin as Mixin,

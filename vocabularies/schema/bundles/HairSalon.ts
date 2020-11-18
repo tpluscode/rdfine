@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { HealthAndBeautyBusinessMixin } from '../HealthAndBeautyBusiness';
-import { HairSalonMixin } from '../HairSalon';
+import { HealthAndBeautyBusinessMixin } from '../lib/HealthAndBeautyBusiness';
+import { HairSalonMixin } from '../lib/HairSalon';
 
 export const HairSalonBundle = [
   HealthAndBeautyBusinessMixin as Mixin,

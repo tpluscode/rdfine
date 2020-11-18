@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MedicalIntangibleMixin } from '../MedicalIntangible';
-import { DDxElementMixin } from '../DDxElement';
-import { MedicalConditionMixin } from '../MedicalCondition';
-import { MedicalSignOrSymptomMixin } from '../MedicalSignOrSymptom';
+import { MedicalIntangibleMixin } from '../lib/MedicalIntangible';
+import { DDxElementMixin } from '../lib/DDxElement';
+import { MedicalConditionMixin } from '../lib/MedicalCondition';
+import { MedicalSignOrSymptomMixin } from '../lib/MedicalSignOrSymptom';
 
 export const DDxElementBundle = [
   MedicalIntangibleMixin as Mixin,

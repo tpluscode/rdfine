@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StructuredValueMixin } from '../StructuredValue';
-import { OwnershipInfoMixin } from '../OwnershipInfo';
-import { OrganizationMixin } from '../Organization';
-import { PersonMixin } from '../Person';
-import { ProductMixin } from '../Product';
-import { ServiceMixin } from '../Service';
+import { StructuredValueMixin } from '../lib/StructuredValue';
+import { OwnershipInfoMixin } from '../lib/OwnershipInfo';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
+import { ProductMixin } from '../lib/Product';
+import { ServiceMixin } from '../lib/Service';
 
 export const OwnershipInfoBundle = [
   StructuredValueMixin as Mixin,

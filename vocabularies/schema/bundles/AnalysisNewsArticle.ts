@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { NewsArticleMixin } from '../NewsArticle';
-import { AnalysisNewsArticleMixin } from '../AnalysisNewsArticle';
+import { NewsArticleMixin } from '../lib/NewsArticle';
+import { AnalysisNewsArticleMixin } from '../lib/AnalysisNewsArticle';
 
 export const AnalysisNewsArticleBundle = [
   NewsArticleMixin as Mixin,

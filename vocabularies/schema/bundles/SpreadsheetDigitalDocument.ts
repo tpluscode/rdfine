@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DigitalDocumentMixin } from '../DigitalDocument';
-import { SpreadsheetDigitalDocumentMixin } from '../SpreadsheetDigitalDocument';
+import { DigitalDocumentMixin } from '../lib/DigitalDocument';
+import { SpreadsheetDigitalDocumentMixin } from '../lib/SpreadsheetDigitalDocument';
 
 export const SpreadsheetDigitalDocumentBundle = [
   DigitalDocumentMixin as Mixin,

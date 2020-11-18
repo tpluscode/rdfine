@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { HowToMixin } from '../HowTo';
-import { RecipeMixin } from '../Recipe';
-import { DurationMixin } from '../Duration';
-import { NutritionInformationMixin } from '../NutritionInformation';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { ItemListMixin } from '../ItemList';
-import { QuantitativeValueMixin } from '../QuantitativeValue';
+import { HowToMixin } from '../lib/HowTo';
+import { RecipeMixin } from '../lib/Recipe';
+import { DurationMixin } from '../lib/Duration';
+import { NutritionInformationMixin } from '../lib/NutritionInformation';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { ItemListMixin } from '../lib/ItemList';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
 
 export const RecipeBundle = [
   HowToMixin as Mixin,

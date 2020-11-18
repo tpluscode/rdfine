@@ -3,7 +3,7 @@ import $rdf from 'rdf-ext'
 import { NamedNode } from 'rdf-js'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import { literal } from '@rdfjs/data-model';
-import { CollectionMixin } from '..'
+import { CollectionMixin } from '../lib/Collection'
 
 describe('Collection', () => {
   let collectionNode: GraphPointer<NamedNode>

@@ -3,11 +3,11 @@ import $rdf from '@rdfjs/dataset'
 import RDF from '@rdfjs/data-model'
 import RdfResource, { Constructor } from '@tpluscode/rdfine'
 import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
-import { ResourceMixin } from '@rdfine/rdfs/Resource'
-import { ShapeMixin } from '../Shape';
+import { ResourceMixin } from '@rdfine/rdfs/lib/Resource'
+import { ShapeMixin } from '../lib/Shape';
 import { ShapeBundle } from '../bundles'
 import { sh } from '../lib/namespace'
-import { PropertyShapeMixin } from '../PropertyShape'
+import { PropertyShapeMixin } from '../lib/PropertyShape'
 
 RdfResource.factory.addMixin(...ShapeBundle)
 RdfResource.factory.addMixin(ResourceMixin)

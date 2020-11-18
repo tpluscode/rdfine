@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StructuredValueMixin } from '../StructuredValue';
-import { TypeAndQuantityNodeMixin } from '../TypeAndQuantityNode';
-import { ProductMixin } from '../Product';
-import { ServiceMixin } from '../Service';
+import { StructuredValueMixin } from '../lib/StructuredValue';
+import { TypeAndQuantityNodeMixin } from '../lib/TypeAndQuantityNode';
+import { ProductMixin } from '../lib/Product';
+import { ServiceMixin } from '../lib/Service';
 
 export const TypeAndQuantityNodeBundle = [
   StructuredValueMixin as Mixin,

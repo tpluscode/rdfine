@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { BodyOfWaterMixin } from '../BodyOfWater';
-import { LakeBodyOfWaterMixin } from '../LakeBodyOfWater';
+import { BodyOfWaterMixin } from '../lib/BodyOfWater';
+import { LakeBodyOfWaterMixin } from '../lib/LakeBodyOfWater';
 
 export const LakeBodyOfWaterBundle = [
   BodyOfWaterMixin as Mixin,

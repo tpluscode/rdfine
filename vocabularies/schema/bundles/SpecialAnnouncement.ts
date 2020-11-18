@@ -1,14 +1,14 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { SpecialAnnouncementMixin } from '../SpecialAnnouncement';
-import { CivicStructureMixin } from '../CivicStructure';
-import { LocalBusinessMixin } from '../LocalBusiness';
-import { ThingMixin } from '../Thing';
-import { WebContentMixin } from '../WebContent';
-import { DatasetMixin } from '../Dataset';
-import { ObservationMixin } from '../Observation';
-import { GovernmentServiceMixin } from '../GovernmentService';
-import { DataFeedMixin } from '../DataFeed';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { SpecialAnnouncementMixin } from '../lib/SpecialAnnouncement';
+import { CivicStructureMixin } from '../lib/CivicStructure';
+import { LocalBusinessMixin } from '../lib/LocalBusiness';
+import { ThingMixin } from '../lib/Thing';
+import { WebContentMixin } from '../lib/WebContent';
+import { DatasetMixin } from '../lib/Dataset';
+import { ObservationMixin } from '../lib/Observation';
+import { GovernmentServiceMixin } from '../lib/GovernmentService';
+import { DataFeedMixin } from '../lib/DataFeed';
 
 export const SpecialAnnouncementBundle = [
   CreativeWorkMixin as Mixin,

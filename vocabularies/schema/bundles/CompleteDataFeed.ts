@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DataFeedMixin } from '../DataFeed';
-import { CompleteDataFeedMixin } from '../CompleteDataFeed';
+import { DataFeedMixin } from '../lib/DataFeed';
+import { CompleteDataFeedMixin } from '../lib/CompleteDataFeed';
 
 export const CompleteDataFeedBundle = [
   DataFeedMixin as Mixin,

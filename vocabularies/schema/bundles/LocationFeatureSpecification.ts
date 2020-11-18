@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PropertyValueMixin } from '../PropertyValue';
-import { LocationFeatureSpecificationMixin } from '../LocationFeatureSpecification';
-import { OpeningHoursSpecificationMixin } from '../OpeningHoursSpecification';
+import { PropertyValueMixin } from '../lib/PropertyValue';
+import { LocationFeatureSpecificationMixin } from '../lib/LocationFeatureSpecification';
+import { OpeningHoursSpecificationMixin } from '../lib/OpeningHoursSpecification';
 
 export const LocationFeatureSpecificationBundle = [
   PropertyValueMixin as Mixin,

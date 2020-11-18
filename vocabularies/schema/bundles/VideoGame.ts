@@ -1,13 +1,13 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { GameMixin } from '../Game';
-import { SoftwareApplicationMixin } from '../SoftwareApplication';
-import { VideoGameMixin } from '../VideoGame';
-import { PersonMixin } from '../Person';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { ThingMixin } from '../Thing';
-import { GameServerMixin } from '../GameServer';
-import { MusicGroupMixin } from '../MusicGroup';
-import { VideoObjectMixin } from '../VideoObject';
+import { GameMixin } from '../lib/Game';
+import { SoftwareApplicationMixin } from '../lib/SoftwareApplication';
+import { VideoGameMixin } from '../lib/VideoGame';
+import { PersonMixin } from '../lib/Person';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { ThingMixin } from '../lib/Thing';
+import { GameServerMixin } from '../lib/GameServer';
+import { MusicGroupMixin } from '../lib/MusicGroup';
+import { VideoObjectMixin } from '../lib/VideoObject';
 
 export const VideoGameBundle = [
   GameMixin as Mixin,

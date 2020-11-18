@@ -60,7 +60,7 @@ describe('meta factory', () => {
       expect(meta).toEqual({
         type: 'Resource',
         mixinName: 'HelloMixin',
-        module: './Hello',
+        module: './lib/Hello',
         qualifiedName: 'Ex.Hello',
         localName: 'Hello',
         term: 'Hello',
@@ -80,7 +80,7 @@ describe('meta factory', () => {
       expect(meta).toEqual({
         type: 'Resource',
         mixinName: '_3DModelMixin',
-        module: './3DModel',
+        module: './lib/3DModel',
         qualifiedName: 'Ex._3DModel',
         localName: '_3DModel',
         term: '3DModel',
@@ -99,9 +99,10 @@ describe('meta factory', () => {
       // then
       expect(meta).toEqual({
         type: 'ExternalResource',
-        mixinName: 'PersonMixin',
+        mixinName: 'SchemaPersonMixin',
+        exportName: 'PersonMixin',
         package: '@rdfine/schema',
-        module: '@rdfine/schema/Person',
+        module: '@rdfine/schema/lib/Person',
         qualifiedName: 'Schema.Person',
         qualifier: 'Schema',
         qualifiedMixinName: 'Schema.PersonMixin',
@@ -120,9 +121,10 @@ describe('meta factory', () => {
       // then
       expect(meta).toEqual({
         type: 'ExternalResource',
-        mixinName: '_3DModelMixin',
+        mixinName: 'Schema3DModelMixin',
+        exportName: '_3DModelMixin',
         package: '@rdfine/schema',
-        module: '@rdfine/schema/3DModel',
+        module: '@rdfine/schema/lib/3DModel',
         qualifiedName: 'Schema._3DModel',
         qualifier: 'Schema',
         qualifiedMixinName: 'Schema._3DModelMixin',

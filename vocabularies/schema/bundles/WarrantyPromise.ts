@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StructuredValueMixin } from '../StructuredValue';
-import { WarrantyPromiseMixin } from '../WarrantyPromise';
-import { QuantitativeValueMixin } from '../QuantitativeValue';
+import { StructuredValueMixin } from '../lib/StructuredValue';
+import { WarrantyPromiseMixin } from '../lib/WarrantyPromise';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
 
 export const WarrantyPromiseBundle = [
   StructuredValueMixin as Mixin,

@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SpaceMixin } from '../Space';
-import { UserAccountMixin } from '../UserAccount';
-import { ContainerMixin } from '../Container';
-import { SiteMixin } from '../Site';
+import { SpaceMixin } from '../lib/Space';
+import { UserAccountMixin } from '../lib/UserAccount';
+import { ContainerMixin } from '../lib/Container';
+import { SiteMixin } from '../lib/Site';
 
 export const SiteBundle = [
   SpaceMixin as Mixin,

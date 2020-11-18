@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreateActionMixin } from '../CreateAction';
-import { CookActionMixin } from '../CookAction';
-import { FoodEstablishmentMixin } from '../FoodEstablishment';
-import { PlaceMixin } from '../Place';
-import { FoodEventMixin } from '../FoodEvent';
-import { RecipeMixin } from '../Recipe';
+import { CreateActionMixin } from '../lib/CreateAction';
+import { CookActionMixin } from '../lib/CookAction';
+import { FoodEstablishmentMixin } from '../lib/FoodEstablishment';
+import { PlaceMixin } from '../lib/Place';
+import { FoodEventMixin } from '../lib/FoodEvent';
+import { RecipeMixin } from '../lib/Recipe';
 
 export const CookActionBundle = [
   CreateActionMixin as Mixin,

@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ImageObjectMixin } from '../ImageObject';
-import { BarcodeMixin } from '../Barcode';
+import { ImageObjectMixin } from '../lib/ImageObject';
+import { BarcodeMixin } from '../lib/Barcode';
 
 export const BarcodeBundle = [
   ImageObjectMixin as Mixin,

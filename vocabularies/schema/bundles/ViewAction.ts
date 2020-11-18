@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ConsumeActionMixin } from '../ConsumeAction';
-import { ViewActionMixin } from '../ViewAction';
+import { ConsumeActionMixin } from '../lib/ConsumeAction';
+import { ViewActionMixin } from '../lib/ViewAction';
 
 export const ViewActionBundle = [
   ConsumeActionMixin as Mixin,

@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { LearningResourceMixin } from '../LearningResource';
-import { CourseMixin } from '../Course';
-import { AlignmentObjectMixin } from '../AlignmentObject';
-import { CourseInstanceMixin } from '../CourseInstance';
-import { StructuredValueMixin } from '../StructuredValue';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { LearningResourceMixin } from '../lib/LearningResource';
+import { CourseMixin } from '../lib/Course';
+import { AlignmentObjectMixin } from '../lib/AlignmentObject';
+import { CourseInstanceMixin } from '../lib/CourseInstance';
+import { StructuredValueMixin } from '../lib/StructuredValue';
 
 export const CourseBundle = [
   CreativeWorkMixin as Mixin,

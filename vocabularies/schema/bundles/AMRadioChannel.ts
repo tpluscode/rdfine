@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RadioChannelMixin } from '../RadioChannel';
-import { AMRadioChannelMixin } from '../AMRadioChannel';
+import { RadioChannelMixin } from '../lib/RadioChannel';
+import { AMRadioChannelMixin } from '../lib/AMRadioChannel';
 
 export const AMRadioChannelBundle = [
   RadioChannelMixin as Mixin,

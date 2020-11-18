@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AutomotiveBusinessMixin } from '../AutomotiveBusiness';
-import { AutoRepairMixin } from '../AutoRepair';
+import { AutomotiveBusinessMixin } from '../lib/AutomotiveBusiness';
+import { AutoRepairMixin } from '../lib/AutoRepair';
 
 export const AutoRepairBundle = [
   AutomotiveBusinessMixin as Mixin,

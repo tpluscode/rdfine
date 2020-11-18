@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ThingMixin } from '../Thing';
-import { MedicalEntityMixin } from '../MedicalEntity';
-import { MedicalCodeMixin } from '../MedicalCode';
-import { MedicalGuidelineMixin } from '../MedicalGuideline';
-import { DrugLegalStatusMixin } from '../DrugLegalStatus';
-import { OrganizationMixin } from '../Organization';
-import { MedicalStudyMixin } from '../MedicalStudy';
+import { ThingMixin } from '../lib/Thing';
+import { MedicalEntityMixin } from '../lib/MedicalEntity';
+import { MedicalCodeMixin } from '../lib/MedicalCode';
+import { MedicalGuidelineMixin } from '../lib/MedicalGuideline';
+import { DrugLegalStatusMixin } from '../lib/DrugLegalStatus';
+import { OrganizationMixin } from '../lib/Organization';
+import { MedicalStudyMixin } from '../lib/MedicalStudy';
 
 export const MedicalEntityBundle = [
   ThingMixin as Mixin,

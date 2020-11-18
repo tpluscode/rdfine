@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CommunicateActionMixin } from '../CommunicateAction';
-import { ShareActionMixin } from '../ShareAction';
+import { CommunicateActionMixin } from '../lib/CommunicateAction';
+import { ShareActionMixin } from '../lib/ShareAction';
 
 export const ShareActionBundle = [
   CommunicateActionMixin as Mixin,

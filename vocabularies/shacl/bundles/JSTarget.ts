@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { JSExecutableMixin } from '../JSExecutable';
-import { TargetMixin } from '../Target';
-import { JSTargetMixin } from '../JSTarget';
+import { JSExecutableMixin } from '../lib/JSExecutable';
+import { TargetMixin } from '../lib/Target';
+import { JSTargetMixin } from '../lib/JSTarget';
 
 export const JSTargetBundle = [
   JSExecutableMixin as Mixin,

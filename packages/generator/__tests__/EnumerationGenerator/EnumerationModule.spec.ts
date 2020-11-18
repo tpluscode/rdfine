@@ -49,7 +49,7 @@ describe('EnumerationModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('./Enum.ts')).toMatchSnapshot()
+    expect(project.getSourceFile('./lib/Enum.ts')).toMatchSnapshot()
   })
 
   it('uses plain NamedNode for enumerations without members', () => {
@@ -78,6 +78,6 @@ describe('EnumerationModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('./Enum.ts')).toMatchSnapshot()
+    expect(project.getSourceFile('./lib/Enum.ts')).toMatchSnapshot()
   })
 })

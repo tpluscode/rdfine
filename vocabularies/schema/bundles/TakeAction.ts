@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { TransferActionMixin } from '../TransferAction';
-import { TakeActionMixin } from '../TakeAction';
+import { TransferActionMixin } from '../lib/TransferAction';
+import { TakeActionMixin } from '../lib/TakeAction';
 
 export const TakeActionBundle = [
   TransferActionMixin as Mixin,

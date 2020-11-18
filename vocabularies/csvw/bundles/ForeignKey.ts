@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { TableReferenceMixin } from '../TableReference';
-import { ForeignKeyMixin } from '../ForeignKey';
+import { TableReferenceMixin } from '../lib/TableReference';
+import { ForeignKeyMixin } from '../lib/ForeignKey';
 
 export const ForeignKeyBundle = [
   TableReferenceMixin as Mixin,

@@ -1,15 +1,15 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { JobPostingMixin } from '../JobPosting';
-import { AdministrativeAreaMixin } from '../AdministrativeArea';
-import { ContactPointMixin } from '../ContactPoint';
-import { MonetaryAmountMixin } from '../MonetaryAmount';
-import { PriceSpecificationMixin } from '../PriceSpecification';
-import { OrganizationMixin } from '../Organization';
-import { MonetaryAmountDistributionMixin } from '../MonetaryAmountDistribution';
-import { PlaceMixin } from '../Place';
-import { CategoryCodeMixin } from '../CategoryCode';
-import { OccupationMixin } from '../Occupation';
+import { IntangibleMixin } from '../lib/Intangible';
+import { JobPostingMixin } from '../lib/JobPosting';
+import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
+import { ContactPointMixin } from '../lib/ContactPoint';
+import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
+import { PriceSpecificationMixin } from '../lib/PriceSpecification';
+import { OrganizationMixin } from '../lib/Organization';
+import { MonetaryAmountDistributionMixin } from '../lib/MonetaryAmountDistribution';
+import { PlaceMixin } from '../lib/Place';
+import { CategoryCodeMixin } from '../lib/CategoryCode';
+import { OccupationMixin } from '../lib/Occupation';
 
 export const JobPostingBundle = [
   IntangibleMixin as Mixin,

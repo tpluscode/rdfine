@@ -1,12 +1,12 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { ReservationMixin } from '../Reservation';
-import { OrganizationMixin } from '../Organization';
-import { PersonMixin } from '../Person';
-import { ProgramMembershipMixin } from '../ProgramMembership';
-import { ThingMixin } from '../Thing';
-import { TicketMixin } from '../Ticket';
-import { PriceSpecificationMixin } from '../PriceSpecification';
+import { IntangibleMixin } from '../lib/Intangible';
+import { ReservationMixin } from '../lib/Reservation';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
+import { ProgramMembershipMixin } from '../lib/ProgramMembership';
+import { ThingMixin } from '../lib/Thing';
+import { TicketMixin } from '../lib/Ticket';
+import { PriceSpecificationMixin } from '../lib/PriceSpecification';
 
 export const ReservationBundle = [
   IntangibleMixin as Mixin,

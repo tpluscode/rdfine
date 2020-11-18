@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { HealthInsurancePlanMixin } from '../HealthInsurancePlan';
-import { ContactPointMixin } from '../ContactPoint';
-import { HealthPlanFormularyMixin } from '../HealthPlanFormulary';
-import { HealthPlanNetworkMixin } from '../HealthPlanNetwork';
+import { IntangibleMixin } from '../lib/Intangible';
+import { HealthInsurancePlanMixin } from '../lib/HealthInsurancePlan';
+import { ContactPointMixin } from '../lib/ContactPoint';
+import { HealthPlanFormularyMixin } from '../lib/HealthPlanFormulary';
+import { HealthPlanNetworkMixin } from '../lib/HealthPlanNetwork';
 
 export const HealthInsurancePlanBundle = [
   IntangibleMixin as Mixin,

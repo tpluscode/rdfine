@@ -1,13 +1,13 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { MediaObjectMixin } from '../MediaObject';
-import { NewsArticleMixin } from '../NewsArticle';
-import { DurationMixin } from '../Duration';
-import { DistanceMixin } from '../Distance';
-import { QuantitativeValueMixin } from '../QuantitativeValue';
-import { OrganizationMixin } from '../Organization';
-import { PlaceMixin } from '../Place';
-import { MediaSubscriptionMixin } from '../MediaSubscription';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { MediaObjectMixin } from '../lib/MediaObject';
+import { NewsArticleMixin } from '../lib/NewsArticle';
+import { DurationMixin } from '../lib/Duration';
+import { DistanceMixin } from '../lib/Distance';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
+import { OrganizationMixin } from '../lib/Organization';
+import { PlaceMixin } from '../lib/Place';
+import { MediaSubscriptionMixin } from '../lib/MediaSubscription';
 
 export const MediaObjectBundle = [
   CreativeWorkMixin as Mixin,

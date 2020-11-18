@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CollectionMixin } from '../Collection';
-import { ProductMixin } from '../Product';
-import { ProductCollectionMixin } from '../ProductCollection';
-import { TypeAndQuantityNodeMixin } from '../TypeAndQuantityNode';
+import { CollectionMixin } from '../lib/Collection';
+import { ProductMixin } from '../lib/Product';
+import { ProductCollectionMixin } from '../lib/ProductCollection';
+import { TypeAndQuantityNodeMixin } from '../lib/TypeAndQuantityNode';
 
 export const ProductCollectionBundle = [
   CollectionMixin as Mixin,

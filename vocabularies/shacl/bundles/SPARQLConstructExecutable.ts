@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SPARQLExecutableMixin } from '../SPARQLExecutable';
-import { SPARQLConstructExecutableMixin } from '../SPARQLConstructExecutable';
+import { SPARQLExecutableMixin } from '../lib/SPARQLExecutable';
+import { SPARQLConstructExecutableMixin } from '../lib/SPARQLConstructExecutable';
 
 export const SPARQLConstructExecutableBundle = [
   SPARQLExecutableMixin as Mixin,

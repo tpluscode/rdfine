@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { VisualArtworkMixin } from '../VisualArtwork';
-import { CoverArtMixin } from '../CoverArt';
+import { VisualArtworkMixin } from '../lib/VisualArtwork';
+import { CoverArtMixin } from '../lib/CoverArt';
 
 export const CoverArtBundle = [
   VisualArtworkMixin as Mixin,

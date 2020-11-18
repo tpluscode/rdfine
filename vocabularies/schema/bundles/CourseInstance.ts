@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { EventMixin } from '../Event';
-import { CourseInstanceMixin } from '../CourseInstance';
-import { PersonMixin } from '../Person';
+import { EventMixin } from '../lib/Event';
+import { CourseInstanceMixin } from '../lib/CourseInstance';
+import { PersonMixin } from '../lib/Person';
 
 export const CourseInstanceBundle = [
   EventMixin as Mixin,

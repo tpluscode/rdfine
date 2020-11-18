@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { LearningResourceMixin } from '../LearningResource';
-import { QuizMixin } from '../Quiz';
+import { LearningResourceMixin } from '../lib/LearningResource';
+import { QuizMixin } from '../lib/Quiz';
 
 export const QuizBundle = [
   LearningResourceMixin as Mixin,

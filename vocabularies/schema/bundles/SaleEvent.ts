@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { EventMixin } from '../Event';
-import { SaleEventMixin } from '../SaleEvent';
+import { EventMixin } from '../lib/Event';
+import { SaleEventMixin } from '../lib/SaleEvent';
 
 export const SaleEventBundle = [
   EventMixin as Mixin,

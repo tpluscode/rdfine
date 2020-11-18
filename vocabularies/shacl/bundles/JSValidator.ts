@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { JSExecutableMixin } from '../JSExecutable';
-import { ValidatorMixin } from '../Validator';
-import { JSValidatorMixin } from '../JSValidator';
+import { JSExecutableMixin } from '../lib/JSExecutable';
+import { ValidatorMixin } from '../lib/Validator';
+import { JSValidatorMixin } from '../lib/JSValidator';
 
 export const JSValidatorBundle = [
   JSExecutableMixin as Mixin,

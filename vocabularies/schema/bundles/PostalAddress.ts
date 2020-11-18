@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ContactPointMixin } from '../ContactPoint';
-import { PostalAddressMixin } from '../PostalAddress';
-import { CountryMixin } from '../Country';
+import { ContactPointMixin } from '../lib/ContactPoint';
+import { PostalAddressMixin } from '../lib/PostalAddress';
+import { CountryMixin } from '../lib/Country';
 
 export const PostalAddressBundle = [
   ContactPointMixin as Mixin,

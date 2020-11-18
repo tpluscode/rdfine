@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { OnlineAccountMixin } from '../OnlineAccount';
-import { OnlineEcommerceAccountMixin } from '../OnlineEcommerceAccount';
+import { OnlineAccountMixin } from '../lib/OnlineAccount';
+import { OnlineEcommerceAccountMixin } from '../lib/OnlineEcommerceAccount';
 
 export const OnlineEcommerceAccountBundle = [
   OnlineAccountMixin as Mixin,

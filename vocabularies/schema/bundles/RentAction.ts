@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { TradeActionMixin } from '../TradeAction';
-import { RentActionMixin } from '../RentAction';
-import { OrganizationMixin } from '../Organization';
-import { PersonMixin } from '../Person';
-import { RealEstateAgentMixin } from '../RealEstateAgent';
+import { TradeActionMixin } from '../lib/TradeAction';
+import { RentActionMixin } from '../lib/RentAction';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
+import { RealEstateAgentMixin } from '../lib/RealEstateAgent';
 
 export const RentActionBundle = [
   TradeActionMixin as Mixin,

@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ParameterizableMixin } from '../Parameterizable';
-import { FunctionMixin } from '../Function';
+import { ParameterizableMixin } from '../lib/Parameterizable';
+import { FunctionMixin } from '../lib/Function';
 
 export const FunctionBundle = [
   ParameterizableMixin as Mixin,

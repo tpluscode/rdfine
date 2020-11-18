@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CommunicateActionMixin } from '../CommunicateAction';
-import { InformActionMixin } from '../InformAction';
-import { EventMixin } from '../Event';
+import { CommunicateActionMixin } from '../lib/CommunicateAction';
+import { InformActionMixin } from '../lib/InformAction';
+import { EventMixin } from '../lib/Event';
 
 export const InformActionBundle = [
   CommunicateActionMixin as Mixin,

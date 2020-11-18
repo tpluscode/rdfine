@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { ListItemMixin } from '../ListItem';
-import { HowToDirectionMixin } from '../HowToDirection';
-import { MediaObjectMixin } from '../MediaObject';
-import { DurationMixin } from '../Duration';
-import { HowToSupplyMixin } from '../HowToSupply';
-import { HowToToolMixin } from '../HowToTool';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { ListItemMixin } from '../lib/ListItem';
+import { HowToDirectionMixin } from '../lib/HowToDirection';
+import { MediaObjectMixin } from '../lib/MediaObject';
+import { DurationMixin } from '../lib/Duration';
+import { HowToSupplyMixin } from '../lib/HowToSupply';
+import { HowToToolMixin } from '../lib/HowToTool';
 
 export const HowToDirectionBundle = [
   CreativeWorkMixin as Mixin,

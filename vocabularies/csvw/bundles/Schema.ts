@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ColumnMixin } from '../Column';
-import { DatatypeMixin } from '../Datatype';
-import { ForeignKeyMixin } from '../ForeignKey';
-import { DirectionMixin } from '../Direction';
-import { TransformationMixin } from '../Transformation';
-import { SchemaMixin } from '../Schema';
+import { ColumnMixin } from '../lib/Column';
+import { DatatypeMixin } from '../lib/Datatype';
+import { ForeignKeyMixin } from '../lib/ForeignKey';
+import { DirectionMixin } from '../lib/Direction';
+import { TransformationMixin } from '../lib/Transformation';
+import { SchemaMixin } from '../lib/Schema';
 
 export const SchemaBundle = [
   ColumnMixin as Mixin,

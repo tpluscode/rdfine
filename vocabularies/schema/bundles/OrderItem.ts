@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { OrderItemMixin } from '../OrderItem';
-import { ParcelDeliveryMixin } from '../ParcelDelivery';
-import { ProductMixin } from '../Product';
-import { ServiceMixin } from '../Service';
+import { IntangibleMixin } from '../lib/Intangible';
+import { OrderItemMixin } from '../lib/OrderItem';
+import { ParcelDeliveryMixin } from '../lib/ParcelDelivery';
+import { ProductMixin } from '../lib/Product';
+import { ServiceMixin } from '../lib/Service';
 
 export const OrderItemBundle = [
   IntangibleMixin as Mixin,

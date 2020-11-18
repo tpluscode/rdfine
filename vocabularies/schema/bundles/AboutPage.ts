@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { WebPageMixin } from '../WebPage';
-import { AboutPageMixin } from '../AboutPage';
+import { WebPageMixin } from '../lib/WebPage';
+import { AboutPageMixin } from '../lib/AboutPage';
 
 export const AboutPageBundle = [
   WebPageMixin as Mixin,

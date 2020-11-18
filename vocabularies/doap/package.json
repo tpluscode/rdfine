@@ -5,6 +5,7 @@
   "module": "index.mjs",
   "browser": "index.mjs",
   "types": "index.d.ts",
+  "sideEffects": false,
   "exports": {
     ".": {
       "require": "./index.js",
@@ -14,14 +15,14 @@
       "require": "./bundles/index.js",
       "import": "./bundles/index.mjs"
     },
-    "./lib/namespace": {
-      "require": "./lib/namespace.js",
-      "import": "./lib/namespace.mjs"
+    "./lib/*": {
+      "require": "./lib/*.js",
+      "import": "./lib/*.mjs"
     }
   },
   "scripts": {
     "prepack": "npm run build",
-    "clean": "find . -name '*.ts' -maxdepth 1 -delete",
+    "clean": "rimraf lib bundles",
     "build": "run-s build:*",
     "build:cjs": "tsc -p tsconfig.build.json",
     "build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs --config-file ../../babel.config.json",

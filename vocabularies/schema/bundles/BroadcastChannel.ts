@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { BroadcastChannelMixin } from '../BroadcastChannel';
-import { BroadcastFrequencySpecificationMixin } from '../BroadcastFrequencySpecification';
-import { CableOrSatelliteServiceMixin } from '../CableOrSatelliteService';
-import { BroadcastServiceMixin } from '../BroadcastService';
+import { IntangibleMixin } from '../lib/Intangible';
+import { BroadcastChannelMixin } from '../lib/BroadcastChannel';
+import { BroadcastFrequencySpecificationMixin } from '../lib/BroadcastFrequencySpecification';
+import { CableOrSatelliteServiceMixin } from '../lib/CableOrSatelliteService';
+import { BroadcastServiceMixin } from '../lib/BroadcastService';
 
 export const BroadcastChannelBundle = [
   IntangibleMixin as Mixin,

@@ -94,6 +94,7 @@ describe('MixinModule', () => {
       package: '@rdfine/schema',
       qualifier: 'Schema',
       qualifiedMixinName: 'Schema.PersonMixin',
+      exportName: 'Person',
     }], [])
 
     // when
@@ -344,6 +345,7 @@ describe('MixinModule', () => {
       range: [{
         type: 'ExternalResource' as const,
         mixinName: 'FooMixin',
+        exportName: 'Foo',
         module: '@rdfine/example/Foo',
         qualifiedName: 'Example.Foo',
         package: '@rdfine/example',
@@ -561,6 +563,7 @@ describe('MixinModule', () => {
       range: [{
         type: 'ExternalResource' as const,
         mixinName: 'FooMixin',
+        exportName: 'Foo',
         module: '@rdfine/example/Foo',
         qualifiedName: 'Example.Foo',
         package: '@rdfine/example',
@@ -613,6 +616,7 @@ describe('MixinModule', () => {
     }, {
       type: 'ExternalResource' as const,
       mixinName: 'ExternMixin',
+      exportName: 'Extern',
       qualifiedName: 'Example.Extern',
       module: 'Extern',
       qualifiedMixinName: 'Example.FooExtern',

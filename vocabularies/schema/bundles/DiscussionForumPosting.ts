@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SocialMediaPostingMixin } from '../SocialMediaPosting';
-import { DiscussionForumPostingMixin } from '../DiscussionForumPosting';
+import { SocialMediaPostingMixin } from '../lib/SocialMediaPosting';
+import { DiscussionForumPostingMixin } from '../lib/DiscussionForumPosting';
 
 export const DiscussionForumPostingBundle = [
   SocialMediaPostingMixin as Mixin,

@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { FloorPlanMixin } from '../FloorPlan';
-import { LocationFeatureSpecificationMixin } from '../LocationFeatureSpecification';
-import { QuantitativeValueMixin } from '../QuantitativeValue';
-import { AccommodationMixin } from '../Accommodation';
+import { IntangibleMixin } from '../lib/Intangible';
+import { FloorPlanMixin } from '../lib/FloorPlan';
+import { LocationFeatureSpecificationMixin } from '../lib/LocationFeatureSpecification';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
+import { AccommodationMixin } from '../lib/Accommodation';
 
 export const FloorPlanBundle = [
   IntangibleMixin as Mixin,

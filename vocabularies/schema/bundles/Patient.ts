@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MedicalAudienceMixin } from '../MedicalAudience';
-import { PersonMixin } from '../Person';
-import { PatientMixin } from '../Patient';
-import { MedicalConditionMixin } from '../MedicalCondition';
-import { DrugMixin } from '../Drug';
+import { MedicalAudienceMixin } from '../lib/MedicalAudience';
+import { PersonMixin } from '../lib/Person';
+import { PatientMixin } from '../lib/Patient';
+import { MedicalConditionMixin } from '../lib/MedicalCondition';
+import { DrugMixin } from '../lib/Drug';
 
 export const PatientBundle = [
   MedicalAudienceMixin as Mixin,

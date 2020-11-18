@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { ArticleMixin } from '../Article';
-import { SpeakableSpecificationMixin } from '../SpeakableSpecification';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { ArticleMixin } from '../lib/Article';
+import { SpeakableSpecificationMixin } from '../lib/SpeakableSpecification';
 
 export const ArticleBundle = [
   CreativeWorkMixin as Mixin,

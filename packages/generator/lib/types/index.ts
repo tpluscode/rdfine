@@ -28,6 +28,7 @@ export interface ExternalResourceType {
   qualifier: string
   package: string
   qualifiedMixinName: string
+  exportName: string
 }
 
 export interface EnumerationType {

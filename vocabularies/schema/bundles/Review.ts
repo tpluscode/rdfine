@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { ReviewMixin } from '../Review';
-import { ThingMixin } from '../Thing';
-import { RatingMixin } from '../Rating';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { ReviewMixin } from '../lib/Review';
+import { ThingMixin } from '../lib/Thing';
+import { RatingMixin } from '../lib/Rating';
 
 export const ReviewBundle = [
   CreativeWorkMixin as Mixin,

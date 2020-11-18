@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { SeasonMixin } from '../Season';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { SeasonMixin } from '../lib/Season';
 
 export const SeasonBundle = [
   CreativeWorkMixin as Mixin,

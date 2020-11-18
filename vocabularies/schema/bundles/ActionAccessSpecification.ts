@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { ActionAccessSpecificationMixin } from '../ActionAccessSpecification';
-import { ThingMixin } from '../Thing';
-import { GeoShapeMixin } from '../GeoShape';
-import { PlaceMixin } from '../Place';
-import { OfferMixin } from '../Offer';
-import { MediaSubscriptionMixin } from '../MediaSubscription';
+import { IntangibleMixin } from '../lib/Intangible';
+import { ActionAccessSpecificationMixin } from '../lib/ActionAccessSpecification';
+import { ThingMixin } from '../lib/Thing';
+import { GeoShapeMixin } from '../lib/GeoShape';
+import { PlaceMixin } from '../lib/Place';
+import { OfferMixin } from '../lib/Offer';
+import { MediaSubscriptionMixin } from '../lib/MediaSubscription';
 
 export const ActionAccessSpecificationBundle = [
   IntangibleMixin as Mixin,

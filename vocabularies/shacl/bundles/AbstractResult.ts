@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AbstractResultMixin } from '../AbstractResult';
-import { SeverityMixin } from '../Severity';
-import { ConstraintComponentMixin } from '../ConstraintComponent';
-import { ShapeMixin } from '../Shape';
+import { AbstractResultMixin } from '../lib/AbstractResult';
+import { SeverityMixin } from '../lib/Severity';
+import { ConstraintComponentMixin } from '../lib/ConstraintComponent';
+import { ShapeMixin } from '../lib/Shape';
 
 export const AbstractResultBundle = [
   AbstractResultMixin as Mixin,

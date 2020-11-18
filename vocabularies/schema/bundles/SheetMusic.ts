@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../CreativeWork';
-import { SheetMusicMixin } from '../SheetMusic';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { SheetMusicMixin } from '../lib/SheetMusic';
 
 export const SheetMusicBundle = [
   CreativeWorkMixin as Mixin,

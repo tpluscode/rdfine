@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../Intangible';
-import { SeatMixin } from '../Seat';
+import { IntangibleMixin } from '../lib/Intangible';
+import { SeatMixin } from '../lib/Seat';
 
 export const SeatBundle = [
   IntangibleMixin as Mixin,

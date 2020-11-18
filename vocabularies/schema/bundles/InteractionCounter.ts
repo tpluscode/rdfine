@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StructuredValueMixin } from '../StructuredValue';
-import { InteractionCounterMixin } from '../InteractionCounter';
-import { SoftwareApplicationMixin } from '../SoftwareApplication';
-import { WebSiteMixin } from '../WebSite';
-import { ActionMixin } from '../Action';
+import { StructuredValueMixin } from '../lib/StructuredValue';
+import { InteractionCounterMixin } from '../lib/InteractionCounter';
+import { SoftwareApplicationMixin } from '../lib/SoftwareApplication';
+import { WebSiteMixin } from '../lib/WebSite';
+import { ActionMixin } from '../lib/Action';
 
 export const InteractionCounterBundle = [
   StructuredValueMixin as Mixin,
