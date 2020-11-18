@@ -35,7 +35,7 @@ export interface RdfResourceCore<D extends DatasetCore = DatasetCore> {
   readonly _graphId: Quad_Graph
   readonly _parent?: RdfResource<D>
   readonly isAnonymous: boolean
-  equals(other: RdfResource | ResourceIdentifier | GraphPointer<ResourceIdentifier> | undefined | null): boolean
+  equals(other: RdfResource | ResourceIdentifier | GraphPointer | undefined | null): boolean
   hasType (type: string | NamedNode): boolean
   /**
    * Gets the value of a property
@@ -198,7 +198,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return this.types.has(type)
   }
 
-  public equals(other: RdfResource<any> | ResourceIdentifier | GraphPointer<ResourceIdentifier> | undefined | null): boolean {
+  public equals(other: RdfResource<any> | ResourceIdentifier | GraphPointer | undefined | null): boolean {
     if (!other) {
       return false
     }
