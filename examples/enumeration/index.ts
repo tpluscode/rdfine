@@ -1,8 +1,8 @@
 import rdf from '@rdfjs/dataset'
-import { OrderMixin } from '@rdfine/schema/Order'
+import { OrderMixin } from '@rdfine/schema/lib/Order'
 import type * as Schema from '@rdfine/schema'
 import RDF from '@rdfjs/data-model'
-import OrderStatus from '@rdfine/schema/OrderStatus'
+import OrderStatus from '@rdfine/schema/lib/OrderStatus'
 import { turtle } from '@tpluscode/rdf-string'
 import cf from 'clownface'
 
