@@ -310,7 +310,7 @@ export default class RdfResourceImpl<ID extends ResourceNode = ResourceNode> imp
   }
 }
 
-type UserDefinedInterface<T extends RdfResource | undefined> = Omit<T, keyof RdfResource>
+type UserDefinedInterface<T extends RdfResourceCore | undefined> = Omit<T, keyof RdfResource>
 
 type BaseInitializer = Record<string, any> & {
   types?: NamedNode[] | TypeCollection<any>

@@ -2,7 +2,7 @@
 import { Literal, NamedNode } from 'rdf-js'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
-import type { DatasetType, Initializer, RdfResource, RdfResourceCore, ResourceNode } from '../RdfResource'
+import type { Initializer, RdfResource, RdfResourceCore, ResourceNode } from '../RdfResource'
 import { createProxy } from './proxy'
 import type { PropertyMeta } from './decorators/property'
 import { GraphPointer } from 'clownface'
@@ -35,7 +35,7 @@ export interface ResourceFactory<T extends AnyFunction = any> {
   createEntity<S, ID extends ResourceNode = ResourceNode>(
     term: GraphPointer,
     typeAndMixins?: Mixin<T>[] | [Constructor, ...Mixin<T>[]], // TODO: move mixins into options object
-    options?: ResourceCreationOptions<RdfResourceCore<ID> & S>): RdfResourceCore<ID> & S & ResourceIndexer<RdfResourceCore<ID>>
+    options?: ResourceCreationOptions<RdfResourceCore<ID> & S>): RdfResourceCore<ID> & S & ResourceIndexer<RdfResource<ID>>
 }
 
 export interface ResourceCreationOptions<R extends RdfResourceCore> {
@@ -71,7 +71,7 @@ export default class <T extends AnyFunction = any> implements ResourceFactory<T>
     })
   }
 
-  public createEntity<S, ID extends ResourceNode = ResourceNode>(pointer: ResourceNode, typeAndMixins: Mixin<T>[] | [Constructor, ...Mixin<T>[]] = [], options: ResourceCreationOptions<RdfResourceCore<ID> & S> = {}): RdfResourceCore<ID> & S & ResourceIndexer<RdfResourceCore<ID>> {
+  public createEntity<S, ID extends ResourceNode = ResourceNode>(pointer: ResourceNode, typeAndMixins: Mixin<T>[] | [Constructor, ...Mixin<T>[]] = [], options: ResourceCreationOptions<RdfResourceCore<ID> & S> = {}): RdfResourceCore<ID> & S & ResourceIndexer<RdfResource<ID>> {
     let BaseClass = this.BaseClass
     let explicitMixins: Mixin[] = typeAndMixins
     if (typeAndMixins.length > 0) {
