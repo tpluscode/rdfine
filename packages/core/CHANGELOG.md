@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.0-next.1
+
+### Patch Changes
+
+- 8065bdb3: Tweak factory typings
+
 ## 0.6.0-next.0
 
 ### Minor Changes
