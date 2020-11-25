@@ -2,16 +2,16 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
-  acceptedAnswer: Schema.Answer<D> | Schema.ItemList<D> | undefined;
+export interface Question<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, RdfResource<ID> {
+  acceptedAnswer: Schema.Answer<SiblingNode<ID>> | Schema.ItemList<SiblingNode<ID>> | undefined;
   answerCount: number | undefined;
   downvoteCount: number | undefined;
-  suggestedAnswer: Schema.Answer<D> | Schema.ItemList<D> | undefined;
+  suggestedAnswer: Schema.Answer<SiblingNode<ID>> | Schema.ItemList<SiblingNode<ID>> | undefined;
   upvoteCount: number | undefined;
 }
 

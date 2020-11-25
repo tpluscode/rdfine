@@ -2,20 +2,20 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Article<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface Article<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, RdfResource<ID> {
   articleBody: string | undefined;
   articleSection: string | undefined;
-  backstory: Schema.CreativeWork<D> | undefined;
+  backstory: Schema.CreativeWork<SiblingNode<ID>> | undefined;
   backstoryLiteral: string | undefined;
   pageEnd: number | string | undefined;
   pageStart: number | string | undefined;
   pagination: string | undefined;
-  speakable: Schema.SpeakableSpecification<D> | undefined;
+  speakable: Schema.SpeakableSpecification<SiblingNode<ID>> | undefined;
   wordCount: number | undefined;
 }
 

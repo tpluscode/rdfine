@@ -2,34 +2,34 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface Order<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
-  acceptedOffer: Schema.Offer<D> | undefined;
-  billingAddress: Schema.PostalAddress<D> | undefined;
-  broker: Schema.Organization<D> | Schema.Person<D> | undefined;
+export interface Order<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
+  acceptedOffer: Schema.Offer<SiblingNode<ID>> | undefined;
+  billingAddress: Schema.PostalAddress<SiblingNode<ID>> | undefined;
+  broker: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
   confirmationNumber: string | undefined;
-  customer: Schema.Organization<D> | Schema.Person<D> | undefined;
+  customer: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
   discount: number | string | undefined;
   discountCode: string | undefined;
   discountCurrency: string | undefined;
   isGift: boolean | undefined;
-  merchant: Schema.Organization<D> | Schema.Person<D> | undefined;
+  merchant: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
   orderDate: Date | undefined;
-  orderDelivery: Schema.ParcelDelivery<D> | undefined;
-  orderedItem: Schema.OrderItem<D> | Schema.Product<D> | Schema.Service<D> | undefined;
+  orderDelivery: Schema.ParcelDelivery<SiblingNode<ID>> | undefined;
+  orderedItem: Schema.OrderItem<SiblingNode<ID>> | Schema.Product<SiblingNode<ID>> | Schema.Service<SiblingNode<ID>> | undefined;
   orderNumber: string | undefined;
   orderStatus: Schema.OrderStatus | undefined;
-  partOfInvoice: Schema.Invoice<D> | undefined;
+  partOfInvoice: Schema.Invoice<SiblingNode<ID>> | undefined;
   paymentDue: Date | undefined;
   paymentDueDate: Date | undefined;
   paymentMethod: Schema.PaymentMethod | undefined;
   paymentMethodId: string | undefined;
   paymentUrl: RDF.NamedNode | undefined;
-  seller: Schema.Organization<D> | Schema.Person<D> | undefined;
+  seller: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
 }
 
 export function OrderMixin<Base extends Constructor>(Resource: Base) {

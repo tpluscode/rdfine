@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ResidenceMixin } from './Residence';
 
-export interface ApartmentComplex<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Residence<D>, RdfResource<D> {
-  numberOfAccommodationUnits: Schema.QuantitativeValue<D> | undefined;
-  numberOfAvailableAccommodationUnits: Schema.QuantitativeValue<D> | undefined;
-  numberOfBedrooms: Schema.QuantitativeValue<D> | undefined;
+export interface ApartmentComplex<ID extends ResourceNode = ResourceNode> extends Schema.Residence<ID>, RdfResource<ID> {
+  numberOfAccommodationUnits: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
+  numberOfAvailableAccommodationUnits: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
+  numberOfBedrooms: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   numberOfBedroomsLiteral: number | undefined;
   petsAllowed: boolean | string | undefined;
   tourBookingPage: RDF.NamedNode | undefined;

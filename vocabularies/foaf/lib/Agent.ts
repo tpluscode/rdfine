@@ -2,30 +2,30 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '..';
 
-export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
-  account: Foaf.OnlineAccount<D> | undefined;
+export interface Agent<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
+  account: Foaf.OnlineAccount<SiblingNode<ID>> | undefined;
   age: RDF.Literal | undefined;
   aimChatID: RDF.Literal | undefined;
   birthday: RDF.Literal | undefined;
   gender: RDF.Literal | undefined;
-  holdsAccount: Foaf.OnlineAccount<D> | undefined;
+  holdsAccount: Foaf.OnlineAccount<SiblingNode<ID>> | undefined;
   icqChatID: RDF.Literal | undefined;
-  interest: Foaf.Document<D> | undefined;
+  interest: Foaf.Document<SiblingNode<ID>> | undefined;
   jabberID: RDF.Literal | undefined;
   made: RDF.NamedNode | undefined;
   mbox: RDF.NamedNode | undefined;
   'mbox_sha1sum': RDF.Literal | undefined;
   msnChatID: RDF.Literal | undefined;
-  openid: Foaf.Document<D> | undefined;
+  openid: Foaf.Document<SiblingNode<ID>> | undefined;
   skypeID: RDF.Literal | undefined;
   status: RDF.Literal | undefined;
-  tipjar: Foaf.Document<D> | undefined;
+  tipjar: Foaf.Document<SiblingNode<ID>> | undefined;
   'topic_interest': RDF.NamedNode | undefined;
-  weblog: Foaf.Document<D> | undefined;
+  weblog: Foaf.Document<SiblingNode<ID>> | undefined;
   yahooChatID: RDF.Literal | undefined;
 }
 

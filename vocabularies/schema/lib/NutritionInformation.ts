@@ -2,24 +2,24 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface NutritionInformation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
-  calories: Schema.Energy<D> | undefined;
-  carbohydrateContent: Schema.Mass<D> | undefined;
-  cholesterolContent: Schema.Mass<D> | undefined;
-  fatContent: Schema.Mass<D> | undefined;
-  fiberContent: Schema.Mass<D> | undefined;
-  proteinContent: Schema.Mass<D> | undefined;
-  saturatedFatContent: Schema.Mass<D> | undefined;
+export interface NutritionInformation<ID extends ResourceNode = ResourceNode> extends Schema.StructuredValue<ID>, RdfResource<ID> {
+  calories: Schema.Energy<SiblingNode<ID>> | undefined;
+  carbohydrateContent: Schema.Mass<SiblingNode<ID>> | undefined;
+  cholesterolContent: Schema.Mass<SiblingNode<ID>> | undefined;
+  fatContent: Schema.Mass<SiblingNode<ID>> | undefined;
+  fiberContent: Schema.Mass<SiblingNode<ID>> | undefined;
+  proteinContent: Schema.Mass<SiblingNode<ID>> | undefined;
+  saturatedFatContent: Schema.Mass<SiblingNode<ID>> | undefined;
   servingSize: string | undefined;
-  sodiumContent: Schema.Mass<D> | undefined;
-  sugarContent: Schema.Mass<D> | undefined;
-  transFatContent: Schema.Mass<D> | undefined;
-  unsaturatedFatContent: Schema.Mass<D> | undefined;
+  sodiumContent: Schema.Mass<SiblingNode<ID>> | undefined;
+  sugarContent: Schema.Mass<SiblingNode<ID>> | undefined;
+  transFatContent: Schema.Mass<SiblingNode<ID>> | undefined;
+  unsaturatedFatContent: Schema.Mass<SiblingNode<ID>> | undefined;
 }
 
 export function NutritionInformationMixin<Base extends Constructor>(Resource: Base) {

@@ -2,16 +2,16 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import { ResourceMixin } from './Resource';
 
-export interface ApiDocumentation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
+export interface ApiDocumentation<ID extends ResourceNode = ResourceNode> extends Hydra.Resource<ID>, RdfResource<ID> {
   description: string | undefined;
-  entrypoint: Hydra.Resource<D> | undefined;
-  possibleStatus: Array<Hydra.Status<D>>;
-  supportedClass: Array<Hydra.Class<D>>;
+  entrypoint: Hydra.Resource<SiblingNode<ID>> | undefined;
+  possibleStatus: Array<Hydra.Status<SiblingNode<ID>>>;
+  supportedClass: Array<Hydra.Class<SiblingNode<ID>>>;
   title: string | undefined;
 }
 

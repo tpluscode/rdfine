@@ -2,18 +2,18 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface ShippingRateSettings<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface ShippingRateSettings<ID extends ResourceNode = ResourceNode> extends Schema.StructuredValue<ID>, RdfResource<ID> {
   doesNotShip: boolean | undefined;
-  freeShippingThreshold: Schema.DeliveryChargeSpecification<D> | Schema.MonetaryAmount<D> | undefined;
+  freeShippingThreshold: Schema.DeliveryChargeSpecification<SiblingNode<ID>> | Schema.MonetaryAmount<SiblingNode<ID>> | undefined;
   isUnlabelledFallback: boolean | undefined;
-  shippingDestination: Schema.DefinedRegion<D> | undefined;
+  shippingDestination: Schema.DefinedRegion<SiblingNode<ID>> | undefined;
   shippingLabel: string | undefined;
-  shippingRate: Schema.MonetaryAmount<D> | undefined;
+  shippingRate: Schema.MonetaryAmount<SiblingNode<ID>> | undefined;
 }
 
 export function ShippingRateSettingsMixin<Base extends Constructor>(Resource: Base) {

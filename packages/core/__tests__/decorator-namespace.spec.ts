@@ -1,7 +1,7 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
-import cf from 'clownface'
+import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { Constructor, namespace, property } from '../index'
+import { Constructor, namespace, property, ResourceIdentifier } from '../index'
 import RdfResource from '../RdfResource'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { foaf, rdfs, schema } from '@tpluscode/rdf-ns-builders'
@@ -52,7 +52,7 @@ describe('decorator', () => {
     it('can be used on class extending specific dataset type', () => {
       // given
       @namespace(foaf)
-      class WithNamespace extends RdfResource<DatasetExt> {
+      class WithNamespace extends RdfResource<GraphPointer<ResourceIdentifier, DatasetExt>> {
       }
 
       // when

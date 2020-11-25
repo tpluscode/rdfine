@@ -2,16 +2,16 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TripMixin } from './Trip';
 
-export interface TrainTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Trip<D>, RdfResource<D> {
+export interface TrainTrip<ID extends ResourceNode = ResourceNode> extends Schema.Trip<ID>, RdfResource<ID> {
   arrivalPlatform: string | undefined;
-  arrivalStation: Schema.TrainStation<D> | undefined;
+  arrivalStation: Schema.TrainStation<SiblingNode<ID>> | undefined;
   departurePlatform: string | undefined;
-  departureStation: Schema.TrainStation<D> | undefined;
+  departureStation: Schema.TrainStation<SiblingNode<ID>> | undefined;
   trainName: string | undefined;
   trainNumber: string | undefined;
 }

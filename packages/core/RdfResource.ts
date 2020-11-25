@@ -21,19 +21,25 @@ import type { Jsonified } from './lib/toJSON'
 import { getPointer } from './lib/resource'
 
 export type ResourceIdentifier = BlankNode | NamedNode
-export type ResourceNode<D extends DatasetCore = DatasetCore> = GraphPointer<ResourceIdentifier, D>
+export type ResourceNode<ID extends ResourceIdentifier = ResourceIdentifier, D extends DatasetCore = DatasetCore> = GraphPointer<ID, D>
 
 export interface GetOptions {
   strict: boolean
 }
 
-export interface RdfResourceCore<D extends DatasetCore = DatasetCore> {
-  readonly id: ResourceIdentifier
-  readonly types: TypeCollection<D>
-  readonly pointer: GraphPointer<ResourceIdentifier, D>
-  readonly unionGraphPointer: MultiPointer<ResourceIdentifier, D>
+type TermType<T> = T extends ResourceNode<infer ID> ? ID : never
+export type DatasetType<T> = T extends ResourceNode<any, infer D> ? D : never
+export type SiblingNode<ID extends ResourceNode> = ResourceNode<ResourceIdentifier, DatasetType<ID>>
+
+type CombinedType<T, ID extends ResourceNode> = T & RdfResource<SiblingNode<ID>>
+
+export interface RdfResourceCore<ID extends ResourceNode = ResourceNode> {
+  readonly id: TermType<ID>
+  readonly types: TypeCollection<DatasetType<ID>>
+  readonly pointer: ID
+  readonly unionGraphPointer: MultiPointer<TermType<ID>, DatasetType<ID>>
   readonly _graphId: Quad_Graph
-  readonly _parent?: RdfResource<D>
+  readonly _parent?: RdfResource<SiblingNode<ID>>
   readonly isAnonymous: boolean
   equals(other: RdfResource | ResourceIdentifier | GraphPointer | undefined | null): boolean
   hasType (type: string | NamedNode): boolean
@@ -41,13 +47,13 @@ export interface RdfResourceCore<D extends DatasetCore = DatasetCore> {
    * Gets the value of a property
    * @param property
    */
-  get<T extends RdfResource<D> = RdfResource<D>> (property: string | NamedNode): T
-  get<T extends RdfResource<D> = RdfResource<D>> (property: string | NamedNode, options?: GetOptions): T | null
+  get<T extends RdfResourceCore = RdfResourceCore> (property: string | NamedNode): CombinedType<T, ID>
+  get<T extends RdfResourceCore = RdfResourceCore> (property: string | NamedNode, options?: GetOptions): CombinedType<T, ID> | null
   /**
    * Gets the value of a property and ensures that an array will be returned
    * @param property
    */
-  getArray<T extends RdfResource<D> = RdfResource<D>> (property: string | NamedNode, options?: GetOptions): T[]
+  getArray<T extends RdfResourceCore = RdfResourceCore> (property: string | NamedNode, options?: GetOptions): CombinedType<T, ID>[]
   /**
    * Gets the property value if it's boolean. Throws if it's not
    * @param property
@@ -70,19 +76,19 @@ export interface RdfResourceCore<D extends DatasetCore = DatasetCore> {
    * Returns JSON-LD-like object which represents the runtime interface of this resource
    */
   toJSON<T extends RdfResourceCore = this> (): Jsonified<RdfResource & T>
-  _getObjects(property: string | NamedNode, options?: GetOptions): MultiPointer<Term, D>
-  _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
+  _getObjects(property: string | NamedNode, options?: GetOptions): MultiPointer<Term, DatasetType<ID>>
+  _create<T extends RdfResource>(term: ResourceNode<any, DatasetType<ID>>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<T>): T & ResourceIndexer
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface RdfResource<D extends DatasetCore = DatasetCore> extends RdfResourceCore<D> {
+export interface RdfResource<ID extends ResourceNode = ResourceNode> extends RdfResourceCore<ID> {
 }
 
-export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implements RdfResourceCore<D> {
-  public readonly pointer: GraphPointer<ResourceIdentifier, D>
-  public readonly unionGraphPointer: MultiPointer<ResourceIdentifier, D>
+export default class RdfResourceImpl<ID extends ResourceNode = ResourceNode> implements RdfResourceCore<ID> {
+  public readonly pointer: ID
+  public readonly unionGraphPointer: MultiPointer<TermType<ID>, DatasetType<ID>>
   public readonly __initialized: boolean = false
-  public readonly _parent?: RdfResource<D>
+  public readonly _parent?: RdfResource<SiblingNode<ID>>
   private readonly __initializeProperties: (() => boolean)
   public static __ns?: NamespaceBuilder
   public static factory: ResourceFactory = new ResourceFactoryImpl(RdfResourceImpl)
@@ -120,7 +126,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     }
   }
 
-  public constructor(pointer: ResourceNode<D>, init: Initializer<any> = {}, parent?: RdfResource<D>) {
+  public constructor(pointer: ID, init: Initializer<any> = {}, parent?: RdfResource<SiblingNode<ID>>) {
     if (pointer.term.termType !== 'BlankNode' && pointer.term.termType !== 'NamedNode') {
       throw new Error(`RdfResource cannot be initialized from a ${(pointer.term as any).termType} node`)
     }
@@ -137,13 +143,13 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     const selfGraph = cf({
       ...pointer,
       term: pointer.term,
-    })
+    }) as any
 
     if (selfGraph._context[0].graph) {
       this.pointer = selfGraph
       this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: undefined })
     } else {
-      this.pointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: defaultGraphInstance })
+      this.pointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: defaultGraphInstance }) as any
       this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term })
     }
 
@@ -178,16 +184,16 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     RdfResourceImpl._userInitializeProperties(this, init)
   }
 
-  public get id(): ResourceIdentifier {
-    return this.pointer.term
+  public get id(): TermType<ID> {
+    return this.pointer.term as any
   }
 
   public get _graphId(): Quad_Graph {
     return this.pointer._context[0].graph!
   }
 
-  public get types(): TypeCollection<D> {
-    return new TypeCollectionCtor(this)
+  public get types(): TypeCollection<DatasetType<ID>> {
+    return new TypeCollectionCtor<any>(this)
   }
 
   public get isAnonymous() {
@@ -216,7 +222,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return idsEqual
   }
 
-  public get<T extends RdfResource<D> = RdfResource<D>>(property: string | NamedNode, options?: GetOptions): T | RdfResource<D> | null {
+  public get<T extends RdfResourceCore = RdfResourceCore>(property: string | NamedNode, options?: GetOptions): CombinedType<T, ID> | null {
     const objects = this.getArray<T>(property, options)
 
     if (objects.length > 0) {
@@ -226,7 +232,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     return null
   }
 
-  public getArray<T extends RdfResource<D> = RdfResource<D>>(property: string | NamedNode, options?: GetOptions): T[] {
+  public getArray<T extends RdfResourceCore = RdfResourceCore>(property: string | NamedNode, options?: GetOptions): CombinedType<T, ID>[] {
     const values = this._getObjects(property, options)
       .filter(obj => obj.term.termType === 'NamedNode' || obj.term.termType === 'BlankNode')
       .map(obj => {
@@ -284,7 +290,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     throw new Error(`Expected property '${property}' to be a boolean but found '${value}'`)
   }
 
-  public _getObjects(property: string | Term, { strict }: GetOptions = { strict: false }): MultiPointer<Term, D> {
+  public _getObjects(property: string | Term, { strict }: GetOptions = { strict: false }): MultiPointer<Term, DatasetType<ID>> {
     const propertyNode = typeof property === 'string' ? this.pointer.namedNode(property) : property
     const objects = this.pointer.out(propertyNode)
 
@@ -292,11 +298,11 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       throw new Error(`Value for predicate <${property}> was missing`)
     }
 
-    return objects
+    return objects as any
   }
 
-  public _create<T extends RdfResourceCore<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D, T> = {}): T & ResourceIndexer {
-    return (this.constructor as Constructor).factory.createEntity<T>(term, mixins, options)
+  public _create<T extends RdfResourceCore, D extends DatasetCore = DatasetCore>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<T> = {}): CombinedType<T, SiblingNode<ID>> & ResourceIndexer {
+    return (this.constructor as Constructor).factory.createEntity<T>(term, mixins, options) as any
   }
 
   public toJSON<T extends RdfResourceCore<any> = this>(): Jsonified<T> {
@@ -304,7 +310,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   }
 }
 
-type UserDefinedInterface<T extends RdfResource | undefined> = Omit<T, keyof RdfResource>
+type UserDefinedInterface<T extends RdfResourceCore | undefined> = Omit<T, keyof RdfResource>
 
 type BaseInitializer = Record<string, any> & {
   types?: NamedNode[] | TypeCollection<any>

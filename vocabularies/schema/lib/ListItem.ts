@@ -2,16 +2,16 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface ListItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
-  item: Schema.Thing<D> | undefined;
-  nextItem: Schema.ListItem<D> | undefined;
+export interface ListItem<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
+  item: Schema.Thing<SiblingNode<ID>> | undefined;
+  nextItem: Schema.ListItem<SiblingNode<ID>> | undefined;
   position: number | string | undefined;
-  previousItem: Schema.ListItem<D> | undefined;
+  previousItem: Schema.ListItem<SiblingNode<ID>> | undefined;
 }
 
 export function ListItemMixin<Base extends Constructor>(Resource: Base) {

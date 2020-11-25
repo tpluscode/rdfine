@@ -2,24 +2,24 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { PlaceMixin } from './Place';
 
-export interface Accommodation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, RdfResource<D> {
+export interface Accommodation<ID extends ResourceNode = ResourceNode> extends Schema.Place<ID>, RdfResource<ID> {
   accommodationCategory: string | undefined;
-  accommodationFloorPlan: Schema.FloorPlan<D> | undefined;
-  amenityFeature: Schema.LocationFeatureSpecification<D> | undefined;
+  accommodationFloorPlan: Schema.FloorPlan<SiblingNode<ID>> | undefined;
+  amenityFeature: Schema.LocationFeatureSpecification<SiblingNode<ID>> | undefined;
   floorLevel: string | undefined;
-  floorSize: Schema.QuantitativeValue<D> | undefined;
-  leaseLength: Schema.Duration<D> | Schema.QuantitativeValue<D> | undefined;
+  floorSize: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
+  leaseLength: Schema.Duration<SiblingNode<ID>> | Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   numberOfBathroomsTotal: number | undefined;
-  numberOfBedrooms: Schema.QuantitativeValue<D> | undefined;
+  numberOfBedrooms: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   numberOfBedroomsLiteral: number | undefined;
   numberOfFullBathrooms: number | undefined;
   numberOfPartialBathrooms: number | undefined;
-  numberOfRooms: Schema.QuantitativeValue<D> | undefined;
+  numberOfRooms: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   numberOfRoomsLiteral: number | undefined;
   permittedUsage: string | undefined;
   petsAllowed: boolean | string | undefined;

@@ -2,25 +2,25 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Movie<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
-  actor: Schema.Person<D> | undefined;
-  actors: Schema.Person<D> | undefined;
-  countryOfOrigin: Schema.Country<D> | undefined;
-  director: Schema.Person<D> | undefined;
-  directors: Schema.Person<D> | undefined;
-  duration: Schema.Duration<D> | undefined;
-  musicBy: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
-  productionCompany: Schema.Organization<D> | undefined;
-  subtitleLanguage: Schema.Language<D> | undefined;
+export interface Movie<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, RdfResource<ID> {
+  actor: Schema.Person<SiblingNode<ID>> | undefined;
+  actors: Schema.Person<SiblingNode<ID>> | undefined;
+  countryOfOrigin: Schema.Country<SiblingNode<ID>> | undefined;
+  director: Schema.Person<SiblingNode<ID>> | undefined;
+  directors: Schema.Person<SiblingNode<ID>> | undefined;
+  duration: Schema.Duration<SiblingNode<ID>> | undefined;
+  musicBy: Schema.MusicGroup<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
+  productionCompany: Schema.Organization<SiblingNode<ID>> | undefined;
+  subtitleLanguage: Schema.Language<SiblingNode<ID>> | undefined;
   subtitleLanguageLiteral: string | undefined;
   titleEIDR: string | undefined;
   titleEIDRTerm: RDF.NamedNode | undefined;
-  trailer: Schema.VideoObject<D> | undefined;
+  trailer: Schema.VideoObject<SiblingNode<ID>> | undefined;
 }
 
 export function MovieMixin<Base extends Constructor>(Resource: Base) {

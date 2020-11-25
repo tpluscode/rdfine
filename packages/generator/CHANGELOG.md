@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.5.0-next.0
+
+### Minor Changes
+
+- 0db486f2: Move all modules into `lib`
+
+  This will allow selective imports in node.
+
+  Also remove any star imports between packages
+
 ## 0.4.3
 
 ### Patch Changes

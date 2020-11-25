@@ -2,14 +2,14 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable';
 import { ValidatorMixin } from './Validator';
 
-export interface SPARQLSelectValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLSelectExecutable<D>, Sh.Validator<D>, RdfResource<D> {
-  resultAnnotation: Sh.ResultAnnotation<D> | undefined;
+export interface SPARQLSelectValidator<ID extends ResourceNode = ResourceNode> extends Sh.SPARQLSelectExecutable<ID>, Sh.Validator<ID>, RdfResource<ID> {
+  resultAnnotation: Sh.ResultAnnotation<SiblingNode<ID>> | undefined;
 }
 
 export function SPARQLSelectValidatorMixin<Base extends Constructor>(Resource: Base) {

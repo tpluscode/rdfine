@@ -1,5 +1,21 @@
 # Change Log
 
+## 0.6.0-next.0
+
+### Minor Changes
+
+- 0db486f2: Move all modules into `lib`
+
+  This will allow selective imports in node.
+
+  Also remove any star imports between packages
+
+### Patch Changes
+
+- Updated dependencies [123df938]
+- Updated dependencies [123df938]
+  - @tpluscode/rdfine@0.6.0-next.0
+
 ## 0.5.3
 
 ### Patch Changes

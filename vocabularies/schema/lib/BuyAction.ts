@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TradeActionMixin } from './TradeAction';
 
-export interface BuyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, RdfResource<D> {
-  seller: Schema.Organization<D> | Schema.Person<D> | undefined;
-  vendor: Schema.Organization<D> | Schema.Person<D> | undefined;
-  warrantyPromise: Schema.WarrantyPromise<D> | undefined;
+export interface BuyAction<ID extends ResourceNode = ResourceNode> extends Schema.TradeAction<ID>, RdfResource<ID> {
+  seller: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
+  vendor: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
+  warrantyPromise: Schema.WarrantyPromise<SiblingNode<ID>> | undefined;
 }
 
 export function BuyActionMixin<Base extends Constructor>(Resource: Base) {

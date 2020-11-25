@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '..';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -14,21 +14,21 @@ import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype';
 import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
-export interface Restriction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.Class<D>, RdfResource<D> {
-  allValuesFrom: Rdfs.Class<D> | undefined;
+export interface Restriction<ID extends ResourceNode = ResourceNode> extends Owl.Class<ID>, RdfResource<ID> {
+  allValuesFrom: Rdfs.Class<SiblingNode<ID>> | undefined;
   cardinality: number | undefined;
-  hasSelf: Rdfs.Resource<D> | undefined;
-  hasValue: Rdfs.Resource<D> | undefined;
+  hasSelf: Rdfs.Resource<SiblingNode<ID>> | undefined;
+  hasValue: Rdfs.Resource<SiblingNode<ID>> | undefined;
   maxCardinality: number | undefined;
   maxQualifiedCardinality: number | undefined;
   minCardinality: number | undefined;
   minQualifiedCardinality: number | undefined;
-  onClass: Owl.Class<D> | undefined;
-  onDataRange: Rdfs.Datatype<D> | undefined;
-  onProperties: Rdf.List<D> | undefined;
-  onProperty: Rdf.Property<D> | undefined;
+  onClass: Owl.Class<SiblingNode<ID>> | undefined;
+  onDataRange: Rdfs.Datatype<SiblingNode<ID>> | undefined;
+  onProperties: Rdf.List<SiblingNode<ID>> | undefined;
+  onProperty: Rdf.Property<SiblingNode<ID>> | undefined;
   qualifiedCardinality: number | undefined;
-  someValuesFrom: Rdfs.Class<D> | undefined;
+  someValuesFrom: Rdfs.Class<SiblingNode<ID>> | undefined;
 }
 
 export function RestrictionMixin<Base extends Constructor>(Resource: Base) {

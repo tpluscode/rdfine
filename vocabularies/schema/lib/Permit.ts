@@ -2,18 +2,18 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface Permit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
-  issuedBy: Schema.Organization<D> | undefined;
-  issuedThrough: Schema.Service<D> | undefined;
-  permitAudience: Schema.Audience<D> | undefined;
-  validFor: Schema.Duration<D> | undefined;
+export interface Permit<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
+  issuedBy: Schema.Organization<SiblingNode<ID>> | undefined;
+  issuedThrough: Schema.Service<SiblingNode<ID>> | undefined;
+  permitAudience: Schema.Audience<SiblingNode<ID>> | undefined;
+  validFor: Schema.Duration<SiblingNode<ID>> | undefined;
   validFrom: Date | undefined;
-  validIn: Schema.AdministrativeArea<D> | undefined;
+  validIn: Schema.AdministrativeArea<SiblingNode<ID>> | undefined;
   validUntil: Date | undefined;
 }
 

@@ -2,24 +2,24 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
 
-export interface ContactPoint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
-  areaServed: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
+export interface ContactPoint<ID extends ResourceNode = ResourceNode> extends Schema.StructuredValue<ID>, RdfResource<ID> {
+  areaServed: Schema.AdministrativeArea<SiblingNode<ID>> | Schema.GeoShape<SiblingNode<ID>> | Schema.Place<SiblingNode<ID>> | undefined;
   areaServedLiteral: string | undefined;
-  availableLanguage: Schema.Language<D> | undefined;
+  availableLanguage: Schema.Language<SiblingNode<ID>> | undefined;
   availableLanguageLiteral: string | undefined;
   contactOption: Schema.ContactPointOption | undefined;
   contactType: string | undefined;
   email: string | undefined;
   faxNumber: string | undefined;
-  hoursAvailable: Schema.OpeningHoursSpecification<D> | undefined;
-  productSupported: Schema.Product<D> | undefined;
+  hoursAvailable: Schema.OpeningHoursSpecification<SiblingNode<ID>> | undefined;
+  productSupported: Schema.Product<SiblingNode<ID>> | undefined;
   productSupportedLiteral: string | undefined;
-  serviceArea: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
+  serviceArea: Schema.AdministrativeArea<SiblingNode<ID>> | Schema.GeoShape<SiblingNode<ID>> | Schema.Place<SiblingNode<ID>> | undefined;
   telephone: string | undefined;
 }
 

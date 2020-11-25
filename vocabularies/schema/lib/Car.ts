@@ -2,14 +2,14 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { VehicleMixin } from './Vehicle';
 
-export interface Car<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Vehicle<D>, RdfResource<D> {
+export interface Car<ID extends ResourceNode = ResourceNode> extends Schema.Vehicle<ID>, RdfResource<ID> {
   acrissCode: string | undefined;
-  roofLoad: Schema.QuantitativeValue<D> | undefined;
+  roofLoad: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
 }
 
 export function CarMixin<Base extends Constructor>(Resource: Base) {

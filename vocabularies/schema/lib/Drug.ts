@@ -2,33 +2,33 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { SubstanceMixin } from './Substance';
 
-export interface Drug<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Substance<D>, RdfResource<D> {
+export interface Drug<ID extends ResourceNode = ResourceNode> extends Schema.Substance<ID>, RdfResource<ID> {
   activeIngredient: string | undefined;
   administrationRoute: string | undefined;
   alcoholWarning: string | undefined;
-  availableStrength: Schema.DrugStrength<D> | undefined;
+  availableStrength: Schema.DrugStrength<SiblingNode<ID>> | undefined;
   breastfeedingWarning: string | undefined;
   clincalPharmacology: string | undefined;
   clinicalPharmacology: string | undefined;
   dosageForm: string | undefined;
-  doseSchedule: Schema.DoseSchedule<D> | undefined;
-  drugClass: Schema.DrugClass<D> | undefined;
+  doseSchedule: Schema.DoseSchedule<SiblingNode<ID>> | undefined;
+  drugClass: Schema.DrugClass<SiblingNode<ID>> | undefined;
   drugUnit: string | undefined;
   foodWarning: string | undefined;
-  includedInHealthInsurancePlan: Schema.HealthInsurancePlan<D> | undefined;
-  interactingDrug: Schema.Drug<D> | undefined;
+  includedInHealthInsurancePlan: Schema.HealthInsurancePlan<SiblingNode<ID>> | undefined;
+  interactingDrug: Schema.Drug<SiblingNode<ID>> | undefined;
   isAvailableGenerically: boolean | undefined;
   isProprietary: boolean | undefined;
   labelDetails: RDF.NamedNode | undefined;
-  legalStatus: Schema.DrugLegalStatus<D> | undefined;
+  legalStatus: Schema.DrugLegalStatus<SiblingNode<ID>> | undefined;
   legalStatusLiteral: string | undefined;
-  manufacturer: Schema.Organization<D> | undefined;
-  maximumIntake: Schema.MaximumDoseSchedule<D> | undefined;
+  manufacturer: Schema.Organization<SiblingNode<ID>> | undefined;
+  maximumIntake: Schema.MaximumDoseSchedule<SiblingNode<ID>> | undefined;
   mechanismOfAction: string | undefined;
   nonProprietaryName: string | undefined;
   overdosage: string | undefined;
@@ -38,7 +38,7 @@ export interface Drug<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   prescriptionStatus: string | undefined;
   prescriptionStatusTerm: Schema.DrugPrescriptionStatus | undefined;
   proprietaryName: string | undefined;
-  relatedDrug: Schema.Drug<D> | undefined;
+  relatedDrug: Schema.Drug<SiblingNode<ID>> | undefined;
   rxcui: string | undefined;
   warning: string | undefined;
   warningTerm: RDF.NamedNode | undefined;

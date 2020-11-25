@@ -5,11 +5,11 @@ exports[`MixinModule does not add datatype annotation to literal property when d
 import * as $rdf from \\"@rdf-esm/data-model\\";
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Initializer, ResourceNode, SiblingNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\"..\\";
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Class<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
     foo: string | undefined;
 }
 
@@ -40,12 +40,12 @@ exports[`MixinModule does not try import self when property has range of enclosi
 import * as $rdf from \\"@rdf-esm/data-model\\";
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Initializer, ResourceNode, SiblingNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\"..\\";
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
-    foo: Example.Class<D> | undefined;
+export interface Class<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
+    foo: Example.Class<SiblingNode<ID>> | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
@@ -72,8 +72,8 @@ ClassMixin.Class = ClassImpl
 
 exports[`MixinModule generates a bundle module with property mixin types but skipping external mixins: toMatchSnapshot 1`] = `
 "import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import { ClassMixin } from \\"../lib/Class\\";
-import { FriendMixin } from \\"../lib/Friend\\";
+import { ClassMixin } from \\"../Class\\";
+import { FriendMixin } from \\"../Friend\\";
 
 export const ClassBundle = [
     ClassMixin as Mixin,
@@ -88,8 +88,8 @@ exports[`MixinModule generates a bundle module with property mixin types but ski
 
 exports[`MixinModule generates a bundle module with super classes but without externals: toMatchSnapshot 1`] = `
 "import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import { SuperMixin } from \\"../lib/Example\\";
-import { ClassMixin } from \\"../lib/Class\\";
+import { SuperMixin } from \\"../Example\\";
+import { ClassMixin } from \\"../Class\\";
 
 export const ClassBundle = [
     SuperMixin as Mixin,
@@ -107,11 +107,11 @@ exports[`MixinModule generates a mixin class where term is not safe identifier: 
 import * as $rdf from \\"@rdf-esm/data-model\\";
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Initializer, ResourceNode, SiblingNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\"..\\";
 
-export interface _3Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface _3Class<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
 }
 
 export function _3ClassMixin<Base extends Constructor>(Resource: Base) {
@@ -139,13 +139,13 @@ exports[`MixinModule generates a mixin class with external super classes: toMatc
 import * as $rdf from \\"@rdf-esm/data-model\\";
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Initializer, ResourceNode, SiblingNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\"..\\";
 import type * as Schema from \\"@rdfine/schema\\";
 import { Person as PersonMixin } from \\"@rdfine/schema/Person\\";
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Person<D>, RdfResource<D> {
+export interface Class<ID extends ResourceNode = ResourceNode> extends Schema.Person<ID>, RdfResource<ID> {
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
@@ -173,11 +173,11 @@ exports[`MixinModule generates a mixin class without props: toMatchSnapshot 1`] 
 import * as $rdf from \\"@rdf-esm/data-model\\";
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Initializer, ResourceNode, SiblingNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\"..\\";
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Class<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
@@ -205,12 +205,12 @@ exports[`MixinModule generates array property: toMatchSnapshot 1`] = `
 import * as $rdf from \\"@rdf-esm/data-model\\";
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Initializer, ResourceNode, SiblingNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\"..\\";
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
-    foo: Array<Example.Foo<D>>;
+export interface Class<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
+    foo: Array<Example.Foo<SiblingNode<ID>>>;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
@@ -240,11 +240,11 @@ exports[`MixinModule generates date property: toMatchSnapshot 1`] = `
 import * as $rdf from \\"@rdf-esm/data-model\\";
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Initializer, ResourceNode, SiblingNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\"..\\";
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Class<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
     foo: Date | undefined;
 }
 
@@ -275,12 +275,12 @@ exports[`MixinModule generates list property: toMatchSnapshot 1`] = `
 import * as $rdf from \\"@rdf-esm/data-model\\";
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Initializer, ResourceNode, SiblingNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\"..\\";
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
-    foo: Array<Example.Foo<D>>;
+export interface Class<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
+    foo: Array<Example.Foo<SiblingNode<ID>>>;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
@@ -310,12 +310,12 @@ exports[`MixinModule generates list/single property: toMatchSnapshot 1`] = `
 import * as $rdf from \\"@rdf-esm/data-model\\";
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Initializer, ResourceNode, SiblingNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\"..\\";
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
-    foo: Example.Foo<D> | Array<Example.Foo<D>> | undefined;
+export interface Class<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
+    foo: Example.Foo<SiblingNode<ID>> | Array<Example.Foo<SiblingNode<ID>>> | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
@@ -345,14 +345,14 @@ exports[`MixinModule generates property with automatic external type cast when p
 import * as $rdf from \\"@rdf-esm/data-model\\";
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Initializer, ResourceNode, SiblingNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\"..\\";
 import type * as Example from \\"@rdfine/example\\";
 import { Foo as FooMixin } from \\"@rdfine/example/Foo\\";
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
-    foo: Example.Foo<D> | undefined;
+export interface Class<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
+    foo: Example.Foo<SiblingNode<ID>> | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
@@ -382,12 +382,12 @@ exports[`MixinModule generates property with automatic type cast when predicate 
 import * as $rdf from \\"@rdf-esm/data-model\\";
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Initializer, ResourceNode, SiblingNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\"..\\";
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
-    foo: Example.Foo<D> | undefined;
+export interface Class<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
+    foo: Example.Foo<SiblingNode<ID>> | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base) {
@@ -417,11 +417,11 @@ exports[`MixinModule generates property with datatype-annotated literal: toMatch
 import * as $rdf from \\"@rdf-esm/data-model\\";
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Initializer, ResourceNode, SiblingNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\"..\\";
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Class<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
     foo: string | undefined;
 }
 
@@ -452,11 +452,11 @@ exports[`MixinModule wraps property name in quotes when term has non-alpha chara
 import * as $rdf from \\"@rdf-esm/data-model\\";
 import type * as RDF from \\"rdf-js\\";
 import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode } from \\"@tpluscode/rdfine/RdfResource\\";
+import type { Initializer, ResourceNode, SiblingNode } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
 import type * as Example from \\"..\\";
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Class<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
     'foo-bar': string | undefined;
 }
 

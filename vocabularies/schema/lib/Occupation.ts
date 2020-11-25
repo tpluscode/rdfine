@@ -2,19 +2,19 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface Occupation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Occupation<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
   educationRequirements: string | undefined;
-  estimatedSalary: Schema.MonetaryAmount<D> | Schema.MonetaryAmountDistribution<D> | undefined;
+  estimatedSalary: Schema.MonetaryAmount<SiblingNode<ID>> | Schema.MonetaryAmountDistribution<SiblingNode<ID>> | undefined;
   estimatedSalaryLiteral: number | undefined;
   experienceRequirements: string | undefined;
-  occupationalCategory: Schema.CategoryCode<D> | undefined;
+  occupationalCategory: Schema.CategoryCode<SiblingNode<ID>> | undefined;
   occupationalCategoryLiteral: string | undefined;
-  occupationLocation: Schema.AdministrativeArea<D> | undefined;
+  occupationLocation: Schema.AdministrativeArea<SiblingNode<ID>> | undefined;
   qualifications: string | undefined;
   responsibilities: string | undefined;
   skills: string | undefined;

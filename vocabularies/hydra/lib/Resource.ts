@@ -2,23 +2,23 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
-export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
-  apiDocumentation: Hydra.ApiDocumentation<D> | undefined;
-  collection: Array<Hydra.Collection<Hydra.Resource<D>, D>>;
-  first: Hydra.Resource<D> | undefined;
+export interface Resource<ID extends ResourceNode = ResourceNode> extends Rdfs.Resource<ID>, RdfResource<ID> {
+  apiDocumentation: Hydra.ApiDocumentation<SiblingNode<ID>> | undefined;
+  collection: Array<Hydra.Collection<Hydra.Resource<SiblingNode<ID>>, SiblingNode<ID>>>;
+  first: Hydra.Resource<SiblingNode<ID>> | undefined;
   freetextQuery: string | undefined;
-  last: Hydra.Resource<D> | undefined;
-  next: Hydra.Resource<D> | undefined;
-  operation: Array<Hydra.Operation<D>>;
-  previous: Hydra.Resource<D> | undefined;
-  search: Hydra.IriTemplate<D> | undefined;
-  view: Array<Hydra.Resource<D>>;
+  last: Hydra.Resource<SiblingNode<ID>> | undefined;
+  next: Hydra.Resource<SiblingNode<ID>> | undefined;
+  operation: Array<Hydra.Operation<SiblingNode<ID>>>;
+  previous: Hydra.Resource<SiblingNode<ID>> | undefined;
+  search: Hydra.IriTemplate<SiblingNode<ID>> | undefined;
+  view: Array<Hydra.Resource<SiblingNode<ID>>>;
 }
 
 export function ResourceMixin<Base extends Constructor>(Resource: Base) {

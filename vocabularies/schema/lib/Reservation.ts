@@ -2,26 +2,26 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface Reservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
-  bookingAgent: Schema.Organization<D> | Schema.Person<D> | undefined;
+export interface Reservation<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
+  bookingAgent: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
   bookingTime: Date | undefined;
-  broker: Schema.Organization<D> | Schema.Person<D> | undefined;
+  broker: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
   modifiedTime: Date | undefined;
   priceCurrency: string | undefined;
-  programMembershipUsed: Schema.ProgramMembership<D> | undefined;
-  provider: Schema.Organization<D> | Schema.Person<D> | undefined;
-  reservationFor: Schema.Thing<D> | undefined;
+  programMembershipUsed: Schema.ProgramMembership<SiblingNode<ID>> | undefined;
+  provider: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
+  reservationFor: Schema.Thing<SiblingNode<ID>> | undefined;
   reservationId: string | undefined;
   reservationStatus: Schema.ReservationStatusType | undefined;
-  reservedTicket: Schema.Ticket<D> | undefined;
-  totalPrice: Schema.PriceSpecification<D> | undefined;
+  reservedTicket: Schema.Ticket<SiblingNode<ID>> | undefined;
+  totalPrice: Schema.PriceSpecification<SiblingNode<ID>> | undefined;
   totalPriceLiteral: number | string | undefined;
-  underName: Schema.Organization<D> | Schema.Person<D> | undefined;
+  underName: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
 }
 
 export function ReservationMixin<Base extends Constructor>(Resource: Base) {

@@ -2,12 +2,12 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '..';
 
-export interface Space<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
-  'has_usergroup': Sioc.Usergroup<D> | undefined;
+export interface Space<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
+  'has_usergroup': Sioc.Usergroup<SiblingNode<ID>> | undefined;
   'space_of': RDF.Term | undefined;
 }
 

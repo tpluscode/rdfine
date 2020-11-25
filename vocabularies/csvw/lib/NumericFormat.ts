@@ -2,13 +2,13 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '..';
 
-export interface NumericFormat<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface NumericFormat<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
   decimalChar: string | undefined;
-  groupChar: Csvw.NumericFormat<D> | undefined;
+  groupChar: Csvw.NumericFormat<SiblingNode<ID>> | undefined;
   groupCharLiteral: string | undefined;
   pattern: string | undefined;
 }

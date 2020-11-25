@@ -2,22 +2,22 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface MusicComposition<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
-  composer: Schema.Organization<D> | Schema.Person<D> | undefined;
-  firstPerformance: Schema.Event<D> | undefined;
-  includedComposition: Schema.MusicComposition<D> | undefined;
+export interface MusicComposition<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, RdfResource<ID> {
+  composer: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
+  firstPerformance: Schema.Event<SiblingNode<ID>> | undefined;
+  includedComposition: Schema.MusicComposition<SiblingNode<ID>> | undefined;
   iswcCode: string | undefined;
-  lyricist: Schema.Person<D> | undefined;
-  lyrics: Schema.CreativeWork<D> | undefined;
+  lyricist: Schema.Person<SiblingNode<ID>> | undefined;
+  lyrics: Schema.CreativeWork<SiblingNode<ID>> | undefined;
   musicalKey: string | undefined;
-  musicArrangement: Schema.MusicComposition<D> | undefined;
+  musicArrangement: Schema.MusicComposition<SiblingNode<ID>> | undefined;
   musicCompositionForm: string | undefined;
-  recordedAs: Schema.MusicRecording<D> | undefined;
+  recordedAs: Schema.MusicRecording<SiblingNode<ID>> | undefined;
 }
 
 export function MusicCompositionMixin<Base extends Constructor>(Resource: Base) {

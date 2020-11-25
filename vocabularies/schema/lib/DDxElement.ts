@@ -2,14 +2,14 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalIntangibleMixin } from './MedicalIntangible';
 
-export interface DDxElement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalIntangible<D>, RdfResource<D> {
-  diagnosis: Schema.MedicalCondition<D> | undefined;
-  distinguishingSign: Schema.MedicalSignOrSymptom<D> | undefined;
+export interface DDxElement<ID extends ResourceNode = ResourceNode> extends Schema.MedicalIntangible<ID>, RdfResource<ID> {
+  diagnosis: Schema.MedicalCondition<SiblingNode<ID>> | undefined;
+  distinguishingSign: Schema.MedicalSignOrSymptom<SiblingNode<ID>> | undefined;
 }
 
 export function DDxElementMixin<Base extends Constructor>(Resource: Base) {

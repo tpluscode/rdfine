@@ -141,7 +141,7 @@ export class MixinModule implements GeneratedModule {
 
         depsModule.addImportDeclaration({
           namedImports: [`${mi.mixinName}`],
-          moduleSpecifier: `${mi.module.replace('./', '../lib/')}`,
+          moduleSpecifier: `${mi.module.replace('./', '../')}`,
         })
         exports.push(`${mi.mixinName} as Mixin`)
       })
@@ -183,7 +183,7 @@ export class MixinModule implements GeneratedModule {
       moduleSpecifier: './namespace',
     })
     mixinFile.addImportDeclaration({
-      namedImports: ['Initializer', 'ResourceNode'],
+      namedImports: ['Initializer', 'ResourceNode', 'SiblingNode'],
       moduleSpecifier: '@tpluscode/rdfine/RdfResource',
       isTypeOnly: true,
     })
@@ -264,12 +264,12 @@ export class MixinModule implements GeneratedModule {
 
   private createInterface(mixinFile: SourceFile) {
     const superInterfaces = this.superClasses
-      .map(superClass => `${superClass.qualifiedName}<D>`)
+      .map(superClass => `${superClass.qualifiedName}<ID>`)
 
     return mixinFile.addInterface({
-      name: `${this.type.localName}<D extends RDF.DatasetCore = RDF.DatasetCore>`,
+      name: `${this.type.localName}<ID extends ResourceNode = ResourceNode>`,
       isExported: true,
-      extends: [...superInterfaces, 'RdfResource<D>'],
+      extends: [...superInterfaces, 'RdfResource<ID>'],
     })
   }
 }

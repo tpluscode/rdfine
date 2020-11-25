@@ -2,19 +2,19 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface Trip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Trip<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
   arrivalTime: Date | undefined;
   departureTime: Date | undefined;
-  itinerary: Schema.ItemList<D> | Schema.Place<D> | undefined;
-  offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
-  partOfTrip: Schema.Trip<D> | undefined;
-  provider: Schema.Organization<D> | Schema.Person<D> | undefined;
-  subTrip: Schema.Trip<D> | undefined;
+  itinerary: Schema.ItemList<SiblingNode<ID>> | Schema.Place<SiblingNode<ID>> | undefined;
+  offers: Schema.Demand<SiblingNode<ID>> | Schema.Offer<SiblingNode<ID>> | undefined;
+  partOfTrip: Schema.Trip<SiblingNode<ID>> | undefined;
+  provider: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
+  subTrip: Schema.Trip<SiblingNode<ID>> | undefined;
 }
 
 export function TripMixin<Base extends Constructor>(Resource: Base) {

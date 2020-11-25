@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ParameterizableMixin } from './Parameterizable';
 import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
 
-export interface Function<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Parameterizable<D>, RdfResource<D> {
-  returnType: Rdfs.Class<D> | undefined;
+export interface Function<ID extends ResourceNode = ResourceNode> extends Sh.Parameterizable<ID>, RdfResource<ID> {
+  returnType: Rdfs.Class<SiblingNode<ID>> | undefined;
 }
 
 export function FunctionMixin<Base extends Constructor>(Resource: Base) {

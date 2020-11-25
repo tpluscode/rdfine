@@ -2,20 +2,20 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 import { LearningResourceMixin } from './LearningResource';
 
-export interface Course<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.LearningResource<D>, RdfResource<D> {
+export interface Course<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, Schema.LearningResource<ID>, RdfResource<ID> {
   courseCode: string | undefined;
-  coursePrerequisites: Schema.AlignmentObject<D> | Schema.Course<D> | undefined;
+  coursePrerequisites: Schema.AlignmentObject<SiblingNode<ID>> | Schema.Course<SiblingNode<ID>> | undefined;
   coursePrerequisitesLiteral: string | undefined;
   educationalCredentialAwarded: string | undefined;
   educationalCredentialAwardedTerm: RDF.NamedNode | undefined;
-  hasCourseInstance: Schema.CourseInstance<D> | undefined;
-  numberOfCredits: Schema.StructuredValue<D> | undefined;
+  hasCourseInstance: Schema.CourseInstance<SiblingNode<ID>> | undefined;
+  numberOfCredits: Schema.StructuredValue<SiblingNode<ID>> | undefined;
   numberOfCreditsLiteral: number | undefined;
   occupationalCredentialAwarded: string | undefined;
   occupationalCredentialAwardedTerm: RDF.NamedNode | undefined;

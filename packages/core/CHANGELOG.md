@@ -1,5 +1,21 @@
 # Change Log
 
+## 0.6.0-next.1
+
+### Patch Changes
+
+- 8065bdb3: Tweak factory typings
+
+## 0.6.0-next.0
+
+### Minor Changes
+
+- 123df938: change RdfResource generic argument from Term to GraphPointer
+
+### Patch Changes
+
+- 123df938: Relax the Term type requirement of equals
+
 ## 0.5.15
 
 ### Patch Changes

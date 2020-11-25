@@ -1,0 +1,26 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "rdfine-example": "0.1.10",
+    "@tpluscode/rdfine": "0.5.15",
+    "@rdfine/generator": "0.4.3",
+    "@rdfine/csvw": "0.5.1",
+    "@rdfine/doap": "0.0.1",
+    "@rdfine/foaf": "0.0.1",
+    "@rdfine/hydra": "0.5.5",
+    "@rdfine/owl": "0.3.2",
+    "@rdfine/rdf": "0.4.1",
+    "@rdfine/rdfs": "0.5.0",
+    "@rdfine/schema": "0.5.3",
+    "@rdfine/shacl": "0.6.0",
+    "@rdfine/sioc": "0.0.1",
+    "@rdfine/wgs": "0.0.1"
+  },
+  "changesets": [
+    "khaki-lamps-grow",
+    "many-eyes-raise",
+    "quiet-months-turn",
+    "stale-fans-jump"
+  ]
+}

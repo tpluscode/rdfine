@@ -2,18 +2,18 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MusicPlaylistMixin } from './MusicPlaylist';
 
-export interface MusicRelease<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MusicPlaylist<D>, RdfResource<D> {
+export interface MusicRelease<ID extends ResourceNode = ResourceNode> extends Schema.MusicPlaylist<ID>, RdfResource<ID> {
   catalogNumber: string | undefined;
-  creditedTo: Schema.Organization<D> | Schema.Person<D> | undefined;
-  duration: Schema.Duration<D> | undefined;
+  creditedTo: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
+  duration: Schema.Duration<SiblingNode<ID>> | undefined;
   musicReleaseFormat: Schema.MusicReleaseFormatType | undefined;
-  recordLabel: Schema.Organization<D> | undefined;
-  releaseOf: Schema.MusicAlbum<D> | undefined;
+  recordLabel: Schema.Organization<SiblingNode<ID>> | undefined;
+  releaseOf: Schema.MusicAlbum<SiblingNode<ID>> | undefined;
 }
 
 export function MusicReleaseMixin<Base extends Constructor>(Resource: Base) {

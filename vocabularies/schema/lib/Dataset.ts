@@ -2,21 +2,21 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Dataset<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
-  catalog: Schema.DataCatalog<D> | undefined;
+export interface Dataset<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, RdfResource<ID> {
+  catalog: Schema.DataCatalog<SiblingNode<ID>> | undefined;
   datasetTimeInterval: Date | undefined;
-  distribution: Schema.DataDownload<D> | undefined;
-  includedDataCatalog: Schema.DataCatalog<D> | undefined;
-  includedInDataCatalog: Schema.DataCatalog<D> | undefined;
+  distribution: Schema.DataDownload<SiblingNode<ID>> | undefined;
+  includedDataCatalog: Schema.DataCatalog<SiblingNode<ID>> | undefined;
+  includedInDataCatalog: Schema.DataCatalog<SiblingNode<ID>> | undefined;
   issn: string | undefined;
   measurementTechnique: string | undefined;
   measurementTechniqueTerm: RDF.NamedNode | undefined;
-  variableMeasured: Schema.PropertyValue<D> | undefined;
+  variableMeasured: Schema.PropertyValue<SiblingNode<ID>> | undefined;
   variableMeasuredLiteral: string | undefined;
 }
 

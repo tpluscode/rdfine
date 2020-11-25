@@ -2,22 +2,22 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface WebPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
-  breadcrumb: Schema.BreadcrumbList<D> | undefined;
+export interface WebPage<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, RdfResource<ID> {
+  breadcrumb: Schema.BreadcrumbList<SiblingNode<ID>> | undefined;
   breadcrumbLiteral: string | undefined;
   lastReviewed: Date | undefined;
-  mainContentOfPage: Schema.WebPageElement<D> | undefined;
-  primaryImageOfPage: Schema.ImageObject<D> | undefined;
+  mainContentOfPage: Schema.WebPageElement<SiblingNode<ID>> | undefined;
+  primaryImageOfPage: Schema.ImageObject<SiblingNode<ID>> | undefined;
   relatedLink: RDF.NamedNode | undefined;
-  reviewedBy: Schema.Organization<D> | Schema.Person<D> | undefined;
+  reviewedBy: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
   significantLink: RDF.NamedNode | undefined;
   significantLinks: RDF.NamedNode | undefined;
-  speakable: Schema.SpeakableSpecification<D> | undefined;
+  speakable: Schema.SpeakableSpecification<SiblingNode<ID>> | undefined;
   specialty: Schema.Specialty | undefined;
 }
 

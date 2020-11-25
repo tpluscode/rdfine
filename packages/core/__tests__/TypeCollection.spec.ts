@@ -1,11 +1,12 @@
 import $rdf from 'rdf-ext'
 import cf, { GraphPointer } from 'clownface'
 import TypeCollection from '../lib/TypeCollection'
+import { NamedNode } from 'rdf-js'
 import RdfResourceImpl, { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { parse, ex } from './_helpers'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 
-const nullResource = {} as RdfResource
+const nullResource = {} as RdfResource<GraphPointer<NamedNode>>
 
 describe('TypeCollection', () => {
   let node: GraphPointer<ResourceIdentifier>

@@ -2,28 +2,28 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface Legislation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
-  jurisdiction: Schema.AdministrativeArea<D> | undefined;
+export interface Legislation<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, RdfResource<ID> {
+  jurisdiction: Schema.AdministrativeArea<SiblingNode<ID>> | undefined;
   jurisdictionLiteral: string | undefined;
-  legislationApplies: Schema.Legislation<D> | undefined;
-  legislationChanges: Schema.Legislation<D> | undefined;
-  legislationConsolidates: Schema.Legislation<D> | undefined;
+  legislationApplies: Schema.Legislation<SiblingNode<ID>> | undefined;
+  legislationChanges: Schema.Legislation<SiblingNode<ID>> | undefined;
+  legislationConsolidates: Schema.Legislation<SiblingNode<ID>> | undefined;
   legislationDate: Date | undefined;
   legislationDateVersion: Date | undefined;
   legislationIdentifier: string | undefined;
   legislationIdentifierTerm: RDF.NamedNode | undefined;
-  legislationJurisdiction: Schema.AdministrativeArea<D> | undefined;
+  legislationJurisdiction: Schema.AdministrativeArea<SiblingNode<ID>> | undefined;
   legislationJurisdictionLiteral: string | undefined;
   legislationLegalForce: Schema.LegalForceStatus | undefined;
-  legislationPassedBy: Schema.Organization<D> | Schema.Person<D> | undefined;
-  legislationResponsible: Schema.Organization<D> | Schema.Person<D> | undefined;
-  legislationTransposes: Schema.Legislation<D> | undefined;
-  legislationType: Schema.CategoryCode<D> | undefined;
+  legislationPassedBy: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
+  legislationResponsible: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
+  legislationTransposes: Schema.Legislation<SiblingNode<ID>> | undefined;
+  legislationType: Schema.CategoryCode<SiblingNode<ID>> | undefined;
   legislationTypeLiteral: string | undefined;
 }
 

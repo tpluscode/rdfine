@@ -2,14 +2,14 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { SportsOrganizationMixin } from './SportsOrganization';
 
-export interface SportsTeam<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SportsOrganization<D>, RdfResource<D> {
-  athlete: Schema.Person<D> | undefined;
-  coach: Schema.Person<D> | undefined;
+export interface SportsTeam<ID extends ResourceNode = ResourceNode> extends Schema.SportsOrganization<ID>, RdfResource<ID> {
+  athlete: Schema.Person<SiblingNode<ID>> | undefined;
+  coach: Schema.Person<SiblingNode<ID>> | undefined;
   gender: string | undefined;
   genderTerm: Schema.GenderType | undefined;
 }

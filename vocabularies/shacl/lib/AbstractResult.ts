@@ -2,21 +2,21 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
-export interface AbstractResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
-  detail: Sh.AbstractResult<D> | undefined;
+export interface AbstractResult<ID extends ResourceNode = ResourceNode> extends Rdfs.Resource<ID>, RdfResource<ID> {
+  detail: Sh.AbstractResult<SiblingNode<ID>> | undefined;
   focusNode: RDF.Term | undefined;
   resultMessage: string | undefined;
-  resultPath: Rdfs.Resource<D> | undefined;
-  resultSeverity: Sh.Severity<D> | undefined;
+  resultPath: Rdfs.Resource<SiblingNode<ID>> | undefined;
+  resultSeverity: Sh.Severity<SiblingNode<ID>> | undefined;
   sourceConstraint: RDF.Term | undefined;
-  sourceConstraintComponent: Sh.ConstraintComponent<D> | undefined;
-  sourceShape: Sh.Shape<D> | undefined;
+  sourceConstraintComponent: Sh.ConstraintComponent<SiblingNode<ID>> | undefined;
+  sourceShape: Sh.Shape<SiblingNode<ID>> | undefined;
   value: RDF.Term | undefined;
 }
 

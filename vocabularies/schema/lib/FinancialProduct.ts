@@ -2,17 +2,17 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ServiceMixin } from './Service';
 
-export interface FinancialProduct<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, RdfResource<D> {
-  annualPercentageRate: Schema.QuantitativeValue<D> | undefined;
+export interface FinancialProduct<ID extends ResourceNode = ResourceNode> extends Schema.Service<ID>, RdfResource<ID> {
+  annualPercentageRate: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   annualPercentageRateLiteral: number | undefined;
   feesAndCommissionsSpecification: string | undefined;
   feesAndCommissionsSpecificationTerm: RDF.NamedNode | undefined;
-  interestRate: Schema.QuantitativeValue<D> | undefined;
+  interestRate: Schema.QuantitativeValue<SiblingNode<ID>> | undefined;
   interestRateLiteral: number | undefined;
 }
 

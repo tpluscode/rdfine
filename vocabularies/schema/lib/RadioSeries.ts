@@ -2,26 +2,26 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkSeriesMixin } from './CreativeWorkSeries';
 
-export interface RadioSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeries<D>, RdfResource<D> {
-  actor: Schema.Person<D> | undefined;
-  actors: Schema.Person<D> | undefined;
-  containsSeason: Schema.CreativeWorkSeason<D> | undefined;
-  director: Schema.Person<D> | undefined;
-  directors: Schema.Person<D> | undefined;
-  episode: Schema.Episode<D> | undefined;
-  episodes: Schema.Episode<D> | undefined;
-  musicBy: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
+export interface RadioSeries<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWorkSeries<ID>, RdfResource<ID> {
+  actor: Schema.Person<SiblingNode<ID>> | undefined;
+  actors: Schema.Person<SiblingNode<ID>> | undefined;
+  containsSeason: Schema.CreativeWorkSeason<SiblingNode<ID>> | undefined;
+  director: Schema.Person<SiblingNode<ID>> | undefined;
+  directors: Schema.Person<SiblingNode<ID>> | undefined;
+  episode: Schema.Episode<SiblingNode<ID>> | undefined;
+  episodes: Schema.Episode<SiblingNode<ID>> | undefined;
+  musicBy: Schema.MusicGroup<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
   numberOfEpisodes: number | undefined;
   numberOfSeasons: number | undefined;
-  productionCompany: Schema.Organization<D> | undefined;
-  season: Schema.CreativeWorkSeason<D> | undefined;
-  seasons: Schema.CreativeWorkSeason<D> | undefined;
-  trailer: Schema.VideoObject<D> | undefined;
+  productionCompany: Schema.Organization<SiblingNode<ID>> | undefined;
+  season: Schema.CreativeWorkSeason<SiblingNode<ID>> | undefined;
+  seasons: Schema.CreativeWorkSeason<SiblingNode<ID>> | undefined;
+  trailer: Schema.VideoObject<SiblingNode<ID>> | undefined;
 }
 
 export function RadioSeriesMixin<Base extends Constructor>(Resource: Base) {

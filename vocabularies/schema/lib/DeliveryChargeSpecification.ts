@@ -2,18 +2,18 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { PriceSpecificationMixin } from './PriceSpecification';
 
-export interface DeliveryChargeSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, RdfResource<D> {
+export interface DeliveryChargeSpecification<ID extends ResourceNode = ResourceNode> extends Schema.PriceSpecification<ID>, RdfResource<ID> {
   appliesToDeliveryMethod: Schema.DeliveryMethod | undefined;
-  areaServed: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
+  areaServed: Schema.AdministrativeArea<SiblingNode<ID>> | Schema.GeoShape<SiblingNode<ID>> | Schema.Place<SiblingNode<ID>> | undefined;
   areaServedLiteral: string | undefined;
-  eligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
+  eligibleRegion: Schema.GeoShape<SiblingNode<ID>> | Schema.Place<SiblingNode<ID>> | undefined;
   eligibleRegionLiteral: string | undefined;
-  ineligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
+  ineligibleRegion: Schema.GeoShape<SiblingNode<ID>> | Schema.Place<SiblingNode<ID>> | undefined;
   ineligibleRegionLiteral: string | undefined;
 }
 

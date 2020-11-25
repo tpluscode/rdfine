@@ -1,6 +1,6 @@
-import { DatasetCore, Term } from 'rdf-js'
+import { DatasetCore, NamedNode, Term } from 'rdf-js'
 import cf, { GraphPointer } from 'clownface'
-import type { RdfResourceCore, ResourceIdentifier } from '../RdfResource'
+import type { RdfResourceCore, ResourceIdentifier, ResourceNode } from '../RdfResource'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import RDF from '@rdf-esm/data-model'
 import { onlyUnique } from './filter'
@@ -18,18 +18,20 @@ function getNode(value: RdfResourceCore | ResourceIdentifier | string): Resource
   return value.id
 }
 
-export interface TypeCollection<D extends DatasetCore> extends Set<RdfResourceCore<D>> {
-  add(value: RdfResourceCore<D> | ResourceIdentifier | string): this
-  delete(value: RdfResourceCore<D> | ResourceIdentifier | string): boolean
-  has(value: RdfResourceCore<D> | ResourceIdentifier | string): boolean
+type NamedNodePointer<D extends DatasetCore> = ResourceNode<NamedNode, D>
+
+export interface TypeCollection<D extends DatasetCore> extends Set<RdfResourceCore<NamedNodePointer<D>>> {
+  add(value: RdfResourceCore<NamedNodePointer<D>> | NamedNode | string): this
+  delete(value: RdfResourceCore<ResourceNode<ResourceIdentifier, D>> | NamedNode | string): boolean
+  has(value: RdfResourceCore<ResourceNode<ResourceIdentifier, D>> | NamedNode | string): boolean
 }
 
-export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> {
-  private readonly __resource: RdfResourceCore<D>
+export default class <D extends DatasetCore> implements Set<RdfResourceCore<NamedNodePointer<D>>> {
+  private readonly __resource: RdfResourceCore<ResourceNode<ResourceIdentifier, D>>
   private readonly __allGraphs: boolean
   private __graph: GraphPointer<Term, D>
 
-  add(value: RdfResourceCore<D> | ResourceIdentifier | string): this {
+  add(value: RdfResourceCore<NamedNodePointer<D>> | NamedNode | string): this {
     this.__resource.pointer.addOut(rdf.type, getNode(value))
     return this
   }
@@ -38,7 +40,7 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
     this.__graph.deleteOut(rdf.type)
   }
 
-  delete(value: RdfResourceCore<D> | ResourceIdentifier | string): boolean {
+  delete(value: RdfResourceCore<ResourceNode<ResourceIdentifier, D>> | NamedNode | string): boolean {
     const deletedQuads = this.__graph.dataset.match(this.__resource.id, rdf.type, getNode(value))
 
     for (const quad of deletedQuads) {
@@ -48,13 +50,13 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
     return deletedQuads.size > 0
   }
 
-  forEach(callbackfn: (value: RdfResourceCore<D>, value2: RdfResourceCore<D>, set: Set<RdfResourceCore<D>>) => void, thisArg?: unknown): void {
+  forEach(callbackfn: (value: RdfResourceCore<NamedNodePointer<D>>, value2: RdfResourceCore<NamedNodePointer<D>>, set: Set<RdfResourceCore<NamedNodePointer<D>>>) => void, thisArg?: unknown): void {
     for (const value of this.values()) {
       callbackfn.call(thisArg, value, value, this)
     }
   }
 
-  has(value: RdfResourceCore<D> | ResourceIdentifier | string): boolean {
+  has(value: RdfResourceCore<ResourceNode<ResourceIdentifier, D>> | NamedNode | string): boolean {
     return this.__graph.has(rdf.type, getNode(value)).terms.length > 0
   }
 
@@ -62,25 +64,25 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
     return this.__graph.out(rdf.type).terms.filter(onlyUnique(compare.terms)).length
   }
 
-  [Symbol.iterator](): IterableIterator<RdfResourceCore<D>> {
+  [Symbol.iterator](): IterableIterator<RdfResourceCore<NamedNodePointer<D>>> {
     return this.values()
   }
 
-  entries(): IterableIterator<[RdfResourceCore<D>, RdfResourceCore<D>]> {
-    return this.__values.map<[RdfResourceCore<D>, RdfResourceCore<D>]>(res => [res, res])[Symbol.iterator]()
+  entries(): IterableIterator<[RdfResourceCore<NamedNodePointer<D>>, RdfResourceCore<NamedNodePointer<D>>]> {
+    return this.__values.map<[RdfResourceCore<NamedNodePointer<D>>, RdfResourceCore<NamedNodePointer<D>>]>(res => [res, res])[Symbol.iterator]()
   }
 
-  keys(): IterableIterator<RdfResourceCore<D>> {
+  keys(): IterableIterator<RdfResourceCore<NamedNodePointer<D>>> {
     return this.values()
   }
 
-  values(): IterableIterator<RdfResourceCore<D>> {
+  values(): IterableIterator<RdfResourceCore<NamedNodePointer<D>>> {
     return this.__values[Symbol.iterator]()
   }
 
   [Symbol.toStringTag]: string;
 
-  public constructor(resource: RdfResourceCore<D>, allGraphs = false) {
+  public constructor(resource: RdfResourceCore<ResourceNode<any, D>>, allGraphs = false) {
     this.__resource = resource
     this.__allGraphs = allGraphs
     // TODO: when clownface gets graph feature
@@ -105,7 +107,7 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
       })
 
     return types
-      .map(type => this.__resource._create<RdfResourceCore<D>>(type))
+      .map(type => this.__resource._create<RdfResourceCore<NamedNodePointer<D>>>(type))
       .filter(onlyUnique(compare.resources(false)))
   }
 }

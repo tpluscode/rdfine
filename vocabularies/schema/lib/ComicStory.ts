@@ -2,17 +2,17 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
 
-export interface ComicStory<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
-  artist: Schema.Person<D> | undefined;
-  colorist: Schema.Person<D> | undefined;
-  inker: Schema.Person<D> | undefined;
-  letterer: Schema.Person<D> | undefined;
-  penciler: Schema.Person<D> | undefined;
+export interface ComicStory<ID extends ResourceNode = ResourceNode> extends Schema.CreativeWork<ID>, RdfResource<ID> {
+  artist: Schema.Person<SiblingNode<ID>> | undefined;
+  colorist: Schema.Person<SiblingNode<ID>> | undefined;
+  inker: Schema.Person<SiblingNode<ID>> | undefined;
+  letterer: Schema.Person<SiblingNode<ID>> | undefined;
+  penciler: Schema.Person<SiblingNode<ID>> | undefined;
 }
 
 export function ComicStoryMixin<Base extends Constructor>(Resource: Base) {

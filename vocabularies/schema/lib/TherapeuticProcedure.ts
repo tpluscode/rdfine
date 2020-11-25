@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalProcedureMixin } from './MedicalProcedure';
 
-export interface TherapeuticProcedure<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalProcedure<D>, RdfResource<D> {
-  adverseOutcome: Schema.MedicalEntity<D> | undefined;
-  doseSchedule: Schema.DoseSchedule<D> | undefined;
-  drug: Schema.Drug<D> | undefined;
+export interface TherapeuticProcedure<ID extends ResourceNode = ResourceNode> extends Schema.MedicalProcedure<ID>, RdfResource<ID> {
+  adverseOutcome: Schema.MedicalEntity<SiblingNode<ID>> | undefined;
+  doseSchedule: Schema.DoseSchedule<SiblingNode<ID>> | undefined;
+  drug: Schema.Drug<SiblingNode<ID>> | undefined;
 }
 
 export function TherapeuticProcedureMixin<Base extends Constructor>(Resource: Base) {

@@ -2,15 +2,15 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TransferActionMixin } from './TransferAction';
 
-export interface MoneyTransfer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, RdfResource<D> {
-  amount: Schema.MonetaryAmount<D> | undefined;
+export interface MoneyTransfer<ID extends ResourceNode = ResourceNode> extends Schema.TransferAction<ID>, RdfResource<ID> {
+  amount: Schema.MonetaryAmount<SiblingNode<ID>> | undefined;
   amountLiteral: number | undefined;
-  beneficiaryBank: Schema.BankOrCreditUnion<D> | undefined;
+  beneficiaryBank: Schema.BankOrCreditUnion<SiblingNode<ID>> | undefined;
   beneficiaryBankLiteral: string | undefined;
 }
 

@@ -2,30 +2,30 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '..';
 
-export interface Table<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Table<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
   aboutUrl: string | undefined;
-  datatype: Csvw.Datatype<D> | undefined;
+  datatype: Csvw.Datatype<SiblingNode<ID>> | undefined;
   datatypeLiteral: string | undefined;
   default: string | undefined;
-  dialect: Csvw.Dialect<D> | undefined;
-  foreignKey: Csvw.ForeignKey<D> | undefined;
+  dialect: Csvw.Dialect<SiblingNode<ID>> | undefined;
+  foreignKey: Csvw.ForeignKey<SiblingNode<ID>> | undefined;
   lang: string | undefined;
   note: RDF.Term | undefined;
   null: string | undefined;
   ordered: boolean | undefined;
   propertyUrl: string | undefined;
   required: boolean | undefined;
-  row: Csvw.Row<D> | undefined;
+  row: Csvw.Row<SiblingNode<ID>> | undefined;
   separator: string | undefined;
   suppressOutput: boolean | undefined;
-  tableDirection: Csvw.Direction<D> | undefined;
-  tableSchema: Csvw.Schema<D> | undefined;
-  textDirection: Csvw.Direction<D> | undefined;
-  transformations: Array<Csvw.Transformation<D>>;
+  tableDirection: Csvw.Direction<SiblingNode<ID>> | undefined;
+  tableSchema: Csvw.Schema<SiblingNode<ID>> | undefined;
+  textDirection: Csvw.Direction<SiblingNode<ID>> | undefined;
+  transformations: Array<Csvw.Transformation<SiblingNode<ID>>>;
   url: string | undefined;
   valueUrl: string | undefined;
 }

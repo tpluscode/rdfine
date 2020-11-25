@@ -2,13 +2,13 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '..';
 
-export interface Usergroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
-  'has_member': Sioc.UserAccount<D> | undefined;
-  'usergroup_of': Sioc.Space<D> | undefined;
+export interface Usergroup<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
+  'has_member': Sioc.UserAccount<SiblingNode<ID>> | undefined;
+  'usergroup_of': Sioc.Space<SiblingNode<ID>> | undefined;
 }
 
 export function UsergroupMixin<Base extends Constructor>(Resource: Base) {

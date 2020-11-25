@@ -2,34 +2,34 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '..';
 
-export interface Item<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Item<ID extends ResourceNode = ResourceNode> extends RdfResource<ID> {
   about: RDF.Term | undefined;
   'addressed_to': RDF.Term | undefined;
   attachment: RDF.Term | undefined;
   content: RDF.Literal | undefined;
   'delivered_at': RDF.Literal | undefined;
-  'earlier_version': Sioc.Item<D> | undefined;
+  'earlier_version': Sioc.Item<SiblingNode<ID>> | undefined;
   'embeds_knowledge': RDF.Term | undefined;
   generator: RDF.Term | undefined;
-  'has_container': Sioc.Container<D> | undefined;
+  'has_container': Sioc.Container<SiblingNode<ID>> | undefined;
   'has_discussion': RDF.Term | undefined;
-  'has_reply': Sioc.Item<D> | undefined;
-  'later_version': Sioc.Item<D> | undefined;
-  'latest_version': Sioc.Item<D> | undefined;
-  mentions: Sioc.UserAccount<D> | undefined;
-  'next_by_date': Sioc.Item<D> | undefined;
-  'next_version': Sioc.Item<D> | undefined;
-  'previous_by_date': Sioc.Item<D> | undefined;
-  'previous_version': Sioc.Item<D> | undefined;
+  'has_reply': Sioc.Item<SiblingNode<ID>> | undefined;
+  'later_version': Sioc.Item<SiblingNode<ID>> | undefined;
+  'latest_version': Sioc.Item<SiblingNode<ID>> | undefined;
+  mentions: Sioc.UserAccount<SiblingNode<ID>> | undefined;
+  'next_by_date': Sioc.Item<SiblingNode<ID>> | undefined;
+  'next_version': Sioc.Item<SiblingNode<ID>> | undefined;
+  'previous_by_date': Sioc.Item<SiblingNode<ID>> | undefined;
+  'previous_version': Sioc.Item<SiblingNode<ID>> | undefined;
   'read_at': RDF.Literal | undefined;
-  'reply_of': Sioc.Item<D> | undefined;
+  'reply_of': Sioc.Item<SiblingNode<ID>> | undefined;
   'respond_to': RDF.Term | undefined;
-  'shared_by': Sioc.UserAccount<D> | undefined;
-  sibling: Sioc.Item<D> | undefined;
+  'shared_by': Sioc.UserAccount<SiblingNode<ID>> | undefined;
+  sibling: Sioc.Item<SiblingNode<ID>> | undefined;
 }
 
 export function ItemMixin<Base extends Constructor>(Resource: Base) {

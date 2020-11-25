@@ -2,14 +2,14 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '..';
 import { DocumentMixin } from './Document';
 
-export interface Image<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Document<D>, RdfResource<D> {
+export interface Image<ID extends ResourceNode = ResourceNode> extends Foaf.Document<ID>, RdfResource<ID> {
   depicts: RDF.NamedNode | undefined;
-  thumbnail: Foaf.Image<D> | undefined;
+  thumbnail: Foaf.Image<SiblingNode<ID>> | undefined;
 }
 
 export function ImageMixin<Base extends Constructor>(Resource: Base) {

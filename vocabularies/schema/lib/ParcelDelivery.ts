@@ -2,22 +2,22 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, SiblingNode } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
-export interface ParcelDelivery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
-  carrier: Schema.Organization<D> | undefined;
-  deliveryAddress: Schema.PostalAddress<D> | undefined;
-  deliveryStatus: Schema.DeliveryEvent<D> | undefined;
+export interface ParcelDelivery<ID extends ResourceNode = ResourceNode> extends Schema.Intangible<ID>, RdfResource<ID> {
+  carrier: Schema.Organization<SiblingNode<ID>> | undefined;
+  deliveryAddress: Schema.PostalAddress<SiblingNode<ID>> | undefined;
+  deliveryStatus: Schema.DeliveryEvent<SiblingNode<ID>> | undefined;
   expectedArrivalFrom: Date | undefined;
   expectedArrivalUntil: Date | undefined;
   hasDeliveryMethod: Schema.DeliveryMethod | undefined;
-  itemShipped: Schema.Product<D> | undefined;
-  originAddress: Schema.PostalAddress<D> | undefined;
-  partOfOrder: Schema.Order<D> | undefined;
-  provider: Schema.Organization<D> | Schema.Person<D> | undefined;
+  itemShipped: Schema.Product<SiblingNode<ID>> | undefined;
+  originAddress: Schema.PostalAddress<SiblingNode<ID>> | undefined;
+  partOfOrder: Schema.Order<SiblingNode<ID>> | undefined;
+  provider: Schema.Organization<SiblingNode<ID>> | Schema.Person<SiblingNode<ID>> | undefined;
   trackingNumber: string | undefined;
   trackingUrl: RDF.NamedNode | undefined;
 }
