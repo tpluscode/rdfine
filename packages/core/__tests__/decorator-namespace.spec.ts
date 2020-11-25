@@ -5,6 +5,7 @@ import { Constructor, namespace, property } from '../index'
 import RdfResource from '../RdfResource'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { foaf, rdfs, schema } from '@tpluscode/rdf-ns-builders'
+import builder, { NamespaceBuilder } from '@rdf-esm/namespace'
 
 describe('decorator', () => {
   describe('namespace', () => {
@@ -32,6 +33,20 @@ describe('decorator', () => {
 
       // then
       expect(ns.value).toEqual(foaf('').value)
+    })
+
+    it('works with typed namespace builder', () => {
+      // given
+      const foobar: NamespaceBuilder<'foo' | 'bar'> = builder('http://example.com/')
+      @namespace(foobar)
+      class WithNamespace extends RdfResource {
+      }
+
+      // when
+      const ns = WithNamespace.__ns!()
+
+      // then
+      expect(ns.value).toEqual('http://example.com/')
     })
 
     it('can be used on class extending specific dataset type', () => {

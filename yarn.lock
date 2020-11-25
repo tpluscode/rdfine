@@ -2222,6 +2222,14 @@
     "@rdf-esm/data-model" "^0.5.1"
     "@rdfjs/namespace" "^1.1.0"
 
+"@rdf-esm/namespace@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@rdf-esm/namespace/-/namespace-0.5.2.tgz#41a12d317a3be0589297a391e887e91755b66d4a"
+  integrity sha512-/9MG/GDopNQX2PnoH2UfRnDEUhuqS/z8Bvws8r6CuNhd+FTm98DicK/YJNNg+/JWn5rwZ4XoVJ1XVoTbH1IeRw==
+  dependencies:
+    "@rdf-esm/data-model" "^0.5.1"
+    "@rdfjs/namespace" "^1.1.0"
+
 "@rdf-esm/term-map@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@rdf-esm/term-map/-/term-map-0.5.0.tgz#8c5a68550530d6421762e766c9d38f55eab03c10"
@@ -2636,10 +2644,10 @@
     "@types/rdf-js" "*"
     "@types/rdfjs__sink-map" "*"
 
-"@types/rdfjs__namespace@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@types/rdfjs__namespace/-/rdfjs__namespace-1.1.1.tgz#0f4b901fe3936d9b6e4d38560386d37ee1e6a6ad"
-  integrity sha512-IgPTKBbKC4Hm5j7kO9XpJMtWMXCRc9x308VD/e/ibdDiaSc27c7dzwPtgQeWUK0q1IQ5hobOAuHZVvlhIH8eMg==
+"@types/rdfjs__namespace@^1.1.1", "@types/rdfjs__namespace@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@types/rdfjs__namespace/-/rdfjs__namespace-1.1.3.tgz#6fc6868b34cda0247afb163a6bf6a1caef9a17cd"
+  integrity sha512-seCWK6z0TqF40ioY7lMhR624I9ovo7xhnhvhAvbWlxfXYtsoQ4QEoddaWFmJDqfat2M1Xv6ThRSN2JGm2OtTIw==
   dependencies:
     "@types/rdf-js" "*"
 
