@@ -88,6 +88,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   public static factory: ResourceFactory = new ResourceFactoryImpl(RdfResourceImpl)
   public static __mixins: Mixin[] = []
   public static __properties = new Map()
+  public static __initializers = new Map()
 
   private static _userInitializeProperties(resource: RdfResourceImpl, init: Initializer<RdfResource> = {}): void {
     Object.entries(init)
@@ -149,16 +150,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
 
     this.__initializeProperties = once(() => {
       const self = this as any
-      const defaults = [...mixins(self)].reduce((propsWithInit, { __properties }) => {
-        const moreProps = [...__properties]
-          .map<[string, unknown]>(([prop, meta]) => [prop, meta.initial])
-          .filter(([, initial]) => !!initial)
-
-        return [
-          ...propsWithInit,
-          ...moreProps,
-        ]
-      }, [] as [string, unknown][])
+      const defaults = [...mixins(self)].flatMap((mixinProto) => [...mixinProto.__initializers])
 
       defaults.forEach(([key, value]) => {
         const currentValue = self[key]

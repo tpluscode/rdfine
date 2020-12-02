@@ -208,6 +208,10 @@ function createProperty<T extends RdfResourceCore, TValue, TTerm extends Term>(p
     proto.constructor.__properties = new Map()
   }
 
+  if (!Object.hasOwnProperty.call(proto.constructor, '__initializers')) {
+    proto.constructor.__initializers = new Map()
+  }
+
   proto.constructor.__properties.set(name, {
     initial,
     options: {
@@ -215,6 +219,10 @@ function createProperty<T extends RdfResourceCore, TValue, TTerm extends Term>(p
       values,
     },
   })
+
+  if (initial) {
+    proto.constructor.__initializers.set(name, initial)
+  }
 }
 
 const legacyProperty =
