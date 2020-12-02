@@ -1,6 +1,6 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
 import cf from 'clownface'
-import { namespace, property, crossBoundaries } from '../index'
+import { namespace, property, crossBoundaries, Constructor } from '../index'
 import RdfResource from '../RdfResource'
 import { parse, ex } from './_helpers'
 import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
@@ -740,6 +740,41 @@ describe('decorator', () => {
         // then
         expect(instance.child.value).toEqual('http://example.com/res/child')
         expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('sets all initial values from all mixins', async () => {
+        // given
+        const dataset = rdfExt.dataset()
+        function NameMixin<Base extends Constructor>(Resource: Base) {
+          class Name extends Resource {
+            @property.literal({
+              path: schema.name,
+              initial: () => RDF.literal('name'),
+            })
+            name!: string
+          }
+          return Name
+        }
+        function AgeMixin<Base extends Constructor>(Resource: Base) {
+          class Age extends Resource {
+            @property.literal({
+              path: schema.age,
+              initial: () => RDF.literal('21'),
+            })
+            age!: string
+          }
+          return Age
+        }
+
+        // when
+        const instance = RdfResource.factory.createEntity(cf({
+          dataset,
+          term: ex.res,
+        }), [NameMixin, AgeMixin])
+
+        // then
+        expect(instance.pointer.out(schema.name).value).toEqual('name')
+        expect(instance.pointer.out(schema.age).value).toEqual('21')
       })
     })
 
