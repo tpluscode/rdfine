@@ -13,6 +13,7 @@ export interface Constructor<A extends RdfResourceCore<any> = RdfResourceCore> {
   factory: ResourceFactory
   __mixins: Mixin[]
   __properties: Map<string, PropertyMeta>
+  __initializers: Map<string, unknown>
   __ns?: NamespaceBuilder
 }
 type EvaluatedMixin = {
