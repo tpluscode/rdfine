@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.5.16
+
+### Patch Changes
+
+- a4e39c35: It is now possible to use typed namespace builder with decorator
+- 07d94285: Relax the Term type requirement of equals
+- 69eb2666: Not all properties from all mixins were initialized
+
 ## 0.5.15
 
 ### Patch Changes
