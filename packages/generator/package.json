@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/generator",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "Generates rdfine entities from RDF vocabulary",
   "main": "index.js",
   "bin": {
