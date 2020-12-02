@@ -15,10 +15,10 @@ import type { TypeCollection } from './lib/TypeCollection'
 import TypeCollectionCtor from './lib/TypeCollection'
 import { xsd } from '@tpluscode/rdf-ns-builders'
 import { defaultGraphInstance } from '@rdf-esm/data-model'
-import type { PropertyMeta } from './lib/decorators/property'
 import { toJSON } from './lib/toJSON'
 import type { Jsonified } from './lib/toJSON'
 import { getPointer } from './lib/resource'
+import { mixins } from './lib/mixins'
 
 export type ResourceIdentifier = BlankNode | NamedNode
 export type ResourceNode<D extends DatasetCore = DatasetCore> = GraphPointer<ResourceIdentifier, D>
@@ -149,10 +149,17 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
 
     this.__initializeProperties = once(() => {
       const self = this as any
-      const properties: Map<string, PropertyMeta> = self.constructor.__properties || new Map()
-      const defaults = [...properties]
-        .map<[string, unknown]>(([prop, meta]) => [prop, meta.initial])
-        .filter(([, initial]) => !!initial)
+      const defaults = [...mixins(self)].reduce((propsWithInit, { __properties }) => {
+        const moreProps = [...__properties]
+          .map<[string, unknown]>(([prop, meta]) => [prop, meta.initial])
+          .filter(([, initial]) => !!initial)
+
+        return [
+          ...propsWithInit,
+          ...moreProps,
+        ]
+      }, [] as [string, unknown][])
+
       defaults.forEach(([key, value]) => {
         const currentValue = self[key]
         const valueIsEmptyArray = Array.isArray(currentValue) && currentValue.length === 0

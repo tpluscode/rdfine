@@ -4,10 +4,11 @@ import { namedNode } from '@rdf-esm/data-model'
 import TermSet from '@rdf-esm/term-set'
 import { rdf, xsd } from '@tpluscode/rdf-ns-builders'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
-import type { Constructor, ResourceIndexer } from './ResourceFactory'
+import type { ResourceIndexer } from './ResourceFactory'
 import type { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { enumerateList, isList } from './rdf-list'
 import { PropertyMeta } from './decorators/property'
+import { mixins } from './mixins'
 
 type PropertyValue = RdfResource | Term
 
@@ -251,19 +252,6 @@ function jsonifyProperties(params: ToJsonContext & JsonifyPropertiesContext) {
     remainingObjects.delete(predicate)
 
     return { json, contextPopulated: contextPopulated || propertyAddedToContext }
-  }
-}
-
-function * mixins(resource: RdfResource): Generator<Constructor> {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  let ctor: Constructor | Function = resource.constructor
-
-  while (ctor) {
-    if ('__properties' in ctor) {
-      yield ctor
-    }
-
-    ctor = Object.getPrototypeOf(ctor)
   }
 }
 
