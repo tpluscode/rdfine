@@ -8,8 +8,8 @@ import cf from 'clownface'
 
 const howard = 'http://zazuko.github.io/tbbt-ld/data/person/howard-wolowitz.ttl'
 
-// Have rdfine recognize schema.org terms
-RdfResource.factory.addMixin(...Object.values(Schema))
+// Have rdfine recognize required schema.org terms
+RdfResource.factory.addMixin(Schema.PersonMixin)
 
 async function main() {
   // download the triples about Howard
