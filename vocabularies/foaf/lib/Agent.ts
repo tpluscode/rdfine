@@ -29,7 +29,7 @@ export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
   yahooChatID: RDF.Literal | undefined;
 }
 
-export function AgentMixin<Base extends Constructor>(Resource: Base) {
+export function AgentMixin<Base extends Constructor>(Resource: Base): Constructor<Agent> & Base {
   @namespace(foaf)
   class AgentClass extends Resource implements Agent {
     @property.resource({ implicitTypes: [foaf.OnlineAccount] })

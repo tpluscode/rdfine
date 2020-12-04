@@ -19,7 +19,7 @@ export interface ServiceChannel<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   serviceUrl: RDF.NamedNode | undefined;
 }
 
-export function ServiceChannelMixin<Base extends Constructor>(Resource: Base) {
+export function ServiceChannelMixin<Base extends Constructor>(Resource: Base): Constructor<ServiceChannel> & Base {
   @namespace(schema)
   class ServiceChannelClass extends IntangibleMixin(Resource) implements ServiceChannel {
     @property.resource()

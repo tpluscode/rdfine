@@ -10,7 +10,7 @@ import { AllocateActionMixin } from './AllocateAction';
 export interface AcceptAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AllocateAction<D>, RdfResource<D> {
 }
 
-export function AcceptActionMixin<Base extends Constructor>(Resource: Base) {
+export function AcceptActionMixin<Base extends Constructor>(Resource: Base): Constructor<AcceptAction> & Base {
   @namespace(schema)
   class AcceptActionClass extends AllocateActionMixin(Resource) implements AcceptAction {
   }

@@ -15,7 +15,7 @@ export interface FlightReservation<D extends RDF.DatasetCore = RDF.DatasetCore> 
   securityScreening: string | undefined;
 }
 
-export function FlightReservationMixin<Base extends Constructor>(Resource: Base) {
+export function FlightReservationMixin<Base extends Constructor>(Resource: Base): Constructor<FlightReservation> & Base {
   @namespace(schema)
   class FlightReservationClass extends ReservationMixin(Resource) implements FlightReservation {
     @property.literal()

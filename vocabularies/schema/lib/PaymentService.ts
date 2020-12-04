@@ -10,7 +10,7 @@ import { FinancialProductMixin } from './FinancialProduct';
 export interface PaymentService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialProduct<D>, RdfResource<D> {
 }
 
-export function PaymentServiceMixin<Base extends Constructor>(Resource: Base) {
+export function PaymentServiceMixin<Base extends Constructor>(Resource: Base): Constructor<PaymentService> & Base {
   @namespace(schema)
   class PaymentServiceClass extends FinancialProductMixin(Resource) implements PaymentService {
   }

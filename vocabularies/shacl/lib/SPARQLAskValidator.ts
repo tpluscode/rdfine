@@ -11,7 +11,7 @@ import { ValidatorMixin } from './Validator';
 export interface SPARQLAskValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLAskExecutable<D>, Sh.Validator<D>, RdfResource<D> {
 }
 
-export function SPARQLAskValidatorMixin<Base extends Constructor>(Resource: Base) {
+export function SPARQLAskValidatorMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLAskValidator> & Base {
   @namespace(sh)
   class SPARQLAskValidatorClass extends ValidatorMixin(SPARQLAskExecutableMixin(Resource)) implements SPARQLAskValidator {
   }

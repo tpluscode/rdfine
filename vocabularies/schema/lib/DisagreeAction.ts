@@ -10,7 +10,7 @@ import { ReactActionMixin } from './ReactAction';
 export interface DisagreeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ReactAction<D>, RdfResource<D> {
 }
 
-export function DisagreeActionMixin<Base extends Constructor>(Resource: Base) {
+export function DisagreeActionMixin<Base extends Constructor>(Resource: Base): Constructor<DisagreeAction> & Base {
   @namespace(schema)
   class DisagreeActionClass extends ReactActionMixin(Resource) implements DisagreeAction {
   }

@@ -10,7 +10,7 @@ import { AbstractResultMixin } from './AbstractResult';
 export interface ValidationResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.AbstractResult<D>, RdfResource<D> {
 }
 
-export function ValidationResultMixin<Base extends Constructor>(Resource: Base) {
+export function ValidationResultMixin<Base extends Constructor>(Resource: Base): Constructor<ValidationResult> & Base {
   @namespace(sh)
   class ValidationResultClass extends AbstractResultMixin(Resource) implements ValidationResult {
   }

@@ -11,7 +11,7 @@ export interface AskAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   question: Schema.Question<D> | undefined;
 }
 
-export function AskActionMixin<Base extends Constructor>(Resource: Base) {
+export function AskActionMixin<Base extends Constructor>(Resource: Base): Constructor<AskAction> & Base {
   @namespace(schema)
   class AskActionClass extends CommunicateActionMixin(Resource) implements AskAction {
     @property.resource()

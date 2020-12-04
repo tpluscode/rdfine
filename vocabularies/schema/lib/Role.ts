@@ -16,7 +16,7 @@ export interface Role<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   startDate: Date | undefined;
 }
 
-export function RoleMixin<Base extends Constructor>(Resource: Base) {
+export function RoleMixin<Base extends Constructor>(Resource: Base): Constructor<Role> & Base {
   @namespace(schema)
   class RoleClass extends IntangibleMixin(Resource) implements Role {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })

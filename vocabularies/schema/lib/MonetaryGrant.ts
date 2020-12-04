@@ -13,7 +13,7 @@ export interface MonetaryGrant<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   funder: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function MonetaryGrantMixin<Base extends Constructor>(Resource: Base) {
+export function MonetaryGrantMixin<Base extends Constructor>(Resource: Base): Constructor<MonetaryGrant> & Base {
   @namespace(schema)
   class MonetaryGrantClass extends GrantMixin(Resource) implements MonetaryGrant {
     @property.resource()

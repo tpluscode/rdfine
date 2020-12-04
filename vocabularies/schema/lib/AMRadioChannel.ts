@@ -10,7 +10,7 @@ import { RadioChannelMixin } from './RadioChannel';
 export interface AMRadioChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.RadioChannel<D>, RdfResource<D> {
 }
 
-export function AMRadioChannelMixin<Base extends Constructor>(Resource: Base) {
+export function AMRadioChannelMixin<Base extends Constructor>(Resource: Base): Constructor<AMRadioChannel> & Base {
   @namespace(schema)
   class AMRadioChannelClass extends RadioChannelMixin(Resource) implements AMRadioChannel {
   }

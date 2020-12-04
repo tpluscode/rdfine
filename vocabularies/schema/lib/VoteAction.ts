@@ -11,7 +11,7 @@ export interface VoteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   candidate: Schema.Person<D> | undefined;
 }
 
-export function VoteActionMixin<Base extends Constructor>(Resource: Base) {
+export function VoteActionMixin<Base extends Constructor>(Resource: Base): Constructor<VoteAction> & Base {
   @namespace(schema)
   class VoteActionClass extends ChooseActionMixin(Resource) implements VoteAction {
     @property.resource()

@@ -10,7 +10,7 @@ import { SpatialThingMixin } from './SpatialThing';
 export interface Point<D extends RDF.DatasetCore = RDF.DatasetCore> extends Wgs.SpatialThing<D>, RdfResource<D> {
 }
 
-export function PointMixin<Base extends Constructor>(Resource: Base) {
+export function PointMixin<Base extends Constructor>(Resource: Base): Constructor<Point> & Base {
   @namespace(wgs)
   class PointClass extends SpatialThingMixin(Resource) implements Point {
   }

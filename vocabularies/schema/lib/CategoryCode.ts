@@ -11,7 +11,7 @@ export interface CategoryCode<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   inCodeSet: Schema.CategoryCodeSet<D> | undefined;
 }
 
-export function CategoryCodeMixin<Base extends Constructor>(Resource: Base) {
+export function CategoryCodeMixin<Base extends Constructor>(Resource: Base): Constructor<CategoryCode> & Base {
   @namespace(schema)
   class CategoryCodeClass extends Resource implements CategoryCode {
     @property.literal()

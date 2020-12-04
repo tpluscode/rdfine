@@ -12,7 +12,7 @@ export interface EducationalOrganization<D extends RDF.DatasetCore = RDF.Dataset
   alumni: Schema.Person<D> | undefined;
 }
 
-export function EducationalOrganizationMixin<Base extends Constructor>(Resource: Base) {
+export function EducationalOrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<EducationalOrganization> & Base {
   @namespace(schema)
   class EducationalOrganizationClass extends OrganizationMixin(CivicStructureMixin(Resource)) implements EducationalOrganization {
     @property.resource()

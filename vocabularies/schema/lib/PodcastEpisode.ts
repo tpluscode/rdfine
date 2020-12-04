@@ -10,7 +10,7 @@ import { EpisodeMixin } from './Episode';
 export interface PodcastEpisode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Episode<D>, RdfResource<D> {
 }
 
-export function PodcastEpisodeMixin<Base extends Constructor>(Resource: Base) {
+export function PodcastEpisodeMixin<Base extends Constructor>(Resource: Base): Constructor<PodcastEpisode> & Base {
   @namespace(schema)
   class PodcastEpisodeClass extends EpisodeMixin(Resource) implements PodcastEpisode {
   }

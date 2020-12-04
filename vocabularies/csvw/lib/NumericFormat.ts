@@ -13,7 +13,7 @@ export interface NumericFormat<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   pattern: string | undefined;
 }
 
-export function NumericFormatMixin<Base extends Constructor>(Resource: Base) {
+export function NumericFormatMixin<Base extends Constructor>(Resource: Base): Constructor<NumericFormat> & Base {
   @namespace(csvw)
   class NumericFormatClass extends Resource implements NumericFormat {
     @property.literal()

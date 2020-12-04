@@ -13,7 +13,7 @@ export interface PrefixDeclaration<D extends RDF.DatasetCore = RDF.DatasetCore> 
   prefix: string | undefined;
 }
 
-export function PrefixDeclarationMixin<Base extends Constructor>(Resource: Base) {
+export function PrefixDeclarationMixin<Base extends Constructor>(Resource: Base): Constructor<PrefixDeclaration> & Base {
   @namespace(sh)
   class PrefixDeclarationClass extends RdfsResourceMixin(Resource) implements PrefixDeclaration {
     @property.literal()

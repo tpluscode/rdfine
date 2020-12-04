@@ -10,7 +10,7 @@ import { AggregateRatingMixin } from './AggregateRating';
 export interface EmployerAggregateRating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AggregateRating<D>, RdfResource<D> {
 }
 
-export function EmployerAggregateRatingMixin<Base extends Constructor>(Resource: Base) {
+export function EmployerAggregateRatingMixin<Base extends Constructor>(Resource: Base): Constructor<EmployerAggregateRating> & Base {
   @namespace(schema)
   class EmployerAggregateRatingClass extends AggregateRatingMixin(Resource) implements EmployerAggregateRating {
   }

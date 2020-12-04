@@ -10,7 +10,7 @@ import { LandformMixin } from './Landform';
 export interface BodyOfWater<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Landform<D>, RdfResource<D> {
 }
 
-export function BodyOfWaterMixin<Base extends Constructor>(Resource: Base) {
+export function BodyOfWaterMixin<Base extends Constructor>(Resource: Base): Constructor<BodyOfWater> & Base {
   @namespace(schema)
   class BodyOfWaterClass extends LandformMixin(Resource) implements BodyOfWater {
   }

@@ -10,7 +10,7 @@ import { WebPageElementMixin } from './WebPageElement';
 export interface WPSideBar<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, RdfResource<D> {
 }
 
-export function WPSideBarMixin<Base extends Constructor>(Resource: Base) {
+export function WPSideBarMixin<Base extends Constructor>(Resource: Base): Constructor<WPSideBar> & Base {
   @namespace(schema)
   class WPSideBarClass extends WebPageElementMixin(Resource) implements WPSideBar {
   }

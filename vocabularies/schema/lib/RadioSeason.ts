@@ -10,7 +10,7 @@ import { CreativeWorkSeasonMixin } from './CreativeWorkSeason';
 export interface RadioSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeason<D>, RdfResource<D> {
 }
 
-export function RadioSeasonMixin<Base extends Constructor>(Resource: Base) {
+export function RadioSeasonMixin<Base extends Constructor>(Resource: Base): Constructor<RadioSeason> & Base {
   @namespace(schema)
   class RadioSeasonClass extends CreativeWorkSeasonMixin(Resource) implements RadioSeason {
   }

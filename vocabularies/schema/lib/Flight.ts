@@ -28,7 +28,7 @@ export interface Flight<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   webCheckinTime: Date | undefined;
 }
 
-export function FlightMixin<Base extends Constructor>(Resource: Base) {
+export function FlightMixin<Base extends Constructor>(Resource: Base): Constructor<Flight> & Base {
   @namespace(schema)
   class FlightClass extends TripMixin(Resource) implements Flight {
     @property.resource()

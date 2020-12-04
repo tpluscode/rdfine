@@ -13,7 +13,7 @@ export interface BusinessAudience<D extends RDF.DatasetCore = RDF.DatasetCore> e
   yearsInOperation: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function BusinessAudienceMixin<Base extends Constructor>(Resource: Base) {
+export function BusinessAudienceMixin<Base extends Constructor>(Resource: Base): Constructor<BusinessAudience> & Base {
   @namespace(schema)
   class BusinessAudienceClass extends AudienceMixin(Resource) implements BusinessAudience {
     @property.resource()

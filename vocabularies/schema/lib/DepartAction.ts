@@ -10,7 +10,7 @@ import { MoveActionMixin } from './MoveAction';
 export interface DepartAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MoveAction<D>, RdfResource<D> {
 }
 
-export function DepartActionMixin<Base extends Constructor>(Resource: Base) {
+export function DepartActionMixin<Base extends Constructor>(Resource: Base): Constructor<DepartAction> & Base {
   @namespace(schema)
   class DepartActionClass extends MoveActionMixin(Resource) implements DepartAction {
   }

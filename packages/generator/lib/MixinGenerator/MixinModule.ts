@@ -141,7 +141,7 @@ export class MixinModule implements GeneratedModule {
 
         depsModule.addImportDeclaration({
           namedImports: [`${mi.mixinName}`],
-          moduleSpecifier: `${mi.module.replace('./', '../lib/')}`,
+          moduleSpecifier: `${mi.module.replace('./', '../')}`,
         })
         exports.push(`${mi.mixinName} as Mixin`)
       })
@@ -240,6 +240,7 @@ export class MixinModule implements GeneratedModule {
         type: 'Base',
       }],
       isExported: true,
+      returnType: `Constructor<${this.type.localName}> & Base`,
     })
 
     const baseClass = this.superClasses

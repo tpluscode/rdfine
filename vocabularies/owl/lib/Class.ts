@@ -17,7 +17,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs
   hasKey: Rdf.List<D> | undefined;
 }
 
-export function ClassMixin<Base extends Constructor>(Resource: Base) {
+export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
   @namespace(owl)
   class ClassClass extends RdfsClassMixin(Resource) implements Class {
     @property.resource({ as: [ClassMixin] })

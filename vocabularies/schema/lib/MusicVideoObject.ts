@@ -10,7 +10,7 @@ import { MediaObjectMixin } from './MediaObject';
 export interface MusicVideoObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, RdfResource<D> {
 }
 
-export function MusicVideoObjectMixin<Base extends Constructor>(Resource: Base) {
+export function MusicVideoObjectMixin<Base extends Constructor>(Resource: Base): Constructor<MusicVideoObject> & Base {
   @namespace(schema)
   class MusicVideoObjectClass extends MediaObjectMixin(Resource) implements MusicVideoObject {
   }

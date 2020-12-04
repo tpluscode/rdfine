@@ -12,7 +12,7 @@ import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable';
 export interface SPARQLFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Function<D>, Sh.SPARQLAskExecutable<D>, Sh.SPARQLSelectExecutable<D>, RdfResource<D> {
 }
 
-export function SPARQLFunctionMixin<Base extends Constructor>(Resource: Base) {
+export function SPARQLFunctionMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLFunction> & Base {
   @namespace(sh)
   class SPARQLFunctionClass extends SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(FunctionMixin(Resource))) implements SPARQLFunction {
   }

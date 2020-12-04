@@ -10,7 +10,7 @@ import { ResourceMixin } from './Resource';
 export interface Container<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
 }
 
-export function ContainerMixin<Base extends Constructor>(Resource: Base) {
+export function ContainerMixin<Base extends Constructor>(Resource: Base): Constructor<Container> & Base {
   @namespace(rdfs)
   class ContainerClass extends ResourceMixin(Resource) implements Container {
   }

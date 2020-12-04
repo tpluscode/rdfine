@@ -10,7 +10,7 @@ import { CreativeWorkMixin } from './CreativeWork';
 export interface Atlas<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
 }
 
-export function AtlasMixin<Base extends Constructor>(Resource: Base) {
+export function AtlasMixin<Base extends Constructor>(Resource: Base): Constructor<Atlas> & Base {
   @namespace(schema)
   class AtlasClass extends CreativeWorkMixin(Resource) implements Atlas {
   }

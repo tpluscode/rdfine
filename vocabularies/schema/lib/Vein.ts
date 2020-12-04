@@ -13,7 +13,7 @@ export interface Vein<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   tributary: Schema.AnatomicalStructure<D> | undefined;
 }
 
-export function VeinMixin<Base extends Constructor>(Resource: Base) {
+export function VeinMixin<Base extends Constructor>(Resource: Base): Constructor<Vein> & Base {
   @namespace(schema)
   class VeinClass extends VesselMixin(Resource) implements Vein {
     @property.resource()

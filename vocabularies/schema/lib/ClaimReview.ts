@@ -11,7 +11,7 @@ export interface ClaimReview<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   claimReviewed: string | undefined;
 }
 
-export function ClaimReviewMixin<Base extends Constructor>(Resource: Base) {
+export function ClaimReviewMixin<Base extends Constructor>(Resource: Base): Constructor<ClaimReview> & Base {
   @namespace(schema)
   class ClaimReviewClass extends ReviewMixin(Resource) implements ClaimReview {
     @property.literal()

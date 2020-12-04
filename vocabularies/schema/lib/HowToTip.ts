@@ -11,7 +11,7 @@ import { ListItemMixin } from './ListItem';
 export interface HowToTip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ListItem<D>, RdfResource<D> {
 }
 
-export function HowToTipMixin<Base extends Constructor>(Resource: Base) {
+export function HowToTipMixin<Base extends Constructor>(Resource: Base): Constructor<HowToTip> & Base {
   @namespace(schema)
   class HowToTipClass extends ListItemMixin(CreativeWorkMixin(Resource)) implements HowToTip {
   }

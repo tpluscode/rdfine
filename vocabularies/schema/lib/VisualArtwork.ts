@@ -27,7 +27,7 @@ export interface VisualArtwork<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function VisualArtworkMixin<Base extends Constructor>(Resource: Base) {
+export function VisualArtworkMixin<Base extends Constructor>(Resource: Base): Constructor<VisualArtwork> & Base {
   @namespace(schema)
   class VisualArtworkClass extends CreativeWorkMixin(Resource) implements VisualArtwork {
     @property.literal()

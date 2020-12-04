@@ -11,7 +11,7 @@ export interface Space<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
   'space_of': RDF.Term | undefined;
 }
 
-export function SpaceMixin<Base extends Constructor>(Resource: Base) {
+export function SpaceMixin<Base extends Constructor>(Resource: Base): Constructor<Space> & Base {
   @namespace(sioc)
   class SpaceClass extends Resource implements Space {
     @property.resource({ implicitTypes: [sioc.Usergroup] })

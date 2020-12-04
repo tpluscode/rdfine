@@ -11,7 +11,7 @@ export interface DrugLegalStatus<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   applicableLocation: Schema.AdministrativeArea<D> | undefined;
 }
 
-export function DrugLegalStatusMixin<Base extends Constructor>(Resource: Base) {
+export function DrugLegalStatusMixin<Base extends Constructor>(Resource: Base): Constructor<DrugLegalStatus> & Base {
   @namespace(schema)
   class DrugLegalStatusClass extends MedicalIntangibleMixin(Resource) implements DrugLegalStatus {
     @property.resource()

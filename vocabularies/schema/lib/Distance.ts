@@ -10,7 +10,7 @@ import { QuantityMixin } from './Quantity';
 export interface Distance<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Quantity<D>, RdfResource<D> {
 }
 
-export function DistanceMixin<Base extends Constructor>(Resource: Base) {
+export function DistanceMixin<Base extends Constructor>(Resource: Base): Constructor<Distance> & Base {
   @namespace(schema)
   class DistanceClass extends QuantityMixin(Resource) implements Distance {
   }

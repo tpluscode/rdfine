@@ -10,7 +10,7 @@ import { OnlineAccountMixin } from './OnlineAccount';
 export interface OnlineEcommerceAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.OnlineAccount<D>, RdfResource<D> {
 }
 
-export function OnlineEcommerceAccountMixin<Base extends Constructor>(Resource: Base) {
+export function OnlineEcommerceAccountMixin<Base extends Constructor>(Resource: Base): Constructor<OnlineEcommerceAccount> & Base {
   @namespace(foaf)
   class OnlineEcommerceAccountClass extends OnlineAccountMixin(Resource) implements OnlineEcommerceAccount {
   }

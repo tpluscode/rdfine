@@ -10,7 +10,7 @@ import { ConsumeActionMixin } from './ConsumeAction';
 export interface InstallAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ConsumeAction<D>, RdfResource<D> {
 }
 
-export function InstallActionMixin<Base extends Constructor>(Resource: Base) {
+export function InstallActionMixin<Base extends Constructor>(Resource: Base): Constructor<InstallAction> & Base {
   @namespace(schema)
   class InstallActionClass extends ConsumeActionMixin(Resource) implements InstallAction {
   }

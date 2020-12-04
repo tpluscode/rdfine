@@ -10,7 +10,7 @@ import { PeriodicalMixin } from './Periodical';
 export interface Newspaper<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Periodical<D>, RdfResource<D> {
 }
 
-export function NewspaperMixin<Base extends Constructor>(Resource: Base) {
+export function NewspaperMixin<Base extends Constructor>(Resource: Base): Constructor<Newspaper> & Base {
   @namespace(schema)
   class NewspaperClass extends PeriodicalMixin(Resource) implements Newspaper {
   }

@@ -10,7 +10,7 @@ import { ResidenceMixin } from './Residence';
 export interface GatedResidenceCommunity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Residence<D>, RdfResource<D> {
 }
 
-export function GatedResidenceCommunityMixin<Base extends Constructor>(Resource: Base) {
+export function GatedResidenceCommunityMixin<Base extends Constructor>(Resource: Base): Constructor<GatedResidenceCommunity> & Base {
   @namespace(schema)
   class GatedResidenceCommunityClass extends ResidenceMixin(Resource) implements GatedResidenceCommunity {
   }

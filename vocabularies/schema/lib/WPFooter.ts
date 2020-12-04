@@ -10,7 +10,7 @@ import { WebPageElementMixin } from './WebPageElement';
 export interface WPFooter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, RdfResource<D> {
 }
 
-export function WPFooterMixin<Base extends Constructor>(Resource: Base) {
+export function WPFooterMixin<Base extends Constructor>(Resource: Base): Constructor<WPFooter> & Base {
   @namespace(schema)
   class WPFooterClass extends WebPageElementMixin(Resource) implements WPFooter {
   }

@@ -11,7 +11,7 @@ export interface InsertAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   toLocation: Schema.Place<D> | undefined;
 }
 
-export function InsertActionMixin<Base extends Constructor>(Resource: Base) {
+export function InsertActionMixin<Base extends Constructor>(Resource: Base): Constructor<InsertAction> & Base {
   @namespace(schema)
   class InsertActionClass extends AddActionMixin(Resource) implements InsertAction {
     @property.resource()

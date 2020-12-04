@@ -10,7 +10,7 @@ import { MedicalClinicMixin } from './MedicalClinic';
 export interface CovidTestingFacility<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalClinic<D>, RdfResource<D> {
 }
 
-export function CovidTestingFacilityMixin<Base extends Constructor>(Resource: Base) {
+export function CovidTestingFacilityMixin<Base extends Constructor>(Resource: Base): Constructor<CovidTestingFacility> & Base {
   @namespace(schema)
   class CovidTestingFacilityClass extends MedicalClinicMixin(Resource) implements CovidTestingFacility {
   }

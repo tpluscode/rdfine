@@ -13,7 +13,7 @@ export interface InfectiousDisease<D extends RDF.DatasetCore = RDF.DatasetCore> 
   transmissionMethod: string | undefined;
 }
 
-export function InfectiousDiseaseMixin<Base extends Constructor>(Resource: Base) {
+export function InfectiousDiseaseMixin<Base extends Constructor>(Resource: Base): Constructor<InfectiousDisease> & Base {
   @namespace(schema)
   class InfectiousDiseaseClass extends MedicalConditionMixin(Resource) implements InfectiousDisease {
     @property.literal()

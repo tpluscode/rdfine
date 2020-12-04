@@ -18,7 +18,7 @@ export interface Operation<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   title: string | undefined;
 }
 
-export function OperationMixin<Base extends Constructor>(Resource: Base) {
+export function OperationMixin<Base extends Constructor>(Resource: Base): Constructor<Operation> & Base {
   @namespace(hydra)
   class OperationClass extends ResourceMixin(Resource) implements Operation {
     @property.literal()

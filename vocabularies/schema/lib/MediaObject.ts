@@ -29,7 +29,7 @@ export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function MediaObjectMixin<Base extends Constructor>(Resource: Base) {
+export function MediaObjectMixin<Base extends Constructor>(Resource: Base): Constructor<MediaObject> & Base {
   @namespace(schema)
   class MediaObjectClass extends CreativeWorkMixin(Resource) implements MediaObject {
     @property.resource()

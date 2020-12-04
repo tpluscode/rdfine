@@ -28,7 +28,7 @@ export interface Invoice<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   totalPaymentDue: Schema.MonetaryAmount<D> | Schema.PriceSpecification<D> | undefined;
 }
 
-export function InvoiceMixin<Base extends Constructor>(Resource: Base) {
+export function InvoiceMixin<Base extends Constructor>(Resource: Base): Constructor<Invoice> & Base {
   @namespace(schema)
   class InvoiceClass extends IntangibleMixin(Resource) implements Invoice {
     @property.literal()

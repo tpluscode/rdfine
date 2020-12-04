@@ -12,7 +12,7 @@ export interface BoatTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   departureBoatTerminal: Schema.BoatTerminal<D> | undefined;
 }
 
-export function BoatTripMixin<Base extends Constructor>(Resource: Base) {
+export function BoatTripMixin<Base extends Constructor>(Resource: Base): Constructor<BoatTrip> & Base {
   @namespace(schema)
   class BoatTripClass extends TripMixin(Resource) implements BoatTrip {
     @property.resource()

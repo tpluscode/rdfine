@@ -10,7 +10,7 @@ import { ObjectPropertyMixin } from './ObjectProperty';
 export interface InverseFunctionalProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, RdfResource<D> {
 }
 
-export function InverseFunctionalPropertyMixin<Base extends Constructor>(Resource: Base) {
+export function InverseFunctionalPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<InverseFunctionalProperty> & Base {
   @namespace(owl)
   class InverseFunctionalPropertyClass extends ObjectPropertyMixin(Resource) implements InverseFunctionalProperty {
   }

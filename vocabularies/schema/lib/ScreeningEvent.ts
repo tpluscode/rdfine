@@ -14,7 +14,7 @@ export interface ScreeningEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   workPresented: Schema.Movie<D> | undefined;
 }
 
-export function ScreeningEventMixin<Base extends Constructor>(Resource: Base) {
+export function ScreeningEventMixin<Base extends Constructor>(Resource: Base): Constructor<ScreeningEvent> & Base {
   @namespace(schema)
   class ScreeningEventClass extends EventMixin(Resource) implements ScreeningEvent {
     @property.resource()

@@ -12,7 +12,7 @@ export interface WebPageElement<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   xpath: string | undefined;
 }
 
-export function WebPageElementMixin<Base extends Constructor>(Resource: Base) {
+export function WebPageElementMixin<Base extends Constructor>(Resource: Base): Constructor<WebPageElement> & Base {
   @namespace(schema)
   class WebPageElementClass extends CreativeWorkMixin(Resource) implements WebPageElement {
     @property.literal()

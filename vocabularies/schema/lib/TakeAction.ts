@@ -10,7 +10,7 @@ import { TransferActionMixin } from './TransferAction';
 export interface TakeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, RdfResource<D> {
 }
 
-export function TakeActionMixin<Base extends Constructor>(Resource: Base) {
+export function TakeActionMixin<Base extends Constructor>(Resource: Base): Constructor<TakeAction> & Base {
   @namespace(schema)
   class TakeActionClass extends TransferActionMixin(Resource) implements TakeAction {
   }

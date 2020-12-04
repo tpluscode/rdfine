@@ -11,7 +11,7 @@ export interface CommentAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   resultComment: Schema.Comment<D> | undefined;
 }
 
-export function CommentActionMixin<Base extends Constructor>(Resource: Base) {
+export function CommentActionMixin<Base extends Constructor>(Resource: Base): Constructor<CommentAction> & Base {
   @namespace(schema)
   class CommentActionClass extends CommunicateActionMixin(Resource) implements CommentAction {
     @property.resource()

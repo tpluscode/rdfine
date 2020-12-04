@@ -14,7 +14,7 @@ export interface ListItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   previousItem: Schema.ListItem<D> | undefined;
 }
 
-export function ListItemMixin<Base extends Constructor>(Resource: Base) {
+export function ListItemMixin<Base extends Constructor>(Resource: Base): Constructor<ListItem> & Base {
   @namespace(schema)
   class ListItemClass extends IntangibleMixin(Resource) implements ListItem {
     @property.resource()

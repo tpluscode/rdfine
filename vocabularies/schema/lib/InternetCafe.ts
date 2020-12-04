@@ -10,7 +10,7 @@ import { LocalBusinessMixin } from './LocalBusiness';
 export interface InternetCafe<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
 }
 
-export function InternetCafeMixin<Base extends Constructor>(Resource: Base) {
+export function InternetCafeMixin<Base extends Constructor>(Resource: Base): Constructor<InternetCafe> & Base {
   @namespace(schema)
   class InternetCafeClass extends LocalBusinessMixin(Resource) implements InternetCafe {
   }

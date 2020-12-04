@@ -11,7 +11,7 @@ export interface SearchAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   query: string | undefined;
 }
 
-export function SearchActionMixin<Base extends Constructor>(Resource: Base) {
+export function SearchActionMixin<Base extends Constructor>(Resource: Base): Constructor<SearchAction> & Base {
   @namespace(schema)
   class SearchActionClass extends ActionMixin(Resource) implements SearchAction {
     @property.literal()

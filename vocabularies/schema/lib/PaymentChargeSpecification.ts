@@ -12,7 +12,7 @@ export interface PaymentChargeSpecification<D extends RDF.DatasetCore = RDF.Data
   appliesToPaymentMethod: Schema.PaymentMethod | undefined;
 }
 
-export function PaymentChargeSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function PaymentChargeSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<PaymentChargeSpecification> & Base {
   @namespace(schema)
   class PaymentChargeSpecificationClass extends PriceSpecificationMixin(Resource) implements PaymentChargeSpecification {
     @property()

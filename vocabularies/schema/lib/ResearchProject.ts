@@ -10,7 +10,7 @@ import { ProjectMixin } from './Project';
 export interface ResearchProject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Project<D>, RdfResource<D> {
 }
 
-export function ResearchProjectMixin<Base extends Constructor>(Resource: Base) {
+export function ResearchProjectMixin<Base extends Constructor>(Resource: Base): Constructor<ResearchProject> & Base {
   @namespace(schema)
   class ResearchProjectClass extends ProjectMixin(Resource) implements ResearchProject {
   }

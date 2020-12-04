@@ -11,7 +11,7 @@ import { EmergencyServiceMixin } from './EmergencyService';
 export interface PoliceStation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.EmergencyService<D>, RdfResource<D> {
 }
 
-export function PoliceStationMixin<Base extends Constructor>(Resource: Base) {
+export function PoliceStationMixin<Base extends Constructor>(Resource: Base): Constructor<PoliceStation> & Base {
   @namespace(schema)
   class PoliceStationClass extends EmergencyServiceMixin(CivicStructureMixin(Resource)) implements PoliceStation {
   }

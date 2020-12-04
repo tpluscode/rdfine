@@ -12,7 +12,7 @@ export interface Statement<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   subject: RDF.Term | undefined;
 }
 
-export function StatementMixin<Base extends Constructor>(Resource: Base) {
+export function StatementMixin<Base extends Constructor>(Resource: Base): Constructor<Statement> & Base {
   @namespace(rdf)
   class StatementClass extends Resource implements Statement {
     @property()

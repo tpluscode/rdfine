@@ -11,7 +11,7 @@ import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
 export interface DeprecatedClass<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, RdfResource<D> {
 }
 
-export function DeprecatedClassMixin<Base extends Constructor>(Resource: Base) {
+export function DeprecatedClassMixin<Base extends Constructor>(Resource: Base): Constructor<DeprecatedClass> & Base {
   @namespace(owl)
   class DeprecatedClassClass extends RdfsClassMixin(Resource) implements DeprecatedClass {
   }

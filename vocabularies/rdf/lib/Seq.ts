@@ -9,7 +9,7 @@ import type * as Rdf from '..';
 export interface Seq<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
 
-export function SeqMixin<Base extends Constructor>(Resource: Base) {
+export function SeqMixin<Base extends Constructor>(Resource: Base): Constructor<Seq> & Base {
   @namespace(rdf)
   class SeqClass extends Resource implements Seq {
   }

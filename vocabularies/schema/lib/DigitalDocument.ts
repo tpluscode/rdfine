@@ -11,7 +11,7 @@ export interface DigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   hasDigitalDocumentPermission: Schema.DigitalDocumentPermission<D> | undefined;
 }
 
-export function DigitalDocumentMixin<Base extends Constructor>(Resource: Base) {
+export function DigitalDocumentMixin<Base extends Constructor>(Resource: Base): Constructor<DigitalDocument> & Base {
   @namespace(schema)
   class DigitalDocumentClass extends CreativeWorkMixin(Resource) implements DigitalDocument {
     @property.resource()

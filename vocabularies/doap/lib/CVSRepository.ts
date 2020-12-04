@@ -11,7 +11,7 @@ export interface CVSRepository<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   module: RDF.Term | undefined;
 }
 
-export function CVSRepositoryMixin<Base extends Constructor>(Resource: Base) {
+export function CVSRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<CVSRepository> & Base {
   @namespace(doap)
   class CVSRepositoryClass extends RepositoryMixin(Resource) implements CVSRepository {
     @property()

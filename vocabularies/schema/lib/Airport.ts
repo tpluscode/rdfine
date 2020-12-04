@@ -12,7 +12,7 @@ export interface Airport<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   icaoCode: string | undefined;
 }
 
-export function AirportMixin<Base extends Constructor>(Resource: Base) {
+export function AirportMixin<Base extends Constructor>(Resource: Base): Constructor<Airport> & Base {
   @namespace(schema)
   class AirportClass extends CivicStructureMixin(Resource) implements Airport {
     @property.literal()

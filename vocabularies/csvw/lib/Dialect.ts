@@ -22,7 +22,7 @@ export interface Dialect<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rd
   trim: boolean | undefined;
 }
 
-export function DialectMixin<Base extends Constructor>(Resource: Base) {
+export function DialectMixin<Base extends Constructor>(Resource: Base): Constructor<Dialect> & Base {
   @namespace(csvw)
   class DialectClass extends Resource implements Dialect {
     @property.literal()

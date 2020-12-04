@@ -22,7 +22,7 @@ export interface PropertyValueSpecification<D extends RDF.DatasetCore = RDF.Data
   valueRequired: boolean | undefined;
 }
 
-export function PropertyValueSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function PropertyValueSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<PropertyValueSpecification> & Base {
   @namespace(schema)
   class PropertyValueSpecificationClass extends IntangibleMixin(Resource) implements PropertyValueSpecification {
     @property.resource()

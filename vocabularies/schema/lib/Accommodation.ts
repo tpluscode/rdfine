@@ -27,7 +27,7 @@ export interface Accommodation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   yearBuilt: number | undefined;
 }
 
-export function AccommodationMixin<Base extends Constructor>(Resource: Base) {
+export function AccommodationMixin<Base extends Constructor>(Resource: Base): Constructor<Accommodation> & Base {
   @namespace(schema)
   class AccommodationClass extends PlaceMixin(Resource) implements Accommodation {
     @property.literal()

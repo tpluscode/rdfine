@@ -15,7 +15,7 @@ export interface NewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   printSection: string | undefined;
 }
 
-export function NewsArticleMixin<Base extends Constructor>(Resource: Base) {
+export function NewsArticleMixin<Base extends Constructor>(Resource: Base): Constructor<NewsArticle> & Base {
   @namespace(schema)
   class NewsArticleClass extends ArticleMixin(Resource) implements NewsArticle {
     @property.literal()

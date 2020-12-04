@@ -27,7 +27,7 @@ export interface MedicalCondition<D extends RDF.DatasetCore = RDF.DatasetCore> e
   typicalTest: Schema.MedicalTest<D> | undefined;
 }
 
-export function MedicalConditionMixin<Base extends Constructor>(Resource: Base) {
+export function MedicalConditionMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalCondition> & Base {
   @namespace(schema)
   class MedicalConditionClass extends MedicalEntityMixin(Resource) implements MedicalCondition {
     @property.resource()

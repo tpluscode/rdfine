@@ -14,7 +14,7 @@ export interface RentalCarReservation<D extends RDF.DatasetCore = RDF.DatasetCor
   pickupTime: Date | undefined;
 }
 
-export function RentalCarReservationMixin<Base extends Constructor>(Resource: Base) {
+export function RentalCarReservationMixin<Base extends Constructor>(Resource: Base): Constructor<RentalCarReservation> & Base {
   @namespace(schema)
   class RentalCarReservationClass extends ReservationMixin(Resource) implements RentalCarReservation {
     @property.resource()

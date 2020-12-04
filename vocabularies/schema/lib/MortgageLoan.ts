@@ -12,7 +12,7 @@ export interface MortgageLoan<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   loanMortgageMandateAmount: Schema.MonetaryAmount<D> | undefined;
 }
 
-export function MortgageLoanMixin<Base extends Constructor>(Resource: Base) {
+export function MortgageLoanMixin<Base extends Constructor>(Resource: Base): Constructor<MortgageLoan> & Base {
   @namespace(schema)
   class MortgageLoanClass extends LoanOrCreditMixin(Resource) implements MortgageLoan {
     @property.literal({ type: Boolean })

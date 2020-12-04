@@ -12,7 +12,7 @@ export interface ReplaceAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   replacer: Schema.Thing<D> | undefined;
 }
 
-export function ReplaceActionMixin<Base extends Constructor>(Resource: Base) {
+export function ReplaceActionMixin<Base extends Constructor>(Resource: Base): Constructor<ReplaceAction> & Base {
   @namespace(schema)
   class ReplaceActionClass extends UpdateActionMixin(Resource) implements ReplaceAction {
     @property.resource()

@@ -10,7 +10,7 @@ import { MediaGalleryMixin } from './MediaGallery';
 export interface VideoGallery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaGallery<D>, RdfResource<D> {
 }
 
-export function VideoGalleryMixin<Base extends Constructor>(Resource: Base) {
+export function VideoGalleryMixin<Base extends Constructor>(Resource: Base): Constructor<VideoGallery> & Base {
   @namespace(schema)
   class VideoGalleryClass extends MediaGalleryMixin(Resource) implements VideoGallery {
   }

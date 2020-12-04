@@ -10,7 +10,7 @@ import { ResourceMixin } from './Resource';
 export interface VariableRepresentation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
 }
 
-export function VariableRepresentationMixin<Base extends Constructor>(Resource: Base) {
+export function VariableRepresentationMixin<Base extends Constructor>(Resource: Base): Constructor<VariableRepresentation> & Base {
   @namespace(hydra)
   class VariableRepresentationClass extends ResourceMixin(Resource) implements VariableRepresentation {
   }

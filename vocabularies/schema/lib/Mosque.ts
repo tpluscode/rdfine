@@ -10,7 +10,7 @@ import { PlaceOfWorshipMixin } from './PlaceOfWorship';
 export interface Mosque<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlaceOfWorship<D>, RdfResource<D> {
 }
 
-export function MosqueMixin<Base extends Constructor>(Resource: Base) {
+export function MosqueMixin<Base extends Constructor>(Resource: Base): Constructor<Mosque> & Base {
   @namespace(schema)
   class MosqueClass extends PlaceOfWorshipMixin(Resource) implements Mosque {
   }

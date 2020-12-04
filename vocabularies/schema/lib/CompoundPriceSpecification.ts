@@ -11,7 +11,7 @@ export interface CompoundPriceSpecification<D extends RDF.DatasetCore = RDF.Data
   priceComponent: Schema.UnitPriceSpecification<D> | undefined;
 }
 
-export function CompoundPriceSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function CompoundPriceSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<CompoundPriceSpecification> & Base {
   @namespace(schema)
   class CompoundPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements CompoundPriceSpecification {
     @property.resource()

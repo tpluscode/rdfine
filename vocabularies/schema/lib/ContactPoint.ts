@@ -23,7 +23,7 @@ export interface ContactPoint<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   telephone: string | undefined;
 }
 
-export function ContactPointMixin<Base extends Constructor>(Resource: Base) {
+export function ContactPointMixin<Base extends Constructor>(Resource: Base): Constructor<ContactPoint> & Base {
   @namespace(schema)
   class ContactPointClass extends StructuredValueMixin(Resource) implements ContactPoint {
     @property.resource()

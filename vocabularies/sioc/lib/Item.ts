@@ -32,7 +32,7 @@ export interface Item<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRe
   sibling: Sioc.Item<D> | undefined;
 }
 
-export function ItemMixin<Base extends Constructor>(Resource: Base) {
+export function ItemMixin<Base extends Constructor>(Resource: Base): Constructor<Item> & Base {
   @namespace(sioc)
   class ItemClass extends Resource implements Item {
     @property()

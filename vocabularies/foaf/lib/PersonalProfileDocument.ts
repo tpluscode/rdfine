@@ -10,7 +10,7 @@ import { DocumentMixin } from './Document';
 export interface PersonalProfileDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Document<D>, RdfResource<D> {
 }
 
-export function PersonalProfileDocumentMixin<Base extends Constructor>(Resource: Base) {
+export function PersonalProfileDocumentMixin<Base extends Constructor>(Resource: Base): Constructor<PersonalProfileDocument> & Base {
   @namespace(foaf)
   class PersonalProfileDocumentClass extends DocumentMixin(Resource) implements PersonalProfileDocument {
   }

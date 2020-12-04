@@ -10,7 +10,7 @@ import { DoseScheduleMixin } from './DoseSchedule';
 export interface ReportedDoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DoseSchedule<D>, RdfResource<D> {
 }
 
-export function ReportedDoseScheduleMixin<Base extends Constructor>(Resource: Base) {
+export function ReportedDoseScheduleMixin<Base extends Constructor>(Resource: Base): Constructor<ReportedDoseSchedule> & Base {
   @namespace(schema)
   class ReportedDoseScheduleClass extends DoseScheduleMixin(Resource) implements ReportedDoseSchedule {
   }

@@ -13,7 +13,7 @@ export interface MusicPlaylist<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   tracks: Schema.MusicRecording<D> | undefined;
 }
 
-export function MusicPlaylistMixin<Base extends Constructor>(Resource: Base) {
+export function MusicPlaylistMixin<Base extends Constructor>(Resource: Base): Constructor<MusicPlaylist> & Base {
   @namespace(schema)
   class MusicPlaylistClass extends CreativeWorkMixin(Resource) implements MusicPlaylist {
     @property.literal({ type: Number })

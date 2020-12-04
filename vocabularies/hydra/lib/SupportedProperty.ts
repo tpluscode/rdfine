@@ -19,7 +19,7 @@ export interface SupportedProperty<D extends RDF.DatasetCore = RDF.DatasetCore> 
   writeable: boolean | undefined;
 }
 
-export function SupportedPropertyMixin<Base extends Constructor>(Resource: Base) {
+export function SupportedPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<SupportedProperty> & Base {
   @namespace(hydra)
   class SupportedPropertyClass extends ResourceMixin(Resource) implements SupportedProperty {
     @property.literal()

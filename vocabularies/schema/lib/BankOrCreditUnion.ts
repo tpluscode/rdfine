@@ -10,7 +10,7 @@ import { FinancialServiceMixin } from './FinancialService';
 export interface BankOrCreditUnion<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialService<D>, RdfResource<D> {
 }
 
-export function BankOrCreditUnionMixin<Base extends Constructor>(Resource: Base) {
+export function BankOrCreditUnionMixin<Base extends Constructor>(Resource: Base): Constructor<BankOrCreditUnion> & Base {
   @namespace(schema)
   class BankOrCreditUnionClass extends FinancialServiceMixin(Resource) implements BankOrCreditUnion {
   }

@@ -10,7 +10,7 @@ import { HealthAndBeautyBusinessMixin } from './HealthAndBeautyBusiness';
 export interface HairSalon<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HealthAndBeautyBusiness<D>, RdfResource<D> {
 }
 
-export function HairSalonMixin<Base extends Constructor>(Resource: Base) {
+export function HairSalonMixin<Base extends Constructor>(Resource: Base): Constructor<HairSalon> & Base {
   @namespace(schema)
   class HairSalonClass extends HealthAndBeautyBusinessMixin(Resource) implements HairSalon {
   }

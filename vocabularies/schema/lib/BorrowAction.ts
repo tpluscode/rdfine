@@ -11,7 +11,7 @@ export interface BorrowAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   lender: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function BorrowActionMixin<Base extends Constructor>(Resource: Base) {
+export function BorrowActionMixin<Base extends Constructor>(Resource: Base): Constructor<BorrowAction> & Base {
   @namespace(schema)
   class BorrowActionClass extends TransferActionMixin(Resource) implements BorrowAction {
     @property.resource()

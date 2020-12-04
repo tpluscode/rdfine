@@ -13,7 +13,7 @@ export interface Physician<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   medicalSpecialty: Schema.MedicalSpecialty | undefined;
 }
 
-export function PhysicianMixin<Base extends Constructor>(Resource: Base) {
+export function PhysicianMixin<Base extends Constructor>(Resource: Base): Constructor<Physician> & Base {
   @namespace(schema)
   class PhysicianClass extends MedicalOrganizationMixin(Resource) implements Physician {
     @property.resource()

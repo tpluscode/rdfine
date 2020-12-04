@@ -10,7 +10,7 @@ import { IntangibleMixin } from './Intangible';
 export interface StructuredValue<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
 }
 
-export function StructuredValueMixin<Base extends Constructor>(Resource: Base) {
+export function StructuredValueMixin<Base extends Constructor>(Resource: Base): Constructor<StructuredValue> & Base {
   @namespace(schema)
   class StructuredValueClass extends IntangibleMixin(Resource) implements StructuredValue {
   }

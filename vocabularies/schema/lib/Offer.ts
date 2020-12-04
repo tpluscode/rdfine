@@ -58,7 +58,7 @@ export interface Offer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   warranty: Schema.WarrantyPromise<D> | undefined;
 }
 
-export function OfferMixin<Base extends Constructor>(Resource: Base) {
+export function OfferMixin<Base extends Constructor>(Resource: Base): Constructor<Offer> & Base {
   @namespace(schema)
   class OfferClass extends IntangibleMixin(Resource) implements Offer {
     @property.resource()

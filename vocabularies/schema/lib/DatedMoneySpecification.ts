@@ -15,7 +15,7 @@ export interface DatedMoneySpecification<D extends RDF.DatasetCore = RDF.Dataset
   startDate: Date | undefined;
 }
 
-export function DatedMoneySpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function DatedMoneySpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<DatedMoneySpecification> & Base {
   @namespace(schema)
   class DatedMoneySpecificationClass extends StructuredValueMixin(Resource) implements DatedMoneySpecification {
     @property.resource()

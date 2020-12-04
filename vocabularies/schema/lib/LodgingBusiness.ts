@@ -20,7 +20,7 @@ export interface LodgingBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   starRating: Schema.Rating<D> | undefined;
 }
 
-export function LodgingBusinessMixin<Base extends Constructor>(Resource: Base) {
+export function LodgingBusinessMixin<Base extends Constructor>(Resource: Base): Constructor<LodgingBusiness> & Base {
   @namespace(schema)
   class LodgingBusinessClass extends LocalBusinessMixin(Resource) implements LodgingBusiness {
     @property.resource()

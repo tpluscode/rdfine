@@ -22,7 +22,7 @@ export interface Recipe<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   suitableForDiet: Schema.RestrictedDiet | undefined;
 }
 
-export function RecipeMixin<Base extends Constructor>(Resource: Base) {
+export function RecipeMixin<Base extends Constructor>(Resource: Base): Constructor<Recipe> & Base {
   @namespace(schema)
   class RecipeClass extends HowToMixin(Resource) implements Recipe {
     @property.literal()

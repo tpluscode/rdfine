@@ -16,7 +16,7 @@ export interface RepaymentSpecification<D extends RDF.DatasetCore = RDF.DatasetC
   numberOfLoanPayments: number | undefined;
 }
 
-export function RepaymentSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function RepaymentSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<RepaymentSpecification> & Base {
   @namespace(schema)
   class RepaymentSpecificationClass extends StructuredValueMixin(Resource) implements RepaymentSpecification {
     @property.resource()

@@ -11,7 +11,7 @@ export interface SPARQLConstructExecutable<D extends RDF.DatasetCore = RDF.Datas
   construct: string | undefined;
 }
 
-export function SPARQLConstructExecutableMixin<Base extends Constructor>(Resource: Base) {
+export function SPARQLConstructExecutableMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLConstructExecutable> & Base {
   @namespace(sh)
   class SPARQLConstructExecutableClass extends SPARQLExecutableMixin(Resource) implements SPARQLConstructExecutable {
     @property.literal()

@@ -17,7 +17,7 @@ export interface MusicGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   tracks: Schema.MusicRecording<D> | undefined;
 }
 
-export function MusicGroupMixin<Base extends Constructor>(Resource: Base) {
+export function MusicGroupMixin<Base extends Constructor>(Resource: Base): Constructor<MusicGroup> & Base {
   @namespace(schema)
   class MusicGroupClass extends PerformingGroupMixin(Resource) implements MusicGroup {
     @property.resource()

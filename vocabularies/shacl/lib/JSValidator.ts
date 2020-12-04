@@ -11,7 +11,7 @@ import { ValidatorMixin } from './Validator';
 export interface JSValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, Sh.Validator<D>, RdfResource<D> {
 }
 
-export function JSValidatorMixin<Base extends Constructor>(Resource: Base) {
+export function JSValidatorMixin<Base extends Constructor>(Resource: Base): Constructor<JSValidator> & Base {
   @namespace(sh)
   class JSValidatorClass extends ValidatorMixin(JSExecutableMixin(Resource)) implements JSValidator {
   }

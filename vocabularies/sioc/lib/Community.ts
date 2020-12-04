@@ -9,7 +9,7 @@ import type * as Sioc from '..';
 export interface Community<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
 
-export function CommunityMixin<Base extends Constructor>(Resource: Base) {
+export function CommunityMixin<Base extends Constructor>(Resource: Base): Constructor<Community> & Base {
   @namespace(sioc)
   class CommunityClass extends Resource implements Community {
   }

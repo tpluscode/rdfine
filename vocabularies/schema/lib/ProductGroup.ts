@@ -13,7 +13,7 @@ export interface ProductGroup<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   variesBy: string | undefined;
 }
 
-export function ProductGroupMixin<Base extends Constructor>(Resource: Base) {
+export function ProductGroupMixin<Base extends Constructor>(Resource: Base): Constructor<ProductGroup> & Base {
   @namespace(schema)
   class ProductGroupClass extends ProductMixin(Resource) implements ProductGroup {
     @property.resource()

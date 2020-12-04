@@ -10,7 +10,7 @@ import { CreativeWorkSeriesMixin } from './CreativeWorkSeries';
 export interface Periodical<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeries<D>, RdfResource<D> {
 }
 
-export function PeriodicalMixin<Base extends Constructor>(Resource: Base) {
+export function PeriodicalMixin<Base extends Constructor>(Resource: Base): Constructor<Periodical> & Base {
   @namespace(schema)
   class PeriodicalClass extends CreativeWorkSeriesMixin(Resource) implements Periodical {
   }

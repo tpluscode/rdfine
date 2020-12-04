@@ -15,7 +15,7 @@ export interface SuperficialAnatomy<D extends RDF.DatasetCore = RDF.DatasetCore>
   significance: string | undefined;
 }
 
-export function SuperficialAnatomyMixin<Base extends Constructor>(Resource: Base) {
+export function SuperficialAnatomyMixin<Base extends Constructor>(Resource: Base): Constructor<SuperficialAnatomy> & Base {
   @namespace(schema)
   class SuperficialAnatomyClass extends MedicalEntityMixin(Resource) implements SuperficialAnatomy {
     @property.literal()

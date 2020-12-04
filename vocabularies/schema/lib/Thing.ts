@@ -22,7 +22,7 @@ export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
   url: RDF.NamedNode | undefined;
 }
 
-export function ThingMixin<Base extends Constructor>(Resource: Base) {
+export function ThingMixin<Base extends Constructor>(Resource: Base): Constructor<Thing> & Base {
   @namespace(schema)
   class ThingClass extends Resource implements Thing {
     @property()

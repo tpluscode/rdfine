@@ -13,7 +13,7 @@ export interface HealthPlanNetwork<D extends RDF.DatasetCore = RDF.DatasetCore> 
   healthPlanNetworkTier: string | undefined;
 }
 
-export function HealthPlanNetworkMixin<Base extends Constructor>(Resource: Base) {
+export function HealthPlanNetworkMixin<Base extends Constructor>(Resource: Base): Constructor<HealthPlanNetwork> & Base {
   @namespace(schema)
   class HealthPlanNetworkClass extends IntangibleMixin(Resource) implements HealthPlanNetwork {
     @property.literal({ type: Boolean })

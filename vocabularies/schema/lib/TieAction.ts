@@ -10,7 +10,7 @@ import { AchieveActionMixin } from './AchieveAction';
 export interface TieAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AchieveAction<D>, RdfResource<D> {
 }
 
-export function TieActionMixin<Base extends Constructor>(Resource: Base) {
+export function TieActionMixin<Base extends Constructor>(Resource: Base): Constructor<TieAction> & Base {
   @namespace(schema)
   class TieActionClass extends AchieveActionMixin(Resource) implements TieAction {
   }

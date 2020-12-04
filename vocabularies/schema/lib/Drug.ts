@@ -44,7 +44,7 @@ export interface Drug<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   warningTerm: RDF.NamedNode | undefined;
 }
 
-export function DrugMixin<Base extends Constructor>(Resource: Base) {
+export function DrugMixin<Base extends Constructor>(Resource: Base): Constructor<Drug> & Base {
   @namespace(schema)
   class DrugClass extends SubstanceMixin(Resource) implements Drug {
     @property.literal()

@@ -17,7 +17,7 @@ export interface MonetaryAmount<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   valueLiteral: boolean | number | string | undefined;
 }
 
-export function MonetaryAmountMixin<Base extends Constructor>(Resource: Base) {
+export function MonetaryAmountMixin<Base extends Constructor>(Resource: Base): Constructor<MonetaryAmount> & Base {
   @namespace(schema)
   class MonetaryAmountClass extends StructuredValueMixin(Resource) implements MonetaryAmount {
     @property.literal()

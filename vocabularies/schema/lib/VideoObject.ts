@@ -21,7 +21,7 @@ export interface VideoObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   videoQuality: string | undefined;
 }
 
-export function VideoObjectMixin<Base extends Constructor>(Resource: Base) {
+export function VideoObjectMixin<Base extends Constructor>(Resource: Base): Constructor<VideoObject> & Base {
   @namespace(schema)
   class VideoObjectClass extends MediaObjectMixin(Resource) implements VideoObject {
     @property.resource()

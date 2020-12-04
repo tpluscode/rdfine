@@ -13,7 +13,7 @@ export interface TVSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   partOfTVSeries: Schema.TVSeries<D> | undefined;
 }
 
-export function TVSeasonMixin<Base extends Constructor>(Resource: Base) {
+export function TVSeasonMixin<Base extends Constructor>(Resource: Base): Constructor<TVSeason> & Base {
   @namespace(schema)
   class TVSeasonClass extends CreativeWorkSeasonMixin(CreativeWorkMixin(Resource)) implements TVSeason {
     @property.resource()

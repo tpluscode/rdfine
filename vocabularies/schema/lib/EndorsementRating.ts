@@ -10,7 +10,7 @@ import { RatingMixin } from './Rating';
 export interface EndorsementRating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Rating<D>, RdfResource<D> {
 }
 
-export function EndorsementRatingMixin<Base extends Constructor>(Resource: Base) {
+export function EndorsementRatingMixin<Base extends Constructor>(Resource: Base): Constructor<EndorsementRating> & Base {
   @namespace(schema)
   class EndorsementRatingClass extends RatingMixin(Resource) implements EndorsementRating {
   }

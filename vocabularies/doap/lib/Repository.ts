@@ -13,7 +13,7 @@ export interface Repository<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   repositoryOf: Doap.Project<D> | undefined;
 }
 
-export function RepositoryMixin<Base extends Constructor>(Resource: Base) {
+export function RepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<Repository> & Base {
   @namespace(doap)
   class RepositoryClass extends Resource implements Repository {
     @property()

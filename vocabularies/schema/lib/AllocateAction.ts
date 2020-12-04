@@ -10,7 +10,7 @@ import { OrganizeActionMixin } from './OrganizeAction';
 export interface AllocateAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OrganizeAction<D>, RdfResource<D> {
 }
 
-export function AllocateActionMixin<Base extends Constructor>(Resource: Base) {
+export function AllocateActionMixin<Base extends Constructor>(Resource: Base): Constructor<AllocateAction> & Base {
   @namespace(schema)
   class AllocateActionClass extends OrganizeActionMixin(Resource) implements AllocateAction {
   }

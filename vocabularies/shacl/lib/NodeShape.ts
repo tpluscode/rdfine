@@ -10,7 +10,7 @@ import { ShapeMixin } from './Shape';
 export interface NodeShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Shape<D>, RdfResource<D> {
 }
 
-export function NodeShapeMixin<Base extends Constructor>(Resource: Base) {
+export function NodeShapeMixin<Base extends Constructor>(Resource: Base): Constructor<NodeShape> & Base {
   @namespace(sh)
   class NodeShapeClass extends ShapeMixin(Resource) implements NodeShape {
   }

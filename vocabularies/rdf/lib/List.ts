@@ -11,7 +11,7 @@ export interface List<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRe
   rest: Rdf.List<D> | undefined;
 }
 
-export function ListMixin<Base extends Constructor>(Resource: Base) {
+export function ListMixin<Base extends Constructor>(Resource: Base): Constructor<List> & Base {
   @namespace(rdf)
   class ListClass extends Resource implements List {
     @property()

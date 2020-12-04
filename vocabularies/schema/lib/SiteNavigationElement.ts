@@ -10,7 +10,7 @@ import { WebPageElementMixin } from './WebPageElement';
 export interface SiteNavigationElement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, RdfResource<D> {
 }
 
-export function SiteNavigationElementMixin<Base extends Constructor>(Resource: Base) {
+export function SiteNavigationElementMixin<Base extends Constructor>(Resource: Base): Constructor<SiteNavigationElement> & Base {
   @namespace(schema)
   class SiteNavigationElementClass extends WebPageElementMixin(Resource) implements SiteNavigationElement {
   }

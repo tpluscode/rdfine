@@ -12,7 +12,7 @@ export interface Forum<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc
   'num_threads': number | undefined;
 }
 
-export function ForumMixin<Base extends Constructor>(Resource: Base) {
+export function ForumMixin<Base extends Constructor>(Resource: Base): Constructor<Forum> & Base {
   @namespace(sioc)
   class ForumClass extends ContainerMixin(Resource) implements Forum {
     @property.resource({ implicitTypes: [sioc.UserAccount] })

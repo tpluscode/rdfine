@@ -10,7 +10,7 @@ import { ControlActionMixin } from './ControlAction';
 export interface ActivateAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ControlAction<D>, RdfResource<D> {
 }
 
-export function ActivateActionMixin<Base extends Constructor>(Resource: Base) {
+export function ActivateActionMixin<Base extends Constructor>(Resource: Base): Constructor<ActivateAction> & Base {
   @namespace(schema)
   class ActivateActionClass extends ControlActionMixin(Resource) implements ActivateAction {
   }

@@ -10,7 +10,7 @@ import { OfferMixin } from './Offer';
 export interface OfferForPurchase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Offer<D>, RdfResource<D> {
 }
 
-export function OfferForPurchaseMixin<Base extends Constructor>(Resource: Base) {
+export function OfferForPurchaseMixin<Base extends Constructor>(Resource: Base): Constructor<OfferForPurchase> & Base {
   @namespace(schema)
   class OfferForPurchaseClass extends OfferMixin(Resource) implements OfferForPurchase {
   }

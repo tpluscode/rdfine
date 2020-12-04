@@ -15,7 +15,7 @@ export interface OpeningHoursSpecification<D extends RDF.DatasetCore = RDF.Datas
   validThrough: Date | undefined;
 }
 
-export function OpeningHoursSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function OpeningHoursSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<OpeningHoursSpecification> & Base {
   @namespace(schema)
   class OpeningHoursSpecificationClass extends StructuredValueMixin(Resource) implements OpeningHoursSpecification {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })

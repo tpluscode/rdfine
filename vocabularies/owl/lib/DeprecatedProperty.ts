@@ -11,7 +11,7 @@ import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 export interface DeprecatedProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, RdfResource<D> {
 }
 
-export function DeprecatedPropertyMixin<Base extends Constructor>(Resource: Base) {
+export function DeprecatedPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<DeprecatedProperty> & Base {
   @namespace(owl)
   class DeprecatedPropertyClass extends RdfPropertyMixin(Resource) implements DeprecatedProperty {
   }

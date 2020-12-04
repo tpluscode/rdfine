@@ -10,7 +10,7 @@ import { PlanActionMixin } from './PlanAction';
 export interface CancelAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlanAction<D>, RdfResource<D> {
 }
 
-export function CancelActionMixin<Base extends Constructor>(Resource: Base) {
+export function CancelActionMixin<Base extends Constructor>(Resource: Base): Constructor<CancelAction> & Base {
   @namespace(schema)
   class CancelActionClass extends PlanActionMixin(Resource) implements CancelAction {
   }

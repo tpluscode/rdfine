@@ -10,7 +10,7 @@ import { CreativeWorkMixin } from './CreativeWork';
 export interface Painting<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
 }
 
-export function PaintingMixin<Base extends Constructor>(Resource: Base) {
+export function PaintingMixin<Base extends Constructor>(Resource: Base): Constructor<Painting> & Base {
   @namespace(schema)
   class PaintingClass extends CreativeWorkMixin(Resource) implements Painting {
   }

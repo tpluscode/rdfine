@@ -13,7 +13,7 @@ export interface WorkBasedProgram<D extends RDF.DatasetCore = RDF.DatasetCore> e
   trainingSalary: Schema.MonetaryAmountDistribution<D> | undefined;
 }
 
-export function WorkBasedProgramMixin<Base extends Constructor>(Resource: Base) {
+export function WorkBasedProgramMixin<Base extends Constructor>(Resource: Base): Constructor<WorkBasedProgram> & Base {
   @namespace(schema)
   class WorkBasedProgramClass extends EducationalOccupationalProgramMixin(Resource) implements WorkBasedProgram {
     @property.resource()

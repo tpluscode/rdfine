@@ -10,7 +10,7 @@ import { UserInteractionMixin } from './UserInteraction';
 export interface UserTweets<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UserInteraction<D>, RdfResource<D> {
 }
 
-export function UserTweetsMixin<Base extends Constructor>(Resource: Base) {
+export function UserTweetsMixin<Base extends Constructor>(Resource: Base): Constructor<UserTweets> & Base {
   @namespace(schema)
   class UserTweetsClass extends UserInteractionMixin(Resource) implements UserTweets {
   }

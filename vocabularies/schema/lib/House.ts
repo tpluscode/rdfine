@@ -12,7 +12,7 @@ export interface House<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   numberOfRoomsLiteral: number | undefined;
 }
 
-export function HouseMixin<Base extends Constructor>(Resource: Base) {
+export function HouseMixin<Base extends Constructor>(Resource: Base): Constructor<House> & Base {
   @namespace(schema)
   class HouseClass extends AccommodationMixin(Resource) implements House {
     @property.resource()

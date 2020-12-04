@@ -11,7 +11,7 @@ import { TargetTypeMixin } from './TargetType';
 export interface JSTargetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, Sh.TargetType<D>, RdfResource<D> {
 }
 
-export function JSTargetTypeMixin<Base extends Constructor>(Resource: Base) {
+export function JSTargetTypeMixin<Base extends Constructor>(Resource: Base): Constructor<JSTargetType> & Base {
   @namespace(sh)
   class JSTargetTypeClass extends TargetTypeMixin(JSExecutableMixin(Resource)) implements JSTargetType {
   }

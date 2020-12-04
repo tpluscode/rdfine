@@ -11,7 +11,7 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface Validator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
 }
 
-export function ValidatorMixin<Base extends Constructor>(Resource: Base) {
+export function ValidatorMixin<Base extends Constructor>(Resource: Base): Constructor<Validator> & Base {
   @namespace(sh)
   class ValidatorClass extends RdfsResourceMixin(Resource) implements Validator {
   }

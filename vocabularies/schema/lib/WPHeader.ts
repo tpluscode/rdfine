@@ -10,7 +10,7 @@ import { WebPageElementMixin } from './WebPageElement';
 export interface WPHeader<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, RdfResource<D> {
 }
 
-export function WPHeaderMixin<Base extends Constructor>(Resource: Base) {
+export function WPHeaderMixin<Base extends Constructor>(Resource: Base): Constructor<WPHeader> & Base {
   @namespace(schema)
   class WPHeaderClass extends WebPageElementMixin(Resource) implements WPHeader {
   }

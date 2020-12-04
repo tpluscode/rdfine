@@ -11,7 +11,7 @@ import { InvestmentOrDepositMixin } from './InvestmentOrDeposit';
 export interface DepositAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BankAccount<D>, Schema.InvestmentOrDeposit<D>, RdfResource<D> {
 }
 
-export function DepositAccountMixin<Base extends Constructor>(Resource: Base) {
+export function DepositAccountMixin<Base extends Constructor>(Resource: Base): Constructor<DepositAccount> & Base {
   @namespace(schema)
   class DepositAccountClass extends InvestmentOrDepositMixin(BankAccountMixin(Resource)) implements DepositAccount {
   }

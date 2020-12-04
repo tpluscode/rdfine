@@ -21,7 +21,7 @@ export interface WebPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   specialty: Schema.Specialty | undefined;
 }
 
-export function WebPageMixin<Base extends Constructor>(Resource: Base) {
+export function WebPageMixin<Base extends Constructor>(Resource: Base): Constructor<WebPage> & Base {
   @namespace(schema)
   class WebPageClass extends CreativeWorkMixin(Resource) implements WebPage {
     @property.resource()

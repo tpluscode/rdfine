@@ -10,7 +10,7 @@ import { ActionMixin } from './Action';
 export interface InteractAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, RdfResource<D> {
 }
 
-export function InteractActionMixin<Base extends Constructor>(Resource: Base) {
+export function InteractActionMixin<Base extends Constructor>(Resource: Base): Constructor<InteractAction> & Base {
   @namespace(schema)
   class InteractActionClass extends ActionMixin(Resource) implements InteractAction {
   }

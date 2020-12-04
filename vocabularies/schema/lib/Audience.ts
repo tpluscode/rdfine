@@ -12,7 +12,7 @@ export interface Audience<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   geographicArea: Schema.AdministrativeArea<D> | undefined;
 }
 
-export function AudienceMixin<Base extends Constructor>(Resource: Base) {
+export function AudienceMixin<Base extends Constructor>(Resource: Base): Constructor<Audience> & Base {
   @namespace(schema)
   class AudienceClass extends IntangibleMixin(Resource) implements Audience {
     @property.literal()

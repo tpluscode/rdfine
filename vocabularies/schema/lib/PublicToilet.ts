@@ -10,7 +10,7 @@ import { CivicStructureMixin } from './CivicStructure';
 export interface PublicToilet<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, RdfResource<D> {
 }
 
-export function PublicToiletMixin<Base extends Constructor>(Resource: Base) {
+export function PublicToiletMixin<Base extends Constructor>(Resource: Base): Constructor<PublicToilet> & Base {
   @namespace(schema)
   class PublicToiletClass extends CivicStructureMixin(Resource) implements PublicToilet {
   }

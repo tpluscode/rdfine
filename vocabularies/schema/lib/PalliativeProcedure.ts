@@ -11,7 +11,7 @@ import { MedicalTherapyMixin } from './MedicalTherapy';
 export interface PalliativeProcedure<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalProcedure<D>, Schema.MedicalTherapy<D>, RdfResource<D> {
 }
 
-export function PalliativeProcedureMixin<Base extends Constructor>(Resource: Base) {
+export function PalliativeProcedureMixin<Base extends Constructor>(Resource: Base): Constructor<PalliativeProcedure> & Base {
   @namespace(schema)
   class PalliativeProcedureClass extends MedicalTherapyMixin(MedicalProcedureMixin(Resource)) implements PalliativeProcedure {
   }

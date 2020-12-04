@@ -24,7 +24,7 @@ export interface SpecialAnnouncement<D extends RDF.DatasetCore = RDF.DatasetCore
   webFeed: Schema.DataFeed<D> | undefined;
 }
 
-export function SpecialAnnouncementMixin<Base extends Constructor>(Resource: Base) {
+export function SpecialAnnouncementMixin<Base extends Constructor>(Resource: Base): Constructor<SpecialAnnouncement> & Base {
   @namespace(schema)
   class SpecialAnnouncementClass extends CreativeWorkMixin(Resource) implements SpecialAnnouncement {
     @property.resource()

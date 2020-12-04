@@ -14,7 +14,7 @@ export interface PublicationIssue<D extends RDF.DatasetCore = RDF.DatasetCore> e
   pagination: string | undefined;
 }
 
-export function PublicationIssueMixin<Base extends Constructor>(Resource: Base) {
+export function PublicationIssueMixin<Base extends Constructor>(Resource: Base): Constructor<PublicationIssue> & Base {
   @namespace(schema)
   class PublicationIssueClass extends CreativeWorkMixin(Resource) implements PublicationIssue {
     @property.literal()

@@ -9,7 +9,7 @@ import type * as Schema from '..';
 export interface Optician<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
 
-export function OpticianMixin<Base extends Constructor>(Resource: Base) {
+export function OpticianMixin<Base extends Constructor>(Resource: Base): Constructor<Optician> & Base {
   @namespace(schema)
   class OpticianClass extends Resource implements Optician {
   }

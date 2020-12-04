@@ -13,7 +13,7 @@ export interface BedDetails<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   typeOfBedTerm: Schema.BedType | undefined;
 }
 
-export function BedDetailsMixin<Base extends Constructor>(Resource: Base) {
+export function BedDetailsMixin<Base extends Constructor>(Resource: Base): Constructor<BedDetails> & Base {
   @namespace(schema)
   class BedDetailsClass extends IntangibleMixin(Resource) implements BedDetails {
     @property.literal({ type: Number })

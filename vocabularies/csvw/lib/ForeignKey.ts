@@ -11,7 +11,7 @@ export interface ForeignKey<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   reference: Csvw.TableReference<D> | undefined;
 }
 
-export function ForeignKeyMixin<Base extends Constructor>(Resource: Base) {
+export function ForeignKeyMixin<Base extends Constructor>(Resource: Base): Constructor<ForeignKey> & Base {
   @namespace(csvw)
   class ForeignKeyClass extends Resource implements ForeignKey {
     @property.literal()

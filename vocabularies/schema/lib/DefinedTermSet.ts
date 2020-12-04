@@ -11,7 +11,7 @@ export interface DefinedTermSet<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   hasDefinedTerm: RDF.Term | undefined;
 }
 
-export function DefinedTermSetMixin<Base extends Constructor>(Resource: Base) {
+export function DefinedTermSetMixin<Base extends Constructor>(Resource: Base): Constructor<DefinedTermSet> & Base {
   @namespace(schema)
   class DefinedTermSetClass extends CreativeWorkMixin(Resource) implements DefinedTermSet {
     @property()

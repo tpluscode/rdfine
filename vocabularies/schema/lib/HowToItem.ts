@@ -12,7 +12,7 @@ export interface HowToItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   requiredQuantityLiteral: number | string | undefined;
 }
 
-export function HowToItemMixin<Base extends Constructor>(Resource: Base) {
+export function HowToItemMixin<Base extends Constructor>(Resource: Base): Constructor<HowToItem> & Base {
   @namespace(schema)
   class HowToItemClass extends ListItemMixin(Resource) implements HowToItem {
     @property.resource()

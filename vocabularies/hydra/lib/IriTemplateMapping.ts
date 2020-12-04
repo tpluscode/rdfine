@@ -16,7 +16,7 @@ export interface IriTemplateMapping<D extends RDF.DatasetCore = RDF.DatasetCore>
   variableRepresentation: Hydra.VariableRepresentation<D> | undefined;
 }
 
-export function IriTemplateMappingMixin<Base extends Constructor>(Resource: Base) {
+export function IriTemplateMappingMixin<Base extends Constructor>(Resource: Base): Constructor<IriTemplateMapping> & Base {
   @namespace(hydra)
   class IriTemplateMappingClass extends ResourceMixin(Resource) implements IriTemplateMapping {
     @property.resource({ as: [RdfPropertyMixin] })

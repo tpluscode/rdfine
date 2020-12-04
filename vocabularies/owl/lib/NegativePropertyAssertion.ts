@@ -17,7 +17,7 @@ export interface NegativePropertyAssertion<D extends RDF.DatasetCore = RDF.Datas
   targetValue: string | undefined;
 }
 
-export function NegativePropertyAssertionMixin<Base extends Constructor>(Resource: Base) {
+export function NegativePropertyAssertionMixin<Base extends Constructor>(Resource: Base): Constructor<NegativePropertyAssertion> & Base {
   @namespace(owl)
   class NegativePropertyAssertionClass extends RdfsResourceMixin(Resource) implements NegativePropertyAssertion {
     @property.resource({ as: [RdfPropertyMixin] })

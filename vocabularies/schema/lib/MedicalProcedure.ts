@@ -18,7 +18,7 @@ export interface MedicalProcedure<D extends RDF.DatasetCore = RDF.DatasetCore> e
   statusTerm: Schema.EventStatusType | Schema.MedicalStudyStatus | undefined;
 }
 
-export function MedicalProcedureMixin<Base extends Constructor>(Resource: Base) {
+export function MedicalProcedureMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalProcedure> & Base {
   @namespace(schema)
   class MedicalProcedureClass extends MedicalEntityMixin(Resource) implements MedicalProcedure {
     @property.literal()

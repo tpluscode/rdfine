@@ -13,7 +13,7 @@ export interface ProductModel<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   successorOf: Schema.ProductModel<D> | undefined;
 }
 
-export function ProductModelMixin<Base extends Constructor>(Resource: Base) {
+export function ProductModelMixin<Base extends Constructor>(Resource: Base): Constructor<ProductModel> & Base {
   @namespace(schema)
   class ProductModelClass extends ProductMixin(Resource) implements ProductModel {
     @property.resource()

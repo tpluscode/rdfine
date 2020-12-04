@@ -10,7 +10,7 @@ import { WebPageMixin } from './WebPage';
 export interface AboutPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, RdfResource<D> {
 }
 
-export function AboutPageMixin<Base extends Constructor>(Resource: Base) {
+export function AboutPageMixin<Base extends Constructor>(Resource: Base): Constructor<AboutPage> & Base {
   @namespace(schema)
   class AboutPageClass extends WebPageMixin(Resource) implements AboutPage {
   }

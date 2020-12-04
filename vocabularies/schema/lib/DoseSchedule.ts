@@ -15,7 +15,7 @@ export interface DoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   targetPopulation: string | undefined;
 }
 
-export function DoseScheduleMixin<Base extends Constructor>(Resource: Base) {
+export function DoseScheduleMixin<Base extends Constructor>(Resource: Base): Constructor<DoseSchedule> & Base {
   @namespace(schema)
   class DoseScheduleClass extends MedicalIntangibleMixin(Resource) implements DoseSchedule {
     @property.literal()

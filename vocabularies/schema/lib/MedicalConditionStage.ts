@@ -12,7 +12,7 @@ export interface MedicalConditionStage<D extends RDF.DatasetCore = RDF.DatasetCo
   subStageSuffix: string | undefined;
 }
 
-export function MedicalConditionStageMixin<Base extends Constructor>(Resource: Base) {
+export function MedicalConditionStageMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalConditionStage> & Base {
   @namespace(schema)
   class MedicalConditionStageClass extends MedicalIntangibleMixin(Resource) implements MedicalConditionStage {
     @property.literal({ type: Number })

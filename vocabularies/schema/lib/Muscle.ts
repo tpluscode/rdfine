@@ -15,7 +15,7 @@ export interface Muscle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   nerve: Schema.Nerve<D> | undefined;
 }
 
-export function MuscleMixin<Base extends Constructor>(Resource: Base) {
+export function MuscleMixin<Base extends Constructor>(Resource: Base): Constructor<Muscle> & Base {
   @namespace(schema)
   class MuscleClass extends AnatomicalStructureMixin(Resource) implements Muscle {
     @property.resource()

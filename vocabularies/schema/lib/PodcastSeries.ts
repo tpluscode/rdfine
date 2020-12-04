@@ -11,7 +11,7 @@ export interface PodcastSeries<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   webFeed: Schema.DataFeed<D> | undefined;
 }
 
-export function PodcastSeriesMixin<Base extends Constructor>(Resource: Base) {
+export function PodcastSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<PodcastSeries> & Base {
   @namespace(schema)
   class PodcastSeriesClass extends CreativeWorkSeriesMixin(Resource) implements PodcastSeries {
     @property.resource()

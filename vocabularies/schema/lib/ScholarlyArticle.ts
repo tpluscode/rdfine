@@ -10,7 +10,7 @@ import { ArticleMixin } from './Article';
 export interface ScholarlyArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, RdfResource<D> {
 }
 
-export function ScholarlyArticleMixin<Base extends Constructor>(Resource: Base) {
+export function ScholarlyArticleMixin<Base extends Constructor>(Resource: Base): Constructor<ScholarlyArticle> & Base {
   @namespace(schema)
   class ScholarlyArticleClass extends ArticleMixin(Resource) implements ScholarlyArticle {
   }

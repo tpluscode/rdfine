@@ -11,7 +11,7 @@ export interface Guide<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   reviewAspect: string | undefined;
 }
 
-export function GuideMixin<Base extends Constructor>(Resource: Base) {
+export function GuideMixin<Base extends Constructor>(Resource: Base): Constructor<Guide> & Base {
   @namespace(schema)
   class GuideClass extends CreativeWorkMixin(Resource) implements Guide {
     @property.literal()

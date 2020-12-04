@@ -21,7 +21,7 @@ export interface Clip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   startOffset: number | undefined;
 }
 
-export function ClipMixin<Base extends Constructor>(Resource: Base) {
+export function ClipMixin<Base extends Constructor>(Resource: Base): Constructor<Clip> & Base {
   @namespace(schema)
   class ClipClass extends CreativeWorkMixin(Resource) implements Clip {
     @property.resource()

@@ -18,7 +18,7 @@ export interface GeoCoordinates<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   postalCode: string | undefined;
 }
 
-export function GeoCoordinatesMixin<Base extends Constructor>(Resource: Base) {
+export function GeoCoordinatesMixin<Base extends Constructor>(Resource: Base): Constructor<GeoCoordinates> & Base {
   @namespace(schema)
   class GeoCoordinatesClass extends StructuredValueMixin(Resource) implements GeoCoordinates {
     @property.resource()

@@ -10,7 +10,7 @@ import { LocalBusinessMixin } from './LocalBusiness';
 export interface DryCleaningOrLaundry<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
 }
 
-export function DryCleaningOrLaundryMixin<Base extends Constructor>(Resource: Base) {
+export function DryCleaningOrLaundryMixin<Base extends Constructor>(Resource: Base): Constructor<DryCleaningOrLaundry> & Base {
   @namespace(schema)
   class DryCleaningOrLaundryClass extends LocalBusinessMixin(Resource) implements DryCleaningOrLaundry {
   }

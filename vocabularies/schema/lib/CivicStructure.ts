@@ -11,7 +11,7 @@ export interface CivicStructure<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   openingHours: string | undefined;
 }
 
-export function CivicStructureMixin<Base extends Constructor>(Resource: Base) {
+export function CivicStructureMixin<Base extends Constructor>(Resource: Base): Constructor<CivicStructure> & Base {
   @namespace(schema)
   class CivicStructureClass extends PlaceMixin(Resource) implements CivicStructure {
     @property.literal()

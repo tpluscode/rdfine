@@ -11,7 +11,7 @@ export interface SomeProducts<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   inventoryLevel: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function SomeProductsMixin<Base extends Constructor>(Resource: Base) {
+export function SomeProductsMixin<Base extends Constructor>(Resource: Base): Constructor<SomeProducts> & Base {
   @namespace(schema)
   class SomeProductsClass extends ProductMixin(Resource) implements SomeProducts {
     @property.resource()

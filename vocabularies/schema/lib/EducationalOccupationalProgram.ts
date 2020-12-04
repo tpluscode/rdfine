@@ -40,7 +40,7 @@ export interface EducationalOccupationalProgram<D extends RDF.DatasetCore = RDF.
   typicalCreditsPerTermLiteral: number | undefined;
 }
 
-export function EducationalOccupationalProgramMixin<Base extends Constructor>(Resource: Base) {
+export function EducationalOccupationalProgramMixin<Base extends Constructor>(Resource: Base): Constructor<EducationalOccupationalProgram> & Base {
   @namespace(schema)
   class EducationalOccupationalProgramClass extends IntangibleMixin(Resource) implements EducationalOccupationalProgram {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })

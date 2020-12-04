@@ -10,7 +10,7 @@ import { ClipMixin } from './Clip';
 export interface RadioClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Clip<D>, RdfResource<D> {
 }
 
-export function RadioClipMixin<Base extends Constructor>(Resource: Base) {
+export function RadioClipMixin<Base extends Constructor>(Resource: Base): Constructor<RadioClip> & Base {
   @namespace(schema)
   class RadioClipClass extends ClipMixin(Resource) implements RadioClip {
   }

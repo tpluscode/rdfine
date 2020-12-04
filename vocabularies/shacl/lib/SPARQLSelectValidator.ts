@@ -12,7 +12,7 @@ export interface SPARQLSelectValidator<D extends RDF.DatasetCore = RDF.DatasetCo
   resultAnnotation: Sh.ResultAnnotation<D> | undefined;
 }
 
-export function SPARQLSelectValidatorMixin<Base extends Constructor>(Resource: Base) {
+export function SPARQLSelectValidatorMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLSelectValidator> & Base {
   @namespace(sh)
   class SPARQLSelectValidatorClass extends ValidatorMixin(SPARQLSelectExecutableMixin(Resource)) implements SPARQLSelectValidator {
     @property.resource({ implicitTypes: [sh.ResultAnnotation] })

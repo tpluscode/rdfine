@@ -12,7 +12,7 @@ export interface MenuSection<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   hasMenuSection: Schema.MenuSection<D> | undefined;
 }
 
-export function MenuSectionMixin<Base extends Constructor>(Resource: Base) {
+export function MenuSectionMixin<Base extends Constructor>(Resource: Base): Constructor<MenuSection> & Base {
   @namespace(schema)
   class MenuSectionClass extends CreativeWorkMixin(Resource) implements MenuSection {
     @property.resource()

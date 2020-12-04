@@ -12,7 +12,7 @@ export interface PropertyGroup<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   order: number | undefined;
 }
 
-export function PropertyGroupMixin<Base extends Constructor>(Resource: Base) {
+export function PropertyGroupMixin<Base extends Constructor>(Resource: Base): Constructor<PropertyGroup> & Base {
   @namespace(sh)
   class PropertyGroupClass extends RdfsResourceMixin(Resource) implements PropertyGroup {
     @property.literal({ type: Number })

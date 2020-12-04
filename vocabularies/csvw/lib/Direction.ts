@@ -9,7 +9,7 @@ import type * as Csvw from '..';
 export interface Direction<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
 
-export function DirectionMixin<Base extends Constructor>(Resource: Base) {
+export function DirectionMixin<Base extends Constructor>(Resource: Base): Constructor<Direction> & Base {
   @namespace(csvw)
   class DirectionClass extends Resource implements Direction {
   }

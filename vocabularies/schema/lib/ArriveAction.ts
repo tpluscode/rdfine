@@ -10,7 +10,7 @@ import { MoveActionMixin } from './MoveAction';
 export interface ArriveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MoveAction<D>, RdfResource<D> {
 }
 
-export function ArriveActionMixin<Base extends Constructor>(Resource: Base) {
+export function ArriveActionMixin<Base extends Constructor>(Resource: Base): Constructor<ArriveAction> & Base {
   @namespace(schema)
   class ArriveActionClass extends MoveActionMixin(Resource) implements ArriveAction {
   }

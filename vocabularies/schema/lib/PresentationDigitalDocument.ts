@@ -10,7 +10,7 @@ import { DigitalDocumentMixin } from './DigitalDocument';
 export interface PresentationDigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DigitalDocument<D>, RdfResource<D> {
 }
 
-export function PresentationDigitalDocumentMixin<Base extends Constructor>(Resource: Base) {
+export function PresentationDigitalDocumentMixin<Base extends Constructor>(Resource: Base): Constructor<PresentationDigitalDocument> & Base {
   @namespace(schema)
   class PresentationDigitalDocumentClass extends DigitalDocumentMixin(Resource) implements PresentationDigitalDocument {
   }

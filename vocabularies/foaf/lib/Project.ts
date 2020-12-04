@@ -9,7 +9,7 @@ import type * as Foaf from '..';
 export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
 
-export function ProjectMixin<Base extends Constructor>(Resource: Base) {
+export function ProjectMixin<Base extends Constructor>(Resource: Base): Constructor<Project> & Base {
   @namespace(foaf)
   class ProjectClass extends Resource implements Project {
   }

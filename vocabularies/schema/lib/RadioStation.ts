@@ -10,7 +10,7 @@ import { LocalBusinessMixin } from './LocalBusiness';
 export interface RadioStation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
 }
 
-export function RadioStationMixin<Base extends Constructor>(Resource: Base) {
+export function RadioStationMixin<Base extends Constructor>(Resource: Base): Constructor<RadioStation> & Base {
   @namespace(schema)
   class RadioStationClass extends LocalBusinessMixin(Resource) implements RadioStation {
   }

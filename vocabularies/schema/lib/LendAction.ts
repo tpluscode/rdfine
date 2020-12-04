@@ -11,7 +11,7 @@ export interface LendAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   borrower: Schema.Person<D> | undefined;
 }
 
-export function LendActionMixin<Base extends Constructor>(Resource: Base) {
+export function LendActionMixin<Base extends Constructor>(Resource: Base): Constructor<LendAction> & Base {
   @namespace(schema)
   class LendActionClass extends TransferActionMixin(Resource) implements LendAction {
     @property.resource()

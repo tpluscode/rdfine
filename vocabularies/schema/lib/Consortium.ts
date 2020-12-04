@@ -10,7 +10,7 @@ import { OrganizationMixin } from './Organization';
 export interface Consortium<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, RdfResource<D> {
 }
 
-export function ConsortiumMixin<Base extends Constructor>(Resource: Base) {
+export function ConsortiumMixin<Base extends Constructor>(Resource: Base): Constructor<Consortium> & Base {
   @namespace(schema)
   class ConsortiumClass extends OrganizationMixin(Resource) implements Consortium {
   }

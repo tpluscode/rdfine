@@ -10,7 +10,7 @@ import { StoreMixin } from './Store';
 export interface ElectronicsStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, RdfResource<D> {
 }
 
-export function ElectronicsStoreMixin<Base extends Constructor>(Resource: Base) {
+export function ElectronicsStoreMixin<Base extends Constructor>(Resource: Base): Constructor<ElectronicsStore> & Base {
   @namespace(schema)
   class ElectronicsStoreClass extends StoreMixin(Resource) implements ElectronicsStore {
   }

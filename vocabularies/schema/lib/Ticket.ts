@@ -20,7 +20,7 @@ export interface Ticket<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   underName: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function TicketMixin<Base extends Constructor>(Resource: Base) {
+export function TicketMixin<Base extends Constructor>(Resource: Base): Constructor<Ticket> & Base {
   @namespace(schema)
   class TicketClass extends IntangibleMixin(Resource) implements Ticket {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })

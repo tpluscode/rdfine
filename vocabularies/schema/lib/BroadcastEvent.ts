@@ -15,7 +15,7 @@ export interface BroadcastEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   videoFormat: string | undefined;
 }
 
-export function BroadcastEventMixin<Base extends Constructor>(Resource: Base) {
+export function BroadcastEventMixin<Base extends Constructor>(Resource: Base): Constructor<BroadcastEvent> & Base {
   @namespace(schema)
   class BroadcastEventClass extends PublicationEventMixin(Resource) implements BroadcastEvent {
     @property.resource()

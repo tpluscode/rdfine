@@ -11,7 +11,7 @@ export interface _3DModel<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   isResizable: boolean | undefined;
 }
 
-export function _3DModelMixin<Base extends Constructor>(Resource: Base) {
+export function _3DModelMixin<Base extends Constructor>(Resource: Base): Constructor<_3DModel> & Base {
   @namespace(schema)
   class _3DModelClass extends MediaObjectMixin(Resource) implements _3DModel {
     @property.literal({ type: Boolean })

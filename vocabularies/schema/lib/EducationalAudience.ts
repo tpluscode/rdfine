@@ -11,7 +11,7 @@ export interface EducationalAudience<D extends RDF.DatasetCore = RDF.DatasetCore
   educationalRole: string | undefined;
 }
 
-export function EducationalAudienceMixin<Base extends Constructor>(Resource: Base) {
+export function EducationalAudienceMixin<Base extends Constructor>(Resource: Base): Constructor<EducationalAudience> & Base {
   @namespace(schema)
   class EducationalAudienceClass extends AudienceMixin(Resource) implements EducationalAudience {
     @property.literal()

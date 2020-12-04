@@ -10,7 +10,7 @@ import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable';
 export interface SPARQLConstraint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLSelectExecutable<D>, RdfResource<D> {
 }
 
-export function SPARQLConstraintMixin<Base extends Constructor>(Resource: Base) {
+export function SPARQLConstraintMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLConstraint> & Base {
   @namespace(sh)
   class SPARQLConstraintClass extends SPARQLSelectExecutableMixin(Resource) implements SPARQLConstraint {
   }

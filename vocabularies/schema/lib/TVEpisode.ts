@@ -16,7 +16,7 @@ export interface TVEpisode<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   titleEIDRTerm: RDF.NamedNode | undefined;
 }
 
-export function TVEpisodeMixin<Base extends Constructor>(Resource: Base) {
+export function TVEpisodeMixin<Base extends Constructor>(Resource: Base): Constructor<TVEpisode> & Base {
   @namespace(schema)
   class TVEpisodeClass extends EpisodeMixin(Resource) implements TVEpisode {
     @property.resource()

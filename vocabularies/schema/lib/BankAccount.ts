@@ -14,7 +14,7 @@ export interface BankAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   bankAccountTypeTerm: RDF.NamedNode | undefined;
 }
 
-export function BankAccountMixin<Base extends Constructor>(Resource: Base) {
+export function BankAccountMixin<Base extends Constructor>(Resource: Base): Constructor<BankAccount> & Base {
   @namespace(schema)
   class BankAccountClass extends FinancialProductMixin(Resource) implements BankAccount {
     @property.resource()

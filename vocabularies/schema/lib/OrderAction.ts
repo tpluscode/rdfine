@@ -11,7 +11,7 @@ export interface OrderAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   deliveryMethod: Schema.DeliveryMethod | undefined;
 }
 
-export function OrderActionMixin<Base extends Constructor>(Resource: Base) {
+export function OrderActionMixin<Base extends Constructor>(Resource: Base): Constructor<OrderAction> & Base {
   @namespace(schema)
   class OrderActionClass extends TradeActionMixin(Resource) implements OrderAction {
     @property()

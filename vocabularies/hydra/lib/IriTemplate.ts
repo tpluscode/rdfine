@@ -14,9 +14,11 @@ export interface IriTemplate<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   variableRepresentation: Hydra.VariableRepresentation<D> | undefined;
 }
 
-export function IriTemplateMixin<Base extends Constructor>(Resource: Base) {
+type MixinType = Omit<IriTemplate, 'expand'>
+
+export function IriTemplateMixin<Base extends Constructor>(Resource: Base): Constructor<MixinType> & Base {
   @namespace(hydra)
-  class IriTemplateClass extends ResourceMixin(Resource) implements Partial<IriTemplate> {
+  class IriTemplateClass extends ResourceMixin(Resource) implements MixinType {
     @property.resource({ values: 'array', implicitTypes: [hydra.IriTemplateMapping] })
     mapping!: Array<Hydra.IriTemplateMapping>;
     @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/ns/hydra/core#Rfc6570Template') })

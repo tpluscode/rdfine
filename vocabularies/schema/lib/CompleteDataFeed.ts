@@ -10,7 +10,7 @@ import { DataFeedMixin } from './DataFeed';
 export interface CompleteDataFeed<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DataFeed<D>, RdfResource<D> {
 }
 
-export function CompleteDataFeedMixin<Base extends Constructor>(Resource: Base) {
+export function CompleteDataFeedMixin<Base extends Constructor>(Resource: Base): Constructor<CompleteDataFeed> & Base {
   @namespace(schema)
   class CompleteDataFeedClass extends DataFeedMixin(Resource) implements CompleteDataFeed {
   }

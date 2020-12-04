@@ -10,7 +10,7 @@ import { ItemListMixin } from './ItemList';
 export interface BreadcrumbList<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ItemList<D>, RdfResource<D> {
 }
 
-export function BreadcrumbListMixin<Base extends Constructor>(Resource: Base) {
+export function BreadcrumbListMixin<Base extends Constructor>(Resource: Base): Constructor<BreadcrumbList> & Base {
   @namespace(schema)
   class BreadcrumbListClass extends ItemListMixin(Resource) implements BreadcrumbList {
   }

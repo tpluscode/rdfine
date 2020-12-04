@@ -11,7 +11,7 @@ export interface JoinAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   event: Schema.Event<D> | undefined;
 }
 
-export function JoinActionMixin<Base extends Constructor>(Resource: Base) {
+export function JoinActionMixin<Base extends Constructor>(Resource: Base): Constructor<JoinAction> & Base {
   @namespace(schema)
   class JoinActionClass extends InteractActionMixin(Resource) implements JoinAction {
     @property.resource()

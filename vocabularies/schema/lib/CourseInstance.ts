@@ -14,7 +14,7 @@ export interface CourseInstance<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   instructor: Schema.Person<D> | undefined;
 }
 
-export function CourseInstanceMixin<Base extends Constructor>(Resource: Base) {
+export function CourseInstanceMixin<Base extends Constructor>(Resource: Base): Constructor<CourseInstance> & Base {
   @namespace(schema)
   class CourseInstanceClass extends EventMixin(Resource) implements CourseInstance {
     @property.literal()

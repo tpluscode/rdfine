@@ -12,7 +12,7 @@ export interface DigitalDocumentPermission<D extends RDF.DatasetCore = RDF.Datas
   permissionType: Schema.DigitalDocumentPermissionType | undefined;
 }
 
-export function DigitalDocumentPermissionMixin<Base extends Constructor>(Resource: Base) {
+export function DigitalDocumentPermissionMixin<Base extends Constructor>(Resource: Base): Constructor<DigitalDocumentPermission> & Base {
   @namespace(schema)
   class DigitalDocumentPermissionClass extends IntangibleMixin(Resource) implements DigitalDocumentPermission {
     @property.resource()

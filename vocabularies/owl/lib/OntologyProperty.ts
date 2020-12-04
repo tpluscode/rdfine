@@ -11,7 +11,7 @@ import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 export interface OntologyProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, RdfResource<D> {
 }
 
-export function OntologyPropertyMixin<Base extends Constructor>(Resource: Base) {
+export function OntologyPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<OntologyProperty> & Base {
   @namespace(owl)
   class OntologyPropertyClass extends RdfPropertyMixin(Resource) implements OntologyProperty {
   }

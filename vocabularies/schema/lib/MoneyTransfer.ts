@@ -14,7 +14,7 @@ export interface MoneyTransfer<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   beneficiaryBankLiteral: string | undefined;
 }
 
-export function MoneyTransferMixin<Base extends Constructor>(Resource: Base) {
+export function MoneyTransferMixin<Base extends Constructor>(Resource: Base): Constructor<MoneyTransfer> & Base {
   @namespace(schema)
   class MoneyTransferClass extends TransferActionMixin(Resource) implements MoneyTransfer {
     @property.resource()

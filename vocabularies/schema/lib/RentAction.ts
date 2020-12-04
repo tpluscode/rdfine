@@ -12,7 +12,7 @@ export interface RentAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   realEstateAgent: Schema.RealEstateAgent<D> | undefined;
 }
 
-export function RentActionMixin<Base extends Constructor>(Resource: Base) {
+export function RentActionMixin<Base extends Constructor>(Resource: Base): Constructor<RentAction> & Base {
   @namespace(schema)
   class RentActionClass extends TradeActionMixin(Resource) implements RentAction {
     @property.resource()

@@ -13,7 +13,7 @@ export interface DataCatalog<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   measurementTechniqueTerm: RDF.NamedNode | undefined;
 }
 
-export function DataCatalogMixin<Base extends Constructor>(Resource: Base) {
+export function DataCatalogMixin<Base extends Constructor>(Resource: Base): Constructor<DataCatalog> & Base {
   @namespace(schema)
   class DataCatalogClass extends CreativeWorkMixin(Resource) implements DataCatalog {
     @property.resource()

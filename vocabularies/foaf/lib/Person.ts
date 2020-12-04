@@ -28,7 +28,7 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Wgs
   workplaceHomepage: Foaf.Document<D> | undefined;
 }
 
-export function PersonMixin<Base extends Constructor>(Resource: Base) {
+export function PersonMixin<Base extends Constructor>(Resource: Base): Constructor<Person> & Base {
   @namespace(foaf)
   class PersonClass extends AgentMixin(WgsSpatialThingMixin(Resource)) implements Person {
     @property()

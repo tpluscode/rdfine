@@ -26,7 +26,7 @@ export interface UserAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   'subscriber_of': Sioc.Container<D> | undefined;
 }
 
-export function UserAccountMixin<Base extends Constructor>(Resource: Base) {
+export function UserAccountMixin<Base extends Constructor>(Resource: Base): Constructor<UserAccount> & Base {
   @namespace(sioc)
   class UserAccountClass extends FoafOnlineAccountMixin(Resource) implements UserAccount {
     @property.resource({ as: [FoafAgentMixin] })

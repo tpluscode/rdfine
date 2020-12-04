@@ -10,7 +10,7 @@ import { DigitalDocumentMixin } from './DigitalDocument';
 export interface NoteDigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DigitalDocument<D>, RdfResource<D> {
 }
 
-export function NoteDigitalDocumentMixin<Base extends Constructor>(Resource: Base) {
+export function NoteDigitalDocumentMixin<Base extends Constructor>(Resource: Base): Constructor<NoteDigitalDocument> & Base {
   @namespace(schema)
   class NoteDigitalDocumentClass extends DigitalDocumentMixin(Resource) implements NoteDigitalDocument {
   }

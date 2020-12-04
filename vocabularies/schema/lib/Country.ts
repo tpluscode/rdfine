@@ -10,7 +10,7 @@ import { AdministrativeAreaMixin } from './AdministrativeArea';
 export interface Country<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AdministrativeArea<D>, RdfResource<D> {
 }
 
-export function CountryMixin<Base extends Constructor>(Resource: Base) {
+export function CountryMixin<Base extends Constructor>(Resource: Base): Constructor<Country> & Base {
   @namespace(schema)
   class CountryClass extends AdministrativeAreaMixin(Resource) implements Country {
   }

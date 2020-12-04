@@ -18,7 +18,7 @@ export interface EntryPoint<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   urlTemplate: string | undefined;
 }
 
-export function EntryPointMixin<Base extends Constructor>(Resource: Base) {
+export function EntryPointMixin<Base extends Constructor>(Resource: Base): Constructor<EntryPoint> & Base {
   @namespace(schema)
   class EntryPointClass extends IntangibleMixin(Resource) implements EntryPoint {
     @property.resource()

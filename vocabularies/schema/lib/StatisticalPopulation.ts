@@ -13,7 +13,7 @@ export interface StatisticalPopulation<D extends RDF.DatasetCore = RDF.DatasetCo
   populationType: RDF.Term | undefined;
 }
 
-export function StatisticalPopulationMixin<Base extends Constructor>(Resource: Base) {
+export function StatisticalPopulationMixin<Base extends Constructor>(Resource: Base): Constructor<StatisticalPopulation> & Base {
   @namespace(schema)
   class StatisticalPopulationClass extends IntangibleMixin(Resource) implements StatisticalPopulation {
     @property.literal({ type: Number })

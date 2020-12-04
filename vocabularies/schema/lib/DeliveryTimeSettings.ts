@@ -14,7 +14,7 @@ export interface DeliveryTimeSettings<D extends RDF.DatasetCore = RDF.DatasetCor
   transitTimeLabel: string | undefined;
 }
 
-export function DeliveryTimeSettingsMixin<Base extends Constructor>(Resource: Base) {
+export function DeliveryTimeSettingsMixin<Base extends Constructor>(Resource: Base): Constructor<DeliveryTimeSettings> & Base {
   @namespace(schema)
   class DeliveryTimeSettingsClass extends StructuredValueMixin(Resource) implements DeliveryTimeSettings {
     @property.resource()

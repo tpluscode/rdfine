@@ -10,7 +10,7 @@ import { MedicalIndicationMixin } from './MedicalIndication';
 export interface ApprovedIndication<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalIndication<D>, RdfResource<D> {
 }
 
-export function ApprovedIndicationMixin<Base extends Constructor>(Resource: Base) {
+export function ApprovedIndicationMixin<Base extends Constructor>(Resource: Base): Constructor<ApprovedIndication> & Base {
   @namespace(schema)
   class ApprovedIndicationClass extends MedicalIndicationMixin(Resource) implements ApprovedIndication {
   }

@@ -12,7 +12,7 @@ export interface MovieTheater<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   screenCount: number | undefined;
 }
 
-export function MovieTheaterMixin<Base extends Constructor>(Resource: Base) {
+export function MovieTheaterMixin<Base extends Constructor>(Resource: Base): Constructor<MovieTheater> & Base {
   @namespace(schema)
   class MovieTheaterClass extends EntertainmentBusinessMixin(CivicStructureMixin(Resource)) implements MovieTheater {
     @property.literal({ type: Number })

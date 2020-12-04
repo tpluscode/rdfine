@@ -31,7 +31,7 @@ export interface Restriction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   someValuesFrom: Rdfs.Class<D> | undefined;
 }
 
-export function RestrictionMixin<Base extends Constructor>(Resource: Base) {
+export function RestrictionMixin<Base extends Constructor>(Resource: Base): Constructor<Restriction> & Base {
   @namespace(owl)
   class RestrictionClass extends ClassMixin(Resource) implements Restriction {
     @property.resource({ as: [RdfsClassMixin] })

@@ -14,7 +14,7 @@ export interface SportsTeam<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   genderTerm: Schema.GenderType | undefined;
 }
 
-export function SportsTeamMixin<Base extends Constructor>(Resource: Base) {
+export function SportsTeamMixin<Base extends Constructor>(Resource: Base): Constructor<SportsTeam> & Base {
   @namespace(schema)
   class SportsTeamClass extends SportsOrganizationMixin(Resource) implements SportsTeam {
     @property.resource()

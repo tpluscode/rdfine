@@ -11,7 +11,7 @@ import { RuleMixin } from './Rule';
 export interface JSRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, Sh.Rule<D>, RdfResource<D> {
 }
 
-export function JSRuleMixin<Base extends Constructor>(Resource: Base) {
+export function JSRuleMixin<Base extends Constructor>(Resource: Base): Constructor<JSRule> & Base {
   @namespace(sh)
   class JSRuleClass extends RuleMixin(JSExecutableMixin(Resource)) implements JSRule {
   }

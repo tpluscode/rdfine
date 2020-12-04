@@ -11,7 +11,7 @@ export interface ArchiveOrganization<D extends RDF.DatasetCore = RDF.DatasetCore
   archiveHeld: Schema.ArchiveComponent<D> | undefined;
 }
 
-export function ArchiveOrganizationMixin<Base extends Constructor>(Resource: Base) {
+export function ArchiveOrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<ArchiveOrganization> & Base {
   @namespace(schema)
   class ArchiveOrganizationClass extends LocalBusinessMixin(Resource) implements ArchiveOrganization {
     @property.resource()

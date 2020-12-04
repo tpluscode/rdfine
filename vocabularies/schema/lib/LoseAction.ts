@@ -11,7 +11,7 @@ export interface LoseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   winner: Schema.Person<D> | undefined;
 }
 
-export function LoseActionMixin<Base extends Constructor>(Resource: Base) {
+export function LoseActionMixin<Base extends Constructor>(Resource: Base): Constructor<LoseAction> & Base {
   @namespace(schema)
   class LoseActionClass extends AchieveActionMixin(Resource) implements LoseAction {
     @property.resource()
