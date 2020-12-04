@@ -11,7 +11,7 @@ export interface Quotation<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   spokenByCharacter: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function QuotationMixin<Base extends Constructor>(Resource: Base) {
+export function QuotationMixin<Base extends Constructor>(Resource: Base): Constructor<Quotation> & Base {
   @namespace(schema)
   class QuotationClass extends CreativeWorkMixin(Resource) implements Quotation {
     @property.resource()

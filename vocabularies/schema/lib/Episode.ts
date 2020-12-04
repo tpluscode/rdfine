@@ -20,7 +20,7 @@ export interface Episode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function EpisodeMixin<Base extends Constructor>(Resource: Base) {
+export function EpisodeMixin<Base extends Constructor>(Resource: Base): Constructor<Episode> & Base {
   @namespace(schema)
   class EpisodeClass extends CreativeWorkMixin(Resource) implements Episode {
     @property.resource()

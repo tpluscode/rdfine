@@ -12,7 +12,7 @@ import { TargetTypeMixin } from './TargetType';
 export interface SPARQLTargetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLAskExecutable<D>, Sh.SPARQLSelectExecutable<D>, Sh.TargetType<D>, RdfResource<D> {
 }
 
-export function SPARQLTargetTypeMixin<Base extends Constructor>(Resource: Base) {
+export function SPARQLTargetTypeMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLTargetType> & Base {
   @namespace(sh)
   class SPARQLTargetTypeClass extends TargetTypeMixin(SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(Resource))) implements SPARQLTargetType {
   }

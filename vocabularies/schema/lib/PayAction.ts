@@ -11,7 +11,7 @@ export interface PayAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function PayActionMixin<Base extends Constructor>(Resource: Base) {
+export function PayActionMixin<Base extends Constructor>(Resource: Base): Constructor<PayAction> & Base {
   @namespace(schema)
   class PayActionClass extends TradeActionMixin(Resource) implements PayAction {
     @property.resource()

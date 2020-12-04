@@ -16,7 +16,7 @@ export interface ImageObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   thumbnail: Schema.ImageObject<D> | undefined;
 }
 
-export function ImageObjectMixin<Base extends Constructor>(Resource: Base) {
+export function ImageObjectMixin<Base extends Constructor>(Resource: Base): Constructor<ImageObject> & Base {
   @namespace(schema)
   class ImageObjectClass extends MediaObjectMixin(Resource) implements ImageObject {
     @property.resource()

@@ -10,7 +10,7 @@ import { PerformingGroupMixin } from './PerformingGroup';
 export interface DanceGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PerformingGroup<D>, RdfResource<D> {
 }
 
-export function DanceGroupMixin<Base extends Constructor>(Resource: Base) {
+export function DanceGroupMixin<Base extends Constructor>(Resource: Base): Constructor<DanceGroup> & Base {
   @namespace(schema)
   class DanceGroupClass extends PerformingGroupMixin(Resource) implements DanceGroup {
   }

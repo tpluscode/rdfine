@@ -51,7 +51,7 @@ export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   workHours: string | undefined;
 }
 
-export function JobPostingMixin<Base extends Constructor>(Resource: Base) {
+export function JobPostingMixin<Base extends Constructor>(Resource: Base): Constructor<JobPosting> & Base {
   @namespace(schema)
   class JobPostingClass extends IntangibleMixin(Resource) implements JobPosting {
     @property.resource()

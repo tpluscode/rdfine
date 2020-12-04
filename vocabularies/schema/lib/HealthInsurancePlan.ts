@@ -20,7 +20,7 @@ export interface HealthInsurancePlan<D extends RDF.DatasetCore = RDF.DatasetCore
   usesHealthPlanIdStandardTerm: RDF.NamedNode | undefined;
 }
 
-export function HealthInsurancePlanMixin<Base extends Constructor>(Resource: Base) {
+export function HealthInsurancePlanMixin<Base extends Constructor>(Resource: Base): Constructor<HealthInsurancePlan> & Base {
   @namespace(schema)
   class HealthInsurancePlanClass extends IntangibleMixin(Resource) implements HealthInsurancePlan {
     @property()

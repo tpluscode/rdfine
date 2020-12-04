@@ -13,7 +13,7 @@ export interface Version<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rd
   revision: RDF.Literal | undefined;
 }
 
-export function VersionMixin<Base extends Constructor>(Resource: Base) {
+export function VersionMixin<Base extends Constructor>(Resource: Base): Constructor<Version> & Base {
   @namespace(doap)
   class VersionClass extends Resource implements Version {
     @property()

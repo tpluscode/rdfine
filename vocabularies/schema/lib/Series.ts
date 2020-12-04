@@ -10,7 +10,7 @@ import { IntangibleMixin } from './Intangible';
 export interface Series<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
 }
 
-export function SeriesMixin<Base extends Constructor>(Resource: Base) {
+export function SeriesMixin<Base extends Constructor>(Resource: Base): Constructor<Series> & Base {
   @namespace(schema)
   class SeriesClass extends IntangibleMixin(Resource) implements Series {
   }

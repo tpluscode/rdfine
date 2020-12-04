@@ -12,7 +12,7 @@ export interface MedicalWebPage<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   medicalAudience: Schema.MedicalAudience<D> | undefined;
 }
 
-export function MedicalWebPageMixin<Base extends Constructor>(Resource: Base) {
+export function MedicalWebPageMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalWebPage> & Base {
   @namespace(schema)
   class MedicalWebPageClass extends WebPageMixin(Resource) implements MedicalWebPage {
     @property.literal()

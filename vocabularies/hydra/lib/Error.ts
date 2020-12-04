@@ -10,7 +10,7 @@ import { StatusMixin } from './Status';
 export interface Error<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Status<D>, RdfResource<D> {
 }
 
-export function ErrorMixin<Base extends Constructor>(Resource: Base) {
+export function ErrorMixin<Base extends Constructor>(Resource: Base): Constructor<Error> & Base {
   @namespace(hydra)
   class ErrorClass extends StatusMixin(Resource) implements Error {
   }

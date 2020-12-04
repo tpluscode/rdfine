@@ -10,7 +10,7 @@ import { ReviewMixin } from './Review';
 export interface UserReview<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Review<D>, RdfResource<D> {
 }
 
-export function UserReviewMixin<Base extends Constructor>(Resource: Base) {
+export function UserReviewMixin<Base extends Constructor>(Resource: Base): Constructor<UserReview> & Base {
   @namespace(schema)
   class UserReviewClass extends ReviewMixin(Resource) implements UserReview {
   }

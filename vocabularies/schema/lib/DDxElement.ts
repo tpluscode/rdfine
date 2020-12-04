@@ -12,7 +12,7 @@ export interface DDxElement<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   distinguishingSign: Schema.MedicalSignOrSymptom<D> | undefined;
 }
 
-export function DDxElementMixin<Base extends Constructor>(Resource: Base) {
+export function DDxElementMixin<Base extends Constructor>(Resource: Base): Constructor<DDxElement> & Base {
   @namespace(schema)
   class DDxElementClass extends MedicalIntangibleMixin(Resource) implements DDxElement {
     @property.resource()

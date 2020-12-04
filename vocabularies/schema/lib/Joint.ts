@@ -14,7 +14,7 @@ export interface Joint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   structuralClass: string | undefined;
 }
 
-export function JointMixin<Base extends Constructor>(Resource: Base) {
+export function JointMixin<Base extends Constructor>(Resource: Base): Constructor<Joint> & Base {
   @namespace(schema)
   class JointClass extends AnatomicalStructureMixin(Resource) implements Joint {
     @property.literal()

@@ -10,7 +10,7 @@ import { LocalBusinessMixin } from './LocalBusiness';
 export interface SelfStorage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
 }
 
-export function SelfStorageMixin<Base extends Constructor>(Resource: Base) {
+export function SelfStorageMixin<Base extends Constructor>(Resource: Base): Constructor<SelfStorage> & Base {
   @namespace(schema)
   class SelfStorageClass extends LocalBusinessMixin(Resource) implements SelfStorage {
   }

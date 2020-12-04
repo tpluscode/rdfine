@@ -15,7 +15,7 @@ export interface HealthPlanCostSharingSpecification<D extends RDF.DatasetCore = 
   healthPlanPharmacyCategory: string | undefined;
 }
 
-export function HealthPlanCostSharingSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function HealthPlanCostSharingSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<HealthPlanCostSharingSpecification> & Base {
   @namespace(schema)
   class HealthPlanCostSharingSpecificationClass extends IntangibleMixin(Resource) implements HealthPlanCostSharingSpecification {
     @property.literal()

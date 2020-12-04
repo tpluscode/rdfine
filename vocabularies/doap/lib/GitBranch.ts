@@ -10,7 +10,7 @@ import { RepositoryMixin } from './Repository';
 export interface GitBranch<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, RdfResource<D> {
 }
 
-export function GitBranchMixin<Base extends Constructor>(Resource: Base) {
+export function GitBranchMixin<Base extends Constructor>(Resource: Base): Constructor<GitBranch> & Base {
   @namespace(doap)
   class GitBranchClass extends RepositoryMixin(Resource) implements GitBranch {
   }

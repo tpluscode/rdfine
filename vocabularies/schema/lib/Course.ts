@@ -21,7 +21,7 @@ export interface Course<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   occupationalCredentialAwardedTerm: RDF.NamedNode | undefined;
 }
 
-export function CourseMixin<Base extends Constructor>(Resource: Base) {
+export function CourseMixin<Base extends Constructor>(Resource: Base): Constructor<Course> & Base {
   @namespace(schema)
   class CourseClass extends LearningResourceMixin(CreativeWorkMixin(Resource)) implements Course {
     @property.literal()

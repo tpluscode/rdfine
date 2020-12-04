@@ -10,7 +10,7 @@ import { PlaceMixin } from './Place';
 export interface Landform<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, RdfResource<D> {
 }
 
-export function LandformMixin<Base extends Constructor>(Resource: Base) {
+export function LandformMixin<Base extends Constructor>(Resource: Base): Constructor<Landform> & Base {
   @namespace(schema)
   class LandformClass extends PlaceMixin(Resource) implements Landform {
   }

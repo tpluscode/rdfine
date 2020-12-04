@@ -10,7 +10,7 @@ import { LearningResourceMixin } from './LearningResource';
 export interface Quiz<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LearningResource<D>, RdfResource<D> {
 }
 
-export function QuizMixin<Base extends Constructor>(Resource: Base) {
+export function QuizMixin<Base extends Constructor>(Resource: Base): Constructor<Quiz> & Base {
   @namespace(schema)
   class QuizClass extends LearningResourceMixin(Resource) implements Quiz {
   }

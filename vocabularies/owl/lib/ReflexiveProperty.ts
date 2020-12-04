@@ -10,7 +10,7 @@ import { ObjectPropertyMixin } from './ObjectProperty';
 export interface ReflexiveProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, RdfResource<D> {
 }
 
-export function ReflexivePropertyMixin<Base extends Constructor>(Resource: Base) {
+export function ReflexivePropertyMixin<Base extends Constructor>(Resource: Base): Constructor<ReflexiveProperty> & Base {
   @namespace(owl)
   class ReflexivePropertyClass extends ObjectPropertyMixin(Resource) implements ReflexiveProperty {
   }

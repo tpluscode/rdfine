@@ -10,7 +10,7 @@ import { AdministrativeAreaMixin } from './AdministrativeArea';
 export interface SchoolDistrict<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AdministrativeArea<D>, RdfResource<D> {
 }
 
-export function SchoolDistrictMixin<Base extends Constructor>(Resource: Base) {
+export function SchoolDistrictMixin<Base extends Constructor>(Resource: Base): Constructor<SchoolDistrict> & Base {
   @namespace(schema)
   class SchoolDistrictClass extends AdministrativeAreaMixin(Resource) implements SchoolDistrict {
   }

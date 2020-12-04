@@ -26,7 +26,7 @@ export interface TVSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function TVSeriesMixin<Base extends Constructor>(Resource: Base) {
+export function TVSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<TVSeries> & Base {
   @namespace(schema)
   class TVSeriesClass extends CreativeWorkSeriesMixin(CreativeWorkMixin(Resource)) implements TVSeries {
     @property.resource()

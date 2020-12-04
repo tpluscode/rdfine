@@ -10,7 +10,7 @@ import { CivicStructureMixin } from './CivicStructure';
 export interface Crematorium<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, RdfResource<D> {
 }
 
-export function CrematoriumMixin<Base extends Constructor>(Resource: Base) {
+export function CrematoriumMixin<Base extends Constructor>(Resource: Base): Constructor<Crematorium> & Base {
   @namespace(schema)
   class CrematoriumClass extends CivicStructureMixin(Resource) implements Crematorium {
   }

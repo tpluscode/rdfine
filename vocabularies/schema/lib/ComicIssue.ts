@@ -16,7 +16,7 @@ export interface ComicIssue<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   variantCover: string | undefined;
 }
 
-export function ComicIssueMixin<Base extends Constructor>(Resource: Base) {
+export function ComicIssueMixin<Base extends Constructor>(Resource: Base): Constructor<ComicIssue> & Base {
   @namespace(schema)
   class ComicIssueClass extends PublicationIssueMixin(Resource) implements ComicIssue {
     @property.resource()

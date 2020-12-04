@@ -10,7 +10,7 @@ import { MedicalRiskEstimatorMixin } from './MedicalRiskEstimator';
 export interface MedicalRiskCalculator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalRiskEstimator<D>, RdfResource<D> {
 }
 
-export function MedicalRiskCalculatorMixin<Base extends Constructor>(Resource: Base) {
+export function MedicalRiskCalculatorMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalRiskCalculator> & Base {
   @namespace(schema)
   class MedicalRiskCalculatorClass extends MedicalRiskEstimatorMixin(Resource) implements MedicalRiskCalculator {
   }

@@ -10,7 +10,7 @@ import { AutomotiveBusinessMixin } from './AutomotiveBusiness';
 export interface AutoBodyShop<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AutomotiveBusiness<D>, RdfResource<D> {
 }
 
-export function AutoBodyShopMixin<Base extends Constructor>(Resource: Base) {
+export function AutoBodyShopMixin<Base extends Constructor>(Resource: Base): Constructor<AutoBodyShop> & Base {
   @namespace(schema)
   class AutoBodyShopClass extends AutomotiveBusinessMixin(Resource) implements AutoBodyShop {
   }

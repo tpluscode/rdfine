@@ -10,7 +10,7 @@ import { HowToItemMixin } from './HowToItem';
 export interface HowToTool<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HowToItem<D>, RdfResource<D> {
 }
 
-export function HowToToolMixin<Base extends Constructor>(Resource: Base) {
+export function HowToToolMixin<Base extends Constructor>(Resource: Base): Constructor<HowToTool> & Base {
   @namespace(schema)
   class HowToToolClass extends HowToItemMixin(Resource) implements HowToTool {
   }

@@ -15,7 +15,7 @@ export interface UserComments<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   replyToUrl: RDF.NamedNode | undefined;
 }
 
-export function UserCommentsMixin<Base extends Constructor>(Resource: Base) {
+export function UserCommentsMixin<Base extends Constructor>(Resource: Base): Constructor<UserComments> & Base {
   @namespace(schema)
   class UserCommentsClass extends UserInteractionMixin(Resource) implements UserComments {
     @property.literal()

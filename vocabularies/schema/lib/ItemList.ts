@@ -15,7 +15,7 @@ export interface ItemList<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   numberOfItems: number | undefined;
 }
 
-export function ItemListMixin<Base extends Constructor>(Resource: Base) {
+export function ItemListMixin<Base extends Constructor>(Resource: Base): Constructor<ItemList> & Base {
   @namespace(schema)
   class ItemListClass extends IntangibleMixin(Resource) implements ItemList {
     @property.resource({ values: 'array' })

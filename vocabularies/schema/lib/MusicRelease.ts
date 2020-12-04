@@ -16,7 +16,7 @@ export interface MusicRelease<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   releaseOf: Schema.MusicAlbum<D> | undefined;
 }
 
-export function MusicReleaseMixin<Base extends Constructor>(Resource: Base) {
+export function MusicReleaseMixin<Base extends Constructor>(Resource: Base): Constructor<MusicRelease> & Base {
   @namespace(schema)
   class MusicReleaseClass extends MusicPlaylistMixin(Resource) implements MusicRelease {
     @property.literal()

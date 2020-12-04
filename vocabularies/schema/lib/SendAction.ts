@@ -12,7 +12,7 @@ export interface SendAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function SendActionMixin<Base extends Constructor>(Resource: Base) {
+export function SendActionMixin<Base extends Constructor>(Resource: Base): Constructor<SendAction> & Base {
   @namespace(schema)
   class SendActionClass extends TransferActionMixin(Resource) implements SendAction {
     @property()

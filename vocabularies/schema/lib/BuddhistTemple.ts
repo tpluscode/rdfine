@@ -10,7 +10,7 @@ import { PlaceOfWorshipMixin } from './PlaceOfWorship';
 export interface BuddhistTemple<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlaceOfWorship<D>, RdfResource<D> {
 }
 
-export function BuddhistTempleMixin<Base extends Constructor>(Resource: Base) {
+export function BuddhistTempleMixin<Base extends Constructor>(Resource: Base): Constructor<BuddhistTemple> & Base {
   @namespace(schema)
   class BuddhistTempleClass extends PlaceOfWorshipMixin(Resource) implements BuddhistTemple {
   }

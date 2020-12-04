@@ -12,7 +12,7 @@ export interface Image<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf
   thumbnail: Foaf.Image<D> | undefined;
 }
 
-export function ImageMixin<Base extends Constructor>(Resource: Base) {
+export function ImageMixin<Base extends Constructor>(Resource: Base): Constructor<Image> & Base {
   @namespace(foaf)
   class ImageClass extends DocumentMixin(Resource) implements Image {
     @property()

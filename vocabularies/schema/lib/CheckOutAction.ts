@@ -10,7 +10,7 @@ import { CommunicateActionMixin } from './CommunicateAction';
 export interface CheckOutAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, RdfResource<D> {
 }
 
-export function CheckOutActionMixin<Base extends Constructor>(Resource: Base) {
+export function CheckOutActionMixin<Base extends Constructor>(Resource: Base): Constructor<CheckOutAction> & Base {
   @namespace(schema)
   class CheckOutActionClass extends CommunicateActionMixin(Resource) implements CheckOutAction {
   }

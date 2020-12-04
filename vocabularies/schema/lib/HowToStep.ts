@@ -12,7 +12,7 @@ import { ListItemMixin } from './ListItem';
 export interface HowToStep<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ItemList<D>, Schema.ListItem<D>, RdfResource<D> {
 }
 
-export function HowToStepMixin<Base extends Constructor>(Resource: Base) {
+export function HowToStepMixin<Base extends Constructor>(Resource: Base): Constructor<HowToStep> & Base {
   @namespace(schema)
   class HowToStepClass extends ListItemMixin(ItemListMixin(CreativeWorkMixin(Resource))) implements HowToStep {
   }

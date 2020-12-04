@@ -13,7 +13,7 @@ export interface Function<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   returnType: Rdfs.Class<D> | undefined;
 }
 
-export function FunctionMixin<Base extends Constructor>(Resource: Base) {
+export function FunctionMixin<Base extends Constructor>(Resource: Base): Constructor<Function> & Base {
   @namespace(sh)
   class FunctionClass extends ParameterizableMixin(Resource) implements Function {
     @property.resource({ as: [RdfsClassMixin] })

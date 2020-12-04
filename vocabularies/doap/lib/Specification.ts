@@ -11,7 +11,7 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface Specification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
 }
 
-export function SpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function SpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Specification> & Base {
   @namespace(doap)
   class SpecificationClass extends RdfsResourceMixin(Resource) implements Specification {
   }

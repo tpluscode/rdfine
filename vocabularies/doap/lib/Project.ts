@@ -45,7 +45,7 @@ export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends Fo
   wiki: RDF.NamedNode | undefined;
 }
 
-export function ProjectMixin<Base extends Constructor>(Resource: Base) {
+export function ProjectMixin<Base extends Constructor>(Resource: Base): Constructor<Project> & Base {
   @namespace(doap)
   class ProjectClass extends FoafProjectMixin(Resource) implements Project {
     @property()

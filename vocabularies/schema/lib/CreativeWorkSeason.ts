@@ -21,7 +21,7 @@ export interface CreativeWorkSeason<D extends RDF.DatasetCore = RDF.DatasetCore>
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function CreativeWorkSeasonMixin<Base extends Constructor>(Resource: Base) {
+export function CreativeWorkSeasonMixin<Base extends Constructor>(Resource: Base): Constructor<CreativeWorkSeason> & Base {
   @namespace(schema)
   class CreativeWorkSeasonClass extends CreativeWorkMixin(Resource) implements CreativeWorkSeason {
     @property.resource()

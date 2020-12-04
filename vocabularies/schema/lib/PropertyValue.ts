@@ -22,7 +22,7 @@ export interface PropertyValue<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   valueReference: Schema.PropertyValue<D> | Schema.QuantitativeValue<D> | Schema.StructuredValue<D> | undefined;
 }
 
-export function PropertyValueMixin<Base extends Constructor>(Resource: Base) {
+export function PropertyValueMixin<Base extends Constructor>(Resource: Base): Constructor<PropertyValue> & Base {
   @namespace(schema)
   class PropertyValueClass extends StructuredValueMixin(Resource) implements PropertyValue {
     @property.literal({ type: Number })

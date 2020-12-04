@@ -10,7 +10,7 @@ import { SocialMediaPostingMixin } from './SocialMediaPosting';
 export interface DiscussionForumPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SocialMediaPosting<D>, RdfResource<D> {
 }
 
-export function DiscussionForumPostingMixin<Base extends Constructor>(Resource: Base) {
+export function DiscussionForumPostingMixin<Base extends Constructor>(Resource: Base): Constructor<DiscussionForumPosting> & Base {
   @namespace(schema)
   class DiscussionForumPostingClass extends SocialMediaPostingMixin(Resource) implements DiscussionForumPosting {
   }

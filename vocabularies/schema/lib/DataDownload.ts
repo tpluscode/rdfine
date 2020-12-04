@@ -12,7 +12,7 @@ export interface DataDownload<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   measurementTechniqueTerm: RDF.NamedNode | undefined;
 }
 
-export function DataDownloadMixin<Base extends Constructor>(Resource: Base) {
+export function DataDownloadMixin<Base extends Constructor>(Resource: Base): Constructor<DataDownload> & Base {
   @namespace(schema)
   class DataDownloadClass extends MediaObjectMixin(Resource) implements DataDownload {
     @property.literal()

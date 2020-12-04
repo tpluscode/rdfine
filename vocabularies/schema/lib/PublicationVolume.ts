@@ -14,7 +14,7 @@ export interface PublicationVolume<D extends RDF.DatasetCore = RDF.DatasetCore> 
   volumeNumber: number | string | undefined;
 }
 
-export function PublicationVolumeMixin<Base extends Constructor>(Resource: Base) {
+export function PublicationVolumeMixin<Base extends Constructor>(Resource: Base): Constructor<PublicationVolume> & Base {
   @namespace(schema)
   class PublicationVolumeClass extends CreativeWorkMixin(Resource) implements PublicationVolume {
     @property.literal()

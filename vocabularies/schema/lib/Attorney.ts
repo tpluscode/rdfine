@@ -10,7 +10,7 @@ import { LegalServiceMixin } from './LegalService';
 export interface Attorney<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LegalService<D>, RdfResource<D> {
 }
 
-export function AttorneyMixin<Base extends Constructor>(Resource: Base) {
+export function AttorneyMixin<Base extends Constructor>(Resource: Base): Constructor<Attorney> & Base {
   @namespace(schema)
   class AttorneyClass extends LegalServiceMixin(Resource) implements Attorney {
   }

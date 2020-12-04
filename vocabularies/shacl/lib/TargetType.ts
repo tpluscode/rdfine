@@ -12,7 +12,7 @@ import { ParameterizableMixin } from './Parameterizable';
 export interface TargetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, Sh.Parameterizable<D>, RdfResource<D> {
 }
 
-export function TargetTypeMixin<Base extends Constructor>(Resource: Base) {
+export function TargetTypeMixin<Base extends Constructor>(Resource: Base): Constructor<TargetType> & Base {
   @namespace(sh)
   class TargetTypeClass extends ParameterizableMixin(RdfsClassMixin(Resource)) implements TargetType {
   }

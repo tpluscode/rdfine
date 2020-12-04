@@ -30,8 +30,9 @@
         "singleline": {
           "delimiter": "semi",
           "requireLast": false
-  }
-      }]
+        }
+      }],
+      "@typescript-eslint/ban-types": "off"
     }
   }, {
     "files": ["examples/**"],

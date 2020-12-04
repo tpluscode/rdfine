@@ -13,7 +13,7 @@ export interface ArchiveComponent<D extends RDF.DatasetCore = RDF.DatasetCore> e
   itemLocationLiteral: string | undefined;
 }
 
-export function ArchiveComponentMixin<Base extends Constructor>(Resource: Base) {
+export function ArchiveComponentMixin<Base extends Constructor>(Resource: Base): Constructor<ArchiveComponent> & Base {
   @namespace(schema)
   class ArchiveComponentClass extends CreativeWorkMixin(Resource) implements ArchiveComponent {
     @property.resource()

@@ -15,7 +15,7 @@ export interface PhysicalActivity<D extends RDF.DatasetCore = RDF.DatasetCore> e
   pathophysiology: string | undefined;
 }
 
-export function PhysicalActivityMixin<Base extends Constructor>(Resource: Base) {
+export function PhysicalActivityMixin<Base extends Constructor>(Resource: Base): Constructor<PhysicalActivity> & Base {
   @namespace(schema)
   class PhysicalActivityClass extends LifestyleModificationMixin(Resource) implements PhysicalActivity {
     @property.resource()

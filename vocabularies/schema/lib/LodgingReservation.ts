@@ -19,7 +19,7 @@ export interface LodgingReservation<D extends RDF.DatasetCore = RDF.DatasetCore>
   numChildrenLiteral: number | undefined;
 }
 
-export function LodgingReservationMixin<Base extends Constructor>(Resource: Base) {
+export function LodgingReservationMixin<Base extends Constructor>(Resource: Base): Constructor<LodgingReservation> & Base {
   @namespace(schema)
   class LodgingReservationClass extends ReservationMixin(Resource) implements LodgingReservation {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })

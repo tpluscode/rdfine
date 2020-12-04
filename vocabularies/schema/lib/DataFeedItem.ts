@@ -14,7 +14,7 @@ export interface DataFeedItem<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   item: Schema.Thing<D> | undefined;
 }
 
-export function DataFeedItemMixin<Base extends Constructor>(Resource: Base) {
+export function DataFeedItemMixin<Base extends Constructor>(Resource: Base): Constructor<DataFeedItem> & Base {
   @namespace(schema)
   class DataFeedItemClass extends IntangibleMixin(Resource) implements DataFeedItem {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })

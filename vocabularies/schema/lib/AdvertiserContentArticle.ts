@@ -10,7 +10,7 @@ import { ArticleMixin } from './Article';
 export interface AdvertiserContentArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, RdfResource<D> {
 }
 
-export function AdvertiserContentArticleMixin<Base extends Constructor>(Resource: Base) {
+export function AdvertiserContentArticleMixin<Base extends Constructor>(Resource: Base): Constructor<AdvertiserContentArticle> & Base {
   @namespace(schema)
   class AdvertiserContentArticleClass extends ArticleMixin(Resource) implements AdvertiserContentArticle {
   }

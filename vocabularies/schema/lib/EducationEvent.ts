@@ -14,7 +14,7 @@ export interface EducationEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   teaches: string | undefined;
 }
 
-export function EducationEventMixin<Base extends Constructor>(Resource: Base) {
+export function EducationEventMixin<Base extends Constructor>(Resource: Base): Constructor<EducationEvent> & Base {
   @namespace(schema)
   class EducationEventClass extends EventMixin(Resource) implements EducationEvent {
     @property.literal()

@@ -11,7 +11,7 @@ import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 export interface DatatypeProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, RdfResource<D> {
 }
 
-export function DatatypePropertyMixin<Base extends Constructor>(Resource: Base) {
+export function DatatypePropertyMixin<Base extends Constructor>(Resource: Base): Constructor<DatatypeProperty> & Base {
   @namespace(owl)
   class DatatypePropertyClass extends RdfPropertyMixin(Resource) implements DatatypeProperty {
   }

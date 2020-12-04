@@ -20,7 +20,7 @@ export interface AbstractResult<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   value: RDF.Term | undefined;
 }
 
-export function AbstractResultMixin<Base extends Constructor>(Resource: Base) {
+export function AbstractResultMixin<Base extends Constructor>(Resource: Base): Constructor<AbstractResult> & Base {
   @namespace(sh)
   class AbstractResultClass extends RdfsResourceMixin(Resource) implements AbstractResult {
     @property.resource({ as: [AbstractResultMixin] })

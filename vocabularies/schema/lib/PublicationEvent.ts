@@ -13,7 +13,7 @@ export interface PublicationEvent<D extends RDF.DatasetCore = RDF.DatasetCore> e
   publishedOn: Schema.BroadcastService<D> | undefined;
 }
 
-export function PublicationEventMixin<Base extends Constructor>(Resource: Base) {
+export function PublicationEventMixin<Base extends Constructor>(Resource: Base): Constructor<PublicationEvent> & Base {
   @namespace(schema)
   class PublicationEventClass extends EventMixin(Resource) implements PublicationEvent {
     @property.literal({ type: Boolean })

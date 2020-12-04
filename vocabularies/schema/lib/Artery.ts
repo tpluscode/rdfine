@@ -12,7 +12,7 @@ export interface Artery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   supplyTo: Schema.AnatomicalStructure<D> | undefined;
 }
 
-export function ArteryMixin<Base extends Constructor>(Resource: Base) {
+export function ArteryMixin<Base extends Constructor>(Resource: Base): Constructor<Artery> & Base {
   @namespace(schema)
   class ArteryClass extends VesselMixin(Resource) implements Artery {
     @property.resource()

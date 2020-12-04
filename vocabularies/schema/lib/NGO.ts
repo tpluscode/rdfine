@@ -10,7 +10,7 @@ import { OrganizationMixin } from './Organization';
 export interface NGO<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, RdfResource<D> {
 }
 
-export function NGOMixin<Base extends Constructor>(Resource: Base) {
+export function NGOMixin<Base extends Constructor>(Resource: Base): Constructor<NGO> & Base {
   @namespace(schema)
   class NGOClass extends OrganizationMixin(Resource) implements NGO {
   }

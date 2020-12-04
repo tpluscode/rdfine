@@ -12,7 +12,7 @@ export interface SpeakableSpecification<D extends RDF.DatasetCore = RDF.DatasetC
   xpath: string | undefined;
 }
 
-export function SpeakableSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function SpeakableSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<SpeakableSpecification> & Base {
   @namespace(schema)
   class SpeakableSpecificationClass extends IntangibleMixin(Resource) implements SpeakableSpecification {
     @property.literal()

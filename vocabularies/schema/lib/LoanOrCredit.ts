@@ -22,7 +22,7 @@ export interface LoanOrCredit<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   requiredCollateralLiteral: string | undefined;
 }
 
-export function LoanOrCreditMixin<Base extends Constructor>(Resource: Base) {
+export function LoanOrCreditMixin<Base extends Constructor>(Resource: Base): Constructor<LoanOrCredit> & Base {
   @namespace(schema)
   class LoanOrCreditClass extends FinancialProductMixin(Resource) implements LoanOrCredit {
     @property.resource()

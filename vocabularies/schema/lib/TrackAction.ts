@@ -11,7 +11,7 @@ export interface TrackAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   deliveryMethod: Schema.DeliveryMethod | undefined;
 }
 
-export function TrackActionMixin<Base extends Constructor>(Resource: Base) {
+export function TrackActionMixin<Base extends Constructor>(Resource: Base): Constructor<TrackAction> & Base {
   @namespace(schema)
   class TrackActionClass extends FindActionMixin(Resource) implements TrackAction {
     @property()

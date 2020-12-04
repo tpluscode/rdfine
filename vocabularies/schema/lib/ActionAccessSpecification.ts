@@ -21,7 +21,7 @@ export interface ActionAccessSpecification<D extends RDF.DatasetCore = RDF.Datas
   requiresSubscriptionLiteral: boolean | undefined;
 }
 
-export function ActionAccessSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function ActionAccessSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<ActionAccessSpecification> & Base {
   @namespace(schema)
   class ActionAccessSpecificationClass extends IntangibleMixin(Resource) implements ActionAccessSpecification {
     @property.literal({ type: Date })

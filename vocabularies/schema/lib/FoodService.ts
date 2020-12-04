@@ -10,7 +10,7 @@ import { ServiceMixin } from './Service';
 export interface FoodService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, RdfResource<D> {
 }
 
-export function FoodServiceMixin<Base extends Constructor>(Resource: Base) {
+export function FoodServiceMixin<Base extends Constructor>(Resource: Base): Constructor<FoodService> & Base {
   @namespace(schema)
   class FoodServiceClass extends ServiceMixin(Resource) implements FoodService {
   }

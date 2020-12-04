@@ -15,7 +15,7 @@ export interface BroadcastFrequencySpecification<D extends RDF.DatasetCore = RDF
   broadcastSubChannel: string | undefined;
 }
 
-export function BroadcastFrequencySpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function BroadcastFrequencySpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<BroadcastFrequencySpecification> & Base {
   @namespace(schema)
   class BroadcastFrequencySpecificationClass extends IntangibleMixin(Resource) implements BroadcastFrequencySpecification {
     @property.resource()

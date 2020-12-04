@@ -22,7 +22,7 @@ export interface Action<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   target: Schema.EntryPoint<D> | undefined;
 }
 
-export function ActionMixin<Base extends Constructor>(Resource: Base) {
+export function ActionMixin<Base extends Constructor>(Resource: Base): Constructor<Action> & Base {
   @namespace(schema)
   class ActionClass extends ThingMixin(Resource) implements Action {
     @property()

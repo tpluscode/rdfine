@@ -11,7 +11,7 @@ export interface ArchRepository<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   module: RDF.Term | undefined;
 }
 
-export function ArchRepositoryMixin<Base extends Constructor>(Resource: Base) {
+export function ArchRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<ArchRepository> & Base {
   @namespace(doap)
   class ArchRepositoryClass extends RepositoryMixin(Resource) implements ArchRepository {
     @property()

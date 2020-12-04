@@ -17,7 +17,7 @@ export interface EngineSpecification<D extends RDF.DatasetCore = RDF.DatasetCore
   torque: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function EngineSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function EngineSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<EngineSpecification> & Base {
   @namespace(schema)
   class EngineSpecificationClass extends StructuredValueMixin(Resource) implements EngineSpecification {
     @property.resource()

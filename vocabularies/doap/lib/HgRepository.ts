@@ -10,7 +10,7 @@ import { RepositoryMixin } from './Repository';
 export interface HgRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, RdfResource<D> {
 }
 
-export function HgRepositoryMixin<Base extends Constructor>(Resource: Base) {
+export function HgRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<HgRepository> & Base {
   @namespace(doap)
   class HgRepositoryClass extends RepositoryMixin(Resource) implements HgRepository {
   }

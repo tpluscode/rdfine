@@ -13,7 +13,7 @@ export interface BuyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   warrantyPromise: Schema.WarrantyPromise<D> | undefined;
 }
 
-export function BuyActionMixin<Base extends Constructor>(Resource: Base) {
+export function BuyActionMixin<Base extends Constructor>(Resource: Base): Constructor<BuyAction> & Base {
   @namespace(schema)
   class BuyActionClass extends TradeActionMixin(Resource) implements BuyAction {
     @property.resource()

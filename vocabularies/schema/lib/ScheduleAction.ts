@@ -10,7 +10,7 @@ import { PlanActionMixin } from './PlanAction';
 export interface ScheduleAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlanAction<D>, RdfResource<D> {
 }
 
-export function ScheduleActionMixin<Base extends Constructor>(Resource: Base) {
+export function ScheduleActionMixin<Base extends Constructor>(Resource: Base): Constructor<ScheduleAction> & Base {
   @namespace(schema)
   class ScheduleActionClass extends PlanActionMixin(Resource) implements ScheduleAction {
   }

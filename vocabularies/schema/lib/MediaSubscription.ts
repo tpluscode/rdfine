@@ -12,7 +12,7 @@ export interface MediaSubscription<D extends RDF.DatasetCore = RDF.DatasetCore> 
   expectsAcceptanceOf: Schema.Offer<D> | undefined;
 }
 
-export function MediaSubscriptionMixin<Base extends Constructor>(Resource: Base) {
+export function MediaSubscriptionMixin<Base extends Constructor>(Resource: Base): Constructor<MediaSubscription> & Base {
   @namespace(schema)
   class MediaSubscriptionClass extends IntangibleMixin(Resource) implements MediaSubscription {
     @property.resource()

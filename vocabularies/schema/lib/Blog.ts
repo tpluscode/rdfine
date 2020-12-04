@@ -13,7 +13,7 @@ export interface Blog<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   issn: string | undefined;
 }
 
-export function BlogMixin<Base extends Constructor>(Resource: Base) {
+export function BlogMixin<Base extends Constructor>(Resource: Base): Constructor<Blog> & Base {
   @namespace(schema)
   class BlogClass extends CreativeWorkMixin(Resource) implements Blog {
     @property.resource()

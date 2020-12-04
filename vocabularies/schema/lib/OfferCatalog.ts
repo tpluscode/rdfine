@@ -10,7 +10,7 @@ import { ItemListMixin } from './ItemList';
 export interface OfferCatalog<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ItemList<D>, RdfResource<D> {
 }
 
-export function OfferCatalogMixin<Base extends Constructor>(Resource: Base) {
+export function OfferCatalogMixin<Base extends Constructor>(Resource: Base): Constructor<OfferCatalog> & Base {
   @namespace(schema)
   class OfferCatalogClass extends ItemListMixin(Resource) implements OfferCatalog {
   }

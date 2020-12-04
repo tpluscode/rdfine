@@ -11,7 +11,7 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface Axiom<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
 }
 
-export function AxiomMixin<Base extends Constructor>(Resource: Base) {
+export function AxiomMixin<Base extends Constructor>(Resource: Base): Constructor<Axiom> & Base {
   @namespace(owl)
   class AxiomClass extends RdfsResourceMixin(Resource) implements Axiom {
   }

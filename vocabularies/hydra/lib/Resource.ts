@@ -21,7 +21,7 @@ export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   view: Array<Hydra.Resource<D>>;
 }
 
-export function ResourceMixin<Base extends Constructor>(Resource: Base) {
+export function ResourceMixin<Base extends Constructor>(Resource: Base): Constructor<Resource> & Base {
   @namespace(hydra)
   class ResourceClass extends RdfsResourceMixin(Resource) implements Resource {
     @property.resource({ implicitTypes: [hydra.ApiDocumentation] })

@@ -12,7 +12,7 @@ export interface Airline<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   iataCode: string | undefined;
 }
 
-export function AirlineMixin<Base extends Constructor>(Resource: Base) {
+export function AirlineMixin<Base extends Constructor>(Resource: Base): Constructor<Airline> & Base {
   @namespace(schema)
   class AirlineClass extends OrganizationMixin(Resource) implements Airline {
     @property()

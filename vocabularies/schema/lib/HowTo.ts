@@ -25,7 +25,7 @@ export interface HowTo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   yieldLiteral: string | undefined;
 }
 
-export function HowToMixin<Base extends Constructor>(Resource: Base) {
+export function HowToMixin<Base extends Constructor>(Resource: Base): Constructor<HowTo> & Base {
   @namespace(schema)
   class HowToClass extends CreativeWorkMixin(Resource) implements HowTo {
     @property.resource()

@@ -11,7 +11,7 @@ export interface LeaveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   event: Schema.Event<D> | undefined;
 }
 
-export function LeaveActionMixin<Base extends Constructor>(Resource: Base) {
+export function LeaveActionMixin<Base extends Constructor>(Resource: Base): Constructor<LeaveAction> & Base {
   @namespace(schema)
   class LeaveActionClass extends InteractActionMixin(Resource) implements LeaveAction {
     @property.resource()

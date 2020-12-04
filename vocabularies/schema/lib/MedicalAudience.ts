@@ -11,7 +11,7 @@ import { PeopleAudienceMixin } from './PeopleAudience';
 export interface MedicalAudience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Audience<D>, Schema.PeopleAudience<D>, RdfResource<D> {
 }
 
-export function MedicalAudienceMixin<Base extends Constructor>(Resource: Base) {
+export function MedicalAudienceMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalAudience> & Base {
   @namespace(schema)
   class MedicalAudienceClass extends PeopleAudienceMixin(AudienceMixin(Resource)) implements MedicalAudience {
   }

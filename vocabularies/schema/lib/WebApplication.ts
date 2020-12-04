@@ -11,7 +11,7 @@ export interface WebApplication<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   browserRequirements: string | undefined;
 }
 
-export function WebApplicationMixin<Base extends Constructor>(Resource: Base) {
+export function WebApplicationMixin<Base extends Constructor>(Resource: Base): Constructor<WebApplication> & Base {
   @namespace(schema)
   class WebApplicationClass extends SoftwareApplicationMixin(Resource) implements WebApplication {
     @property.literal()

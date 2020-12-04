@@ -13,7 +13,7 @@ export interface Comment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   upvoteCount: number | undefined;
 }
 
-export function CommentMixin<Base extends Constructor>(Resource: Base) {
+export function CommentMixin<Base extends Constructor>(Resource: Base): Constructor<Comment> & Base {
   @namespace(schema)
   class CommentClass extends CreativeWorkMixin(Resource) implements Comment {
     @property.literal({ type: Number })

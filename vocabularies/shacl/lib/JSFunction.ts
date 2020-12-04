@@ -11,7 +11,7 @@ import { JSExecutableMixin } from './JSExecutable';
 export interface JSFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Function<D>, Sh.JSExecutable<D>, RdfResource<D> {
 }
 
-export function JSFunctionMixin<Base extends Constructor>(Resource: Base) {
+export function JSFunctionMixin<Base extends Constructor>(Resource: Base): Constructor<JSFunction> & Base {
   @namespace(sh)
   class JSFunctionClass extends JSExecutableMixin(FunctionMixin(Resource)) implements JSFunction {
   }

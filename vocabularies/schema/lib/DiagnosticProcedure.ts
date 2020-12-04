@@ -10,7 +10,7 @@ import { MedicalProcedureMixin } from './MedicalProcedure';
 export interface DiagnosticProcedure<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalProcedure<D>, RdfResource<D> {
 }
 
-export function DiagnosticProcedureMixin<Base extends Constructor>(Resource: Base) {
+export function DiagnosticProcedureMixin<Base extends Constructor>(Resource: Base): Constructor<DiagnosticProcedure> & Base {
   @namespace(schema)
   class DiagnosticProcedureClass extends MedicalProcedureMixin(Resource) implements DiagnosticProcedure {
   }

@@ -12,7 +12,7 @@ export interface ConsumeAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   expectsAcceptanceOf: Schema.Offer<D> | undefined;
 }
 
-export function ConsumeActionMixin<Base extends Constructor>(Resource: Base) {
+export function ConsumeActionMixin<Base extends Constructor>(Resource: Base): Constructor<ConsumeAction> & Base {
   @namespace(schema)
   class ConsumeActionClass extends ActionMixin(Resource) implements ConsumeAction {
     @property.resource()

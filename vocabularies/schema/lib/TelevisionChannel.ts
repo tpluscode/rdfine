@@ -10,7 +10,7 @@ import { BroadcastChannelMixin } from './BroadcastChannel';
 export interface TelevisionChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BroadcastChannel<D>, RdfResource<D> {
 }
 
-export function TelevisionChannelMixin<Base extends Constructor>(Resource: Base) {
+export function TelevisionChannelMixin<Base extends Constructor>(Resource: Base): Constructor<TelevisionChannel> & Base {
   @namespace(schema)
   class TelevisionChannelClass extends BroadcastChannelMixin(Resource) implements TelevisionChannel {
   }

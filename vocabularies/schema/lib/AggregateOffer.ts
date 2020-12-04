@@ -14,7 +14,7 @@ export interface AggregateOffer<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
 }
 
-export function AggregateOfferMixin<Base extends Constructor>(Resource: Base) {
+export function AggregateOfferMixin<Base extends Constructor>(Resource: Base): Constructor<AggregateOffer> & Base {
   @namespace(schema)
   class AggregateOfferClass extends OfferMixin(Resource) implements AggregateOffer {
     @property.literal()

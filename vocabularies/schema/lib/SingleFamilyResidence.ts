@@ -13,7 +13,7 @@ export interface SingleFamilyResidence<D extends RDF.DatasetCore = RDF.DatasetCo
   occupancy: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function SingleFamilyResidenceMixin<Base extends Constructor>(Resource: Base) {
+export function SingleFamilyResidenceMixin<Base extends Constructor>(Resource: Base): Constructor<SingleFamilyResidence> & Base {
   @namespace(schema)
   class SingleFamilyResidenceClass extends HouseMixin(Resource) implements SingleFamilyResidence {
     @property.resource()

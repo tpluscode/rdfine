@@ -12,7 +12,7 @@ export interface HowToSupply<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   estimatedCostLiteral: string | undefined;
 }
 
-export function HowToSupplyMixin<Base extends Constructor>(Resource: Base) {
+export function HowToSupplyMixin<Base extends Constructor>(Resource: Base): Constructor<HowToSupply> & Base {
   @namespace(schema)
   class HowToSupplyClass extends HowToItemMixin(Resource) implements HowToSupply {
     @property.resource()

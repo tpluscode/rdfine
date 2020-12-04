@@ -11,7 +11,7 @@ export interface Collection<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   collectionSize: number | undefined;
 }
 
-export function CollectionMixin<Base extends Constructor>(Resource: Base) {
+export function CollectionMixin<Base extends Constructor>(Resource: Base): Constructor<Collection> & Base {
   @namespace(schema)
   class CollectionClass extends CreativeWorkMixin(Resource) implements Collection {
     @property.literal({ type: Number })

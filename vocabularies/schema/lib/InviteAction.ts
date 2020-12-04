@@ -11,7 +11,7 @@ export interface InviteAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   event: Schema.Event<D> | undefined;
 }
 
-export function InviteActionMixin<Base extends Constructor>(Resource: Base) {
+export function InviteActionMixin<Base extends Constructor>(Resource: Base): Constructor<InviteAction> & Base {
   @namespace(schema)
   class InviteActionClass extends CommunicateActionMixin(Resource) implements InviteAction {
     @property.resource()

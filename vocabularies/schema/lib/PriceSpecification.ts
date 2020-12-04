@@ -19,7 +19,7 @@ export interface PriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore>
   valueAddedTaxIncluded: boolean | undefined;
 }
 
-export function PriceSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function PriceSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<PriceSpecification> & Base {
   @namespace(schema)
   class PriceSpecificationClass extends StructuredValueMixin(Resource) implements PriceSpecification {
     @property.resource()

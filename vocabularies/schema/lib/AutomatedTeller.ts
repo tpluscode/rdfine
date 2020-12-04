@@ -10,7 +10,7 @@ import { FinancialServiceMixin } from './FinancialService';
 export interface AutomatedTeller<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialService<D>, RdfResource<D> {
 }
 
-export function AutomatedTellerMixin<Base extends Constructor>(Resource: Base) {
+export function AutomatedTellerMixin<Base extends Constructor>(Resource: Base): Constructor<AutomatedTeller> & Base {
   @namespace(schema)
   class AutomatedTellerClass extends FinancialServiceMixin(Resource) implements AutomatedTeller {
   }

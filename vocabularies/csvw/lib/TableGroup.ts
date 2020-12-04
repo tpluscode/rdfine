@@ -27,7 +27,7 @@ export interface TableGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   valueUrl: string | undefined;
 }
 
-export function TableGroupMixin<Base extends Constructor>(Resource: Base) {
+export function TableGroupMixin<Base extends Constructor>(Resource: Base): Constructor<TableGroup> & Base {
   @namespace(csvw)
   class TableGroupClass extends Resource implements TableGroup {
     @property.literal()

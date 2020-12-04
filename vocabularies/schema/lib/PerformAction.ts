@@ -11,7 +11,7 @@ export interface PerformAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   entertainmentBusiness: Schema.EntertainmentBusiness<D> | undefined;
 }
 
-export function PerformActionMixin<Base extends Constructor>(Resource: Base) {
+export function PerformActionMixin<Base extends Constructor>(Resource: Base): Constructor<PerformAction> & Base {
   @namespace(schema)
   class PerformActionClass extends PlayActionMixin(Resource) implements PerformAction {
     @property.resource()

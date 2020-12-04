@@ -13,7 +13,7 @@ export interface LymphaticVessel<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   runsTo: Schema.Vessel<D> | undefined;
 }
 
-export function LymphaticVesselMixin<Base extends Constructor>(Resource: Base) {
+export function LymphaticVesselMixin<Base extends Constructor>(Resource: Base): Constructor<LymphaticVessel> & Base {
   @namespace(schema)
   class LymphaticVesselClass extends VesselMixin(Resource) implements LymphaticVessel {
     @property.resource()

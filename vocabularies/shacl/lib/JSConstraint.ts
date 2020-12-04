@@ -10,7 +10,7 @@ import { JSExecutableMixin } from './JSExecutable';
 export interface JSConstraint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, RdfResource<D> {
 }
 
-export function JSConstraintMixin<Base extends Constructor>(Resource: Base) {
+export function JSConstraintMixin<Base extends Constructor>(Resource: Base): Constructor<JSConstraint> & Base {
   @namespace(sh)
   class JSConstraintClass extends JSExecutableMixin(Resource) implements JSConstraint {
   }

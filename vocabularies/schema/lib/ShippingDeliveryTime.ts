@@ -14,7 +14,7 @@ export interface ShippingDeliveryTime<D extends RDF.DatasetCore = RDF.DatasetCor
   transitTime: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function ShippingDeliveryTimeMixin<Base extends Constructor>(Resource: Base) {
+export function ShippingDeliveryTimeMixin<Base extends Constructor>(Resource: Base): Constructor<ShippingDeliveryTime> & Base {
   @namespace(schema)
   class ShippingDeliveryTimeClass extends StructuredValueMixin(Resource) implements ShippingDeliveryTime {
     @property.resource()

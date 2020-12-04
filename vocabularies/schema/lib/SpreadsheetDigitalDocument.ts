@@ -10,7 +10,7 @@ import { DigitalDocumentMixin } from './DigitalDocument';
 export interface SpreadsheetDigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DigitalDocument<D>, RdfResource<D> {
 }
 
-export function SpreadsheetDigitalDocumentMixin<Base extends Constructor>(Resource: Base) {
+export function SpreadsheetDigitalDocumentMixin<Base extends Constructor>(Resource: Base): Constructor<SpreadsheetDigitalDocument> & Base {
   @namespace(schema)
   class SpreadsheetDigitalDocumentClass extends DigitalDocumentMixin(Resource) implements SpreadsheetDigitalDocument {
   }

@@ -11,7 +11,7 @@ import { LodgingBusinessMixin } from './LodgingBusiness';
 export interface Campground<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.LodgingBusiness<D>, RdfResource<D> {
 }
 
-export function CampgroundMixin<Base extends Constructor>(Resource: Base) {
+export function CampgroundMixin<Base extends Constructor>(Resource: Base): Constructor<Campground> & Base {
   @namespace(schema)
   class CampgroundClass extends LodgingBusinessMixin(CivicStructureMixin(Resource)) implements Campground {
   }

@@ -10,7 +10,7 @@ import { InformActionMixin } from './InformAction';
 export interface ConfirmAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InformAction<D>, RdfResource<D> {
 }
 
-export function ConfirmActionMixin<Base extends Constructor>(Resource: Base) {
+export function ConfirmActionMixin<Base extends Constructor>(Resource: Base): Constructor<ConfirmAction> & Base {
   @namespace(schema)
   class ConfirmActionClass extends InformActionMixin(Resource) implements ConfirmAction {
   }

@@ -10,7 +10,7 @@ import { NewsArticleMixin } from './NewsArticle';
 export interface ReportageNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.NewsArticle<D>, RdfResource<D> {
 }
 
-export function ReportageNewsArticleMixin<Base extends Constructor>(Resource: Base) {
+export function ReportageNewsArticleMixin<Base extends Constructor>(Resource: Base): Constructor<ReportageNewsArticle> & Base {
   @namespace(schema)
   class ReportageNewsArticleClass extends NewsArticleMixin(Resource) implements ReportageNewsArticle {
   }

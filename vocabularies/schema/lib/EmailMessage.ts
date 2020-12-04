@@ -10,7 +10,7 @@ import { MessageMixin } from './Message';
 export interface EmailMessage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Message<D>, RdfResource<D> {
 }
 
-export function EmailMessageMixin<Base extends Constructor>(Resource: Base) {
+export function EmailMessageMixin<Base extends Constructor>(Resource: Base): Constructor<EmailMessage> & Base {
   @namespace(schema)
   class EmailMessageClass extends MessageMixin(Resource) implements EmailMessage {
   }

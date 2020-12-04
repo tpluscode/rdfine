@@ -15,7 +15,7 @@ export interface Observation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   observedNode: Schema.StatisticalPopulation<D> | undefined;
 }
 
-export function ObservationMixin<Base extends Constructor>(Resource: Base) {
+export function ObservationMixin<Base extends Constructor>(Resource: Base): Constructor<Observation> & Base {
   @namespace(schema)
   class ObservationClass extends IntangibleMixin(Resource) implements Observation {
     @property.literal({ type: Date })

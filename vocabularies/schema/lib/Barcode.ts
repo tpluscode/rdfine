@@ -10,7 +10,7 @@ import { ImageObjectMixin } from './ImageObject';
 export interface Barcode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ImageObject<D>, RdfResource<D> {
 }
 
-export function BarcodeMixin<Base extends Constructor>(Resource: Base) {
+export function BarcodeMixin<Base extends Constructor>(Resource: Base): Constructor<Barcode> & Base {
   @namespace(schema)
   class BarcodeClass extends ImageObjectMixin(Resource) implements Barcode {
   }

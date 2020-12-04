@@ -11,7 +11,7 @@ export interface WinAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   loser: Schema.Person<D> | undefined;
 }
 
-export function WinActionMixin<Base extends Constructor>(Resource: Base) {
+export function WinActionMixin<Base extends Constructor>(Resource: Base): Constructor<WinAction> & Base {
   @namespace(schema)
   class WinActionClass extends AchieveActionMixin(Resource) implements WinAction {
     @property.resource()

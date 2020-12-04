@@ -13,7 +13,7 @@ export interface Chapter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   pagination: string | undefined;
 }
 
-export function ChapterMixin<Base extends Constructor>(Resource: Base) {
+export function ChapterMixin<Base extends Constructor>(Resource: Base): Constructor<Chapter> & Base {
   @namespace(schema)
   class ChapterClass extends CreativeWorkMixin(Resource) implements Chapter {
     @property.literal()

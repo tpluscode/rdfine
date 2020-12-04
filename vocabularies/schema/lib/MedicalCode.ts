@@ -13,7 +13,7 @@ export interface MedicalCode<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   codingSystem: string | undefined;
 }
 
-export function MedicalCodeMixin<Base extends Constructor>(Resource: Base) {
+export function MedicalCodeMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalCode> & Base {
   @namespace(schema)
   class MedicalCodeClass extends MedicalIntangibleMixin(CategoryCodeMixin(Resource)) implements MedicalCode {
     @property.literal()

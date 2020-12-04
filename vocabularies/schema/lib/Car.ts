@@ -12,7 +12,7 @@ export interface Car<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema
   roofLoad: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function CarMixin<Base extends Constructor>(Resource: Base) {
+export function CarMixin<Base extends Constructor>(Resource: Base): Constructor<Car> & Base {
   @namespace(schema)
   class CarClass extends VehicleMixin(Resource) implements Car {
     @property.literal()

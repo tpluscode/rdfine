@@ -42,7 +42,7 @@ export interface SoftwareApplication<D extends RDF.DatasetCore = RDF.DatasetCore
   supportingData: Schema.DataFeed<D> | undefined;
 }
 
-export function SoftwareApplicationMixin<Base extends Constructor>(Resource: Base) {
+export function SoftwareApplicationMixin<Base extends Constructor>(Resource: Base): Constructor<SoftwareApplication> & Base {
   @namespace(schema)
   class SoftwareApplicationClass extends CreativeWorkMixin(Resource) implements SoftwareApplication {
     @property.literal()

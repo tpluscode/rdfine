@@ -16,7 +16,7 @@ export interface DefinedRegion<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   postalCodeRange: Schema.PostalCodeRangeSpecification<D> | undefined;
 }
 
-export function DefinedRegionMixin<Base extends Constructor>(Resource: Base) {
+export function DefinedRegionMixin<Base extends Constructor>(Resource: Base): Constructor<DefinedRegion> & Base {
   @namespace(schema)
   class DefinedRegionClass extends StructuredValueMixin(Resource) implements DefinedRegion {
     @property.resource()

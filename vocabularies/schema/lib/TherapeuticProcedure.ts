@@ -13,7 +13,7 @@ export interface TherapeuticProcedure<D extends RDF.DatasetCore = RDF.DatasetCor
   drug: Schema.Drug<D> | undefined;
 }
 
-export function TherapeuticProcedureMixin<Base extends Constructor>(Resource: Base) {
+export function TherapeuticProcedureMixin<Base extends Constructor>(Resource: Base): Constructor<TherapeuticProcedure> & Base {
   @namespace(schema)
   class TherapeuticProcedureClass extends MedicalProcedureMixin(Resource) implements TherapeuticProcedure {
     @property.resource()

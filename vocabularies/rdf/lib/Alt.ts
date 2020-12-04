@@ -9,7 +9,7 @@ import type * as Rdf from '..';
 export interface Alt<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
 
-export function AltMixin<Base extends Constructor>(Resource: Base) {
+export function AltMixin<Base extends Constructor>(Resource: Base): Constructor<Alt> & Base {
   @namespace(rdf)
   class AltClass extends Resource implements Alt {
   }

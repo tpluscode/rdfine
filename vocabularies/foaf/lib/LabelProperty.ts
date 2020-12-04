@@ -9,7 +9,7 @@ import type * as Foaf from '..';
 export interface LabelProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
 
-export function LabelPropertyMixin<Base extends Constructor>(Resource: Base) {
+export function LabelPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<LabelProperty> & Base {
   @namespace(foaf)
   class LabelPropertyClass extends Resource implements LabelProperty {
   }

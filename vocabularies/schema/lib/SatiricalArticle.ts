@@ -10,7 +10,7 @@ import { ArticleMixin } from './Article';
 export interface SatiricalArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, RdfResource<D> {
 }
 
-export function SatiricalArticleMixin<Base extends Constructor>(Resource: Base) {
+export function SatiricalArticleMixin<Base extends Constructor>(Resource: Base): Constructor<SatiricalArticle> & Base {
   @namespace(schema)
   class SatiricalArticleClass extends ArticleMixin(Resource) implements SatiricalArticle {
   }

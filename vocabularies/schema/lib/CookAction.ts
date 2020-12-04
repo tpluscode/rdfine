@@ -13,7 +13,7 @@ export interface CookAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   recipe: Schema.Recipe<D> | undefined;
 }
 
-export function CookActionMixin<Base extends Constructor>(Resource: Base) {
+export function CookActionMixin<Base extends Constructor>(Resource: Base): Constructor<CookAction> & Base {
   @namespace(schema)
   class CookActionClass extends CreateActionMixin(Resource) implements CookAction {
     @property.resource()

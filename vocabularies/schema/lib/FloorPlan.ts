@@ -23,7 +23,7 @@ export interface FloorPlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   petsAllowed: boolean | string | undefined;
 }
 
-export function FloorPlanMixin<Base extends Constructor>(Resource: Base) {
+export function FloorPlanMixin<Base extends Constructor>(Resource: Base): Constructor<FloorPlan> & Base {
   @namespace(schema)
   class FloorPlanClass extends IntangibleMixin(Resource) implements FloorPlan {
     @property.resource()

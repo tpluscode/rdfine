@@ -16,7 +16,7 @@ export interface ShippingRateSettings<D extends RDF.DatasetCore = RDF.DatasetCor
   shippingRate: Schema.MonetaryAmount<D> | undefined;
 }
 
-export function ShippingRateSettingsMixin<Base extends Constructor>(Resource: Base) {
+export function ShippingRateSettingsMixin<Base extends Constructor>(Resource: Base): Constructor<ShippingRateSettings> & Base {
   @namespace(schema)
   class ShippingRateSettingsClass extends StructuredValueMixin(Resource) implements ShippingRateSettings {
     @property.literal({ type: Boolean })

@@ -10,7 +10,7 @@ import { TradeActionMixin } from './TradeAction';
 export interface QuoteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, RdfResource<D> {
 }
 
-export function QuoteActionMixin<Base extends Constructor>(Resource: Base) {
+export function QuoteActionMixin<Base extends Constructor>(Resource: Base): Constructor<QuoteAction> & Base {
   @namespace(schema)
   class QuoteActionClass extends TradeActionMixin(Resource) implements QuoteAction {
   }

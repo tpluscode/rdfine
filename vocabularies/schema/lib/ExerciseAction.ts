@@ -23,7 +23,7 @@ export interface ExerciseAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   toLocation: Schema.Place<D> | undefined;
 }
 
-export function ExerciseActionMixin<Base extends Constructor>(Resource: Base) {
+export function ExerciseActionMixin<Base extends Constructor>(Resource: Base): Constructor<ExerciseAction> & Base {
   @namespace(schema)
   class ExerciseActionClass extends PlayActionMixin(Resource) implements ExerciseAction {
     @property.resource()

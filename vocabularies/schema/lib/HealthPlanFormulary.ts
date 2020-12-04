@@ -13,7 +13,7 @@ export interface HealthPlanFormulary<D extends RDF.DatasetCore = RDF.DatasetCore
   offersPrescriptionByMail: boolean | undefined;
 }
 
-export function HealthPlanFormularyMixin<Base extends Constructor>(Resource: Base) {
+export function HealthPlanFormularyMixin<Base extends Constructor>(Resource: Base): Constructor<HealthPlanFormulary> & Base {
   @namespace(schema)
   class HealthPlanFormularyClass extends IntangibleMixin(Resource) implements HealthPlanFormulary {
     @property.literal({ type: Boolean })

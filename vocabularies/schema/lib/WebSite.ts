@@ -11,7 +11,7 @@ export interface WebSite<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   issn: string | undefined;
 }
 
-export function WebSiteMixin<Base extends Constructor>(Resource: Base) {
+export function WebSiteMixin<Base extends Constructor>(Resource: Base): Constructor<WebSite> & Base {
   @namespace(schema)
   class WebSiteClass extends CreativeWorkMixin(Resource) implements WebSite {
     @property.literal()

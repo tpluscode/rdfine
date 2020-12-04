@@ -20,7 +20,7 @@ export interface Dataset<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   variableMeasuredLiteral: string | undefined;
 }
 
-export function DatasetMixin<Base extends Constructor>(Resource: Base) {
+export function DatasetMixin<Base extends Constructor>(Resource: Base): Constructor<Dataset> & Base {
   @namespace(schema)
   class DatasetClass extends CreativeWorkMixin(Resource) implements Dataset {
     @property.resource()

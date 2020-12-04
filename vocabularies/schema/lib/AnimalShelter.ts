@@ -10,7 +10,7 @@ import { LocalBusinessMixin } from './LocalBusiness';
 export interface AnimalShelter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
 }
 
-export function AnimalShelterMixin<Base extends Constructor>(Resource: Base) {
+export function AnimalShelterMixin<Base extends Constructor>(Resource: Base): Constructor<AnimalShelter> & Base {
   @namespace(schema)
   class AnimalShelterClass extends LocalBusinessMixin(Resource) implements AnimalShelter {
   }

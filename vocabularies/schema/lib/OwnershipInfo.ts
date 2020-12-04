@@ -14,7 +14,7 @@ export interface OwnershipInfo<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   typeOfGood: Schema.Product<D> | Schema.Service<D> | undefined;
 }
 
-export function OwnershipInfoMixin<Base extends Constructor>(Resource: Base) {
+export function OwnershipInfoMixin<Base extends Constructor>(Resource: Base): Constructor<OwnershipInfo> & Base {
   @namespace(schema)
   class OwnershipInfoClass extends StructuredValueMixin(Resource) implements OwnershipInfo {
     @property.resource()

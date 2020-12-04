@@ -11,7 +11,7 @@ import { SPARQLConstructExecutableMixin } from './SPARQLConstructExecutable';
 export interface SPARQLRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Rule<D>, Sh.SPARQLConstructExecutable<D>, RdfResource<D> {
 }
 
-export function SPARQLRuleMixin<Base extends Constructor>(Resource: Base) {
+export function SPARQLRuleMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLRule> & Base {
   @namespace(sh)
   class SPARQLRuleClass extends SPARQLConstructExecutableMixin(RuleMixin(Resource)) implements SPARQLRule {
   }

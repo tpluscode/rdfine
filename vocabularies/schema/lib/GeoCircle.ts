@@ -13,7 +13,7 @@ export interface GeoCircle<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   geoRadiusLiteral: number | string | undefined;
 }
 
-export function GeoCircleMixin<Base extends Constructor>(Resource: Base) {
+export function GeoCircleMixin<Base extends Constructor>(Resource: Base): Constructor<GeoCircle> & Base {
   @namespace(schema)
   class GeoCircleClass extends GeoShapeMixin(Resource) implements GeoCircle {
     @property.resource()

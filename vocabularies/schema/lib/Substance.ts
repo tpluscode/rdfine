@@ -12,7 +12,7 @@ export interface Substance<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   maximumIntake: Schema.MaximumDoseSchedule<D> | undefined;
 }
 
-export function SubstanceMixin<Base extends Constructor>(Resource: Base) {
+export function SubstanceMixin<Base extends Constructor>(Resource: Base): Constructor<Substance> & Base {
   @namespace(schema)
   class SubstanceClass extends MedicalEntityMixin(Resource) implements Substance {
     @property.literal()

@@ -13,7 +13,7 @@ export interface RsvpAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   rsvpResponse: Schema.RsvpResponseType | undefined;
 }
 
-export function RsvpActionMixin<Base extends Constructor>(Resource: Base) {
+export function RsvpActionMixin<Base extends Constructor>(Resource: Base): Constructor<RsvpAction> & Base {
   @namespace(schema)
   class RsvpActionClass extends InformActionMixin(Resource) implements RsvpAction {
     @property.literal({ type: Number })

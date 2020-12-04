@@ -27,7 +27,7 @@ export interface Legislation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   legislationTypeLiteral: string | undefined;
 }
 
-export function LegislationMixin<Base extends Constructor>(Resource: Base) {
+export function LegislationMixin<Base extends Constructor>(Resource: Base): Constructor<Legislation> & Base {
   @namespace(schema)
   class LegislationClass extends CreativeWorkMixin(Resource) implements Legislation {
     @property.resource()

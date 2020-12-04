@@ -14,7 +14,7 @@ export interface Transformation<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   url: string | undefined;
 }
 
-export function TransformationMixin<Base extends Constructor>(Resource: Base) {
+export function TransformationMixin<Base extends Constructor>(Resource: Base): Constructor<Transformation> & Base {
   @namespace(csvw)
   class TransformationClass extends Resource implements Transformation {
     @property.literal()

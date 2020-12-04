@@ -17,7 +17,7 @@ export interface OfferShippingDetails<D extends RDF.DatasetCore = RDF.DatasetCor
   transitTimeLabel: string | undefined;
 }
 
-export function OfferShippingDetailsMixin<Base extends Constructor>(Resource: Base) {
+export function OfferShippingDetailsMixin<Base extends Constructor>(Resource: Base): Constructor<OfferShippingDetails> & Base {
   @namespace(schema)
   class OfferShippingDetailsClass extends StructuredValueMixin(Resource) implements OfferShippingDetails {
     @property.resource()

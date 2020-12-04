@@ -10,7 +10,7 @@ import { MedicalEntityMixin } from './MedicalEntity';
 export interface LifestyleModification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, RdfResource<D> {
 }
 
-export function LifestyleModificationMixin<Base extends Constructor>(Resource: Base) {
+export function LifestyleModificationMixin<Base extends Constructor>(Resource: Base): Constructor<LifestyleModification> & Base {
   @namespace(schema)
   class LifestyleModificationClass extends MedicalEntityMixin(Resource) implements LifestyleModification {
   }

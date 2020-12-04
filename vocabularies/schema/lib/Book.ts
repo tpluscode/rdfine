@@ -16,7 +16,7 @@ export interface Book<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   numberOfPages: number | undefined;
 }
 
-export function BookMixin<Base extends Constructor>(Resource: Base) {
+export function BookMixin<Base extends Constructor>(Resource: Base): Constructor<Book> & Base {
   @namespace(schema)
   class BookClass extends CreativeWorkMixin(Resource) implements Book {
     @property.literal({ type: Boolean })

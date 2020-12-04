@@ -10,7 +10,7 @@ import { ReservationMixin } from './Reservation';
 export interface EventReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, RdfResource<D> {
 }
 
-export function EventReservationMixin<Base extends Constructor>(Resource: Base) {
+export function EventReservationMixin<Base extends Constructor>(Resource: Base): Constructor<EventReservation> & Base {
   @namespace(schema)
   class EventReservationClass extends ReservationMixin(Resource) implements EventReservation {
   }

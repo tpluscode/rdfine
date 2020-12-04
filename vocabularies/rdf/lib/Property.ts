@@ -9,7 +9,7 @@ import type * as Rdf from '..';
 export interface Property<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
 
-export function PropertyMixin<Base extends Constructor>(Resource: Base) {
+export function PropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Property> & Base {
   @namespace(rdf)
   class PropertyClass extends Resource implements Property {
   }

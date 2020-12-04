@@ -18,7 +18,7 @@ export interface FoodEstablishment<D extends RDF.DatasetCore = RDF.DatasetCore> 
   starRating: Schema.Rating<D> | undefined;
 }
 
-export function FoodEstablishmentMixin<Base extends Constructor>(Resource: Base) {
+export function FoodEstablishmentMixin<Base extends Constructor>(Resource: Base): Constructor<FoodEstablishment> & Base {
   @namespace(schema)
   class FoodEstablishmentClass extends LocalBusinessMixin(Resource) implements FoodEstablishment {
     @property.literal()

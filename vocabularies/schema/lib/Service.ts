@@ -38,7 +38,7 @@ export interface Service<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   termsOfServiceTerm: RDF.NamedNode | undefined;
 }
 
-export function ServiceMixin<Base extends Constructor>(Resource: Base) {
+export function ServiceMixin<Base extends Constructor>(Resource: Base): Constructor<Service> & Base {
   @namespace(schema)
   class ServiceClass extends IntangibleMixin(Resource) implements Service {
     @property.resource()

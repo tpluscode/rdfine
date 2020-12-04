@@ -14,7 +14,7 @@ export interface ManagesBlock<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   subject: Hydra.Resource<D> | undefined;
 }
 
-export function ManagesBlockMixin<Base extends Constructor>(Resource: Base) {
+export function ManagesBlockMixin<Base extends Constructor>(Resource: Base): Constructor<ManagesBlock> & Base {
   @namespace(hydra)
   class ManagesBlockClass extends Resource implements ManagesBlock {
     @property.resource()

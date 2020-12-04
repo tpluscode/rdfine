@@ -15,7 +15,7 @@ export interface AlignmentObject<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   targetUrl: RDF.NamedNode | undefined;
 }
 
-export function AlignmentObjectMixin<Base extends Constructor>(Resource: Base) {
+export function AlignmentObjectMixin<Base extends Constructor>(Resource: Base): Constructor<AlignmentObject> & Base {
   @namespace(schema)
   class AlignmentObjectClass extends IntangibleMixin(Resource) implements AlignmentObject {
     @property.literal()

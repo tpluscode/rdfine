@@ -14,7 +14,7 @@ export interface ValidationReport<D extends RDF.DatasetCore = RDF.DatasetCore> e
   shapesGraphWellFormed: boolean | undefined;
 }
 
-export function ValidationReportMixin<Base extends Constructor>(Resource: Base) {
+export function ValidationReportMixin<Base extends Constructor>(Resource: Base): Constructor<ValidationReport> & Base {
   @namespace(sh)
   class ValidationReportClass extends RdfsResourceMixin(Resource) implements ValidationReport {
     @property.literal({ type: Boolean })

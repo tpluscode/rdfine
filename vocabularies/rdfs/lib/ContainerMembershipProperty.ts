@@ -11,7 +11,7 @@ import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 export interface ContainerMembershipProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, RdfResource<D> {
 }
 
-export function ContainerMembershipPropertyMixin<Base extends Constructor>(Resource: Base) {
+export function ContainerMembershipPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<ContainerMembershipProperty> & Base {
   @namespace(rdfs)
   class ContainerMembershipPropertyClass extends RdfPropertyMixin(Resource) implements ContainerMembershipProperty {
   }

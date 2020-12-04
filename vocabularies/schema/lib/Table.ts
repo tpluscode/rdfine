@@ -10,7 +10,7 @@ import { WebPageElementMixin } from './WebPageElement';
 export interface Table<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, RdfResource<D> {
 }
 
-export function TableMixin<Base extends Constructor>(Resource: Base) {
+export function TableMixin<Base extends Constructor>(Resource: Base): Constructor<Table> & Base {
   @namespace(schema)
   class TableClass extends WebPageElementMixin(Resource) implements Table {
   }

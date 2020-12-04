@@ -10,7 +10,7 @@ import { ObjectPropertyMixin } from './ObjectProperty';
 export interface SymmetricProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, RdfResource<D> {
 }
 
-export function SymmetricPropertyMixin<Base extends Constructor>(Resource: Base) {
+export function SymmetricPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<SymmetricProperty> & Base {
   @namespace(owl)
   class SymmetricPropertyClass extends ObjectPropertyMixin(Resource) implements SymmetricProperty {
   }

@@ -14,7 +14,7 @@ export interface ChooseAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   optionLiteral: string | undefined;
 }
 
-export function ChooseActionMixin<Base extends Constructor>(Resource: Base) {
+export function ChooseActionMixin<Base extends Constructor>(Resource: Base): Constructor<ChooseAction> & Base {
   @namespace(schema)
   class ChooseActionClass extends AssessActionMixin(Resource) implements ChooseAction {
     @property.resource()

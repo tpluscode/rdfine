@@ -10,7 +10,7 @@ import { ClipMixin } from './Clip';
 export interface VideoGameClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Clip<D>, RdfResource<D> {
 }
 
-export function VideoGameClipMixin<Base extends Constructor>(Resource: Base) {
+export function VideoGameClipMixin<Base extends Constructor>(Resource: Base): Constructor<VideoGameClip> & Base {
   @namespace(schema)
   class VideoGameClipClass extends ClipMixin(Resource) implements VideoGameClip {
   }

@@ -10,7 +10,7 @@ import { AgentMixin } from './Agent';
 export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Agent<D>, RdfResource<D> {
 }
 
-export function OrganizationMixin<Base extends Constructor>(Resource: Base) {
+export function OrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<Organization> & Base {
   @namespace(foaf)
   class OrganizationClass extends AgentMixin(Resource) implements Organization {
   }

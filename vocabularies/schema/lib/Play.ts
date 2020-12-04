@@ -10,7 +10,7 @@ import { CreativeWorkMixin } from './CreativeWork';
 export interface Play<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
 }
 
-export function PlayMixin<Base extends Constructor>(Resource: Base) {
+export function PlayMixin<Base extends Constructor>(Resource: Base): Constructor<Play> & Base {
   @namespace(schema)
   class PlayClass extends CreativeWorkMixin(Resource) implements Play {
   }

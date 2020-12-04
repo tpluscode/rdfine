@@ -17,7 +17,7 @@ export interface DeliveryChargeSpecification<D extends RDF.DatasetCore = RDF.Dat
   ineligibleRegionLiteral: string | undefined;
 }
 
-export function DeliveryChargeSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function DeliveryChargeSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<DeliveryChargeSpecification> & Base {
   @namespace(schema)
   class DeliveryChargeSpecificationClass extends PriceSpecificationMixin(Resource) implements DeliveryChargeSpecification {
     @property()

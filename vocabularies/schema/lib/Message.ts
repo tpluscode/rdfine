@@ -19,7 +19,7 @@ export interface Message<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   toRecipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function MessageMixin<Base extends Constructor>(Resource: Base) {
+export function MessageMixin<Base extends Constructor>(Resource: Base): Constructor<Message> & Base {
   @namespace(schema)
   class MessageClass extends CreativeWorkMixin(Resource) implements Message {
     @property.resource()

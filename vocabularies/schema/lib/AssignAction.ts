@@ -10,7 +10,7 @@ import { AllocateActionMixin } from './AllocateAction';
 export interface AssignAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AllocateAction<D>, RdfResource<D> {
 }
 
-export function AssignActionMixin<Base extends Constructor>(Resource: Base) {
+export function AssignActionMixin<Base extends Constructor>(Resource: Base): Constructor<AssignAction> & Base {
   @namespace(schema)
   class AssignActionClass extends AllocateActionMixin(Resource) implements AssignAction {
   }

@@ -13,7 +13,7 @@ export interface EmployeeRole<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   salaryCurrency: string | undefined;
 }
 
-export function EmployeeRoleMixin<Base extends Constructor>(Resource: Base) {
+export function EmployeeRoleMixin<Base extends Constructor>(Resource: Base): Constructor<EmployeeRole> & Base {
   @namespace(schema)
   class EmployeeRoleClass extends OrganizationRoleMixin(Resource) implements EmployeeRole {
     @property.resource()

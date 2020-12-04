@@ -10,7 +10,7 @@ import { BodyOfWaterMixin } from './BodyOfWater';
 export interface SeaBodyOfWater<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BodyOfWater<D>, RdfResource<D> {
 }
 
-export function SeaBodyOfWaterMixin<Base extends Constructor>(Resource: Base) {
+export function SeaBodyOfWaterMixin<Base extends Constructor>(Resource: Base): Constructor<SeaBodyOfWater> & Base {
   @namespace(schema)
   class SeaBodyOfWaterClass extends BodyOfWaterMixin(Resource) implements SeaBodyOfWater {
   }

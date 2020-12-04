@@ -10,7 +10,7 @@ import { VisualArtworkMixin } from './VisualArtwork';
 export interface CoverArt<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.VisualArtwork<D>, RdfResource<D> {
 }
 
-export function CoverArtMixin<Base extends Constructor>(Resource: Base) {
+export function CoverArtMixin<Base extends Constructor>(Resource: Base): Constructor<CoverArt> & Base {
   @namespace(schema)
   class CoverArtClass extends VisualArtworkMixin(Resource) implements CoverArt {
   }

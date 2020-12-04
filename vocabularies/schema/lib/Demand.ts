@@ -46,7 +46,7 @@ export interface Demand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   warranty: Schema.WarrantyPromise<D> | undefined;
 }
 
-export function DemandMixin<Base extends Constructor>(Resource: Base) {
+export function DemandMixin<Base extends Constructor>(Resource: Base): Constructor<Demand> & Base {
   @namespace(schema)
   class DemandClass extends IntangibleMixin(Resource) implements Demand {
     @property.resource()

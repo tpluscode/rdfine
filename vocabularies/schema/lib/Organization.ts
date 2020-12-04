@@ -79,7 +79,7 @@ export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   vatID: string | undefined;
 }
 
-export function OrganizationMixin<Base extends Constructor>(Resource: Base) {
+export function OrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<Organization> & Base {
   @namespace(schema)
   class OrganizationClass extends ThingMixin(Resource) implements Organization {
     @property.resource()

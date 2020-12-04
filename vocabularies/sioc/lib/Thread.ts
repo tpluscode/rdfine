@@ -10,7 +10,7 @@ import { ContainerMixin } from './Container';
 export interface Thread<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc.Container<D>, RdfResource<D> {
 }
 
-export function ThreadMixin<Base extends Constructor>(Resource: Base) {
+export function ThreadMixin<Base extends Constructor>(Resource: Base): Constructor<Thread> & Base {
   @namespace(sioc)
   class ThreadClass extends ContainerMixin(Resource) implements Thread {
   }

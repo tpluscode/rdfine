@@ -10,7 +10,7 @@ import { CommentMixin } from './Comment';
 export interface Answer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Comment<D>, RdfResource<D> {
 }
 
-export function AnswerMixin<Base extends Constructor>(Resource: Base) {
+export function AnswerMixin<Base extends Constructor>(Resource: Base): Constructor<Answer> & Base {
   @namespace(schema)
   class AnswerClass extends CommentMixin(Resource) implements Answer {
   }

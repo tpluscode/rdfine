@@ -11,7 +11,7 @@ export interface MonetaryAmountDistribution<D extends RDF.DatasetCore = RDF.Data
   currency: string | undefined;
 }
 
-export function MonetaryAmountDistributionMixin<Base extends Constructor>(Resource: Base) {
+export function MonetaryAmountDistributionMixin<Base extends Constructor>(Resource: Base): Constructor<MonetaryAmountDistribution> & Base {
   @namespace(schema)
   class MonetaryAmountDistributionClass extends QuantitativeValueDistributionMixin(Resource) implements MonetaryAmountDistribution {
     @property.literal()

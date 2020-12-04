@@ -22,7 +22,7 @@ export interface DietarySupplement<D extends RDF.DatasetCore = RDF.DatasetCore> 
   targetPopulation: string | undefined;
 }
 
-export function DietarySupplementMixin<Base extends Constructor>(Resource: Base) {
+export function DietarySupplementMixin<Base extends Constructor>(Resource: Base): Constructor<DietarySupplement> & Base {
   @namespace(schema)
   class DietarySupplementClass extends SubstanceMixin(Resource) implements DietarySupplement {
     @property.literal()

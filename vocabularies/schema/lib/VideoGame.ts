@@ -23,7 +23,7 @@ export interface VideoGame<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function VideoGameMixin<Base extends Constructor>(Resource: Base) {
+export function VideoGameMixin<Base extends Constructor>(Resource: Base): Constructor<VideoGame> & Base {
   @namespace(schema)
   class VideoGameClass extends SoftwareApplicationMixin(GameMixin(Resource)) implements VideoGame {
     @property.resource()

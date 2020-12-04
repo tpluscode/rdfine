@@ -11,7 +11,7 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface AllDisjointProperties<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
 }
 
-export function AllDisjointPropertiesMixin<Base extends Constructor>(Resource: Base) {
+export function AllDisjointPropertiesMixin<Base extends Constructor>(Resource: Base): Constructor<AllDisjointProperties> & Base {
   @namespace(owl)
   class AllDisjointPropertiesClass extends RdfsResourceMixin(Resource) implements AllDisjointProperties {
   }

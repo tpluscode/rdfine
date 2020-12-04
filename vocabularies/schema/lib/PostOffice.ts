@@ -10,7 +10,7 @@ import { GovernmentOfficeMixin } from './GovernmentOffice';
 export interface PostOffice<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentOffice<D>, RdfResource<D> {
 }
 
-export function PostOfficeMixin<Base extends Constructor>(Resource: Base) {
+export function PostOfficeMixin<Base extends Constructor>(Resource: Base): Constructor<PostOffice> & Base {
   @namespace(schema)
   class PostOfficeClass extends GovernmentOfficeMixin(Resource) implements PostOffice {
   }

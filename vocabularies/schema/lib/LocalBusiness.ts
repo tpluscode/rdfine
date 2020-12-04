@@ -16,7 +16,7 @@ export interface LocalBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   priceRange: string | undefined;
 }
 
-export function LocalBusinessMixin<Base extends Constructor>(Resource: Base) {
+export function LocalBusinessMixin<Base extends Constructor>(Resource: Base): Constructor<LocalBusiness> & Base {
   @namespace(schema)
   class LocalBusinessClass extends PlaceMixin(OrganizationMixin(Resource)) implements LocalBusiness {
     @property.resource()

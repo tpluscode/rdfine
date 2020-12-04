@@ -9,7 +9,7 @@ import type * as Rdf from '..';
 export interface Bag<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
 
-export function BagMixin<Base extends Constructor>(Resource: Base) {
+export function BagMixin<Base extends Constructor>(Resource: Base): Constructor<Bag> & Base {
   @namespace(rdf)
   class BagClass extends Resource implements Bag {
   }

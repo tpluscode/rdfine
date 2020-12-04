@@ -30,7 +30,7 @@ export interface Table<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
   valueUrl: string | undefined;
 }
 
-export function TableMixin<Base extends Constructor>(Resource: Base) {
+export function TableMixin<Base extends Constructor>(Resource: Base): Constructor<Table> & Base {
   @namespace(csvw)
   class TableClass extends Resource implements Table {
     @property.literal()

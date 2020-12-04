@@ -13,7 +13,7 @@ export interface GovernmentService<D extends RDF.DatasetCore = RDF.DatasetCore> 
   serviceOperator: Schema.Organization<D> | undefined;
 }
 
-export function GovernmentServiceMixin<Base extends Constructor>(Resource: Base) {
+export function GovernmentServiceMixin<Base extends Constructor>(Resource: Base): Constructor<GovernmentService> & Base {
   @namespace(schema)
   class GovernmentServiceClass extends ServiceMixin(Resource) implements GovernmentService {
     @property.resource()

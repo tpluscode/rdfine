@@ -11,7 +11,7 @@ import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype';
 export interface DataRange<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Datatype<D>, RdfResource<D> {
 }
 
-export function DataRangeMixin<Base extends Constructor>(Resource: Base) {
+export function DataRangeMixin<Base extends Constructor>(Resource: Base): Constructor<DataRange> & Base {
   @namespace(owl)
   class DataRangeClass extends RdfsDatatypeMixin(Resource) implements DataRange {
   }

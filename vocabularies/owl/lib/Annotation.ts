@@ -11,7 +11,7 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface Annotation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
 }
 
-export function AnnotationMixin<Base extends Constructor>(Resource: Base) {
+export function AnnotationMixin<Base extends Constructor>(Resource: Base): Constructor<Annotation> & Base {
   @namespace(owl)
   class AnnotationClass extends RdfsResourceMixin(Resource) implements Annotation {
   }

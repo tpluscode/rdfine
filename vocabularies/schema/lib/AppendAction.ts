@@ -10,7 +10,7 @@ import { InsertActionMixin } from './InsertAction';
 export interface AppendAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InsertAction<D>, RdfResource<D> {
 }
 
-export function AppendActionMixin<Base extends Constructor>(Resource: Base) {
+export function AppendActionMixin<Base extends Constructor>(Resource: Base): Constructor<AppendAction> & Base {
   @namespace(schema)
   class AppendActionClass extends InsertActionMixin(Resource) implements AppendAction {
   }

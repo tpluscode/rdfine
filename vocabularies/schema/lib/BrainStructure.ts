@@ -10,7 +10,7 @@ import { AnatomicalStructureMixin } from './AnatomicalStructure';
 export interface BrainStructure<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AnatomicalStructure<D>, RdfResource<D> {
 }
 
-export function BrainStructureMixin<Base extends Constructor>(Resource: Base) {
+export function BrainStructureMixin<Base extends Constructor>(Resource: Base): Constructor<BrainStructure> & Base {
   @namespace(schema)
   class BrainStructureClass extends AnatomicalStructureMixin(Resource) implements BrainStructure {
   }

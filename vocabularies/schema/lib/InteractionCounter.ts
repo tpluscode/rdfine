@@ -13,7 +13,7 @@ export interface InteractionCounter<D extends RDF.DatasetCore = RDF.DatasetCore>
   userInteractionCount: number | undefined;
 }
 
-export function InteractionCounterMixin<Base extends Constructor>(Resource: Base) {
+export function InteractionCounterMixin<Base extends Constructor>(Resource: Base): Constructor<InteractionCounter> & Base {
   @namespace(schema)
   class InteractionCounterClass extends StructuredValueMixin(Resource) implements InteractionCounter {
     @property.resource()

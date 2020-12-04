@@ -14,7 +14,7 @@ export interface MenuItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   suitableForDiet: Schema.RestrictedDiet | undefined;
 }
 
-export function MenuItemMixin<Base extends Constructor>(Resource: Base) {
+export function MenuItemMixin<Base extends Constructor>(Resource: Base): Constructor<MenuItem> & Base {
   @namespace(schema)
   class MenuItemClass extends IntangibleMixin(Resource) implements MenuItem {
     @property.resource()

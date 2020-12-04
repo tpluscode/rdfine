@@ -10,7 +10,7 @@ import { WebPageElementMixin } from './WebPageElement';
 export interface WPAdBlock<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, RdfResource<D> {
 }
 
-export function WPAdBlockMixin<Base extends Constructor>(Resource: Base) {
+export function WPAdBlockMixin<Base extends Constructor>(Resource: Base): Constructor<WPAdBlock> & Base {
   @namespace(schema)
   class WPAdBlockClass extends WebPageElementMixin(Resource) implements WPAdBlock {
   }

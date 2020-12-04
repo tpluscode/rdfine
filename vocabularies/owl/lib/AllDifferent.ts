@@ -14,7 +14,7 @@ export interface AllDifferent<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   distinctMembers: Rdf.List<D> | undefined;
 }
 
-export function AllDifferentMixin<Base extends Constructor>(Resource: Base) {
+export function AllDifferentMixin<Base extends Constructor>(Resource: Base): Constructor<AllDifferent> & Base {
   @namespace(owl)
   class AllDifferentClass extends RdfsResourceMixin(Resource) implements AllDifferent {
     @property.resource({ as: [RdfListMixin] })

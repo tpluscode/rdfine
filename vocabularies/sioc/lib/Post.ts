@@ -19,7 +19,7 @@ export interface Post<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc.
   title: RDF.Literal | undefined;
 }
 
-export function PostMixin<Base extends Constructor>(Resource: Base) {
+export function PostMixin<Base extends Constructor>(Resource: Base): Constructor<Post> & Base {
   @namespace(sioc)
   class PostClass extends FoafDocumentMixin(ItemMixin(Resource)) implements Post {
     @property()

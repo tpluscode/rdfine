@@ -12,7 +12,7 @@ export interface Grant<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   sponsor: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function GrantMixin<Base extends Constructor>(Resource: Base) {
+export function GrantMixin<Base extends Constructor>(Resource: Base): Constructor<Grant> & Base {
   @namespace(schema)
   class GrantClass extends IntangibleMixin(Resource) implements Grant {
     @property.resource()

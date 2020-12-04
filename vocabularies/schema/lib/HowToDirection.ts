@@ -21,7 +21,7 @@ export interface HowToDirection<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   totalTime: Schema.Duration<D> | undefined;
 }
 
-export function HowToDirectionMixin<Base extends Constructor>(Resource: Base) {
+export function HowToDirectionMixin<Base extends Constructor>(Resource: Base): Constructor<HowToDirection> & Base {
   @namespace(schema)
   class HowToDirectionClass extends ListItemMixin(CreativeWorkMixin(Resource)) implements HowToDirection {
     @property.resource()

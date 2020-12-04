@@ -10,7 +10,7 @@ import { CreativeWorkMixin } from './CreativeWork';
 export interface Season<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
 }
 
-export function SeasonMixin<Base extends Constructor>(Resource: Base) {
+export function SeasonMixin<Base extends Constructor>(Resource: Base): Constructor<Season> & Base {
   @namespace(schema)
   class SeasonClass extends CreativeWorkMixin(Resource) implements Season {
   }

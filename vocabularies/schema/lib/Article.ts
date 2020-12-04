@@ -19,7 +19,7 @@ export interface Article<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   wordCount: number | undefined;
 }
 
-export function ArticleMixin<Base extends Constructor>(Resource: Base) {
+export function ArticleMixin<Base extends Constructor>(Resource: Base): Constructor<Article> & Base {
   @namespace(schema)
   class ArticleClass extends CreativeWorkMixin(Resource) implements Article {
     @property.literal()

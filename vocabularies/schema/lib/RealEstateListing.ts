@@ -12,7 +12,7 @@ export interface RealEstateListing<D extends RDF.DatasetCore = RDF.DatasetCore> 
   leaseLength: Schema.Duration<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function RealEstateListingMixin<Base extends Constructor>(Resource: Base) {
+export function RealEstateListingMixin<Base extends Constructor>(Resource: Base): Constructor<RealEstateListing> & Base {
   @namespace(schema)
   class RealEstateListingClass extends WebPageMixin(Resource) implements RealEstateListing {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })

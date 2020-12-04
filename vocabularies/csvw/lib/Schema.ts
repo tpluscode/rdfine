@@ -26,7 +26,7 @@ export interface Schema<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf
   valueUrl: string | undefined;
 }
 
-export function SchemaMixin<Base extends Constructor>(Resource: Base) {
+export function SchemaMixin<Base extends Constructor>(Resource: Base): Constructor<Schema> & Base {
   @namespace(csvw)
   class SchemaClass extends Resource implements Schema {
     @property.literal()

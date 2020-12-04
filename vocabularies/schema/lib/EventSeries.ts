@@ -11,7 +11,7 @@ import { SeriesMixin } from './Series';
 export interface EventSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, Schema.Series<D>, RdfResource<D> {
 }
 
-export function EventSeriesMixin<Base extends Constructor>(Resource: Base) {
+export function EventSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<EventSeries> & Base {
   @namespace(schema)
   class EventSeriesClass extends SeriesMixin(EventMixin(Resource)) implements EventSeries {
   }

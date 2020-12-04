@@ -10,7 +10,7 @@ import { UseActionMixin } from './UseAction';
 export interface WearAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UseAction<D>, RdfResource<D> {
 }
 
-export function WearActionMixin<Base extends Constructor>(Resource: Base) {
+export function WearActionMixin<Base extends Constructor>(Resource: Base): Constructor<WearAction> & Base {
   @namespace(schema)
   class WearActionClass extends UseActionMixin(Resource) implements WearAction {
   }

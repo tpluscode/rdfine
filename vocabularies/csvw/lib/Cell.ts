@@ -9,7 +9,7 @@ import type * as Csvw from '..';
 export interface Cell<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
 
-export function CellMixin<Base extends Constructor>(Resource: Base) {
+export function CellMixin<Base extends Constructor>(Resource: Base): Constructor<Cell> & Base {
   @namespace(csvw)
   class CellClass extends Resource implements Cell {
   }

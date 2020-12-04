@@ -13,7 +13,7 @@ export interface LocationFeatureSpecification<D extends RDF.DatasetCore = RDF.Da
   validThrough: Date | undefined;
 }
 
-export function LocationFeatureSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function LocationFeatureSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<LocationFeatureSpecification> & Base {
   @namespace(schema)
   class LocationFeatureSpecificationClass extends PropertyValueMixin(Resource) implements LocationFeatureSpecification {
     @property.resource()

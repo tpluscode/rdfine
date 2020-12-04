@@ -11,7 +11,7 @@ import { MedicalOrganizationMixin } from './MedicalOrganization';
 export interface Dentist<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, Schema.MedicalOrganization<D>, RdfResource<D> {
 }
 
-export function DentistMixin<Base extends Constructor>(Resource: Base) {
+export function DentistMixin<Base extends Constructor>(Resource: Base): Constructor<Dentist> & Base {
   @namespace(schema)
   class DentistClass extends MedicalOrganizationMixin(LocalBusinessMixin(Resource)) implements Dentist {
   }

@@ -10,7 +10,7 @@ import { EventMixin } from './Event';
 export interface SocialEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
 }
 
-export function SocialEventMixin<Base extends Constructor>(Resource: Base) {
+export function SocialEventMixin<Base extends Constructor>(Resource: Base): Constructor<SocialEvent> & Base {
   @namespace(schema)
   class SocialEventClass extends EventMixin(Resource) implements SocialEvent {
   }

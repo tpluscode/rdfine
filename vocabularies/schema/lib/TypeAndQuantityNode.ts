@@ -16,7 +16,7 @@ export interface TypeAndQuantityNode<D extends RDF.DatasetCore = RDF.DatasetCore
   unitText: string | undefined;
 }
 
-export function TypeAndQuantityNodeMixin<Base extends Constructor>(Resource: Base) {
+export function TypeAndQuantityNodeMixin<Base extends Constructor>(Resource: Base): Constructor<TypeAndQuantityNode> & Base {
   @namespace(schema)
   class TypeAndQuantityNodeClass extends StructuredValueMixin(Resource) implements TypeAndQuantityNode {
     @property.literal({ type: Number })

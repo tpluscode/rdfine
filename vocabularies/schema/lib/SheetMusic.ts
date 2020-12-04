@@ -10,7 +10,7 @@ import { CreativeWorkMixin } from './CreativeWork';
 export interface SheetMusic<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
 }
 
-export function SheetMusicMixin<Base extends Constructor>(Resource: Base) {
+export function SheetMusicMixin<Base extends Constructor>(Resource: Base): Constructor<SheetMusic> & Base {
   @namespace(schema)
   class SheetMusicClass extends CreativeWorkMixin(Resource) implements SheetMusic {
   }

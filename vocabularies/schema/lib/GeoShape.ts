@@ -20,7 +20,7 @@ export interface GeoShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   postalCode: string | undefined;
 }
 
-export function GeoShapeMixin<Base extends Constructor>(Resource: Base) {
+export function GeoShapeMixin<Base extends Constructor>(Resource: Base): Constructor<GeoShape> & Base {
   @namespace(schema)
   class GeoShapeClass extends StructuredValueMixin(Resource) implements GeoShape {
     @property.resource()

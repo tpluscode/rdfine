@@ -12,7 +12,7 @@ export interface FinancialService<D extends RDF.DatasetCore = RDF.DatasetCore> e
   feesAndCommissionsSpecificationTerm: RDF.NamedNode | undefined;
 }
 
-export function FinancialServiceMixin<Base extends Constructor>(Resource: Base) {
+export function FinancialServiceMixin<Base extends Constructor>(Resource: Base): Constructor<FinancialService> & Base {
   @namespace(schema)
   class FinancialServiceClass extends LocalBusinessMixin(Resource) implements FinancialService {
     @property.literal()

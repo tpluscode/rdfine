@@ -10,7 +10,7 @@ import { CommunicateActionMixin } from './CommunicateAction';
 export interface ShareAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, RdfResource<D> {
 }
 
-export function ShareActionMixin<Base extends Constructor>(Resource: Base) {
+export function ShareActionMixin<Base extends Constructor>(Resource: Base): Constructor<ShareAction> & Base {
   @namespace(schema)
   class ShareActionClass extends CommunicateActionMixin(Resource) implements ShareAction {
   }

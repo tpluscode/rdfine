@@ -13,7 +13,7 @@ export interface WriteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   language: Schema.Language<D> | undefined;
 }
 
-export function WriteActionMixin<Base extends Constructor>(Resource: Base) {
+export function WriteActionMixin<Base extends Constructor>(Resource: Base): Constructor<WriteAction> & Base {
   @namespace(schema)
   class WriteActionClass extends CreateActionMixin(Resource) implements WriteAction {
     @property.resource()

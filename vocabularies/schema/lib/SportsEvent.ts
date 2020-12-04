@@ -15,7 +15,7 @@ export interface SportsEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   sportTerm: RDF.NamedNode | undefined;
 }
 
-export function SportsEventMixin<Base extends Constructor>(Resource: Base) {
+export function SportsEventMixin<Base extends Constructor>(Resource: Base): Constructor<SportsEvent> & Base {
   @namespace(schema)
   class SportsEventClass extends EventMixin(Resource) implements SportsEvent {
     @property.resource()

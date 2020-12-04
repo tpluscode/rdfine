@@ -14,7 +14,7 @@ export interface Brand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   slogan: string | undefined;
 }
 
-export function BrandMixin<Base extends Constructor>(Resource: Base) {
+export function BrandMixin<Base extends Constructor>(Resource: Base): Constructor<Brand> & Base {
   @namespace(schema)
   class BrandClass extends IntangibleMixin(Resource) implements Brand {
     @property.resource()

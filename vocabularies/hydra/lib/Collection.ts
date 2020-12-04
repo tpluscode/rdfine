@@ -13,7 +13,7 @@ export interface Collection<M extends RdfResourceCore<any> = RdfResourceCore<any
   totalItems: number | undefined;
 }
 
-export function CollectionMixin<Base extends Constructor>(Resource: Base) {
+export function CollectionMixin<Base extends Constructor>(Resource: Base): Constructor<Collection> & Base {
   @namespace(hydra)
   class CollectionClass extends ResourceMixin(Resource) implements Collection {
     @property.resource({ values: 'array', implicitTypes: [hydra.ManagesBlock] })

@@ -16,7 +16,7 @@ export interface MerchantReturnPolicy<D extends RDF.DatasetCore = RDF.DatasetCor
   returnPolicyCategory: Schema.MerchantReturnEnumeration | undefined;
 }
 
-export function MerchantReturnPolicyMixin<Base extends Constructor>(Resource: Base) {
+export function MerchantReturnPolicyMixin<Base extends Constructor>(Resource: Base): Constructor<MerchantReturnPolicy> & Base {
   @namespace(schema)
   class MerchantReturnPolicyClass extends IntangibleMixin(Resource) implements MerchantReturnPolicy {
     @property.literal({ type: Boolean })

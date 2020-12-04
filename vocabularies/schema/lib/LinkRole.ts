@@ -13,7 +13,7 @@ export interface LinkRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   linkRelationship: string | undefined;
 }
 
-export function LinkRoleMixin<Base extends Constructor>(Resource: Base) {
+export function LinkRoleMixin<Base extends Constructor>(Resource: Base): Constructor<LinkRole> & Base {
   @namespace(schema)
   class LinkRoleClass extends RoleMixin(Resource) implements LinkRole {
     @property.resource()

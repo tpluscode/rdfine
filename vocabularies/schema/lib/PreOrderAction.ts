@@ -10,7 +10,7 @@ import { TradeActionMixin } from './TradeAction';
 export interface PreOrderAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, RdfResource<D> {
 }
 
-export function PreOrderActionMixin<Base extends Constructor>(Resource: Base) {
+export function PreOrderActionMixin<Base extends Constructor>(Resource: Base): Constructor<PreOrderAction> & Base {
   @namespace(schema)
   class PreOrderActionClass extends TradeActionMixin(Resource) implements PreOrderAction {
   }

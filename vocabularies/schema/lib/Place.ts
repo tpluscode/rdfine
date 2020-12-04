@@ -55,7 +55,7 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   tourBookingPage: RDF.NamedNode | undefined;
 }
 
-export function PlaceMixin<Base extends Constructor>(Resource: Base) {
+export function PlaceMixin<Base extends Constructor>(Resource: Base): Constructor<Place> & Base {
   @namespace(schema)
   class PlaceClass extends ThingMixin(Resource) implements Place {
     @property.resource()

@@ -76,7 +76,7 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   worksFor: Schema.Organization<D> | undefined;
 }
 
-export function PersonMixin<Base extends Constructor>(Resource: Base) {
+export function PersonMixin<Base extends Constructor>(Resource: Base): Constructor<Person> & Base {
   @namespace(schema)
   class PersonClass extends ThingMixin(Resource) implements Person {
     @property.literal()

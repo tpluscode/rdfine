@@ -10,7 +10,7 @@ import { SportsActivityLocationMixin } from './SportsActivityLocation';
 export interface ExerciseGym<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SportsActivityLocation<D>, RdfResource<D> {
 }
 
-export function ExerciseGymMixin<Base extends Constructor>(Resource: Base) {
+export function ExerciseGymMixin<Base extends Constructor>(Resource: Base): Constructor<ExerciseGym> & Base {
   @namespace(schema)
   class ExerciseGymClass extends SportsActivityLocationMixin(Resource) implements ExerciseGym {
   }

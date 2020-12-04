@@ -11,7 +11,7 @@ export interface EndorseAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   endorsee: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function EndorseActionMixin<Base extends Constructor>(Resource: Base) {
+export function EndorseActionMixin<Base extends Constructor>(Resource: Base): Constructor<EndorseAction> & Base {
   @namespace(schema)
   class EndorseActionClass extends ReactActionMixin(Resource) implements EndorseAction {
     @property.resource()

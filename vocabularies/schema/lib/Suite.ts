@@ -15,7 +15,7 @@ export interface Suite<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   occupancy: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function SuiteMixin<Base extends Constructor>(Resource: Base) {
+export function SuiteMixin<Base extends Constructor>(Resource: Base): Constructor<Suite> & Base {
   @namespace(schema)
   class SuiteClass extends AccommodationMixin(Resource) implements Suite {
     @property.resource()

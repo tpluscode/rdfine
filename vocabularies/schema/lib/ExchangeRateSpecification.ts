@@ -14,7 +14,7 @@ export interface ExchangeRateSpecification<D extends RDF.DatasetCore = RDF.Datas
   exchangeRateSpreadLiteral: number | undefined;
 }
 
-export function ExchangeRateSpecificationMixin<Base extends Constructor>(Resource: Base) {
+export function ExchangeRateSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<ExchangeRateSpecification> & Base {
   @namespace(schema)
   class ExchangeRateSpecificationClass extends StructuredValueMixin(Resource) implements ExchangeRateSpecification {
     @property.literal()

@@ -14,7 +14,7 @@ export interface Property<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   supersededBy: Schema.Property<D> | undefined;
 }
 
-export function PropertyMixin<Base extends Constructor>(Resource: Base) {
+export function PropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Property> & Base {
   @namespace(schema)
   class PropertyClass extends IntangibleMixin(Resource) implements Property {
     @property()

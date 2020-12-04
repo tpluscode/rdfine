@@ -12,7 +12,7 @@ export interface BusOrCoach<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   roofLoad: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function BusOrCoachMixin<Base extends Constructor>(Resource: Base) {
+export function BusOrCoachMixin<Base extends Constructor>(Resource: Base): Constructor<BusOrCoach> & Base {
   @namespace(schema)
   class BusOrCoachClass extends VehicleMixin(Resource) implements BusOrCoach {
     @property.literal()

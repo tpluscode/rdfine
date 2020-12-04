@@ -10,7 +10,7 @@ import { ServiceMixin } from './Service';
 export interface CableOrSatelliteService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, RdfResource<D> {
 }
 
-export function CableOrSatelliteServiceMixin<Base extends Constructor>(Resource: Base) {
+export function CableOrSatelliteServiceMixin<Base extends Constructor>(Resource: Base): Constructor<CableOrSatelliteService> & Base {
   @namespace(schema)
   class CableOrSatelliteServiceClass extends ServiceMixin(Resource) implements CableOrSatelliteService {
   }

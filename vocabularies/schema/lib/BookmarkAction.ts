@@ -10,7 +10,7 @@ import { OrganizeActionMixin } from './OrganizeAction';
 export interface BookmarkAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OrganizeAction<D>, RdfResource<D> {
 }
 
-export function BookmarkActionMixin<Base extends Constructor>(Resource: Base) {
+export function BookmarkActionMixin<Base extends Constructor>(Resource: Base): Constructor<BookmarkAction> & Base {
   @namespace(schema)
   class BookmarkActionClass extends OrganizeActionMixin(Resource) implements BookmarkAction {
   }

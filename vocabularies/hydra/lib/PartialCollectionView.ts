@@ -10,7 +10,7 @@ import { ResourceMixin } from './Resource';
 export interface PartialCollectionView<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
 }
 
-export function PartialCollectionViewMixin<Base extends Constructor>(Resource: Base) {
+export function PartialCollectionViewMixin<Base extends Constructor>(Resource: Base): Constructor<PartialCollectionView> & Base {
   @namespace(hydra)
   class PartialCollectionViewClass extends ResourceMixin(Resource) implements PartialCollectionView {
   }

@@ -10,7 +10,7 @@ import { RepositoryMixin } from './Repository';
 export interface DarcsRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, RdfResource<D> {
 }
 
-export function DarcsRepositoryMixin<Base extends Constructor>(Resource: Base) {
+export function DarcsRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<DarcsRepository> & Base {
   @namespace(doap)
   class DarcsRepositoryClass extends RepositoryMixin(Resource) implements DarcsRepository {
   }

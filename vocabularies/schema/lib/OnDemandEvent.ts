@@ -10,7 +10,7 @@ import { PublicationEventMixin } from './PublicationEvent';
 export interface OnDemandEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PublicationEvent<D>, RdfResource<D> {
 }
 
-export function OnDemandEventMixin<Base extends Constructor>(Resource: Base) {
+export function OnDemandEventMixin<Base extends Constructor>(Resource: Base): Constructor<OnDemandEvent> & Base {
   @namespace(schema)
   class OnDemandEventClass extends PublicationEventMixin(Resource) implements OnDemandEvent {
   }

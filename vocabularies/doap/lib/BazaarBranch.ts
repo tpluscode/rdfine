@@ -10,7 +10,7 @@ import { RepositoryMixin } from './Repository';
 export interface BazaarBranch<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, RdfResource<D> {
 }
 
-export function BazaarBranchMixin<Base extends Constructor>(Resource: Base) {
+export function BazaarBranchMixin<Base extends Constructor>(Resource: Base): Constructor<BazaarBranch> & Base {
   @namespace(doap)
   class BazaarBranchClass extends RepositoryMixin(Resource) implements BazaarBranch {
   }

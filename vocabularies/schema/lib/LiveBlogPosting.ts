@@ -13,7 +13,7 @@ export interface LiveBlogPosting<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   liveBlogUpdate: Schema.BlogPosting<D> | undefined;
 }
 
-export function LiveBlogPostingMixin<Base extends Constructor>(Resource: Base) {
+export function LiveBlogPostingMixin<Base extends Constructor>(Resource: Base): Constructor<LiveBlogPosting> & Base {
   @namespace(schema)
   class LiveBlogPostingClass extends BlogPostingMixin(Resource) implements LiveBlogPosting {
     @property.literal({ type: Date })

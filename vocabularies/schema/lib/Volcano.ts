@@ -10,7 +10,7 @@ import { LandformMixin } from './Landform';
 export interface Volcano<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Landform<D>, RdfResource<D> {
 }
 
-export function VolcanoMixin<Base extends Constructor>(Resource: Base) {
+export function VolcanoMixin<Base extends Constructor>(Resource: Base): Constructor<Volcano> & Base {
   @namespace(schema)
   class VolcanoClass extends LandformMixin(Resource) implements Volcano {
   }

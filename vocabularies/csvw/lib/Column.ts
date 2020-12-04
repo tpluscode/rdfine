@@ -26,7 +26,7 @@ export interface Column<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf
   virtual: boolean | undefined;
 }
 
-export function ColumnMixin<Base extends Constructor>(Resource: Base) {
+export function ColumnMixin<Base extends Constructor>(Resource: Base): Constructor<Column> & Base {
   @namespace(csvw)
   class ColumnClass extends Resource implements Column {
     @property.literal()
