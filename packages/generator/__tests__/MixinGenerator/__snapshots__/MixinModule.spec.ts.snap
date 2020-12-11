@@ -15,7 +15,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
     @namespace(ex)
-    class ClassClass extends Resource implements Class {
+    class ClassClass extends Resource implements Partial<Class> {
         @property.literal()
         foo: string | undefined;
     }
@@ -50,7 +50,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
     @namespace(ex)
-    class ClassClass extends Resource implements Class {
+    class ClassClass extends Resource implements Partial<Class> {
         @property.resource({ as: [ClassMixin] })
         foo: Example.Class | undefined;
     }
@@ -116,7 +116,7 @@ export interface _3Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rd
 
 export function _3ClassMixin<Base extends Constructor>(Resource: Base): Constructor<_3Class> & Base {
     @namespace(ex)
-    class _3ClassClass extends Resource implements _3Class {
+    class _3ClassClass extends Resource implements Partial<_3Class> {
     }
     return _3ClassClass
 }
@@ -150,7 +150,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
     @namespace(ex)
-    class ClassClass extends PersonMixin(Resource) implements Class {
+    class ClassClass extends PersonMixin(Resource) implements Partial<Class> {
     }
     return ClassClass
 }
@@ -182,7 +182,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
     @namespace(ex)
-    class ClassClass extends Resource implements Class {
+    class ClassClass extends Resource implements Partial<Class> {
     }
     return ClassClass
 }
@@ -215,7 +215,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
     @namespace(ex)
-    class ClassClass extends Resource implements Class {
+    class ClassClass extends Resource implements Partial<Class> {
         @property.resource({ values: 'array' })
         foo!: Array<Example.Foo>;
     }
@@ -250,7 +250,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
     @namespace(ex)
-    class ClassClass extends Resource implements Class {
+    class ClassClass extends Resource implements Partial<Class> {
         @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
         foo: Date | undefined;
     }
@@ -285,7 +285,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
     @namespace(ex)
-    class ClassClass extends Resource implements Class {
+    class ClassClass extends Resource implements Partial<Class> {
         @property.resource({ values: 'list' })
         foo!: Array<Example.Foo>;
     }
@@ -320,7 +320,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
     @namespace(ex)
-    class ClassClass extends Resource implements Class {
+    class ClassClass extends Resource implements Partial<Class> {
         @property.resource({ values: ['list', 'single'] })
         foo: Example.Foo | Array<Example.Foo> | undefined;
     }
@@ -357,7 +357,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
     @namespace(ex)
-    class ClassClass extends Resource implements Class {
+    class ClassClass extends Resource implements Partial<Class> {
         @property.resource({ as: [FooMixin] })
         foo: Example.Foo | undefined;
     }
@@ -392,7 +392,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
     @namespace(ex)
-    class ClassClass extends Resource implements Class {
+    class ClassClass extends Resource implements Partial<Class> {
         @property.resource({ implicitTypes: [ex.Foo] })
         foo: Example.Foo | undefined;
     }
@@ -427,7 +427,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
     @namespace(ex)
-    class ClassClass extends Resource implements Class {
+    class ClassClass extends Resource implements Partial<Class> {
         @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#anyURI') })
         foo: string | undefined;
     }
@@ -462,7 +462,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
     @namespace(ex)
-    class ClassClass extends Resource implements Class {
+    class ClassClass extends Resource implements Partial<Class> {
         @property.literal()
         'foo-bar': string | undefined;
     }
