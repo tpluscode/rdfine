@@ -12,7 +12,7 @@ export interface HardwareStore<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function HardwareStoreMixin<Base extends Constructor>(Resource: Base): Constructor<HardwareStore> & Base {
   @namespace(schema)
-  class HardwareStoreClass extends StoreMixin(Resource) implements HardwareStore {
+  class HardwareStoreClass extends StoreMixin(Resource) implements Partial<HardwareStore> {
   }
   return HardwareStoreClass
 }

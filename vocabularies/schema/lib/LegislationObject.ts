@@ -14,7 +14,7 @@ export interface LegislationObject<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function LegislationObjectMixin<Base extends Constructor>(Resource: Base): Constructor<LegislationObject> & Base {
   @namespace(schema)
-  class LegislationObjectClass extends MediaObjectMixin(LegislationMixin(Resource)) implements LegislationObject {
+  class LegislationObjectClass extends MediaObjectMixin(LegislationMixin(Resource)) implements Partial<LegislationObject> {
     @property()
     legislationLegalValue: Schema.LegalValueLevel | undefined;
   }

@@ -11,7 +11,7 @@ export interface Direction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function DirectionMixin<Base extends Constructor>(Resource: Base): Constructor<Direction> & Base {
   @namespace(csvw)
-  class DirectionClass extends Resource implements Direction {
+  class DirectionClass extends Resource implements Partial<Direction> {
   }
   return DirectionClass
 }

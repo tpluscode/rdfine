@@ -14,7 +14,7 @@ export interface TouristTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function TouristTripMixin<Base extends Constructor>(Resource: Base): Constructor<TouristTrip> & Base {
   @namespace(schema)
-  class TouristTripClass extends TripMixin(Resource) implements TouristTrip {
+  class TouristTripClass extends TripMixin(Resource) implements Partial<TouristTrip> {
     @property.resource()
     touristType: Schema.Audience | undefined;
     @property.literal({ path: schema.touristType })

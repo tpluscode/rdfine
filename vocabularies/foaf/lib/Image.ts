@@ -14,7 +14,7 @@ export interface Image<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf
 
 export function ImageMixin<Base extends Constructor>(Resource: Base): Constructor<Image> & Base {
   @namespace(foaf)
-  class ImageClass extends DocumentMixin(Resource) implements Image {
+  class ImageClass extends DocumentMixin(Resource) implements Partial<Image> {
     @property()
     depicts: RDF.NamedNode | undefined;
     @property.resource({ as: [ImageMixin] })

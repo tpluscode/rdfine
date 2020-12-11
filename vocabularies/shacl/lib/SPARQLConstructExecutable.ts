@@ -13,7 +13,7 @@ export interface SPARQLConstructExecutable<D extends RDF.DatasetCore = RDF.Datas
 
 export function SPARQLConstructExecutableMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLConstructExecutable> & Base {
   @namespace(sh)
-  class SPARQLConstructExecutableClass extends SPARQLExecutableMixin(Resource) implements SPARQLConstructExecutable {
+  class SPARQLConstructExecutableClass extends SPARQLExecutableMixin(Resource) implements Partial<SPARQLConstructExecutable> {
     @property.literal()
     construct: string | undefined;
   }

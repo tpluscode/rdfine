@@ -14,7 +14,7 @@ export interface TransferAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function TransferActionMixin<Base extends Constructor>(Resource: Base): Constructor<TransferAction> & Base {
   @namespace(schema)
-  class TransferActionClass extends ActionMixin(Resource) implements TransferAction {
+  class TransferActionClass extends ActionMixin(Resource) implements Partial<TransferAction> {
     @property.resource()
     fromLocation: Schema.Place | undefined;
     @property.resource()

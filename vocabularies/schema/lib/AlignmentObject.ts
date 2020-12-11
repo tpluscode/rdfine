@@ -17,7 +17,7 @@ export interface AlignmentObject<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function AlignmentObjectMixin<Base extends Constructor>(Resource: Base): Constructor<AlignmentObject> & Base {
   @namespace(schema)
-  class AlignmentObjectClass extends IntangibleMixin(Resource) implements AlignmentObject {
+  class AlignmentObjectClass extends IntangibleMixin(Resource) implements Partial<AlignmentObject> {
     @property.literal()
     alignmentType: string | undefined;
     @property.literal()

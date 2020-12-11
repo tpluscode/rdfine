@@ -14,7 +14,7 @@ export interface ProductCollection<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function ProductCollectionMixin<Base extends Constructor>(Resource: Base): Constructor<ProductCollection> & Base {
   @namespace(schema)
-  class ProductCollectionClass extends ProductMixin(CollectionMixin(Resource)) implements ProductCollection {
+  class ProductCollectionClass extends ProductMixin(CollectionMixin(Resource)) implements Partial<ProductCollection> {
     @property.resource()
     includesObject: Schema.TypeAndQuantityNode | undefined;
   }

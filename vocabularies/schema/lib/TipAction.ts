@@ -13,7 +13,7 @@ export interface TipAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function TipActionMixin<Base extends Constructor>(Resource: Base): Constructor<TipAction> & Base {
   @namespace(schema)
-  class TipActionClass extends TradeActionMixin(Resource) implements TipAction {
+  class TipActionClass extends TradeActionMixin(Resource) implements Partial<TipAction> {
     @property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }

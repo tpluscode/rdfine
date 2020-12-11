@@ -12,7 +12,7 @@ export interface LifestyleModification<D extends RDF.DatasetCore = RDF.DatasetCo
 
 export function LifestyleModificationMixin<Base extends Constructor>(Resource: Base): Constructor<LifestyleModification> & Base {
   @namespace(schema)
-  class LifestyleModificationClass extends MedicalEntityMixin(Resource) implements LifestyleModification {
+  class LifestyleModificationClass extends MedicalEntityMixin(Resource) implements Partial<LifestyleModification> {
   }
   return LifestyleModificationClass
 }

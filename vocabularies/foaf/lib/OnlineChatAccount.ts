@@ -12,7 +12,7 @@ export interface OnlineChatAccount<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function OnlineChatAccountMixin<Base extends Constructor>(Resource: Base): Constructor<OnlineChatAccount> & Base {
   @namespace(foaf)
-  class OnlineChatAccountClass extends OnlineAccountMixin(Resource) implements OnlineChatAccount {
+  class OnlineChatAccountClass extends OnlineAccountMixin(Resource) implements Partial<OnlineChatAccount> {
   }
   return OnlineChatAccountClass
 }

@@ -24,7 +24,7 @@ export interface ParcelDelivery<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function ParcelDeliveryMixin<Base extends Constructor>(Resource: Base): Constructor<ParcelDelivery> & Base {
   @namespace(schema)
-  class ParcelDeliveryClass extends IntangibleMixin(Resource) implements ParcelDelivery {
+  class ParcelDeliveryClass extends IntangibleMixin(Resource) implements Partial<ParcelDelivery> {
     @property.resource()
     carrier: Schema.Organization | undefined;
     @property.resource()

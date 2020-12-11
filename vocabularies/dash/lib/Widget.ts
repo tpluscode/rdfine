@@ -13,7 +13,7 @@ export interface Widget<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf
 
 export function WidgetMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class WidgetClass extends RdfsResourceMixin(Resource) implements Widget {
+  class WidgetClass extends RdfsResourceMixin(Resource) implements Partial<Widget> {
   }
   return WidgetClass
 }

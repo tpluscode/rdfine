@@ -12,7 +12,7 @@ export interface Bridge<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function BridgeMixin<Base extends Constructor>(Resource: Base): Constructor<Bridge> & Base {
   @namespace(schema)
-  class BridgeClass extends CivicStructureMixin(Resource) implements Bridge {
+  class BridgeClass extends CivicStructureMixin(Resource) implements Partial<Bridge> {
   }
   return BridgeClass
 }

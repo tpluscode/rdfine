@@ -13,7 +13,7 @@ export interface DepositAccount<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function DepositAccountMixin<Base extends Constructor>(Resource: Base): Constructor<DepositAccount> & Base {
   @namespace(schema)
-  class DepositAccountClass extends InvestmentOrDepositMixin(BankAccountMixin(Resource)) implements DepositAccount {
+  class DepositAccountClass extends InvestmentOrDepositMixin(BankAccountMixin(Resource)) implements Partial<DepositAccount> {
   }
   return DepositAccountClass
 }

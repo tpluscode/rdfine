@@ -15,7 +15,7 @@ export interface GovernmentService<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function GovernmentServiceMixin<Base extends Constructor>(Resource: Base): Constructor<GovernmentService> & Base {
   @namespace(schema)
-  class GovernmentServiceClass extends ServiceMixin(Resource) implements GovernmentService {
+  class GovernmentServiceClass extends ServiceMixin(Resource) implements Partial<GovernmentService> {
     @property.resource()
     jurisdiction: Schema.AdministrativeArea | undefined;
     @property.literal({ path: schema.jurisdiction })

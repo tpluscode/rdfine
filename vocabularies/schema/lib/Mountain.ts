@@ -12,7 +12,7 @@ export interface Mountain<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function MountainMixin<Base extends Constructor>(Resource: Base): Constructor<Mountain> & Base {
   @namespace(schema)
-  class MountainClass extends LandformMixin(Resource) implements Mountain {
+  class MountainClass extends LandformMixin(Resource) implements Partial<Mountain> {
   }
   return MountainClass
 }

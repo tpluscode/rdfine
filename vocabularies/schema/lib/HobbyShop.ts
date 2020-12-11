@@ -12,7 +12,7 @@ export interface HobbyShop<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function HobbyShopMixin<Base extends Constructor>(Resource: Base): Constructor<HobbyShop> & Base {
   @namespace(schema)
-  class HobbyShopClass extends StoreMixin(Resource) implements HobbyShop {
+  class HobbyShopClass extends StoreMixin(Resource) implements Partial<HobbyShop> {
   }
   return HobbyShopClass
 }

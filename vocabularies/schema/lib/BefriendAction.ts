@@ -12,7 +12,7 @@ export interface BefriendAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function BefriendActionMixin<Base extends Constructor>(Resource: Base): Constructor<BefriendAction> & Base {
   @namespace(schema)
-  class BefriendActionClass extends InteractActionMixin(Resource) implements BefriendAction {
+  class BefriendActionClass extends InteractActionMixin(Resource) implements Partial<BefriendAction> {
   }
   return BefriendActionClass
 }

@@ -18,7 +18,7 @@ export interface ResultAnnotation<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function ResultAnnotationMixin<Base extends Constructor>(Resource: Base): Constructor<ResultAnnotation> & Base {
   @namespace(sh)
-  class ResultAnnotationClass extends RdfsResourceMixin(Resource) implements ResultAnnotation {
+  class ResultAnnotationClass extends RdfsResourceMixin(Resource) implements Partial<ResultAnnotation> {
     @property.resource({ as: [RdfPropertyMixin] })
     annotationProperty: Rdf.Property | undefined;
     @property()

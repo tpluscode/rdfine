@@ -53,7 +53,7 @@ export interface Event<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
 
 export function EventMixin<Base extends Constructor>(Resource: Base): Constructor<Event> & Base {
   @namespace(schema)
-  class EventClass extends ThingMixin(Resource) implements Event {
+  class EventClass extends ThingMixin(Resource) implements Partial<Event> {
     @property.resource()
     about: Schema.Thing | undefined;
     @property.resource()

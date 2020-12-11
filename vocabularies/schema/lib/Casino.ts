@@ -12,7 +12,7 @@ export interface Casino<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function CasinoMixin<Base extends Constructor>(Resource: Base): Constructor<Casino> & Base {
   @namespace(schema)
-  class CasinoClass extends EntertainmentBusinessMixin(Resource) implements Casino {
+  class CasinoClass extends EntertainmentBusinessMixin(Resource) implements Partial<Casino> {
   }
   return CasinoClass
 }

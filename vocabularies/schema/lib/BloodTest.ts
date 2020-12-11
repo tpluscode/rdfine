@@ -12,7 +12,7 @@ export interface BloodTest<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function BloodTestMixin<Base extends Constructor>(Resource: Base): Constructor<BloodTest> & Base {
   @namespace(schema)
-  class BloodTestClass extends MedicalTestMixin(Resource) implements BloodTest {
+  class BloodTestClass extends MedicalTestMixin(Resource) implements Partial<BloodTest> {
   }
   return BloodTestClass
 }

@@ -12,7 +12,7 @@ export interface TheaterGroup<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function TheaterGroupMixin<Base extends Constructor>(Resource: Base): Constructor<TheaterGroup> & Base {
   @namespace(schema)
-  class TheaterGroupClass extends PerformingGroupMixin(Resource) implements TheaterGroup {
+  class TheaterGroupClass extends PerformingGroupMixin(Resource) implements Partial<TheaterGroup> {
   }
   return TheaterGroupClass
 }

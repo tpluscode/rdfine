@@ -12,7 +12,7 @@ export interface Atlas<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
 
 export function AtlasMixin<Base extends Constructor>(Resource: Base): Constructor<Atlas> & Base {
   @namespace(schema)
-  class AtlasClass extends CreativeWorkMixin(Resource) implements Atlas {
+  class AtlasClass extends CreativeWorkMixin(Resource) implements Partial<Atlas> {
   }
   return AtlasClass
 }

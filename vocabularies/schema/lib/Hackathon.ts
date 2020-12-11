@@ -12,7 +12,7 @@ export interface Hackathon<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function HackathonMixin<Base extends Constructor>(Resource: Base): Constructor<Hackathon> & Base {
   @namespace(schema)
-  class HackathonClass extends EventMixin(Resource) implements Hackathon {
+  class HackathonClass extends EventMixin(Resource) implements Partial<Hackathon> {
   }
   return HackathonClass
 }

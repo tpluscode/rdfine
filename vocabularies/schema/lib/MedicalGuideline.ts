@@ -16,7 +16,7 @@ export interface MedicalGuideline<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function MedicalGuidelineMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalGuideline> & Base {
   @namespace(schema)
-  class MedicalGuidelineClass extends MedicalEntityMixin(Resource) implements MedicalGuideline {
+  class MedicalGuidelineClass extends MedicalEntityMixin(Resource) implements Partial<MedicalGuideline> {
     @property()
     evidenceLevel: Schema.MedicalEvidenceLevel | undefined;
     @property.literal()

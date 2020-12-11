@@ -15,7 +15,7 @@ export interface Status<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hyd
 
 export function StatusMixin<Base extends Constructor>(Resource: Base): Constructor<Status> & Base {
   @namespace(hydra)
-  class StatusClass extends ResourceMixin(Resource) implements Status {
+  class StatusClass extends ResourceMixin(Resource) implements Partial<Status> {
     @property.literal()
     description: string | undefined;
     @property.literal({ type: Number })

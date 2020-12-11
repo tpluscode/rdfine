@@ -13,7 +13,7 @@ export interface TVClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function TVClipMixin<Base extends Constructor>(Resource: Base): Constructor<TVClip> & Base {
   @namespace(schema)
-  class TVClipClass extends ClipMixin(Resource) implements TVClip {
+  class TVClipClass extends ClipMixin(Resource) implements Partial<TVClip> {
     @property.resource()
     partOfTVSeries: Schema.TVSeries | undefined;
   }

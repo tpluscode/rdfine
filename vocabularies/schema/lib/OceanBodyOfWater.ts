@@ -12,7 +12,7 @@ export interface OceanBodyOfWater<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function OceanBodyOfWaterMixin<Base extends Constructor>(Resource: Base): Constructor<OceanBodyOfWater> & Base {
   @namespace(schema)
-  class OceanBodyOfWaterClass extends BodyOfWaterMixin(Resource) implements OceanBodyOfWater {
+  class OceanBodyOfWaterClass extends BodyOfWaterMixin(Resource) implements Partial<OceanBodyOfWater> {
   }
   return OceanBodyOfWaterClass
 }

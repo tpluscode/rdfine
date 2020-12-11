@@ -12,7 +12,7 @@ export interface MobilePhoneStore<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function MobilePhoneStoreMixin<Base extends Constructor>(Resource: Base): Constructor<MobilePhoneStore> & Base {
   @namespace(schema)
-  class MobilePhoneStoreClass extends StoreMixin(Resource) implements MobilePhoneStore {
+  class MobilePhoneStoreClass extends StoreMixin(Resource) implements Partial<MobilePhoneStore> {
   }
   return MobilePhoneStoreClass
 }

@@ -26,7 +26,7 @@ export interface RadioSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function RadioSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<RadioSeries> & Base {
   @namespace(schema)
-  class RadioSeriesClass extends CreativeWorkSeriesMixin(Resource) implements RadioSeries {
+  class RadioSeriesClass extends CreativeWorkSeriesMixin(Resource) implements Partial<RadioSeries> {
     @property.resource()
     actor: Schema.Person | undefined;
     @property.resource()

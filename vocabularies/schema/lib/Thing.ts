@@ -24,7 +24,7 @@ export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function ThingMixin<Base extends Constructor>(Resource: Base): Constructor<Thing> & Base {
   @namespace(schema)
-  class ThingClass extends Resource implements Thing {
+  class ThingClass extends Resource implements Partial<Thing> {
     @property()
     additionalType: RDF.NamedNode | undefined;
     @property.literal()

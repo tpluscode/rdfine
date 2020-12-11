@@ -18,7 +18,7 @@ export interface ShippingRateSettings<D extends RDF.DatasetCore = RDF.DatasetCor
 
 export function ShippingRateSettingsMixin<Base extends Constructor>(Resource: Base): Constructor<ShippingRateSettings> & Base {
   @namespace(schema)
-  class ShippingRateSettingsClass extends StructuredValueMixin(Resource) implements ShippingRateSettings {
+  class ShippingRateSettingsClass extends StructuredValueMixin(Resource) implements Partial<ShippingRateSettings> {
     @property.literal({ type: Boolean })
     doesNotShip: boolean | undefined;
     @property.resource()

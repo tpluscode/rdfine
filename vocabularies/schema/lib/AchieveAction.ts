@@ -12,7 +12,7 @@ export interface AchieveAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function AchieveActionMixin<Base extends Constructor>(Resource: Base): Constructor<AchieveAction> & Base {
   @namespace(schema)
-  class AchieveActionClass extends ActionMixin(Resource) implements AchieveAction {
+  class AchieveActionClass extends ActionMixin(Resource) implements Partial<AchieveAction> {
   }
   return AchieveActionClass
 }

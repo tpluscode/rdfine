@@ -12,7 +12,7 @@ export interface Volcano<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function VolcanoMixin<Base extends Constructor>(Resource: Base): Constructor<Volcano> & Base {
   @namespace(schema)
-  class VolcanoClass extends LandformMixin(Resource) implements Volcano {
+  class VolcanoClass extends LandformMixin(Resource) implements Partial<Volcano> {
   }
   return VolcanoClass
 }

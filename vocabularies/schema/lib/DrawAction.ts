@@ -12,7 +12,7 @@ export interface DrawAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function DrawActionMixin<Base extends Constructor>(Resource: Base): Constructor<DrawAction> & Base {
   @namespace(schema)
-  class DrawActionClass extends CreateActionMixin(Resource) implements DrawAction {
+  class DrawActionClass extends CreateActionMixin(Resource) implements Partial<DrawAction> {
   }
   return DrawActionClass
 }

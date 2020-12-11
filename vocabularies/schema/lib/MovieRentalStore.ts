@@ -12,7 +12,7 @@ export interface MovieRentalStore<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function MovieRentalStoreMixin<Base extends Constructor>(Resource: Base): Constructor<MovieRentalStore> & Base {
   @namespace(schema)
-  class MovieRentalStoreClass extends StoreMixin(Resource) implements MovieRentalStore {
+  class MovieRentalStoreClass extends StoreMixin(Resource) implements Partial<MovieRentalStore> {
   }
   return MovieRentalStoreClass
 }

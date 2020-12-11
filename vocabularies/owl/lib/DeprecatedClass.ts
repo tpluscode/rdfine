@@ -13,7 +13,7 @@ export interface DeprecatedClass<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function DeprecatedClassMixin<Base extends Constructor>(Resource: Base): Constructor<DeprecatedClass> & Base {
   @namespace(owl)
-  class DeprecatedClassClass extends RdfsClassMixin(Resource) implements DeprecatedClass {
+  class DeprecatedClassClass extends RdfsClassMixin(Resource) implements Partial<DeprecatedClass> {
   }
   return DeprecatedClassClass
 }

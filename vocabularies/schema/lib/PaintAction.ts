@@ -12,7 +12,7 @@ export interface PaintAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function PaintActionMixin<Base extends Constructor>(Resource: Base): Constructor<PaintAction> & Base {
   @namespace(schema)
-  class PaintActionClass extends CreateActionMixin(Resource) implements PaintAction {
+  class PaintActionClass extends CreateActionMixin(Resource) implements Partial<PaintAction> {
   }
   return PaintActionClass
 }

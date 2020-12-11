@@ -13,7 +13,7 @@ export interface SomeProducts<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function SomeProductsMixin<Base extends Constructor>(Resource: Base): Constructor<SomeProducts> & Base {
   @namespace(schema)
-  class SomeProductsClass extends ProductMixin(Resource) implements SomeProducts {
+  class SomeProductsClass extends ProductMixin(Resource) implements Partial<SomeProducts> {
     @property.resource()
     inventoryLevel: Schema.QuantitativeValue | undefined;
   }

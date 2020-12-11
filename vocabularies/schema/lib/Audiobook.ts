@@ -15,7 +15,7 @@ export interface Audiobook<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function AudiobookMixin<Base extends Constructor>(Resource: Base): Constructor<Audiobook> & Base {
   @namespace(schema)
-  class AudiobookClass extends BookMixin(AudioObjectMixin(Resource)) implements Audiobook {
+  class AudiobookClass extends BookMixin(AudioObjectMixin(Resource)) implements Partial<Audiobook> {
     @property.resource()
     duration: Schema.Duration | undefined;
     @property.resource()

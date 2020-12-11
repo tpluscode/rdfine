@@ -15,7 +15,7 @@ export interface RsvpAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function RsvpActionMixin<Base extends Constructor>(Resource: Base): Constructor<RsvpAction> & Base {
   @namespace(schema)
-  class RsvpActionClass extends InformActionMixin(Resource) implements RsvpAction {
+  class RsvpActionClass extends InformActionMixin(Resource) implements Partial<RsvpAction> {
     @property.literal({ type: Number })
     additionalNumberOfGuests: number | undefined;
     @property.resource()

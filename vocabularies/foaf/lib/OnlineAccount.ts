@@ -13,7 +13,7 @@ export interface OnlineAccount<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function OnlineAccountMixin<Base extends Constructor>(Resource: Base): Constructor<OnlineAccount> & Base {
   @namespace(foaf)
-  class OnlineAccountClass extends Resource implements OnlineAccount {
+  class OnlineAccountClass extends Resource implements Partial<OnlineAccount> {
     @property()
     accountName: RDF.Literal | undefined;
     @property.resource({ implicitTypes: [foaf.Document] })

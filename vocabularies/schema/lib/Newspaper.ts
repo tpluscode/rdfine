@@ -12,7 +12,7 @@ export interface Newspaper<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function NewspaperMixin<Base extends Constructor>(Resource: Base): Constructor<Newspaper> & Base {
   @namespace(schema)
-  class NewspaperClass extends PeriodicalMixin(Resource) implements Newspaper {
+  class NewspaperClass extends PeriodicalMixin(Resource) implements Partial<Newspaper> {
   }
   return NewspaperClass
 }

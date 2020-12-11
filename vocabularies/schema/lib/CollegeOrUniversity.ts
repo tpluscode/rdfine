@@ -12,7 +12,7 @@ export interface CollegeOrUniversity<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function CollegeOrUniversityMixin<Base extends Constructor>(Resource: Base): Constructor<CollegeOrUniversity> & Base {
   @namespace(schema)
-  class CollegeOrUniversityClass extends EducationalOrganizationMixin(Resource) implements CollegeOrUniversity {
+  class CollegeOrUniversityClass extends EducationalOrganizationMixin(Resource) implements Partial<CollegeOrUniversity> {
   }
   return CollegeOrUniversityClass
 }

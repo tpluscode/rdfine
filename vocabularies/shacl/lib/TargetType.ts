@@ -14,7 +14,7 @@ export interface TargetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function TargetTypeMixin<Base extends Constructor>(Resource: Base): Constructor<TargetType> & Base {
   @namespace(sh)
-  class TargetTypeClass extends ParameterizableMixin(RdfsClassMixin(Resource)) implements TargetType {
+  class TargetTypeClass extends ParameterizableMixin(RdfsClassMixin(Resource)) implements Partial<TargetType> {
   }
   return TargetTypeClass
 }

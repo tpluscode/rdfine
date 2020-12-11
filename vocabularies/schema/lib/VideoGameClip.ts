@@ -12,7 +12,7 @@ export interface VideoGameClip<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function VideoGameClipMixin<Base extends Constructor>(Resource: Base): Constructor<VideoGameClip> & Base {
   @namespace(schema)
-  class VideoGameClipClass extends ClipMixin(Resource) implements VideoGameClip {
+  class VideoGameClipClass extends ClipMixin(Resource) implements Partial<VideoGameClip> {
   }
   return VideoGameClipClass
 }

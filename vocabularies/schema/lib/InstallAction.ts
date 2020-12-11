@@ -12,7 +12,7 @@ export interface InstallAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function InstallActionMixin<Base extends Constructor>(Resource: Base): Constructor<InstallAction> & Base {
   @namespace(schema)
-  class InstallActionClass extends ConsumeActionMixin(Resource) implements InstallAction {
+  class InstallActionClass extends ConsumeActionMixin(Resource) implements Partial<InstallAction> {
   }
   return InstallActionClass
 }

@@ -12,7 +12,7 @@ export interface AssignAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function AssignActionMixin<Base extends Constructor>(Resource: Base): Constructor<AssignAction> & Base {
   @namespace(schema)
-  class AssignActionClass extends AllocateActionMixin(Resource) implements AssignAction {
+  class AssignActionClass extends AllocateActionMixin(Resource) implements Partial<AssignAction> {
   }
   return AssignActionClass
 }

@@ -12,7 +12,7 @@ export interface EmailMessage<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function EmailMessageMixin<Base extends Constructor>(Resource: Base): Constructor<EmailMessage> & Base {
   @namespace(schema)
-  class EmailMessageClass extends MessageMixin(Resource) implements EmailMessage {
+  class EmailMessageClass extends MessageMixin(Resource) implements Partial<EmailMessage> {
   }
   return EmailMessageClass
 }

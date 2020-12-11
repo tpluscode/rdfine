@@ -12,7 +12,7 @@ export interface Zoo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema
 
 export function ZooMixin<Base extends Constructor>(Resource: Base): Constructor<Zoo> & Base {
   @namespace(schema)
-  class ZooClass extends CivicStructureMixin(Resource) implements Zoo {
+  class ZooClass extends CivicStructureMixin(Resource) implements Partial<Zoo> {
   }
   return ZooClass
 }

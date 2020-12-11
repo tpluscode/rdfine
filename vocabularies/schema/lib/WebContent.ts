@@ -12,7 +12,7 @@ export interface WebContent<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function WebContentMixin<Base extends Constructor>(Resource: Base): Constructor<WebContent> & Base {
   @namespace(schema)
-  class WebContentClass extends CreativeWorkMixin(Resource) implements WebContent {
+  class WebContentClass extends CreativeWorkMixin(Resource) implements Partial<WebContent> {
   }
   return WebContentClass
 }

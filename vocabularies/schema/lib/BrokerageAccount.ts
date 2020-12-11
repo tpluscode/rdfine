@@ -12,7 +12,7 @@ export interface BrokerageAccount<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function BrokerageAccountMixin<Base extends Constructor>(Resource: Base): Constructor<BrokerageAccount> & Base {
   @namespace(schema)
-  class BrokerageAccountClass extends InvestmentOrDepositMixin(Resource) implements BrokerageAccount {
+  class BrokerageAccountClass extends InvestmentOrDepositMixin(Resource) implements Partial<BrokerageAccount> {
   }
   return BrokerageAccountClass
 }

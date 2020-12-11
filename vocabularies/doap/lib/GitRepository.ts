@@ -12,7 +12,7 @@ export interface GitRepository<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function GitRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<GitRepository> & Base {
   @namespace(doap)
-  class GitRepositoryClass extends RepositoryMixin(Resource) implements GitRepository {
+  class GitRepositoryClass extends RepositoryMixin(Resource) implements Partial<GitRepository> {
   }
   return GitRepositoryClass
 }

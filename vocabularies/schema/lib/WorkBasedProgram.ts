@@ -15,7 +15,7 @@ export interface WorkBasedProgram<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function WorkBasedProgramMixin<Base extends Constructor>(Resource: Base): Constructor<WorkBasedProgram> & Base {
   @namespace(schema)
-  class WorkBasedProgramClass extends EducationalOccupationalProgramMixin(Resource) implements WorkBasedProgram {
+  class WorkBasedProgramClass extends EducationalOccupationalProgramMixin(Resource) implements Partial<WorkBasedProgram> {
     @property.resource()
     occupationalCategory: Schema.CategoryCode | undefined;
     @property.literal({ path: schema.occupationalCategory })

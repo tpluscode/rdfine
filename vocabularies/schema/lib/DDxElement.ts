@@ -14,7 +14,7 @@ export interface DDxElement<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function DDxElementMixin<Base extends Constructor>(Resource: Base): Constructor<DDxElement> & Base {
   @namespace(schema)
-  class DDxElementClass extends MedicalIntangibleMixin(Resource) implements DDxElement {
+  class DDxElementClass extends MedicalIntangibleMixin(Resource) implements Partial<DDxElement> {
     @property.resource()
     diagnosis: Schema.MedicalCondition | undefined;
     @property.resource()

@@ -12,7 +12,7 @@ export interface OrganizeAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function OrganizeActionMixin<Base extends Constructor>(Resource: Base): Constructor<OrganizeAction> & Base {
   @namespace(schema)
-  class OrganizeActionClass extends ActionMixin(Resource) implements OrganizeAction {
+  class OrganizeActionClass extends ActionMixin(Resource) implements Partial<OrganizeAction> {
   }
   return OrganizeActionClass
 }

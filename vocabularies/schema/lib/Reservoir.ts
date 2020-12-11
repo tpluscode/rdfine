@@ -12,7 +12,7 @@ export interface Reservoir<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function ReservoirMixin<Base extends Constructor>(Resource: Base): Constructor<Reservoir> & Base {
   @namespace(schema)
-  class ReservoirClass extends BodyOfWaterMixin(Resource) implements Reservoir {
+  class ReservoirClass extends BodyOfWaterMixin(Resource) implements Partial<Reservoir> {
   }
   return ReservoirClass
 }

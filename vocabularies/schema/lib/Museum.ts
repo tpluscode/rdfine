@@ -12,7 +12,7 @@ export interface Museum<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function MuseumMixin<Base extends Constructor>(Resource: Base): Constructor<Museum> & Base {
   @namespace(schema)
-  class MuseumClass extends CivicStructureMixin(Resource) implements Museum {
+  class MuseumClass extends CivicStructureMixin(Resource) implements Partial<Museum> {
   }
   return MuseumClass
 }

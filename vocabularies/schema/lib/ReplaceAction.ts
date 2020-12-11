@@ -14,7 +14,7 @@ export interface ReplaceAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function ReplaceActionMixin<Base extends Constructor>(Resource: Base): Constructor<ReplaceAction> & Base {
   @namespace(schema)
-  class ReplaceActionClass extends UpdateActionMixin(Resource) implements ReplaceAction {
+  class ReplaceActionClass extends UpdateActionMixin(Resource) implements Partial<ReplaceAction> {
     @property.resource()
     replacee: Schema.Thing | undefined;
     @property.resource()

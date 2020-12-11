@@ -12,7 +12,7 @@ export interface AutoWash<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function AutoWashMixin<Base extends Constructor>(Resource: Base): Constructor<AutoWash> & Base {
   @namespace(schema)
-  class AutoWashClass extends AutomotiveBusinessMixin(Resource) implements AutoWash {
+  class AutoWashClass extends AutomotiveBusinessMixin(Resource) implements Partial<AutoWash> {
   }
   return AutoWashClass
 }

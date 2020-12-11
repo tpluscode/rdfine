@@ -12,7 +12,7 @@ export interface Waterfall<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function WaterfallMixin<Base extends Constructor>(Resource: Base): Constructor<Waterfall> & Base {
   @namespace(schema)
-  class WaterfallClass extends BodyOfWaterMixin(Resource) implements Waterfall {
+  class WaterfallClass extends BodyOfWaterMixin(Resource) implements Partial<Waterfall> {
   }
   return WaterfallClass
 }

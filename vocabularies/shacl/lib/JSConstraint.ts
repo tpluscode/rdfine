@@ -12,7 +12,7 @@ export interface JSConstraint<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function JSConstraintMixin<Base extends Constructor>(Resource: Base): Constructor<JSConstraint> & Base {
   @namespace(sh)
-  class JSConstraintClass extends JSExecutableMixin(Resource) implements JSConstraint {
+  class JSConstraintClass extends JSExecutableMixin(Resource) implements Partial<JSConstraint> {
   }
   return JSConstraintClass
 }

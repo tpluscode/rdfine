@@ -13,7 +13,7 @@ export interface AnnotationProperty<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function AnnotationPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<AnnotationProperty> & Base {
   @namespace(owl)
-  class AnnotationPropertyClass extends RdfPropertyMixin(Resource) implements AnnotationProperty {
+  class AnnotationPropertyClass extends RdfPropertyMixin(Resource) implements Partial<AnnotationProperty> {
   }
   return AnnotationPropertyClass
 }

@@ -12,7 +12,7 @@ export interface InferencingTestCase<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function InferencingTestCaseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class InferencingTestCaseClass extends TestCaseMixin(Resource) implements InferencingTestCase {
+  class InferencingTestCaseClass extends TestCaseMixin(Resource) implements Partial<InferencingTestCase> {
   }
   return InferencingTestCaseClass
 }

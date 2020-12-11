@@ -24,7 +24,7 @@ export interface NewsMediaOrganization<D extends RDF.DatasetCore = RDF.DatasetCo
 
 export function NewsMediaOrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<NewsMediaOrganization> & Base {
   @namespace(schema)
-  class NewsMediaOrganizationClass extends OrganizationMixin(Resource) implements NewsMediaOrganization {
+  class NewsMediaOrganizationClass extends OrganizationMixin(Resource) implements Partial<NewsMediaOrganization> {
     @property.resource()
     actionableFeedbackPolicy: Schema.CreativeWork | undefined;
     @property.resource()

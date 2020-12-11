@@ -12,7 +12,7 @@ export interface OnDemandEvent<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function OnDemandEventMixin<Base extends Constructor>(Resource: Base): Constructor<OnDemandEvent> & Base {
   @namespace(schema)
-  class OnDemandEventClass extends PublicationEventMixin(Resource) implements OnDemandEvent {
+  class OnDemandEventClass extends PublicationEventMixin(Resource) implements Partial<OnDemandEvent> {
   }
   return OnDemandEventClass
 }

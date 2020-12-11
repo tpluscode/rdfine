@@ -14,7 +14,7 @@ export interface PropertyGroup<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function PropertyGroupMixin<Base extends Constructor>(Resource: Base): Constructor<PropertyGroup> & Base {
   @namespace(sh)
-  class PropertyGroupClass extends RdfsResourceMixin(Resource) implements PropertyGroup {
+  class PropertyGroupClass extends RdfsResourceMixin(Resource) implements Partial<PropertyGroup> {
     @property.literal({ type: Number })
     order: number | undefined;
   }

@@ -11,7 +11,7 @@ export interface Nothing<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rd
 
 export function NothingMixin<Base extends Constructor>(Resource: Base): Constructor<Nothing> & Base {
   @namespace(owl)
-  class NothingClass extends Resource implements Nothing {
+  class NothingClass extends Resource implements Partial<Nothing> {
   }
   return NothingClass
 }

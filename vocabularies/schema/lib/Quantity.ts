@@ -12,7 +12,7 @@ export interface Quantity<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function QuantityMixin<Base extends Constructor>(Resource: Base): Constructor<Quantity> & Base {
   @namespace(schema)
-  class QuantityClass extends IntangibleMixin(Resource) implements Quantity {
+  class QuantityClass extends IntangibleMixin(Resource) implements Partial<Quantity> {
   }
   return QuantityClass
 }

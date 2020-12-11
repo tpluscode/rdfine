@@ -12,7 +12,7 @@ export interface Duration<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function DurationMixin<Base extends Constructor>(Resource: Base): Constructor<Duration> & Base {
   @namespace(schema)
-  class DurationClass extends QuantityMixin(Resource) implements Duration {
+  class DurationClass extends QuantityMixin(Resource) implements Partial<Duration> {
   }
   return DurationClass
 }

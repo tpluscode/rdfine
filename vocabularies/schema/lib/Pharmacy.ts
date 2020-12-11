@@ -12,7 +12,7 @@ export interface Pharmacy<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function PharmacyMixin<Base extends Constructor>(Resource: Base): Constructor<Pharmacy> & Base {
   @namespace(schema)
-  class PharmacyClass extends MedicalOrganizationMixin(Resource) implements Pharmacy {
+  class PharmacyClass extends MedicalOrganizationMixin(Resource) implements Partial<Pharmacy> {
   }
   return PharmacyClass
 }

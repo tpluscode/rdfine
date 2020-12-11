@@ -15,7 +15,7 @@ export interface NumericFormat<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function NumericFormatMixin<Base extends Constructor>(Resource: Base): Constructor<NumericFormat> & Base {
   @namespace(csvw)
-  class NumericFormatClass extends Resource implements NumericFormat {
+  class NumericFormatClass extends Resource implements Partial<NumericFormat> {
     @property.literal()
     decimalChar: string | undefined;
     @property.resource({ as: [NumericFormatMixin] })

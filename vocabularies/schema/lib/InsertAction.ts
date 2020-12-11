@@ -13,7 +13,7 @@ export interface InsertAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function InsertActionMixin<Base extends Constructor>(Resource: Base): Constructor<InsertAction> & Base {
   @namespace(schema)
-  class InsertActionClass extends AddActionMixin(Resource) implements InsertAction {
+  class InsertActionClass extends AddActionMixin(Resource) implements Partial<InsertAction> {
     @property.resource()
     toLocation: Schema.Place | undefined;
   }

@@ -14,7 +14,7 @@ export interface Audience<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function AudienceMixin<Base extends Constructor>(Resource: Base): Constructor<Audience> & Base {
   @namespace(schema)
-  class AudienceClass extends IntangibleMixin(Resource) implements Audience {
+  class AudienceClass extends IntangibleMixin(Resource) implements Partial<Audience> {
     @property.literal()
     audienceType: string | undefined;
     @property.resource()

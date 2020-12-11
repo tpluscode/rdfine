@@ -12,7 +12,7 @@ export interface CovidTestingFacility<D extends RDF.DatasetCore = RDF.DatasetCor
 
 export function CovidTestingFacilityMixin<Base extends Constructor>(Resource: Base): Constructor<CovidTestingFacility> & Base {
   @namespace(schema)
-  class CovidTestingFacilityClass extends MedicalClinicMixin(Resource) implements CovidTestingFacility {
+  class CovidTestingFacilityClass extends MedicalClinicMixin(Resource) implements Partial<CovidTestingFacility> {
   }
   return CovidTestingFacilityClass
 }

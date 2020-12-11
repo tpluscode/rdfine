@@ -14,7 +14,7 @@ export interface DataFeed<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function DataFeedMixin<Base extends Constructor>(Resource: Base): Constructor<DataFeed> & Base {
   @namespace(schema)
-  class DataFeedClass extends DatasetMixin(Resource) implements DataFeed {
+  class DataFeedClass extends DatasetMixin(Resource) implements Partial<DataFeed> {
     @property.resource()
     dataFeedElement: Schema.DataFeedItem | Schema.Thing | undefined;
     @property.literal({ path: schema.dataFeedElement })

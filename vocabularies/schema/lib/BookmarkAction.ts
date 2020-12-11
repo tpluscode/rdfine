@@ -12,7 +12,7 @@ export interface BookmarkAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function BookmarkActionMixin<Base extends Constructor>(Resource: Base): Constructor<BookmarkAction> & Base {
   @namespace(schema)
-  class BookmarkActionClass extends OrganizeActionMixin(Resource) implements BookmarkAction {
+  class BookmarkActionClass extends OrganizeActionMixin(Resource) implements Partial<BookmarkAction> {
   }
   return BookmarkActionClass
 }

@@ -20,7 +20,7 @@ export interface GeoCoordinates<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function GeoCoordinatesMixin<Base extends Constructor>(Resource: Base): Constructor<GeoCoordinates> & Base {
   @namespace(schema)
-  class GeoCoordinatesClass extends StructuredValueMixin(Resource) implements GeoCoordinates {
+  class GeoCoordinatesClass extends StructuredValueMixin(Resource) implements Partial<GeoCoordinates> {
     @property.resource()
     address: Schema.PostalAddress | undefined;
     @property.literal({ path: schema.address })

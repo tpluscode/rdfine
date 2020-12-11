@@ -11,7 +11,7 @@ export interface Optician<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
 
 export function OpticianMixin<Base extends Constructor>(Resource: Base): Constructor<Optician> & Base {
   @namespace(schema)
-  class OpticianClass extends Resource implements Optician {
+  class OpticianClass extends Resource implements Partial<Optician> {
   }
   return OpticianClass
 }

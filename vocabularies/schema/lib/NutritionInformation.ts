@@ -24,7 +24,7 @@ export interface NutritionInformation<D extends RDF.DatasetCore = RDF.DatasetCor
 
 export function NutritionInformationMixin<Base extends Constructor>(Resource: Base): Constructor<NutritionInformation> & Base {
   @namespace(schema)
-  class NutritionInformationClass extends StructuredValueMixin(Resource) implements NutritionInformation {
+  class NutritionInformationClass extends StructuredValueMixin(Resource) implements Partial<NutritionInformation> {
     @property.resource()
     calories: Schema.Energy | undefined;
     @property.resource()

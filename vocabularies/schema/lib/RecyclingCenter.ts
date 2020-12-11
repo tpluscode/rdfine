@@ -12,7 +12,7 @@ export interface RecyclingCenter<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function RecyclingCenterMixin<Base extends Constructor>(Resource: Base): Constructor<RecyclingCenter> & Base {
   @namespace(schema)
-  class RecyclingCenterClass extends LocalBusinessMixin(Resource) implements RecyclingCenter {
+  class RecyclingCenterClass extends LocalBusinessMixin(Resource) implements Partial<RecyclingCenter> {
   }
   return RecyclingCenterClass
 }

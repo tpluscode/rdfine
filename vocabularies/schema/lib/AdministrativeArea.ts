@@ -12,7 +12,7 @@ export interface AdministrativeArea<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function AdministrativeAreaMixin<Base extends Constructor>(Resource: Base): Constructor<AdministrativeArea> & Base {
   @namespace(schema)
-  class AdministrativeAreaClass extends PlaceMixin(Resource) implements AdministrativeArea {
+  class AdministrativeAreaClass extends PlaceMixin(Resource) implements Partial<AdministrativeArea> {
   }
   return AdministrativeAreaClass
 }

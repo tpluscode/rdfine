@@ -11,7 +11,7 @@ export interface LabelProperty<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function LabelPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<LabelProperty> & Base {
   @namespace(foaf)
-  class LabelPropertyClass extends Resource implements LabelProperty {
+  class LabelPropertyClass extends Resource implements Partial<LabelProperty> {
   }
   return LabelPropertyClass
 }

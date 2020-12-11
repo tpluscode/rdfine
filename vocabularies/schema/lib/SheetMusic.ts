@@ -12,7 +12,7 @@ export interface SheetMusic<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function SheetMusicMixin<Base extends Constructor>(Resource: Base): Constructor<SheetMusic> & Base {
   @namespace(schema)
-  class SheetMusicClass extends CreativeWorkMixin(Resource) implements SheetMusic {
+  class SheetMusicClass extends CreativeWorkMixin(Resource) implements Partial<SheetMusic> {
   }
   return SheetMusicClass
 }

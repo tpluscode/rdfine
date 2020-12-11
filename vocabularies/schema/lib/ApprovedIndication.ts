@@ -12,7 +12,7 @@ export interface ApprovedIndication<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function ApprovedIndicationMixin<Base extends Constructor>(Resource: Base): Constructor<ApprovedIndication> & Base {
   @namespace(schema)
-  class ApprovedIndicationClass extends MedicalIndicationMixin(Resource) implements ApprovedIndication {
+  class ApprovedIndicationClass extends MedicalIndicationMixin(Resource) implements Partial<ApprovedIndication> {
   }
   return ApprovedIndicationClass
 }

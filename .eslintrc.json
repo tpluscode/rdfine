@@ -41,7 +41,7 @@
       "import/no-extraneous-dependencies": "warn"
     }
   }, {
-    "files": ["vocabularies/shacl/Function.ts"],
+    "files": ["vocabularies/shacl/lib/Function.ts"],
     "rules": {
       "@typescript-eslint/ban-types": "off"
     }

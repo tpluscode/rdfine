@@ -19,7 +19,7 @@ export interface Trip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function TripMixin<Base extends Constructor>(Resource: Base): Constructor<Trip> & Base {
   @namespace(schema)
-  class TripClass extends IntangibleMixin(Resource) implements Trip {
+  class TripClass extends IntangibleMixin(Resource) implements Partial<Trip> {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     arrivalTime: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })

@@ -12,7 +12,7 @@ export interface Manuscript<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function ManuscriptMixin<Base extends Constructor>(Resource: Base): Constructor<Manuscript> & Base {
   @namespace(schema)
-  class ManuscriptClass extends CreativeWorkMixin(Resource) implements Manuscript {
+  class ManuscriptClass extends CreativeWorkMixin(Resource) implements Partial<Manuscript> {
   }
   return ManuscriptClass
 }

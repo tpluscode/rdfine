@@ -12,7 +12,7 @@ export interface PartialCollectionView<D extends RDF.DatasetCore = RDF.DatasetCo
 
 export function PartialCollectionViewMixin<Base extends Constructor>(Resource: Base): Constructor<PartialCollectionView> & Base {
   @namespace(hydra)
-  class PartialCollectionViewClass extends ResourceMixin(Resource) implements PartialCollectionView {
+  class PartialCollectionViewClass extends ResourceMixin(Resource) implements Partial<PartialCollectionView> {
   }
   return PartialCollectionViewClass
 }

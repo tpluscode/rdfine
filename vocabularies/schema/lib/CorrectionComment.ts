@@ -12,7 +12,7 @@ export interface CorrectionComment<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function CorrectionCommentMixin<Base extends Constructor>(Resource: Base): Constructor<CorrectionComment> & Base {
   @namespace(schema)
-  class CorrectionCommentClass extends CommentMixin(Resource) implements CorrectionComment {
+  class CorrectionCommentClass extends CommentMixin(Resource) implements Partial<CorrectionComment> {
   }
   return CorrectionCommentClass
 }

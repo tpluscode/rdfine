@@ -14,7 +14,7 @@ export interface SPARQLFunction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function SPARQLFunctionMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLFunction> & Base {
   @namespace(sh)
-  class SPARQLFunctionClass extends SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(FunctionMixin(Resource))) implements SPARQLFunction {
+  class SPARQLFunctionClass extends SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(FunctionMixin(Resource))) implements Partial<SPARQLFunction> {
   }
   return SPARQLFunctionClass
 }

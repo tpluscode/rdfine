@@ -13,7 +13,7 @@ export interface OrganizationRole<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function OrganizationRoleMixin<Base extends Constructor>(Resource: Base): Constructor<OrganizationRole> & Base {
   @namespace(schema)
-  class OrganizationRoleClass extends RoleMixin(Resource) implements OrganizationRole {
+  class OrganizationRoleClass extends RoleMixin(Resource) implements Partial<OrganizationRole> {
     @property.literal({ type: Number })
     numberedPosition: number | undefined;
   }

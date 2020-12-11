@@ -13,7 +13,7 @@ export interface Parameter<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function ParameterMixin<Base extends Constructor>(Resource: Base): Constructor<Parameter> & Base {
   @namespace(sh)
-  class ParameterClass extends PropertyShapeMixin(Resource) implements Parameter {
+  class ParameterClass extends PropertyShapeMixin(Resource) implements Partial<Parameter> {
     @property.literal({ type: Boolean })
     optional: boolean | undefined;
   }

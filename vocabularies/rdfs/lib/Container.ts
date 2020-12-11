@@ -12,7 +12,7 @@ export interface Container<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function ContainerMixin<Base extends Constructor>(Resource: Base): Constructor<Container> & Base {
   @namespace(rdfs)
-  class ContainerClass extends ResourceMixin(Resource) implements Container {
+  class ContainerClass extends ResourceMixin(Resource) implements Partial<Container> {
   }
   return ContainerClass
 }

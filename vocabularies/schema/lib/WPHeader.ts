@@ -12,7 +12,7 @@ export interface WPHeader<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function WPHeaderMixin<Base extends Constructor>(Resource: Base): Constructor<WPHeader> & Base {
   @namespace(schema)
-  class WPHeaderClass extends WebPageElementMixin(Resource) implements WPHeader {
+  class WPHeaderClass extends WebPageElementMixin(Resource) implements Partial<WPHeader> {
   }
   return WPHeaderClass
 }

@@ -17,7 +17,7 @@ export interface CommunicateAction<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function CommunicateActionMixin<Base extends Constructor>(Resource: Base): Constructor<CommunicateAction> & Base {
   @namespace(schema)
-  class CommunicateActionClass extends InteractActionMixin(Resource) implements CommunicateAction {
+  class CommunicateActionClass extends InteractActionMixin(Resource) implements Partial<CommunicateAction> {
     @property.resource()
     about: Schema.Thing | undefined;
     @property.resource()

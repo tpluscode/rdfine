@@ -12,7 +12,7 @@ export interface FailureTestCaseResult<D extends RDF.DatasetCore = RDF.DatasetCo
 
 export function FailureTestCaseResultMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class FailureTestCaseResultClass extends TestCaseResultMixin(Resource) implements FailureTestCaseResult {
+  class FailureTestCaseResultClass extends TestCaseResultMixin(Resource) implements Partial<FailureTestCaseResult> {
   }
   return FailureTestCaseResultClass
 }

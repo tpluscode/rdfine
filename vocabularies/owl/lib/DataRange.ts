@@ -13,7 +13,7 @@ export interface DataRange<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function DataRangeMixin<Base extends Constructor>(Resource: Base): Constructor<DataRange> & Base {
   @namespace(owl)
-  class DataRangeClass extends RdfsDatatypeMixin(Resource) implements DataRange {
+  class DataRangeClass extends RdfsDatatypeMixin(Resource) implements Partial<DataRange> {
   }
   return DataRangeClass
 }

@@ -15,7 +15,7 @@ export interface Parameterizable<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function ParameterizableMixin<Base extends Constructor>(Resource: Base): Constructor<Parameterizable> & Base {
   @namespace(sh)
-  class ParameterizableClass extends RdfsResourceMixin(Resource) implements Parameterizable {
+  class ParameterizableClass extends RdfsResourceMixin(Resource) implements Partial<Parameterizable> {
     @property.literal()
     labelTemplate: string | undefined;
     @property.resource({ implicitTypes: [sh.Parameter] })

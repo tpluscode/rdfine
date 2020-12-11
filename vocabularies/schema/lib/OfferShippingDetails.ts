@@ -19,7 +19,7 @@ export interface OfferShippingDetails<D extends RDF.DatasetCore = RDF.DatasetCor
 
 export function OfferShippingDetailsMixin<Base extends Constructor>(Resource: Base): Constructor<OfferShippingDetails> & Base {
   @namespace(schema)
-  class OfferShippingDetailsClass extends StructuredValueMixin(Resource) implements OfferShippingDetails {
+  class OfferShippingDetailsClass extends StructuredValueMixin(Resource) implements Partial<OfferShippingDetails> {
     @property.resource()
     deliveryTime: Schema.ShippingDeliveryTime | undefined;
     @property.literal({ type: Boolean })

@@ -15,7 +15,7 @@ export interface EmployeeRole<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function EmployeeRoleMixin<Base extends Constructor>(Resource: Base): Constructor<EmployeeRole> & Base {
   @namespace(schema)
-  class EmployeeRoleClass extends OrganizationRoleMixin(Resource) implements EmployeeRole {
+  class EmployeeRoleClass extends OrganizationRoleMixin(Resource) implements Partial<EmployeeRole> {
     @property.resource()
     baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
     @property.literal({ path: schema.baseSalary, type: Number })

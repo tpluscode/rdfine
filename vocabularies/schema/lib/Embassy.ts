@@ -12,7 +12,7 @@ export interface Embassy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function EmbassyMixin<Base extends Constructor>(Resource: Base): Constructor<Embassy> & Base {
   @namespace(schema)
-  class EmbassyClass extends GovernmentBuildingMixin(Resource) implements Embassy {
+  class EmbassyClass extends GovernmentBuildingMixin(Resource) implements Partial<Embassy> {
   }
   return EmbassyClass
 }

@@ -12,7 +12,7 @@ export interface RejectAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function RejectActionMixin<Base extends Constructor>(Resource: Base): Constructor<RejectAction> & Base {
   @namespace(schema)
-  class RejectActionClass extends AllocateActionMixin(Resource) implements RejectAction {
+  class RejectActionClass extends AllocateActionMixin(Resource) implements Partial<RejectAction> {
   }
   return RejectActionClass
 }

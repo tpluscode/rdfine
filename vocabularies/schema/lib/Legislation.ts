@@ -29,7 +29,7 @@ export interface Legislation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function LegislationMixin<Base extends Constructor>(Resource: Base): Constructor<Legislation> & Base {
   @namespace(schema)
-  class LegislationClass extends CreativeWorkMixin(Resource) implements Legislation {
+  class LegislationClass extends CreativeWorkMixin(Resource) implements Partial<Legislation> {
     @property.resource()
     jurisdiction: Schema.AdministrativeArea | undefined;
     @property.literal({ path: schema.jurisdiction })

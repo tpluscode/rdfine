@@ -14,7 +14,7 @@ export interface SPARQLTarget<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function SPARQLTargetMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLTarget> & Base {
   @namespace(sh)
-  class SPARQLTargetClass extends TargetMixin(SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(Resource))) implements SPARQLTarget {
+  class SPARQLTargetClass extends TargetMixin(SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(Resource))) implements Partial<SPARQLTarget> {
   }
   return SPARQLTargetClass
 }

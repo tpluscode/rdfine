@@ -13,7 +13,7 @@ export interface CategoryCode<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function CategoryCodeMixin<Base extends Constructor>(Resource: Base): Constructor<CategoryCode> & Base {
   @namespace(schema)
-  class CategoryCodeClass extends Resource implements CategoryCode {
+  class CategoryCodeClass extends Resource implements Partial<CategoryCode> {
     @property.literal()
     codeValue: string | undefined;
     @property.resource()

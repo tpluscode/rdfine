@@ -12,7 +12,7 @@ export interface Viewer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Das
 
 export function ViewerMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class ViewerClass extends WidgetMixin(Resource) implements Viewer {
+  class ViewerClass extends WidgetMixin(Resource) implements Partial<Viewer> {
   }
   return ViewerClass
 }

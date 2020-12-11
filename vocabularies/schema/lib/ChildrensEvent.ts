@@ -12,7 +12,7 @@ export interface ChildrensEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function ChildrensEventMixin<Base extends Constructor>(Resource: Base): Constructor<ChildrensEvent> & Base {
   @namespace(schema)
-  class ChildrensEventClass extends EventMixin(Resource) implements ChildrensEvent {
+  class ChildrensEventClass extends EventMixin(Resource) implements Partial<ChildrensEvent> {
   }
   return ChildrensEventClass
 }

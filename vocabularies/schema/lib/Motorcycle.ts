@@ -12,7 +12,7 @@ export interface Motorcycle<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function MotorcycleMixin<Base extends Constructor>(Resource: Base): Constructor<Motorcycle> & Base {
   @namespace(schema)
-  class MotorcycleClass extends VehicleMixin(Resource) implements Motorcycle {
+  class MotorcycleClass extends VehicleMixin(Resource) implements Partial<Motorcycle> {
   }
   return MotorcycleClass
 }

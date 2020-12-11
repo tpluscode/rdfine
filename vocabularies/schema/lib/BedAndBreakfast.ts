@@ -12,7 +12,7 @@ export interface BedAndBreakfast<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function BedAndBreakfastMixin<Base extends Constructor>(Resource: Base): Constructor<BedAndBreakfast> & Base {
   @namespace(schema)
-  class BedAndBreakfastClass extends LodgingBusinessMixin(Resource) implements BedAndBreakfast {
+  class BedAndBreakfastClass extends LodgingBusinessMixin(Resource) implements Partial<BedAndBreakfast> {
   }
   return BedAndBreakfastClass
 }

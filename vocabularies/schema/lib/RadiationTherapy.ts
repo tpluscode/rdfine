@@ -12,7 +12,7 @@ export interface RadiationTherapy<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function RadiationTherapyMixin<Base extends Constructor>(Resource: Base): Constructor<RadiationTherapy> & Base {
   @namespace(schema)
-  class RadiationTherapyClass extends MedicalTherapyMixin(Resource) implements RadiationTherapy {
+  class RadiationTherapyClass extends MedicalTherapyMixin(Resource) implements Partial<RadiationTherapy> {
   }
   return RadiationTherapyClass
 }

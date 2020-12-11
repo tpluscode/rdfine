@@ -14,7 +14,7 @@ export interface MedicalSign<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function MedicalSignMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalSign> & Base {
   @namespace(schema)
-  class MedicalSignClass extends MedicalSignOrSymptomMixin(Resource) implements MedicalSign {
+  class MedicalSignClass extends MedicalSignOrSymptomMixin(Resource) implements Partial<MedicalSign> {
     @property()
     identifyingExam: Schema.PhysicalExam | undefined;
     @property.resource()

@@ -81,7 +81,7 @@ export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function OrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<Organization> & Base {
   @namespace(schema)
-  class OrganizationClass extends ThingMixin(Resource) implements Organization {
+  class OrganizationClass extends ThingMixin(Resource) implements Partial<Organization> {
     @property.resource()
     actionableFeedbackPolicy: Schema.CreativeWork | undefined;
     @property.resource()

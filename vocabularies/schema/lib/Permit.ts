@@ -19,7 +19,7 @@ export interface Permit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function PermitMixin<Base extends Constructor>(Resource: Base): Constructor<Permit> & Base {
   @namespace(schema)
-  class PermitClass extends IntangibleMixin(Resource) implements Permit {
+  class PermitClass extends IntangibleMixin(Resource) implements Partial<Permit> {
     @property.resource()
     issuedBy: Schema.Organization | undefined;
     @property.resource()

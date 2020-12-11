@@ -12,7 +12,7 @@ export interface Bone<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function BoneMixin<Base extends Constructor>(Resource: Base): Constructor<Bone> & Base {
   @namespace(schema)
-  class BoneClass extends AnatomicalStructureMixin(Resource) implements Bone {
+  class BoneClass extends AnatomicalStructureMixin(Resource) implements Partial<Bone> {
   }
   return BoneClass
 }

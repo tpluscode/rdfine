@@ -17,7 +17,7 @@ export interface Seat<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function SeatMixin<Base extends Constructor>(Resource: Base): Constructor<Seat> & Base {
   @namespace(schema)
-  class SeatClass extends IntangibleMixin(Resource) implements Seat {
+  class SeatClass extends IntangibleMixin(Resource) implements Partial<Seat> {
     @property.literal()
     seatingType: string | undefined;
     @property({ path: schema.seatingType })

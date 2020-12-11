@@ -12,7 +12,7 @@ export interface GatedResidenceCommunity<D extends RDF.DatasetCore = RDF.Dataset
 
 export function GatedResidenceCommunityMixin<Base extends Constructor>(Resource: Base): Constructor<GatedResidenceCommunity> & Base {
   @namespace(schema)
-  class GatedResidenceCommunityClass extends ResidenceMixin(Resource) implements GatedResidenceCommunity {
+  class GatedResidenceCommunityClass extends ResidenceMixin(Resource) implements Partial<GatedResidenceCommunity> {
   }
   return GatedResidenceCommunityClass
 }

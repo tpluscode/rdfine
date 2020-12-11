@@ -12,7 +12,7 @@ export interface Beach<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
 
 export function BeachMixin<Base extends Constructor>(Resource: Base): Constructor<Beach> & Base {
   @namespace(schema)
-  class BeachClass extends CivicStructureMixin(Resource) implements Beach {
+  class BeachClass extends CivicStructureMixin(Resource) implements Partial<Beach> {
   }
   return BeachClass
 }

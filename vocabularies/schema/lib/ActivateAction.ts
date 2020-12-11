@@ -12,7 +12,7 @@ export interface ActivateAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function ActivateActionMixin<Base extends Constructor>(Resource: Base): Constructor<ActivateAction> & Base {
   @namespace(schema)
-  class ActivateActionClass extends ControlActionMixin(Resource) implements ActivateAction {
+  class ActivateActionClass extends ControlActionMixin(Resource) implements Partial<ActivateAction> {
   }
   return ActivateActionClass
 }

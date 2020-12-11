@@ -13,7 +13,7 @@ export interface JSTargetType<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function JSTargetTypeMixin<Base extends Constructor>(Resource: Base): Constructor<JSTargetType> & Base {
   @namespace(sh)
-  class JSTargetTypeClass extends TargetTypeMixin(JSExecutableMixin(Resource)) implements JSTargetType {
+  class JSTargetTypeClass extends TargetTypeMixin(JSExecutableMixin(Resource)) implements Partial<JSTargetType> {
   }
   return JSTargetTypeClass
 }

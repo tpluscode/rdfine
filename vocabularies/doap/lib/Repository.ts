@@ -15,7 +15,7 @@ export interface Repository<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function RepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<Repository> & Base {
   @namespace(doap)
-  class RepositoryClass extends Resource implements Repository {
+  class RepositoryClass extends Resource implements Partial<Repository> {
     @property()
     'anon-root': RDF.Literal | undefined;
     @property()

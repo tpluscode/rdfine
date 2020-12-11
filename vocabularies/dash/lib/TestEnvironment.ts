@@ -13,7 +13,7 @@ export interface TestEnvironment<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function TestEnvironmentMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class TestEnvironmentClass extends RdfsResourceMixin(Resource) implements TestEnvironment {
+  class TestEnvironmentClass extends RdfsResourceMixin(Resource) implements Partial<TestEnvironment> {
   }
   return TestEnvironmentClass
 }

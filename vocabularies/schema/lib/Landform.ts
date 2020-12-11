@@ -12,7 +12,7 @@ export interface Landform<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function LandformMixin<Base extends Constructor>(Resource: Base): Constructor<Landform> & Base {
   @namespace(schema)
-  class LandformClass extends PlaceMixin(Resource) implements Landform {
+  class LandformClass extends PlaceMixin(Resource) implements Partial<Landform> {
   }
   return LandformClass
 }

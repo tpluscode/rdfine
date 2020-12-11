@@ -19,7 +19,7 @@ export interface MonetaryAmount<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function MonetaryAmountMixin<Base extends Constructor>(Resource: Base): Constructor<MonetaryAmount> & Base {
   @namespace(schema)
-  class MonetaryAmountClass extends StructuredValueMixin(Resource) implements MonetaryAmount {
+  class MonetaryAmountClass extends StructuredValueMixin(Resource) implements Partial<MonetaryAmount> {
     @property.literal()
     currency: string | undefined;
     @property.literal({ type: Number })

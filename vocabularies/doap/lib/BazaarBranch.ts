@@ -12,7 +12,7 @@ export interface BazaarBranch<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function BazaarBranchMixin<Base extends Constructor>(Resource: Base): Constructor<BazaarBranch> & Base {
   @namespace(doap)
-  class BazaarBranchClass extends RepositoryMixin(Resource) implements BazaarBranch {
+  class BazaarBranchClass extends RepositoryMixin(Resource) implements Partial<BazaarBranch> {
   }
   return BazaarBranchClass
 }

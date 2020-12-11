@@ -12,7 +12,7 @@ export interface VisualArtsEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function VisualArtsEventMixin<Base extends Constructor>(Resource: Base): Constructor<VisualArtsEvent> & Base {
   @namespace(schema)
-  class VisualArtsEventClass extends EventMixin(Resource) implements VisualArtsEvent {
+  class VisualArtsEventClass extends EventMixin(Resource) implements Partial<VisualArtsEvent> {
   }
   return VisualArtsEventClass
 }

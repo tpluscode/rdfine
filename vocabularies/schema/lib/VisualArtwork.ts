@@ -29,7 +29,7 @@ export interface VisualArtwork<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function VisualArtworkMixin<Base extends Constructor>(Resource: Base): Constructor<VisualArtwork> & Base {
   @namespace(schema)
-  class VisualArtworkClass extends CreativeWorkMixin(Resource) implements VisualArtwork {
+  class VisualArtworkClass extends CreativeWorkMixin(Resource) implements Partial<VisualArtwork> {
     @property.literal()
     artEdition: number | string | undefined;
     @property.literal()

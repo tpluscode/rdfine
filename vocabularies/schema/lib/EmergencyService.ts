@@ -12,7 +12,7 @@ export interface EmergencyService<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function EmergencyServiceMixin<Base extends Constructor>(Resource: Base): Constructor<EmergencyService> & Base {
   @namespace(schema)
-  class EmergencyServiceClass extends LocalBusinessMixin(Resource) implements EmergencyService {
+  class EmergencyServiceClass extends LocalBusinessMixin(Resource) implements Partial<EmergencyService> {
   }
   return EmergencyServiceClass
 }

@@ -12,7 +12,7 @@ export interface OccupationalTherapy<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function OccupationalTherapyMixin<Base extends Constructor>(Resource: Base): Constructor<OccupationalTherapy> & Base {
   @namespace(schema)
-  class OccupationalTherapyClass extends MedicalTherapyMixin(Resource) implements OccupationalTherapy {
+  class OccupationalTherapyClass extends MedicalTherapyMixin(Resource) implements Partial<OccupationalTherapy> {
   }
   return OccupationalTherapyClass
 }

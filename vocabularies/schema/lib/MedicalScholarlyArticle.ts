@@ -13,7 +13,7 @@ export interface MedicalScholarlyArticle<D extends RDF.DatasetCore = RDF.Dataset
 
 export function MedicalScholarlyArticleMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalScholarlyArticle> & Base {
   @namespace(schema)
-  class MedicalScholarlyArticleClass extends ScholarlyArticleMixin(Resource) implements MedicalScholarlyArticle {
+  class MedicalScholarlyArticleClass extends ScholarlyArticleMixin(Resource) implements Partial<MedicalScholarlyArticle> {
     @property.literal()
     publicationType: string | undefined;
   }

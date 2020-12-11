@@ -15,7 +15,7 @@ export interface InteractionCounter<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function InteractionCounterMixin<Base extends Constructor>(Resource: Base): Constructor<InteractionCounter> & Base {
   @namespace(schema)
-  class InteractionCounterClass extends StructuredValueMixin(Resource) implements InteractionCounter {
+  class InteractionCounterClass extends StructuredValueMixin(Resource) implements Partial<InteractionCounter> {
     @property.resource()
     interactionService: Schema.SoftwareApplication | Schema.WebSite | undefined;
     @property.resource()

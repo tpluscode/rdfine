@@ -14,7 +14,7 @@ export interface JSExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function JSExecutableMixin<Base extends Constructor>(Resource: Base): Constructor<JSExecutable> & Base {
   @namespace(sh)
-  class JSExecutableClass extends RdfsResourceMixin(Resource) implements JSExecutable {
+  class JSExecutableClass extends RdfsResourceMixin(Resource) implements Partial<JSExecutable> {
     @property.literal()
     jsFunctionName: string | undefined;
   }

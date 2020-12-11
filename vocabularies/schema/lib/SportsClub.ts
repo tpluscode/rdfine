@@ -12,7 +12,7 @@ export interface SportsClub<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function SportsClubMixin<Base extends Constructor>(Resource: Base): Constructor<SportsClub> & Base {
   @namespace(schema)
-  class SportsClubClass extends SportsActivityLocationMixin(Resource) implements SportsClub {
+  class SportsClubClass extends SportsActivityLocationMixin(Resource) implements Partial<SportsClub> {
   }
   return SportsClubClass
 }

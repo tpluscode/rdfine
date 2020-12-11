@@ -13,7 +13,7 @@ export interface JSFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function JSFunctionMixin<Base extends Constructor>(Resource: Base): Constructor<JSFunction> & Base {
   @namespace(sh)
-  class JSFunctionClass extends JSExecutableMixin(FunctionMixin(Resource)) implements JSFunction {
+  class JSFunctionClass extends JSExecutableMixin(FunctionMixin(Resource)) implements Partial<JSFunction> {
   }
   return JSFunctionClass
 }

@@ -14,7 +14,7 @@ export interface UpdateAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function UpdateActionMixin<Base extends Constructor>(Resource: Base): Constructor<UpdateAction> & Base {
   @namespace(schema)
-  class UpdateActionClass extends ActionMixin(Resource) implements UpdateAction {
+  class UpdateActionClass extends ActionMixin(Resource) implements Partial<UpdateAction> {
     @property.resource()
     collection: Schema.Thing | undefined;
     @property.resource()

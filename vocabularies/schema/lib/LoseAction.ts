@@ -13,7 +13,7 @@ export interface LoseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function LoseActionMixin<Base extends Constructor>(Resource: Base): Constructor<LoseAction> & Base {
   @namespace(schema)
-  class LoseActionClass extends AchieveActionMixin(Resource) implements LoseAction {
+  class LoseActionClass extends AchieveActionMixin(Resource) implements Partial<LoseAction> {
     @property.resource()
     winner: Schema.Person | undefined;
   }

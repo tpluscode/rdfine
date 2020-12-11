@@ -13,7 +13,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
   @namespace(rdfs)
-  class ClassClass extends ResourceMixin(Resource) implements Class {
+  class ClassClass extends ResourceMixin(Resource) implements Partial<Class> {
     @property.resource({ values: 'array', as: [ClassMixin] })
     subClassOf!: Array<Rdfs.Class>;
   }

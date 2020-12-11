@@ -13,7 +13,7 @@ export interface FunctionalProperty<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function FunctionalPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<FunctionalProperty> & Base {
   @namespace(owl)
-  class FunctionalPropertyClass extends RdfPropertyMixin(Resource) implements FunctionalProperty {
+  class FunctionalPropertyClass extends RdfPropertyMixin(Resource) implements Partial<FunctionalProperty> {
   }
   return FunctionalPropertyClass
 }

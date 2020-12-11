@@ -15,7 +15,7 @@ export interface MedicalOrganization<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function MedicalOrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalOrganization> & Base {
   @namespace(schema)
-  class MedicalOrganizationClass extends OrganizationMixin(Resource) implements MedicalOrganization {
+  class MedicalOrganizationClass extends OrganizationMixin(Resource) implements Partial<MedicalOrganization> {
     @property.literal()
     healthPlanNetworkId: string | undefined;
     @property.literal({ type: Boolean })

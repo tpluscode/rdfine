@@ -18,7 +18,7 @@ export interface Book<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function BookMixin<Base extends Constructor>(Resource: Base): Constructor<Book> & Base {
   @namespace(schema)
-  class BookClass extends CreativeWorkMixin(Resource) implements Book {
+  class BookClass extends CreativeWorkMixin(Resource) implements Partial<Book> {
     @property.literal({ type: Boolean })
     abridged: boolean | undefined;
     @property.literal()

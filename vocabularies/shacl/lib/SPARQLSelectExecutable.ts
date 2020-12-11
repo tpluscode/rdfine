@@ -13,7 +13,7 @@ export interface SPARQLSelectExecutable<D extends RDF.DatasetCore = RDF.DatasetC
 
 export function SPARQLSelectExecutableMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLSelectExecutable> & Base {
   @namespace(sh)
-  class SPARQLSelectExecutableClass extends SPARQLExecutableMixin(Resource) implements SPARQLSelectExecutable {
+  class SPARQLSelectExecutableClass extends SPARQLExecutableMixin(Resource) implements Partial<SPARQLSelectExecutable> {
     @property.literal()
     select: string | undefined;
   }

@@ -30,7 +30,7 @@ export interface Flight<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function FlightMixin<Base extends Constructor>(Resource: Base): Constructor<Flight> & Base {
   @namespace(schema)
-  class FlightClass extends TripMixin(Resource) implements Flight {
+  class FlightClass extends TripMixin(Resource) implements Partial<Flight> {
     @property.resource()
     aircraft: Schema.Vehicle | undefined;
     @property.literal({ path: schema.aircraft })

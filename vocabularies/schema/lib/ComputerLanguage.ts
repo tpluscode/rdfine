@@ -12,7 +12,7 @@ export interface ComputerLanguage<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function ComputerLanguageMixin<Base extends Constructor>(Resource: Base): Constructor<ComputerLanguage> & Base {
   @namespace(schema)
-  class ComputerLanguageClass extends IntangibleMixin(Resource) implements ComputerLanguage {
+  class ComputerLanguageClass extends IntangibleMixin(Resource) implements Partial<ComputerLanguage> {
   }
   return ComputerLanguageClass
 }

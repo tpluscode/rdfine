@@ -12,7 +12,7 @@ export interface Country<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function CountryMixin<Base extends Constructor>(Resource: Base): Constructor<Country> & Base {
   @namespace(schema)
-  class CountryClass extends AdministrativeAreaMixin(Resource) implements Country {
+  class CountryClass extends AdministrativeAreaMixin(Resource) implements Partial<Country> {
   }
   return CountryClass
 }

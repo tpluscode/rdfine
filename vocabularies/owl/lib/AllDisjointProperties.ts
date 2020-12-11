@@ -13,7 +13,7 @@ export interface AllDisjointProperties<D extends RDF.DatasetCore = RDF.DatasetCo
 
 export function AllDisjointPropertiesMixin<Base extends Constructor>(Resource: Base): Constructor<AllDisjointProperties> & Base {
   @namespace(owl)
-  class AllDisjointPropertiesClass extends RdfsResourceMixin(Resource) implements AllDisjointProperties {
+  class AllDisjointPropertiesClass extends RdfsResourceMixin(Resource) implements Partial<AllDisjointProperties> {
   }
   return AllDisjointPropertiesClass
 }

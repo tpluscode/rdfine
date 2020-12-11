@@ -12,7 +12,7 @@ export interface School<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function SchoolMixin<Base extends Constructor>(Resource: Base): Constructor<School> & Base {
   @namespace(schema)
-  class SchoolClass extends EducationalOrganizationMixin(Resource) implements School {
+  class SchoolClass extends EducationalOrganizationMixin(Resource) implements Partial<School> {
   }
   return SchoolClass
 }

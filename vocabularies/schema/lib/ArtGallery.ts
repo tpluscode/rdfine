@@ -12,7 +12,7 @@ export interface ArtGallery<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function ArtGalleryMixin<Base extends Constructor>(Resource: Base): Constructor<ArtGallery> & Base {
   @namespace(schema)
-  class ArtGalleryClass extends EntertainmentBusinessMixin(Resource) implements ArtGallery {
+  class ArtGalleryClass extends EntertainmentBusinessMixin(Resource) implements Partial<ArtGallery> {
   }
   return ArtGalleryClass
 }

@@ -12,7 +12,7 @@ export interface UseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function UseActionMixin<Base extends Constructor>(Resource: Base): Constructor<UseAction> & Base {
   @namespace(schema)
-  class UseActionClass extends ConsumeActionMixin(Resource) implements UseAction {
+  class UseActionClass extends ConsumeActionMixin(Resource) implements Partial<UseAction> {
   }
   return UseActionClass
 }

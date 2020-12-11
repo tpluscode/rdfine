@@ -12,7 +12,7 @@ export interface Synagogue<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function SynagogueMixin<Base extends Constructor>(Resource: Base): Constructor<Synagogue> & Base {
   @namespace(schema)
-  class SynagogueClass extends PlaceOfWorshipMixin(Resource) implements Synagogue {
+  class SynagogueClass extends PlaceOfWorshipMixin(Resource) implements Partial<Synagogue> {
   }
   return SynagogueClass
 }

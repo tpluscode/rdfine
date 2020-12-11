@@ -12,7 +12,7 @@ export interface HgRepository<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function HgRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<HgRepository> & Base {
   @namespace(doap)
-  class HgRepositoryClass extends RepositoryMixin(Resource) implements HgRepository {
+  class HgRepositoryClass extends RepositoryMixin(Resource) implements Partial<HgRepository> {
   }
   return HgRepositoryClass
 }

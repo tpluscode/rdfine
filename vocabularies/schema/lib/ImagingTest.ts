@@ -13,7 +13,7 @@ export interface ImagingTest<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function ImagingTestMixin<Base extends Constructor>(Resource: Base): Constructor<ImagingTest> & Base {
   @namespace(schema)
-  class ImagingTestClass extends MedicalTestMixin(Resource) implements ImagingTest {
+  class ImagingTestClass extends MedicalTestMixin(Resource) implements Partial<ImagingTest> {
     @property()
     imagingTechnique: Schema.MedicalImagingTechnique | undefined;
   }

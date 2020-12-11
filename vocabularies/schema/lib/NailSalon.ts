@@ -12,7 +12,7 @@ export interface NailSalon<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function NailSalonMixin<Base extends Constructor>(Resource: Base): Constructor<NailSalon> & Base {
   @namespace(schema)
-  class NailSalonClass extends HealthAndBeautyBusinessMixin(Resource) implements NailSalon {
+  class NailSalonClass extends HealthAndBeautyBusinessMixin(Resource) implements Partial<NailSalon> {
   }
   return NailSalonClass
 }

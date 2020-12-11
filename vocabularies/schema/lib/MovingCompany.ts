@@ -12,7 +12,7 @@ export interface MovingCompany<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function MovingCompanyMixin<Base extends Constructor>(Resource: Base): Constructor<MovingCompany> & Base {
   @namespace(schema)
-  class MovingCompanyClass extends HomeAndConstructionBusinessMixin(Resource) implements MovingCompany {
+  class MovingCompanyClass extends HomeAndConstructionBusinessMixin(Resource) implements Partial<MovingCompany> {
   }
   return MovingCompanyClass
 }

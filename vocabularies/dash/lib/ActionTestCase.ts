@@ -12,7 +12,7 @@ export interface ActionTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function ActionTestCaseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class ActionTestCaseClass extends TestCaseMixin(Resource) implements ActionTestCase {
+  class ActionTestCaseClass extends TestCaseMixin(Resource) implements Partial<ActionTestCase> {
   }
   return ActionTestCaseClass
 }

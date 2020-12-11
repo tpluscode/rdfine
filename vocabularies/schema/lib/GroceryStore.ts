@@ -12,7 +12,7 @@ export interface GroceryStore<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function GroceryStoreMixin<Base extends Constructor>(Resource: Base): Constructor<GroceryStore> & Base {
   @namespace(schema)
-  class GroceryStoreClass extends StoreMixin(Resource) implements GroceryStore {
+  class GroceryStoreClass extends StoreMixin(Resource) implements Partial<GroceryStore> {
   }
   return GroceryStoreClass
 }

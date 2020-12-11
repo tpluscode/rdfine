@@ -14,7 +14,7 @@ export interface HowToStep<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function HowToStepMixin<Base extends Constructor>(Resource: Base): Constructor<HowToStep> & Base {
   @namespace(schema)
-  class HowToStepClass extends ListItemMixin(ItemListMixin(CreativeWorkMixin(Resource))) implements HowToStep {
+  class HowToStepClass extends ListItemMixin(ItemListMixin(CreativeWorkMixin(Resource))) implements Partial<HowToStep> {
   }
   return HowToStepClass
 }

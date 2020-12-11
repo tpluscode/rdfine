@@ -21,7 +21,7 @@ export interface Article<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function ArticleMixin<Base extends Constructor>(Resource: Base): Constructor<Article> & Base {
   @namespace(schema)
-  class ArticleClass extends CreativeWorkMixin(Resource) implements Article {
+  class ArticleClass extends CreativeWorkMixin(Resource) implements Partial<Article> {
     @property.literal()
     articleBody: string | undefined;
     @property.literal()

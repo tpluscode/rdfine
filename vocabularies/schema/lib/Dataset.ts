@@ -22,7 +22,7 @@ export interface Dataset<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function DatasetMixin<Base extends Constructor>(Resource: Base): Constructor<Dataset> & Base {
   @namespace(schema)
-  class DatasetClass extends CreativeWorkMixin(Resource) implements Dataset {
+  class DatasetClass extends CreativeWorkMixin(Resource) implements Partial<Dataset> {
     @property.resource()
     catalog: Schema.DataCatalog | undefined;
     @property.literal({ type: Date })

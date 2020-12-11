@@ -12,7 +12,7 @@ export interface PublicToilet<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function PublicToiletMixin<Base extends Constructor>(Resource: Base): Constructor<PublicToilet> & Base {
   @namespace(schema)
-  class PublicToiletClass extends CivicStructureMixin(Resource) implements PublicToilet {
+  class PublicToiletClass extends CivicStructureMixin(Resource) implements Partial<PublicToilet> {
   }
   return PublicToiletClass
 }

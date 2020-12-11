@@ -13,7 +13,7 @@ export interface Axiom<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs
 
 export function AxiomMixin<Base extends Constructor>(Resource: Base): Constructor<Axiom> & Base {
   @namespace(owl)
-  class AxiomClass extends RdfsResourceMixin(Resource) implements Axiom {
+  class AxiomClass extends RdfsResourceMixin(Resource) implements Partial<Axiom> {
   }
   return AxiomClass
 }

@@ -16,7 +16,7 @@ export interface ChooseAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function ChooseActionMixin<Base extends Constructor>(Resource: Base): Constructor<ChooseAction> & Base {
   @namespace(schema)
-  class ChooseActionClass extends AssessActionMixin(Resource) implements ChooseAction {
+  class ChooseActionClass extends AssessActionMixin(Resource) implements Partial<ChooseAction> {
     @property.resource()
     actionOption: Schema.Thing | undefined;
     @property.literal({ path: schema.actionOption })

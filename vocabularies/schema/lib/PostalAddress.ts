@@ -19,7 +19,7 @@ export interface PostalAddress<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function PostalAddressMixin<Base extends Constructor>(Resource: Base): Constructor<PostalAddress> & Base {
   @namespace(schema)
-  class PostalAddressClass extends ContactPointMixin(Resource) implements PostalAddress {
+  class PostalAddressClass extends ContactPointMixin(Resource) implements Partial<PostalAddress> {
     @property.resource()
     addressCountry: Schema.Country | undefined;
     @property.literal({ path: schema.addressCountry })

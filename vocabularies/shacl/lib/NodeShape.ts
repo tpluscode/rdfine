@@ -12,7 +12,7 @@ export interface NodeShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function NodeShapeMixin<Base extends Constructor>(Resource: Base): Constructor<NodeShape> & Base {
   @namespace(sh)
-  class NodeShapeClass extends ShapeMixin(Resource) implements NodeShape {
+  class NodeShapeClass extends ShapeMixin(Resource) implements Partial<NodeShape> {
   }
   return NodeShapeClass
 }

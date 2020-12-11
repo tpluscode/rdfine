@@ -12,7 +12,7 @@ export interface BankOrCreditUnion<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function BankOrCreditUnionMixin<Base extends Constructor>(Resource: Base): Constructor<BankOrCreditUnion> & Base {
   @namespace(schema)
-  class BankOrCreditUnionClass extends FinancialServiceMixin(Resource) implements BankOrCreditUnion {
+  class BankOrCreditUnionClass extends FinancialServiceMixin(Resource) implements Partial<BankOrCreditUnion> {
   }
   return BankOrCreditUnionClass
 }

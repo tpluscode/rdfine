@@ -11,7 +11,7 @@ export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rd
 
 export function ProjectMixin<Base extends Constructor>(Resource: Base): Constructor<Project> & Base {
   @namespace(foaf)
-  class ProjectClass extends Resource implements Project {
+  class ProjectClass extends Resource implements Partial<Project> {
   }
   return ProjectClass
 }

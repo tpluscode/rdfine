@@ -16,7 +16,7 @@ export interface DeliveryTimeSettings<D extends RDF.DatasetCore = RDF.DatasetCor
 
 export function DeliveryTimeSettingsMixin<Base extends Constructor>(Resource: Base): Constructor<DeliveryTimeSettings> & Base {
   @namespace(schema)
-  class DeliveryTimeSettingsClass extends StructuredValueMixin(Resource) implements DeliveryTimeSettings {
+  class DeliveryTimeSettingsClass extends StructuredValueMixin(Resource) implements Partial<DeliveryTimeSettings> {
     @property.resource()
     deliveryTime: Schema.ShippingDeliveryTime | undefined;
     @property.literal({ type: Boolean })

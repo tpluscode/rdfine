@@ -14,7 +14,7 @@ export interface BusOrCoach<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function BusOrCoachMixin<Base extends Constructor>(Resource: Base): Constructor<BusOrCoach> & Base {
   @namespace(schema)
-  class BusOrCoachClass extends VehicleMixin(Resource) implements BusOrCoach {
+  class BusOrCoachClass extends VehicleMixin(Resource) implements Partial<BusOrCoach> {
     @property.literal()
     acrissCode: string | undefined;
     @property.resource()

@@ -13,7 +13,7 @@ export interface Specification<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function SpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Specification> & Base {
   @namespace(doap)
-  class SpecificationClass extends RdfsResourceMixin(Resource) implements Specification {
+  class SpecificationClass extends RdfsResourceMixin(Resource) implements Partial<Specification> {
   }
   return SpecificationClass
 }

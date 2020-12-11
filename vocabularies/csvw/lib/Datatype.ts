@@ -20,7 +20,7 @@ export interface Datatype<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
 
 export function DatatypeMixin<Base extends Constructor>(Resource: Base): Constructor<Datatype> & Base {
   @namespace(csvw)
-  class DatatypeClass extends Resource implements Datatype {
+  class DatatypeClass extends Resource implements Partial<Datatype> {
     @property.literal()
     base: string | undefined;
     @property.literal()

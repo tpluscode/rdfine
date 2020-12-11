@@ -12,7 +12,7 @@ export interface DrinkAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function DrinkActionMixin<Base extends Constructor>(Resource: Base): Constructor<DrinkAction> & Base {
   @namespace(schema)
-  class DrinkActionClass extends ConsumeActionMixin(Resource) implements DrinkAction {
+  class DrinkActionClass extends ConsumeActionMixin(Resource) implements Partial<DrinkAction> {
   }
   return DrinkActionClass
 }

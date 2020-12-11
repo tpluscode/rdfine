@@ -12,7 +12,7 @@ export interface SurgicalProcedure<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function SurgicalProcedureMixin<Base extends Constructor>(Resource: Base): Constructor<SurgicalProcedure> & Base {
   @namespace(schema)
-  class SurgicalProcedureClass extends MedicalProcedureMixin(Resource) implements SurgicalProcedure {
+  class SurgicalProcedureClass extends MedicalProcedureMixin(Resource) implements Partial<SurgicalProcedure> {
   }
   return SurgicalProcedureClass
 }

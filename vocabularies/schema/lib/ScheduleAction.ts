@@ -12,7 +12,7 @@ export interface ScheduleAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function ScheduleActionMixin<Base extends Constructor>(Resource: Base): Constructor<ScheduleAction> & Base {
   @namespace(schema)
-  class ScheduleActionClass extends PlanActionMixin(Resource) implements ScheduleAction {
+  class ScheduleActionClass extends PlanActionMixin(Resource) implements Partial<ScheduleAction> {
   }
   return ScheduleActionClass
 }

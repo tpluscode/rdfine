@@ -17,7 +17,7 @@ export interface ApiDocumentation<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function ApiDocumentationMixin<Base extends Constructor>(Resource: Base): Constructor<ApiDocumentation> & Base {
   @namespace(hydra)
-  class ApiDocumentationClass extends ResourceMixin(Resource) implements ApiDocumentation {
+  class ApiDocumentationClass extends ResourceMixin(Resource) implements Partial<ApiDocumentation> {
     @property.literal()
     description: string | undefined;
     @property.resource({ implicitTypes: [hydra.Resource] })

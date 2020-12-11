@@ -13,7 +13,7 @@ export interface Group<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf
 
 export function GroupMixin<Base extends Constructor>(Resource: Base): Constructor<Group> & Base {
   @namespace(foaf)
-  class GroupClass extends AgentMixin(Resource) implements Group {
+  class GroupClass extends AgentMixin(Resource) implements Partial<Group> {
     @property.resource({ implicitTypes: [foaf.Agent] })
     member: Foaf.Agent | undefined;
   }

@@ -12,7 +12,7 @@ export interface CatholicChurch<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function CatholicChurchMixin<Base extends Constructor>(Resource: Base): Constructor<CatholicChurch> & Base {
   @namespace(schema)
-  class CatholicChurchClass extends ChurchMixin(Resource) implements CatholicChurch {
+  class CatholicChurchClass extends ChurchMixin(Resource) implements Partial<CatholicChurch> {
   }
   return CatholicChurchClass
 }

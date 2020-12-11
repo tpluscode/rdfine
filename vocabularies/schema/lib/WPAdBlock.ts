@@ -12,7 +12,7 @@ export interface WPAdBlock<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function WPAdBlockMixin<Base extends Constructor>(Resource: Base): Constructor<WPAdBlock> & Base {
   @namespace(schema)
-  class WPAdBlockClass extends WebPageElementMixin(Resource) implements WPAdBlock {
+  class WPAdBlockClass extends WebPageElementMixin(Resource) implements Partial<WPAdBlock> {
   }
   return WPAdBlockClass
 }

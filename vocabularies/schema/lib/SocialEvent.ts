@@ -12,7 +12,7 @@ export interface SocialEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function SocialEventMixin<Base extends Constructor>(Resource: Base): Constructor<SocialEvent> & Base {
   @namespace(schema)
-  class SocialEventClass extends EventMixin(Resource) implements SocialEvent {
+  class SocialEventClass extends EventMixin(Resource) implements Partial<SocialEvent> {
   }
   return SocialEventClass
 }

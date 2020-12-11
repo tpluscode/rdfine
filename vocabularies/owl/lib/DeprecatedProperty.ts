@@ -13,7 +13,7 @@ export interface DeprecatedProperty<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function DeprecatedPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<DeprecatedProperty> & Base {
   @namespace(owl)
-  class DeprecatedPropertyClass extends RdfPropertyMixin(Resource) implements DeprecatedProperty {
+  class DeprecatedPropertyClass extends RdfPropertyMixin(Resource) implements Partial<DeprecatedProperty> {
   }
   return DeprecatedPropertyClass
 }

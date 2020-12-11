@@ -24,7 +24,7 @@ export interface PropertyValue<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function PropertyValueMixin<Base extends Constructor>(Resource: Base): Constructor<PropertyValue> & Base {
   @namespace(schema)
-  class PropertyValueClass extends StructuredValueMixin(Resource) implements PropertyValue {
+  class PropertyValueClass extends StructuredValueMixin(Resource) implements Partial<PropertyValue> {
     @property.literal({ type: Number })
     maxValue: number | undefined;
     @property.literal()

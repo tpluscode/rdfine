@@ -53,7 +53,7 @@ export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function JobPostingMixin<Base extends Constructor>(Resource: Base): Constructor<JobPosting> & Base {
   @namespace(schema)
-  class JobPostingClass extends IntangibleMixin(Resource) implements JobPosting {
+  class JobPostingClass extends IntangibleMixin(Resource) implements Partial<JobPosting> {
     @property.resource()
     applicantLocationRequirements: Schema.AdministrativeArea | undefined;
     @property.resource()

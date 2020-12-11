@@ -250,7 +250,7 @@ export class MixinModule implements GeneratedModule {
     const mixinClass = mixinFunction.addClass({
       name: className,
       extends: baseClass,
-      implements: [this.type.localName],
+      implements: [`Partial<${this.type.localName}>`],
     })
 
     mixinClass.addDecorator({

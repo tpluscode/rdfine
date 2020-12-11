@@ -12,7 +12,7 @@ export interface BusStop<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function BusStopMixin<Base extends Constructor>(Resource: Base): Constructor<BusStop> & Base {
   @namespace(schema)
-  class BusStopClass extends CivicStructureMixin(Resource) implements BusStop {
+  class BusStopClass extends CivicStructureMixin(Resource) implements Partial<BusStop> {
   }
   return BusStopClass
 }

@@ -13,7 +13,7 @@ export interface SocialMediaPosting<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function SocialMediaPostingMixin<Base extends Constructor>(Resource: Base): Constructor<SocialMediaPosting> & Base {
   @namespace(schema)
-  class SocialMediaPostingClass extends ArticleMixin(Resource) implements SocialMediaPosting {
+  class SocialMediaPostingClass extends ArticleMixin(Resource) implements Partial<SocialMediaPosting> {
     @property.resource()
     sharedContent: Schema.CreativeWork | undefined;
   }

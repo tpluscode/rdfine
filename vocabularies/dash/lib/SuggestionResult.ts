@@ -13,7 +13,7 @@ export interface SuggestionResult<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function SuggestionResultMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class SuggestionResultClass extends ShaclAbstractResultMixin(Resource) implements SuggestionResult {
+  class SuggestionResultClass extends ShaclAbstractResultMixin(Resource) implements Partial<SuggestionResult> {
   }
   return SuggestionResultClass
 }

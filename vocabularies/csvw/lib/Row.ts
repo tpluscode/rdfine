@@ -15,7 +15,7 @@ export interface Row<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRes
 
 export function RowMixin<Base extends Constructor>(Resource: Base): Constructor<Row> & Base {
   @namespace(csvw)
-  class RowClass extends Resource implements Row {
+  class RowClass extends Resource implements Partial<Row> {
     @property()
     describes: RDF.Term | undefined;
     @property.literal()

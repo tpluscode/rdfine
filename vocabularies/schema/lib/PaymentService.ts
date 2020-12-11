@@ -12,7 +12,7 @@ export interface PaymentService<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function PaymentServiceMixin<Base extends Constructor>(Resource: Base): Constructor<PaymentService> & Base {
   @namespace(schema)
-  class PaymentServiceClass extends FinancialProductMixin(Resource) implements PaymentService {
+  class PaymentServiceClass extends FinancialProductMixin(Resource) implements Partial<PaymentService> {
   }
   return PaymentServiceClass
 }

@@ -14,7 +14,7 @@ export interface SPARQLSelectTemplate<D extends RDF.DatasetCore = RDF.DatasetCor
 
 export function SPARQLSelectTemplateMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class SPARQLSelectTemplateClass extends ShaclSPARQLSelectExecutableMixin(ShaclParameterizableMixin(Resource)) implements SPARQLSelectTemplate {
+  class SPARQLSelectTemplateClass extends ShaclSPARQLSelectExecutableMixin(ShaclParameterizableMixin(Resource)) implements Partial<SPARQLSelectTemplate> {
   }
   return SPARQLSelectTemplateClass
 }

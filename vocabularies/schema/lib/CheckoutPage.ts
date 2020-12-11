@@ -12,7 +12,7 @@ export interface CheckoutPage<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function CheckoutPageMixin<Base extends Constructor>(Resource: Base): Constructor<CheckoutPage> & Base {
   @namespace(schema)
-  class CheckoutPageClass extends WebPageMixin(Resource) implements CheckoutPage {
+  class CheckoutPageClass extends WebPageMixin(Resource) implements Partial<CheckoutPage> {
   }
   return CheckoutPageClass
 }

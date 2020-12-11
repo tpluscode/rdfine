@@ -13,7 +13,7 @@ export interface Thesis<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function ThesisMixin<Base extends Constructor>(Resource: Base): Constructor<Thesis> & Base {
   @namespace(schema)
-  class ThesisClass extends CreativeWorkMixin(Resource) implements Thesis {
+  class ThesisClass extends CreativeWorkMixin(Resource) implements Partial<Thesis> {
     @property.literal()
     inSupportOf: string | undefined;
   }

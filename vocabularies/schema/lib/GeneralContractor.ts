@@ -12,7 +12,7 @@ export interface GeneralContractor<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function GeneralContractorMixin<Base extends Constructor>(Resource: Base): Constructor<GeneralContractor> & Base {
   @namespace(schema)
-  class GeneralContractorClass extends HomeAndConstructionBusinessMixin(Resource) implements GeneralContractor {
+  class GeneralContractorClass extends HomeAndConstructionBusinessMixin(Resource) implements Partial<GeneralContractor> {
   }
   return GeneralContractorClass
 }

@@ -13,7 +13,7 @@ export interface DonateAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function DonateActionMixin<Base extends Constructor>(Resource: Base): Constructor<DonateAction> & Base {
   @namespace(schema)
-  class DonateActionClass extends TradeActionMixin(Resource) implements DonateAction {
+  class DonateActionClass extends TradeActionMixin(Resource) implements Partial<DonateAction> {
     @property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }

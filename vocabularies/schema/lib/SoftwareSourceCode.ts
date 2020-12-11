@@ -20,7 +20,7 @@ export interface SoftwareSourceCode<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function SoftwareSourceCodeMixin<Base extends Constructor>(Resource: Base): Constructor<SoftwareSourceCode> & Base {
   @namespace(schema)
-  class SoftwareSourceCodeClass extends CreativeWorkMixin(Resource) implements SoftwareSourceCode {
+  class SoftwareSourceCodeClass extends CreativeWorkMixin(Resource) implements Partial<SoftwareSourceCode> {
     @property()
     codeRepository: RDF.NamedNode | undefined;
     @property.literal()

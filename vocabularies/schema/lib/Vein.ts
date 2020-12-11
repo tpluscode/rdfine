@@ -15,7 +15,7 @@ export interface Vein<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function VeinMixin<Base extends Constructor>(Resource: Base): Constructor<Vein> & Base {
   @namespace(schema)
-  class VeinClass extends VesselMixin(Resource) implements Vein {
+  class VeinClass extends VesselMixin(Resource) implements Partial<Vein> {
     @property.resource()
     drainsTo: Schema.Vessel | undefined;
     @property.resource()

@@ -12,7 +12,7 @@ export interface BookSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function BookSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<BookSeries> & Base {
   @namespace(schema)
-  class BookSeriesClass extends CreativeWorkSeriesMixin(Resource) implements BookSeries {
+  class BookSeriesClass extends CreativeWorkSeriesMixin(Resource) implements Partial<BookSeries> {
   }
   return BookSeriesClass
 }

@@ -12,7 +12,7 @@ export interface AutoBodyShop<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function AutoBodyShopMixin<Base extends Constructor>(Resource: Base): Constructor<AutoBodyShop> & Base {
   @namespace(schema)
-  class AutoBodyShopClass extends AutomotiveBusinessMixin(Resource) implements AutoBodyShop {
+  class AutoBodyShopClass extends AutomotiveBusinessMixin(Resource) implements Partial<AutoBodyShop> {
   }
   return AutoBodyShopClass
 }

@@ -16,7 +16,7 @@ export interface DeliveryEvent<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function DeliveryEventMixin<Base extends Constructor>(Resource: Base): Constructor<DeliveryEvent> & Base {
   @namespace(schema)
-  class DeliveryEventClass extends EventMixin(Resource) implements DeliveryEvent {
+  class DeliveryEventClass extends EventMixin(Resource) implements Partial<DeliveryEvent> {
     @property.literal()
     accessCode: string | undefined;
     @property.literal({ type: Date })

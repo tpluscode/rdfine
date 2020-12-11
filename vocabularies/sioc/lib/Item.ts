@@ -34,7 +34,7 @@ export interface Item<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRe
 
 export function ItemMixin<Base extends Constructor>(Resource: Base): Constructor<Item> & Base {
   @namespace(sioc)
-  class ItemClass extends Resource implements Item {
+  class ItemClass extends Resource implements Partial<Item> {
     @property()
     about: RDF.Term | undefined;
     @property()

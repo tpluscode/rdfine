@@ -12,7 +12,7 @@ export interface MusicVenue<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function MusicVenueMixin<Base extends Constructor>(Resource: Base): Constructor<MusicVenue> & Base {
   @namespace(schema)
-  class MusicVenueClass extends CivicStructureMixin(Resource) implements MusicVenue {
+  class MusicVenueClass extends CivicStructureMixin(Resource) implements Partial<MusicVenue> {
   }
   return MusicVenueClass
 }

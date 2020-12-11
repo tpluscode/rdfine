@@ -12,7 +12,7 @@ export interface UserPageVisits<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function UserPageVisitsMixin<Base extends Constructor>(Resource: Base): Constructor<UserPageVisits> & Base {
   @namespace(schema)
-  class UserPageVisitsClass extends UserInteractionMixin(Resource) implements UserPageVisits {
+  class UserPageVisitsClass extends UserInteractionMixin(Resource) implements Partial<UserPageVisits> {
   }
   return UserPageVisitsClass
 }

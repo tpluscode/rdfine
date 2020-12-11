@@ -12,7 +12,7 @@ export interface SelfStorage<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function SelfStorageMixin<Base extends Constructor>(Resource: Base): Constructor<SelfStorage> & Base {
   @namespace(schema)
-  class SelfStorageClass extends LocalBusinessMixin(Resource) implements SelfStorage {
+  class SelfStorageClass extends LocalBusinessMixin(Resource) implements Partial<SelfStorage> {
   }
   return SelfStorageClass
 }

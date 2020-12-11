@@ -12,7 +12,7 @@ export interface LiteraryEvent<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function LiteraryEventMixin<Base extends Constructor>(Resource: Base): Constructor<LiteraryEvent> & Base {
   @namespace(schema)
-  class LiteraryEventClass extends EventMixin(Resource) implements LiteraryEvent {
+  class LiteraryEventClass extends EventMixin(Resource) implements Partial<LiteraryEvent> {
   }
   return LiteraryEventClass
 }

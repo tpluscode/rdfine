@@ -12,7 +12,7 @@ export interface CurrencyConversionService<D extends RDF.DatasetCore = RDF.Datas
 
 export function CurrencyConversionServiceMixin<Base extends Constructor>(Resource: Base): Constructor<CurrencyConversionService> & Base {
   @namespace(schema)
-  class CurrencyConversionServiceClass extends FinancialProductMixin(Resource) implements CurrencyConversionService {
+  class CurrencyConversionServiceClass extends FinancialProductMixin(Resource) implements Partial<CurrencyConversionService> {
   }
   return CurrencyConversionServiceClass
 }

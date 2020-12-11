@@ -12,7 +12,7 @@ export interface AnimalShelter<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function AnimalShelterMixin<Base extends Constructor>(Resource: Base): Constructor<AnimalShelter> & Base {
   @namespace(schema)
-  class AnimalShelterClass extends LocalBusinessMixin(Resource) implements AnimalShelter {
+  class AnimalShelterClass extends LocalBusinessMixin(Resource) implements Partial<AnimalShelter> {
   }
   return AnimalShelterClass
 }

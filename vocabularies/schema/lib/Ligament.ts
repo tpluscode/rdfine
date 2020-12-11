@@ -12,7 +12,7 @@ export interface Ligament<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function LigamentMixin<Base extends Constructor>(Resource: Base): Constructor<Ligament> & Base {
   @namespace(schema)
-  class LigamentClass extends AnatomicalStructureMixin(Resource) implements Ligament {
+  class LigamentClass extends AnatomicalStructureMixin(Resource) implements Partial<Ligament> {
   }
   return LigamentClass
 }

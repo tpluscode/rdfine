@@ -12,7 +12,7 @@ export interface Table<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
 
 export function TableMixin<Base extends Constructor>(Resource: Base): Constructor<Table> & Base {
   @namespace(schema)
-  class TableClass extends WebPageElementMixin(Resource) implements Table {
+  class TableClass extends WebPageElementMixin(Resource) implements Partial<Table> {
   }
   return TableClass
 }

@@ -12,7 +12,7 @@ export interface BowlingAlley<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function BowlingAlleyMixin<Base extends Constructor>(Resource: Base): Constructor<BowlingAlley> & Base {
   @namespace(schema)
-  class BowlingAlleyClass extends SportsActivityLocationMixin(Resource) implements BowlingAlley {
+  class BowlingAlleyClass extends SportsActivityLocationMixin(Resource) implements Partial<BowlingAlley> {
   }
   return BowlingAlleyClass
 }

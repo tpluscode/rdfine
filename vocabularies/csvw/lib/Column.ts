@@ -28,7 +28,7 @@ export interface Column<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf
 
 export function ColumnMixin<Base extends Constructor>(Resource: Base): Constructor<Column> & Base {
   @namespace(csvw)
-  class ColumnClass extends Resource implements Column {
+  class ColumnClass extends Resource implements Partial<Column> {
     @property.literal()
     aboutUrl: string | undefined;
     @property.resource({ implicitTypes: [csvw.Datatype] })

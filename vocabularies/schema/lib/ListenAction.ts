@@ -12,7 +12,7 @@ export interface ListenAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function ListenActionMixin<Base extends Constructor>(Resource: Base): Constructor<ListenAction> & Base {
   @namespace(schema)
-  class ListenActionClass extends ConsumeActionMixin(Resource) implements ListenAction {
+  class ListenActionClass extends ConsumeActionMixin(Resource) implements Partial<ListenAction> {
   }
   return ListenActionClass
 }

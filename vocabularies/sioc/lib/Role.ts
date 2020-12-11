@@ -13,7 +13,7 @@ export interface Role<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRe
 
 export function RoleMixin<Base extends Constructor>(Resource: Base): Constructor<Role> & Base {
   @namespace(sioc)
-  class RoleClass extends Resource implements Role {
+  class RoleClass extends Resource implements Partial<Role> {
     @property()
     'function_of': RDF.Term | undefined;
     @property()

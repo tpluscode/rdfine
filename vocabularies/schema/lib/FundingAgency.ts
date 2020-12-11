@@ -12,7 +12,7 @@ export interface FundingAgency<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function FundingAgencyMixin<Base extends Constructor>(Resource: Base): Constructor<FundingAgency> & Base {
   @namespace(schema)
-  class FundingAgencyClass extends ProjectMixin(Resource) implements FundingAgency {
+  class FundingAgencyClass extends ProjectMixin(Resource) implements Partial<FundingAgency> {
   }
   return FundingAgencyClass
 }

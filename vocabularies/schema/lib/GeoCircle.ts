@@ -15,7 +15,7 @@ export interface GeoCircle<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function GeoCircleMixin<Base extends Constructor>(Resource: Base): Constructor<GeoCircle> & Base {
   @namespace(schema)
-  class GeoCircleClass extends GeoShapeMixin(Resource) implements GeoCircle {
+  class GeoCircleClass extends GeoShapeMixin(Resource) implements Partial<GeoCircle> {
     @property.resource()
     geoMidpoint: Schema.GeoCoordinates | undefined;
     @property.resource()

@@ -12,7 +12,7 @@ export interface RadioClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function RadioClipMixin<Base extends Constructor>(Resource: Base): Constructor<RadioClip> & Base {
   @namespace(schema)
-  class RadioClipClass extends ClipMixin(Resource) implements RadioClip {
+  class RadioClipClass extends ClipMixin(Resource) implements Partial<RadioClip> {
   }
   return RadioClipClass
 }

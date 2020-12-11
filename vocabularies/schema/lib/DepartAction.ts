@@ -12,7 +12,7 @@ export interface DepartAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function DepartActionMixin<Base extends Constructor>(Resource: Base): Constructor<DepartAction> & Base {
   @namespace(schema)
-  class DepartActionClass extends MoveActionMixin(Resource) implements DepartAction {
+  class DepartActionClass extends MoveActionMixin(Resource) implements Partial<DepartAction> {
   }
   return DepartActionClass
 }

@@ -18,7 +18,7 @@ export interface IriTemplateMapping<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function IriTemplateMappingMixin<Base extends Constructor>(Resource: Base): Constructor<IriTemplateMapping> & Base {
   @namespace(hydra)
-  class IriTemplateMappingClass extends ResourceMixin(Resource) implements IriTemplateMapping {
+  class IriTemplateMappingClass extends ResourceMixin(Resource) implements Partial<IriTemplateMapping> {
     @property.resource({ as: [RdfPropertyMixin] })
     property: Rdf.Property | undefined;
     @property.literal({ type: Boolean })

@@ -15,7 +15,7 @@ export interface Collection<M extends RdfResourceCore<any> = RdfResourceCore<any
 
 export function CollectionMixin<Base extends Constructor>(Resource: Base): Constructor<Collection> & Base {
   @namespace(hydra)
-  class CollectionClass extends ResourceMixin(Resource) implements Collection {
+  class CollectionClass extends ResourceMixin(Resource) implements Partial<Collection> {
     @property.resource({ values: 'array', implicitTypes: [hydra.ManagesBlock] })
     manages!: Array<Hydra.ManagesBlock>;
     @property.resource({ values: 'array', implicitTypes: [hydra.Resource] })

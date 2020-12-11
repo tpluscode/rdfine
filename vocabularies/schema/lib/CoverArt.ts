@@ -12,7 +12,7 @@ export interface CoverArt<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function CoverArtMixin<Base extends Constructor>(Resource: Base): Constructor<CoverArt> & Base {
   @namespace(schema)
-  class CoverArtClass extends VisualArtworkMixin(Resource) implements CoverArt {
+  class CoverArtClass extends VisualArtworkMixin(Resource) implements Partial<CoverArt> {
   }
   return CoverArtClass
 }

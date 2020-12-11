@@ -12,7 +12,7 @@ export interface UnRegisterAction<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function UnRegisterActionMixin<Base extends Constructor>(Resource: Base): Constructor<UnRegisterAction> & Base {
   @namespace(schema)
-  class UnRegisterActionClass extends InteractActionMixin(Resource) implements UnRegisterAction {
+  class UnRegisterActionClass extends InteractActionMixin(Resource) implements Partial<UnRegisterAction> {
   }
   return UnRegisterActionClass
 }

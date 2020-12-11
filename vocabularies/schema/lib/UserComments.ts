@@ -17,7 +17,7 @@ export interface UserComments<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function UserCommentsMixin<Base extends Constructor>(Resource: Base): Constructor<UserComments> & Base {
   @namespace(schema)
-  class UserCommentsClass extends UserInteractionMixin(Resource) implements UserComments {
+  class UserCommentsClass extends UserInteractionMixin(Resource) implements Partial<UserComments> {
     @property.literal()
     commentText: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })

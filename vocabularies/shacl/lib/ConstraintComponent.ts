@@ -15,7 +15,7 @@ export interface ConstraintComponent<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function ConstraintComponentMixin<Base extends Constructor>(Resource: Base): Constructor<ConstraintComponent> & Base {
   @namespace(sh)
-  class ConstraintComponentClass extends ParameterizableMixin(Resource) implements ConstraintComponent {
+  class ConstraintComponentClass extends ParameterizableMixin(Resource) implements Partial<ConstraintComponent> {
     @property.resource({ implicitTypes: [sh.Validator] })
     nodeValidator: Sh.Validator | undefined;
     @property.resource({ implicitTypes: [sh.Validator] })

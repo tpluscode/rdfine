@@ -12,7 +12,7 @@ export interface GovernmentOrganization<D extends RDF.DatasetCore = RDF.DatasetC
 
 export function GovernmentOrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<GovernmentOrganization> & Base {
   @namespace(schema)
-  class GovernmentOrganizationClass extends OrganizationMixin(Resource) implements GovernmentOrganization {
+  class GovernmentOrganizationClass extends OrganizationMixin(Resource) implements Partial<GovernmentOrganization> {
   }
   return GovernmentOrganizationClass
 }

@@ -14,7 +14,7 @@ export interface SPARQLConstructTemplate<D extends RDF.DatasetCore = RDF.Dataset
 
 export function SPARQLConstructTemplateMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class SPARQLConstructTemplateClass extends ShaclSPARQLConstructExecutableMixin(ShaclParameterizableMixin(Resource)) implements SPARQLConstructTemplate {
+  class SPARQLConstructTemplateClass extends ShaclSPARQLConstructExecutableMixin(ShaclParameterizableMixin(Resource)) implements Partial<SPARQLConstructTemplate> {
   }
   return SPARQLConstructTemplateClass
 }

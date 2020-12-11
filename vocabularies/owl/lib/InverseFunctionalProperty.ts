@@ -12,7 +12,7 @@ export interface InverseFunctionalProperty<D extends RDF.DatasetCore = RDF.Datas
 
 export function InverseFunctionalPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<InverseFunctionalProperty> & Base {
   @namespace(owl)
-  class InverseFunctionalPropertyClass extends ObjectPropertyMixin(Resource) implements InverseFunctionalProperty {
+  class InverseFunctionalPropertyClass extends ObjectPropertyMixin(Resource) implements Partial<InverseFunctionalProperty> {
   }
   return InverseFunctionalPropertyClass
 }

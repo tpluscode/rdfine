@@ -14,7 +14,7 @@ export interface QueryTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function QueryTestCaseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class QueryTestCaseClass extends ShaclSPARQLSelectExecutableMixin(TestCaseMixin(Resource)) implements QueryTestCase {
+  class QueryTestCaseClass extends ShaclSPARQLSelectExecutableMixin(TestCaseMixin(Resource)) implements Partial<QueryTestCase> {
   }
   return QueryTestCaseClass
 }

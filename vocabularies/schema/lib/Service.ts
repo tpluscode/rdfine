@@ -40,7 +40,7 @@ export interface Service<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function ServiceMixin<Base extends Constructor>(Resource: Base): Constructor<Service> & Base {
   @namespace(schema)
-  class ServiceClass extends IntangibleMixin(Resource) implements Service {
+  class ServiceClass extends IntangibleMixin(Resource) implements Partial<Service> {
     @property.resource()
     aggregateRating: Schema.AggregateRating | undefined;
     @property.resource()

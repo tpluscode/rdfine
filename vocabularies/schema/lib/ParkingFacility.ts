@@ -12,7 +12,7 @@ export interface ParkingFacility<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function ParkingFacilityMixin<Base extends Constructor>(Resource: Base): Constructor<ParkingFacility> & Base {
   @namespace(schema)
-  class ParkingFacilityClass extends CivicStructureMixin(Resource) implements ParkingFacility {
+  class ParkingFacilityClass extends CivicStructureMixin(Resource) implements Partial<ParkingFacility> {
   }
   return ParkingFacilityClass
 }

@@ -12,7 +12,7 @@ export interface Editor<D extends RDF.DatasetCore = RDF.DatasetCore> extends Das
 
 export function EditorMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class EditorClass extends WidgetMixin(Resource) implements Editor {
+  class EditorClass extends WidgetMixin(Resource) implements Partial<Editor> {
   }
   return EditorClass
 }

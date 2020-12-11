@@ -16,7 +16,7 @@ export interface Nerve<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
 
 export function NerveMixin<Base extends Constructor>(Resource: Base): Constructor<Nerve> & Base {
   @namespace(schema)
-  class NerveClass extends AnatomicalStructureMixin(Resource) implements Nerve {
+  class NerveClass extends AnatomicalStructureMixin(Resource) implements Partial<Nerve> {
     @property.resource()
     branch: Schema.AnatomicalStructure | undefined;
     @property.resource()

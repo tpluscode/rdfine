@@ -12,7 +12,7 @@ export interface Conversation<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function ConversationMixin<Base extends Constructor>(Resource: Base): Constructor<Conversation> & Base {
   @namespace(schema)
-  class ConversationClass extends CreativeWorkMixin(Resource) implements Conversation {
+  class ConversationClass extends CreativeWorkMixin(Resource) implements Partial<Conversation> {
   }
   return ConversationClass
 }

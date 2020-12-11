@@ -16,7 +16,7 @@ export interface FoodEstablishmentReservation<D extends RDF.DatasetCore = RDF.Da
 
 export function FoodEstablishmentReservationMixin<Base extends Constructor>(Resource: Base): Constructor<FoodEstablishmentReservation> & Base {
   @namespace(schema)
-  class FoodEstablishmentReservationClass extends ReservationMixin(Resource) implements FoodEstablishmentReservation {
+  class FoodEstablishmentReservationClass extends ReservationMixin(Resource) implements Partial<FoodEstablishmentReservation> {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     endTime: Date | undefined;
     @property.resource()

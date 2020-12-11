@@ -12,7 +12,7 @@ export interface WearAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function WearActionMixin<Base extends Constructor>(Resource: Base): Constructor<WearAction> & Base {
   @namespace(schema)
-  class WearActionClass extends UseActionMixin(Resource) implements WearAction {
+  class WearActionClass extends UseActionMixin(Resource) implements Partial<WearAction> {
   }
   return WearActionClass
 }

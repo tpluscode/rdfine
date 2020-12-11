@@ -18,7 +18,7 @@ export interface LocalBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function LocalBusinessMixin<Base extends Constructor>(Resource: Base): Constructor<LocalBusiness> & Base {
   @namespace(schema)
-  class LocalBusinessClass extends PlaceMixin(OrganizationMixin(Resource)) implements LocalBusiness {
+  class LocalBusinessClass extends PlaceMixin(OrganizationMixin(Resource)) implements Partial<LocalBusiness> {
     @property.resource()
     branchOf: Schema.Organization | undefined;
     @property.literal()

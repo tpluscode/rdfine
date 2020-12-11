@@ -12,7 +12,7 @@ export interface Store<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
 
 export function StoreMixin<Base extends Constructor>(Resource: Base): Constructor<Store> & Base {
   @namespace(schema)
-  class StoreClass extends LocalBusinessMixin(Resource) implements Store {
+  class StoreClass extends LocalBusinessMixin(Resource) implements Partial<Store> {
   }
   return StoreClass
 }

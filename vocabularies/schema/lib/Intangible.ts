@@ -12,7 +12,7 @@ export interface Intangible<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function IntangibleMixin<Base extends Constructor>(Resource: Base): Constructor<Intangible> & Base {
   @namespace(schema)
-  class IntangibleClass extends ThingMixin(Resource) implements Intangible {
+  class IntangibleClass extends ThingMixin(Resource) implements Partial<Intangible> {
   }
   return IntangibleClass
 }

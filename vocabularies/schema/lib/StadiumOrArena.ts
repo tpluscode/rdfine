@@ -13,7 +13,7 @@ export interface StadiumOrArena<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function StadiumOrArenaMixin<Base extends Constructor>(Resource: Base): Constructor<StadiumOrArena> & Base {
   @namespace(schema)
-  class StadiumOrArenaClass extends SportsActivityLocationMixin(CivicStructureMixin(Resource)) implements StadiumOrArena {
+  class StadiumOrArenaClass extends SportsActivityLocationMixin(CivicStructureMixin(Resource)) implements Partial<StadiumOrArena> {
   }
   return StadiumOrArenaClass
 }

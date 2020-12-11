@@ -14,7 +14,7 @@ export interface JSLibrary<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function JSLibraryMixin<Base extends Constructor>(Resource: Base): Constructor<JSLibrary> & Base {
   @namespace(sh)
-  class JSLibraryClass extends RdfsResourceMixin(Resource) implements JSLibrary {
+  class JSLibraryClass extends RdfsResourceMixin(Resource) implements Partial<JSLibrary> {
     @property.literal()
     jsLibraryURL: string | undefined;
   }

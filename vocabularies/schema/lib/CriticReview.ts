@@ -12,7 +12,7 @@ export interface CriticReview<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function CriticReviewMixin<Base extends Constructor>(Resource: Base): Constructor<CriticReview> & Base {
   @namespace(schema)
-  class CriticReviewClass extends ReviewMixin(Resource) implements CriticReview {
+  class CriticReviewClass extends ReviewMixin(Resource) implements Partial<CriticReview> {
   }
   return CriticReviewClass
 }

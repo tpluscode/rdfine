@@ -12,7 +12,7 @@ export interface Park<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function ParkMixin<Base extends Constructor>(Resource: Base): Constructor<Park> & Base {
   @namespace(schema)
-  class ParkClass extends CivicStructureMixin(Resource) implements Park {
+  class ParkClass extends CivicStructureMixin(Resource) implements Partial<Park> {
   }
   return ParkClass
 }

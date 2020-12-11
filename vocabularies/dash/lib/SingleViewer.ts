@@ -12,7 +12,7 @@ export interface SingleViewer<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function SingleViewerMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class SingleViewerClass extends ViewerMixin(Resource) implements SingleViewer {
+  class SingleViewerClass extends ViewerMixin(Resource) implements Partial<SingleViewer> {
   }
   return SingleViewerClass
 }

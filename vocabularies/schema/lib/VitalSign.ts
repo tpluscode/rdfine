@@ -12,7 +12,7 @@ export interface VitalSign<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function VitalSignMixin<Base extends Constructor>(Resource: Base): Constructor<VitalSign> & Base {
   @namespace(schema)
-  class VitalSignClass extends MedicalSignMixin(Resource) implements VitalSign {
+  class VitalSignClass extends MedicalSignMixin(Resource) implements Partial<VitalSign> {
   }
   return VitalSignClass
 }

@@ -15,7 +15,7 @@ export interface AggregateRating<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function AggregateRatingMixin<Base extends Constructor>(Resource: Base): Constructor<AggregateRating> & Base {
   @namespace(schema)
-  class AggregateRatingClass extends RatingMixin(Resource) implements AggregateRating {
+  class AggregateRatingClass extends RatingMixin(Resource) implements Partial<AggregateRating> {
     @property.resource()
     itemReviewed: Schema.Thing | undefined;
     @property.literal({ type: Number })

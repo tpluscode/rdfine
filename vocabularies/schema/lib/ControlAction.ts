@@ -12,7 +12,7 @@ export interface ControlAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function ControlActionMixin<Base extends Constructor>(Resource: Base): Constructor<ControlAction> & Base {
   @namespace(schema)
-  class ControlActionClass extends ActionMixin(Resource) implements ControlAction {
+  class ControlActionClass extends ActionMixin(Resource) implements Partial<ControlAction> {
   }
   return ControlActionClass
 }

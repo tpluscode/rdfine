@@ -12,7 +12,7 @@ export interface ItemPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function ItemPageMixin<Base extends Constructor>(Resource: Base): Constructor<ItemPage> & Base {
   @namespace(schema)
-  class ItemPageClass extends WebPageMixin(Resource) implements ItemPage {
+  class ItemPageClass extends WebPageMixin(Resource) implements Partial<ItemPage> {
   }
   return ItemPageClass
 }

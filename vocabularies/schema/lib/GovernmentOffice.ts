@@ -12,7 +12,7 @@ export interface GovernmentOffice<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function GovernmentOfficeMixin<Base extends Constructor>(Resource: Base): Constructor<GovernmentOffice> & Base {
   @namespace(schema)
-  class GovernmentOfficeClass extends LocalBusinessMixin(Resource) implements GovernmentOffice {
+  class GovernmentOfficeClass extends LocalBusinessMixin(Resource) implements Partial<GovernmentOffice> {
   }
   return GovernmentOfficeClass
 }

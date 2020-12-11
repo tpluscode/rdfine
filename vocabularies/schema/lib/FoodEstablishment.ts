@@ -20,7 +20,7 @@ export interface FoodEstablishment<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function FoodEstablishmentMixin<Base extends Constructor>(Resource: Base): Constructor<FoodEstablishment> & Base {
   @namespace(schema)
-  class FoodEstablishmentClass extends LocalBusinessMixin(Resource) implements FoodEstablishment {
+  class FoodEstablishmentClass extends LocalBusinessMixin(Resource) implements Partial<FoodEstablishment> {
     @property.literal()
     acceptsReservations: boolean | string | undefined;
     @property({ path: schema.acceptsReservations })

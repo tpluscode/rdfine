@@ -12,7 +12,7 @@ export interface Crematorium<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function CrematoriumMixin<Base extends Constructor>(Resource: Base): Constructor<Crematorium> & Base {
   @namespace(schema)
-  class CrematoriumClass extends CivicStructureMixin(Resource) implements Crematorium {
+  class CrematoriumClass extends CivicStructureMixin(Resource) implements Partial<Crematorium> {
   }
   return CrematoriumClass
 }

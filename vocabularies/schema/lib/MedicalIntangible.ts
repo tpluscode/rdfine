@@ -12,7 +12,7 @@ export interface MedicalIntangible<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function MedicalIntangibleMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalIntangible> & Base {
   @namespace(schema)
-  class MedicalIntangibleClass extends MedicalEntityMixin(Resource) implements MedicalIntangible {
+  class MedicalIntangibleClass extends MedicalEntityMixin(Resource) implements Partial<MedicalIntangible> {
   }
   return MedicalIntangibleClass
 }

@@ -23,7 +23,7 @@ export interface WebPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function WebPageMixin<Base extends Constructor>(Resource: Base): Constructor<WebPage> & Base {
   @namespace(schema)
-  class WebPageClass extends CreativeWorkMixin(Resource) implements WebPage {
+  class WebPageClass extends CreativeWorkMixin(Resource) implements Partial<WebPage> {
     @property.resource()
     breadcrumb: Schema.BreadcrumbList | undefined;
     @property.literal({ path: schema.breadcrumb })

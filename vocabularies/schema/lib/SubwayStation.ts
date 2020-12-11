@@ -12,7 +12,7 @@ export interface SubwayStation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function SubwayStationMixin<Base extends Constructor>(Resource: Base): Constructor<SubwayStation> & Base {
   @namespace(schema)
-  class SubwayStationClass extends CivicStructureMixin(Resource) implements SubwayStation {
+  class SubwayStationClass extends CivicStructureMixin(Resource) implements Partial<SubwayStation> {
   }
   return SubwayStationClass
 }

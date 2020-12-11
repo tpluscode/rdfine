@@ -12,7 +12,7 @@ export interface ValidationResult<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function ValidationResultMixin<Base extends Constructor>(Resource: Base): Constructor<ValidationResult> & Base {
   @namespace(sh)
-  class ValidationResultClass extends AbstractResultMixin(Resource) implements ValidationResult {
+  class ValidationResultClass extends AbstractResultMixin(Resource) implements Partial<ValidationResult> {
   }
   return ValidationResultClass
 }

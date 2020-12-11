@@ -12,7 +12,7 @@ export interface PreOrderAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function PreOrderActionMixin<Base extends Constructor>(Resource: Base): Constructor<PreOrderAction> & Base {
   @namespace(schema)
-  class PreOrderActionClass extends TradeActionMixin(Resource) implements PreOrderAction {
+  class PreOrderActionClass extends TradeActionMixin(Resource) implements Partial<PreOrderAction> {
   }
   return PreOrderActionClass
 }

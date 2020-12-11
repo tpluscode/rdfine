@@ -13,7 +13,7 @@ export interface OntologyProperty<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function OntologyPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<OntologyProperty> & Base {
   @namespace(owl)
-  class OntologyPropertyClass extends RdfPropertyMixin(Resource) implements OntologyProperty {
+  class OntologyPropertyClass extends RdfPropertyMixin(Resource) implements Partial<OntologyProperty> {
   }
   return OntologyPropertyClass
 }

@@ -14,7 +14,7 @@ export interface InvestmentOrDeposit<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function InvestmentOrDepositMixin<Base extends Constructor>(Resource: Base): Constructor<InvestmentOrDeposit> & Base {
   @namespace(schema)
-  class InvestmentOrDepositClass extends FinancialProductMixin(Resource) implements InvestmentOrDeposit {
+  class InvestmentOrDepositClass extends FinancialProductMixin(Resource) implements Partial<InvestmentOrDeposit> {
     @property.resource()
     amount: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.amount, type: Number })

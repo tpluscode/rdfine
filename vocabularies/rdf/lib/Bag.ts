@@ -11,7 +11,7 @@ export interface Bag<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRes
 
 export function BagMixin<Base extends Constructor>(Resource: Base): Constructor<Bag> & Base {
   @namespace(rdf)
-  class BagClass extends Resource implements Bag {
+  class BagClass extends Resource implements Partial<Bag> {
   }
   return BagClass
 }

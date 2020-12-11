@@ -25,7 +25,7 @@ export interface Movie<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
 
 export function MovieMixin<Base extends Constructor>(Resource: Base): Constructor<Movie> & Base {
   @namespace(schema)
-  class MovieClass extends CreativeWorkMixin(Resource) implements Movie {
+  class MovieClass extends CreativeWorkMixin(Resource) implements Partial<Movie> {
     @property.resource()
     actor: Schema.Person | undefined;
     @property.resource()

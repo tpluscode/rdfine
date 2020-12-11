@@ -13,7 +13,7 @@ export interface MediaReview<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function MediaReviewMixin<Base extends Constructor>(Resource: Base): Constructor<MediaReview> & Base {
   @namespace(schema)
-  class MediaReviewClass extends ReviewMixin(Resource) implements MediaReview {
+  class MediaReviewClass extends ReviewMixin(Resource) implements Partial<MediaReview> {
     @property()
     mediaAuthenticityCategory: Schema.MediaManipulationRatingEnumeration | undefined;
   }

@@ -14,7 +14,7 @@ export interface MoveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function MoveActionMixin<Base extends Constructor>(Resource: Base): Constructor<MoveAction> & Base {
   @namespace(schema)
-  class MoveActionClass extends ActionMixin(Resource) implements MoveAction {
+  class MoveActionClass extends ActionMixin(Resource) implements Partial<MoveAction> {
     @property.resource()
     fromLocation: Schema.Place | undefined;
     @property.resource()

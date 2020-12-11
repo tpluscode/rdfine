@@ -13,7 +13,7 @@ export interface List<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRe
 
 export function ListMixin<Base extends Constructor>(Resource: Base): Constructor<List> & Base {
   @namespace(rdf)
-  class ListClass extends Resource implements List {
+  class ListClass extends Resource implements Partial<List> {
     @property()
     first: RDF.Term | undefined;
     @property.resource({ as: [ListMixin] })

@@ -15,7 +15,7 @@ export interface MedicalCode<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function MedicalCodeMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalCode> & Base {
   @namespace(schema)
-  class MedicalCodeClass extends MedicalIntangibleMixin(CategoryCodeMixin(Resource)) implements MedicalCode {
+  class MedicalCodeClass extends MedicalIntangibleMixin(CategoryCodeMixin(Resource)) implements Partial<MedicalCode> {
     @property.literal()
     codeValue: string | undefined;
     @property.literal()

@@ -12,7 +12,7 @@ export interface SchoolDistrict<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function SchoolDistrictMixin<Base extends Constructor>(Resource: Base): Constructor<SchoolDistrict> & Base {
   @namespace(schema)
-  class SchoolDistrictClass extends AdministrativeAreaMixin(Resource) implements SchoolDistrict {
+  class SchoolDistrictClass extends AdministrativeAreaMixin(Resource) implements Partial<SchoolDistrict> {
   }
   return SchoolDistrictClass
 }

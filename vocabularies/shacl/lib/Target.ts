@@ -13,7 +13,7 @@ export interface Target<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf
 
 export function TargetMixin<Base extends Constructor>(Resource: Base): Constructor<Target> & Base {
   @namespace(sh)
-  class TargetClass extends RdfsResourceMixin(Resource) implements Target {
+  class TargetClass extends RdfsResourceMixin(Resource) implements Partial<Target> {
   }
   return TargetClass
 }

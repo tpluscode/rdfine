@@ -30,7 +30,7 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Wgs
 
 export function PersonMixin<Base extends Constructor>(Resource: Base): Constructor<Person> & Base {
   @namespace(foaf)
-  class PersonClass extends AgentMixin(WgsSpatialThingMixin(Resource)) implements Person {
+  class PersonClass extends AgentMixin(WgsSpatialThingMixin(Resource)) implements Partial<Person> {
     @property()
     currentProject: RDF.NamedNode | undefined;
     @property()

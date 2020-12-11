@@ -12,7 +12,7 @@ export interface EntertainmentBusiness<D extends RDF.DatasetCore = RDF.DatasetCo
 
 export function EntertainmentBusinessMixin<Base extends Constructor>(Resource: Base): Constructor<EntertainmentBusiness> & Base {
   @namespace(schema)
-  class EntertainmentBusinessClass extends LocalBusinessMixin(Resource) implements EntertainmentBusiness {
+  class EntertainmentBusinessClass extends LocalBusinessMixin(Resource) implements Partial<EntertainmentBusiness> {
   }
   return EntertainmentBusinessClass
 }

@@ -12,7 +12,7 @@ export interface Distance<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function DistanceMixin<Base extends Constructor>(Resource: Base): Constructor<Distance> & Base {
   @namespace(schema)
-  class DistanceClass extends QuantityMixin(Resource) implements Distance {
+  class DistanceClass extends QuantityMixin(Resource) implements Partial<Distance> {
   }
   return DistanceClass
 }

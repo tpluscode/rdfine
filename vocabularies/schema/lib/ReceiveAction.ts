@@ -14,7 +14,7 @@ export interface ReceiveAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function ReceiveActionMixin<Base extends Constructor>(Resource: Base): Constructor<ReceiveAction> & Base {
   @namespace(schema)
-  class ReceiveActionClass extends TransferActionMixin(Resource) implements ReceiveAction {
+  class ReceiveActionClass extends TransferActionMixin(Resource) implements Partial<ReceiveAction> {
     @property()
     deliveryMethod: Schema.DeliveryMethod | undefined;
     @property.resource()

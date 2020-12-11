@@ -13,7 +13,7 @@ export interface TestCaseResult<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function TestCaseResultMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class TestCaseResultClass extends ShaclAbstractResultMixin(Resource) implements TestCaseResult {
+  class TestCaseResultClass extends ShaclAbstractResultMixin(Resource) implements Partial<TestCaseResult> {
   }
   return TestCaseResultClass
 }

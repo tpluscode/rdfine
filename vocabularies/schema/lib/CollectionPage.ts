@@ -12,7 +12,7 @@ export interface CollectionPage<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function CollectionPageMixin<Base extends Constructor>(Resource: Base): Constructor<CollectionPage> & Base {
   @namespace(schema)
-  class CollectionPageClass extends WebPageMixin(Resource) implements CollectionPage {
+  class CollectionPageClass extends WebPageMixin(Resource) implements Partial<CollectionPage> {
   }
   return CollectionPageClass
 }

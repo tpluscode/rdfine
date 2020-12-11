@@ -13,7 +13,7 @@ export interface PoliceStation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function PoliceStationMixin<Base extends Constructor>(Resource: Base): Constructor<PoliceStation> & Base {
   @namespace(schema)
-  class PoliceStationClass extends EmergencyServiceMixin(CivicStructureMixin(Resource)) implements PoliceStation {
+  class PoliceStationClass extends EmergencyServiceMixin(CivicStructureMixin(Resource)) implements Partial<PoliceStation> {
   }
   return PoliceStationClass
 }

@@ -63,7 +63,7 @@ export interface Vehicle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function VehicleMixin<Base extends Constructor>(Resource: Base): Constructor<Vehicle> & Base {
   @namespace(schema)
-  class VehicleClass extends ProductMixin(Resource) implements Vehicle {
+  class VehicleClass extends ProductMixin(Resource) implements Partial<Vehicle> {
     @property.resource()
     accelerationTime: Schema.QuantitativeValue | undefined;
     @property.literal()

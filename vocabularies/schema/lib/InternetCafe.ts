@@ -12,7 +12,7 @@ export interface InternetCafe<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function InternetCafeMixin<Base extends Constructor>(Resource: Base): Constructor<InternetCafe> & Base {
   @namespace(schema)
-  class InternetCafeClass extends LocalBusinessMixin(Resource) implements InternetCafe {
+  class InternetCafeClass extends LocalBusinessMixin(Resource) implements Partial<InternetCafe> {
   }
   return InternetCafeClass
 }

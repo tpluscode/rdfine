@@ -12,7 +12,7 @@ export interface ContactPage<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function ContactPageMixin<Base extends Constructor>(Resource: Base): Constructor<ContactPage> & Base {
   @namespace(schema)
-  class ContactPageClass extends WebPageMixin(Resource) implements ContactPage {
+  class ContactPageClass extends WebPageMixin(Resource) implements Partial<ContactPage> {
   }
   return ContactPageClass
 }

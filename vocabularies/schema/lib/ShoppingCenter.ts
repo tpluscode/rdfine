@@ -12,7 +12,7 @@ export interface ShoppingCenter<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function ShoppingCenterMixin<Base extends Constructor>(Resource: Base): Constructor<ShoppingCenter> & Base {
   @namespace(schema)
-  class ShoppingCenterClass extends LocalBusinessMixin(Resource) implements ShoppingCenter {
+  class ShoppingCenterClass extends LocalBusinessMixin(Resource) implements Partial<ShoppingCenter> {
   }
   return ShoppingCenterClass
 }

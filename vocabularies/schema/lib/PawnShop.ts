@@ -12,7 +12,7 @@ export interface PawnShop<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function PawnShopMixin<Base extends Constructor>(Resource: Base): Constructor<PawnShop> & Base {
   @namespace(schema)
-  class PawnShopClass extends StoreMixin(Resource) implements PawnShop {
+  class PawnShopClass extends StoreMixin(Resource) implements Partial<PawnShop> {
   }
   return PawnShopClass
 }

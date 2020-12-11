@@ -24,7 +24,7 @@ export interface LoanOrCredit<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function LoanOrCreditMixin<Base extends Constructor>(Resource: Base): Constructor<LoanOrCredit> & Base {
   @namespace(schema)
-  class LoanOrCreditClass extends FinancialProductMixin(Resource) implements LoanOrCredit {
+  class LoanOrCreditClass extends FinancialProductMixin(Resource) implements Partial<LoanOrCredit> {
     @property.resource()
     amount: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.amount, type: Number })

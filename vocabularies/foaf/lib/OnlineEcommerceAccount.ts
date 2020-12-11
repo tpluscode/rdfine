@@ -12,7 +12,7 @@ export interface OnlineEcommerceAccount<D extends RDF.DatasetCore = RDF.DatasetC
 
 export function OnlineEcommerceAccountMixin<Base extends Constructor>(Resource: Base): Constructor<OnlineEcommerceAccount> & Base {
   @namespace(foaf)
-  class OnlineEcommerceAccountClass extends OnlineAccountMixin(Resource) implements OnlineEcommerceAccount {
+  class OnlineEcommerceAccountClass extends OnlineAccountMixin(Resource) implements Partial<OnlineEcommerceAccount> {
   }
   return OnlineEcommerceAccountClass
 }

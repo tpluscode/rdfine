@@ -12,7 +12,7 @@ export interface TaxiService<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function TaxiServiceMixin<Base extends Constructor>(Resource: Base): Constructor<TaxiService> & Base {
   @namespace(schema)
-  class TaxiServiceClass extends ServiceMixin(Resource) implements TaxiService {
+  class TaxiServiceClass extends ServiceMixin(Resource) implements Partial<TaxiService> {
   }
   return TaxiServiceClass
 }

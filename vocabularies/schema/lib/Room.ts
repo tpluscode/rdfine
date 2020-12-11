@@ -12,7 +12,7 @@ export interface Room<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function RoomMixin<Base extends Constructor>(Resource: Base): Constructor<Room> & Base {
   @namespace(schema)
-  class RoomClass extends AccommodationMixin(Resource) implements Room {
+  class RoomClass extends AccommodationMixin(Resource) implements Partial<Room> {
   }
   return RoomClass
 }

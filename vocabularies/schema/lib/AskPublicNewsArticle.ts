@@ -12,7 +12,7 @@ export interface AskPublicNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCor
 
 export function AskPublicNewsArticleMixin<Base extends Constructor>(Resource: Base): Constructor<AskPublicNewsArticle> & Base {
   @namespace(schema)
-  class AskPublicNewsArticleClass extends NewsArticleMixin(Resource) implements AskPublicNewsArticle {
+  class AskPublicNewsArticleClass extends NewsArticleMixin(Resource) implements Partial<AskPublicNewsArticle> {
   }
   return AskPublicNewsArticleClass
 }

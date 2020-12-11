@@ -12,7 +12,7 @@ export interface Barcode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function BarcodeMixin<Base extends Constructor>(Resource: Base): Constructor<Barcode> & Base {
   @namespace(schema)
-  class BarcodeClass extends ImageObjectMixin(Resource) implements Barcode {
+  class BarcodeClass extends ImageObjectMixin(Resource) implements Partial<Barcode> {
   }
   return BarcodeClass
 }

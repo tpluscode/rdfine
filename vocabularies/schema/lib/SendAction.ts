@@ -14,7 +14,7 @@ export interface SendAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function SendActionMixin<Base extends Constructor>(Resource: Base): Constructor<SendAction> & Base {
   @namespace(schema)
-  class SendActionClass extends TransferActionMixin(Resource) implements SendAction {
+  class SendActionClass extends TransferActionMixin(Resource) implements Partial<SendAction> {
     @property()
     deliveryMethod: Schema.DeliveryMethod | undefined;
     @property.resource()

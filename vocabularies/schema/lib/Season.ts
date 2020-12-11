@@ -12,7 +12,7 @@ export interface Season<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function SeasonMixin<Base extends Constructor>(Resource: Base): Constructor<Season> & Base {
   @namespace(schema)
-  class SeasonClass extends CreativeWorkMixin(Resource) implements Season {
+  class SeasonClass extends CreativeWorkMixin(Resource) implements Partial<Season> {
   }
   return SeasonClass
 }

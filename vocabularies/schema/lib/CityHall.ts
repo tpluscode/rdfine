@@ -12,7 +12,7 @@ export interface CityHall<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function CityHallMixin<Base extends Constructor>(Resource: Base): Constructor<CityHall> & Base {
   @namespace(schema)
-  class CityHallClass extends GovernmentBuildingMixin(Resource) implements CityHall {
+  class CityHallClass extends GovernmentBuildingMixin(Resource) implements Partial<CityHall> {
   }
   return CityHallClass
 }

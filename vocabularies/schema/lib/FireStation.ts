@@ -13,7 +13,7 @@ export interface FireStation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function FireStationMixin<Base extends Constructor>(Resource: Base): Constructor<FireStation> & Base {
   @namespace(schema)
-  class FireStationClass extends EmergencyServiceMixin(CivicStructureMixin(Resource)) implements FireStation {
+  class FireStationClass extends EmergencyServiceMixin(CivicStructureMixin(Resource)) implements Partial<FireStation> {
   }
   return FireStationClass
 }

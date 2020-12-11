@@ -12,7 +12,7 @@ export interface BreadcrumbList<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function BreadcrumbListMixin<Base extends Constructor>(Resource: Base): Constructor<BreadcrumbList> & Base {
   @namespace(schema)
-  class BreadcrumbListClass extends ItemListMixin(Resource) implements BreadcrumbList {
+  class BreadcrumbListClass extends ItemListMixin(Resource) implements Partial<BreadcrumbList> {
   }
   return BreadcrumbListClass
 }

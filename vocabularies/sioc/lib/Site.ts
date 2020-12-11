@@ -14,7 +14,7 @@ export interface Site<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc.
 
 export function SiteMixin<Base extends Constructor>(Resource: Base): Constructor<Site> & Base {
   @namespace(sioc)
-  class SiteClass extends SpaceMixin(Resource) implements Site {
+  class SiteClass extends SpaceMixin(Resource) implements Partial<Site> {
     @property.resource({ implicitTypes: [sioc.UserAccount] })
     'has_administrator': Sioc.UserAccount | undefined;
     @property.resource({ implicitTypes: [sioc.Container] })

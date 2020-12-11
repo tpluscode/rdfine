@@ -12,7 +12,7 @@ export interface BusReservation<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function BusReservationMixin<Base extends Constructor>(Resource: Base): Constructor<BusReservation> & Base {
   @namespace(schema)
-  class BusReservationClass extends ReservationMixin(Resource) implements BusReservation {
+  class BusReservationClass extends ReservationMixin(Resource) implements Partial<BusReservation> {
   }
   return BusReservationClass
 }

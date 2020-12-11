@@ -13,7 +13,7 @@ export interface Corporation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function CorporationMixin<Base extends Constructor>(Resource: Base): Constructor<Corporation> & Base {
   @namespace(schema)
-  class CorporationClass extends OrganizationMixin(Resource) implements Corporation {
+  class CorporationClass extends OrganizationMixin(Resource) implements Partial<Corporation> {
     @property.literal()
     tickerSymbol: string | undefined;
   }

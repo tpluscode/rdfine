@@ -17,7 +17,7 @@ export interface TemplatedLink<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function TemplatedLinkMixin<Base extends Constructor>(Resource: Base): Constructor<TemplatedLink> & Base {
   @namespace(hydra)
-  class TemplatedLinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements TemplatedLink {
+  class TemplatedLinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements Partial<TemplatedLink> {
     @property.literal()
     description: string | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })

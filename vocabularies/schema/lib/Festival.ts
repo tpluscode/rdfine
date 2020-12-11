@@ -12,7 +12,7 @@ export interface Festival<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function FestivalMixin<Base extends Constructor>(Resource: Base): Constructor<Festival> & Base {
   @namespace(schema)
-  class FestivalClass extends EventMixin(Resource) implements Festival {
+  class FestivalClass extends EventMixin(Resource) implements Partial<Festival> {
   }
   return FestivalClass
 }

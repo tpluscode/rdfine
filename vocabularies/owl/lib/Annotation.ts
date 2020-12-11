@@ -13,7 +13,7 @@ export interface Annotation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function AnnotationMixin<Base extends Constructor>(Resource: Base): Constructor<Annotation> & Base {
   @namespace(owl)
-  class AnnotationClass extends RdfsResourceMixin(Resource) implements Annotation {
+  class AnnotationClass extends RdfsResourceMixin(Resource) implements Partial<Annotation> {
   }
   return AnnotationClass
 }

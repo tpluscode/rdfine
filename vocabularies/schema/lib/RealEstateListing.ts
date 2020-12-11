@@ -14,7 +14,7 @@ export interface RealEstateListing<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function RealEstateListingMixin<Base extends Constructor>(Resource: Base): Constructor<RealEstateListing> & Base {
   @namespace(schema)
-  class RealEstateListingClass extends WebPageMixin(Resource) implements RealEstateListing {
+  class RealEstateListingClass extends WebPageMixin(Resource) implements Partial<RealEstateListing> {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     datePosted: Date | undefined;
     @property.resource()

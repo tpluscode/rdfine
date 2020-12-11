@@ -12,7 +12,7 @@ export interface MusicVideoObject<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function MusicVideoObjectMixin<Base extends Constructor>(Resource: Base): Constructor<MusicVideoObject> & Base {
   @namespace(schema)
-  class MusicVideoObjectClass extends MediaObjectMixin(Resource) implements MusicVideoObject {
+  class MusicVideoObjectClass extends MediaObjectMixin(Resource) implements Partial<MusicVideoObject> {
   }
   return MusicVideoObjectClass
 }

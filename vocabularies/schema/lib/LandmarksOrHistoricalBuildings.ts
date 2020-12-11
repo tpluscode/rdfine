@@ -12,7 +12,7 @@ export interface LandmarksOrHistoricalBuildings<D extends RDF.DatasetCore = RDF.
 
 export function LandmarksOrHistoricalBuildingsMixin<Base extends Constructor>(Resource: Base): Constructor<LandmarksOrHistoricalBuildings> & Base {
   @namespace(schema)
-  class LandmarksOrHistoricalBuildingsClass extends PlaceMixin(Resource) implements LandmarksOrHistoricalBuildings {
+  class LandmarksOrHistoricalBuildingsClass extends PlaceMixin(Resource) implements Partial<LandmarksOrHistoricalBuildings> {
   }
   return LandmarksOrHistoricalBuildingsClass
 }

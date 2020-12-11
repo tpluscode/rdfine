@@ -15,7 +15,7 @@ export interface SPARQLUpdateSuggestionGenerator<D extends RDF.DatasetCore = RDF
 
 export function SPARQLUpdateSuggestionGeneratorMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class SPARQLUpdateSuggestionGeneratorClass extends ShaclSPARQLUpdateExecutableMixin(ShaclSPARQLSelectExecutableMixin(SuggestionGeneratorMixin(Resource))) implements SPARQLUpdateSuggestionGenerator {
+  class SPARQLUpdateSuggestionGeneratorClass extends ShaclSPARQLUpdateExecutableMixin(ShaclSPARQLSelectExecutableMixin(SuggestionGeneratorMixin(Resource))) implements Partial<SPARQLUpdateSuggestionGenerator> {
   }
   return SPARQLUpdateSuggestionGeneratorClass
 }

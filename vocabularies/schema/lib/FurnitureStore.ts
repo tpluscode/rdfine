@@ -12,7 +12,7 @@ export interface FurnitureStore<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function FurnitureStoreMixin<Base extends Constructor>(Resource: Base): Constructor<FurnitureStore> & Base {
   @namespace(schema)
-  class FurnitureStoreClass extends StoreMixin(Resource) implements FurnitureStore {
+  class FurnitureStoreClass extends StoreMixin(Resource) implements Partial<FurnitureStore> {
   }
   return FurnitureStoreClass
 }

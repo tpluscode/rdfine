@@ -12,7 +12,7 @@ export interface FAQPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function FAQPageMixin<Base extends Constructor>(Resource: Base): Constructor<FAQPage> & Base {
   @namespace(schema)
-  class FAQPageClass extends WebPageMixin(Resource) implements FAQPage {
+  class FAQPageClass extends WebPageMixin(Resource) implements Partial<FAQPage> {
   }
   return FAQPageClass
 }

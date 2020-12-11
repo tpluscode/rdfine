@@ -15,7 +15,7 @@ export interface LinkRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function LinkRoleMixin<Base extends Constructor>(Resource: Base): Constructor<LinkRole> & Base {
   @namespace(schema)
-  class LinkRoleClass extends RoleMixin(Resource) implements LinkRole {
+  class LinkRoleClass extends RoleMixin(Resource) implements Partial<LinkRole> {
     @property.resource()
     inLanguage: Schema.Language | undefined;
     @property.literal({ path: schema.inLanguage })

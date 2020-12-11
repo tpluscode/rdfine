@@ -12,7 +12,7 @@ export interface MaximumDoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function MaximumDoseScheduleMixin<Base extends Constructor>(Resource: Base): Constructor<MaximumDoseSchedule> & Base {
   @namespace(schema)
-  class MaximumDoseScheduleClass extends DoseScheduleMixin(Resource) implements MaximumDoseSchedule {
+  class MaximumDoseScheduleClass extends DoseScheduleMixin(Resource) implements Partial<MaximumDoseSchedule> {
   }
   return MaximumDoseScheduleClass
 }

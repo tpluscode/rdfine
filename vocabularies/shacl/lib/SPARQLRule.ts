@@ -13,7 +13,7 @@ export interface SPARQLRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function SPARQLRuleMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLRule> & Base {
   @namespace(sh)
-  class SPARQLRuleClass extends SPARQLConstructExecutableMixin(RuleMixin(Resource)) implements SPARQLRule {
+  class SPARQLRuleClass extends SPARQLConstructExecutableMixin(RuleMixin(Resource)) implements Partial<SPARQLRule> {
   }
   return SPARQLRuleClass
 }

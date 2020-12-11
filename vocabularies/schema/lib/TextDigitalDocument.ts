@@ -12,7 +12,7 @@ export interface TextDigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function TextDigitalDocumentMixin<Base extends Constructor>(Resource: Base): Constructor<TextDigitalDocument> & Base {
   @namespace(schema)
-  class TextDigitalDocumentClass extends DigitalDocumentMixin(Resource) implements TextDigitalDocument {
+  class TextDigitalDocumentClass extends DigitalDocumentMixin(Resource) implements Partial<TextDigitalDocument> {
   }
   return TextDigitalDocumentClass
 }

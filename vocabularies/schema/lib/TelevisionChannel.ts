@@ -12,7 +12,7 @@ export interface TelevisionChannel<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function TelevisionChannelMixin<Base extends Constructor>(Resource: Base): Constructor<TelevisionChannel> & Base {
   @namespace(schema)
-  class TelevisionChannelClass extends BroadcastChannelMixin(Resource) implements TelevisionChannel {
+  class TelevisionChannelClass extends BroadcastChannelMixin(Resource) implements Partial<TelevisionChannel> {
   }
   return TelevisionChannelClass
 }

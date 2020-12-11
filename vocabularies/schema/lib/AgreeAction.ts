@@ -12,7 +12,7 @@ export interface AgreeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function AgreeActionMixin<Base extends Constructor>(Resource: Base): Constructor<AgreeAction> & Base {
   @namespace(schema)
-  class AgreeActionClass extends ReactActionMixin(Resource) implements AgreeAction {
+  class AgreeActionClass extends ReactActionMixin(Resource) implements Partial<AgreeAction> {
   }
   return AgreeActionClass
 }

@@ -26,7 +26,7 @@ export interface Reservation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function ReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Reservation> & Base {
   @namespace(schema)
-  class ReservationClass extends IntangibleMixin(Resource) implements Reservation {
+  class ReservationClass extends IntangibleMixin(Resource) implements Partial<Reservation> {
     @property.resource()
     bookingAgent: Schema.Organization | Schema.Person | undefined;
     @property.literal({ type: Date })

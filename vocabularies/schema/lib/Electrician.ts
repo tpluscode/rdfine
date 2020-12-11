@@ -12,7 +12,7 @@ export interface Electrician<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function ElectricianMixin<Base extends Constructor>(Resource: Base): Constructor<Electrician> & Base {
   @namespace(schema)
-  class ElectricianClass extends HomeAndConstructionBusinessMixin(Resource) implements Electrician {
+  class ElectricianClass extends HomeAndConstructionBusinessMixin(Resource) implements Partial<Electrician> {
   }
   return ElectricianClass
 }

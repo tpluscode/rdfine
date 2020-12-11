@@ -12,7 +12,7 @@ export interface Aquarium<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function AquariumMixin<Base extends Constructor>(Resource: Base): Constructor<Aquarium> & Base {
   @namespace(schema)
-  class AquariumClass extends CivicStructureMixin(Resource) implements Aquarium {
+  class AquariumClass extends CivicStructureMixin(Resource) implements Partial<Aquarium> {
   }
   return AquariumClass
 }

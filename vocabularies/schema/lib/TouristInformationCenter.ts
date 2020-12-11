@@ -12,7 +12,7 @@ export interface TouristInformationCenter<D extends RDF.DatasetCore = RDF.Datase
 
 export function TouristInformationCenterMixin<Base extends Constructor>(Resource: Base): Constructor<TouristInformationCenter> & Base {
   @namespace(schema)
-  class TouristInformationCenterClass extends LocalBusinessMixin(Resource) implements TouristInformationCenter {
+  class TouristInformationCenterClass extends LocalBusinessMixin(Resource) implements Partial<TouristInformationCenter> {
   }
   return TouristInformationCenterClass
 }

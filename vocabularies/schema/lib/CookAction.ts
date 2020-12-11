@@ -15,7 +15,7 @@ export interface CookAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function CookActionMixin<Base extends Constructor>(Resource: Base): Constructor<CookAction> & Base {
   @namespace(schema)
-  class CookActionClass extends CreateActionMixin(Resource) implements CookAction {
+  class CookActionClass extends CreateActionMixin(Resource) implements Partial<CookAction> {
     @property.resource()
     foodEstablishment: Schema.FoodEstablishment | Schema.Place | undefined;
     @property.resource()

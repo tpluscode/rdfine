@@ -16,7 +16,7 @@ export interface ShippingDeliveryTime<D extends RDF.DatasetCore = RDF.DatasetCor
 
 export function ShippingDeliveryTimeMixin<Base extends Constructor>(Resource: Base): Constructor<ShippingDeliveryTime> & Base {
   @namespace(schema)
-  class ShippingDeliveryTimeClass extends StructuredValueMixin(Resource) implements ShippingDeliveryTime {
+  class ShippingDeliveryTimeClass extends StructuredValueMixin(Resource) implements Partial<ShippingDeliveryTime> {
     @property.resource()
     businessDays: Schema.OpeningHoursSpecification | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })

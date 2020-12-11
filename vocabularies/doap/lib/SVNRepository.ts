@@ -12,7 +12,7 @@ export interface SVNRepository<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function SVNRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<SVNRepository> & Base {
   @namespace(doap)
-  class SVNRepositoryClass extends RepositoryMixin(Resource) implements SVNRepository {
+  class SVNRepositoryClass extends RepositoryMixin(Resource) implements Partial<SVNRepository> {
   }
   return SVNRepositoryClass
 }

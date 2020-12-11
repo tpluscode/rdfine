@@ -12,7 +12,7 @@ export interface LikeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function LikeActionMixin<Base extends Constructor>(Resource: Base): Constructor<LikeAction> & Base {
   @namespace(schema)
-  class LikeActionClass extends ReactActionMixin(Resource) implements LikeAction {
+  class LikeActionClass extends ReactActionMixin(Resource) implements Partial<LikeAction> {
   }
   return LikeActionClass
 }

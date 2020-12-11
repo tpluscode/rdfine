@@ -11,7 +11,7 @@ export interface Property<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
 
 export function PropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Property> & Base {
   @namespace(rdf)
-  class PropertyClass extends Resource implements Property {
+  class PropertyClass extends Resource implements Partial<Property> {
   }
   return PropertyClass
 }

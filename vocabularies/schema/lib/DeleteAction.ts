@@ -12,7 +12,7 @@ export interface DeleteAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function DeleteActionMixin<Base extends Constructor>(Resource: Base): Constructor<DeleteAction> & Base {
   @namespace(schema)
-  class DeleteActionClass extends UpdateActionMixin(Resource) implements DeleteAction {
+  class DeleteActionClass extends UpdateActionMixin(Resource) implements Partial<DeleteAction> {
   }
   return DeleteActionClass
 }

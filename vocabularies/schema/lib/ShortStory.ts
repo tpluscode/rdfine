@@ -12,7 +12,7 @@ export interface ShortStory<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function ShortStoryMixin<Base extends Constructor>(Resource: Base): Constructor<ShortStory> & Base {
   @namespace(schema)
-  class ShortStoryClass extends CreativeWorkMixin(Resource) implements ShortStory {
+  class ShortStoryClass extends CreativeWorkMixin(Resource) implements Partial<ShortStory> {
   }
   return ShortStoryClass
 }

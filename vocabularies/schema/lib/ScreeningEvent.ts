@@ -16,7 +16,7 @@ export interface ScreeningEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function ScreeningEventMixin<Base extends Constructor>(Resource: Base): Constructor<ScreeningEvent> & Base {
   @namespace(schema)
-  class ScreeningEventClass extends EventMixin(Resource) implements ScreeningEvent {
+  class ScreeningEventClass extends EventMixin(Resource) implements Partial<ScreeningEvent> {
     @property.resource()
     subtitleLanguage: Schema.Language | undefined;
     @property.literal({ path: schema.subtitleLanguage })

@@ -12,7 +12,7 @@ export interface Drawing<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function DrawingMixin<Base extends Constructor>(Resource: Base): Constructor<Drawing> & Base {
   @namespace(schema)
-  class DrawingClass extends CreativeWorkMixin(Resource) implements Drawing {
+  class DrawingClass extends CreativeWorkMixin(Resource) implements Partial<Drawing> {
   }
   return DrawingClass
 }

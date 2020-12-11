@@ -21,7 +21,7 @@ export interface SupportedProperty<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function SupportedPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<SupportedProperty> & Base {
   @namespace(hydra)
-  class SupportedPropertyClass extends ResourceMixin(Resource) implements SupportedProperty {
+  class SupportedPropertyClass extends ResourceMixin(Resource) implements Partial<SupportedProperty> {
     @property.literal()
     description: string | undefined;
     @property.resource({ as: [RdfPropertyMixin] })

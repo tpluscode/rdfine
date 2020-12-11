@@ -11,7 +11,7 @@ export interface Cell<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRe
 
 export function CellMixin<Base extends Constructor>(Resource: Base): Constructor<Cell> & Base {
   @namespace(csvw)
-  class CellClass extends Resource implements Cell {
+  class CellClass extends Resource implements Partial<Cell> {
   }
   return CellClass
 }

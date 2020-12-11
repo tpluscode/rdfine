@@ -12,7 +12,7 @@ export interface ResearchProject<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function ResearchProjectMixin<Base extends Constructor>(Resource: Base): Constructor<ResearchProject> & Base {
   @namespace(schema)
-  class ResearchProjectClass extends ProjectMixin(Resource) implements ResearchProject {
+  class ResearchProjectClass extends ProjectMixin(Resource) implements Partial<ResearchProject> {
   }
   return ResearchProjectClass
 }

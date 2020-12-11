@@ -14,7 +14,7 @@ export interface SportsOrganization<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function SportsOrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<SportsOrganization> & Base {
   @namespace(schema)
-  class SportsOrganizationClass extends OrganizationMixin(Resource) implements SportsOrganization {
+  class SportsOrganizationClass extends OrganizationMixin(Resource) implements Partial<SportsOrganization> {
     @property.literal()
     sport: string | undefined;
     @property({ path: schema.sport })

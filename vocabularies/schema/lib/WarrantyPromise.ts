@@ -14,7 +14,7 @@ export interface WarrantyPromise<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function WarrantyPromiseMixin<Base extends Constructor>(Resource: Base): Constructor<WarrantyPromise> & Base {
   @namespace(schema)
-  class WarrantyPromiseClass extends StructuredValueMixin(Resource) implements WarrantyPromise {
+  class WarrantyPromiseClass extends StructuredValueMixin(Resource) implements Partial<WarrantyPromise> {
     @property.resource()
     durationOfWarranty: Schema.QuantitativeValue | undefined;
     @property()

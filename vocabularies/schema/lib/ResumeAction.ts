@@ -12,7 +12,7 @@ export interface ResumeAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function ResumeActionMixin<Base extends Constructor>(Resource: Base): Constructor<ResumeAction> & Base {
   @namespace(schema)
-  class ResumeActionClass extends ControlActionMixin(Resource) implements ResumeAction {
+  class ResumeActionClass extends ControlActionMixin(Resource) implements Partial<ResumeAction> {
   }
   return ResumeActionClass
 }

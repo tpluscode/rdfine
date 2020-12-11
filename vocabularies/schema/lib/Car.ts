@@ -14,7 +14,7 @@ export interface Car<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema
 
 export function CarMixin<Base extends Constructor>(Resource: Base): Constructor<Car> & Base {
   @namespace(schema)
-  class CarClass extends VehicleMixin(Resource) implements Car {
+  class CarClass extends VehicleMixin(Resource) implements Partial<Car> {
     @property.literal()
     acrissCode: string | undefined;
     @property.resource()

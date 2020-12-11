@@ -48,7 +48,7 @@ export interface Demand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function DemandMixin<Base extends Constructor>(Resource: Base): Constructor<Demand> & Base {
   @namespace(schema)
-  class DemandClass extends IntangibleMixin(Resource) implements Demand {
+  class DemandClass extends IntangibleMixin(Resource) implements Partial<Demand> {
     @property.resource()
     acceptedPaymentMethod: Schema.LoanOrCredit | undefined;
     @property.resource()

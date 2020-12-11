@@ -12,7 +12,7 @@ export interface VeterinaryCare<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function VeterinaryCareMixin<Base extends Constructor>(Resource: Base): Constructor<VeterinaryCare> & Base {
   @namespace(schema)
-  class VeterinaryCareClass extends MedicalOrganizationMixin(Resource) implements VeterinaryCare {
+  class VeterinaryCareClass extends MedicalOrganizationMixin(Resource) implements Partial<VeterinaryCare> {
   }
   return VeterinaryCareClass
 }

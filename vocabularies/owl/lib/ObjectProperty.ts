@@ -16,7 +16,7 @@ export interface ObjectProperty<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function ObjectPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<ObjectProperty> & Base {
   @namespace(owl)
-  class ObjectPropertyClass extends RdfPropertyMixin(Resource) implements ObjectProperty {
+  class ObjectPropertyClass extends RdfPropertyMixin(Resource) implements Partial<ObjectProperty> {
     @property.resource({ as: [ObjectPropertyMixin] })
     inverseOf: Owl.ObjectProperty | undefined;
     @property.resource({ as: [RdfListMixin] })

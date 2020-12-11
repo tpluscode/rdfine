@@ -13,7 +13,7 @@ export interface TrackAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function TrackActionMixin<Base extends Constructor>(Resource: Base): Constructor<TrackAction> & Base {
   @namespace(schema)
-  class TrackActionClass extends FindActionMixin(Resource) implements TrackAction {
+  class TrackActionClass extends FindActionMixin(Resource) implements Partial<TrackAction> {
     @property()
     deliveryMethod: Schema.DeliveryMethod | undefined;
   }

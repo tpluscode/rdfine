@@ -12,7 +12,7 @@ export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function OrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<Organization> & Base {
   @namespace(foaf)
-  class OrganizationClass extends AgentMixin(Resource) implements Organization {
+  class OrganizationClass extends AgentMixin(Resource) implements Partial<Organization> {
   }
   return OrganizationClass
 }

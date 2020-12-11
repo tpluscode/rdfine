@@ -16,7 +16,7 @@ export interface BankAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function BankAccountMixin<Base extends Constructor>(Resource: Base): Constructor<BankAccount> & Base {
   @namespace(schema)
-  class BankAccountClass extends FinancialProductMixin(Resource) implements BankAccount {
+  class BankAccountClass extends FinancialProductMixin(Resource) implements Partial<BankAccount> {
     @property.resource()
     accountMinimumInflow: Schema.MonetaryAmount | undefined;
     @property.resource()

@@ -13,7 +13,7 @@ export interface ReplyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function ReplyActionMixin<Base extends Constructor>(Resource: Base): Constructor<ReplyAction> & Base {
   @namespace(schema)
-  class ReplyActionClass extends CommunicateActionMixin(Resource) implements ReplyAction {
+  class ReplyActionClass extends CommunicateActionMixin(Resource) implements Partial<ReplyAction> {
     @property.resource()
     resultComment: Schema.Comment | undefined;
   }

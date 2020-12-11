@@ -12,7 +12,7 @@ export interface ReflexiveProperty<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function ReflexivePropertyMixin<Base extends Constructor>(Resource: Base): Constructor<ReflexiveProperty> & Base {
   @namespace(owl)
-  class ReflexivePropertyClass extends ObjectPropertyMixin(Resource) implements ReflexiveProperty {
+  class ReflexivePropertyClass extends ObjectPropertyMixin(Resource) implements Partial<ReflexiveProperty> {
   }
   return ReflexivePropertyClass
 }

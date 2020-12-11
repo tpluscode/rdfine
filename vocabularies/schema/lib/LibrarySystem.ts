@@ -12,7 +12,7 @@ export interface LibrarySystem<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function LibrarySystemMixin<Base extends Constructor>(Resource: Base): Constructor<LibrarySystem> & Base {
   @namespace(schema)
-  class LibrarySystemClass extends OrganizationMixin(Resource) implements LibrarySystem {
+  class LibrarySystemClass extends OrganizationMixin(Resource) implements Partial<LibrarySystem> {
   }
   return LibrarySystemClass
 }

@@ -13,7 +13,7 @@ export interface BKRepository<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function BKRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<BKRepository> & Base {
   @namespace(doap)
-  class BKRepositoryClass extends RepositoryMixin(Resource) implements BKRepository {
+  class BKRepositoryClass extends RepositoryMixin(Resource) implements Partial<BKRepository> {
     @property()
     module: RDF.Term | undefined;
   }

@@ -44,7 +44,7 @@ export interface SoftwareApplication<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function SoftwareApplicationMixin<Base extends Constructor>(Resource: Base): Constructor<SoftwareApplication> & Base {
   @namespace(schema)
-  class SoftwareApplicationClass extends CreativeWorkMixin(Resource) implements SoftwareApplication {
+  class SoftwareApplicationClass extends CreativeWorkMixin(Resource) implements Partial<SoftwareApplication> {
     @property.literal()
     applicationCategory: string | undefined;
     @property({ path: schema.applicationCategory })

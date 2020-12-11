@@ -12,7 +12,7 @@ export interface Continent<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function ContinentMixin<Base extends Constructor>(Resource: Base): Constructor<Continent> & Base {
   @namespace(schema)
-  class ContinentClass extends LandformMixin(Resource) implements Continent {
+  class ContinentClass extends LandformMixin(Resource) implements Partial<Continent> {
   }
   return ContinentClass
 }

@@ -16,7 +16,7 @@ export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
 
 export function ResourceMixin<Base extends Constructor>(Resource: Base): Constructor<Resource> & Base {
   @namespace(rdfs)
-  class ResourceClass extends Resource implements Resource {
+  class ResourceClass extends Resource implements Partial<Resource> {
     @property.literal()
     comment: string | undefined;
     @property.resource({ as: [ResourceMixin] })

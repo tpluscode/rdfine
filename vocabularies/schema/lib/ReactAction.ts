@@ -12,7 +12,7 @@ export interface ReactAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function ReactActionMixin<Base extends Constructor>(Resource: Base): Constructor<ReactAction> & Base {
   @namespace(schema)
-  class ReactActionClass extends AssessActionMixin(Resource) implements ReactAction {
+  class ReactActionClass extends AssessActionMixin(Resource) implements Partial<ReactAction> {
   }
   return ReactActionClass
 }

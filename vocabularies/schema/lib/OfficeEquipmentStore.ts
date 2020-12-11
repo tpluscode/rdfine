@@ -12,7 +12,7 @@ export interface OfficeEquipmentStore<D extends RDF.DatasetCore = RDF.DatasetCor
 
 export function OfficeEquipmentStoreMixin<Base extends Constructor>(Resource: Base): Constructor<OfficeEquipmentStore> & Base {
   @namespace(schema)
-  class OfficeEquipmentStoreClass extends StoreMixin(Resource) implements OfficeEquipmentStore {
+  class OfficeEquipmentStoreClass extends StoreMixin(Resource) implements Partial<OfficeEquipmentStore> {
   }
   return OfficeEquipmentStoreClass
 }

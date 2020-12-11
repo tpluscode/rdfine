@@ -12,7 +12,7 @@ export interface TireShop<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function TireShopMixin<Base extends Constructor>(Resource: Base): Constructor<TireShop> & Base {
   @namespace(schema)
-  class TireShopClass extends StoreMixin(Resource) implements TireShop {
+  class TireShopClass extends StoreMixin(Resource) implements Partial<TireShop> {
   }
   return TireShopClass
 }

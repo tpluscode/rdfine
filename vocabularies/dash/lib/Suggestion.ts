@@ -15,7 +15,7 @@ export interface Suggestion<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function SuggestionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class SuggestionClass extends RdfsResourceMixin(Resource) implements Suggestion {
+  class SuggestionClass extends RdfsResourceMixin(Resource) implements Partial<Suggestion> {
     @property.literal({ type: Number })
     suggestionConfidence: number | undefined;
     @property()

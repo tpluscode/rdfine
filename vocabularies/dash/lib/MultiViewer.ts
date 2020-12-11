@@ -12,7 +12,7 @@ export interface MultiViewer<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function MultiViewerMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class MultiViewerClass extends ViewerMixin(Resource) implements MultiViewer {
+  class MultiViewerClass extends ViewerMixin(Resource) implements Partial<MultiViewer> {
   }
   return MultiViewerClass
 }

@@ -12,7 +12,7 @@ export interface SPARQLConstraint<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function SPARQLConstraintMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLConstraint> & Base {
   @namespace(sh)
-  class SPARQLConstraintClass extends SPARQLSelectExecutableMixin(Resource) implements SPARQLConstraint {
+  class SPARQLConstraintClass extends SPARQLSelectExecutableMixin(Resource) implements Partial<SPARQLConstraint> {
   }
   return SPARQLConstraintClass
 }

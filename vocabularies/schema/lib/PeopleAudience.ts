@@ -19,7 +19,7 @@ export interface PeopleAudience<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function PeopleAudienceMixin<Base extends Constructor>(Resource: Base): Constructor<PeopleAudience> & Base {
   @namespace(schema)
-  class PeopleAudienceClass extends AudienceMixin(Resource) implements PeopleAudience {
+  class PeopleAudienceClass extends AudienceMixin(Resource) implements Partial<PeopleAudience> {
     @property.resource()
     healthCondition: Schema.MedicalCondition | undefined;
     @property.literal()

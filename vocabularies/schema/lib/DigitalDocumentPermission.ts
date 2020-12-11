@@ -14,7 +14,7 @@ export interface DigitalDocumentPermission<D extends RDF.DatasetCore = RDF.Datas
 
 export function DigitalDocumentPermissionMixin<Base extends Constructor>(Resource: Base): Constructor<DigitalDocumentPermission> & Base {
   @namespace(schema)
-  class DigitalDocumentPermissionClass extends IntangibleMixin(Resource) implements DigitalDocumentPermission {
+  class DigitalDocumentPermissionClass extends IntangibleMixin(Resource) implements Partial<DigitalDocumentPermission> {
     @property.resource()
     grantee: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
     @property()

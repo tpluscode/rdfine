@@ -18,7 +18,7 @@ export interface FinancialProduct<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function FinancialProductMixin<Base extends Constructor>(Resource: Base): Constructor<FinancialProduct> & Base {
   @namespace(schema)
-  class FinancialProductClass extends ServiceMixin(Resource) implements FinancialProduct {
+  class FinancialProductClass extends ServiceMixin(Resource) implements Partial<FinancialProduct> {
     @property.resource()
     annualPercentageRate: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.annualPercentageRate, type: Number })

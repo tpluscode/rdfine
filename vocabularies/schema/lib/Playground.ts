@@ -12,7 +12,7 @@ export interface Playground<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function PlaygroundMixin<Base extends Constructor>(Resource: Base): Constructor<Playground> & Base {
   @namespace(schema)
-  class PlaygroundClass extends CivicStructureMixin(Resource) implements Playground {
+  class PlaygroundClass extends CivicStructureMixin(Resource) implements Partial<Playground> {
   }
   return PlaygroundClass
 }

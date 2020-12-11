@@ -26,7 +26,7 @@ export interface SpecialAnnouncement<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function SpecialAnnouncementMixin<Base extends Constructor>(Resource: Base): Constructor<SpecialAnnouncement> & Base {
   @namespace(schema)
-  class SpecialAnnouncementClass extends CreativeWorkMixin(Resource) implements SpecialAnnouncement {
+  class SpecialAnnouncementClass extends CreativeWorkMixin(Resource) implements Partial<SpecialAnnouncement> {
     @property.resource()
     announcementLocation: Schema.CivicStructure | Schema.LocalBusiness | undefined;
     @property.resource()

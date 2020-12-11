@@ -15,7 +15,7 @@ export interface GameServer<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function GameServerMixin<Base extends Constructor>(Resource: Base): Constructor<GameServer> & Base {
   @namespace(schema)
-  class GameServerClass extends IntangibleMixin(Resource) implements GameServer {
+  class GameServerClass extends IntangibleMixin(Resource) implements Partial<GameServer> {
     @property.resource()
     game: Schema.VideoGame | undefined;
     @property.literal({ type: Number })

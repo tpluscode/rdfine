@@ -15,7 +15,7 @@ export interface TripleRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function TripleRuleMixin<Base extends Constructor>(Resource: Base): Constructor<TripleRule> & Base {
   @namespace(sh)
-  class TripleRuleClass extends RuleMixin(Resource) implements TripleRule {
+  class TripleRuleClass extends RuleMixin(Resource) implements Partial<TripleRule> {
     @property()
     object: RDF.Term | undefined;
     @property()

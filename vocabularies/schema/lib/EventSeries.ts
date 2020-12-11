@@ -13,7 +13,7 @@ export interface EventSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function EventSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<EventSeries> & Base {
   @namespace(schema)
-  class EventSeriesClass extends SeriesMixin(EventMixin(Resource)) implements EventSeries {
+  class EventSeriesClass extends SeriesMixin(EventMixin(Resource)) implements Partial<EventSeries> {
   }
   return EventSeriesClass
 }

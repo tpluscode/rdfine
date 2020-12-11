@@ -12,7 +12,7 @@ export interface Quiz<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function QuizMixin<Base extends Constructor>(Resource: Base): Constructor<Quiz> & Base {
   @namespace(schema)
-  class QuizClass extends LearningResourceMixin(Resource) implements Quiz {
+  class QuizClass extends LearningResourceMixin(Resource) implements Partial<Quiz> {
   }
   return QuizClass
 }

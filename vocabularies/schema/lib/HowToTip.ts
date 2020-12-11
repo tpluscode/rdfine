@@ -13,7 +13,7 @@ export interface HowToTip<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function HowToTipMixin<Base extends Constructor>(Resource: Base): Constructor<HowToTip> & Base {
   @namespace(schema)
-  class HowToTipClass extends ListItemMixin(CreativeWorkMixin(Resource)) implements HowToTip {
+  class HowToTipClass extends ListItemMixin(CreativeWorkMixin(Resource)) implements Partial<HowToTip> {
   }
   return HowToTipClass
 }

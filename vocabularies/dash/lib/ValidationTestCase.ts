@@ -12,7 +12,7 @@ export interface ValidationTestCase<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function ValidationTestCaseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class ValidationTestCaseClass extends TestCaseMixin(Resource) implements ValidationTestCase {
+  class ValidationTestCaseClass extends TestCaseMixin(Resource) implements Partial<ValidationTestCase> {
   }
   return ValidationTestCaseClass
 }

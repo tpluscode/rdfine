@@ -12,7 +12,7 @@ export interface PersonalProfileDocument<D extends RDF.DatasetCore = RDF.Dataset
 
 export function PersonalProfileDocumentMixin<Base extends Constructor>(Resource: Base): Constructor<PersonalProfileDocument> & Base {
   @namespace(foaf)
-  class PersonalProfileDocumentClass extends DocumentMixin(Resource) implements PersonalProfileDocument {
+  class PersonalProfileDocumentClass extends DocumentMixin(Resource) implements Partial<PersonalProfileDocument> {
   }
   return PersonalProfileDocumentClass
 }

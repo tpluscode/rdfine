@@ -20,7 +20,7 @@ export interface AnatomicalStructure<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function AnatomicalStructureMixin<Base extends Constructor>(Resource: Base): Constructor<AnatomicalStructure> & Base {
   @namespace(schema)
-  class AnatomicalStructureClass extends MedicalEntityMixin(Resource) implements AnatomicalStructure {
+  class AnatomicalStructureClass extends MedicalEntityMixin(Resource) implements Partial<AnatomicalStructure> {
     @property.literal()
     associatedPathophysiology: string | undefined;
     @property.literal()

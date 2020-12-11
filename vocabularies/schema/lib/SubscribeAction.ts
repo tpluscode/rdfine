@@ -12,7 +12,7 @@ export interface SubscribeAction<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function SubscribeActionMixin<Base extends Constructor>(Resource: Base): Constructor<SubscribeAction> & Base {
   @namespace(schema)
-  class SubscribeActionClass extends InteractActionMixin(Resource) implements SubscribeAction {
+  class SubscribeActionClass extends InteractActionMixin(Resource) implements Partial<SubscribeAction> {
   }
   return SubscribeActionClass
 }

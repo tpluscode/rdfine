@@ -13,7 +13,7 @@ export interface MobileApplication<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function MobileApplicationMixin<Base extends Constructor>(Resource: Base): Constructor<MobileApplication> & Base {
   @namespace(schema)
-  class MobileApplicationClass extends SoftwareApplicationMixin(Resource) implements MobileApplication {
+  class MobileApplicationClass extends SoftwareApplicationMixin(Resource) implements Partial<MobileApplication> {
     @property.literal()
     carrierRequirements: string | undefined;
   }

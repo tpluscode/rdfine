@@ -12,7 +12,7 @@ export interface AdultEntertainment<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function AdultEntertainmentMixin<Base extends Constructor>(Resource: Base): Constructor<AdultEntertainment> & Base {
   @namespace(schema)
-  class AdultEntertainmentClass extends EntertainmentBusinessMixin(Resource) implements AdultEntertainment {
+  class AdultEntertainmentClass extends EntertainmentBusinessMixin(Resource) implements Partial<AdultEntertainment> {
   }
   return AdultEntertainmentClass
 }

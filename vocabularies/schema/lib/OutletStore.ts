@@ -12,7 +12,7 @@ export interface OutletStore<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function OutletStoreMixin<Base extends Constructor>(Resource: Base): Constructor<OutletStore> & Base {
   @namespace(schema)
-  class OutletStoreClass extends StoreMixin(Resource) implements OutletStore {
+  class OutletStoreClass extends StoreMixin(Resource) implements Partial<OutletStore> {
   }
   return OutletStoreClass
 }

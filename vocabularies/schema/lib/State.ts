@@ -12,7 +12,7 @@ export interface State<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
 
 export function StateMixin<Base extends Constructor>(Resource: Base): Constructor<State> & Base {
   @namespace(schema)
-  class StateClass extends AdministrativeAreaMixin(Resource) implements State {
+  class StateClass extends AdministrativeAreaMixin(Resource) implements Partial<State> {
   }
   return StateClass
 }

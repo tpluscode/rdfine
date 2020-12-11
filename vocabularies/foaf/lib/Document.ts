@@ -14,7 +14,7 @@ export interface Document<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
 
 export function DocumentMixin<Base extends Constructor>(Resource: Base): Constructor<Document> & Base {
   @namespace(foaf)
-  class DocumentClass extends Resource implements Document {
+  class DocumentClass extends Resource implements Partial<Document> {
     @property()
     primaryTopic: RDF.NamedNode | undefined;
     @property()

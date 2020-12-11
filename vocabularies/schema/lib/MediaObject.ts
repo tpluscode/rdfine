@@ -31,7 +31,7 @@ export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function MediaObjectMixin<Base extends Constructor>(Resource: Base): Constructor<MediaObject> & Base {
   @namespace(schema)
-  class MediaObjectClass extends CreativeWorkMixin(Resource) implements MediaObject {
+  class MediaObjectClass extends CreativeWorkMixin(Resource) implements Partial<MediaObject> {
     @property.resource()
     associatedArticle: Schema.NewsArticle | undefined;
     @property.literal()

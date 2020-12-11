@@ -16,7 +16,7 @@ export interface PronounceableText<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function PronounceableTextMixin<Base extends Constructor>(Resource: Base): Constructor<PronounceableText> & Base {
   @namespace(schema)
-  class PronounceableTextClass extends Resource implements PronounceableText {
+  class PronounceableTextClass extends Resource implements Partial<PronounceableText> {
     @property.resource()
     inLanguage: Schema.Language | undefined;
     @property.literal({ path: schema.inLanguage })

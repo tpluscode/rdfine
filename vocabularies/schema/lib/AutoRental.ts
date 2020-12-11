@@ -12,7 +12,7 @@ export interface AutoRental<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function AutoRentalMixin<Base extends Constructor>(Resource: Base): Constructor<AutoRental> & Base {
   @namespace(schema)
-  class AutoRentalClass extends AutomotiveBusinessMixin(Resource) implements AutoRental {
+  class AutoRentalClass extends AutomotiveBusinessMixin(Resource) implements Partial<AutoRental> {
   }
   return AutoRentalClass
 }

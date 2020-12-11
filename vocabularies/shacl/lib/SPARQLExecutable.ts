@@ -16,7 +16,7 @@ export interface SPARQLExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function SPARQLExecutableMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLExecutable> & Base {
   @namespace(sh)
-  class SPARQLExecutableClass extends RdfsResourceMixin(Resource) implements SPARQLExecutable {
+  class SPARQLExecutableClass extends RdfsResourceMixin(Resource) implements Partial<SPARQLExecutable> {
     @property.resource({ as: [OwlOntologyMixin] })
     prefixes: Owl.Ontology | undefined;
   }

@@ -13,7 +13,7 @@ export interface Space<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function SpaceMixin<Base extends Constructor>(Resource: Base): Constructor<Space> & Base {
   @namespace(sioc)
-  class SpaceClass extends Resource implements Space {
+  class SpaceClass extends Resource implements Partial<Space> {
     @property.resource({ implicitTypes: [sioc.Usergroup] })
     'has_usergroup': Sioc.Usergroup | undefined;
     @property()

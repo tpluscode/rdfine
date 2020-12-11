@@ -57,7 +57,7 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
 
 export function PlaceMixin<Base extends Constructor>(Resource: Base): Constructor<Place> & Base {
   @namespace(schema)
-  class PlaceClass extends ThingMixin(Resource) implements Place {
+  class PlaceClass extends ThingMixin(Resource) implements Partial<Place> {
     @property.resource()
     additionalProperty: Schema.PropertyValue | undefined;
     @property.resource()

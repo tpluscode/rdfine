@@ -12,7 +12,7 @@ export interface DiscussionForumPosting<D extends RDF.DatasetCore = RDF.DatasetC
 
 export function DiscussionForumPostingMixin<Base extends Constructor>(Resource: Base): Constructor<DiscussionForumPosting> & Base {
   @namespace(schema)
-  class DiscussionForumPostingClass extends SocialMediaPostingMixin(Resource) implements DiscussionForumPosting {
+  class DiscussionForumPostingClass extends SocialMediaPostingMixin(Resource) implements Partial<DiscussionForumPosting> {
   }
   return DiscussionForumPostingClass
 }

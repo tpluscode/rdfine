@@ -12,7 +12,7 @@ export interface WPSideBar<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function WPSideBarMixin<Base extends Constructor>(Resource: Base): Constructor<WPSideBar> & Base {
   @namespace(schema)
-  class WPSideBarClass extends WebPageElementMixin(Resource) implements WPSideBar {
+  class WPSideBarClass extends WebPageElementMixin(Resource) implements Partial<WPSideBar> {
   }
   return WPSideBarClass
 }

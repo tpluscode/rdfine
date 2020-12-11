@@ -12,7 +12,7 @@ export interface DarcsRepository<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function DarcsRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<DarcsRepository> & Base {
   @namespace(doap)
-  class DarcsRepositoryClass extends RepositoryMixin(Resource) implements DarcsRepository {
+  class DarcsRepositoryClass extends RepositoryMixin(Resource) implements Partial<DarcsRepository> {
   }
   return DarcsRepositoryClass
 }

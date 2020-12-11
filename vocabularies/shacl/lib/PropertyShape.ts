@@ -41,7 +41,7 @@ export interface PropertyShape<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function PropertyShapeMixin<Base extends Constructor>(Resource: Base): Constructor<PropertyShape> & Base {
   @namespace(sh)
-  class PropertyShapeClass extends ShapeMixin(Resource) implements PropertyShape {
+  class PropertyShapeClass extends ShapeMixin(Resource) implements Partial<PropertyShape> {
     @property.resource({ as: [RdfsDatatypeMixin] })
     datatype: Rdfs.Datatype | undefined;
     @property()

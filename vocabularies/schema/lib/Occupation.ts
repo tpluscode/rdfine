@@ -22,7 +22,7 @@ export interface Occupation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function OccupationMixin<Base extends Constructor>(Resource: Base): Constructor<Occupation> & Base {
   @namespace(schema)
-  class OccupationClass extends IntangibleMixin(Resource) implements Occupation {
+  class OccupationClass extends IntangibleMixin(Resource) implements Partial<Occupation> {
     @property.literal()
     educationRequirements: string | undefined;
     @property.resource()

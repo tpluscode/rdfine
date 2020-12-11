@@ -15,7 +15,7 @@ export interface InfectiousDisease<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function InfectiousDiseaseMixin<Base extends Constructor>(Resource: Base): Constructor<InfectiousDisease> & Base {
   @namespace(schema)
-  class InfectiousDiseaseClass extends MedicalConditionMixin(Resource) implements InfectiousDisease {
+  class InfectiousDiseaseClass extends MedicalConditionMixin(Resource) implements Partial<InfectiousDisease> {
     @property.literal()
     infectiousAgent: string | undefined;
     @property()

@@ -12,7 +12,7 @@ export interface BoatTerminal<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function BoatTerminalMixin<Base extends Constructor>(Resource: Base): Constructor<BoatTerminal> & Base {
   @namespace(schema)
-  class BoatTerminalClass extends CivicStructureMixin(Resource) implements BoatTerminal {
+  class BoatTerminalClass extends CivicStructureMixin(Resource) implements Partial<BoatTerminal> {
   }
   return BoatTerminalClass
 }

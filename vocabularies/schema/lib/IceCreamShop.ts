@@ -12,7 +12,7 @@ export interface IceCreamShop<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function IceCreamShopMixin<Base extends Constructor>(Resource: Base): Constructor<IceCreamShop> & Base {
   @namespace(schema)
-  class IceCreamShopClass extends FoodEstablishmentMixin(Resource) implements IceCreamShop {
+  class IceCreamShopClass extends FoodEstablishmentMixin(Resource) implements Partial<IceCreamShop> {
   }
   return IceCreamShopClass
 }

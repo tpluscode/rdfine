@@ -11,7 +11,7 @@ export interface NamedIndividual<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function NamedIndividualMixin<Base extends Constructor>(Resource: Base): Constructor<NamedIndividual> & Base {
   @namespace(owl)
-  class NamedIndividualClass extends Resource implements NamedIndividual {
+  class NamedIndividualClass extends Resource implements Partial<NamedIndividual> {
   }
   return NamedIndividualClass
 }

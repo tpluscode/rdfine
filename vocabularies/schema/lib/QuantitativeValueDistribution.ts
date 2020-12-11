@@ -18,7 +18,7 @@ export interface QuantitativeValueDistribution<D extends RDF.DatasetCore = RDF.D
 
 export function QuantitativeValueDistributionMixin<Base extends Constructor>(Resource: Base): Constructor<QuantitativeValueDistribution> & Base {
   @namespace(schema)
-  class QuantitativeValueDistributionClass extends StructuredValueMixin(Resource) implements QuantitativeValueDistribution {
+  class QuantitativeValueDistributionClass extends StructuredValueMixin(Resource) implements Partial<QuantitativeValueDistribution> {
     @property.resource()
     duration: Schema.Duration | undefined;
     @property.literal({ type: Number })

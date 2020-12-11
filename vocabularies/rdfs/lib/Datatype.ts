@@ -12,7 +12,7 @@ export interface Datatype<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
 
 export function DatatypeMixin<Base extends Constructor>(Resource: Base): Constructor<Datatype> & Base {
   @namespace(rdfs)
-  class DatatypeClass extends ClassMixin(Resource) implements Datatype {
+  class DatatypeClass extends ClassMixin(Resource) implements Partial<Datatype> {
   }
   return DatatypeClass
 }

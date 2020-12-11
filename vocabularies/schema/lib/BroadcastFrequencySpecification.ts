@@ -17,7 +17,7 @@ export interface BroadcastFrequencySpecification<D extends RDF.DatasetCore = RDF
 
 export function BroadcastFrequencySpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<BroadcastFrequencySpecification> & Base {
   @namespace(schema)
-  class BroadcastFrequencySpecificationClass extends IntangibleMixin(Resource) implements BroadcastFrequencySpecification {
+  class BroadcastFrequencySpecificationClass extends IntangibleMixin(Resource) implements Partial<BroadcastFrequencySpecification> {
     @property.resource()
     broadcastFrequencyValue: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.broadcastFrequencyValue, type: Number })

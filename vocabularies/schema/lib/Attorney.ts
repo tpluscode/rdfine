@@ -12,7 +12,7 @@ export interface Attorney<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function AttorneyMixin<Base extends Constructor>(Resource: Base): Constructor<Attorney> & Base {
   @namespace(schema)
-  class AttorneyClass extends LegalServiceMixin(Resource) implements Attorney {
+  class AttorneyClass extends LegalServiceMixin(Resource) implements Partial<Attorney> {
   }
   return AttorneyClass
 }

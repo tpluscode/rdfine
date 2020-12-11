@@ -13,7 +13,7 @@ export interface ReturnAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function ReturnActionMixin<Base extends Constructor>(Resource: Base): Constructor<ReturnAction> & Base {
   @namespace(schema)
-  class ReturnActionClass extends TransferActionMixin(Resource) implements ReturnAction {
+  class ReturnActionClass extends TransferActionMixin(Resource) implements Partial<ReturnAction> {
     @property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }

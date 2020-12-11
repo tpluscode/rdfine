@@ -12,7 +12,7 @@ export interface StructuredValue<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function StructuredValueMixin<Base extends Constructor>(Resource: Base): Constructor<StructuredValue> & Base {
   @namespace(schema)
-  class StructuredValueClass extends IntangibleMixin(Resource) implements StructuredValue {
+  class StructuredValueClass extends IntangibleMixin(Resource) implements Partial<StructuredValue> {
   }
   return StructuredValueClass
 }

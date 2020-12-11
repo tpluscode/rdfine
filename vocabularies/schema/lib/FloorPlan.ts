@@ -25,7 +25,7 @@ export interface FloorPlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function FloorPlanMixin<Base extends Constructor>(Resource: Base): Constructor<FloorPlan> & Base {
   @namespace(schema)
-  class FloorPlanClass extends IntangibleMixin(Resource) implements FloorPlan {
+  class FloorPlanClass extends IntangibleMixin(Resource) implements Partial<FloorPlan> {
     @property.resource()
     amenityFeature: Schema.LocationFeatureSpecification | undefined;
     @property.resource()

@@ -12,7 +12,7 @@ export interface ProfilePage<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function ProfilePageMixin<Base extends Constructor>(Resource: Base): Constructor<ProfilePage> & Base {
   @namespace(schema)
-  class ProfilePageClass extends WebPageMixin(Resource) implements ProfilePage {
+  class ProfilePageClass extends WebPageMixin(Resource) implements Partial<ProfilePage> {
   }
   return ProfilePageClass
 }

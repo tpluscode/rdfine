@@ -12,7 +12,7 @@ export interface TennisComplex<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function TennisComplexMixin<Base extends Constructor>(Resource: Base): Constructor<TennisComplex> & Base {
   @namespace(schema)
-  class TennisComplexClass extends SportsActivityLocationMixin(Resource) implements TennisComplex {
+  class TennisComplexClass extends SportsActivityLocationMixin(Resource) implements Partial<TennisComplex> {
   }
   return TennisComplexClass
 }

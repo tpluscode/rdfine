@@ -12,7 +12,7 @@ export interface Sculpture<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function SculptureMixin<Base extends Constructor>(Resource: Base): Constructor<Sculpture> & Base {
   @namespace(schema)
-  class SculptureClass extends CreativeWorkMixin(Resource) implements Sculpture {
+  class SculptureClass extends CreativeWorkMixin(Resource) implements Partial<Sculpture> {
   }
   return SculptureClass
 }

@@ -14,7 +14,7 @@ export interface SpatialThing<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function SpatialThingMixin<Base extends Constructor>(Resource: Base): Constructor<SpatialThing> & Base {
   @namespace(wgs)
-  class SpatialThingClass extends Resource implements SpatialThing {
+  class SpatialThingClass extends Resource implements Partial<SpatialThing> {
     @property.literal({ type: Number })
     alt: number | undefined;
     @property.literal({ type: Number })

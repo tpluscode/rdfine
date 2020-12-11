@@ -15,7 +15,7 @@ export interface PrefixDeclaration<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function PrefixDeclarationMixin<Base extends Constructor>(Resource: Base): Constructor<PrefixDeclaration> & Base {
   @namespace(sh)
-  class PrefixDeclarationClass extends RdfsResourceMixin(Resource) implements PrefixDeclaration {
+  class PrefixDeclarationClass extends RdfsResourceMixin(Resource) implements Partial<PrefixDeclaration> {
     @property.literal()
     namespace: string | undefined;
     @property.literal()

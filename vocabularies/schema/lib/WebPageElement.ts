@@ -14,7 +14,7 @@ export interface WebPageElement<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function WebPageElementMixin<Base extends Constructor>(Resource: Base): Constructor<WebPageElement> & Base {
   @namespace(schema)
-  class WebPageElementClass extends CreativeWorkMixin(Resource) implements WebPageElement {
+  class WebPageElementClass extends CreativeWorkMixin(Resource) implements Partial<WebPageElement> {
     @property.literal()
     cssSelector: string | undefined;
     @property.literal()

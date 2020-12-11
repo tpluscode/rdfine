@@ -13,7 +13,7 @@ export interface ReviewNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function ReviewNewsArticleMixin<Base extends Constructor>(Resource: Base): Constructor<ReviewNewsArticle> & Base {
   @namespace(schema)
-  class ReviewNewsArticleClass extends NewsArticleMixin(CriticReviewMixin(Resource)) implements ReviewNewsArticle {
+  class ReviewNewsArticleClass extends NewsArticleMixin(CriticReviewMixin(Resource)) implements Partial<ReviewNewsArticle> {
   }
   return ReviewNewsArticleClass
 }

@@ -13,7 +13,7 @@ export interface ActionGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function ActionGroupMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class ActionGroupClass extends RdfsResourceMixin(Resource) implements ActionGroup {
+  class ActionGroupClass extends RdfsResourceMixin(Resource) implements Partial<ActionGroup> {
   }
   return ActionGroupClass
 }

@@ -13,7 +13,7 @@ export interface CompoundLiteral<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function CompoundLiteralMixin<Base extends Constructor>(Resource: Base): Constructor<CompoundLiteral> & Base {
   @namespace(rdf)
-  class CompoundLiteralClass extends Resource implements CompoundLiteral {
+  class CompoundLiteralClass extends Resource implements Partial<CompoundLiteral> {
     @property()
     direction: RDF.Term | undefined;
     @property()

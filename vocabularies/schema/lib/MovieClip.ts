@@ -12,7 +12,7 @@ export interface MovieClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function MovieClipMixin<Base extends Constructor>(Resource: Base): Constructor<MovieClip> & Base {
   @namespace(schema)
-  class MovieClipClass extends ClipMixin(Resource) implements MovieClip {
+  class MovieClipClass extends ClipMixin(Resource) implements Partial<MovieClip> {
   }
   return MovieClipClass
 }

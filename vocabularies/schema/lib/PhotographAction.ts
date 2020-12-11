@@ -12,7 +12,7 @@ export interface PhotographAction<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function PhotographActionMixin<Base extends Constructor>(Resource: Base): Constructor<PhotographAction> & Base {
   @namespace(schema)
-  class PhotographActionClass extends CreateActionMixin(Resource) implements PhotographAction {
+  class PhotographActionClass extends CreateActionMixin(Resource) implements Partial<PhotographAction> {
   }
   return PhotographActionClass
 }

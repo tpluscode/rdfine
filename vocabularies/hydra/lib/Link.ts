@@ -17,7 +17,7 @@ export interface Link<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.P
 
 export function LinkMixin<Base extends Constructor>(Resource: Base): Constructor<Link> & Base {
   @namespace(hydra)
-  class LinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements Link {
+  class LinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements Partial<Link> {
     @property.literal()
     description: string | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })

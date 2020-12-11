@@ -15,7 +15,7 @@ export interface BedDetails<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function BedDetailsMixin<Base extends Constructor>(Resource: Base): Constructor<BedDetails> & Base {
   @namespace(schema)
-  class BedDetailsClass extends IntangibleMixin(Resource) implements BedDetails {
+  class BedDetailsClass extends IntangibleMixin(Resource) implements Partial<BedDetails> {
     @property.literal({ type: Number })
     numberOfBeds: number | undefined;
     @property.literal()

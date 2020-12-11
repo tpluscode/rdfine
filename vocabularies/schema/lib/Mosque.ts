@@ -12,7 +12,7 @@ export interface Mosque<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function MosqueMixin<Base extends Constructor>(Resource: Base): Constructor<Mosque> & Base {
   @namespace(schema)
-  class MosqueClass extends PlaceOfWorshipMixin(Resource) implements Mosque {
+  class MosqueClass extends PlaceOfWorshipMixin(Resource) implements Partial<Mosque> {
   }
   return MosqueClass
 }

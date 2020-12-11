@@ -12,7 +12,7 @@ export interface WantAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function WantActionMixin<Base extends Constructor>(Resource: Base): Constructor<WantAction> & Base {
   @namespace(schema)
-  class WantActionClass extends ReactActionMixin(Resource) implements WantAction {
+  class WantActionClass extends ReactActionMixin(Resource) implements Partial<WantAction> {
   }
   return WantActionClass
 }

@@ -18,7 +18,7 @@ export interface RepaymentSpecification<D extends RDF.DatasetCore = RDF.DatasetC
 
 export function RepaymentSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<RepaymentSpecification> & Base {
   @namespace(schema)
-  class RepaymentSpecificationClass extends StructuredValueMixin(Resource) implements RepaymentSpecification {
+  class RepaymentSpecificationClass extends StructuredValueMixin(Resource) implements Partial<RepaymentSpecification> {
     @property.resource()
     downPayment: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.downPayment, type: Number })

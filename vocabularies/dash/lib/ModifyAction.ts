@@ -12,7 +12,7 @@ export interface ModifyAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function ModifyActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class ModifyActionClass extends ResourceActionMixin(Resource) implements ModifyAction {
+  class ModifyActionClass extends ResourceActionMixin(Resource) implements Partial<ModifyAction> {
   }
   return ModifyActionClass
 }

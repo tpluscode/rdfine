@@ -15,7 +15,7 @@ export interface TradeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function TradeActionMixin<Base extends Constructor>(Resource: Base): Constructor<TradeAction> & Base {
   @namespace(schema)
-  class TradeActionClass extends ActionMixin(Resource) implements TradeAction {
+  class TradeActionClass extends ActionMixin(Resource) implements Partial<TradeAction> {
     @property.literal()
     price: number | string | undefined;
     @property.literal()

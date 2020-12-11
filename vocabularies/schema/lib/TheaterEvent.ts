@@ -12,7 +12,7 @@ export interface TheaterEvent<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function TheaterEventMixin<Base extends Constructor>(Resource: Base): Constructor<TheaterEvent> & Base {
   @namespace(schema)
-  class TheaterEventClass extends EventMixin(Resource) implements TheaterEvent {
+  class TheaterEventClass extends EventMixin(Resource) implements Partial<TheaterEvent> {
   }
   return TheaterEventClass
 }

@@ -18,7 +18,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Class> & Base {
   @namespace(hydra)
-  class ClassClass extends ResourceMixin(RdfsClassMixin(Resource)) implements Class {
+  class ClassClass extends ResourceMixin(RdfsClassMixin(Resource)) implements Partial<Class> {
     @property.literal()
     description: string | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })

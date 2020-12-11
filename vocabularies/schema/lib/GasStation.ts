@@ -12,7 +12,7 @@ export interface GasStation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function GasStationMixin<Base extends Constructor>(Resource: Base): Constructor<GasStation> & Base {
   @namespace(schema)
-  class GasStationClass extends AutomotiveBusinessMixin(Resource) implements GasStation {
+  class GasStationClass extends AutomotiveBusinessMixin(Resource) implements Partial<GasStation> {
   }
   return GasStationClass
 }

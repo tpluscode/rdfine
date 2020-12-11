@@ -12,7 +12,7 @@ export interface Library<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function LibraryMixin<Base extends Constructor>(Resource: Base): Constructor<Library> & Base {
   @namespace(schema)
-  class LibraryClass extends LocalBusinessMixin(Resource) implements Library {
+  class LibraryClass extends LocalBusinessMixin(Resource) implements Partial<Library> {
   }
   return LibraryClass
 }

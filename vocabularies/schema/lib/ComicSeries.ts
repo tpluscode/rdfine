@@ -12,7 +12,7 @@ export interface ComicSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function ComicSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<ComicSeries> & Base {
   @namespace(schema)
-  class ComicSeriesClass extends PeriodicalMixin(Resource) implements ComicSeries {
+  class ComicSeriesClass extends PeriodicalMixin(Resource) implements Partial<ComicSeries> {
   }
   return ComicSeriesClass
 }

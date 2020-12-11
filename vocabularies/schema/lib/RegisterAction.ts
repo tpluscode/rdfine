@@ -12,7 +12,7 @@ export interface RegisterAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function RegisterActionMixin<Base extends Constructor>(Resource: Base): Constructor<RegisterAction> & Base {
   @namespace(schema)
-  class RegisterActionClass extends InteractActionMixin(Resource) implements RegisterAction {
+  class RegisterActionClass extends InteractActionMixin(Resource) implements Partial<RegisterAction> {
   }
   return RegisterActionClass
 }

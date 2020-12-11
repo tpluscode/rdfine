@@ -12,7 +12,7 @@ export interface ConvenienceStore<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function ConvenienceStoreMixin<Base extends Constructor>(Resource: Base): Constructor<ConvenienceStore> & Base {
   @namespace(schema)
-  class ConvenienceStoreClass extends StoreMixin(Resource) implements ConvenienceStore {
+  class ConvenienceStoreClass extends StoreMixin(Resource) implements Partial<ConvenienceStore> {
   }
   return ConvenienceStoreClass
 }

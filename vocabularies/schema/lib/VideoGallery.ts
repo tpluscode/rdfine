@@ -12,7 +12,7 @@ export interface VideoGallery<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function VideoGalleryMixin<Base extends Constructor>(Resource: Base): Constructor<VideoGallery> & Base {
   @namespace(schema)
-  class VideoGalleryClass extends MediaGalleryMixin(Resource) implements VideoGallery {
+  class VideoGalleryClass extends MediaGalleryMixin(Resource) implements Partial<VideoGallery> {
   }
   return VideoGalleryClass
 }

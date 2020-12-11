@@ -16,7 +16,7 @@ export interface ValidationReport<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function ValidationReportMixin<Base extends Constructor>(Resource: Base): Constructor<ValidationReport> & Base {
   @namespace(sh)
-  class ValidationReportClass extends RdfsResourceMixin(Resource) implements ValidationReport {
+  class ValidationReportClass extends RdfsResourceMixin(Resource) implements Partial<ValidationReport> {
     @property.literal({ type: Boolean })
     conforms: boolean | undefined;
     @property.resource({ implicitTypes: [sh.ValidationResult] })

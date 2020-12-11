@@ -12,7 +12,7 @@ export interface SuspendAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function SuspendActionMixin<Base extends Constructor>(Resource: Base): Constructor<SuspendAction> & Base {
   @namespace(schema)
-  class SuspendActionClass extends ControlActionMixin(Resource) implements SuspendAction {
+  class SuspendActionClass extends ControlActionMixin(Resource) implements Partial<SuspendAction> {
   }
   return SuspendActionClass
 }

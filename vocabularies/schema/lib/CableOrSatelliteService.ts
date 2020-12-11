@@ -12,7 +12,7 @@ export interface CableOrSatelliteService<D extends RDF.DatasetCore = RDF.Dataset
 
 export function CableOrSatelliteServiceMixin<Base extends Constructor>(Resource: Base): Constructor<CableOrSatelliteService> & Base {
   @namespace(schema)
-  class CableOrSatelliteServiceClass extends ServiceMixin(Resource) implements CableOrSatelliteService {
+  class CableOrSatelliteServiceClass extends ServiceMixin(Resource) implements Partial<CableOrSatelliteService> {
   }
   return CableOrSatelliteServiceClass
 }

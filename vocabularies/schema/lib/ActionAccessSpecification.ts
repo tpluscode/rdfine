@@ -23,7 +23,7 @@ export interface ActionAccessSpecification<D extends RDF.DatasetCore = RDF.Datas
 
 export function ActionAccessSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<ActionAccessSpecification> & Base {
   @namespace(schema)
-  class ActionAccessSpecificationClass extends IntangibleMixin(Resource) implements ActionAccessSpecification {
+  class ActionAccessSpecificationClass extends IntangibleMixin(Resource) implements Partial<ActionAccessSpecification> {
     @property.literal({ type: Date })
     availabilityEnds: Date | undefined;
     @property.literal({ type: Date })

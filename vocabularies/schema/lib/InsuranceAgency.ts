@@ -12,7 +12,7 @@ export interface InsuranceAgency<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function InsuranceAgencyMixin<Base extends Constructor>(Resource: Base): Constructor<InsuranceAgency> & Base {
   @namespace(schema)
-  class InsuranceAgencyClass extends FinancialServiceMixin(Resource) implements InsuranceAgency {
+  class InsuranceAgencyClass extends FinancialServiceMixin(Resource) implements Partial<InsuranceAgency> {
   }
   return InsuranceAgencyClass
 }

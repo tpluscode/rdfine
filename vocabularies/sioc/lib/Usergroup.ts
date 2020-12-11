@@ -13,7 +13,7 @@ export interface Usergroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function UsergroupMixin<Base extends Constructor>(Resource: Base): Constructor<Usergroup> & Base {
   @namespace(sioc)
-  class UsergroupClass extends Resource implements Usergroup {
+  class UsergroupClass extends Resource implements Partial<Usergroup> {
     @property.resource({ implicitTypes: [sioc.UserAccount] })
     'has_member': Sioc.UserAccount | undefined;
     @property.resource({ implicitTypes: [sioc.Space] })

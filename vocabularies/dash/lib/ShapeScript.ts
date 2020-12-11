@@ -12,7 +12,7 @@ export interface ShapeScript<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function ShapeScriptMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class ShapeScriptClass extends ScriptMixin(Resource) implements ShapeScript {
+  class ShapeScriptClass extends ScriptMixin(Resource) implements Partial<ShapeScript> {
   }
   return ShapeScriptClass
 }

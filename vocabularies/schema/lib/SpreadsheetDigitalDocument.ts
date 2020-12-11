@@ -12,7 +12,7 @@ export interface SpreadsheetDigitalDocument<D extends RDF.DatasetCore = RDF.Data
 
 export function SpreadsheetDigitalDocumentMixin<Base extends Constructor>(Resource: Base): Constructor<SpreadsheetDigitalDocument> & Base {
   @namespace(schema)
-  class SpreadsheetDigitalDocumentClass extends DigitalDocumentMixin(Resource) implements SpreadsheetDigitalDocument {
+  class SpreadsheetDigitalDocumentClass extends DigitalDocumentMixin(Resource) implements Partial<SpreadsheetDigitalDocument> {
   }
   return SpreadsheetDigitalDocumentClass
 }

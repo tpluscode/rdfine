@@ -12,7 +12,7 @@ export interface QAPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function QAPageMixin<Base extends Constructor>(Resource: Base): Constructor<QAPage> & Base {
   @namespace(schema)
-  class QAPageClass extends WebPageMixin(Resource) implements QAPage {
+  class QAPageClass extends WebPageMixin(Resource) implements Partial<QAPage> {
   }
   return QAPageClass
 }

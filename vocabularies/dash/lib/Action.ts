@@ -16,7 +16,7 @@ export interface Action<D extends RDF.DatasetCore = RDF.DatasetCore> extends Das
 
 export function ActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class ActionClass extends ShaclParameterizableMixin(ScriptMixin(Resource)) implements Action {
+  class ActionClass extends ShaclParameterizableMixin(ScriptMixin(Resource)) implements Partial<Action> {
     @property.resource({ implicitTypes: [dash.ActionGroup] })
     actionGroup: Dash.ActionGroup | undefined;
     @property.literal()

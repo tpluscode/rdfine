@@ -20,7 +20,7 @@ export interface BroadcastChannel<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function BroadcastChannelMixin<Base extends Constructor>(Resource: Base): Constructor<BroadcastChannel> & Base {
   @namespace(schema)
-  class BroadcastChannelClass extends IntangibleMixin(Resource) implements BroadcastChannel {
+  class BroadcastChannelClass extends IntangibleMixin(Resource) implements Partial<BroadcastChannel> {
     @property.literal()
     broadcastChannelId: string | undefined;
     @property.resource()

@@ -13,7 +13,7 @@ export interface Quotation<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function QuotationMixin<Base extends Constructor>(Resource: Base): Constructor<Quotation> & Base {
   @namespace(schema)
-  class QuotationClass extends CreativeWorkMixin(Resource) implements Quotation {
+  class QuotationClass extends CreativeWorkMixin(Resource) implements Partial<Quotation> {
     @property.resource()
     spokenByCharacter: Schema.Organization | Schema.Person | undefined;
   }

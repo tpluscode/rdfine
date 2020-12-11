@@ -12,7 +12,7 @@ export interface TravelAgency<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function TravelAgencyMixin<Base extends Constructor>(Resource: Base): Constructor<TravelAgency> & Base {
   @namespace(schema)
-  class TravelAgencyClass extends LocalBusinessMixin(Resource) implements TravelAgency {
+  class TravelAgencyClass extends LocalBusinessMixin(Resource) implements Partial<TravelAgency> {
   }
   return TravelAgencyClass
 }

@@ -12,7 +12,7 @@ export interface HealthAndBeautyBusiness<D extends RDF.DatasetCore = RDF.Dataset
 
 export function HealthAndBeautyBusinessMixin<Base extends Constructor>(Resource: Base): Constructor<HealthAndBeautyBusiness> & Base {
   @namespace(schema)
-  class HealthAndBeautyBusinessClass extends LocalBusinessMixin(Resource) implements HealthAndBeautyBusiness {
+  class HealthAndBeautyBusinessClass extends LocalBusinessMixin(Resource) implements Partial<HealthAndBeautyBusiness> {
   }
   return HealthAndBeautyBusinessClass
 }

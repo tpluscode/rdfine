@@ -14,7 +14,7 @@ export interface TechArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function TechArticleMixin<Base extends Constructor>(Resource: Base): Constructor<TechArticle> & Base {
   @namespace(schema)
-  class TechArticleClass extends ArticleMixin(Resource) implements TechArticle {
+  class TechArticleClass extends ArticleMixin(Resource) implements Partial<TechArticle> {
     @property.literal()
     dependencies: string | undefined;
     @property.literal()

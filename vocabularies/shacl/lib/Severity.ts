@@ -13,7 +13,7 @@ export interface Severity<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
 
 export function SeverityMixin<Base extends Constructor>(Resource: Base): Constructor<Severity> & Base {
   @namespace(sh)
-  class SeverityClass extends RdfsResourceMixin(Resource) implements Severity {
+  class SeverityClass extends RdfsResourceMixin(Resource) implements Partial<Severity> {
   }
   return SeverityClass
 }

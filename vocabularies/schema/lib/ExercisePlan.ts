@@ -25,7 +25,7 @@ export interface ExercisePlan<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function ExercisePlanMixin<Base extends Constructor>(Resource: Base): Constructor<ExercisePlan> & Base {
   @namespace(schema)
-  class ExercisePlanClass extends PhysicalActivityMixin(CreativeWorkMixin(Resource)) implements ExercisePlan {
+  class ExercisePlanClass extends PhysicalActivityMixin(CreativeWorkMixin(Resource)) implements Partial<ExercisePlan> {
     @property.resource()
     activityDuration: Schema.Duration | Schema.QuantitativeValue | undefined;
     @property.resource()

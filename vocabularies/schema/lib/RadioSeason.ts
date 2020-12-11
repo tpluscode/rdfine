@@ -12,7 +12,7 @@ export interface RadioSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function RadioSeasonMixin<Base extends Constructor>(Resource: Base): Constructor<RadioSeason> & Base {
   @namespace(schema)
-  class RadioSeasonClass extends CreativeWorkSeasonMixin(Resource) implements RadioSeason {
+  class RadioSeasonClass extends CreativeWorkSeasonMixin(Resource) implements Partial<RadioSeason> {
   }
   return RadioSeasonClass
 }

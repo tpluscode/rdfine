@@ -12,7 +12,7 @@ export interface ProfessionalService<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function ProfessionalServiceMixin<Base extends Constructor>(Resource: Base): Constructor<ProfessionalService> & Base {
   @namespace(schema)
-  class ProfessionalServiceClass extends LocalBusinessMixin(Resource) implements ProfessionalService {
+  class ProfessionalServiceClass extends LocalBusinessMixin(Resource) implements Partial<ProfessionalService> {
   }
   return ProfessionalServiceClass
 }

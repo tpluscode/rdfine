@@ -12,7 +12,7 @@ export interface Church<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function ChurchMixin<Base extends Constructor>(Resource: Base): Constructor<Church> & Base {
   @namespace(schema)
-  class ChurchClass extends PlaceOfWorshipMixin(Resource) implements Church {
+  class ChurchClass extends PlaceOfWorshipMixin(Resource) implements Partial<Church> {
   }
   return ChurchClass
 }

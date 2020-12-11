@@ -12,7 +12,7 @@ export interface AsymmetricProperty<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function AsymmetricPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<AsymmetricProperty> & Base {
   @namespace(owl)
-  class AsymmetricPropertyClass extends ObjectPropertyMixin(Resource) implements AsymmetricProperty {
+  class AsymmetricPropertyClass extends ObjectPropertyMixin(Resource) implements Partial<AsymmetricProperty> {
   }
   return AsymmetricPropertyClass
 }

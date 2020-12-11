@@ -12,7 +12,7 @@ export interface LakeBodyOfWater<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function LakeBodyOfWaterMixin<Base extends Constructor>(Resource: Base): Constructor<LakeBodyOfWater> & Base {
   @namespace(schema)
-  class LakeBodyOfWaterClass extends BodyOfWaterMixin(Resource) implements LakeBodyOfWater {
+  class LakeBodyOfWaterClass extends BodyOfWaterMixin(Resource) implements Partial<LakeBodyOfWater> {
   }
   return LakeBodyOfWaterClass
 }

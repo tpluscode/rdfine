@@ -18,7 +18,7 @@ export interface LearningResource<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function LearningResourceMixin<Base extends Constructor>(Resource: Base): Constructor<LearningResource> & Base {
   @namespace(schema)
-  class LearningResourceClass extends CreativeWorkMixin(Resource) implements LearningResource {
+  class LearningResourceClass extends CreativeWorkMixin(Resource) implements Partial<LearningResource> {
     @property.literal()
     assesses: string | undefined;
     @property.resource()

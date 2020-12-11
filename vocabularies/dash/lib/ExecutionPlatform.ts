@@ -14,7 +14,7 @@ export interface ExecutionPlatform<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function ExecutionPlatformMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class ExecutionPlatformClass extends RdfsResourceMixin(Resource) implements ExecutionPlatform {
+  class ExecutionPlatformClass extends RdfsResourceMixin(Resource) implements Partial<ExecutionPlatform> {
     @property.resource({ as: [ExecutionPlatformMixin] })
     includedExecutionPlatform: Dash.ExecutionPlatform | undefined;
   }

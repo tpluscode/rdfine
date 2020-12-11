@@ -12,7 +12,7 @@ export interface Distillery<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function DistilleryMixin<Base extends Constructor>(Resource: Base): Constructor<Distillery> & Base {
   @namespace(schema)
-  class DistilleryClass extends FoodEstablishmentMixin(Resource) implements Distillery {
+  class DistilleryClass extends FoodEstablishmentMixin(Resource) implements Partial<Distillery> {
   }
   return DistilleryClass
 }

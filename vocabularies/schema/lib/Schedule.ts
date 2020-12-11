@@ -27,7 +27,7 @@ export interface Schedule<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function ScheduleMixin<Base extends Constructor>(Resource: Base): Constructor<Schedule> & Base {
   @namespace(schema)
-  class ScheduleClass extends IntangibleMixin(Resource) implements Schedule {
+  class ScheduleClass extends IntangibleMixin(Resource) implements Partial<Schedule> {
     @property.literal()
     byDay: string | undefined;
     @property({ path: schema.byDay })

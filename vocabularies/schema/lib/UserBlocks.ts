@@ -12,7 +12,7 @@ export interface UserBlocks<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function UserBlocksMixin<Base extends Constructor>(Resource: Base): Constructor<UserBlocks> & Base {
   @namespace(schema)
-  class UserBlocksClass extends UserInteractionMixin(Resource) implements UserBlocks {
+  class UserBlocksClass extends UserInteractionMixin(Resource) implements Partial<UserBlocks> {
   }
   return UserBlocksClass
 }

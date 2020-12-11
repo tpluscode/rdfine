@@ -13,7 +13,7 @@ export interface PerformanceRole<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function PerformanceRoleMixin<Base extends Constructor>(Resource: Base): Constructor<PerformanceRole> & Base {
   @namespace(schema)
-  class PerformanceRoleClass extends RoleMixin(Resource) implements PerformanceRole {
+  class PerformanceRoleClass extends RoleMixin(Resource) implements Partial<PerformanceRole> {
     @property.literal()
     characterName: string | undefined;
   }

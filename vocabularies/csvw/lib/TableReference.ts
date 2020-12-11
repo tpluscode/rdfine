@@ -14,7 +14,7 @@ export interface TableReference<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function TableReferenceMixin<Base extends Constructor>(Resource: Base): Constructor<TableReference> & Base {
   @namespace(csvw)
-  class TableReferenceClass extends Resource implements TableReference {
+  class TableReferenceClass extends Resource implements Partial<TableReference> {
     @property.literal()
     columnReference: string | undefined;
     @property.literal()

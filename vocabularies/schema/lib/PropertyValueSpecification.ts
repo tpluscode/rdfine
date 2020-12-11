@@ -24,7 +24,7 @@ export interface PropertyValueSpecification<D extends RDF.DatasetCore = RDF.Data
 
 export function PropertyValueSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<PropertyValueSpecification> & Base {
   @namespace(schema)
-  class PropertyValueSpecificationClass extends IntangibleMixin(Resource) implements PropertyValueSpecification {
+  class PropertyValueSpecificationClass extends IntangibleMixin(Resource) implements Partial<PropertyValueSpecification> {
     @property.resource()
     defaultValue: Schema.Thing | undefined;
     @property.literal({ path: schema.defaultValue })

@@ -12,7 +12,7 @@ export interface EndorsementRating<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function EndorsementRatingMixin<Base extends Constructor>(Resource: Base): Constructor<EndorsementRating> & Base {
   @namespace(schema)
-  class EndorsementRatingClass extends RatingMixin(Resource) implements EndorsementRating {
+  class EndorsementRatingClass extends RatingMixin(Resource) implements Partial<EndorsementRating> {
   }
   return EndorsementRatingClass
 }

@@ -12,7 +12,7 @@ export interface Play<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function PlayMixin<Base extends Constructor>(Resource: Base): Constructor<Play> & Base {
   @namespace(schema)
-  class PlayClass extends CreativeWorkMixin(Resource) implements Play {
+  class PlayClass extends CreativeWorkMixin(Resource) implements Partial<Play> {
   }
   return PlayClass
 }

@@ -16,7 +16,7 @@ export interface Property<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function PropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Property> & Base {
   @namespace(schema)
-  class PropertyClass extends IntangibleMixin(Resource) implements Property {
+  class PropertyClass extends IntangibleMixin(Resource) implements Partial<Property> {
     @property()
     domainIncludes: RDF.Term | undefined;
     @property.resource()

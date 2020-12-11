@@ -12,7 +12,7 @@ export interface ResourceAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function ResourceActionMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class ResourceActionClass extends ActionMixin(Resource) implements ResourceAction {
+  class ResourceActionClass extends ActionMixin(Resource) implements Partial<ResourceAction> {
   }
   return ResourceActionClass
 }

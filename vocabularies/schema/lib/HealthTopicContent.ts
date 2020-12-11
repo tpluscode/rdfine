@@ -13,7 +13,7 @@ export interface HealthTopicContent<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function HealthTopicContentMixin<Base extends Constructor>(Resource: Base): Constructor<HealthTopicContent> & Base {
   @namespace(schema)
-  class HealthTopicContentClass extends WebContentMixin(Resource) implements HealthTopicContent {
+  class HealthTopicContentClass extends WebContentMixin(Resource) implements Partial<HealthTopicContent> {
     @property()
     hasHealthAspect: Schema.HealthAspectEnumeration | undefined;
   }

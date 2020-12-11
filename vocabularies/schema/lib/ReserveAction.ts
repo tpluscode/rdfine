@@ -12,7 +12,7 @@ export interface ReserveAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function ReserveActionMixin<Base extends Constructor>(Resource: Base): Constructor<ReserveAction> & Base {
   @namespace(schema)
-  class ReserveActionClass extends PlanActionMixin(Resource) implements ReserveAction {
+  class ReserveActionClass extends PlanActionMixin(Resource) implements Partial<ReserveAction> {
   }
   return ReserveActionClass
 }

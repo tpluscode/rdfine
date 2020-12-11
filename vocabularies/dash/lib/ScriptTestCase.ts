@@ -13,7 +13,7 @@ export interface ScriptTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function ScriptTestCaseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class ScriptTestCaseClass extends TestCaseMixin(ScriptMixin(Resource)) implements ScriptTestCase {
+  class ScriptTestCaseClass extends TestCaseMixin(ScriptMixin(Resource)) implements Partial<ScriptTestCase> {
   }
   return ScriptTestCaseClass
 }

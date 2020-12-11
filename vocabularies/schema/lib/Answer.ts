@@ -12,7 +12,7 @@ export interface Answer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function AnswerMixin<Base extends Constructor>(Resource: Base): Constructor<Answer> & Base {
   @namespace(schema)
-  class AnswerClass extends CommentMixin(Resource) implements Answer {
+  class AnswerClass extends CommentMixin(Resource) implements Partial<Answer> {
   }
   return AnswerClass
 }

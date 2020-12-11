@@ -12,7 +12,7 @@ export interface BrainStructure<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function BrainStructureMixin<Base extends Constructor>(Resource: Base): Constructor<BrainStructure> & Base {
   @namespace(schema)
-  class BrainStructureClass extends AnatomicalStructureMixin(Resource) implements BrainStructure {
+  class BrainStructureClass extends AnatomicalStructureMixin(Resource) implements Partial<BrainStructure> {
   }
   return BrainStructureClass
 }

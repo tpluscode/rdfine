@@ -12,7 +12,7 @@ export interface SatiricalArticle<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function SatiricalArticleMixin<Base extends Constructor>(Resource: Base): Constructor<SatiricalArticle> & Base {
   @namespace(schema)
-  class SatiricalArticleClass extends ArticleMixin(Resource) implements SatiricalArticle {
+  class SatiricalArticleClass extends ArticleMixin(Resource) implements Partial<SatiricalArticle> {
   }
   return SatiricalArticleClass
 }

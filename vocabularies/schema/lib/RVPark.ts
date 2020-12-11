@@ -12,7 +12,7 @@ export interface RVPark<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function RVParkMixin<Base extends Constructor>(Resource: Base): Constructor<RVPark> & Base {
   @namespace(schema)
-  class RVParkClass extends CivicStructureMixin(Resource) implements RVPark {
+  class RVParkClass extends CivicStructureMixin(Resource) implements Partial<RVPark> {
   }
   return RVParkClass
 }

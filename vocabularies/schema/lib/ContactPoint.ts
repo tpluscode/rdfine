@@ -25,7 +25,7 @@ export interface ContactPoint<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function ContactPointMixin<Base extends Constructor>(Resource: Base): Constructor<ContactPoint> & Base {
   @namespace(schema)
-  class ContactPointClass extends StructuredValueMixin(Resource) implements ContactPoint {
+  class ContactPointClass extends StructuredValueMixin(Resource) implements Partial<ContactPoint> {
     @property.resource()
     areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
     @property.literal({ path: schema.areaServed })

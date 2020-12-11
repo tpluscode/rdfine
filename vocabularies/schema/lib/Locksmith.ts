@@ -12,7 +12,7 @@ export interface Locksmith<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function LocksmithMixin<Base extends Constructor>(Resource: Base): Constructor<Locksmith> & Base {
   @namespace(schema)
-  class LocksmithClass extends HomeAndConstructionBusinessMixin(Resource) implements Locksmith {
+  class LocksmithClass extends HomeAndConstructionBusinessMixin(Resource) implements Partial<Locksmith> {
   }
   return LocksmithClass
 }

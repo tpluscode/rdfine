@@ -18,7 +18,7 @@ export interface Rating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function RatingMixin<Base extends Constructor>(Resource: Base): Constructor<Rating> & Base {
   @namespace(schema)
-  class RatingClass extends IntangibleMixin(Resource) implements Rating {
+  class RatingClass extends IntangibleMixin(Resource) implements Partial<Rating> {
     @property.resource()
     author: Schema.Organization | Schema.Person | undefined;
     @property.literal()

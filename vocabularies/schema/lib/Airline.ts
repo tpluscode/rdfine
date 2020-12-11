@@ -14,7 +14,7 @@ export interface Airline<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function AirlineMixin<Base extends Constructor>(Resource: Base): Constructor<Airline> & Base {
   @namespace(schema)
-  class AirlineClass extends OrganizationMixin(Resource) implements Airline {
+  class AirlineClass extends OrganizationMixin(Resource) implements Partial<Airline> {
     @property()
     boardingPolicy: Schema.BoardingPolicyType | undefined;
     @property.literal()

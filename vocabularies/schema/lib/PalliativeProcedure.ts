@@ -13,7 +13,7 @@ export interface PalliativeProcedure<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function PalliativeProcedureMixin<Base extends Constructor>(Resource: Base): Constructor<PalliativeProcedure> & Base {
   @namespace(schema)
-  class PalliativeProcedureClass extends MedicalTherapyMixin(MedicalProcedureMixin(Resource)) implements PalliativeProcedure {
+  class PalliativeProcedureClass extends MedicalTherapyMixin(MedicalProcedureMixin(Resource)) implements Partial<PalliativeProcedure> {
   }
   return PalliativeProcedureClass
 }

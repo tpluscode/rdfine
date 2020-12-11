@@ -132,7 +132,7 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Constructor<CreativeWork> & Base {
   @namespace(schema)
-  class CreativeWorkClass extends ThingMixin(Resource) implements CreativeWork {
+  class CreativeWorkClass extends ThingMixin(Resource) implements Partial<CreativeWork> {
     @property.resource()
     about: Schema.Thing | undefined;
     @property.literal()

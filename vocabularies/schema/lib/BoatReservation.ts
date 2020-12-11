@@ -12,7 +12,7 @@ export interface BoatReservation<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function BoatReservationMixin<Base extends Constructor>(Resource: Base): Constructor<BoatReservation> & Base {
   @namespace(schema)
-  class BoatReservationClass extends ReservationMixin(Resource) implements BoatReservation {
+  class BoatReservationClass extends ReservationMixin(Resource) implements Partial<BoatReservation> {
   }
   return BoatReservationClass
 }

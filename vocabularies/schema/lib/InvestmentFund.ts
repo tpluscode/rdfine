@@ -12,7 +12,7 @@ export interface InvestmentFund<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function InvestmentFundMixin<Base extends Constructor>(Resource: Base): Constructor<InvestmentFund> & Base {
   @namespace(schema)
-  class InvestmentFundClass extends InvestmentOrDepositMixin(Resource) implements InvestmentFund {
+  class InvestmentFundClass extends InvestmentOrDepositMixin(Resource) implements Partial<InvestmentFund> {
   }
   return InvestmentFundClass
 }

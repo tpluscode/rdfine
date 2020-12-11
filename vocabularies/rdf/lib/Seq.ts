@@ -11,7 +11,7 @@ export interface Seq<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRes
 
 export function SeqMixin<Base extends Constructor>(Resource: Base): Constructor<Seq> & Base {
   @namespace(rdf)
-  class SeqClass extends Resource implements Seq {
+  class SeqClass extends Resource implements Partial<Seq> {
   }
   return SeqClass
 }

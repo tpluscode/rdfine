@@ -12,7 +12,7 @@ export interface PerformingArtsTheater<D extends RDF.DatasetCore = RDF.DatasetCo
 
 export function PerformingArtsTheaterMixin<Base extends Constructor>(Resource: Base): Constructor<PerformingArtsTheater> & Base {
   @namespace(schema)
-  class PerformingArtsTheaterClass extends CivicStructureMixin(Resource) implements PerformingArtsTheater {
+  class PerformingArtsTheaterClass extends CivicStructureMixin(Resource) implements Partial<PerformingArtsTheater> {
   }
   return PerformingArtsTheaterClass
 }

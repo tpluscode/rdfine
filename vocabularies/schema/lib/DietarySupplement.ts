@@ -24,7 +24,7 @@ export interface DietarySupplement<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function DietarySupplementMixin<Base extends Constructor>(Resource: Base): Constructor<DietarySupplement> & Base {
   @namespace(schema)
-  class DietarySupplementClass extends SubstanceMixin(Resource) implements DietarySupplement {
+  class DietarySupplementClass extends SubstanceMixin(Resource) implements Partial<DietarySupplement> {
     @property.literal()
     activeIngredient: string | undefined;
     @property.literal({ type: Boolean })

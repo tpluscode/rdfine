@@ -31,7 +31,7 @@ export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
 
 export function AgentMixin<Base extends Constructor>(Resource: Base): Constructor<Agent> & Base {
   @namespace(foaf)
-  class AgentClass extends Resource implements Agent {
+  class AgentClass extends Resource implements Partial<Agent> {
     @property.resource({ implicitTypes: [foaf.OnlineAccount] })
     account: Foaf.OnlineAccount | undefined;
     @property()

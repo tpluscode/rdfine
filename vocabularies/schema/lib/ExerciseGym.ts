@@ -12,7 +12,7 @@ export interface ExerciseGym<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function ExerciseGymMixin<Base extends Constructor>(Resource: Base): Constructor<ExerciseGym> & Base {
   @namespace(schema)
-  class ExerciseGymClass extends SportsActivityLocationMixin(Resource) implements ExerciseGym {
+  class ExerciseGymClass extends SportsActivityLocationMixin(Resource) implements Partial<ExerciseGym> {
   }
   return ExerciseGymClass
 }

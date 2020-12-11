@@ -14,7 +14,7 @@ export interface MediaSubscription<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function MediaSubscriptionMixin<Base extends Constructor>(Resource: Base): Constructor<MediaSubscription> & Base {
   @namespace(schema)
-  class MediaSubscriptionClass extends IntangibleMixin(Resource) implements MediaSubscription {
+  class MediaSubscriptionClass extends IntangibleMixin(Resource) implements Partial<MediaSubscription> {
     @property.resource()
     authenticator: Schema.Organization | undefined;
     @property.resource()

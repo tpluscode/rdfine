@@ -12,7 +12,7 @@ export interface PsychologicalTreatment<D extends RDF.DatasetCore = RDF.DatasetC
 
 export function PsychologicalTreatmentMixin<Base extends Constructor>(Resource: Base): Constructor<PsychologicalTreatment> & Base {
   @namespace(schema)
-  class PsychologicalTreatmentClass extends TherapeuticProcedureMixin(Resource) implements PsychologicalTreatment {
+  class PsychologicalTreatmentClass extends TherapeuticProcedureMixin(Resource) implements Partial<PsychologicalTreatment> {
   }
   return PsychologicalTreatmentClass
 }

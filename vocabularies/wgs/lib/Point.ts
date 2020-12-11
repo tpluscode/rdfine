@@ -12,7 +12,7 @@ export interface Point<D extends RDF.DatasetCore = RDF.DatasetCore> extends Wgs.
 
 export function PointMixin<Base extends Constructor>(Resource: Base): Constructor<Point> & Base {
   @namespace(wgs)
-  class PointClass extends SpatialThingMixin(Resource) implements Point {
+  class PointClass extends SpatialThingMixin(Resource) implements Partial<Point> {
   }
   return PointClass
 }

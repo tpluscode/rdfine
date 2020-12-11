@@ -12,7 +12,7 @@ export interface DislikeAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function DislikeActionMixin<Base extends Constructor>(Resource: Base): Constructor<DislikeAction> & Base {
   @namespace(schema)
-  class DislikeActionClass extends ReactActionMixin(Resource) implements DislikeAction {
+  class DislikeActionClass extends ReactActionMixin(Resource) implements Partial<DislikeAction> {
   }
   return DislikeActionClass
 }

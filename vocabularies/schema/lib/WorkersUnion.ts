@@ -12,7 +12,7 @@ export interface WorkersUnion<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function WorkersUnionMixin<Base extends Constructor>(Resource: Base): Constructor<WorkersUnion> & Base {
   @namespace(schema)
-  class WorkersUnionClass extends OrganizationMixin(Resource) implements WorkersUnion {
+  class WorkersUnionClass extends OrganizationMixin(Resource) implements Partial<WorkersUnion> {
   }
   return WorkersUnionClass
 }

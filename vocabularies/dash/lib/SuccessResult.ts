@@ -13,7 +13,7 @@ export interface SuccessResult<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function SuccessResultMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class SuccessResultClass extends ShaclAbstractResultMixin(Resource) implements SuccessResult {
+  class SuccessResultClass extends ShaclAbstractResultMixin(Resource) implements Partial<SuccessResult> {
   }
   return SuccessResultClass
 }

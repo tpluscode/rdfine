@@ -15,7 +15,7 @@ export interface LocationFeatureSpecification<D extends RDF.DatasetCore = RDF.Da
 
 export function LocationFeatureSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<LocationFeatureSpecification> & Base {
   @namespace(schema)
-  class LocationFeatureSpecificationClass extends PropertyValueMixin(Resource) implements LocationFeatureSpecification {
+  class LocationFeatureSpecificationClass extends PropertyValueMixin(Resource) implements Partial<LocationFeatureSpecification> {
     @property.resource()
     hoursAvailable: Schema.OpeningHoursSpecification | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })

@@ -58,7 +58,7 @@ export interface Product<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function ProductMixin<Base extends Constructor>(Resource: Base): Constructor<Product> & Base {
   @namespace(schema)
-  class ProductClass extends ThingMixin(Resource) implements Product {
+  class ProductClass extends ThingMixin(Resource) implements Partial<Product> {
     @property.resource()
     additionalProperty: Schema.PropertyValue | undefined;
     @property.resource()

@@ -13,7 +13,7 @@ export interface DatatypeProperty<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function DatatypePropertyMixin<Base extends Constructor>(Resource: Base): Constructor<DatatypeProperty> & Base {
   @namespace(owl)
-  class DatatypePropertyClass extends RdfPropertyMixin(Resource) implements DatatypeProperty {
+  class DatatypePropertyClass extends RdfPropertyMixin(Resource) implements Partial<DatatypeProperty> {
   }
   return DatatypePropertyClass
 }

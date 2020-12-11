@@ -12,7 +12,7 @@ export interface HinduTemple<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function HinduTempleMixin<Base extends Constructor>(Resource: Base): Constructor<HinduTemple> & Base {
   @namespace(schema)
-  class HinduTempleClass extends PlaceOfWorshipMixin(Resource) implements HinduTemple {
+  class HinduTempleClass extends PlaceOfWorshipMixin(Resource) implements Partial<HinduTemple> {
   }
   return HinduTempleClass
 }

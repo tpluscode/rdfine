@@ -12,7 +12,7 @@ export interface RecommendedDoseSchedule<D extends RDF.DatasetCore = RDF.Dataset
 
 export function RecommendedDoseScheduleMixin<Base extends Constructor>(Resource: Base): Constructor<RecommendedDoseSchedule> & Base {
   @namespace(schema)
-  class RecommendedDoseScheduleClass extends DoseScheduleMixin(Resource) implements RecommendedDoseSchedule {
+  class RecommendedDoseScheduleClass extends DoseScheduleMixin(Resource) implements Partial<RecommendedDoseSchedule> {
   }
   return RecommendedDoseScheduleClass
 }

@@ -13,7 +13,7 @@ export interface TravelAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function TravelActionMixin<Base extends Constructor>(Resource: Base): Constructor<TravelAction> & Base {
   @namespace(schema)
-  class TravelActionClass extends MoveActionMixin(Resource) implements TravelAction {
+  class TravelActionClass extends MoveActionMixin(Resource) implements Partial<TravelAction> {
     @property.resource()
     distance: Schema.Distance | undefined;
   }

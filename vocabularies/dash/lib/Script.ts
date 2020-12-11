@@ -14,7 +14,7 @@ export interface Script<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf
 
 export function ScriptMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class ScriptClass extends RdfsResourceMixin(Resource) implements Script {
+  class ScriptClass extends RdfsResourceMixin(Resource) implements Partial<Script> {
     @property.literal()
     js: string | undefined;
   }

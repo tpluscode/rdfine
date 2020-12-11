@@ -25,7 +25,7 @@ export interface BroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function BroadcastServiceMixin<Base extends Constructor>(Resource: Base): Constructor<BroadcastService> & Base {
   @namespace(schema)
-  class BroadcastServiceClass extends ServiceMixin(Resource) implements BroadcastService {
+  class BroadcastServiceClass extends ServiceMixin(Resource) implements Partial<BroadcastService> {
     @property.resource()
     area: Schema.Place | undefined;
     @property.resource()

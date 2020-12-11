@@ -13,7 +13,7 @@ export interface GiveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function GiveActionMixin<Base extends Constructor>(Resource: Base): Constructor<GiveAction> & Base {
   @namespace(schema)
-  class GiveActionClass extends TransferActionMixin(Resource) implements GiveAction {
+  class GiveActionClass extends TransferActionMixin(Resource) implements Partial<GiveAction> {
     @property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }

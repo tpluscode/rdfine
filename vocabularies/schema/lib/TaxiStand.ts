@@ -12,7 +12,7 @@ export interface TaxiStand<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function TaxiStandMixin<Base extends Constructor>(Resource: Base): Constructor<TaxiStand> & Base {
   @namespace(schema)
-  class TaxiStandClass extends CivicStructureMixin(Resource) implements TaxiStand {
+  class TaxiStandClass extends CivicStructureMixin(Resource) implements Partial<TaxiStand> {
   }
   return TaxiStandClass
 }

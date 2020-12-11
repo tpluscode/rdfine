@@ -14,7 +14,7 @@ export interface JSTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function JSTestCaseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class JSTestCaseClass extends ShaclJSFunctionMixin(TestCaseMixin(Resource)) implements JSTestCase {
+  class JSTestCaseClass extends ShaclJSFunctionMixin(TestCaseMixin(Resource)) implements Partial<JSTestCase> {
   }
   return JSTestCaseClass
 }

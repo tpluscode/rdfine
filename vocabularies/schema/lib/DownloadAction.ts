@@ -12,7 +12,7 @@ export interface DownloadAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function DownloadActionMixin<Base extends Constructor>(Resource: Base): Constructor<DownloadAction> & Base {
   @namespace(schema)
-  class DownloadActionClass extends TransferActionMixin(Resource) implements DownloadAction {
+  class DownloadActionClass extends TransferActionMixin(Resource) implements Partial<DownloadAction> {
   }
   return DownloadActionClass
 }

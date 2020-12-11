@@ -12,7 +12,7 @@ export interface Mass<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function MassMixin<Base extends Constructor>(Resource: Base): Constructor<Mass> & Base {
   @namespace(schema)
-  class MassClass extends QuantityMixin(Resource) implements Mass {
+  class MassClass extends QuantityMixin(Resource) implements Partial<Mass> {
   }
   return MassClass
 }

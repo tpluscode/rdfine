@@ -15,7 +15,7 @@ export interface SingleFamilyResidence<D extends RDF.DatasetCore = RDF.DatasetCo
 
 export function SingleFamilyResidenceMixin<Base extends Constructor>(Resource: Base): Constructor<SingleFamilyResidence> & Base {
   @namespace(schema)
-  class SingleFamilyResidenceClass extends HouseMixin(Resource) implements SingleFamilyResidence {
+  class SingleFamilyResidenceClass extends HouseMixin(Resource) implements Partial<SingleFamilyResidence> {
     @property.resource()
     numberOfRooms: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.numberOfRooms, type: Number })

@@ -12,7 +12,7 @@ export interface TattooParlor<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function TattooParlorMixin<Base extends Constructor>(Resource: Base): Constructor<TattooParlor> & Base {
   @namespace(schema)
-  class TattooParlorClass extends HealthAndBeautyBusinessMixin(Resource) implements TattooParlor {
+  class TattooParlorClass extends HealthAndBeautyBusinessMixin(Resource) implements Partial<TattooParlor> {
   }
   return TattooParlorClass
 }

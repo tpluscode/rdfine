@@ -12,7 +12,7 @@ export interface UserDownloads<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function UserDownloadsMixin<Base extends Constructor>(Resource: Base): Constructor<UserDownloads> & Base {
   @namespace(schema)
-  class UserDownloadsClass extends UserInteractionMixin(Resource) implements UserDownloads {
+  class UserDownloadsClass extends UserInteractionMixin(Resource) implements Partial<UserDownloads> {
   }
   return UserDownloadsClass
 }

@@ -13,7 +13,7 @@ export interface Map<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema
 
 export function MapMixin<Base extends Constructor>(Resource: Base): Constructor<Map> & Base {
   @namespace(schema)
-  class MapClass extends CreativeWorkMixin(Resource) implements Map {
+  class MapClass extends CreativeWorkMixin(Resource) implements Partial<Map> {
     @property()
     mapType: Schema.MapCategoryType | undefined;
   }

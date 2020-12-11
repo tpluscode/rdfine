@@ -14,7 +14,7 @@ export interface Forum<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc
 
 export function ForumMixin<Base extends Constructor>(Resource: Base): Constructor<Forum> & Base {
   @namespace(sioc)
-  class ForumClass extends ContainerMixin(Resource) implements Forum {
+  class ForumClass extends ContainerMixin(Resource) implements Partial<Forum> {
     @property.resource({ implicitTypes: [sioc.UserAccount] })
     'has_moderator': Sioc.UserAccount | undefined;
     @property.literal({ type: Number })

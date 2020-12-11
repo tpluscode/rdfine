@@ -12,7 +12,7 @@ export interface ReportedDoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCor
 
 export function ReportedDoseScheduleMixin<Base extends Constructor>(Resource: Base): Constructor<ReportedDoseSchedule> & Base {
   @namespace(schema)
-  class ReportedDoseScheduleClass extends DoseScheduleMixin(Resource) implements ReportedDoseSchedule {
+  class ReportedDoseScheduleClass extends DoseScheduleMixin(Resource) implements Partial<ReportedDoseSchedule> {
   }
   return ReportedDoseScheduleClass
 }

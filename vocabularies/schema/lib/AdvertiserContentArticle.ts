@@ -12,7 +12,7 @@ export interface AdvertiserContentArticle<D extends RDF.DatasetCore = RDF.Datase
 
 export function AdvertiserContentArticleMixin<Base extends Constructor>(Resource: Base): Constructor<AdvertiserContentArticle> & Base {
   @namespace(schema)
-  class AdvertiserContentArticleClass extends ArticleMixin(Resource) implements AdvertiserContentArticle {
+  class AdvertiserContentArticleClass extends ArticleMixin(Resource) implements Partial<AdvertiserContentArticle> {
   }
   return AdvertiserContentArticleClass
 }

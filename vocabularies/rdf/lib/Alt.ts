@@ -11,7 +11,7 @@ export interface Alt<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRes
 
 export function AltMixin<Base extends Constructor>(Resource: Base): Constructor<Alt> & Base {
   @namespace(rdf)
-  class AltClass extends Resource implements Alt {
+  class AltClass extends Resource implements Partial<Alt> {
   }
   return AltClass
 }

@@ -13,7 +13,7 @@ export interface MedicalTrial<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function MedicalTrialMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalTrial> & Base {
   @namespace(schema)
-  class MedicalTrialClass extends MedicalStudyMixin(Resource) implements MedicalTrial {
+  class MedicalTrialClass extends MedicalStudyMixin(Resource) implements Partial<MedicalTrial> {
     @property()
     trialDesign: Schema.MedicalTrialDesign | undefined;
   }

@@ -13,7 +13,7 @@ export interface InformAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function InformActionMixin<Base extends Constructor>(Resource: Base): Constructor<InformAction> & Base {
   @namespace(schema)
-  class InformActionClass extends CommunicateActionMixin(Resource) implements InformAction {
+  class InformActionClass extends CommunicateActionMixin(Resource) implements Partial<InformAction> {
     @property.resource()
     event: Schema.Event | undefined;
   }

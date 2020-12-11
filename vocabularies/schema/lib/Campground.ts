@@ -13,7 +13,7 @@ export interface Campground<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function CampgroundMixin<Base extends Constructor>(Resource: Base): Constructor<Campground> & Base {
   @namespace(schema)
-  class CampgroundClass extends LodgingBusinessMixin(CivicStructureMixin(Resource)) implements Campground {
+  class CampgroundClass extends LodgingBusinessMixin(CivicStructureMixin(Resource)) implements Partial<Campground> {
   }
   return CampgroundClass
 }

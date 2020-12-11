@@ -12,7 +12,7 @@ export interface AutomatedTeller<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function AutomatedTellerMixin<Base extends Constructor>(Resource: Base): Constructor<AutomatedTeller> & Base {
   @namespace(schema)
-  class AutomatedTellerClass extends FinancialServiceMixin(Resource) implements AutomatedTeller {
+  class AutomatedTellerClass extends FinancialServiceMixin(Resource) implements Partial<AutomatedTeller> {
   }
   return AutomatedTellerClass
 }

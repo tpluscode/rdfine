@@ -12,7 +12,7 @@ export interface ConfirmAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function ConfirmActionMixin<Base extends Constructor>(Resource: Base): Constructor<ConfirmAction> & Base {
   @namespace(schema)
-  class ConfirmActionClass extends InformActionMixin(Resource) implements ConfirmAction {
+  class ConfirmActionClass extends InformActionMixin(Resource) implements Partial<ConfirmAction> {
   }
   return ConfirmActionClass
 }

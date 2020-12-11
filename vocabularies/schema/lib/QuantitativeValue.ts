@@ -21,7 +21,7 @@ export interface QuantitativeValue<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function QuantitativeValueMixin<Base extends Constructor>(Resource: Base): Constructor<QuantitativeValue> & Base {
   @namespace(schema)
-  class QuantitativeValueClass extends StructuredValueMixin(Resource) implements QuantitativeValue {
+  class QuantitativeValueClass extends StructuredValueMixin(Resource) implements Partial<QuantitativeValue> {
     @property.resource()
     additionalProperty: Schema.PropertyValue | undefined;
     @property.literal({ type: Number })

@@ -12,7 +12,7 @@ export interface PresentationDigitalDocument<D extends RDF.DatasetCore = RDF.Dat
 
 export function PresentationDigitalDocumentMixin<Base extends Constructor>(Resource: Base): Constructor<PresentationDigitalDocument> & Base {
   @namespace(schema)
-  class PresentationDigitalDocumentClass extends DigitalDocumentMixin(Resource) implements PresentationDigitalDocument {
+  class PresentationDigitalDocumentClass extends DigitalDocumentMixin(Resource) implements Partial<PresentationDigitalDocument> {
   }
   return PresentationDigitalDocumentClass
 }

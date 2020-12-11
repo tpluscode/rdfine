@@ -22,7 +22,7 @@ export interface Episode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function EpisodeMixin<Base extends Constructor>(Resource: Base): Constructor<Episode> & Base {
   @namespace(schema)
-  class EpisodeClass extends CreativeWorkMixin(Resource) implements Episode {
+  class EpisodeClass extends CreativeWorkMixin(Resource) implements Partial<Episode> {
     @property.resource()
     actor: Schema.Person | undefined;
     @property.resource()

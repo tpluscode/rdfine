@@ -12,7 +12,7 @@ export interface PrependAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function PrependActionMixin<Base extends Constructor>(Resource: Base): Constructor<PrependAction> & Base {
   @namespace(schema)
-  class PrependActionClass extends InsertActionMixin(Resource) implements PrependAction {
+  class PrependActionClass extends InsertActionMixin(Resource) implements Partial<PrependAction> {
   }
   return PrependActionClass
 }

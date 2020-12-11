@@ -15,7 +15,7 @@ export interface HealthPlanFormulary<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function HealthPlanFormularyMixin<Base extends Constructor>(Resource: Base): Constructor<HealthPlanFormulary> & Base {
   @namespace(schema)
-  class HealthPlanFormularyClass extends IntangibleMixin(Resource) implements HealthPlanFormulary {
+  class HealthPlanFormularyClass extends IntangibleMixin(Resource) implements Partial<HealthPlanFormulary> {
     @property.literal({ type: Boolean })
     healthPlanCostSharing: boolean | undefined;
     @property.literal()

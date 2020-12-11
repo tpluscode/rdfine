@@ -13,7 +13,7 @@ export interface ReviewAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function ReviewActionMixin<Base extends Constructor>(Resource: Base): Constructor<ReviewAction> & Base {
   @namespace(schema)
-  class ReviewActionClass extends AssessActionMixin(Resource) implements ReviewAction {
+  class ReviewActionClass extends AssessActionMixin(Resource) implements Partial<ReviewAction> {
     @property.resource()
     resultReview: Schema.Review | undefined;
   }

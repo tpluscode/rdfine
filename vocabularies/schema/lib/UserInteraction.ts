@@ -12,7 +12,7 @@ export interface UserInteraction<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function UserInteractionMixin<Base extends Constructor>(Resource: Base): Constructor<UserInteraction> & Base {
   @namespace(schema)
-  class UserInteractionClass extends EventMixin(Resource) implements UserInteraction {
+  class UserInteractionClass extends EventMixin(Resource) implements Partial<UserInteraction> {
   }
   return UserInteractionClass
 }

@@ -12,7 +12,7 @@ export interface GraphStoreTestCase<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function GraphStoreTestCaseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class GraphStoreTestCaseClass extends TestCaseMixin(Resource) implements GraphStoreTestCase {
+  class GraphStoreTestCaseClass extends TestCaseMixin(Resource) implements Partial<GraphStoreTestCase> {
   }
   return GraphStoreTestCaseClass
 }

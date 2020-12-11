@@ -16,7 +16,7 @@ export interface CreativeWorkSeries<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function CreativeWorkSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<CreativeWorkSeries> & Base {
   @namespace(schema)
-  class CreativeWorkSeriesClass extends SeriesMixin(CreativeWorkMixin(Resource)) implements CreativeWorkSeries {
+  class CreativeWorkSeriesClass extends SeriesMixin(CreativeWorkMixin(Resource)) implements Partial<CreativeWorkSeries> {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate: Date | undefined;
     @property.literal()

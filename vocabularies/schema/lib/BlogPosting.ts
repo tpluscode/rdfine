@@ -12,7 +12,7 @@ export interface BlogPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function BlogPostingMixin<Base extends Constructor>(Resource: Base): Constructor<BlogPosting> & Base {
   @namespace(schema)
-  class BlogPostingClass extends SocialMediaPostingMixin(Resource) implements BlogPosting {
+  class BlogPostingClass extends SocialMediaPostingMixin(Resource) implements Partial<BlogPosting> {
   }
   return BlogPostingClass
 }

@@ -17,7 +17,7 @@ export interface Suite<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
 
 export function SuiteMixin<Base extends Constructor>(Resource: Base): Constructor<Suite> & Base {
   @namespace(schema)
-  class SuiteClass extends AccommodationMixin(Resource) implements Suite {
+  class SuiteClass extends AccommodationMixin(Resource) implements Partial<Suite> {
     @property.resource()
     bed: Schema.BedDetails | undefined;
     @property.literal({ path: schema.bed })

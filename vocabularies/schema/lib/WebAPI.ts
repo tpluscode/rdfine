@@ -13,7 +13,7 @@ export interface WebAPI<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function WebAPIMixin<Base extends Constructor>(Resource: Base): Constructor<WebAPI> & Base {
   @namespace(schema)
-  class WebAPIClass extends ServiceMixin(Resource) implements WebAPI {
+  class WebAPIClass extends ServiceMixin(Resource) implements Partial<WebAPI> {
     @property.resource()
     documentation: Schema.CreativeWork | undefined;
   }

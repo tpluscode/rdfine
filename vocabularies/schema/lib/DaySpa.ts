@@ -12,7 +12,7 @@ export interface DaySpa<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function DaySpaMixin<Base extends Constructor>(Resource: Base): Constructor<DaySpa> & Base {
   @namespace(schema)
-  class DaySpaClass extends HealthAndBeautyBusinessMixin(Resource) implements DaySpa {
+  class DaySpaClass extends HealthAndBeautyBusinessMixin(Resource) implements Partial<DaySpa> {
   }
   return DaySpaClass
 }

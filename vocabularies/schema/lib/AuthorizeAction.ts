@@ -13,7 +13,7 @@ export interface AuthorizeAction<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function AuthorizeActionMixin<Base extends Constructor>(Resource: Base): Constructor<AuthorizeAction> & Base {
   @namespace(schema)
-  class AuthorizeActionClass extends AllocateActionMixin(Resource) implements AuthorizeAction {
+  class AuthorizeActionClass extends AllocateActionMixin(Resource) implements Partial<AuthorizeAction> {
     @property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }

@@ -29,7 +29,7 @@ export interface CDCPMDRecord<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function CDCPMDRecordMixin<Base extends Constructor>(Resource: Base): Constructor<CDCPMDRecord> & Base {
   @namespace(schema)
-  class CDCPMDRecordClass extends StructuredValueMixin(Resource) implements CDCPMDRecord {
+  class CDCPMDRecordClass extends StructuredValueMixin(Resource) implements Partial<CDCPMDRecord> {
     @property.literal()
     cvdCollectionDate: Date | string | undefined;
     @property.literal()

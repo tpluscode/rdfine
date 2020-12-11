@@ -12,7 +12,7 @@ export interface Vessel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function VesselMixin<Base extends Constructor>(Resource: Base): Constructor<Vessel> & Base {
   @namespace(schema)
-  class VesselClass extends AnatomicalStructureMixin(Resource) implements Vessel {
+  class VesselClass extends AnatomicalStructureMixin(Resource) implements Partial<Vessel> {
   }
   return VesselClass
 }

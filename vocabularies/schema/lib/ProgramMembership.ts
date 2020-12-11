@@ -19,7 +19,7 @@ export interface ProgramMembership<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function ProgramMembershipMixin<Base extends Constructor>(Resource: Base): Constructor<ProgramMembership> & Base {
   @namespace(schema)
-  class ProgramMembershipClass extends IntangibleMixin(Resource) implements ProgramMembership {
+  class ProgramMembershipClass extends IntangibleMixin(Resource) implements Partial<ProgramMembership> {
     @property.resource()
     hostingOrganization: Schema.Organization | undefined;
     @property.resource()

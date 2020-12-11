@@ -13,7 +13,7 @@ export interface SPARQLAskValidator<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function SPARQLAskValidatorMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLAskValidator> & Base {
   @namespace(sh)
-  class SPARQLAskValidatorClass extends ValidatorMixin(SPARQLAskExecutableMixin(Resource)) implements SPARQLAskValidator {
+  class SPARQLAskValidatorClass extends ValidatorMixin(SPARQLAskExecutableMixin(Resource)) implements Partial<SPARQLAskValidator> {
   }
   return SPARQLAskValidatorClass
 }

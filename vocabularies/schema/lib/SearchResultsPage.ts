@@ -12,7 +12,7 @@ export interface SearchResultsPage<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function SearchResultsPageMixin<Base extends Constructor>(Resource: Base): Constructor<SearchResultsPage> & Base {
   @namespace(schema)
-  class SearchResultsPageClass extends WebPageMixin(Resource) implements SearchResultsPage {
+  class SearchResultsPageClass extends WebPageMixin(Resource) implements Partial<SearchResultsPage> {
   }
   return SearchResultsPageClass
 }

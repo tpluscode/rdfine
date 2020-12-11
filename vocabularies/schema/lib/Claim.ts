@@ -14,7 +14,7 @@ export interface Claim<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
 
 export function ClaimMixin<Base extends Constructor>(Resource: Base): Constructor<Claim> & Base {
   @namespace(schema)
-  class ClaimClass extends CreativeWorkMixin(Resource) implements Claim {
+  class ClaimClass extends CreativeWorkMixin(Resource) implements Partial<Claim> {
     @property.resource()
     appearance: Schema.CreativeWork | undefined;
     @property.resource()

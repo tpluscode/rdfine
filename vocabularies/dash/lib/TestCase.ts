@@ -16,7 +16,7 @@ export interface TestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
 
 export function TestCaseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class TestCaseClass extends RdfsResourceMixin(Resource) implements TestCase {
+  class TestCaseClass extends RdfsResourceMixin(Resource) implements Partial<TestCase> {
     @property()
     expectedResult: RDF.Term | undefined;
     @property.literal({ type: Boolean })

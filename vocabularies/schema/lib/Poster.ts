@@ -12,7 +12,7 @@ export interface Poster<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function PosterMixin<Base extends Constructor>(Resource: Base): Constructor<Poster> & Base {
   @namespace(schema)
-  class PosterClass extends CreativeWorkMixin(Resource) implements Poster {
+  class PosterClass extends CreativeWorkMixin(Resource) implements Partial<Poster> {
   }
   return PosterClass
 }

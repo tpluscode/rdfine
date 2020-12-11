@@ -12,7 +12,7 @@ export interface BarOrPub<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function BarOrPubMixin<Base extends Constructor>(Resource: Base): Constructor<BarOrPub> & Base {
   @namespace(schema)
-  class BarOrPubClass extends FoodEstablishmentMixin(Resource) implements BarOrPub {
+  class BarOrPubClass extends FoodEstablishmentMixin(Resource) implements Partial<BarOrPub> {
   }
   return BarOrPubClass
 }

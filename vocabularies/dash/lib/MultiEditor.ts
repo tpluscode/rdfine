@@ -12,7 +12,7 @@ export interface MultiEditor<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function MultiEditorMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class MultiEditorClass extends EditorMixin(Resource) implements MultiEditor {
+  class MultiEditorClass extends EditorMixin(Resource) implements Partial<MultiEditor> {
   }
   return MultiEditorClass
 }

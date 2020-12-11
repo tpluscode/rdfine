@@ -13,7 +13,7 @@ export interface GraphValidationTestCase<D extends RDF.DatasetCore = RDF.Dataset
 
 export function GraphValidationTestCaseMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class GraphValidationTestCaseClass extends ValidationTestCaseMixin(Resource) implements GraphValidationTestCase {
+  class GraphValidationTestCaseClass extends ValidationTestCaseMixin(Resource) implements Partial<GraphValidationTestCase> {
     @property.literal({ type: Boolean })
     validateShapes: boolean | undefined;
   }

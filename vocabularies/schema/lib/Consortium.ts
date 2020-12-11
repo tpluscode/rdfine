@@ -12,7 +12,7 @@ export interface Consortium<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function ConsortiumMixin<Base extends Constructor>(Resource: Base): Constructor<Consortium> & Base {
   @namespace(schema)
-  class ConsortiumClass extends OrganizationMixin(Resource) implements Consortium {
+  class ConsortiumClass extends OrganizationMixin(Resource) implements Partial<Consortium> {
   }
   return ConsortiumClass
 }

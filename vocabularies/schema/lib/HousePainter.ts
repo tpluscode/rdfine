@@ -12,7 +12,7 @@ export interface HousePainter<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function HousePainterMixin<Base extends Constructor>(Resource: Base): Constructor<HousePainter> & Base {
   @namespace(schema)
-  class HousePainterClass extends HomeAndConstructionBusinessMixin(Resource) implements HousePainter {
+  class HousePainterClass extends HomeAndConstructionBusinessMixin(Resource) implements Partial<HousePainter> {
   }
   return HousePainterClass
 }

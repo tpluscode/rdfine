@@ -13,7 +13,7 @@ export interface SuggestionGenerator<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function SuggestionGeneratorMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class SuggestionGeneratorClass extends RdfsResourceMixin(Resource) implements SuggestionGenerator {
+  class SuggestionGeneratorClass extends RdfsResourceMixin(Resource) implements Partial<SuggestionGenerator> {
   }
   return SuggestionGeneratorClass
 }

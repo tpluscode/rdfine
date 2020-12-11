@@ -12,7 +12,7 @@ export interface CheckOutAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function CheckOutActionMixin<Base extends Constructor>(Resource: Base): Constructor<CheckOutAction> & Base {
   @namespace(schema)
-  class CheckOutActionClass extends CommunicateActionMixin(Resource) implements CheckOutAction {
+  class CheckOutActionClass extends CommunicateActionMixin(Resource) implements Partial<CheckOutAction> {
   }
   return CheckOutActionClass
 }

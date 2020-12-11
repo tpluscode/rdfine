@@ -12,7 +12,7 @@ export interface FastFoodRestaurant<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function FastFoodRestaurantMixin<Base extends Constructor>(Resource: Base): Constructor<FastFoodRestaurant> & Base {
   @namespace(schema)
-  class FastFoodRestaurantClass extends FoodEstablishmentMixin(Resource) implements FastFoodRestaurant {
+  class FastFoodRestaurantClass extends FoodEstablishmentMixin(Resource) implements Partial<FastFoodRestaurant> {
   }
   return FastFoodRestaurantClass
 }

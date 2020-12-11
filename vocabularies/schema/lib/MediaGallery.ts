@@ -12,7 +12,7 @@ export interface MediaGallery<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function MediaGalleryMixin<Base extends Constructor>(Resource: Base): Constructor<MediaGallery> & Base {
   @namespace(schema)
-  class MediaGalleryClass extends CollectionPageMixin(Resource) implements MediaGallery {
+  class MediaGalleryClass extends CollectionPageMixin(Resource) implements Partial<MediaGallery> {
   }
   return MediaGalleryClass
 }

@@ -14,7 +14,7 @@ export interface Substance<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function SubstanceMixin<Base extends Constructor>(Resource: Base): Constructor<Substance> & Base {
   @namespace(schema)
-  class SubstanceClass extends MedicalEntityMixin(Resource) implements Substance {
+  class SubstanceClass extends MedicalEntityMixin(Resource) implements Partial<Substance> {
     @property.literal()
     activeIngredient: string | undefined;
     @property.resource()

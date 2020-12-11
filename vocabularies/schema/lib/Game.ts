@@ -17,7 +17,7 @@ export interface Game<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function GameMixin<Base extends Constructor>(Resource: Base): Constructor<Game> & Base {
   @namespace(schema)
-  class GameClass extends CreativeWorkMixin(Resource) implements Game {
+  class GameClass extends CreativeWorkMixin(Resource) implements Partial<Game> {
     @property.resource()
     characterAttribute: Schema.Thing | undefined;
     @property.resource()

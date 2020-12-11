@@ -18,7 +18,7 @@ export interface ApartmentComplex<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function ApartmentComplexMixin<Base extends Constructor>(Resource: Base): Constructor<ApartmentComplex> & Base {
   @namespace(schema)
-  class ApartmentComplexClass extends ResidenceMixin(Resource) implements ApartmentComplex {
+  class ApartmentComplexClass extends ResidenceMixin(Resource) implements Partial<ApartmentComplex> {
     @property.resource()
     numberOfAccommodationUnits: Schema.QuantitativeValue | undefined;
     @property.resource()

@@ -14,7 +14,7 @@ export interface Recommendation<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function RecommendationMixin<Base extends Constructor>(Resource: Base): Constructor<Recommendation> & Base {
   @namespace(schema)
-  class RecommendationClass extends ReviewMixin(Resource) implements Recommendation {
+  class RecommendationClass extends ReviewMixin(Resource) implements Partial<Recommendation> {
     @property.resource()
     category: Schema.Thing | undefined;
     @property.literal({ path: schema.category })

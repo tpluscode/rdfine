@@ -33,7 +33,7 @@ export interface Shape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs
 
 export function ShapeMixin<Base extends Constructor>(Resource: Base): Constructor<Shape> & Base {
   @namespace(sh)
-  class ShapeClass extends RdfsResourceMixin(Resource) implements Shape {
+  class ShapeClass extends RdfsResourceMixin(Resource) implements Partial<Shape> {
     @property.resource({ values: 'list', as: [ShapeMixin] })
     and!: Array<Sh.Shape>;
     @property.resource({ as: [RdfsClassMixin] })

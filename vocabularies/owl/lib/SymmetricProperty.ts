@@ -12,7 +12,7 @@ export interface SymmetricProperty<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function SymmetricPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<SymmetricProperty> & Base {
   @namespace(owl)
-  class SymmetricPropertyClass extends ObjectPropertyMixin(Resource) implements SymmetricProperty {
+  class SymmetricPropertyClass extends ObjectPropertyMixin(Resource) implements Partial<SymmetricProperty> {
   }
   return SymmetricPropertyClass
 }

@@ -12,7 +12,7 @@ export interface EmployerAggregateRating<D extends RDF.DatasetCore = RDF.Dataset
 
 export function EmployerAggregateRatingMixin<Base extends Constructor>(Resource: Base): Constructor<EmployerAggregateRating> & Base {
   @namespace(schema)
-  class EmployerAggregateRatingClass extends AggregateRatingMixin(Resource) implements EmployerAggregateRating {
+  class EmployerAggregateRatingClass extends AggregateRatingMixin(Resource) implements Partial<EmployerAggregateRating> {
   }
   return EmployerAggregateRatingClass
 }

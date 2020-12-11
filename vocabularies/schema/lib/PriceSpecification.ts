@@ -21,7 +21,7 @@ export interface PriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function PriceSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<PriceSpecification> & Base {
   @namespace(schema)
-  class PriceSpecificationClass extends StructuredValueMixin(Resource) implements PriceSpecification {
+  class PriceSpecificationClass extends StructuredValueMixin(Resource) implements Partial<PriceSpecification> {
     @property.resource()
     eligibleQuantity: Schema.QuantitativeValue | undefined;
     @property.resource()

@@ -12,7 +12,7 @@ export interface OfferCatalog<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function OfferCatalogMixin<Base extends Constructor>(Resource: Base): Constructor<OfferCatalog> & Base {
   @namespace(schema)
-  class OfferCatalogClass extends ItemListMixin(Resource) implements OfferCatalog {
+  class OfferCatalogClass extends ItemListMixin(Resource) implements Partial<OfferCatalog> {
   }
   return OfferCatalogClass
 }

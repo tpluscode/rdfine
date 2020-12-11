@@ -12,7 +12,7 @@ export interface Florist<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function FloristMixin<Base extends Constructor>(Resource: Base): Constructor<Florist> & Base {
   @namespace(schema)
-  class FloristClass extends StoreMixin(Resource) implements Florist {
+  class FloristClass extends StoreMixin(Resource) implements Partial<Florist> {
   }
   return FloristClass
 }

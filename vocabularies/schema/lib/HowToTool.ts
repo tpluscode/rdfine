@@ -12,7 +12,7 @@ export interface HowToTool<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function HowToToolMixin<Base extends Constructor>(Resource: Base): Constructor<HowToTool> & Base {
   @namespace(schema)
-  class HowToToolClass extends HowToItemMixin(Resource) implements HowToTool {
+  class HowToToolClass extends HowToItemMixin(Resource) implements Partial<HowToTool> {
   }
   return HowToToolClass
 }

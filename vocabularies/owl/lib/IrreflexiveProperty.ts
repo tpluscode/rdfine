@@ -12,7 +12,7 @@ export interface IrreflexiveProperty<D extends RDF.DatasetCore = RDF.DatasetCore
 
 export function IrreflexivePropertyMixin<Base extends Constructor>(Resource: Base): Constructor<IrreflexiveProperty> & Base {
   @namespace(owl)
-  class IrreflexivePropertyClass extends ObjectPropertyMixin(Resource) implements IrreflexiveProperty {
+  class IrreflexivePropertyClass extends ObjectPropertyMixin(Resource) implements Partial<IrreflexiveProperty> {
   }
   return IrreflexivePropertyClass
 }

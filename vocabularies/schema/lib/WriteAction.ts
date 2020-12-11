@@ -15,7 +15,7 @@ export interface WriteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function WriteActionMixin<Base extends Constructor>(Resource: Base): Constructor<WriteAction> & Base {
   @namespace(schema)
-  class WriteActionClass extends CreateActionMixin(Resource) implements WriteAction {
+  class WriteActionClass extends CreateActionMixin(Resource) implements Partial<WriteAction> {
     @property.resource()
     inLanguage: Schema.Language | undefined;
     @property.literal({ path: schema.inLanguage })

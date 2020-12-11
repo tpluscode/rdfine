@@ -12,7 +12,7 @@ export interface MarryAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function MarryActionMixin<Base extends Constructor>(Resource: Base): Constructor<MarryAction> & Base {
   @namespace(schema)
-  class MarryActionClass extends InteractActionMixin(Resource) implements MarryAction {
+  class MarryActionClass extends InteractActionMixin(Resource) implements Partial<MarryAction> {
   }
   return MarryActionClass
 }

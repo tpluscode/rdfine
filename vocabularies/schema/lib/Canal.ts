@@ -12,7 +12,7 @@ export interface Canal<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
 
 export function CanalMixin<Base extends Constructor>(Resource: Base): Constructor<Canal> & Base {
   @namespace(schema)
-  class CanalClass extends BodyOfWaterMixin(Resource) implements Canal {
+  class CanalClass extends BodyOfWaterMixin(Resource) implements Partial<Canal> {
   }
   return CanalClass
 }

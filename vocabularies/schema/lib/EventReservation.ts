@@ -12,7 +12,7 @@ export interface EventReservation<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function EventReservationMixin<Base extends Constructor>(Resource: Base): Constructor<EventReservation> & Base {
   @namespace(schema)
-  class EventReservationClass extends ReservationMixin(Resource) implements EventReservation {
+  class EventReservationClass extends ReservationMixin(Resource) implements Partial<EventReservation> {
   }
   return EventReservationClass
 }

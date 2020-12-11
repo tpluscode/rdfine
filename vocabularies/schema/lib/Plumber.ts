@@ -12,7 +12,7 @@ export interface Plumber<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function PlumberMixin<Base extends Constructor>(Resource: Base): Constructor<Plumber> & Base {
   @namespace(schema)
-  class PlumberClass extends HomeAndConstructionBusinessMixin(Resource) implements Plumber {
+  class PlumberClass extends HomeAndConstructionBusinessMixin(Resource) implements Partial<Plumber> {
   }
   return PlumberClass
 }

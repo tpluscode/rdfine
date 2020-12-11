@@ -14,7 +14,7 @@ export interface HowToItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function HowToItemMixin<Base extends Constructor>(Resource: Base): Constructor<HowToItem> & Base {
   @namespace(schema)
-  class HowToItemClass extends ListItemMixin(Resource) implements HowToItem {
+  class HowToItemClass extends ListItemMixin(Resource) implements Partial<HowToItem> {
     @property.resource()
     requiredQuantity: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.requiredQuantity })

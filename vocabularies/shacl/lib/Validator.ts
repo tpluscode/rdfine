@@ -13,7 +13,7 @@ export interface Validator<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function ValidatorMixin<Base extends Constructor>(Resource: Base): Constructor<Validator> & Base {
   @namespace(sh)
-  class ValidatorClass extends RdfsResourceMixin(Resource) implements Validator {
+  class ValidatorClass extends RdfsResourceMixin(Resource) implements Partial<Validator> {
   }
   return ValidatorClass
 }

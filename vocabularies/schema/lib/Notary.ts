@@ -12,7 +12,7 @@ export interface Notary<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function NotaryMixin<Base extends Constructor>(Resource: Base): Constructor<Notary> & Base {
   @namespace(schema)
-  class NotaryClass extends LegalServiceMixin(Resource) implements Notary {
+  class NotaryClass extends LegalServiceMixin(Resource) implements Partial<Notary> {
   }
   return NotaryClass
 }

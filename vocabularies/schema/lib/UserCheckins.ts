@@ -12,7 +12,7 @@ export interface UserCheckins<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function UserCheckinsMixin<Base extends Constructor>(Resource: Base): Constructor<UserCheckins> & Base {
   @namespace(schema)
-  class UserCheckinsClass extends UserInteractionMixin(Resource) implements UserCheckins {
+  class UserCheckinsClass extends UserInteractionMixin(Resource) implements Partial<UserCheckins> {
   }
   return UserCheckinsClass
 }

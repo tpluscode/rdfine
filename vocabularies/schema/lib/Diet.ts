@@ -18,7 +18,7 @@ export interface Diet<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function DietMixin<Base extends Constructor>(Resource: Base): Constructor<Diet> & Base {
   @namespace(schema)
-  class DietClass extends LifestyleModificationMixin(CreativeWorkMixin(Resource)) implements Diet {
+  class DietClass extends LifestyleModificationMixin(CreativeWorkMixin(Resource)) implements Partial<Diet> {
     @property.literal()
     dietFeatures: string | undefined;
     @property.resource()

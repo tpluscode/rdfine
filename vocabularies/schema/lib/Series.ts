@@ -12,7 +12,7 @@ export interface Series<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function SeriesMixin<Base extends Constructor>(Resource: Base): Constructor<Series> & Base {
   @namespace(schema)
-  class SeriesClass extends IntangibleMixin(Resource) implements Series {
+  class SeriesClass extends IntangibleMixin(Resource) implements Partial<Series> {
   }
   return SeriesClass
 }

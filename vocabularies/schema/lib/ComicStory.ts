@@ -17,7 +17,7 @@ export interface ComicStory<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function ComicStoryMixin<Base extends Constructor>(Resource: Base): Constructor<ComicStory> & Base {
   @namespace(schema)
-  class ComicStoryClass extends CreativeWorkMixin(Resource) implements ComicStory {
+  class ComicStoryClass extends CreativeWorkMixin(Resource) implements Partial<ComicStory> {
     @property.resource()
     artist: Schema.Person | undefined;
     @property.resource()

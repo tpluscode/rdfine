@@ -14,7 +14,7 @@ export interface Menu<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function MenuMixin<Base extends Constructor>(Resource: Base): Constructor<Menu> & Base {
   @namespace(schema)
-  class MenuClass extends CreativeWorkMixin(Resource) implements Menu {
+  class MenuClass extends CreativeWorkMixin(Resource) implements Partial<Menu> {
     @property.resource()
     hasMenuItem: Schema.MenuItem | undefined;
     @property.resource()

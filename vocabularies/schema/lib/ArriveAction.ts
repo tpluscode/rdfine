@@ -12,7 +12,7 @@ export interface ArriveAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function ArriveActionMixin<Base extends Constructor>(Resource: Base): Constructor<ArriveAction> & Base {
   @namespace(schema)
-  class ArriveActionClass extends MoveActionMixin(Resource) implements ArriveAction {
+  class ArriveActionClass extends MoveActionMixin(Resource) implements Partial<ArriveAction> {
   }
   return ArriveActionClass
 }

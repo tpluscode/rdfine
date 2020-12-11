@@ -13,7 +13,7 @@ export interface ContainerMembershipProperty<D extends RDF.DatasetCore = RDF.Dat
 
 export function ContainerMembershipPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<ContainerMembershipProperty> & Base {
   @namespace(rdfs)
-  class ContainerMembershipPropertyClass extends RdfPropertyMixin(Resource) implements ContainerMembershipProperty {
+  class ContainerMembershipPropertyClass extends RdfPropertyMixin(Resource) implements Partial<ContainerMembershipProperty> {
   }
   return ContainerMembershipPropertyClass
 }

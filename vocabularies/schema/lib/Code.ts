@@ -12,7 +12,7 @@ export interface Code<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
 
 export function CodeMixin<Base extends Constructor>(Resource: Base): Constructor<Code> & Base {
   @namespace(schema)
-  class CodeClass extends CreativeWorkMixin(Resource) implements Code {
+  class CodeClass extends CreativeWorkMixin(Resource) implements Partial<Code> {
   }
   return CodeClass
 }

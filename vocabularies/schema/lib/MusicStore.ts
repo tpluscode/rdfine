@@ -12,7 +12,7 @@ export interface MusicStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function MusicStoreMixin<Base extends Constructor>(Resource: Base): Constructor<MusicStore> & Base {
   @namespace(schema)
-  class MusicStoreClass extends StoreMixin(Resource) implements MusicStore {
+  class MusicStoreClass extends StoreMixin(Resource) implements Partial<MusicStore> {
   }
   return MusicStoreClass
 }

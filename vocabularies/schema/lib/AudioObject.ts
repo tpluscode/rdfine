@@ -15,7 +15,7 @@ export interface AudioObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function AudioObjectMixin<Base extends Constructor>(Resource: Base): Constructor<AudioObject> & Base {
   @namespace(schema)
-  class AudioObjectClass extends MediaObjectMixin(Resource) implements AudioObject {
+  class AudioObjectClass extends MediaObjectMixin(Resource) implements Partial<AudioObject> {
     @property.resource()
     caption: Schema.MediaObject | undefined;
     @property.literal({ path: schema.caption })

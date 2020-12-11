@@ -12,7 +12,7 @@ export interface UserReview<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function UserReviewMixin<Base extends Constructor>(Resource: Base): Constructor<UserReview> & Base {
   @namespace(schema)
-  class UserReviewClass extends ReviewMixin(Resource) implements UserReview {
+  class UserReviewClass extends ReviewMixin(Resource) implements Partial<UserReview> {
   }
   return UserReviewClass
 }

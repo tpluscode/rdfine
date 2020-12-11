@@ -12,7 +12,7 @@ export interface AddAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function AddActionMixin<Base extends Constructor>(Resource: Base): Constructor<AddAction> & Base {
   @namespace(schema)
-  class AddActionClass extends UpdateActionMixin(Resource) implements AddAction {
+  class AddActionClass extends UpdateActionMixin(Resource) implements Partial<AddAction> {
   }
   return AddActionClass
 }

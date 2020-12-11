@@ -12,7 +12,7 @@ export interface CancelAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function CancelActionMixin<Base extends Constructor>(Resource: Base): Constructor<CancelAction> & Base {
   @namespace(schema)
-  class CancelActionClass extends PlanActionMixin(Resource) implements CancelAction {
+  class CancelActionClass extends PlanActionMixin(Resource) implements Partial<CancelAction> {
   }
   return CancelActionClass
 }

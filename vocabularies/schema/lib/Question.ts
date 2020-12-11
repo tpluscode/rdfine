@@ -17,7 +17,7 @@ export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function QuestionMixin<Base extends Constructor>(Resource: Base): Constructor<Question> & Base {
   @namespace(schema)
-  class QuestionClass extends CreativeWorkMixin(Resource) implements Question {
+  class QuestionClass extends CreativeWorkMixin(Resource) implements Partial<Question> {
     @property.resource()
     acceptedAnswer: Schema.Answer | Schema.ItemList | undefined;
     @property.literal({ type: Number })

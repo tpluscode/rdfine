@@ -13,7 +13,7 @@ export interface Dentist<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function DentistMixin<Base extends Constructor>(Resource: Base): Constructor<Dentist> & Base {
   @namespace(schema)
-  class DentistClass extends MedicalOrganizationMixin(LocalBusinessMixin(Resource)) implements Dentist {
+  class DentistClass extends MedicalOrganizationMixin(LocalBusinessMixin(Resource)) implements Partial<Dentist> {
   }
   return DentistClass
 }

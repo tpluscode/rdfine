@@ -18,7 +18,7 @@ export interface Container<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function ContainerMixin<Base extends Constructor>(Resource: Base): Constructor<Container> & Base {
   @namespace(sioc)
-  class ContainerClass extends Resource implements Container {
+  class ContainerClass extends Resource implements Partial<Container> {
     @property.resource({ implicitTypes: [sioc.Item] })
     'container_of': Sioc.Item | undefined;
     @property.resource({ implicitTypes: [sioc.Site] })

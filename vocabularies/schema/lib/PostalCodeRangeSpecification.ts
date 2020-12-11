@@ -14,7 +14,7 @@ export interface PostalCodeRangeSpecification<D extends RDF.DatasetCore = RDF.Da
 
 export function PostalCodeRangeSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<PostalCodeRangeSpecification> & Base {
   @namespace(schema)
-  class PostalCodeRangeSpecificationClass extends StructuredValueMixin(Resource) implements PostalCodeRangeSpecification {
+  class PostalCodeRangeSpecificationClass extends StructuredValueMixin(Resource) implements Partial<PostalCodeRangeSpecification> {
     @property.literal()
     postalCodeBegin: string | undefined;
     @property.literal()

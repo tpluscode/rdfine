@@ -12,7 +12,7 @@ export interface ShareAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function ShareActionMixin<Base extends Constructor>(Resource: Base): Constructor<ShareAction> & Base {
   @namespace(schema)
-  class ShareActionClass extends CommunicateActionMixin(Resource) implements ShareAction {
+  class ShareActionClass extends CommunicateActionMixin(Resource) implements Partial<ShareAction> {
   }
   return ShareActionClass
 }

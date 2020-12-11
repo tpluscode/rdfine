@@ -12,7 +12,7 @@ export interface Error<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydr
 
 export function ErrorMixin<Base extends Constructor>(Resource: Base): Constructor<Error> & Base {
   @namespace(hydra)
-  class ErrorClass extends StatusMixin(Resource) implements Error {
+  class ErrorClass extends StatusMixin(Resource) implements Partial<Error> {
   }
   return ErrorClass
 }

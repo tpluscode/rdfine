@@ -16,7 +16,7 @@ export interface GraphUpdate<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function GraphUpdateMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class GraphUpdateClass extends SuggestionMixin(Resource) implements GraphUpdate {
+  class GraphUpdateClass extends SuggestionMixin(Resource) implements Partial<GraphUpdate> {
     @property.resource({ as: [RdfStatementMixin] })
     addedTriple: Rdf.Statement | undefined;
     @property.resource({ as: [RdfStatementMixin] })

@@ -15,7 +15,7 @@ export interface DataCatalog<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function DataCatalogMixin<Base extends Constructor>(Resource: Base): Constructor<DataCatalog> & Base {
   @namespace(schema)
-  class DataCatalogClass extends CreativeWorkMixin(Resource) implements DataCatalog {
+  class DataCatalogClass extends CreativeWorkMixin(Resource) implements Partial<DataCatalog> {
     @property.resource()
     dataset: Schema.Dataset | undefined;
     @property.literal()

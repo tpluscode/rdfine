@@ -12,7 +12,7 @@ export interface EmploymentAgency<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function EmploymentAgencyMixin<Base extends Constructor>(Resource: Base): Constructor<EmploymentAgency> & Base {
   @namespace(schema)
-  class EmploymentAgencyClass extends LocalBusinessMixin(Resource) implements EmploymentAgency {
+  class EmploymentAgencyClass extends LocalBusinessMixin(Resource) implements Partial<EmploymentAgency> {
   }
   return EmploymentAgencyClass
 }

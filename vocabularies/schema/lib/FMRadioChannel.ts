@@ -12,7 +12,7 @@ export interface FMRadioChannel<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function FMRadioChannelMixin<Base extends Constructor>(Resource: Base): Constructor<FMRadioChannel> & Base {
   @namespace(schema)
-  class FMRadioChannelClass extends RadioChannelMixin(Resource) implements FMRadioChannel {
+  class FMRadioChannelClass extends RadioChannelMixin(Resource) implements Partial<FMRadioChannel> {
   }
   return FMRadioChannelClass
 }

@@ -12,7 +12,7 @@ export interface PostOffice<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function PostOfficeMixin<Base extends Constructor>(Resource: Base): Constructor<PostOffice> & Base {
   @namespace(schema)
-  class PostOfficeClass extends GovernmentOfficeMixin(Resource) implements PostOffice {
+  class PostOfficeClass extends GovernmentOfficeMixin(Resource) implements Partial<PostOffice> {
   }
   return PostOfficeClass
 }

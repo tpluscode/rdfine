@@ -14,7 +14,7 @@ export interface ParentAudience<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function ParentAudienceMixin<Base extends Constructor>(Resource: Base): Constructor<ParentAudience> & Base {
   @namespace(schema)
-  class ParentAudienceClass extends PeopleAudienceMixin(Resource) implements ParentAudience {
+  class ParentAudienceClass extends PeopleAudienceMixin(Resource) implements Partial<ParentAudience> {
     @property.literal({ type: Number })
     childMaxAge: number | undefined;
     @property.literal({ type: Number })

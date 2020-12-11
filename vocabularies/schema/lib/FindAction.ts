@@ -12,7 +12,7 @@ export interface FindAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function FindActionMixin<Base extends Constructor>(Resource: Base): Constructor<FindAction> & Base {
   @namespace(schema)
-  class FindActionClass extends ActionMixin(Resource) implements FindAction {
+  class FindActionClass extends ActionMixin(Resource) implements Partial<FindAction> {
   }
   return FindActionClass
 }

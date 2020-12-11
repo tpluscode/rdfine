@@ -12,7 +12,7 @@ export interface DeactivateAction<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function DeactivateActionMixin<Base extends Constructor>(Resource: Base): Constructor<DeactivateAction> & Base {
   @namespace(schema)
-  class DeactivateActionClass extends ControlActionMixin(Resource) implements DeactivateAction {
+  class DeactivateActionClass extends ControlActionMixin(Resource) implements Partial<DeactivateAction> {
   }
   return DeactivateActionClass
 }

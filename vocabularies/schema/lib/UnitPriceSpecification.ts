@@ -18,7 +18,7 @@ export interface UnitPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetC
 
 export function UnitPriceSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<UnitPriceSpecification> & Base {
   @namespace(schema)
-  class UnitPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements UnitPriceSpecification {
+  class UnitPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<UnitPriceSpecification> {
     @property.literal({ type: Number })
     billingIncrement: number | undefined;
     @property.literal()

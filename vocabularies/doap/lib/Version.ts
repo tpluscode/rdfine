@@ -15,7 +15,7 @@ export interface Version<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rd
 
 export function VersionMixin<Base extends Constructor>(Resource: Base): Constructor<Version> & Base {
   @namespace(doap)
-  class VersionClass extends Resource implements Version {
+  class VersionClass extends Resource implements Partial<Version> {
     @property()
     'file-release': RDF.Term | undefined;
     @property()

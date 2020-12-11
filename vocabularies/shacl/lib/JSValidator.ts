@@ -13,7 +13,7 @@ export interface JSValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function JSValidatorMixin<Base extends Constructor>(Resource: Base): Constructor<JSValidator> & Base {
   @namespace(sh)
-  class JSValidatorClass extends ValidatorMixin(JSExecutableMixin(Resource)) implements JSValidator {
+  class JSValidatorClass extends ValidatorMixin(JSExecutableMixin(Resource)) implements Partial<JSValidator> {
   }
   return JSValidatorClass
 }

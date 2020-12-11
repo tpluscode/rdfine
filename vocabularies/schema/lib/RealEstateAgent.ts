@@ -12,7 +12,7 @@ export interface RealEstateAgent<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function RealEstateAgentMixin<Base extends Constructor>(Resource: Base): Constructor<RealEstateAgent> & Base {
   @namespace(schema)
-  class RealEstateAgentClass extends LocalBusinessMixin(Resource) implements RealEstateAgent {
+  class RealEstateAgentClass extends LocalBusinessMixin(Resource) implements Partial<RealEstateAgent> {
   }
   return RealEstateAgentClass
 }

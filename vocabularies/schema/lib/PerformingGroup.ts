@@ -12,7 +12,7 @@ export interface PerformingGroup<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function PerformingGroupMixin<Base extends Constructor>(Resource: Base): Constructor<PerformingGroup> & Base {
   @namespace(schema)
-  class PerformingGroupClass extends OrganizationMixin(Resource) implements PerformingGroup {
+  class PerformingGroupClass extends OrganizationMixin(Resource) implements Partial<PerformingGroup> {
   }
   return PerformingGroupClass
 }

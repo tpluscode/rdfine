@@ -13,7 +13,7 @@ export interface HealthClub<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function HealthClubMixin<Base extends Constructor>(Resource: Base): Constructor<HealthClub> & Base {
   @namespace(schema)
-  class HealthClubClass extends SportsActivityLocationMixin(HealthAndBeautyBusinessMixin(Resource)) implements HealthClub {
+  class HealthClubClass extends SportsActivityLocationMixin(HealthAndBeautyBusinessMixin(Resource)) implements Partial<HealthClub> {
   }
   return HealthClubClass
 }

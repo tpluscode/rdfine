@@ -12,7 +12,7 @@ export interface QuoteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function QuoteActionMixin<Base extends Constructor>(Resource: Base): Constructor<QuoteAction> & Base {
   @namespace(schema)
-  class QuoteActionClass extends TradeActionMixin(Resource) implements QuoteAction {
+  class QuoteActionClass extends TradeActionMixin(Resource) implements Partial<QuoteAction> {
   }
   return QuoteActionClass
 }

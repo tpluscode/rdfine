@@ -14,7 +14,7 @@ export interface MortgageLoan<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function MortgageLoanMixin<Base extends Constructor>(Resource: Base): Constructor<MortgageLoan> & Base {
   @namespace(schema)
-  class MortgageLoanClass extends LoanOrCreditMixin(Resource) implements MortgageLoan {
+  class MortgageLoanClass extends LoanOrCreditMixin(Resource) implements Partial<MortgageLoan> {
     @property.literal({ type: Boolean })
     domiciledMortgage: boolean | undefined;
     @property.resource()

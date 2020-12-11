@@ -12,7 +12,7 @@ export interface ScholarlyArticle<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function ScholarlyArticleMixin<Base extends Constructor>(Resource: Base): Constructor<ScholarlyArticle> & Base {
   @namespace(schema)
-  class ScholarlyArticleClass extends ArticleMixin(Resource) implements ScholarlyArticle {
+  class ScholarlyArticleClass extends ArticleMixin(Resource) implements Partial<ScholarlyArticle> {
   }
   return ScholarlyArticleClass
 }

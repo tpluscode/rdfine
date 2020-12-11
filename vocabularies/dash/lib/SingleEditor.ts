@@ -12,7 +12,7 @@ export interface SingleEditor<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function SingleEditorMixin<Base extends Constructor>(Resource: Base) {
   @namespace(dash)
-  class SingleEditorClass extends EditorMixin(Resource) implements SingleEditor {
+  class SingleEditorClass extends EditorMixin(Resource) implements Partial<SingleEditor> {
   }
   return SingleEditorClass
 }

@@ -12,7 +12,7 @@ export interface Thread<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sio
 
 export function ThreadMixin<Base extends Constructor>(Resource: Base): Constructor<Thread> & Base {
   @namespace(sioc)
-  class ThreadClass extends ContainerMixin(Resource) implements Thread {
+  class ThreadClass extends ContainerMixin(Resource) implements Partial<Thread> {
   }
   return ThreadClass
 }

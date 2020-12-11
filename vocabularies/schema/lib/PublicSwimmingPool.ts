@@ -12,7 +12,7 @@ export interface PublicSwimmingPool<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function PublicSwimmingPoolMixin<Base extends Constructor>(Resource: Base): Constructor<PublicSwimmingPool> & Base {
   @namespace(schema)
-  class PublicSwimmingPoolClass extends SportsActivityLocationMixin(Resource) implements PublicSwimmingPool {
+  class PublicSwimmingPoolClass extends SportsActivityLocationMixin(Resource) implements Partial<PublicSwimmingPool> {
   }
   return PublicSwimmingPoolClass
 }

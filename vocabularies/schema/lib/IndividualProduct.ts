@@ -13,7 +13,7 @@ export interface IndividualProduct<D extends RDF.DatasetCore = RDF.DatasetCore> 
 
 export function IndividualProductMixin<Base extends Constructor>(Resource: Base): Constructor<IndividualProduct> & Base {
   @namespace(schema)
-  class IndividualProductClass extends ProductMixin(Resource) implements IndividualProduct {
+  class IndividualProductClass extends ProductMixin(Resource) implements Partial<IndividualProduct> {
     @property.literal()
     serialNumber: string | undefined;
   }

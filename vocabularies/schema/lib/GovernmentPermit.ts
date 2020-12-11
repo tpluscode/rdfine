@@ -12,7 +12,7 @@ export interface GovernmentPermit<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function GovernmentPermitMixin<Base extends Constructor>(Resource: Base): Constructor<GovernmentPermit> & Base {
   @namespace(schema)
-  class GovernmentPermitClass extends PermitMixin(Resource) implements GovernmentPermit {
+  class GovernmentPermitClass extends PermitMixin(Resource) implements Partial<GovernmentPermit> {
   }
   return GovernmentPermitClass
 }

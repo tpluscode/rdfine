@@ -12,7 +12,7 @@ export interface BackgroundNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCo
 
 export function BackgroundNewsArticleMixin<Base extends Constructor>(Resource: Base): Constructor<BackgroundNewsArticle> & Base {
   @namespace(schema)
-  class BackgroundNewsArticleClass extends NewsArticleMixin(Resource) implements BackgroundNewsArticle {
+  class BackgroundNewsArticleClass extends NewsArticleMixin(Resource) implements Partial<BackgroundNewsArticle> {
   }
   return BackgroundNewsArticleClass
 }

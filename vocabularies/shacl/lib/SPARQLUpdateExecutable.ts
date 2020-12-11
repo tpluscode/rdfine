@@ -13,7 +13,7 @@ export interface SPARQLUpdateExecutable<D extends RDF.DatasetCore = RDF.DatasetC
 
 export function SPARQLUpdateExecutableMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLUpdateExecutable> & Base {
   @namespace(sh)
-  class SPARQLUpdateExecutableClass extends SPARQLExecutableMixin(Resource) implements SPARQLUpdateExecutable {
+  class SPARQLUpdateExecutableClass extends SPARQLExecutableMixin(Resource) implements Partial<SPARQLUpdateExecutable> {
     @property.literal()
     update: string | undefined;
   }

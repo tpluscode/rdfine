@@ -17,7 +17,7 @@ export interface DatedMoneySpecification<D extends RDF.DatasetCore = RDF.Dataset
 
 export function DatedMoneySpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<DatedMoneySpecification> & Base {
   @namespace(schema)
-  class DatedMoneySpecificationClass extends StructuredValueMixin(Resource) implements DatedMoneySpecification {
+  class DatedMoneySpecificationClass extends StructuredValueMixin(Resource) implements Partial<DatedMoneySpecification> {
     @property.resource()
     amount: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.amount, type: Number })

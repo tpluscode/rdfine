@@ -12,7 +12,7 @@ export interface UserPlusOnes<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function UserPlusOnesMixin<Base extends Constructor>(Resource: Base): Constructor<UserPlusOnes> & Base {
   @namespace(schema)
-  class UserPlusOnesClass extends UserInteractionMixin(Resource) implements UserPlusOnes {
+  class UserPlusOnesClass extends UserInteractionMixin(Resource) implements Partial<UserPlusOnes> {
   }
   return UserPlusOnesClass
 }

@@ -12,7 +12,7 @@ export interface Energy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function EnergyMixin<Base extends Constructor>(Resource: Base): Constructor<Energy> & Base {
   @namespace(schema)
-  class EnergyClass extends QuantityMixin(Resource) implements Energy {
+  class EnergyClass extends QuantityMixin(Resource) implements Partial<Energy> {
   }
   return EnergyClass
 }

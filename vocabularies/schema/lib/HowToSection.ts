@@ -16,7 +16,7 @@ export interface HowToSection<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function HowToSectionMixin<Base extends Constructor>(Resource: Base): Constructor<HowToSection> & Base {
   @namespace(schema)
-  class HowToSectionClass extends ListItemMixin(ItemListMixin(CreativeWorkMixin(Resource))) implements HowToSection {
+  class HowToSectionClass extends ListItemMixin(ItemListMixin(CreativeWorkMixin(Resource))) implements Partial<HowToSection> {
     @property.resource({ values: 'array' })
     steps!: Array<Schema.CreativeWork | Schema.ItemList>;
     @property.literal({ path: schema.steps, values: 'array' })

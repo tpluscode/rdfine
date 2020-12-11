@@ -16,7 +16,7 @@ export interface Review<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
 
 export function ReviewMixin<Base extends Constructor>(Resource: Base): Constructor<Review> & Base {
   @namespace(schema)
-  class ReviewClass extends CreativeWorkMixin(Resource) implements Review {
+  class ReviewClass extends CreativeWorkMixin(Resource) implements Partial<Review> {
     @property.resource()
     itemReviewed: Schema.Thing | undefined;
     @property.literal()

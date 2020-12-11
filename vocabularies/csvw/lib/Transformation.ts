@@ -16,7 +16,7 @@ export interface Transformation<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function TransformationMixin<Base extends Constructor>(Resource: Base): Constructor<Transformation> & Base {
   @namespace(csvw)
-  class TransformationClass extends Resource implements Transformation {
+  class TransformationClass extends Resource implements Partial<Transformation> {
     @property.literal()
     scriptFormat: string | undefined;
     @property.literal()

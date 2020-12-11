@@ -12,7 +12,7 @@ export interface CompleteDataFeed<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function CompleteDataFeedMixin<Base extends Constructor>(Resource: Base): Constructor<CompleteDataFeed> & Base {
   @namespace(schema)
-  class CompleteDataFeedClass extends DataFeedMixin(Resource) implements CompleteDataFeed {
+  class CompleteDataFeedClass extends DataFeedMixin(Resource) implements Partial<CompleteDataFeed> {
   }
   return CompleteDataFeedClass
 }

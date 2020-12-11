@@ -12,7 +12,7 @@ export interface JewelryStore<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function JewelryStoreMixin<Base extends Constructor>(Resource: Base): Constructor<JewelryStore> & Base {
   @namespace(schema)
-  class JewelryStoreClass extends StoreMixin(Resource) implements JewelryStore {
+  class JewelryStoreClass extends StoreMixin(Resource) implements Partial<JewelryStore> {
   }
   return JewelryStoreClass
 }

@@ -19,7 +19,7 @@ export interface DeliveryChargeSpecification<D extends RDF.DatasetCore = RDF.Dat
 
 export function DeliveryChargeSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<DeliveryChargeSpecification> & Base {
   @namespace(schema)
-  class DeliveryChargeSpecificationClass extends PriceSpecificationMixin(Resource) implements DeliveryChargeSpecification {
+  class DeliveryChargeSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<DeliveryChargeSpecification> {
     @property()
     appliesToDeliveryMethod: Schema.DeliveryMethod | undefined;
     @property.resource()

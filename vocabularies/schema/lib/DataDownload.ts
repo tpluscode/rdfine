@@ -14,7 +14,7 @@ export interface DataDownload<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function DataDownloadMixin<Base extends Constructor>(Resource: Base): Constructor<DataDownload> & Base {
   @namespace(schema)
-  class DataDownloadClass extends MediaObjectMixin(Resource) implements DataDownload {
+  class DataDownloadClass extends MediaObjectMixin(Resource) implements Partial<DataDownload> {
     @property.literal()
     measurementTechnique: string | undefined;
     @property({ path: schema.measurementTechnique })

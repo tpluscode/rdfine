@@ -12,7 +12,7 @@ export interface MedicalSymptom<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function MedicalSymptomMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalSymptom> & Base {
   @namespace(schema)
-  class MedicalSymptomClass extends MedicalSignOrSymptomMixin(Resource) implements MedicalSymptom {
+  class MedicalSymptomClass extends MedicalSignOrSymptomMixin(Resource) implements Partial<MedicalSymptom> {
   }
   return MedicalSymptomClass
 }

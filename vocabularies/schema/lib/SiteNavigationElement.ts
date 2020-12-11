@@ -12,7 +12,7 @@ export interface SiteNavigationElement<D extends RDF.DatasetCore = RDF.DatasetCo
 
 export function SiteNavigationElementMixin<Base extends Constructor>(Resource: Base): Constructor<SiteNavigationElement> & Base {
   @namespace(schema)
-  class SiteNavigationElementClass extends WebPageElementMixin(Resource) implements SiteNavigationElement {
+  class SiteNavigationElementClass extends WebPageElementMixin(Resource) implements Partial<SiteNavigationElement> {
   }
   return SiteNavigationElementClass
 }

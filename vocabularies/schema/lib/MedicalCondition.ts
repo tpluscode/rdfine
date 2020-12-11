@@ -29,7 +29,7 @@ export interface MedicalCondition<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function MedicalConditionMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalCondition> & Base {
   @namespace(schema)
-  class MedicalConditionClass extends MedicalEntityMixin(Resource) implements MedicalCondition {
+  class MedicalConditionClass extends MedicalEntityMixin(Resource) implements Partial<MedicalCondition> {
     @property.resource()
     associatedAnatomy: Schema.AnatomicalStructure | Schema.AnatomicalSystem | Schema.SuperficialAnatomy | undefined;
     @property.resource()

@@ -15,7 +15,7 @@ export interface LiveBlogPosting<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function LiveBlogPostingMixin<Base extends Constructor>(Resource: Base): Constructor<LiveBlogPosting> & Base {
   @namespace(schema)
-  class LiveBlogPostingClass extends BlogPostingMixin(Resource) implements LiveBlogPosting {
+  class LiveBlogPostingClass extends BlogPostingMixin(Resource) implements Partial<LiveBlogPosting> {
     @property.literal({ type: Date })
     coverageEndTime: Date | undefined;
     @property.literal({ type: Date })

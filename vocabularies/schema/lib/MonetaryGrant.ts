@@ -15,7 +15,7 @@ export interface MonetaryGrant<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function MonetaryGrantMixin<Base extends Constructor>(Resource: Base): Constructor<MonetaryGrant> & Base {
   @namespace(schema)
-  class MonetaryGrantClass extends GrantMixin(Resource) implements MonetaryGrant {
+  class MonetaryGrantClass extends GrantMixin(Resource) implements Partial<MonetaryGrant> {
     @property.resource()
     amount: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.amount, type: Number })

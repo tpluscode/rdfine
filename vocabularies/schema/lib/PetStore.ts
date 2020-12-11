@@ -12,7 +12,7 @@ export interface PetStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function PetStoreMixin<Base extends Constructor>(Resource: Base): Constructor<PetStore> & Base {
   @namespace(schema)
-  class PetStoreClass extends StoreMixin(Resource) implements PetStore {
+  class PetStoreClass extends StoreMixin(Resource) implements Partial<PetStore> {
   }
   return PetStoreClass
 }

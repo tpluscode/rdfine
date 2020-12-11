@@ -12,7 +12,7 @@ export interface DryCleaningOrLaundry<D extends RDF.DatasetCore = RDF.DatasetCor
 
 export function DryCleaningOrLaundryMixin<Base extends Constructor>(Resource: Base): Constructor<DryCleaningOrLaundry> & Base {
   @namespace(schema)
-  class DryCleaningOrLaundryClass extends LocalBusinessMixin(Resource) implements DryCleaningOrLaundry {
+  class DryCleaningOrLaundryClass extends LocalBusinessMixin(Resource) implements Partial<DryCleaningOrLaundry> {
   }
   return DryCleaningOrLaundryClass
 }

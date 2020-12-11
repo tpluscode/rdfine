@@ -12,7 +12,7 @@ export interface VariableRepresentation<D extends RDF.DatasetCore = RDF.DatasetC
 
 export function VariableRepresentationMixin<Base extends Constructor>(Resource: Base): Constructor<VariableRepresentation> & Base {
   @namespace(hydra)
-  class VariableRepresentationClass extends ResourceMixin(Resource) implements VariableRepresentation {
+  class VariableRepresentationClass extends ResourceMixin(Resource) implements Partial<VariableRepresentation> {
   }
   return VariableRepresentationClass
 }

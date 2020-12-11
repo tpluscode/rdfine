@@ -12,7 +12,7 @@ export interface WPFooter<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function WPFooterMixin<Base extends Constructor>(Resource: Base): Constructor<WPFooter> & Base {
   @namespace(schema)
-  class WPFooterClass extends WebPageElementMixin(Resource) implements WPFooter {
+  class WPFooterClass extends WebPageElementMixin(Resource) implements Partial<WPFooter> {
   }
   return WPFooterClass
 }

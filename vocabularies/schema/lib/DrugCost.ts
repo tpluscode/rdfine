@@ -19,7 +19,7 @@ export interface DrugCost<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function DrugCostMixin<Base extends Constructor>(Resource: Base): Constructor<DrugCost> & Base {
   @namespace(schema)
-  class DrugCostClass extends MedicalEntityMixin(Resource) implements DrugCost {
+  class DrugCostClass extends MedicalEntityMixin(Resource) implements Partial<DrugCost> {
     @property.resource()
     applicableLocation: Schema.AdministrativeArea | undefined;
     @property()

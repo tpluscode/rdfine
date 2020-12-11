@@ -12,7 +12,7 @@ export interface TieAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function TieActionMixin<Base extends Constructor>(Resource: Base): Constructor<TieAction> & Base {
   @namespace(schema)
-  class TieActionClass extends AchieveActionMixin(Resource) implements TieAction {
+  class TieActionClass extends AchieveActionMixin(Resource) implements Partial<TieAction> {
   }
   return TieActionClass
 }

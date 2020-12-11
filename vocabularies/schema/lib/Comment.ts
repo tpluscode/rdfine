@@ -15,7 +15,7 @@ export interface Comment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function CommentMixin<Base extends Constructor>(Resource: Base): Constructor<Comment> & Base {
   @namespace(schema)
-  class CommentClass extends CreativeWorkMixin(Resource) implements Comment {
+  class CommentClass extends CreativeWorkMixin(Resource) implements Partial<Comment> {
     @property.literal({ type: Number })
     downvoteCount: number | undefined;
     @property.resource()

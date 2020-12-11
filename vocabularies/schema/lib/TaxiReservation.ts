@@ -16,7 +16,7 @@ export interface TaxiReservation<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function TaxiReservationMixin<Base extends Constructor>(Resource: Base): Constructor<TaxiReservation> & Base {
   @namespace(schema)
-  class TaxiReservationClass extends ReservationMixin(Resource) implements TaxiReservation {
+  class TaxiReservationClass extends ReservationMixin(Resource) implements Partial<TaxiReservation> {
     @property.resource()
     partySize: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.partySize, type: Number })

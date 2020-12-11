@@ -15,7 +15,7 @@ export interface HotelRoom<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function HotelRoomMixin<Base extends Constructor>(Resource: Base): Constructor<HotelRoom> & Base {
   @namespace(schema)
-  class HotelRoomClass extends RoomMixin(Resource) implements HotelRoom {
+  class HotelRoomClass extends RoomMixin(Resource) implements Partial<HotelRoom> {
     @property.resource()
     bed: Schema.BedDetails | undefined;
     @property.literal({ path: schema.bed })

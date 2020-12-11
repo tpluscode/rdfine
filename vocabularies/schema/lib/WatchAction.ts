@@ -12,7 +12,7 @@ export interface WatchAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function WatchActionMixin<Base extends Constructor>(Resource: Base): Constructor<WatchAction> & Base {
   @namespace(schema)
-  class WatchActionClass extends ConsumeActionMixin(Resource) implements WatchAction {
+  class WatchActionClass extends ConsumeActionMixin(Resource) implements Partial<WatchAction> {
   }
   return WatchActionClass
 }

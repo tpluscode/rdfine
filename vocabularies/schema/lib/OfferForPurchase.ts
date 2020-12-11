@@ -12,7 +12,7 @@ export interface OfferForPurchase<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function OfferForPurchaseMixin<Base extends Constructor>(Resource: Base): Constructor<OfferForPurchase> & Base {
   @namespace(schema)
-  class OfferForPurchaseClass extends OfferMixin(Resource) implements OfferForPurchase {
+  class OfferForPurchaseClass extends OfferMixin(Resource) implements Partial<OfferForPurchase> {
   }
   return OfferForPurchaseClass
 }

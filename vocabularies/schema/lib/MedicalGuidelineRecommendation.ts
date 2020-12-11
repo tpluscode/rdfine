@@ -13,7 +13,7 @@ export interface MedicalGuidelineRecommendation<D extends RDF.DatasetCore = RDF.
 
 export function MedicalGuidelineRecommendationMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalGuidelineRecommendation> & Base {
   @namespace(schema)
-  class MedicalGuidelineRecommendationClass extends MedicalGuidelineMixin(Resource) implements MedicalGuidelineRecommendation {
+  class MedicalGuidelineRecommendationClass extends MedicalGuidelineMixin(Resource) implements Partial<MedicalGuidelineRecommendation> {
     @property.literal()
     recommendationStrength: string | undefined;
   }

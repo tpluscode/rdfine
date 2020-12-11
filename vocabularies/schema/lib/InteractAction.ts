@@ -12,7 +12,7 @@ export interface InteractAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function InteractActionMixin<Base extends Constructor>(Resource: Base): Constructor<InteractAction> & Base {
   @namespace(schema)
-  class InteractActionClass extends ActionMixin(Resource) implements InteractAction {
+  class InteractActionClass extends ActionMixin(Resource) implements Partial<InteractAction> {
   }
   return InteractActionClass
 }

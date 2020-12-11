@@ -13,7 +13,7 @@ export interface PlanAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function PlanActionMixin<Base extends Constructor>(Resource: Base): Constructor<PlanAction> & Base {
   @namespace(schema)
-  class PlanActionClass extends OrganizeActionMixin(Resource) implements PlanAction {
+  class PlanActionClass extends OrganizeActionMixin(Resource) implements Partial<PlanAction> {
     @property.literal({ type: Date })
     scheduledTime: Date | undefined;
   }

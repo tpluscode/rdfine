@@ -12,7 +12,7 @@ export interface ReadAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
 
 export function ReadActionMixin<Base extends Constructor>(Resource: Base): Constructor<ReadAction> & Base {
   @namespace(schema)
-  class ReadActionClass extends ConsumeActionMixin(Resource) implements ReadAction {
+  class ReadActionClass extends ConsumeActionMixin(Resource) implements Partial<ReadAction> {
   }
   return ReadActionClass
 }

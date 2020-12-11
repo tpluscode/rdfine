@@ -18,7 +18,7 @@ export interface TrainTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function TrainTripMixin<Base extends Constructor>(Resource: Base): Constructor<TrainTrip> & Base {
   @namespace(schema)
-  class TrainTripClass extends TripMixin(Resource) implements TrainTrip {
+  class TrainTripClass extends TripMixin(Resource) implements Partial<TrainTrip> {
     @property.literal()
     arrivalPlatform: string | undefined;
     @property.resource()

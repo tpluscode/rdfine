@@ -17,7 +17,7 @@ export interface APIReference<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function APIReferenceMixin<Base extends Constructor>(Resource: Base): Constructor<APIReference> & Base {
   @namespace(schema)
-  class APIReferenceClass extends TechArticleMixin(Resource) implements APIReference {
+  class APIReferenceClass extends TechArticleMixin(Resource) implements Partial<APIReference> {
     @property.literal()
     assembly: string | undefined;
     @property.literal()

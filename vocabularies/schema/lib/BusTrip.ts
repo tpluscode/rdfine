@@ -16,7 +16,7 @@ export interface BusTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
 
 export function BusTripMixin<Base extends Constructor>(Resource: Base): Constructor<BusTrip> & Base {
   @namespace(schema)
-  class BusTripClass extends TripMixin(Resource) implements BusTrip {
+  class BusTripClass extends TripMixin(Resource) implements Partial<BusTrip> {
     @property.resource()
     arrivalBusStop: Schema.BusStation | Schema.BusStop | undefined;
     @property.literal()

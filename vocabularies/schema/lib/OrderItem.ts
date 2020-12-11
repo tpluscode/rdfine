@@ -17,7 +17,7 @@ export interface OrderItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function OrderItemMixin<Base extends Constructor>(Resource: Base): Constructor<OrderItem> & Base {
   @namespace(schema)
-  class OrderItemClass extends IntangibleMixin(Resource) implements OrderItem {
+  class OrderItemClass extends IntangibleMixin(Resource) implements Partial<OrderItem> {
     @property.resource()
     orderDelivery: Schema.ParcelDelivery | undefined;
     @property.resource()

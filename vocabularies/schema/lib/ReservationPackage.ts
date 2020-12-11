@@ -13,7 +13,7 @@ export interface ReservationPackage<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function ReservationPackageMixin<Base extends Constructor>(Resource: Base): Constructor<ReservationPackage> & Base {
   @namespace(schema)
-  class ReservationPackageClass extends ReservationMixin(Resource) implements ReservationPackage {
+  class ReservationPackageClass extends ReservationMixin(Resource) implements Partial<ReservationPackage> {
     @property.resource()
     subReservation: Schema.Reservation | undefined;
   }

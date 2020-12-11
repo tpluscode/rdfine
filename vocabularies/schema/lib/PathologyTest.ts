@@ -13,7 +13,7 @@ export interface PathologyTest<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function PathologyTestMixin<Base extends Constructor>(Resource: Base): Constructor<PathologyTest> & Base {
   @namespace(schema)
-  class PathologyTestClass extends MedicalTestMixin(Resource) implements PathologyTest {
+  class PathologyTestClass extends MedicalTestMixin(Resource) implements Partial<PathologyTest> {
     @property.literal()
     tissueSample: string | undefined;
   }
