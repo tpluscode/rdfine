@@ -41,7 +41,7 @@ export interface ModuleStrategy {
   (types: TypeMetaCollection, context: Context): GeneratedModule[]
 }
 
-export type TypeOverride = DatatypeName | 'NamedNode' | 'Datatype'
+export type TypeOverride = DatatypeName | 'NamedNode' | 'Datatype' | 'Term'
 
 interface GeneratorOptions {
   stream: Stream

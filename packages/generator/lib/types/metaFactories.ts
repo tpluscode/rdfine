@@ -156,10 +156,10 @@ export function overrides(overrideMap: Record<string, TypeOverride> = {}) {
   return (node: GraphPointer<NamedNode>): TermType | LiteralType | null => {
     const override = overrideMap[node.value]
 
-    if (override === 'NamedNode') {
+    if (override === 'NamedNode' || override === 'Term') {
       return {
         type: 'Term',
-        termType: 'NamedNode',
+        termType: override,
       }
     }
 
