@@ -15,8 +15,12 @@ import { toUpperInitial } from '../util/string'
 import { isEnumerationType } from './util'
 import { DatatypeName, wellKnownDatatypes } from './wellKnownDatatypes'
 
+const externalPrefixMap: Record<string, string> = {
+  sh: 'shacl',
+}
+
 export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix'>): ExternalResourceType | ResourceType | null {
-  const [prefix, termName] = shrink(term.value).split(':')
+  let [prefix, termName] = shrink(term.value).split(':')
   if (!termName) {
     return null
   }
@@ -24,6 +28,7 @@ export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix
   const localName = identifier(termName)
 
   if (prefix !== context.prefix) {
+    prefix = externalPrefixMap[prefix] || prefix
     return {
       type: 'ExternalResource',
       mixinName: toUpperInitial(`${prefix}${termName}Mixin`),

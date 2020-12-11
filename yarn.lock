@@ -2583,10 +2583,10 @@
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.0.1.tgz#b6e98083f13faa1e5231bfa3bdb1b0feff536b6d"
   integrity sha512-boy4xPNEtiw6N3abRhBi/e7hNvy3Tt8E9ZRAQrwAGzoCGZS/1wjo9KY7JHhnfnEsG5wSjDbymCozUM9a3ea7OQ==
 
-"@types/rdf-dataset-indexed@*":
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/@types/rdf-dataset-indexed/-/rdf-dataset-indexed-0.4.4.tgz#8cbaebbb93f69ca113a15cc302ca5e1f9d1a6f63"
-  integrity sha512-jdf7zIb5TFgFZ+keDwuw+bhtPqOikcoGP3m9CJGauPfEezn+DWiYlRTMDIprwdnFNlqTRNmWVI+3d+12QKuYxA==
+"@types/rdf-dataset-indexed@*", "@types/rdf-dataset-indexed@^0.4.5":
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/@types/rdf-dataset-indexed/-/rdf-dataset-indexed-0.4.5.tgz#23ced6eda037575bedb9479485efe9fb965b9cac"
+  integrity sha512-Pw/jEG3cRyewlg0xD5cQ9Tl85DjzAfewzDGaXo2f+Fgv/WbMSWYq9qGlJgNELFGZH6P1iaNOMQVwlSoA64j1Fg==
   dependencies:
     "@types/rdf-js" "*"
 
