@@ -5,6 +5,8 @@ import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types
 import { MixinModule } from './MixinModule'
 import { findProperties } from '../property'
 import { toJavascriptProperties } from '../property/JsProperties'
+import { NamedNode } from 'rdf-js'
+import TermSet from '@rdfjs/term-set'
 
 export function getSuperClasses(clas: GraphPointer, types: TypeMetaCollection) {
   return clas.out(rdfs.subClassOf)
@@ -19,28 +21,34 @@ export function getSuperClasses(clas: GraphPointer, types: TypeMetaCollection) {
   }, [])
 }
 
-function * getProperties(clas: GraphPointer, types: TypeMetaCollection, context: Context) {
+function * getProperties(clas: GraphPointer, types: TypeMetaCollection, context: Context, excludedTerms: TermSet) {
   for (const { term, range } of findProperties(clas, context)) {
+    if (excludedTerms.has(term.term)) continue
+
     for (const jsProperty of toJavascriptProperties(term, range, types, context)) {
       yield jsProperty
     }
   }
 }
 
-export function findTermsToGenerate(types: TypeMetaCollection, context: Context) {
-  return context.vocabulary
-    .has(rdf.type, [rdfs.Class, hydra.Class, owl.Class])
-    .filter(term => types.get(term)?.type === 'Resource')
-    .map(term => {
-      const meta = types.getOrThrow(term)
-      if (meta.type !== 'Resource') {
-        throw new Error(`Expected resource type but got ${meta.type}`)
-      }
+export function findTermsToGenerate(excludedTerms: NamedNode[]) {
+  const excluded = new TermSet(excludedTerms)
 
-      return new MixinModule(
-        term,
-        meta,
-        getSuperClasses(term, types),
-        [...getProperties(term, types, context)])
-    })
+  return function (types: TypeMetaCollection, context: Context) {
+    return context.vocabulary
+      .has(rdf.type, [rdfs.Class, hydra.Class, owl.Class])
+      .filter(term => types.get(term)?.type === 'Resource')
+      .map(term => {
+        const meta = types.getOrThrow(term)
+        if (meta.type !== 'Resource') {
+          throw new Error(`Expected resource type but got ${meta.type}`)
+        }
+
+        return new MixinModule(
+          term,
+          meta,
+          getSuperClasses(term, types),
+          [...getProperties(term, types, context, excluded)])
+      })
+  }
 }

@@ -85,16 +85,16 @@ export async function generate(options: GeneratorOptions, logger: Debugger) {
     },
   })
 
-  const strategies: ModuleStrategy[] = [
-    EnumerationGenerator.findTermsToGenerate,
-    MixinGenerator.findTermsToGenerate,
-  ]
-
   const namespace = nsBuilder(prefixes[options.prefix])
   const excludedTerms = options.exclude
     .map(excludedTerm => {
       return excludedTerm.includes(':') ? rdf.namedNode(expand(excludedTerm)) : namespace(excludedTerm)
     })
+
+  const strategies: ModuleStrategy[] = [
+    EnumerationGenerator.findTermsToGenerate,
+    MixinGenerator.findTermsToGenerate(excludedTerms),
+  ]
 
   const log = {
     debug: logger,
