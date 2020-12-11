@@ -2,13 +2,11 @@
   "name": "rdfine",
   "private": true,
   "scripts": {
-    "prepare": "lerna run --stream --sort prepare -- --inlineSourceMap",
     "lint": "eslint . --ext .ts,.js --quiet --ignore-path .eslintignore --ignore-path .gitignore",
     "test": "run-s test:*",
     "test:ts-node": "jest --coverage",
     "test:babel": "jest --coverage -c jest.babel.config.js",
     "example": "lerna run start --scope rdfine-example --stream --no-prefix",
-    "pregenerate": "yarn prepare",
     "generate": "lerna run generate --stream --no-prefix --include-dependencies",
     "build": "lerna run prepack",
     "release": "changeset publish"
@@ -22,6 +20,7 @@
     "@types/node": "^12",
     "@types/rdf-js": "^4",
     "@types/rdfjs__parser-jsonld": "^1.2.3",
+    "@types/rdf-dataset-indexed": "^0.4.5",
     "@typescript-eslint/eslint-plugin": "^4.9.0",
     "@typescript-eslint/parser": "^4.9.0",
     "eslint": "^7.10.0",

@@ -26,7 +26,7 @@
     "build": "run-s build:*",
     "build:cjs": "tsc -p tsconfig.build.json",
     "build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs --config-file ../../babel.config.json",
-    "generate": "{ rdf-vocab prefix sioc ; cat ./overrides.nq ; } | node ../../packages/generator/bin/rdfine-gen.js --format application/n-quads"
+    "generate": "{ rdf-vocab prefix sioc ; cat ./overrides.nq ; } | rdfine-gen --format application/n-quads --dev"
   },
   "rdfine": {
     "prefix": "sioc"
