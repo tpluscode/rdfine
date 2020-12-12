@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -27,3 +28,5 @@ class WantActionImpl extends WantActionMixin(RdfResourceImpl) {
 }
 WantActionMixin.appliesTo = schema.WantAction
 WantActionMixin.Class = WantActionImpl
+
+export const fromPointer = createFactory<WantAction>([ReactActionMixin, WantActionMixin], { types: [schema.WantAction] });

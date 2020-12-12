@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -45,3 +46,5 @@ class UnitPriceSpecificationImpl extends UnitPriceSpecificationMixin(RdfResource
 }
 UnitPriceSpecificationMixin.appliesTo = schema.UnitPriceSpecification
 UnitPriceSpecificationMixin.Class = UnitPriceSpecificationImpl
+
+export const fromPointer = createFactory<UnitPriceSpecification>([PriceSpecificationMixin, UnitPriceSpecificationMixin], { types: [schema.UnitPriceSpecification] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -30,3 +31,5 @@ class AuthorizeActionImpl extends AuthorizeActionMixin(RdfResourceImpl) {
 }
 AuthorizeActionMixin.appliesTo = schema.AuthorizeAction
 AuthorizeActionMixin.Class = AuthorizeActionImpl
+
+export const fromPointer = createFactory<AuthorizeAction>([AllocateActionMixin, AuthorizeActionMixin], { types: [schema.AuthorizeAction] });

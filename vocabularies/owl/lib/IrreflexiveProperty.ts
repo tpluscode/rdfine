@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './namespace';
@@ -27,3 +28,5 @@ class IrreflexivePropertyImpl extends IrreflexivePropertyMixin(RdfResourceImpl) 
 }
 IrreflexivePropertyMixin.appliesTo = owl.IrreflexiveProperty
 IrreflexivePropertyMixin.Class = IrreflexivePropertyImpl
+
+export const fromPointer = createFactory<IrreflexiveProperty>([ObjectPropertyMixin, IrreflexivePropertyMixin], { types: [owl.IrreflexiveProperty] });

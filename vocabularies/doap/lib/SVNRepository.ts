@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { doap } from './namespace';
@@ -27,3 +28,5 @@ class SVNRepositoryImpl extends SVNRepositoryMixin(RdfResourceImpl) {
 }
 SVNRepositoryMixin.appliesTo = doap.SVNRepository
 SVNRepositoryMixin.Class = SVNRepositoryImpl
+
+export const fromPointer = createFactory<SVNRepository>([RepositoryMixin, SVNRepositoryMixin], { types: [doap.SVNRepository] });

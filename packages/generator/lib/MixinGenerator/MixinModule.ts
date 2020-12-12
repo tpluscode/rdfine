@@ -40,6 +40,8 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     })
     this.properties.forEach(propertyWriter.addProperty.bind(propertyWriter))
 
+    const type = `${context.prefix}.${this.type.localName}`
+
     const implementationClass = mixinFile.addClass({
       name: implName,
       extends: `${mixinName}(RdfResourceImpl)`,
@@ -50,7 +52,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
         { name: 'init', type: `Initializer<${this.type.localName}>`, hasQuestionToken: true }],
       statements: [
         'super(arg, init)',
-        `this.types.add(${context.prefix}.${this.type.localName})`,
+        `this.types.add(${type})`,
       ],
     })
 
@@ -73,12 +75,22 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       `${mixinName}.Class = ${implName}`,
     ])
 
+    mixinFile.addVariableStatement({
+      isExported: true,
+      declarationKind: VariableDeclarationKind.Const,
+      declarations: [{
+        name: 'fromPointer',
+        initializer: `createFactory<${this.type.localName}>([${mixinNames.reverse().join(', ')}], { types: [${type}] })`,
+      }],
+    })
+
     this.addImports(mixinFile, context)
     this.generateDependenciesModule(bundleModule, bundleIndex, types)
 
     indexModule.addExportDeclaration({
+      namedExports: [this.type.localName, mixinName],
       moduleSpecifier: this.type.module,
-    }).toNamespaceExport()
+    })
   }
 
   private generateDependenciesModule(depsModule: SourceFile, bundleIndex: SourceFile, types: TypeMetaCollection) {
@@ -152,6 +164,10 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       defaultImport: 'RdfResourceImpl',
       namedImports: rdfineImports,
       moduleSpecifier: '@tpluscode/rdfine',
+    })
+    mixinFile.addImportDeclaration({
+      namedImports: ['createFactory'],
+      moduleSpecifier: '@tpluscode/rdfine/factory',
     })
 
     mixinFile.addImportDeclaration({

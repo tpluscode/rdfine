@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -27,3 +28,5 @@ class VideoGalleryImpl extends VideoGalleryMixin(RdfResourceImpl) {
 }
 VideoGalleryMixin.appliesTo = schema.VideoGallery
 VideoGalleryMixin.Class = VideoGalleryImpl
+
+export const fromPointer = createFactory<VideoGallery>([MediaGalleryMixin, VideoGalleryMixin], { types: [schema.VideoGallery] });

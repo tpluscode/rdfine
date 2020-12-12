@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
@@ -28,3 +29,5 @@ class ValidatorImpl extends ValidatorMixin(RdfResourceImpl) {
 }
 ValidatorMixin.appliesTo = sh.Validator
 ValidatorMixin.Class = ValidatorImpl
+
+export const fromPointer = createFactory<Validator>([RdfsResourceMixin, ValidatorMixin], { types: [sh.Validator] });

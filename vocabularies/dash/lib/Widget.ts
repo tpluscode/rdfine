@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -28,3 +29,5 @@ class WidgetImpl extends WidgetMixin(RdfResourceImpl) {
 }
 WidgetMixin.appliesTo = dash.Widget
 WidgetMixin.Class = WidgetImpl
+
+export const fromPointer = createFactory<Widget>([RdfsResourceMixin, WidgetMixin], { types: [dash.Widget] });

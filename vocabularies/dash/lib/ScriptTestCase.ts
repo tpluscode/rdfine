@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -28,3 +29,5 @@ class ScriptTestCaseImpl extends ScriptTestCaseMixin(RdfResourceImpl) {
 }
 ScriptTestCaseMixin.appliesTo = dash.ScriptTestCase
 ScriptTestCaseMixin.Class = ScriptTestCaseImpl
+
+export const fromPointer = createFactory<ScriptTestCase>([TestCaseMixin, ScriptMixin, ScriptTestCaseMixin], { types: [dash.ScriptTestCase] });

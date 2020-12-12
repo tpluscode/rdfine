@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
@@ -80,3 +81,5 @@ class TableGroupImpl extends TableGroupMixin(RdfResourceImpl) {
 }
 TableGroupMixin.appliesTo = csvw.TableGroup
 TableGroupMixin.Class = TableGroupImpl
+
+export const fromPointer = createFactory<TableGroup>([TableGroupMixin], { types: [csvw.TableGroup] });

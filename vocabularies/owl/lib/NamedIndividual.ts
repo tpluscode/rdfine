@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './namespace';
@@ -26,3 +27,5 @@ class NamedIndividualImpl extends NamedIndividualMixin(RdfResourceImpl) {
 }
 NamedIndividualMixin.appliesTo = owl.NamedIndividual
 NamedIndividualMixin.Class = NamedIndividualImpl
+
+export const fromPointer = createFactory<NamedIndividual>([NamedIndividualMixin], { types: [owl.NamedIndividual] });

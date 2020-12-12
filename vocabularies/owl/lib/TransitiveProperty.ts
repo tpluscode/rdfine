@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './namespace';
@@ -27,3 +28,5 @@ class TransitivePropertyImpl extends TransitivePropertyMixin(RdfResourceImpl) {
 }
 TransitivePropertyMixin.appliesTo = owl.TransitiveProperty
 TransitivePropertyMixin.Class = TransitivePropertyImpl
+
+export const fromPointer = createFactory<TransitiveProperty>([ObjectPropertyMixin, TransitivePropertyMixin], { types: [owl.TransitiveProperty] });

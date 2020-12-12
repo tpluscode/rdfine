@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -27,3 +28,5 @@ class ExploreActionImpl extends ExploreActionMixin(RdfResourceImpl) {
 }
 ExploreActionMixin.appliesTo = dash.ExploreAction
 ExploreActionMixin.Class = ExploreActionImpl
+
+export const fromPointer = createFactory<ExploreAction>([ResourceActionMixin, ExploreActionMixin], { types: [dash.ExploreAction] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './namespace';
@@ -28,3 +29,5 @@ class AllDisjointPropertiesImpl extends AllDisjointPropertiesMixin(RdfResourceIm
 }
 AllDisjointPropertiesMixin.appliesTo = owl.AllDisjointProperties
 AllDisjointPropertiesMixin.Class = AllDisjointPropertiesImpl
+
+export const fromPointer = createFactory<AllDisjointProperties>([RdfsResourceMixin, AllDisjointPropertiesMixin], { types: [owl.AllDisjointProperties] });

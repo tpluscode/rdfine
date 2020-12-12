@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -123,3 +124,5 @@ class SoftwareApplicationImpl extends SoftwareApplicationMixin(RdfResourceImpl) 
 }
 SoftwareApplicationMixin.appliesTo = schema.SoftwareApplication
 SoftwareApplicationMixin.Class = SoftwareApplicationImpl
+
+export const fromPointer = createFactory<SoftwareApplication>([CreativeWorkMixin, SoftwareApplicationMixin], { types: [schema.SoftwareApplication] });

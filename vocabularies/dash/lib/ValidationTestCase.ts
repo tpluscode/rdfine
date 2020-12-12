@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -27,3 +28,5 @@ class ValidationTestCaseImpl extends ValidationTestCaseMixin(RdfResourceImpl) {
 }
 ValidationTestCaseMixin.appliesTo = dash.ValidationTestCase
 ValidationTestCaseMixin.Class = ValidationTestCaseImpl
+
+export const fromPointer = createFactory<ValidationTestCase>([TestCaseMixin, ValidationTestCaseMixin], { types: [dash.ValidationTestCase] });

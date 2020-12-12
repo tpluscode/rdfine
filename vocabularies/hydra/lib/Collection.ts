@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './namespace';
@@ -36,3 +37,5 @@ class CollectionImpl extends CollectionMixin(RdfResourceImpl) {
 }
 CollectionMixin.appliesTo = hydra.Collection
 CollectionMixin.Class = CollectionImpl
+
+export const fromPointer = createFactory<Collection>([ResourceMixin, CollectionMixin], { types: [hydra.Collection] });

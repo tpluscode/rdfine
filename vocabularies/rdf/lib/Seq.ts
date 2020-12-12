@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { rdf } from './namespace';
@@ -26,3 +27,5 @@ class SeqImpl extends SeqMixin(RdfResourceImpl) {
 }
 SeqMixin.appliesTo = rdf.Seq
 SeqMixin.Class = SeqImpl
+
+export const fromPointer = createFactory<Seq>([SeqMixin], { types: [rdf.Seq] });

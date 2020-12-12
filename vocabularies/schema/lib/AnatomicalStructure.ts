@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -51,3 +52,5 @@ class AnatomicalStructureImpl extends AnatomicalStructureMixin(RdfResourceImpl) 
 }
 AnatomicalStructureMixin.appliesTo = schema.AnatomicalStructure
 AnatomicalStructureMixin.Class = AnatomicalStructureImpl
+
+export const fromPointer = createFactory<AnatomicalStructure>([MedicalEntityMixin, AnatomicalStructureMixin], { types: [schema.AnatomicalStructure] });

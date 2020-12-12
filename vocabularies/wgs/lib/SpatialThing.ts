@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { wgs } from './namespace';
@@ -35,3 +36,5 @@ class SpatialThingImpl extends SpatialThingMixin(RdfResourceImpl) {
 }
 SpatialThingMixin.appliesTo = wgs.SpatialThing
 SpatialThingMixin.Class = SpatialThingImpl
+
+export const fromPointer = createFactory<SpatialThing>([SpatialThingMixin], { types: [wgs.SpatialThing] });

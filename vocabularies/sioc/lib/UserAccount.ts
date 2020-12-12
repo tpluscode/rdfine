@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
@@ -71,3 +72,5 @@ class UserAccountImpl extends UserAccountMixin(RdfResourceImpl) {
 }
 UserAccountMixin.appliesTo = sioc.UserAccount
 UserAccountMixin.Class = UserAccountImpl
+
+export const fromPointer = createFactory<UserAccount>([FoafOnlineAccountMixin, UserAccountMixin], { types: [sioc.UserAccount] });

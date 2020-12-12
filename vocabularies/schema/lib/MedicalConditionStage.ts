@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -33,3 +34,5 @@ class MedicalConditionStageImpl extends MedicalConditionStageMixin(RdfResourceIm
 }
 MedicalConditionStageMixin.appliesTo = schema.MedicalConditionStage
 MedicalConditionStageMixin.Class = MedicalConditionStageImpl
+
+export const fromPointer = createFactory<MedicalConditionStage>([MedicalIntangibleMixin, MedicalConditionStageMixin], { types: [schema.MedicalConditionStage] });

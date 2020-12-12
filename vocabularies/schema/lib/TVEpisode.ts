@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -45,3 +46,5 @@ class TVEpisodeImpl extends TVEpisodeMixin(RdfResourceImpl) {
 }
 TVEpisodeMixin.appliesTo = schema.TVEpisode
 TVEpisodeMixin.Class = TVEpisodeImpl
+
+export const fromPointer = createFactory<TVEpisode>([EpisodeMixin, TVEpisodeMixin], { types: [schema.TVEpisode] });

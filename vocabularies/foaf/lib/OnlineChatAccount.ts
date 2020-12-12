@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
@@ -27,3 +28,5 @@ class OnlineChatAccountImpl extends OnlineChatAccountMixin(RdfResourceImpl) {
 }
 OnlineChatAccountMixin.appliesTo = foaf.OnlineChatAccount
 OnlineChatAccountMixin.Class = OnlineChatAccountImpl
+
+export const fromPointer = createFactory<OnlineChatAccount>([OnlineAccountMixin, OnlineChatAccountMixin], { types: [foaf.OnlineChatAccount] });

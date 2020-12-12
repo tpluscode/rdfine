@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
@@ -27,3 +28,5 @@ class OrganizationImpl extends OrganizationMixin(RdfResourceImpl) {
 }
 OrganizationMixin.appliesTo = foaf.Organization
 OrganizationMixin.Class = OrganizationImpl
+
+export const fromPointer = createFactory<Organization>([AgentMixin, OrganizationMixin], { types: [foaf.Organization] });

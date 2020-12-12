@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -63,3 +64,5 @@ class DietarySupplementImpl extends DietarySupplementMixin(RdfResourceImpl) {
 }
 DietarySupplementMixin.appliesTo = schema.DietarySupplement
 DietarySupplementMixin.Class = DietarySupplementImpl
+
+export const fromPointer = createFactory<DietarySupplement>([SubstanceMixin, DietarySupplementMixin], { types: [schema.DietarySupplement] });

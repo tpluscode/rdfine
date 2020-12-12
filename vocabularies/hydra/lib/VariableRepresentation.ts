@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './namespace';
@@ -27,3 +28,5 @@ class VariableRepresentationImpl extends VariableRepresentationMixin(RdfResource
 }
 VariableRepresentationMixin.appliesTo = hydra.VariableRepresentation
 VariableRepresentationMixin.Class = VariableRepresentationImpl
+
+export const fromPointer = createFactory<VariableRepresentation>([ResourceMixin, VariableRepresentationMixin], { types: [hydra.VariableRepresentation] });

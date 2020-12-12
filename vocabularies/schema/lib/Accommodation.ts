@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -78,3 +79,5 @@ class AccommodationImpl extends AccommodationMixin(RdfResourceImpl) {
 }
 AccommodationMixin.appliesTo = schema.Accommodation
 AccommodationMixin.Class = AccommodationImpl
+
+export const fromPointer = createFactory<Accommodation>([PlaceMixin, AccommodationMixin], { types: [schema.Accommodation] });

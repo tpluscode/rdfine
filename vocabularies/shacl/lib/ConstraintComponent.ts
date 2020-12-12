@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
@@ -36,3 +37,5 @@ class ConstraintComponentImpl extends ConstraintComponentMixin(RdfResourceImpl) 
 }
 ConstraintComponentMixin.appliesTo = sh.ConstraintComponent
 ConstraintComponentMixin.Class = ConstraintComponentImpl
+
+export const fromPointer = createFactory<ConstraintComponent>([ParameterizableMixin, ConstraintComponentMixin], { types: [sh.ConstraintComponent] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -81,3 +82,5 @@ class InvoiceImpl extends InvoiceMixin(RdfResourceImpl) {
 }
 InvoiceMixin.appliesTo = schema.Invoice
 InvoiceMixin.Class = InvoiceImpl
+
+export const fromPointer = createFactory<Invoice>([IntangibleMixin, InvoiceMixin], { types: [schema.Invoice] });

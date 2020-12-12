@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -39,3 +40,5 @@ class AggregateOfferImpl extends AggregateOfferMixin(RdfResourceImpl) {
 }
 AggregateOfferMixin.appliesTo = schema.AggregateOffer
 AggregateOfferMixin.Class = AggregateOfferImpl
+
+export const fromPointer = createFactory<AggregateOffer>([OfferMixin, AggregateOfferMixin], { types: [schema.AggregateOffer] });

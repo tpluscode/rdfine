@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -150,3 +151,5 @@ class JobPostingImpl extends JobPostingMixin(RdfResourceImpl) {
 }
 JobPostingMixin.appliesTo = schema.JobPosting
 JobPostingMixin.Class = JobPostingImpl
+
+export const fromPointer = createFactory<JobPosting>([IntangibleMixin, JobPostingMixin], { types: [schema.JobPosting] });

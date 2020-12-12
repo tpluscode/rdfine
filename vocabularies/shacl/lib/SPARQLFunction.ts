@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
@@ -29,3 +30,5 @@ class SPARQLFunctionImpl extends SPARQLFunctionMixin(RdfResourceImpl) {
 }
 SPARQLFunctionMixin.appliesTo = sh.SPARQLFunction
 SPARQLFunctionMixin.Class = SPARQLFunctionImpl
+
+export const fromPointer = createFactory<SPARQLFunction>([SPARQLSelectExecutableMixin, SPARQLAskExecutableMixin, FunctionMixin, SPARQLFunctionMixin], { types: [sh.SPARQLFunction] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -51,3 +52,5 @@ class SoftwareSourceCodeImpl extends SoftwareSourceCodeMixin(RdfResourceImpl) {
 }
 SoftwareSourceCodeMixin.appliesTo = schema.SoftwareSourceCode
 SoftwareSourceCodeMixin.Class = SoftwareSourceCodeImpl
+
+export const fromPointer = createFactory<SoftwareSourceCode>([CreativeWorkMixin, SoftwareSourceCodeMixin], { types: [schema.SoftwareSourceCode] });

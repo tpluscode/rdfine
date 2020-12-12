@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -57,3 +58,5 @@ class TicketImpl extends TicketMixin(RdfResourceImpl) {
 }
 TicketMixin.appliesTo = schema.Ticket
 TicketMixin.Class = TicketImpl
+
+export const fromPointer = createFactory<Ticket>([IntangibleMixin, TicketMixin], { types: [schema.Ticket] });

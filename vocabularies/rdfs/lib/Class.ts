@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { rdfs } from './namespace';
@@ -30,3 +31,5 @@ class ClassImpl extends ClassMixin(RdfResourceImpl) {
 }
 ClassMixin.appliesTo = rdfs.Class
 ClassMixin.Class = ClassImpl
+
+export const fromPointer = createFactory<Class>([ResourceMixin, ClassMixin], { types: [rdfs.Class] });

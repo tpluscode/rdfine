@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -27,3 +28,5 @@ class ActionTestCaseImpl extends ActionTestCaseMixin(RdfResourceImpl) {
 }
 ActionTestCaseMixin.appliesTo = dash.ActionTestCase
 ActionTestCaseMixin.Class = ActionTestCaseImpl
+
+export const fromPointer = createFactory<ActionTestCase>([TestCaseMixin, ActionTestCaseMixin], { types: [dash.ActionTestCase] });

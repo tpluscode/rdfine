@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './namespace';
@@ -28,3 +29,5 @@ class DatatypePropertyImpl extends DatatypePropertyMixin(RdfResourceImpl) {
 }
 DatatypePropertyMixin.appliesTo = owl.DatatypeProperty
 DatatypePropertyMixin.Class = DatatypePropertyImpl
+
+export const fromPointer = createFactory<DatatypeProperty>([RdfPropertyMixin, DatatypePropertyMixin], { types: [owl.DatatypeProperty] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
@@ -77,3 +78,5 @@ class ColumnImpl extends ColumnMixin(RdfResourceImpl) {
 }
 ColumnMixin.appliesTo = csvw.Column
 ColumnMixin.Class = ColumnImpl
+
+export const fromPointer = createFactory<Column>([ColumnMixin], { types: [csvw.Column] });

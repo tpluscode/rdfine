@@ -1,2 +1,2 @@
-export * from './lib/Point';
-export * from './lib/SpatialThing';
+export { Point, PointMixin } from './lib/Point';
+export { SpatialThing, SpatialThingMixin } from './lib/SpatialThing';

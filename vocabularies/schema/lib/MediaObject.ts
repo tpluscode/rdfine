@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -84,3 +85,5 @@ class MediaObjectImpl extends MediaObjectMixin(RdfResourceImpl) {
 }
 MediaObjectMixin.appliesTo = schema.MediaObject
 MediaObjectMixin.Class = MediaObjectImpl
+
+export const fromPointer = createFactory<MediaObject>([CreativeWorkMixin, MediaObjectMixin], { types: [schema.MediaObject] });

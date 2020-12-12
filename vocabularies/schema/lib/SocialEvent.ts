@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -27,3 +28,5 @@ class SocialEventImpl extends SocialEventMixin(RdfResourceImpl) {
 }
 SocialEventMixin.appliesTo = schema.SocialEvent
 SocialEventMixin.Class = SocialEventImpl
+
+export const fromPointer = createFactory<SocialEvent>([EventMixin, SocialEventMixin], { types: [schema.SocialEvent] });

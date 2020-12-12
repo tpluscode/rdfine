@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { rdf } from './namespace';
@@ -35,3 +36,5 @@ class StatementImpl extends StatementMixin(RdfResourceImpl) {
 }
 StatementMixin.appliesTo = rdf.Statement
 StatementMixin.Class = StatementImpl
+
+export const fromPointer = createFactory<Statement>([StatementMixin], { types: [rdf.Statement] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -31,3 +32,5 @@ class ProductCollectionImpl extends ProductCollectionMixin(RdfResourceImpl) {
 }
 ProductCollectionMixin.appliesTo = schema.ProductCollection
 ProductCollectionMixin.Class = ProductCollectionImpl
+
+export const fromPointer = createFactory<ProductCollection>([ProductMixin, CollectionMixin, ProductCollectionMixin], { types: [schema.ProductCollection] });

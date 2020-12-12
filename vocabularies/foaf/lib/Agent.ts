@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
@@ -86,3 +87,5 @@ class AgentImpl extends AgentMixin(RdfResourceImpl) {
 }
 AgentMixin.appliesTo = foaf.Agent
 AgentMixin.Class = AgentImpl
+
+export const fromPointer = createFactory<Agent>([AgentMixin], { types: [foaf.Agent] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -27,3 +28,5 @@ class LikeActionImpl extends LikeActionMixin(RdfResourceImpl) {
 }
 LikeActionMixin.appliesTo = schema.LikeAction
 LikeActionMixin.Class = LikeActionImpl
+
+export const fromPointer = createFactory<LikeAction>([ReactActionMixin, LikeActionMixin], { types: [schema.LikeAction] });

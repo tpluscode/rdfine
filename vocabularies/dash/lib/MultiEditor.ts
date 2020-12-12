@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -27,3 +28,5 @@ class MultiEditorImpl extends MultiEditorMixin(RdfResourceImpl) {
 }
 MultiEditorMixin.appliesTo = dash.MultiEditor
 MultiEditorMixin.Class = MultiEditorImpl
+
+export const fromPointer = createFactory<MultiEditor>([EditorMixin, MultiEditorMixin], { types: [dash.MultiEditor] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -33,3 +34,5 @@ class ParentAudienceImpl extends ParentAudienceMixin(RdfResourceImpl) {
 }
 ParentAudienceMixin.appliesTo = schema.ParentAudience
 ParentAudienceMixin.Class = ParentAudienceImpl
+
+export const fromPointer = createFactory<ParentAudience>([PeopleAudienceMixin, ParentAudienceMixin], { types: [schema.ParentAudience] });

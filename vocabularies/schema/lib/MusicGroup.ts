@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -48,3 +49,5 @@ class MusicGroupImpl extends MusicGroupMixin(RdfResourceImpl) {
 }
 MusicGroupMixin.appliesTo = schema.MusicGroup
 MusicGroupMixin.Class = MusicGroupImpl
+
+export const fromPointer = createFactory<MusicGroup>([PerformingGroupMixin, MusicGroupMixin], { types: [schema.MusicGroup] });

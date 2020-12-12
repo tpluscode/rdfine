@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -42,3 +43,5 @@ class ItemListImpl extends ItemListMixin(RdfResourceImpl) {
 }
 ItemListMixin.appliesTo = schema.ItemList
 ItemListMixin.Class = ItemListImpl
+
+export const fromPointer = createFactory<ItemList>([IntangibleMixin, ItemListMixin], { types: [schema.ItemList] });

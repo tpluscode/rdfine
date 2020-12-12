@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { wgs } from './namespace';
@@ -27,3 +28,5 @@ class PointImpl extends PointMixin(RdfResourceImpl) {
 }
 PointMixin.appliesTo = wgs.Point
 PointMixin.Class = PointImpl
+
+export const fromPointer = createFactory<Point>([SpatialThingMixin, PointMixin], { types: [wgs.Point] });

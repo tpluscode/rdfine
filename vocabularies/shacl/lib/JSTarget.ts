@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
@@ -28,3 +29,5 @@ class JSTargetImpl extends JSTargetMixin(RdfResourceImpl) {
 }
 JSTargetMixin.appliesTo = sh.JSTarget
 JSTargetMixin.Class = JSTargetImpl
+
+export const fromPointer = createFactory<JSTarget>([TargetMixin, JSExecutableMixin, JSTargetMixin], { types: [sh.JSTarget] });

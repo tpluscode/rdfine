@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -63,3 +64,5 @@ class PropertyValueSpecificationImpl extends PropertyValueSpecificationMixin(Rdf
 }
 PropertyValueSpecificationMixin.appliesTo = schema.PropertyValueSpecification
 PropertyValueSpecificationMixin.Class = PropertyValueSpecificationImpl
+
+export const fromPointer = createFactory<PropertyValueSpecification>([IntangibleMixin, PropertyValueSpecificationMixin], { types: [schema.PropertyValueSpecification] });

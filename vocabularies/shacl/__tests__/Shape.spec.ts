@@ -4,7 +4,7 @@ import RDF from '@rdfjs/data-model'
 import RdfResource, { Constructor } from '@tpluscode/rdfine'
 import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
 import { ResourceMixin } from '@rdfine/rdfs/lib/Resource'
-import { ShapeMixin } from '../lib/Shape';
+import { fromPointer } from '../lib/Shape';
 import { ShapeBundle } from '../bundles'
 import { sh } from '../lib/namespace'
 import { PropertyShapeMixin } from '../lib/PropertyShape'
@@ -23,7 +23,7 @@ describe('Shape', () => {
         })
 
       // when
-      const shape = new ShapeMixin.Class(graph)
+      const shape = fromPointer(graph)
 
       // then
       expect(shape.property[0].name).toEqual('Foo')

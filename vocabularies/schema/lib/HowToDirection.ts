@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -58,3 +59,5 @@ class HowToDirectionImpl extends HowToDirectionMixin(RdfResourceImpl) {
 }
 HowToDirectionMixin.appliesTo = schema.HowToDirection
 HowToDirectionMixin.Class = HowToDirectionImpl
+
+export const fromPointer = createFactory<HowToDirection>([ListItemMixin, CreativeWorkMixin, HowToDirectionMixin], { types: [schema.HowToDirection] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -41,3 +42,5 @@ class PronounceableTextImpl extends PronounceableTextMixin(RdfResourceImpl) {
 }
 PronounceableTextMixin.appliesTo = schema.PronounceableText
 PronounceableTextMixin.Class = PronounceableTextImpl
+
+export const fromPointer = createFactory<PronounceableText>([PronounceableTextMixin], { types: [schema.PronounceableText] });

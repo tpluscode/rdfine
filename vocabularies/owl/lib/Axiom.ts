@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './namespace';
@@ -28,3 +29,5 @@ class AxiomImpl extends AxiomMixin(RdfResourceImpl) {
 }
 AxiomMixin.appliesTo = owl.Axiom
 AxiomMixin.Class = AxiomImpl
+
+export const fromPointer = createFactory<Axiom>([RdfsResourceMixin, AxiomMixin], { types: [owl.Axiom] });

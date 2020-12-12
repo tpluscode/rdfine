@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -93,3 +94,5 @@ class OrderImpl extends OrderMixin(RdfResourceImpl) {
 }
 OrderMixin.appliesTo = schema.Order
 OrderMixin.Class = OrderImpl
+
+export const fromPointer = createFactory<Order>([IntangibleMixin, OrderMixin], { types: [schema.Order] });

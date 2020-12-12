@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
@@ -27,3 +28,5 @@ class OnlineGamingAccountImpl extends OnlineGamingAccountMixin(RdfResourceImpl) 
 }
 OnlineGamingAccountMixin.appliesTo = foaf.OnlineGamingAccount
 OnlineGamingAccountMixin.Class = OnlineGamingAccountImpl
+
+export const fromPointer = createFactory<OnlineGamingAccount>([OnlineAccountMixin, OnlineGamingAccountMixin], { types: [foaf.OnlineGamingAccount] });

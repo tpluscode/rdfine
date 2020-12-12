@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -27,3 +28,5 @@ class InferencingTestCaseImpl extends InferencingTestCaseMixin(RdfResourceImpl) 
 }
 InferencingTestCaseMixin.appliesTo = dash.InferencingTestCase
 InferencingTestCaseMixin.Class = InferencingTestCaseImpl
+
+export const fromPointer = createFactory<InferencingTestCase>([TestCaseMixin, InferencingTestCaseMixin], { types: [dash.InferencingTestCase] });

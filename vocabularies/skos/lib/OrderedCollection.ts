@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { skos } from './namespace';
@@ -32,3 +33,5 @@ class OrderedCollectionImpl extends OrderedCollectionMixin(RdfResourceImpl) {
 }
 OrderedCollectionMixin.appliesTo = skos.OrderedCollection
 OrderedCollectionMixin.Class = OrderedCollectionImpl
+
+export const fromPointer = createFactory<OrderedCollection>([CollectionMixin, OrderedCollectionMixin], { types: [skos.OrderedCollection] });

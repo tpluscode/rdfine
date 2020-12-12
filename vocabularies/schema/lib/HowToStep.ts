@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -29,3 +30,5 @@ class HowToStepImpl extends HowToStepMixin(RdfResourceImpl) {
 }
 HowToStepMixin.appliesTo = schema.HowToStep
 HowToStepMixin.Class = HowToStepImpl
+
+export const fromPointer = createFactory<HowToStep>([ListItemMixin, ItemListMixin, CreativeWorkMixin, HowToStepMixin], { types: [schema.HowToStep] });

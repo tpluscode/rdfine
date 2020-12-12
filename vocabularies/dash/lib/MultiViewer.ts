@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -27,3 +28,5 @@ class MultiViewerImpl extends MultiViewerMixin(RdfResourceImpl) {
 }
 MultiViewerMixin.appliesTo = dash.MultiViewer
 MultiViewerMixin.Class = MultiViewerImpl
+
+export const fromPointer = createFactory<MultiViewer>([ViewerMixin, MultiViewerMixin], { types: [dash.MultiViewer] });

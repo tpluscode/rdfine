@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -42,3 +43,5 @@ class APIReferenceImpl extends APIReferenceMixin(RdfResourceImpl) {
 }
 APIReferenceMixin.appliesTo = schema.APIReference
 APIReferenceMixin.Class = APIReferenceImpl
+
+export const fromPointer = createFactory<APIReference>([TechArticleMixin, APIReferenceMixin], { types: [schema.APIReference] });

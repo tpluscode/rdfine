@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
@@ -27,3 +28,5 @@ class JSConstraintImpl extends JSConstraintMixin(RdfResourceImpl) {
 }
 JSConstraintMixin.appliesTo = sh.JSConstraint
 JSConstraintMixin.Class = JSConstraintImpl
+
+export const fromPointer = createFactory<JSConstraint>([JSExecutableMixin, JSConstraintMixin], { types: [sh.JSConstraint] });

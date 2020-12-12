@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -33,3 +34,5 @@ class SendActionImpl extends SendActionMixin(RdfResourceImpl) {
 }
 SendActionMixin.appliesTo = schema.SendAction
 SendActionMixin.Class = SendActionImpl
+
+export const fromPointer = createFactory<SendAction>([TransferActionMixin, SendActionMixin], { types: [schema.SendAction] });

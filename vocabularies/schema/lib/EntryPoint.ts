@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -51,3 +52,5 @@ class EntryPointImpl extends EntryPointMixin(RdfResourceImpl) {
 }
 EntryPointMixin.appliesTo = schema.EntryPoint
 EntryPointMixin.Class = EntryPointImpl
+
+export const fromPointer = createFactory<EntryPoint>([IntangibleMixin, EntryPointMixin], { types: [schema.EntryPoint] });

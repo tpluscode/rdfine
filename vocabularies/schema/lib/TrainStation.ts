@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -27,3 +28,5 @@ class TrainStationImpl extends TrainStationMixin(RdfResourceImpl) {
 }
 TrainStationMixin.appliesTo = schema.TrainStation
 TrainStationMixin.Class = TrainStationImpl
+
+export const fromPointer = createFactory<TrainStation>([CivicStructureMixin, TrainStationMixin], { types: [schema.TrainStation] });

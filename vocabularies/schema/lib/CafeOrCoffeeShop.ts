@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -27,3 +28,5 @@ class CafeOrCoffeeShopImpl extends CafeOrCoffeeShopMixin(RdfResourceImpl) {
 }
 CafeOrCoffeeShopMixin.appliesTo = schema.CafeOrCoffeeShop
 CafeOrCoffeeShopMixin.Class = CafeOrCoffeeShopImpl
+
+export const fromPointer = createFactory<CafeOrCoffeeShop>([FoodEstablishmentMixin, CafeOrCoffeeShopMixin], { types: [schema.CafeOrCoffeeShop] });

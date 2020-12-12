@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
@@ -38,3 +39,5 @@ class RowImpl extends RowMixin(RdfResourceImpl) {
 }
 RowMixin.appliesTo = csvw.Row
 RowMixin.Class = RowImpl
+
+export const fromPointer = createFactory<Row>([RowMixin], { types: [csvw.Row] });

@@ -1,7 +1,7 @@
 import clownface from 'clownface'
 import $rdf from '@rdfjs/dataset'
 import RDF from '@rdfjs/data-model'
-import { IriTemplateMixin } from '../lib/IriTemplate'
+import { fromPointer } from '../lib/IriTemplate'
 import { hydra } from '../lib/namespace';
 import namespace from '@rdfjs/namespace'
 import { xsd } from '@tpluscode/rdf-ns-builders';
@@ -33,7 +33,7 @@ describe('IriTemplate', () => {
       // given
       const dataset = $rdf.dataset()
       const pointer = clownface({ dataset }).blankNode()
-      const iriTemplate = new IriTemplateMixin.Class(pointer, {
+      const iriTemplate = fromPointer(pointer, {
         template: 'http://example.com/find/{value}',
         variableRepresentation: RDF.namedNode(representation),
         mapping: [
@@ -59,7 +59,7 @@ describe('IriTemplate', () => {
       // given
       const dataset = $rdf.dataset()
       const pointer = clownface({ dataset }).blankNode()
-      const iriTemplate = new IriTemplateMixin.Class(pointer, {
+      const iriTemplate = fromPointer(pointer, {
         template: 'http://example.com/find/{?foo,bar,baz}',
         mapping: [
           {

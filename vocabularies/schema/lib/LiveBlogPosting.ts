@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -36,3 +37,5 @@ class LiveBlogPostingImpl extends LiveBlogPostingMixin(RdfResourceImpl) {
 }
 LiveBlogPostingMixin.appliesTo = schema.LiveBlogPosting
 LiveBlogPostingMixin.Class = LiveBlogPostingImpl
+
+export const fromPointer = createFactory<LiveBlogPosting>([BlogPostingMixin, LiveBlogPostingMixin], { types: [schema.LiveBlogPosting] });

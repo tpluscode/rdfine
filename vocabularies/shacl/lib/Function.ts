@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
@@ -32,3 +33,5 @@ class FunctionImpl extends FunctionMixin(RdfResourceImpl) {
 }
 FunctionMixin.appliesTo = sh.Function
 FunctionMixin.Class = FunctionImpl
+
+export const fromPointer = createFactory<Function>([ParameterizableMixin, FunctionMixin], { types: [sh.Function] });

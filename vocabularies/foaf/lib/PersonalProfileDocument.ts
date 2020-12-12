@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
@@ -27,3 +28,5 @@ class PersonalProfileDocumentImpl extends PersonalProfileDocumentMixin(RdfResour
 }
 PersonalProfileDocumentMixin.appliesTo = foaf.PersonalProfileDocument
 PersonalProfileDocumentMixin.Class = PersonalProfileDocumentImpl
+
+export const fromPointer = createFactory<PersonalProfileDocument>([DocumentMixin, PersonalProfileDocumentMixin], { types: [foaf.PersonalProfileDocument] });

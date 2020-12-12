@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -129,3 +130,5 @@ class DrugImpl extends DrugMixin(RdfResourceImpl) {
 }
 DrugMixin.appliesTo = schema.Drug
 DrugMixin.Class = DrugImpl
+
+export const fromPointer = createFactory<Drug>([SubstanceMixin, DrugMixin], { types: [schema.Drug] });

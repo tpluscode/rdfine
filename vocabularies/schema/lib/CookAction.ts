@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -36,3 +37,5 @@ class CookActionImpl extends CookActionMixin(RdfResourceImpl) {
 }
 CookActionMixin.appliesTo = schema.CookAction
 CookActionMixin.Class = CookActionImpl
+
+export const fromPointer = createFactory<CookAction>([CreateActionMixin, CookActionMixin], { types: [schema.CookAction] });

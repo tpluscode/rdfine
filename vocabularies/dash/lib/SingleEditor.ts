@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -27,3 +28,5 @@ class SingleEditorImpl extends SingleEditorMixin(RdfResourceImpl) {
 }
 SingleEditorMixin.appliesTo = dash.SingleEditor
 SingleEditorMixin.Class = SingleEditorImpl
+
+export const fromPointer = createFactory<SingleEditor>([EditorMixin, SingleEditorMixin], { types: [dash.SingleEditor] });

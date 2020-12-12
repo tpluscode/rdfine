@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -27,3 +28,5 @@ class GraphStoreTestCaseImpl extends GraphStoreTestCaseMixin(RdfResourceImpl) {
 }
 GraphStoreTestCaseMixin.appliesTo = dash.GraphStoreTestCase
 GraphStoreTestCaseMixin.Class = GraphStoreTestCaseImpl
+
+export const fromPointer = createFactory<GraphStoreTestCase>([TestCaseMixin, GraphStoreTestCaseMixin], { types: [dash.GraphStoreTestCase] });

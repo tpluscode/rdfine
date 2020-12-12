@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -28,3 +29,5 @@ class HealthClubImpl extends HealthClubMixin(RdfResourceImpl) {
 }
 HealthClubMixin.appliesTo = schema.HealthClub
 HealthClubMixin.Class = HealthClubImpl
+
+export const fromPointer = createFactory<HealthClub>([SportsActivityLocationMixin, HealthAndBeautyBusinessMixin, HealthClubMixin], { types: [schema.HealthClub] });

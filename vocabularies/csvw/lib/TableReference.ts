@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
@@ -35,3 +36,5 @@ class TableReferenceImpl extends TableReferenceMixin(RdfResourceImpl) {
 }
 TableReferenceMixin.appliesTo = csvw.TableReference
 TableReferenceMixin.Class = TableReferenceImpl
+
+export const fromPointer = createFactory<TableReference>([TableReferenceMixin], { types: [csvw.TableReference] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { doap } from './namespace';
@@ -28,3 +29,5 @@ class SpecificationImpl extends SpecificationMixin(RdfResourceImpl) {
 }
 SpecificationMixin.appliesTo = doap.Specification
 SpecificationMixin.Class = SpecificationImpl
+
+export const fromPointer = createFactory<Specification>([RdfsResourceMixin, SpecificationMixin], { types: [doap.Specification] });

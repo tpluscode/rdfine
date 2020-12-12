@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { doap } from './namespace';
@@ -38,3 +39,5 @@ class VersionImpl extends VersionMixin(RdfResourceImpl) {
 }
 VersionMixin.appliesTo = doap.Version
 VersionMixin.Class = VersionImpl
+
+export const fromPointer = createFactory<Version>([VersionMixin], { types: [doap.Version] });

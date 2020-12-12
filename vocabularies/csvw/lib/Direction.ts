@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
@@ -26,3 +27,5 @@ class DirectionImpl extends DirectionMixin(RdfResourceImpl) {
 }
 DirectionMixin.appliesTo = csvw.Direction
 DirectionMixin.Class = DirectionImpl
+
+export const fromPointer = createFactory<Direction>([DirectionMixin], { types: [csvw.Direction] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -30,3 +31,5 @@ class CategoryCodeSetImpl extends CategoryCodeSetMixin(RdfResourceImpl) {
 }
 CategoryCodeSetMixin.appliesTo = schema.CategoryCodeSet
 CategoryCodeSetMixin.Class = CategoryCodeSetImpl
+
+export const fromPointer = createFactory<CategoryCodeSet>([DefinedTermSetMixin, CategoryCodeSetMixin], { types: [schema.CategoryCodeSet] });

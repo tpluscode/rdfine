@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { doap } from './namespace';
@@ -27,3 +28,5 @@ class BazaarBranchImpl extends BazaarBranchMixin(RdfResourceImpl) {
 }
 BazaarBranchMixin.appliesTo = doap.BazaarBranch
 BazaarBranchMixin.Class = BazaarBranchImpl
+
+export const fromPointer = createFactory<BazaarBranch>([RepositoryMixin, BazaarBranchMixin], { types: [doap.BazaarBranch] });

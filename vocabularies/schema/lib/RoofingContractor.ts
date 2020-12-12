@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -27,3 +28,5 @@ class RoofingContractorImpl extends RoofingContractorMixin(RdfResourceImpl) {
 }
 RoofingContractorMixin.appliesTo = schema.RoofingContractor
 RoofingContractorMixin.Class = RoofingContractorImpl
+
+export const fromPointer = createFactory<RoofingContractor>([HomeAndConstructionBusinessMixin, RoofingContractorMixin], { types: [schema.RoofingContractor] });

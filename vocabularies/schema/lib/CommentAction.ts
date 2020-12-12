@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -30,3 +31,5 @@ class CommentActionImpl extends CommentActionMixin(RdfResourceImpl) {
 }
 CommentActionMixin.appliesTo = schema.CommentAction
 CommentActionMixin.Class = CommentActionImpl
+
+export const fromPointer = createFactory<CommentAction>([CommunicateActionMixin, CommentActionMixin], { types: [schema.CommentAction] });

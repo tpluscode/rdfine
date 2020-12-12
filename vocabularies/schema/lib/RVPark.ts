@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -27,3 +28,5 @@ class RVParkImpl extends RVParkMixin(RdfResourceImpl) {
 }
 RVParkMixin.appliesTo = schema.RVPark
 RVParkMixin.Class = RVParkImpl
+
+export const fromPointer = createFactory<RVPark>([CivicStructureMixin, RVParkMixin], { types: [schema.RVPark] });

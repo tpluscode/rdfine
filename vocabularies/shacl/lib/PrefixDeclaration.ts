@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
@@ -34,3 +35,5 @@ class PrefixDeclarationImpl extends PrefixDeclarationMixin(RdfResourceImpl) {
 }
 PrefixDeclarationMixin.appliesTo = sh.PrefixDeclaration
 PrefixDeclarationMixin.Class = PrefixDeclarationImpl
+
+export const fromPointer = createFactory<PrefixDeclaration>([RdfsResourceMixin, PrefixDeclarationMixin], { types: [sh.PrefixDeclaration] });

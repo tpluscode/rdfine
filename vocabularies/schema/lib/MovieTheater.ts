@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -31,3 +32,5 @@ class MovieTheaterImpl extends MovieTheaterMixin(RdfResourceImpl) {
 }
 MovieTheaterMixin.appliesTo = schema.MovieTheater
 MovieTheaterMixin.Class = MovieTheaterImpl
+
+export const fromPointer = createFactory<MovieTheater>([EntertainmentBusinessMixin, CivicStructureMixin, MovieTheaterMixin], { types: [schema.MovieTheater] });

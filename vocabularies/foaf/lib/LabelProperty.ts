@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
@@ -26,3 +27,5 @@ class LabelPropertyImpl extends LabelPropertyMixin(RdfResourceImpl) {
 }
 LabelPropertyMixin.appliesTo = foaf.LabelProperty
 LabelPropertyMixin.Class = LabelPropertyImpl
+
+export const fromPointer = createFactory<LabelProperty>([LabelPropertyMixin], { types: [foaf.LabelProperty] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -33,3 +34,5 @@ class MedicalSignImpl extends MedicalSignMixin(RdfResourceImpl) {
 }
 MedicalSignMixin.appliesTo = schema.MedicalSign
 MedicalSignMixin.Class = MedicalSignImpl
+
+export const fromPointer = createFactory<MedicalSign>([MedicalSignOrSymptomMixin, MedicalSignMixin], { types: [schema.MedicalSign] });

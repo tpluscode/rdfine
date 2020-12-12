@@ -1,4 +1,4 @@
-export * from './lib/Collection';
-export * from './lib/Concept';
-export * from './lib/ConceptScheme';
-export * from './lib/OrderedCollection';
+export { Collection, CollectionMixin } from './lib/Collection';
+export { Concept, ConceptMixin } from './lib/Concept';
+export { ConceptScheme, ConceptSchemeMixin } from './lib/ConceptScheme';
+export { OrderedCollection, OrderedCollectionMixin } from './lib/OrderedCollection';

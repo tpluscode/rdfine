@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './namespace';
@@ -27,3 +28,5 @@ class SymmetricPropertyImpl extends SymmetricPropertyMixin(RdfResourceImpl) {
 }
 SymmetricPropertyMixin.appliesTo = owl.SymmetricProperty
 SymmetricPropertyMixin.Class = SymmetricPropertyImpl
+
+export const fromPointer = createFactory<SymmetricProperty>([ObjectPropertyMixin, SymmetricPropertyMixin], { types: [owl.SymmetricProperty] });

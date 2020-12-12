@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
@@ -27,3 +28,5 @@ class ThreadImpl extends ThreadMixin(RdfResourceImpl) {
 }
 ThreadMixin.appliesTo = sioc.Thread
 ThreadMixin.Class = ThreadImpl
+
+export const fromPointer = createFactory<Thread>([ContainerMixin, ThreadMixin], { types: [sioc.Thread] });

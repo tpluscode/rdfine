@@ -4,7 +4,7 @@ import RDF from '@rdfjs/data-model'
 import RdfResource from '@tpluscode/rdfine'
 import { rdfs, skos } from '@tpluscode/rdf-ns-builders'
 import { ResourceMixin } from '@rdfine/rdfs/lib/Resource'
-import { PropertyShape, PropertyShapeMixin } from '../lib/PropertyShape';
+import { PropertyShape, fromPointer } from '../lib/PropertyShape';
 import { PropertyShapeBundle } from '../bundles'
 
 RdfResource.factory.addMixin(...PropertyShapeBundle)
@@ -19,7 +19,7 @@ describe('PropertyShape', () => {
 
       // when
       // eslint-disable-next-line no-new
-      new PropertyShapeMixin.Class(graph, {
+      fromPointer(graph, {
         path: rdfs.label,
       })
 
@@ -34,7 +34,7 @@ describe('PropertyShape', () => {
 
       // when
       // eslint-disable-next-line no-new
-      new PropertyShapeMixin.Class(graph, {
+      fromPointer(graph, {
         path: [skos.broader, rdfs.label],
       })
 

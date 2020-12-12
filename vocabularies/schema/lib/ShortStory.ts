@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -27,3 +28,5 @@ class ShortStoryImpl extends ShortStoryMixin(RdfResourceImpl) {
 }
 ShortStoryMixin.appliesTo = schema.ShortStory
 ShortStoryMixin.Class = ShortStoryImpl
+
+export const fromPointer = createFactory<ShortStory>([CreativeWorkMixin, ShortStoryMixin], { types: [schema.ShortStory] });

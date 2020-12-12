@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -42,3 +43,5 @@ class AlignmentObjectImpl extends AlignmentObjectMixin(RdfResourceImpl) {
 }
 AlignmentObjectMixin.appliesTo = schema.AlignmentObject
 AlignmentObjectMixin.Class = AlignmentObjectImpl
+
+export const fromPointer = createFactory<AlignmentObject>([IntangibleMixin, AlignmentObjectMixin], { types: [schema.AlignmentObject] });

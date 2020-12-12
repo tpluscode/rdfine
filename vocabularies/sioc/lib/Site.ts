@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
@@ -33,3 +34,5 @@ class SiteImpl extends SiteMixin(RdfResourceImpl) {
 }
 SiteMixin.appliesTo = sioc.Site
 SiteMixin.Class = SiteImpl
+
+export const fromPointer = createFactory<Site>([SpaceMixin, SiteMixin], { types: [sioc.Site] });

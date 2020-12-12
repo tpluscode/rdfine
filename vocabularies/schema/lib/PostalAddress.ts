@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -48,3 +49,5 @@ class PostalAddressImpl extends PostalAddressMixin(RdfResourceImpl) {
 }
 PostalAddressMixin.appliesTo = schema.PostalAddress
 PostalAddressMixin.Class = PostalAddressImpl
+
+export const fromPointer = createFactory<PostalAddress>([ContactPointMixin, PostalAddressMixin], { types: [schema.PostalAddress] });

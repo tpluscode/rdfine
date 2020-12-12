@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -29,3 +30,5 @@ class JSTestCaseImpl extends JSTestCaseMixin(RdfResourceImpl) {
 }
 JSTestCaseMixin.appliesTo = dash.JSTestCase
 JSTestCaseMixin.Class = JSTestCaseImpl
+
+export const fromPointer = createFactory<JSTestCase>([ShaclJSFunctionMixin, TestCaseMixin, JSTestCaseMixin], { types: [dash.JSTestCase] });

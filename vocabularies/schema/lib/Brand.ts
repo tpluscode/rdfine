@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -39,3 +40,5 @@ class BrandImpl extends BrandMixin(RdfResourceImpl) {
 }
 BrandMixin.appliesTo = schema.Brand
 BrandMixin.Class = BrandImpl
+
+export const fromPointer = createFactory<Brand>([IntangibleMixin, BrandMixin], { types: [schema.Brand] });

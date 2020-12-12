@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -42,3 +43,5 @@ class SuperficialAnatomyImpl extends SuperficialAnatomyMixin(RdfResourceImpl) {
 }
 SuperficialAnatomyMixin.appliesTo = schema.SuperficialAnatomy
 SuperficialAnatomyMixin.Class = SuperficialAnatomyImpl
+
+export const fromPointer = createFactory<SuperficialAnatomy>([MedicalEntityMixin, SuperficialAnatomyMixin], { types: [schema.SuperficialAnatomy] });

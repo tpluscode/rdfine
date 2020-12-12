@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -29,3 +30,5 @@ class QueryTestCaseImpl extends QueryTestCaseMixin(RdfResourceImpl) {
 }
 QueryTestCaseMixin.appliesTo = dash.QueryTestCase
 QueryTestCaseMixin.Class = QueryTestCaseImpl
+
+export const fromPointer = createFactory<QueryTestCase>([ShaclSPARQLSelectExecutableMixin, TestCaseMixin, QueryTestCaseMixin], { types: [dash.QueryTestCase] });

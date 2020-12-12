@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -28,3 +29,5 @@ class PalliativeProcedureImpl extends PalliativeProcedureMixin(RdfResourceImpl) 
 }
 PalliativeProcedureMixin.appliesTo = schema.PalliativeProcedure
 PalliativeProcedureMixin.Class = PalliativeProcedureImpl
+
+export const fromPointer = createFactory<PalliativeProcedure>([MedicalTherapyMixin, MedicalProcedureMixin, PalliativeProcedureMixin], { types: [schema.PalliativeProcedure] });

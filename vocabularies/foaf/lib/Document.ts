@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
@@ -35,3 +36,5 @@ class DocumentImpl extends DocumentMixin(RdfResourceImpl) {
 }
 DocumentMixin.appliesTo = foaf.Document
 DocumentMixin.Class = DocumentImpl
+
+export const fromPointer = createFactory<Document>([DocumentMixin], { types: [foaf.Document] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
@@ -32,3 +33,5 @@ class RoleImpl extends RoleMixin(RdfResourceImpl) {
 }
 RoleMixin.appliesTo = sioc.Role
 RoleMixin.Class = RoleImpl
+
+export const fromPointer = createFactory<Role>([RoleMixin], { types: [sioc.Role] });

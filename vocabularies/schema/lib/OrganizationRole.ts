@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -30,3 +31,5 @@ class OrganizationRoleImpl extends OrganizationRoleMixin(RdfResourceImpl) {
 }
 OrganizationRoleMixin.appliesTo = schema.OrganizationRole
 OrganizationRoleMixin.Class = OrganizationRoleImpl
+
+export const fromPointer = createFactory<OrganizationRole>([RoleMixin, OrganizationRoleMixin], { types: [schema.OrganizationRole] });

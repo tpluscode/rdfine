@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -27,3 +28,5 @@ class AutomotiveBusinessImpl extends AutomotiveBusinessMixin(RdfResourceImpl) {
 }
 AutomotiveBusinessMixin.appliesTo = schema.AutomotiveBusiness
 AutomotiveBusinessMixin.Class = AutomotiveBusinessImpl
+
+export const fromPointer = createFactory<AutomotiveBusiness>([LocalBusinessMixin, AutomotiveBusinessMixin], { types: [schema.AutomotiveBusiness] });

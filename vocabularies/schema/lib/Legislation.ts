@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -78,3 +79,5 @@ class LegislationImpl extends LegislationMixin(RdfResourceImpl) {
 }
 LegislationMixin.appliesTo = schema.Legislation
 LegislationMixin.Class = LegislationImpl
+
+export const fromPointer = createFactory<Legislation>([CreativeWorkMixin, LegislationMixin], { types: [schema.Legislation] });

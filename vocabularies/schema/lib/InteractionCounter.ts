@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -36,3 +37,5 @@ class InteractionCounterImpl extends InteractionCounterMixin(RdfResourceImpl) {
 }
 InteractionCounterMixin.appliesTo = schema.InteractionCounter
 InteractionCounterMixin.Class = InteractionCounterImpl
+
+export const fromPointer = createFactory<InteractionCounter>([StructuredValueMixin, InteractionCounterMixin], { types: [schema.InteractionCounter] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { rdfs } from './namespace';
@@ -27,3 +28,5 @@ class ContainerImpl extends ContainerMixin(RdfResourceImpl) {
 }
 ContainerMixin.appliesTo = rdfs.Container
 ContainerMixin.Class = ContainerImpl
+
+export const fromPointer = createFactory<Container>([ResourceMixin, ContainerMixin], { types: [rdfs.Container] });

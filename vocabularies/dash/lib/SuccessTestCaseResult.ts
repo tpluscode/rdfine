@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -27,3 +28,5 @@ class SuccessTestCaseResultImpl extends SuccessTestCaseResultMixin(RdfResourceIm
 }
 SuccessTestCaseResultMixin.appliesTo = dash.SuccessTestCaseResult
 SuccessTestCaseResultMixin.Class = SuccessTestCaseResultImpl
+
+export const fromPointer = createFactory<SuccessTestCaseResult>([TestCaseResultMixin, SuccessTestCaseResultMixin], { types: [dash.SuccessTestCaseResult] });

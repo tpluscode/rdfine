@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -64,3 +65,5 @@ class VideoGameImpl extends VideoGameMixin(RdfResourceImpl) {
 }
 VideoGameMixin.appliesTo = schema.VideoGame
 VideoGameMixin.Class = VideoGameImpl
+
+export const fromPointer = createFactory<VideoGame>([SoftwareApplicationMixin, GameMixin, VideoGameMixin], { types: [schema.VideoGame] });

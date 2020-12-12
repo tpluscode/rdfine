@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -27,3 +28,5 @@ class EmergencyServiceImpl extends EmergencyServiceMixin(RdfResourceImpl) {
 }
 EmergencyServiceMixin.appliesTo = schema.EmergencyService
 EmergencyServiceMixin.Class = EmergencyServiceImpl
+
+export const fromPointer = createFactory<EmergencyService>([LocalBusinessMixin, EmergencyServiceMixin], { types: [schema.EmergencyService] });

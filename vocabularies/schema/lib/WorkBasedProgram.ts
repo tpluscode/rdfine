@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -36,3 +37,5 @@ class WorkBasedProgramImpl extends WorkBasedProgramMixin(RdfResourceImpl) {
 }
 WorkBasedProgramMixin.appliesTo = schema.WorkBasedProgram
 WorkBasedProgramMixin.Class = WorkBasedProgramImpl
+
+export const fromPointer = createFactory<WorkBasedProgram>([EducationalOccupationalProgramMixin, WorkBasedProgramMixin], { types: [schema.WorkBasedProgram] });

@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -29,3 +30,5 @@ class SPARQLConstructTemplateImpl extends SPARQLConstructTemplateMixin(RdfResour
 }
 SPARQLConstructTemplateMixin.appliesTo = dash.SPARQLConstructTemplate
 SPARQLConstructTemplateMixin.Class = SPARQLConstructTemplateImpl
+
+export const fromPointer = createFactory<SPARQLConstructTemplate>([ShaclSPARQLConstructExecutableMixin, ShaclParameterizableMixin, SPARQLConstructTemplateMixin], { types: [dash.SPARQLConstructTemplate] });

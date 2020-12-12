@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './namespace';
@@ -28,3 +29,5 @@ class DeprecatedClassImpl extends DeprecatedClassMixin(RdfResourceImpl) {
 }
 DeprecatedClassMixin.appliesTo = owl.DeprecatedClass
 DeprecatedClassMixin.Class = DeprecatedClassImpl
+
+export const fromPointer = createFactory<DeprecatedClass>([RdfsClassMixin, DeprecatedClassMixin], { types: [owl.DeprecatedClass] });

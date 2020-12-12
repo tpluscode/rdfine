@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
@@ -30,3 +31,5 @@ class SPARQLUpdateSuggestionGeneratorImpl extends SPARQLUpdateSuggestionGenerato
 }
 SPARQLUpdateSuggestionGeneratorMixin.appliesTo = dash.SPARQLUpdateSuggestionGenerator
 SPARQLUpdateSuggestionGeneratorMixin.Class = SPARQLUpdateSuggestionGeneratorImpl
+
+export const fromPointer = createFactory<SPARQLUpdateSuggestionGenerator>([ShaclSPARQLUpdateExecutableMixin, ShaclSPARQLSelectExecutableMixin, SuggestionGeneratorMixin, SPARQLUpdateSuggestionGeneratorMixin], { types: [dash.SPARQLUpdateSuggestionGenerator] });

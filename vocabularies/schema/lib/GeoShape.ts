@@ -1,4 +1,5 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
@@ -57,3 +58,5 @@ class GeoShapeImpl extends GeoShapeMixin(RdfResourceImpl) {
 }
 GeoShapeMixin.appliesTo = schema.GeoShape
 GeoShapeMixin.Class = GeoShapeImpl
+
+export const fromPointer = createFactory<GeoShape>([StructuredValueMixin, GeoShapeMixin], { types: [schema.GeoShape] });
