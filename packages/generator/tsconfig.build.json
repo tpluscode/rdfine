@@ -6,6 +6,6 @@
     "esModuleInterop": true,
     "declaration": true
   },
-  "files": ["bin/rdfine-gen.ts"],
+  "files": ["index.ts"],
   "include": []
 }
