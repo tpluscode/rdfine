@@ -19,7 +19,7 @@ declare module '@rdfine/rdf/lib/Property' {
   }
 }
 
-export function RdfPropertyMixinEx<Base extends ExtendingConstructor<Rdf.Property, PropertyEx>>(Resource: Base): Constructor<PropertyEx & RdfResourceCore> & Base {
+export function PropertyMixinEx<Base extends ExtendingConstructor<Rdf.Property, PropertyEx>>(Resource: Base): Constructor<PropertyEx & RdfResourceCore> & Base {
   @namespace(rdfs)
   class Impl extends Resource implements PropertyEx {
     @property.resource({ values: 'array', implicitTypes: [rdfs.Class] })
@@ -31,4 +31,4 @@ export function RdfPropertyMixinEx<Base extends ExtendingConstructor<Rdf.Propert
   }
   return Impl
 }
-RdfPropertyMixinEx.appliesTo = rdf.Property
+PropertyMixinEx.appliesTo = rdf.Property

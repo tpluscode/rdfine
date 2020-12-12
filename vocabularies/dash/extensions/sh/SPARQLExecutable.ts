@@ -16,7 +16,7 @@ declare module '@rdfine/shacl/lib/SPARQLExecutable' {
   }
 }
 
-export function ShaclSPARQLExecutableMixinEx<Base extends ExtendingConstructor<Shacl.SPARQLExecutable, SPARQLExecutableEx>>(Resource: Base): Constructor<SPARQLExecutableEx & RdfResourceCore> & Base {
+export function SPARQLExecutableMixinEx<Base extends ExtendingConstructor<Shacl.SPARQLExecutable, SPARQLExecutableEx>>(Resource: Base): Constructor<SPARQLExecutableEx & RdfResourceCore> & Base {
   @namespace(dash)
   class Impl extends Resource implements SPARQLExecutableEx {
     @property.resource({ implicitTypes: [dash.ExecutionPlatform] })
@@ -24,4 +24,4 @@ export function ShaclSPARQLExecutableMixinEx<Base extends ExtendingConstructor<S
   }
   return Impl
 }
-ShaclSPARQLExecutableMixinEx.appliesTo = sh.SPARQLExecutable
+SPARQLExecutableMixinEx.appliesTo = sh.SPARQLExecutable

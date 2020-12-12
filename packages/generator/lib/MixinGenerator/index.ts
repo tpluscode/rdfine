@@ -7,6 +7,7 @@ import { findProperties } from '../property'
 import { toJavascriptProperties } from '../property/JsProperties'
 import { NamedNode } from 'rdf-js'
 import TermSet from '@rdfjs/term-set'
+import TermMap from '@rdfjs/term-map'
 
 export function getSuperClasses(clas: GraphPointer, types: TypeMetaCollection) {
   return clas.out(rdfs.subClassOf)
@@ -35,10 +36,13 @@ export function findTermsToGenerate(excludedTerms: NamedNode[]) {
   const excluded = new TermSet(excludedTerms)
 
   return function (types: TypeMetaCollection, context: Context) {
-    return context.vocabulary
+    const terms = new TermMap(context.vocabulary
       .has(rdf.type, [rdfs.Class, hydra.Class, owl.Class])
       .filter(term => types.get(term)?.type === 'Resource')
-      .map(term => {
+      .map(pointer => [pointer.term, pointer]))
+
+    return [...terms]
+      .map(([, term]) => {
         const meta = types.getOrThrow(term)
         if (meta.type !== 'Resource') {
           throw new Error(`Expected resource type but got ${meta.type}`)

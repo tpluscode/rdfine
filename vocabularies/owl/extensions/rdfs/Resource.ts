@@ -24,7 +24,7 @@ declare module '@rdfine/rdfs/lib/Resource' {
   }
 }
 
-export function RdfsResourceMixinEx<Base extends ExtendingConstructor<Rdfs.Resource, ResourceEx>>(Resource: Base): Constructor<ResourceEx & RdfResourceCore> & Base {
+export function ResourceMixinEx<Base extends ExtendingConstructor<Rdfs.Resource, ResourceEx>>(Resource: Base): Constructor<ResourceEx & RdfResourceCore> & Base {
   @namespace(owl)
   class Impl extends Resource implements ResourceEx {
     @property.resource({ as: [RdfsResourceMixin] })
@@ -42,4 +42,4 @@ export function RdfsResourceMixinEx<Base extends ExtendingConstructor<Rdfs.Resou
   }
   return Impl
 }
-RdfsResourceMixinEx.appliesTo = rdfs.Resource
+ResourceMixinEx.appliesTo = rdfs.Resource

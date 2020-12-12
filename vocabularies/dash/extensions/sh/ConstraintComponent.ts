@@ -18,7 +18,7 @@ declare module '@rdfine/shacl/lib/ConstraintComponent' {
   }
 }
 
-export function ShaclConstraintComponentMixinEx<Base extends ExtendingConstructor<Shacl.ConstraintComponent, ConstraintComponentEx>>(Resource: Base): Constructor<ConstraintComponentEx & RdfResourceCore> & Base {
+export function ConstraintComponentMixinEx<Base extends ExtendingConstructor<Shacl.ConstraintComponent, ConstraintComponentEx>>(Resource: Base): Constructor<ConstraintComponentEx & RdfResourceCore> & Base {
   @namespace(dash)
   class Impl extends Resource implements ConstraintComponentEx {
     @property.literal({ type: Boolean })
@@ -30,4 +30,4 @@ export function ShaclConstraintComponentMixinEx<Base extends ExtendingConstructo
   }
   return Impl
 }
-ShaclConstraintComponentMixinEx.appliesTo = sh.ConstraintComponent
+ConstraintComponentMixinEx.appliesTo = sh.ConstraintComponent

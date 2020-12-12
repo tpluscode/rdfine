@@ -16,7 +16,7 @@ declare module '@rdfine/skos/lib/Concept' {
   }
 }
 
-export function SkosConceptMixinEx<Base extends ExtendingConstructor<Skos.Concept, ConceptEx>>(Resource: Base): Constructor<ConceptEx & RdfResourceCore> & Base {
+export function ConceptMixinEx<Base extends ExtendingConstructor<Skos.Concept, ConceptEx>>(Resource: Base): Constructor<ConceptEx & RdfResourceCore> & Base {
   @namespace(foaf)
   class Impl extends Resource implements ConceptEx {
     @property()
@@ -24,4 +24,4 @@ export function SkosConceptMixinEx<Base extends ExtendingConstructor<Skos.Concep
   }
   return Impl
 }
-SkosConceptMixinEx.appliesTo = skos.Concept
+ConceptMixinEx.appliesTo = skos.Concept

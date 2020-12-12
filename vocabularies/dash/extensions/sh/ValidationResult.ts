@@ -16,7 +16,7 @@ declare module '@rdfine/shacl/lib/ValidationResult' {
   }
 }
 
-export function ShaclValidationResultMixinEx<Base extends ExtendingConstructor<Shacl.ValidationResult, ValidationResultEx>>(Resource: Base): Constructor<ValidationResultEx & RdfResourceCore> & Base {
+export function ValidationResultMixinEx<Base extends ExtendingConstructor<Shacl.ValidationResult, ValidationResultEx>>(Resource: Base): Constructor<ValidationResultEx & RdfResourceCore> & Base {
   @namespace(dash)
   class Impl extends Resource implements ValidationResultEx {
     @property.literal({ type: Boolean })
@@ -24,4 +24,4 @@ export function ShaclValidationResultMixinEx<Base extends ExtendingConstructor<S
   }
   return Impl
 }
-ShaclValidationResultMixinEx.appliesTo = sh.ValidationResult
+ValidationResultMixinEx.appliesTo = sh.ValidationResult

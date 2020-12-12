@@ -17,7 +17,7 @@ declare module '@rdfine/rdfs/lib/Class' {
   }
 }
 
-export function RdfsClassMixinEx<Base extends ExtendingConstructor<Rdfs.Class, ClassEx>>(Resource: Base): Constructor<ClassEx & RdfResourceCore> & Base {
+export function ClassMixinEx<Base extends ExtendingConstructor<Rdfs.Class, ClassEx>>(Resource: Base): Constructor<ClassEx & RdfResourceCore> & Base {
   @namespace(dash)
   class Impl extends Resource implements ClassEx {
     @property.literal({ type: Boolean })
@@ -27,4 +27,4 @@ export function RdfsClassMixinEx<Base extends ExtendingConstructor<Rdfs.Class, C
   }
   return Impl
 }
-RdfsClassMixinEx.appliesTo = rdfs.Class
+ClassMixinEx.appliesTo = rdfs.Class

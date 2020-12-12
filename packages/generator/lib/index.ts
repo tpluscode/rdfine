@@ -33,8 +33,7 @@ export interface Context {
 }
 
 export interface GeneratedModule<T extends ResourceType | EnumerationType | ExternalResourceType = ResourceType | EnumerationType | ExternalResourceType> {
-  node: GraphPointer
-  type: T
+  node?: GraphPointer
   writeModule(params: { project: Project; types: TypeMetaCollection; context: Context; indexModule: SourceFile }): void
 }
 
