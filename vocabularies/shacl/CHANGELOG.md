@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.7.2
+
+### Patch Changes
+
+- 04d8af79: Missing exports of extension modules
+- Updated dependencies [04d8af79]
+  - @rdfine/owl@0.4.2
+  - @rdfine/rdf@0.5.2
+  - @rdfine/rdfs@0.6.2
+
 ## 0.7.1
 
 ### Patch Changes

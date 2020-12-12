@@ -1,6 +1,15 @@
 # @rdfine/skos
 
+## 0.1.1
+
+### Patch Changes
+
+- 04d8af79: Missing exports of extension modules
+- Updated dependencies [04d8af79]
+  - @rdfine/rdf@0.5.2
+
 ## 0.1.0
+
 ### Minor Changes
 
 - 59396a54: First version of SKOS

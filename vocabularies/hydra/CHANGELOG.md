@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.6.2
+
+### Patch Changes
+
+- 04d8af79: Missing exports of extension modules
+- Updated dependencies [04d8af79]
+  - @rdfine/rdf@0.5.2
+  - @rdfine/rdfs@0.6.2
+
 ## 0.6.1
 
 ### Patch Changes
