@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
-    "@rdfine/foaf": "*",
+    "@rdfine/foaf": "^0.1.0",
     "@tpluscode/rdf-ns-builders": "^0.4",
     "@tpluscode/rdfine": "^0.5.16"
   },
