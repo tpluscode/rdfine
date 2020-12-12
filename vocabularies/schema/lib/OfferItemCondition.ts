@@ -8,7 +8,7 @@ export default {
   UsedCondition: schema.UsedCondition as NamedNode<'http://schema.org/UsedCondition'>,
 };
 
-export type OfferItemCondition = 
+export type OfferItemCondition =
   NamedNode<'http://schema.org/DamagedCondition'>
   | NamedNode<'http://schema.org/NewCondition'>
   | NamedNode<'http://schema.org/RefurbishedCondition'>

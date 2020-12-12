@@ -12,7 +12,7 @@ export default {
   Wednesday: schema.Wednesday as NamedNode<'http://schema.org/Wednesday'>,
 };
 
-export type DayOfWeek = 
+export type DayOfWeek =
   NamedNode<'http://schema.org/Friday'>
   | NamedNode<'http://schema.org/Monday'>
   | NamedNode<'http://schema.org/PublicHolidays'>

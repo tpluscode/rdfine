@@ -6,6 +6,6 @@ export default {
   PercutaneousProcedure: schema.PercutaneousProcedure as NamedNode<'http://schema.org/PercutaneousProcedure'>,
 };
 
-export type MedicalProcedureType = 
+export type MedicalProcedureType =
   NamedNode<'http://schema.org/NoninvasiveProcedure'>
   | NamedNode<'http://schema.org/PercutaneousProcedure'>;

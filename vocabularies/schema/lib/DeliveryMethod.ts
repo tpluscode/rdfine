@@ -7,7 +7,7 @@ export default {
   ParcelService: schema.ParcelService as NamedNode<'http://schema.org/ParcelService'>,
 };
 
-export type DeliveryMethod = 
+export type DeliveryMethod =
   NamedNode<'http://schema.org/LockerDelivery'>
   | NamedNode<'http://schema.org/OnSitePickup'>
   | NamedNode<'http://schema.org/ParcelService'>;

@@ -13,7 +13,7 @@ export default {
   TripleBlindedTrial: schema.TripleBlindedTrial as NamedNode<'http://schema.org/TripleBlindedTrial'>,
 };
 
-export type MedicalTrialDesign = 
+export type MedicalTrialDesign =
   NamedNode<'http://schema.org/DoubleBlindedTrial'>
   | NamedNode<'http://schema.org/InternationalTrial'>
   | NamedNode<'http://schema.org/MultiCenterTrial'>

@@ -6,6 +6,6 @@ export default {
   RightHandDriving: schema.RightHandDriving as NamedNode<'http://schema.org/RightHandDriving'>,
 };
 
-export type SteeringPositionValue = 
+export type SteeringPositionValue =
   NamedNode<'http://schema.org/LeftHandDriving'>
   | NamedNode<'http://schema.org/RightHandDriving'>;

@@ -13,7 +13,7 @@ export default {
   StudioAlbum: schema.StudioAlbum as NamedNode<'http://schema.org/StudioAlbum'>,
 };
 
-export type MusicAlbumProductionType = 
+export type MusicAlbumProductionType =
   NamedNode<'http://schema.org/CompilationAlbum'>
   | NamedNode<'http://schema.org/DJMixAlbum'>
   | NamedNode<'http://schema.org/DemoAlbum'>

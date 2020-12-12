@@ -10,7 +10,7 @@ export default {
   Virus: schema.Virus as NamedNode<'http://schema.org/Virus'>,
 };
 
-export type InfectiousAgentClass = 
+export type InfectiousAgentClass =
   NamedNode<'http://schema.org/Bacteria'>
   | NamedNode<'http://schema.org/Fungus'>
   | NamedNode<'http://schema.org/MulticellularParasite'>

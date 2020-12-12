@@ -8,7 +8,7 @@ export default {
   VenueMap: schema.VenueMap as NamedNode<'http://schema.org/VenueMap'>,
 };
 
-export type MapCategoryType = 
+export type MapCategoryType =
   NamedNode<'http://schema.org/ParkingMap'>
   | NamedNode<'http://schema.org/SeatingMap'>
   | NamedNode<'http://schema.org/TransitMap'>

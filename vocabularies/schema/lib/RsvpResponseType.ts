@@ -7,7 +7,7 @@ export default {
   RsvpResponseYes: schema.RsvpResponseYes as NamedNode<'http://schema.org/RsvpResponseYes'>,
 };
 
-export type RsvpResponseType = 
+export type RsvpResponseType =
   NamedNode<'http://schema.org/RsvpResponseMaybe'>
   | NamedNode<'http://schema.org/RsvpResponseNo'>
   | NamedNode<'http://schema.org/RsvpResponseYes'>;

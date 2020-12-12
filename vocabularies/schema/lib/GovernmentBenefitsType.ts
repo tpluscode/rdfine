@@ -12,7 +12,7 @@ export default {
   UnemploymentSupport: schema.UnemploymentSupport as NamedNode<'http://schema.org/UnemploymentSupport'>,
 };
 
-export type GovernmentBenefitsType = 
+export type GovernmentBenefitsType =
   NamedNode<'http://schema.org/BasicIncome'>
   | NamedNode<'http://schema.org/BusinessSupport'>
   | NamedNode<'http://schema.org/DisabilitySupport'>

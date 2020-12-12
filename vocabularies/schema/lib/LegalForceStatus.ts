@@ -7,7 +7,7 @@ export default {
   PartiallyInForce: schema.PartiallyInForce as NamedNode<'http://schema.org/PartiallyInForce'>,
 };
 
-export type LegalForceStatus = 
+export type LegalForceStatus =
   NamedNode<'http://schema.org/InForce'>
   | NamedNode<'http://schema.org/NotInForce'>
   | NamedNode<'http://schema.org/PartiallyInForce'>;

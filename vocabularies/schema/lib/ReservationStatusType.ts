@@ -8,7 +8,7 @@ export default {
   ReservationPending: schema.ReservationPending as NamedNode<'http://schema.org/ReservationPending'>,
 };
 
-export type ReservationStatusType = 
+export type ReservationStatusType =
   NamedNode<'http://schema.org/ReservationCancelled'>
   | NamedNode<'http://schema.org/ReservationConfirmed'>
   | NamedNode<'http://schema.org/ReservationHold'>

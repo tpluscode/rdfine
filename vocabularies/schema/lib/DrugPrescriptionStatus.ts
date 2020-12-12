@@ -6,6 +6,6 @@ export default {
   PrescriptionOnly: schema.PrescriptionOnly as NamedNode<'http://schema.org/PrescriptionOnly'>,
 };
 
-export type DrugPrescriptionStatus = 
+export type DrugPrescriptionStatus =
   NamedNode<'http://schema.org/OTC'>
   | NamedNode<'http://schema.org/PrescriptionOnly'>;

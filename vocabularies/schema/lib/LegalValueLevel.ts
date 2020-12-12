@@ -8,7 +8,7 @@ export default {
   UnofficialLegalValue: schema.UnofficialLegalValue as NamedNode<'http://schema.org/UnofficialLegalValue'>,
 };
 
-export type LegalValueLevel = 
+export type LegalValueLevel =
   NamedNode<'http://schema.org/AuthoritativeLegalValue'>
   | NamedNode<'http://schema.org/DefinitiveLegalValue'>
   | NamedNode<'http://schema.org/OfficialLegalValue'>

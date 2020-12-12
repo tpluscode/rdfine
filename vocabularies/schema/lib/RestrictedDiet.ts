@@ -15,7 +15,7 @@ export default {
   VegetarianDiet: schema.VegetarianDiet as NamedNode<'http://schema.org/VegetarianDiet'>,
 };
 
-export type RestrictedDiet = 
+export type RestrictedDiet =
   NamedNode<'http://schema.org/DiabeticDiet'>
   | NamedNode<'http://schema.org/GlutenFreeDiet'>
   | NamedNode<'http://schema.org/HalalDiet'>

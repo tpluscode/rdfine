@@ -8,7 +8,7 @@ export default {
   SingleRelease: schema.SingleRelease as NamedNode<'http://schema.org/SingleRelease'>,
 };
 
-export type MusicAlbumReleaseType = 
+export type MusicAlbumReleaseType =
   NamedNode<'http://schema.org/AlbumRelease'>
   | NamedNode<'http://schema.org/BroadcastRelease'>
   | NamedNode<'http://schema.org/EPRelease'>

@@ -7,7 +7,7 @@ export default {
   Wholesale: schema.Wholesale as NamedNode<'http://schema.org/Wholesale'>,
 };
 
-export type DrugCostCategory = 
+export type DrugCostCategory =
   NamedNode<'http://schema.org/ReimbursementCap'>
   | NamedNode<'http://schema.org/Retail'>
   | NamedNode<'http://schema.org/Wholesale'>;

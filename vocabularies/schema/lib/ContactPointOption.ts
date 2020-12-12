@@ -6,6 +6,6 @@ export default {
   TollFree: schema.TollFree as NamedNode<'http://schema.org/TollFree'>,
 };
 
-export type ContactPointOption = 
+export type ContactPointOption =
   NamedNode<'http://schema.org/HearingImpairedSupported'>
   | NamedNode<'http://schema.org/TollFree'>;

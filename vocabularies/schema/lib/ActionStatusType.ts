@@ -8,7 +8,7 @@ export default {
   PotentialActionStatus: schema.PotentialActionStatus as NamedNode<'http://schema.org/PotentialActionStatus'>,
 };
 
-export type ActionStatusType = 
+export type ActionStatusType =
   NamedNode<'http://schema.org/ActiveActionStatus'>
   | NamedNode<'http://schema.org/CompletedActionStatus'>
   | NamedNode<'http://schema.org/FailedActionStatus'>

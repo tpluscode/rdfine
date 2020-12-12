@@ -7,7 +7,7 @@ export default {
   EvidenceLevelC: schema.EvidenceLevelC as NamedNode<'http://schema.org/EvidenceLevelC'>,
 };
 
-export type MedicalEvidenceLevel = 
+export type MedicalEvidenceLevel =
   NamedNode<'http://schema.org/EvidenceLevelA'>
   | NamedNode<'http://schema.org/EvidenceLevelB'>
   | NamedNode<'http://schema.org/EvidenceLevelC'>;

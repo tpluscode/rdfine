@@ -10,7 +10,7 @@ export default {
   Registry: schema.Registry as NamedNode<'http://schema.org/Registry'>,
 };
 
-export type MedicalObservationalStudyDesign = 
+export type MedicalObservationalStudyDesign =
   NamedNode<'http://schema.org/CaseSeries'>
   | NamedNode<'http://schema.org/CohortStudy'>
   | NamedNode<'http://schema.org/CrossSectional'>

@@ -10,7 +10,7 @@ export default {
   XRay: schema.XRay as NamedNode<'http://schema.org/XRay'>,
 };
 
-export type MedicalImagingTechnique = 
+export type MedicalImagingTechnique =
   NamedNode<'http://schema.org/CT'>
   | NamedNode<'http://schema.org/MRI'>
   | NamedNode<'http://schema.org/PET'>

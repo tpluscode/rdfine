@@ -6,6 +6,6 @@ export default {
   NonprofitSBBI: schema.NonprofitSBBI as NamedNode<'http://schema.org/NonprofitSBBI'>,
 };
 
-export type NLNonprofitType = 
+export type NLNonprofitType =
   NamedNode<'http://schema.org/NonprofitANBI'>
   | NamedNode<'http://schema.org/NonprofitSBBI'>;
