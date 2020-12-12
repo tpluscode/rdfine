@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '..';
 import type * as Rdf from '@rdfine/rdf';
@@ -14,7 +14,7 @@ export interface GraphUpdate<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   deletedTriple: Rdf.Statement<D> | undefined;
 }
 
-export function GraphUpdateMixin<Base extends Constructor>(Resource: Base) {
+export function GraphUpdateMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<GraphUpdate> & RdfResourceCore> & Base {
   @namespace(dash)
   class GraphUpdateClass extends SuggestionMixin(Resource) implements Partial<GraphUpdate> {
     @property.resource({ as: [RdfStatementMixin] })

@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CategoryCodeMixin } from './CategoryCode';
@@ -13,7 +13,7 @@ export interface MedicalCode<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   codingSystem: string | undefined;
 }
 
-export function MedicalCodeMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalCode> & Base {
+export function MedicalCodeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalCode> & RdfResourceCore> & Base {
   @namespace(schema)
   class MedicalCodeClass extends MedicalIntangibleMixin(CategoryCodeMixin(Resource)) implements Partial<MedicalCode> {
     @property.literal()

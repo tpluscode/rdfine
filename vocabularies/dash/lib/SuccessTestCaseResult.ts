@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '..';
 import { TestCaseResultMixin } from './TestCaseResult';
@@ -10,7 +10,7 @@ import { TestCaseResultMixin } from './TestCaseResult';
 export interface SuccessTestCaseResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.TestCaseResult<D>, RdfResource<D> {
 }
 
-export function SuccessTestCaseResultMixin<Base extends Constructor>(Resource: Base) {
+export function SuccessTestCaseResultMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SuccessTestCaseResult> & RdfResourceCore> & Base {
   @namespace(dash)
   class SuccessTestCaseResultClass extends TestCaseResultMixin(Resource) implements Partial<SuccessTestCaseResult> {
   }

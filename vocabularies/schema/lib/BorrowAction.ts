@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TransferActionMixin } from './TransferAction';
@@ -11,7 +11,7 @@ export interface BorrowAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   lender: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function BorrowActionMixin<Base extends Constructor>(Resource: Base): Constructor<BorrowAction> & Base {
+export function BorrowActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BorrowAction> & RdfResourceCore> & Base {
   @namespace(schema)
   class BorrowActionClass extends TransferActionMixin(Resource) implements Partial<BorrowAction> {
     @property.resource()

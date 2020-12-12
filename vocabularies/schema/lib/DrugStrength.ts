@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalIntangibleMixin } from './MedicalIntangible';
@@ -15,7 +15,7 @@ export interface DrugStrength<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   strengthValue: number | undefined;
 }
 
-export function DrugStrengthMixin<Base extends Constructor>(Resource: Base): Constructor<DrugStrength> & Base {
+export function DrugStrengthMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DrugStrength> & RdfResourceCore> & Base {
   @namespace(schema)
   class DrugStrengthClass extends MedicalIntangibleMixin(Resource) implements Partial<DrugStrength> {
     @property.literal()

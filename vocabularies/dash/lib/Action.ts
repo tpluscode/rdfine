@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '..';
 import type * as Shacl from '@rdfine/shacl';
@@ -14,7 +14,7 @@ export interface Action<D extends RDF.DatasetCore = RDF.DatasetCore> extends Das
   actionIconClass: string | undefined;
 }
 
-export function ActionMixin<Base extends Constructor>(Resource: Base) {
+export function ActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Action> & RdfResourceCore> & Base {
   @namespace(dash)
   class ActionClass extends ShaclParameterizableMixin(ScriptMixin(Resource)) implements Partial<Action> {
     @property.resource({ implicitTypes: [dash.ActionGroup] })

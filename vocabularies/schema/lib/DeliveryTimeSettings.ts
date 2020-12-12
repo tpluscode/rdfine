@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -14,7 +14,7 @@ export interface DeliveryTimeSettings<D extends RDF.DatasetCore = RDF.DatasetCor
   transitTimeLabel: string | undefined;
 }
 
-export function DeliveryTimeSettingsMixin<Base extends Constructor>(Resource: Base): Constructor<DeliveryTimeSettings> & Base {
+export function DeliveryTimeSettingsMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DeliveryTimeSettings> & RdfResourceCore> & Base {
   @namespace(schema)
   class DeliveryTimeSettingsClass extends StructuredValueMixin(Resource) implements Partial<DeliveryTimeSettings> {
     @property.resource()

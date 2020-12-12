@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '..';
 import { ScriptMixin } from './Script';
@@ -10,7 +10,7 @@ import { ScriptMixin } from './Script';
 export interface ShapeScript<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, RdfResource<D> {
 }
 
-export function ShapeScriptMixin<Base extends Constructor>(Resource: Base) {
+export function ShapeScriptMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ShapeScript> & RdfResourceCore> & Base {
   @namespace(dash)
   class ShapeScriptClass extends ScriptMixin(Resource) implements Partial<ShapeScript> {
   }

@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { UseActionMixin } from './UseAction';
@@ -10,7 +10,7 @@ import { UseActionMixin } from './UseAction';
 export interface WearAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UseAction<D>, RdfResource<D> {
 }
 
-export function WearActionMixin<Base extends Constructor>(Resource: Base): Constructor<WearAction> & Base {
+export function WearActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<WearAction> & RdfResourceCore> & Base {
   @namespace(schema)
   class WearActionClass extends UseActionMixin(Resource) implements Partial<WearAction> {
   }

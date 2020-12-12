@@ -1,36 +1,21 @@
 import { Project, SourceFile, VariableDeclarationKind } from 'ts-morph'
-import { Context, GeneratedModule } from '../index'
+import { Context } from '../index'
 import { GraphPointer } from 'clownface'
 import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types'
 import { PropertyWriter } from '../property/PropertyWriter'
 import { JavascriptProperty } from '../property/JsProperties'
 import { getSuperClasses } from './index'
+import { MixinModuleBase } from './MixinModuleBase'
 
-export class MixinModule implements GeneratedModule {
-  type: ResourceType
-  node: GraphPointer;
+export class MixinModule extends MixinModuleBase<ResourceType> {
   superClasses: Array<ResourceType | ExternalResourceType>
   properties: JavascriptProperty[]
-  private namespaceImports: Record<string, string> = {}
-  private mixinImports: Array<ResourceType | ExternalResourceType> = []
 
   public constructor(clas: GraphPointer, type: ResourceType, superClasses: (ResourceType | ExternalResourceType)[], properties: JavascriptProperty[]) {
-    this.node = clas
-    this.type = type
+    super(clas, type)
     this.superClasses = superClasses
     this.superClasses.forEach(this.addMixinImport.bind(this))
     this.properties = properties
-  }
-
-  addMixinImport(type: ExternalResourceType | ResourceType) {
-    const mixinImportExists = this.mixinImports.find(current => current.module === type.module)
-    if (!mixinImportExists) {
-      this.mixinImports.push(type)
-    }
-
-    if ('package' in type && !this.namespaceImports[type.package]) {
-      this.namespaceImports[type.package] = type.qualifier
-    }
   }
 
   writeModule(params: { project: Project; types: TypeMetaCollection; context: Pick<Context, 'log' | 'prefix' | 'vocabulary' | 'defaultExport'>; indexModule: SourceFile }) {
@@ -183,7 +168,7 @@ export class MixinModule implements GeneratedModule {
       moduleSpecifier: './namespace',
     })
     mixinFile.addImportDeclaration({
-      namedImports: ['Initializer', 'ResourceNode'],
+      namedImports: ['Initializer', 'ResourceNode', 'RdfResourceCore'],
       moduleSpecifier: '@tpluscode/rdfine/RdfResource',
       isTypeOnly: true,
     })
@@ -240,7 +225,7 @@ export class MixinModule implements GeneratedModule {
         type: 'Base',
       }],
       isExported: true,
-      returnType: `Constructor<${this.type.localName}> & Base`,
+      returnType: `Constructor<Partial<${this.type.localName}> & RdfResourceCore> & Base`,
     })
 
     const baseClass = this.superClasses

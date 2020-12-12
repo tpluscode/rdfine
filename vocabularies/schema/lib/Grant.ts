@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -12,7 +12,7 @@ export interface Grant<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   sponsor: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function GrantMixin<Base extends Constructor>(Resource: Base): Constructor<Grant> & Base {
+export function GrantMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Grant> & RdfResourceCore> & Base {
   @namespace(schema)
   class GrantClass extends IntangibleMixin(Resource) implements Partial<Grant> {
     @property.resource()

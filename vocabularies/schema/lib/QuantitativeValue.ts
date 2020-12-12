@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -19,7 +19,7 @@ export interface QuantitativeValue<D extends RDF.DatasetCore = RDF.DatasetCore> 
   valueReference: Schema.PropertyValue<D> | Schema.QuantitativeValue<D> | Schema.StructuredValue<D> | undefined;
 }
 
-export function QuantitativeValueMixin<Base extends Constructor>(Resource: Base): Constructor<QuantitativeValue> & Base {
+export function QuantitativeValueMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<QuantitativeValue> & RdfResourceCore> & Base {
   @namespace(schema)
   class QuantitativeValueClass extends StructuredValueMixin(Resource) implements Partial<QuantitativeValue> {
     @property.resource()

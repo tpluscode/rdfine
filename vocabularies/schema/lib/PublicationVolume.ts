@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -14,7 +14,7 @@ export interface PublicationVolume<D extends RDF.DatasetCore = RDF.DatasetCore> 
   volumeNumber: number | string | undefined;
 }
 
-export function PublicationVolumeMixin<Base extends Constructor>(Resource: Base): Constructor<PublicationVolume> & Base {
+export function PublicationVolumeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PublicationVolume> & RdfResourceCore> & Base {
   @namespace(schema)
   class PublicationVolumeClass extends CreativeWorkMixin(Resource) implements Partial<PublicationVolume> {
     @property.literal()

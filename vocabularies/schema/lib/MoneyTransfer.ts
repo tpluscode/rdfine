@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TransferActionMixin } from './TransferAction';
@@ -14,7 +14,7 @@ export interface MoneyTransfer<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   beneficiaryBankLiteral: string | undefined;
 }
 
-export function MoneyTransferMixin<Base extends Constructor>(Resource: Base): Constructor<MoneyTransfer> & Base {
+export function MoneyTransferMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MoneyTransfer> & RdfResourceCore> & Base {
   @namespace(schema)
   class MoneyTransferClass extends TransferActionMixin(Resource) implements Partial<MoneyTransfer> {
     @property.resource()

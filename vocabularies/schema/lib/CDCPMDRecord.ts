@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -27,7 +27,7 @@ export interface CDCPMDRecord<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   datePosted: Date | undefined;
 }
 
-export function CDCPMDRecordMixin<Base extends Constructor>(Resource: Base): Constructor<CDCPMDRecord> & Base {
+export function CDCPMDRecordMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CDCPMDRecord> & RdfResourceCore> & Base {
   @namespace(schema)
   class CDCPMDRecordClass extends StructuredValueMixin(Resource) implements Partial<CDCPMDRecord> {
     @property.literal()

@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { wgs } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Wgs from '..';
 
@@ -12,7 +12,7 @@ export interface SpatialThing<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   long: number | undefined;
 }
 
-export function SpatialThingMixin<Base extends Constructor>(Resource: Base): Constructor<SpatialThing> & Base {
+export function SpatialThingMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SpatialThing> & RdfResourceCore> & Base {
   @namespace(wgs)
   class SpatialThingClass extends Resource implements Partial<SpatialThing> {
     @property.literal({ type: Number })

@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CommentMixin } from './Comment';
@@ -10,7 +10,7 @@ import { CommentMixin } from './Comment';
 export interface CorrectionComment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Comment<D>, RdfResource<D> {
 }
 
-export function CorrectionCommentMixin<Base extends Constructor>(Resource: Base): Constructor<CorrectionComment> & Base {
+export function CorrectionCommentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CorrectionComment> & RdfResourceCore> & Base {
   @namespace(schema)
   class CorrectionCommentClass extends CommentMixin(Resource) implements Partial<CorrectionComment> {
   }

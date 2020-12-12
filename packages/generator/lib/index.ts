@@ -8,8 +8,9 @@ import { IndentationText, Project, QuoteKind, SourceFile } from 'ts-morph'
 import FileSystem from './util/FileSystem'
 import * as generator from './generator'
 import * as EnumerationGenerator from './EnumerationGenerator'
-import { EnumerationType, ResourceType, TypeMap, TypeMetaCollection } from './types'
+import { EnumerationType, ExternalResourceType, ResourceType, TypeMap, TypeMetaCollection } from './types'
 import * as MixinGenerator from './MixinGenerator'
+import * as ExtensionMixinGenerator from './ExtensionMixinGenerator'
 import * as factories from './types/metaFactories'
 import { toUpperInitial } from './util/string'
 import { expandMapKeys } from './util/overrideMap'
@@ -31,9 +32,9 @@ export interface Context {
   properties: PropertyOverrides
 }
 
-export interface GeneratedModule {
+export interface GeneratedModule<T extends ResourceType | EnumerationType | ExternalResourceType = ResourceType | EnumerationType | ExternalResourceType> {
   node: GraphPointer
-  type: ResourceType | EnumerationType
+  type: T
   writeModule(params: { project: Project; types: TypeMetaCollection; context: Context; indexModule: SourceFile }): void
 }
 
@@ -94,6 +95,7 @@ export async function generate(options: GeneratorOptions, logger: Debugger) {
   const strategies: ModuleStrategy[] = [
     EnumerationGenerator.findTermsToGenerate,
     MixinGenerator.findTermsToGenerate(excludedTerms),
+    ExtensionMixinGenerator.findTermsToGenerate,
   ]
 
   const log = {

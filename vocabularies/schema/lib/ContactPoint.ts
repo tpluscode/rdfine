@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -23,7 +23,7 @@ export interface ContactPoint<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   telephone: string | undefined;
 }
 
-export function ContactPointMixin<Base extends Constructor>(Resource: Base): Constructor<ContactPoint> & Base {
+export function ContactPointMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ContactPoint> & RdfResourceCore> & Base {
   @namespace(schema)
   class ContactPointClass extends StructuredValueMixin(Resource) implements Partial<ContactPoint> {
     @property.resource()

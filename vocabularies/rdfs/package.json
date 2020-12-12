@@ -42,6 +42,15 @@
       },
       "subClassOf": {
         "values": "array"
+      },
+      "domain": {
+        "values": "array"
+      },
+      "range": {
+        "values": "array"
+      },
+      "subPropertyOf": {
+        "values": "array"
       }
     }
   },

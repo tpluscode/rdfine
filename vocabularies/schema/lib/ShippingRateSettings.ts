@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -16,7 +16,7 @@ export interface ShippingRateSettings<D extends RDF.DatasetCore = RDF.DatasetCor
   shippingRate: Schema.MonetaryAmount<D> | undefined;
 }
 
-export function ShippingRateSettingsMixin<Base extends Constructor>(Resource: Base): Constructor<ShippingRateSettings> & Base {
+export function ShippingRateSettingsMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ShippingRateSettings> & RdfResourceCore> & Base {
   @namespace(schema)
   class ShippingRateSettingsClass extends StructuredValueMixin(Resource) implements Partial<ShippingRateSettings> {
     @property.literal({ type: Boolean })

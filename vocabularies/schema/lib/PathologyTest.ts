@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalTestMixin } from './MedicalTest';
@@ -11,7 +11,7 @@ export interface PathologyTest<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   tissueSample: string | undefined;
 }
 
-export function PathologyTestMixin<Base extends Constructor>(Resource: Base): Constructor<PathologyTest> & Base {
+export function PathologyTestMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PathologyTest> & RdfResourceCore> & Base {
   @namespace(schema)
   class PathologyTestClass extends MedicalTestMixin(Resource) implements Partial<PathologyTest> {
     @property.literal()

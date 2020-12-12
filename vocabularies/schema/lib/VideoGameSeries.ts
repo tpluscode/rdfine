@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkSeriesMixin } from './CreativeWorkSeries';
@@ -33,7 +33,7 @@ export interface VideoGameSeries<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function VideoGameSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<VideoGameSeries> & Base {
+export function VideoGameSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<VideoGameSeries> & RdfResourceCore> & Base {
   @namespace(schema)
   class VideoGameSeriesClass extends CreativeWorkSeriesMixin(Resource) implements Partial<VideoGameSeries> {
     @property.resource()

@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -42,7 +42,7 @@ export interface SoftwareApplication<D extends RDF.DatasetCore = RDF.DatasetCore
   supportingData: Schema.DataFeed<D> | undefined;
 }
 
-export function SoftwareApplicationMixin<Base extends Constructor>(Resource: Base): Constructor<SoftwareApplication> & Base {
+export function SoftwareApplicationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SoftwareApplication> & RdfResourceCore> & Base {
   @namespace(schema)
   class SoftwareApplicationClass extends CreativeWorkMixin(Resource) implements Partial<SoftwareApplication> {
     @property.literal()

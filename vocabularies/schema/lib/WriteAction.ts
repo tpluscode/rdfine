@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreateActionMixin } from './CreateAction';
@@ -13,7 +13,7 @@ export interface WriteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   language: Schema.Language<D> | undefined;
 }
 
-export function WriteActionMixin<Base extends Constructor>(Resource: Base): Constructor<WriteAction> & Base {
+export function WriteActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<WriteAction> & RdfResourceCore> & Base {
   @namespace(schema)
   class WriteActionClass extends CreateActionMixin(Resource) implements Partial<WriteAction> {
     @property.resource()

@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CollectionPageMixin } from './CollectionPage';
@@ -10,7 +10,7 @@ import { CollectionPageMixin } from './CollectionPage';
 export interface MediaGallery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CollectionPage<D>, RdfResource<D> {
 }
 
-export function MediaGalleryMixin<Base extends Constructor>(Resource: Base): Constructor<MediaGallery> & Base {
+export function MediaGalleryMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MediaGallery> & RdfResourceCore> & Base {
   @namespace(schema)
   class MediaGalleryClass extends CollectionPageMixin(Resource) implements Partial<MediaGallery> {
   }

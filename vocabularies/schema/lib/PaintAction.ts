@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreateActionMixin } from './CreateAction';
@@ -10,7 +10,7 @@ import { CreateActionMixin } from './CreateAction';
 export interface PaintAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, RdfResource<D> {
 }
 
-export function PaintActionMixin<Base extends Constructor>(Resource: Base): Constructor<PaintAction> & Base {
+export function PaintActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PaintAction> & RdfResourceCore> & Base {
   @namespace(schema)
   class PaintActionClass extends CreateActionMixin(Resource) implements Partial<PaintAction> {
   }

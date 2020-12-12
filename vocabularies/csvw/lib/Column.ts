@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '..';
 
@@ -26,7 +26,7 @@ export interface Column<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf
   virtual: boolean | undefined;
 }
 
-export function ColumnMixin<Base extends Constructor>(Resource: Base): Constructor<Column> & Base {
+export function ColumnMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Column> & RdfResourceCore> & Base {
   @namespace(csvw)
   class ColumnClass extends Resource implements Partial<Column> {
     @property.literal()

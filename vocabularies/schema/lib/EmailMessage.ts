@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MessageMixin } from './Message';
@@ -10,7 +10,7 @@ import { MessageMixin } from './Message';
 export interface EmailMessage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Message<D>, RdfResource<D> {
 }
 
-export function EmailMessageMixin<Base extends Constructor>(Resource: Base): Constructor<EmailMessage> & Base {
+export function EmailMessageMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EmailMessage> & RdfResourceCore> & Base {
   @namespace(schema)
   class EmailMessageClass extends MessageMixin(Resource) implements Partial<EmailMessage> {
   }

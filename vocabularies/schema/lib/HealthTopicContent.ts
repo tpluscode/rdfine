@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { WebContentMixin } from './WebContent';
@@ -11,7 +11,7 @@ export interface HealthTopicContent<D extends RDF.DatasetCore = RDF.DatasetCore>
   hasHealthAspect: Schema.HealthAspectEnumeration | undefined;
 }
 
-export function HealthTopicContentMixin<Base extends Constructor>(Resource: Base): Constructor<HealthTopicContent> & Base {
+export function HealthTopicContentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<HealthTopicContent> & RdfResourceCore> & Base {
   @namespace(schema)
   class HealthTopicContentClass extends WebContentMixin(Resource) implements Partial<HealthTopicContent> {
     @property()

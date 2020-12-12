@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -10,7 +10,7 @@ import { IntangibleMixin } from './Intangible';
 export interface ComputerLanguage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
 }
 
-export function ComputerLanguageMixin<Base extends Constructor>(Resource: Base): Constructor<ComputerLanguage> & Base {
+export function ComputerLanguageMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ComputerLanguage> & RdfResourceCore> & Base {
   @namespace(schema)
   class ComputerLanguageClass extends IntangibleMixin(Resource) implements Partial<ComputerLanguage> {
   }

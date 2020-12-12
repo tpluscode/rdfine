@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { GovernmentBuildingMixin } from './GovernmentBuilding';
@@ -10,7 +10,7 @@ import { GovernmentBuildingMixin } from './GovernmentBuilding';
 export interface Courthouse<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentBuilding<D>, RdfResource<D> {
 }
 
-export function CourthouseMixin<Base extends Constructor>(Resource: Base): Constructor<Courthouse> & Base {
+export function CourthouseMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Courthouse> & RdfResourceCore> & Base {
   @namespace(schema)
   class CourthouseClass extends GovernmentBuildingMixin(Resource) implements Partial<Courthouse> {
   }

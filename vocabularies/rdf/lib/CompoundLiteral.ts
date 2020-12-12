@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { rdf } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdf from '..';
 
@@ -11,7 +11,7 @@ export interface CompoundLiteral<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   language: RDF.Term | undefined;
 }
 
-export function CompoundLiteralMixin<Base extends Constructor>(Resource: Base): Constructor<CompoundLiteral> & Base {
+export function CompoundLiteralMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CompoundLiteral> & RdfResourceCore> & Base {
   @namespace(rdf)
   class CompoundLiteralClass extends Resource implements Partial<CompoundLiteral> {
     @property()

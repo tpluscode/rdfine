@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { LocalBusinessMixin } from './LocalBusiness';
@@ -20,7 +20,7 @@ export interface LodgingBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   starRating: Schema.Rating<D> | undefined;
 }
 
-export function LodgingBusinessMixin<Base extends Constructor>(Resource: Base): Constructor<LodgingBusiness> & Base {
+export function LodgingBusinessMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LodgingBusiness> & RdfResourceCore> & Base {
   @namespace(schema)
   class LodgingBusinessClass extends LocalBusinessMixin(Resource) implements Partial<LodgingBusiness> {
     @property.resource()

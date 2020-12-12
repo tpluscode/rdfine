@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '..';
 
@@ -32,7 +32,7 @@ export interface Item<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRe
   sibling: Sioc.Item<D> | undefined;
 }
 
-export function ItemMixin<Base extends Constructor>(Resource: Base): Constructor<Item> & Base {
+export function ItemMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Item> & RdfResourceCore> & Base {
   @namespace(sioc)
   class ItemClass extends Resource implements Partial<Item> {
     @property()

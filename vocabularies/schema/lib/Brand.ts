@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -14,7 +14,7 @@ export interface Brand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   slogan: string | undefined;
 }
 
-export function BrandMixin<Base extends Constructor>(Resource: Base): Constructor<Brand> & Base {
+export function BrandMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Brand> & RdfResourceCore> & Base {
   @namespace(schema)
   class BrandClass extends IntangibleMixin(Resource) implements Partial<Brand> {
     @property.resource()

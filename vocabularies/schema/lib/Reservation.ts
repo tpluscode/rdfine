@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -24,7 +24,7 @@ export interface Reservation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   underName: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function ReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Reservation> & Base {
+export function ReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Reservation> & RdfResourceCore> & Base {
   @namespace(schema)
   class ReservationClass extends IntangibleMixin(Resource) implements Partial<Reservation> {
     @property.resource()

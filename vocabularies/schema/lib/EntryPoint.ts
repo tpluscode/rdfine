@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -18,7 +18,7 @@ export interface EntryPoint<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   urlTemplate: string | undefined;
 }
 
-export function EntryPointMixin<Base extends Constructor>(Resource: Base): Constructor<EntryPoint> & Base {
+export function EntryPointMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EntryPoint> & RdfResourceCore> & Base {
   @namespace(schema)
   class EntryPointClass extends IntangibleMixin(Resource) implements Partial<EntryPoint> {
     @property.resource()

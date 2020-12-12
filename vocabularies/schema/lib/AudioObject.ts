@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MediaObjectMixin } from './MediaObject';
@@ -13,7 +13,7 @@ export interface AudioObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   transcript: string | undefined;
 }
 
-export function AudioObjectMixin<Base extends Constructor>(Resource: Base): Constructor<AudioObject> & Base {
+export function AudioObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AudioObject> & RdfResourceCore> & Base {
   @namespace(schema)
   class AudioObjectClass extends MediaObjectMixin(Resource) implements Partial<AudioObject> {
     @property.resource()

@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ReservationMixin } from './Reservation';
@@ -19,7 +19,7 @@ export interface LodgingReservation<D extends RDF.DatasetCore = RDF.DatasetCore>
   numChildrenLiteral: number | undefined;
 }
 
-export function LodgingReservationMixin<Base extends Constructor>(Resource: Base): Constructor<LodgingReservation> & Base {
+export function LodgingReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LodgingReservation> & RdfResourceCore> & Base {
   @namespace(schema)
   class LodgingReservationClass extends ReservationMixin(Resource) implements Partial<LodgingReservation> {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })

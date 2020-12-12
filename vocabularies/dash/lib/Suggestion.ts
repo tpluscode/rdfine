@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '..';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -13,7 +13,7 @@ export interface Suggestion<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   suggestionGroup: RDF.Term | undefined;
 }
 
-export function SuggestionMixin<Base extends Constructor>(Resource: Base) {
+export function SuggestionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Suggestion> & RdfResourceCore> & Base {
   @namespace(dash)
   class SuggestionClass extends RdfsResourceMixin(Resource) implements Partial<Suggestion> {
     @property.literal({ type: Number })

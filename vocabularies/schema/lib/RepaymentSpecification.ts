@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -16,7 +16,7 @@ export interface RepaymentSpecification<D extends RDF.DatasetCore = RDF.DatasetC
   numberOfLoanPayments: number | undefined;
 }
 
-export function RepaymentSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<RepaymentSpecification> & Base {
+export function RepaymentSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RepaymentSpecification> & RdfResourceCore> & Base {
   @namespace(schema)
   class RepaymentSpecificationClass extends StructuredValueMixin(Resource) implements Partial<RepaymentSpecification> {
     @property.resource()

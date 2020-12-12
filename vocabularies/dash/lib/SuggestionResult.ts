@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '..';
 import type * as Shacl from '@rdfine/shacl';
@@ -11,7 +11,7 @@ import { AbstractResultMixin as ShaclAbstractResultMixin } from '@rdfine/shacl/l
 export interface SuggestionResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.AbstractResult<D>, RdfResource<D> {
 }
 
-export function SuggestionResultMixin<Base extends Constructor>(Resource: Base) {
+export function SuggestionResultMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SuggestionResult> & RdfResourceCore> & Base {
   @namespace(dash)
   class SuggestionResultClass extends ShaclAbstractResultMixin(Resource) implements Partial<SuggestionResult> {
   }

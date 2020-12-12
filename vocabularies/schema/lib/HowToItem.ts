@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ListItemMixin } from './ListItem';
@@ -12,7 +12,7 @@ export interface HowToItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   requiredQuantityLiteral: number | string | undefined;
 }
 
-export function HowToItemMixin<Base extends Constructor>(Resource: Base): Constructor<HowToItem> & Base {
+export function HowToItemMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<HowToItem> & RdfResourceCore> & Base {
   @namespace(schema)
   class HowToItemClass extends ListItemMixin(Resource) implements Partial<HowToItem> {
     @property.resource()

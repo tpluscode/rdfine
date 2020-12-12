@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '..';
 import type * as Foaf from '@rdfine/foaf';
@@ -26,7 +26,7 @@ export interface UserAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   'subscriber_of': Sioc.Container<D> | undefined;
 }
 
-export function UserAccountMixin<Base extends Constructor>(Resource: Base): Constructor<UserAccount> & Base {
+export function UserAccountMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<UserAccount> & RdfResourceCore> & Base {
   @namespace(sioc)
   class UserAccountClass extends FoafOnlineAccountMixin(Resource) implements Partial<UserAccount> {
     @property.resource({ as: [FoafAgentMixin] })

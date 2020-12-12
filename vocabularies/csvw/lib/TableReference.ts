@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '..';
 
@@ -12,7 +12,7 @@ export interface TableReference<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   schemaReference: string | undefined;
 }
 
-export function TableReferenceMixin<Base extends Constructor>(Resource: Base): Constructor<TableReference> & Base {
+export function TableReferenceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TableReference> & RdfResourceCore> & Base {
   @namespace(csvw)
   class TableReferenceClass extends Resource implements Partial<TableReference> {
     @property.literal()

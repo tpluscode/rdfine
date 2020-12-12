@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { skos } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Skos from '..';
 
@@ -11,7 +11,7 @@ export interface Concept<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rd
   topConceptOf: Array<Skos.ConceptScheme<D>>;
 }
 
-export function ConceptMixin<Base extends Constructor>(Resource: Base) {
+export function ConceptMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Concept> & RdfResourceCore> & Base {
   @namespace(skos)
   class ConceptClass extends Resource implements Partial<Concept> {
     @property.resource({ values: 'array', as: [ConceptMixin] })

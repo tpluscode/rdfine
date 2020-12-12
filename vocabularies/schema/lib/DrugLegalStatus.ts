@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalIntangibleMixin } from './MedicalIntangible';
@@ -11,7 +11,7 @@ export interface DrugLegalStatus<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   applicableLocation: Schema.AdministrativeArea<D> | undefined;
 }
 
-export function DrugLegalStatusMixin<Base extends Constructor>(Resource: Base): Constructor<DrugLegalStatus> & Base {
+export function DrugLegalStatusMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DrugLegalStatus> & RdfResourceCore> & Base {
   @namespace(schema)
   class DrugLegalStatusClass extends MedicalIntangibleMixin(Resource) implements Partial<DrugLegalStatus> {
     @property.resource()

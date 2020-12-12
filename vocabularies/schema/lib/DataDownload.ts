@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MediaObjectMixin } from './MediaObject';
@@ -12,7 +12,7 @@ export interface DataDownload<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   measurementTechniqueTerm: RDF.NamedNode | undefined;
 }
 
-export function DataDownloadMixin<Base extends Constructor>(Resource: Base): Constructor<DataDownload> & Base {
+export function DataDownloadMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DataDownload> & RdfResourceCore> & Base {
   @namespace(schema)
   class DataDownloadClass extends MediaObjectMixin(Resource) implements Partial<DataDownload> {
     @property.literal()

@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TechArticleMixin } from './TechArticle';
@@ -15,7 +15,7 @@ export interface APIReference<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   targetPlatform: string | undefined;
 }
 
-export function APIReferenceMixin<Base extends Constructor>(Resource: Base): Constructor<APIReference> & Base {
+export function APIReferenceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<APIReference> & RdfResourceCore> & Base {
   @namespace(schema)
   class APIReferenceClass extends TechArticleMixin(Resource) implements Partial<APIReference> {
     @property.literal()

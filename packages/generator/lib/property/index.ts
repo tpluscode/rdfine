@@ -63,20 +63,22 @@ function findUnionedDomains(clas: GraphPointer, vocabulary: AnyPointer): GraphPo
     .map(pair => pair.prop)
 }
 
+export function findRanges(prop: GraphPointer): Range[] {
+  const directRanges = findDirectRanges(prop)
+  const owlUnionRanges = findUnionedRanges(prop)
+
+  return flatUniqueRanges(directRanges, owlUnionRanges)
+}
+
 export function findProperties(clas: GraphPointer, context: Pick<Context, 'vocabulary'>) {
   const directDomains = findDirectDomain(clas, context.vocabulary)
   const unionDomains = findUnionedDomains(clas, context.vocabulary)
 
   return flatUnique(directDomains, unionDomains)
-    .map(prop => {
-      const directRanges = findDirectRanges(prop)
-      const owlUnionRanges = findUnionedRanges(prop)
-
-      return {
-        term: prop,
-        range: flatUniqueRanges(directRanges, owlUnionRanges),
-      }
-    })
+    .map(prop => ({
+      term: prop,
+      range: findRanges(prop),
+    }))
     .sort((left, right) => {
       return left.term.value.localeCompare(right.term.value)
     })

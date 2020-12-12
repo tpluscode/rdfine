@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -14,7 +14,7 @@ export interface ValidationReport<D extends RDF.DatasetCore = RDF.DatasetCore> e
   shapesGraphWellFormed: boolean | undefined;
 }
 
-export function ValidationReportMixin<Base extends Constructor>(Resource: Base): Constructor<ValidationReport> & Base {
+export function ValidationReportMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ValidationReport> & RdfResourceCore> & Base {
   @namespace(sh)
   class ValidationReportClass extends RdfsResourceMixin(Resource) implements Partial<ValidationReport> {
     @property.literal({ type: Boolean })

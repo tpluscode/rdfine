@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { PriceSpecificationMixin } from './PriceSpecification';
@@ -16,7 +16,7 @@ export interface UnitPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetC
   unitText: string | undefined;
 }
 
-export function UnitPriceSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<UnitPriceSpecification> & Base {
+export function UnitPriceSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<UnitPriceSpecification> & RdfResourceCore> & Base {
   @namespace(schema)
   class UnitPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<UnitPriceSpecification> {
     @property.literal({ type: Number })

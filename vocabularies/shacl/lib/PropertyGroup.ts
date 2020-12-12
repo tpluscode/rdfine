@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -12,7 +12,7 @@ export interface PropertyGroup<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   order: number | undefined;
 }
 
-export function PropertyGroupMixin<Base extends Constructor>(Resource: Base): Constructor<PropertyGroup> & Base {
+export function PropertyGroupMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PropertyGroup> & RdfResourceCore> & Base {
   @namespace(sh)
   class PropertyGroupClass extends RdfsResourceMixin(Resource) implements Partial<PropertyGroup> {
     @property.literal({ type: Number })

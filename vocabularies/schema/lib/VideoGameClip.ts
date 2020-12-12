@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ClipMixin } from './Clip';
@@ -10,7 +10,7 @@ import { ClipMixin } from './Clip';
 export interface VideoGameClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Clip<D>, RdfResource<D> {
 }
 
-export function VideoGameClipMixin<Base extends Constructor>(Resource: Base): Constructor<VideoGameClip> & Base {
+export function VideoGameClipMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<VideoGameClip> & RdfResourceCore> & Base {
   @namespace(schema)
   class VideoGameClipClass extends ClipMixin(Resource) implements Partial<VideoGameClip> {
   }

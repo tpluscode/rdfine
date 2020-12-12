@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '..';
 
@@ -13,7 +13,7 @@ export interface NumericFormat<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   pattern: string | undefined;
 }
 
-export function NumericFormatMixin<Base extends Constructor>(Resource: Base): Constructor<NumericFormat> & Base {
+export function NumericFormatMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<NumericFormat> & RdfResourceCore> & Base {
   @namespace(csvw)
   class NumericFormatClass extends Resource implements Partial<NumericFormat> {
     @property.literal()

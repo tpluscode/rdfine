@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '..';
 
@@ -27,7 +27,7 @@ export interface TableGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   valueUrl: string | undefined;
 }
 
-export function TableGroupMixin<Base extends Constructor>(Resource: Base): Constructor<TableGroup> & Base {
+export function TableGroupMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TableGroup> & RdfResourceCore> & Base {
   @namespace(csvw)
   class TableGroupClass extends Resource implements Partial<TableGroup> {
     @property.literal()

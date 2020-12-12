@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -21,7 +21,7 @@ export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   view: Array<Hydra.Resource<D>>;
 }
 
-export function ResourceMixin<Base extends Constructor>(Resource: Base): Constructor<Resource> & Base {
+export function ResourceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Resource> & RdfResourceCore> & Base {
   @namespace(hydra)
   class ResourceClass extends RdfsResourceMixin(Resource) implements Partial<Resource> {
     @property.resource({ implicitTypes: [hydra.ApiDocumentation] })

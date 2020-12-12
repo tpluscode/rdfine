@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalEntityMixin } from './MedicalEntity';
@@ -14,7 +14,7 @@ export interface MedicalGuideline<D extends RDF.DatasetCore = RDF.DatasetCore> e
   guidelineSubject: Schema.MedicalEntity<D> | undefined;
 }
 
-export function MedicalGuidelineMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalGuideline> & Base {
+export function MedicalGuidelineMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalGuideline> & RdfResourceCore> & Base {
   @namespace(schema)
   class MedicalGuidelineClass extends MedicalEntityMixin(Resource) implements Partial<MedicalGuideline> {
     @property()

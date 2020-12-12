@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ResidenceMixin } from './Residence';
@@ -16,7 +16,7 @@ export interface ApartmentComplex<D extends RDF.DatasetCore = RDF.DatasetCore> e
   tourBookingPage: RDF.NamedNode | undefined;
 }
 
-export function ApartmentComplexMixin<Base extends Constructor>(Resource: Base): Constructor<ApartmentComplex> & Base {
+export function ApartmentComplexMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ApartmentComplex> & RdfResourceCore> & Base {
   @namespace(schema)
   class ApartmentComplexClass extends ResidenceMixin(Resource) implements Partial<ApartmentComplex> {
     @property.resource()

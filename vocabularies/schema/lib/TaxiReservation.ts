@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ReservationMixin } from './Reservation';
@@ -14,7 +14,7 @@ export interface TaxiReservation<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   pickupTime: Date | undefined;
 }
 
-export function TaxiReservationMixin<Base extends Constructor>(Resource: Base): Constructor<TaxiReservation> & Base {
+export function TaxiReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TaxiReservation> & RdfResourceCore> & Base {
   @namespace(schema)
   class TaxiReservationClass extends ReservationMixin(Resource) implements Partial<TaxiReservation> {
     @property.resource()

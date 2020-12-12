@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ThingMixin } from './Thing';
@@ -56,7 +56,7 @@ export interface Product<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function ProductMixin<Base extends Constructor>(Resource: Base): Constructor<Product> & Base {
+export function ProductMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Product> & RdfResourceCore> & Base {
   @namespace(schema)
   class ProductClass extends ThingMixin(Resource) implements Partial<Product> {
     @property.resource()

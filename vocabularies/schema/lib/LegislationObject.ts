@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { LegislationMixin } from './Legislation';
@@ -12,7 +12,7 @@ export interface LegislationObject<D extends RDF.DatasetCore = RDF.DatasetCore> 
   legislationLegalValue: Schema.LegalValueLevel | undefined;
 }
 
-export function LegislationObjectMixin<Base extends Constructor>(Resource: Base): Constructor<LegislationObject> & Base {
+export function LegislationObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LegislationObject> & RdfResourceCore> & Base {
   @namespace(schema)
   class LegislationObjectClass extends MediaObjectMixin(LegislationMixin(Resource)) implements Partial<LegislationObject> {
     @property()

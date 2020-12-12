@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { HouseMixin } from './House';
@@ -13,7 +13,7 @@ export interface SingleFamilyResidence<D extends RDF.DatasetCore = RDF.DatasetCo
   occupancy: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function SingleFamilyResidenceMixin<Base extends Constructor>(Resource: Base): Constructor<SingleFamilyResidence> & Base {
+export function SingleFamilyResidenceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SingleFamilyResidence> & RdfResourceCore> & Base {
   @namespace(schema)
   class SingleFamilyResidenceClass extends HouseMixin(Resource) implements Partial<SingleFamilyResidence> {
     @property.resource()

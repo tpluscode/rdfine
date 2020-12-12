@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { OrganizationMixin } from './Organization';
@@ -16,7 +16,7 @@ export interface LocalBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   priceRange: string | undefined;
 }
 
-export function LocalBusinessMixin<Base extends Constructor>(Resource: Base): Constructor<LocalBusiness> & Base {
+export function LocalBusinessMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LocalBusiness> & RdfResourceCore> & Base {
   @namespace(schema)
   class LocalBusinessClass extends PlaceMixin(OrganizationMixin(Resource)) implements Partial<LocalBusiness> {
     @property.resource()

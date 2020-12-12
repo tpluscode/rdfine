@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { OrganizationMixin } from './Organization';
@@ -10,7 +10,7 @@ import { OrganizationMixin } from './Organization';
 export interface PerformingGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, RdfResource<D> {
 }
 
-export function PerformingGroupMixin<Base extends Constructor>(Resource: Base): Constructor<PerformingGroup> & Base {
+export function PerformingGroupMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PerformingGroup> & RdfResourceCore> & Base {
   @namespace(schema)
   class PerformingGroupClass extends OrganizationMixin(Resource) implements Partial<PerformingGroup> {
   }

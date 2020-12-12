@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ControlActionMixin } from './ControlAction';
@@ -10,7 +10,7 @@ import { ControlActionMixin } from './ControlAction';
 export interface ResumeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ControlAction<D>, RdfResource<D> {
 }
 
-export function ResumeActionMixin<Base extends Constructor>(Resource: Base): Constructor<ResumeAction> & Base {
+export function ResumeActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ResumeAction> & RdfResourceCore> & Base {
   @namespace(schema)
   class ResumeActionClass extends ControlActionMixin(Resource) implements Partial<ResumeAction> {
   }

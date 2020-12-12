@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '..';
 import type * as Shacl from '@rdfine/shacl';
@@ -12,7 +12,7 @@ import { JSFunctionMixin as ShaclJSFunctionMixin } from '@rdfine/shacl/lib/JSFun
 export interface JSTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.TestCase<D>, Shacl.JSFunction<D>, RdfResource<D> {
 }
 
-export function JSTestCaseMixin<Base extends Constructor>(Resource: Base) {
+export function JSTestCaseMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<JSTestCase> & RdfResourceCore> & Base {
   @namespace(dash)
   class JSTestCaseClass extends ShaclJSFunctionMixin(TestCaseMixin(Resource)) implements Partial<JSTestCase> {
   }

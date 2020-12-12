@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import type * as Rdf from '@rdfine/rdf';
@@ -15,7 +15,7 @@ export interface TemplatedLink<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   title: string | undefined;
 }
 
-export function TemplatedLinkMixin<Base extends Constructor>(Resource: Base): Constructor<TemplatedLink> & Base {
+export function TemplatedLinkMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TemplatedLink> & RdfResourceCore> & Base {
   @namespace(hydra)
   class TemplatedLinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements Partial<TemplatedLink> {
     @property.literal()

@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './namespace';
-import type { Initializer, RdfResourceCore, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import { ResourceMixin } from './Resource';
@@ -13,7 +13,7 @@ export interface Collection<M extends RdfResourceCore<any> = RdfResourceCore<any
   totalItems: number | undefined;
 }
 
-export function CollectionMixin<Base extends Constructor>(Resource: Base): Constructor<Collection> & Base {
+export function CollectionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Collection> & RdfResourceCore> & Base {
   @namespace(hydra)
   class CollectionClass extends ResourceMixin(Resource) implements Partial<Collection> {
     @property.resource({ values: 'array', implicitTypes: [hydra.ManagesBlock] })

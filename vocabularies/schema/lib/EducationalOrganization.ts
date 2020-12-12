@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CivicStructureMixin } from './CivicStructure';
@@ -12,7 +12,7 @@ export interface EducationalOrganization<D extends RDF.DatasetCore = RDF.Dataset
   alumni: Schema.Person<D> | undefined;
 }
 
-export function EducationalOrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<EducationalOrganization> & Base {
+export function EducationalOrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EducationalOrganization> & RdfResourceCore> & Base {
   @namespace(schema)
   class EducationalOrganizationClass extends OrganizationMixin(CivicStructureMixin(Resource)) implements Partial<EducationalOrganization> {
     @property.resource()

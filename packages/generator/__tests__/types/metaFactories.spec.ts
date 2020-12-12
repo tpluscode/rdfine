@@ -99,6 +99,7 @@ describe('meta factory', () => {
       // then
       expect(meta).toEqual({
         type: 'ExternalResource',
+        localName: 'Person',
         mixinName: 'SchemaPersonMixin',
         exportName: 'PersonMixin',
         package: '@rdfine/schema',
@@ -121,6 +122,7 @@ describe('meta factory', () => {
       // then
       expect(meta).toEqual({
         type: 'ExternalResource',
+        localName: '_3DModel',
         mixinName: 'Schema3DModelMixin',
         exportName: '_3DModelMixin',
         package: '@rdfine/schema',

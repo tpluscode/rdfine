@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import { JSExecutableMixin } from './JSExecutable';
@@ -11,7 +11,7 @@ import { TargetTypeMixin } from './TargetType';
 export interface JSTargetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, Sh.TargetType<D>, RdfResource<D> {
 }
 
-export function JSTargetTypeMixin<Base extends Constructor>(Resource: Base): Constructor<JSTargetType> & Base {
+export function JSTargetTypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<JSTargetType> & RdfResourceCore> & Base {
   @namespace(sh)
   class JSTargetTypeClass extends TargetTypeMixin(JSExecutableMixin(Resource)) implements Partial<JSTargetType> {
   }

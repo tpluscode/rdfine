@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { UserInteractionMixin } from './UserInteraction';
@@ -10,7 +10,7 @@ import { UserInteractionMixin } from './UserInteraction';
 export interface UserPlays<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UserInteraction<D>, RdfResource<D> {
 }
 
-export function UserPlaysMixin<Base extends Constructor>(Resource: Base): Constructor<UserPlays> & Base {
+export function UserPlaysMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<UserPlays> & RdfResourceCore> & Base {
   @namespace(schema)
   class UserPlaysClass extends UserInteractionMixin(Resource) implements Partial<UserPlays> {
   }

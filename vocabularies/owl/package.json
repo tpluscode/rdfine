@@ -32,6 +32,26 @@
     "types": {
       "Thing": "NamedNode",
       "rdfs:Literal": "string"
+    },
+    "properties": {
+      "equivalentProperty": {
+        "values": "array"
+      },
+      "propertyDisjointWith": {
+        "values": "array"
+      },
+      "equivalentClass": {
+        "values": "array"
+      },
+      "intersectionOf": {
+        "values": "array"
+      },
+      "oneOf": {
+        "values": "array"
+      },
+      "unionOf": {
+        "values": "array"
+      }
     }
   },
   "dependencies": {

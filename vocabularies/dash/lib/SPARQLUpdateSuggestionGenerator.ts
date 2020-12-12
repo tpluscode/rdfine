@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '..';
 import type * as Shacl from '@rdfine/shacl';
@@ -13,7 +13,7 @@ import { SPARQLUpdateExecutableMixin as ShaclSPARQLUpdateExecutableMixin } from 
 export interface SPARQLUpdateSuggestionGenerator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.SuggestionGenerator<D>, Shacl.SPARQLSelectExecutable<D>, Shacl.SPARQLUpdateExecutable<D>, RdfResource<D> {
 }
 
-export function SPARQLUpdateSuggestionGeneratorMixin<Base extends Constructor>(Resource: Base) {
+export function SPARQLUpdateSuggestionGeneratorMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SPARQLUpdateSuggestionGenerator> & RdfResourceCore> & Base {
   @namespace(dash)
   class SPARQLUpdateSuggestionGeneratorClass extends ShaclSPARQLUpdateExecutableMixin(ShaclSPARQLSelectExecutableMixin(SuggestionGeneratorMixin(Resource))) implements Partial<SPARQLUpdateSuggestionGenerator> {
   }

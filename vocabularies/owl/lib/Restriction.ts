@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '..';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -31,7 +31,7 @@ export interface Restriction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   someValuesFrom: Rdfs.Class<D> | undefined;
 }
 
-export function RestrictionMixin<Base extends Constructor>(Resource: Base): Constructor<Restriction> & Base {
+export function RestrictionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Restriction> & RdfResourceCore> & Base {
   @namespace(owl)
   class RestrictionClass extends ClassMixin(Resource) implements Partial<Restriction> {
     @property.resource({ as: [RdfsClassMixin] })

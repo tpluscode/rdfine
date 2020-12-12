@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -14,7 +14,7 @@ export interface ListItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   previousItem: Schema.ListItem<D> | undefined;
 }
 
-export function ListItemMixin<Base extends Constructor>(Resource: Base): Constructor<ListItem> & Base {
+export function ListItemMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ListItem> & RdfResourceCore> & Base {
   @namespace(schema)
   class ListItemClass extends IntangibleMixin(Resource) implements Partial<ListItem> {
     @property.resource()

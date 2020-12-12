@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { AccommodationMixin } from './Accommodation';
@@ -15,7 +15,7 @@ export interface Suite<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   occupancy: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function SuiteMixin<Base extends Constructor>(Resource: Base): Constructor<Suite> & Base {
+export function SuiteMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Suite> & RdfResourceCore> & Base {
   @namespace(schema)
   class SuiteClass extends AccommodationMixin(Resource) implements Partial<Suite> {
     @property.resource()

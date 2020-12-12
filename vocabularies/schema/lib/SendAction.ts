@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TransferActionMixin } from './TransferAction';
@@ -12,7 +12,7 @@ export interface SendAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function SendActionMixin<Base extends Constructor>(Resource: Base): Constructor<SendAction> & Base {
+export function SendActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SendAction> & RdfResourceCore> & Base {
   @namespace(schema)
   class SendActionClass extends TransferActionMixin(Resource) implements Partial<SendAction> {
     @property()

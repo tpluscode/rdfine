@@ -26,10 +26,30 @@
     "build": "run-s build:*",
     "build:cjs": "tsc -p tsconfig.build.json",
     "build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs --config-file ../../babel.config.json",
-    "generate": "rdf-vocab prefix dash | rdfine-gen --format application/n-quads --dev"
+    "generate": "( rdf-vocab prefix dash ; cat overrides.nq ; ) | rdfine-gen --format application/n-quads --dev"
   },
   "rdfine": {
-    "prefix": "dash"
+    "prefix": "dash",
+    "properties": {
+      "resourceAction": {
+        "values": "array"
+      },
+      "suggestion": {
+        "values": "array"
+      },
+      "shapeScript": {
+        "values": "array"
+      },
+      "expectedResult": {
+        "values": "array"
+      },
+      "reifiableBy": {
+        "values": "array"
+      },
+      "applicableToClass": {
+        "values": "array"
+      }
+    }
   },
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",

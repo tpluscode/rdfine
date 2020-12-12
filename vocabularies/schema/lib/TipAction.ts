@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TradeActionMixin } from './TradeAction';
@@ -11,7 +11,7 @@ export interface TipAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function TipActionMixin<Base extends Constructor>(Resource: Base): Constructor<TipAction> & Base {
+export function TipActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TipAction> & RdfResourceCore> & Base {
   @namespace(schema)
   class TipActionClass extends TradeActionMixin(Resource) implements Partial<TipAction> {
     @property.resource()

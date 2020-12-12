@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { EventMixin } from './Event';
@@ -10,7 +10,7 @@ import { EventMixin } from './Event';
 export interface LiteraryEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
 }
 
-export function LiteraryEventMixin<Base extends Constructor>(Resource: Base): Constructor<LiteraryEvent> & Base {
+export function LiteraryEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LiteraryEvent> & RdfResourceCore> & Base {
   @namespace(schema)
   class LiteraryEventClass extends EventMixin(Resource) implements Partial<LiteraryEvent> {
   }

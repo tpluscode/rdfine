@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalEntityMixin } from './MedicalEntity';
@@ -11,7 +11,7 @@ export interface MedicalRiskFactor<D extends RDF.DatasetCore = RDF.DatasetCore> 
   increasesRiskOf: Schema.MedicalEntity<D> | undefined;
 }
 
-export function MedicalRiskFactorMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalRiskFactor> & Base {
+export function MedicalRiskFactorMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalRiskFactor> & RdfResourceCore> & Base {
   @namespace(schema)
   class MedicalRiskFactorClass extends MedicalEntityMixin(Resource) implements Partial<MedicalRiskFactor> {
     @property.resource()

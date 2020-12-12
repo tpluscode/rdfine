@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TripMixin } from './Trip';
@@ -28,7 +28,7 @@ export interface Flight<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   webCheckinTime: Date | undefined;
 }
 
-export function FlightMixin<Base extends Constructor>(Resource: Base): Constructor<Flight> & Base {
+export function FlightMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Flight> & RdfResourceCore> & Base {
   @namespace(schema)
   class FlightClass extends TripMixin(Resource) implements Partial<Flight> {
     @property.resource()

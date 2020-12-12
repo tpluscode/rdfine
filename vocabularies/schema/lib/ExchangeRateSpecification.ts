@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -14,7 +14,7 @@ export interface ExchangeRateSpecification<D extends RDF.DatasetCore = RDF.Datas
   exchangeRateSpreadLiteral: number | undefined;
 }
 
-export function ExchangeRateSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<ExchangeRateSpecification> & Base {
+export function ExchangeRateSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ExchangeRateSpecification> & RdfResourceCore> & Base {
   @namespace(schema)
   class ExchangeRateSpecificationClass extends StructuredValueMixin(Resource) implements Partial<ExchangeRateSpecification> {
     @property.literal()

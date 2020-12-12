@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { OrganizationRoleMixin } from './OrganizationRole';
@@ -13,7 +13,7 @@ export interface EmployeeRole<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   salaryCurrency: string | undefined;
 }
 
-export function EmployeeRoleMixin<Base extends Constructor>(Resource: Base): Constructor<EmployeeRole> & Base {
+export function EmployeeRoleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EmployeeRole> & RdfResourceCore> & Base {
   @namespace(schema)
   class EmployeeRoleClass extends OrganizationRoleMixin(Resource) implements Partial<EmployeeRole> {
     @property.resource()

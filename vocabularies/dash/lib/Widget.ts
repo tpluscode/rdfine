@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { dash } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '..';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -11,7 +11,7 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface Widget<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
 }
 
-export function WidgetMixin<Base extends Constructor>(Resource: Base) {
+export function WidgetMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Widget> & RdfResourceCore> & Base {
   @namespace(dash)
   class WidgetClass extends RdfsResourceMixin(Resource) implements Partial<Widget> {
   }

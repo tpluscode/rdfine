@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { wgs } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Wgs from '..';
 import { SpatialThingMixin } from './SpatialThing';
@@ -10,7 +10,7 @@ import { SpatialThingMixin } from './SpatialThing';
 export interface Point<D extends RDF.DatasetCore = RDF.DatasetCore> extends Wgs.SpatialThing<D>, RdfResource<D> {
 }
 
-export function PointMixin<Base extends Constructor>(Resource: Base): Constructor<Point> & Base {
+export function PointMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Point> & RdfResourceCore> & Base {
   @namespace(wgs)
   class PointClass extends SpatialThingMixin(Resource) implements Partial<Point> {
   }

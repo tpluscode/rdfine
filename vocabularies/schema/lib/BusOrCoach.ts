@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { VehicleMixin } from './Vehicle';
@@ -12,7 +12,7 @@ export interface BusOrCoach<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   roofLoad: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function BusOrCoachMixin<Base extends Constructor>(Resource: Base): Constructor<BusOrCoach> & Base {
+export function BusOrCoachMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BusOrCoach> & RdfResourceCore> & Base {
   @namespace(schema)
   class BusOrCoachClass extends VehicleMixin(Resource) implements Partial<BusOrCoach> {
     @property.literal()

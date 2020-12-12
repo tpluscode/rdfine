@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CollectionMixin } from './Collection';
@@ -12,7 +12,7 @@ export interface ProductCollection<D extends RDF.DatasetCore = RDF.DatasetCore> 
   includesObject: Schema.TypeAndQuantityNode<D> | undefined;
 }
 
-export function ProductCollectionMixin<Base extends Constructor>(Resource: Base): Constructor<ProductCollection> & Base {
+export function ProductCollectionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ProductCollection> & RdfResourceCore> & Base {
   @namespace(schema)
   class ProductCollectionClass extends ProductMixin(CollectionMixin(Resource)) implements Partial<ProductCollection> {
     @property.resource()

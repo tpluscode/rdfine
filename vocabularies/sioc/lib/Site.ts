@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '..';
 import { SpaceMixin } from './Space';
@@ -12,7 +12,7 @@ export interface Site<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc.
   'host_of': Sioc.Container<D> | undefined;
 }
 
-export function SiteMixin<Base extends Constructor>(Resource: Base): Constructor<Site> & Base {
+export function SiteMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Site> & RdfResourceCore> & Base {
   @namespace(sioc)
   class SiteClass extends SpaceMixin(Resource) implements Partial<Site> {
     @property.resource({ implicitTypes: [sioc.UserAccount] })

@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -15,7 +15,7 @@ export interface OrderItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   orderQuantity: number | undefined;
 }
 
-export function OrderItemMixin<Base extends Constructor>(Resource: Base): Constructor<OrderItem> & Base {
+export function OrderItemMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<OrderItem> & RdfResourceCore> & Base {
   @namespace(schema)
   class OrderItemClass extends IntangibleMixin(Resource) implements Partial<OrderItem> {
     @property.resource()

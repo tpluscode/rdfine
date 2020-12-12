@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CommunicateActionMixin } from './CommunicateAction';
@@ -11,7 +11,7 @@ export interface ReplyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   resultComment: Schema.Comment<D> | undefined;
 }
 
-export function ReplyActionMixin<Base extends Constructor>(Resource: Base): Constructor<ReplyAction> & Base {
+export function ReplyActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ReplyAction> & RdfResourceCore> & Base {
   @namespace(schema)
   class ReplyActionClass extends CommunicateActionMixin(Resource) implements Partial<ReplyAction> {
     @property.resource()

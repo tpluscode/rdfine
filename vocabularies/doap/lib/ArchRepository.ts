@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { doap } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Doap from '..';
 import { RepositoryMixin } from './Repository';
@@ -11,7 +11,7 @@ export interface ArchRepository<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   module: RDF.Term | undefined;
 }
 
-export function ArchRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<ArchRepository> & Base {
+export function ArchRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ArchRepository> & RdfResourceCore> & Base {
   @namespace(doap)
   class ArchRepositoryClass extends RepositoryMixin(Resource) implements Partial<ArchRepository> {
     @property()

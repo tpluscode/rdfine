@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '..';
 
@@ -11,7 +11,7 @@ export interface Usergroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   'usergroup_of': Sioc.Space<D> | undefined;
 }
 
-export function UsergroupMixin<Base extends Constructor>(Resource: Base): Constructor<Usergroup> & Base {
+export function UsergroupMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Usergroup> & RdfResourceCore> & Base {
   @namespace(sioc)
   class UsergroupClass extends Resource implements Partial<Usergroup> {
     @property.resource({ implicitTypes: [sioc.UserAccount] })

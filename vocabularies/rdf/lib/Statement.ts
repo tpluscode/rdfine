@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { rdf } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdf from '..';
 
@@ -12,7 +12,7 @@ export interface Statement<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   subject: RDF.Term | undefined;
 }
 
-export function StatementMixin<Base extends Constructor>(Resource: Base): Constructor<Statement> & Base {
+export function StatementMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Statement> & RdfResourceCore> & Base {
   @namespace(rdf)
   class StatementClass extends Resource implements Partial<Statement> {
     @property()

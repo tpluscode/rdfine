@@ -31,6 +31,7 @@ export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix
     prefix = externalPrefixMap[prefix] || prefix
     return {
       type: 'ExternalResource',
+      localName,
       mixinName: toUpperInitial(`${prefix}${termName}Mixin`),
       exportName: `${localName}Mixin`,
       qualifiedMixinName: `${toUpperInitial(prefix)}.${localName}Mixin`,

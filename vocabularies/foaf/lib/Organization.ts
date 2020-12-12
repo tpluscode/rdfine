@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '..';
 import { AgentMixin } from './Agent';
@@ -10,7 +10,7 @@ import { AgentMixin } from './Agent';
 export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Agent<D>, RdfResource<D> {
 }
 
-export function OrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<Organization> & Base {
+export function OrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Organization> & RdfResourceCore> & Base {
   @namespace(foaf)
   class OrganizationClass extends AgentMixin(Resource) implements Partial<Organization> {
   }

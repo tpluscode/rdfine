@@ -2,7 +2,7 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { AccommodationMixin } from './Accommodation';
@@ -10,7 +10,7 @@ import { AccommodationMixin } from './Accommodation';
 export interface CampingPitch<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Accommodation<D>, RdfResource<D> {
 }
 
-export function CampingPitchMixin<Base extends Constructor>(Resource: Base): Constructor<CampingPitch> & Base {
+export function CampingPitchMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CampingPitch> & RdfResourceCore> & Base {
   @namespace(schema)
   class CampingPitchClass extends AccommodationMixin(Resource) implements Partial<CampingPitch> {
   }
