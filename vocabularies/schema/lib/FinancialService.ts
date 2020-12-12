@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { LocalBusinessMixin } from './LocalBusiness';
@@ -12,9 +13,9 @@ export interface FinancialService<D extends RDF.DatasetCore = RDF.DatasetCore> e
   feesAndCommissionsSpecificationTerm: RDF.NamedNode | undefined;
 }
 
-export function FinancialServiceMixin<Base extends Constructor>(Resource: Base): Constructor<FinancialService> & Base {
+export function FinancialServiceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FinancialService> & RdfResourceCore> & Base {
   @namespace(schema)
-  class FinancialServiceClass extends LocalBusinessMixin(Resource) implements FinancialService {
+  class FinancialServiceClass extends LocalBusinessMixin(Resource) implements Partial<FinancialService> {
     @property.literal()
     feesAndCommissionsSpecification: string | undefined;
     @property({ path: schema.feesAndCommissionsSpecification })
@@ -33,3 +34,5 @@ class FinancialServiceImpl extends FinancialServiceMixin(RdfResourceImpl) {
 }
 FinancialServiceMixin.appliesTo = schema.FinancialService
 FinancialServiceMixin.Class = FinancialServiceImpl
+
+export const fromPointer = createFactory<FinancialService>([LocalBusinessMixin, FinancialServiceMixin], { types: [schema.FinancialService] });

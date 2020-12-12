@@ -22,6 +22,7 @@ export interface ResourceType {
 
 export interface ExternalResourceType {
   type: 'ExternalResource'
+  localName: string
   module: string
   mixinName: string
   qualifiedName: string

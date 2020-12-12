@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ReservationMixin } from './Reservation';
@@ -14,9 +15,9 @@ export interface TaxiReservation<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   pickupTime: Date | undefined;
 }
 
-export function TaxiReservationMixin<Base extends Constructor>(Resource: Base): Constructor<TaxiReservation> & Base {
+export function TaxiReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TaxiReservation> & RdfResourceCore> & Base {
   @namespace(schema)
-  class TaxiReservationClass extends ReservationMixin(Resource) implements TaxiReservation {
+  class TaxiReservationClass extends ReservationMixin(Resource) implements Partial<TaxiReservation> {
     @property.resource()
     partySize: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.partySize, type: Number })
@@ -39,3 +40,5 @@ class TaxiReservationImpl extends TaxiReservationMixin(RdfResourceImpl) {
 }
 TaxiReservationMixin.appliesTo = schema.TaxiReservation
 TaxiReservationMixin.Class = TaxiReservationImpl
+
+export const fromPointer = createFactory<TaxiReservation>([ReservationMixin, TaxiReservationMixin], { types: [schema.TaxiReservation] });

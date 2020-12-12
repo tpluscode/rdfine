@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { AudienceMixin } from './Audience';
@@ -17,9 +18,9 @@ export interface PeopleAudience<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   suggestedMinAge: number | undefined;
 }
 
-export function PeopleAudienceMixin<Base extends Constructor>(Resource: Base): Constructor<PeopleAudience> & Base {
+export function PeopleAudienceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PeopleAudience> & RdfResourceCore> & Base {
   @namespace(schema)
-  class PeopleAudienceClass extends AudienceMixin(Resource) implements PeopleAudience {
+  class PeopleAudienceClass extends AudienceMixin(Resource) implements Partial<PeopleAudience> {
     @property.resource()
     healthCondition: Schema.MedicalCondition | undefined;
     @property.literal()
@@ -48,3 +49,5 @@ class PeopleAudienceImpl extends PeopleAudienceMixin(RdfResourceImpl) {
 }
 PeopleAudienceMixin.appliesTo = schema.PeopleAudience
 PeopleAudienceMixin.Class = PeopleAudienceImpl
+
+export const fromPointer = createFactory<PeopleAudience>([AudienceMixin, PeopleAudienceMixin], { types: [schema.PeopleAudience] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -15,9 +16,9 @@ export interface Game<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   quest: Schema.Thing<D> | undefined;
 }
 
-export function GameMixin<Base extends Constructor>(Resource: Base): Constructor<Game> & Base {
+export function GameMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Game> & RdfResourceCore> & Base {
   @namespace(schema)
-  class GameClass extends CreativeWorkMixin(Resource) implements Game {
+  class GameClass extends CreativeWorkMixin(Resource) implements Partial<Game> {
     @property.resource()
     characterAttribute: Schema.Thing | undefined;
     @property.resource()
@@ -42,3 +43,5 @@ class GameImpl extends GameMixin(RdfResourceImpl) {
 }
 GameMixin.appliesTo = schema.Game
 GameMixin.Class = GameImpl
+
+export const fromPointer = createFactory<Game>([CreativeWorkMixin, GameMixin], { types: [schema.Game] });

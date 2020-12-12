@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ContactPointMixin } from './ContactPoint';
@@ -17,9 +18,9 @@ export interface PostalAddress<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   streetAddress: string | undefined;
 }
 
-export function PostalAddressMixin<Base extends Constructor>(Resource: Base): Constructor<PostalAddress> & Base {
+export function PostalAddressMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PostalAddress> & RdfResourceCore> & Base {
   @namespace(schema)
-  class PostalAddressClass extends ContactPointMixin(Resource) implements PostalAddress {
+  class PostalAddressClass extends ContactPointMixin(Resource) implements Partial<PostalAddress> {
     @property.resource()
     addressCountry: Schema.Country | undefined;
     @property.literal({ path: schema.addressCountry })
@@ -48,3 +49,5 @@ class PostalAddressImpl extends PostalAddressMixin(RdfResourceImpl) {
 }
 PostalAddressMixin.appliesTo = schema.PostalAddress
 PostalAddressMixin.Class = PostalAddressImpl
+
+export const fromPointer = createFactory<PostalAddress>([ContactPointMixin, PostalAddressMixin], { types: [schema.PostalAddress] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { OrganizationMixin } from './Organization';
@@ -12,9 +13,9 @@ export interface Airline<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   iataCode: string | undefined;
 }
 
-export function AirlineMixin<Base extends Constructor>(Resource: Base): Constructor<Airline> & Base {
+export function AirlineMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Airline> & RdfResourceCore> & Base {
   @namespace(schema)
-  class AirlineClass extends OrganizationMixin(Resource) implements Airline {
+  class AirlineClass extends OrganizationMixin(Resource) implements Partial<Airline> {
     @property()
     boardingPolicy: Schema.BoardingPolicyType | undefined;
     @property.literal()
@@ -33,3 +34,5 @@ class AirlineImpl extends AirlineMixin(RdfResourceImpl) {
 }
 AirlineMixin.appliesTo = schema.Airline
 AirlineMixin.Class = AirlineImpl
+
+export const fromPointer = createFactory<Airline>([OrganizationMixin, AirlineMixin], { types: [schema.Airline] });

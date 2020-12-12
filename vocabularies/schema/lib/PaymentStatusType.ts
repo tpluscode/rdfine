@@ -9,7 +9,7 @@ export default {
   PaymentPastDue: schema.PaymentPastDue as NamedNode<'http://schema.org/PaymentPastDue'>,
 };
 
-export type PaymentStatusType = 
+export type PaymentStatusType =
   NamedNode<'http://schema.org/PaymentAutomaticallyApplied'>
   | NamedNode<'http://schema.org/PaymentComplete'>
   | NamedNode<'http://schema.org/PaymentDeclined'>

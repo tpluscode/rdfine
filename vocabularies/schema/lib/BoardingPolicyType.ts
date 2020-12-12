@@ -6,6 +6,6 @@ export default {
   ZoneBoardingPolicy: schema.ZoneBoardingPolicy as NamedNode<'http://schema.org/ZoneBoardingPolicy'>,
 };
 
-export type BoardingPolicyType = 
+export type BoardingPolicyType =
   NamedNode<'http://schema.org/GroupBoardingPolicy'>
   | NamedNode<'http://schema.org/ZoneBoardingPolicy'>;

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import { PropertyShapeMixin } from './PropertyShape';
@@ -11,9 +12,9 @@ export interface Parameter<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   optional: boolean | undefined;
 }
 
-export function ParameterMixin<Base extends Constructor>(Resource: Base): Constructor<Parameter> & Base {
+export function ParameterMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Parameter> & RdfResourceCore> & Base {
   @namespace(sh)
-  class ParameterClass extends PropertyShapeMixin(Resource) implements Parameter {
+  class ParameterClass extends PropertyShapeMixin(Resource) implements Partial<Parameter> {
     @property.literal({ type: Boolean })
     optional: boolean | undefined;
   }
@@ -30,3 +31,5 @@ class ParameterImpl extends ParameterMixin(RdfResourceImpl) {
 }
 ParameterMixin.appliesTo = sh.Parameter
 ParameterMixin.Class = ParameterImpl
+
+export const fromPointer = createFactory<Parameter>([PropertyShapeMixin, ParameterMixin], { types: [sh.Parameter] });

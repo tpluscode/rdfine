@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { GeoShapeMixin } from './GeoShape';
@@ -13,9 +14,9 @@ export interface GeoCircle<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   geoRadiusLiteral: number | string | undefined;
 }
 
-export function GeoCircleMixin<Base extends Constructor>(Resource: Base): Constructor<GeoCircle> & Base {
+export function GeoCircleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<GeoCircle> & RdfResourceCore> & Base {
   @namespace(schema)
-  class GeoCircleClass extends GeoShapeMixin(Resource) implements GeoCircle {
+  class GeoCircleClass extends GeoShapeMixin(Resource) implements Partial<GeoCircle> {
     @property.resource()
     geoMidpoint: Schema.GeoCoordinates | undefined;
     @property.resource()
@@ -36,3 +37,5 @@ class GeoCircleImpl extends GeoCircleMixin(RdfResourceImpl) {
 }
 GeoCircleMixin.appliesTo = schema.GeoCircle
 GeoCircleMixin.Class = GeoCircleImpl
+
+export const fromPointer = createFactory<GeoCircle>([GeoShapeMixin, GeoCircleMixin], { types: [schema.GeoCircle] });

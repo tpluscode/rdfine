@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '..';
 
@@ -14,9 +15,9 @@ export interface Transformation<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   url: string | undefined;
 }
 
-export function TransformationMixin<Base extends Constructor>(Resource: Base): Constructor<Transformation> & Base {
+export function TransformationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Transformation> & RdfResourceCore> & Base {
   @namespace(csvw)
-  class TransformationClass extends Resource implements Transformation {
+  class TransformationClass extends Resource implements Partial<Transformation> {
     @property.literal()
     scriptFormat: string | undefined;
     @property.literal()
@@ -41,3 +42,5 @@ class TransformationImpl extends TransformationMixin(RdfResourceImpl) {
 }
 TransformationMixin.appliesTo = csvw.Transformation
 TransformationMixin.Class = TransformationImpl
+
+export const fromPointer = createFactory<Transformation>([TransformationMixin], { types: [csvw.Transformation] });

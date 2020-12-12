@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '..';
 
@@ -29,9 +30,9 @@ export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
   yahooChatID: RDF.Literal | undefined;
 }
 
-export function AgentMixin<Base extends Constructor>(Resource: Base): Constructor<Agent> & Base {
+export function AgentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Agent> & RdfResourceCore> & Base {
   @namespace(foaf)
-  class AgentClass extends Resource implements Agent {
+  class AgentClass extends Resource implements Partial<Agent> {
     @property.resource({ implicitTypes: [foaf.OnlineAccount] })
     account: Foaf.OnlineAccount | undefined;
     @property()
@@ -86,3 +87,5 @@ class AgentImpl extends AgentMixin(RdfResourceImpl) {
 }
 AgentMixin.appliesTo = foaf.Agent
 AgentMixin.Class = AgentImpl
+
+export const fromPointer = createFactory<Agent>([AgentMixin], { types: [foaf.Agent] });

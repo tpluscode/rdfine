@@ -8,7 +8,7 @@ export default {
   UnincorporatedAssociationCharity: schema.UnincorporatedAssociationCharity as NamedNode<'http://schema.org/UnincorporatedAssociationCharity'>,
 };
 
-export type UKNonprofitType = 
+export type UKNonprofitType =
   NamedNode<'http://schema.org/CharitableIncorporatedOrganization'>
   | NamedNode<'http://schema.org/LimitedByGuaranteeCharity'>
   | NamedNode<'http://schema.org/UKTrust'>

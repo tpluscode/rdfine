@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -22,9 +23,9 @@ export interface NutritionInformation<D extends RDF.DatasetCore = RDF.DatasetCor
   unsaturatedFatContent: Schema.Mass<D> | undefined;
 }
 
-export function NutritionInformationMixin<Base extends Constructor>(Resource: Base): Constructor<NutritionInformation> & Base {
+export function NutritionInformationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<NutritionInformation> & RdfResourceCore> & Base {
   @namespace(schema)
-  class NutritionInformationClass extends StructuredValueMixin(Resource) implements NutritionInformation {
+  class NutritionInformationClass extends StructuredValueMixin(Resource) implements Partial<NutritionInformation> {
     @property.resource()
     calories: Schema.Energy | undefined;
     @property.resource()
@@ -63,3 +64,5 @@ class NutritionInformationImpl extends NutritionInformationMixin(RdfResourceImpl
 }
 NutritionInformationMixin.appliesTo = schema.NutritionInformation
 NutritionInformationMixin.Class = NutritionInformationImpl
+
+export const fromPointer = createFactory<NutritionInformation>([StructuredValueMixin, NutritionInformationMixin], { types: [schema.NutritionInformation] });

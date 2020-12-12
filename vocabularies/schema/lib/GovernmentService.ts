@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ServiceMixin } from './Service';
@@ -13,9 +14,9 @@ export interface GovernmentService<D extends RDF.DatasetCore = RDF.DatasetCore> 
   serviceOperator: Schema.Organization<D> | undefined;
 }
 
-export function GovernmentServiceMixin<Base extends Constructor>(Resource: Base): Constructor<GovernmentService> & Base {
+export function GovernmentServiceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<GovernmentService> & RdfResourceCore> & Base {
   @namespace(schema)
-  class GovernmentServiceClass extends ServiceMixin(Resource) implements GovernmentService {
+  class GovernmentServiceClass extends ServiceMixin(Resource) implements Partial<GovernmentService> {
     @property.resource()
     jurisdiction: Schema.AdministrativeArea | undefined;
     @property.literal({ path: schema.jurisdiction })
@@ -36,3 +37,5 @@ class GovernmentServiceImpl extends GovernmentServiceMixin(RdfResourceImpl) {
 }
 GovernmentServiceMixin.appliesTo = schema.GovernmentService
 GovernmentServiceMixin.Class = GovernmentServiceImpl
+
+export const fromPointer = createFactory<GovernmentService>([ServiceMixin, GovernmentServiceMixin], { types: [schema.GovernmentService] });

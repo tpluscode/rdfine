@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -58,9 +59,9 @@ export interface Offer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   warranty: Schema.WarrantyPromise<D> | undefined;
 }
 
-export function OfferMixin<Base extends Constructor>(Resource: Base): Constructor<Offer> & Base {
+export function OfferMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Offer> & RdfResourceCore> & Base {
   @namespace(schema)
-  class OfferClass extends IntangibleMixin(Resource) implements Offer {
+  class OfferClass extends IntangibleMixin(Resource) implements Partial<Offer> {
     @property.resource()
     acceptedPaymentMethod: Schema.LoanOrCredit | undefined;
     @property.resource()
@@ -171,3 +172,5 @@ class OfferImpl extends OfferMixin(RdfResourceImpl) {
 }
 OfferMixin.appliesTo = schema.Offer
 OfferMixin.Class = OfferImpl
+
+export const fromPointer = createFactory<Offer>([IntangibleMixin, OfferMixin], { types: [schema.Offer] });

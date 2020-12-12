@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '..';
 import type * as Wgs from '@rdfine/wgs';
@@ -28,9 +29,9 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Wgs
   workplaceHomepage: Foaf.Document<D> | undefined;
 }
 
-export function PersonMixin<Base extends Constructor>(Resource: Base): Constructor<Person> & Base {
+export function PersonMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Person> & RdfResourceCore> & Base {
   @namespace(foaf)
-  class PersonClass extends AgentMixin(WgsSpatialThingMixin(Resource)) implements Person {
+  class PersonClass extends AgentMixin(WgsSpatialThingMixin(Resource)) implements Partial<Person> {
     @property()
     currentProject: RDF.NamedNode | undefined;
     @property()
@@ -77,3 +78,5 @@ class PersonImpl extends PersonMixin(RdfResourceImpl) {
 }
 PersonMixin.appliesTo = foaf.Person
 PersonMixin.Class = PersonImpl
+
+export const fromPointer = createFactory<Person>([AgentMixin, WgsSpatialThingMixin, PersonMixin], { types: [foaf.Person] });

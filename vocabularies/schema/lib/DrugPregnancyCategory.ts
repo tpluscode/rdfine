@@ -10,7 +10,7 @@ export default {
   FDAnotEvaluated: schema.FDAnotEvaluated as NamedNode<'http://schema.org/FDAnotEvaluated'>,
 };
 
-export type DrugPregnancyCategory = 
+export type DrugPregnancyCategory =
   NamedNode<'http://schema.org/FDAcategoryA'>
   | NamedNode<'http://schema.org/FDAcategoryB'>
   | NamedNode<'http://schema.org/FDAcategoryC'>

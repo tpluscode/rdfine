@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '..';
 
@@ -11,9 +12,9 @@ export interface Role<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRe
   'has_scope': RDF.Term | undefined;
 }
 
-export function RoleMixin<Base extends Constructor>(Resource: Base): Constructor<Role> & Base {
+export function RoleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Role> & RdfResourceCore> & Base {
   @namespace(sioc)
-  class RoleClass extends Resource implements Role {
+  class RoleClass extends Resource implements Partial<Role> {
     @property()
     'function_of': RDF.Term | undefined;
     @property()
@@ -32,3 +33,5 @@ class RoleImpl extends RoleMixin(RdfResourceImpl) {
 }
 RoleMixin.appliesTo = sioc.Role
 RoleMixin.Class = RoleImpl
+
+export const fromPointer = createFactory<Role>([RoleMixin], { types: [sioc.Role] });

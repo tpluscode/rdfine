@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { AddActionMixin } from './AddAction';
@@ -11,9 +12,9 @@ export interface InsertAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   toLocation: Schema.Place<D> | undefined;
 }
 
-export function InsertActionMixin<Base extends Constructor>(Resource: Base): Constructor<InsertAction> & Base {
+export function InsertActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<InsertAction> & RdfResourceCore> & Base {
   @namespace(schema)
-  class InsertActionClass extends AddActionMixin(Resource) implements InsertAction {
+  class InsertActionClass extends AddActionMixin(Resource) implements Partial<InsertAction> {
     @property.resource()
     toLocation: Schema.Place | undefined;
   }
@@ -30,3 +31,5 @@ class InsertActionImpl extends InsertActionMixin(RdfResourceImpl) {
 }
 InsertActionMixin.appliesTo = schema.InsertAction
 InsertActionMixin.Class = InsertActionImpl
+
+export const fromPointer = createFactory<InsertAction>([AddActionMixin, InsertActionMixin], { types: [schema.InsertAction] });

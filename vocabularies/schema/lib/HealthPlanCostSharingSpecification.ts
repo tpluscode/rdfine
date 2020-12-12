@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -15,9 +16,9 @@ export interface HealthPlanCostSharingSpecification<D extends RDF.DatasetCore = 
   healthPlanPharmacyCategory: string | undefined;
 }
 
-export function HealthPlanCostSharingSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<HealthPlanCostSharingSpecification> & Base {
+export function HealthPlanCostSharingSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<HealthPlanCostSharingSpecification> & RdfResourceCore> & Base {
   @namespace(schema)
-  class HealthPlanCostSharingSpecificationClass extends IntangibleMixin(Resource) implements HealthPlanCostSharingSpecification {
+  class HealthPlanCostSharingSpecificationClass extends IntangibleMixin(Resource) implements Partial<HealthPlanCostSharingSpecification> {
     @property.literal()
     healthPlanCoinsuranceOption: string | undefined;
     @property.literal({ type: Number })
@@ -42,3 +43,5 @@ class HealthPlanCostSharingSpecificationImpl extends HealthPlanCostSharingSpecif
 }
 HealthPlanCostSharingSpecificationMixin.appliesTo = schema.HealthPlanCostSharingSpecification
 HealthPlanCostSharingSpecificationMixin.Class = HealthPlanCostSharingSpecificationImpl
+
+export const fromPointer = createFactory<HealthPlanCostSharingSpecification>([IntangibleMixin, HealthPlanCostSharingSpecificationMixin], { types: [schema.HealthPlanCostSharingSpecification] });

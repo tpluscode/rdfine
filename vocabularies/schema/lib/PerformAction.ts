@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { PlayActionMixin } from './PlayAction';
@@ -11,9 +12,9 @@ export interface PerformAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   entertainmentBusiness: Schema.EntertainmentBusiness<D> | undefined;
 }
 
-export function PerformActionMixin<Base extends Constructor>(Resource: Base): Constructor<PerformAction> & Base {
+export function PerformActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PerformAction> & RdfResourceCore> & Base {
   @namespace(schema)
-  class PerformActionClass extends PlayActionMixin(Resource) implements PerformAction {
+  class PerformActionClass extends PlayActionMixin(Resource) implements Partial<PerformAction> {
     @property.resource()
     entertainmentBusiness: Schema.EntertainmentBusiness | undefined;
   }
@@ -30,3 +31,5 @@ class PerformActionImpl extends PerformActionMixin(RdfResourceImpl) {
 }
 PerformActionMixin.appliesTo = schema.PerformAction
 PerformActionMixin.Class = PerformActionImpl
+
+export const fromPointer = createFactory<PerformAction>([PlayActionMixin, PerformActionMixin], { types: [schema.PerformAction] });

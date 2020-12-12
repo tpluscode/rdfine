@@ -7,7 +7,7 @@ export default {
   OnlineEventAttendanceMode: schema.OnlineEventAttendanceMode as NamedNode<'http://schema.org/OnlineEventAttendanceMode'>,
 };
 
-export type EventAttendanceModeEnumeration = 
+export type EventAttendanceModeEnumeration =
   NamedNode<'http://schema.org/MixedEventAttendanceMode'>
   | NamedNode<'http://schema.org/OfflineEventAttendanceMode'>
   | NamedNode<'http://schema.org/OnlineEventAttendanceMode'>;

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalIntangibleMixin } from './MedicalIntangible';
@@ -15,9 +16,9 @@ export interface DoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   targetPopulation: string | undefined;
 }
 
-export function DoseScheduleMixin<Base extends Constructor>(Resource: Base): Constructor<DoseSchedule> & Base {
+export function DoseScheduleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DoseSchedule> & RdfResourceCore> & Base {
   @namespace(schema)
-  class DoseScheduleClass extends MedicalIntangibleMixin(Resource) implements DoseSchedule {
+  class DoseScheduleClass extends MedicalIntangibleMixin(Resource) implements Partial<DoseSchedule> {
     @property.literal()
     doseUnit: string | undefined;
     @property.literal({ type: Number })
@@ -42,3 +43,5 @@ class DoseScheduleImpl extends DoseScheduleMixin(RdfResourceImpl) {
 }
 DoseScheduleMixin.appliesTo = schema.DoseSchedule
 DoseScheduleMixin.Class = DoseScheduleImpl
+
+export const fromPointer = createFactory<DoseSchedule>([MedicalIntangibleMixin, DoseScheduleMixin], { types: [schema.DoseSchedule] });

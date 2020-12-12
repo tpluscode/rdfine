@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { NewsArticleMixin } from './NewsArticle';
@@ -10,9 +11,9 @@ import { NewsArticleMixin } from './NewsArticle';
 export interface AskPublicNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.NewsArticle<D>, RdfResource<D> {
 }
 
-export function AskPublicNewsArticleMixin<Base extends Constructor>(Resource: Base): Constructor<AskPublicNewsArticle> & Base {
+export function AskPublicNewsArticleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AskPublicNewsArticle> & RdfResourceCore> & Base {
   @namespace(schema)
-  class AskPublicNewsArticleClass extends NewsArticleMixin(Resource) implements AskPublicNewsArticle {
+  class AskPublicNewsArticleClass extends NewsArticleMixin(Resource) implements Partial<AskPublicNewsArticle> {
   }
   return AskPublicNewsArticleClass
 }
@@ -27,3 +28,5 @@ class AskPublicNewsArticleImpl extends AskPublicNewsArticleMixin(RdfResourceImpl
 }
 AskPublicNewsArticleMixin.appliesTo = schema.AskPublicNewsArticle
 AskPublicNewsArticleMixin.Class = AskPublicNewsArticleImpl
+
+export const fromPointer = createFactory<AskPublicNewsArticle>([NewsArticleMixin, AskPublicNewsArticleMixin], { types: [schema.AskPublicNewsArticle] });

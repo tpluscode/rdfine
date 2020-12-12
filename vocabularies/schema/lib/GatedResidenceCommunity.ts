@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ResidenceMixin } from './Residence';
@@ -10,9 +11,9 @@ import { ResidenceMixin } from './Residence';
 export interface GatedResidenceCommunity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Residence<D>, RdfResource<D> {
 }
 
-export function GatedResidenceCommunityMixin<Base extends Constructor>(Resource: Base): Constructor<GatedResidenceCommunity> & Base {
+export function GatedResidenceCommunityMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<GatedResidenceCommunity> & RdfResourceCore> & Base {
   @namespace(schema)
-  class GatedResidenceCommunityClass extends ResidenceMixin(Resource) implements GatedResidenceCommunity {
+  class GatedResidenceCommunityClass extends ResidenceMixin(Resource) implements Partial<GatedResidenceCommunity> {
   }
   return GatedResidenceCommunityClass
 }
@@ -27,3 +28,5 @@ class GatedResidenceCommunityImpl extends GatedResidenceCommunityMixin(RdfResour
 }
 GatedResidenceCommunityMixin.appliesTo = schema.GatedResidenceCommunity
 GatedResidenceCommunityMixin.Class = GatedResidenceCommunityImpl
+
+export const fromPointer = createFactory<GatedResidenceCommunity>([ResidenceMixin, GatedResidenceCommunityMixin], { types: [schema.GatedResidenceCommunity] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ThingMixin } from './Thing';
@@ -55,9 +56,9 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   tourBookingPage: RDF.NamedNode | undefined;
 }
 
-export function PlaceMixin<Base extends Constructor>(Resource: Base): Constructor<Place> & Base {
+export function PlaceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Place> & RdfResourceCore> & Base {
   @namespace(schema)
-  class PlaceClass extends ThingMixin(Resource) implements Place {
+  class PlaceClass extends ThingMixin(Resource) implements Partial<Place> {
     @property.resource()
     additionalProperty: Schema.PropertyValue | undefined;
     @property.resource()
@@ -162,3 +163,5 @@ class PlaceImpl extends PlaceMixin(RdfResourceImpl) {
 }
 PlaceMixin.appliesTo = schema.Place
 PlaceMixin.Class = PlaceImpl
+
+export const fromPointer = createFactory<Place>([ThingMixin, PlaceMixin], { types: [schema.Place] });

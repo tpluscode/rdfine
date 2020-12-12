@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -15,9 +16,9 @@ export interface DatedMoneySpecification<D extends RDF.DatasetCore = RDF.Dataset
   startDate: Date | undefined;
 }
 
-export function DatedMoneySpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<DatedMoneySpecification> & Base {
+export function DatedMoneySpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DatedMoneySpecification> & RdfResourceCore> & Base {
   @namespace(schema)
-  class DatedMoneySpecificationClass extends StructuredValueMixin(Resource) implements DatedMoneySpecification {
+  class DatedMoneySpecificationClass extends StructuredValueMixin(Resource) implements Partial<DatedMoneySpecification> {
     @property.resource()
     amount: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.amount, type: Number })
@@ -42,3 +43,5 @@ class DatedMoneySpecificationImpl extends DatedMoneySpecificationMixin(RdfResour
 }
 DatedMoneySpecificationMixin.appliesTo = schema.DatedMoneySpecification
 DatedMoneySpecificationMixin.Class = DatedMoneySpecificationImpl
+
+export const fromPointer = createFactory<DatedMoneySpecification>([StructuredValueMixin, DatedMoneySpecificationMixin], { types: [schema.DatedMoneySpecification] });

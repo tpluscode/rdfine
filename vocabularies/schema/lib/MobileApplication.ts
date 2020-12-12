@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { SoftwareApplicationMixin } from './SoftwareApplication';
@@ -11,9 +12,9 @@ export interface MobileApplication<D extends RDF.DatasetCore = RDF.DatasetCore> 
   carrierRequirements: string | undefined;
 }
 
-export function MobileApplicationMixin<Base extends Constructor>(Resource: Base): Constructor<MobileApplication> & Base {
+export function MobileApplicationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MobileApplication> & RdfResourceCore> & Base {
   @namespace(schema)
-  class MobileApplicationClass extends SoftwareApplicationMixin(Resource) implements MobileApplication {
+  class MobileApplicationClass extends SoftwareApplicationMixin(Resource) implements Partial<MobileApplication> {
     @property.literal()
     carrierRequirements: string | undefined;
   }
@@ -30,3 +31,5 @@ class MobileApplicationImpl extends MobileApplicationMixin(RdfResourceImpl) {
 }
 MobileApplicationMixin.appliesTo = schema.MobileApplication
 MobileApplicationMixin.Class = MobileApplicationImpl
+
+export const fromPointer = createFactory<MobileApplication>([SoftwareApplicationMixin, MobileApplicationMixin], { types: [schema.MobileApplication] });

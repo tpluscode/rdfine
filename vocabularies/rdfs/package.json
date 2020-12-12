@@ -23,10 +23,10 @@
   "scripts": {
     "prepack": "npm run build",
     "clean": "rimraf lib bundles",
-    "build": "run-s build:*",
+    "build": "run-p build:*",
     "build:cjs": "tsc -p tsconfig.build.json",
     "build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs --config-file ../../babel.config.json",
-    "generate": "rdf-vocab prefix rdfs | node ../../packages/generator/bin/rdfine-gen.js --format application/n-quads"
+    "generate": "rdf-vocab prefix rdfs | rdfine-gen --format application/n-quads --dev"
   },
   "rdfine": {
     "prefix": "rdfs",
@@ -42,6 +42,15 @@
       },
       "subClassOf": {
         "values": "array"
+      },
+      "domain": {
+        "values": "array"
+      },
+      "range": {
+        "values": "array"
+      },
+      "subPropertyOf": {
+        "values": "array"
       }
     }
   },
@@ -51,28 +60,10 @@
     "@tpluscode/rdf-ns-builders": "^0.4",
     "@tpluscode/rdfine": "^0.5.16"
   },
-  "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-proposal-decorators": "^7.8.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
-    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "@babel/preset-typescript": "^7.8.3",
-    "@rdfine/generator": "^0.5.0",
-    "@rdfjs/dataset": "^1.0.1",
-    "@types/clownface": "^1",
-    "@types/rdf-js": "^4",
-    "@zazuko/rdf-vocabularies": "^2020.3.23",
-    "clownface": "^1",
-    "eslint": "^6.8.0",
-    "jest": "^26.1.0",
-    "npm-run-all": "^4.1.5",
-    "ts-jest": "^26.1.1",
-    "typescript": "next"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tpluscode/rdfine.git"
+    "url": "git+https://github.com/tpluscode/rdfine.git",
+    "directory": "vocabularies/rdfs"
   },
   "publishConfig": {
     "access": "public"

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import type * as Rdf from '@rdfine/rdf';
@@ -15,9 +16,9 @@ export interface Link<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.P
   title: string | undefined;
 }
 
-export function LinkMixin<Base extends Constructor>(Resource: Base): Constructor<Link> & Base {
+export function LinkMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Link> & RdfResourceCore> & Base {
   @namespace(hydra)
-  class LinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements Link {
+  class LinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements Partial<Link> {
     @property.literal()
     description: string | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
@@ -38,3 +39,5 @@ class LinkImpl extends LinkMixin(RdfResourceImpl) {
 }
 LinkMixin.appliesTo = hydra.Link
 LinkMixin.Class = LinkImpl
+
+export const fromPointer = createFactory<Link>([ResourceMixin, RdfPropertyMixin, LinkMixin], { types: [hydra.Link] });

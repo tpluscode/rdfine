@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { VisualArtworkMixin } from './VisualArtwork';
@@ -10,9 +11,9 @@ import { VisualArtworkMixin } from './VisualArtwork';
 export interface CoverArt<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.VisualArtwork<D>, RdfResource<D> {
 }
 
-export function CoverArtMixin<Base extends Constructor>(Resource: Base): Constructor<CoverArt> & Base {
+export function CoverArtMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CoverArt> & RdfResourceCore> & Base {
   @namespace(schema)
-  class CoverArtClass extends VisualArtworkMixin(Resource) implements CoverArt {
+  class CoverArtClass extends VisualArtworkMixin(Resource) implements Partial<CoverArt> {
   }
   return CoverArtClass
 }
@@ -27,3 +28,5 @@ class CoverArtImpl extends CoverArtMixin(RdfResourceImpl) {
 }
 CoverArtMixin.appliesTo = schema.CoverArt
 CoverArtMixin.Class = CoverArtImpl
+
+export const fromPointer = createFactory<CoverArt>([VisualArtworkMixin, CoverArtMixin], { types: [schema.CoverArt] });

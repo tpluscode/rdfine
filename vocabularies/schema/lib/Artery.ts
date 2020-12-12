@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { VesselMixin } from './Vessel';
@@ -12,9 +13,9 @@ export interface Artery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   supplyTo: Schema.AnatomicalStructure<D> | undefined;
 }
 
-export function ArteryMixin<Base extends Constructor>(Resource: Base): Constructor<Artery> & Base {
+export function ArteryMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Artery> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ArteryClass extends VesselMixin(Resource) implements Artery {
+  class ArteryClass extends VesselMixin(Resource) implements Partial<Artery> {
     @property.resource()
     arterialBranch: Schema.AnatomicalStructure | undefined;
     @property.resource()
@@ -33,3 +34,5 @@ class ArteryImpl extends ArteryMixin(RdfResourceImpl) {
 }
 ArteryMixin.appliesTo = schema.Artery
 ArteryMixin.Class = ArteryImpl
+
+export const fromPointer = createFactory<Artery>([VesselMixin, ArteryMixin], { types: [schema.Artery] });

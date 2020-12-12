@@ -12,7 +12,7 @@ export default {
   OrderReturned: schema.OrderReturned as NamedNode<'http://schema.org/OrderReturned'>,
 };
 
-export type OrderStatus = 
+export type OrderStatus =
   NamedNode<'http://schema.org/OrderCancelled'>
   | NamedNode<'http://schema.org/OrderDelivered'>
   | NamedNode<'http://schema.org/OrderInTransit'>

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CivicStructureMixin } from './CivicStructure';
@@ -12,9 +13,9 @@ export interface MovieTheater<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   screenCount: number | undefined;
 }
 
-export function MovieTheaterMixin<Base extends Constructor>(Resource: Base): Constructor<MovieTheater> & Base {
+export function MovieTheaterMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MovieTheater> & RdfResourceCore> & Base {
   @namespace(schema)
-  class MovieTheaterClass extends EntertainmentBusinessMixin(CivicStructureMixin(Resource)) implements MovieTheater {
+  class MovieTheaterClass extends EntertainmentBusinessMixin(CivicStructureMixin(Resource)) implements Partial<MovieTheater> {
     @property.literal({ type: Number })
     screenCount: number | undefined;
   }
@@ -31,3 +32,5 @@ class MovieTheaterImpl extends MovieTheaterMixin(RdfResourceImpl) {
 }
 MovieTheaterMixin.appliesTo = schema.MovieTheater
 MovieTheaterMixin.Class = MovieTheaterImpl
+
+export const fromPointer = createFactory<MovieTheater>([EntertainmentBusinessMixin, CivicStructureMixin, MovieTheaterMixin], { types: [schema.MovieTheater] });

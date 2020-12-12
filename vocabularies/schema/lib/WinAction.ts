@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { AchieveActionMixin } from './AchieveAction';
@@ -11,9 +12,9 @@ export interface WinAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   loser: Schema.Person<D> | undefined;
 }
 
-export function WinActionMixin<Base extends Constructor>(Resource: Base): Constructor<WinAction> & Base {
+export function WinActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<WinAction> & RdfResourceCore> & Base {
   @namespace(schema)
-  class WinActionClass extends AchieveActionMixin(Resource) implements WinAction {
+  class WinActionClass extends AchieveActionMixin(Resource) implements Partial<WinAction> {
     @property.resource()
     loser: Schema.Person | undefined;
   }
@@ -30,3 +31,5 @@ class WinActionImpl extends WinActionMixin(RdfResourceImpl) {
 }
 WinActionMixin.appliesTo = schema.WinAction
 WinActionMixin.Class = WinActionImpl
+
+export const fromPointer = createFactory<WinAction>([AchieveActionMixin, WinActionMixin], { types: [schema.WinAction] });

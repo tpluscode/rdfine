@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { UpdateActionMixin } from './UpdateAction';
@@ -12,9 +13,9 @@ export interface ReplaceAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   replacer: Schema.Thing<D> | undefined;
 }
 
-export function ReplaceActionMixin<Base extends Constructor>(Resource: Base): Constructor<ReplaceAction> & Base {
+export function ReplaceActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ReplaceAction> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ReplaceActionClass extends UpdateActionMixin(Resource) implements ReplaceAction {
+  class ReplaceActionClass extends UpdateActionMixin(Resource) implements Partial<ReplaceAction> {
     @property.resource()
     replacee: Schema.Thing | undefined;
     @property.resource()
@@ -33,3 +34,5 @@ class ReplaceActionImpl extends ReplaceActionMixin(RdfResourceImpl) {
 }
 ReplaceActionMixin.appliesTo = schema.ReplaceAction
 ReplaceActionMixin.Class = ReplaceActionImpl
+
+export const fromPointer = createFactory<ReplaceAction>([UpdateActionMixin, ReplaceActionMixin], { types: [schema.ReplaceAction] });

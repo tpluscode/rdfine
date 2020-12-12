@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { doap } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Doap from '..';
 import type * as Foaf from '@rdfine/foaf';
@@ -45,9 +46,9 @@ export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends Fo
   wiki: RDF.NamedNode | undefined;
 }
 
-export function ProjectMixin<Base extends Constructor>(Resource: Base): Constructor<Project> & Base {
+export function ProjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Project> & RdfResourceCore> & Base {
   @namespace(doap)
-  class ProjectClass extends FoafProjectMixin(Resource) implements Project {
+  class ProjectClass extends FoafProjectMixin(Resource) implements Partial<Project> {
     @property()
     audience: RDF.Literal | undefined;
     @property.resource({ as: [RdfsResourceMixin] })
@@ -118,3 +119,5 @@ class ProjectImpl extends ProjectMixin(RdfResourceImpl) {
 }
 ProjectMixin.appliesTo = doap.Project
 ProjectMixin.Class = ProjectImpl
+
+export const fromPointer = createFactory<Project>([FoafProjectMixin, ProjectMixin], { types: [doap.Project] });

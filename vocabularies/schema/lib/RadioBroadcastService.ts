@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { BroadcastServiceMixin } from './BroadcastService';
@@ -10,9 +11,9 @@ import { BroadcastServiceMixin } from './BroadcastService';
 export interface RadioBroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BroadcastService<D>, RdfResource<D> {
 }
 
-export function RadioBroadcastServiceMixin<Base extends Constructor>(Resource: Base): Constructor<RadioBroadcastService> & Base {
+export function RadioBroadcastServiceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RadioBroadcastService> & RdfResourceCore> & Base {
   @namespace(schema)
-  class RadioBroadcastServiceClass extends BroadcastServiceMixin(Resource) implements RadioBroadcastService {
+  class RadioBroadcastServiceClass extends BroadcastServiceMixin(Resource) implements Partial<RadioBroadcastService> {
   }
   return RadioBroadcastServiceClass
 }
@@ -27,3 +28,5 @@ class RadioBroadcastServiceImpl extends RadioBroadcastServiceMixin(RdfResourceIm
 }
 RadioBroadcastServiceMixin.appliesTo = schema.RadioBroadcastService
 RadioBroadcastServiceMixin.Class = RadioBroadcastServiceImpl
+
+export const fromPointer = createFactory<RadioBroadcastService>([BroadcastServiceMixin, RadioBroadcastServiceMixin], { types: [schema.RadioBroadcastService] });

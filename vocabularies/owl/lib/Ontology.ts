@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { owl } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '..';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -16,9 +17,9 @@ export interface Ontology<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   versionIRI: Owl.Ontology<D> | undefined;
 }
 
-export function OntologyMixin<Base extends Constructor>(Resource: Base): Constructor<Ontology> & Base {
+export function OntologyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Ontology> & RdfResourceCore> & Base {
   @namespace(owl)
-  class OntologyClass extends RdfsResourceMixin(Resource) implements Ontology {
+  class OntologyClass extends RdfsResourceMixin(Resource) implements Partial<Ontology> {
     @property.resource({ as: [OntologyMixin] })
     backwardCompatibleWith: Owl.Ontology | undefined;
     @property.resource({ as: [OntologyMixin] })
@@ -43,3 +44,5 @@ class OntologyImpl extends OntologyMixin(RdfResourceImpl) {
 }
 OntologyMixin.appliesTo = owl.Ontology
 OntologyMixin.Class = OntologyImpl
+
+export const fromPointer = createFactory<Ontology>([RdfsResourceMixin, OntologyMixin], { types: [owl.Ontology] });

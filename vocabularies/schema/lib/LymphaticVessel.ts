@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { VesselMixin } from './Vessel';
@@ -13,9 +14,9 @@ export interface LymphaticVessel<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   runsTo: Schema.Vessel<D> | undefined;
 }
 
-export function LymphaticVesselMixin<Base extends Constructor>(Resource: Base): Constructor<LymphaticVessel> & Base {
+export function LymphaticVesselMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LymphaticVessel> & RdfResourceCore> & Base {
   @namespace(schema)
-  class LymphaticVesselClass extends VesselMixin(Resource) implements LymphaticVessel {
+  class LymphaticVesselClass extends VesselMixin(Resource) implements Partial<LymphaticVessel> {
     @property.resource()
     originatesFrom: Schema.Vessel | undefined;
     @property.resource()
@@ -36,3 +37,5 @@ class LymphaticVesselImpl extends LymphaticVesselMixin(RdfResourceImpl) {
 }
 LymphaticVesselMixin.appliesTo = schema.LymphaticVessel
 LymphaticVesselMixin.Class = LymphaticVesselImpl
+
+export const fromPointer = createFactory<LymphaticVessel>([VesselMixin, LymphaticVesselMixin], { types: [schema.LymphaticVessel] });

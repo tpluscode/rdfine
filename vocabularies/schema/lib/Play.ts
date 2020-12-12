@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -10,9 +11,9 @@ import { CreativeWorkMixin } from './CreativeWork';
 export interface Play<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
 }
 
-export function PlayMixin<Base extends Constructor>(Resource: Base): Constructor<Play> & Base {
+export function PlayMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Play> & RdfResourceCore> & Base {
   @namespace(schema)
-  class PlayClass extends CreativeWorkMixin(Resource) implements Play {
+  class PlayClass extends CreativeWorkMixin(Resource) implements Partial<Play> {
   }
   return PlayClass
 }
@@ -27,3 +28,5 @@ class PlayImpl extends PlayMixin(RdfResourceImpl) {
 }
 PlayMixin.appliesTo = schema.Play
 PlayMixin.Class = PlayImpl
+
+export const fromPointer = createFactory<Play>([CreativeWorkMixin, PlayMixin], { types: [schema.Play] });

@@ -2,6 +2,7 @@ import rdf from '@rdfjs/dataset'
 import clownface from 'clownface'
 import { turtle } from '@tpluscode/rdf-string'
 import * as Schema from '@rdfine/schema'
+import { fromPointer } from '@rdfine/schema/lib/Person'
 import { PersonBundle } from '@rdfine/schema/bundles'
 import RdfResource, { fromObject } from '@tpluscode/rdfine/RdfResource'
 import { schema } from '@tpluscode/rdf-ns-builders'
@@ -17,7 +18,7 @@ async function main() {
   const graph = clownface({ dataset, term: bigBangTheory.Howard })
 
   // the person gets initialized with it whole subgraph
-  const howard: Schema.Person = new Schema.PersonMixin.Class(graph, {
+  const howard = fromPointer(graph, {
     givenName: 'Howard',
     familyName: 'Wolowitz',
     knows: {
@@ -36,7 +37,7 @@ async function main() {
   })
 
   // existing entities can also be used
-  const penny = new Schema.PersonMixin.Class(graph.node(bigBangTheory.Penny), {
+  const penny = fromPointer(graph.node(bigBangTheory.Penny), {
     knows: howard,
   })
   penny.name = 'Penny'

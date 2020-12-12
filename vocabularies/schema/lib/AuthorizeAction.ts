@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { AllocateActionMixin } from './AllocateAction';
@@ -11,9 +12,9 @@ export interface AuthorizeAction<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function AuthorizeActionMixin<Base extends Constructor>(Resource: Base): Constructor<AuthorizeAction> & Base {
+export function AuthorizeActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AuthorizeAction> & RdfResourceCore> & Base {
   @namespace(schema)
-  class AuthorizeActionClass extends AllocateActionMixin(Resource) implements AuthorizeAction {
+  class AuthorizeActionClass extends AllocateActionMixin(Resource) implements Partial<AuthorizeAction> {
     @property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
@@ -30,3 +31,5 @@ class AuthorizeActionImpl extends AuthorizeActionMixin(RdfResourceImpl) {
 }
 AuthorizeActionMixin.appliesTo = schema.AuthorizeAction
 AuthorizeActionMixin.Class = AuthorizeActionImpl
+
+export const fromPointer = createFactory<AuthorizeAction>([AllocateActionMixin, AuthorizeActionMixin], { types: [schema.AuthorizeAction] });

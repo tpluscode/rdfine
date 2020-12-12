@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -21,9 +22,9 @@ export interface ActionAccessSpecification<D extends RDF.DatasetCore = RDF.Datas
   requiresSubscriptionLiteral: boolean | undefined;
 }
 
-export function ActionAccessSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<ActionAccessSpecification> & Base {
+export function ActionAccessSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ActionAccessSpecification> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ActionAccessSpecificationClass extends IntangibleMixin(Resource) implements ActionAccessSpecification {
+  class ActionAccessSpecificationClass extends IntangibleMixin(Resource) implements Partial<ActionAccessSpecification> {
     @property.literal({ type: Date })
     availabilityEnds: Date | undefined;
     @property.literal({ type: Date })
@@ -60,3 +61,5 @@ class ActionAccessSpecificationImpl extends ActionAccessSpecificationMixin(RdfRe
 }
 ActionAccessSpecificationMixin.appliesTo = schema.ActionAccessSpecification
 ActionAccessSpecificationMixin.Class = ActionAccessSpecificationImpl
+
+export const fromPointer = createFactory<ActionAccessSpecification>([IntangibleMixin, ActionAccessSpecificationMixin], { types: [schema.ActionAccessSpecification] });

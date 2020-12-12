@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { InformActionMixin } from './InformAction';
@@ -10,9 +11,9 @@ import { InformActionMixin } from './InformAction';
 export interface ConfirmAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InformAction<D>, RdfResource<D> {
 }
 
-export function ConfirmActionMixin<Base extends Constructor>(Resource: Base): Constructor<ConfirmAction> & Base {
+export function ConfirmActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ConfirmAction> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ConfirmActionClass extends InformActionMixin(Resource) implements ConfirmAction {
+  class ConfirmActionClass extends InformActionMixin(Resource) implements Partial<ConfirmAction> {
   }
   return ConfirmActionClass
 }
@@ -27,3 +28,5 @@ class ConfirmActionImpl extends ConfirmActionMixin(RdfResourceImpl) {
 }
 ConfirmActionMixin.appliesTo = schema.ConfirmAction
 ConfirmActionMixin.Class = ConfirmActionImpl
+
+export const fromPointer = createFactory<ConfirmAction>([InformActionMixin, ConfirmActionMixin], { types: [schema.ConfirmAction] });

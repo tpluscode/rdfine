@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -17,9 +18,9 @@ export interface ProgramMembership<D extends RDF.DatasetCore = RDF.DatasetCore> 
   programName: string | undefined;
 }
 
-export function ProgramMembershipMixin<Base extends Constructor>(Resource: Base): Constructor<ProgramMembership> & Base {
+export function ProgramMembershipMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ProgramMembership> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ProgramMembershipClass extends IntangibleMixin(Resource) implements ProgramMembership {
+  class ProgramMembershipClass extends IntangibleMixin(Resource) implements Partial<ProgramMembership> {
     @property.resource()
     hostingOrganization: Schema.Organization | undefined;
     @property.resource()
@@ -48,3 +49,5 @@ class ProgramMembershipImpl extends ProgramMembershipMixin(RdfResourceImpl) {
 }
 ProgramMembershipMixin.appliesTo = schema.ProgramMembership
 ProgramMembershipMixin.Class = ProgramMembershipImpl
+
+export const fromPointer = createFactory<ProgramMembership>([IntangibleMixin, ProgramMembershipMixin], { types: [schema.ProgramMembership] });

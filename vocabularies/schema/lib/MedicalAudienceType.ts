@@ -6,6 +6,6 @@ export default {
   MedicalResearcher: schema.MedicalResearcher as NamedNode<'http://schema.org/MedicalResearcher'>,
 };
 
-export type MedicalAudienceType = 
+export type MedicalAudienceType =
   NamedNode<'http://schema.org/Clinician'>
   | NamedNode<'http://schema.org/MedicalResearcher'>;

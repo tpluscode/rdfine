@@ -8,7 +8,7 @@ export default {
   MerchantReturnUnspecified: schema.MerchantReturnUnspecified as NamedNode<'http://schema.org/MerchantReturnUnspecified'>,
 };
 
-export type MerchantReturnEnumeration = 
+export type MerchantReturnEnumeration =
   NamedNode<'http://schema.org/MerchantReturnFiniteReturnWindow'>
   | NamedNode<'http://schema.org/MerchantReturnNotPermitted'>
   | NamedNode<'http://schema.org/MerchantReturnUnlimitedWindow'>

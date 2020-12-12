@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ScholarlyArticleMixin } from './ScholarlyArticle';
@@ -11,9 +12,9 @@ export interface MedicalScholarlyArticle<D extends RDF.DatasetCore = RDF.Dataset
   publicationType: string | undefined;
 }
 
-export function MedicalScholarlyArticleMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalScholarlyArticle> & Base {
+export function MedicalScholarlyArticleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalScholarlyArticle> & RdfResourceCore> & Base {
   @namespace(schema)
-  class MedicalScholarlyArticleClass extends ScholarlyArticleMixin(Resource) implements MedicalScholarlyArticle {
+  class MedicalScholarlyArticleClass extends ScholarlyArticleMixin(Resource) implements Partial<MedicalScholarlyArticle> {
     @property.literal()
     publicationType: string | undefined;
   }
@@ -30,3 +31,5 @@ class MedicalScholarlyArticleImpl extends MedicalScholarlyArticleMixin(RdfResour
 }
 MedicalScholarlyArticleMixin.appliesTo = schema.MedicalScholarlyArticle
 MedicalScholarlyArticleMixin.Class = MedicalScholarlyArticleImpl
+
+export const fromPointer = createFactory<MedicalScholarlyArticle>([ScholarlyArticleMixin, MedicalScholarlyArticleMixin], { types: [schema.MedicalScholarlyArticle] });

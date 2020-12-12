@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -40,9 +41,9 @@ export interface EducationalOccupationalProgram<D extends RDF.DatasetCore = RDF.
   typicalCreditsPerTermLiteral: number | undefined;
 }
 
-export function EducationalOccupationalProgramMixin<Base extends Constructor>(Resource: Base): Constructor<EducationalOccupationalProgram> & Base {
+export function EducationalOccupationalProgramMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EducationalOccupationalProgram> & RdfResourceCore> & Base {
   @namespace(schema)
-  class EducationalOccupationalProgramClass extends IntangibleMixin(Resource) implements EducationalOccupationalProgram {
+  class EducationalOccupationalProgramClass extends IntangibleMixin(Resource) implements Partial<EducationalOccupationalProgram> {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     applicationDeadline: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
@@ -117,3 +118,5 @@ class EducationalOccupationalProgramImpl extends EducationalOccupationalProgramM
 }
 EducationalOccupationalProgramMixin.appliesTo = schema.EducationalOccupationalProgram
 EducationalOccupationalProgramMixin.Class = EducationalOccupationalProgramImpl
+
+export const fromPointer = createFactory<EducationalOccupationalProgram>([IntangibleMixin, EducationalOccupationalProgramMixin], { types: [schema.EducationalOccupationalProgram] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -19,9 +20,9 @@ export interface PriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore>
   valueAddedTaxIncluded: boolean | undefined;
 }
 
-export function PriceSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<PriceSpecification> & Base {
+export function PriceSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PriceSpecification> & RdfResourceCore> & Base {
   @namespace(schema)
-  class PriceSpecificationClass extends StructuredValueMixin(Resource) implements PriceSpecification {
+  class PriceSpecificationClass extends StructuredValueMixin(Resource) implements Partial<PriceSpecification> {
     @property.resource()
     eligibleQuantity: Schema.QuantitativeValue | undefined;
     @property.resource()
@@ -54,3 +55,5 @@ class PriceSpecificationImpl extends PriceSpecificationMixin(RdfResourceImpl) {
 }
 PriceSpecificationMixin.appliesTo = schema.PriceSpecification
 PriceSpecificationMixin.Class = PriceSpecificationImpl
+
+export const fromPointer = createFactory<PriceSpecification>([StructuredValueMixin, PriceSpecificationMixin], { types: [schema.PriceSpecification] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -10,9 +11,9 @@ import { CreativeWorkMixin } from './CreativeWork';
 export interface Season<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
 }
 
-export function SeasonMixin<Base extends Constructor>(Resource: Base): Constructor<Season> & Base {
+export function SeasonMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Season> & RdfResourceCore> & Base {
   @namespace(schema)
-  class SeasonClass extends CreativeWorkMixin(Resource) implements Season {
+  class SeasonClass extends CreativeWorkMixin(Resource) implements Partial<Season> {
   }
   return SeasonClass
 }
@@ -27,3 +28,5 @@ class SeasonImpl extends SeasonMixin(RdfResourceImpl) {
 }
 SeasonMixin.appliesTo = schema.Season
 SeasonMixin.Class = SeasonImpl
+
+export const fromPointer = createFactory<Season>([CreativeWorkMixin, SeasonMixin], { types: [schema.Season] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import { SPARQLAskExecutableMixin } from './SPARQLAskExecutable';
@@ -12,9 +13,9 @@ import { TargetTypeMixin } from './TargetType';
 export interface SPARQLTargetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLAskExecutable<D>, Sh.SPARQLSelectExecutable<D>, Sh.TargetType<D>, RdfResource<D> {
 }
 
-export function SPARQLTargetTypeMixin<Base extends Constructor>(Resource: Base): Constructor<SPARQLTargetType> & Base {
+export function SPARQLTargetTypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SPARQLTargetType> & RdfResourceCore> & Base {
   @namespace(sh)
-  class SPARQLTargetTypeClass extends TargetTypeMixin(SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(Resource))) implements SPARQLTargetType {
+  class SPARQLTargetTypeClass extends TargetTypeMixin(SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(Resource))) implements Partial<SPARQLTargetType> {
   }
   return SPARQLTargetTypeClass
 }
@@ -29,3 +30,5 @@ class SPARQLTargetTypeImpl extends SPARQLTargetTypeMixin(RdfResourceImpl) {
 }
 SPARQLTargetTypeMixin.appliesTo = sh.SPARQLTargetType
 SPARQLTargetTypeMixin.Class = SPARQLTargetTypeImpl
+
+export const fromPointer = createFactory<SPARQLTargetType>([TargetTypeMixin, SPARQLSelectExecutableMixin, SPARQLAskExecutableMixin, SPARQLTargetTypeMixin], { types: [sh.SPARQLTargetType] });

@@ -6,6 +6,6 @@ export default {
   Male: schema.Male as NamedNode<'http://schema.org/Male'>,
 };
 
-export type GenderType = 
+export type GenderType =
   NamedNode<'http://schema.org/Female'>
   | NamedNode<'http://schema.org/Male'>;

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MediaObjectMixin } from './MediaObject';
@@ -13,9 +14,9 @@ export interface AudioObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   transcript: string | undefined;
 }
 
-export function AudioObjectMixin<Base extends Constructor>(Resource: Base): Constructor<AudioObject> & Base {
+export function AudioObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AudioObject> & RdfResourceCore> & Base {
   @namespace(schema)
-  class AudioObjectClass extends MediaObjectMixin(Resource) implements AudioObject {
+  class AudioObjectClass extends MediaObjectMixin(Resource) implements Partial<AudioObject> {
     @property.resource()
     caption: Schema.MediaObject | undefined;
     @property.literal({ path: schema.caption })
@@ -36,3 +37,5 @@ class AudioObjectImpl extends AudioObjectMixin(RdfResourceImpl) {
 }
 AudioObjectMixin.appliesTo = schema.AudioObject
 AudioObjectMixin.Class = AudioObjectImpl
+
+export const fromPointer = createFactory<AudioObject>([MediaObjectMixin, AudioObjectMixin], { types: [schema.AudioObject] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -16,9 +17,9 @@ export interface LearningResource<D extends RDF.DatasetCore = RDF.DatasetCore> e
   teaches: string | undefined;
 }
 
-export function LearningResourceMixin<Base extends Constructor>(Resource: Base): Constructor<LearningResource> & Base {
+export function LearningResourceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LearningResource> & RdfResourceCore> & Base {
   @namespace(schema)
-  class LearningResourceClass extends CreativeWorkMixin(Resource) implements LearningResource {
+  class LearningResourceClass extends CreativeWorkMixin(Resource) implements Partial<LearningResource> {
     @property.literal()
     assesses: string | undefined;
     @property.resource()
@@ -45,3 +46,5 @@ class LearningResourceImpl extends LearningResourceMixin(RdfResourceImpl) {
 }
 LearningResourceMixin.appliesTo = schema.LearningResource
 LearningResourceMixin.Class = LearningResourceImpl
+
+export const fromPointer = createFactory<LearningResource>([CreativeWorkMixin, LearningResourceMixin], { types: [schema.LearningResource] });

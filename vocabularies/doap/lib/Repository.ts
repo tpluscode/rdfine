@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { doap } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Doap from '..';
 
@@ -13,9 +14,9 @@ export interface Repository<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   repositoryOf: Doap.Project<D> | undefined;
 }
 
-export function RepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<Repository> & Base {
+export function RepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Repository> & RdfResourceCore> & Base {
   @namespace(doap)
-  class RepositoryClass extends Resource implements Repository {
+  class RepositoryClass extends Resource implements Partial<Repository> {
     @property()
     'anon-root': RDF.Literal | undefined;
     @property()
@@ -38,3 +39,5 @@ class RepositoryImpl extends RepositoryMixin(RdfResourceImpl) {
 }
 RepositoryMixin.appliesTo = doap.Repository
 RepositoryMixin.Class = RepositoryImpl
+
+export const fromPointer = createFactory<Repository>([RepositoryMixin], { types: [doap.Repository] });

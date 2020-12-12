@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { EventMixin } from './Event';
@@ -15,9 +16,9 @@ export interface SportsEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   sportTerm: RDF.NamedNode | undefined;
 }
 
-export function SportsEventMixin<Base extends Constructor>(Resource: Base): Constructor<SportsEvent> & Base {
+export function SportsEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SportsEvent> & RdfResourceCore> & Base {
   @namespace(schema)
-  class SportsEventClass extends EventMixin(Resource) implements SportsEvent {
+  class SportsEventClass extends EventMixin(Resource) implements Partial<SportsEvent> {
     @property.resource()
     awayTeam: Schema.Person | Schema.SportsTeam | undefined;
     @property.resource()
@@ -42,3 +43,5 @@ class SportsEventImpl extends SportsEventMixin(RdfResourceImpl) {
 }
 SportsEventMixin.appliesTo = schema.SportsEvent
 SportsEventMixin.Class = SportsEventImpl
+
+export const fromPointer = createFactory<SportsEvent>([EventMixin, SportsEventMixin], { types: [schema.SportsEvent] });

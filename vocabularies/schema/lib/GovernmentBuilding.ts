@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CivicStructureMixin } from './CivicStructure';
@@ -10,9 +11,9 @@ import { CivicStructureMixin } from './CivicStructure';
 export interface GovernmentBuilding<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, RdfResource<D> {
 }
 
-export function GovernmentBuildingMixin<Base extends Constructor>(Resource: Base): Constructor<GovernmentBuilding> & Base {
+export function GovernmentBuildingMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<GovernmentBuilding> & RdfResourceCore> & Base {
   @namespace(schema)
-  class GovernmentBuildingClass extends CivicStructureMixin(Resource) implements GovernmentBuilding {
+  class GovernmentBuildingClass extends CivicStructureMixin(Resource) implements Partial<GovernmentBuilding> {
   }
   return GovernmentBuildingClass
 }
@@ -27,3 +28,5 @@ class GovernmentBuildingImpl extends GovernmentBuildingMixin(RdfResourceImpl) {
 }
 GovernmentBuildingMixin.appliesTo = schema.GovernmentBuilding
 GovernmentBuildingMixin.Class = GovernmentBuildingImpl
+
+export const fromPointer = createFactory<GovernmentBuilding>([CivicStructureMixin, GovernmentBuildingMixin], { types: [schema.GovernmentBuilding] });

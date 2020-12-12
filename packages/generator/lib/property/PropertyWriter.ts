@@ -1,15 +1,15 @@
 import { ClassDeclaration, DecoratorStructure, InterfaceDeclaration, OptionalKind } from 'ts-morph'
 import { JavascriptProperty } from './JsProperties'
 import { Context } from '../index'
-import { TypeMeta, LiteralType } from '../types'
-import { MixinModule } from '../MixinGenerator/MixinModule'
+import { TypeMeta, LiteralType, ResourceType, ExternalResourceType } from '../types'
+import { MixinModuleBase } from '../MixinGenerator/MixinModuleBase'
 import TermSet from '@rdfjs/term-set'
 
 interface PropertyWriterInit {
   interfaceDeclaration: InterfaceDeclaration
   classDeclaration: ClassDeclaration
   context: Omit<Context, 'properties'>
-  module: MixinModule
+  module: MixinModuleBase<ResourceType | ExternalResourceType>
 }
 
 const plainNameRegex = /^[a-zA-Z]+$/
@@ -43,7 +43,7 @@ export class PropertyWriter {
   private readonly __interface: InterfaceDeclaration;
   private readonly __class: ClassDeclaration;
   private readonly __context: Omit<Context, 'properties'>
-  private readonly __module: MixinModule;
+  private readonly __module: MixinModuleBase<ResourceType | ExternalResourceType>;
 
   public constructor({ interfaceDeclaration, classDeclaration, context, module }: PropertyWriterInit) {
     this.__interface = interfaceDeclaration
@@ -120,7 +120,7 @@ export class PropertyWriter {
       if (resourceRange.type === 'Resource') {
         this.__module.addMixinImport(resourceRange)
 
-        if (this.__module.type.localName === resourceRange.localName) {
+        if ('localName' in this.__module.type && this.__module.type.localName === resourceRange.localName) {
           decoratorOptions.push(`as: [${resourceRange.mixinName}]`)
         } else {
           decoratorOptions.push(`implicitTypes: [${this.__context.prefix}.${resourceRange.localName}]`)

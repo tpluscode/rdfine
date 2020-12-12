@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { PlaceMixin } from './Place';
@@ -11,9 +12,9 @@ export interface Residence<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   accommodationFloorPlan: Schema.FloorPlan<D> | undefined;
 }
 
-export function ResidenceMixin<Base extends Constructor>(Resource: Base): Constructor<Residence> & Base {
+export function ResidenceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Residence> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ResidenceClass extends PlaceMixin(Resource) implements Residence {
+  class ResidenceClass extends PlaceMixin(Resource) implements Partial<Residence> {
     @property.resource()
     accommodationFloorPlan: Schema.FloorPlan | undefined;
   }
@@ -30,3 +31,5 @@ class ResidenceImpl extends ResidenceMixin(RdfResourceImpl) {
 }
 ResidenceMixin.appliesTo = schema.Residence
 ResidenceMixin.Class = ResidenceImpl
+
+export const fromPointer = createFactory<Residence>([PlaceMixin, ResidenceMixin], { types: [schema.Residence] });

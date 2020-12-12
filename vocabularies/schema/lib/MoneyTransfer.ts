@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TransferActionMixin } from './TransferAction';
@@ -14,9 +15,9 @@ export interface MoneyTransfer<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   beneficiaryBankLiteral: string | undefined;
 }
 
-export function MoneyTransferMixin<Base extends Constructor>(Resource: Base): Constructor<MoneyTransfer> & Base {
+export function MoneyTransferMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MoneyTransfer> & RdfResourceCore> & Base {
   @namespace(schema)
-  class MoneyTransferClass extends TransferActionMixin(Resource) implements MoneyTransfer {
+  class MoneyTransferClass extends TransferActionMixin(Resource) implements Partial<MoneyTransfer> {
     @property.resource()
     amount: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.amount, type: Number })
@@ -39,3 +40,5 @@ class MoneyTransferImpl extends MoneyTransferMixin(RdfResourceImpl) {
 }
 MoneyTransferMixin.appliesTo = schema.MoneyTransfer
 MoneyTransferMixin.Class = MoneyTransferImpl
+
+export const fromPointer = createFactory<MoneyTransfer>([TransferActionMixin, MoneyTransferMixin], { types: [schema.MoneyTransfer] });

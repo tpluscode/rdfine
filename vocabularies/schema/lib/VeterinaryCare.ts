@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalOrganizationMixin } from './MedicalOrganization';
@@ -10,9 +11,9 @@ import { MedicalOrganizationMixin } from './MedicalOrganization';
 export interface VeterinaryCare<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalOrganization<D>, RdfResource<D> {
 }
 
-export function VeterinaryCareMixin<Base extends Constructor>(Resource: Base): Constructor<VeterinaryCare> & Base {
+export function VeterinaryCareMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<VeterinaryCare> & RdfResourceCore> & Base {
   @namespace(schema)
-  class VeterinaryCareClass extends MedicalOrganizationMixin(Resource) implements VeterinaryCare {
+  class VeterinaryCareClass extends MedicalOrganizationMixin(Resource) implements Partial<VeterinaryCare> {
   }
   return VeterinaryCareClass
 }
@@ -27,3 +28,5 @@ class VeterinaryCareImpl extends VeterinaryCareMixin(RdfResourceImpl) {
 }
 VeterinaryCareMixin.appliesTo = schema.VeterinaryCare
 VeterinaryCareMixin.Class = VeterinaryCareImpl
+
+export const fromPointer = createFactory<VeterinaryCare>([MedicalOrganizationMixin, VeterinaryCareMixin], { types: [schema.VeterinaryCare] });

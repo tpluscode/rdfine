@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import { ResourceMixin } from './Resource';
@@ -14,11 +15,9 @@ export interface IriTemplate<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   variableRepresentation: Hydra.VariableRepresentation<D> | undefined;
 }
 
-type MixinType = Omit<IriTemplate, 'expand'>
-
-export function IriTemplateMixin<Base extends Constructor>(Resource: Base): Constructor<MixinType> & Base {
+export function IriTemplateMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<IriTemplate> & RdfResourceCore> & Base {
   @namespace(hydra)
-  class IriTemplateClass extends ResourceMixin(Resource) implements MixinType {
+  class IriTemplateClass extends ResourceMixin(Resource) implements Partial<IriTemplate> {
     @property.resource({ values: 'array', implicitTypes: [hydra.IriTemplateMapping] })
     mapping!: Array<Hydra.IriTemplateMapping>;
     @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/ns/hydra/core#Rfc6570Template') })
@@ -39,3 +38,5 @@ class IriTemplateImpl extends IriTemplateExMixin(IriTemplateMixin(RdfResourceImp
 }
 IriTemplateMixin.appliesTo = hydra.IriTemplate
 IriTemplateMixin.Class = IriTemplateImpl
+
+export const fromPointer = createFactory<IriTemplate>([ResourceMixin, IriTemplateMixin, IriTemplateExMixin], { types: [hydra.IriTemplate] });

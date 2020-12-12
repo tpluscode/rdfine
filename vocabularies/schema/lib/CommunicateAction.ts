@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { InteractActionMixin } from './InteractAction';
@@ -15,9 +16,9 @@ export interface CommunicateAction<D extends RDF.DatasetCore = RDF.DatasetCore> 
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function CommunicateActionMixin<Base extends Constructor>(Resource: Base): Constructor<CommunicateAction> & Base {
+export function CommunicateActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CommunicateAction> & RdfResourceCore> & Base {
   @namespace(schema)
-  class CommunicateActionClass extends InteractActionMixin(Resource) implements CommunicateAction {
+  class CommunicateActionClass extends InteractActionMixin(Resource) implements Partial<CommunicateAction> {
     @property.resource()
     about: Schema.Thing | undefined;
     @property.resource()
@@ -42,3 +43,5 @@ class CommunicateActionImpl extends CommunicateActionMixin(RdfResourceImpl) {
 }
 CommunicateActionMixin.appliesTo = schema.CommunicateAction
 CommunicateActionMixin.Class = CommunicateActionImpl
+
+export const fromPointer = createFactory<CommunicateAction>([InteractActionMixin, CommunicateActionMixin], { types: [schema.CommunicateAction] });

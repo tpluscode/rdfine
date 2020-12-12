@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { LandformMixin } from './Landform';
@@ -10,9 +11,9 @@ import { LandformMixin } from './Landform';
 export interface Mountain<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Landform<D>, RdfResource<D> {
 }
 
-export function MountainMixin<Base extends Constructor>(Resource: Base): Constructor<Mountain> & Base {
+export function MountainMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Mountain> & RdfResourceCore> & Base {
   @namespace(schema)
-  class MountainClass extends LandformMixin(Resource) implements Mountain {
+  class MountainClass extends LandformMixin(Resource) implements Partial<Mountain> {
   }
   return MountainClass
 }
@@ -27,3 +28,5 @@ class MountainImpl extends MountainMixin(RdfResourceImpl) {
 }
 MountainMixin.appliesTo = schema.Mountain
 MountainMixin.Class = MountainImpl
+
+export const fromPointer = createFactory<Mountain>([LandformMixin, MountainMixin], { types: [schema.Mountain] });

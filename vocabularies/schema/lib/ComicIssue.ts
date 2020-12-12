@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { PublicationIssueMixin } from './PublicationIssue';
@@ -16,9 +17,9 @@ export interface ComicIssue<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   variantCover: string | undefined;
 }
 
-export function ComicIssueMixin<Base extends Constructor>(Resource: Base): Constructor<ComicIssue> & Base {
+export function ComicIssueMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ComicIssue> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ComicIssueClass extends PublicationIssueMixin(Resource) implements ComicIssue {
+  class ComicIssueClass extends PublicationIssueMixin(Resource) implements Partial<ComicIssue> {
     @property.resource()
     artist: Schema.Person | undefined;
     @property.resource()
@@ -45,3 +46,5 @@ class ComicIssueImpl extends ComicIssueMixin(RdfResourceImpl) {
 }
 ComicIssueMixin.appliesTo = schema.ComicIssue
 ComicIssueMixin.Class = ComicIssueImpl
+
+export const fromPointer = createFactory<ComicIssue>([PublicationIssueMixin, ComicIssueMixin], { types: [schema.ComicIssue] });

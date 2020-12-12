@@ -12,6 +12,7 @@
   },
   "rules": {
     "symbol-description": "off",
+    "no-unused-vars": "off",
     "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/__tests__/**", "__tests__/*"]}]
   },
   "overrides": [{
@@ -41,7 +42,7 @@
       "import/no-extraneous-dependencies": "warn"
     }
   }, {
-    "files": ["vocabularies/shacl/Function.ts"],
+    "files": ["vocabularies/shacl/lib/Function.ts"],
     "rules": {
       "@typescript-eslint/ban-types": "off"
     }

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { PublicationEventMixin } from './PublicationEvent';
@@ -15,9 +16,9 @@ export interface BroadcastEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   videoFormat: string | undefined;
 }
 
-export function BroadcastEventMixin<Base extends Constructor>(Resource: Base): Constructor<BroadcastEvent> & Base {
+export function BroadcastEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BroadcastEvent> & RdfResourceCore> & Base {
   @namespace(schema)
-  class BroadcastEventClass extends PublicationEventMixin(Resource) implements BroadcastEvent {
+  class BroadcastEventClass extends PublicationEventMixin(Resource) implements Partial<BroadcastEvent> {
     @property.resource()
     broadcastOfEvent: Schema.Event | undefined;
     @property.literal({ type: Boolean })
@@ -42,3 +43,5 @@ class BroadcastEventImpl extends BroadcastEventMixin(RdfResourceImpl) {
 }
 BroadcastEventMixin.appliesTo = schema.BroadcastEvent
 BroadcastEventMixin.Class = BroadcastEventImpl
+
+export const fromPointer = createFactory<BroadcastEvent>([PublicationEventMixin, BroadcastEventMixin], { types: [schema.BroadcastEvent] });

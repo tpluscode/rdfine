@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '..';
 import { OnlineAccountMixin } from './OnlineAccount';
@@ -10,9 +11,9 @@ import { OnlineAccountMixin } from './OnlineAccount';
 export interface OnlineEcommerceAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.OnlineAccount<D>, RdfResource<D> {
 }
 
-export function OnlineEcommerceAccountMixin<Base extends Constructor>(Resource: Base): Constructor<OnlineEcommerceAccount> & Base {
+export function OnlineEcommerceAccountMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<OnlineEcommerceAccount> & RdfResourceCore> & Base {
   @namespace(foaf)
-  class OnlineEcommerceAccountClass extends OnlineAccountMixin(Resource) implements OnlineEcommerceAccount {
+  class OnlineEcommerceAccountClass extends OnlineAccountMixin(Resource) implements Partial<OnlineEcommerceAccount> {
   }
   return OnlineEcommerceAccountClass
 }
@@ -27,3 +28,5 @@ class OnlineEcommerceAccountImpl extends OnlineEcommerceAccountMixin(RdfResource
 }
 OnlineEcommerceAccountMixin.appliesTo = foaf.OnlineEcommerceAccount
 OnlineEcommerceAccountMixin.Class = OnlineEcommerceAccountImpl
+
+export const fromPointer = createFactory<OnlineEcommerceAccount>([OnlineAccountMixin, OnlineEcommerceAccountMixin], { types: [foaf.OnlineEcommerceAccount] });

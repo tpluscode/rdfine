@@ -1,12 +1,10 @@
-import { turtle } from '@tpluscode/rdf-string'
 import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { NamedNode } from 'rdf-js'
 import namespace from '@rdfjs/namespace'
-import stringToStream from 'string-to-stream'
 import Parser from '@rdfjs/parser-n3'
-import { ClassMixin } from '../lib/Class'
+import { fromPointer } from '../lib/Class'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import * as graphs from './Class-spec-graphs'
 
@@ -29,7 +27,7 @@ describe('Class', () => {
       hydraClassNode.addOut(hydra.supportedOperation, hydraClassNode.blankNode())
 
       // when
-      const clas = new ClassMixin.Class(hydraClassNode)
+      const clas = fromPointer(hydraClassNode)
 
       // then
       expect(clas.supportedOperation.length).toBe(1)
@@ -37,7 +35,7 @@ describe('Class', () => {
 
     it('should return empty array if property is missing', () => {
       // when
-      const clas = new ClassMixin.Class(hydraClassNode)
+      const clas = fromPointer(hydraClassNode)
 
       // then
       expect(clas.supportedOperation.length).toBe(0)
@@ -50,14 +48,14 @@ describe('Class', () => {
       hydraClassNode.addOut(hydra.supportedProperty, hydraClassNode.blankNode())
 
       // when
-      const clas = new ClassMixin.Class(hydraClassNode)
+      const clas = fromPointer(hydraClassNode)
 
       // then
       expect(clas.supportedProperty.length).toBe(1)
     })
 
     it('should return empty array if property is missing', () => {
-      const clas = new ClassMixin.Class(hydraClassNode)
+      const clas = fromPointer(hydraClassNode)
 
       expect(clas.supportedProperty.length).toBe(0)
     })

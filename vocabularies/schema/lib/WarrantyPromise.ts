@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -12,9 +13,9 @@ export interface WarrantyPromise<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   warrantyScope: Schema.WarrantyScope | undefined;
 }
 
-export function WarrantyPromiseMixin<Base extends Constructor>(Resource: Base): Constructor<WarrantyPromise> & Base {
+export function WarrantyPromiseMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<WarrantyPromise> & RdfResourceCore> & Base {
   @namespace(schema)
-  class WarrantyPromiseClass extends StructuredValueMixin(Resource) implements WarrantyPromise {
+  class WarrantyPromiseClass extends StructuredValueMixin(Resource) implements Partial<WarrantyPromise> {
     @property.resource()
     durationOfWarranty: Schema.QuantitativeValue | undefined;
     @property()
@@ -33,3 +34,5 @@ class WarrantyPromiseImpl extends WarrantyPromiseMixin(RdfResourceImpl) {
 }
 WarrantyPromiseMixin.appliesTo = schema.WarrantyPromise
 WarrantyPromiseMixin.Class = WarrantyPromiseImpl
+
+export const fromPointer = createFactory<WarrantyPromise>([StructuredValueMixin, WarrantyPromiseMixin], { types: [schema.WarrantyPromise] });

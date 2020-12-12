@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { AnatomicalStructureMixin } from './AnatomicalStructure';
@@ -14,9 +15,9 @@ export interface Nerve<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   sourcedFrom: Schema.BrainStructure<D> | undefined;
 }
 
-export function NerveMixin<Base extends Constructor>(Resource: Base): Constructor<Nerve> & Base {
+export function NerveMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Nerve> & RdfResourceCore> & Base {
   @namespace(schema)
-  class NerveClass extends AnatomicalStructureMixin(Resource) implements Nerve {
+  class NerveClass extends AnatomicalStructureMixin(Resource) implements Partial<Nerve> {
     @property.resource()
     branch: Schema.AnatomicalStructure | undefined;
     @property.resource()
@@ -39,3 +40,5 @@ class NerveImpl extends NerveMixin(RdfResourceImpl) {
 }
 NerveMixin.appliesTo = schema.Nerve
 NerveMixin.Class = NerveImpl
+
+export const fromPointer = createFactory<Nerve>([AnatomicalStructureMixin, NerveMixin], { types: [schema.Nerve] });

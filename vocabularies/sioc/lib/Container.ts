@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '..';
 
@@ -16,9 +17,9 @@ export interface Container<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   'parent_of': Sioc.Container<D> | undefined;
 }
 
-export function ContainerMixin<Base extends Constructor>(Resource: Base): Constructor<Container> & Base {
+export function ContainerMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Container> & RdfResourceCore> & Base {
   @namespace(sioc)
-  class ContainerClass extends Resource implements Container {
+  class ContainerClass extends Resource implements Partial<Container> {
     @property.resource({ implicitTypes: [sioc.Item] })
     'container_of': Sioc.Item | undefined;
     @property.resource({ implicitTypes: [sioc.Site] })
@@ -47,3 +48,5 @@ class ContainerImpl extends ContainerMixin(RdfResourceImpl) {
 }
 ContainerMixin.appliesTo = sioc.Container
 ContainerMixin.Class = ContainerImpl
+
+export const fromPointer = createFactory<Container>([ContainerMixin], { types: [sioc.Container] });

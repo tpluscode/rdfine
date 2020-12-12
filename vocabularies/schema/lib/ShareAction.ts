@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CommunicateActionMixin } from './CommunicateAction';
@@ -10,9 +11,9 @@ import { CommunicateActionMixin } from './CommunicateAction';
 export interface ShareAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, RdfResource<D> {
 }
 
-export function ShareActionMixin<Base extends Constructor>(Resource: Base): Constructor<ShareAction> & Base {
+export function ShareActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ShareAction> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ShareActionClass extends CommunicateActionMixin(Resource) implements ShareAction {
+  class ShareActionClass extends CommunicateActionMixin(Resource) implements Partial<ShareAction> {
   }
   return ShareActionClass
 }
@@ -27,3 +28,5 @@ class ShareActionImpl extends ShareActionMixin(RdfResourceImpl) {
 }
 ShareActionMixin.appliesTo = schema.ShareAction
 ShareActionMixin.Class = ShareActionImpl
+
+export const fromPointer = createFactory<ShareAction>([CommunicateActionMixin, ShareActionMixin], { types: [schema.ShareAction] });

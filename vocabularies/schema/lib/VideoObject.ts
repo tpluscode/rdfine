@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MediaObjectMixin } from './MediaObject';
@@ -21,9 +22,9 @@ export interface VideoObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   videoQuality: string | undefined;
 }
 
-export function VideoObjectMixin<Base extends Constructor>(Resource: Base): Constructor<VideoObject> & Base {
+export function VideoObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<VideoObject> & RdfResourceCore> & Base {
   @namespace(schema)
-  class VideoObjectClass extends MediaObjectMixin(Resource) implements VideoObject {
+  class VideoObjectClass extends MediaObjectMixin(Resource) implements Partial<VideoObject> {
     @property.resource()
     actor: Schema.Person | undefined;
     @property.resource()
@@ -60,3 +61,5 @@ class VideoObjectImpl extends VideoObjectMixin(RdfResourceImpl) {
 }
 VideoObjectMixin.appliesTo = schema.VideoObject
 VideoObjectMixin.Class = VideoObjectImpl
+
+export const fromPointer = createFactory<VideoObject>([MediaObjectMixin, VideoObjectMixin], { types: [schema.VideoObject] });

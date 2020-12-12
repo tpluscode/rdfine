@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -14,9 +15,9 @@ export interface PublicationIssue<D extends RDF.DatasetCore = RDF.DatasetCore> e
   pagination: string | undefined;
 }
 
-export function PublicationIssueMixin<Base extends Constructor>(Resource: Base): Constructor<PublicationIssue> & Base {
+export function PublicationIssueMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PublicationIssue> & RdfResourceCore> & Base {
   @namespace(schema)
-  class PublicationIssueClass extends CreativeWorkMixin(Resource) implements PublicationIssue {
+  class PublicationIssueClass extends CreativeWorkMixin(Resource) implements Partial<PublicationIssue> {
     @property.literal()
     issueNumber: number | string | undefined;
     @property.literal()
@@ -39,3 +40,5 @@ class PublicationIssueImpl extends PublicationIssueMixin(RdfResourceImpl) {
 }
 PublicationIssueMixin.appliesTo = schema.PublicationIssue
 PublicationIssueMixin.Class = PublicationIssueImpl
+
+export const fromPointer = createFactory<PublicationIssue>([CreativeWorkMixin, PublicationIssueMixin], { types: [schema.PublicationIssue] });

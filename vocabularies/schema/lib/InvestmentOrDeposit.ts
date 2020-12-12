@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { FinancialProductMixin } from './FinancialProduct';
@@ -12,9 +13,9 @@ export interface InvestmentOrDeposit<D extends RDF.DatasetCore = RDF.DatasetCore
   amountLiteral: number | undefined;
 }
 
-export function InvestmentOrDepositMixin<Base extends Constructor>(Resource: Base): Constructor<InvestmentOrDeposit> & Base {
+export function InvestmentOrDepositMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<InvestmentOrDeposit> & RdfResourceCore> & Base {
   @namespace(schema)
-  class InvestmentOrDepositClass extends FinancialProductMixin(Resource) implements InvestmentOrDeposit {
+  class InvestmentOrDepositClass extends FinancialProductMixin(Resource) implements Partial<InvestmentOrDeposit> {
     @property.resource()
     amount: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.amount, type: Number })
@@ -33,3 +34,5 @@ class InvestmentOrDepositImpl extends InvestmentOrDepositMixin(RdfResourceImpl) 
 }
 InvestmentOrDepositMixin.appliesTo = schema.InvestmentOrDeposit
 InvestmentOrDepositMixin.Class = InvestmentOrDepositImpl
+
+export const fromPointer = createFactory<InvestmentOrDeposit>([FinancialProductMixin, InvestmentOrDepositMixin], { types: [schema.InvestmentOrDeposit] });

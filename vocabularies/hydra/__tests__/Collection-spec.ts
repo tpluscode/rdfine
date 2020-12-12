@@ -2,8 +2,7 @@ import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { NamedNode } from 'rdf-js'
 import { hydra } from '@tpluscode/rdf-ns-builders'
-import { literal } from '@rdfjs/data-model';
-import { CollectionMixin } from '../lib/Collection'
+import { fromPointer } from '../lib/Collection'
 
 describe('Collection', () => {
   let collectionNode: GraphPointer<NamedNode>
@@ -20,7 +19,7 @@ describe('Collection', () => {
         .addOut(hydra.member, m => {
           m.addOut(collectionNode.namedNode('http://example.com/text'), 'hello')
         })
-      const collection = new CollectionMixin.Class(collectionNode)
+      const collection = fromPointer(collectionNode)
 
       // then
       expect(Array.isArray(collection.member)).toBe(true)
@@ -31,7 +30,7 @@ describe('Collection', () => {
   describe('views', () => {
     it('should return empty array when views are missing', () => {
       // given
-      const collection = new CollectionMixin.Class(collectionNode)
+      const collection = fromPointer(collectionNode)
 
       // then
       expect(Array.isArray(collection.view)).toBe(true)
@@ -43,7 +42,7 @@ describe('Collection', () => {
     it('should return array even for one element', () => {
       // given
       collectionNode.addOut(hydra.manages, collectionNode.blankNode())
-      const collection = new CollectionMixin.Class(collectionNode)
+      const collection = fromPointer(collectionNode)
 
       // then
       expect(Array.isArray(collection.manages)).toBe(true)
@@ -54,7 +53,7 @@ describe('Collection', () => {
     it('returns the value of the hydra property', () => {
       // given
       collectionNode.addOut(hydra.totalItems, 167)
-      const collection = new CollectionMixin.Class(collectionNode)
+      const collection = fromPointer(collectionNode)
 
       // then
       expect(collection.totalItems).toBe(167)

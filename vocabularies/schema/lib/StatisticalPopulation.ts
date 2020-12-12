@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -13,9 +14,9 @@ export interface StatisticalPopulation<D extends RDF.DatasetCore = RDF.DatasetCo
   populationType: RDF.Term | undefined;
 }
 
-export function StatisticalPopulationMixin<Base extends Constructor>(Resource: Base): Constructor<StatisticalPopulation> & Base {
+export function StatisticalPopulationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<StatisticalPopulation> & RdfResourceCore> & Base {
   @namespace(schema)
-  class StatisticalPopulationClass extends IntangibleMixin(Resource) implements StatisticalPopulation {
+  class StatisticalPopulationClass extends IntangibleMixin(Resource) implements Partial<StatisticalPopulation> {
     @property.literal({ type: Number })
     constrainingProperty: number | undefined;
     @property.literal({ type: Number })
@@ -36,3 +37,5 @@ class StatisticalPopulationImpl extends StatisticalPopulationMixin(RdfResourceIm
 }
 StatisticalPopulationMixin.appliesTo = schema.StatisticalPopulation
 StatisticalPopulationMixin.Class = StatisticalPopulationImpl
+
+export const fromPointer = createFactory<StatisticalPopulation>([IntangibleMixin, StatisticalPopulationMixin], { types: [schema.StatisticalPopulation] });

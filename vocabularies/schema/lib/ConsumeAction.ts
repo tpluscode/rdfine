@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ActionMixin } from './Action';
@@ -12,9 +13,9 @@ export interface ConsumeAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   expectsAcceptanceOf: Schema.Offer<D> | undefined;
 }
 
-export function ConsumeActionMixin<Base extends Constructor>(Resource: Base): Constructor<ConsumeAction> & Base {
+export function ConsumeActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ConsumeAction> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ConsumeActionClass extends ActionMixin(Resource) implements ConsumeAction {
+  class ConsumeActionClass extends ActionMixin(Resource) implements Partial<ConsumeAction> {
     @property.resource()
     actionAccessibilityRequirement: Schema.ActionAccessSpecification | undefined;
     @property.resource()
@@ -33,3 +34,5 @@ class ConsumeActionImpl extends ConsumeActionMixin(RdfResourceImpl) {
 }
 ConsumeActionMixin.appliesTo = schema.ConsumeAction
 ConsumeActionMixin.Class = ConsumeActionImpl
+
+export const fromPointer = createFactory<ConsumeAction>([ActionMixin, ConsumeActionMixin], { types: [schema.ConsumeAction] });

@@ -7,7 +7,7 @@ export default {
   TaxiVehicleUsage: schema.TaxiVehicleUsage as NamedNode<'http://schema.org/TaxiVehicleUsage'>,
 };
 
-export type CarUsageType = 
+export type CarUsageType =
   NamedNode<'http://schema.org/DrivingSchoolVehicleUsage'>
   | NamedNode<'http://schema.org/RentalVehicleUsage'>
   | NamedNode<'http://schema.org/TaxiVehicleUsage'>;

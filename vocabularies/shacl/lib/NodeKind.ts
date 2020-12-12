@@ -10,7 +10,7 @@ export default {
   Literal: sh.Literal as NamedNode<'http://www.w3.org/ns/shacl#Literal'>,
 };
 
-export type NodeKind = 
+export type NodeKind =
   NamedNode<'http://www.w3.org/ns/shacl#BlankNode'>
   | NamedNode<'http://www.w3.org/ns/shacl#BlankNodeOrIRI'>
   | NamedNode<'http://www.w3.org/ns/shacl#BlankNodeOrLiteral'>

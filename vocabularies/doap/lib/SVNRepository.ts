@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { doap } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Doap from '..';
 import { RepositoryMixin } from './Repository';
@@ -10,9 +11,9 @@ import { RepositoryMixin } from './Repository';
 export interface SVNRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, RdfResource<D> {
 }
 
-export function SVNRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<SVNRepository> & Base {
+export function SVNRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SVNRepository> & RdfResourceCore> & Base {
   @namespace(doap)
-  class SVNRepositoryClass extends RepositoryMixin(Resource) implements SVNRepository {
+  class SVNRepositoryClass extends RepositoryMixin(Resource) implements Partial<SVNRepository> {
   }
   return SVNRepositoryClass
 }
@@ -27,3 +28,5 @@ class SVNRepositoryImpl extends SVNRepositoryMixin(RdfResourceImpl) {
 }
 SVNRepositoryMixin.appliesTo = doap.SVNRepository
 SVNRepositoryMixin.Class = SVNRepositoryImpl
+
+export const fromPointer = createFactory<SVNRepository>([RepositoryMixin, SVNRepositoryMixin], { types: [doap.SVNRepository] });

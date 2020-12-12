@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ArticleMixin } from './Article';
@@ -10,9 +11,9 @@ import { ArticleMixin } from './Article';
 export interface AdvertiserContentArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, RdfResource<D> {
 }
 
-export function AdvertiserContentArticleMixin<Base extends Constructor>(Resource: Base): Constructor<AdvertiserContentArticle> & Base {
+export function AdvertiserContentArticleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AdvertiserContentArticle> & RdfResourceCore> & Base {
   @namespace(schema)
-  class AdvertiserContentArticleClass extends ArticleMixin(Resource) implements AdvertiserContentArticle {
+  class AdvertiserContentArticleClass extends ArticleMixin(Resource) implements Partial<AdvertiserContentArticle> {
   }
   return AdvertiserContentArticleClass
 }
@@ -27,3 +28,5 @@ class AdvertiserContentArticleImpl extends AdvertiserContentArticleMixin(RdfReso
 }
 AdvertiserContentArticleMixin.appliesTo = schema.AdvertiserContentArticle
 AdvertiserContentArticleMixin.Class = AdvertiserContentArticleImpl
+
+export const fromPointer = createFactory<AdvertiserContentArticle>([ArticleMixin, AdvertiserContentArticleMixin], { types: [schema.AdvertiserContentArticle] });

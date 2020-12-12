@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -22,9 +23,9 @@ export interface ParcelDelivery<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   trackingUrl: RDF.NamedNode | undefined;
 }
 
-export function ParcelDeliveryMixin<Base extends Constructor>(Resource: Base): Constructor<ParcelDelivery> & Base {
+export function ParcelDeliveryMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ParcelDelivery> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ParcelDeliveryClass extends IntangibleMixin(Resource) implements ParcelDelivery {
+  class ParcelDeliveryClass extends IntangibleMixin(Resource) implements Partial<ParcelDelivery> {
     @property.resource()
     carrier: Schema.Organization | undefined;
     @property.resource()
@@ -63,3 +64,5 @@ class ParcelDeliveryImpl extends ParcelDeliveryMixin(RdfResourceImpl) {
 }
 ParcelDeliveryMixin.appliesTo = schema.ParcelDelivery
 ParcelDeliveryMixin.Class = ParcelDeliveryImpl
+
+export const fromPointer = createFactory<ParcelDelivery>([IntangibleMixin, ParcelDeliveryMixin], { types: [schema.ParcelDelivery] });

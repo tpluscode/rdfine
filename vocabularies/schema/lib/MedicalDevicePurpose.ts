@@ -6,6 +6,6 @@ export default {
   Therapeutic: schema.Therapeutic as NamedNode<'http://schema.org/Therapeutic'>,
 };
 
-export type MedicalDevicePurpose = 
+export type MedicalDevicePurpose =
   NamedNode<'http://schema.org/Diagnostic'>
   | NamedNode<'http://schema.org/Therapeutic'>;

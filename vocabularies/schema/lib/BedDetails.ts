@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -13,9 +14,9 @@ export interface BedDetails<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   typeOfBedTerm: Schema.BedType | undefined;
 }
 
-export function BedDetailsMixin<Base extends Constructor>(Resource: Base): Constructor<BedDetails> & Base {
+export function BedDetailsMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BedDetails> & RdfResourceCore> & Base {
   @namespace(schema)
-  class BedDetailsClass extends IntangibleMixin(Resource) implements BedDetails {
+  class BedDetailsClass extends IntangibleMixin(Resource) implements Partial<BedDetails> {
     @property.literal({ type: Number })
     numberOfBeds: number | undefined;
     @property.literal()
@@ -36,3 +37,5 @@ class BedDetailsImpl extends BedDetailsMixin(RdfResourceImpl) {
 }
 BedDetailsMixin.appliesTo = schema.BedDetails
 BedDetailsMixin.Class = BedDetailsImpl
+
+export const fromPointer = createFactory<BedDetails>([IntangibleMixin, BedDetailsMixin], { types: [schema.BedDetails] });

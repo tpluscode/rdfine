@@ -46,7 +46,7 @@ export default {
   Urologic: schema.Urologic as NamedNode<'http://schema.org/Urologic'>,
 };
 
-export type MedicalSpecialty = 
+export type MedicalSpecialty =
   NamedNode<'http://schema.org/Anesthesia'>
   | NamedNode<'http://schema.org/Cardiovascular'>
   | NamedNode<'http://schema.org/CommunityHealth'>

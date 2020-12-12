@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { LocalBusinessMixin } from './LocalBusiness';
@@ -10,9 +11,9 @@ import { LocalBusinessMixin } from './LocalBusiness';
 export interface EntertainmentBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
 }
 
-export function EntertainmentBusinessMixin<Base extends Constructor>(Resource: Base): Constructor<EntertainmentBusiness> & Base {
+export function EntertainmentBusinessMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EntertainmentBusiness> & RdfResourceCore> & Base {
   @namespace(schema)
-  class EntertainmentBusinessClass extends LocalBusinessMixin(Resource) implements EntertainmentBusiness {
+  class EntertainmentBusinessClass extends LocalBusinessMixin(Resource) implements Partial<EntertainmentBusiness> {
   }
   return EntertainmentBusinessClass
 }
@@ -27,3 +28,5 @@ class EntertainmentBusinessImpl extends EntertainmentBusinessMixin(RdfResourceIm
 }
 EntertainmentBusinessMixin.appliesTo = schema.EntertainmentBusiness
 EntertainmentBusinessMixin.Class = EntertainmentBusinessImpl
+
+export const fromPointer = createFactory<EntertainmentBusiness>([LocalBusinessMixin, EntertainmentBusinessMixin], { types: [schema.EntertainmentBusiness] });

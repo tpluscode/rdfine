@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { HomeAndConstructionBusinessMixin } from './HomeAndConstructionBusiness';
@@ -10,9 +11,9 @@ import { HomeAndConstructionBusinessMixin } from './HomeAndConstructionBusiness'
 export interface RoofingContractor<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HomeAndConstructionBusiness<D>, RdfResource<D> {
 }
 
-export function RoofingContractorMixin<Base extends Constructor>(Resource: Base): Constructor<RoofingContractor> & Base {
+export function RoofingContractorMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RoofingContractor> & RdfResourceCore> & Base {
   @namespace(schema)
-  class RoofingContractorClass extends HomeAndConstructionBusinessMixin(Resource) implements RoofingContractor {
+  class RoofingContractorClass extends HomeAndConstructionBusinessMixin(Resource) implements Partial<RoofingContractor> {
   }
   return RoofingContractorClass
 }
@@ -27,3 +28,5 @@ class RoofingContractorImpl extends RoofingContractorMixin(RdfResourceImpl) {
 }
 RoofingContractorMixin.appliesTo = schema.RoofingContractor
 RoofingContractorMixin.Class = RoofingContractorImpl
+
+export const fromPointer = createFactory<RoofingContractor>([HomeAndConstructionBusinessMixin, RoofingContractorMixin], { types: [schema.RoofingContractor] });

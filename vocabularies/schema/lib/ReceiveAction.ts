@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TransferActionMixin } from './TransferAction';
@@ -12,9 +13,9 @@ export interface ReceiveAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   sender: Schema.Audience<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function ReceiveActionMixin<Base extends Constructor>(Resource: Base): Constructor<ReceiveAction> & Base {
+export function ReceiveActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ReceiveAction> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ReceiveActionClass extends TransferActionMixin(Resource) implements ReceiveAction {
+  class ReceiveActionClass extends TransferActionMixin(Resource) implements Partial<ReceiveAction> {
     @property()
     deliveryMethod: Schema.DeliveryMethod | undefined;
     @property.resource()
@@ -33,3 +34,5 @@ class ReceiveActionImpl extends ReceiveActionMixin(RdfResourceImpl) {
 }
 ReceiveActionMixin.appliesTo = schema.ReceiveAction
 ReceiveActionMixin.Class = ReceiveActionImpl
+
+export const fromPointer = createFactory<ReceiveAction>([TransferActionMixin, ReceiveActionMixin], { types: [schema.ReceiveAction] });

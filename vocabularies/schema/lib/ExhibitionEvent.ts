@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { EventMixin } from './Event';
@@ -10,9 +11,9 @@ import { EventMixin } from './Event';
 export interface ExhibitionEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
 }
 
-export function ExhibitionEventMixin<Base extends Constructor>(Resource: Base): Constructor<ExhibitionEvent> & Base {
+export function ExhibitionEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ExhibitionEvent> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ExhibitionEventClass extends EventMixin(Resource) implements ExhibitionEvent {
+  class ExhibitionEventClass extends EventMixin(Resource) implements Partial<ExhibitionEvent> {
   }
   return ExhibitionEventClass
 }
@@ -27,3 +28,5 @@ class ExhibitionEventImpl extends ExhibitionEventMixin(RdfResourceImpl) {
 }
 ExhibitionEventMixin.appliesTo = schema.ExhibitionEvent
 ExhibitionEventMixin.Class = ExhibitionEventImpl
+
+export const fromPointer = createFactory<ExhibitionEvent>([EventMixin, ExhibitionEventMixin], { types: [schema.ExhibitionEvent] });

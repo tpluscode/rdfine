@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -25,9 +26,9 @@ export interface HowTo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   yieldLiteral: string | undefined;
 }
 
-export function HowToMixin<Base extends Constructor>(Resource: Base): Constructor<HowTo> & Base {
+export function HowToMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<HowTo> & RdfResourceCore> & Base {
   @namespace(schema)
-  class HowToClass extends CreativeWorkMixin(Resource) implements HowTo {
+  class HowToClass extends CreativeWorkMixin(Resource) implements Partial<HowTo> {
     @property.resource()
     estimatedCost: Schema.MonetaryAmount | undefined;
     @property.literal({ path: schema.estimatedCost })
@@ -72,3 +73,5 @@ class HowToImpl extends HowToMixin(RdfResourceImpl) {
 }
 HowToMixin.appliesTo = schema.HowTo
 HowToMixin.Class = HowToImpl
+
+export const fromPointer = createFactory<HowTo>([CreativeWorkMixin, HowToMixin], { types: [schema.HowTo] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { OrganizationMixin } from './Organization';
@@ -11,9 +12,9 @@ export interface Corporation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   tickerSymbol: string | undefined;
 }
 
-export function CorporationMixin<Base extends Constructor>(Resource: Base): Constructor<Corporation> & Base {
+export function CorporationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Corporation> & RdfResourceCore> & Base {
   @namespace(schema)
-  class CorporationClass extends OrganizationMixin(Resource) implements Corporation {
+  class CorporationClass extends OrganizationMixin(Resource) implements Partial<Corporation> {
     @property.literal()
     tickerSymbol: string | undefined;
   }
@@ -30,3 +31,5 @@ class CorporationImpl extends CorporationMixin(RdfResourceImpl) {
 }
 CorporationMixin.appliesTo = schema.Corporation
 CorporationMixin.Class = CorporationImpl
+
+export const fromPointer = createFactory<Corporation>([OrganizationMixin, CorporationMixin], { types: [schema.Corporation] });

@@ -7,7 +7,7 @@ export default {
   StoreCreditRefund: schema.StoreCreditRefund as NamedNode<'http://schema.org/StoreCreditRefund'>,
 };
 
-export type RefundTypeEnumeration = 
+export type RefundTypeEnumeration =
   NamedNode<'http://schema.org/ExchangeRefund'>
   | NamedNode<'http://schema.org/FullRefund'>
   | NamedNode<'http://schema.org/StoreCreditRefund'>;

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { SubstanceMixin } from './Substance';
@@ -22,9 +23,9 @@ export interface DietarySupplement<D extends RDF.DatasetCore = RDF.DatasetCore> 
   targetPopulation: string | undefined;
 }
 
-export function DietarySupplementMixin<Base extends Constructor>(Resource: Base): Constructor<DietarySupplement> & Base {
+export function DietarySupplementMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DietarySupplement> & RdfResourceCore> & Base {
   @namespace(schema)
-  class DietarySupplementClass extends SubstanceMixin(Resource) implements DietarySupplement {
+  class DietarySupplementClass extends SubstanceMixin(Resource) implements Partial<DietarySupplement> {
     @property.literal()
     activeIngredient: string | undefined;
     @property.literal({ type: Boolean })
@@ -63,3 +64,5 @@ class DietarySupplementImpl extends DietarySupplementMixin(RdfResourceImpl) {
 }
 DietarySupplementMixin.appliesTo = schema.DietarySupplement
 DietarySupplementMixin.Class = DietarySupplementImpl
+
+export const fromPointer = createFactory<DietarySupplement>([SubstanceMixin, DietarySupplementMixin], { types: [schema.DietarySupplement] });

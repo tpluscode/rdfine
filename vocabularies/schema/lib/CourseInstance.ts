@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { EventMixin } from './Event';
@@ -14,9 +15,9 @@ export interface CourseInstance<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   instructor: Schema.Person<D> | undefined;
 }
 
-export function CourseInstanceMixin<Base extends Constructor>(Resource: Base): Constructor<CourseInstance> & Base {
+export function CourseInstanceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CourseInstance> & RdfResourceCore> & Base {
   @namespace(schema)
-  class CourseInstanceClass extends EventMixin(Resource) implements CourseInstance {
+  class CourseInstanceClass extends EventMixin(Resource) implements Partial<CourseInstance> {
     @property.literal()
     courseMode: string | undefined;
     @property({ path: schema.courseMode })
@@ -39,3 +40,5 @@ class CourseInstanceImpl extends CourseInstanceMixin(RdfResourceImpl) {
 }
 CourseInstanceMixin.appliesTo = schema.CourseInstance
 CourseInstanceMixin.Class = CourseInstanceImpl
+
+export const fromPointer = createFactory<CourseInstance>([EventMixin, CourseInstanceMixin], { types: [schema.CourseInstance] });

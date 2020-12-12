@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CommunicateActionMixin } from './CommunicateAction';
@@ -11,9 +12,9 @@ export interface InviteAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   event: Schema.Event<D> | undefined;
 }
 
-export function InviteActionMixin<Base extends Constructor>(Resource: Base): Constructor<InviteAction> & Base {
+export function InviteActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<InviteAction> & RdfResourceCore> & Base {
   @namespace(schema)
-  class InviteActionClass extends CommunicateActionMixin(Resource) implements InviteAction {
+  class InviteActionClass extends CommunicateActionMixin(Resource) implements Partial<InviteAction> {
     @property.resource()
     event: Schema.Event | undefined;
   }
@@ -30,3 +31,5 @@ class InviteActionImpl extends InviteActionMixin(RdfResourceImpl) {
 }
 InviteActionMixin.appliesTo = schema.InviteAction
 InviteActionMixin.Class = InviteActionImpl
+
+export const fromPointer = createFactory<InviteAction>([CommunicateActionMixin, InviteActionMixin], { types: [schema.InviteAction] });

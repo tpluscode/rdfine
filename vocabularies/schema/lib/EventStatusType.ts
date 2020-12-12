@@ -9,7 +9,7 @@ export default {
   EventScheduled: schema.EventScheduled as NamedNode<'http://schema.org/EventScheduled'>,
 };
 
-export type EventStatusType = 
+export type EventStatusType =
   NamedNode<'http://schema.org/EventCancelled'>
   | NamedNode<'http://schema.org/EventMovedOnline'>
   | NamedNode<'http://schema.org/EventPostponed'>

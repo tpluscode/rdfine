@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import type * as Rdf from '@rdfine/rdf';
@@ -14,9 +15,9 @@ export interface ManagesBlock<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   subject: Hydra.Resource<D> | undefined;
 }
 
-export function ManagesBlockMixin<Base extends Constructor>(Resource: Base): Constructor<ManagesBlock> & Base {
+export function ManagesBlockMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ManagesBlock> & RdfResourceCore> & Base {
   @namespace(hydra)
-  class ManagesBlockClass extends Resource implements ManagesBlock {
+  class ManagesBlockClass extends Resource implements Partial<ManagesBlock> {
     @property.resource()
     object: Hydra.Class | undefined;
     @property.resource({ as: [RdfPropertyMixin] })
@@ -37,3 +38,5 @@ class ManagesBlockImpl extends ManagesBlockMixin(RdfResourceImpl) {
 }
 ManagesBlockMixin.appliesTo = hydra.ManagesBlock
 ManagesBlockMixin.Class = ManagesBlockImpl
+
+export const fromPointer = createFactory<ManagesBlock>([ManagesBlockMixin], { types: [hydra.ManagesBlock] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -16,9 +17,9 @@ export interface MerchantReturnPolicy<D extends RDF.DatasetCore = RDF.DatasetCor
   returnPolicyCategory: Schema.MerchantReturnEnumeration | undefined;
 }
 
-export function MerchantReturnPolicyMixin<Base extends Constructor>(Resource: Base): Constructor<MerchantReturnPolicy> & Base {
+export function MerchantReturnPolicyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MerchantReturnPolicy> & RdfResourceCore> & Base {
   @namespace(schema)
-  class MerchantReturnPolicyClass extends IntangibleMixin(Resource) implements MerchantReturnPolicy {
+  class MerchantReturnPolicyClass extends IntangibleMixin(Resource) implements Partial<MerchantReturnPolicy> {
     @property.literal({ type: Boolean })
     inStoreReturnsOffered: boolean | undefined;
     @property.literal({ type: Number })
@@ -45,3 +46,5 @@ class MerchantReturnPolicyImpl extends MerchantReturnPolicyMixin(RdfResourceImpl
 }
 MerchantReturnPolicyMixin.appliesTo = schema.MerchantReturnPolicy
 MerchantReturnPolicyMixin.Class = MerchantReturnPolicyImpl
+
+export const fromPointer = createFactory<MerchantReturnPolicy>([IntangibleMixin, MerchantReturnPolicyMixin], { types: [schema.MerchantReturnPolicy] });

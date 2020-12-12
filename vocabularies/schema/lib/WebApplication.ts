@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { SoftwareApplicationMixin } from './SoftwareApplication';
@@ -11,9 +12,9 @@ export interface WebApplication<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   browserRequirements: string | undefined;
 }
 
-export function WebApplicationMixin<Base extends Constructor>(Resource: Base): Constructor<WebApplication> & Base {
+export function WebApplicationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<WebApplication> & RdfResourceCore> & Base {
   @namespace(schema)
-  class WebApplicationClass extends SoftwareApplicationMixin(Resource) implements WebApplication {
+  class WebApplicationClass extends SoftwareApplicationMixin(Resource) implements Partial<WebApplication> {
     @property.literal()
     browserRequirements: string | undefined;
   }
@@ -30,3 +31,5 @@ class WebApplicationImpl extends WebApplicationMixin(RdfResourceImpl) {
 }
 WebApplicationMixin.appliesTo = schema.WebApplication
 WebApplicationMixin.Class = WebApplicationImpl
+
+export const fromPointer = createFactory<WebApplication>([SoftwareApplicationMixin, WebApplicationMixin], { types: [schema.WebApplication] });

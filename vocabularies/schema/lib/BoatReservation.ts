@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ReservationMixin } from './Reservation';
@@ -10,9 +11,9 @@ import { ReservationMixin } from './Reservation';
 export interface BoatReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, RdfResource<D> {
 }
 
-export function BoatReservationMixin<Base extends Constructor>(Resource: Base): Constructor<BoatReservation> & Base {
+export function BoatReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BoatReservation> & RdfResourceCore> & Base {
   @namespace(schema)
-  class BoatReservationClass extends ReservationMixin(Resource) implements BoatReservation {
+  class BoatReservationClass extends ReservationMixin(Resource) implements Partial<BoatReservation> {
   }
   return BoatReservationClass
 }
@@ -27,3 +28,5 @@ class BoatReservationImpl extends BoatReservationMixin(RdfResourceImpl) {
 }
 BoatReservationMixin.appliesTo = schema.BoatReservation
 BoatReservationMixin.Class = BoatReservationImpl
+
+export const fromPointer = createFactory<BoatReservation>([ReservationMixin, BoatReservationMixin], { types: [schema.BoatReservation] });

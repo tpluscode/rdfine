@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -13,9 +14,9 @@ export interface ArchiveComponent<D extends RDF.DatasetCore = RDF.DatasetCore> e
   itemLocationLiteral: string | undefined;
 }
 
-export function ArchiveComponentMixin<Base extends Constructor>(Resource: Base): Constructor<ArchiveComponent> & Base {
+export function ArchiveComponentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ArchiveComponent> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ArchiveComponentClass extends CreativeWorkMixin(Resource) implements ArchiveComponent {
+  class ArchiveComponentClass extends CreativeWorkMixin(Resource) implements Partial<ArchiveComponent> {
     @property.resource()
     holdingArchive: Schema.ArchiveOrganization | undefined;
     @property.resource()
@@ -36,3 +37,5 @@ class ArchiveComponentImpl extends ArchiveComponentMixin(RdfResourceImpl) {
 }
 ArchiveComponentMixin.appliesTo = schema.ArchiveComponent
 ArchiveComponentMixin.Class = ArchiveComponentImpl
+
+export const fromPointer = createFactory<ArchiveComponent>([CreativeWorkMixin, ArchiveComponentMixin], { types: [schema.ArchiveComponent] });

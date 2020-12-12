@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CommunicateActionMixin } from './CommunicateAction';
@@ -11,9 +12,9 @@ export interface CommentAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   resultComment: Schema.Comment<D> | undefined;
 }
 
-export function CommentActionMixin<Base extends Constructor>(Resource: Base): Constructor<CommentAction> & Base {
+export function CommentActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CommentAction> & RdfResourceCore> & Base {
   @namespace(schema)
-  class CommentActionClass extends CommunicateActionMixin(Resource) implements CommentAction {
+  class CommentActionClass extends CommunicateActionMixin(Resource) implements Partial<CommentAction> {
     @property.resource()
     resultComment: Schema.Comment | undefined;
   }
@@ -30,3 +31,5 @@ class CommentActionImpl extends CommentActionMixin(RdfResourceImpl) {
 }
 CommentActionMixin.appliesTo = schema.CommentAction
 CommentActionMixin.Class = CommentActionImpl
+
+export const fromPointer = createFactory<CommentAction>([CommunicateActionMixin, CommentActionMixin], { types: [schema.CommentAction] });

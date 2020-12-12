@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -39,9 +40,9 @@ export interface PropertyShape<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   uniqueLang: boolean | undefined;
 }
 
-export function PropertyShapeMixin<Base extends Constructor>(Resource: Base): Constructor<PropertyShape> & Base {
+export function PropertyShapeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PropertyShape> & RdfResourceCore> & Base {
   @namespace(sh)
-  class PropertyShapeClass extends ShapeMixin(Resource) implements PropertyShape {
+  class PropertyShapeClass extends ShapeMixin(Resource) implements Partial<PropertyShape> {
     @property.resource({ as: [RdfsDatatypeMixin] })
     datatype: Rdfs.Datatype | undefined;
     @property()
@@ -104,3 +105,5 @@ class PropertyShapeImpl extends PropertyShapeMixin(RdfResourceImpl) {
 }
 PropertyShapeMixin.appliesTo = sh.PropertyShape
 PropertyShapeMixin.Class = PropertyShapeImpl
+
+export const fromPointer = createFactory<PropertyShape>([ShapeMixin, PropertyShapeMixin], { types: [sh.PropertyShape] });

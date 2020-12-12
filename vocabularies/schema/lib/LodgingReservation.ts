@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ReservationMixin } from './Reservation';
@@ -19,9 +20,9 @@ export interface LodgingReservation<D extends RDF.DatasetCore = RDF.DatasetCore>
   numChildrenLiteral: number | undefined;
 }
 
-export function LodgingReservationMixin<Base extends Constructor>(Resource: Base): Constructor<LodgingReservation> & Base {
+export function LodgingReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LodgingReservation> & RdfResourceCore> & Base {
   @namespace(schema)
-  class LodgingReservationClass extends ReservationMixin(Resource) implements LodgingReservation {
+  class LodgingReservationClass extends ReservationMixin(Resource) implements Partial<LodgingReservation> {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     checkinTime: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
@@ -54,3 +55,5 @@ class LodgingReservationImpl extends LodgingReservationMixin(RdfResourceImpl) {
 }
 LodgingReservationMixin.appliesTo = schema.LodgingReservation
 LodgingReservationMixin.Class = LodgingReservationImpl
+
+export const fromPointer = createFactory<LodgingReservation>([ReservationMixin, LodgingReservationMixin], { types: [schema.LodgingReservation] });

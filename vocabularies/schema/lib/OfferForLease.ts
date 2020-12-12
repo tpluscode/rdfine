@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { OfferMixin } from './Offer';
@@ -10,9 +11,9 @@ import { OfferMixin } from './Offer';
 export interface OfferForLease<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Offer<D>, RdfResource<D> {
 }
 
-export function OfferForLeaseMixin<Base extends Constructor>(Resource: Base): Constructor<OfferForLease> & Base {
+export function OfferForLeaseMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<OfferForLease> & RdfResourceCore> & Base {
   @namespace(schema)
-  class OfferForLeaseClass extends OfferMixin(Resource) implements OfferForLease {
+  class OfferForLeaseClass extends OfferMixin(Resource) implements Partial<OfferForLease> {
   }
   return OfferForLeaseClass
 }
@@ -27,3 +28,5 @@ class OfferForLeaseImpl extends OfferForLeaseMixin(RdfResourceImpl) {
 }
 OfferForLeaseMixin.appliesTo = schema.OfferForLease
 OfferForLeaseMixin.Class = OfferForLeaseImpl
+
+export const fromPointer = createFactory<OfferForLease>([OfferMixin, OfferForLeaseMixin], { types: [schema.OfferForLease] });

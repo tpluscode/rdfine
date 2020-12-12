@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { EpisodeMixin } from './Episode';
@@ -10,9 +11,9 @@ import { EpisodeMixin } from './Episode';
 export interface RadioEpisode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Episode<D>, RdfResource<D> {
 }
 
-export function RadioEpisodeMixin<Base extends Constructor>(Resource: Base): Constructor<RadioEpisode> & Base {
+export function RadioEpisodeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RadioEpisode> & RdfResourceCore> & Base {
   @namespace(schema)
-  class RadioEpisodeClass extends EpisodeMixin(Resource) implements RadioEpisode {
+  class RadioEpisodeClass extends EpisodeMixin(Resource) implements Partial<RadioEpisode> {
   }
   return RadioEpisodeClass
 }
@@ -27,3 +28,5 @@ class RadioEpisodeImpl extends RadioEpisodeMixin(RdfResourceImpl) {
 }
 RadioEpisodeMixin.appliesTo = schema.RadioEpisode
 RadioEpisodeMixin.Class = RadioEpisodeImpl
+
+export const fromPointer = createFactory<RadioEpisode>([EpisodeMixin, RadioEpisodeMixin], { types: [schema.RadioEpisode] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -20,9 +21,9 @@ export interface HealthInsurancePlan<D extends RDF.DatasetCore = RDF.DatasetCore
   usesHealthPlanIdStandardTerm: RDF.NamedNode | undefined;
 }
 
-export function HealthInsurancePlanMixin<Base extends Constructor>(Resource: Base): Constructor<HealthInsurancePlan> & Base {
+export function HealthInsurancePlanMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<HealthInsurancePlan> & RdfResourceCore> & Base {
   @namespace(schema)
-  class HealthInsurancePlanClass extends IntangibleMixin(Resource) implements HealthInsurancePlan {
+  class HealthInsurancePlanClass extends IntangibleMixin(Resource) implements Partial<HealthInsurancePlan> {
     @property()
     benefitsSummaryUrl: RDF.NamedNode | undefined;
     @property.resource()
@@ -57,3 +58,5 @@ class HealthInsurancePlanImpl extends HealthInsurancePlanMixin(RdfResourceImpl) 
 }
 HealthInsurancePlanMixin.appliesTo = schema.HealthInsurancePlan
 HealthInsurancePlanMixin.Class = HealthInsurancePlanImpl
+
+export const fromPointer = createFactory<HealthInsurancePlan>([IntangibleMixin, HealthInsurancePlanMixin], { types: [schema.HealthInsurancePlan] });

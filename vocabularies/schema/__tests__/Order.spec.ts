@@ -2,7 +2,7 @@ import clownface from 'clownface'
 import rdf from '@rdfjs/dataset'
 import RDF from '@rdfjs/data-model'
 import { schema } from '@tpluscode/rdf-ns-builders';
-import { OrderMixin } from '../lib/Order'
+import { fromPointer } from '../lib/Order'
 
 describe('Order', () => {
   describe('status', () => {
@@ -13,7 +13,7 @@ describe('Order', () => {
         .addOut(schema.orderStatus, schema.OrderCancelled)
 
       // when
-      const order = new OrderMixin.Class(graph)
+      const order = fromPointer(graph)
 
       // then
       expect(order.orderStatus?.termType).toEqual('NamedNode')

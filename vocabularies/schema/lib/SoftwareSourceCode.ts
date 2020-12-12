@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -18,9 +19,9 @@ export interface SoftwareSourceCode<D extends RDF.DatasetCore = RDF.DatasetCore>
   targetProduct: Schema.SoftwareApplication<D> | undefined;
 }
 
-export function SoftwareSourceCodeMixin<Base extends Constructor>(Resource: Base): Constructor<SoftwareSourceCode> & Base {
+export function SoftwareSourceCodeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SoftwareSourceCode> & RdfResourceCore> & Base {
   @namespace(schema)
-  class SoftwareSourceCodeClass extends CreativeWorkMixin(Resource) implements SoftwareSourceCode {
+  class SoftwareSourceCodeClass extends CreativeWorkMixin(Resource) implements Partial<SoftwareSourceCode> {
     @property()
     codeRepository: RDF.NamedNode | undefined;
     @property.literal()
@@ -51,3 +52,5 @@ class SoftwareSourceCodeImpl extends SoftwareSourceCodeMixin(RdfResourceImpl) {
 }
 SoftwareSourceCodeMixin.appliesTo = schema.SoftwareSourceCode
 SoftwareSourceCodeMixin.Class = SoftwareSourceCodeImpl
+
+export const fromPointer = createFactory<SoftwareSourceCode>([CreativeWorkMixin, SoftwareSourceCodeMixin], { types: [schema.SoftwareSourceCode] });

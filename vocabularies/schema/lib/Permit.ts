@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -17,9 +18,9 @@ export interface Permit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   validUntil: Date | undefined;
 }
 
-export function PermitMixin<Base extends Constructor>(Resource: Base): Constructor<Permit> & Base {
+export function PermitMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Permit> & RdfResourceCore> & Base {
   @namespace(schema)
-  class PermitClass extends IntangibleMixin(Resource) implements Permit {
+  class PermitClass extends IntangibleMixin(Resource) implements Partial<Permit> {
     @property.resource()
     issuedBy: Schema.Organization | undefined;
     @property.resource()
@@ -48,3 +49,5 @@ class PermitImpl extends PermitMixin(RdfResourceImpl) {
 }
 PermitMixin.appliesTo = schema.Permit
 PermitMixin.Class = PermitImpl
+
+export const fromPointer = createFactory<Permit>([IntangibleMixin, PermitMixin], { types: [schema.Permit] });

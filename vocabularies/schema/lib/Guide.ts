@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -11,9 +12,9 @@ export interface Guide<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   reviewAspect: string | undefined;
 }
 
-export function GuideMixin<Base extends Constructor>(Resource: Base): Constructor<Guide> & Base {
+export function GuideMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Guide> & RdfResourceCore> & Base {
   @namespace(schema)
-  class GuideClass extends CreativeWorkMixin(Resource) implements Guide {
+  class GuideClass extends CreativeWorkMixin(Resource) implements Partial<Guide> {
     @property.literal()
     reviewAspect: string | undefined;
   }
@@ -30,3 +31,5 @@ class GuideImpl extends GuideMixin(RdfResourceImpl) {
 }
 GuideMixin.appliesTo = schema.Guide
 GuideMixin.Class = GuideImpl
+
+export const fromPointer = createFactory<Guide>([CreativeWorkMixin, GuideMixin], { types: [schema.Guide] });

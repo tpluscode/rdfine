@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ArticleMixin } from './Article';
@@ -10,9 +11,9 @@ import { ArticleMixin } from './Article';
 export interface SatiricalArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, RdfResource<D> {
 }
 
-export function SatiricalArticleMixin<Base extends Constructor>(Resource: Base): Constructor<SatiricalArticle> & Base {
+export function SatiricalArticleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SatiricalArticle> & RdfResourceCore> & Base {
   @namespace(schema)
-  class SatiricalArticleClass extends ArticleMixin(Resource) implements SatiricalArticle {
+  class SatiricalArticleClass extends ArticleMixin(Resource) implements Partial<SatiricalArticle> {
   }
   return SatiricalArticleClass
 }
@@ -27,3 +28,5 @@ class SatiricalArticleImpl extends SatiricalArticleMixin(RdfResourceImpl) {
 }
 SatiricalArticleMixin.appliesTo = schema.SatiricalArticle
 SatiricalArticleMixin.Class = SatiricalArticleImpl
+
+export const fromPointer = createFactory<SatiricalArticle>([ArticleMixin, SatiricalArticleMixin], { types: [schema.SatiricalArticle] });

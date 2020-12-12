@@ -11,7 +11,7 @@ export default {
   VinylFormat: schema.VinylFormat as NamedNode<'http://schema.org/VinylFormat'>,
 };
 
-export type MusicReleaseFormatType = 
+export type MusicReleaseFormatType =
   NamedNode<'http://schema.org/CDFormat'>
   | NamedNode<'http://schema.org/CassetteFormat'>
   | NamedNode<'http://schema.org/DVDFormat'>

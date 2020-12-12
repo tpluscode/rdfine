@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalConditionMixin } from './MedicalCondition';
@@ -13,9 +14,9 @@ export interface InfectiousDisease<D extends RDF.DatasetCore = RDF.DatasetCore> 
   transmissionMethod: string | undefined;
 }
 
-export function InfectiousDiseaseMixin<Base extends Constructor>(Resource: Base): Constructor<InfectiousDisease> & Base {
+export function InfectiousDiseaseMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<InfectiousDisease> & RdfResourceCore> & Base {
   @namespace(schema)
-  class InfectiousDiseaseClass extends MedicalConditionMixin(Resource) implements InfectiousDisease {
+  class InfectiousDiseaseClass extends MedicalConditionMixin(Resource) implements Partial<InfectiousDisease> {
     @property.literal()
     infectiousAgent: string | undefined;
     @property()
@@ -36,3 +37,5 @@ class InfectiousDiseaseImpl extends InfectiousDiseaseMixin(RdfResourceImpl) {
 }
 InfectiousDiseaseMixin.appliesTo = schema.InfectiousDisease
 InfectiousDiseaseMixin.Class = InfectiousDiseaseImpl
+
+export const fromPointer = createFactory<InfectiousDisease>([MedicalConditionMixin, InfectiousDiseaseMixin], { types: [schema.InfectiousDisease] });

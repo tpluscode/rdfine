@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { PeriodicalMixin } from './Periodical';
@@ -10,9 +11,9 @@ import { PeriodicalMixin } from './Periodical';
 export interface ComicSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Periodical<D>, RdfResource<D> {
 }
 
-export function ComicSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<ComicSeries> & Base {
+export function ComicSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ComicSeries> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ComicSeriesClass extends PeriodicalMixin(Resource) implements ComicSeries {
+  class ComicSeriesClass extends PeriodicalMixin(Resource) implements Partial<ComicSeries> {
   }
   return ComicSeriesClass
 }
@@ -27,3 +28,5 @@ class ComicSeriesImpl extends ComicSeriesMixin(RdfResourceImpl) {
 }
 ComicSeriesMixin.appliesTo = schema.ComicSeries
 ComicSeriesMixin.Class = ComicSeriesImpl
+
+export const fromPointer = createFactory<ComicSeries>([PeriodicalMixin, ComicSeriesMixin], { types: [schema.ComicSeries] });

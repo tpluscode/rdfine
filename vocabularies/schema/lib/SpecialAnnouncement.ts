@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -24,9 +25,9 @@ export interface SpecialAnnouncement<D extends RDF.DatasetCore = RDF.DatasetCore
   webFeed: Schema.DataFeed<D> | undefined;
 }
 
-export function SpecialAnnouncementMixin<Base extends Constructor>(Resource: Base): Constructor<SpecialAnnouncement> & Base {
+export function SpecialAnnouncementMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SpecialAnnouncement> & RdfResourceCore> & Base {
   @namespace(schema)
-  class SpecialAnnouncementClass extends CreativeWorkMixin(Resource) implements SpecialAnnouncement {
+  class SpecialAnnouncementClass extends CreativeWorkMixin(Resource) implements Partial<SpecialAnnouncement> {
     @property.resource()
     announcementLocation: Schema.CivicStructure | Schema.LocalBusiness | undefined;
     @property.resource()
@@ -69,3 +70,5 @@ class SpecialAnnouncementImpl extends SpecialAnnouncementMixin(RdfResourceImpl) 
 }
 SpecialAnnouncementMixin.appliesTo = schema.SpecialAnnouncement
 SpecialAnnouncementMixin.Class = SpecialAnnouncementImpl
+
+export const fromPointer = createFactory<SpecialAnnouncement>([CreativeWorkMixin, SpecialAnnouncementMixin], { types: [schema.SpecialAnnouncement] });

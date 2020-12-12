@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { doap } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Doap from '..';
 import { RepositoryMixin } from './Repository';
@@ -10,9 +11,9 @@ import { RepositoryMixin } from './Repository';
 export interface BazaarBranch<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, RdfResource<D> {
 }
 
-export function BazaarBranchMixin<Base extends Constructor>(Resource: Base): Constructor<BazaarBranch> & Base {
+export function BazaarBranchMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BazaarBranch> & RdfResourceCore> & Base {
   @namespace(doap)
-  class BazaarBranchClass extends RepositoryMixin(Resource) implements BazaarBranch {
+  class BazaarBranchClass extends RepositoryMixin(Resource) implements Partial<BazaarBranch> {
   }
   return BazaarBranchClass
 }
@@ -27,3 +28,5 @@ class BazaarBranchImpl extends BazaarBranchMixin(RdfResourceImpl) {
 }
 BazaarBranchMixin.appliesTo = doap.BazaarBranch
 BazaarBranchMixin.Class = BazaarBranchImpl
+
+export const fromPointer = createFactory<BazaarBranch>([RepositoryMixin, BazaarBranchMixin], { types: [doap.BazaarBranch] });

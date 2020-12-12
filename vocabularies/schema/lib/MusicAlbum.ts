@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MusicPlaylistMixin } from './MusicPlaylist';
@@ -14,9 +15,9 @@ export interface MusicAlbum<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   byArtist: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
 }
 
-export function MusicAlbumMixin<Base extends Constructor>(Resource: Base): Constructor<MusicAlbum> & Base {
+export function MusicAlbumMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MusicAlbum> & RdfResourceCore> & Base {
   @namespace(schema)
-  class MusicAlbumClass extends MusicPlaylistMixin(Resource) implements MusicAlbum {
+  class MusicAlbumClass extends MusicPlaylistMixin(Resource) implements Partial<MusicAlbum> {
     @property()
     albumProductionType: Schema.MusicAlbumProductionType | undefined;
     @property.resource()
@@ -39,3 +40,5 @@ class MusicAlbumImpl extends MusicAlbumMixin(RdfResourceImpl) {
 }
 MusicAlbumMixin.appliesTo = schema.MusicAlbum
 MusicAlbumMixin.Class = MusicAlbumImpl
+
+export const fromPointer = createFactory<MusicAlbum>([MusicPlaylistMixin, MusicAlbumMixin], { types: [schema.MusicAlbum] });

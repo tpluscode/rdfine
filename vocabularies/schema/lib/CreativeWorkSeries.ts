@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -14,9 +15,9 @@ export interface CreativeWorkSeries<D extends RDF.DatasetCore = RDF.DatasetCore>
   startDate: Date | undefined;
 }
 
-export function CreativeWorkSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<CreativeWorkSeries> & Base {
+export function CreativeWorkSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CreativeWorkSeries> & RdfResourceCore> & Base {
   @namespace(schema)
-  class CreativeWorkSeriesClass extends SeriesMixin(CreativeWorkMixin(Resource)) implements CreativeWorkSeries {
+  class CreativeWorkSeriesClass extends SeriesMixin(CreativeWorkMixin(Resource)) implements Partial<CreativeWorkSeries> {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate: Date | undefined;
     @property.literal()
@@ -37,3 +38,5 @@ class CreativeWorkSeriesImpl extends CreativeWorkSeriesMixin(RdfResourceImpl) {
 }
 CreativeWorkSeriesMixin.appliesTo = schema.CreativeWorkSeries
 CreativeWorkSeriesMixin.Class = CreativeWorkSeriesImpl
+
+export const fromPointer = createFactory<CreativeWorkSeries>([SeriesMixin, CreativeWorkMixin, CreativeWorkSeriesMixin], { types: [schema.CreativeWorkSeries] });

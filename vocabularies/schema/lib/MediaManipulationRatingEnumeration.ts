@@ -6,6 +6,6 @@ export default {
   MissingContext: schema.MissingContext as NamedNode<'http://schema.org/MissingContext'>,
 };
 
-export type MediaManipulationRatingEnumeration = 
+export type MediaManipulationRatingEnumeration =
   NamedNode<'http://schema.org/AuthenticContent'>
   | NamedNode<'http://schema.org/MissingContext'>;

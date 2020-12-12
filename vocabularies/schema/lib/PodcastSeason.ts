@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkSeasonMixin } from './CreativeWorkSeason';
@@ -10,9 +11,9 @@ import { CreativeWorkSeasonMixin } from './CreativeWorkSeason';
 export interface PodcastSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeason<D>, RdfResource<D> {
 }
 
-export function PodcastSeasonMixin<Base extends Constructor>(Resource: Base): Constructor<PodcastSeason> & Base {
+export function PodcastSeasonMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PodcastSeason> & RdfResourceCore> & Base {
   @namespace(schema)
-  class PodcastSeasonClass extends CreativeWorkSeasonMixin(Resource) implements PodcastSeason {
+  class PodcastSeasonClass extends CreativeWorkSeasonMixin(Resource) implements Partial<PodcastSeason> {
   }
   return PodcastSeasonClass
 }
@@ -27,3 +28,5 @@ class PodcastSeasonImpl extends PodcastSeasonMixin(RdfResourceImpl) {
 }
 PodcastSeasonMixin.appliesTo = schema.PodcastSeason
 PodcastSeasonMixin.Class = PodcastSeasonImpl
+
+export const fromPointer = createFactory<PodcastSeason>([CreativeWorkSeasonMixin, PodcastSeasonMixin], { types: [schema.PodcastSeason] });

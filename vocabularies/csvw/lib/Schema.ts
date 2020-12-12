@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '..';
 
@@ -26,9 +27,9 @@ export interface Schema<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf
   valueUrl: string | undefined;
 }
 
-export function SchemaMixin<Base extends Constructor>(Resource: Base): Constructor<Schema> & Base {
+export function SchemaMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Schema> & RdfResourceCore> & Base {
   @namespace(csvw)
-  class SchemaClass extends Resource implements Schema {
+  class SchemaClass extends Resource implements Partial<Schema> {
     @property.literal()
     aboutUrl: string | undefined;
     @property.resource({ values: 'list', implicitTypes: [csvw.Column] })
@@ -77,3 +78,5 @@ class SchemaImpl extends SchemaMixin(RdfResourceImpl) {
 }
 SchemaMixin.appliesTo = csvw.Schema
 SchemaMixin.Class = SchemaImpl
+
+export const fromPointer = createFactory<Schema>([SchemaMixin], { types: [csvw.Schema] });

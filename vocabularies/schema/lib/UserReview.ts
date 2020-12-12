@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ReviewMixin } from './Review';
@@ -10,9 +11,9 @@ import { ReviewMixin } from './Review';
 export interface UserReview<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Review<D>, RdfResource<D> {
 }
 
-export function UserReviewMixin<Base extends Constructor>(Resource: Base): Constructor<UserReview> & Base {
+export function UserReviewMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<UserReview> & RdfResourceCore> & Base {
   @namespace(schema)
-  class UserReviewClass extends ReviewMixin(Resource) implements UserReview {
+  class UserReviewClass extends ReviewMixin(Resource) implements Partial<UserReview> {
   }
   return UserReviewClass
 }
@@ -27,3 +28,5 @@ class UserReviewImpl extends UserReviewMixin(RdfResourceImpl) {
 }
 UserReviewMixin.appliesTo = schema.UserReview
 UserReviewMixin.Class = UserReviewImpl
+
+export const fromPointer = createFactory<UserReview>([ReviewMixin, UserReviewMixin], { types: [schema.UserReview] });

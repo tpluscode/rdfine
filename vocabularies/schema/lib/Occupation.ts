@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -20,9 +21,9 @@ export interface Occupation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   skills: string | undefined;
 }
 
-export function OccupationMixin<Base extends Constructor>(Resource: Base): Constructor<Occupation> & Base {
+export function OccupationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Occupation> & RdfResourceCore> & Base {
   @namespace(schema)
-  class OccupationClass extends IntangibleMixin(Resource) implements Occupation {
+  class OccupationClass extends IntangibleMixin(Resource) implements Partial<Occupation> {
     @property.literal()
     educationRequirements: string | undefined;
     @property.resource()
@@ -57,3 +58,5 @@ class OccupationImpl extends OccupationMixin(RdfResourceImpl) {
 }
 OccupationMixin.appliesTo = schema.Occupation
 OccupationMixin.Class = OccupationImpl
+
+export const fromPointer = createFactory<Occupation>([IntangibleMixin, OccupationMixin], { types: [schema.Occupation] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ServiceMixin } from './Service';
@@ -16,9 +17,9 @@ export interface FinancialProduct<D extends RDF.DatasetCore = RDF.DatasetCore> e
   interestRateLiteral: number | undefined;
 }
 
-export function FinancialProductMixin<Base extends Constructor>(Resource: Base): Constructor<FinancialProduct> & Base {
+export function FinancialProductMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FinancialProduct> & RdfResourceCore> & Base {
   @namespace(schema)
-  class FinancialProductClass extends ServiceMixin(Resource) implements FinancialProduct {
+  class FinancialProductClass extends ServiceMixin(Resource) implements Partial<FinancialProduct> {
     @property.resource()
     annualPercentageRate: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.annualPercentageRate, type: Number })
@@ -45,3 +46,5 @@ class FinancialProductImpl extends FinancialProductMixin(RdfResourceImpl) {
 }
 FinancialProductMixin.appliesTo = schema.FinancialProduct
 FinancialProductMixin.Class = FinancialProductImpl
+
+export const fromPointer = createFactory<FinancialProduct>([ServiceMixin, FinancialProductMixin], { types: [schema.FinancialProduct] });

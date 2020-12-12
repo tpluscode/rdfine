@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StoreMixin } from './Store';
@@ -10,9 +11,9 @@ import { StoreMixin } from './Store';
 export interface BikeStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, RdfResource<D> {
 }
 
-export function BikeStoreMixin<Base extends Constructor>(Resource: Base): Constructor<BikeStore> & Base {
+export function BikeStoreMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BikeStore> & RdfResourceCore> & Base {
   @namespace(schema)
-  class BikeStoreClass extends StoreMixin(Resource) implements BikeStore {
+  class BikeStoreClass extends StoreMixin(Resource) implements Partial<BikeStore> {
   }
   return BikeStoreClass
 }
@@ -27,3 +28,5 @@ class BikeStoreImpl extends BikeStoreMixin(RdfResourceImpl) {
 }
 BikeStoreMixin.appliesTo = schema.BikeStore
 BikeStoreMixin.Class = BikeStoreImpl
+
+export const fromPointer = createFactory<BikeStore>([StoreMixin, BikeStoreMixin], { types: [schema.BikeStore] });

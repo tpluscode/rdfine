@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkSeriesMixin } from './CreativeWorkSeries';
@@ -24,9 +25,9 @@ export interface RadioSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function RadioSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<RadioSeries> & Base {
+export function RadioSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RadioSeries> & RdfResourceCore> & Base {
   @namespace(schema)
-  class RadioSeriesClass extends CreativeWorkSeriesMixin(Resource) implements RadioSeries {
+  class RadioSeriesClass extends CreativeWorkSeriesMixin(Resource) implements Partial<RadioSeries> {
     @property.resource()
     actor: Schema.Person | undefined;
     @property.resource()
@@ -69,3 +70,5 @@ class RadioSeriesImpl extends RadioSeriesMixin(RdfResourceImpl) {
 }
 RadioSeriesMixin.appliesTo = schema.RadioSeries
 RadioSeriesMixin.Class = RadioSeriesImpl
+
+export const fromPointer = createFactory<RadioSeries>([CreativeWorkSeriesMixin, RadioSeriesMixin], { types: [schema.RadioSeries] });

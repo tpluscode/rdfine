@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import { AbstractResultMixin } from './AbstractResult';
@@ -10,9 +11,9 @@ import { AbstractResultMixin } from './AbstractResult';
 export interface ValidationResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.AbstractResult<D>, RdfResource<D> {
 }
 
-export function ValidationResultMixin<Base extends Constructor>(Resource: Base): Constructor<ValidationResult> & Base {
+export function ValidationResultMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ValidationResult> & RdfResourceCore> & Base {
   @namespace(sh)
-  class ValidationResultClass extends AbstractResultMixin(Resource) implements ValidationResult {
+  class ValidationResultClass extends AbstractResultMixin(Resource) implements Partial<ValidationResult> {
   }
   return ValidationResultClass
 }
@@ -27,3 +28,5 @@ class ValidationResultImpl extends ValidationResultMixin(RdfResourceImpl) {
 }
 ValidationResultMixin.appliesTo = sh.ValidationResult
 ValidationResultMixin.Class = ValidationResultImpl
+
+export const fromPointer = createFactory<ValidationResult>([AbstractResultMixin, ValidationResultMixin], { types: [sh.ValidationResult] });

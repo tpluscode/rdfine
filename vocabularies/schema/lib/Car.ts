@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { VehicleMixin } from './Vehicle';
@@ -12,9 +13,9 @@ export interface Car<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema
   roofLoad: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function CarMixin<Base extends Constructor>(Resource: Base): Constructor<Car> & Base {
+export function CarMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Car> & RdfResourceCore> & Base {
   @namespace(schema)
-  class CarClass extends VehicleMixin(Resource) implements Car {
+  class CarClass extends VehicleMixin(Resource) implements Partial<Car> {
     @property.literal()
     acrissCode: string | undefined;
     @property.resource()
@@ -33,3 +34,5 @@ class CarImpl extends CarMixin(RdfResourceImpl) {
 }
 CarMixin.appliesTo = schema.Car
 CarMixin.Class = CarImpl
+
+export const fromPointer = createFactory<Car>([VehicleMixin, CarMixin], { types: [schema.Car] });

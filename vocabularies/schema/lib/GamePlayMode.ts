@@ -7,7 +7,7 @@ export default {
   SinglePlayer: schema.SinglePlayer as NamedNode<'http://schema.org/SinglePlayer'>,
 };
 
-export type GamePlayMode = 
+export type GamePlayMode =
   NamedNode<'http://schema.org/CoOp'>
   | NamedNode<'http://schema.org/MultiPlayer'>
   | NamedNode<'http://schema.org/SinglePlayer'>;

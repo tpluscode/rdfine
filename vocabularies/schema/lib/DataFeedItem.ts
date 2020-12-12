@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -14,9 +15,9 @@ export interface DataFeedItem<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   item: Schema.Thing<D> | undefined;
 }
 
-export function DataFeedItemMixin<Base extends Constructor>(Resource: Base): Constructor<DataFeedItem> & Base {
+export function DataFeedItemMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DataFeedItem> & RdfResourceCore> & Base {
   @namespace(schema)
-  class DataFeedItemClass extends IntangibleMixin(Resource) implements DataFeedItem {
+  class DataFeedItemClass extends IntangibleMixin(Resource) implements Partial<DataFeedItem> {
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateCreated: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
@@ -39,3 +40,5 @@ class DataFeedItemImpl extends DataFeedItemMixin(RdfResourceImpl) {
 }
 DataFeedItemMixin.appliesTo = schema.DataFeedItem
 DataFeedItemMixin.Class = DataFeedItemImpl
+
+export const fromPointer = createFactory<DataFeedItem>([IntangibleMixin, DataFeedItemMixin], { types: [schema.DataFeedItem] });

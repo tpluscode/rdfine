@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ServiceMixin } from './Service';
@@ -23,9 +24,9 @@ export interface BroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> e
   videoFormat: string | undefined;
 }
 
-export function BroadcastServiceMixin<Base extends Constructor>(Resource: Base): Constructor<BroadcastService> & Base {
+export function BroadcastServiceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BroadcastService> & RdfResourceCore> & Base {
   @namespace(schema)
-  class BroadcastServiceClass extends ServiceMixin(Resource) implements BroadcastService {
+  class BroadcastServiceClass extends ServiceMixin(Resource) implements Partial<BroadcastService> {
     @property.resource()
     area: Schema.Place | undefined;
     @property.resource()
@@ -66,3 +67,5 @@ class BroadcastServiceImpl extends BroadcastServiceMixin(RdfResourceImpl) {
 }
 BroadcastServiceMixin.appliesTo = schema.BroadcastService
 BroadcastServiceMixin.Class = BroadcastServiceImpl
+
+export const fromPointer = createFactory<BroadcastService>([ServiceMixin, BroadcastServiceMixin], { types: [schema.BroadcastService] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalIntangibleMixin } from './MedicalIntangible';
@@ -12,9 +13,9 @@ export interface MedicalConditionStage<D extends RDF.DatasetCore = RDF.DatasetCo
   subStageSuffix: string | undefined;
 }
 
-export function MedicalConditionStageMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalConditionStage> & Base {
+export function MedicalConditionStageMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalConditionStage> & RdfResourceCore> & Base {
   @namespace(schema)
-  class MedicalConditionStageClass extends MedicalIntangibleMixin(Resource) implements MedicalConditionStage {
+  class MedicalConditionStageClass extends MedicalIntangibleMixin(Resource) implements Partial<MedicalConditionStage> {
     @property.literal({ type: Number })
     stageAsNumber: number | undefined;
     @property.literal()
@@ -33,3 +34,5 @@ class MedicalConditionStageImpl extends MedicalConditionStageMixin(RdfResourceIm
 }
 MedicalConditionStageMixin.appliesTo = schema.MedicalConditionStage
 MedicalConditionStageMixin.Class = MedicalConditionStageImpl
+
+export const fromPointer = createFactory<MedicalConditionStage>([MedicalIntangibleMixin, MedicalConditionStageMixin], { types: [schema.MedicalConditionStage] });

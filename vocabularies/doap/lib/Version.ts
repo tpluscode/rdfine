@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { doap } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Doap from '..';
 
@@ -13,9 +14,9 @@ export interface Version<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rd
   revision: RDF.Literal | undefined;
 }
 
-export function VersionMixin<Base extends Constructor>(Resource: Base): Constructor<Version> & Base {
+export function VersionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Version> & RdfResourceCore> & Base {
   @namespace(doap)
-  class VersionClass extends Resource implements Version {
+  class VersionClass extends Resource implements Partial<Version> {
     @property()
     'file-release': RDF.Term | undefined;
     @property()
@@ -38,3 +39,5 @@ class VersionImpl extends VersionMixin(RdfResourceImpl) {
 }
 VersionMixin.appliesTo = doap.Version
 VersionMixin.Class = VersionImpl
+
+export const fromPointer = createFactory<Version>([VersionMixin], { types: [doap.Version] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { EducationalOrganizationMixin } from './EducationalOrganization';
@@ -10,9 +11,9 @@ import { EducationalOrganizationMixin } from './EducationalOrganization';
 export interface Preschool<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.EducationalOrganization<D>, RdfResource<D> {
 }
 
-export function PreschoolMixin<Base extends Constructor>(Resource: Base): Constructor<Preschool> & Base {
+export function PreschoolMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Preschool> & RdfResourceCore> & Base {
   @namespace(schema)
-  class PreschoolClass extends EducationalOrganizationMixin(Resource) implements Preschool {
+  class PreschoolClass extends EducationalOrganizationMixin(Resource) implements Partial<Preschool> {
   }
   return PreschoolClass
 }
@@ -27,3 +28,5 @@ class PreschoolImpl extends PreschoolMixin(RdfResourceImpl) {
 }
 PreschoolMixin.appliesTo = schema.Preschool
 PreschoolMixin.Class = PreschoolImpl
+
+export const fromPointer = createFactory<Preschool>([EducationalOrganizationMixin, PreschoolMixin], { types: [schema.Preschool] });

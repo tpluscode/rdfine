@@ -40,7 +40,7 @@ export default {
   Nonprofit527: schema.Nonprofit527 as NamedNode<'http://schema.org/Nonprofit527'>,
 };
 
-export type USNonprofitType = 
+export type USNonprofitType =
   NamedNode<'http://schema.org/Nonprofit501a'>
   | NamedNode<'http://schema.org/Nonprofit501c10'>
   | NamedNode<'http://schema.org/Nonprofit501c11'>

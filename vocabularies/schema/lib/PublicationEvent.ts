@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { EventMixin } from './Event';
@@ -13,9 +14,9 @@ export interface PublicationEvent<D extends RDF.DatasetCore = RDF.DatasetCore> e
   publishedOn: Schema.BroadcastService<D> | undefined;
 }
 
-export function PublicationEventMixin<Base extends Constructor>(Resource: Base): Constructor<PublicationEvent> & Base {
+export function PublicationEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PublicationEvent> & RdfResourceCore> & Base {
   @namespace(schema)
-  class PublicationEventClass extends EventMixin(Resource) implements PublicationEvent {
+  class PublicationEventClass extends EventMixin(Resource) implements Partial<PublicationEvent> {
     @property.literal({ type: Boolean })
     free: boolean | undefined;
     @property.resource()
@@ -36,3 +37,5 @@ class PublicationEventImpl extends PublicationEventMixin(RdfResourceImpl) {
 }
 PublicationEventMixin.appliesTo = schema.PublicationEvent
 PublicationEventMixin.Class = PublicationEventImpl
+
+export const fromPointer = createFactory<PublicationEvent>([EventMixin, PublicationEventMixin], { types: [schema.PublicationEvent] });

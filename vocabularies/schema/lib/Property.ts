@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -14,9 +15,9 @@ export interface Property<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   supersededBy: Schema.Property<D> | undefined;
 }
 
-export function PropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Property> & Base {
+export function PropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Property> & RdfResourceCore> & Base {
   @namespace(schema)
-  class PropertyClass extends IntangibleMixin(Resource) implements Property {
+  class PropertyClass extends IntangibleMixin(Resource) implements Partial<Property> {
     @property()
     domainIncludes: RDF.Term | undefined;
     @property.resource()
@@ -39,3 +40,5 @@ class PropertyImpl extends PropertyMixin(RdfResourceImpl) {
 }
 PropertyMixin.appliesTo = schema.Property
 PropertyMixin.Class = PropertyImpl
+
+export const fromPointer = createFactory<Property>([IntangibleMixin, PropertyMixin], { types: [schema.Property] });

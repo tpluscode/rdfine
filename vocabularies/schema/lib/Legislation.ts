@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -27,9 +28,9 @@ export interface Legislation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   legislationTypeLiteral: string | undefined;
 }
 
-export function LegislationMixin<Base extends Constructor>(Resource: Base): Constructor<Legislation> & Base {
+export function LegislationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Legislation> & RdfResourceCore> & Base {
   @namespace(schema)
-  class LegislationClass extends CreativeWorkMixin(Resource) implements Legislation {
+  class LegislationClass extends CreativeWorkMixin(Resource) implements Partial<Legislation> {
     @property.resource()
     jurisdiction: Schema.AdministrativeArea | undefined;
     @property.literal({ path: schema.jurisdiction })
@@ -78,3 +79,5 @@ class LegislationImpl extends LegislationMixin(RdfResourceImpl) {
 }
 LegislationMixin.appliesTo = schema.Legislation
 LegislationMixin.Class = LegislationImpl
+
+export const fromPointer = createFactory<Legislation>([CreativeWorkMixin, LegislationMixin], { types: [schema.Legislation] });

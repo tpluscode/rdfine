@@ -8,7 +8,7 @@ export default {
   OnlineFull: schema.OnlineFull as NamedNode<'http://schema.org/OnlineFull'>,
 };
 
-export type GameServerStatus = 
+export type GameServerStatus =
   NamedNode<'http://schema.org/OfflinePermanently'>
   | NamedNode<'http://schema.org/OfflineTemporarily'>
   | NamedNode<'http://schema.org/Online'>

@@ -1,5 +1,5 @@
-export * from './lib/Class';
-export * from './lib/Container';
-export * from './lib/ContainerMembershipProperty';
-export * from './lib/Datatype';
-export * from './lib/Resource';
+export { Class, ClassMixin } from './lib/Class';
+export { Container, ContainerMixin } from './lib/Container';
+export { ContainerMembershipProperty, ContainerMembershipPropertyMixin } from './lib/ContainerMembershipProperty';
+export { Datatype, DatatypeMixin } from './lib/Datatype';
+export { Resource, ResourceMixin } from './lib/Resource';

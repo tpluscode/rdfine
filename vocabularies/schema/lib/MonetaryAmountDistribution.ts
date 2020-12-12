@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { QuantitativeValueDistributionMixin } from './QuantitativeValueDistribution';
@@ -11,9 +12,9 @@ export interface MonetaryAmountDistribution<D extends RDF.DatasetCore = RDF.Data
   currency: string | undefined;
 }
 
-export function MonetaryAmountDistributionMixin<Base extends Constructor>(Resource: Base): Constructor<MonetaryAmountDistribution> & Base {
+export function MonetaryAmountDistributionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MonetaryAmountDistribution> & RdfResourceCore> & Base {
   @namespace(schema)
-  class MonetaryAmountDistributionClass extends QuantitativeValueDistributionMixin(Resource) implements MonetaryAmountDistribution {
+  class MonetaryAmountDistributionClass extends QuantitativeValueDistributionMixin(Resource) implements Partial<MonetaryAmountDistribution> {
     @property.literal()
     currency: string | undefined;
   }
@@ -30,3 +31,5 @@ class MonetaryAmountDistributionImpl extends MonetaryAmountDistributionMixin(Rdf
 }
 MonetaryAmountDistributionMixin.appliesTo = schema.MonetaryAmountDistribution
 MonetaryAmountDistributionMixin.Class = MonetaryAmountDistributionImpl
+
+export const fromPointer = createFactory<MonetaryAmountDistribution>([QuantitativeValueDistributionMixin, MonetaryAmountDistributionMixin], { types: [schema.MonetaryAmountDistribution] });

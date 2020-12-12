@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { PlaceMixin } from './Place';
@@ -13,9 +14,9 @@ export interface TouristDestination<D extends RDF.DatasetCore = RDF.DatasetCore>
   touristTypeLiteral: string | undefined;
 }
 
-export function TouristDestinationMixin<Base extends Constructor>(Resource: Base): Constructor<TouristDestination> & Base {
+export function TouristDestinationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TouristDestination> & RdfResourceCore> & Base {
   @namespace(schema)
-  class TouristDestinationClass extends PlaceMixin(Resource) implements TouristDestination {
+  class TouristDestinationClass extends PlaceMixin(Resource) implements Partial<TouristDestination> {
     @property.resource()
     includesAttraction: Schema.TouristAttraction | undefined;
     @property.resource()
@@ -36,3 +37,5 @@ class TouristDestinationImpl extends TouristDestinationMixin(RdfResourceImpl) {
 }
 TouristDestinationMixin.appliesTo = schema.TouristDestination
 TouristDestinationMixin.Class = TouristDestinationImpl
+
+export const fromPointer = createFactory<TouristDestination>([PlaceMixin, TouristDestinationMixin], { types: [schema.TouristDestination] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -13,9 +14,9 @@ export interface Comment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   upvoteCount: number | undefined;
 }
 
-export function CommentMixin<Base extends Constructor>(Resource: Base): Constructor<Comment> & Base {
+export function CommentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Comment> & RdfResourceCore> & Base {
   @namespace(schema)
-  class CommentClass extends CreativeWorkMixin(Resource) implements Comment {
+  class CommentClass extends CreativeWorkMixin(Resource) implements Partial<Comment> {
     @property.literal({ type: Number })
     downvoteCount: number | undefined;
     @property.resource()
@@ -36,3 +37,5 @@ class CommentImpl extends CommentMixin(RdfResourceImpl) {
 }
 CommentMixin.appliesTo = schema.Comment
 CommentMixin.Class = CommentImpl
+
+export const fromPointer = createFactory<Comment>([CreativeWorkMixin, CommentMixin], { types: [schema.Comment] });

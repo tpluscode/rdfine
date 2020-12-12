@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalEntityMixin } from './MedicalEntity';
@@ -12,9 +13,9 @@ export interface Substance<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   maximumIntake: Schema.MaximumDoseSchedule<D> | undefined;
 }
 
-export function SubstanceMixin<Base extends Constructor>(Resource: Base): Constructor<Substance> & Base {
+export function SubstanceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Substance> & RdfResourceCore> & Base {
   @namespace(schema)
-  class SubstanceClass extends MedicalEntityMixin(Resource) implements Substance {
+  class SubstanceClass extends MedicalEntityMixin(Resource) implements Partial<Substance> {
     @property.literal()
     activeIngredient: string | undefined;
     @property.resource()
@@ -33,3 +34,5 @@ class SubstanceImpl extends SubstanceMixin(RdfResourceImpl) {
 }
 SubstanceMixin.appliesTo = schema.Substance
 SubstanceMixin.Class = SubstanceImpl
+
+export const fromPointer = createFactory<Substance>([MedicalEntityMixin, SubstanceMixin], { types: [schema.Substance] });

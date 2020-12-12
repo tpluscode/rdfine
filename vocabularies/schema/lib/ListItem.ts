@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -14,9 +15,9 @@ export interface ListItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   previousItem: Schema.ListItem<D> | undefined;
 }
 
-export function ListItemMixin<Base extends Constructor>(Resource: Base): Constructor<ListItem> & Base {
+export function ListItemMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ListItem> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ListItemClass extends IntangibleMixin(Resource) implements ListItem {
+  class ListItemClass extends IntangibleMixin(Resource) implements Partial<ListItem> {
     @property.resource()
     item: Schema.Thing | undefined;
     @property.resource()
@@ -39,3 +40,5 @@ class ListItemImpl extends ListItemMixin(RdfResourceImpl) {
 }
 ListItemMixin.appliesTo = schema.ListItem
 ListItemMixin.Class = ListItemImpl
+
+export const fromPointer = createFactory<ListItem>([IntangibleMixin, ListItemMixin], { types: [schema.ListItem] });

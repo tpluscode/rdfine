@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { TripMixin } from './Trip';
@@ -16,9 +17,9 @@ export interface TrainTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   trainNumber: string | undefined;
 }
 
-export function TrainTripMixin<Base extends Constructor>(Resource: Base): Constructor<TrainTrip> & Base {
+export function TrainTripMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TrainTrip> & RdfResourceCore> & Base {
   @namespace(schema)
-  class TrainTripClass extends TripMixin(Resource) implements TrainTrip {
+  class TrainTripClass extends TripMixin(Resource) implements Partial<TrainTrip> {
     @property.literal()
     arrivalPlatform: string | undefined;
     @property.resource()
@@ -45,3 +46,5 @@ class TrainTripImpl extends TrainTripMixin(RdfResourceImpl) {
 }
 TrainTripMixin.appliesTo = schema.TrainTrip
 TrainTripMixin.Class = TrainTripImpl
+
+export const fromPointer = createFactory<TrainTrip>([TripMixin, TrainTripMixin], { types: [schema.TrainTrip] });

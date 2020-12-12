@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ThingMixin } from './Thing';
@@ -130,9 +131,9 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   workTranslation: Schema.CreativeWork<D> | undefined;
 }
 
-export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Constructor<CreativeWork> & Base {
+export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CreativeWork> & RdfResourceCore> & Base {
   @namespace(schema)
-  class CreativeWorkClass extends ThingMixin(Resource) implements CreativeWork {
+  class CreativeWorkClass extends ThingMixin(Resource) implements Partial<CreativeWork> {
     @property.resource()
     about: Schema.Thing | undefined;
     @property.literal()
@@ -387,3 +388,5 @@ class CreativeWorkImpl extends CreativeWorkMixin(RdfResourceImpl) {
 }
 CreativeWorkMixin.appliesTo = schema.CreativeWork
 CreativeWorkMixin.Class = CreativeWorkImpl
+
+export const fromPointer = createFactory<CreativeWork>([ThingMixin, CreativeWorkMixin], { types: [schema.CreativeWork] });

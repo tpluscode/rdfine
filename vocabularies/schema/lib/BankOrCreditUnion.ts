@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { FinancialServiceMixin } from './FinancialService';
@@ -10,9 +11,9 @@ import { FinancialServiceMixin } from './FinancialService';
 export interface BankOrCreditUnion<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialService<D>, RdfResource<D> {
 }
 
-export function BankOrCreditUnionMixin<Base extends Constructor>(Resource: Base): Constructor<BankOrCreditUnion> & Base {
+export function BankOrCreditUnionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BankOrCreditUnion> & RdfResourceCore> & Base {
   @namespace(schema)
-  class BankOrCreditUnionClass extends FinancialServiceMixin(Resource) implements BankOrCreditUnion {
+  class BankOrCreditUnionClass extends FinancialServiceMixin(Resource) implements Partial<BankOrCreditUnion> {
   }
   return BankOrCreditUnionClass
 }
@@ -27,3 +28,5 @@ class BankOrCreditUnionImpl extends BankOrCreditUnionMixin(RdfResourceImpl) {
 }
 BankOrCreditUnionMixin.appliesTo = schema.BankOrCreditUnion
 BankOrCreditUnionMixin.Class = BankOrCreditUnionImpl
+
+export const fromPointer = createFactory<BankOrCreditUnion>([FinancialServiceMixin, BankOrCreditUnionMixin], { types: [schema.BankOrCreditUnion] });

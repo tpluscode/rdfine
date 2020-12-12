@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -18,9 +19,9 @@ export interface BroadcastChannel<D extends RDF.DatasetCore = RDF.DatasetCore> e
   providesBroadcastService: Schema.BroadcastService<D> | undefined;
 }
 
-export function BroadcastChannelMixin<Base extends Constructor>(Resource: Base): Constructor<BroadcastChannel> & Base {
+export function BroadcastChannelMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BroadcastChannel> & RdfResourceCore> & Base {
   @namespace(schema)
-  class BroadcastChannelClass extends IntangibleMixin(Resource) implements BroadcastChannel {
+  class BroadcastChannelClass extends IntangibleMixin(Resource) implements Partial<BroadcastChannel> {
     @property.literal()
     broadcastChannelId: string | undefined;
     @property.resource()
@@ -51,3 +52,5 @@ class BroadcastChannelImpl extends BroadcastChannelMixin(RdfResourceImpl) {
 }
 BroadcastChannelMixin.appliesTo = schema.BroadcastChannel
 BroadcastChannelMixin.Class = BroadcastChannelImpl
+
+export const fromPointer = createFactory<BroadcastChannel>([IntangibleMixin, BroadcastChannelMixin], { types: [schema.BroadcastChannel] });

@@ -11,7 +11,7 @@ export default {
   StrengthTraining: schema.StrengthTraining as NamedNode<'http://schema.org/StrengthTraining'>,
 };
 
-export type PhysicalActivityCategory = 
+export type PhysicalActivityCategory =
   NamedNode<'http://schema.org/AerobicActivity'>
   | NamedNode<'http://schema.org/AnaerobicActivity'>
   | NamedNode<'http://schema.org/Balance'>

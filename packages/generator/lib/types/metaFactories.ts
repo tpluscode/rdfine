@@ -15,8 +15,12 @@ import { toUpperInitial } from '../util/string'
 import { isEnumerationType } from './util'
 import { DatatypeName, wellKnownDatatypes } from './wellKnownDatatypes'
 
+const externalPrefixMap: Record<string, string> = {
+  sh: 'shacl',
+}
+
 export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix'>): ExternalResourceType | ResourceType | null {
-  const [prefix, termName] = shrink(term.value).split(':')
+  let [prefix, termName] = shrink(term.value).split(':')
   if (!termName) {
     return null
   }
@@ -24,8 +28,10 @@ export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix
   const localName = identifier(termName)
 
   if (prefix !== context.prefix) {
+    prefix = externalPrefixMap[prefix] || prefix
     return {
       type: 'ExternalResource',
+      localName,
       mixinName: toUpperInitial(`${prefix}${termName}Mixin`),
       exportName: `${localName}Mixin`,
       qualifiedMixinName: `${toUpperInitial(prefix)}.${localName}Mixin`,
@@ -156,10 +162,10 @@ export function overrides(overrideMap: Record<string, TypeOverride> = {}) {
   return (node: GraphPointer<NamedNode>): TermType | LiteralType | null => {
     const override = overrideMap[node.value]
 
-    if (override === 'NamedNode') {
+    if (override === 'NamedNode' || override === 'Term') {
       return {
         type: 'Term',
-        termType: 'NamedNode',
+        termType: override,
       }
     }
 

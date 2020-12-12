@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ReservationMixin } from './Reservation';
@@ -15,9 +16,9 @@ export interface FlightReservation<D extends RDF.DatasetCore = RDF.DatasetCore> 
   securityScreening: string | undefined;
 }
 
-export function FlightReservationMixin<Base extends Constructor>(Resource: Base): Constructor<FlightReservation> & Base {
+export function FlightReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FlightReservation> & RdfResourceCore> & Base {
   @namespace(schema)
-  class FlightReservationClass extends ReservationMixin(Resource) implements FlightReservation {
+  class FlightReservationClass extends ReservationMixin(Resource) implements Partial<FlightReservation> {
     @property.literal()
     boardingGroup: string | undefined;
     @property.literal()
@@ -42,3 +43,5 @@ class FlightReservationImpl extends FlightReservationMixin(RdfResourceImpl) {
 }
 FlightReservationMixin.appliesTo = schema.FlightReservation
 FlightReservationMixin.Class = FlightReservationImpl
+
+export const fromPointer = createFactory<FlightReservation>([ReservationMixin, FlightReservationMixin], { types: [schema.FlightReservation] });

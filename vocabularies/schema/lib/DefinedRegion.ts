@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -16,9 +17,9 @@ export interface DefinedRegion<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   postalCodeRange: Schema.PostalCodeRangeSpecification<D> | undefined;
 }
 
-export function DefinedRegionMixin<Base extends Constructor>(Resource: Base): Constructor<DefinedRegion> & Base {
+export function DefinedRegionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DefinedRegion> & RdfResourceCore> & Base {
   @namespace(schema)
-  class DefinedRegionClass extends StructuredValueMixin(Resource) implements DefinedRegion {
+  class DefinedRegionClass extends StructuredValueMixin(Resource) implements Partial<DefinedRegion> {
     @property.resource()
     addressCountry: Schema.Country | undefined;
     @property.literal({ path: schema.addressCountry })
@@ -45,3 +46,5 @@ class DefinedRegionImpl extends DefinedRegionMixin(RdfResourceImpl) {
 }
 DefinedRegionMixin.appliesTo = schema.DefinedRegion
 DefinedRegionMixin.Class = DefinedRegionImpl
+
+export const fromPointer = createFactory<DefinedRegion>([StructuredValueMixin, DefinedRegionMixin], { types: [schema.DefinedRegion] });

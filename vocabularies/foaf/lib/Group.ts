@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { foaf } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '..';
 import { AgentMixin } from './Agent';
@@ -11,9 +12,9 @@ export interface Group<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf
   member: Foaf.Agent<D> | undefined;
 }
 
-export function GroupMixin<Base extends Constructor>(Resource: Base): Constructor<Group> & Base {
+export function GroupMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Group> & RdfResourceCore> & Base {
   @namespace(foaf)
-  class GroupClass extends AgentMixin(Resource) implements Group {
+  class GroupClass extends AgentMixin(Resource) implements Partial<Group> {
     @property.resource({ implicitTypes: [foaf.Agent] })
     member: Foaf.Agent | undefined;
   }
@@ -30,3 +31,5 @@ class GroupImpl extends GroupMixin(RdfResourceImpl) {
 }
 GroupMixin.appliesTo = foaf.Group
 GroupMixin.Class = GroupImpl
+
+export const fromPointer = createFactory<Group>([AgentMixin, GroupMixin], { types: [foaf.Group] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -13,9 +14,9 @@ export interface InteractionCounter<D extends RDF.DatasetCore = RDF.DatasetCore>
   userInteractionCount: number | undefined;
 }
 
-export function InteractionCounterMixin<Base extends Constructor>(Resource: Base): Constructor<InteractionCounter> & Base {
+export function InteractionCounterMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<InteractionCounter> & RdfResourceCore> & Base {
   @namespace(schema)
-  class InteractionCounterClass extends StructuredValueMixin(Resource) implements InteractionCounter {
+  class InteractionCounterClass extends StructuredValueMixin(Resource) implements Partial<InteractionCounter> {
     @property.resource()
     interactionService: Schema.SoftwareApplication | Schema.WebSite | undefined;
     @property.resource()
@@ -36,3 +37,5 @@ class InteractionCounterImpl extends InteractionCounterMixin(RdfResourceImpl) {
 }
 InteractionCounterMixin.appliesTo = schema.InteractionCounter
 InteractionCounterMixin.Class = InteractionCounterImpl
+
+export const fromPointer = createFactory<InteractionCounter>([StructuredValueMixin, InteractionCounterMixin], { types: [schema.InteractionCounter] });

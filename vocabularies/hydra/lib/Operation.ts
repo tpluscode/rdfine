@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import { ResourceMixin } from './Resource';
@@ -18,9 +19,9 @@ export interface Operation<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   title: string | undefined;
 }
 
-export function OperationMixin<Base extends Constructor>(Resource: Base): Constructor<Operation> & Base {
+export function OperationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Operation> & RdfResourceCore> & Base {
   @namespace(hydra)
-  class OperationClass extends ResourceMixin(Resource) implements Operation {
+  class OperationClass extends ResourceMixin(Resource) implements Partial<Operation> {
     @property.literal()
     description: string | undefined;
     @property.resource({ values: 'array' })
@@ -51,3 +52,5 @@ class OperationImpl extends OperationMixin(RdfResourceImpl) {
 }
 OperationMixin.appliesTo = hydra.Operation
 OperationMixin.Class = OperationImpl
+
+export const fromPointer = createFactory<Operation>([ResourceMixin, OperationMixin], { types: [hydra.Operation] });

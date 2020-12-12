@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalEntityMixin } from './MedicalEntity';
@@ -15,9 +16,9 @@ export interface AnatomicalSystem<D extends RDF.DatasetCore = RDF.DatasetCore> e
   relatedTherapy: Schema.MedicalTherapy<D> | undefined;
 }
 
-export function AnatomicalSystemMixin<Base extends Constructor>(Resource: Base): Constructor<AnatomicalSystem> & Base {
+export function AnatomicalSystemMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AnatomicalSystem> & RdfResourceCore> & Base {
   @namespace(schema)
-  class AnatomicalSystemClass extends MedicalEntityMixin(Resource) implements AnatomicalSystem {
+  class AnatomicalSystemClass extends MedicalEntityMixin(Resource) implements Partial<AnatomicalSystem> {
     @property.literal()
     associatedPathophysiology: string | undefined;
     @property.resource()
@@ -42,3 +43,5 @@ class AnatomicalSystemImpl extends AnatomicalSystemMixin(RdfResourceImpl) {
 }
 AnatomicalSystemMixin.appliesTo = schema.AnatomicalSystem
 AnatomicalSystemMixin.Class = AnatomicalSystemImpl
+
+export const fromPointer = createFactory<AnatomicalSystem>([MedicalEntityMixin, AnatomicalSystemMixin], { types: [schema.AnatomicalSystem] });

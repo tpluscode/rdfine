@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -15,9 +16,9 @@ export interface ItemList<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   numberOfItems: number | undefined;
 }
 
-export function ItemListMixin<Base extends Constructor>(Resource: Base): Constructor<ItemList> & Base {
+export function ItemListMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ItemList> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ItemListClass extends IntangibleMixin(Resource) implements ItemList {
+  class ItemListClass extends IntangibleMixin(Resource) implements Partial<ItemList> {
     @property.resource({ values: 'array' })
     itemListElement!: Array<Schema.ListItem | Schema.Thing>;
     @property.literal({ path: schema.itemListElement, values: 'array' })
@@ -42,3 +43,5 @@ class ItemListImpl extends ItemListMixin(RdfResourceImpl) {
 }
 ItemListMixin.appliesTo = schema.ItemList
 ItemListMixin.Class = ItemListImpl
+
+export const fromPointer = createFactory<ItemList>([IntangibleMixin, ItemListMixin], { types: [schema.ItemList] });

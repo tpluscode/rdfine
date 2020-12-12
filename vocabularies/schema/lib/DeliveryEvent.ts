@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { EventMixin } from './Event';
@@ -14,9 +15,9 @@ export interface DeliveryEvent<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   hasDeliveryMethod: Schema.DeliveryMethod | undefined;
 }
 
-export function DeliveryEventMixin<Base extends Constructor>(Resource: Base): Constructor<DeliveryEvent> & Base {
+export function DeliveryEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DeliveryEvent> & RdfResourceCore> & Base {
   @namespace(schema)
-  class DeliveryEventClass extends EventMixin(Resource) implements DeliveryEvent {
+  class DeliveryEventClass extends EventMixin(Resource) implements Partial<DeliveryEvent> {
     @property.literal()
     accessCode: string | undefined;
     @property.literal({ type: Date })
@@ -39,3 +40,5 @@ class DeliveryEventImpl extends DeliveryEventMixin(RdfResourceImpl) {
 }
 DeliveryEventMixin.appliesTo = schema.DeliveryEvent
 DeliveryEventMixin.Class = DeliveryEventImpl
+
+export const fromPointer = createFactory<DeliveryEvent>([EventMixin, DeliveryEventMixin], { types: [schema.DeliveryEvent] });

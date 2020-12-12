@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalEntityMixin } from './MedicalEntity';
@@ -11,9 +12,9 @@ export interface MedicalCause<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   causeOf: Schema.MedicalEntity<D> | undefined;
 }
 
-export function MedicalCauseMixin<Base extends Constructor>(Resource: Base): Constructor<MedicalCause> & Base {
+export function MedicalCauseMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalCause> & RdfResourceCore> & Base {
   @namespace(schema)
-  class MedicalCauseClass extends MedicalEntityMixin(Resource) implements MedicalCause {
+  class MedicalCauseClass extends MedicalEntityMixin(Resource) implements Partial<MedicalCause> {
     @property.resource()
     causeOf: Schema.MedicalEntity | undefined;
   }
@@ -30,3 +31,5 @@ class MedicalCauseImpl extends MedicalCauseMixin(RdfResourceImpl) {
 }
 MedicalCauseMixin.appliesTo = schema.MedicalCause
 MedicalCauseMixin.Class = MedicalCauseImpl
+
+export const fromPointer = createFactory<MedicalCause>([MedicalEntityMixin, MedicalCauseMixin], { types: [schema.MedicalCause] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { hydra } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import type * as Rdf from '@rdfine/rdf';
@@ -19,9 +20,9 @@ export interface SupportedProperty<D extends RDF.DatasetCore = RDF.DatasetCore> 
   writeable: boolean | undefined;
 }
 
-export function SupportedPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<SupportedProperty> & Base {
+export function SupportedPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SupportedProperty> & RdfResourceCore> & Base {
   @namespace(hydra)
-  class SupportedPropertyClass extends ResourceMixin(Resource) implements SupportedProperty {
+  class SupportedPropertyClass extends ResourceMixin(Resource) implements Partial<SupportedProperty> {
     @property.literal()
     description: string | undefined;
     @property.resource({ as: [RdfPropertyMixin] })
@@ -50,3 +51,5 @@ class SupportedPropertyImpl extends SupportedPropertyMixin(RdfResourceImpl) {
 }
 SupportedPropertyMixin.appliesTo = hydra.SupportedProperty
 SupportedPropertyMixin.Class = SupportedPropertyImpl
+
+export const fromPointer = createFactory<SupportedProperty>([ResourceMixin, SupportedPropertyMixin], { types: [hydra.SupportedProperty] });

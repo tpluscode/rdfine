@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ThingMixin } from './Thing';
@@ -79,9 +80,9 @@ export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   vatID: string | undefined;
 }
 
-export function OrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<Organization> & Base {
+export function OrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Organization> & RdfResourceCore> & Base {
   @namespace(schema)
-  class OrganizationClass extends ThingMixin(Resource) implements Organization {
+  class OrganizationClass extends ThingMixin(Resource) implements Partial<Organization> {
     @property.resource()
     actionableFeedbackPolicy: Schema.CreativeWork | undefined;
     @property.resource()
@@ -234,3 +235,5 @@ class OrganizationImpl extends OrganizationMixin(RdfResourceImpl) {
 }
 OrganizationMixin.appliesTo = schema.Organization
 OrganizationMixin.Class = OrganizationImpl
+
+export const fromPointer = createFactory<Organization>([ThingMixin, OrganizationMixin], { types: [schema.Organization] });

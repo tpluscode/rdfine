@@ -1,17 +1,18 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '..';
 
 export interface Direction<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
 
-export function DirectionMixin<Base extends Constructor>(Resource: Base): Constructor<Direction> & Base {
+export function DirectionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Direction> & RdfResourceCore> & Base {
   @namespace(csvw)
-  class DirectionClass extends Resource implements Direction {
+  class DirectionClass extends Resource implements Partial<Direction> {
   }
   return DirectionClass
 }
@@ -26,3 +27,5 @@ class DirectionImpl extends DirectionMixin(RdfResourceImpl) {
 }
 DirectionMixin.appliesTo = csvw.Direction
 DirectionMixin.Class = DirectionImpl
+
+export const fromPointer = createFactory<Direction>([DirectionMixin], { types: [csvw.Direction] });

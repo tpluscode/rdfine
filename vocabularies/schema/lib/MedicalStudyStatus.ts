@@ -14,7 +14,7 @@ export default {
   Withdrawn: schema.Withdrawn as NamedNode<'http://schema.org/Withdrawn'>,
 };
 
-export type MedicalStudyStatus = 
+export type MedicalStudyStatus =
   NamedNode<'http://schema.org/ActiveNotRecruiting'>
   | NamedNode<'http://schema.org/Completed'>
   | NamedNode<'http://schema.org/EnrollingByInvitation'>

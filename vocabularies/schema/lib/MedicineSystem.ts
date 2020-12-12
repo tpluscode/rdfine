@@ -10,7 +10,7 @@ export default {
   WesternConventional: schema.WesternConventional as NamedNode<'http://schema.org/WesternConventional'>,
 };
 
-export type MedicineSystem = 
+export type MedicineSystem =
   NamedNode<'http://schema.org/Ayurvedic'>
   | NamedNode<'http://schema.org/Chiropractic'>
   | NamedNode<'http://schema.org/Homeopathic'>

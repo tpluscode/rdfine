@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import { ParameterizableMixin } from './Parameterizable';
@@ -13,9 +14,9 @@ export interface ConstraintComponent<D extends RDF.DatasetCore = RDF.DatasetCore
   validator: Sh.Validator<D> | undefined;
 }
 
-export function ConstraintComponentMixin<Base extends Constructor>(Resource: Base): Constructor<ConstraintComponent> & Base {
+export function ConstraintComponentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ConstraintComponent> & RdfResourceCore> & Base {
   @namespace(sh)
-  class ConstraintComponentClass extends ParameterizableMixin(Resource) implements ConstraintComponent {
+  class ConstraintComponentClass extends ParameterizableMixin(Resource) implements Partial<ConstraintComponent> {
     @property.resource({ implicitTypes: [sh.Validator] })
     nodeValidator: Sh.Validator | undefined;
     @property.resource({ implicitTypes: [sh.Validator] })
@@ -36,3 +37,5 @@ class ConstraintComponentImpl extends ConstraintComponentMixin(RdfResourceImpl) 
 }
 ConstraintComponentMixin.appliesTo = sh.ConstraintComponent
 ConstraintComponentMixin.Class = ConstraintComponentImpl
+
+export const fromPointer = createFactory<ConstraintComponent>([ParameterizableMixin, ConstraintComponentMixin], { types: [sh.ConstraintComponent] });

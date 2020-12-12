@@ -88,6 +88,7 @@ describe('MixinModule', () => {
       term: 'Class',
     }, [{
       type: 'ExternalResource' as const,
+      localName: 'Person',
       mixinName: 'PersonMixin',
       module: '@rdfine/schema/Person',
       qualifiedName: 'Schema.Person',
@@ -344,6 +345,7 @@ describe('MixinModule', () => {
       termName: 'foo',
       range: [{
         type: 'ExternalResource' as const,
+        localName: 'Foo',
         mixinName: 'FooMixin',
         exportName: 'Foo',
         module: '@rdfine/example/Foo',
@@ -562,6 +564,7 @@ describe('MixinModule', () => {
       termName: 'foo',
       range: [{
         type: 'ExternalResource' as const,
+        localName: 'Foo',
         mixinName: 'FooMixin',
         exportName: 'Foo',
         module: '@rdfine/example/Foo',
@@ -615,6 +618,7 @@ describe('MixinModule', () => {
       term: 'Super',
     }, {
       type: 'ExternalResource' as const,
+      localName: 'Extern',
       mixinName: 'ExternMixin',
       exportName: 'Extern',
       qualifiedName: 'Example.Extern',

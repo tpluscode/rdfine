@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -15,9 +16,9 @@ export interface AlignmentObject<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   targetUrl: RDF.NamedNode | undefined;
 }
 
-export function AlignmentObjectMixin<Base extends Constructor>(Resource: Base): Constructor<AlignmentObject> & Base {
+export function AlignmentObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AlignmentObject> & RdfResourceCore> & Base {
   @namespace(schema)
-  class AlignmentObjectClass extends IntangibleMixin(Resource) implements AlignmentObject {
+  class AlignmentObjectClass extends IntangibleMixin(Resource) implements Partial<AlignmentObject> {
     @property.literal()
     alignmentType: string | undefined;
     @property.literal()
@@ -42,3 +43,5 @@ class AlignmentObjectImpl extends AlignmentObjectMixin(RdfResourceImpl) {
 }
 AlignmentObjectMixin.appliesTo = schema.AlignmentObject
 AlignmentObjectMixin.Class = AlignmentObjectImpl
+
+export const fromPointer = createFactory<AlignmentObject>([IntangibleMixin, AlignmentObjectMixin], { types: [schema.AlignmentObject] });

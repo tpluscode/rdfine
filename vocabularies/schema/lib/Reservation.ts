@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -24,9 +25,9 @@ export interface Reservation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   underName: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function ReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Reservation> & Base {
+export function ReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Reservation> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ReservationClass extends IntangibleMixin(Resource) implements Reservation {
+  class ReservationClass extends IntangibleMixin(Resource) implements Partial<Reservation> {
     @property.resource()
     bookingAgent: Schema.Organization | Schema.Person | undefined;
     @property.literal({ type: Date })
@@ -69,3 +70,5 @@ class ReservationImpl extends ReservationMixin(RdfResourceImpl) {
 }
 ReservationMixin.appliesTo = schema.Reservation
 ReservationMixin.Class = ReservationImpl
+
+export const fromPointer = createFactory<Reservation>([IntangibleMixin, ReservationMixin], { types: [schema.Reservation] });

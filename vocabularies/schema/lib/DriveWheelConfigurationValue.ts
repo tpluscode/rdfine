@@ -8,7 +8,7 @@ export default {
   RearWheelDriveConfiguration: schema.RearWheelDriveConfiguration as NamedNode<'http://schema.org/RearWheelDriveConfiguration'>,
 };
 
-export type DriveWheelConfigurationValue = 
+export type DriveWheelConfigurationValue =
   NamedNode<'http://schema.org/AllWheelDriveConfiguration'>
   | NamedNode<'http://schema.org/FourWheelDriveConfiguration'>
   | NamedNode<'http://schema.org/FrontWheelDriveConfiguration'>

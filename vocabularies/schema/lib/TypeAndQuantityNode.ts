@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { StructuredValueMixin } from './StructuredValue';
@@ -16,9 +17,9 @@ export interface TypeAndQuantityNode<D extends RDF.DatasetCore = RDF.DatasetCore
   unitText: string | undefined;
 }
 
-export function TypeAndQuantityNodeMixin<Base extends Constructor>(Resource: Base): Constructor<TypeAndQuantityNode> & Base {
+export function TypeAndQuantityNodeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TypeAndQuantityNode> & RdfResourceCore> & Base {
   @namespace(schema)
-  class TypeAndQuantityNodeClass extends StructuredValueMixin(Resource) implements TypeAndQuantityNode {
+  class TypeAndQuantityNodeClass extends StructuredValueMixin(Resource) implements Partial<TypeAndQuantityNode> {
     @property.literal({ type: Number })
     amountOfThisGood: number | undefined;
     @property()
@@ -45,3 +46,5 @@ class TypeAndQuantityNodeImpl extends TypeAndQuantityNodeMixin(RdfResourceImpl) 
 }
 TypeAndQuantityNodeMixin.appliesTo = schema.TypeAndQuantityNode
 TypeAndQuantityNodeMixin.Class = TypeAndQuantityNodeImpl
+
+export const fromPointer = createFactory<TypeAndQuantityNode>([StructuredValueMixin, TypeAndQuantityNodeMixin], { types: [schema.TypeAndQuantityNode] });

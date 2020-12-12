@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { EventMixin } from './Event';
@@ -14,9 +15,9 @@ export interface ScreeningEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   workPresented: Schema.Movie<D> | undefined;
 }
 
-export function ScreeningEventMixin<Base extends Constructor>(Resource: Base): Constructor<ScreeningEvent> & Base {
+export function ScreeningEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ScreeningEvent> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ScreeningEventClass extends EventMixin(Resource) implements ScreeningEvent {
+  class ScreeningEventClass extends EventMixin(Resource) implements Partial<ScreeningEvent> {
     @property.resource()
     subtitleLanguage: Schema.Language | undefined;
     @property.literal({ path: schema.subtitleLanguage })
@@ -39,3 +40,5 @@ class ScreeningEventImpl extends ScreeningEventMixin(RdfResourceImpl) {
 }
 ScreeningEventMixin.appliesTo = schema.ScreeningEvent
 ScreeningEventMixin.Class = ScreeningEventImpl
+
+export const fromPointer = createFactory<ScreeningEvent>([EventMixin, ScreeningEventMixin], { types: [schema.ScreeningEvent] });

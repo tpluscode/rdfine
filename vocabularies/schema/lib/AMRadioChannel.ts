@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { RadioChannelMixin } from './RadioChannel';
@@ -10,9 +11,9 @@ import { RadioChannelMixin } from './RadioChannel';
 export interface AMRadioChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.RadioChannel<D>, RdfResource<D> {
 }
 
-export function AMRadioChannelMixin<Base extends Constructor>(Resource: Base): Constructor<AMRadioChannel> & Base {
+export function AMRadioChannelMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AMRadioChannel> & RdfResourceCore> & Base {
   @namespace(schema)
-  class AMRadioChannelClass extends RadioChannelMixin(Resource) implements AMRadioChannel {
+  class AMRadioChannelClass extends RadioChannelMixin(Resource) implements Partial<AMRadioChannel> {
   }
   return AMRadioChannelClass
 }
@@ -27,3 +28,5 @@ class AMRadioChannelImpl extends AMRadioChannelMixin(RdfResourceImpl) {
 }
 AMRadioChannelMixin.appliesTo = schema.AMRadioChannel
 AMRadioChannelMixin.Class = AMRadioChannelImpl
+
+export const fromPointer = createFactory<AMRadioChannel>([RadioChannelMixin, AMRadioChannelMixin], { types: [schema.AMRadioChannel] });

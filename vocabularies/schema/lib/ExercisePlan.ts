@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -23,9 +24,9 @@ export interface ExercisePlan<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   workload: Schema.Energy<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function ExercisePlanMixin<Base extends Constructor>(Resource: Base): Constructor<ExercisePlan> & Base {
+export function ExercisePlanMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ExercisePlan> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ExercisePlanClass extends PhysicalActivityMixin(CreativeWorkMixin(Resource)) implements ExercisePlan {
+  class ExercisePlanClass extends PhysicalActivityMixin(CreativeWorkMixin(Resource)) implements Partial<ExercisePlan> {
     @property.resource()
     activityDuration: Schema.Duration | Schema.QuantitativeValue | undefined;
     @property.resource()
@@ -64,3 +65,5 @@ class ExercisePlanImpl extends ExercisePlanMixin(RdfResourceImpl) {
 }
 ExercisePlanMixin.appliesTo = schema.ExercisePlan
 ExercisePlanMixin.Class = ExercisePlanImpl
+
+export const fromPointer = createFactory<ExercisePlan>([PhysicalActivityMixin, CreativeWorkMixin, ExercisePlanMixin], { types: [schema.ExercisePlan] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ServiceMixin } from './Service';
@@ -10,9 +11,9 @@ import { ServiceMixin } from './Service';
 export interface FoodService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, RdfResource<D> {
 }
 
-export function FoodServiceMixin<Base extends Constructor>(Resource: Base): Constructor<FoodService> & Base {
+export function FoodServiceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FoodService> & RdfResourceCore> & Base {
   @namespace(schema)
-  class FoodServiceClass extends ServiceMixin(Resource) implements FoodService {
+  class FoodServiceClass extends ServiceMixin(Resource) implements Partial<FoodService> {
   }
   return FoodServiceClass
 }
@@ -27,3 +28,5 @@ class FoodServiceImpl extends FoodServiceMixin(RdfResourceImpl) {
 }
 FoodServiceMixin.appliesTo = schema.FoodService
 FoodServiceMixin.Class = FoodServiceImpl
+
+export const fromPointer = createFactory<FoodService>([ServiceMixin, FoodServiceMixin], { types: [schema.FoodService] });

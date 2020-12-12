@@ -9,7 +9,7 @@ export default {
   Paperback: schema.Paperback as NamedNode<'http://schema.org/Paperback'>,
 };
 
-export type BookFormatType = 
+export type BookFormatType =
   NamedNode<'http://schema.org/AudiobookFormat'>
   | NamedNode<'http://schema.org/EBook'>
   | NamedNode<'http://schema.org/GraphicNovel'>

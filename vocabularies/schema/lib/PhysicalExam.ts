@@ -18,7 +18,7 @@ export default {
   Throat: schema.Throat as NamedNode<'http://schema.org/Throat'>,
 };
 
-export type PhysicalExam = 
+export type PhysicalExam =
   NamedNode<'http://schema.org/Abdomen'>
   | NamedNode<'http://schema.org/Appearance'>
   | NamedNode<'http://schema.org/CardiovascularExam'>

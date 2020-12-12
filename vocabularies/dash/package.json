@@ -1,0 +1,84 @@
+{
+  "name": "@rdfine/dash",
+  "version": "0.0.0",
+  "main": "index.js",
+  "module": "index.mjs",
+  "browser": "index.mjs",
+  "types": "index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "import": "./index.mjs"
+    },
+    "./bundles": {
+      "require": "./bundles/index.js",
+      "import": "./bundles/index.mjs"
+    },
+    "./lib/namespace": {
+      "require": "./lib/namespace.js",
+      "import": "./lib/namespace.mjs"
+    }
+  },
+  "scripts": {
+    "prepack": "npm run build",
+    "clean": "rimraf lib bundles",
+    "build": "run-p build:*",
+    "build:cjs": "tsc -p tsconfig.build.json",
+    "build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs --config-file ../../babel.config.json",
+    "generate": "( rdf-vocab prefix dash ; cat overrides.nq ; ) | rdfine-gen --format application/n-quads --dev"
+  },
+  "rdfine": {
+    "prefix": "dash",
+    "properties": {
+      "resourceAction": {
+        "values": "array"
+      },
+      "suggestion": {
+        "values": "array"
+      },
+      "shapeScript": {
+        "values": "array"
+      },
+      "expectedResult": {
+        "values": "array"
+      },
+      "reifiableBy": {
+        "values": "array"
+      },
+      "applicableToClass": {
+        "values": "array"
+      }
+    }
+  },
+  "dependencies": {
+    "@rdf-esm/data-model": "^0.5.3",
+    "@tpluscode/rdf-ns-builders": "^0.4",
+    "@tpluscode/rdfine": "^0.5.16",
+    "@rdfine/rdf": "^0.5.0",
+    "@rdfine/rdfs": "^0.6.0",
+    "@rdfine/shacl": "^0.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tpluscode/rdfine.git",
+    "directory": "vocabularies/dash"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "rdf",
+    "rdfjs",
+    "entity",
+    "decorator",
+    "clownface",
+    "graph"
+  ],
+  "author": "tpluscode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tpluscode/rdfine/issues"
+  },
+  "homepage": "https://github.com/tpluscode/rdfine/tree/master/vocabularies/dash#readme"
+}

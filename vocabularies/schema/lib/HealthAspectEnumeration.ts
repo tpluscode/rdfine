@@ -26,7 +26,7 @@ export default {
   UsageOrScheduleHealthAspect: schema.UsageOrScheduleHealthAspect as NamedNode<'http://schema.org/UsageOrScheduleHealthAspect'>,
 };
 
-export type HealthAspectEnumeration = 
+export type HealthAspectEnumeration =
   NamedNode<'http://schema.org/BenefitsHealthAspect'>
   | NamedNode<'http://schema.org/CausesHealthAspect'>
   | NamedNode<'http://schema.org/ContagiousnessHealthAspect'>

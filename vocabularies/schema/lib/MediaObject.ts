@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -29,9 +30,9 @@ export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function MediaObjectMixin<Base extends Constructor>(Resource: Base): Constructor<MediaObject> & Base {
+export function MediaObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MediaObject> & RdfResourceCore> & Base {
   @namespace(schema)
-  class MediaObjectClass extends CreativeWorkMixin(Resource) implements MediaObject {
+  class MediaObjectClass extends CreativeWorkMixin(Resource) implements Partial<MediaObject> {
     @property.resource()
     associatedArticle: Schema.NewsArticle | undefined;
     @property.literal()
@@ -84,3 +85,5 @@ class MediaObjectImpl extends MediaObjectMixin(RdfResourceImpl) {
 }
 MediaObjectMixin.appliesTo = schema.MediaObject
 MediaObjectMixin.Class = MediaObjectImpl
+
+export const fromPointer = createFactory<MediaObject>([CreativeWorkMixin, MediaObjectMixin], { types: [schema.MediaObject] });

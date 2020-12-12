@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { PropertyValueMixin } from './PropertyValue';
@@ -13,9 +14,9 @@ export interface LocationFeatureSpecification<D extends RDF.DatasetCore = RDF.Da
   validThrough: Date | undefined;
 }
 
-export function LocationFeatureSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<LocationFeatureSpecification> & Base {
+export function LocationFeatureSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LocationFeatureSpecification> & RdfResourceCore> & Base {
   @namespace(schema)
-  class LocationFeatureSpecificationClass extends PropertyValueMixin(Resource) implements LocationFeatureSpecification {
+  class LocationFeatureSpecificationClass extends PropertyValueMixin(Resource) implements Partial<LocationFeatureSpecification> {
     @property.resource()
     hoursAvailable: Schema.OpeningHoursSpecification | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
@@ -36,3 +37,5 @@ class LocationFeatureSpecificationImpl extends LocationFeatureSpecificationMixin
 }
 LocationFeatureSpecificationMixin.appliesTo = schema.LocationFeatureSpecification
 LocationFeatureSpecificationMixin.Class = LocationFeatureSpecificationImpl
+
+export const fromPointer = createFactory<LocationFeatureSpecification>([PropertyValueMixin, LocationFeatureSpecificationMixin], { types: [schema.LocationFeatureSpecification] });

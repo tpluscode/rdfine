@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { PriceSpecificationMixin } from './PriceSpecification';
@@ -17,9 +18,9 @@ export interface DeliveryChargeSpecification<D extends RDF.DatasetCore = RDF.Dat
   ineligibleRegionLiteral: string | undefined;
 }
 
-export function DeliveryChargeSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<DeliveryChargeSpecification> & Base {
+export function DeliveryChargeSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DeliveryChargeSpecification> & RdfResourceCore> & Base {
   @namespace(schema)
-  class DeliveryChargeSpecificationClass extends PriceSpecificationMixin(Resource) implements DeliveryChargeSpecification {
+  class DeliveryChargeSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<DeliveryChargeSpecification> {
     @property()
     appliesToDeliveryMethod: Schema.DeliveryMethod | undefined;
     @property.resource()
@@ -48,3 +49,5 @@ class DeliveryChargeSpecificationImpl extends DeliveryChargeSpecificationMixin(R
 }
 DeliveryChargeSpecificationMixin.appliesTo = schema.DeliveryChargeSpecification
 DeliveryChargeSpecificationMixin.Class = DeliveryChargeSpecificationImpl
+
+export const fromPointer = createFactory<DeliveryChargeSpecification>([PriceSpecificationMixin, DeliveryChargeSpecificationMixin], { types: [schema.DeliveryChargeSpecification] });

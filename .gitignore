@@ -7,3 +7,4 @@ coverage/
 *.mjs
 !*.config.js
 !main.js
+!packages/generator/bin/*.js

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MedicalEntityMixin } from './MedicalEntity';
@@ -17,9 +18,9 @@ export interface DrugCost<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   drugUnit: string | undefined;
 }
 
-export function DrugCostMixin<Base extends Constructor>(Resource: Base): Constructor<DrugCost> & Base {
+export function DrugCostMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DrugCost> & RdfResourceCore> & Base {
   @namespace(schema)
-  class DrugCostClass extends MedicalEntityMixin(Resource) implements DrugCost {
+  class DrugCostClass extends MedicalEntityMixin(Resource) implements Partial<DrugCost> {
     @property.resource()
     applicableLocation: Schema.AdministrativeArea | undefined;
     @property()
@@ -48,3 +49,5 @@ class DrugCostImpl extends DrugCostMixin(RdfResourceImpl) {
 }
 DrugCostMixin.appliesTo = schema.DrugCost
 DrugCostMixin.Class = DrugCostImpl
+
+export const fromPointer = createFactory<DrugCost>([MedicalEntityMixin, DrugCostMixin], { types: [schema.DrugCost] });

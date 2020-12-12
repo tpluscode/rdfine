@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { HomeAndConstructionBusinessMixin } from './HomeAndConstructionBusiness';
@@ -10,9 +11,9 @@ import { HomeAndConstructionBusinessMixin } from './HomeAndConstructionBusiness'
 export interface GeneralContractor<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HomeAndConstructionBusiness<D>, RdfResource<D> {
 }
 
-export function GeneralContractorMixin<Base extends Constructor>(Resource: Base): Constructor<GeneralContractor> & Base {
+export function GeneralContractorMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<GeneralContractor> & RdfResourceCore> & Base {
   @namespace(schema)
-  class GeneralContractorClass extends HomeAndConstructionBusinessMixin(Resource) implements GeneralContractor {
+  class GeneralContractorClass extends HomeAndConstructionBusinessMixin(Resource) implements Partial<GeneralContractor> {
   }
   return GeneralContractorClass
 }
@@ -27,3 +28,5 @@ class GeneralContractorImpl extends GeneralContractorMixin(RdfResourceImpl) {
 }
 GeneralContractorMixin.appliesTo = schema.GeneralContractor
 GeneralContractorMixin.Class = GeneralContractorImpl
+
+export const fromPointer = createFactory<GeneralContractor>([HomeAndConstructionBusinessMixin, GeneralContractorMixin], { types: [schema.GeneralContractor] });

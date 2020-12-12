@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { EpisodeMixin } from './Episode';
@@ -16,9 +17,9 @@ export interface TVEpisode<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   titleEIDRTerm: RDF.NamedNode | undefined;
 }
 
-export function TVEpisodeMixin<Base extends Constructor>(Resource: Base): Constructor<TVEpisode> & Base {
+export function TVEpisodeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TVEpisode> & RdfResourceCore> & Base {
   @namespace(schema)
-  class TVEpisodeClass extends EpisodeMixin(Resource) implements TVEpisode {
+  class TVEpisodeClass extends EpisodeMixin(Resource) implements Partial<TVEpisode> {
     @property.resource()
     countryOfOrigin: Schema.Country | undefined;
     @property.resource()
@@ -45,3 +46,5 @@ class TVEpisodeImpl extends TVEpisodeMixin(RdfResourceImpl) {
 }
 TVEpisodeMixin.appliesTo = schema.TVEpisode
 TVEpisodeMixin.Class = TVEpisodeImpl
+
+export const fromPointer = createFactory<TVEpisode>([EpisodeMixin, TVEpisodeMixin], { types: [schema.TVEpisode] });

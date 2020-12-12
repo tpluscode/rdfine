@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { csvw } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '..';
 
@@ -30,9 +31,9 @@ export interface Table<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
   valueUrl: string | undefined;
 }
 
-export function TableMixin<Base extends Constructor>(Resource: Base): Constructor<Table> & Base {
+export function TableMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Table> & RdfResourceCore> & Base {
   @namespace(csvw)
-  class TableClass extends Resource implements Table {
+  class TableClass extends Resource implements Partial<Table> {
     @property.literal()
     aboutUrl: string | undefined;
     @property.resource({ implicitTypes: [csvw.Datatype] })
@@ -89,3 +90,5 @@ class TableImpl extends TableMixin(RdfResourceImpl) {
 }
 TableMixin.appliesTo = csvw.Table
 TableMixin.Class = TableImpl
+
+export const fromPointer = createFactory<Table>([TableMixin], { types: [csvw.Table] });

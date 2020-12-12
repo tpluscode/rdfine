@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -12,9 +13,9 @@ export interface Audience<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   geographicArea: Schema.AdministrativeArea<D> | undefined;
 }
 
-export function AudienceMixin<Base extends Constructor>(Resource: Base): Constructor<Audience> & Base {
+export function AudienceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Audience> & RdfResourceCore> & Base {
   @namespace(schema)
-  class AudienceClass extends IntangibleMixin(Resource) implements Audience {
+  class AudienceClass extends IntangibleMixin(Resource) implements Partial<Audience> {
     @property.literal()
     audienceType: string | undefined;
     @property.resource()
@@ -33,3 +34,5 @@ class AudienceImpl extends AudienceMixin(RdfResourceImpl) {
 }
 AudienceMixin.appliesTo = schema.Audience
 AudienceMixin.Class = AudienceImpl
+
+export const fromPointer = createFactory<Audience>([IntangibleMixin, AudienceMixin], { types: [schema.Audience] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sh } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -13,9 +14,9 @@ export interface Parameterizable<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   parameter: Sh.Parameter<D> | undefined;
 }
 
-export function ParameterizableMixin<Base extends Constructor>(Resource: Base): Constructor<Parameterizable> & Base {
+export function ParameterizableMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Parameterizable> & RdfResourceCore> & Base {
   @namespace(sh)
-  class ParameterizableClass extends RdfsResourceMixin(Resource) implements Parameterizable {
+  class ParameterizableClass extends RdfsResourceMixin(Resource) implements Partial<Parameterizable> {
     @property.literal()
     labelTemplate: string | undefined;
     @property.resource({ implicitTypes: [sh.Parameter] })
@@ -34,3 +35,5 @@ class ParameterizableImpl extends ParameterizableMixin(RdfResourceImpl) {
 }
 ParameterizableMixin.appliesTo = sh.Parameterizable
 ParameterizableMixin.Class = ParameterizableImpl
+
+export const fromPointer = createFactory<Parameterizable>([RdfsResourceMixin, ParameterizableMixin], { types: [sh.Parameterizable] });

@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { HowToMixin } from './HowTo';
@@ -22,9 +23,9 @@ export interface Recipe<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   suitableForDiet: Schema.RestrictedDiet | undefined;
 }
 
-export function RecipeMixin<Base extends Constructor>(Resource: Base): Constructor<Recipe> & Base {
+export function RecipeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Recipe> & RdfResourceCore> & Base {
   @namespace(schema)
-  class RecipeClass extends HowToMixin(Resource) implements Recipe {
+  class RecipeClass extends HowToMixin(Resource) implements Partial<Recipe> {
     @property.literal()
     cookingMethod: string | undefined;
     @property.resource()
@@ -63,3 +64,5 @@ class RecipeImpl extends RecipeMixin(RdfResourceImpl) {
 }
 RecipeMixin.appliesTo = schema.Recipe
 RecipeMixin.Class = RecipeImpl
+
+export const fromPointer = createFactory<Recipe>([HowToMixin, RecipeMixin], { types: [schema.Recipe] });

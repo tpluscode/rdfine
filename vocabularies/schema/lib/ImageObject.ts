@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { MediaObjectMixin } from './MediaObject';
@@ -16,9 +17,9 @@ export interface ImageObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   thumbnail: Schema.ImageObject<D> | undefined;
 }
 
-export function ImageObjectMixin<Base extends Constructor>(Resource: Base): Constructor<ImageObject> & Base {
+export function ImageObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ImageObject> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ImageObjectClass extends MediaObjectMixin(Resource) implements ImageObject {
+  class ImageObjectClass extends MediaObjectMixin(Resource) implements Partial<ImageObject> {
     @property.resource()
     caption: Schema.MediaObject | undefined;
     @property.literal({ path: schema.caption })
@@ -45,3 +46,5 @@ class ImageObjectImpl extends ImageObjectMixin(RdfResourceImpl) {
 }
 ImageObjectMixin.appliesTo = schema.ImageObject
 ImageObjectMixin.Class = ImageObjectImpl
+
+export const fromPointer = createFactory<ImageObject>([MediaObjectMixin, ImageObjectMixin], { types: [schema.ImageObject] });

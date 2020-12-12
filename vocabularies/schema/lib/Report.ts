@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { ArticleMixin } from './Article';
@@ -11,9 +12,9 @@ export interface Report<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   reportNumber: string | undefined;
 }
 
-export function ReportMixin<Base extends Constructor>(Resource: Base): Constructor<Report> & Base {
+export function ReportMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Report> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ReportClass extends ArticleMixin(Resource) implements Report {
+  class ReportClass extends ArticleMixin(Resource) implements Partial<Report> {
     @property.literal()
     reportNumber: string | undefined;
   }
@@ -30,3 +31,5 @@ class ReportImpl extends ReportMixin(RdfResourceImpl) {
 }
 ReportMixin.appliesTo = schema.Report
 ReportMixin.Class = ReportImpl
+
+export const fromPointer = createFactory<Report>([ArticleMixin, ReportMixin], { types: [schema.Report] });

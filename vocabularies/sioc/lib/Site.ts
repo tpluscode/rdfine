@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { sioc } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '..';
 import { SpaceMixin } from './Space';
@@ -12,9 +13,9 @@ export interface Site<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc.
   'host_of': Sioc.Container<D> | undefined;
 }
 
-export function SiteMixin<Base extends Constructor>(Resource: Base): Constructor<Site> & Base {
+export function SiteMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Site> & RdfResourceCore> & Base {
   @namespace(sioc)
-  class SiteClass extends SpaceMixin(Resource) implements Site {
+  class SiteClass extends SpaceMixin(Resource) implements Partial<Site> {
     @property.resource({ implicitTypes: [sioc.UserAccount] })
     'has_administrator': Sioc.UserAccount | undefined;
     @property.resource({ implicitTypes: [sioc.Container] })
@@ -33,3 +34,5 @@ class SiteImpl extends SiteMixin(RdfResourceImpl) {
 }
 SiteMixin.appliesTo = sioc.Site
 SiteMixin.Class = SiteImpl
+
+export const fromPointer = createFactory<Site>([SpaceMixin, SiteMixin], { types: [sioc.Site] });

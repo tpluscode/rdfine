@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { UserInteractionMixin } from './UserInteraction';
@@ -15,9 +16,9 @@ export interface UserComments<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   replyToUrl: RDF.NamedNode | undefined;
 }
 
-export function UserCommentsMixin<Base extends Constructor>(Resource: Base): Constructor<UserComments> & Base {
+export function UserCommentsMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<UserComments> & RdfResourceCore> & Base {
   @namespace(schema)
-  class UserCommentsClass extends UserInteractionMixin(Resource) implements UserComments {
+  class UserCommentsClass extends UserInteractionMixin(Resource) implements Partial<UserComments> {
     @property.literal()
     commentText: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
@@ -42,3 +43,5 @@ class UserCommentsImpl extends UserCommentsMixin(RdfResourceImpl) {
 }
 UserCommentsMixin.appliesTo = schema.UserComments
 UserCommentsMixin.Class = UserCommentsImpl
+
+export const fromPointer = createFactory<UserComments>([UserInteractionMixin, UserCommentsMixin], { types: [schema.UserComments] });

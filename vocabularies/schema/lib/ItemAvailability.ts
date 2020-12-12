@@ -13,7 +13,7 @@ export default {
   SoldOut: schema.SoldOut as NamedNode<'http://schema.org/SoldOut'>,
 };
 
-export type ItemAvailability = 
+export type ItemAvailability =
   NamedNode<'http://schema.org/Discontinued'>
   | NamedNode<'http://schema.org/InStock'>
   | NamedNode<'http://schema.org/InStoreOnly'>

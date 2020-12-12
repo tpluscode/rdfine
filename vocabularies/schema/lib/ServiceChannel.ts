@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -19,9 +20,9 @@ export interface ServiceChannel<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   serviceUrl: RDF.NamedNode | undefined;
 }
 
-export function ServiceChannelMixin<Base extends Constructor>(Resource: Base): Constructor<ServiceChannel> & Base {
+export function ServiceChannelMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ServiceChannel> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ServiceChannelClass extends IntangibleMixin(Resource) implements ServiceChannel {
+  class ServiceChannelClass extends IntangibleMixin(Resource) implements Partial<ServiceChannel> {
     @property.resource()
     availableLanguage: Schema.Language | undefined;
     @property.literal({ path: schema.availableLanguage })
@@ -54,3 +55,5 @@ class ServiceChannelImpl extends ServiceChannelMixin(RdfResourceImpl) {
 }
 ServiceChannelMixin.appliesTo = schema.ServiceChannel
 ServiceChannelMixin.Class = ServiceChannelImpl
+
+export const fromPointer = createFactory<ServiceChannel>([IntangibleMixin, ServiceChannelMixin], { types: [schema.ServiceChannel] });

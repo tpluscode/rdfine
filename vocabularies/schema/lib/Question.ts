@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CreativeWorkMixin } from './CreativeWork';
@@ -15,9 +16,9 @@ export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   upvoteCount: number | undefined;
 }
 
-export function QuestionMixin<Base extends Constructor>(Resource: Base): Constructor<Question> & Base {
+export function QuestionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Question> & RdfResourceCore> & Base {
   @namespace(schema)
-  class QuestionClass extends CreativeWorkMixin(Resource) implements Question {
+  class QuestionClass extends CreativeWorkMixin(Resource) implements Partial<Question> {
     @property.resource()
     acceptedAnswer: Schema.Answer | Schema.ItemList | undefined;
     @property.literal({ type: Number })
@@ -42,3 +43,5 @@ class QuestionImpl extends QuestionMixin(RdfResourceImpl) {
 }
 QuestionMixin.appliesTo = schema.Question
 QuestionMixin.Class = QuestionImpl
+
+export const fromPointer = createFactory<Question>([CreativeWorkMixin, QuestionMixin], { types: [schema.Question] });

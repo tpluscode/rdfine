@@ -1,8 +1,9 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
 import { schema } from './namespace';
-import type { Initializer, ResourceNode } from '@tpluscode/rdfine/RdfResource';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
@@ -46,9 +47,9 @@ export interface Demand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   warranty: Schema.WarrantyPromise<D> | undefined;
 }
 
-export function DemandMixin<Base extends Constructor>(Resource: Base): Constructor<Demand> & Base {
+export function DemandMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Demand> & RdfResourceCore> & Base {
   @namespace(schema)
-  class DemandClass extends IntangibleMixin(Resource) implements Demand {
+  class DemandClass extends IntangibleMixin(Resource) implements Partial<Demand> {
     @property.resource()
     acceptedPaymentMethod: Schema.LoanOrCredit | undefined;
     @property.resource()
@@ -135,3 +136,5 @@ class DemandImpl extends DemandMixin(RdfResourceImpl) {
 }
 DemandMixin.appliesTo = schema.Demand
 DemandMixin.Class = DemandImpl
+
+export const fromPointer = createFactory<Demand>([IntangibleMixin, DemandMixin], { types: [schema.Demand] });
