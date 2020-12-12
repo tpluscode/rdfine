@@ -1,0 +1,21 @@
+# @rdfine/dash
+
+## 0.1.0
+### Minor Changes
+
+- 8e70e640: First version of DASH package
+
+### Patch Changes
+
+- 60a925e4: Generating mixins extending other vocabs
+- 0d82ae01: Mixins classes implement partial interface
+- e2d18bb7: Add factory method to mixin modules
+- Updated dependencies [decc4686]
+- Updated dependencies [c341d76b]
+- Updated dependencies [60a925e4]
+- Updated dependencies [0d82ae01]
+- Updated dependencies [e2d18bb7]
+  - @rdfine/shacl@0.7.1
+  - @rdfine/rdf@0.5.1
+  - @rdfine/rdfs@0.6.1
+  - @tpluscode/rdfine@0.5.17

@@ -1,5 +1,23 @@
 # Change Log
 
+## 0.7.1
+
+### Patch Changes
+
+- decc4686: sh:equals property added to PropertyShape
+- c341d76b: Add a return type to mixin functions
+- 60a925e4: Generating mixins extending other vocabs
+- 0d82ae01: Mixins classes implement partial interface
+- e2d18bb7: Add factory method to mixin modules
+- Updated dependencies [c341d76b]
+- Updated dependencies [60a925e4]
+- Updated dependencies [0d82ae01]
+- Updated dependencies [e2d18bb7]
+  - @rdfine/owl@0.4.1
+  - @rdfine/rdf@0.5.1
+  - @rdfine/rdfs@0.6.1
+  - @tpluscode/rdfine@0.5.17
+
 ## 0.7.0
 
 ### Minor Changes
