@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.2
+
+### Patch Changes
+
+- 04d8af79: Missing exports of extension modules
+
 ## 0.5.1
 
 ### Patch Changes

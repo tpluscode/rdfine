@@ -1,6 +1,17 @@
 # @rdfine/dash
 
+## 0.1.1
+
+### Patch Changes
+
+- 04d8af79: Missing exports of extension modules
+- Updated dependencies [04d8af79]
+  - @rdfine/rdf@0.5.2
+  - @rdfine/rdfs@0.6.2
+  - @rdfine/shacl@0.7.2
+
 ## 0.1.0
+
 ### Minor Changes
 
 - 8e70e640: First version of DASH package

@@ -1,5 +1,14 @@
 # @rdfine/wgs
 
+## 0.1.2
+
+### Patch Changes
+
+- 04d8af79: Missing exports of extension modules
+- Updated dependencies [04d8af79]
+  - @rdfine/foaf@0.1.2
+  - @rdfine/rdfs@0.6.2
+
 ## 0.1.1
 
 ### Patch Changes
