@@ -82,7 +82,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tpluscode/rdfine.git"
+    "url": "git+https://github.com/tpluscode/rdfine.git",
+    "directory": "vocabularies/owl"
   },
   "publishConfig": {
     "access": "public"
