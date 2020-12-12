@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/doap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",
@@ -38,11 +38,11 @@
   },
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
-    "@rdfine/foaf": "^0.1.0",
-    "@rdfine/rdfs": "^0.6.0",
-    "@rdfine/sioc": "^0.1.0",
+    "@rdfine/foaf": "^0.1.1",
+    "@rdfine/rdfs": "^0.6.1",
+    "@rdfine/sioc": "^0.1.1",
     "@tpluscode/rdf-ns-builders": "^0.4",
-    "@tpluscode/rdfine": "^0.5.16"
+    "@tpluscode/rdfine": "^0.5.17"
   },
   "repository": {
     "type": "git",

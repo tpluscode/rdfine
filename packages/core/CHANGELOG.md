@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.5.17
+
+### Patch Changes
+
+- 60a925e4: Generating mixins extending other vocabs
+- e2d18bb7: Add factory method to mixin modules
+
 ## 0.5.16
 
 ### Patch Changes

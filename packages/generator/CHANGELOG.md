@@ -1,5 +1,21 @@
 # Change Log
 
+## 0.6.0
+
+### Minor Changes
+
+- 5a0d871f: Prefix terms which would clash with base class members
+
+### Patch Changes
+
+- fe36fd44: Use exclusions for properties
+- 2e2e7a5f: Override property to become RDF/JS Term
+- c341d76b: Add a return type to mixin functions
+- 3113b9c8: Incorrect bundle module imports
+- 60a925e4: Generating mixins extending other vocabs
+- 0d82ae01: Mixins classes implement partial interface
+- e2d18bb7: Add factory method to mixin modules
+
 ## 0.5.0
 
 ### Minor Changes
