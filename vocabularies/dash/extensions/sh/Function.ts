@@ -16,7 +16,7 @@ declare module '@rdfine/shacl/lib/Function' {
   }
 }
 
-export function ShaclFunctionMixinEx<Base extends ExtendingConstructor<Shacl.Function, FunctionEx>>(Resource: Base): Constructor<FunctionEx & RdfResourceCore> & Base {
+export function FunctionMixinEx<Base extends ExtendingConstructor<Shacl.Function, FunctionEx>>(Resource: Base): Constructor<FunctionEx & RdfResourceCore> & Base {
   @namespace(dash)
   class Impl extends Resource implements FunctionEx {
     @property.literal({ type: Boolean })
@@ -24,4 +24,4 @@ export function ShaclFunctionMixinEx<Base extends ExtendingConstructor<Shacl.Fun
   }
   return Impl
 }
-ShaclFunctionMixinEx.appliesTo = sh.Function
+FunctionMixinEx.appliesTo = sh.Function

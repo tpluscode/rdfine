@@ -21,7 +21,7 @@ declare module '@rdfine/rdfs/lib/Datatype' {
   }
 }
 
-export function RdfsDatatypeMixinEx<Base extends ExtendingConstructor<Rdfs.Datatype, DatatypeEx>>(Resource: Base): Constructor<DatatypeEx & RdfResourceCore> & Base {
+export function DatatypeMixinEx<Base extends ExtendingConstructor<Rdfs.Datatype, DatatypeEx>>(Resource: Base): Constructor<DatatypeEx & RdfResourceCore> & Base {
   @namespace(owl)
   class Impl extends Resource implements DatatypeEx {
     @property.resource({ as: [RdfsDatatypeMixin] })
@@ -33,4 +33,4 @@ export function RdfsDatatypeMixinEx<Base extends ExtendingConstructor<Rdfs.Datat
   }
   return Impl
 }
-RdfsDatatypeMixinEx.appliesTo = rdfs.Datatype
+DatatypeMixinEx.appliesTo = rdfs.Datatype

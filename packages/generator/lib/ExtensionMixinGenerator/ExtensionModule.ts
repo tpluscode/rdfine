@@ -71,7 +71,7 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
 
   private createMixinFunction(mixinFile: SourceFile, context: Omit<Context, 'properties'>) {
     const mixinFunction = mixinFile.addFunction({
-      name: `${this.type.mixinName}Ex`,
+      name: `${this.type.localName}MixinEx`,
       typeParameters: [{
         name: 'Base',
         constraint: `ExtendingConstructor<${this.type.qualifiedName}, ${this.interfaceName}>`,

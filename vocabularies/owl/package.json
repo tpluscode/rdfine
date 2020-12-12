@@ -17,6 +17,10 @@
     "./lib/*": {
       "require": "./lib/*.js",
       "import": "./lib/*.mjs"
+    },
+    "./extensions/*": {
+      "require": "./extensions/*.js",
+      "import": "./extensions/*.mjs"
     }
   },
   "scripts": {

@@ -22,7 +22,7 @@ declare module '@rdfine/rdfs/lib/Class' {
   }
 }
 
-export function RdfsClassMixinEx<Base extends ExtendingConstructor<Rdfs.Class, ClassEx>>(Resource: Base): Constructor<ClassEx & RdfResourceCore> & Base {
+export function ClassMixinEx<Base extends ExtendingConstructor<Rdfs.Class, ClassEx>>(Resource: Base): Constructor<ClassEx & RdfResourceCore> & Base {
   @namespace(owl)
   class Impl extends Resource implements ClassEx {
     @property.resource({ values: 'array', as: [RdfsClassMixin] })
@@ -36,4 +36,4 @@ export function RdfsClassMixinEx<Base extends ExtendingConstructor<Rdfs.Class, C
   }
   return Impl
 }
-RdfsClassMixinEx.appliesTo = rdfs.Class
+ClassMixinEx.appliesTo = rdfs.Class

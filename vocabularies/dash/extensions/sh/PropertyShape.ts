@@ -24,7 +24,7 @@ declare module '@rdfine/shacl/lib/PropertyShape' {
   }
 }
 
-export function ShaclPropertyShapeMixinEx<Base extends ExtendingConstructor<Shacl.PropertyShape, PropertyShapeEx>>(Resource: Base): Constructor<PropertyShapeEx & RdfResourceCore> & Base {
+export function PropertyShapeMixinEx<Base extends ExtendingConstructor<Shacl.PropertyShape, PropertyShapeEx>>(Resource: Base): Constructor<PropertyShapeEx & RdfResourceCore> & Base {
   @namespace(dash)
   class Impl extends Resource implements PropertyShapeEx {
     @property.literal({ type: Boolean })
@@ -46,4 +46,4 @@ export function ShaclPropertyShapeMixinEx<Base extends ExtendingConstructor<Shac
   }
   return Impl
 }
-ShaclPropertyShapeMixinEx.appliesTo = sh.PropertyShape
+PropertyShapeMixinEx.appliesTo = sh.PropertyShape

@@ -16,7 +16,7 @@ declare module '@rdfine/shacl/lib/AbstractResult' {
   }
 }
 
-export function ShaclAbstractResultMixinEx<Base extends ExtendingConstructor<Shacl.AbstractResult, AbstractResultEx>>(Resource: Base): Constructor<AbstractResultEx & RdfResourceCore> & Base {
+export function AbstractResultMixinEx<Base extends ExtendingConstructor<Shacl.AbstractResult, AbstractResultEx>>(Resource: Base): Constructor<AbstractResultEx & RdfResourceCore> & Base {
   @namespace(dash)
   class Impl extends Resource implements AbstractResultEx {
     @property.resource({ values: 'array', implicitTypes: [dash.Suggestion] })
@@ -24,4 +24,4 @@ export function ShaclAbstractResultMixinEx<Base extends ExtendingConstructor<Sha
   }
   return Impl
 }
-ShaclAbstractResultMixinEx.appliesTo = sh.AbstractResult
+AbstractResultMixinEx.appliesTo = sh.AbstractResult

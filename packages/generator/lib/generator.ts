@@ -1,7 +1,7 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
 import { Project } from 'ts-morph'
 import { generateNamespace } from './namespace'
-import { Context, GeneratedModule, ModuleStrategy } from './index'
+import { Context, ModuleStrategy } from './index'
 import { TypeMetaCollection } from './types'
 
 export async function generate(project: Project, types: TypeMetaCollection, strategies: ModuleStrategy[], context: Context) {
@@ -11,34 +11,27 @@ export async function generate(project: Project, types: TypeMetaCollection, stra
   generateNamespace({ project }, context)
   const indexModule = project.createSourceFile('index.ts', {}, { overwrite: true })
 
-  const writers = strategies.reduce((moduleWriters, findTermsToGenerate) => {
-    return findTermsToGenerate(types, context)
-      .reduce((moduleWriters, writer) => {
-        if (moduleWriters.has(writer.node.value)) {
-          log.debug(`Type ${writer.node.value} has already been selected by another strategy`)
-        }
-
-        moduleWriters.set(writer.node.value, writer)
-        return moduleWriters
-      }, moduleWriters)
-  }, new Map<string, GeneratedModule>())
+  const writers = strategies.flatMap(strategy => strategy(types, context).map(moduleWriter => ({
+    node: moduleWriter.node,
+    moduleWriter,
+  })))
 
   await [...writers.values()]
     .filter(({ node }) => {
-      if (!types.get(node)) {
+      if (node && !types.get(node)) {
         log.warn(`Skipping excluded type ${node.value}`)
         return false
       }
 
       return true
     })
-    .sort((left, right) => left.node.value.localeCompare(right.node.value))
-    .reduce((previous, moduleWriter) => {
+    .sort((left, right) => (left.node?.value || '').localeCompare(right.node?.value || ''))
+    .reduce((previous, { moduleWriter }) => {
       return previous.then(async () => {
         try {
           moduleWriter.writeModule({ project, types, context, indexModule })
         } catch (e) {
-          context.log.error('Failed to generate type %s\n%s', moduleWriter.node.value, e.message)
+          context.log.error('Failed to generate module %s (type %s)\n%s', moduleWriter.constructor.name, moduleWriter.node?.value, e.message)
         }
 
         await project.save()

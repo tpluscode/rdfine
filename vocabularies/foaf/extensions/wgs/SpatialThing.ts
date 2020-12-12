@@ -17,7 +17,7 @@ declare module '@rdfine/wgs/lib/SpatialThing' {
   }
 }
 
-export function WgsSpatialThingMixinEx<Base extends ExtendingConstructor<Wgs.SpatialThing, SpatialThingEx>>(Resource: Base): Constructor<SpatialThingEx & RdfResourceCore> & Base {
+export function SpatialThingMixinEx<Base extends ExtendingConstructor<Wgs.SpatialThing, SpatialThingEx>>(Resource: Base): Constructor<SpatialThingEx & RdfResourceCore> & Base {
   @namespace(foaf)
   class Impl extends Resource implements SpatialThingEx {
     @property.resource({ as: [WgsSpatialThingMixin] })
@@ -25,4 +25,4 @@ export function WgsSpatialThingMixinEx<Base extends ExtendingConstructor<Wgs.Spa
   }
   return Impl
 }
-WgsSpatialThingMixinEx.appliesTo = wgs.SpatialThing
+SpatialThingMixinEx.appliesTo = wgs.SpatialThing

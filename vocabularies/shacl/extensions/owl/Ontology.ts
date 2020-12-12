@@ -22,7 +22,7 @@ declare module '@rdfine/owl/lib/Ontology' {
   }
 }
 
-export function OwlOntologyMixinEx<Base extends ExtendingConstructor<Owl.Ontology, OntologyEx>>(Resource: Base): Constructor<OntologyEx & RdfResourceCore> & Base {
+export function OntologyMixinEx<Base extends ExtendingConstructor<Owl.Ontology, OntologyEx>>(Resource: Base): Constructor<OntologyEx & RdfResourceCore> & Base {
   @namespace(sh)
   class Impl extends Resource implements OntologyEx {
     @property.resource({ implicitTypes: [sh.PrefixDeclaration] })
@@ -36,4 +36,4 @@ export function OwlOntologyMixinEx<Base extends ExtendingConstructor<Owl.Ontolog
   }
   return Impl
 }
-OwlOntologyMixinEx.appliesTo = owl.Ontology
+OntologyMixinEx.appliesTo = owl.Ontology

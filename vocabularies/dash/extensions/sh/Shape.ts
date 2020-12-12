@@ -18,7 +18,7 @@ declare module '@rdfine/shacl/lib/Shape' {
   }
 }
 
-export function ShaclShapeMixinEx<Base extends ExtendingConstructor<Shacl.Shape, ShapeEx>>(Resource: Base): Constructor<ShapeEx & RdfResourceCore> & Base {
+export function ShapeMixinEx<Base extends ExtendingConstructor<Shacl.Shape, ShapeEx>>(Resource: Base): Constructor<ShapeEx & RdfResourceCore> & Base {
   @namespace(dash)
   class Impl extends Resource implements ShapeEx {
     @property.resource({ values: 'array', as: [RdfsClassMixin] })
@@ -26,4 +26,4 @@ export function ShaclShapeMixinEx<Base extends ExtendingConstructor<Shacl.Shape,
   }
   return Impl
 }
-ShaclShapeMixinEx.appliesTo = sh.Shape
+ShapeMixinEx.appliesTo = sh.Shape

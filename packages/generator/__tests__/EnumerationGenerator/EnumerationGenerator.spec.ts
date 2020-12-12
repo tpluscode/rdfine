@@ -28,7 +28,7 @@ describe('EnumerationGenerator', () => {
     })
 
     // then
-    expect(result.map(m => m.node.value)).toEqual(
+    expect(result.map(m => m.node?.value)).toEqual(
       expect.arrayContaining([
         vocabulary.node(ex.Enum1).value,
         vocabulary.node(ex.Enum2).value,

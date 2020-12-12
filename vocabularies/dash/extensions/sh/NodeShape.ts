@@ -18,7 +18,7 @@ declare module '@rdfine/shacl/lib/NodeShape' {
   }
 }
 
-export function ShaclNodeShapeMixinEx<Base extends ExtendingConstructor<Shacl.NodeShape, NodeShapeEx>>(Resource: Base): Constructor<NodeShapeEx & RdfResourceCore> & Base {
+export function NodeShapeMixinEx<Base extends ExtendingConstructor<Shacl.NodeShape, NodeShapeEx>>(Resource: Base): Constructor<NodeShapeEx & RdfResourceCore> & Base {
   @namespace(dash)
   class Impl extends Resource implements NodeShapeEx {
     @property.resource({ as: [ShaclShapeMixin] })
@@ -28,4 +28,4 @@ export function ShaclNodeShapeMixinEx<Base extends ExtendingConstructor<Shacl.No
   }
   return Impl
 }
-ShaclNodeShapeMixinEx.appliesTo = sh.NodeShape
+NodeShapeMixinEx.appliesTo = sh.NodeShape
