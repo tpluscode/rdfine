@@ -22,7 +22,7 @@ Core library to define the JavaScript object model for RDF classes and propertie
 * [@rdfine/schema](vocabularies/schema) - http://schema.org/
 * [@rdfine/shacl](vocabularies/shacl) - [Shapes Constraint Language](https://www.w3.org/TR/shacl/)
 * [@rdfine/sioc](vocabularies/sioc) - [SIOC (Semantically-Interlinked Online Communities)](http://rdfs.org/sioc/spec/)
-* [@rdfine/skos](vocabularies/skos) - [SKOS Core Vocabulary)](https://www.w3.org/TR/swbp-skos-core-spec/)
+* [@rdfine/skos](vocabularies/skos) - [SKOS Core Vocabulary](https://www.w3.org/TR/swbp-skos-core-spec/)
 * [@rdfine/wgs](vocabularies/wgs) - [WGS84 Geo Positioning: an RDF vocabulary](https://www.w3.org/2003/01/geo/)
 
 ### [@rdfine/generator](packages/generator)
