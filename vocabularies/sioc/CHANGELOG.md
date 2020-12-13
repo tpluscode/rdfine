@@ -1,5 +1,13 @@
 # @rdfine/sioc
 
+## 0.1.3
+
+### Patch Changes
+
+- 7cdc4e04: type-only export of interfaces
+- Updated dependencies [7cdc4e04]
+  - @rdfine/foaf@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes

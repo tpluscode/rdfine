@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.3
+
+### Patch Changes
+
+- 7cdc4e04: type-only export of interfaces
+
 ## 0.5.2
 
 ### Patch Changes
