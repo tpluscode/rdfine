@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.18
+
+### Patch Changes
+
+- d5a614bd: Missing export of @tpluscode/rdfine/factory
+
 ## 0.5.17
 
 ### Patch Changes
