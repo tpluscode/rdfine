@@ -11,9 +11,9 @@
       "require": "./index.js",
       "import": "./index.mjs"
     },
-    "./RdfResource": {
-      "require": "./RdfResource.js",
-      "import": "./RdfResource.mjs"
+    "./*": {
+      "require": "./*.js",
+      "import": "./*.mjs"
     },
     "./lib/TypeCollection": {
       "require": "./lib/TypeCollection.js",
