@@ -88,8 +88,14 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     this.generateDependenciesModule(bundleModule, bundleIndex, types)
 
     indexModule.addExportDeclaration({
-      namedExports: [this.type.localName, mixinName],
+      namedExports: [mixinName],
       moduleSpecifier: this.type.module,
+    })
+
+    indexModule.addExportDeclaration({
+      namedExports: [this.type.localName],
+      moduleSpecifier: this.type.module,
+      isTypeOnly: true,
     })
   }
 
