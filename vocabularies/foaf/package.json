@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/foaf",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",
@@ -37,8 +37,8 @@
   },
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
-    "@rdfine/skos": "^0.1.1",
-    "@rdfine/wgs": "^0.1.2",
+    "@rdfine/skos": "^0.1.2",
+    "@rdfine/wgs": "^0.1.3",
     "@tpluscode/rdf-ns-builders": "^0.4",
     "@tpluscode/rdfine": "^0.5.17"
   },

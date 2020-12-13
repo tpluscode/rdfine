@@ -1,5 +1,13 @@
 # @rdfine/skos
 
+## 0.1.2
+
+### Patch Changes
+
+- 7cdc4e04: type-only export of interfaces
+- Updated dependencies [7cdc4e04]
+  - @rdfine/rdf@0.5.3
+
 ## 0.1.1
 
 ### Patch Changes

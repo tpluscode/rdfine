@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/rdfs",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",
@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
-    "@rdfine/rdf": "^0.5.2",
+    "@rdfine/rdf": "^0.5.3",
     "@tpluscode/rdf-ns-builders": "^0.4",
     "@tpluscode/rdfine": "^0.5.17"
   },
