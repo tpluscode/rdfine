@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.4
+
+### Patch Changes
+
+- e7988f86: `_equals` property needs path decorator option
+
 ## 0.7.3
 
 ### Patch Changes

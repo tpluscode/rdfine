@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.2
+
+### Patch Changes
+
+- e7988f86: Ensure that properties with changed name get path decorator
+
 ## 0.6.1
 
 ### Patch Changes
