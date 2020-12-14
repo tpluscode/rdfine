@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/shacl",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",
