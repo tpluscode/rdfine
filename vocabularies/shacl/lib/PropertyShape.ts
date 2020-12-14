@@ -51,7 +51,7 @@ export function PropertyShapeMixin<Base extends Constructor>(Resource: Base): Co
     description: string | undefined;
     @property.resource({ as: [RdfPropertyMixin] })
     disjoint: Rdf.Property | undefined;
-    @property.resource({ as: [RdfPropertyMixin] })
+    @property.resource({ path: sh.equals, as: [RdfPropertyMixin] })
     '_equals': Rdf.Property | undefined;
     @property.literal()
     flags: string | undefined;
