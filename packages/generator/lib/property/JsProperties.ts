@@ -64,7 +64,7 @@ export function * toJavascriptProperties(prop: GraphPointer, range: Range[], typ
   const baseProperty: Omit<JavascriptProperty, 'type' | 'range'> = {
     semantics: undefined,
     term: prop.term,
-    name: nameOf(prop),
+    name: nameOf(prop, true),
     termName: nameOf(prop),
     prefixedTerm: getPrefixedTerm(prop),
   }
