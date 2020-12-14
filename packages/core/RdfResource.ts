@@ -19,6 +19,7 @@ import { toJSON } from './lib/toJSON'
 import type { Jsonified } from './lib/toJSON'
 import { getPointer } from './lib/resource'
 import { mixins } from './lib/mixins'
+import { toLiteral } from './lib/conversion'
 
 export type ResourceIdentifier = BlankNode | NamedNode
 export type ResourceNode<D extends DatasetCore = DatasetCore> = GraphPointer<ResourceIdentifier, D>
@@ -102,9 +103,19 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
 
         const values = Array.isArray(value) ? value : [value]
         const pointers = values.map(value => {
-          if (typeof value !== 'object' || 'termType' in value) {
-            // use node or native value directly as object
+          if (typeof value === 'object' && 'termType' in value) {
             return resource.pointer.node(value)
+          }
+
+          let literal: Literal | undefined
+          if (typeof value === 'object' && 'value' in value && 'datatype' in value) {
+            literal = toLiteral(value.value, value.datatype)
+          } else {
+            literal = toLiteral(value)
+          }
+
+          if (literal) {
+            return resource.pointer.node(literal)
           }
 
           // create and initialize an object resource

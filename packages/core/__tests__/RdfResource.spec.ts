@@ -667,6 +667,33 @@ describe('RdfResource', () => {
       // then
       expect(resource.pointer.dataset).toMatchSnapshot()
     })
+
+    const nativeSetters: [string, any, Literal][] = [
+      ['Date', new Date(Date.UTC(2000, 5, 6, 10, 56, 40)), $rdf.literal('2000-06-06T10:56:40.000Z', xsd.dateTime)],
+      ['Date', { value: new Date(Date.UTC(2000, 5, 6, 10, 56, 40)), datatype: xsd.date }, $rdf.literal('2000-06-06', xsd.date)],
+      ['integer', 5, $rdf.literal('5', xsd.integer)],
+      ['decimal', 4.5, $rdf.literal('4.5', xsd.float)],
+      ['boolean', true, $rdf.literal('true', xsd.boolean)],
+    ]
+
+    for (const [name, value, term] of nativeSetters) {
+      it(`initializes from native ${name} value`, () => {
+        // when
+        const resource = new RdfResource(
+          cf({ dataset: $rdf.dataset() }).blankNode(), {
+            [ex.prop.value]: value,
+          },
+        )
+
+        // then
+        expect(resource.pointer.out(ex.prop).term?.value).toEqual(term.value)
+        expect(resource.pointer.out(ex.prop).term).toMatchObject({
+          datatype: {
+            value: term.datatype.value,
+          },
+        })
+      })
+    }
   })
 
   describe('isAnonymous', () => {
