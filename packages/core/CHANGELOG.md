@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.19
+
+### Patch Changes
+
+- fa277552: Date initializer should set value
+
 ## 0.5.18
 
 ### Patch Changes
