@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.4
+
+### Patch Changes
+
+- fb9fe13c: Bring back missing export
+
 ## 0.6.3
 
 ### Patch Changes
