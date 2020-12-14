@@ -15,7 +15,7 @@ declare module '@rdfine/hydra' {
   }
 }
 
-export function IriTemplateExMixin<Base extends Constructor<Partial<Omit<IriTemplate, keyof IriTemplateEx>> & RdfResourceCore>>(base: Base) {
+export function IriTemplateExMixin<Base extends Constructor<Partial<Omit<IriTemplate, keyof IriTemplateEx>> & RdfResourceCore>>(base: Base): Constructor<RdfResourceCore & IriTemplateEx> & Base {
   class IriTemplateExClass extends base implements IriTemplateEx {
     public expand(model: AnyPointer | RdfResource): string {
       return new TemplateExpander(this as any).expand(model)
