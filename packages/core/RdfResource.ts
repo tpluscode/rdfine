@@ -127,8 +127,8 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
         resource.pointer.addOut(resource.pointer.namedNode(prop), pointers)
       })
 
-    if (init.types && Array.isArray(init.types)) {
-      init.types.forEach(type => resource.types.add(type))
+    for (const type of init.types || []) {
+      resource.types.add(type)
     }
   }
 
