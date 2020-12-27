@@ -16,9 +16,9 @@ import {
   dcterms,
   rdfs,
 } from '@tpluscode/rdf-ns-builders'
-import RdfResource, { Initializer, ResourceNode } from '../RdfResource'
+import RdfResource, { Initializer, RdfResourceCore, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
-import { Constructor, crossBoundaries, namespace, property } from '../index'
+import { Constructor, crossBoundaries, namespace, property, ResourceFactory } from '../index'
 
 describe('RdfResource', () => {
   describe('constructor', () => {
@@ -694,6 +694,38 @@ describe('RdfResource', () => {
         })
       })
     }
+
+    it('initializes nested resources using mixin property names', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Concept extends RdfResourceCore {
+        prefLabel: string
+      }
+      function ConceptMixin<Base extends Constructor>(Resource: Base) {
+        class ConceptImpl extends Resource implements Concept {
+          @property.literal({ path: skos.prefLabel })
+          prefLabel!: string;
+        }
+
+        return ConceptImpl
+      }
+      ConceptMixin.appliesTo = skos.Concept
+      const factory = new ResourceFactory(RdfResource)
+      factory.addMixin(ConceptMixin)
+
+      // when
+      const resource = factory.createEntity(node, [], {
+        initializer: {
+          [skos.hasTopConcept.value]: {
+            types: [skos.Concept],
+            prefLabel: 'Foo',
+          },
+        },
+      })
+
+      // then
+      expect(resource.get<Concept>(skos.hasTopConcept)?.prefLabel).toEqual('Foo')
+    })
   })
 
   describe('isAnonymous', () => {

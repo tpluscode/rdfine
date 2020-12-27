@@ -84,7 +84,16 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
       }
     }
 
-    BaseClass = this.__getBaseClass(BaseClass, pointer.out(rdf.type).values)
+    const types = pointer.out(rdf.type).values
+    for (const type of options.initializer?.types || []) {
+      if ('termType' in type) {
+        types.push(type.value)
+      } else {
+        types.push(type.id.value)
+      }
+    }
+
+    BaseClass = this.__getBaseClass(BaseClass, types)
     const entity = new BaseClass(pointer)
 
     const mixins = [...this.__mixins].reduce<Set<Mixin<T>>>((selected, next) => {
@@ -96,6 +105,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     }, new Set(explicitMixins))
 
     const Type = this.__extend(BaseClass, [...mixins])
+    Type.factory = this
 
     return createProxy(new Type(pointer, options.initializer, options.parent)) as R & S & ResourceIndexer<R>
   }
