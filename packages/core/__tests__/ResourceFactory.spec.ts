@@ -1,10 +1,11 @@
 import cf from 'clownface'
-import { foaf, schema } from '@tpluscode/rdf-ns-builders'
+import { foaf, rdf, schema } from '@tpluscode/rdf-ns-builders'
 import { turtle } from '@tpluscode/rdf-string'
 import $rdf from 'rdf-ext'
 import ResourceFactory, { Constructor } from '../lib/ResourceFactory'
 import { parse, ex } from './_helpers'
 import RdfResourceImpl from '../RdfResource'
+import clownface from 'clownface'
 
 function NeverApply() {
   return class {
@@ -107,5 +108,21 @@ describe('ResourceFactory', () => {
 
     // then
     expect(entity.bar).toBe('baz')
+  })
+
+  it('sets rdf:types initialized with TypeCollection', () => {
+    // given
+    const pointer = clownface({ dataset: $rdf.dataset() }).blankNode()
+    const { types } = new RdfResourceImpl(clownface({ dataset: $rdf.dataset() }).blankNode().addOut(rdf.type, schema.Person))
+
+    // when
+    const resource = factory.createEntity(pointer, [], {
+      initializer: {
+        types,
+      },
+    })
+
+    // then
+    expect(resource.types.has(schema.Person)).toBe(true)
   })
 })
