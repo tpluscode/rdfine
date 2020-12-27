@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.5.20
+
+### Patch Changes
+
+- 5f084146: Types initialied with TypeCollection are not added
+- 1448f1bb: Initializing nested resources using typed interface
+
 ## 0.5.19
 
 ### Patch Changes
