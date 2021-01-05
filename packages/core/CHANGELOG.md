@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.21
+
+### Patch Changes
+
+- b60897cf: Initializer incorrectly mapped RdfResourceCore properties
+
 ## 0.5.20
 
 ### Patch Changes
