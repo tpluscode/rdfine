@@ -330,12 +330,12 @@ type InitializeArray<T extends RdfResource> = Array<InitializeSingle<T>>
 export type Initializer<T> = Omit<{
   [P in keyof Required<T>]?: T[P] extends string
     ? T[P] | InitialLiteral
-    : T[P] extends (RdfResource | undefined)
+    : T[P] extends (RdfResourceCore | undefined)
       ? InitializeSingle<T[P]>
       : T[P] extends Term
         ? T[P] | InitialNode<T[P]>
         : Extract<T[P], Array<any>> extends (infer U)[]
-          ? U extends RdfResource
+          ? U extends RdfResourceCore
             ? InitializeArray<U> | InitializeSingle<U>
             : U extends Term
               ? T[P] | InitialNode<Term>[]
