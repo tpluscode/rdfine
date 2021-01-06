@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.22
+
+### Patch Changes
+
+- a721bc7d: Fix initilizer build issue caused in 0.5.20
+
 ## 0.5.21
 
 ### Patch Changes
