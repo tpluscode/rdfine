@@ -314,7 +314,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   }
 }
 
-type UserDefinedInterface<T extends RdfResource | undefined> = Omit<T, keyof RdfResource>
+type UserDefinedInterface<T extends RdfResourceCore | undefined> = Omit<T, keyof RdfResource>
 
 type BaseInitializer = Record<string, any> & {
   types?: NamedNode[] | TypeCollection<any>
@@ -324,8 +324,8 @@ type BaseInitializer = Record<string, any> & {
 type InitialNode<Node extends Term = NamedNode | BlankNode> = Node | GraphPointer<Node>
 type InitialLiteral = InitialNode<Literal>
 
-type InitializeSingle<T extends RdfResource | undefined> = Initializer<UserDefinedInterface<T> & BaseInitializer> | InitialNode
-type InitializeArray<T extends RdfResource> = Array<InitializeSingle<T>>
+type InitializeSingle<T extends RdfResourceCore | undefined> = Initializer<UserDefinedInterface<T> & BaseInitializer> | InitialNode
+type InitializeArray<T extends RdfResourceCore> = Array<InitializeSingle<T>>
 
 export type Initializer<T> = Omit<{
   [P in keyof Required<T>]?: T[P] extends string
