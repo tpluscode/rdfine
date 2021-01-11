@@ -11,7 +11,6 @@ export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   comment: string | undefined;
   isDefinedBy: Rdfs.Resource<D> | undefined;
   label: string | undefined;
-  member: Array<Rdfs.Resource<D>>;
   seeAlso: Array<Rdfs.Resource<D>>;
 }
 
@@ -24,8 +23,6 @@ export function ResourceMixin<Base extends Constructor>(Resource: Base): Constru
     isDefinedBy: Rdfs.Resource | undefined;
     @property.literal()
     label: string | undefined;
-    @property.resource({ values: 'array', as: [ResourceMixin] })
-    member!: Array<Rdfs.Resource>;
     @property.resource({ values: 'array', as: [ResourceMixin] })
     seeAlso!: Array<Rdfs.Resource>;
   }
