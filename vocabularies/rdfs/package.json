@@ -37,10 +37,10 @@
     "types": {
       "Literal": "string"
     },
+    "exclude": [
+      "member"
+    ],
     "properties": {
-      "member": {
-        "values": "array"
-      },
       "seeAlso": {
         "values": "array"
       },
