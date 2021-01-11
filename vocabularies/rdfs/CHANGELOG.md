@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.4
+
+### Patch Changes
+
+- 649ea6d2: Remove rdfs:member
+
 ## 0.6.3
 
 ### Patch Changes
