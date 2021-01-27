@@ -17,6 +17,7 @@ Core library to define the JavaScript object model for RDF classes and propertie
 * [@rdfine/foaf](vocabularies/foaf) - [FOAF: Friend of a Friend](http://xmlns.com/foaf/spec/)
 * [@rdfine/hydra](vocabularies/hydra) - [Hydra Core Vocabulary](https://www.hydra-cg.com/spec/latest/core/)
 * [@rdfine/owl](vocabularies/owl) - [OWL Web Ontology Language](https://www.w3.org/OWL/)
+* [@rdfine/prov](vocabularies/prov) - [W3C PROVenance Interchange](https://www.w3.org/blog/SW/2013/03/21/prov-a-framework-for-provenance-interchange/)
 * [@rdfine/rdf](vocabularies/rdf) - [The RDF Concepts Vocabulary](https://www.w3.org/TR/rdf11-concepts/)
 * [@rdfine/rdfs](vocabularies/rdfs) - [The RDF Schema vocabulary](https://www.w3.org/TR/rdf-schema/)
 * [@rdfine/schema](vocabularies/schema) - http://schema.org/

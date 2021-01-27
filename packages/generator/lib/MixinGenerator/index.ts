@@ -48,11 +48,12 @@ export function findTermsToGenerate(excludedTerms: NamedNode[]) {
           throw new Error(`Expected resource type but got ${meta.type}`)
         }
 
+        const props = [...getProperties(term, types, context, excluded)]
         return new MixinModule(
           term,
           meta,
           getSuperClasses(term, types),
-          [...getProperties(term, types, context, excluded)])
+          props)
       })
   }
 }

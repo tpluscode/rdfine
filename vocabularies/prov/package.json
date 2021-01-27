@@ -1,0 +1,60 @@
+{
+  "name": "@rdfine/prov",
+  "version": "0.0.0",
+  "main": "index.js",
+  "module": "index.mjs",
+  "browser": "index.mjs",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "import": "./index.mjs"
+    },
+    "./bundles": {
+      "require": "./bundles/index.js",
+      "import": "./bundles/index.mjs"
+    },
+    "./lib/*": {
+      "require": "./lib/*.js",
+      "import": "./lib/*.mjs"
+    }
+  },
+  "scripts": {
+    "prepack": "npm run build",
+    "clean": "rimraf lib bundles",
+    "build": "run-p build:*",
+    "build:cjs": "tsc -p tsconfig.build.json",
+    "build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs --config-file ../../babel.config.json",
+    "generate": "rdf-vocab prefix prov | rdfine-gen --format application/n-quads --dev"
+  },
+  "rdfine": {
+    "prefix": "prov"
+  },
+  "dependencies": {
+    "@rdf-esm/data-model": "^0.5.3",
+    "@tpluscode/rdf-ns-builders": "^0.4",
+    "@tpluscode/rdfine": "^0.5.17"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tpluscode/rdfine.git",
+    "directory": "vocabularies/prov"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "rdf",
+    "rdfjs",
+    "entity",
+    "decorator",
+    "clownface",
+    "graph"
+  ],
+  "author": "tpluscode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tpluscode/rdfine/issues"
+  },
+  "homepage": "https://github.com/tpluscode/rdfine/tree/master/vocabularies/prov#readme"
+}
