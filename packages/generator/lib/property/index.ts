@@ -1,6 +1,8 @@
 import { AnyPointer, GraphPointer } from 'clownface'
 import { Context } from '../index'
 import { owl, rdfs, schema } from '@tpluscode/rdf-ns-builders'
+import TermMap from '@rdfjs/term-map'
+import { Term } from 'rdf-js'
 
 export type Range = {
   term: GraphPointer
@@ -27,12 +29,12 @@ function findUnionedRanges(prop: GraphPointer): Range[] {
 }
 
 function flatUnique(...terms: GraphPointer[][]): GraphPointer[] {
-  return [...terms.reduce((set, terms) => {
-    return terms.reduce((set, term) => {
-      set.add(term)
-      return set
-    }, set)
-  }, new Set<GraphPointer>())]
+  return [...terms.reduce((map, terms) => {
+    return terms.reduce((map, term) => {
+      map.set(term.term, term)
+      return map
+    }, map)
+  }, new TermMap<Term, GraphPointer>()).values()]
 }
 
 function flatUniqueRanges(...terms: Range[][]): Range[] {
