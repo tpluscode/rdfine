@@ -28,7 +28,18 @@
     "generate": "rdf-vocab prefix prov | rdfine-gen --format application/n-quads --dev"
   },
   "rdfine": {
-    "prefix": "prov"
+    "prefix": "prov",
+    "properties": {
+      "qualifiedInsertion": {
+        "values": "array"
+      },
+      "qualifiedRemoval": {
+        "values": "array"
+      },
+      "hadDictionaryMember": {
+        "values": "array"
+      }
+    }
   },
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
