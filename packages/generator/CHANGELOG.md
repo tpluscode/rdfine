@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.3
+
+### Patch Changes
+
+- d538e6fb: Predicates sometimes can be generated as duplicate properties
+
 ## 0.6.2
 
 ### Patch Changes
