@@ -10,9 +10,9 @@ import type * as Prov from '..';
 export interface Dictionary<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   derivedByInsertionFrom: Prov.Dictionary<D> | undefined;
   derivedByRemovalFrom: Prov.Dictionary<D> | undefined;
-  hadDictionaryMember: Prov.KeyEntityPair<D> | undefined;
-  qualifiedInsertion: Prov.Insertion<D> | undefined;
-  qualifiedRemoval: Prov.Removal<D> | undefined;
+  hadDictionaryMember: Array<Prov.KeyEntityPair<D>>;
+  qualifiedInsertion: Array<Prov.Insertion<D>>;
+  qualifiedRemoval: Array<Prov.Removal<D>>;
 }
 
 export function DictionaryMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Dictionary> & RdfResourceCore> & Base {
@@ -22,12 +22,12 @@ export function DictionaryMixin<Base extends Constructor>(Resource: Base): Const
     derivedByInsertionFrom: Prov.Dictionary | undefined;
     @property.resource({ as: [DictionaryMixin] })
     derivedByRemovalFrom: Prov.Dictionary | undefined;
-    @property.resource({ implicitTypes: [prov.KeyEntityPair] })
-    hadDictionaryMember: Prov.KeyEntityPair | undefined;
-    @property.resource({ implicitTypes: [prov.Insertion] })
-    qualifiedInsertion: Prov.Insertion | undefined;
-    @property.resource({ implicitTypes: [prov.Removal] })
-    qualifiedRemoval: Prov.Removal | undefined;
+    @property.resource({ values: 'array', implicitTypes: [prov.KeyEntityPair] })
+    hadDictionaryMember!: Array<Prov.KeyEntityPair>;
+    @property.resource({ values: 'array', implicitTypes: [prov.Insertion] })
+    qualifiedInsertion!: Array<Prov.Insertion>;
+    @property.resource({ values: 'array', implicitTypes: [prov.Removal] })
+    qualifiedRemoval!: Array<Prov.Removal>;
   }
   return DictionaryClass
 }
