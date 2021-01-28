@@ -2,4 +2,4 @@
 "@rdfine/prov": minor
 ---
 
-Firts release
+First release
