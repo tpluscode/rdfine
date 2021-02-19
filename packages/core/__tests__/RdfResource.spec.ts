@@ -726,6 +726,35 @@ describe('RdfResource', () => {
       // then
       expect(resource.get<Concept>(skos.hasTopConcept)?.prefLabel).toEqual('Foo')
     })
+
+    it('initialized mixed property as list when given array', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Concept extends RdfResourceCore {
+        prefLabel: string | string[]
+      }
+      function ConceptMixin<Base extends Constructor>(Resource: Base) {
+        class ConceptImpl extends Resource implements Concept {
+          @property.literal({ path: skos.prefLabel, values: ['list', 'single'] })
+          prefLabel!: string | string[];
+        }
+
+        return ConceptImpl
+      }
+      ConceptMixin.appliesTo = skos.Concept
+      const factory = new ResourceFactory(RdfResource)
+      factory.addMixin(ConceptMixin)
+
+      // when
+      const resource = factory.createEntity(node, [], {
+        initializer: {
+          prefLabel: ['Foo', 'Bar'],
+        },
+      })
+
+      // then
+      expect(resource.prefLabel).toEqual(['Foo', 'Bar'])
+    })
   })
 
   describe('isAnonymous', () => {

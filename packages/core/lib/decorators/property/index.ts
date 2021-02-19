@@ -164,8 +164,10 @@ function createProperty<T extends RdfResourceCore, TValue, TTerm extends Term>(p
         return
       }
 
+      let initializedArray = false
       let valueArray: Array<RdfResourceCore | Term | GraphPointer | TValue>
       if (Array.isArray(value)) {
+        initializedArray = true
         valueArray = value
       } else {
         valueArray = [value]
@@ -192,12 +194,16 @@ function createProperty<T extends RdfResourceCore, TValue, TTerm extends Term>(p
         return toTerm.call(this, value)
       })
 
-      if (values.includes('list')) {
+      if (values.includes('list') && (values.length === 1 || initializedArray)) {
+        // only set RDF List when property only allows lists or explicitly initialized with array
         if (termsArray.length === 0) {
           subject.addOut(lastPredicate, rdf.nil)
         } else {
           subject.addList(lastPredicate, termsArray)
         }
+      } else if (values.includes('list') && termsArray.length > 1) {
+        // otherwise initialize List when there are more than one element
+        subject.addList(lastPredicate, termsArray)
       } else {
         subject.addOut(lastPredicate, termsArray)
       }

@@ -188,8 +188,10 @@ function jsonifyProperties(params: ToJsonContext & JsonifyPropertiesContext) {
       return { json, contextPopulated }
     }
 
+    const objectPointers = resource.pointer.out(predicate)
+
     if (!alreadyMapped(parentContexts, name, predicate)) {
-      if (options.values.includes('list')) {
+      if (options.values.includes('list') && objectPointers.term && isList(objectPointers)) {
         context[name] = {
           '@container': '@list',
           '@id': predicate.value,
@@ -200,8 +202,7 @@ function jsonifyProperties(params: ToJsonContext & JsonifyPropertiesContext) {
       propertyAddedToContext = true
     }
 
-    const propertyObjects = resource.pointer
-      .out(predicate)
+    const propertyObjects = objectPointers
       .map(obj => {
         if (obj.term.termType === 'Literal') {
           return obj.term
