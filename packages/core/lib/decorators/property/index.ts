@@ -201,9 +201,6 @@ function createProperty<T extends RdfResourceCore, TValue, TTerm extends Term>(p
         } else {
           subject.addList(lastPredicate, termsArray)
         }
-      } else if (values.includes('list') && termsArray.length > 1) {
-        // otherwise initialize List when there are more than one element
-        subject.addList(lastPredicate, termsArray)
       } else {
         subject.addOut(lastPredicate, termsArray)
       }

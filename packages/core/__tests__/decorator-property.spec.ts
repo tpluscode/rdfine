@@ -650,6 +650,30 @@ describe('decorator', () => {
         expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
+      it('sets list when property allows list or single and setting array with multiple items', async () => {
+        // given
+        const dataset = await parse(`
+          @prefix ex: <${prefixes.ex}> .
+          @prefix foaf: <${prefixes.foaf}> .
+          
+          ex:res foaf:knows ( ) .
+        `)
+        class Resource extends RdfResource {
+          @property({ path: ex.foo, values: ['list', 'single'] })
+          friend!: Term[]
+        }
+
+        // when
+        const instance = new Resource(cf({
+          dataset,
+          term: ex.res,
+        }))
+        instance.friend = [rdfExt.literal('bar'), rdfExt.literal('baz')]
+
+        // then
+        expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
       it('setting null to rdf list removes triple', async () => {
         // given
         const dataset = await parse(`
