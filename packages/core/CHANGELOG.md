@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.23
+
+### Patch Changes
+
+- b2af1429: Property which allows lists and single element should not initalize RDF List with single item
+
 ## 0.5.22
 
 ### Patch Changes
