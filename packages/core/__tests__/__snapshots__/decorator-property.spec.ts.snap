@@ -82,6 +82,16 @@ exports[`decorator term setter can set array: toMatchSnapshot 1`] = `
 
 exports[`decorator term setter can set empty array, removing objects: toMatchSnapshot 1`] = `""`;
 
+exports[`decorator term setter sets list when property allows list or single and setting array with multiple items: toMatchSnapshot 1`] = `
+"<http://example.com/res> <http://example.com/foo> _:c14n0 .
+<http://example.com/res> <http://xmlns.com/foaf/0.1/knows> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:c14n0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> \\"bar\\" .
+_:c14n0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:c14n1 .
+_:c14n1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> \\"baz\\" .
+_:c14n1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+"
+`;
+
 exports[`decorator term setter sets nil for empty rdf list: toMatchSnapshot 1`] = `
 "<http://example.com/res> <http://xmlns.com/foaf/0.1/knows> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
 "
