@@ -1892,7 +1892,103 @@ describe('RdfResource', () => {
       `)
     })
 
-    ;[
+    it('serializes RDF list of literals', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const node = cf({ dataset })
+        .namedNode('john')
+        .addList(ex.foo, [
+          'foo',
+          $rdf.literal('bar', 'en'),
+          $rdf.literal('bar', xsd.anyType),
+        ])
+
+      function PersonMixin<Base extends Constructor>(base: Base) {
+        @namespace(ex)
+        class NameClass extends base {
+          @property.literal({ values: 'list' })
+          foo!: string[];
+        }
+
+        return NameClass
+      }
+
+      const resource = RdfResource.factory.createEntity(node, [PersonMixin])
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "foo": Object {
+              "@container": "@list",
+              "@id": "http://example.com/foo",
+            },
+            "id": "@id",
+            "type": "@type",
+          },
+          "foo": Array [
+            "foo",
+            Object {
+              "@language": "en",
+              "@value": "bar",
+            },
+            Object {
+              "@type": "http://www.w3.org/2001/XMLSchema#anyType",
+              "@value": "bar",
+            },
+          ],
+          "id": "john",
+        }
+      `)
+    })
+
+    it('serializes literal property', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const node = cf({ dataset })
+        .namedNode('john')
+        .addList(ex.foo, [$rdf.literal('bar', 'en')])
+
+      function PersonMixin<Base extends Constructor>(base: Base) {
+        @namespace(ex)
+        class NameClass extends base {
+          @property.literal()
+          foo!: string;
+        }
+
+        return NameClass
+      }
+
+      const resource = RdfResource.factory.createEntity(node, [PersonMixin])
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "foo": "http://example.com/foo",
+            "id": "@id",
+            "type": "@type",
+          },
+          "foo": Array [
+            Object {
+              "@language": "en",
+              "@value": "bar",
+            },
+          ],
+          "id": "john",
+        }
+      `)
+    });
+
+    [
       $rdf.variable('foo'),
       // $rdf.quad(ex.foo, ex.bar, ex.baz), TODO: for when dataset indexed supports RDF*
       $rdf.defaultGraph(),
