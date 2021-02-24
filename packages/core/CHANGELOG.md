@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.24
+
+### Patch Changes
+
+- 6ca3a8a6: toJSON: exception thrown when serializing literals
+
 ## 0.5.23
 
 ### Patch Changes
