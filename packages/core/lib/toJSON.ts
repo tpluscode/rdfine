@@ -9,6 +9,7 @@ import type { RdfResource, ResourceIdentifier } from '../RdfResource'
 import { enumerateList, isList } from './rdf-list'
 import { PropertyMeta } from './decorators/property'
 import { mixins } from './mixins'
+import { GraphPointer } from 'clownface'
 
 type PropertyValue = RdfResource | Term
 
@@ -202,6 +203,16 @@ function jsonifyProperties(params: ToJsonContext & JsonifyPropertiesContext) {
       propertyAddedToContext = true
     }
 
+    function fromTerm(pointer: GraphPointer): PropertyValue {
+      switch (pointer.term.termType) {
+        case 'BlankNode':
+        case 'NamedNode':
+          return options.fromTerm.call(resource, pointer) as PropertyValue
+        default:
+          return pointer.term
+      }
+    }
+
     const propertyObjects = objectPointers
       .map(obj => {
         if (obj.term.termType === 'Literal') {
@@ -209,10 +220,10 @@ function jsonifyProperties(params: ToJsonContext & JsonifyPropertiesContext) {
         }
 
         if (isList(obj)) {
-          return enumerateList(resource, obj, options.fromTerm.bind(resource)) as PropertyValue[]
+          return enumerateList(resource, obj, fromTerm)
         }
 
-        return options.fromTerm.call(resource, obj) as PropertyValue
+        return fromTerm(obj)
       })
 
     const jsonValues = propertyObjects.map(function valueToJSON(obj): unknown {
