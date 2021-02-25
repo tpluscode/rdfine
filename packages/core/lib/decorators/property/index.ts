@@ -6,11 +6,13 @@ import { EdgeTraversal, EdgeTraversalFactory, PropRef, toEdgeTraversals } from '
 import cf, { GraphPointer } from 'clownface'
 import { isList, enumerateList } from '../../rdf-list'
 import type { ClassElement } from '../index'
-import literalPropertyDecorator from '../property/literal'
+import literalPropertyDecorator, { LiteralValues } from '../property/literal'
 import resourcePropertyDecorator from '../property/resource'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import { onlyUnique } from '../../filter'
 import * as compare from '../../compare'
+import { toLiteral } from '../../conversion'
+import { literal } from '@rdf-esm/data-model'
 
 type PropertyReturnKind = 'single' | 'array' | 'list'
 type ArrayOrSingle<T> = T | T[]
@@ -63,9 +65,9 @@ export type ObjectOrFactory<TSelf, T, TTerm extends Term> =
   ArrayOrSingle<T | TTerm | GraphPointer<TTerm>> |
   ((self: TSelf) => ArrayOrSingle<T | TTerm | GraphPointer<TTerm>>)
 
-interface PropertyDecoratorOptions<T extends RdfResourceCore, TValue, TTerm extends Term> extends AccessorOptions {
+interface PropertyDecoratorOptions<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm extends Term> extends AccessorOptions {
   fromTerm: (this: T, obj: GraphPointer) => TValue
-  toTerm: (this: T, value: TValue) => TTerm
+  toTerm: (this: T, value: TLegalAssigned) => TTerm
   assertSetValue: (value: RdfResourceCore | Term | GraphPointer | TValue) => boolean
   valueTypeName: string
   initial?: ObjectOrFactory<T, TValue, TTerm>
@@ -74,10 +76,10 @@ interface PropertyDecoratorOptions<T extends RdfResourceCore, TValue, TTerm exte
 
 export type PropertyMeta<T = any> = {
   initial?: ObjectOrFactory<T, unknown, Term>
-  options: Omit<PropertyDecoratorOptions<RdfResourceCore, unknown, Term>, 'values'> & { values: PropertyReturnKind[] }
+  options: Omit<PropertyDecoratorOptions<RdfResourceCore, unknown, unknown, Term>, 'values'> & { values: PropertyReturnKind[] }
 }
 
-function createProperty<T extends RdfResourceCore, TValue, TTerm extends Term>(proto: any, name: string, options: PropertyDecoratorOptions<T, TValue, TTerm>) {
+function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm extends Term>(proto: any, name: string, options: PropertyDecoratorOptions<T, TValue, TLegalAssigned, TTerm>) {
   const { fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict, compare, subjectFromAllGraphs } = options
   let values: PropertyReturnKind[] = ['single']
   if (Array.isArray(options.values)) {
@@ -191,7 +193,7 @@ function createProperty<T extends RdfResourceCore, TValue, TTerm extends Term>(p
           return value.id
         }
 
-        return toTerm.call(this, value)
+        return toTerm.call(this, value as any)
       })
 
       if (values.includes('list') && (values.length === 1 || initializedArray)) {
@@ -229,12 +231,12 @@ function createProperty<T extends RdfResourceCore, TValue, TTerm extends Term>(p
 }
 
 const legacyProperty =
-  <T extends RdfResourceCore, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>, proto: Record<string, unknown>, name: PropertyKey) => {
+  <T extends RdfResourceCore, TValue, TLegalAssigned, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TLegalAssigned, TTerm>, proto: Record<string, unknown>, name: PropertyKey) => {
     createProperty(proto, name.toString(), options)
   }
 
 const standardProperty =
-  <T extends RdfResourceCore, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>, element: ClassElement) => {
+  <T extends RdfResourceCore, TValue, TLegalAssigned, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TLegalAssigned, TTerm>, element: ClassElement) => {
     return {
       kind: 'field',
       key: Symbol(),
@@ -260,7 +262,7 @@ const standardProperty =
     }
   }
 
-export function propertyDecorator<T extends RdfResourceCore<any>, TValue, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TTerm>) {
+export function propertyDecorator<T extends RdfResourceCore<any>, TValue, TLegalAssigned, TTerm extends Term>(options: PropertyDecoratorOptions<T, TValue, TLegalAssigned, TTerm>) {
   return (protoOrDescriptor: RdfResourceCore<any>|ClassElement, name?: PropertyKey): any =>
     (name !== undefined)
       ? legacyProperty(options, protoOrDescriptor as any, name)
@@ -272,10 +274,10 @@ interface TermOptions <TSelf>{
 }
 
 export function property<R extends RdfResourceCore<any>>(options: AccessorOptions & TermOptions<R> = {}) {
-  return propertyDecorator<R, Term, Term>({
+  return propertyDecorator<R, Term, LiteralValues, Term>({
     ...options,
     fromTerm: (obj) => obj.term,
-    toTerm: value => value,
+    toTerm: value => toLiteral(value) || literal(value.toString()),
     valueTypeName: 'RDF/JS term object',
     assertSetValue: () => true,
     compare: compare.terms,

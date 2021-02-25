@@ -8,6 +8,8 @@ import * as RDF from '@rdf-esm/data-model'
 import rdfExt from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { foaf, schema, rdf } from '@tpluscode/rdf-ns-builders'
+import clownface from 'clownface'
+import $rdf from 'rdf-ext'
 
 describe('decorator', () => {
   describe('term', () => {
@@ -696,6 +698,38 @@ describe('decorator', () => {
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
+      })
+
+      it('can set an rdf resource', async () => {
+        // given
+        const ptr = clownface({ dataset: $rdf.dataset() }).node(ex.res)
+        class Resource extends RdfResource {
+          @property({ path: foaf.knows })
+          friend!: any
+        }
+
+        // when
+        const instance = new Resource(ptr)
+        instance.friend = new Resource(clownface({ dataset: $rdf.dataset() }).node(ex.friend))
+
+        // then
+        expect(ptr.out(foaf.knows).term).toStrictEqual(ex.friend)
+      })
+
+      it('can set a pointer', async () => {
+        // given
+        const ptr = clownface({ dataset: $rdf.dataset() }).node(ex.res)
+        class Resource extends RdfResource {
+          @property({ path: foaf.knows })
+          friend!: any
+        }
+
+        // when
+        const instance = new Resource(ptr)
+        instance.friend = clownface({ dataset: $rdf.dataset() }).node(ex.friend)
+
+        // then
+        expect(ptr.out(foaf.knows).term).toStrictEqual(ex.friend)
       })
     })
 
