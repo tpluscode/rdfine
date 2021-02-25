@@ -10,12 +10,12 @@ interface LiteralOptions<R extends RdfResourceCore> {
   datatype?: NamedNode
 }
 
-type LiteralValues = string | number | boolean | bigint | Date
+export type LiteralValues = string | number | boolean | bigint | Date
 
 export default function<R extends RdfResourceCore> (options: AccessorOptions & LiteralOptions<R> = {}) {
   const type = options.type || String
 
-  return propertyDecorator<R, LiteralValues, Literal>({
+  return propertyDecorator<R, LiteralValues, LiteralValues, Literal>({
     ...options,
     fromTerm(obj) {
       return fromLiteral(type, obj)

@@ -670,30 +670,65 @@ describe('RdfResource', () => {
 
     const nativeSetters: [string, any, Literal][] = [
       ['Date', new Date(Date.UTC(2000, 5, 6, 10, 56, 40)), $rdf.literal('2000-06-06T10:56:40.000Z', xsd.dateTime)],
-      ['Date', { value: new Date(Date.UTC(2000, 5, 6, 10, 56, 40)), datatype: xsd.date }, $rdf.literal('2000-06-06', xsd.date)],
       ['integer', 5, $rdf.literal('5', xsd.integer)],
       ['decimal', 4.5, $rdf.literal('4.5', xsd.float)],
       ['boolean', true, $rdf.literal('true', xsd.boolean)],
     ]
 
-    for (const [name, value, term] of nativeSetters) {
-      it(`initializes from native ${name} value`, () => {
+    describe('setting built-in types', () => {
+      for (const [name, value, term] of nativeSetters) {
+        it(`initializes from native ${name} value`, () => {
         // when
-        const resource = new RdfResource(
-          cf({ dataset: $rdf.dataset() }).blankNode(), {
-            [ex.prop.value]: value,
-          },
-        )
+          const resource = new RdfResource(
+            cf({ dataset: $rdf.dataset() }).blankNode(), {
+              [ex.prop.value]: value,
+            },
+          )
 
-        // then
-        expect(resource.pointer.out(ex.prop).term?.value).toEqual(term.value)
-        expect(resource.pointer.out(ex.prop).term).toMatchObject({
-          datatype: {
-            value: term.datatype.value,
-          },
+          // then
+          expect(resource.pointer.out(ex.prop).term?.value).toEqual(term.value)
+          expect(resource.pointer.out(ex.prop).term).toMatchObject({
+            datatype: {
+              value: term.datatype.value,
+            },
+          })
         })
-      })
-    }
+
+        it(`initializes annotated term property from native ${name} value`, () => {
+        // given
+          interface Person extends RdfResourceCore {
+            prop?: Literal
+          }
+          function PersonMixin<Base extends Constructor>(Resource: Base) {
+            class PersonImpl extends Resource implements Person {
+              @property({ path: ex.prop })
+              prop?: Literal
+            }
+
+            return PersonImpl
+          }
+          PersonMixin.appliesTo = schema.Person
+          const factory = new ResourceFactory(RdfResource)
+          factory.addMixin(PersonMixin)
+
+          // when
+          const node = cf({ dataset: $rdf.dataset() }).blankNode()
+          const resource = factory.createEntity(node, [PersonMixin], {
+            initializer: {
+              prop: value,
+            },
+          })
+
+          // then
+          expect(resource.pointer.out(ex.prop).term?.value).toEqual(term.value)
+          expect(resource.pointer.out(ex.prop).term).toMatchObject({
+            datatype: {
+              value: term.datatype.value,
+            },
+          })
+        })
+      }
+    })
 
     it('initializes nested resources using mixin property names', () => {
       // given
