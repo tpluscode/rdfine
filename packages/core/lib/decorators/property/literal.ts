@@ -1,8 +1,8 @@
 import { RdfResourceCore } from '../../../RdfResource'
 import { Literal, NamedNode, Term } from 'rdf-js'
 import { fromLiteral, toLiteral } from '../../conversion'
-import type { AccessorOptions, ObjectOrFactory } from '.'
-import { propertyDecorator } from '.'
+import type { AccessorOptions } from './index'
+import { propertyDecorator, ObjectOrFactory } from './decoratorFactory'
 
 interface LiteralOptions<R extends RdfResourceCore> {
   type?: BooleanConstructor | StringConstructor | NumberConstructor | DateConstructor
