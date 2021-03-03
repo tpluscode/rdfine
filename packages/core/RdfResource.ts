@@ -17,7 +17,7 @@ import { xsd } from '@tpluscode/rdf-ns-builders'
 import { defaultGraphInstance } from '@rdf-esm/data-model'
 import { toJSON } from './lib/toJSON'
 import type { Jsonified } from './lib/toJSON'
-import { getPointer } from './lib/resource'
+import { fromInitializer } from './lib/resource'
 import { mixins } from './lib/mixins'
 import { toLiteral } from './lib/conversion'
 
@@ -119,8 +119,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
           }
 
           // create and initialize an object resource
-          const term = getPointer(resource.pointer, value.id)
-          const childResource = resource._create(term, [], { initializer: value })
+          const childResource = fromInitializer(resource, value)
           return childResource.pointer
         })
 
@@ -338,7 +337,7 @@ export type Initializer<T> = Omit<{
           ? U extends RdfResourceCore
             ? InitializeArray<U> | InitializeSingle<U>
             : U extends Term
-              ? T[P] | InitialNode<Term>[]
+              ? T[P] | (InitialNode<Term> | InitializeSingle<RdfResourceCore>)[]
               : T[P] | InitialLiteral[]
           : unknown
 }, keyof RdfResource> & BaseInitializer

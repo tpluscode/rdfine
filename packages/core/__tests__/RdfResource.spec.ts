@@ -15,6 +15,7 @@ import {
   xsd,
   dcterms,
   rdfs,
+  sh,
 } from '@tpluscode/rdf-ns-builders'
 import RdfResource, { Initializer, RdfResourceCore, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
@@ -789,6 +790,42 @@ describe('RdfResource', () => {
 
       // then
       expect(resource.prefLabel).toEqual(['Foo', 'Bar'])
+    })
+
+    it('initialized list from resource initializers', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Shape extends RdfResourceCore {
+        in: Term[]
+      }
+      function ShapeMixin<Base extends Constructor>(Resource: Base) {
+        class ShapeImpl extends Resource implements Shape {
+          @property({ path: sh.in, values: 'list' })
+          in!: Term[];
+        }
+
+        return ShapeImpl
+      }
+      ShapeMixin.appliesTo = sh.Shape
+      const factory = new ResourceFactory(RdfResource)
+      factory.addMixin(ShapeMixin)
+
+      // when
+      const resource = factory.createEntity<Shape>(node, [], {
+        initializer: {
+          types: [sh.Shape],
+          in: [{
+            id: ex.foo,
+          }, {
+            id: ex.bar,
+          }],
+        },
+      })
+
+      // then
+      expect(resource.in).toStrictEqual(
+        expect.arrayContaining([ex.foo, ex.bar]),
+      )
     })
   })
 

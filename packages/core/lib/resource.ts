@@ -1,6 +1,6 @@
 import { AnyPointer, GraphPointer } from 'clownface'
 import { BlankNode, NamedNode } from 'rdf-js'
-import type { ResourceIdentifier } from '../RdfResource'
+import type { Initializer, RdfResourceCore, ResourceIdentifier } from '../RdfResource'
 
 export function getPointer(graph: AnyPointer, id?: ResourceIdentifier | string): GraphPointer<BlankNode | NamedNode> {
   if (id && typeof id !== 'string') {
@@ -12,4 +12,9 @@ export function getPointer(graph: AnyPointer, id?: ResourceIdentifier | string):
   }
 
   return graph.namedNode(id)
+}
+
+export function fromInitializer(resource: RdfResourceCore, initializer: Initializer<RdfResourceCore>): RdfResourceCore {
+  const term = getPointer(resource.pointer, initializer.id)
+  return resource._create(term, [], { initializer })
 }
