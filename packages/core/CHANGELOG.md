@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.5.25
+
+### Patch Changes
+
+- abcdf51a: Setting Term property from resource initializer
+- 7b624685: It was impossible to set a Date directly to an annotated Term property
+- b03ad19f: Build: break import cycle between modules
+
 ## 0.5.24
 
 ### Patch Changes
