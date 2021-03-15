@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from 'rdf-js';
@@ -9,11 +9,14 @@ import type * as Sh from '..';
 import { ShapeMixin } from './Shape';
 
 export interface NodeShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Shape<D>, RdfResource<D> {
+  ignoredProperties: Array<RDF.Term>;
 }
 
 export function NodeShapeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<NodeShape> & RdfResourceCore> & Base {
   @namespace(sh)
   class NodeShapeClass extends ShapeMixin(Resource) implements Partial<NodeShape> {
+    @property({ values: 'list' })
+    ignoredProperties!: Array<RDF.Term>;
   }
   return NodeShapeClass
 }
