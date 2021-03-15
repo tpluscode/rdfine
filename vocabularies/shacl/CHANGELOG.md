@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.5
+
+### Patch Changes
+
+- dd26cb12: Missing sh:ignoredProperties on NodeShape
+
 ## 0.7.4
 
 ### Patch Changes
