@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.6.4
+
+### Patch Changes
+
+- ae3bc5a1: Datatypes: basic support for `owl:onDatatype` constructs
+- 030fc0b2: Generate constant types defined as `owl:oneOf` list
+
 ## 0.6.3
 
 ### Patch Changes
