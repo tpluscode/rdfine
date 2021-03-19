@@ -3,7 +3,9 @@ export type DatatypeName = 'boolean' | 'string' | 'number' | 'Date' | 'DateTime'
 export const wellKnownDatatypes: Record<string, DatatypeName> = {
   'xsd:boolean': 'boolean',
   'xsd:decimal': 'number',
+  'xsd:float': 'number',
   'xsd:int': 'number',
+  'xsd:language': 'string',
   'xsd:integer': 'number',
   'xsd:nonNegativeInteger': 'number',
   'xsd:negativeInteger': 'number',

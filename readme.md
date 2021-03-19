@@ -11,6 +11,7 @@ Core library to define the JavaScript object model for RDF classes and propertie
 
 ### Generated model packages for selected vocabularies:
 
+* [@rdfine/as](vocabularies/as) - [Activity Vocabulary](https://www.w3.org/TR/activitystreams-vocabulary/)
 * [@rdfine/csvw](vocabularies/csvw) - [Metadata Vocabulary for Tabular Data](https://www.w3.org/TR/tabular-metadata/)
 * [@rdfine/dash](vocabularies/dash) - [DASH Data Shapes. Platform-independent extensions of SHACL for common tasks.](http://datashapes.org)
 * [@rdfine/doap](vocabularies/doap) - [DOAP: Description Of A Project](https://github.com/ewilderj/doap)
