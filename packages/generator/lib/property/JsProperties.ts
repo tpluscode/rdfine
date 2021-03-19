@@ -61,8 +61,12 @@ function groupRangeTypes(range: Range[], types: TypeMetaCollection, { log }: Pic
 
     for (const meta of metas) {
       switch (meta.type) {
-        case 'Literal':
         case 'Constant':
+          if (!grouped.literal.some(range => range.type === 'Constant' && range.value === meta.value)) {
+            grouped.literal.push(meta)
+          }
+          continue
+        case 'Literal':
           grouped.literal.push(meta)
           continue
         case 'Resource':

@@ -79,6 +79,23 @@ describe('TypeMap', () => {
       // then
       expect(meta).toBeUndefined()
     })
+
+    it('returns value verbatim when it is a literal', () => {
+      const typeMap = new TypeMap({
+        context,
+        factories: [],
+        excluded: [ex.Type],
+      })
+
+      // when
+      const meta = typeMap.get(vocabulary.node('foo'))
+
+      // then
+      expect(meta).toStrictEqual({
+        type: 'Constant',
+        value: 'foo',
+      })
+    })
   })
 
   describe('getOrThrow', () => {
