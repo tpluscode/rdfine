@@ -101,4 +101,28 @@ describe('findProperties', () => {
     expect(properties[0].range[0].strictSemantics).toBe(true)
     expect(properties[0].range[1].strictSemantics).toBe(true)
   })
+
+  it('returns strict properties defined as derived datatype with owl:onDatatype', async () => {
+    // given
+    const triples = turtle`
+      ${ex.Type} a ${rdfs.Class} .
+      
+      ${ex.prop} ${rdfs.domain} [ ${owl.unionOf} ( ${ex.Type} ) ]  ;
+                 ${rdfs.range}  [
+                                  ${owl.onDatatype} ${xsd.float}
+                                ] .      
+    `.toString()
+    const vocabulary = cf({
+      dataset: await $rdf.dataset().import(parser.import(stringToStream(triples))),
+    })
+
+    // when
+    const properties = findProperties(vocabulary.node(ex.Type), {
+      vocabulary,
+    })
+
+    // then
+    expect(properties[0].range[0].term.term).toStrictEqual(xsd.float)
+    expect(properties[0].range[0].strictSemantics).toBe(true)
+  })
 })

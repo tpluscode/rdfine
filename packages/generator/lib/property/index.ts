@@ -18,7 +18,11 @@ function findDirectRanges(prop: GraphPointer): Range[] {
     .filter(node => node.term.termType === 'NamedNode')
     .map(term => ({ term, strictSemantics: true }))
 
-  return [...strictSemantics, ...looseSemantics]
+  const owlDatatypes = prop.out(rdfs.range)
+    .out(owl.onDatatype)
+    .map(term => ({ term, strictSemantics: true }))
+
+  return [...strictSemantics, ...looseSemantics, ...owlDatatypes]
 }
 
 function findUnionedRanges(prop: GraphPointer): Range[] {

@@ -1,4 +1,4 @@
-import { NamedNode } from 'rdf-js'
+import { Literal, NamedNode } from 'rdf-js'
 import { AnyPointer, GraphPointer } from 'clownface'
 import { Context } from '../index'
 import { TypeMeta, TypeMetaCollection, TypeMetaFactory } from './index'
@@ -7,6 +7,10 @@ interface TypeMapInit {
   excluded: NamedNode[]
   factories: TypeMetaFactory[]
   context: Context
+}
+
+function isNamedNode(ptr: GraphPointer): ptr is GraphPointer<NamedNode> {
+  return ptr.term.termType === 'NamedNode'
 }
 
 export class TypeMap implements TypeMetaCollection {
@@ -25,9 +29,16 @@ export class TypeMap implements TypeMetaCollection {
     this.__context = context
   }
 
-  get(key: GraphPointer<NamedNode>, noFallback = false): TypeMeta | undefined {
+  get(key: GraphPointer<NamedNode | Literal>, noFallback = false): TypeMeta | undefined {
     if (this.__excluded.includes(key.value)) {
       return undefined
+    }
+
+    if (!isNamedNode(key)) {
+      return {
+        type: 'Constant',
+        value: key.value,
+      }
     }
 
     if (!this.__map.has(key.value)) {

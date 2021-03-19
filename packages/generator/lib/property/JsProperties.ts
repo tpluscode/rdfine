@@ -1,5 +1,6 @@
 import { GraphPointer } from 'clownface'
 import { shrink } from '@zazuko/rdf-vocabularies'
+import { owl } from '@tpluscode/rdf-ns-builders'
 import { Term } from 'rdf-js'
 import { TypeMeta, TypeMetaCollection } from '../types'
 import { Context } from '../index'
@@ -19,6 +20,23 @@ export interface JavascriptProperty {
   values?: PropertyReturnKind[]
 }
 
+function * fromOwlConstruct(range: Range, types: TypeMetaCollection, log: Context['log']): Generator<TypeMeta> {
+  const oneOf = range.term.out(owl.oneOf).list()
+  if (oneOf) {
+    for (const element of oneOf) {
+      const meta = types.get(element)
+      if (meta) {
+        yield meta
+      } else {
+        log.warn('Unrecognized property range %s', element.value)
+      }
+    }
+    return
+  }
+
+  log.warn('Unrecognized property range %s', range.term.value)
+}
+
 function groupRangeTypes(range: Range[], types: TypeMetaCollection, { log }: Pick<Context, 'log'>) {
   const grouped = {
     resource: [] as TypeMeta[],
@@ -27,22 +45,37 @@ function groupRangeTypes(range: Range[], types: TypeMetaCollection, { log }: Pic
   }
 
   for (const rangeType of range) {
-    const meta = types.get(rangeType.term)
-    if (!meta) {
-      log.warn(`Skipping unrecognized property type ${rangeType.term.value}`)
-      continue
+    let metas: TypeMeta[]
+
+    if (rangeType.term.term.termType === 'BlankNode') {
+      metas = [...fromOwlConstruct(rangeType, types, log)]
+    } else {
+      const meta = types.get(rangeType.term)
+
+      if (!meta) {
+        log.warn(`Skipping unrecognized property type ${rangeType.term.value}`)
+        continue
+      }
+      metas = [meta]
     }
 
-    switch (meta.type) {
-      case 'Literal':
-        grouped.literal.push(meta)
-        continue
-      case 'Resource':
-      case 'ExternalResource':
-        grouped.resource.push(meta)
-        continue
-      default:
-        grouped.term.push(meta)
+    for (const meta of metas) {
+      switch (meta.type) {
+        case 'Constant':
+          if (!grouped.literal.some(range => range.type === 'Constant' && range.value === meta.value)) {
+            grouped.literal.push(meta)
+          }
+          continue
+        case 'Literal':
+          grouped.literal.push(meta)
+          continue
+        case 'Resource':
+        case 'ExternalResource':
+          grouped.resource.push(meta)
+          continue
+        default:
+          grouped.term.push(meta)
+      }
     }
   }
 

@@ -460,6 +460,51 @@ describe('MixinModule', () => {
     expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
+  it('generates literal property with unioned string return types', () => {
+    // given
+    const module = new MixinModule(vocabulary.node(ex.Class), {
+      type: 'Resource',
+      localName: 'Class',
+      qualifiedName: 'Example.Class',
+      module: './Class',
+      mixinName: 'ClassMixin',
+      term: 'Class',
+    }, [], [{
+      term: ex.foo,
+      name: 'foo',
+      type: 'literal' as const,
+      prefixedTerm: 'ex.foo',
+      semantics: 'strict' as const,
+      termName: 'foo',
+      range: [{
+        type: 'Constant',
+        value: 'foo',
+      }, {
+        type: 'Constant',
+        value: 'bar',
+      }, {
+        type: 'Constant',
+        value: 'baz',
+      }],
+    }])
+
+    // when
+    module.writeModule({
+      indexModule,
+      project,
+      types: new FakeTypeCollection(),
+      context: {
+        prefix: 'ex',
+        defaultExport: 'Example',
+        log: fakeLog(),
+        vocabulary,
+      },
+    })
+
+    // then
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
+  })
+
   it('wraps property name in quotes when term has non-alpha characters', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
