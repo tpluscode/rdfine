@@ -50,7 +50,12 @@ export interface TermType {
   termType: Term['termType'] | 'Term'
 }
 
-export type TypeMeta = LiteralType | ResourceType | ExternalResourceType | EnumerationType | EnumerationMember | TermType
+export interface ConstantType {
+  type: 'Constant'
+  value: string
+}
+
+export type TypeMeta = LiteralType | ResourceType | ExternalResourceType | EnumerationType | EnumerationMember | TermType | ConstantType
 
 export interface TypeMetaFactory<T extends TypeMeta = TypeMeta> {
   (term: GraphPointer<NamedNode>, context: Context): T | null

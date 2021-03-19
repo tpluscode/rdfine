@@ -16,6 +16,8 @@ const plainNameRegex = /^[a-zA-Z]+$/
 
 function __getJsReturnType(range: TypeMeta): string | null {
   switch (range.type) {
+    case 'Constant':
+      return `'${range.value}'`
     case 'Literal':
       return range.nativeName
     case 'Resource':
