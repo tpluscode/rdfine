@@ -1,5 +1,5 @@
 ---
-"@rdfine/as": patch
+"@rdfine/as": minor
 ---
 
 Update Activity Stream namespace
