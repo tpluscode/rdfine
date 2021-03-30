@@ -11,7 +11,7 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
 export interface ValidationReport<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
   conforms: boolean | undefined;
-  result: Sh.ValidationResult<D> | undefined;
+  result: Array<Sh.ValidationResult<D>>;
   shapesGraphWellFormed: boolean | undefined;
 }
 
@@ -20,8 +20,8 @@ export function ValidationReportMixin<Base extends Constructor>(Resource: Base):
   class ValidationReportClass extends RdfsResourceMixin(Resource) implements Partial<ValidationReport> {
     @property.literal({ type: Boolean })
     conforms: boolean | undefined;
-    @property.resource({ implicitTypes: [sh.ValidationResult] })
-    result: Sh.ValidationResult | undefined;
+    @property.resource({ values: 'array', implicitTypes: [sh.ValidationResult] })
+    result!: Array<Sh.ValidationResult>;
     @property.literal({ type: Boolean })
     shapesGraphWellFormed: boolean | undefined;
   }
