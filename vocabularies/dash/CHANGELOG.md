@@ -1,5 +1,12 @@
 # @rdfine/dash
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [cc15037b]
+  - @rdfine/shacl@0.8.0
+
 ## 0.1.2
 
 ### Patch Changes
