@@ -65,6 +65,9 @@
       "targetNode": {
         "values": "array"
       },
+      "result": {
+        "values": "array"
+      },
       "path": {
         "values": [
           "list",
