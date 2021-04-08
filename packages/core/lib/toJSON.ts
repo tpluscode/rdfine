@@ -79,11 +79,11 @@ function getObjectMap<D extends DatasetCore>(resource: RdfResource<D>) {
 
     const quads = map.get(quad.predicate) || []
     if (objectCanBeJsonified(quad.object)) {
-      quads.push(quad.object)
+      quads.push(resource.pointer.node(quad.object))
     }
     map.set(quad.predicate, quads)
     return map
-  }, new TermMap<Term, Array<ResourceIdentifier | Literal>>())
+  }, new TermMap<Term, Array<GraphPointer<ResourceIdentifier | Literal>>>())
 }
 
 function alreadyMapped(parentContext: Record<string, unknown> | undefined, name: string, prop: NamedNode) {
@@ -141,13 +141,18 @@ interface ToJsonContext {
 }
 
 function jsonifyQuads(resource: RdfResource, context: ToJsonContext) {
-  return (json: Record<string, any>, [predicate, objects]: [Term, Array<ResourceIdentifier | Literal>]) => {
-    const mapped = objects.map(term => {
-      if (term.termType === 'Literal') {
-        return literalToJSON(term)
+  return (json: Record<string, any>, [predicate, objects]: [Term, Array<GraphPointer<ResourceIdentifier | Literal>>]) => {
+    const mapped = objects.map((pointer) => {
+      if (pointer.term.termType === 'Literal') {
+        return literalToJSON(pointer.term)
       }
 
-      return toJSON(resource._create(resource.pointer.node(term)), context)
+      const list = pointer.list()
+      if (list) {
+        return [...list].map(({ term }) => toJSON(resource._create(resource.pointer.node(term)), context))
+      }
+
+      return toJSON(resource._create(resource.pointer.node(pointer.term)), context)
     })
 
     if (mapped.length === 1) {
@@ -166,7 +171,7 @@ interface JsonifyPropertiesAccumulator {
 }
 
 interface JsonifyPropertiesContext {
-  remainingObjects: Map<Term, Term[]>
+  remainingObjects: Map<Term, GraphPointer[]>
   context: Partial<Context>
   resource: RdfResource
   namespace: NamespaceBuilder | undefined
