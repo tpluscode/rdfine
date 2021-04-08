@@ -2018,6 +2018,100 @@ describe('RdfResource', () => {
       `)
     })
 
+    it('serializes RDF list of Named Nodes', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const node = cf({ dataset })
+        .namedNode('john')
+        .addList(ex.foo, [
+          ex.Foo,
+          ex.Bar,
+          ex.Baz,
+        ])
+
+      function PersonMixin<Base extends Constructor>(base: Base) {
+        @namespace(ex)
+        class NameClass extends base {
+          @property({ values: 'list' })
+          foo!: Term[];
+        }
+
+        return NameClass
+      }
+
+      const resource = RdfResource.factory.createEntity(node, [PersonMixin])
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "foo": Object {
+              "@container": "@list",
+              "@id": "http://example.com/foo",
+            },
+            "id": "@id",
+            "type": "@type",
+          },
+          "foo": Array [
+            Object {
+              "id": "http://example.com/Foo",
+            },
+            Object {
+              "id": "http://example.com/Bar",
+            },
+            Object {
+              "id": "http://example.com/Baz",
+            },
+          ],
+          "id": "john",
+        }
+      `)
+    })
+
+    it('serializes RDF list of resources which was not annotated', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const node = cf({ dataset })
+        .namedNode('john')
+        .addList(ex.foo, [
+          ex.Foo,
+          ex.Bar,
+          ex.Baz,
+        ])
+
+      const resource = RdfResource.factory.createEntity(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "type": "@type",
+          },
+          "http://example.com/foo": Array [
+            Object {
+              "id": "http://example.com/Foo",
+            },
+            Object {
+              "id": "http://example.com/Bar",
+            },
+            Object {
+              "id": "http://example.com/Baz",
+            },
+          ],
+          "id": "john",
+        }
+      `)
+    })
+
     it('serializes literal property', () => {
       // given
       const dataset = $rdf.dataset()
