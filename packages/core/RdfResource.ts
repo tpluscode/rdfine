@@ -338,7 +338,7 @@ export type Initializer<T> = Omit<{
             ? InitializeArray<U> | InitializeSingle<U>
             : U extends Term
               ? T[P] | (InitialNode<Term> | InitializeSingle<RdfResourceCore>)[]
-              : T[P] | InitialLiteral[]
+              : T[P] | InitialLiteral | InitialLiteral[]
           : unknown
 }, keyof RdfResource> & BaseInitializer
 
