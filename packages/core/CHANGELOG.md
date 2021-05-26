@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.5.26
+
+### Patch Changes
+
+- 97c0dd19: toJSON: serialize lists which are not strongly typed properties
+- 0a04fa75: Initializing optional properties only allowed arrays
+
 ## 0.5.25
 
 ### Patch Changes

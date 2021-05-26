@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.5
+
+### Patch Changes
+
+- 88ff6fa8: Use latest @zazuko/rdf-vocabularies
+
 ## 0.6.4
 
 ### Patch Changes
