@@ -54,14 +54,19 @@ export class TemplateExpander {
     }
   }
 
-  public expand(model: AnyPointer | RdfResource): string {
+  public expand(...models: Array<AnyPointer | RdfResource>): string {
     if (!this.__template.template) {
       return ''
     }
 
     const uriTemplate = new URITemplate(this.__template.template)
 
-    const variables = this.buildExpansionModel(this.__template.mapping, 'id' in model ? model.pointer : model)
+    const variables = models.reduce((variables, model) => {
+      return {
+        ...variables,
+        ...this.buildExpansionModel(this.__template.mapping, 'id' in model ? model.pointer : model),
+      }
+    }, {})
     const expanded = uriTemplate.expand(variables)
 
     if (this.__template._parent && !this.__template._parent.isAnonymous) {
