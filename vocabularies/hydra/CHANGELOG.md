@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.5
+
+### Patch Changes
+
+- 84eb75b4: Allow multiple inputs to `IriTemplate#expand`
+
 ## 0.6.4
 
 ### Patch Changes
