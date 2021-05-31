@@ -89,5 +89,64 @@ describe('IriTemplate', () => {
       // then
       expect(expanded).toEqual('http://example.com/find/?bar=bar')
     })
+
+    it('combines multiple models to expand template', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const pointer = clownface({ dataset }).blankNode()
+      const iriTemplate = fromPointer(pointer, {
+        template: 'http://example.com/find/{?foo,bar,baz}',
+        mapping: [
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'foo',
+            property: ex.foo,
+          },
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'bar',
+            property: ex.bar,
+          },
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'baz',
+            property: ex.baz,
+          },
+        ],
+      })
+
+      // when
+      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('foo'))
+      const bar = clownface({ dataset }).blankNode().addOut(ex.bar, RDF.literal('bar'))
+      const baz = clownface({ dataset }).blankNode().addOut(ex.baz, RDF.literal('baz'))
+      const expanded = iriTemplate.expand(foo, bar, baz)
+
+      // then
+      expect(expanded).toEqual('http://example.com/find/?foo=foo&bar=bar&baz=baz')
+    })
+
+    it('uses latter models to override template bindings', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const pointer = clownface({ dataset }).blankNode()
+      const iriTemplate = fromPointer(pointer, {
+        template: 'http://example.com/find/{?foo}',
+        mapping: [
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'foo',
+            property: ex.foo,
+          },
+        ],
+      })
+
+      // when
+      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('foo'))
+      const bar = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('bar'))
+      const expanded = iriTemplate.expand(foo, bar)
+
+      // then
+      expect(expanded).toEqual('http://example.com/find/?foo=bar')
+    })
   })
 })
