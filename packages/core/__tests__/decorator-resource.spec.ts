@@ -1,6 +1,6 @@
 import { prefixes } from '@zazuko/rdf-vocabularies'
 import cf, { GraphPointer } from 'clownface'
-import { DatasetCore, Literal, NamedNode, Term } from 'rdf-js'
+import { DatasetCore, Literal, NamedNode, Term } from '@rdfjs/types'
 import rdfExt from 'rdf-ext'
 import { defaultGraph, literal } from '@rdf-esm/data-model'
 import { turtle } from '@tpluscode/rdf-string'

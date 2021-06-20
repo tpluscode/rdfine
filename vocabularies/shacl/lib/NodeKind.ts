@@ -1,4 +1,4 @@
-import { NamedNode } from 'rdf-js';
+import { NamedNode } from '@rdfjs/types';
 import { sh } from './namespace';
 
 export default {

@@ -1,7 +1,7 @@
 import { GraphPointer } from 'clownface'
 import { shrink } from '@zazuko/rdf-vocabularies'
 import { owl } from '@tpluscode/rdf-ns-builders'
-import { Term } from 'rdf-js'
+import { Term } from '@rdfjs/types'
 import { TypeMeta, TypeMetaCollection } from '../types'
 import { Context } from '../index'
 import { nameOf } from '../util/nameOf'

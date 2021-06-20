@@ -1,6 +1,6 @@
 import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { NamedNode } from 'rdf-js'
+import type { NamedNode } from '@rdfjs/types'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import { fromPointer } from '../lib/Collection'
 

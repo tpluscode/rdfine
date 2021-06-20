@@ -1,7 +1,7 @@
 import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
-import { NamedNode } from 'rdf-js'
+import type { NamedNode } from '@rdfjs/types'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import RdfResourceImpl from '@tpluscode/rdfine';
 import { IriTemplateMappingMixin } from '../lib/IriTemplateMapping';

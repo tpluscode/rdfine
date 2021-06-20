@@ -5,7 +5,7 @@ import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types
 import { MixinModule } from './MixinModule'
 import { findProperties } from '../property'
 import { toJavascriptProperties } from '../property/JsProperties'
-import { NamedNode } from 'rdf-js'
+import { NamedNode } from '@rdfjs/types'
 import TermSet from '@rdfjs/term-set'
 import TermMap from '@rdfjs/term-map'
 

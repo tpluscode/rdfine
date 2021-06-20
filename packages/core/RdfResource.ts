@@ -1,6 +1,6 @@
 /* eslint-disable camelcase,no-dupe-class-members,no-use-before-define */
 import type { NamespaceBuilder } from '@rdf-esm/namespace'
-import { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from 'rdf-js'
+import { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from '@rdfjs/types'
 import cf, { MultiPointer, GraphPointer } from 'clownface'
 import ResourceFactoryImpl from './lib/ResourceFactory'
 import type {

@@ -182,7 +182,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     })
     mixinFile.addImportDeclaration({
       namespaceImport: 'RDF',
-      moduleSpecifier: 'rdf-js',
+      moduleSpecifier: '@rdfjs/types',
       isTypeOnly: true,
     })
     mixinFile.addImportDeclaration({

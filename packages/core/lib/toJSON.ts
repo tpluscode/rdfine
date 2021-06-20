@@ -1,5 +1,5 @@
 import TermMap from '@rdf-esm/term-map'
-import type { BlankNode, DatasetCore, Literal, NamedNode, Term } from 'rdf-js'
+import type { BlankNode, DatasetCore, Literal, NamedNode, Term } from '@rdfjs/types'
 import { namedNode } from '@rdf-esm/data-model'
 import TermSet from '@rdf-esm/term-set'
 import { rdf, xsd } from '@tpluscode/rdf-ns-builders'

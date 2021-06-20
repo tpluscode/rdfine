@@ -2,7 +2,7 @@ import type { RdfResource } from '@tpluscode/rdfine'
 import type { AnyPointer } from 'clownface';
 import URITemplate from 'es6-url-template'
 import { IriTemplate, IriTemplateMapping } from '../'
-import { Term } from 'rdf-js';
+import type { Term } from '@rdfjs/types'
 import { hydra } from '../lib/namespace';
 import { xsd } from '@tpluscode/rdf-ns-builders';
 

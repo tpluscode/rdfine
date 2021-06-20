@@ -1,5 +1,5 @@
 import { GraphPointer } from 'clownface'
-import { NamedNode, Term } from 'rdf-js'
+import { NamedNode, Term } from '@rdfjs/types'
 import { Context } from '../index'
 
 export { TypeMap } from './TypeMap'

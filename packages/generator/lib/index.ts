@@ -1,6 +1,6 @@
 import cf, { AnyPointer, GraphPointer } from 'clownface'
 import { Debugger } from 'debug'
-import { Stream } from 'rdf-js'
+import { Stream } from '@rdfjs/types'
 import rdf from 'rdf-ext'
 import nsBuilder from '@rdfjs/namespace'
 import { expand, prefixes } from '@zazuko/rdf-vocabularies'

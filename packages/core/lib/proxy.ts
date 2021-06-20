@@ -1,4 +1,4 @@
-import { Literal, Term } from 'rdf-js'
+import { Literal, Term } from '@rdfjs/types'
 import type { GraphPointer } from 'clownface'
 import type { RdfResource, RdfResourceCore } from '../RdfResource'
 import * as rdfList from './rdf-list'
