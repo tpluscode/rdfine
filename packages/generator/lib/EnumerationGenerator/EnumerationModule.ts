@@ -19,7 +19,7 @@ export class EnumerationModule implements GeneratedModule {
 
     enumFile.addImportDeclaration({
       namedImports: ['NamedNode'],
-      moduleSpecifier: 'rdf-js',
+      moduleSpecifier: '@rdfjs/types',
     })
     enumFile.addImportDeclaration({
       namedImports: [context.prefix],

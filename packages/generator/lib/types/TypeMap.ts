@@ -1,4 +1,4 @@
-import { Literal, NamedNode } from 'rdf-js'
+import { Literal, NamedNode } from '@rdfjs/types'
 import { AnyPointer, GraphPointer } from 'clownface'
 import { Context } from '../index'
 import { TypeMeta, TypeMetaCollection, TypeMetaFactory } from './index'

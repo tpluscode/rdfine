@@ -18,7 +18,7 @@
     "@types/clownface": "^1",
     "@types/jest": "^26.0.3",
     "@types/node": "^12",
-    "@types/rdf-js": "^4",
+    "@rdfjs/types": "*",
     "@types/rdfjs__parser-jsonld": "^1.2.3",
     "@types/rdf-dataset-indexed": "^0.4.5",
     "@typescript-eslint/eslint-plugin": "^4.9.0",

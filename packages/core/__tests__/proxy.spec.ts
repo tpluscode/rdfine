@@ -4,7 +4,7 @@ import { literal } from '@rdf-esm/data-model'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { createProxy } from '../lib/proxy'
 import RdfResourceImpl, { RdfResource } from '../RdfResource'
-import { Literal, NamedNode } from 'rdf-js'
+import { Literal, NamedNode } from '@rdfjs/types'
 import { property, ResourceIndexer } from '../index'
 import { ex } from './_helpers'
 

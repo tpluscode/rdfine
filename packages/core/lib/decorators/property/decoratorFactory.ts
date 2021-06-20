@@ -1,5 +1,5 @@
 import RdfResourceImpl, { RdfResourceCore } from '../../../RdfResource'
-import { Quad, Term } from 'rdf-js'
+import { Quad, Term } from '@rdfjs/types'
 import { ClassElement } from '../index'
 import { EdgeTraversal, toEdgeTraversals } from '../../path'
 import { enumerateList, isList } from '../../rdf-list'

@@ -1,4 +1,4 @@
-import * as RDF from 'rdf-js'
+import * as RDF from '@rdfjs/types'
 import { Initializer, RdfResourceCore, ResourceNode } from './RdfResource'
 import RdfResourceImpl from '.'
 import { ResourceFactory, Mixin } from './lib/ResourceFactory'

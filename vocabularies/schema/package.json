@@ -66,11 +66,11 @@
   },
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
-    "@tpluscode/rdf-ns-builders": "^0.4",
+    "@tpluscode/rdf-ns-builders": "^1.0.0",
     "@tpluscode/rdfine": "^0.5.17"
   },
   "peerDependencies": {
-    "@types/rdf-js": ">3"
+    "@rdfjs/types": ">1"
   },
   "devDependencies": {
     "@rdfjs/data-model": "^1.2.0",

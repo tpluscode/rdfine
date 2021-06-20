@@ -1,5 +1,5 @@
 import { GraphPointer } from 'clownface'
-import { NamedNode } from 'rdf-js'
+import { NamedNode } from '@rdfjs/types'
 import { TypeMeta, TypeMetaCollection } from '../../lib/types'
 
 export class FakeTypeCollection implements TypeMetaCollection {

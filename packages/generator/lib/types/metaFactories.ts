@@ -1,7 +1,7 @@
 import { GraphPointer } from 'clownface'
 import { shrink } from '@zazuko/rdf-vocabularies'
 import { hydra, owl, rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
-import { NamedNode } from 'rdf-js'
+import { NamedNode } from '@rdfjs/types'
 import { identifier } from 'safe-identifier'
 import {
   EnumerationMember,

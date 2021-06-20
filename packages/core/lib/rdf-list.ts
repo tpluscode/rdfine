@@ -1,6 +1,6 @@
 import { AnyPointer, GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import { DatasetCore, Term } from 'rdf-js'
+import { DatasetCore, Term } from '@rdfjs/types'
 import type { RdfResource } from '../RdfResource'
 
 function isLast(node: AnyPointer): boolean {

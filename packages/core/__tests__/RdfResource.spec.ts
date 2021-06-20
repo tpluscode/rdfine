@@ -1,6 +1,6 @@
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { NamedNode, Term, Literal } from 'rdf-js'
+import { NamedNode, Term, Literal } from '@rdfjs/types'
 import {
   defaultGraph,
   namedNode,

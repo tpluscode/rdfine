@@ -1,7 +1,7 @@
 import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
-import { NamedNode } from 'rdf-js'
+import type { NamedNode } from '@rdfjs/types'
 import namespace from '@rdfjs/namespace'
 import Parser from '@rdfjs/parser-n3'
 import { fromPointer } from '../lib/Class'

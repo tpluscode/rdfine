@@ -4,7 +4,7 @@ exports[`MixinModule does not add datatype annotation to literal property when d
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
@@ -42,7 +42,7 @@ exports[`MixinModule does not try import self when property has range of enclosi
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
@@ -112,7 +112,7 @@ exports[`MixinModule generates a mixin class where term is not safe identifier: 
 "import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
@@ -147,7 +147,7 @@ exports[`MixinModule generates a mixin class with external super classes: toMatc
 "import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
@@ -184,7 +184,7 @@ exports[`MixinModule generates a mixin class without props: toMatchSnapshot 1`] 
 "import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
@@ -219,7 +219,7 @@ exports[`MixinModule generates array property: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
@@ -257,7 +257,7 @@ exports[`MixinModule generates date property: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
@@ -295,7 +295,7 @@ exports[`MixinModule generates list property: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
@@ -333,7 +333,7 @@ exports[`MixinModule generates list/single property: toMatchSnapshot 1`] = `
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
@@ -371,7 +371,7 @@ exports[`MixinModule generates literal property with unioned string return types
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
@@ -409,7 +409,7 @@ exports[`MixinModule generates property with automatic external type cast when p
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
@@ -449,7 +449,7 @@ exports[`MixinModule generates property with automatic type cast when predicate 
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
@@ -487,7 +487,7 @@ exports[`MixinModule generates property with datatype-annotated literal: toMatch
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
@@ -525,7 +525,7 @@ exports[`MixinModule wraps property name in quotes when term has non-alpha chara
 "import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
 import { createFactory } from \\"@tpluscode/rdfine/factory\\";
 import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
+import type * as RDF from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
 import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
