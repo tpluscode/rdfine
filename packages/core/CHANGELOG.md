@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.28
+
+### Patch Changes
+
+- 377c603b: Update typing which appears to cause an error `TS2344: Type 'T' does not satisfy the constraint 'RdfResourceCore<DatasetCore<Quad, Quad>>'` on later versions of TypeScript
+
 ## 0.5.27
 
 ### Patch Changes
