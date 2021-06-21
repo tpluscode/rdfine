@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.6
+
+### Patch Changes
+
+- a63ec35a: Update `@tpluscode/rdf-ns-builders` and typescript RDF/JS types
+
 ## 0.6.5
 
 ### Patch Changes
