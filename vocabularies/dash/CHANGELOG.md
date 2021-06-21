@@ -1,5 +1,16 @@
 # @rdfine/dash
 
+## 0.1.4
+
+### Patch Changes
+
+- a63ec35a: Update `@tpluscode/rdf-ns-builders` and typescript RDF/JS types
+- Updated dependencies [a63ec35a]
+  - @tpluscode/rdfine@0.5.27
+  - @rdfine/rdf@0.5.4
+  - @rdfine/rdfs@0.6.5
+  - @rdfine/shacl@0.8.1
+
 ## 0.1.3
 
 ### Patch Changes

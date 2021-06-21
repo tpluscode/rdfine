@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.1.12
+
+### Patch Changes
+
+- a63ec35a: Update `@tpluscode/rdf-ns-builders` and typescript RDF/JS types
+- Updated dependencies [a63ec35a]
+  - @tpluscode/rdfine@0.5.27
+  - @rdfine/schema@0.6.4
+
 ## 0.1.11
 
 ### Patch Changes
