@@ -72,7 +72,7 @@ export interface RdfResourceCore<D extends DatasetCore = DatasetCore> {
    */
   toJSON<T extends RdfResourceCore = this> (): Jsonified<RdfResource & T>
   _getObjects(property: string | NamedNode, options?: GetOptions): MultiPointer<Term, D>
-  _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
+  _create<T extends RdfResourceCore<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
