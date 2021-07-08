@@ -1,6 +1,6 @@
 import { GraphPointer } from 'clownface'
 import { Context } from '../index'
-import { rdf, rdfs, hydra, owl } from '@tpluscode/rdf-ns-builders'
+import { dash, rdf, rdfs, hydra, owl } from '@tpluscode/rdf-ns-builders'
 import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types'
 import { MixinModule } from './MixinModule'
 import { findProperties } from '../property'
@@ -37,7 +37,7 @@ export function findTermsToGenerate(excludedTerms: NamedNode[]) {
 
   return function (types: TypeMetaCollection, context: Context) {
     const terms = new TermMap(context.vocabulary
-      .has(rdf.type, [rdfs.Class, hydra.Class, owl.Class])
+      .has(rdf.type, [rdfs.Class, hydra.Class, owl.Class, dash.ShapeClass])
       .filter(term => types.get(term)?.type === 'Resource')
       .map(pointer => [pointer.term, pointer]))
 
