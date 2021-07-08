@@ -1,11 +1,12 @@
-import { Project, SourceFile, VariableDeclarationKind } from 'ts-morph'
-import { Context } from '../index'
+import { SourceFile, VariableDeclarationKind } from 'ts-morph'
+import { Context, GeneratedModule, WriteModule } from '../index'
 import { GraphPointer } from 'clownface'
 import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types'
 import { PropertyWriter } from '../property/PropertyWriter'
 import { JavascriptProperty } from '../property/JsProperties'
 import { getSuperClasses } from './index'
 import { MixinModuleBase } from './MixinModuleBase'
+import { ExtensionModule } from '../ExtensionMixinGenerator/ExtensionModule'
 
 export class MixinModule extends MixinModuleBase<ResourceType> {
   superClasses: Array<ResourceType | ExternalResourceType>
@@ -18,8 +19,8 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     this.properties = properties
   }
 
-  writeModule(params: { project: Project; types: TypeMetaCollection; context: Pick<Context, 'log' | 'prefix' | 'vocabulary' | 'defaultExport'>; indexModule: SourceFile }) {
-    const { project, types, context, indexModule } = params
+  writeModule(params: WriteModule) {
+    const { project, types, context, indexModule, allGenerators } = params
 
     context.log.debug(`Generating mixin ${this.type.qualifiedName}`)
 
@@ -30,7 +31,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     const mixinName = this.type.mixinName
     const implName = `${this.type.localName}Impl`
     const interfaceDeclaration = this.createInterface(mixinFile)
-    const classDeclaration = this.createMixinFunction(mixinFile, context)
+    const classDeclaration = this.createMixinFunction(mixinFile, allGenerators, context)
 
     const propertyWriter = new PropertyWriter({
       interfaceDeclaration,
@@ -235,7 +236,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       })
   }
 
-  private createMixinFunction(mixinFile: SourceFile, context: Omit<Context, 'properties'>) {
+  private createMixinFunction(mixinFile: SourceFile, allGenerators: Array<GeneratedModule | ExtensionModule>, context: Omit<Context, 'properties'>) {
     const mixinFunction = mixinFile.addFunction({
       name: this.type.mixinName,
       typeParameters: [{
@@ -250,8 +251,24 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       returnType: `Constructor<Partial<${this.type.localName}> & RdfResourceCore> & Base`,
     })
 
+    function isModuleExtending(superClass: ResourceType | ExternalResourceType) {
+      return function (gen: GeneratedModule | ExtensionModule): gen is ExtensionModule {
+        return 'type' in gen && gen.type.type === 'ExternalResource' && gen.type.mixinName === superClass.mixinName
+      }
+    }
+
     const baseClass = this.superClasses
-      .reduce((type, superClass) => `${superClass.mixinName}(${type})`, 'Resource')
+      .reduce((type, superClass) => {
+        const chain = `${superClass.mixinName}(${type})`
+
+        const extendedModules = allGenerators.filter(isModuleExtending(superClass))
+
+        return extendedModules.reduce((type, module) => {
+          this.addExtensionImport(mixinFile, module)
+
+          return `${module.type.localName}MixinEx(${type})`
+        }, chain)
+      }, 'Resource')
 
     const className = `${this.type.localName}Class`
     const mixinClass = mixinFunction.addClass({
@@ -278,6 +295,13 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       name: `${this.type.localName}<D extends RDF.DatasetCore = RDF.DatasetCore>`,
       isExported: true,
       extends: [...superInterfaces, 'RdfResource<D>'],
+    })
+  }
+
+  private addExtensionImport(mixinFile: SourceFile, module: ExtensionModule) {
+    mixinFile.addImportDeclaration({
+      namedImports: [`${module.type.localName}MixinEx`],
+      moduleSpecifier: `../extensions/${module.extended.prefix}`,
     })
   }
 }

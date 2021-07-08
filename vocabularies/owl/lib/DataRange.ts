@@ -1,3 +1,4 @@
+import { DatatypeMixinEx } from '../extensions/rdfs';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -14,7 +15,7 @@ export interface DataRange<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
 
 export function DataRangeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DataRange> & RdfResourceCore> & Base {
   @namespace(owl)
-  class DataRangeClass extends RdfsDatatypeMixin(Resource) implements Partial<DataRange> {
+  class DataRangeClass extends DatatypeMixinEx(RdfsDatatypeMixin(Resource)) implements Partial<DataRange> {
   }
   return DataRangeClass
 }

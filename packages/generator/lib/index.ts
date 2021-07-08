@@ -32,9 +32,18 @@ export interface Context {
   properties: PropertyOverrides
 }
 
+export interface WriteModule {
+  project: Project
+  types: TypeMetaCollection
+  context: Context
+  indexModule: SourceFile
+  // eslint-disable-next-line no-use-before-define
+  allGenerators: GeneratedModule[]
+}
+
 export interface GeneratedModule<T extends ResourceType | EnumerationType | ExternalResourceType = ResourceType | EnumerationType | ExternalResourceType> {
   node?: GraphPointer
-  writeModule(params: { project: Project; types: TypeMetaCollection; context: Context; indexModule: SourceFile }): void
+  writeModule(params: WriteModule): void
 }
 
 export interface ModuleStrategy {

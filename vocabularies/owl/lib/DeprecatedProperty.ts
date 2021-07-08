@@ -1,3 +1,4 @@
+import { PropertyMixinEx } from '../extensions/rdf';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -14,7 +15,7 @@ export interface DeprecatedProperty<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function DeprecatedPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DeprecatedProperty> & RdfResourceCore> & Base {
   @namespace(owl)
-  class DeprecatedPropertyClass extends RdfPropertyMixin(Resource) implements Partial<DeprecatedProperty> {
+  class DeprecatedPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<DeprecatedProperty> {
   }
   return DeprecatedPropertyClass
 }

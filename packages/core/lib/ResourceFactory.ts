@@ -16,7 +16,7 @@ export interface Constructor<A extends RdfResourceCore<any> = RdfResourceCore> {
   __initializers: Map<string, unknown>
   __ns?: NamespaceBuilder
 }
-export type ExtendingConstructor<TExtended, TExtension> = Constructor<RdfResourceCore & Omit<TExtended, keyof TExtension>>
+export type ExtendingConstructor<TExtended, TExtension> = Constructor<RdfResourceCore & Partial<Omit<TExtended, keyof TExtension>>>
 type EvaluatedMixin = {
   shouldApply: boolean | ((entity: RdfResource) => boolean)
 }

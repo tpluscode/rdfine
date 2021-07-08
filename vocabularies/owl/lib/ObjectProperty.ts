@@ -1,3 +1,4 @@
+import { PropertyMixinEx } from '../extensions/rdf';
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -17,7 +18,7 @@ export interface ObjectProperty<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 
 export function ObjectPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ObjectProperty> & RdfResourceCore> & Base {
   @namespace(owl)
-  class ObjectPropertyClass extends RdfPropertyMixin(Resource) implements Partial<ObjectProperty> {
+  class ObjectPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<ObjectProperty> {
     @property.resource({ as: [ObjectPropertyMixin] })
     inverseOf: Owl.ObjectProperty | undefined;
     @property.resource({ as: [RdfListMixin] })

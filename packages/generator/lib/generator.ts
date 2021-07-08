@@ -11,12 +11,10 @@ export async function generate(project: Project, types: TypeMetaCollection, stra
   generateNamespace({ project }, context)
   const indexModule = project.createSourceFile('index.ts', {}, { overwrite: true })
 
-  const writers = strategies.flatMap(strategy => strategy(types, context).map(moduleWriter => ({
-    node: moduleWriter.node,
-    moduleWriter,
-  })))
+  const writers = strategies.flatMap(strategy => strategy(types, context))
 
-  await [...writers.values()]
+  const allGenerators = [...writers.values()]
+  await allGenerators
     .filter(({ node }) => {
       if (node && !types.get(node)) {
         log.warn(`Skipping excluded type ${node.value}`)
@@ -26,10 +24,10 @@ export async function generate(project: Project, types: TypeMetaCollection, stra
       return true
     })
     .sort((left, right) => (left.node?.value || '').localeCompare(right.node?.value || ''))
-    .reduce((previous, { moduleWriter }) => {
+    .reduce((previous, moduleWriter) => {
       return previous.then(async () => {
         try {
-          moduleWriter.writeModule({ project, types, context, indexModule })
+          moduleWriter.writeModule({ project, types, context, indexModule, allGenerators })
         } catch (e) {
           context.log.error('Failed to generate module %s (type %s)\n%s', moduleWriter.constructor.name, moduleWriter.node?.value, e.message)
         }

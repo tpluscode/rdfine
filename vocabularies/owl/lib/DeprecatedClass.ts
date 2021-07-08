@@ -1,3 +1,4 @@
+import { ClassMixinEx } from '../extensions/rdfs';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -14,7 +15,7 @@ export interface DeprecatedClass<D extends RDF.DatasetCore = RDF.DatasetCore> ex
 
 export function DeprecatedClassMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DeprecatedClass> & RdfResourceCore> & Base {
   @namespace(owl)
-  class DeprecatedClassClass extends RdfsClassMixin(Resource) implements Partial<DeprecatedClass> {
+  class DeprecatedClassClass extends ClassMixinEx(RdfsClassMixin(Resource)) implements Partial<DeprecatedClass> {
   }
   return DeprecatedClassClass
 }

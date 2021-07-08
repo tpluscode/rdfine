@@ -1,3 +1,4 @@
+import { PropertyMixinEx } from '../extensions/rdf';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -14,7 +15,7 @@ export interface AnnotationProperty<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function AnnotationPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AnnotationProperty> & RdfResourceCore> & Base {
   @namespace(owl)
-  class AnnotationPropertyClass extends RdfPropertyMixin(Resource) implements Partial<AnnotationProperty> {
+  class AnnotationPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<AnnotationProperty> {
   }
   return AnnotationPropertyClass
 }

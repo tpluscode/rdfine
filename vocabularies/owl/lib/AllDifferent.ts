@@ -1,3 +1,4 @@
+import { ResourceMixinEx } from '../extensions/rdfs';
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -17,7 +18,7 @@ export interface AllDifferent<D extends RDF.DatasetCore = RDF.DatasetCore> exten
 
 export function AllDifferentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AllDifferent> & RdfResourceCore> & Base {
   @namespace(owl)
-  class AllDifferentClass extends RdfsResourceMixin(Resource) implements Partial<AllDifferent> {
+  class AllDifferentClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) implements Partial<AllDifferent> {
     @property.resource({ as: [RdfListMixin] })
     distinctMembers: Rdf.List | undefined;
   }
