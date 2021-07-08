@@ -35,6 +35,7 @@ export interface Offer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   'gtin13': string | undefined;
   'gtin14': string | undefined;
   'gtin8': string | undefined;
+  hasMeasurement: Schema.QuantitativeValue<D> | undefined;
   includesObject: Schema.TypeAndQuantityNode<D> | undefined;
   ineligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   ineligibleRegionLiteral: string | undefined;
@@ -114,6 +115,8 @@ export function OfferMixin<Base extends Constructor>(Resource: Base): Constructo
     'gtin14': string | undefined;
     @property.literal()
     'gtin8': string | undefined;
+    @property.resource()
+    hasMeasurement: Schema.QuantitativeValue | undefined;
     @property.resource()
     includesObject: Schema.TypeAndQuantityNode | undefined;
     @property.resource()

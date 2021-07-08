@@ -6,8 +6,8 @@ import { PostalAddressMixin } from '../lib/PostalAddress';
 import { AggregateRatingMixin } from '../lib/AggregateRating';
 import { LocationFeatureSpecificationMixin } from '../lib/LocationFeatureSpecification';
 import { EventMixin } from '../lib/Event';
-import { GeoCoordinatesMixin } from '../lib/GeoCoordinates';
 import { GeoShapeMixin } from '../lib/GeoShape';
+import { GeoCoordinatesMixin } from '../lib/GeoCoordinates';
 import { MapMixin } from '../lib/Map';
 import { ImageObjectMixin } from '../lib/ImageObject';
 import { OpeningHoursSpecificationMixin } from '../lib/OpeningHoursSpecification';
@@ -22,8 +22,8 @@ export const PlaceBundle = [
   AggregateRatingMixin as Mixin,
   LocationFeatureSpecificationMixin as Mixin,
   EventMixin as Mixin,
-  GeoCoordinatesMixin as Mixin,
   GeoShapeMixin as Mixin,
+  GeoCoordinatesMixin as Mixin,
   MapMixin as Mixin,
   ImageObjectMixin as Mixin,
   OpeningHoursSpecificationMixin as Mixin,

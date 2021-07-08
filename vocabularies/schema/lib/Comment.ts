@@ -10,7 +10,7 @@ import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Comment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
   downvoteCount: number | undefined;
-  parentItem: Schema.Question<D> | undefined;
+  parentItem: Schema.Comment<D> | undefined;
   upvoteCount: number | undefined;
 }
 
@@ -20,7 +20,7 @@ export function CommentMixin<Base extends Constructor>(Resource: Base): Construc
     @property.literal({ type: Number })
     downvoteCount: number | undefined;
     @property.resource()
-    parentItem: Schema.Question | undefined;
+    parentItem: Schema.Comment | undefined;
     @property.literal({ type: Number })
     upvoteCount: number | undefined;
   }

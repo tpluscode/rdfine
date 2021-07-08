@@ -13,6 +13,7 @@ interface PropertyShapeEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   editor: Dash.Editor<D> | undefined;
   hidden: boolean | undefined;
   indexed: boolean | undefined;
+  localValues: boolean | undefined;
   mimeTypes: string | undefined;
   readOnly: boolean | undefined;
   reifiableBy: Array<Shacl.NodeShape<D>>;
@@ -35,6 +36,8 @@ export function PropertyShapeMixinEx<Base extends ExtendingConstructor<Shacl.Pro
     hidden: boolean | undefined;
     @property.literal({ type: Boolean })
     indexed: boolean | undefined;
+    @property.literal({ type: Boolean })
+    localValues: boolean | undefined;
     @property.literal()
     mimeTypes: string | undefined;
     @property.literal({ type: Boolean })

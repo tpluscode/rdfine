@@ -18,6 +18,7 @@ export interface EducationalOccupationalProgram<D extends RDF.DatasetCore = RDF.
   educationalProgramModeTerm: RDF.NamedNode | undefined;
   endDate: Date | undefined;
   financialAidEligible: string | undefined;
+  hasCourse: Schema.Course<D> | undefined;
   maximumEnrollment: number | undefined;
   numberOfCredits: Schema.StructuredValue<D> | undefined;
   numberOfCreditsLiteral: number | undefined;
@@ -62,6 +63,8 @@ export function EducationalOccupationalProgramMixin<Base extends Constructor>(Re
     endDate: Date | undefined;
     @property.literal()
     financialAidEligible: string | undefined;
+    @property.resource()
+    hasCourse: Schema.Course | undefined;
     @property.literal({ type: Number })
     maximumEnrollment: number | undefined;
     @property.resource()

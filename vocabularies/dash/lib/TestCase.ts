@@ -12,7 +12,6 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface TestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
   expectedResult: Array<RDF.Term>;
   expectedResultIsTTL: boolean | undefined;
-  testModifiesEnvironment: boolean | undefined;
 }
 
 export function TestCaseMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TestCase> & RdfResourceCore> & Base {
@@ -22,8 +21,6 @@ export function TestCaseMixin<Base extends Constructor>(Resource: Base): Constru
     expectedResult!: Array<RDF.Term>;
     @property.literal({ type: Boolean })
     expectedResultIsTTL: boolean | undefined;
-    @property.literal({ type: Boolean })
-    testModifiesEnvironment: boolean | undefined;
   }
   return TestCaseClass
 }

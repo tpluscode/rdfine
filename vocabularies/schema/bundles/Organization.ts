@@ -5,9 +5,9 @@ import { CreativeWorkMixin } from '../lib/CreativeWork';
 import { PostalAddressMixin } from '../lib/PostalAddress';
 import { AggregateRatingMixin } from '../lib/AggregateRating';
 import { PersonMixin } from '../lib/Person';
+import { PlaceMixin } from '../lib/Place';
 import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
 import { GeoShapeMixin } from '../lib/GeoShape';
-import { PlaceMixin } from '../lib/Place';
 import { BrandMixin } from '../lib/Brand';
 import { ContactPointMixin } from '../lib/ContactPoint';
 import { ArticleMixin } from '../lib/Article';
@@ -21,8 +21,8 @@ import { OfferMixin } from '../lib/Offer';
 import { ProgramMembershipMixin } from '../lib/ProgramMembership';
 import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
 import { AboutPageMixin } from '../lib/AboutPage';
-import { OwnershipInfoMixin } from '../lib/OwnershipInfo';
 import { ProductMixin } from '../lib/Product';
+import { OwnershipInfoMixin } from '../lib/OwnershipInfo';
 import { ReviewMixin } from '../lib/Review';
 import { DemandMixin } from '../lib/Demand';
 
@@ -33,9 +33,9 @@ export const OrganizationBundle = [
   PostalAddressMixin as Mixin,
   AggregateRatingMixin as Mixin,
   PersonMixin as Mixin,
+  PlaceMixin as Mixin,
   AdministrativeAreaMixin as Mixin,
   GeoShapeMixin as Mixin,
-  PlaceMixin as Mixin,
   BrandMixin as Mixin,
   ContactPointMixin as Mixin,
   ArticleMixin as Mixin,
@@ -49,7 +49,7 @@ export const OrganizationBundle = [
   ProgramMembershipMixin as Mixin,
   QuantitativeValueMixin as Mixin,
   AboutPageMixin as Mixin,
-  OwnershipInfoMixin as Mixin,
   ProductMixin as Mixin,
+  OwnershipInfoMixin as Mixin,
   ReviewMixin as Mixin,
   DemandMixin as Mixin];

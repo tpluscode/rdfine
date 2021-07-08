@@ -3,9 +3,9 @@ import { InteractActionMixin } from '../lib/InteractAction';
 import { CommunicateActionMixin } from '../lib/CommunicateAction';
 import { ThingMixin } from '../lib/Thing';
 import { LanguageMixin } from '../lib/Language';
+import { OrganizationMixin } from '../lib/Organization';
 import { AudienceMixin } from '../lib/Audience';
 import { ContactPointMixin } from '../lib/ContactPoint';
-import { OrganizationMixin } from '../lib/Organization';
 import { PersonMixin } from '../lib/Person';
 
 export const CommunicateActionBundle = [
@@ -13,7 +13,7 @@ export const CommunicateActionBundle = [
   CommunicateActionMixin as Mixin,
   ThingMixin as Mixin,
   LanguageMixin as Mixin,
+  OrganizationMixin as Mixin,
   AudienceMixin as Mixin,
   ContactPointMixin as Mixin,
-  OrganizationMixin as Mixin,
   PersonMixin as Mixin];

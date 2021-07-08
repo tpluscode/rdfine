@@ -12,7 +12,8 @@ export interface Occupation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   educationRequirements: string | undefined;
   estimatedSalary: Schema.MonetaryAmount<D> | Schema.MonetaryAmountDistribution<D> | undefined;
   estimatedSalaryLiteral: number | undefined;
-  experienceRequirements: string | undefined;
+  experienceRequirements: Schema.OccupationalExperienceRequirements<D> | undefined;
+  experienceRequirementsLiteral: string | undefined;
   occupationalCategory: Schema.CategoryCode<D> | undefined;
   occupationalCategoryLiteral: string | undefined;
   occupationLocation: Schema.AdministrativeArea<D> | undefined;
@@ -30,8 +31,10 @@ export function OccupationMixin<Base extends Constructor>(Resource: Base): Const
     estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution | undefined;
     @property.literal({ path: schema.estimatedSalary, type: Number })
     estimatedSalaryLiteral: number | undefined;
-    @property.literal()
-    experienceRequirements: string | undefined;
+    @property.resource()
+    experienceRequirements: Schema.OccupationalExperienceRequirements | undefined;
+    @property.literal({ path: schema.experienceRequirements })
+    experienceRequirementsLiteral: string | undefined;
     @property.resource()
     occupationalCategory: Schema.CategoryCode | undefined;
     @property.literal({ path: schema.occupationalCategory })

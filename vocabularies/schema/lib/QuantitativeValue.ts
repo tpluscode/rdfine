@@ -18,6 +18,7 @@ export interface QuantitativeValue<D extends RDF.DatasetCore = RDF.DatasetCore> 
   value: Schema.StructuredValue<D> | undefined;
   valueLiteral: boolean | number | string | undefined;
   valueReference: Schema.PropertyValue<D> | Schema.QuantitativeValue<D> | Schema.StructuredValue<D> | undefined;
+  valueReferenceLiteral: string | undefined;
 }
 
 export function QuantitativeValueMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<QuantitativeValue> & RdfResourceCore> & Base {
@@ -41,6 +42,8 @@ export function QuantitativeValueMixin<Base extends Constructor>(Resource: Base)
     valueLiteral: boolean | number | string | undefined;
     @property.resource()
     valueReference: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue | undefined;
+    @property.literal({ path: schema.valueReference })
+    valueReferenceLiteral: string | undefined;
   }
   return QuantitativeValueClass
 }

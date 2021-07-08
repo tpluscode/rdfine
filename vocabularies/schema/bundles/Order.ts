@@ -6,9 +6,9 @@ import { PostalAddressMixin } from '../lib/PostalAddress';
 import { OrganizationMixin } from '../lib/Organization';
 import { PersonMixin } from '../lib/Person';
 import { ParcelDeliveryMixin } from '../lib/ParcelDelivery';
-import { OrderItemMixin } from '../lib/OrderItem';
-import { ProductMixin } from '../lib/Product';
 import { ServiceMixin } from '../lib/Service';
+import { ProductMixin } from '../lib/Product';
+import { OrderItemMixin } from '../lib/OrderItem';
 import { InvoiceMixin } from '../lib/Invoice';
 
 export const OrderBundle = [
@@ -19,7 +19,7 @@ export const OrderBundle = [
   OrganizationMixin as Mixin,
   PersonMixin as Mixin,
   ParcelDeliveryMixin as Mixin,
-  OrderItemMixin as Mixin,
-  ProductMixin as Mixin,
   ServiceMixin as Mixin,
+  ProductMixin as Mixin,
+  OrderItemMixin as Mixin,
   InvoiceMixin as Mixin];

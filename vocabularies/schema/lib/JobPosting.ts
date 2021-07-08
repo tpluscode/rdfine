@@ -22,7 +22,9 @@ export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   employmentUnit: Schema.Organization<D> | undefined;
   estimatedSalary: Schema.MonetaryAmount<D> | Schema.MonetaryAmountDistribution<D> | undefined;
   estimatedSalaryLiteral: number | undefined;
-  experienceRequirements: string | undefined;
+  experienceInPlaceOfEducation: boolean | undefined;
+  experienceRequirements: Schema.OccupationalExperienceRequirements<D> | undefined;
+  experienceRequirementsLiteral: string | undefined;
   hiringOrganization: Schema.Organization<D> | undefined;
   incentiveCompensation: string | undefined;
   incentives: string | undefined;
@@ -81,8 +83,12 @@ export function JobPostingMixin<Base extends Constructor>(Resource: Base): Const
     estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution | undefined;
     @property.literal({ path: schema.estimatedSalary, type: Number })
     estimatedSalaryLiteral: number | undefined;
-    @property.literal()
-    experienceRequirements: string | undefined;
+    @property.literal({ type: Boolean })
+    experienceInPlaceOfEducation: boolean | undefined;
+    @property.resource()
+    experienceRequirements: Schema.OccupationalExperienceRequirements | undefined;
+    @property.literal({ path: schema.experienceRequirements })
+    experienceRequirementsLiteral: string | undefined;
     @property.resource()
     hiringOrganization: Schema.Organization | undefined;
     @property.literal()

@@ -2,19 +2,26 @@ import { NamedNode } from '@rdfjs/types';
 import { schema } from './namespace';
 
 export default {
+  AllergiesHealthAspect: schema.AllergiesHealthAspect as NamedNode<'http://schema.org/AllergiesHealthAspect'>,
   BenefitsHealthAspect: schema.BenefitsHealthAspect as NamedNode<'http://schema.org/BenefitsHealthAspect'>,
   CausesHealthAspect: schema.CausesHealthAspect as NamedNode<'http://schema.org/CausesHealthAspect'>,
   ContagiousnessHealthAspect: schema.ContagiousnessHealthAspect as NamedNode<'http://schema.org/ContagiousnessHealthAspect'>,
+  EffectivenessHealthAspect: schema.EffectivenessHealthAspect as NamedNode<'http://schema.org/EffectivenessHealthAspect'>,
+  GettingAccessHealthAspect: schema.GettingAccessHealthAspect as NamedNode<'http://schema.org/GettingAccessHealthAspect'>,
+  HowItWorksHealthAspect: schema.HowItWorksHealthAspect as NamedNode<'http://schema.org/HowItWorksHealthAspect'>,
   HowOrWhereHealthAspect: schema.HowOrWhereHealthAspect as NamedNode<'http://schema.org/HowOrWhereHealthAspect'>,
+  IngredientsHealthAspect: schema.IngredientsHealthAspect as NamedNode<'http://schema.org/IngredientsHealthAspect'>,
   LivingWithHealthAspect: schema.LivingWithHealthAspect as NamedNode<'http://schema.org/LivingWithHealthAspect'>,
   MayTreatHealthAspect: schema.MayTreatHealthAspect as NamedNode<'http://schema.org/MayTreatHealthAspect'>,
   MisconceptionsHealthAspect: schema.MisconceptionsHealthAspect as NamedNode<'http://schema.org/MisconceptionsHealthAspect'>,
   OverviewHealthAspect: schema.OverviewHealthAspect as NamedNode<'http://schema.org/OverviewHealthAspect'>,
   PatientExperienceHealthAspect: schema.PatientExperienceHealthAspect as NamedNode<'http://schema.org/PatientExperienceHealthAspect'>,
+  PregnancyHealthAspect: schema.PregnancyHealthAspect as NamedNode<'http://schema.org/PregnancyHealthAspect'>,
   PreventionHealthAspect: schema.PreventionHealthAspect as NamedNode<'http://schema.org/PreventionHealthAspect'>,
   PrognosisHealthAspect: schema.PrognosisHealthAspect as NamedNode<'http://schema.org/PrognosisHealthAspect'>,
   RelatedTopicsHealthAspect: schema.RelatedTopicsHealthAspect as NamedNode<'http://schema.org/RelatedTopicsHealthAspect'>,
   RisksOrComplicationsHealthAspect: schema.RisksOrComplicationsHealthAspect as NamedNode<'http://schema.org/RisksOrComplicationsHealthAspect'>,
+  SafetyHealthAspect: schema.SafetyHealthAspect as NamedNode<'http://schema.org/SafetyHealthAspect'>,
   ScreeningHealthAspect: schema.ScreeningHealthAspect as NamedNode<'http://schema.org/ScreeningHealthAspect'>,
   SeeDoctorHealthAspect: schema.SeeDoctorHealthAspect as NamedNode<'http://schema.org/SeeDoctorHealthAspect'>,
   SelfCareHealthAspect: schema.SelfCareHealthAspect as NamedNode<'http://schema.org/SelfCareHealthAspect'>,
@@ -27,19 +34,26 @@ export default {
 };
 
 export type HealthAspectEnumeration =
-  NamedNode<'http://schema.org/BenefitsHealthAspect'>
+  NamedNode<'http://schema.org/AllergiesHealthAspect'>
+  | NamedNode<'http://schema.org/BenefitsHealthAspect'>
   | NamedNode<'http://schema.org/CausesHealthAspect'>
   | NamedNode<'http://schema.org/ContagiousnessHealthAspect'>
+  | NamedNode<'http://schema.org/EffectivenessHealthAspect'>
+  | NamedNode<'http://schema.org/GettingAccessHealthAspect'>
+  | NamedNode<'http://schema.org/HowItWorksHealthAspect'>
   | NamedNode<'http://schema.org/HowOrWhereHealthAspect'>
+  | NamedNode<'http://schema.org/IngredientsHealthAspect'>
   | NamedNode<'http://schema.org/LivingWithHealthAspect'>
   | NamedNode<'http://schema.org/MayTreatHealthAspect'>
   | NamedNode<'http://schema.org/MisconceptionsHealthAspect'>
   | NamedNode<'http://schema.org/OverviewHealthAspect'>
   | NamedNode<'http://schema.org/PatientExperienceHealthAspect'>
+  | NamedNode<'http://schema.org/PregnancyHealthAspect'>
   | NamedNode<'http://schema.org/PreventionHealthAspect'>
   | NamedNode<'http://schema.org/PrognosisHealthAspect'>
   | NamedNode<'http://schema.org/RelatedTopicsHealthAspect'>
   | NamedNode<'http://schema.org/RisksOrComplicationsHealthAspect'>
+  | NamedNode<'http://schema.org/SafetyHealthAspect'>
   | NamedNode<'http://schema.org/ScreeningHealthAspect'>
   | NamedNode<'http://schema.org/SeeDoctorHealthAspect'>
   | NamedNode<'http://schema.org/SelfCareHealthAspect'>

@@ -10,6 +10,8 @@ import { PriceSpecificationMixin } from './PriceSpecification';
 
 export interface CompoundPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, RdfResource<D> {
   priceComponent: Schema.UnitPriceSpecification<D> | undefined;
+  priceType: string | undefined;
+  priceTypeTerm: Schema.PriceTypeEnumeration | undefined;
 }
 
 export function CompoundPriceSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CompoundPriceSpecification> & RdfResourceCore> & Base {
@@ -17,6 +19,10 @@ export function CompoundPriceSpecificationMixin<Base extends Constructor>(Resour
   class CompoundPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<CompoundPriceSpecification> {
     @property.resource()
     priceComponent: Schema.UnitPriceSpecification | undefined;
+    @property.literal()
+    priceType: string | undefined;
+    @property({ path: schema.priceType })
+    priceTypeTerm: Schema.PriceTypeEnumeration | undefined;
   }
   return CompoundPriceSpecificationClass
 }

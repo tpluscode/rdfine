@@ -13,8 +13,11 @@ export interface PeopleAudience<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   requiredGender: string | undefined;
   requiredMaxAge: number | undefined;
   requiredMinAge: number | undefined;
+  suggestedAge: Schema.QuantitativeValue<D> | undefined;
   suggestedGender: string | undefined;
+  suggestedGenderTerm: Schema.GenderType | undefined;
   suggestedMaxAge: number | undefined;
+  suggestedMeasurement: Schema.QuantitativeValue<D> | undefined;
   suggestedMinAge: number | undefined;
 }
 
@@ -29,10 +32,16 @@ export function PeopleAudienceMixin<Base extends Constructor>(Resource: Base): C
     requiredMaxAge: number | undefined;
     @property.literal({ type: Number })
     requiredMinAge: number | undefined;
+    @property.resource()
+    suggestedAge: Schema.QuantitativeValue | undefined;
     @property.literal()
     suggestedGender: string | undefined;
+    @property({ path: schema.suggestedGender })
+    suggestedGenderTerm: Schema.GenderType | undefined;
     @property.literal({ type: Number })
     suggestedMaxAge: number | undefined;
+    @property.resource()
+    suggestedMeasurement: Schema.QuantitativeValue | undefined;
     @property.literal({ type: Number })
     suggestedMinAge: number | undefined;
   }

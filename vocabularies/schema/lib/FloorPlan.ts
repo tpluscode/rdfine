@@ -12,6 +12,7 @@ export interface FloorPlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   amenityFeature: Schema.LocationFeatureSpecification<D> | undefined;
   floorSize: Schema.QuantitativeValue<D> | undefined;
   isPlanForApartment: Schema.Accommodation<D> | undefined;
+  layoutImage: Schema.ImageObject<D> | undefined;
   numberOfAccommodationUnits: Schema.QuantitativeValue<D> | undefined;
   numberOfAvailableAccommodationUnits: Schema.QuantitativeValue<D> | undefined;
   numberOfBathroomsTotal: number | undefined;
@@ -33,6 +34,8 @@ export function FloorPlanMixin<Base extends Constructor>(Resource: Base): Constr
     floorSize: Schema.QuantitativeValue | undefined;
     @property.resource()
     isPlanForApartment: Schema.Accommodation | undefined;
+    @property.resource()
+    layoutImage: Schema.ImageObject | undefined;
     @property.resource()
     numberOfAccommodationUnits: Schema.QuantitativeValue | undefined;
     @property.resource()
