@@ -39,13 +39,13 @@ describe('Collection', () => {
   })
 
   describe('manages', () => {
-    it('should be a property', () => {
+    it('should return array', () => {
       // given
       collectionNode.addOut(hydra.manages, collectionNode.blankNode())
       const collection = fromPointer(collectionNode)
 
       // then
-      expect(collection.manages).toBeDefined()
+      expect(collection.manages).toHaveLength(1)
     })
   })
 
