@@ -1,3 +1,4 @@
+import { ClassMixinEx } from '../extensions/rdfs';
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -8,24 +9,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
-import { ResourceMixin } from './Resource';
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, Hydra.Resource<D>, RdfResource<D> {
+export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, RdfResource<D> {
   description: string | undefined;
   supportedOperation: Array<Hydra.Operation<D>>;
-  supportedProperty: Array<Hydra.SupportedProperty<D>>;
   title: string | undefined;
 }
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Class> & RdfResourceCore> & Base {
   @namespace(hydra)
-  class ClassClass extends ResourceMixin(RdfsClassMixin(Resource)) implements Partial<Class> {
+  class ClassClass extends ClassMixinEx(RdfsClassMixin(Resource)) implements Partial<Class> {
     @property.literal()
     description: string | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
     supportedOperation!: Array<Hydra.Operation>;
-    @property.resource({ values: 'array', implicitTypes: [hydra.SupportedProperty] })
-    supportedProperty!: Array<Hydra.SupportedProperty>;
     @property.literal()
     title: string | undefined;
   }
@@ -38,9 +35,9 @@ class ClassImpl extends ClassMixin(RdfResourceImpl) {
     this.types.add(hydra.Class)
   }
 
-  static readonly __mixins: Mixin[] = [ClassMixin, RdfsClassMixin, ResourceMixin];
+  static readonly __mixins: Mixin[] = [ClassMixin, RdfsClassMixin];
 }
 ClassMixin.appliesTo = hydra.Class
 ClassMixin.Class = ClassImpl
 
-export const fromPointer = createFactory<Class>([ResourceMixin, RdfsClassMixin, ClassMixin], { types: [hydra.Class] });
+export const fromPointer = createFactory<Class>([RdfsClassMixin, ClassMixin], { types: [hydra.Class] });

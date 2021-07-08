@@ -43,7 +43,7 @@ export function ResourceMixin<Base extends Constructor>(Resource: Base): Constru
     previous: Hydra.Resource | undefined;
     @property.resource({ implicitTypes: [hydra.IriTemplate] })
     search: Hydra.IriTemplate | undefined;
-    @property.resource({ values: 'array', as: [ResourceMixin] })
+    @property.resource({ values: 'array' })
     view!: Array<Hydra.Resource>;
   }
   return ResourceClass

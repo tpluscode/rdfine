@@ -34,6 +34,9 @@
   },
   "rdfine": {
     "prefix": "hydra",
+    "types": {
+      "BaseUriSource": "NamedNode"
+    },
     "properties": {
       "collection": {
         "values": "array"
@@ -41,7 +44,7 @@
       "expects": {
         "values": "array"
       },
-      "manages": {
+      "memberAssertion": {
         "values": "array"
       },
       "mapping": {
@@ -54,6 +57,9 @@
         "values": "array"
       },
       "possibleStatus": {
+        "values": "array"
+      },
+      "possibleValue": {
         "values": "array"
       },
       "supportedClass": {

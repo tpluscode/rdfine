@@ -9,15 +9,15 @@ import type * as Hydra from '..';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
-export interface ManagesBlock<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface MemberAssertion<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   object: Hydra.Class<D> | undefined;
   property: Rdf.Property<D> | undefined;
   subject: Hydra.Resource<D> | undefined;
 }
 
-export function ManagesBlockMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ManagesBlock> & RdfResourceCore> & Base {
+export function MemberAssertionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MemberAssertion> & RdfResourceCore> & Base {
   @namespace(hydra)
-  class ManagesBlockClass extends Resource implements Partial<ManagesBlock> {
+  class MemberAssertionClass extends Resource implements Partial<MemberAssertion> {
     @property.resource()
     object: Hydra.Class | undefined;
     @property.resource({ as: [RdfPropertyMixin] })
@@ -25,18 +25,18 @@ export function ManagesBlockMixin<Base extends Constructor>(Resource: Base): Con
     @property.resource({ implicitTypes: [hydra.Resource] })
     subject: Hydra.Resource | undefined;
   }
-  return ManagesBlockClass
+  return MemberAssertionClass
 }
 
-class ManagesBlockImpl extends ManagesBlockMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ManagesBlock>) {
+class MemberAssertionImpl extends MemberAssertionMixin(RdfResourceImpl) {
+  constructor(arg: ResourceNode, init?: Initializer<MemberAssertion>) {
     super(arg, init)
-    this.types.add(hydra.ManagesBlock)
+    this.types.add(hydra.MemberAssertion)
   }
 
-  static readonly __mixins: Mixin[] = [ManagesBlockMixin];
+  static readonly __mixins: Mixin[] = [MemberAssertionMixin];
 }
-ManagesBlockMixin.appliesTo = hydra.ManagesBlock
-ManagesBlockMixin.Class = ManagesBlockImpl
+MemberAssertionMixin.appliesTo = hydra.MemberAssertion
+MemberAssertionMixin.Class = MemberAssertionImpl
 
-export const fromPointer = createFactory<ManagesBlock>([ManagesBlockMixin], { types: [hydra.ManagesBlock] });
+export const fromPointer = createFactory<MemberAssertion>([MemberAssertionMixin], { types: [hydra.MemberAssertion] });

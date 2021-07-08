@@ -39,13 +39,24 @@ describe('Collection', () => {
   })
 
   describe('manages', () => {
+    it('should be a property', () => {
+      // given
+      collectionNode.addOut(hydra.manages, collectionNode.blankNode())
+      const collection = fromPointer(collectionNode)
+
+      // then
+      expect(collection.manages).toBeDefined()
+    })
+  })
+
+  describe('memberAssertion', () => {
     it('should return array even for one element', () => {
       // given
       collectionNode.addOut(hydra.manages, collectionNode.blankNode())
       const collection = fromPointer(collectionNode)
 
       // then
-      expect(Array.isArray(collection.manages)).toBe(true)
+      expect(Array.isArray(collection.memberAssertion)).toBe(true)
     })
   })
 
