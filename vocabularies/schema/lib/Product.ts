@@ -24,6 +24,8 @@ export interface Product<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   'gtin13': string | undefined;
   'gtin14': string | undefined;
   'gtin8': string | undefined;
+  hasEnergyConsumptionDetails: Schema.EnergyConsumptionDetails<D> | undefined;
+  hasMeasurement: Schema.QuantitativeValue<D> | undefined;
   hasMerchantReturnPolicy: Schema.MerchantReturnPolicy<D> | undefined;
   height: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
   inProductGroupWithID: string | undefined;
@@ -90,6 +92,10 @@ export function ProductMixin<Base extends Constructor>(Resource: Base): Construc
     'gtin14': string | undefined;
     @property.literal()
     'gtin8': string | undefined;
+    @property.resource()
+    hasEnergyConsumptionDetails: Schema.EnergyConsumptionDetails | undefined;
+    @property.resource()
+    hasMeasurement: Schema.QuantitativeValue | undefined;
     @property.resource()
     hasMerchantReturnPolicy: Schema.MerchantReturnPolicy | undefined;
     @property.resource()

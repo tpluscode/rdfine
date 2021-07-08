@@ -6,13 +6,15 @@ import { hydra } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
+import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin } from './Resource';
 
 export interface ApiDocumentation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
   description: string | undefined;
   entrypoint: Hydra.Resource<D> | undefined;
+  extension: RDF.Term | undefined;
   possibleStatus: Array<Hydra.Status<D>>;
-  supportedClass: Array<Hydra.Class<D>>;
+  supportedClass: Array<Hydra.Class<D> | Rdfs.Class<D>>;
   title: string | undefined;
 }
 
@@ -23,10 +25,12 @@ export function ApiDocumentationMixin<Base extends Constructor>(Resource: Base):
     description: string | undefined;
     @property.resource({ implicitTypes: [hydra.Resource] })
     entrypoint: Hydra.Resource | undefined;
+    @property()
+    extension: RDF.Term | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Status] })
     possibleStatus!: Array<Hydra.Status>;
-    @property.resource({ values: 'array', implicitTypes: [hydra.Class] })
-    supportedClass!: Array<Hydra.Class>;
+    @property.resource({ values: 'array' })
+    supportedClass!: Array<Hydra.Class | Rdfs.Class>;
     @property.literal()
     title: string | undefined;
   }

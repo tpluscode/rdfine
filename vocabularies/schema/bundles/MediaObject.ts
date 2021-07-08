@@ -5,8 +5,9 @@ import { NewsArticleMixin } from '../lib/NewsArticle';
 import { DurationMixin } from '../lib/Duration';
 import { DistanceMixin } from '../lib/Distance';
 import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
-import { OrganizationMixin } from '../lib/Organization';
 import { PlaceMixin } from '../lib/Place';
+import { GeoShapeMixin } from '../lib/GeoShape';
+import { OrganizationMixin } from '../lib/Organization';
 import { MediaSubscriptionMixin } from '../lib/MediaSubscription';
 
 export const MediaObjectBundle = [
@@ -16,6 +17,7 @@ export const MediaObjectBundle = [
   DurationMixin as Mixin,
   DistanceMixin as Mixin,
   QuantitativeValueMixin as Mixin,
-  OrganizationMixin as Mixin,
   PlaceMixin as Mixin,
+  GeoShapeMixin as Mixin,
+  OrganizationMixin as Mixin,
   MediaSubscriptionMixin as Mixin];

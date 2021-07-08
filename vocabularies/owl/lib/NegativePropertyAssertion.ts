@@ -1,3 +1,4 @@
+import { ResourceMixinEx } from '../extensions/rdfs';
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -20,7 +21,7 @@ export interface NegativePropertyAssertion<D extends RDF.DatasetCore = RDF.Datas
 
 export function NegativePropertyAssertionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<NegativePropertyAssertion> & RdfResourceCore> & Base {
   @namespace(owl)
-  class NegativePropertyAssertionClass extends RdfsResourceMixin(Resource) implements Partial<NegativePropertyAssertion> {
+  class NegativePropertyAssertionClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) implements Partial<NegativePropertyAssertion> {
     @property.resource({ as: [RdfPropertyMixin] })
     assertionProperty: Rdf.Property | undefined;
     @property()

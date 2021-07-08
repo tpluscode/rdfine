@@ -7,20 +7,21 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import { ResourceMixin } from './Resource';
+import { CollectionExMixin } from '../extensions/CollectionEx';
 
 export interface Collection<M extends RdfResourceCore<any> = RdfResourceCore<any>, D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
-  manages: Array<Hydra.ManagesBlock<D>>;
   member: Array<Hydra.Resource<D> & M>;
+  memberAssertion: Array<Hydra.MemberAssertion<D>>;
   totalItems: number | undefined;
 }
 
 export function CollectionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Collection> & RdfResourceCore> & Base {
   @namespace(hydra)
-  class CollectionClass extends ResourceMixin(Resource) implements Partial<Collection> {
-    @property.resource({ values: 'array', implicitTypes: [hydra.ManagesBlock] })
-    manages!: Array<Hydra.ManagesBlock>;
+  class CollectionClass extends CollectionExMixin(ResourceMixin(Resource)) implements Partial<Collection> {
     @property.resource({ values: 'array', implicitTypes: [hydra.Resource] })
     member!: Array<Hydra.Resource>;
+    @property.resource({ values: 'array', implicitTypes: [hydra.MemberAssertion] })
+    memberAssertion!: Array<Hydra.MemberAssertion>;
     @property.literal({ type: Number })
     totalItems: number | undefined;
   }
@@ -33,7 +34,7 @@ class CollectionImpl extends CollectionMixin(RdfResourceImpl) {
     this.types.add(hydra.Collection)
   }
 
-  static readonly __mixins: Mixin[] = [CollectionMixin, ResourceMixin];
+  static readonly __mixins: Mixin[] = [CollectionExMixin, CollectionMixin, ResourceMixin];
 }
 CollectionMixin.appliesTo = hydra.Collection
 CollectionMixin.Class = CollectionImpl

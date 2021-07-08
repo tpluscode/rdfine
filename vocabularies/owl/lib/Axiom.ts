@@ -1,3 +1,4 @@
+import { ResourceMixinEx } from '../extensions/rdfs';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -14,7 +15,7 @@ export interface Axiom<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs
 
 export function AxiomMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Axiom> & RdfResourceCore> & Base {
   @namespace(owl)
-  class AxiomClass extends RdfsResourceMixin(Resource) implements Partial<Axiom> {
+  class AxiomClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) implements Partial<Axiom> {
   }
   return AxiomClass
 }

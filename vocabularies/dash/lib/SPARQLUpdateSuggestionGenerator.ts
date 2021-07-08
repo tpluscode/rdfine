@@ -11,12 +11,12 @@ import { SuggestionGeneratorMixin } from './SuggestionGenerator';
 import { SPARQLSelectExecutableMixin as ShaclSPARQLSelectExecutableMixin } from '@rdfine/shacl/lib/SPARQLSelectExecutable';
 import { SPARQLUpdateExecutableMixin as ShaclSPARQLUpdateExecutableMixin } from '@rdfine/shacl/lib/SPARQLUpdateExecutable';
 
-export interface SPARQLUpdateSuggestionGenerator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.SuggestionGenerator<D>, Shacl.SPARQLSelectExecutable<D>, Shacl.SPARQLUpdateExecutable<D>, RdfResource<D> {
+export interface SPARQLUpdateSuggestionGenerator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.SPARQLSelectExecutable<D>, Dash.SuggestionGenerator<D>, Shacl.SPARQLUpdateExecutable<D>, RdfResource<D> {
 }
 
 export function SPARQLUpdateSuggestionGeneratorMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SPARQLUpdateSuggestionGenerator> & RdfResourceCore> & Base {
   @namespace(dash)
-  class SPARQLUpdateSuggestionGeneratorClass extends ShaclSPARQLUpdateExecutableMixin(ShaclSPARQLSelectExecutableMixin(SuggestionGeneratorMixin(Resource))) implements Partial<SPARQLUpdateSuggestionGenerator> {
+  class SPARQLUpdateSuggestionGeneratorClass extends ShaclSPARQLUpdateExecutableMixin(SuggestionGeneratorMixin(ShaclSPARQLSelectExecutableMixin(Resource))) implements Partial<SPARQLUpdateSuggestionGenerator> {
   }
   return SPARQLUpdateSuggestionGeneratorClass
 }
@@ -27,9 +27,9 @@ class SPARQLUpdateSuggestionGeneratorImpl extends SPARQLUpdateSuggestionGenerato
     this.types.add(dash.SPARQLUpdateSuggestionGenerator)
   }
 
-  static readonly __mixins: Mixin[] = [SPARQLUpdateSuggestionGeneratorMixin, SuggestionGeneratorMixin, ShaclSPARQLSelectExecutableMixin, ShaclSPARQLUpdateExecutableMixin];
+  static readonly __mixins: Mixin[] = [SPARQLUpdateSuggestionGeneratorMixin, ShaclSPARQLSelectExecutableMixin, SuggestionGeneratorMixin, ShaclSPARQLUpdateExecutableMixin];
 }
 SPARQLUpdateSuggestionGeneratorMixin.appliesTo = dash.SPARQLUpdateSuggestionGenerator
 SPARQLUpdateSuggestionGeneratorMixin.Class = SPARQLUpdateSuggestionGeneratorImpl
 
-export const fromPointer = createFactory<SPARQLUpdateSuggestionGenerator>([ShaclSPARQLUpdateExecutableMixin, ShaclSPARQLSelectExecutableMixin, SuggestionGeneratorMixin, SPARQLUpdateSuggestionGeneratorMixin], { types: [dash.SPARQLUpdateSuggestionGenerator] });
+export const fromPointer = createFactory<SPARQLUpdateSuggestionGenerator>([ShaclSPARQLUpdateExecutableMixin, SuggestionGeneratorMixin, ShaclSPARQLSelectExecutableMixin, SPARQLUpdateSuggestionGeneratorMixin], { types: [dash.SPARQLUpdateSuggestionGenerator] });

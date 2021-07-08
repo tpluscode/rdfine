@@ -1,3 +1,4 @@
+import { ResourceMixinEx } from '../extensions/rdfs';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -14,7 +15,7 @@ export interface AllDisjointProperties<D extends RDF.DatasetCore = RDF.DatasetCo
 
 export function AllDisjointPropertiesMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AllDisjointProperties> & RdfResourceCore> & Base {
   @namespace(owl)
-  class AllDisjointPropertiesClass extends RdfsResourceMixin(Resource) implements Partial<AllDisjointProperties> {
+  class AllDisjointPropertiesClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) implements Partial<AllDisjointProperties> {
   }
   return AllDisjointPropertiesClass
 }

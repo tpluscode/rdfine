@@ -1,3 +1,4 @@
+import { PropertyMixinEx } from '../extensions/rdf';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -14,7 +15,7 @@ export interface OntologyProperty<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function OntologyPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<OntologyProperty> & RdfResourceCore> & Base {
   @namespace(owl)
-  class OntologyPropertyClass extends RdfPropertyMixin(Resource) implements Partial<OntologyProperty> {
+  class OntologyPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<OntologyProperty> {
   }
   return OntologyPropertyClass
 }

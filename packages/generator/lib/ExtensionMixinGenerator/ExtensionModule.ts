@@ -9,8 +9,8 @@ import { MixinModuleBase } from '../MixinGenerator/MixinModuleBase'
 
 export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
   properties: JavascriptProperty[];
-  private extended: { prefix: string; term: string }
-  private interfaceName: string
+  extended: { prefix: string; term: string }
+  interfaceName: string
 
   constructor({ domain, type }: { domain: GraphPointer; type: ExternalResourceType }) {
     super(domain, type)

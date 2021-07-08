@@ -2,6 +2,7 @@ import { NamedNode } from '@rdfjs/types';
 import { schema } from './namespace';
 
 export default {
+  BackOrder: schema.BackOrder as NamedNode<'http://schema.org/BackOrder'>,
   Discontinued: schema.Discontinued as NamedNode<'http://schema.org/Discontinued'>,
   InStock: schema.InStock as NamedNode<'http://schema.org/InStock'>,
   InStoreOnly: schema.InStoreOnly as NamedNode<'http://schema.org/InStoreOnly'>,
@@ -14,7 +15,8 @@ export default {
 };
 
 export type ItemAvailability =
-  NamedNode<'http://schema.org/Discontinued'>
+  NamedNode<'http://schema.org/BackOrder'>
+  | NamedNode<'http://schema.org/Discontinued'>
   | NamedNode<'http://schema.org/InStock'>
   | NamedNode<'http://schema.org/InStoreOnly'>
   | NamedNode<'http://schema.org/LimitedAvailability'>

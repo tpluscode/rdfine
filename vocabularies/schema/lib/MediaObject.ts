@@ -20,6 +20,8 @@ export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   encodingFormatTerm: RDF.NamedNode | undefined;
   endTime: Date | undefined;
   height: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
+  ineligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
+  ineligibleRegionLiteral: string | undefined;
   playerType: string | undefined;
   productionCompany: Schema.Organization<D> | undefined;
   regionsAllowed: Schema.Place<D> | undefined;
@@ -55,6 +57,10 @@ export function MediaObjectMixin<Base extends Constructor>(Resource: Base): Cons
     endTime: Date | undefined;
     @property.resource()
     height: Schema.Distance | Schema.QuantitativeValue | undefined;
+    @property.resource()
+    ineligibleRegion: Schema.GeoShape | Schema.Place | undefined;
+    @property.literal({ path: schema.ineligibleRegion })
+    ineligibleRegionLiteral: string | undefined;
     @property.literal()
     playerType: string | undefined;
     @property.resource()

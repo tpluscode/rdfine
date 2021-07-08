@@ -2819,9 +2819,9 @@
     eslint-visitor-keys "^2.0.0"
 
 "@zazuko/rdf-vocabularies@*":
-  version "2021.3.31"
-  resolved "https://registry.yarnpkg.com/@zazuko/rdf-vocabularies/-/rdf-vocabularies-2021.3.31.tgz#946699a4f5e5890dc32ea33f31ab2002d992804d"
-  integrity sha512-Ew/5o1VMFaIY1U3nb2UqLFMyd47NSEblUNmqA0tQV/goNfYGa33DQu9cIEq2VkDFVrIue0ebLtcIfDVSbwDvuw==
+  version "2021.6.10"
+  resolved "https://registry.yarnpkg.com/@zazuko/rdf-vocabularies/-/rdf-vocabularies-2021.6.10.tgz#a8d8dd22934b160e0f6cd52d2fc3ab2f91eb4b70"
+  integrity sha512-Cwflod4ACJfAhrx7RcMGvG0DaDR8QBJfWWBOjuntvSnTbZ6+79ycuvfG0Hde3gyUfT31ncLy6yuFhiDGqH+ETw==
   dependencies:
     "@rdfjs/parser-n3" "^1.1.4"
     commander "^5.0.0"

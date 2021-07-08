@@ -6,29 +6,26 @@ import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
-import { CreativeWorkMixin } from './CreativeWork';
+import { CommentMixin } from './Comment';
 
-export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Comment<D>, RdfResource<D> {
   acceptedAnswer: Schema.Answer<D> | Schema.ItemList<D> | undefined;
   answerCount: number | undefined;
-  downvoteCount: number | undefined;
+  eduQuestionType: string | undefined;
   suggestedAnswer: Schema.Answer<D> | Schema.ItemList<D> | undefined;
-  upvoteCount: number | undefined;
 }
 
 export function QuestionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Question> & RdfResourceCore> & Base {
   @namespace(schema)
-  class QuestionClass extends CreativeWorkMixin(Resource) implements Partial<Question> {
+  class QuestionClass extends CommentMixin(Resource) implements Partial<Question> {
     @property.resource()
     acceptedAnswer: Schema.Answer | Schema.ItemList | undefined;
     @property.literal({ type: Number })
     answerCount: number | undefined;
-    @property.literal({ type: Number })
-    downvoteCount: number | undefined;
+    @property.literal()
+    eduQuestionType: string | undefined;
     @property.resource()
     suggestedAnswer: Schema.Answer | Schema.ItemList | undefined;
-    @property.literal({ type: Number })
-    upvoteCount: number | undefined;
   }
   return QuestionClass
 }
@@ -39,9 +36,9 @@ class QuestionImpl extends QuestionMixin(RdfResourceImpl) {
     this.types.add(schema.Question)
   }
 
-  static readonly __mixins: Mixin[] = [QuestionMixin, CreativeWorkMixin];
+  static readonly __mixins: Mixin[] = [QuestionMixin, CommentMixin];
 }
 QuestionMixin.appliesTo = schema.Question
 QuestionMixin.Class = QuestionImpl
 
-export const fromPointer = createFactory<Question>([CreativeWorkMixin, QuestionMixin], { types: [schema.Question] });
+export const fromPointer = createFactory<Question>([CommentMixin, QuestionMixin], { types: [schema.Question] });

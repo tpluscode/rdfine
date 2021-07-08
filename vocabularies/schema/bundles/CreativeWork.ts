@@ -19,8 +19,8 @@ import { LanguageMixin } from '../lib/Language';
 import { InteractionCounterMixin } from '../lib/InteractionCounter';
 import { ProductMixin } from '../lib/Product';
 import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
-import { DemandMixin } from '../lib/Demand';
 import { OfferMixin } from '../lib/Offer';
+import { DemandMixin } from '../lib/Demand';
 import { PublicationEventMixin } from '../lib/PublicationEvent';
 import { EventMixin } from '../lib/Event';
 import { ReviewMixin } from '../lib/Review';
@@ -48,8 +48,8 @@ export const CreativeWorkBundle = [
   InteractionCounterMixin as Mixin,
   ProductMixin as Mixin,
   QuantitativeValueMixin as Mixin,
-  DemandMixin as Mixin,
   OfferMixin as Mixin,
+  DemandMixin as Mixin,
   PublicationEventMixin as Mixin,
   EventMixin as Mixin,
   ReviewMixin as Mixin,

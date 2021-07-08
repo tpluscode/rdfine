@@ -9,7 +9,7 @@ import type * as Schema from '..';
 import { IntangibleMixin } from './Intangible';
 
 export interface Observation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
-  marginOfError: Date | undefined;
+  marginOfError: Schema.QuantitativeValue<D> | undefined;
   measuredProperty: Schema.Property<D> | undefined;
   measuredValue: RDF.Term | undefined;
   observationDate: Date | undefined;
@@ -19,8 +19,8 @@ export interface Observation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 export function ObservationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Observation> & RdfResourceCore> & Base {
   @namespace(schema)
   class ObservationClass extends IntangibleMixin(Resource) implements Partial<Observation> {
-    @property.literal({ type: Date })
-    marginOfError: Date | undefined;
+    @property.resource()
+    marginOfError: Schema.QuantitativeValue | undefined;
     @property.resource()
     measuredProperty: Schema.Property | undefined;
     @property()

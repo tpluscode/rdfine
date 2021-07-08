@@ -21,6 +21,7 @@ export interface PropertyValue<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   value: Schema.StructuredValue<D> | undefined;
   valueLiteral: boolean | number | string | undefined;
   valueReference: Schema.PropertyValue<D> | Schema.QuantitativeValue<D> | Schema.StructuredValue<D> | undefined;
+  valueReferenceLiteral: string | undefined;
 }
 
 export function PropertyValueMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PropertyValue> & RdfResourceCore> & Base {
@@ -50,6 +51,8 @@ export function PropertyValueMixin<Base extends Constructor>(Resource: Base): Co
     valueLiteral: boolean | number | string | undefined;
     @property.resource()
     valueReference: Schema.PropertyValue | Schema.QuantitativeValue | Schema.StructuredValue | undefined;
+    @property.literal({ path: schema.valueReference })
+    valueReferenceLiteral: string | undefined;
   }
   return PropertyValueClass
 }

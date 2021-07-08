@@ -10,8 +10,8 @@ import { ScheduleMixin } from '../lib/Schedule';
 import { LanguageMixin } from '../lib/Language';
 import { PlaceMixin } from '../lib/Place';
 import { PostalAddressMixin } from '../lib/PostalAddress';
-import { DemandMixin } from '../lib/Demand';
 import { OfferMixin } from '../lib/Offer';
+import { DemandMixin } from '../lib/Demand';
 import { CreativeWorkMixin } from '../lib/CreativeWork';
 import { ReviewMixin } from '../lib/Review';
 
@@ -27,7 +27,7 @@ export const EventBundle = [
   LanguageMixin as Mixin,
   PlaceMixin as Mixin,
   PostalAddressMixin as Mixin,
-  DemandMixin as Mixin,
   OfferMixin as Mixin,
+  DemandMixin as Mixin,
   CreativeWorkMixin as Mixin,
   ReviewMixin as Mixin];

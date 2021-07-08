@@ -1,3 +1,4 @@
+import { PropertyMixinEx } from '../extensions/rdf';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -14,7 +15,7 @@ export interface ContainerMembershipProperty<D extends RDF.DatasetCore = RDF.Dat
 
 export function ContainerMembershipPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ContainerMembershipProperty> & RdfResourceCore> & Base {
   @namespace(rdfs)
-  class ContainerMembershipPropertyClass extends RdfPropertyMixin(Resource) implements Partial<ContainerMembershipProperty> {
+  class ContainerMembershipPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<ContainerMembershipProperty> {
   }
   return ContainerMembershipPropertyClass
 }

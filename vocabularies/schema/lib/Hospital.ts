@@ -7,10 +7,10 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
 import { CivicStructureMixin } from './CivicStructure';
-import { EmergencyServiceMixin } from './EmergencyService';
 import { MedicalOrganizationMixin } from './MedicalOrganization';
+import { EmergencyServiceMixin } from './EmergencyService';
 
-export interface Hospital<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.EmergencyService<D>, Schema.MedicalOrganization<D>, RdfResource<D> {
+export interface Hospital<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.MedicalOrganization<D>, Schema.EmergencyService<D>, RdfResource<D> {
   availableService: Schema.MedicalProcedure<D> | Schema.MedicalTest<D> | Schema.MedicalTherapy<D> | undefined;
   healthcareReportingData: Schema.CDCPMDRecord<D> | Schema.Dataset<D> | undefined;
   medicalSpecialty: Schema.MedicalSpecialty | undefined;
@@ -18,7 +18,7 @@ export interface Hospital<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
 
 export function HospitalMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Hospital> & RdfResourceCore> & Base {
   @namespace(schema)
-  class HospitalClass extends MedicalOrganizationMixin(EmergencyServiceMixin(CivicStructureMixin(Resource))) implements Partial<Hospital> {
+  class HospitalClass extends EmergencyServiceMixin(MedicalOrganizationMixin(CivicStructureMixin(Resource))) implements Partial<Hospital> {
     @property.resource()
     availableService: Schema.MedicalProcedure | Schema.MedicalTest | Schema.MedicalTherapy | undefined;
     @property.resource()
@@ -35,9 +35,9 @@ class HospitalImpl extends HospitalMixin(RdfResourceImpl) {
     this.types.add(schema.Hospital)
   }
 
-  static readonly __mixins: Mixin[] = [HospitalMixin, CivicStructureMixin, EmergencyServiceMixin, MedicalOrganizationMixin];
+  static readonly __mixins: Mixin[] = [HospitalMixin, CivicStructureMixin, MedicalOrganizationMixin, EmergencyServiceMixin];
 }
 HospitalMixin.appliesTo = schema.Hospital
 HospitalMixin.Class = HospitalImpl
 
-export const fromPointer = createFactory<Hospital>([MedicalOrganizationMixin, EmergencyServiceMixin, CivicStructureMixin, HospitalMixin], { types: [schema.Hospital] });
+export const fromPointer = createFactory<Hospital>([EmergencyServiceMixin, MedicalOrganizationMixin, CivicStructureMixin, HospitalMixin], { types: [schema.Hospital] });

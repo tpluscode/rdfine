@@ -41,11 +41,13 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   contentReferenceTime: Date | undefined;
   contributor: Schema.Organization<D> | Schema.Person<D> | undefined;
   copyrightHolder: Schema.Organization<D> | Schema.Person<D> | undefined;
+  copyrightNotice: string | undefined;
   copyrightYear: number | undefined;
   correction: Schema.CorrectionComment<D> | undefined;
   correctionLiteral: string | undefined;
   creativeWorkStatus: string | undefined;
   creator: Schema.Organization<D> | Schema.Person<D> | undefined;
+  creditText: string | undefined;
   dateCreated: Date | undefined;
   dateModified: Date | undefined;
   datePublished: Date | undefined;
@@ -80,6 +82,7 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   isFamilyFriendly: boolean | undefined;
   isPartOf: Schema.CreativeWork<D> | undefined;
   keywords: string | undefined;
+  keywordsTerm: RDF.NamedNode | undefined;
   learningResourceType: string | undefined;
   license: Schema.CreativeWork<D> | undefined;
   locationCreated: Schema.Place<D> | undefined;
@@ -198,6 +201,8 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Con
     contributor: Schema.Organization | Schema.Person | undefined;
     @property.resource()
     copyrightHolder: Schema.Organization | Schema.Person | undefined;
+    @property.literal()
+    copyrightNotice: string | undefined;
     @property.literal({ type: Number })
     copyrightYear: number | undefined;
     @property.resource()
@@ -208,6 +213,8 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Con
     creativeWorkStatus: string | undefined;
     @property.resource()
     creator: Schema.Organization | Schema.Person | undefined;
+    @property.literal()
+    creditText: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateCreated: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
@@ -276,6 +283,8 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Con
     isPartOf: Schema.CreativeWork | undefined;
     @property.literal()
     keywords: string | undefined;
+    @property({ path: schema.keywords })
+    keywordsTerm: RDF.NamedNode | undefined;
     @property.literal()
     learningResourceType: string | undefined;
     @property.resource()

@@ -16,10 +16,10 @@ import { LanguageMixin } from '../lib/Language';
 import { OfferMixin } from '../lib/Offer';
 import { ProgramMembershipMixin } from '../lib/ProgramMembership';
 import { CountryMixin } from '../lib/Country';
-import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
 import { PriceSpecificationMixin } from '../lib/PriceSpecification';
-import { OwnershipInfoMixin } from '../lib/OwnershipInfo';
+import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
 import { ProductMixin } from '../lib/Product';
+import { OwnershipInfoMixin } from '../lib/OwnershipInfo';
 import { EventMixin } from '../lib/Event';
 import { CreativeWorkMixin } from '../lib/CreativeWork';
 import { DemandMixin } from '../lib/Demand';
@@ -42,10 +42,10 @@ export const PersonBundle = [
   OfferMixin as Mixin,
   ProgramMembershipMixin as Mixin,
   CountryMixin as Mixin,
-  MonetaryAmountMixin as Mixin,
   PriceSpecificationMixin as Mixin,
-  OwnershipInfoMixin as Mixin,
+  MonetaryAmountMixin as Mixin,
   ProductMixin as Mixin,
+  OwnershipInfoMixin as Mixin,
   EventMixin as Mixin,
   CreativeWorkMixin as Mixin,
   DemandMixin as Mixin];

@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { CommentMixin } from '../lib/Comment';
 import { QuestionMixin } from '../lib/Question';
 import { AnswerMixin } from '../lib/Answer';
 import { ItemListMixin } from '../lib/ItemList';
 
 export const QuestionBundle = [
-  CreativeWorkMixin as Mixin,
+  CommentMixin as Mixin,
   QuestionMixin as Mixin,
   AnswerMixin as Mixin,
   ItemListMixin as Mixin];

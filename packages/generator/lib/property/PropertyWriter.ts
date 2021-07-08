@@ -60,6 +60,10 @@ export class PropertyWriter {
       .reduce(rangesToPropertyTypes, [])
       .sort((l, r) => l.localeCompare(r))
 
+    for (const range of prop.range) {
+      this.__module.addRdfineNamespaceImport(range)
+    }
+
     if (propertyTypes.length === 0) {
       type = 'RDF.Term'
       this.__context.log.warn('Could not determine types for property %s', prop.term.value)

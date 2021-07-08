@@ -1,3 +1,4 @@
+import { AbstractResultMixinEx } from '../extensions/sh';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -14,7 +15,7 @@ export interface SuggestionResult<D extends RDF.DatasetCore = RDF.DatasetCore> e
 
 export function SuggestionResultMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SuggestionResult> & RdfResourceCore> & Base {
   @namespace(dash)
-  class SuggestionResultClass extends ShaclAbstractResultMixin(Resource) implements Partial<SuggestionResult> {
+  class SuggestionResultClass extends AbstractResultMixinEx(ShaclAbstractResultMixin(Resource)) implements Partial<SuggestionResult> {
   }
   return SuggestionResultClass
 }

@@ -1,3 +1,4 @@
+import { ClassMixinEx } from '../extensions/rdfs';
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -20,7 +21,7 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs
 
 export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Class> & RdfResourceCore> & Base {
   @namespace(owl)
-  class ClassClass extends RdfsClassMixin(Resource) implements Partial<Class> {
+  class ClassClass extends ClassMixinEx(RdfsClassMixin(Resource)) implements Partial<Class> {
     @property.resource({ as: [ClassMixin] })
     complementOf: Owl.Class | undefined;
     @property.resource({ as: [RdfListMixin] })

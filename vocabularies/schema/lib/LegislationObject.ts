@@ -6,16 +6,16 @@ import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
-import { LegislationMixin } from './Legislation';
 import { MediaObjectMixin } from './MediaObject';
+import { LegislationMixin } from './Legislation';
 
-export interface LegislationObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Legislation<D>, Schema.MediaObject<D>, RdfResource<D> {
+export interface LegislationObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, Schema.Legislation<D>, RdfResource<D> {
   legislationLegalValue: Schema.LegalValueLevel | undefined;
 }
 
 export function LegislationObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LegislationObject> & RdfResourceCore> & Base {
   @namespace(schema)
-  class LegislationObjectClass extends MediaObjectMixin(LegislationMixin(Resource)) implements Partial<LegislationObject> {
+  class LegislationObjectClass extends LegislationMixin(MediaObjectMixin(Resource)) implements Partial<LegislationObject> {
     @property()
     legislationLegalValue: Schema.LegalValueLevel | undefined;
   }
@@ -28,9 +28,9 @@ class LegislationObjectImpl extends LegislationObjectMixin(RdfResourceImpl) {
     this.types.add(schema.LegislationObject)
   }
 
-  static readonly __mixins: Mixin[] = [LegislationObjectMixin, LegislationMixin, MediaObjectMixin];
+  static readonly __mixins: Mixin[] = [LegislationObjectMixin, MediaObjectMixin, LegislationMixin];
 }
 LegislationObjectMixin.appliesTo = schema.LegislationObject
 LegislationObjectMixin.Class = LegislationObjectImpl
 
-export const fromPointer = createFactory<LegislationObject>([MediaObjectMixin, LegislationMixin, LegislationObjectMixin], { types: [schema.LegislationObject] });
+export const fromPointer = createFactory<LegislationObject>([LegislationMixin, MediaObjectMixin, LegislationObjectMixin], { types: [schema.LegislationObject] });

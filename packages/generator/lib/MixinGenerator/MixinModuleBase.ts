@@ -1,7 +1,7 @@
 import { Project, SourceFile } from 'ts-morph'
 import { GraphPointer } from 'clownface'
 import { Context, GeneratedModule } from '../index'
-import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types'
+import { ExternalResourceType, ResourceType, TypeMeta, TypeMetaCollection } from '../types'
 
 export abstract class MixinModuleBase<T extends ResourceType | ExternalResourceType> implements GeneratedModule<T> {
   type: T
@@ -22,12 +22,13 @@ export abstract class MixinModuleBase<T extends ResourceType | ExternalResourceT
       this.mixinImports.push(type)
     }
 
-    if ('package' in type) {
-      this.addRdfineNamespaceImport(type)
-    }
+    this.addRdfineNamespaceImport(type)
   }
 
-  addRdfineNamespaceImport(type: ExternalResourceType) {
+  addRdfineNamespaceImport(type: TypeMeta) {
+    if (!('package' in type)) {
+      return
+    }
     if (this.namespaceImports[type.package]) {
       return
     }
