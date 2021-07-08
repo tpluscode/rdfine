@@ -17,7 +17,7 @@ declare module '@rdfine/hydra' {
 
 export function CollectionExMixin<Base extends Constructor<Partial<Omit<Collection, keyof CollectionEx>> & RdfResourceCore>>(base: Base): Constructor<RdfResourceCore & CollectionEx> & Base {
   class CollectionExClass extends base implements CollectionEx {
-    @property.resource({ path: hydra.manages, implicitTypes: [hydra.MemberAssertion] })
+    @property.resource({ path: hydra.manages, implicitTypes: [hydra.MemberAssertion], values: 'array' })
     manages!: Array<MemberAssertion>
   }
 
