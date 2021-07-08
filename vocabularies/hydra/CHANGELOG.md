@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.1
+
+### Patch Changes
+
+- c4787718: `hydra:manages` must return an array
+
 ## 0.7.0
 
 ### Minor Changes
