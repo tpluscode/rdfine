@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.6.5
+
+### Patch Changes
+
+- f9adc9b2: Update to latest terms for DASH and schema
+- Updated dependencies [247137f2]
+  - @tpluscode/rdfine@0.5.29
+
 ## 0.6.4
 
 ### Patch Changes

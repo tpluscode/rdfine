@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.6.6
+
+### Patch Changes
+
+- afe232c3: Add extending mixin to generated class
+- Updated dependencies [247137f2]
+  - @tpluscode/rdfine@0.5.29
+
 ## 0.6.5
 
 ### Patch Changes

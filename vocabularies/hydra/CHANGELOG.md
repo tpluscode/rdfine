@@ -1,5 +1,21 @@
 # Change Log
 
+## 0.7.0
+
+### Minor Changes
+
+- 553f30b2: Update Hydra to latest vocabulary
+
+  - correct name `writable` used
+  - Added `memberAssertion`. `manages` kept for now
+
+### Patch Changes
+
+- Updated dependencies [afe232c3]
+- Updated dependencies [247137f2]
+  - @rdfine/rdfs@0.6.6
+  - @tpluscode/rdfine@0.5.29
+
 ## 0.6.6
 
 ### Patch Changes

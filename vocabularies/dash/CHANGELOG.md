@@ -1,5 +1,18 @@
 # @rdfine/dash
 
+## 0.2.0
+
+### Minor Changes
+
+- f9adc9b2: Update to latest terms for DASH and schema
+
+### Patch Changes
+
+- Updated dependencies [afe232c3]
+- Updated dependencies [247137f2]
+  - @rdfine/rdfs@0.6.6
+  - @tpluscode/rdfine@0.5.29
+
 ## 0.1.4
 
 ### Patch Changes
