@@ -1,5 +1,13 @@
 # @rdfine/foaf
 
+## 0.1.5
+
+### Patch Changes
+
+- 9dce881b: Remove cycled dependency on WGS
+- Updated dependencies [247137f2]
+  - @tpluscode/rdfine@0.5.29
+
 ## 0.1.4
 
 ### Patch Changes

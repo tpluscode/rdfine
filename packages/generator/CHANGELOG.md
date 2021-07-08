@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.6.7
+
+### Patch Changes
+
+- afe232c3: Add extending mixin to generated class
+- 2cd64dfb: Generate mixins from `dash:ShapeClass`
+- 0faebb6b: Missing namespace import for types used only as ranges
+
 ## 0.6.6
 
 ### Patch Changes

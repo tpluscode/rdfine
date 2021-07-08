@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.29
+
+### Patch Changes
+
+- 247137f2: Extending interface relaxed to allow Partial base class
+
 ## 0.5.28
 
 ### Patch Changes
