@@ -52,7 +52,7 @@ describe('Collection', () => {
   describe('memberAssertion', () => {
     it('should return array even for one element', () => {
       // given
-      collectionNode.addOut(hydra.manages, collectionNode.blankNode())
+      collectionNode.addOut(hydra.memberAssertion, collectionNode.blankNode())
       const collection = fromPointer(collectionNode)
 
       // then

@@ -17,7 +17,7 @@ export interface Collection<M extends RdfResourceCore<any> = RdfResourceCore<any
 
 export function CollectionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Collection> & RdfResourceCore> & Base {
   @namespace(hydra)
-  class CollectionClass extends ResourceMixin(Resource) implements Partial<Collection> {
+  class CollectionClass extends CollectionExMixin(ResourceMixin(Resource)) implements Partial<Collection> {
     @property.resource({ values: 'array', implicitTypes: [hydra.Resource] })
     member!: Array<Hydra.Resource>;
     @property.resource({ values: 'array', implicitTypes: [hydra.MemberAssertion] })
@@ -28,13 +28,13 @@ export function CollectionMixin<Base extends Constructor>(Resource: Base): Const
   return CollectionClass
 }
 
-class CollectionImpl extends CollectionExMixin(CollectionMixin(RdfResourceImpl)) {
+class CollectionImpl extends CollectionMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: Initializer<Collection>) {
     super(arg, init)
     this.types.add(hydra.Collection)
   }
 
-  static readonly __mixins: Mixin[] = [CollectionMixin, ResourceMixin];
+  static readonly __mixins: Mixin[] = [CollectionExMixin, CollectionMixin, ResourceMixin];
 }
 CollectionMixin.appliesTo = hydra.Collection
 CollectionMixin.Class = CollectionImpl

@@ -30,4 +30,3 @@ export { TemplatedLinkMixin } from './lib/TemplatedLink';
 export type { TemplatedLink } from './lib/TemplatedLink';
 export { VariableRepresentationMixin } from './lib/VariableRepresentation';
 export type { VariableRepresentation } from './lib/VariableRepresentation';
-export * from './extensions'
