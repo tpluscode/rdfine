@@ -1,15 +1,13 @@
 import { NamedNode } from '@rdfjs/types';
 import { schema } from './namespace';
 
-export default {
-  AllWheelDriveConfiguration: schema.AllWheelDriveConfiguration as NamedNode<'http://schema.org/AllWheelDriveConfiguration'>,
-  FourWheelDriveConfiguration: schema.FourWheelDriveConfiguration as NamedNode<'http://schema.org/FourWheelDriveConfiguration'>,
-  FrontWheelDriveConfiguration: schema.FrontWheelDriveConfiguration as NamedNode<'http://schema.org/FrontWheelDriveConfiguration'>,
-  RearWheelDriveConfiguration: schema.RearWheelDriveConfiguration as NamedNode<'http://schema.org/RearWheelDriveConfiguration'>,
+const values = {
+  AllWheelDriveConfiguration: schema.AllWheelDriveConfiguration,
+  FourWheelDriveConfiguration: schema.FourWheelDriveConfiguration,
+  FrontWheelDriveConfiguration: schema.FrontWheelDriveConfiguration,
+  RearWheelDriveConfiguration: schema.RearWheelDriveConfiguration,
 };
 
-export type DriveWheelConfigurationValue =
-  NamedNode<'http://schema.org/AllWheelDriveConfiguration'>
-  | NamedNode<'http://schema.org/FourWheelDriveConfiguration'>
-  | NamedNode<'http://schema.org/FrontWheelDriveConfiguration'>
-  | NamedNode<'http://schema.org/RearWheelDriveConfiguration'>;
+export type DriveWheelConfigurationValue = typeof values[keyof typeof values];
+
+export default values;

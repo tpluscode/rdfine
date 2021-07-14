@@ -1,6 +1,8 @@
 import { NamedNode } from '@rdfjs/types';
 import { schema } from './namespace';
 
-export default {};
+const values = {};
 
 export type Specialty = NamedNode;
+
+export default values;

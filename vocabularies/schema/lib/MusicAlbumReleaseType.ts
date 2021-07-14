@@ -1,15 +1,13 @@
 import { NamedNode } from '@rdfjs/types';
 import { schema } from './namespace';
 
-export default {
-  AlbumRelease: schema.AlbumRelease as NamedNode<'http://schema.org/AlbumRelease'>,
-  BroadcastRelease: schema.BroadcastRelease as NamedNode<'http://schema.org/BroadcastRelease'>,
-  EPRelease: schema.EPRelease as NamedNode<'http://schema.org/EPRelease'>,
-  SingleRelease: schema.SingleRelease as NamedNode<'http://schema.org/SingleRelease'>,
+const values = {
+  AlbumRelease: schema.AlbumRelease,
+  BroadcastRelease: schema.BroadcastRelease,
+  EPRelease: schema.EPRelease,
+  SingleRelease: schema.SingleRelease,
 };
 
-export type MusicAlbumReleaseType =
-  NamedNode<'http://schema.org/AlbumRelease'>
-  | NamedNode<'http://schema.org/BroadcastRelease'>
-  | NamedNode<'http://schema.org/EPRelease'>
-  | NamedNode<'http://schema.org/SingleRelease'>;
+export type MusicAlbumReleaseType = typeof values[keyof typeof values];
+
+export default values;

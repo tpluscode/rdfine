@@ -4,9 +4,11 @@ exports[`EnumerationModule uses plain NamedNode for enumerations without members
 "import { NamedNode } from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 
-export default {};
+const values = {};
 
 export type Enum = NamedNode;
+
+export default values;
 "
 `;
 
@@ -14,13 +16,13 @@ exports[`EnumerationModule writes a module with enumeration members: toMatchSnap
 "import { NamedNode } from \\"@rdfjs/types\\";
 import { ex } from \\"./namespace\\";
 
-export default {
-    Member1: ex.Member1 as NamedNode<'http://example.com/Member1'>,
-    Member2: ex.Member2 as NamedNode<'http://example.com/Member2'>
+const values = {
+    Member1: ex.Member1,
+    Member2: ex.Member2
 };
 
-export type Enum = 
-    NamedNode<'http://example.com/Member1'>
-    | NamedNode<'http://example.com/Member2'>;
+export type Enum = typeof values[keyof typeof values];
+
+export default values;
 "
 `;

@@ -1,11 +1,11 @@
 import { NamedNode } from '@rdfjs/types';
 import { schema } from './namespace';
 
-export default {
-  SizeSystemImperial: schema.SizeSystemImperial as NamedNode<'http://schema.org/SizeSystemImperial'>,
-  SizeSystemMetric: schema.SizeSystemMetric as NamedNode<'http://schema.org/SizeSystemMetric'>,
+const values = {
+  SizeSystemImperial: schema.SizeSystemImperial,
+  SizeSystemMetric: schema.SizeSystemMetric,
 };
 
-export type SizeSystemEnumeration =
-  NamedNode<'http://schema.org/SizeSystemImperial'>
-  | NamedNode<'http://schema.org/SizeSystemMetric'>;
+export type SizeSystemEnumeration = typeof values[keyof typeof values];
+
+export default values;

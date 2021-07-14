@@ -1,21 +1,16 @@
 import { NamedNode } from '@rdfjs/types';
 import { schema } from './namespace';
 
-export default {
-  AerobicActivity: schema.AerobicActivity as NamedNode<'http://schema.org/AerobicActivity'>,
-  AnaerobicActivity: schema.AnaerobicActivity as NamedNode<'http://schema.org/AnaerobicActivity'>,
-  Balance: schema.Balance as NamedNode<'http://schema.org/Balance'>,
-  Flexibility: schema.Flexibility as NamedNode<'http://schema.org/Flexibility'>,
-  LeisureTimeActivity: schema.LeisureTimeActivity as NamedNode<'http://schema.org/LeisureTimeActivity'>,
-  OccupationalActivity: schema.OccupationalActivity as NamedNode<'http://schema.org/OccupationalActivity'>,
-  StrengthTraining: schema.StrengthTraining as NamedNode<'http://schema.org/StrengthTraining'>,
+const values = {
+  AerobicActivity: schema.AerobicActivity,
+  AnaerobicActivity: schema.AnaerobicActivity,
+  Balance: schema.Balance,
+  Flexibility: schema.Flexibility,
+  LeisureTimeActivity: schema.LeisureTimeActivity,
+  OccupationalActivity: schema.OccupationalActivity,
+  StrengthTraining: schema.StrengthTraining,
 };
 
-export type PhysicalActivityCategory =
-  NamedNode<'http://schema.org/AerobicActivity'>
-  | NamedNode<'http://schema.org/AnaerobicActivity'>
-  | NamedNode<'http://schema.org/Balance'>
-  | NamedNode<'http://schema.org/Flexibility'>
-  | NamedNode<'http://schema.org/LeisureTimeActivity'>
-  | NamedNode<'http://schema.org/OccupationalActivity'>
-  | NamedNode<'http://schema.org/StrengthTraining'>;
+export type PhysicalActivityCategory = typeof values[keyof typeof values];
+
+export default values;
