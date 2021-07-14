@@ -1,4 +1,5 @@
-import { PropertyMixinEx } from '../extensions/rdf';
+import '../extensions/rdf/Property';
+import { PropertyMixinEx } from '../extensions/rdf/Property';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
