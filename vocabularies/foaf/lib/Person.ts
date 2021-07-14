@@ -1,3 +1,5 @@
+import '../extensions/wgs/SpatialThing';
+import { SpatialThingMixinEx } from '../extensions/wgs/SpatialThing';
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
@@ -31,7 +33,7 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Wgs
 
 export function PersonMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Person> & RdfResourceCore> & Base {
   @namespace(foaf)
-  class PersonClass extends AgentMixin(WgsSpatialThingMixin(Resource)) implements Partial<Person> {
+  class PersonClass extends SpatialThingMixinEx(AgentMixin(WgsSpatialThingMixin(Resource))) implements Partial<Person> {
     @property()
     currentProject: RDF.NamedNode | undefined;
     @property()

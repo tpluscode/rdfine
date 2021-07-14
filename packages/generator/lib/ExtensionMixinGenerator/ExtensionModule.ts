@@ -45,7 +45,9 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
       context,
       module: this,
     })
-    this.properties.forEach(propertyWriter.addProperty.bind(propertyWriter))
+    this.properties
+      .sort((left, right) => left.name.localeCompare(right.name))
+      .forEach(propertyWriter.addProperty.bind(propertyWriter))
 
     const nsBuilderTerm = this.extended.term === this.type.localName
       ? `${this.extended.prefix}.${this.extended.term}`

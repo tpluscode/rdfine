@@ -1,5 +1,7 @@
-import { NodeShapeMixinEx } from '../extensions/sh';
-import { ClassMixinEx } from '../extensions/rdfs';
+import '../extensions/sh/NodeShape';
+import { NodeShapeMixinEx } from '../extensions/sh/NodeShape';
+import '../extensions/rdfs/Class';
+import { ClassMixinEx } from '../extensions/rdfs/Class';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';

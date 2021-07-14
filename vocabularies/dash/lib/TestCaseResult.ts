@@ -1,4 +1,5 @@
-import { AbstractResultMixinEx } from '../extensions/sh';
+import '../extensions/sh/AbstractResult';
+import { AbstractResultMixinEx } from '../extensions/sh/AbstractResult';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';

@@ -1,4 +1,5 @@
-import { ResourceMixinEx } from '../extensions/rdfs';
+import '../extensions/rdfs/Resource';
+import { ResourceMixinEx } from '../extensions/rdfs/Resource';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';

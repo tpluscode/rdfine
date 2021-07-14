@@ -39,7 +39,9 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       context,
       module: this,
     })
-    this.properties.forEach(propertyWriter.addProperty.bind(propertyWriter))
+    this.properties
+      .sort((left, right) => left.name.localeCompare(right.name))
+      .forEach(propertyWriter.addProperty.bind(propertyWriter))
 
     const type = `${context.prefix}.${this.type.localName}`
 
@@ -300,8 +302,12 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
 
   private addExtensionImport(mixinFile: SourceFile, module: ExtensionModule) {
     mixinFile.addImportDeclaration({
+      moduleSpecifier: `../extensions/${module.extended.prefix}/${module.type.localName}`,
+    })
+
+    mixinFile.addImportDeclaration({
       namedImports: [`${module.type.localName}MixinEx`],
-      moduleSpecifier: `../extensions/${module.extended.prefix}`,
+      moduleSpecifier: `../extensions/${module.extended.prefix}/${module.type.localName}`,
     })
   }
 }

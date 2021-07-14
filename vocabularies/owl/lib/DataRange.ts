@@ -1,4 +1,5 @@
-import { DatatypeMixinEx } from '../extensions/rdfs';
+import '../extensions/rdfs/Datatype';
+import { DatatypeMixinEx } from '../extensions/rdfs/Datatype';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';

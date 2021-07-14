@@ -1,4 +1,5 @@
-import { FunctionMixinEx } from '../extensions/sh';
+import '../extensions/sh/Function';
+import { FunctionMixinEx } from '../extensions/sh/Function';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
