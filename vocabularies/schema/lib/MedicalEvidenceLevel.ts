@@ -1,13 +1,12 @@
 import { NamedNode } from '@rdfjs/types';
 import { schema } from './namespace';
 
-export default {
-  EvidenceLevelA: schema.EvidenceLevelA as NamedNode<'http://schema.org/EvidenceLevelA'>,
-  EvidenceLevelB: schema.EvidenceLevelB as NamedNode<'http://schema.org/EvidenceLevelB'>,
-  EvidenceLevelC: schema.EvidenceLevelC as NamedNode<'http://schema.org/EvidenceLevelC'>,
+const values = {
+  EvidenceLevelA: schema.EvidenceLevelA,
+  EvidenceLevelB: schema.EvidenceLevelB,
+  EvidenceLevelC: schema.EvidenceLevelC,
 };
 
-export type MedicalEvidenceLevel =
-  NamedNode<'http://schema.org/EvidenceLevelA'>
-  | NamedNode<'http://schema.org/EvidenceLevelB'>
-  | NamedNode<'http://schema.org/EvidenceLevelC'>;
+export type MedicalEvidenceLevel = typeof values[keyof typeof values];
+
+export default values;

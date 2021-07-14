@@ -1,13 +1,12 @@
 import { NamedNode } from '@rdfjs/types';
 import { schema } from './namespace';
 
-export default {
-  ExchangeRefund: schema.ExchangeRefund as NamedNode<'http://schema.org/ExchangeRefund'>,
-  FullRefund: schema.FullRefund as NamedNode<'http://schema.org/FullRefund'>,
-  StoreCreditRefund: schema.StoreCreditRefund as NamedNode<'http://schema.org/StoreCreditRefund'>,
+const values = {
+  ExchangeRefund: schema.ExchangeRefund,
+  FullRefund: schema.FullRefund,
+  StoreCreditRefund: schema.StoreCreditRefund,
 };
 
-export type RefundTypeEnumeration =
-  NamedNode<'http://schema.org/ExchangeRefund'>
-  | NamedNode<'http://schema.org/FullRefund'>
-  | NamedNode<'http://schema.org/StoreCreditRefund'>;
+export type RefundTypeEnumeration = typeof values[keyof typeof values];
+
+export default values;

@@ -1,15 +1,13 @@
 import { NamedNode } from '@rdfjs/types';
 import { schema } from './namespace';
 
-export default {
-  CharitableIncorporatedOrganization: schema.CharitableIncorporatedOrganization as NamedNode<'http://schema.org/CharitableIncorporatedOrganization'>,
-  LimitedByGuaranteeCharity: schema.LimitedByGuaranteeCharity as NamedNode<'http://schema.org/LimitedByGuaranteeCharity'>,
-  UKTrust: schema.UKTrust as NamedNode<'http://schema.org/UKTrust'>,
-  UnincorporatedAssociationCharity: schema.UnincorporatedAssociationCharity as NamedNode<'http://schema.org/UnincorporatedAssociationCharity'>,
+const values = {
+  CharitableIncorporatedOrganization: schema.CharitableIncorporatedOrganization,
+  LimitedByGuaranteeCharity: schema.LimitedByGuaranteeCharity,
+  UKTrust: schema.UKTrust,
+  UnincorporatedAssociationCharity: schema.UnincorporatedAssociationCharity,
 };
 
-export type UKNonprofitType =
-  NamedNode<'http://schema.org/CharitableIncorporatedOrganization'>
-  | NamedNode<'http://schema.org/LimitedByGuaranteeCharity'>
-  | NamedNode<'http://schema.org/UKTrust'>
-  | NamedNode<'http://schema.org/UnincorporatedAssociationCharity'>;
+export type UKNonprofitType = typeof values[keyof typeof values];
+
+export default values;
