@@ -1,5 +1,15 @@
 # @rdfine/dash
 
+## 0.2.1
+
+### Patch Changes
+
+- 45a4be9c: Broken imports or exports of extension modules
+- Updated dependencies [45a4be9c]
+- Updated dependencies [46a6b035]
+  - @rdfine/rdfs@0.6.7
+  - @rdfine/shacl@0.8.2
+
 ## 0.2.0
 
 ### Minor Changes

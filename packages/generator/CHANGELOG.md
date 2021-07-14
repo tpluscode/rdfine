@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.6.8
+
+### Patch Changes
+
+- 45a4be9c: Broken imports or exports of extension modules
+- 46a6b035: Simplify generated enum modules
+
 ## 0.6.7
 
 ### Patch Changes

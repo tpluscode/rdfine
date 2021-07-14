@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/owl",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",
@@ -61,7 +61,7 @@
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
     "@rdfine/rdf": "^0.5.4",
-    "@rdfine/rdfs": "^0.6.6",
+    "@rdfine/rdfs": "^0.6.7",
     "@tpluscode/rdf-ns-builders": "^1.0.0",
     "@tpluscode/rdfine": "^0.5.29"
   },
