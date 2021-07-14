@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.8.2
+
+### Patch Changes
+
+- 46a6b035: Simplify generated enum modules
+
 ## 0.8.1
 
 ### Patch Changes
