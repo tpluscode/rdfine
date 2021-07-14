@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.8.2
+
+### Patch Changes
+
+- 46a6b035: Simplify generated enum modules
+- Updated dependencies [45a4be9c]
+  - @rdfine/owl@0.4.6
+  - @rdfine/rdfs@0.6.7
+
 ## 0.8.1
 
 ### Patch Changes

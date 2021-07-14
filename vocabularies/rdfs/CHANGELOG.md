@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.7
+
+### Patch Changes
+
+- 45a4be9c: Broken imports or exports of extension modules
+
 ## 0.6.6
 
 ### Patch Changes

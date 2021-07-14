@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.7.2
+
+### Patch Changes
+
+- 45a4be9c: Broken imports or exports of extension modules
+- Updated dependencies [45a4be9c]
+  - @rdfine/rdfs@0.6.7
+
 ## 0.7.1
 
 ### Patch Changes
