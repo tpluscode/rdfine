@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.30
+
+### Patch Changes
+
+- 6207e784: Fix serialization of list of literals to JSON
+
 ## 0.5.29
 
 ### Patch Changes
