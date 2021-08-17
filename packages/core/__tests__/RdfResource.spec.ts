@@ -2039,6 +2039,46 @@ describe('RdfResource', () => {
       `)
     })
 
+    it('serializes RDF list of literals (without mixin)', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const node = cf({ dataset })
+        .namedNode('john')
+        .addList(ex.foo, [
+          'foo',
+          $rdf.literal('bar', 'en'),
+          $rdf.literal('bar', xsd.anyType),
+        ])
+
+      const resource = RdfResource.factory.createEntity(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "type": "@type",
+          },
+          "http://example.com/foo": Array [
+            "foo",
+            Object {
+              "@language": "en",
+              "@value": "bar",
+            },
+            Object {
+              "@type": "http://www.w3.org/2001/XMLSchema#anyType",
+              "@value": "bar",
+            },
+          ],
+          "id": "john",
+        }
+      `)
+    })
+
     it('serializes RDF list of Named Nodes', () => {
       // given
       const dataset = $rdf.dataset()
