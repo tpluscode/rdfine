@@ -142,18 +142,20 @@ interface ToJsonContext {
 
 function jsonifyQuads(resource: RdfResource, context: ToJsonContext) {
   return (json: Record<string, any>, [predicate, objects]: [Term, Array<GraphPointer<ResourceIdentifier | Literal>>]) => {
-    const mapped = objects.map((pointer) => {
+    const jsonifyObject: any = (pointer: GraphPointer) => {
       if (pointer.term.termType === 'Literal') {
         return literalToJSON(pointer.term)
       }
 
       const list = pointer.list()
       if (list) {
-        return [...list].map(({ term }) => toJSON(resource._create(resource.pointer.node(term)), context))
+        return [...list].map(jsonifyObject)
       }
 
       return toJSON(resource._create(resource.pointer.node(pointer.term)), context)
-    })
+    }
+
+    const mapped = objects.map(jsonifyObject)
 
     if (mapped.length === 1) {
       json[predicate.value] = mapped[0]
