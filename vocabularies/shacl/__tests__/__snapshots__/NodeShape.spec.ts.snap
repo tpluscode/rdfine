@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NodeShape initializer sets an array as list deep in the initialized graph: toMatchSnapshot 1`] = `
+exports[`NodeShape initializer sets an array as list deep in the initialized graph 1`] = `
 "<http://example.com/bar> <http://www.w3.org/2000/01/rdf-schema#label> \\"Bar\\" .
 <http://example.com/foo> <http://www.w3.org/2000/01/rdf-schema#label> \\"Foo\\" .
 <http://example.com/shape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .

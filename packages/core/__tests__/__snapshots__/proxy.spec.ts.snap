@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`proxy set does not proxy declared properties: toMatchSnapshot 1`] = `
+exports[`proxy set does not proxy declared properties 1`] = `
 "<http://example.com/Proxied2> <http://example.com/Prop2> \\"foo\\"@bar .
 <http://example.com/Proxied> <http://example.com/Prop1> <http://example.com/Proxied2> .
 <http://example.com/Proxied> <http://example.com/multi> \\"a\\" .
@@ -9,13 +9,13 @@ exports[`proxy set does not proxy declared properties: toMatchSnapshot 1`] = `
 "
 `;
 
-exports[`proxy set empty array removes triples: toMatchSnapshot 1`] = `
+exports[`proxy set empty array removes triples 1`] = `
 "<http://example.com/Proxied2> <http://example.com/Prop2> \\"foo\\"@bar .
 <http://example.com/Proxied> <http://example.com/Prop1> <http://example.com/Proxied2> .
 "
 `;
 
-exports[`proxy set multiple literals: toMatchSnapshot 1`] = `
+exports[`proxy set multiple literals 1`] = `
 "<http://example.com/Proxied2> <http://example.com/Prop2> \\"foo\\"@bar .
 <http://example.com/Proxied> <http://example.com/Prop1> <http://example.com/Proxied2> .
 <http://example.com/Proxied> <http://example.com/multi> \\"a\\" .
@@ -25,7 +25,7 @@ exports[`proxy set multiple literals: toMatchSnapshot 1`] = `
 "
 `;
 
-exports[`proxy set multiple resources: toMatchSnapshot 1`] = `
+exports[`proxy set multiple resources 1`] = `
 "<http://example.com/Proxied2> <http://example.com/Prop2> \\"foo\\"@bar .
 <http://example.com/Proxied> <http://example.com/Prop1> <http://example.com/Proxied2> .
 <http://example.com/Proxied> <http://example.com/multi> \\"a\\" .
@@ -35,13 +35,13 @@ exports[`proxy set multiple resources: toMatchSnapshot 1`] = `
 "
 `;
 
-exports[`proxy set null removes triples: toMatchSnapshot 1`] = `
+exports[`proxy set null removes triples 1`] = `
 "<http://example.com/Proxied2> <http://example.com/Prop2> \\"foo\\"@bar .
 <http://example.com/Proxied> <http://example.com/Prop1> <http://example.com/Proxied2> .
 "
 `;
 
-exports[`proxy set single literal: toMatchSnapshot 1`] = `
+exports[`proxy set single literal 1`] = `
 "<http://example.com/Proxied2> <http://example.com/Prop2> \\"foo\\"@bar .
 <http://example.com/Proxied> <http://example.com/Prop1> <http://example.com/Proxied2> .
 <http://example.com/Proxied> <http://example.com/multi> \\"a\\" .
@@ -50,7 +50,7 @@ exports[`proxy set single literal: toMatchSnapshot 1`] = `
 "
 `;
 
-exports[`proxy set single resource: toMatchSnapshot 1`] = `
+exports[`proxy set single resource 1`] = `
 "<http://example.com/Proxied2> <http://example.com/Prop2> \\"foo\\"@bar .
 <http://example.com/Proxied> <http://example.com/Prop1> <http://example.com/Proxied2> .
 <http://example.com/Proxied> <http://example.com/multi> \\"a\\" .
