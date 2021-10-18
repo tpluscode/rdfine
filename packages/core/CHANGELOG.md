@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.31
+
+### Patch Changes
+
+- 64e8907e: Filter decorator option
+
 ## 0.5.30
 
 ### Patch Changes
