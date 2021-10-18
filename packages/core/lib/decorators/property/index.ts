@@ -17,6 +17,7 @@ export interface AccessorOptions {
   path?: ArrayOrSingle<PropRef | EdgeTraversalFactory>
   strict?: true
   subjectFromAllGraphs?: true
+  filter?: (pointer: Term) => boolean
 }
 
 interface TermOptions <TSelf>{
