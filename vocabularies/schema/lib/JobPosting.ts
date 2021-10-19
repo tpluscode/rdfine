@@ -15,6 +15,7 @@ export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   baseSalaryLiteral: number | undefined;
   benefits: string | undefined;
   datePosted: Date | undefined;
+  directApply: boolean | undefined;
   educationRequirements: string | undefined;
   eligibilityToWorkRequirement: string | undefined;
   employerOverview: string | undefined;
@@ -69,6 +70,8 @@ export function JobPostingMixin<Base extends Constructor>(Resource: Base): Const
     benefits: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     datePosted: Date | undefined;
+    @property.literal({ type: Boolean })
+    directApply: boolean | undefined;
     @property.literal()
     educationRequirements: string | undefined;
     @property.literal()

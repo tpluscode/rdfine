@@ -9,12 +9,15 @@ import type * as Schema from '..';
 import { CreativeWorkSeriesMixin } from './CreativeWorkSeries';
 
 export interface PodcastSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeries<D>, RdfResource<D> {
+  actor: Schema.Person<D> | undefined;
   webFeed: Schema.DataFeed<D> | undefined;
 }
 
 export function PodcastSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PodcastSeries> & RdfResourceCore> & Base {
   @namespace(schema)
   class PodcastSeriesClass extends CreativeWorkSeriesMixin(Resource) implements Partial<PodcastSeries> {
+    @property.resource()
+    actor: Schema.Person | undefined;
     @property.resource()
     webFeed: Schema.DataFeed | undefined;
   }

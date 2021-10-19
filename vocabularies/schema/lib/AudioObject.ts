@@ -11,6 +11,7 @@ import { MediaObjectMixin } from './MediaObject';
 export interface AudioObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, RdfResource<D> {
   caption: Schema.MediaObject<D> | undefined;
   captionLiteral: string | undefined;
+  embeddedTextCaption: string | undefined;
   transcript: string | undefined;
 }
 
@@ -21,6 +22,8 @@ export function AudioObjectMixin<Base extends Constructor>(Resource: Base): Cons
     caption: Schema.MediaObject | undefined;
     @property.literal({ path: schema.caption })
     captionLiteral: string | undefined;
+    @property.literal()
+    embeddedTextCaption: string | undefined;
     @property.literal()
     transcript: string | undefined;
   }

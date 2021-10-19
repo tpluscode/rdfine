@@ -4,6 +4,7 @@ import { CreativeWorkMixin } from '../lib/CreativeWork';
 import { ItemListMixin } from '../lib/ItemList';
 import { PersonMixin } from '../lib/Person';
 import { AggregateRatingMixin } from '../lib/AggregateRating';
+import { WebPageMixin } from '../lib/WebPage';
 import { MediaObjectMixin } from '../lib/MediaObject';
 import { AudienceMixin } from '../lib/Audience';
 import { AudioObjectMixin } from '../lib/AudioObject';
@@ -14,9 +15,11 @@ import { CommentMixin } from '../lib/Comment';
 import { PlaceMixin } from '../lib/Place';
 import { RatingMixin } from '../lib/Rating';
 import { CorrectionCommentMixin } from '../lib/CorrectionComment';
+import { CountryMixin } from '../lib/Country';
 import { AlignmentObjectMixin } from '../lib/AlignmentObject';
 import { LanguageMixin } from '../lib/Language';
 import { InteractionCounterMixin } from '../lib/InteractionCounter';
+import { ClaimMixin } from '../lib/Claim';
 import { ProductMixin } from '../lib/Product';
 import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
 import { OfferMixin } from '../lib/Offer';
@@ -33,6 +36,7 @@ export const CreativeWorkBundle = [
   ItemListMixin as Mixin,
   PersonMixin as Mixin,
   AggregateRatingMixin as Mixin,
+  WebPageMixin as Mixin,
   MediaObjectMixin as Mixin,
   AudienceMixin as Mixin,
   AudioObjectMixin as Mixin,
@@ -43,9 +47,11 @@ export const CreativeWorkBundle = [
   PlaceMixin as Mixin,
   RatingMixin as Mixin,
   CorrectionCommentMixin as Mixin,
+  CountryMixin as Mixin,
   AlignmentObjectMixin as Mixin,
   LanguageMixin as Mixin,
   InteractionCounterMixin as Mixin,
+  ClaimMixin as Mixin,
   ProductMixin as Mixin,
   QuantitativeValueMixin as Mixin,
   OfferMixin as Mixin,

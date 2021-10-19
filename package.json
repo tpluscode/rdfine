@@ -10,6 +10,7 @@
     "generate": "npm run generate:one",
     "generate:one": "wsrun --no-prefix -rltm -p $npm_config_package -c generate && echo",
     "generate:all": "wsrun --no-prefix -rltm -c generate",
+    "clean": "wsrun --no-prefix -rltm -c clean",
     "build": "wsrun -cm prepack",
     "release": "changeset publish"
   },

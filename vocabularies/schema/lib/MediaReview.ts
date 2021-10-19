@@ -10,6 +10,8 @@ import { ReviewMixin } from './Review';
 
 export interface MediaReview<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Review<D>, RdfResource<D> {
   mediaAuthenticityCategory: Schema.MediaManipulationRatingEnumeration | undefined;
+  originalMediaContextDescription: string | undefined;
+  originalMediaLink: Schema.MediaObject<D> | Schema.WebPage<D> | undefined;
 }
 
 export function MediaReviewMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MediaReview> & RdfResourceCore> & Base {
@@ -17,6 +19,10 @@ export function MediaReviewMixin<Base extends Constructor>(Resource: Base): Cons
   class MediaReviewClass extends ReviewMixin(Resource) implements Partial<MediaReview> {
     @property()
     mediaAuthenticityCategory: Schema.MediaManipulationRatingEnumeration | undefined;
+    @property.literal()
+    originalMediaContextDescription: string | undefined;
+    @property.resource()
+    originalMediaLink: Schema.MediaObject | Schema.WebPage | undefined;
   }
   return MediaReviewClass
 }

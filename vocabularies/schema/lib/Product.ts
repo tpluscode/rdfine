@@ -18,6 +18,9 @@ export interface Product<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   category: Schema.Thing<D> | undefined;
   categoryLiteral: string | undefined;
   color: string | undefined;
+  countryOfAssembly: string | undefined;
+  countryOfLastProcessing: string | undefined;
+  countryOfOrigin: Schema.Country<D> | undefined;
   depth: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
   gtin: string | undefined;
   'gtin12': string | undefined;
@@ -80,6 +83,12 @@ export function ProductMixin<Base extends Constructor>(Resource: Base): Construc
     categoryLiteral: string | undefined;
     @property.literal()
     color: string | undefined;
+    @property.literal()
+    countryOfAssembly: string | undefined;
+    @property.literal()
+    countryOfLastProcessing: string | undefined;
+    @property.resource()
+    countryOfOrigin: Schema.Country | undefined;
     @property.resource()
     depth: Schema.Distance | Schema.QuantitativeValue | undefined;
     @property.literal()

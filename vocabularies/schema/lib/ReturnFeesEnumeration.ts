@@ -2,8 +2,10 @@ import { NamedNode } from '@rdfjs/types';
 import { schema } from './namespace';
 
 const values = {
+  FreeReturn: schema.FreeReturn,
   OriginalShippingFees: schema.OriginalShippingFees,
   RestockingFees: schema.RestockingFees,
+  ReturnFeesCustomerResponsibility: schema.ReturnFeesCustomerResponsibility,
   ReturnShippingFees: schema.ReturnShippingFees,
 };
 
