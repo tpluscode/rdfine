@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/schema",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",
