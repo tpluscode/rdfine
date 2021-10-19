@@ -37,6 +37,9 @@
     "types": {
       "BaseUriSource": "NamedNode"
     },
+    "exclude": [
+      "apiDocumentation"
+    ],
     "properties": {
       "collection": {
         "values": "array"
