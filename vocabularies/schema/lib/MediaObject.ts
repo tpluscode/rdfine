@@ -22,11 +22,13 @@ export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   height: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
   ineligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   ineligibleRegionLiteral: string | undefined;
+  interpretedAsClaim: Schema.Claim<D> | undefined;
   playerType: string | undefined;
   productionCompany: Schema.Organization<D> | undefined;
   regionsAllowed: Schema.Place<D> | undefined;
   requiresSubscription: Schema.MediaSubscription<D> | undefined;
   requiresSubscriptionLiteral: boolean | undefined;
+  'sha256': string | undefined;
   startTime: Date | undefined;
   uploadDate: Date | undefined;
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
@@ -61,6 +63,8 @@ export function MediaObjectMixin<Base extends Constructor>(Resource: Base): Cons
     ineligibleRegion: Schema.GeoShape | Schema.Place | undefined;
     @property.literal({ path: schema.ineligibleRegion })
     ineligibleRegionLiteral: string | undefined;
+    @property.resource()
+    interpretedAsClaim: Schema.Claim | undefined;
     @property.literal()
     playerType: string | undefined;
     @property.resource()
@@ -71,6 +75,8 @@ export function MediaObjectMixin<Base extends Constructor>(Resource: Base): Cons
     requiresSubscription: Schema.MediaSubscription | undefined;
     @property.literal({ path: schema.requiresSubscription, type: Boolean })
     requiresSubscriptionLiteral: boolean | undefined;
+    @property.literal()
+    'sha256': string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     startTime: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })

@@ -7,6 +7,7 @@ import { DistanceMixin } from '../lib/Distance';
 import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
 import { PlaceMixin } from '../lib/Place';
 import { GeoShapeMixin } from '../lib/GeoShape';
+import { ClaimMixin } from '../lib/Claim';
 import { OrganizationMixin } from '../lib/Organization';
 import { MediaSubscriptionMixin } from '../lib/MediaSubscription';
 
@@ -19,5 +20,6 @@ export const MediaObjectBundle = [
   QuantitativeValueMixin as Mixin,
   PlaceMixin as Mixin,
   GeoShapeMixin as Mixin,
+  ClaimMixin as Mixin,
   OrganizationMixin as Mixin,
   MediaSubscriptionMixin as Mixin];

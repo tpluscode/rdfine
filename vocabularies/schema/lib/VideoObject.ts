@@ -15,6 +15,7 @@ export interface VideoObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   captionLiteral: string | undefined;
   director: Schema.Person<D> | undefined;
   directors: Schema.Person<D> | undefined;
+  embeddedTextCaption: string | undefined;
   musicBy: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
   thumbnail: Schema.ImageObject<D> | undefined;
   transcript: string | undefined;
@@ -37,6 +38,8 @@ export function VideoObjectMixin<Base extends Constructor>(Resource: Base): Cons
     director: Schema.Person | undefined;
     @property.resource()
     directors: Schema.Person | undefined;
+    @property.literal()
+    embeddedTextCaption: string | undefined;
     @property.resource()
     musicBy: Schema.MusicGroup | Schema.Person | undefined;
     @property.resource()

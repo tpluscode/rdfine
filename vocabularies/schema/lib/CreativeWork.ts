@@ -22,6 +22,7 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   acquireLicensePage: Schema.CreativeWork<D> | undefined;
   aggregateRating: Schema.AggregateRating<D> | undefined;
   alternativeHeadline: string | undefined;
+  archivedAt: Schema.WebPage<D> | undefined;
   assesses: string | undefined;
   associatedMedia: Schema.MediaObject<D> | undefined;
   audience: Schema.Audience<D> | undefined;
@@ -45,6 +46,7 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   copyrightYear: number | undefined;
   correction: Schema.CorrectionComment<D> | undefined;
   correctionLiteral: string | undefined;
+  countryOfOrigin: Schema.Country<D> | undefined;
   creativeWorkStatus: string | undefined;
   creator: Schema.Organization<D> | Schema.Person<D> | undefined;
   creditText: string | undefined;
@@ -76,6 +78,7 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   inLanguageLiteral: string | undefined;
   interactionStatistic: Schema.InteractionCounter<D> | undefined;
   interactivityType: string | undefined;
+  interpretedAsClaim: Schema.Claim<D> | undefined;
   isAccessibleForFree: boolean | undefined;
   isBasedOn: Schema.CreativeWork<D> | Schema.Product<D> | undefined;
   isBasedOnUrl: Schema.CreativeWork<D> | Schema.Product<D> | undefined;
@@ -89,9 +92,9 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   mainEntity: Schema.Thing<D> | undefined;
   maintainer: Schema.Organization<D> | Schema.Person<D> | undefined;
   material: Schema.Product<D> | undefined;
-  materialLiteral: string | undefined;
   materialExtent: Schema.QuantitativeValue<D> | undefined;
   materialExtentLiteral: string | undefined;
+  materialLiteral: string | undefined;
   mentions: Schema.Thing<D> | undefined;
   offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
   pattern: string | undefined;
@@ -163,6 +166,8 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Con
     aggregateRating: Schema.AggregateRating | undefined;
     @property.literal()
     alternativeHeadline: string | undefined;
+    @property.resource()
+    archivedAt: Schema.WebPage | undefined;
     @property.literal()
     assesses: string | undefined;
     @property.resource()
@@ -209,6 +214,8 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Con
     correction: Schema.CorrectionComment | undefined;
     @property.literal({ path: schema.correction })
     correctionLiteral: string | undefined;
+    @property.resource()
+    countryOfOrigin: Schema.Country | undefined;
     @property.literal()
     creativeWorkStatus: string | undefined;
     @property.resource()
@@ -271,6 +278,8 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Con
     interactionStatistic: Schema.InteractionCounter | undefined;
     @property.literal()
     interactivityType: string | undefined;
+    @property.resource()
+    interpretedAsClaim: Schema.Claim | undefined;
     @property.literal({ type: Boolean })
     isAccessibleForFree: boolean | undefined;
     @property.resource()
@@ -297,12 +306,12 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Con
     maintainer: Schema.Organization | Schema.Person | undefined;
     @property.resource()
     material: Schema.Product | undefined;
-    @property.literal({ path: schema.material })
-    materialLiteral: string | undefined;
     @property.resource()
     materialExtent: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.materialExtent })
     materialExtentLiteral: string | undefined;
+    @property.literal({ path: schema.material })
+    materialLiteral: string | undefined;
     @property.resource()
     mentions: Schema.Thing | undefined;
     @property.resource()

@@ -9,6 +9,7 @@ import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
 import { GeoShapeMixin } from '../lib/GeoShape';
 import { ThingMixin } from '../lib/Thing';
 import { PriceSpecificationMixin } from '../lib/PriceSpecification';
+import { MerchantReturnPolicyMixin } from '../lib/MerchantReturnPolicy';
 import { TypeAndQuantityNodeMixin } from '../lib/TypeAndQuantityNode';
 import { AggregateOfferMixin } from '../lib/AggregateOffer';
 import { CreativeWorkMixin } from '../lib/CreativeWork';
@@ -35,6 +36,7 @@ export const OfferBundle = [
   GeoShapeMixin as Mixin,
   ThingMixin as Mixin,
   PriceSpecificationMixin as Mixin,
+  MerchantReturnPolicyMixin as Mixin,
   TypeAndQuantityNodeMixin as Mixin,
   AggregateOfferMixin as Mixin,
   CreativeWorkMixin as Mixin,

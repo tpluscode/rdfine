@@ -9,7 +9,7 @@ import type * as Schema from '..';
 import { TradeActionMixin } from './TradeAction';
 
 export interface SellAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, RdfResource<D> {
-  buyer: Schema.Person<D> | undefined;
+  buyer: Schema.Organization<D> | Schema.Person<D> | undefined;
   warrantyPromise: Schema.WarrantyPromise<D> | undefined;
 }
 
@@ -17,7 +17,7 @@ export function SellActionMixin<Base extends Constructor>(Resource: Base): Const
   @namespace(schema)
   class SellActionClass extends TradeActionMixin(Resource) implements Partial<SellAction> {
     @property.resource()
-    buyer: Schema.Person | undefined;
+    buyer: Schema.Organization | Schema.Person | undefined;
     @property.resource()
     warrantyPromise: Schema.WarrantyPromise | undefined;
   }

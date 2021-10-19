@@ -6,6 +6,7 @@ import { AggregateRatingMixin } from '../lib/AggregateRating';
 import { AudienceMixin } from '../lib/Audience';
 import { OrganizationMixin } from '../lib/Organization';
 import { BrandMixin } from '../lib/Brand';
+import { CountryMixin } from '../lib/Country';
 import { DistanceMixin } from '../lib/Distance';
 import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
 import { EnergyConsumptionDetailsMixin } from '../lib/EnergyConsumptionDetails';
@@ -26,6 +27,7 @@ export const ProductBundle = [
   AudienceMixin as Mixin,
   OrganizationMixin as Mixin,
   BrandMixin as Mixin,
+  CountryMixin as Mixin,
   DistanceMixin as Mixin,
   QuantitativeValueMixin as Mixin,
   EnergyConsumptionDetailsMixin as Mixin,

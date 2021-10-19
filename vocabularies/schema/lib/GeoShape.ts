@@ -10,9 +10,9 @@ import { StructuredValueMixin } from './StructuredValue';
 
 export interface GeoShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
   address: Schema.PostalAddress<D> | undefined;
-  addressLiteral: string | undefined;
   addressCountry: Schema.Country<D> | undefined;
   addressCountryLiteral: string | undefined;
+  addressLiteral: string | undefined;
   box: string | undefined;
   circle: string | undefined;
   elevation: number | string | undefined;
@@ -26,12 +26,12 @@ export function GeoShapeMixin<Base extends Constructor>(Resource: Base): Constru
   class GeoShapeClass extends StructuredValueMixin(Resource) implements Partial<GeoShape> {
     @property.resource()
     address: Schema.PostalAddress | undefined;
-    @property.literal({ path: schema.address })
-    addressLiteral: string | undefined;
     @property.resource()
     addressCountry: Schema.Country | undefined;
     @property.literal({ path: schema.addressCountry })
     addressCountryLiteral: string | undefined;
+    @property.literal({ path: schema.address })
+    addressLiteral: string | undefined;
     @property.literal()
     box: string | undefined;
     @property.literal()
