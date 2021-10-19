@@ -10,7 +10,6 @@ import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
 export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
-  apiDocumentation: Hydra.ApiDocumentation<D> | undefined;
   collection: Array<Hydra.Collection<Hydra.Resource<D>, D>>;
   first: Hydra.Resource<D> | undefined;
   freetextQuery: string | undefined;
@@ -25,8 +24,6 @@ export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
 export function ResourceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Resource> & RdfResourceCore> & Base {
   @namespace(hydra)
   class ResourceClass extends RdfsResourceMixin(Resource) implements Partial<Resource> {
-    @property.resource({ implicitTypes: [hydra.ApiDocumentation] })
-    apiDocumentation: Hydra.ApiDocumentation | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Collection] })
     collection!: Array<Hydra.Collection<any, any>>;
     @property.resource({ as: [ResourceMixin] })
