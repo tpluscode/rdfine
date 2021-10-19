@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.7
+
+### Patch Changes
+
+- 858cc537: Update to latest vocab
+
 ## 0.6.6
 
 ### Patch Changes

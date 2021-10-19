@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.8.0
+
+### Minor Changes
+
+- 072263df: Removed generated property getter `hydra:apiDocumentation`
+
 ## 0.7.2
 
 ### Patch Changes
