@@ -848,6 +848,53 @@ describe('RdfResource', () => {
         expect.arrayContaining([ex.foo, ex.bar]),
       )
     })
+
+    describe('with curried factory', () => {
+      it('blank node initializing Term property', () => {
+        // given
+        const node = cf({ dataset: $rdf.dataset() }).blankNode()
+        interface TestResource extends RdfResourceCore {
+          child?: Term
+        }
+        function TestMixin<Base extends Constructor>(Resource: Base) {
+          class Impl extends Resource implements TestResource {
+            @property({ path: ex.child })
+            child!: Term;
+          }
+
+          return Impl
+        }
+        TestMixin.shouldApply = true
+        const factory = new ResourceFactory(RdfResource)
+        factory.addMixin(TestMixin)
+
+        // when
+        const resource = factory.createEntity<TestResource>(node, [TestMixin], {
+          initializer: {
+            child: (graph) => factory.createEntity(graph.blankNode('foo')),
+          },
+        })
+
+        // then
+        expect(resource.child).toEqual($rdf.blankNode('foo'))
+      })
+
+      it('named node initializing URI property', () => {
+        // given
+        const node = cf({ dataset: $rdf.dataset() }).blankNode()
+        const factory = new ResourceFactory(RdfResource)
+
+        // when
+        const resource = factory.createEntity(node, [], {
+          initializer: {
+            [ex.foo.value]: (graph: AnyPointer) => graph.namedNode('foo'),
+          },
+        })
+
+        // then
+        expect(resource.pointer.out(ex.foo).term).toEqual($rdf.namedNode('foo'))
+      })
+    })
   })
 
   describe('isAnonymous', () => {

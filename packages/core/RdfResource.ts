@@ -1,7 +1,7 @@
 /* eslint-disable camelcase,no-dupe-class-members,no-use-before-define */
 import type { NamespaceBuilder } from '@rdf-esm/namespace'
 import { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from '@rdfjs/types'
-import cf, { MultiPointer, GraphPointer } from 'clownface'
+import cf, { MultiPointer, GraphPointer, AnyPointer } from 'clownface'
 import ResourceFactoryImpl from './lib/ResourceFactory'
 import type {
   Constructor,
@@ -97,12 +97,20 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       .forEach(([prop, value]) => {
         if (!prop.startsWith('http')) {
           // use decorated setter property
-          (resource as any)[prop] = value
+          if (typeof value === 'function') {
+            (resource as any)[prop] = value(resource.pointer.any())
+          } else {
+            (resource as any)[prop] = value
+          }
           return
         }
 
         const values = Array.isArray(value) ? value : [value]
         const pointers = values.map(value => {
+          if (typeof value === 'function') {
+            return value(resource.pointer.any())
+          }
+
           if (typeof value === 'object' && 'termType' in value) {
             return resource.pointer.node(value)
           }
@@ -320,10 +328,16 @@ type BaseInitializer = Record<string, any> & {
   id?: RdfResource['id'] | string
 }
 
-type InitialNode<Node extends Term = NamedNode | BlankNode> = Node | GraphPointer<Node>
+type InitialNode<Node extends Term = NamedNode | BlankNode> = Node | GraphPointer<Node> | ((graph: AnyPointer) => Node | GraphPointer<Node>)
 type InitialLiteral = InitialNode<Literal>
 
-type InitializeSingle<T extends RdfResourceCore | undefined> = Initializer<UserDefinedInterface<T> & BaseInitializer> | InitialNode
+interface Factory<T extends RdfResourceCore | undefined> {
+  (graph: AnyPointer): T
+}
+
+type InitializeSingle<T extends RdfResourceCore | undefined> = Initializer<UserDefinedInterface<T> & BaseInitializer>
+| InitialNode
+| Factory<T>
 type InitializeArray<T extends RdfResourceCore> = Array<InitializeSingle<T>>
 
 export type Initializer<T> = Omit<{
