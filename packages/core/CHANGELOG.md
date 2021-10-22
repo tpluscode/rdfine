@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.32
+
+### Patch Changes
+
+- 20f5f01c: Initializing properties with factory functions
+
 ## 0.5.31
 
 ### Patch Changes
