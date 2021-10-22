@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.8.3
+
+### Patch Changes
+
+- d6f77ced: `fromPointer` methods should typed as `Factory<T>`
+- Updated dependencies [d6f77ced]
+  - @rdfine/owl@0.4.7
+  - @rdfine/rdf@0.5.5
+  - @rdfine/rdfs@0.6.8
+
 ## 0.8.2
 
 ### Patch Changes

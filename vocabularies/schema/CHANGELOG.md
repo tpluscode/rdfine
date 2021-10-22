@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.8
+
+### Patch Changes
+
+- d6f77ced: `fromPointer` methods should typed as `Factory<T>`
+
 ## 0.6.7
 
 ### Patch Changes
