@@ -1,5 +1,13 @@
 # @rdfine/skos
 
+## 0.1.4
+
+### Patch Changes
+
+- d6f77ced: `fromPointer` methods should typed as `Factory<T>`
+- Updated dependencies [d6f77ced]
+  - @rdfine/rdf@0.5.5
+
 ## 0.1.3
 
 ### Patch Changes

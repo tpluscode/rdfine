@@ -1,5 +1,14 @@
 # @rdfine/foaf
 
+## 0.1.7
+
+### Patch Changes
+
+- d6f77ced: `fromPointer` methods should typed as `Factory<T>`
+- Updated dependencies [d6f77ced]
+  - @rdfine/skos@0.1.4
+  - @rdfine/wgs@0.1.5
+
 ## 0.1.6
 
 ### Patch Changes

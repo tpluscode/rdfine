@@ -1,5 +1,11 @@
 # @rdfine/prov
 
+## 0.1.3
+
+### Patch Changes
+
+- d6f77ced: `fromPointer` methods should typed as `Factory<T>`
+
 ## 0.1.2
 
 ### Patch Changes
