@@ -34,7 +34,7 @@ export function createFactory<T extends RdfResourceCore<any>>(mixins: Mixin[], b
   }
 
   const curriedNamedFactory: CurriedFactory<T> = (id, initializer, { factory = RdfResourceImpl.factory, additionalMixins = [] } = {}) => {
-    return (graph) => factory.createEntity<T>(graph.namedNode(id), [...mixins, ...additionalMixins], {
+    return (graph, overrideFactory = factory) => overrideFactory.createEntity<T>(graph.namedNode(id), [...mixins, ...additionalMixins], {
       initializer: {
         ...baseInitializer,
         ...(initializer || {}),
@@ -43,7 +43,7 @@ export function createFactory<T extends RdfResourceCore<any>>(mixins: Mixin[], b
   }
 
   const curriedBlankFactory: CurriedBlankFactory<T> = (initializer, { factory = RdfResourceImpl.factory, additionalMixins = [] } = {}) => {
-    return (graph) => factory.createEntity<T>(graph.blankNode(), [...mixins, ...additionalMixins], {
+    return (graph, overrideFactory = factory) => overrideFactory.createEntity<T>(graph.blankNode(), [...mixins, ...additionalMixins], {
       initializer: {
         ...baseInitializer,
         ...(initializer || {}),
