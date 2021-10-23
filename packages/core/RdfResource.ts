@@ -114,6 +114,9 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
             if (typeof result === 'function') {
               throw new Error('Initializer factory function cannot return a function')
             }
+            if (Array.isArray(result)) {
+              throw new Error('Initializer factory function cannot return an array')
+            }
             return toPointer(result)
           }
 
