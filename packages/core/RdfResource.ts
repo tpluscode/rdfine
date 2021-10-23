@@ -117,6 +117,10 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
             return toPointer(result)
           }
 
+          if (typeof value === 'object' && 'pointer' in value) {
+            return value.pointer
+          }
+
           if (typeof value === 'object' && 'termType' in value) {
             return resource.pointer.node(value)
           }
