@@ -92,13 +92,15 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   public static __initializers = new Map()
 
   private static _userInitializeProperties(resource: RdfResourceImpl, init: Initializer<RdfResource> = {}): void {
+    const { factory } = resource.constructor as Constructor
+
     Object.entries(init)
       .filter(([prop]) => prop !== 'id' && prop !== 'types')
       .forEach(([prop, value]) => {
         if (!prop.startsWith('http')) {
           // use decorated setter property
           if (typeof value === 'function') {
-            (resource as any)[prop] = value(resource.pointer.any())
+            (resource as any)[prop] = value(resource.pointer.any(), factory)
           } else {
             (resource as any)[prop] = value
           }
@@ -106,9 +108,13 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
         }
 
         const values = Array.isArray(value) ? value : [value]
-        const pointers = values.map(value => {
+        const pointers = values.map(function toPointer(value): GraphPointer {
           if (typeof value === 'function') {
-            return value(resource.pointer.any())
+            const result = value(resource.pointer.any(), factory)
+            if (typeof result === 'function') {
+              throw new Error('Initializer factory function cannot return a function')
+            }
+            return toPointer(result)
           }
 
           if (typeof value === 'object' && 'termType' in value) {
