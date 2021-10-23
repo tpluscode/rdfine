@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.5.33
+
+### Patch Changes
+
+- 658c9e98: Optimise setting URI property from existing resource object
+- 7a52025d: Initializing URI property with factory would throw
+
 ## 0.5.32
 
 ### Patch Changes
