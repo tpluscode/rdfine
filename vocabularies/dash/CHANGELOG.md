@@ -1,5 +1,15 @@
 # @rdfine/dash
 
+## 0.2.3
+
+### Patch Changes
+
+- 5e2681a4: Update @tpluscode/rdfine
+- Updated dependencies [5e2681a4]
+  - @rdfine/rdf@0.5.6
+  - @rdfine/rdfs@0.6.9
+  - @rdfine/shacl@0.8.4
+
 ## 0.2.2
 
 ### Patch Changes

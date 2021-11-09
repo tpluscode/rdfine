@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/skos",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",
@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
-    "@rdfine/rdf": "^0.5.5",
+    "@rdfine/rdf": "^0.5.6",
     "@tpluscode/rdf-ns-builders": "^1.0.0",
     "@tpluscode/rdfine": "^0.5.34"
   },

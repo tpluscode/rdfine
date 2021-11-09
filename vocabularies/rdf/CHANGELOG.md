@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.6
+
+### Patch Changes
+
+- 5e2681a4: Update @tpluscode/rdfine
+
 ## 0.5.5
 
 ### Patch Changes

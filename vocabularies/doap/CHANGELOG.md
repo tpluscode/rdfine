@@ -1,5 +1,15 @@
 # @rdfine/doap
 
+## 0.1.6
+
+### Patch Changes
+
+- 5e2681a4: Update @tpluscode/rdfine
+- Updated dependencies [5e2681a4]
+  - @rdfine/foaf@0.1.8
+  - @rdfine/rdfs@0.6.9
+  - @rdfine/sioc@0.1.6
+
 ## 0.1.5
 
 ### Patch Changes

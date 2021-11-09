@@ -1,5 +1,13 @@
 # @rdfine/as
 
+## 0.2.3
+
+### Patch Changes
+
+- 5e2681a4: Update @tpluscode/rdfine
+- Updated dependencies [5e2681a4]
+  - @rdfine/rdf@0.5.6
+
 ## 0.2.2
 
 ### Patch Changes
