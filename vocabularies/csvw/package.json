@@ -49,7 +49,7 @@
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
     "@tpluscode/rdf-ns-builders": "^1.0.0",
-    "@tpluscode/rdfine": "^0.5.27"
+    "@tpluscode/rdfine": "^0.5.34"
   },
   "repository": {
     "type": "git",
