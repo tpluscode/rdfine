@@ -1,5 +1,5 @@
 import * as RDF from '@rdfjs/types'
-import { AnyPointer } from 'clownface'
+import { AnyContext, AnyPointer } from 'clownface'
 import { Initializer, RdfResourceCore, ResourceNode } from './RdfResource'
 import RdfResourceImpl from '.'
 import { ResourceFactory, Mixin } from './lib/ResourceFactory'
@@ -9,21 +9,23 @@ export interface FactoryOptions {
   additionalMixins?: Mixin[]
 }
 
-interface CurriedBlankFactory<T extends RdfResourceCore<any>> {
+export interface Factory<T extends RdfResourceCore<any>> {
+  <D extends RDF.DatasetCore = RDF.DatasetCore>(graph: AnyPointer<AnyContext, D>): (T & RdfResourceCore<D>) | ResourceNode<D>
+}
+
+export interface CurriedBlankFactory<T extends RdfResourceCore<any>> {
   <D extends RDF.DatasetCore = RDF.DatasetCore>(initializer?: Initializer<T>, options?: FactoryOptions): (graph: AnyPointer) => T & RdfResourceCore<D>
 }
 
-interface CurriedFactory<T extends RdfResourceCore<any>> {
+export interface CurriedFactory<T extends RdfResourceCore<any>> {
   <D extends RDF.DatasetCore = RDF.DatasetCore>(id: string | RDF.NamedNode, initializer?: Initializer<T>, options?: FactoryOptions): (graph: AnyPointer) => T & RdfResourceCore<D>
 }
 
-interface FullFactory<T extends RdfResourceCore<any>> {
+export interface FullFactory<T extends RdfResourceCore<any>> {
   <D extends RDF.DatasetCore = RDF.DatasetCore>(pointer: ResourceNode<D>, initializer?: Initializer<T>, options?: FactoryOptions): T & RdfResourceCore<D>
 }
 
-export type Factory<T extends RdfResourceCore<any>> = FullFactory<T> & CurriedFactory<T> & CurriedBlankFactory<T>
-
-export function createFactory<T extends RdfResourceCore<any>>(mixins: Mixin[], baseInitializer: Initializer<T>): Factory<T> {
+export function createFactory<T extends RdfResourceCore<any>>(mixins: Mixin[], baseInitializer: Initializer<T>): FullFactory<T> & CurriedFactory<T> & CurriedBlankFactory<T> {
   const fullFactory: FullFactory<T> = (pointer, initializer, { factory = RdfResourceImpl.factory, additionalMixins = [] } = {}) => {
     return factory.createEntity<T>(pointer, [...mixins, ...additionalMixins], {
       initializer: {

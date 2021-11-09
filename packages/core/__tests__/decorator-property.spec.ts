@@ -9,6 +9,7 @@ import rdfExt from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { foaf, schema, rdf } from '@tpluscode/rdf-ns-builders'
 import { turtle } from '@tpluscode/rdf-string'
+import type { Factory } from '../factory'
 
 describe('decorator', () => {
   describe('term', () => {
@@ -753,6 +754,23 @@ describe('decorator', () => {
         // when
         const instance = new Resource(ptr)
         instance.friend = cf({ dataset: rdfExt.dataset() }).node(ex.friend)
+
+        // then
+        expect(ptr.out(foaf.knows).term).toStrictEqual(ex.friend)
+      })
+
+      it('can set from factory', async () => {
+        // given
+        const ptr = cf({ dataset: rdfExt.dataset() }).node(ex.res)
+        class Resource extends RdfResource {
+          @property({ path: foaf.knows })
+          friend!: any
+        }
+
+        // when
+        const instance = new Resource(ptr)
+        const createFriend: Factory<Resource> = graph => graph.node(ex.friend).addOut(schema.name, 'Friend')
+        instance.friend = createFriend
 
         // then
         expect(ptr.out(foaf.knows).term).toStrictEqual(ex.friend)

@@ -8,6 +8,7 @@ import cf, { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import TermSet from '@rdf-esm/term-set'
 import { AccessorOptions } from './index'
+import type { Factory } from '../../../factory'
 
 export type PropertyReturnKind = 'single' | 'array' | 'list'
 export type ArrayOrSingle<T> = T | T[]
@@ -129,7 +130,7 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
       return values.includes('single') ? returnValues[0] : returnValues
     },
 
-    set(this: T & RdfResourceImpl, value: ArrayOrSingle<RdfResourceCore | Term | GraphPointer>) {
+    set(this: T & RdfResourceImpl, value: ArrayOrSingle<RdfResourceCore | Term | GraphPointer | Factory<T>>) {
       if (!values.includes('array') && !values.includes('list') && Array.isArray(value)) {
         throw new Error(`${name}: Cannot set array to a non-array property`)
       }
@@ -159,7 +160,7 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
       }
 
       let initializedArray = false
-      let valueArray: Array<RdfResourceCore | Term | GraphPointer | TValue>
+      let valueArray: Array<RdfResourceCore | Term | GraphPointer | TValue | Factory<any>>
       if (Array.isArray(value)) {
         initializedArray = true
         valueArray = value
@@ -167,8 +168,14 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
         valueArray = [value]
       }
 
-      const termsArray = valueArray.reduce((terms, value) => {
+      const termsArray = valueArray.reduce((terms, valueOrFactory) => {
         let term: Term
+        let value: RdfResourceCore | Term | GraphPointer | TValue
+        if (typeof valueOrFactory === 'function') {
+          value = (valueOrFactory as any)(this.pointer.any())
+        } else {
+          value = valueOrFactory
+        }
 
         if (typeof value === 'object' && 'termType' in value) {
           term = value
