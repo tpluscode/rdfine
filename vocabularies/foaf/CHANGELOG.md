@@ -1,5 +1,14 @@
 # @rdfine/foaf
 
+## 0.1.8
+
+### Patch Changes
+
+- 5e2681a4: Update @tpluscode/rdfine
+- Updated dependencies [5e2681a4]
+  - @rdfine/skos@0.1.5
+  - @rdfine/wgs@0.1.6
+
 ## 0.1.7
 
 ### Patch Changes

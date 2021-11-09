@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.8.4
+
+### Patch Changes
+
+- 5e2681a4: Update @tpluscode/rdfine
+- Updated dependencies [5e2681a4]
+  - @rdfine/owl@0.4.8
+  - @rdfine/rdf@0.5.6
+  - @rdfine/rdfs@0.6.9
+
 ## 0.8.3
 
 ### Patch Changes

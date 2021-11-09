@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/rdf",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",

@@ -1,5 +1,11 @@
 # @rdfine/prov
 
+## 0.1.4
+
+### Patch Changes
+
+- 5e2681a4: Update @tpluscode/rdfine
+
 ## 0.1.3
 
 ### Patch Changes
