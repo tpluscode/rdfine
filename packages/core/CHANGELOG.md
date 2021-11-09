@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.5.34
+
+### Patch Changes
+
+- 292c9d7b: Possibility for setting properties using factories (fixes #191)
+- 292c9d7b: Pointers could not have been set to proxied properties
+
 ## 0.5.33
 
 ### Patch Changes
