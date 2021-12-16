@@ -87,9 +87,6 @@
     "@tpluscode/rdf-ns-builders": "^1.0.0",
     "@tpluscode/rdfine": "^0.5.34"
   },
-  "peerDependencies": {
-    "@rdfjs/types": ">1"
-  },
   "devDependencies": {
     "@rdfjs/data-model": "^1.2",
     "@rdfjs/dataset": "^1.0.1",

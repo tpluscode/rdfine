@@ -31,7 +31,6 @@
     "url": "git+https://github.com/tpluscode/rdfine.git"
   },
   "dependencies": {
-    "@rdfjs/types": "*",
     "@rdf-esm/data-model": "^0.5.3",
     "@rdf-esm/namespace": "^0.5.2",
     "@rdf-esm/term-map": "^0.5.0",
@@ -39,6 +38,9 @@
     "@tpluscode/rdf-ns-builders": "^1.0.0",
     "clownface": "^1",
     "once": "^1.4.0"
+  },
+  "peerDependencies": {
+    "@rdfjs/types": ">=1"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.5",
