@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.35
+
+### Patch Changes
+
+- 76c13f14: Fix peer dependencies (re hypermedia-app/shaperone#173)
+
 ## 0.5.34
 
 ### Patch Changes

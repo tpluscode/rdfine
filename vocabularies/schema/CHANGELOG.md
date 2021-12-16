@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.6.10
+
+### Patch Changes
+
+- 76c13f14: Fix peer dependencies (re hypermedia-app/shaperone#173)
+- Updated dependencies [76c13f14]
+  - @tpluscode/rdfine@0.5.35
+
 ## 0.6.9
 
 ### Patch Changes
