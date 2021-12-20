@@ -1,6 +1,6 @@
 import * as RDF from '@rdfjs/types'
 import { AnyContext, AnyPointer } from 'clownface'
-import { Initializer, RdfResourceCore, ResourceNode } from './RdfResource'
+import { Initializer, RdfResourceCore, ResourceIdentifier, ResourceNode } from './RdfResource'
 import RdfResourceImpl from '.'
 import { ResourceFactory, Mixin } from './lib/ResourceFactory'
 
@@ -18,7 +18,7 @@ export interface CurriedBlankFactory<T extends RdfResourceCore<any>> {
 }
 
 export interface CurriedFactory<T extends RdfResourceCore<any>> {
-  <D extends RDF.DatasetCore = RDF.DatasetCore>(id: string | RDF.NamedNode, initializer?: Initializer<T>, options?: FactoryOptions): (graph: AnyPointer) => T & RdfResourceCore<D>
+  <D extends RDF.DatasetCore = RDF.DatasetCore>(id: string | ResourceIdentifier, initializer?: Initializer<T>, options?: FactoryOptions): (graph: AnyPointer) => T & RdfResourceCore<D>
 }
 
 export interface FullFactory<T extends RdfResourceCore<any>> {
@@ -36,12 +36,15 @@ export function createFactory<T extends RdfResourceCore<any>>(mixins: Mixin[], b
   }
 
   const curriedNamedFactory: CurriedFactory<T> = (id, initializer, { factory = RdfResourceImpl.factory, additionalMixins = [] } = {}) => {
-    return (graph, overrideFactory = factory) => overrideFactory.createEntity<T>(graph.namedNode(id), [...mixins, ...additionalMixins], {
-      initializer: {
-        ...baseInitializer,
-        ...(initializer || {}),
-      },
-    })
+    return (graph, overrideFactory = factory) => {
+      const term = typeof id === 'string' ? graph.namedNode(id) : graph.node(id)
+      return overrideFactory.createEntity<T>(term, [...mixins, ...additionalMixins], {
+        initializer: {
+          ...baseInitializer,
+          ...(initializer || {}),
+        },
+      })
+    }
   }
 
   const curriedBlankFactory: CurriedBlankFactory<T> = (initializer, { factory = RdfResourceImpl.factory, additionalMixins = [] } = {}) => {
