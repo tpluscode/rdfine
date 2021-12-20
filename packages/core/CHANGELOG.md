@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.36
+
+### Patch Changes
+
+- a2484ec2: Initializer factory only allowed URI nodes
+
 ## 0.5.35
 
 ### Patch Changes
