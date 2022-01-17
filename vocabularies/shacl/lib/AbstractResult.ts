@@ -10,7 +10,7 @@ import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
 export interface AbstractResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
-  detail: Sh.AbstractResult<D> | undefined;
+  detail: Array<Sh.AbstractResult<D>>;
   focusNode: RDF.Term | undefined;
   resultMessage: string | undefined;
   resultPath: Rdfs.Resource<D> | undefined;
@@ -24,8 +24,8 @@ export interface AbstractResult<D extends RDF.DatasetCore = RDF.DatasetCore> ext
 export function AbstractResultMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AbstractResult> & RdfResourceCore> & Base {
   @namespace(sh)
   class AbstractResultClass extends RdfsResourceMixin(Resource) implements Partial<AbstractResult> {
-    @property.resource({ as: [AbstractResultMixin] })
-    detail: Sh.AbstractResult | undefined;
+    @property.resource({ values: 'array', as: [AbstractResultMixin] })
+    detail!: Array<Sh.AbstractResult>;
     @property()
     focusNode: RDF.Term | undefined;
     @property.literal()
