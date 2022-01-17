@@ -68,6 +68,9 @@
       "result": {
         "values": "array"
       },
+      "detail": {
+        "values": "array"
+      },
       "path": {
         "values": [
           "list",
