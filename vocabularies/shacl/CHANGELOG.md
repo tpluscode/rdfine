@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.8.6
+
+### Patch Changes
+
+- 5f4e2023: `sh:detail` should allow multiple values
+
 ## 0.8.5
 
 ### Patch Changes
