@@ -8,7 +8,7 @@ import RdfResourceImpl, { RdfResource } from '../RdfResource'
 import { Literal, NamedNode } from '@rdfjs/types'
 import { property, ResourceIndexer } from '../index'
 import { ex } from './_helpers'
-import type { Factory } from '../factory'
+import type { AnyFactory } from '../factory'
 
 describe('proxy', () => {
   let node: GraphPointer<NamedNode, DatasetExt>
@@ -183,7 +183,7 @@ describe('proxy', () => {
       // given
       const resource = new RdfResourceImpl(node)
       const proxy = createProxy(resource)
-      const child: Factory<RdfResourceImpl> = (pointer) => {
+      const child: AnyFactory<RdfResourceImpl> = (pointer) => {
         return new RdfResourceImpl(pointer.blankNode(), {
           [schema.name.value]: 'Child',
         })
@@ -228,7 +228,7 @@ describe('proxy', () => {
       const resource = new RdfResourceImpl(node)
       const Baz = node.addOut(schema.name, 'Baz')
       const proxy = createProxy(resource)
-      const child = (name: string): Factory<RdfResourceImpl> => (pointer) => {
+      const child = (name: string): AnyFactory<RdfResourceImpl> => (pointer) => {
         return new RdfResourceImpl(pointer.blankNode(), {
           [schema.name.value]: name,
         })

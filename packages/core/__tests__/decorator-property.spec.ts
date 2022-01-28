@@ -9,7 +9,7 @@ import rdfExt from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { foaf, schema, rdf } from '@tpluscode/rdf-ns-builders'
 import { turtle } from '@tpluscode/rdf-string'
-import type { Factory } from '../factory'
+import type { AnyFactory } from '../factory'
 
 describe('decorator', () => {
   describe('term', () => {
@@ -769,7 +769,7 @@ describe('decorator', () => {
 
         // when
         const instance = new Resource(ptr)
-        const createFriend: Factory<Resource> = graph => graph.node(ex.friend).addOut(schema.name, 'Friend')
+        const createFriend: AnyFactory<Resource> = graph => graph.node(ex.friend).addOut(schema.name, 'Friend')
         instance.friend = createFriend
 
         // then

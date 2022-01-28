@@ -9,7 +9,7 @@ export interface FactoryOptions {
   additionalMixins?: Mixin[]
 }
 
-export interface Factory<T extends RdfResourceCore<any>> {
+export interface AnyFactory<T extends RdfResourceCore<any>> {
   <D extends RDF.DatasetCore = RDF.DatasetCore>(graph: AnyPointer<AnyContext, D>): (T & RdfResourceCore<D>) | ResourceNode<D>
 }
 
@@ -24,6 +24,8 @@ export interface CurriedFactory<T extends RdfResourceCore<any>> {
 export interface FullFactory<T extends RdfResourceCore<any>> {
   <D extends RDF.DatasetCore = RDF.DatasetCore>(pointer: ResourceNode<D>, initializer?: Initializer<T>, options?: FactoryOptions): T & RdfResourceCore<D>
 }
+
+export type Factory<T extends RdfResourceCore<any>> = FullFactory<T> & CurriedFactory<T> & CurriedBlankFactory<T>;
 
 export function createFactory<T extends RdfResourceCore<any>>(mixins: Mixin[], baseInitializer: Initializer<T>): FullFactory<T> & CurriedFactory<T> & CurriedBlankFactory<T> {
   const fullFactory: FullFactory<T> = (pointer, initializer, { factory = RdfResourceImpl.factory, additionalMixins = [] } = {}) => {
