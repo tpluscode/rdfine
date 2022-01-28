@@ -54,14 +54,26 @@ export class TemplateExpander {
     }
   }
 
-  public expand(...models: Array<AnyPointer | RdfResource>): string {
+  public expand(baseOrFirst: undefined | string | AnyPointer | RdfResource, ...models: Array<AnyPointer | RdfResource>): string {
     if (!this.__template.template) {
       return ''
     }
 
+    let base = ''
+    let expansionModels: Array<AnyPointer | RdfResource>
+    if (typeof baseOrFirst === 'string') {
+      base = baseOrFirst
+      expansionModels = models
+    } else {
+      if (this.__template._parent && !this.__template._parent.isAnonymous) {
+        base = this.__template._parent.id.value
+      }
+      expansionModels = baseOrFirst ? [baseOrFirst, ...models] : models
+    }
+
     const uriTemplate = new URITemplate(this.__template.template)
 
-    const variables = models.reduce((variables, model) => {
+    const variables = expansionModels.reduce((variables, model) => {
       return {
         ...variables,
         ...this.buildExpansionModel(this.__template.mapping, 'id' in model ? model.pointer : model),
@@ -69,8 +81,8 @@ export class TemplateExpander {
     }, {})
     const expanded = uriTemplate.expand(variables)
 
-    if (this.__template._parent && !this.__template._parent.isAnonymous) {
-      return new URL(expanded, this.__template._parent.id.value).toString()
+    if (base) {
+      return new URL(expanded, base).toString()
     }
 
     return expanded
