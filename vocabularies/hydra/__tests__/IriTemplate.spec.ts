@@ -148,5 +148,29 @@ describe('IriTemplate', () => {
       // then
       expect(expanded).toEqual('http://example.com/find/?foo=bar')
     })
+
+    it('expands against base if given as first argument', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const pointer = clownface({ dataset }).blankNode()
+      const iriTemplate = fromPointer(pointer, {
+        template: '{?foo}',
+        mapping: [
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'foo',
+            property: ex.foo,
+          },
+        ],
+      })
+
+      // when
+      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('foo'))
+      const bar = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('bar'))
+      const expanded = iriTemplate.expand('http://example.com/find/', foo, bar)
+
+      // then
+      expect(expanded).toEqual('http://example.com/find/?foo=bar')
+    })
   })
 })
