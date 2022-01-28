@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/hydra",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",

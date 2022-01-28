@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.8.3
+
+### Patch Changes
+
+- c137556e: IriTemplate: add optional `base` argument to expand any relative template
+
 ## 0.8.2
 
 ### Patch Changes
