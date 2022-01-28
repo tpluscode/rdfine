@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.37
+
+### Patch Changes
+
+- 32a92788: `fromPointer` function did not work due to inaccurate types
+
 ## 0.5.36
 
 ### Patch Changes
