@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.9
+
+### Patch Changes
+
+- 9acaff8a: Update `@rdfjs/formats-common`
+
 ## 0.6.8
 
 ### Patch Changes

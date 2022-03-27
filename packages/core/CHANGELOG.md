@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.38
+
+### Patch Changes
+
+- 5cb8a316: Make `@types/clownface` a regular dependency (re hypermedia-app/Alcaeus#288)
+
 ## 0.5.37
 
 ### Patch Changes
