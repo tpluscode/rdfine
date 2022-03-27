@@ -15,7 +15,7 @@
     "build": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "@rdfjs/formats-common": "^2.1.0",
+    "@rdfjs/formats-common": "^2.2.0",
     "@rdfjs/namespace": "^1.1.0",
     "@rdfjs/term-map": "^1.0.0",
     "@rdfjs/term-set": "^1.0.1",
