@@ -1,8 +1,5 @@
 <http://www.w3.org/ns/hydra/core#variableRepresentation> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/hydra/core#IriTemplate> .
 
-<http://www.w3.org/ns/hydra/core#memberAssertion> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/hydra/core#MemberAssertion> .
-<http://www.w3.org/ns/hydra/core#MemberAssertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
-
 <http://www.w3.org/ns/hydra/core#object> <http://schema.org/domainIncludes> <http://www.w3.org/ns/hydra/core#MemberAssertion> .
 <http://www.w3.org/ns/hydra/core#object> <http://schema.org/rangeIncludes> <http://www.w3.org/ns/hydra/core#Class> .
 

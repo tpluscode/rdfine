@@ -38,7 +38,8 @@
       "BaseUriSource": "NamedNode"
     },
     "exclude": [
-      "apiDocumentation"
+      "apiDocumentation",
+      "memberAssertion"
     ],
     "properties": {
       "collection": {

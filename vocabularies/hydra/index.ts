@@ -14,8 +14,6 @@ export { IriTemplateMappingMixin } from './lib/IriTemplateMapping';
 export type { IriTemplateMapping } from './lib/IriTemplateMapping';
 export { LinkMixin } from './lib/Link';
 export type { Link } from './lib/Link';
-export { MemberAssertionMixin } from './lib/MemberAssertion';
-export type { MemberAssertion } from './lib/MemberAssertion';
 export { OperationMixin } from './lib/Operation';
 export type { Operation } from './lib/Operation';
 export { PartialCollectionViewMixin } from './lib/PartialCollectionView';
