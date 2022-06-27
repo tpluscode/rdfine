@@ -1,5 +1,16 @@
 # Change Log
 
+## 0.6.11
+
+### Patch Changes
+
+- 6e11bd18: No unnecessary imports in enumeration modules
+- a140fd55: Incorrect type generated for names which need quotes
+- 4ce19cbe: Introduce a more stable order of members, exports and imports
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+- Updated dependencies [f7cfefff]
+  - @tpluscode/rdfine@0.5.39
+
 ## 0.6.10
 
 ### Patch Changes

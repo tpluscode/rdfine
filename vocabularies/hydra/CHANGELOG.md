@@ -1,5 +1,19 @@
 # Change Log
 
+## 0.8.4
+
+### Patch Changes
+
+- 153af913: Remove generation of `hydra:collection`
+- 4ce19cbe: Introduce a more stable order of members, exports and imports
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+- 67d2ebc5: Do not generate for class `MemberAssertion`, which does not exist in Hydra vocabulary
+- Updated dependencies [4ce19cbe]
+- Updated dependencies [f7cfefff]
+  - @rdfine/rdfs@0.6.10
+  - @tpluscode/rdfine@0.5.39
+  - @rdfine/rdf@0.5.7
+
 ## 0.8.3
 
 ### Patch Changes
