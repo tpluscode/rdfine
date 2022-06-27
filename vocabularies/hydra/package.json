@@ -39,7 +39,8 @@
     },
     "exclude": [
       "apiDocumentation",
-      "memberAssertion"
+      "memberAssertion",
+      "collection"
     ],
     "properties": {
       "collection": {

@@ -5,7 +5,7 @@ import { OperationMixin } from '../lib/Operation';
 import { ResourceMixin } from '../lib/Resource';
 
 export const ResourceBundle = [
-  CollectionMixin as Mixin,
+  CollectionMixin as Mixin, // DO NOT REMOVE
   IriTemplateMixin as Mixin,
   OperationMixin as Mixin,
   ResourceMixin as Mixin];
