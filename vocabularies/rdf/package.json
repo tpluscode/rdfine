@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
-    "@tpluscode/rdf-ns-builders": "^2.0.0",
+    "@tpluscode/rdf-ns-builders": "^2.0.1",
     "@tpluscode/rdfine": "^0.5.34"
   },
   "repository": {

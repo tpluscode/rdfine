@@ -85,7 +85,7 @@
     "@rdfine/rdf": "^0.5.6",
     "@rdfine/rdfs": "^0.6.9",
     "@rdf-esm/data-model": "^0.5.3",
-    "@tpluscode/rdf-ns-builders": "^2.0.0",
+    "@tpluscode/rdf-ns-builders": "^2.0.1",
     "@tpluscode/rdfine": "^0.5.34",
     "es6-url-template": "^3.0.2"
   },

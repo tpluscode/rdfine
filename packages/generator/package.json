@@ -20,7 +20,7 @@
     "@rdfjs/term-map": "^1.0.0",
     "@rdfjs/term-set": "^1.0.1",
     "@rdfjs/types": "*",
-    "@tpluscode/rdf-ns-builders": "^2.0.0",
+    "@tpluscode/rdf-ns-builders": "^2.0.1",
     "@ts-morph/common": "^0.7.2",
     "@zazuko/rdf-vocabularies": "*",
     "clownface": "^1",
