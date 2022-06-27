@@ -24,7 +24,7 @@ export function _3DModelMixin<Base extends Constructor>(Resource: Base): Constru
 class _3DModelImpl extends _3DModelMixin(RdfResourceImpl) {
   constructor(arg: ResourceNode, init?: Initializer<_3DModel>) {
     super(arg, init)
-    this.types.add(schema._3DModel)
+    this.types.add(schema['3DModel'])
   }
 
   static readonly __mixins: Mixin[] = [_3DModelMixin, MediaObjectMixin];
@@ -32,4 +32,4 @@ class _3DModelImpl extends _3DModelMixin(RdfResourceImpl) {
 _3DModelMixin.appliesTo = schema['3DModel']
 _3DModelMixin.Class = _3DModelImpl
 
-export const fromPointer = createFactory<_3DModel>([MediaObjectMixin, _3DModelMixin], { types: [schema._3DModel] });
+export const fromPointer = createFactory<_3DModel>([MediaObjectMixin, _3DModelMixin], { types: [schema['3DModel']] });

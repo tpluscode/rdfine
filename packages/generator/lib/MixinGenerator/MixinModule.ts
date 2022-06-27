@@ -43,7 +43,9 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       .sort((left, right) => left.name.localeCompare(right.name))
       .forEach(propertyWriter.addProperty.bind(propertyWriter))
 
-    const type = `${context.prefix}.${this.type.localName}`
+    const type = this.type.term === this.type.localName
+      ? `${context.prefix}.${this.type.term}`
+      : `${context.prefix}['${this.type.term}']`
 
     const implementationClass = mixinFile.addClass({
       name: implName,
@@ -70,11 +72,8 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       initializer: `[${mixinNames.join(', ')}]`,
     })
 
-    const nsBuilderTerm = this.type.term === this.type.localName
-      ? `${context.prefix}.${this.type.term}`
-      : `${context.prefix}['${this.type.term}']`
     mixinFile.addStatements([
-      `${mixinName}.appliesTo = ${nsBuilderTerm}`,
+      `${mixinName}.appliesTo = ${type}`,
       `${mixinName}.Class = ${implName}`,
     ])
 

@@ -131,7 +131,7 @@ export function _3ClassMixin<Base extends Constructor>(Resource: Base): Construc
 class _3ClassImpl extends _3ClassMixin(RdfResourceImpl) {
     constructor(arg: ResourceNode, init?: Initializer<_3Class>) {
         super(arg, init)
-        this.types.add(ex._3Class)
+        this.types.add(ex['3Class'])
     }
 
     static readonly __mixins: Mixin[] = [_3ClassMixin];
@@ -139,7 +139,7 @@ class _3ClassImpl extends _3ClassMixin(RdfResourceImpl) {
 _3ClassMixin.appliesTo = ex['Class']
 _3ClassMixin.Class = _3ClassImpl
 
-export const fromPointer = createFactory<_3Class>([_3ClassMixin], { types: [ex._3Class] });
+export const fromPointer = createFactory<_3Class>([_3ClassMixin], { types: [e['3Class']] });
 
 `;
 
