@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SoftwareAgentMixin } from '../lib/SoftwareAgent';
 import { DirectQueryServiceMixin } from '../lib/DirectQueryService';
+import { SoftwareAgentMixin } from '../lib/SoftwareAgent';
 
 export const DirectQueryServiceBundle = [
-  SoftwareAgentMixin as Mixin,
-  DirectQueryServiceMixin as Mixin];
+  DirectQueryServiceMixin as Mixin,
+  SoftwareAgentMixin as Mixin];

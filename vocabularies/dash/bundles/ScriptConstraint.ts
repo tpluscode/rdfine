@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ScriptMixin } from '../lib/Script';
 import { ScriptConstraintMixin } from '../lib/ScriptConstraint';
+import { ScriptMixin } from '../lib/Script';
 
 export const ScriptConstraintBundle = [
-  ScriptMixin as Mixin,
-  ScriptConstraintMixin as Mixin];
+  ScriptConstraintMixin as Mixin,
+  ScriptMixin as Mixin];

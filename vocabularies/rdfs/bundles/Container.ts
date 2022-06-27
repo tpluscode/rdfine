@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ResourceMixin } from '../lib/Resource';
 import { ContainerMixin } from '../lib/Container';
+import { ResourceMixin } from '../lib/Resource';
 
 export const ContainerBundle = [
-  ResourceMixin as Mixin,
-  ContainerMixin as Mixin];
+  ContainerMixin as Mixin,
+  ResourceMixin as Mixin];

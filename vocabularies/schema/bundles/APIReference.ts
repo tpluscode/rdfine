@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { TechArticleMixin } from '../lib/TechArticle';
 import { APIReferenceMixin } from '../lib/APIReference';
+import { TechArticleMixin } from '../lib/TechArticle';
 
 export const APIReferenceBundle = [
-  TechArticleMixin as Mixin,
-  APIReferenceMixin as Mixin];
+  APIReferenceMixin as Mixin,
+  TechArticleMixin as Mixin];

@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { OrganizationMixin } from '../lib/Organization';
 import { LibrarySystemMixin } from '../lib/LibrarySystem';
+import { OrganizationMixin } from '../lib/Organization';
 
 export const LibrarySystemBundle = [
-  OrganizationMixin as Mixin,
-  LibrarySystemMixin as Mixin];
+  LibrarySystemMixin as Mixin,
+  OrganizationMixin as Mixin];

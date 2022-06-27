@@ -8,7 +8,7 @@ export class ExtensionIndexModule implements GeneratedModule {
   writeModule({ project }: { project: Project }): void {
     const extensionsModule = project.createSourceFile(`extensions/${this.prefix}.ts`, {}, { overwrite: true })
 
-    for (const extendedTerm of this.terms) {
+    for (const extendedTerm of this.terms.sort((l, r) => l.localeCompare(r))) {
       extensionsModule.addExportDeclaration({
         namedExports: [`${extendedTerm}MixinEx`],
         moduleSpecifier: `./${this.prefix}/${extendedTerm}`,

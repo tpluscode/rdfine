@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MedicalIndicationMixin } from '../lib/MedicalIndication';
 import { ApprovedIndicationMixin } from '../lib/ApprovedIndication';
+import { MedicalIndicationMixin } from '../lib/MedicalIndication';
 
 export const ApprovedIndicationBundle = [
-  MedicalIndicationMixin as Mixin,
-  ApprovedIndicationMixin as Mixin];
+  ApprovedIndicationMixin as Mixin,
+  MedicalIndicationMixin as Mixin];

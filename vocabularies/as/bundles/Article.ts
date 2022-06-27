@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ObjectMixin } from '../lib/Object';
 import { ArticleMixin } from '../lib/Article';
+import { ObjectMixin } from '../lib/Object';
 
 export const ArticleBundle = [
-  ObjectMixin as Mixin,
-  ArticleMixin as Mixin];
+  ArticleMixin as Mixin,
+  ObjectMixin as Mixin];

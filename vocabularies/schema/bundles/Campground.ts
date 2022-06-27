@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import { CampgroundMixin } from '../lib/Campground';
 import { CivicStructureMixin } from '../lib/CivicStructure';
 import { LodgingBusinessMixin } from '../lib/LodgingBusiness';
-import { CampgroundMixin } from '../lib/Campground';
 
 export const CampgroundBundle = [
+  CampgroundMixin as Mixin,
   CivicStructureMixin as Mixin,
-  LodgingBusinessMixin as Mixin,
-  CampgroundMixin as Mixin];
+  LodgingBusinessMixin as Mixin];

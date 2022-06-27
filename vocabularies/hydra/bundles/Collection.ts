@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ResourceMixin } from '../lib/Resource';
-import { MemberAssertionMixin } from '../lib/MemberAssertion';
 import { CollectionMixin } from '../lib/Collection';
+import { MemberAssertionMixin } from '../lib/MemberAssertion';
+import { ResourceMixin } from '../lib/Resource';
 
 export const CollectionBundle = [
-  ResourceMixin as Mixin,
+  CollectionMixin as Mixin,
   MemberAssertionMixin as Mixin,
-  CollectionMixin as Mixin];
+  ResourceMixin as Mixin];

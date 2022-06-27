@@ -29,7 +29,9 @@ function addExtension(extensions: Map<NamedNode, ExtensionModule>, { property, d
     module = new ExtensionModule({ domain, type })
     extensions.set(domain.term, module)
   }
-  module.addProperties(...toJavascriptProperties(property, findRanges(property), types, context))
+  const sortedProperties = [...toJavascriptProperties(property, findRanges(property), types, context)]
+    .sort((left, right) => left.name.localeCompare(right.name))
+  module.addProperties(...sortedProperties)
 
   return true
 }

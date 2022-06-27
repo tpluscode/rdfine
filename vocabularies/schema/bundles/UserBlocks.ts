@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { UserInteractionMixin } from '../lib/UserInteraction';
 import { UserBlocksMixin } from '../lib/UserBlocks';
+import { UserInteractionMixin } from '../lib/UserInteraction';
 
 export const UserBlocksBundle = [
-  UserInteractionMixin as Mixin,
-  UserBlocksMixin as Mixin];
+  UserBlocksMixin as Mixin,
+  UserInteractionMixin as Mixin];

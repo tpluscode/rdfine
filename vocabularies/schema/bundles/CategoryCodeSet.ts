@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DefinedTermSetMixin } from '../lib/DefinedTermSet';
-import { CategoryCodeSetMixin } from '../lib/CategoryCodeSet';
 import { CategoryCodeMixin } from '../lib/CategoryCode';
+import { CategoryCodeSetMixin } from '../lib/CategoryCodeSet';
+import { DefinedTermSetMixin } from '../lib/DefinedTermSet';
 
 export const CategoryCodeSetBundle = [
-  DefinedTermSetMixin as Mixin,
+  CategoryCodeMixin as Mixin,
   CategoryCodeSetMixin as Mixin,
-  CategoryCodeMixin as Mixin];
+  DefinedTermSetMixin as Mixin];

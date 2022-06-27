@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { InvestmentOrDepositMixin } from '../lib/InvestmentOrDeposit';
 import { BrokerageAccountMixin } from '../lib/BrokerageAccount';
+import { InvestmentOrDepositMixin } from '../lib/InvestmentOrDeposit';
 
 export const BrokerageAccountBundle = [
-  InvestmentOrDepositMixin as Mixin,
-  BrokerageAccountMixin as Mixin];
+  BrokerageAccountMixin as Mixin,
+  InvestmentOrDepositMixin as Mixin];

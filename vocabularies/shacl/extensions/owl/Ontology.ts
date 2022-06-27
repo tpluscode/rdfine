@@ -5,8 +5,8 @@ import type * as RDF from '@rdfjs/types';
 import { owl } from '@tpluscode/rdf-ns-builders';
 import { sh } from '../../lib/namespace';
 import type * as Sh from '../..';
-import type * as Rdfs from '@rdfine/rdfs';
 import type * as Owl from '@rdfine/owl';
+import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 import { OntologyMixin as OwlOntologyMixin } from '@rdfine/owl/lib/Ontology';
 

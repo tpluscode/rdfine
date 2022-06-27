@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ScholarlyArticleMixin } from '../lib/ScholarlyArticle';
 import { MedicalScholarlyArticleMixin } from '../lib/MedicalScholarlyArticle';
+import { ScholarlyArticleMixin } from '../lib/ScholarlyArticle';
 
 export const MedicalScholarlyArticleBundle = [
-  ScholarlyArticleMixin as Mixin,
-  MedicalScholarlyArticleMixin as Mixin];
+  MedicalScholarlyArticleMixin as Mixin,
+  ScholarlyArticleMixin as Mixin];

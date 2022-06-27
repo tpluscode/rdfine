@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../lib/Intangible';
 import { AlignmentObjectMixin } from '../lib/AlignmentObject';
+import { IntangibleMixin } from '../lib/Intangible';
 
 export const AlignmentObjectBundle = [
-  IntangibleMixin as Mixin,
-  AlignmentObjectMixin as Mixin];
+  AlignmentObjectMixin as Mixin,
+  IntangibleMixin as Mixin];

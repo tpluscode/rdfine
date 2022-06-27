@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RepositoryMixin } from '../lib/Repository';
 import { BKRepositoryMixin } from '../lib/BKRepository';
+import { RepositoryMixin } from '../lib/Repository';
 
 export const BKRepositoryBundle = [
-  RepositoryMixin as Mixin,
-  BKRepositoryMixin as Mixin];
+  BKRepositoryMixin as Mixin,
+  RepositoryMixin as Mixin];

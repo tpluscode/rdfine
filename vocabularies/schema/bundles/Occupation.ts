@@ -1,17 +1,17 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../lib/Intangible';
-import { OccupationMixin } from '../lib/Occupation';
-import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
-import { MonetaryAmountDistributionMixin } from '../lib/MonetaryAmountDistribution';
-import { OccupationalExperienceRequirementsMixin } from '../lib/OccupationalExperienceRequirements';
-import { CategoryCodeMixin } from '../lib/CategoryCode';
 import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
+import { CategoryCodeMixin } from '../lib/CategoryCode';
+import { IntangibleMixin } from '../lib/Intangible';
+import { MonetaryAmountDistributionMixin } from '../lib/MonetaryAmountDistribution';
+import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
+import { OccupationalExperienceRequirementsMixin } from '../lib/OccupationalExperienceRequirements';
+import { OccupationMixin } from '../lib/Occupation';
 
 export const OccupationBundle = [
-  IntangibleMixin as Mixin,
-  OccupationMixin as Mixin,
-  MonetaryAmountMixin as Mixin,
-  MonetaryAmountDistributionMixin as Mixin,
-  OccupationalExperienceRequirementsMixin as Mixin,
+  AdministrativeAreaMixin as Mixin,
   CategoryCodeMixin as Mixin,
-  AdministrativeAreaMixin as Mixin];
+  IntangibleMixin as Mixin,
+  MonetaryAmountDistributionMixin as Mixin,
+  MonetaryAmountMixin as Mixin,
+  OccupationalExperienceRequirementsMixin as Mixin,
+  OccupationMixin as Mixin];

@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { InfluenceMixin } from '../lib/Influence';
-import { EntityMixin } from '../lib/Entity';
 import { EntityInfluenceMixin } from '../lib/EntityInfluence';
+import { EntityMixin } from '../lib/Entity';
+import { InfluenceMixin } from '../lib/Influence';
 
 export const EntityInfluenceBundle = [
-  InfluenceMixin as Mixin,
+  EntityInfluenceMixin as Mixin,
   EntityMixin as Mixin,
-  EntityInfluenceMixin as Mixin];
+  InfluenceMixin as Mixin];

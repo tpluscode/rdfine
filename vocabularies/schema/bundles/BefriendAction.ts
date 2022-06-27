@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { InteractActionMixin } from '../lib/InteractAction';
 import { BefriendActionMixin } from '../lib/BefriendAction';
+import { InteractActionMixin } from '../lib/InteractAction';
 
 export const BefriendActionBundle = [
-  InteractActionMixin as Mixin,
-  BefriendActionMixin as Mixin];
+  BefriendActionMixin as Mixin,
+  InteractActionMixin as Mixin];

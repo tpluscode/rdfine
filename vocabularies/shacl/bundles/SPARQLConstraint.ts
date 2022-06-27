@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SPARQLSelectExecutableMixin } from '../lib/SPARQLSelectExecutable';
 import { SPARQLConstraintMixin } from '../lib/SPARQLConstraint';
+import { SPARQLSelectExecutableMixin } from '../lib/SPARQLSelectExecutable';
 
 export const SPARQLConstraintBundle = [
-  SPARQLSelectExecutableMixin as Mixin,
-  SPARQLConstraintMixin as Mixin];
+  SPARQLConstraintMixin as Mixin,
+  SPARQLSelectExecutableMixin as Mixin];

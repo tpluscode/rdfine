@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SoftwareAgentMixin } from '../lib/SoftwareAgent';
 import { ServiceDescriptionMixin } from '../lib/ServiceDescription';
+import { SoftwareAgentMixin } from '../lib/SoftwareAgent';
 
 export const ServiceDescriptionBundle = [
-  SoftwareAgentMixin as Mixin,
-  ServiceDescriptionMixin as Mixin];
+  ServiceDescriptionMixin as Mixin,
+  SoftwareAgentMixin as Mixin];

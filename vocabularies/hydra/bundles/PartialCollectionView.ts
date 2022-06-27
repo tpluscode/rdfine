@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ResourceMixin } from '../lib/Resource';
 import { PartialCollectionViewMixin } from '../lib/PartialCollectionView';
+import { ResourceMixin } from '../lib/Resource';
 
 export const PartialCollectionViewBundle = [
-  ResourceMixin as Mixin,
-  PartialCollectionViewMixin as Mixin];
+  PartialCollectionViewMixin as Mixin,
+  ResourceMixin as Mixin];

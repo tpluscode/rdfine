@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import { DentistMixin } from '../lib/Dentist';
 import { LocalBusinessMixin } from '../lib/LocalBusiness';
 import { MedicalOrganizationMixin } from '../lib/MedicalOrganization';
-import { DentistMixin } from '../lib/Dentist';
 
 export const DentistBundle = [
+  DentistMixin as Mixin,
   LocalBusinessMixin as Mixin,
-  MedicalOrganizationMixin as Mixin,
-  DentistMixin as Mixin];
+  MedicalOrganizationMixin as Mixin];

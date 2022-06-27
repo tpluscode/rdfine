@@ -7,10 +7,10 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import type * as Rdf from '@rdfine/rdf';
-import { ResourceMixin } from './Resource';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
+import { ResourceMixin } from './Resource';
 
-export interface TemplatedLink<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, Rdf.Property<D>, RdfResource<D> {
+export interface TemplatedLink<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, Hydra.Resource<D>, RdfResource<D> {
   description: string | undefined;
   supportedOperation: Array<Hydra.Operation<D>>;
   title: string | undefined;
@@ -18,7 +18,7 @@ export interface TemplatedLink<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 
 export function TemplatedLinkMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TemplatedLink> & RdfResourceCore> & Base {
   @namespace(hydra)
-  class TemplatedLinkClass extends RdfPropertyMixin(ResourceMixin(Resource)) implements Partial<TemplatedLink> {
+  class TemplatedLinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements Partial<TemplatedLink> {
     @property.literal()
     description: string | undefined;
     @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
@@ -35,9 +35,9 @@ class TemplatedLinkImpl extends TemplatedLinkMixin(RdfResourceImpl) {
     this.types.add(hydra.TemplatedLink)
   }
 
-  static readonly __mixins: Mixin[] = [TemplatedLinkMixin, ResourceMixin, RdfPropertyMixin];
+  static readonly __mixins: Mixin[] = [TemplatedLinkMixin, RdfPropertyMixin, ResourceMixin];
 }
 TemplatedLinkMixin.appliesTo = hydra.TemplatedLink
 TemplatedLinkMixin.Class = TemplatedLinkImpl
 
-export const fromPointer = createFactory<TemplatedLink>([RdfPropertyMixin, ResourceMixin, TemplatedLinkMixin], { types: [hydra.TemplatedLink] });
+export const fromPointer = createFactory<TemplatedLink>([ResourceMixin, RdfPropertyMixin, TemplatedLinkMixin], { types: [hydra.TemplatedLink] });

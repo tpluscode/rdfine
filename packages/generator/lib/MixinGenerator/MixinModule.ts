@@ -138,8 +138,9 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
         .forEach(sc => toImport.push(sc))
     }
 
-    imported
-      .forEach(mi => {
+    [...imported]
+      .sort(([l], [r]) => l.localeCompare(r))
+      .forEach(([, mi]) => {
         if (mi.type !== 'Resource') {
           return
         }
@@ -208,6 +209,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     })
 
     Object.entries(this.namespaceImports)
+      .sort(([l], [r]) => l.localeCompare(r))
       .forEach(([moduleSpecifier, namespaceImport]) => {
         mixinFile.addImportDeclaration({
           moduleSpecifier,

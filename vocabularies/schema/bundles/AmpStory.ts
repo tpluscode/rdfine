@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
 import { AmpStoryMixin } from '../lib/AmpStory';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
 
 export const AmpStoryBundle = [
-  CreativeWorkMixin as Mixin,
-  AmpStoryMixin as Mixin];
+  AmpStoryMixin as Mixin,
+  CreativeWorkMixin as Mixin];

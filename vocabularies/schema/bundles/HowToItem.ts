@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ListItemMixin } from '../lib/ListItem';
 import { HowToItemMixin } from '../lib/HowToItem';
+import { ListItemMixin } from '../lib/ListItem';
 import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
 
 export const HowToItemBundle = [
-  ListItemMixin as Mixin,
   HowToItemMixin as Mixin,
+  ListItemMixin as Mixin,
   QuantitativeValueMixin as Mixin];

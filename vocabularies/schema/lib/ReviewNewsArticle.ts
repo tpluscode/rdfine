@@ -6,15 +6,15 @@ import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '..';
-import { NewsArticleMixin } from './NewsArticle';
 import { CriticReviewMixin } from './CriticReview';
+import { NewsArticleMixin } from './NewsArticle';
 
-export interface ReviewNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.NewsArticle<D>, Schema.CriticReview<D>, RdfResource<D> {
+export interface ReviewNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CriticReview<D>, Schema.NewsArticle<D>, RdfResource<D> {
 }
 
 export function ReviewNewsArticleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ReviewNewsArticle> & RdfResourceCore> & Base {
   @namespace(schema)
-  class ReviewNewsArticleClass extends CriticReviewMixin(NewsArticleMixin(Resource)) implements Partial<ReviewNewsArticle> {
+  class ReviewNewsArticleClass extends NewsArticleMixin(CriticReviewMixin(Resource)) implements Partial<ReviewNewsArticle> {
   }
   return ReviewNewsArticleClass
 }
@@ -25,9 +25,9 @@ class ReviewNewsArticleImpl extends ReviewNewsArticleMixin(RdfResourceImpl) {
     this.types.add(schema.ReviewNewsArticle)
   }
 
-  static readonly __mixins: Mixin[] = [ReviewNewsArticleMixin, NewsArticleMixin, CriticReviewMixin];
+  static readonly __mixins: Mixin[] = [ReviewNewsArticleMixin, CriticReviewMixin, NewsArticleMixin];
 }
 ReviewNewsArticleMixin.appliesTo = schema.ReviewNewsArticle
 ReviewNewsArticleMixin.Class = ReviewNewsArticleImpl
 
-export const fromPointer = createFactory<ReviewNewsArticle>([CriticReviewMixin, NewsArticleMixin, ReviewNewsArticleMixin], { types: [schema.ReviewNewsArticle] });
+export const fromPointer = createFactory<ReviewNewsArticle>([NewsArticleMixin, CriticReviewMixin, ReviewNewsArticleMixin], { types: [schema.ReviewNewsArticle] });

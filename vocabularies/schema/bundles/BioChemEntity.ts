@@ -1,15 +1,15 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ThingMixin } from '../lib/Thing';
 import { BioChemEntityMixin } from '../lib/BioChemEntity';
+import { GeneMixin } from '../lib/Gene';
 import { MedicalConditionMixin } from '../lib/MedicalCondition';
 import { PropertyValueMixin } from '../lib/PropertyValue';
-import { GeneMixin } from '../lib/Gene';
 import { TaxonMixin } from '../lib/Taxon';
+import { ThingMixin } from '../lib/Thing';
 
 export const BioChemEntityBundle = [
-  ThingMixin as Mixin,
   BioChemEntityMixin as Mixin,
+  GeneMixin as Mixin,
   MedicalConditionMixin as Mixin,
   PropertyValueMixin as Mixin,
-  GeneMixin as Mixin,
-  TaxonMixin as Mixin];
+  TaxonMixin as Mixin,
+  ThingMixin as Mixin];

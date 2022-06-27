@@ -1,19 +1,19 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../lib/Intangible';
-import { ParcelDeliveryMixin } from '../lib/ParcelDelivery';
-import { OrganizationMixin } from '../lib/Organization';
-import { PostalAddressMixin } from '../lib/PostalAddress';
 import { DeliveryEventMixin } from '../lib/DeliveryEvent';
-import { ProductMixin } from '../lib/Product';
+import { IntangibleMixin } from '../lib/Intangible';
 import { OrderMixin } from '../lib/Order';
+import { OrganizationMixin } from '../lib/Organization';
+import { ParcelDeliveryMixin } from '../lib/ParcelDelivery';
 import { PersonMixin } from '../lib/Person';
+import { PostalAddressMixin } from '../lib/PostalAddress';
+import { ProductMixin } from '../lib/Product';
 
 export const ParcelDeliveryBundle = [
-  IntangibleMixin as Mixin,
-  ParcelDeliveryMixin as Mixin,
-  OrganizationMixin as Mixin,
-  PostalAddressMixin as Mixin,
   DeliveryEventMixin as Mixin,
-  ProductMixin as Mixin,
+  IntangibleMixin as Mixin,
   OrderMixin as Mixin,
-  PersonMixin as Mixin];
+  OrganizationMixin as Mixin,
+  ParcelDeliveryMixin as Mixin,
+  PersonMixin as Mixin,
+  PostalAddressMixin as Mixin,
+  ProductMixin as Mixin];

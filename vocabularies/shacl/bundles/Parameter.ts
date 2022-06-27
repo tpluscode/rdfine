@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PropertyShapeMixin } from '../lib/PropertyShape';
 import { ParameterMixin } from '../lib/Parameter';
+import { PropertyShapeMixin } from '../lib/PropertyShape';
 
 export const ParameterBundle = [
-  PropertyShapeMixin as Mixin,
-  ParameterMixin as Mixin];
+  ParameterMixin as Mixin,
+  PropertyShapeMixin as Mixin];

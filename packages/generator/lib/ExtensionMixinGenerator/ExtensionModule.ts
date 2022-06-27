@@ -137,6 +137,7 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
     })
 
     Object.entries(this.namespaceImports)
+      .sort(([l], [r]) => l.localeCompare(r))
       .forEach(([moduleSpecifier, namespaceImport]) => {
         mixinFile.addImportDeclaration({
           moduleSpecifier,

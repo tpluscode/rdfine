@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { TradeActionMixin } from '../lib/TradeAction';
 import { OrderActionMixin } from '../lib/OrderAction';
+import { TradeActionMixin } from '../lib/TradeAction';
 
 export const OrderActionBundle = [
-  TradeActionMixin as Mixin,
-  OrderActionMixin as Mixin];
+  OrderActionMixin as Mixin,
+  TradeActionMixin as Mixin];

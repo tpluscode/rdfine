@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RatingMixin } from '../lib/Rating';
 import { AggregateRatingMixin } from '../lib/AggregateRating';
+import { RatingMixin } from '../lib/Rating';
 import { ThingMixin } from '../lib/Thing';
 
 export const AggregateRatingBundle = [
-  RatingMixin as Mixin,
   AggregateRatingMixin as Mixin,
+  RatingMixin as Mixin,
   ThingMixin as Mixin];

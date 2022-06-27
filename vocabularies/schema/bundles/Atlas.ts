@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
 import { AtlasMixin } from '../lib/Atlas';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
 
 export const AtlasBundle = [
-  CreativeWorkMixin as Mixin,
-  AtlasMixin as Mixin];
+  AtlasMixin as Mixin,
+  CreativeWorkMixin as Mixin];

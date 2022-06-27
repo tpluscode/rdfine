@@ -19,7 +19,7 @@ export function getSuperClasses(clas: GraphPointer, types: TypeMetaCollection) {
     }
 
     return selected
-  }, [])
+  }, []).sort((l, r) => l.localName.localeCompare(r.localName))
 }
 
 function * getProperties(clas: GraphPointer, types: TypeMetaCollection, context: Context, excludedTerms: TermSet) {

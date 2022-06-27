@@ -1,29 +1,29 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkSeriesMixin } from '../lib/CreativeWorkSeries';
-import { VideoGameSeriesMixin } from '../lib/VideoGameSeries';
-import { PersonMixin } from '../lib/Person';
-import { ThingMixin } from '../lib/Thing';
 import { CreativeWorkMixin } from '../lib/CreativeWork';
 import { CreativeWorkSeasonMixin } from '../lib/CreativeWorkSeason';
+import { CreativeWorkSeriesMixin } from '../lib/CreativeWorkSeries';
 import { EpisodeMixin } from '../lib/Episode';
+import { MusicGroupMixin } from '../lib/MusicGroup';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
 import { PlaceMixin } from '../lib/Place';
 import { PostalAddressMixin } from '../lib/PostalAddress';
-import { MusicGroupMixin } from '../lib/MusicGroup';
 import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
-import { OrganizationMixin } from '../lib/Organization';
+import { ThingMixin } from '../lib/Thing';
+import { VideoGameSeriesMixin } from '../lib/VideoGameSeries';
 import { VideoObjectMixin } from '../lib/VideoObject';
 
 export const VideoGameSeriesBundle = [
-  CreativeWorkSeriesMixin as Mixin,
-  VideoGameSeriesMixin as Mixin,
-  PersonMixin as Mixin,
-  ThingMixin as Mixin,
   CreativeWorkMixin as Mixin,
   CreativeWorkSeasonMixin as Mixin,
+  CreativeWorkSeriesMixin as Mixin,
   EpisodeMixin as Mixin,
+  MusicGroupMixin as Mixin,
+  OrganizationMixin as Mixin,
+  PersonMixin as Mixin,
   PlaceMixin as Mixin,
   PostalAddressMixin as Mixin,
-  MusicGroupMixin as Mixin,
   QuantitativeValueMixin as Mixin,
-  OrganizationMixin as Mixin,
+  ThingMixin as Mixin,
+  VideoGameSeriesMixin as Mixin,
   VideoObjectMixin as Mixin];

@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RoleMixin } from '../lib/Role';
 import { RightsHolderMixin } from '../lib/RightsHolder';
+import { RoleMixin } from '../lib/Role';
 
 export const RightsHolderBundle = [
-  RoleMixin as Mixin,
-  RightsHolderMixin as Mixin];
+  RightsHolderMixin as Mixin,
+  RoleMixin as Mixin];

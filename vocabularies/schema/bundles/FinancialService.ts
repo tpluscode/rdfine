@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { LocalBusinessMixin } from '../lib/LocalBusiness';
 import { FinancialServiceMixin } from '../lib/FinancialService';
+import { LocalBusinessMixin } from '../lib/LocalBusiness';
 
 export const FinancialServiceBundle = [
-  LocalBusinessMixin as Mixin,
-  FinancialServiceMixin as Mixin];
+  FinancialServiceMixin as Mixin,
+  LocalBusinessMixin as Mixin];

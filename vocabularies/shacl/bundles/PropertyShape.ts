@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ShapeMixin } from '../lib/Shape';
 import { PropertyGroupMixin } from '../lib/PropertyGroup';
 import { PropertyShapeMixin } from '../lib/PropertyShape';
+import { ShapeMixin } from '../lib/Shape';
 
 export const PropertyShapeBundle = [
-  ShapeMixin as Mixin,
   PropertyGroupMixin as Mixin,
-  PropertyShapeMixin as Mixin];
+  PropertyShapeMixin as Mixin,
+  ShapeMixin as Mixin];

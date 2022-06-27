@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MedicalEntityMixin } from '../lib/MedicalEntity';
 import { LifestyleModificationMixin } from '../lib/LifestyleModification';
+import { MedicalEntityMixin } from '../lib/MedicalEntity';
 
 export const LifestyleModificationBundle = [
-  MedicalEntityMixin as Mixin,
-  LifestyleModificationMixin as Mixin];
+  LifestyleModificationMixin as Mixin,
+  MedicalEntityMixin as Mixin];

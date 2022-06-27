@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { QuantitativeValueDistributionMixin } from '../lib/QuantitativeValueDistribution';
 import { MonetaryAmountDistributionMixin } from '../lib/MonetaryAmountDistribution';
+import { QuantitativeValueDistributionMixin } from '../lib/QuantitativeValueDistribution';
 
 export const MonetaryAmountDistributionBundle = [
-  QuantitativeValueDistributionMixin as Mixin,
-  MonetaryAmountDistributionMixin as Mixin];
+  MonetaryAmountDistributionMixin as Mixin,
+  QuantitativeValueDistributionMixin as Mixin];

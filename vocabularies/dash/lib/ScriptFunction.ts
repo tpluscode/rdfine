@@ -9,15 +9,15 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '..';
 import type * as Shacl from '@rdfine/shacl';
-import { ScriptMixin } from './Script';
 import { FunctionMixin as ShaclFunctionMixin } from '@rdfine/shacl/lib/Function';
+import { ScriptMixin } from './Script';
 
-export interface ScriptFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, Shacl.Function<D>, RdfResource<D> {
+export interface ScriptFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.Function<D>, Dash.Script<D>, RdfResource<D> {
 }
 
 export function ScriptFunctionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ScriptFunction> & RdfResourceCore> & Base {
   @namespace(dash)
-  class ScriptFunctionClass extends FunctionMixinEx(ShaclFunctionMixin(ScriptMixin(Resource))) implements Partial<ScriptFunction> {
+  class ScriptFunctionClass extends ScriptMixin(FunctionMixinEx(ShaclFunctionMixin(Resource))) implements Partial<ScriptFunction> {
   }
   return ScriptFunctionClass
 }
@@ -28,9 +28,9 @@ class ScriptFunctionImpl extends ScriptFunctionMixin(RdfResourceImpl) {
     this.types.add(dash.ScriptFunction)
   }
 
-  static readonly __mixins: Mixin[] = [ScriptFunctionMixin, ScriptMixin, ShaclFunctionMixin];
+  static readonly __mixins: Mixin[] = [ScriptFunctionMixin, ShaclFunctionMixin, ScriptMixin];
 }
 ScriptFunctionMixin.appliesTo = dash.ScriptFunction
 ScriptFunctionMixin.Class = ScriptFunctionImpl
 
-export const fromPointer = createFactory<ScriptFunction>([ShaclFunctionMixin, ScriptMixin, ScriptFunctionMixin], { types: [dash.ScriptFunction] });
+export const fromPointer = createFactory<ScriptFunction>([ScriptMixin, ShaclFunctionMixin, ScriptFunctionMixin], { types: [dash.ScriptFunction] });
