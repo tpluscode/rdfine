@@ -45,7 +45,7 @@
     "@rdfine/foaf": "^0.1.8",
     "@rdfine/rdfs": "^0.6.9",
     "@rdfine/sioc": "^0.1.6",
-    "@tpluscode/rdf-ns-builders": "^1.0.0",
+    "@tpluscode/rdf-ns-builders": "^2.0.0",
     "@tpluscode/rdfine": "^0.5.34"
   },
   "repository": {

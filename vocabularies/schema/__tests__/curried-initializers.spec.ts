@@ -2,7 +2,7 @@ import clownface from 'clownface';
 import { dataset } from '@rdfjs/dataset';
 import { namedNode } from '@rdf-esm/data-model';
 import { fromPointer, PersonMixin } from '../lib/Person';
-import { schema } from '@tpluscode/rdf-ns-builders/strict';
+import { schema } from '@tpluscode/rdf-ns-builders';
 import RdfResourceImpl, { ResourceFactory } from '@tpluscode/rdfine';
 
 describe('curried initializers', () => {
