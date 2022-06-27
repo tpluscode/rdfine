@@ -1,5 +1,4 @@
-import { NamedNode } from '@rdfjs/types';
-import { schema } from './namespace';
+import type { NamedNode } from '@rdfjs/types';
 
 const values = {};
 

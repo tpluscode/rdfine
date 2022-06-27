@@ -1,13 +1,13 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MediaObjectMixin } from '../lib/MediaObject';
-import { VideoObjectMixin } from '../lib/VideoObject';
-import { PersonMixin } from '../lib/Person';
-import { MusicGroupMixin } from '../lib/MusicGroup';
 import { ImageObjectMixin } from '../lib/ImageObject';
+import { MediaObjectMixin } from '../lib/MediaObject';
+import { MusicGroupMixin } from '../lib/MusicGroup';
+import { PersonMixin } from '../lib/Person';
+import { VideoObjectMixin } from '../lib/VideoObject';
 
 export const VideoObjectBundle = [
+  ImageObjectMixin as Mixin,
   MediaObjectMixin as Mixin,
-  VideoObjectMixin as Mixin,
-  PersonMixin as Mixin,
   MusicGroupMixin as Mixin,
-  ImageObjectMixin as Mixin];
+  PersonMixin as Mixin,
+  VideoObjectMixin as Mixin];

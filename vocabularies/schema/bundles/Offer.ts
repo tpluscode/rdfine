@@ -1,53 +1,53 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../lib/Intangible';
-import { OfferMixin } from '../lib/Offer';
-import { LoanOrCreditMixin } from '../lib/LoanOrCredit';
-import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
-import { AggregateRatingMixin } from '../lib/AggregateRating';
-import { PlaceMixin } from '../lib/Place';
 import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
-import { GeoShapeMixin } from '../lib/GeoShape';
-import { ThingMixin } from '../lib/Thing';
-import { PriceSpecificationMixin } from '../lib/PriceSpecification';
-import { MerchantReturnPolicyMixin } from '../lib/MerchantReturnPolicy';
-import { TypeAndQuantityNodeMixin } from '../lib/TypeAndQuantityNode';
 import { AggregateOfferMixin } from '../lib/AggregateOffer';
+import { AggregateRatingMixin } from '../lib/AggregateRating';
 import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { TripMixin } from '../lib/Trip';
-import { ServiceMixin } from '../lib/Service';
-import { EventMixin } from '../lib/Event';
-import { ProductMixin } from '../lib/Product';
-import { MenuItemMixin } from '../lib/MenuItem';
 import { DurationMixin } from '../lib/Duration';
+import { EventMixin } from '../lib/Event';
+import { GeoShapeMixin } from '../lib/GeoShape';
+import { IntangibleMixin } from '../lib/Intangible';
+import { LoanOrCreditMixin } from '../lib/LoanOrCredit';
+import { MenuItemMixin } from '../lib/MenuItem';
+import { MerchantReturnPolicyMixin } from '../lib/MerchantReturnPolicy';
+import { OfferMixin } from '../lib/Offer';
+import { OfferShippingDetailsMixin } from '../lib/OfferShippingDetails';
 import { OrganizationMixin } from '../lib/Organization';
 import { PersonMixin } from '../lib/Person';
+import { PlaceMixin } from '../lib/Place';
+import { PriceSpecificationMixin } from '../lib/PriceSpecification';
+import { ProductMixin } from '../lib/Product';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
 import { ReviewMixin } from '../lib/Review';
-import { OfferShippingDetailsMixin } from '../lib/OfferShippingDetails';
+import { ServiceMixin } from '../lib/Service';
+import { ThingMixin } from '../lib/Thing';
+import { TripMixin } from '../lib/Trip';
+import { TypeAndQuantityNodeMixin } from '../lib/TypeAndQuantityNode';
 import { WarrantyPromiseMixin } from '../lib/WarrantyPromise';
 
 export const OfferBundle = [
-  IntangibleMixin as Mixin,
-  OfferMixin as Mixin,
-  LoanOrCreditMixin as Mixin,
-  QuantitativeValueMixin as Mixin,
-  AggregateRatingMixin as Mixin,
-  PlaceMixin as Mixin,
   AdministrativeAreaMixin as Mixin,
-  GeoShapeMixin as Mixin,
-  ThingMixin as Mixin,
-  PriceSpecificationMixin as Mixin,
-  MerchantReturnPolicyMixin as Mixin,
-  TypeAndQuantityNodeMixin as Mixin,
   AggregateOfferMixin as Mixin,
+  AggregateRatingMixin as Mixin,
   CreativeWorkMixin as Mixin,
-  TripMixin as Mixin,
-  ServiceMixin as Mixin,
-  EventMixin as Mixin,
-  ProductMixin as Mixin,
-  MenuItemMixin as Mixin,
   DurationMixin as Mixin,
+  EventMixin as Mixin,
+  GeoShapeMixin as Mixin,
+  IntangibleMixin as Mixin,
+  LoanOrCreditMixin as Mixin,
+  MenuItemMixin as Mixin,
+  MerchantReturnPolicyMixin as Mixin,
+  OfferMixin as Mixin,
+  OfferShippingDetailsMixin as Mixin,
   OrganizationMixin as Mixin,
   PersonMixin as Mixin,
+  PlaceMixin as Mixin,
+  PriceSpecificationMixin as Mixin,
+  ProductMixin as Mixin,
+  QuantitativeValueMixin as Mixin,
   ReviewMixin as Mixin,
-  OfferShippingDetailsMixin as Mixin,
+  ServiceMixin as Mixin,
+  ThingMixin as Mixin,
+  TripMixin as Mixin,
+  TypeAndQuantityNodeMixin as Mixin,
   WarrantyPromiseMixin as Mixin];

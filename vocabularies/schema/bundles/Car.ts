@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { VehicleMixin } from '../lib/Vehicle';
 import { CarMixin } from '../lib/Car';
 import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
+import { VehicleMixin } from '../lib/Vehicle';
 
 export const CarBundle = [
-  VehicleMixin as Mixin,
   CarMixin as Mixin,
-  QuantitativeValueMixin as Mixin];
+  QuantitativeValueMixin as Mixin,
+  VehicleMixin as Mixin];

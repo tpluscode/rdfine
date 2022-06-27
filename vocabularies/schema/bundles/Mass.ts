@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { QuantityMixin } from '../lib/Quantity';
 import { MassMixin } from '../lib/Mass';
+import { QuantityMixin } from '../lib/Quantity';
 
 export const MassBundle = [
-  QuantityMixin as Mixin,
-  MassMixin as Mixin];
+  MassMixin as Mixin,
+  QuantityMixin as Mixin];

@@ -1,15 +1,15 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PerformingGroupMixin } from '../lib/PerformingGroup';
-import { MusicGroupMixin } from '../lib/MusicGroup';
-import { MusicAlbumMixin } from '../lib/MusicAlbum';
-import { PersonMixin } from '../lib/Person';
 import { ItemListMixin } from '../lib/ItemList';
+import { MusicAlbumMixin } from '../lib/MusicAlbum';
+import { MusicGroupMixin } from '../lib/MusicGroup';
 import { MusicRecordingMixin } from '../lib/MusicRecording';
+import { PerformingGroupMixin } from '../lib/PerformingGroup';
+import { PersonMixin } from '../lib/Person';
 
 export const MusicGroupBundle = [
-  PerformingGroupMixin as Mixin,
-  MusicGroupMixin as Mixin,
-  MusicAlbumMixin as Mixin,
-  PersonMixin as Mixin,
   ItemListMixin as Mixin,
-  MusicRecordingMixin as Mixin];
+  MusicAlbumMixin as Mixin,
+  MusicGroupMixin as Mixin,
+  MusicRecordingMixin as Mixin,
+  PerformingGroupMixin as Mixin,
+  PersonMixin as Mixin];

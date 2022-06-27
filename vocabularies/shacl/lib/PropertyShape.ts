@@ -6,19 +6,19 @@ import { sh } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '..';
-import type * as Rdfs from '@rdfine/rdfs';
 import type * as Rdf from '@rdfine/rdf';
+import type * as Rdfs from '@rdfine/rdfs';
 import { ShapeMixin } from './Shape';
-import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
+import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
 export interface PropertyShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Shape<D>, RdfResource<D> {
+  '_equals': Rdf.Property<D> | undefined;
   datatype: Rdfs.Datatype<D> | undefined;
   defaultValue: RDF.Term | undefined;
   description: string | undefined;
   disjoint: Rdf.Property<D> | undefined;
-  '_equals': Rdf.Property<D> | undefined;
   flags: string | undefined;
   group: Sh.PropertyGroup<D> | undefined;
   hasValue: Array<RDF.Term>;
@@ -43,6 +43,8 @@ export interface PropertyShape<D extends RDF.DatasetCore = RDF.DatasetCore> exte
 export function PropertyShapeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PropertyShape> & RdfResourceCore> & Base {
   @namespace(sh)
   class PropertyShapeClass extends ShapeMixin(Resource) implements Partial<PropertyShape> {
+    @property.resource({ path: sh.equals, as: [RdfPropertyMixin] })
+    '_equals': Rdf.Property | undefined;
     @property.resource({ as: [RdfsDatatypeMixin] })
     datatype: Rdfs.Datatype | undefined;
     @property()
@@ -51,8 +53,6 @@ export function PropertyShapeMixin<Base extends Constructor>(Resource: Base): Co
     description: string | undefined;
     @property.resource({ as: [RdfPropertyMixin] })
     disjoint: Rdf.Property | undefined;
-    @property.resource({ path: sh.equals, as: [RdfPropertyMixin] })
-    '_equals': Rdf.Property | undefined;
     @property.literal()
     flags: string | undefined;
     @property.resource({ implicitTypes: [sh.PropertyGroup] })

@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { CreativeWorkSeriesMixin } from '../lib/CreativeWorkSeries';
-import { PodcastSeriesMixin } from '../lib/PodcastSeries';
-import { PersonMixin } from '../lib/Person';
 import { DataFeedMixin } from '../lib/DataFeed';
+import { PersonMixin } from '../lib/Person';
+import { PodcastSeriesMixin } from '../lib/PodcastSeries';
 
 export const PodcastSeriesBundle = [
   CreativeWorkSeriesMixin as Mixin,
-  PodcastSeriesMixin as Mixin,
+  DataFeedMixin as Mixin,
   PersonMixin as Mixin,
-  DataFeedMixin as Mixin];
+  PodcastSeriesMixin as Mixin];

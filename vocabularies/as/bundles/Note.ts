@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ObjectMixin } from '../lib/Object';
 import { NoteMixin } from '../lib/Note';
+import { ObjectMixin } from '../lib/Object';
 
 export const NoteBundle = [
-  ObjectMixin as Mixin,
-  NoteMixin as Mixin];
+  NoteMixin as Mixin,
+  ObjectMixin as Mixin];

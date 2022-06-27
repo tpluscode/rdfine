@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ServiceMixin } from '../lib/Service';
 import { CableOrSatelliteServiceMixin } from '../lib/CableOrSatelliteService';
+import { ServiceMixin } from '../lib/Service';
 
 export const CableOrSatelliteServiceBundle = [
-  ServiceMixin as Mixin,
-  CableOrSatelliteServiceMixin as Mixin];
+  CableOrSatelliteServiceMixin as Mixin,
+  ServiceMixin as Mixin];

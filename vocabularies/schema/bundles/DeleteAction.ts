@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { UpdateActionMixin } from '../lib/UpdateAction';
 import { DeleteActionMixin } from '../lib/DeleteAction';
+import { UpdateActionMixin } from '../lib/UpdateAction';
 
 export const DeleteActionBundle = [
-  UpdateActionMixin as Mixin,
-  DeleteActionMixin as Mixin];
+  DeleteActionMixin as Mixin,
+  UpdateActionMixin as Mixin];

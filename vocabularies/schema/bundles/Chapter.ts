@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
 import { ChapterMixin } from '../lib/Chapter';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
 
 export const ChapterBundle = [
-  CreativeWorkMixin as Mixin,
-  ChapterMixin as Mixin];
+  ChapterMixin as Mixin,
+  CreativeWorkMixin as Mixin];

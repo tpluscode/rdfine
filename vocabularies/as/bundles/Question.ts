@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { IntransitiveActivityMixin } from '../lib/IntransitiveActivity';
-import { QuestionMixin } from '../lib/Question';
-import { ObjectMixin } from '../lib/Object';
 import { LinkMixin } from '../lib/Link';
+import { ObjectMixin } from '../lib/Object';
+import { QuestionMixin } from '../lib/Question';
 
 export const QuestionBundle = [
   IntransitiveActivityMixin as Mixin,
-  QuestionMixin as Mixin,
+  LinkMixin as Mixin,
   ObjectMixin as Mixin,
-  LinkMixin as Mixin];
+  QuestionMixin as Mixin];

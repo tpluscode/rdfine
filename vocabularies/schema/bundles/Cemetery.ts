@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CivicStructureMixin } from '../lib/CivicStructure';
 import { CemeteryMixin } from '../lib/Cemetery';
+import { CivicStructureMixin } from '../lib/CivicStructure';
 
 export const CemeteryBundle = [
-  CivicStructureMixin as Mixin,
-  CemeteryMixin as Mixin];
+  CemeteryMixin as Mixin,
+  CivicStructureMixin as Mixin];

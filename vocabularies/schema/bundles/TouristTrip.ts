@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { TripMixin } from '../lib/Trip';
-import { TouristTripMixin } from '../lib/TouristTrip';
 import { AudienceMixin } from '../lib/Audience';
+import { TouristTripMixin } from '../lib/TouristTrip';
+import { TripMixin } from '../lib/Trip';
 
 export const TouristTripBundle = [
-  TripMixin as Mixin,
+  AudienceMixin as Mixin,
   TouristTripMixin as Mixin,
-  AudienceMixin as Mixin];
+  TripMixin as Mixin];

@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ThingMixin } from '../lib/Thing';
-import { TaxonMixin } from '../lib/Taxon';
 import { PropertyValueMixin } from '../lib/PropertyValue';
+import { TaxonMixin } from '../lib/Taxon';
+import { ThingMixin } from '../lib/Thing';
 
 export const TaxonBundle = [
-  ThingMixin as Mixin,
+  PropertyValueMixin as Mixin,
   TaxonMixin as Mixin,
-  PropertyValueMixin as Mixin];
+  ThingMixin as Mixin];

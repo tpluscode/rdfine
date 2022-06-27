@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { EntityInfluenceMixin } from '../lib/EntityInfluence';
-import { InstantaneousEventMixin } from '../lib/InstantaneousEvent';
 import { ActivityMixin } from '../lib/Activity';
 import { EndMixin } from '../lib/End';
+import { EntityInfluenceMixin } from '../lib/EntityInfluence';
+import { InstantaneousEventMixin } from '../lib/InstantaneousEvent';
 
 export const EndBundle = [
-  EntityInfluenceMixin as Mixin,
-  InstantaneousEventMixin as Mixin,
   ActivityMixin as Mixin,
-  EndMixin as Mixin];
+  EndMixin as Mixin,
+  EntityInfluenceMixin as Mixin,
+  InstantaneousEventMixin as Mixin];

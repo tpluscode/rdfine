@@ -1,15 +1,15 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ThingMixin } from '../lib/Thing';
-import { PropertyValueMixin } from '../lib/PropertyValue';
-import { ImageObjectMixin } from '../lib/ImageObject';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
 import { ActionMixin } from '../lib/Action';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
 import { EventMixin } from '../lib/Event';
+import { ImageObjectMixin } from '../lib/ImageObject';
+import { PropertyValueMixin } from '../lib/PropertyValue';
+import { ThingMixin } from '../lib/Thing';
 
 export const ThingBundle = [
-  ThingMixin as Mixin,
-  PropertyValueMixin as Mixin,
-  ImageObjectMixin as Mixin,
-  CreativeWorkMixin as Mixin,
   ActionMixin as Mixin,
-  EventMixin as Mixin];
+  CreativeWorkMixin as Mixin,
+  EventMixin as Mixin,
+  ImageObjectMixin as Mixin,
+  PropertyValueMixin as Mixin,
+  ThingMixin as Mixin];

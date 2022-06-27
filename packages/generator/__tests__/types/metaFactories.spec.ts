@@ -1,6 +1,7 @@
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { owl, rdf, rdfs, schema, xsd } from '@tpluscode/rdf-ns-builders'
+import { owl, rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
+import { schema } from '@tpluscode/rdf-ns-builders/loose'
 import { ex } from '../_helpers/prefix'
 import {
   EnumerationMember,

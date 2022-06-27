@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ResourceMixin } from '../lib/Resource';
 import { OperationMixin } from '../lib/Operation';
+import { ResourceMixin } from '../lib/Resource';
 import { TemplatedLinkMixin } from '../lib/TemplatedLink';
 
 export const TemplatedLinkBundle = [
-  ResourceMixin as Mixin,
   OperationMixin as Mixin,
+  ResourceMixin as Mixin,
   TemplatedLinkMixin as Mixin];

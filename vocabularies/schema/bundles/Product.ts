@@ -1,41 +1,41 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ThingMixin } from '../lib/Thing';
-import { ProductMixin } from '../lib/Product';
-import { PropertyValueMixin } from '../lib/PropertyValue';
 import { AggregateRatingMixin } from '../lib/AggregateRating';
 import { AudienceMixin } from '../lib/Audience';
-import { OrganizationMixin } from '../lib/Organization';
 import { BrandMixin } from '../lib/Brand';
 import { CountryMixin } from '../lib/Country';
-import { DistanceMixin } from '../lib/Distance';
-import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
-import { EnergyConsumptionDetailsMixin } from '../lib/EnergyConsumptionDetails';
-import { MerchantReturnPolicyMixin } from '../lib/MerchantReturnPolicy';
-import { ServiceMixin } from '../lib/Service';
-import { ProductGroupMixin } from '../lib/ProductGroup';
-import { ProductModelMixin } from '../lib/ProductModel';
-import { ImageObjectMixin } from '../lib/ImageObject';
-import { OfferMixin } from '../lib/Offer';
 import { DemandMixin } from '../lib/Demand';
+import { DistanceMixin } from '../lib/Distance';
+import { EnergyConsumptionDetailsMixin } from '../lib/EnergyConsumptionDetails';
+import { ImageObjectMixin } from '../lib/ImageObject';
+import { MerchantReturnPolicyMixin } from '../lib/MerchantReturnPolicy';
+import { OfferMixin } from '../lib/Offer';
+import { OrganizationMixin } from '../lib/Organization';
+import { ProductGroupMixin } from '../lib/ProductGroup';
+import { ProductMixin } from '../lib/Product';
+import { ProductModelMixin } from '../lib/ProductModel';
+import { PropertyValueMixin } from '../lib/PropertyValue';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
 import { ReviewMixin } from '../lib/Review';
+import { ServiceMixin } from '../lib/Service';
+import { ThingMixin } from '../lib/Thing';
 
 export const ProductBundle = [
-  ThingMixin as Mixin,
-  ProductMixin as Mixin,
-  PropertyValueMixin as Mixin,
   AggregateRatingMixin as Mixin,
   AudienceMixin as Mixin,
-  OrganizationMixin as Mixin,
   BrandMixin as Mixin,
   CountryMixin as Mixin,
-  DistanceMixin as Mixin,
-  QuantitativeValueMixin as Mixin,
-  EnergyConsumptionDetailsMixin as Mixin,
-  MerchantReturnPolicyMixin as Mixin,
-  ServiceMixin as Mixin,
-  ProductGroupMixin as Mixin,
-  ProductModelMixin as Mixin,
-  ImageObjectMixin as Mixin,
-  OfferMixin as Mixin,
   DemandMixin as Mixin,
-  ReviewMixin as Mixin];
+  DistanceMixin as Mixin,
+  EnergyConsumptionDetailsMixin as Mixin,
+  ImageObjectMixin as Mixin,
+  MerchantReturnPolicyMixin as Mixin,
+  OfferMixin as Mixin,
+  OrganizationMixin as Mixin,
+  ProductGroupMixin as Mixin,
+  ProductMixin as Mixin,
+  ProductModelMixin as Mixin,
+  PropertyValueMixin as Mixin,
+  QuantitativeValueMixin as Mixin,
+  ReviewMixin as Mixin,
+  ServiceMixin as Mixin,
+  ThingMixin as Mixin];

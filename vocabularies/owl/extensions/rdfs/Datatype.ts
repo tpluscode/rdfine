@@ -5,8 +5,8 @@ import type * as RDF from '@rdfjs/types';
 import { rdfs } from '@tpluscode/rdf-ns-builders';
 import { owl } from '../../lib/namespace';
 import type * as Owl from '../..';
-import type * as Rdfs from '@rdfine/rdfs';
 import type * as Rdf from '@rdfine/rdf';
+import type * as Rdfs from '@rdfine/rdfs';
 import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype';
 import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List';
 

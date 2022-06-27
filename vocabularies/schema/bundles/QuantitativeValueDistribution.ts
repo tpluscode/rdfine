@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StructuredValueMixin } from '../lib/StructuredValue';
-import { QuantitativeValueDistributionMixin } from '../lib/QuantitativeValueDistribution';
 import { DurationMixin } from '../lib/Duration';
+import { QuantitativeValueDistributionMixin } from '../lib/QuantitativeValueDistribution';
+import { StructuredValueMixin } from '../lib/StructuredValue';
 
 export const QuantitativeValueDistributionBundle = [
-  StructuredValueMixin as Mixin,
+  DurationMixin as Mixin,
   QuantitativeValueDistributionMixin as Mixin,
-  DurationMixin as Mixin];
+  StructuredValueMixin as Mixin];

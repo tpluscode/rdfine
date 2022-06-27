@@ -43,7 +43,9 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       .sort((left, right) => left.name.localeCompare(right.name))
       .forEach(propertyWriter.addProperty.bind(propertyWriter))
 
-    const type = `${context.prefix}.${this.type.localName}`
+    const type = this.type.term === this.type.localName
+      ? `${context.prefix}.${this.type.term}`
+      : `${context.prefix}['${this.type.term}']`
 
     const implementationClass = mixinFile.addClass({
       name: implName,
@@ -70,11 +72,8 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       initializer: `[${mixinNames.join(', ')}]`,
     })
 
-    const nsBuilderTerm = this.type.term === this.type.localName
-      ? `${context.prefix}.${this.type.term}`
-      : `${context.prefix}['${this.type.term}']`
     mixinFile.addStatements([
-      `${mixinName}.appliesTo = ${nsBuilderTerm}`,
+      `${mixinName}.appliesTo = ${type}`,
       `${mixinName}.Class = ${implName}`,
     ])
 
@@ -139,8 +138,9 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
         .forEach(sc => toImport.push(sc))
     }
 
-    imported
-      .forEach(mi => {
+    [...imported]
+      .sort(([l], [r]) => l.localeCompare(r))
+      .forEach(([, mi]) => {
         if (mi.type !== 'Resource') {
           return
         }
@@ -209,6 +209,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     })
 
     Object.entries(this.namespaceImports)
+      .sort(([l], [r]) => l.localeCompare(r))
       .forEach(([moduleSpecifier, namespaceImport]) => {
         mixinFile.addImportDeclaration({
           moduleSpecifier,

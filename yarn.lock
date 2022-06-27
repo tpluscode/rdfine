@@ -1425,7 +1425,7 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@rdf-esm/data-model@^0.5.1", "@rdf-esm/data-model@^0.5.3":
+"@rdf-esm/data-model@^0.5.1", "@rdf-esm/data-model@^0.5.3", "@rdf-esm/data-model@^0.5.4":
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/@rdf-esm/data-model/-/data-model-0.5.4.tgz#bd0f7aba4415240387f26ef0cd05ebb6b444f47f"
   integrity sha512-EINrtebCO6aT9e8vLmkaFFs317sCRj9cdFlKexvZA+7bLwcKrmcQLwC+nnnyBurtypHzWlokbLvp1SZHQWiH3w==
@@ -1612,25 +1612,26 @@
   resolved "https://registry.yarnpkg.com/@tpluscode/eslint-config/-/eslint-config-0.1.1.tgz#5562e9753d4a4e9bd6ee4785baeaf9e6c7f42bfc"
   integrity sha512-gv7CE+3iQ6YNoEofgzMKWUgOHxY7Kozq06M4ls0PkOScOmvCoHTFD2XvPtqmADmXezQsMcZyM6VsHEilgHoasw==
 
-"@tpluscode/rdf-ns-builders@^1", "@tpluscode/rdf-ns-builders@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@tpluscode/rdf-ns-builders/-/rdf-ns-builders-1.0.0.tgz#289391759c6d5a6af816d66ea68cc355a6e18a9b"
-  integrity sha512-e7EjBOgKbS7RoSu8SPuD8L/JtADO9tiOODGwg2DykbOEAZ29XzmlexnnJuhBJxHZ4/MY/Fr/ZrkgCr0YNEND6w==
+"@tpluscode/rdf-ns-builders@^2", "@tpluscode/rdf-ns-builders@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@tpluscode/rdf-ns-builders/-/rdf-ns-builders-2.0.1.tgz#1074666a538f6ea2946bf67dac12da191fd2d928"
+  integrity sha512-P/pwfjhcj/JOZF3epheHiDd/f9tSkceydQBqBuqThpNX2NIg+4BSgwtG2YfKBa24mmGFfyzN6RVeFclhA8wZBw==
   dependencies:
+    "@rdf-esm/data-model" "^0.5.4"
     "@rdf-esm/namespace" "^0.5.1"
     "@rdfjs/types" "*"
     commander "^7.2.0"
     fs-extra "^10.0.0"
 
-"@tpluscode/rdf-string@^0.2.24":
-  version "0.2.24"
-  resolved "https://registry.yarnpkg.com/@tpluscode/rdf-string/-/rdf-string-0.2.24.tgz#9d9fcafca2b2cfdf2bf0e515f9136feb8e221c7a"
-  integrity sha512-eD8vpspwDP1Y+Pxp+ohFVCALd7OyT91m4KzjTJjtGT1kONXyM+6ygKm5EDsicScsyS64rlWOD8uAJJazoi65xg==
+"@tpluscode/rdf-string@^0.2.26":
+  version "0.2.26"
+  resolved "https://registry.yarnpkg.com/@tpluscode/rdf-string/-/rdf-string-0.2.26.tgz#cdc827d0869c19125358d1cc280dc83375bf6ce1"
+  integrity sha512-zfNGMmY8D9jVuJ9qHwNrIWMwhibIkO42/1KtCfo59m4vXYTfJrXcn1ny9pj5kuhbpSubRbJ69zmYxP4UrXVPQw==
   dependencies:
     "@rdf-esm/data-model" "^0.5.3"
     "@rdf-esm/term-map" "^0.5.0"
     "@rdfjs/types" "*"
-    "@tpluscode/rdf-ns-builders" "^1"
+    "@tpluscode/rdf-ns-builders" "^2"
     "@zazuko/rdf-vocabularies" "*"
 
 "@ts-morph/common@^0.7.2", "@ts-morph/common@~0.7.0":

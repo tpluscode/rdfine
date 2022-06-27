@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { OfferMixin } from '../lib/Offer';
 import { AggregateOfferMixin } from '../lib/AggregateOffer';
 import { DemandMixin } from '../lib/Demand';
+import { OfferMixin } from '../lib/Offer';
 
 export const AggregateOfferBundle = [
-  OfferMixin as Mixin,
   AggregateOfferMixin as Mixin,
-  DemandMixin as Mixin];
+  DemandMixin as Mixin,
+  OfferMixin as Mixin];

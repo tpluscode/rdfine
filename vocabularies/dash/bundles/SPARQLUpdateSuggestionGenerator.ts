@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SuggestionGeneratorMixin } from '../lib/SuggestionGenerator';
 import { SPARQLUpdateSuggestionGeneratorMixin } from '../lib/SPARQLUpdateSuggestionGenerator';
+import { SuggestionGeneratorMixin } from '../lib/SuggestionGenerator';
 
 export const SPARQLUpdateSuggestionGeneratorBundle = [
-  SuggestionGeneratorMixin as Mixin,
-  SPARQLUpdateSuggestionGeneratorMixin as Mixin];
+  SPARQLUpdateSuggestionGeneratorMixin as Mixin,
+  SuggestionGeneratorMixin as Mixin];

@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CommunicateActionMixin } from '../lib/CommunicateAction';
 import { CommentActionMixin } from '../lib/CommentAction';
 import { CommentMixin } from '../lib/Comment';
+import { CommunicateActionMixin } from '../lib/CommunicateAction';
 
 export const CommentActionBundle = [
-  CommunicateActionMixin as Mixin,
   CommentActionMixin as Mixin,
-  CommentMixin as Mixin];
+  CommentMixin as Mixin,
+  CommunicateActionMixin as Mixin];

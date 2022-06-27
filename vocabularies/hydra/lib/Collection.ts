@@ -11,7 +11,6 @@ import { CollectionExMixin } from '../extensions/CollectionEx';
 
 export interface Collection<M extends RdfResourceCore<any> = RdfResourceCore<any>, D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
   member: Array<Hydra.Resource<D> & M>;
-  memberAssertion: Array<Hydra.MemberAssertion<D>>;
   totalItems: number | undefined;
 }
 
@@ -20,8 +19,6 @@ export function CollectionMixin<Base extends Constructor>(Resource: Base): Const
   class CollectionClass extends CollectionExMixin(ResourceMixin(Resource)) implements Partial<Collection> {
     @property.resource({ values: 'array', implicitTypes: [hydra.Resource] })
     member!: Array<Hydra.Resource>;
-    @property.resource({ values: 'array', implicitTypes: [hydra.MemberAssertion] })
-    memberAssertion!: Array<Hydra.MemberAssertion>;
     @property.literal({ type: Number })
     totalItems: number | undefined;
   }

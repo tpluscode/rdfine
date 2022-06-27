@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PriceSpecificationMixin } from '../lib/PriceSpecification';
-import { UnitPriceSpecificationMixin } from '../lib/UnitPriceSpecification';
 import { DurationMixin } from '../lib/Duration';
+import { PriceSpecificationMixin } from '../lib/PriceSpecification';
 import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
+import { UnitPriceSpecificationMixin } from '../lib/UnitPriceSpecification';
 
 export const UnitPriceSpecificationBundle = [
-  PriceSpecificationMixin as Mixin,
-  UnitPriceSpecificationMixin as Mixin,
   DurationMixin as Mixin,
-  QuantitativeValueMixin as Mixin];
+  PriceSpecificationMixin as Mixin,
+  QuantitativeValueMixin as Mixin,
+  UnitPriceSpecificationMixin as Mixin];

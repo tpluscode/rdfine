@@ -1,6 +1,6 @@
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { NamedNode, Term, Literal } from '@rdfjs/types'
+import type { NamedNode, Term, Literal } from '@rdfjs/types'
 import {
   defaultGraph,
   namedNode,
@@ -16,7 +16,7 @@ import {
   dcterms,
   rdfs,
   sh,
-} from '@tpluscode/rdf-ns-builders'
+} from '@tpluscode/rdf-ns-builders/loose'
 import RdfResource, { Initializer, RdfResourceCore, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
 import { Constructor, crossBoundaries, namespace, property, ResourceFactory } from '../index'

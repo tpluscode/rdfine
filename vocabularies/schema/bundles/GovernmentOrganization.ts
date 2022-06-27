@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { OrganizationMixin } from '../lib/Organization';
 import { GovernmentOrganizationMixin } from '../lib/GovernmentOrganization';
+import { OrganizationMixin } from '../lib/Organization';
 
 export const GovernmentOrganizationBundle = [
-  OrganizationMixin as Mixin,
-  GovernmentOrganizationMixin as Mixin];
+  GovernmentOrganizationMixin as Mixin,
+  OrganizationMixin as Mixin];

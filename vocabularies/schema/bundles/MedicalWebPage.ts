@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { WebPageMixin } from '../lib/WebPage';
-import { MedicalWebPageMixin } from '../lib/MedicalWebPage';
 import { MedicalAudienceMixin } from '../lib/MedicalAudience';
+import { MedicalWebPageMixin } from '../lib/MedicalWebPage';
+import { WebPageMixin } from '../lib/WebPage';
 
 export const MedicalWebPageBundle = [
-  WebPageMixin as Mixin,
+  MedicalAudienceMixin as Mixin,
   MedicalWebPageMixin as Mixin,
-  MedicalAudienceMixin as Mixin];
+  WebPageMixin as Mixin];

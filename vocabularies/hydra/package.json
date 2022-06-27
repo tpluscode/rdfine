@@ -38,7 +38,9 @@
       "BaseUriSource": "NamedNode"
     },
     "exclude": [
-      "apiDocumentation"
+      "apiDocumentation",
+      "memberAssertion",
+      "collection"
     ],
     "properties": {
       "collection": {
@@ -83,7 +85,7 @@
     "@rdfine/rdf": "^0.5.6",
     "@rdfine/rdfs": "^0.6.9",
     "@rdf-esm/data-model": "^0.5.3",
-    "@tpluscode/rdf-ns-builders": "^1.0.0",
+    "@tpluscode/rdf-ns-builders": "^2.0.1",
     "@tpluscode/rdfine": "^0.5.34",
     "es6-url-template": "^3.0.2"
   },
@@ -93,7 +95,7 @@
     "@rdfjs/dataset": "^1.0.1",
     "@rdfjs/namespace": "^1.1.0",
     "@rdfjs/parser-n3": "^1.1.4",
-    "@tpluscode/rdf-string": "^0.2.24",
+    "@tpluscode/rdf-string": "^0.2.26",
     "@zazuko/rdf-vocabularies": "*",
     "clownface": "^1",
     "rdf-ext": "^1.3.0",

@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ItemListMixin } from '../lib/ItemList';
 import { BreadcrumbListMixin } from '../lib/BreadcrumbList';
+import { ItemListMixin } from '../lib/ItemList';
 
 export const BreadcrumbListBundle = [
-  ItemListMixin as Mixin,
-  BreadcrumbListMixin as Mixin];
+  BreadcrumbListMixin as Mixin,
+  ItemListMixin as Mixin];

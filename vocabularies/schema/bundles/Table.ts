@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { WebPageElementMixin } from '../lib/WebPageElement';
 import { TableMixin } from '../lib/Table';
+import { WebPageElementMixin } from '../lib/WebPageElement';
 
 export const TableBundle = [
-  WebPageElementMixin as Mixin,
-  TableMixin as Mixin];
+  TableMixin as Mixin,
+  WebPageElementMixin as Mixin];

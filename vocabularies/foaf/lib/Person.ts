@@ -9,10 +9,10 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '..';
 import type * as Wgs from '@rdfine/wgs';
-import { SpatialThingMixin as WgsSpatialThingMixin } from '@rdfine/wgs/lib/SpatialThing';
 import { AgentMixin } from './Agent';
+import { SpatialThingMixin as WgsSpatialThingMixin } from '@rdfine/wgs/lib/SpatialThing';
 
-export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Wgs.SpatialThing<D>, Foaf.Agent<D>, RdfResource<D> {
+export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Agent<D>, Wgs.SpatialThing<D>, RdfResource<D> {
   currentProject: RDF.NamedNode | undefined;
   'family_name': RDF.Literal | undefined;
   familyName: RDF.Literal | undefined;
@@ -33,7 +33,7 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Wgs
 
 export function PersonMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Person> & RdfResourceCore> & Base {
   @namespace(foaf)
-  class PersonClass extends SpatialThingMixinEx(AgentMixin(WgsSpatialThingMixin(Resource))) implements Partial<Person> {
+  class PersonClass extends SpatialThingMixinEx(WgsSpatialThingMixin(AgentMixin(Resource))) implements Partial<Person> {
     @property()
     currentProject: RDF.NamedNode | undefined;
     @property()
@@ -76,9 +76,9 @@ class PersonImpl extends PersonMixin(RdfResourceImpl) {
     this.types.add(foaf.Person)
   }
 
-  static readonly __mixins: Mixin[] = [PersonMixin, WgsSpatialThingMixin, AgentMixin];
+  static readonly __mixins: Mixin[] = [PersonMixin, AgentMixin, WgsSpatialThingMixin];
 }
 PersonMixin.appliesTo = foaf.Person
 PersonMixin.Class = PersonImpl
 
-export const fromPointer = createFactory<Person>([AgentMixin, WgsSpatialThingMixin, PersonMixin], { types: [foaf.Person] });
+export const fromPointer = createFactory<Person>([WgsSpatialThingMixin, AgentMixin, PersonMixin], { types: [foaf.Person] });

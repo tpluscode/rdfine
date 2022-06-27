@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RoomMixin } from '../lib/Room';
-import { HotelRoomMixin } from '../lib/HotelRoom';
 import { BedDetailsMixin } from '../lib/BedDetails';
+import { HotelRoomMixin } from '../lib/HotelRoom';
 import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
+import { RoomMixin } from '../lib/Room';
 
 export const HotelRoomBundle = [
-  RoomMixin as Mixin,
-  HotelRoomMixin as Mixin,
   BedDetailsMixin as Mixin,
-  QuantitativeValueMixin as Mixin];
+  HotelRoomMixin as Mixin,
+  QuantitativeValueMixin as Mixin,
+  RoomMixin as Mixin];

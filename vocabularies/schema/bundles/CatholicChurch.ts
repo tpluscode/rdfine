@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ChurchMixin } from '../lib/Church';
 import { CatholicChurchMixin } from '../lib/CatholicChurch';
+import { ChurchMixin } from '../lib/Church';
 
 export const CatholicChurchBundle = [
-  ChurchMixin as Mixin,
-  CatholicChurchMixin as Mixin];
+  CatholicChurchMixin as Mixin,
+  ChurchMixin as Mixin];
