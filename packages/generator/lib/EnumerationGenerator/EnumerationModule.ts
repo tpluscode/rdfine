@@ -17,15 +17,6 @@ export class EnumerationModule implements GeneratedModule {
     context.log.debug('Generating enumeration %s', this.type.name)
     const enumFile = project.createSourceFile(`lib/${this.type.module}.ts`, {}, { overwrite: true })
 
-    enumFile.addImportDeclaration({
-      namedImports: ['NamedNode'],
-      moduleSpecifier: '@rdfjs/types',
-    })
-    enumFile.addImportDeclaration({
-      namedImports: [context.prefix],
-      moduleSpecifier: './namespace',
-    })
-
     const enumeration = enumFile.addVariableStatement({
       declarationKind: VariableDeclarationKind.Const,
       declarations: [{
@@ -50,9 +41,23 @@ export class EnumerationModule implements GeneratedModule {
         })
       })
 
+    const hasMembers = enumeration.getProperties().length > 0
+    if (!hasMembers) {
+      enumFile.addImportDeclaration({
+        namedImports: ['NamedNode'],
+        moduleSpecifier: '@rdfjs/types',
+        isTypeOnly: true,
+      })
+    } else {
+      enumFile.addImportDeclaration({
+        namedImports: [context.prefix],
+        moduleSpecifier: './namespace',
+      })
+    }
+
     enumFile.addTypeAlias({
       name: this.type.name,
-      type: enumeration.getProperties().length ? 'typeof values[keyof typeof values]' : 'NamedNode',
+      type: hasMembers ? 'typeof values[keyof typeof values]' : 'NamedNode',
       isExported: true,
     })
 
