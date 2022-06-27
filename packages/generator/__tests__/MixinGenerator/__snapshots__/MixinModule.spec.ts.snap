@@ -94,12 +94,12 @@ export { ClassBundle } from "./Class";
 
 exports[`MixinModule generates a bundle module with super classes but without externals 1`] = `
 import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
-import { SuperMixin } from "../Example";
 import { ClassMixin } from "../Class";
+import { SuperMixin } from "../Example";
 
 export const ClassBundle = [
-    SuperMixin as Mixin,
-    ClassMixin as Mixin];
+    ClassMixin as Mixin,
+    SuperMixin as Mixin];
 
 `;
 
@@ -136,10 +136,10 @@ class _3ClassImpl extends _3ClassMixin(RdfResourceImpl) {
 
     static readonly __mixins: Mixin[] = [_3ClassMixin];
 }
-_3ClassMixin.appliesTo = ex['Class']
+_3ClassMixin.appliesTo = ex['3Class']
 _3ClassMixin.Class = _3ClassImpl
 
-export const fromPointer = createFactory<_3Class>([_3ClassMixin], { types: [e['3Class']] });
+export const fromPointer = createFactory<_3Class>([_3ClassMixin], { types: [ex['3Class']] });
 
 `;
 

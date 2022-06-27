@@ -21,11 +21,11 @@ describe('Resource', () => {
       hydraResourceNode.addOut(hydra.collection, hydraResourceNode.namedNode('http://example.com/c'))
 
       // when
-      const clas = fromPointer(hydraResourceNode)
+      const resource = fromPointer(hydraResourceNode)
 
       // then
-      expect(clas.collection.length).toBe(1)
-      expect(clas.collection[0].id.value).toBe('http://example.com/c')
+      expect(resource.collection.length).toBe(1)
+      expect(resource.collection[0].id.value).toBe('http://example.com/c')
     })
   })
 })
