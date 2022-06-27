@@ -1,5 +1,17 @@
 # @rdfine/foaf
 
+## 0.1.9
+
+### Patch Changes
+
+- 4ce19cbe: Introduce a more stable order of members, exports and imports
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+- Updated dependencies [4ce19cbe]
+- Updated dependencies [f7cfefff]
+  - @rdfine/wgs@0.1.7
+  - @tpluscode/rdfine@0.5.39
+  - @rdfine/skos@0.1.6
+
 ## 0.1.8
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/rdf",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "main": "index.js",
   "module": "index.mjs",
   "browser": "index.mjs",
@@ -44,7 +44,7 @@
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
     "@tpluscode/rdf-ns-builders": "^2.0.1",
-    "@tpluscode/rdfine": "^0.5.34"
+    "@tpluscode/rdfine": "^0.5.39"
   },
   "repository": {
     "type": "git",

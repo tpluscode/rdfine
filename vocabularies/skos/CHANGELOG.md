@@ -1,5 +1,14 @@
 # @rdfine/skos
 
+## 0.1.6
+
+### Patch Changes
+
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+- Updated dependencies [f7cfefff]
+  - @tpluscode/rdfine@0.5.39
+  - @rdfine/rdf@0.5.7
+
 ## 0.1.5
 
 ### Patch Changes

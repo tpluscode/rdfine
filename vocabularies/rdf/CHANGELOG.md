@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.5.7
+
+### Patch Changes
+
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+- Updated dependencies [f7cfefff]
+  - @tpluscode/rdfine@0.5.39
+
 ## 0.5.6
 
 ### Patch Changes

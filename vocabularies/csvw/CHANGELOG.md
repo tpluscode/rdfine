@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.6.7
+
+### Patch Changes
+
+- 4ce19cbe: Introduce a more stable order of members, exports and imports
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+- Updated dependencies [f7cfefff]
+  - @tpluscode/rdfine@0.5.39
+
 ## 0.6.6
 
 ### Patch Changes
