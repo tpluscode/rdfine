@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.41
+
+### Patch Changes
+
+- 1cd0c024: Initializer module missing in CJS build
+
 ## 0.5.40
 
 ### Patch Changes
