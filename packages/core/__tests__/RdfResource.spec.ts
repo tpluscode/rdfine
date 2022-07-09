@@ -20,6 +20,7 @@ import {
 import RdfResource, { Initializer, RdfResourceCore, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
 import { Constructor, crossBoundaries, namespace, property, ResourceFactory } from '../index'
+import * as initialize from '../initializer'
 
 describe('RdfResource', () => {
   describe('constructor', () => {
@@ -847,6 +848,62 @@ describe('RdfResource', () => {
       expect(resource.in).toStrictEqual(
         expect.arrayContaining([ex.foo, ex.bar]),
       )
+    })
+
+    it('initializes ad-hoc list using helper', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Shape extends RdfResourceCore {
+        in: Term[]
+      }
+      function ShapeMixin<Base extends Constructor>(Resource: Base) {
+        class ShapeImpl extends Resource implements Shape {
+          @property({ path: sh.in, values: 'list' })
+          in!: Term[];
+        }
+
+        return ShapeImpl
+      }
+      const factory = new ResourceFactory(RdfResource)
+
+      // when
+      const resource = factory.createEntity(node, [ShapeMixin], {
+        initializer: {
+          [sh.in.value]: initialize.rdfList(ex.foo, ex.bar),
+        },
+      })
+
+      // then
+      expect(resource.in).toStrictEqual(
+        expect.arrayContaining([ex.foo, ex.bar]),
+      )
+    })
+
+    it('initializes empty ad-hoc list using helper', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Shape extends RdfResourceCore {
+        in: Term[]
+      }
+      function ShapeMixin<Base extends Constructor>(Resource: Base) {
+        class ShapeImpl extends Resource implements Shape {
+          @property({ path: sh.in, values: 'list' })
+          in!: Term[];
+        }
+
+        return ShapeImpl
+      }
+      const factory = new ResourceFactory(RdfResource)
+
+      // when
+      const resource = factory.createEntity(node, [ShapeMixin], {
+        initializer: {
+          [sh.in.value]: initialize.rdfList(),
+        },
+      })
+
+      // then
+      expect(resource.in).toStrictEqual([])
     })
 
     describe('with curried factory', () => {
