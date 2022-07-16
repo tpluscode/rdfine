@@ -65,8 +65,9 @@ export class TemplateExpander {
       base = baseOrFirst
       expansionModels = models
     } else {
-      if (this.__template._parent && !this.__template._parent.isAnonymous) {
-        base = this.__template._parent.id.value
+      const parent = this.findNamedParent()
+      if (parent) {
+        base = parent.id.value
       }
       expansionModels = baseOrFirst ? [baseOrFirst, ...models] : models
     }
@@ -86,6 +87,19 @@ export class TemplateExpander {
     }
 
     return expanded
+  }
+
+  private findNamedParent() {
+    let parent = this.__template._parent
+    do {
+      if (parent && !parent.isAnonymous) {
+        return parent
+      }
+
+      parent = parent?._parent
+    } while (parent)
+
+    return undefined
   }
 
   private buildExpansionModel(mappings: IriTemplateMapping[], templateValues: AnyPointer): Record<string, string[]> {
