@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.8.5
+
+### Patch Changes
+
+- a080452d: Template expansion did not expand against a parent's URI if it was not an direct parent
+
 ## 0.8.4
 
 ### Patch Changes
