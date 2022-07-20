@@ -6,6 +6,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '..';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
+import { createFactory } from '@tpluscode/rdfine/factory';
 
 export interface MemberAssertion<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   object: Hydra.Class<D> | undefined;
@@ -30,3 +31,5 @@ class MemberAssertionImpl extends MemberAssertionMixin(RdfResourceImpl) {
   static readonly __mixins: Mixin[] = [MemberAssertionMixin];
 }
 MemberAssertionMixin.Class = MemberAssertionImpl
+
+export const fromPointer = createFactory<MemberAssertion>([MemberAssertionMixin], {});
