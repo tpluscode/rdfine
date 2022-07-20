@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.8.6
+
+### Patch Changes
+
+- 45fa0c98: Again export a factory for "member assertion"
+
 ## 0.8.5
 
 ### Patch Changes
