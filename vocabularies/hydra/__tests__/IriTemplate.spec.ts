@@ -7,8 +7,9 @@ import namespace from '@rdfjs/namespace'
 import { xsd } from '@tpluscode/rdf-ns-builders';
 import RdfResource from '@tpluscode/rdfine';
 import { IriTemplateBundle } from '../bundles';
+import * as Extensions from '../extensions';
 
-RdfResource.factory.addMixin(...IriTemplateBundle)
+RdfResource.factory.addMixin(...IriTemplateBundle, ...Object.values(Extensions))
 
 const ex = namespace('http://example.com/')
 
@@ -53,6 +54,33 @@ describe('IriTemplate', () => {
 
       // then
       expect(expanded).toEqual(expected)
+    })
+
+    it('lets variable override the expansion model', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const pointer = clownface({ dataset }).blankNode()
+      const iriTemplate = fromPointer(pointer, {
+        template: 'http://example.com/find/{value}',
+        variableRepresentation: hydra.BasicRepresentation,
+        mapping: [
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'value',
+            property: ex.value,
+            variableRepresentation: hydra.ExplicitRepresentation,
+          },
+        ],
+      })
+
+      // when
+      const bindings = clownface({ dataset })
+        .blankNode()
+        .addOut(ex.value, $rdf.literal('5.5', xsd.decimal))
+      const expanded = iriTemplate.expand(bindings)
+
+      // then
+      expect(expanded).toEqual('http://example.com/find/%225.5%22%5E%5Ehttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23decimal')
     })
 
     it('does not expand variables with no values', () => {
