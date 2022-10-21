@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.8.7
+
+### Patch Changes
+
+- 96e50a57: Support expanding using `hydra:variableRepresentation` override on individual mapping (re HydraCG/Specifications#244)
+
 ## 0.8.6
 
 ### Patch Changes
