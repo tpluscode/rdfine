@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.8.8
+
+### Patch Changes
+
+- a45c89c1: `VariableRepresentation#mapValue` would be undefined because the extension mixin would not be added to factory
+
 ## 0.8.7
 
 ### Patch Changes
