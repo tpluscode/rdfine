@@ -7,9 +7,8 @@ import namespace from '@rdfjs/namespace'
 import { xsd } from '@tpluscode/rdf-ns-builders';
 import RdfResource from '@tpluscode/rdfine';
 import { IriTemplateBundle } from '../bundles';
-import * as Extensions from '../extensions';
 
-RdfResource.factory.addMixin(...IriTemplateBundle, ...Object.values(Extensions))
+RdfResource.factory.addMixin(...IriTemplateBundle)
 
 const ex = namespace('http://example.com/')
 
@@ -258,6 +257,18 @@ describe('IriTemplate', () => {
 
       // then
       expect(expanded).toEqual('http://example.com/find/?foo=foo')
+    })
+
+    it('should ensure that mapValue method exists on VariableRepresentation', () => {
+      const dataset = $rdf.dataset()
+      const pointer = clownface({ dataset }).blankNode()
+      const iriTemplate = fromPointer(pointer, {
+        template: 'http://example.com/find/{value}',
+        variableRepresentation: hydra.BasicRepresentation,
+      })
+
+      // then
+      expect(iriTemplate.variableRepresentation?.mapValue).toBeTruthy()
     })
   })
 })
