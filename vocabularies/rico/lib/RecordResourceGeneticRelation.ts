@@ -1,0 +1,35 @@
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import { createFactory } from '@tpluscode/rdfine/factory';
+import * as $rdf from '@rdf-esm/data-model';
+import type * as RDF from '@rdfjs/types';
+import { rico } from './namespace';
+import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
+import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type * as Rico from '..';
+import { RecordResourceToRecordResourceRelationMixin } from './RecordResourceToRecordResourceRelation';
+
+export interface RecordResourceGeneticRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.RecordResourceToRecordResourceRelation<D>, RdfResource<D> {
+  recordResourceGeneticRelationConnects: Rico.RecordResource<D> | undefined;
+}
+
+export function RecordResourceGeneticRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RecordResourceGeneticRelation> & RdfResourceCore> & Base {
+  @namespace(rico)
+  class RecordResourceGeneticRelationClass extends RecordResourceToRecordResourceRelationMixin(Resource) implements Partial<RecordResourceGeneticRelation> {
+    @property.resource({ implicitTypes: [rico.RecordResource] })
+    recordResourceGeneticRelationConnects: Rico.RecordResource | undefined;
+  }
+  return RecordResourceGeneticRelationClass
+}
+
+class RecordResourceGeneticRelationImpl extends RecordResourceGeneticRelationMixin(RdfResourceImpl) {
+  constructor(arg: ResourceNode, init?: Initializer<RecordResourceGeneticRelation>) {
+    super(arg, init)
+    this.types.add(rico.RecordResourceGeneticRelation)
+  }
+
+  static readonly __mixins: Mixin[] = [RecordResourceGeneticRelationMixin, RecordResourceToRecordResourceRelationMixin];
+}
+RecordResourceGeneticRelationMixin.appliesTo = rico.RecordResourceGeneticRelation
+RecordResourceGeneticRelationMixin.Class = RecordResourceGeneticRelationImpl
+
+export const fromPointer = createFactory<RecordResourceGeneticRelation>([RecordResourceToRecordResourceRelationMixin, RecordResourceGeneticRelationMixin], { types: [rico.RecordResourceGeneticRelation] });
