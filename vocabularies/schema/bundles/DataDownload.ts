@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MediaObjectMixin } from '../lib/MediaObject';
 import { DataDownloadMixin } from '../lib/DataDownload';
+import { MediaObjectMixin } from '../lib/MediaObject';
 
 export const DataDownloadBundle = [
-  MediaObjectMixin as Mixin,
-  DataDownloadMixin as Mixin];
+  DataDownloadMixin as Mixin,
+  MediaObjectMixin as Mixin];

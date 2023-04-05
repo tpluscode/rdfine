@@ -1,5 +1,72 @@
 # Change Log
 
+## 0.8.7
+
+### Patch Changes
+
+- 4ce19cbe: Introduce a more stable order of members, exports and imports
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+- Updated dependencies [4ce19cbe]
+- Updated dependencies [f7cfefff]
+  - @rdfine/owl@0.4.9
+  - @rdfine/rdfs@0.6.10
+  - @tpluscode/rdfine@0.5.39
+  - @rdfine/rdf@0.5.7
+
+## 0.8.6
+
+### Patch Changes
+
+- 5f4e2023: `sh:detail` should allow multiple values
+
+## 0.8.5
+
+### Patch Changes
+
+- 76c13f14: Fix peer dependencies (re hypermedia-app/shaperone#173)
+- Updated dependencies [76c13f14]
+  - @tpluscode/rdfine@0.5.35
+
+## 0.8.4
+
+### Patch Changes
+
+- 5e2681a4: Update @tpluscode/rdfine
+- Updated dependencies [5e2681a4]
+  - @rdfine/owl@0.4.8
+  - @rdfine/rdf@0.5.6
+  - @rdfine/rdfs@0.6.9
+
+## 0.8.3
+
+### Patch Changes
+
+- d6f77ced: `fromPointer` methods should typed as `Factory<T>`
+- Updated dependencies [d6f77ced]
+  - @rdfine/owl@0.4.7
+  - @rdfine/rdf@0.5.5
+  - @rdfine/rdfs@0.6.8
+
+## 0.8.2
+
+### Patch Changes
+
+- 46a6b035: Simplify generated enum modules
+- Updated dependencies [45a4be9c]
+  - @rdfine/owl@0.4.6
+  - @rdfine/rdfs@0.6.7
+
+## 0.8.1
+
+### Patch Changes
+
+- a63ec35a: Update `@tpluscode/rdf-ns-builders` and typescript RDF/JS types
+- Updated dependencies [a63ec35a]
+  - @tpluscode/rdfine@0.5.27
+  - @rdfine/owl@0.4.4
+  - @rdfine/rdf@0.5.4
+  - @rdfine/rdfs@0.6.5
+
 ## 0.8.0
 
 ### Minor Changes

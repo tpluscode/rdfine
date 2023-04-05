@@ -36,30 +36,21 @@ expect.extend({
   },
 })
 
-expect.extend({
-  toMatchSnapshot(received: DatasetExt | SourceFile) {
-    if (typeof received === 'object' && received && 'toCanonical' in received) {
-      return toMatchSnapshot.call(
-        this as any,
-        received.toCanonical(),
-        'toMatchSnapshot',
-      )
-    }
+expect.addSnapshotSerializer({
+  test(val) {
+    return typeof val === 'object' && val && 'toCanonical' in val
+  },
+  serialize(val: DatasetExt) {
+    return val.toCanonical()
+  },
+})
 
-    if (typeof received === 'object' && 'saveSync' in received) {
-      received.saveSync()
-      const contents = received.getProject().getFileSystem().readFileSync(received.getFilePath())
-      return toMatchSnapshot.call(
-        this as any,
-        contents,
-        'toMatchSnapshot',
-      )
-    }
-
-    return toMatchSnapshot.call(
-      this as any,
-      received,
-      'toMatchSnapshot',
-    )
+expect.addSnapshotSerializer({
+  test(val) {
+    return typeof val === 'object' && 'saveSync' in val
+  },
+  serialize(val: SourceFile) {
+    val.saveSync()
+    return val.getProject().getFileSystem().readFileSync(val.getFilePath())
   },
 })

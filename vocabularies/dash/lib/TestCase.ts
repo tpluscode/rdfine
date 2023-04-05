@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { dash } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -12,7 +12,6 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface TestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
   expectedResult: Array<RDF.Term>;
   expectedResultIsTTL: boolean | undefined;
-  testModifiesEnvironment: boolean | undefined;
 }
 
 export function TestCaseMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TestCase> & RdfResourceCore> & Base {
@@ -22,8 +21,6 @@ export function TestCaseMixin<Base extends Constructor>(Resource: Base): Constru
     expectedResult!: Array<RDF.Term>;
     @property.literal({ type: Boolean })
     expectedResultIsTTL: boolean | undefined;
-    @property.literal({ type: Boolean })
-    testModifiesEnvironment: boolean | undefined;
   }
   return TestCaseClass
 }

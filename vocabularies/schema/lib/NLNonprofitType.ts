@@ -1,11 +1,10 @@
-import { NamedNode } from 'rdf-js';
 import { schema } from './namespace';
 
-export default {
-  NonprofitANBI: schema.NonprofitANBI as NamedNode<'http://schema.org/NonprofitANBI'>,
-  NonprofitSBBI: schema.NonprofitSBBI as NamedNode<'http://schema.org/NonprofitSBBI'>,
+const values = {
+  NonprofitANBI: schema.NonprofitANBI,
+  NonprofitSBBI: schema.NonprofitSBBI,
 };
 
-export type NLNonprofitType =
-  NamedNode<'http://schema.org/NonprofitANBI'>
-  | NamedNode<'http://schema.org/NonprofitSBBI'>;
+export type NLNonprofitType = typeof values[keyof typeof values];
+
+export default values;

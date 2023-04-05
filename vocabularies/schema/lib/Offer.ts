@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -35,6 +35,8 @@ export interface Offer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   'gtin13': string | undefined;
   'gtin14': string | undefined;
   'gtin8': string | undefined;
+  hasMeasurement: Schema.QuantitativeValue<D> | undefined;
+  hasMerchantReturnPolicy: Schema.MerchantReturnPolicy<D> | undefined;
   includesObject: Schema.TypeAndQuantityNode<D> | undefined;
   ineligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   ineligibleRegionLiteral: string | undefined;
@@ -114,6 +116,10 @@ export function OfferMixin<Base extends Constructor>(Resource: Base): Constructo
     'gtin14': string | undefined;
     @property.literal()
     'gtin8': string | undefined;
+    @property.resource()
+    hasMeasurement: Schema.QuantitativeValue | undefined;
+    @property.resource()
+    hasMerchantReturnPolicy: Schema.MerchantReturnPolicy | undefined;
     @property.resource()
     includesObject: Schema.TypeAndQuantityNode | undefined;
     @property.resource()

@@ -1,11 +1,14 @@
-import { NamedNode } from 'rdf-js';
 import { schema } from './namespace';
 
-export default {
-  AuthenticContent: schema.AuthenticContent as NamedNode<'http://schema.org/AuthenticContent'>,
-  MissingContext: schema.MissingContext as NamedNode<'http://schema.org/MissingContext'>,
+const values = {
+  DecontextualizedContent: schema.DecontextualizedContent,
+  EditedOrCroppedContent: schema.EditedOrCroppedContent,
+  OriginalMediaContent: schema.OriginalMediaContent,
+  SatireOrParodyContent: schema.SatireOrParodyContent,
+  StagedContent: schema.StagedContent,
+  TransformedContent: schema.TransformedContent,
 };
 
-export type MediaManipulationRatingEnumeration =
-  NamedNode<'http://schema.org/AuthenticContent'>
-  | NamedNode<'http://schema.org/MissingContext'>;
+export type MediaManipulationRatingEnumeration = typeof values[keyof typeof values];
+
+export default values;

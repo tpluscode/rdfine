@@ -1,6 +1,6 @@
 import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { NamedNode } from 'rdf-js'
+import type { NamedNode } from '@rdfjs/types'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import { fromPointer } from '../lib/Collection'
 
@@ -39,13 +39,24 @@ describe('Collection', () => {
   })
 
   describe('manages', () => {
-    it('should return array even for one element', () => {
+    it('should return array', () => {
       // given
       collectionNode.addOut(hydra.manages, collectionNode.blankNode())
       const collection = fromPointer(collectionNode)
 
       // then
-      expect(Array.isArray(collection.manages)).toBe(true)
+      expect(collection.manages).toHaveLength(1)
+    })
+  })
+
+  describe('memberAssertion', () => {
+    it('should return array even for one element', () => {
+      // given
+      collectionNode.addOut(hydra.memberAssertion, collectionNode.blankNode())
+      const collection = fromPointer(collectionNode)
+
+      // then
+      expect(Array.isArray(collection.memberAssertion)).toBe(true)
     })
   })
 

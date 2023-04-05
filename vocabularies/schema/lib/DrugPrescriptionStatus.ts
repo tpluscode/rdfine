@@ -1,11 +1,10 @@
-import { NamedNode } from 'rdf-js';
 import { schema } from './namespace';
 
-export default {
-  OTC: schema.OTC as NamedNode<'http://schema.org/OTC'>,
-  PrescriptionOnly: schema.PrescriptionOnly as NamedNode<'http://schema.org/PrescriptionOnly'>,
+const values = {
+  OTC: schema.OTC,
+  PrescriptionOnly: schema.PrescriptionOnly,
 };
 
-export type DrugPrescriptionStatus =
-  NamedNode<'http://schema.org/OTC'>
-  | NamedNode<'http://schema.org/PrescriptionOnly'>;
+export type DrugPrescriptionStatus = typeof values[keyof typeof values];
+
+export default values;

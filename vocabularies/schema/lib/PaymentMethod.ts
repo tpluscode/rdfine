@@ -1,6 +1,7 @@
-import { NamedNode } from 'rdf-js';
-import { schema } from './namespace';
+import type { NamedNode } from '@rdfjs/types';
 
-export default {};
+const values = {};
 
 export type PaymentMethod = NamedNode;
+
+export default values;

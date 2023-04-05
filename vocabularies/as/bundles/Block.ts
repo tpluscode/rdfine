@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IgnoreMixin } from '../lib/Ignore';
 import { BlockMixin } from '../lib/Block';
+import { IgnoreMixin } from '../lib/Ignore';
 
 export const BlockBundle = [
-  IgnoreMixin as Mixin,
-  BlockMixin as Mixin];
+  BlockMixin as Mixin,
+  IgnoreMixin as Mixin];

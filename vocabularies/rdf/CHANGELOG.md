@@ -1,5 +1,33 @@
 # Change Log
 
+## 0.5.7
+
+### Patch Changes
+
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+- Updated dependencies [f7cfefff]
+  - @tpluscode/rdfine@0.5.39
+
+## 0.5.6
+
+### Patch Changes
+
+- 5e2681a4: Update @tpluscode/rdfine
+
+## 0.5.5
+
+### Patch Changes
+
+- d6f77ced: `fromPointer` methods should typed as `Factory<T>`
+
+## 0.5.4
+
+### Patch Changes
+
+- a63ec35a: Update `@tpluscode/rdf-ns-builders` and typescript RDF/JS types
+- Updated dependencies [a63ec35a]
+  - @tpluscode/rdfine@0.5.27
+
 ## 0.5.3
 
 ### Patch Changes

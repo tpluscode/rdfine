@@ -1,55 +1,55 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ThingMixin } from '../lib/Thing';
-import { OrganizationMixin } from '../lib/Organization';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { PostalAddressMixin } from '../lib/PostalAddress';
-import { AggregateRatingMixin } from '../lib/AggregateRating';
-import { PersonMixin } from '../lib/Person';
+import { AboutPageMixin } from '../lib/AboutPage';
 import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
-import { GeoShapeMixin } from '../lib/GeoShape';
-import { PlaceMixin } from '../lib/Place';
+import { AggregateRatingMixin } from '../lib/AggregateRating';
+import { ArticleMixin } from '../lib/Article';
 import { BrandMixin } from '../lib/Brand';
 import { ContactPointMixin } from '../lib/ContactPoint';
-import { ArticleMixin } from '../lib/Article';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { DemandMixin } from '../lib/Demand';
 import { EventMixin } from '../lib/Event';
-import { MerchantReturnPolicyMixin } from '../lib/MerchantReturnPolicy';
-import { OfferCatalogMixin } from '../lib/OfferCatalog';
+import { GeoShapeMixin } from '../lib/GeoShape';
+import { ImageObjectMixin } from '../lib/ImageObject';
 import { InteractionCounterMixin } from '../lib/InteractionCounter';
 import { LanguageMixin } from '../lib/Language';
-import { ImageObjectMixin } from '../lib/ImageObject';
+import { MerchantReturnPolicyMixin } from '../lib/MerchantReturnPolicy';
+import { OfferCatalogMixin } from '../lib/OfferCatalog';
 import { OfferMixin } from '../lib/Offer';
+import { OrganizationMixin } from '../lib/Organization';
+import { OwnershipInfoMixin } from '../lib/OwnershipInfo';
+import { PersonMixin } from '../lib/Person';
+import { PlaceMixin } from '../lib/Place';
+import { PostalAddressMixin } from '../lib/PostalAddress';
+import { ProductMixin } from '../lib/Product';
 import { ProgramMembershipMixin } from '../lib/ProgramMembership';
 import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
-import { AboutPageMixin } from '../lib/AboutPage';
-import { OwnershipInfoMixin } from '../lib/OwnershipInfo';
-import { ProductMixin } from '../lib/Product';
 import { ReviewMixin } from '../lib/Review';
-import { DemandMixin } from '../lib/Demand';
+import { ThingMixin } from '../lib/Thing';
 
 export const OrganizationBundle = [
-  ThingMixin as Mixin,
-  OrganizationMixin as Mixin,
-  CreativeWorkMixin as Mixin,
-  PostalAddressMixin as Mixin,
-  AggregateRatingMixin as Mixin,
-  PersonMixin as Mixin,
+  AboutPageMixin as Mixin,
   AdministrativeAreaMixin as Mixin,
-  GeoShapeMixin as Mixin,
-  PlaceMixin as Mixin,
+  AggregateRatingMixin as Mixin,
+  ArticleMixin as Mixin,
   BrandMixin as Mixin,
   ContactPointMixin as Mixin,
-  ArticleMixin as Mixin,
+  CreativeWorkMixin as Mixin,
+  DemandMixin as Mixin,
   EventMixin as Mixin,
-  MerchantReturnPolicyMixin as Mixin,
-  OfferCatalogMixin as Mixin,
+  GeoShapeMixin as Mixin,
+  ImageObjectMixin as Mixin,
   InteractionCounterMixin as Mixin,
   LanguageMixin as Mixin,
-  ImageObjectMixin as Mixin,
+  MerchantReturnPolicyMixin as Mixin,
+  OfferCatalogMixin as Mixin,
   OfferMixin as Mixin,
+  OrganizationMixin as Mixin,
+  OwnershipInfoMixin as Mixin,
+  PersonMixin as Mixin,
+  PlaceMixin as Mixin,
+  PostalAddressMixin as Mixin,
+  ProductMixin as Mixin,
   ProgramMembershipMixin as Mixin,
   QuantitativeValueMixin as Mixin,
-  AboutPageMixin as Mixin,
-  OwnershipInfoMixin as Mixin,
-  ProductMixin as Mixin,
   ReviewMixin as Mixin,
-  DemandMixin as Mixin];
+  ThingMixin as Mixin];

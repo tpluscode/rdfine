@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../lib/Intangible';
-import { AudienceMixin } from '../lib/Audience';
 import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
+import { AudienceMixin } from '../lib/Audience';
+import { IntangibleMixin } from '../lib/Intangible';
 
 export const AudienceBundle = [
-  IntangibleMixin as Mixin,
+  AdministrativeAreaMixin as Mixin,
   AudienceMixin as Mixin,
-  AdministrativeAreaMixin as Mixin];
+  IntangibleMixin as Mixin];

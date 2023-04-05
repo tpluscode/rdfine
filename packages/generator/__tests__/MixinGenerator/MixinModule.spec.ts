@@ -41,8 +41,10 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
       indexModule,
+      allGenerators: [],
     })
 
     // then
@@ -51,13 +53,13 @@ describe('MixinModule', () => {
 
   it('generates a mixin class where term is not safe identifier', () => {
     // given
-    const module = new MixinModule(vocabulary.node(ex.Class), {
+    const module = new MixinModule(vocabulary.node(ex['3Class']), {
       type: 'Resource',
       localName: '_3Class',
       qualifiedName: 'Example._3Class',
-      module: './Class',
+      module: './3Class',
       mixinName: '_3ClassMixin',
-      term: 'Class',
+      term: '3Class',
     }, [], [])
 
     // when
@@ -69,12 +71,14 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
       indexModule,
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
+    expect(project.getSourceFile('3Class.ts')).toMatchSnapshot()
   })
 
   it('generates a mixin class with external super classes', () => {
@@ -107,7 +111,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
       indexModule,
     })
 
@@ -150,7 +156,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
       indexModule,
     })
 
@@ -195,7 +203,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
     })
 
     // then
@@ -239,7 +249,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
     })
 
     // then
@@ -283,7 +295,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
     })
 
     // then
@@ -320,7 +334,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
     })
 
     // then
@@ -366,7 +382,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
     })
 
     // then
@@ -412,7 +430,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
     })
 
     // then
@@ -453,7 +473,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
     })
 
     // then
@@ -498,7 +520,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
     })
 
     // then
@@ -538,7 +562,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
     })
 
     // then
@@ -584,7 +610,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
     })
 
     // then
@@ -637,7 +665,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
     })
 
     // then
@@ -683,7 +713,9 @@ describe('MixinModule', () => {
         defaultExport: 'Example',
         log: fakeLog(),
         vocabulary,
+        properties: {},
       },
+      allGenerators: [],
     })
 
     // then

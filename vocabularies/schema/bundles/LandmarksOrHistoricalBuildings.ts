@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PlaceMixin } from '../lib/Place';
 import { LandmarksOrHistoricalBuildingsMixin } from '../lib/LandmarksOrHistoricalBuildings';
+import { PlaceMixin } from '../lib/Place';
 
 export const LandmarksOrHistoricalBuildingsBundle = [
-  PlaceMixin as Mixin,
-  LandmarksOrHistoricalBuildingsMixin as Mixin];
+  LandmarksOrHistoricalBuildingsMixin as Mixin,
+  PlaceMixin as Mixin];

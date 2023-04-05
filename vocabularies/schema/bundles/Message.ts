@@ -1,15 +1,15 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import { AudienceMixin } from '../lib/Audience';
+import { ContactPointMixin } from '../lib/ContactPoint';
 import { CreativeWorkMixin } from '../lib/CreativeWork';
 import { MessageMixin } from '../lib/Message';
-import { ContactPointMixin } from '../lib/ContactPoint';
 import { OrganizationMixin } from '../lib/Organization';
 import { PersonMixin } from '../lib/Person';
-import { AudienceMixin } from '../lib/Audience';
 
 export const MessageBundle = [
+  AudienceMixin as Mixin,
+  ContactPointMixin as Mixin,
   CreativeWorkMixin as Mixin,
   MessageMixin as Mixin,
-  ContactPointMixin as Mixin,
   OrganizationMixin as Mixin,
-  PersonMixin as Mixin,
-  AudienceMixin as Mixin];
+  PersonMixin as Mixin];

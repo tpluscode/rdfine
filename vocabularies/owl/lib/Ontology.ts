@@ -1,7 +1,9 @@
+import '../extensions/rdfs/Resource';
+import { ResourceMixinEx } from '../extensions/rdfs/Resource';
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { owl } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -19,7 +21,7 @@ export interface Ontology<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
 
 export function OntologyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Ontology> & RdfResourceCore> & Base {
   @namespace(owl)
-  class OntologyClass extends RdfsResourceMixin(Resource) implements Partial<Ontology> {
+  class OntologyClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) implements Partial<Ontology> {
     @property.resource({ as: [OntologyMixin] })
     backwardCompatibleWith: Owl.Ontology | undefined;
     @property.resource({ as: [OntologyMixin] })

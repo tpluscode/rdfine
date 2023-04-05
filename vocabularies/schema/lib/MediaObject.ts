@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -20,11 +20,15 @@ export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   encodingFormatTerm: RDF.NamedNode | undefined;
   endTime: Date | undefined;
   height: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
+  ineligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
+  ineligibleRegionLiteral: string | undefined;
+  interpretedAsClaim: Schema.Claim<D> | undefined;
   playerType: string | undefined;
   productionCompany: Schema.Organization<D> | undefined;
   regionsAllowed: Schema.Place<D> | undefined;
   requiresSubscription: Schema.MediaSubscription<D> | undefined;
   requiresSubscriptionLiteral: boolean | undefined;
+  'sha256': string | undefined;
   startTime: Date | undefined;
   uploadDate: Date | undefined;
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
@@ -55,6 +59,12 @@ export function MediaObjectMixin<Base extends Constructor>(Resource: Base): Cons
     endTime: Date | undefined;
     @property.resource()
     height: Schema.Distance | Schema.QuantitativeValue | undefined;
+    @property.resource()
+    ineligibleRegion: Schema.GeoShape | Schema.Place | undefined;
+    @property.literal({ path: schema.ineligibleRegion })
+    ineligibleRegionLiteral: string | undefined;
+    @property.resource()
+    interpretedAsClaim: Schema.Claim | undefined;
     @property.literal()
     playerType: string | undefined;
     @property.resource()
@@ -65,6 +75,8 @@ export function MediaObjectMixin<Base extends Constructor>(Resource: Base): Cons
     requiresSubscription: Schema.MediaSubscription | undefined;
     @property.literal({ path: schema.requiresSubscription, type: Boolean })
     requiresSubscriptionLiteral: boolean | undefined;
+    @property.literal()
+    'sha256': string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     startTime: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })

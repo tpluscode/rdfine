@@ -1,7 +1,7 @@
 import clownface from 'clownface'
 import $rdf from '@rdfjs/dataset'
 import RDF from '@rdfjs/data-model'
-import { fromPointer } from '../lib/IriTemplate'
+import { fromPointer, IriTemplate } from '../lib/IriTemplate'
 import { hydra } from '../lib/namespace';
 import namespace from '@rdfjs/namespace'
 import { xsd } from '@tpluscode/rdf-ns-builders';
@@ -55,6 +55,33 @@ describe('IriTemplate', () => {
       expect(expanded).toEqual(expected)
     })
 
+    it('lets variable override the expansion model', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const pointer = clownface({ dataset }).blankNode()
+      const iriTemplate = fromPointer(pointer, {
+        template: 'http://example.com/find/{value}',
+        variableRepresentation: hydra.BasicRepresentation,
+        mapping: [
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'value',
+            property: ex.value,
+            variableRepresentation: hydra.ExplicitRepresentation,
+          },
+        ],
+      })
+
+      // when
+      const bindings = clownface({ dataset })
+        .blankNode()
+        .addOut(ex.value, $rdf.literal('5.5', xsd.decimal))
+      const expanded = iriTemplate.expand(bindings)
+
+      // then
+      expect(expanded).toEqual('http://example.com/find/%225.5%22%5E%5Ehttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23decimal')
+    })
+
     it('does not expand variables with no values', () => {
       // given
       const dataset = $rdf.dataset()
@@ -88,6 +115,160 @@ describe('IriTemplate', () => {
 
       // then
       expect(expanded).toEqual('http://example.com/find/?bar=bar')
+    })
+
+    it('combines multiple models to expand template', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const pointer = clownface({ dataset }).blankNode()
+      const iriTemplate = fromPointer(pointer, {
+        template: 'http://example.com/find/{?foo,bar,baz}',
+        mapping: [
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'foo',
+            property: ex.foo,
+          },
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'bar',
+            property: ex.bar,
+          },
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'baz',
+            property: ex.baz,
+          },
+        ],
+      })
+
+      // when
+      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('foo'))
+      const bar = clownface({ dataset }).blankNode().addOut(ex.bar, RDF.literal('bar'))
+      const baz = clownface({ dataset }).blankNode().addOut(ex.baz, RDF.literal('baz'))
+      const expanded = iriTemplate.expand(foo, bar, baz)
+
+      // then
+      expect(expanded).toEqual('http://example.com/find/?foo=foo&bar=bar&baz=baz')
+    })
+
+    it('uses latter models to override template bindings', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const pointer = clownface({ dataset }).blankNode()
+      const iriTemplate = fromPointer(pointer, {
+        template: 'http://example.com/find/{?foo}',
+        mapping: [
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'foo',
+            property: ex.foo,
+          },
+        ],
+      })
+
+      // when
+      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('foo'))
+      const bar = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('bar'))
+      const expanded = iriTemplate.expand(foo, bar)
+
+      // then
+      expect(expanded).toEqual('http://example.com/find/?foo=bar')
+    })
+
+    it('expands against base if given as first argument', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const pointer = clownface({ dataset }).blankNode()
+      const iriTemplate = fromPointer(pointer, {
+        template: '{?foo}',
+        mapping: [
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'foo',
+            property: ex.foo,
+          },
+        ],
+      })
+
+      // when
+      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('foo'))
+      const bar = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('bar'))
+      const expanded = iriTemplate.expand('http://example.com/find/', foo, bar)
+
+      // then
+      expect(expanded).toEqual('http://example.com/find/?foo=bar')
+    })
+
+    it("uses parent's URI as base", () => {
+      // given
+      const dataset = $rdf.dataset()
+      const pointer = clownface({ dataset }).blankNode()
+      const parent = RdfResource.factory.createEntity(pointer.namedNode('http://example.com/find/'), [], {
+        initializer: {
+          [hydra.search.value]: fromPointer(pointer, {
+            template: '{?foo}',
+            mapping: [
+              {
+                types: [hydra.IriTemplateMapping],
+                variable: 'foo',
+                property: ex.foo,
+              },
+            ],
+          }),
+        },
+      })
+      const iriTemplate = parent.get<IriTemplate>(hydra.search)
+
+      // when
+      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('foo'))
+      const expanded = iriTemplate.expand(foo)
+
+      // then
+      expect(expanded).toEqual('http://example.com/find/?foo=foo')
+    })
+
+    it('walks up parents to find first NamedNode to use as base', () => {
+      // given
+      const graph = clownface({ dataset: $rdf.dataset() })
+      const parentPtr = graph.namedNode('http://example.com/find/')
+      const templatePtr = graph.blankNode()
+      fromPointer(templatePtr, {
+        template: '{?foo}',
+        mapping: [
+          {
+            types: [hydra.IriTemplateMapping],
+            variable: 'foo',
+            property: ex.foo,
+          },
+        ],
+      })
+      const iriTemplate = RdfResource.factory.createEntity(parentPtr, [], {
+        initializer: {
+          [hydra.collection.value]: {
+            [hydra.search.value]: templatePtr,
+          },
+        },
+      }).get(hydra.collection).get<IriTemplate>(hydra.search)
+
+      // when
+      const foo = clownface({ dataset: $rdf.dataset() }).blankNode().addOut(ex.foo, RDF.literal('foo'))
+      const expanded = iriTemplate.expand(foo)
+
+      // then
+      expect(expanded).toEqual('http://example.com/find/?foo=foo')
+    })
+
+    it('should ensure that mapValue method exists on VariableRepresentation', () => {
+      const dataset = $rdf.dataset()
+      const pointer = clownface({ dataset }).blankNode()
+      const iriTemplate = fromPointer(pointer, {
+        template: 'http://example.com/find/{value}',
+        variableRepresentation: hydra.BasicRepresentation,
+      })
+
+      // then
+      expect(iriTemplate.variableRepresentation?.mapValue).toBeTruthy()
     })
   })
 })

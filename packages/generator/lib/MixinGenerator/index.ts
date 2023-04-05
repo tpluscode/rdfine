@@ -1,11 +1,11 @@
 import { GraphPointer } from 'clownface'
 import { Context } from '../index'
-import { rdf, rdfs, hydra, owl } from '@tpluscode/rdf-ns-builders'
+import { dash, rdf, rdfs, hydra, owl } from '@tpluscode/rdf-ns-builders'
 import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types'
 import { MixinModule } from './MixinModule'
 import { findProperties } from '../property'
 import { toJavascriptProperties } from '../property/JsProperties'
-import { NamedNode } from 'rdf-js'
+import { NamedNode } from '@rdfjs/types'
 import TermSet from '@rdfjs/term-set'
 import TermMap from '@rdfjs/term-map'
 
@@ -19,7 +19,7 @@ export function getSuperClasses(clas: GraphPointer, types: TypeMetaCollection) {
     }
 
     return selected
-  }, [])
+  }, []).sort((l, r) => l.localName.localeCompare(r.localName))
 }
 
 function * getProperties(clas: GraphPointer, types: TypeMetaCollection, context: Context, excludedTerms: TermSet) {
@@ -37,7 +37,7 @@ export function findTermsToGenerate(excludedTerms: NamedNode[]) {
 
   return function (types: TypeMetaCollection, context: Context) {
     const terms = new TermMap(context.vocabulary
-      .has(rdf.type, [rdfs.Class, hydra.Class, owl.Class])
+      .has(rdf.type, [rdfs.Class, hydra.Class, owl.Class, dash.ShapeClass])
       .filter(term => types.get(term)?.type === 'Resource')
       .map(pointer => [pointer.term, pointer]))
 

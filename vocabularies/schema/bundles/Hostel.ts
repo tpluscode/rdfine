@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { LodgingBusinessMixin } from '../lib/LodgingBusiness';
 import { HostelMixin } from '../lib/Hostel';
+import { LodgingBusinessMixin } from '../lib/LodgingBusiness';
 
 export const HostelBundle = [
-  LodgingBusinessMixin as Mixin,
-  HostelMixin as Mixin];
+  HostelMixin as Mixin,
+  LodgingBusinessMixin as Mixin];

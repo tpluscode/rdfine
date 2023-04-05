@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MedicalProcedureMixin } from '../lib/MedicalProcedure';
 import { DiagnosticProcedureMixin } from '../lib/DiagnosticProcedure';
+import { MedicalProcedureMixin } from '../lib/MedicalProcedure';
 
 export const DiagnosticProcedureBundle = [
-  MedicalProcedureMixin as Mixin,
-  DiagnosticProcedureMixin as Mixin];
+  DiagnosticProcedureMixin as Mixin,
+  MedicalProcedureMixin as Mixin];

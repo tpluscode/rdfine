@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { SoftwareSourceCodeMixin } from '../lib/SoftwareSourceCode';
 import { ComputerLanguageMixin } from '../lib/ComputerLanguage';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
 import { SoftwareApplicationMixin } from '../lib/SoftwareApplication';
+import { SoftwareSourceCodeMixin } from '../lib/SoftwareSourceCode';
 
 export const SoftwareSourceCodeBundle = [
-  CreativeWorkMixin as Mixin,
-  SoftwareSourceCodeMixin as Mixin,
   ComputerLanguageMixin as Mixin,
-  SoftwareApplicationMixin as Mixin];
+  CreativeWorkMixin as Mixin,
+  SoftwareApplicationMixin as Mixin,
+  SoftwareSourceCodeMixin as Mixin];

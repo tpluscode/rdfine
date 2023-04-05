@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -12,7 +12,8 @@ export interface Occupation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   educationRequirements: string | undefined;
   estimatedSalary: Schema.MonetaryAmount<D> | Schema.MonetaryAmountDistribution<D> | undefined;
   estimatedSalaryLiteral: number | undefined;
-  experienceRequirements: string | undefined;
+  experienceRequirements: Schema.OccupationalExperienceRequirements<D> | undefined;
+  experienceRequirementsLiteral: string | undefined;
   occupationalCategory: Schema.CategoryCode<D> | undefined;
   occupationalCategoryLiteral: string | undefined;
   occupationLocation: Schema.AdministrativeArea<D> | undefined;
@@ -30,8 +31,10 @@ export function OccupationMixin<Base extends Constructor>(Resource: Base): Const
     estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution | undefined;
     @property.literal({ path: schema.estimatedSalary, type: Number })
     estimatedSalaryLiteral: number | undefined;
-    @property.literal()
-    experienceRequirements: string | undefined;
+    @property.resource()
+    experienceRequirements: Schema.OccupationalExperienceRequirements | undefined;
+    @property.literal({ path: schema.experienceRequirements })
+    experienceRequirementsLiteral: string | undefined;
     @property.resource()
     occupationalCategory: Schema.CategoryCode | undefined;
     @property.literal({ path: schema.occupationalCategory })

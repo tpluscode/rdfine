@@ -1,19 +1,14 @@
-import { NamedNode } from 'rdf-js';
 import { schema } from './namespace';
 
-export default {
-  FDAcategoryA: schema.FDAcategoryA as NamedNode<'http://schema.org/FDAcategoryA'>,
-  FDAcategoryB: schema.FDAcategoryB as NamedNode<'http://schema.org/FDAcategoryB'>,
-  FDAcategoryC: schema.FDAcategoryC as NamedNode<'http://schema.org/FDAcategoryC'>,
-  FDAcategoryD: schema.FDAcategoryD as NamedNode<'http://schema.org/FDAcategoryD'>,
-  FDAcategoryX: schema.FDAcategoryX as NamedNode<'http://schema.org/FDAcategoryX'>,
-  FDAnotEvaluated: schema.FDAnotEvaluated as NamedNode<'http://schema.org/FDAnotEvaluated'>,
+const values = {
+  FDAcategoryA: schema.FDAcategoryA,
+  FDAcategoryB: schema.FDAcategoryB,
+  FDAcategoryC: schema.FDAcategoryC,
+  FDAcategoryD: schema.FDAcategoryD,
+  FDAcategoryX: schema.FDAcategoryX,
+  FDAnotEvaluated: schema.FDAnotEvaluated,
 };
 
-export type DrugPregnancyCategory =
-  NamedNode<'http://schema.org/FDAcategoryA'>
-  | NamedNode<'http://schema.org/FDAcategoryB'>
-  | NamedNode<'http://schema.org/FDAcategoryC'>
-  | NamedNode<'http://schema.org/FDAcategoryD'>
-  | NamedNode<'http://schema.org/FDAcategoryX'>
-  | NamedNode<'http://schema.org/FDAnotEvaluated'>;
+export type DrugPregnancyCategory = typeof values[keyof typeof values];
+
+export default values;

@@ -1,4 +1,4 @@
-import { Term } from 'rdf-js'
+import type { Term } from '@rdfjs/types'
 import type { RdfResource } from '../RdfResource'
 
 export function terms(left: Term, right: Term): boolean {

@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -13,6 +13,7 @@ export interface Episode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   actors: Schema.Person<D> | undefined;
   director: Schema.Person<D> | undefined;
   directors: Schema.Person<D> | undefined;
+  duration: Schema.Duration<D> | undefined;
   episodeNumber: number | string | undefined;
   musicBy: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
   partOfSeason: Schema.CreativeWorkSeason<D> | undefined;
@@ -32,6 +33,8 @@ export function EpisodeMixin<Base extends Constructor>(Resource: Base): Construc
     director: Schema.Person | undefined;
     @property.resource()
     directors: Schema.Person | undefined;
+    @property.resource()
+    duration: Schema.Duration | undefined;
     @property.literal()
     episodeNumber: number | string | undefined;
     @property.resource()

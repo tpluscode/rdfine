@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SportsActivityLocationMixin } from '../lib/SportsActivityLocation';
 import { ExerciseGymMixin } from '../lib/ExerciseGym';
+import { SportsActivityLocationMixin } from '../lib/SportsActivityLocation';
 
 export const ExerciseGymBundle = [
-  SportsActivityLocationMixin as Mixin,
-  ExerciseGymMixin as Mixin];
+  ExerciseGymMixin as Mixin,
+  SportsActivityLocationMixin as Mixin];

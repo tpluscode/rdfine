@@ -1,7 +1,9 @@
+import '../extensions/rdf/Property';
+import { PropertyMixinEx } from '../extensions/rdf/Property';
 import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { owl } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -14,7 +16,7 @@ export interface FunctionalProperty<D extends RDF.DatasetCore = RDF.DatasetCore>
 
 export function FunctionalPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FunctionalProperty> & RdfResourceCore> & Base {
   @namespace(owl)
-  class FunctionalPropertyClass extends RdfPropertyMixin(Resource) implements Partial<FunctionalProperty> {
+  class FunctionalPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<FunctionalProperty> {
   }
   return FunctionalPropertyClass
 }

@@ -1,6 +1,6 @@
 import cf, { AnyPointer, GraphPointer } from 'clownface'
 import { Debugger } from 'debug'
-import { Stream } from 'rdf-js'
+import { Stream } from '@rdfjs/types'
 import rdf from 'rdf-ext'
 import nsBuilder from '@rdfjs/namespace'
 import { expand, prefixes } from '@zazuko/rdf-vocabularies'
@@ -32,9 +32,18 @@ export interface Context {
   properties: PropertyOverrides
 }
 
+export interface WriteModule {
+  project: Project
+  types: TypeMetaCollection
+  context: Context
+  indexModule: SourceFile
+  // eslint-disable-next-line no-use-before-define
+  allGenerators: GeneratedModule[]
+}
+
 export interface GeneratedModule<T extends ResourceType | EnumerationType | ExternalResourceType = ResourceType | EnumerationType | ExternalResourceType> {
   node?: GraphPointer
-  writeModule(params: { project: Project; types: TypeMetaCollection; context: Context; indexModule: SourceFile }): void
+  writeModule(params: WriteModule): void
 }
 
 export interface ModuleStrategy {

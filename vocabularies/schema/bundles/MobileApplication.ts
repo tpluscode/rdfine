@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SoftwareApplicationMixin } from '../lib/SoftwareApplication';
 import { MobileApplicationMixin } from '../lib/MobileApplication';
+import { SoftwareApplicationMixin } from '../lib/SoftwareApplication';
 
 export const MobileApplicationBundle = [
-  SoftwareApplicationMixin as Mixin,
-  MobileApplicationMixin as Mixin];
+  MobileApplicationMixin as Mixin,
+  SoftwareApplicationMixin as Mixin];

@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -10,10 +10,13 @@ import { CreativeWorkMixin } from './CreativeWork';
 
 export interface LearningResource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
   assesses: string | undefined;
+  competencyRequired: string | undefined;
+  competencyRequiredTerm: RDF.NamedNode | undefined;
   educationalAlignment: Schema.AlignmentObject<D> | undefined;
   educationalLevel: string | undefined;
   educationalLevelTerm: RDF.NamedNode | undefined;
   educationalUse: string | undefined;
+  learningResourceType: string | undefined;
   teaches: string | undefined;
 }
 
@@ -22,6 +25,10 @@ export function LearningResourceMixin<Base extends Constructor>(Resource: Base):
   class LearningResourceClass extends CreativeWorkMixin(Resource) implements Partial<LearningResource> {
     @property.literal()
     assesses: string | undefined;
+    @property.literal()
+    competencyRequired: string | undefined;
+    @property({ path: schema.competencyRequired })
+    competencyRequiredTerm: RDF.NamedNode | undefined;
     @property.resource()
     educationalAlignment: Schema.AlignmentObject | undefined;
     @property.literal()
@@ -30,6 +37,8 @@ export function LearningResourceMixin<Base extends Constructor>(Resource: Base):
     educationalLevelTerm: RDF.NamedNode | undefined;
     @property.literal()
     educationalUse: string | undefined;
+    @property.literal()
+    learningResourceType: string | undefined;
     @property.literal()
     teaches: string | undefined;
   }

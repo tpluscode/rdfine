@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -15,6 +15,7 @@ export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   baseSalaryLiteral: number | undefined;
   benefits: string | undefined;
   datePosted: Date | undefined;
+  directApply: boolean | undefined;
   educationRequirements: string | undefined;
   eligibilityToWorkRequirement: string | undefined;
   employerOverview: string | undefined;
@@ -22,7 +23,9 @@ export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   employmentUnit: Schema.Organization<D> | undefined;
   estimatedSalary: Schema.MonetaryAmount<D> | Schema.MonetaryAmountDistribution<D> | undefined;
   estimatedSalaryLiteral: number | undefined;
-  experienceRequirements: string | undefined;
+  experienceInPlaceOfEducation: boolean | undefined;
+  experienceRequirements: Schema.OccupationalExperienceRequirements<D> | undefined;
+  experienceRequirementsLiteral: string | undefined;
   hiringOrganization: Schema.Organization<D> | undefined;
   incentiveCompensation: string | undefined;
   incentives: string | undefined;
@@ -67,6 +70,8 @@ export function JobPostingMixin<Base extends Constructor>(Resource: Base): Const
     benefits: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     datePosted: Date | undefined;
+    @property.literal({ type: Boolean })
+    directApply: boolean | undefined;
     @property.literal()
     educationRequirements: string | undefined;
     @property.literal()
@@ -81,8 +86,12 @@ export function JobPostingMixin<Base extends Constructor>(Resource: Base): Const
     estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution | undefined;
     @property.literal({ path: schema.estimatedSalary, type: Number })
     estimatedSalaryLiteral: number | undefined;
-    @property.literal()
-    experienceRequirements: string | undefined;
+    @property.literal({ type: Boolean })
+    experienceInPlaceOfEducation: boolean | undefined;
+    @property.resource()
+    experienceRequirements: Schema.OccupationalExperienceRequirements | undefined;
+    @property.literal({ path: schema.experienceRequirements })
+    experienceRequirementsLiteral: string | undefined;
     @property.resource()
     hiringOrganization: Schema.Organization | undefined;
     @property.literal()

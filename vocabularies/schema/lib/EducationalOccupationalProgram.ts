@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -18,6 +18,7 @@ export interface EducationalOccupationalProgram<D extends RDF.DatasetCore = RDF.
   educationalProgramModeTerm: RDF.NamedNode | undefined;
   endDate: Date | undefined;
   financialAidEligible: string | undefined;
+  hasCourse: Schema.Course<D> | undefined;
   maximumEnrollment: number | undefined;
   numberOfCredits: Schema.StructuredValue<D> | undefined;
   numberOfCreditsLiteral: number | undefined;
@@ -62,6 +63,8 @@ export function EducationalOccupationalProgramMixin<Base extends Constructor>(Re
     endDate: Date | undefined;
     @property.literal()
     financialAidEligible: string | undefined;
+    @property.resource()
+    hasCourse: Schema.Course | undefined;
     @property.literal({ type: Number })
     maximumEnrollment: number | undefined;
     @property.resource()

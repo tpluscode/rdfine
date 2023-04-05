@@ -1,5 +1,45 @@
 # @rdfine/wgs
 
+## 0.1.7
+
+### Patch Changes
+
+- 4ce19cbe: Introduce a more stable order of members, exports and imports
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+- Updated dependencies [4ce19cbe]
+- Updated dependencies [f7cfefff]
+  - @rdfine/foaf@0.1.9
+  - @rdfine/rdfs@0.6.10
+  - @tpluscode/rdfine@0.5.39
+
+## 0.1.6
+
+### Patch Changes
+
+- 5e2681a4: Update @tpluscode/rdfine
+- Updated dependencies [5e2681a4]
+  - @rdfine/foaf@0.1.8
+  - @rdfine/rdfs@0.6.9
+
+## 0.1.5
+
+### Patch Changes
+
+- d6f77ced: `fromPointer` methods should typed as `Factory<T>`
+- Updated dependencies [d6f77ced]
+  - @rdfine/foaf@0.1.7
+  - @rdfine/rdfs@0.6.8
+
+## 0.1.4
+
+### Patch Changes
+
+- a63ec35a: Update `@tpluscode/rdf-ns-builders` and typescript RDF/JS types
+- Updated dependencies [a63ec35a]
+  - @tpluscode/rdfine@0.5.27
+  - @rdfine/foaf@0.1.4
+  - @rdfine/rdfs@0.6.5
+
 ## 0.1.3
 
 ### Patch Changes

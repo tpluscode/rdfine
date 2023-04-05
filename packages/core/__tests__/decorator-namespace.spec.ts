@@ -4,7 +4,8 @@ import $rdf from 'rdf-ext'
 import { Constructor, namespace, property } from '../index'
 import RdfResource from '../RdfResource'
 import DatasetExt from 'rdf-ext/lib/Dataset'
-import { foaf, rdfs, schema } from '@tpluscode/rdf-ns-builders'
+import { foaf } from '@tpluscode/rdf-ns-builders'
+import { rdfs, schema } from '@tpluscode/rdf-ns-builders/loose'
 import builder, { NamespaceBuilder } from '@rdf-esm/namespace'
 
 describe('decorator', () => {

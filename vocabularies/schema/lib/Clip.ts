@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -14,12 +14,14 @@ export interface Clip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   clipNumber: number | string | undefined;
   director: Schema.Person<D> | undefined;
   directors: Schema.Person<D> | undefined;
-  endOffset: number | undefined;
+  endOffset: Schema.HyperTocEntry<D> | undefined;
+  endOffsetLiteral: number | undefined;
   musicBy: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
   partOfEpisode: Schema.Episode<D> | undefined;
   partOfSeason: Schema.CreativeWorkSeason<D> | undefined;
   partOfSeries: Schema.CreativeWorkSeries<D> | undefined;
-  startOffset: number | undefined;
+  startOffset: Schema.HyperTocEntry<D> | undefined;
+  startOffsetLiteral: number | undefined;
 }
 
 export function ClipMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Clip> & RdfResourceCore> & Base {
@@ -35,8 +37,10 @@ export function ClipMixin<Base extends Constructor>(Resource: Base): Constructor
     director: Schema.Person | undefined;
     @property.resource()
     directors: Schema.Person | undefined;
-    @property.literal({ type: Number })
-    endOffset: number | undefined;
+    @property.resource()
+    endOffset: Schema.HyperTocEntry | undefined;
+    @property.literal({ path: schema.endOffset, type: Number })
+    endOffsetLiteral: number | undefined;
     @property.resource()
     musicBy: Schema.MusicGroup | Schema.Person | undefined;
     @property.resource()
@@ -45,8 +49,10 @@ export function ClipMixin<Base extends Constructor>(Resource: Base): Constructor
     partOfSeason: Schema.CreativeWorkSeason | undefined;
     @property.resource()
     partOfSeries: Schema.CreativeWorkSeries | undefined;
-    @property.literal({ type: Number })
-    startOffset: number | undefined;
+    @property.resource()
+    startOffset: Schema.HyperTocEntry | undefined;
+    @property.literal({ path: schema.startOffset, type: Number })
+    startOffsetLiteral: number | undefined;
   }
   return ClipClass
 }

@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StructuredValueMixin } from '../lib/StructuredValue';
-import { DefinedRegionMixin } from '../lib/DefinedRegion';
 import { CountryMixin } from '../lib/Country';
+import { DefinedRegionMixin } from '../lib/DefinedRegion';
 import { PostalCodeRangeSpecificationMixin } from '../lib/PostalCodeRangeSpecification';
+import { StructuredValueMixin } from '../lib/StructuredValue';
 
 export const DefinedRegionBundle = [
-  StructuredValueMixin as Mixin,
-  DefinedRegionMixin as Mixin,
   CountryMixin as Mixin,
-  PostalCodeRangeSpecificationMixin as Mixin];
+  DefinedRegionMixin as Mixin,
+  PostalCodeRangeSpecificationMixin as Mixin,
+  StructuredValueMixin as Mixin];

@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -12,6 +12,7 @@ export interface FloorPlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   amenityFeature: Schema.LocationFeatureSpecification<D> | undefined;
   floorSize: Schema.QuantitativeValue<D> | undefined;
   isPlanForApartment: Schema.Accommodation<D> | undefined;
+  layoutImage: Schema.ImageObject<D> | undefined;
   numberOfAccommodationUnits: Schema.QuantitativeValue<D> | undefined;
   numberOfAvailableAccommodationUnits: Schema.QuantitativeValue<D> | undefined;
   numberOfBathroomsTotal: number | undefined;
@@ -33,6 +34,8 @@ export function FloorPlanMixin<Base extends Constructor>(Resource: Base): Constr
     floorSize: Schema.QuantitativeValue | undefined;
     @property.resource()
     isPlanForApartment: Schema.Accommodation | undefined;
+    @property.resource()
+    layoutImage: Schema.ImageObject | undefined;
     @property.resource()
     numberOfAccommodationUnits: Schema.QuantitativeValue | undefined;
     @property.resource()

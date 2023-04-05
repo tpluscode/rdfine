@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { EntityMixin } from '../lib/Entity';
 import { CollectionMixin } from '../lib/Collection';
+import { EntityMixin } from '../lib/Entity';
 
 export const CollectionBundle = [
-  EntityMixin as Mixin,
-  CollectionMixin as Mixin];
+  CollectionMixin as Mixin,
+  EntityMixin as Mixin];

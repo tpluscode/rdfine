@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { TestCaseMixin } from '../lib/TestCase';
 import { ActionTestCaseMixin } from '../lib/ActionTestCase';
+import { TestCaseMixin } from '../lib/TestCase';
 
 export const ActionTestCaseBundle = [
-  TestCaseMixin as Mixin,
-  ActionTestCaseMixin as Mixin];
+  ActionTestCaseMixin as Mixin,
+  TestCaseMixin as Mixin];

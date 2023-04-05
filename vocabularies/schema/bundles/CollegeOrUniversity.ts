@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { EducationalOrganizationMixin } from '../lib/EducationalOrganization';
 import { CollegeOrUniversityMixin } from '../lib/CollegeOrUniversity';
+import { EducationalOrganizationMixin } from '../lib/EducationalOrganization';
 
 export const CollegeOrUniversityBundle = [
-  EducationalOrganizationMixin as Mixin,
-  CollegeOrUniversityMixin as Mixin];
+  CollegeOrUniversityMixin as Mixin,
+  EducationalOrganizationMixin as Mixin];

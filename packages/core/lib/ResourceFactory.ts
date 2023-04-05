@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { DatasetCore, Literal, NamedNode, Term } from 'rdf-js'
+import type { DatasetCore, Literal, NamedNode, Term } from '@rdfjs/types'
 import type { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
@@ -16,7 +16,7 @@ export interface Constructor<A extends RdfResourceCore<any> = RdfResourceCore> {
   __initializers: Map<string, unknown>
   __ns?: NamespaceBuilder
 }
-export type ExtendingConstructor<TExtended, TExtension> = Constructor<RdfResourceCore & Omit<TExtended, keyof TExtension>>
+export type ExtendingConstructor<TExtended, TExtension> = Constructor<RdfResourceCore & Partial<Omit<TExtended, keyof TExtension>>>
 type EvaluatedMixin = {
   shouldApply: boolean | ((entity: RdfResource) => boolean)
 }

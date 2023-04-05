@@ -1,15 +1,12 @@
-import { NamedNode } from 'rdf-js';
 import { schema } from './namespace';
 
-export default {
-  MerchantReturnFiniteReturnWindow: schema.MerchantReturnFiniteReturnWindow as NamedNode<'http://schema.org/MerchantReturnFiniteReturnWindow'>,
-  MerchantReturnNotPermitted: schema.MerchantReturnNotPermitted as NamedNode<'http://schema.org/MerchantReturnNotPermitted'>,
-  MerchantReturnUnlimitedWindow: schema.MerchantReturnUnlimitedWindow as NamedNode<'http://schema.org/MerchantReturnUnlimitedWindow'>,
-  MerchantReturnUnspecified: schema.MerchantReturnUnspecified as NamedNode<'http://schema.org/MerchantReturnUnspecified'>,
+const values = {
+  MerchantReturnFiniteReturnWindow: schema.MerchantReturnFiniteReturnWindow,
+  MerchantReturnNotPermitted: schema.MerchantReturnNotPermitted,
+  MerchantReturnUnlimitedWindow: schema.MerchantReturnUnlimitedWindow,
+  MerchantReturnUnspecified: schema.MerchantReturnUnspecified,
 };
 
-export type MerchantReturnEnumeration =
-  NamedNode<'http://schema.org/MerchantReturnFiniteReturnWindow'>
-  | NamedNode<'http://schema.org/MerchantReturnNotPermitted'>
-  | NamedNode<'http://schema.org/MerchantReturnUnlimitedWindow'>
-  | NamedNode<'http://schema.org/MerchantReturnUnspecified'>;
+export type MerchantReturnEnumeration = typeof values[keyof typeof values];
+
+export default values;

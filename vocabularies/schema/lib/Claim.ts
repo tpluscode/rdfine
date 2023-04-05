@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -10,6 +10,7 @@ import { CreativeWorkMixin } from './CreativeWork';
 
 export interface Claim<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
   appearance: Schema.CreativeWork<D> | undefined;
+  claimInterpreter: Schema.Organization<D> | Schema.Person<D> | undefined;
   firstAppearance: Schema.CreativeWork<D> | undefined;
 }
 
@@ -18,6 +19,8 @@ export function ClaimMixin<Base extends Constructor>(Resource: Base): Constructo
   class ClaimClass extends CreativeWorkMixin(Resource) implements Partial<Claim> {
     @property.resource()
     appearance: Schema.CreativeWork | undefined;
+    @property.resource()
+    claimInterpreter: Schema.Organization | Schema.Person | undefined;
     @property.resource()
     firstAppearance: Schema.CreativeWork | undefined;
   }

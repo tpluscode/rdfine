@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PriceSpecificationMixin } from '../lib/PriceSpecification';
 import { PaymentChargeSpecificationMixin } from '../lib/PaymentChargeSpecification';
+import { PriceSpecificationMixin } from '../lib/PriceSpecification';
 
 export const PaymentChargeSpecificationBundle = [
-  PriceSpecificationMixin as Mixin,
-  PaymentChargeSpecificationMixin as Mixin];
+  PaymentChargeSpecificationMixin as Mixin,
+  PriceSpecificationMixin as Mixin];

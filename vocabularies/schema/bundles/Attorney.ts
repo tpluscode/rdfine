@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { LegalServiceMixin } from '../lib/LegalService';
 import { AttorneyMixin } from '../lib/Attorney';
+import { LegalServiceMixin } from '../lib/LegalService';
 
 export const AttorneyBundle = [
-  LegalServiceMixin as Mixin,
-  AttorneyMixin as Mixin];
+  AttorneyMixin as Mixin,
+  LegalServiceMixin as Mixin];

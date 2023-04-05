@@ -1,7 +1,7 @@
 import { GraphPointer } from 'clownface'
 import { shrink } from '@zazuko/rdf-vocabularies'
-import { hydra, owl, rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
-import { NamedNode } from 'rdf-js'
+import { dash, hydra, owl, rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
+import { NamedNode } from '@rdfjs/types'
 import { identifier } from 'safe-identifier'
 import {
   EnumerationMember,
@@ -42,7 +42,7 @@ export function resourceTypes(term: GraphPointer, context: Pick<Context, 'prefix
     }
   }
 
-  if (!term.has(rdf.type, [rdfs.Class, hydra.Class, owl.Class]).values.length) {
+  if (!term.has(rdf.type, [rdfs.Class, hydra.Class, owl.Class, dash.ShapeClass]).values.length) {
     return null
   }
 

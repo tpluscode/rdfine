@@ -1,17 +1,13 @@
-import { NamedNode } from 'rdf-js';
 import { schema } from './namespace';
 
-export default {
-  AudiobookFormat: schema.AudiobookFormat as NamedNode<'http://schema.org/AudiobookFormat'>,
-  EBook: schema.EBook as NamedNode<'http://schema.org/EBook'>,
-  GraphicNovel: schema.GraphicNovel as NamedNode<'http://schema.org/GraphicNovel'>,
-  Hardcover: schema.Hardcover as NamedNode<'http://schema.org/Hardcover'>,
-  Paperback: schema.Paperback as NamedNode<'http://schema.org/Paperback'>,
+const values = {
+  AudiobookFormat: schema.AudiobookFormat,
+  EBook: schema.EBook,
+  GraphicNovel: schema.GraphicNovel,
+  Hardcover: schema.Hardcover,
+  Paperback: schema.Paperback,
 };
 
-export type BookFormatType =
-  NamedNode<'http://schema.org/AudiobookFormat'>
-  | NamedNode<'http://schema.org/EBook'>
-  | NamedNode<'http://schema.org/GraphicNovel'>
-  | NamedNode<'http://schema.org/Hardcover'>
-  | NamedNode<'http://schema.org/Paperback'>;
+export type BookFormatType = typeof values[keyof typeof values];
+
+export default values;

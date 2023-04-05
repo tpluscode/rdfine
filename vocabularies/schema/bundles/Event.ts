@@ -1,33 +1,33 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ThingMixin } from '../lib/Thing';
-import { EventMixin } from '../lib/Event';
-import { PersonMixin } from '../lib/Person';
 import { AggregateRatingMixin } from '../lib/AggregateRating';
-import { OrganizationMixin } from '../lib/Organization';
 import { AudienceMixin } from '../lib/Audience';
+import { CreativeWorkMixin } from '../lib/CreativeWork';
+import { DemandMixin } from '../lib/Demand';
 import { DurationMixin } from '../lib/Duration';
-import { ScheduleMixin } from '../lib/Schedule';
+import { EventMixin } from '../lib/Event';
 import { LanguageMixin } from '../lib/Language';
+import { OfferMixin } from '../lib/Offer';
+import { OrganizationMixin } from '../lib/Organization';
+import { PersonMixin } from '../lib/Person';
 import { PlaceMixin } from '../lib/Place';
 import { PostalAddressMixin } from '../lib/PostalAddress';
-import { DemandMixin } from '../lib/Demand';
-import { OfferMixin } from '../lib/Offer';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
 import { ReviewMixin } from '../lib/Review';
+import { ScheduleMixin } from '../lib/Schedule';
+import { ThingMixin } from '../lib/Thing';
 
 export const EventBundle = [
-  ThingMixin as Mixin,
-  EventMixin as Mixin,
-  PersonMixin as Mixin,
   AggregateRatingMixin as Mixin,
-  OrganizationMixin as Mixin,
   AudienceMixin as Mixin,
+  CreativeWorkMixin as Mixin,
+  DemandMixin as Mixin,
   DurationMixin as Mixin,
-  ScheduleMixin as Mixin,
+  EventMixin as Mixin,
   LanguageMixin as Mixin,
+  OfferMixin as Mixin,
+  OrganizationMixin as Mixin,
+  PersonMixin as Mixin,
   PlaceMixin as Mixin,
   PostalAddressMixin as Mixin,
-  DemandMixin as Mixin,
-  OfferMixin as Mixin,
-  CreativeWorkMixin as Mixin,
-  ReviewMixin as Mixin];
+  ReviewMixin as Mixin,
+  ScheduleMixin as Mixin,
+  ThingMixin as Mixin];

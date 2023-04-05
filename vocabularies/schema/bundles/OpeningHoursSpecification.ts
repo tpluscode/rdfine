@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StructuredValueMixin } from '../lib/StructuredValue';
 import { OpeningHoursSpecificationMixin } from '../lib/OpeningHoursSpecification';
+import { StructuredValueMixin } from '../lib/StructuredValue';
 
 export const OpeningHoursSpecificationBundle = [
-  StructuredValueMixin as Mixin,
-  OpeningHoursSpecificationMixin as Mixin];
+  OpeningHoursSpecificationMixin as Mixin,
+  StructuredValueMixin as Mixin];

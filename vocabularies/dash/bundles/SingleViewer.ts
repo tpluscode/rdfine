@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ViewerMixin } from '../lib/Viewer';
 import { SingleViewerMixin } from '../lib/SingleViewer';
+import { ViewerMixin } from '../lib/Viewer';
 
 export const SingleViewerBundle = [
-  ViewerMixin as Mixin,
-  SingleViewerMixin as Mixin];
+  SingleViewerMixin as Mixin,
+  ViewerMixin as Mixin];

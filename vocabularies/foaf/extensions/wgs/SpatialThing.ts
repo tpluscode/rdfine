@@ -1,7 +1,7 @@
 import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { wgs } from '@tpluscode/rdf-ns-builders';
 import { foaf } from '../../lib/namespace';
 import type * as Foaf from '../..';

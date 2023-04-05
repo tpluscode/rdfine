@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MedicalEntityMixin } from '../lib/MedicalEntity';
-import { DrugCostMixin } from '../lib/DrugCost';
 import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
+import { DrugCostMixin } from '../lib/DrugCost';
+import { MedicalEntityMixin } from '../lib/MedicalEntity';
 
 export const DrugCostBundle = [
-  MedicalEntityMixin as Mixin,
+  AdministrativeAreaMixin as Mixin,
   DrugCostMixin as Mixin,
-  AdministrativeAreaMixin as Mixin];
+  MedicalEntityMixin as Mixin];

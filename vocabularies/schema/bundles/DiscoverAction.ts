@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { FindActionMixin } from '../lib/FindAction';
 import { DiscoverActionMixin } from '../lib/DiscoverAction';
+import { FindActionMixin } from '../lib/FindAction';
 
 export const DiscoverActionBundle = [
-  FindActionMixin as Mixin,
-  DiscoverActionMixin as Mixin];
+  DiscoverActionMixin as Mixin,
+  FindActionMixin as Mixin];

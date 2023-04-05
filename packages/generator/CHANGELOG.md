@@ -1,5 +1,47 @@
 # Change Log
 
+## 0.6.10
+
+### Patch Changes
+
+- 6e11bd18: No unnecessary imports in enumeration modules
+- a140fd55: Incorrect type generated for names which need quotes
+- 4ce19cbe: Introduce a more stable order of members, exports and imports
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+
+## 0.6.9
+
+### Patch Changes
+
+- 9acaff8a: Update `@rdfjs/formats-common`
+
+## 0.6.8
+
+### Patch Changes
+
+- 45a4be9c: Broken imports or exports of extension modules
+- 46a6b035: Simplify generated enum modules
+
+## 0.6.7
+
+### Patch Changes
+
+- afe232c3: Add extending mixin to generated class
+- 2cd64dfb: Generate mixins from `dash:ShapeClass`
+- 0faebb6b: Missing namespace import for types used only as ranges
+
+## 0.6.6
+
+### Patch Changes
+
+- a63ec35a: Update `@tpluscode/rdf-ns-builders` and typescript RDF/JS types
+
+## 0.6.5
+
+### Patch Changes
+
+- 88ff6fa8: Use latest @zazuko/rdf-vocabularies
+
 ## 0.6.4
 
 ### Patch Changes

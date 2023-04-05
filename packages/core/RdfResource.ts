@@ -1,7 +1,7 @@
 /* eslint-disable camelcase,no-dupe-class-members,no-use-before-define */
 import type { NamespaceBuilder } from '@rdf-esm/namespace'
-import { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from 'rdf-js'
-import cf, { MultiPointer, GraphPointer } from 'clownface'
+import type { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from '@rdfjs/types'
+import cf, { MultiPointer, GraphPointer, AnyPointer } from 'clownface'
 import ResourceFactoryImpl from './lib/ResourceFactory'
 import type {
   Constructor,
@@ -72,7 +72,7 @@ export interface RdfResourceCore<D extends DatasetCore = DatasetCore> {
    */
   toJSON<T extends RdfResourceCore = this> (): Jsonified<RdfResource & T>
   _getObjects(property: string | NamedNode, options?: GetOptions): MultiPointer<Term, D>
-  _create<T extends RdfResource<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
+  _create<T extends RdfResourceCore<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options?: ResourceCreationOptions<D, T>): T & ResourceIndexer
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -97,12 +97,35 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       .forEach(([prop, value]) => {
         if (!prop.startsWith('http')) {
           // use decorated setter property
-          (resource as any)[prop] = value
+          if (typeof value === 'function') {
+            (resource as any)[prop] = value(resource.pointer.any())
+          } else {
+            (resource as any)[prop] = value
+          }
           return
         }
 
         const values = Array.isArray(value) ? value : [value]
-        const pointers = values.map(value => {
+        const pointers = values.map(function toPointer(value): GraphPointer {
+          if (typeof value === 'function') {
+            const result = value(resource.pointer.any())
+            if (typeof result === 'function') {
+              throw new Error('Initializer factory function cannot return a function')
+            }
+            if (Array.isArray(result)) {
+              throw new Error('Initializer factory function cannot return an array')
+            }
+            return toPointer(result)
+          }
+
+          if (typeof value === 'object' && 'term' in value) {
+            return value.term
+          }
+
+          if (typeof value === 'object' && 'pointer' in value) {
+            return value.pointer
+          }
+
           if (typeof value === 'object' && 'termType' in value) {
             return resource.pointer.node(value)
           }
@@ -320,10 +343,16 @@ type BaseInitializer = Record<string, any> & {
   id?: RdfResource['id'] | string
 }
 
-type InitialNode<Node extends Term = NamedNode | BlankNode> = Node | GraphPointer<Node>
+type InitialNode<Node extends Term = NamedNode | BlankNode> = Node | GraphPointer<Node> | ((graph: AnyPointer) => Node | GraphPointer<Node>)
 type InitialLiteral = InitialNode<Literal>
 
-type InitializeSingle<T extends RdfResourceCore | undefined> = Initializer<UserDefinedInterface<T> & BaseInitializer> | InitialNode
+interface Factory<T extends RdfResourceCore | undefined> {
+  (graph: AnyPointer): T
+}
+
+type InitializeSingle<T extends RdfResourceCore | undefined> = Initializer<UserDefinedInterface<T> & BaseInitializer>
+| InitialNode
+| Factory<T>
 type InitializeArray<T extends RdfResourceCore> = Array<InitializeSingle<T>>
 
 export type Initializer<T> = Omit<{

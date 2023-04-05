@@ -1,5 +1,119 @@
 # Change Log
 
+## 0.8.8
+
+### Patch Changes
+
+- a45c89c1: `VariableRepresentation#mapValue` would be undefined because the extension mixin would not be added to factory
+
+## 0.8.7
+
+### Patch Changes
+
+- 96e50a57: Support expanding using `hydra:variableRepresentation` override on individual mapping (re HydraCG/Specifications#244)
+
+## 0.8.6
+
+### Patch Changes
+
+- 45fa0c98: Again export a factory for "member assertion"
+
+## 0.8.5
+
+### Patch Changes
+
+- a080452d: Template expansion did not expand against a parent's URI if it was not an direct parent
+
+## 0.8.4
+
+### Patch Changes
+
+- 153af913: Remove generation of `hydra:collection`
+- 4ce19cbe: Introduce a more stable order of members, exports and imports
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+- 67d2ebc5: Do not generate for class `MemberAssertion`, which does not exist in Hydra vocabulary
+- Updated dependencies [4ce19cbe]
+- Updated dependencies [f7cfefff]
+  - @rdfine/rdfs@0.6.10
+  - @tpluscode/rdfine@0.5.39
+  - @rdfine/rdf@0.5.7
+
+## 0.8.3
+
+### Patch Changes
+
+- c137556e: IriTemplate: add optional `base` argument to expand any relative template
+
+## 0.8.2
+
+### Patch Changes
+
+- 5e2681a4: Update @tpluscode/rdfine
+- Updated dependencies [5e2681a4]
+  - @rdfine/rdf@0.5.6
+  - @rdfine/rdfs@0.6.9
+
+## 0.8.1
+
+### Patch Changes
+
+- d6f77ced: `fromPointer` methods should typed as `Factory<T>`
+- Updated dependencies [d6f77ced]
+  - @rdfine/rdf@0.5.5
+  - @rdfine/rdfs@0.6.8
+
+## 0.8.0
+
+### Minor Changes
+
+- 072263df: Removed generated property getter `hydra:apiDocumentation`
+
+## 0.7.2
+
+### Patch Changes
+
+- 45a4be9c: Broken imports or exports of extension modules
+- Updated dependencies [45a4be9c]
+  - @rdfine/rdfs@0.6.7
+
+## 0.7.1
+
+### Patch Changes
+
+- c4787718: `hydra:manages` must return an array
+
+## 0.7.0
+
+### Minor Changes
+
+- 553f30b2: Update Hydra to latest vocabulary
+
+  - correct name `writable` used
+  - Added `memberAssertion`. `manages` kept for now
+
+### Patch Changes
+
+- Updated dependencies [afe232c3]
+- Updated dependencies [247137f2]
+  - @rdfine/rdfs@0.6.6
+  - @tpluscode/rdfine@0.5.29
+
+## 0.6.6
+
+### Patch Changes
+
+- a63ec35a: Update `@tpluscode/rdf-ns-builders` and typescript RDF/JS types
+- Updated dependencies [a63ec35a]
+  - @tpluscode/rdfine@0.5.27
+  - @rdfine/rdf@0.5.4
+  - @rdfine/rdfs@0.6.5
+
+## 0.6.5
+
+### Patch Changes
+
+- 84eb75b4: Allow multiple inputs to `IriTemplate#expand`
+
 ## 0.6.4
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { WebPageMixin } from '../lib/WebPage';
 import { SearchResultsPageMixin } from '../lib/SearchResultsPage';
+import { WebPageMixin } from '../lib/WebPage';
 
 export const SearchResultsPageBundle = [
-  WebPageMixin as Mixin,
-  SearchResultsPageMixin as Mixin];
+  SearchResultsPageMixin as Mixin,
+  WebPageMixin as Mixin];

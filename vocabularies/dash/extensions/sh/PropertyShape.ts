@@ -1,7 +1,7 @@
 import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { sh } from '@tpluscode/rdf-ns-builders';
 import { dash } from '../../lib/namespace';
 import type * as Dash from '../..';
@@ -13,6 +13,7 @@ interface PropertyShapeEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   editor: Dash.Editor<D> | undefined;
   hidden: boolean | undefined;
   indexed: boolean | undefined;
+  localValues: boolean | undefined;
   mimeTypes: string | undefined;
   readOnly: boolean | undefined;
   reifiableBy: Array<Shacl.NodeShape<D>>;
@@ -35,6 +36,8 @@ export function PropertyShapeMixinEx<Base extends ExtendingConstructor<Shacl.Pro
     hidden: boolean | undefined;
     @property.literal({ type: Boolean })
     indexed: boolean | undefined;
+    @property.literal({ type: Boolean })
+    localValues: boolean | undefined;
     @property.literal()
     mimeTypes: string | undefined;
     @property.literal({ type: Boolean })

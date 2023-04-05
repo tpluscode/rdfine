@@ -1,19 +1,19 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../lib/Intangible';
-import { ServiceChannelMixin } from '../lib/ServiceChannel';
-import { LanguageMixin } from '../lib/Language';
-import { DurationMixin } from '../lib/Duration';
-import { ServiceMixin } from '../lib/Service';
-import { PlaceMixin } from '../lib/Place';
 import { ContactPointMixin } from '../lib/ContactPoint';
+import { DurationMixin } from '../lib/Duration';
+import { IntangibleMixin } from '../lib/Intangible';
+import { LanguageMixin } from '../lib/Language';
+import { PlaceMixin } from '../lib/Place';
 import { PostalAddressMixin } from '../lib/PostalAddress';
+import { ServiceChannelMixin } from '../lib/ServiceChannel';
+import { ServiceMixin } from '../lib/Service';
 
 export const ServiceChannelBundle = [
-  IntangibleMixin as Mixin,
-  ServiceChannelMixin as Mixin,
-  LanguageMixin as Mixin,
-  DurationMixin as Mixin,
-  ServiceMixin as Mixin,
-  PlaceMixin as Mixin,
   ContactPointMixin as Mixin,
-  PostalAddressMixin as Mixin];
+  DurationMixin as Mixin,
+  IntangibleMixin as Mixin,
+  LanguageMixin as Mixin,
+  PlaceMixin as Mixin,
+  PostalAddressMixin as Mixin,
+  ServiceChannelMixin as Mixin,
+  ServiceMixin as Mixin];

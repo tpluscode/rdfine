@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ReactActionMixin } from '../lib/ReactAction';
 import { AgreeActionMixin } from '../lib/AgreeAction';
+import { ReactActionMixin } from '../lib/ReactAction';
 
 export const AgreeActionBundle = [
-  ReactActionMixin as Mixin,
-  AgreeActionMixin as Mixin];
+  AgreeActionMixin as Mixin,
+  ReactActionMixin as Mixin];

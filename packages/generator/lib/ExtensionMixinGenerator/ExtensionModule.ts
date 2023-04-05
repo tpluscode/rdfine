@@ -9,8 +9,8 @@ import { MixinModuleBase } from '../MixinGenerator/MixinModuleBase'
 
 export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
   properties: JavascriptProperty[];
-  private extended: { prefix: string; term: string }
-  private interfaceName: string
+  extended: { prefix: string; term: string }
+  interfaceName: string
 
   constructor({ domain, type }: { domain: GraphPointer; type: ExternalResourceType }) {
     super(domain, type)
@@ -45,7 +45,9 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
       context,
       module: this,
     })
-    this.properties.forEach(propertyWriter.addProperty.bind(propertyWriter))
+    this.properties
+      .sort((left, right) => left.name.localeCompare(right.name))
+      .forEach(propertyWriter.addProperty.bind(propertyWriter))
 
     const nsBuilderTerm = this.extended.term === this.type.localName
       ? `${this.extended.prefix}.${this.extended.term}`
@@ -117,7 +119,7 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
     })
     mixinFile.addImportDeclaration({
       namespaceImport: 'RDF',
-      moduleSpecifier: 'rdf-js',
+      moduleSpecifier: '@rdfjs/types',
       isTypeOnly: true,
     })
     mixinFile.addImportDeclaration({
@@ -135,6 +137,7 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
     })
 
     Object.entries(this.namespaceImports)
+      .sort(([l], [r]) => l.localeCompare(r))
       .forEach(([moduleSpecifier, namespaceImport]) => {
         mixinFile.addImportDeclaration({
           moduleSpecifier,

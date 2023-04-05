@@ -1,5 +1,64 @@
 # Change Log
 
+## 0.6.11
+
+### Patch Changes
+
+- 6e11bd18: No unnecessary imports in enumeration modules
+- a140fd55: Incorrect type generated for names which need quotes
+- 4ce19cbe: Introduce a more stable order of members, exports and imports
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+- Updated dependencies [f7cfefff]
+  - @tpluscode/rdfine@0.5.39
+
+## 0.6.10
+
+### Patch Changes
+
+- 76c13f14: Fix peer dependencies (re hypermedia-app/shaperone#173)
+- Updated dependencies [76c13f14]
+  - @tpluscode/rdfine@0.5.35
+
+## 0.6.9
+
+### Patch Changes
+
+- 5e2681a4: Update @tpluscode/rdfine
+
+## 0.6.8
+
+### Patch Changes
+
+- d6f77ced: `fromPointer` methods should typed as `Factory<T>`
+
+## 0.6.7
+
+### Patch Changes
+
+- 858cc537: Update to latest vocab
+
+## 0.6.6
+
+### Patch Changes
+
+- 46a6b035: Simplify generated enum modules
+
+## 0.6.5
+
+### Patch Changes
+
+- f9adc9b2: Update to latest terms for DASH and schema
+- Updated dependencies [247137f2]
+  - @tpluscode/rdfine@0.5.29
+
+## 0.6.4
+
+### Patch Changes
+
+- a63ec35a: Update `@tpluscode/rdf-ns-builders` and typescript RDF/JS types
+- Updated dependencies [a63ec35a]
+  - @tpluscode/rdfine@0.5.27
+
 ## 0.6.3
 
 ### Patch Changes

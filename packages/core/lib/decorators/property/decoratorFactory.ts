@@ -1,5 +1,5 @@
 import RdfResourceImpl, { RdfResourceCore } from '../../../RdfResource'
-import { Quad, Term } from 'rdf-js'
+import type { Quad, Term } from '@rdfjs/types'
 import { ClassElement } from '../index'
 import { EdgeTraversal, toEdgeTraversals } from '../../path'
 import { enumerateList, isList } from '../../rdf-list'
@@ -8,6 +8,7 @@ import cf, { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import TermSet from '@rdf-esm/term-set'
 import { AccessorOptions } from './index'
+import type { Factory } from '../../../factory'
 
 export type PropertyReturnKind = 'single' | 'array' | 'list'
 export type ArrayOrSingle<T> = T | T[]
@@ -68,7 +69,7 @@ export type PropertyMeta<T = any> = {
 }
 
 function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm extends Term>(proto: any, name: string, options: PropertyDecoratorOptions<T, TValue, TLegalAssigned, TTerm>) {
-  const { fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict, compare, subjectFromAllGraphs } = options
+  const { fromTerm, toTerm, assertSetValue, valueTypeName, initial, strict, compare, subjectFromAllGraphs, filter } = options
   let values: PropertyReturnKind[] = ['single']
   if (Array.isArray(options.values)) {
     values = options.values
@@ -84,10 +85,14 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
     get(this: T & RdfResourceImpl): unknown {
       const rootNode = subjectFromAllGraphs ? getNodeFromEveryGraph(this.pointer) : [this.pointer]
       const path = getPath()
-      const nodes = getObjects(rootNode, path)
+      let nodes = getObjects(rootNode, path)
       const crossesBoundaries = path.some(edge => edge.crossesGraphBoundaries)
       if (subjectFromAllGraphs || crossesBoundaries) {
         values = ['array']
+      }
+
+      if (filter) {
+        nodes = nodes.filter(node => filter(node.term))
       }
 
       const returnValues = nodes.map((obj, index) => {
@@ -125,7 +130,7 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
       return values.includes('single') ? returnValues[0] : returnValues
     },
 
-    set(this: T & RdfResourceImpl, value: ArrayOrSingle<RdfResourceCore | Term | GraphPointer>) {
+    set(this: T & RdfResourceImpl, value: ArrayOrSingle<RdfResourceCore | Term | GraphPointer | Factory<T>>) {
       if (!values.includes('array') && !values.includes('list') && Array.isArray(value)) {
         throw new Error(`${name}: Cannot set array to a non-array property`)
       }
@@ -155,7 +160,7 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
       }
 
       let initializedArray = false
-      let valueArray: Array<RdfResourceCore | Term | GraphPointer | TValue>
+      let valueArray: Array<RdfResourceCore | Term | GraphPointer | TValue | Factory<any>>
       if (Array.isArray(value)) {
         initializedArray = true
         valueArray = value
@@ -163,26 +168,40 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
         valueArray = [value]
       }
 
-      const termsArray = valueArray.map(value => {
+      const termsArray = valueArray.reduce((terms, valueOrFactory) => {
+        let term: Term
+        let value: RdfResourceCore | Term | GraphPointer | TValue
+        if (typeof valueOrFactory === 'function') {
+          value = (valueOrFactory as any)(this.pointer.any())
+        } else {
+          value = valueOrFactory
+        }
+
+        if (typeof value === 'object' && 'termType' in value) {
+          term = value
+        } else
+
+        if (typeof value === 'object' && 'term' in value) {
+          term = value.term
+        } else
+
+        if (typeof value === 'object' && 'pointer' in value) {
+          term = value.id
+        } else {
+          term = toTerm.call(this, value as any)
+        }
+
+        if (filter && !filter(term)) {
+          return terms
+        }
+
         if (!assertSetValue(value)) {
           const pathStr = path.map(edge => `<${edge.predicate.value}>`).join('/')
           throw new Error(`Unexpected value for path ${pathStr}. Expecting a ${valueTypeName} or RDF/JS term.`)
         }
 
-        if (typeof value === 'object' && 'termType' in value) {
-          return value
-        }
-
-        if (typeof value === 'object' && 'term' in value) {
-          return value.term
-        }
-
-        if (typeof value === 'object' && 'pointer' in value) {
-          return value.id
-        }
-
-        return toTerm.call(this, value as any)
-      })
+        return [...terms, term]
+      }, [] as Term[])
 
       if (values.includes('list') && (values.length === 1 || initializedArray)) {
         // only set RDF List when property only allows lists or explicitly initialized with array

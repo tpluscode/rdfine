@@ -62,9 +62,9 @@ describe('ExtensionMixinGenerator', () => {
   it('does not generate an index module for own types', () => {
     // const
     const types = new FakeTypeCollection([
-      [dash.Shape, { type: 'Resource' }],
+      [sh.Shape, { type: 'Resource' }],
     ])
-    vocabulary.namedNode(dash.hidden).addOut(rdfs.domain, dash.Shape)
+    vocabulary.namedNode(dash.hidden).addOut(rdfs.domain, sh.Shape)
 
     // when
     const modules = findTermsToGenerate(types, { vocabulary, log, properties, prefix: 'dash' })

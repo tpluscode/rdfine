@@ -1,13 +1,11 @@
-import { NamedNode } from 'rdf-js';
 import { schema } from './namespace';
 
-export default {
-  DrivingSchoolVehicleUsage: schema.DrivingSchoolVehicleUsage as NamedNode<'http://schema.org/DrivingSchoolVehicleUsage'>,
-  RentalVehicleUsage: schema.RentalVehicleUsage as NamedNode<'http://schema.org/RentalVehicleUsage'>,
-  TaxiVehicleUsage: schema.TaxiVehicleUsage as NamedNode<'http://schema.org/TaxiVehicleUsage'>,
+const values = {
+  DrivingSchoolVehicleUsage: schema.DrivingSchoolVehicleUsage,
+  RentalVehicleUsage: schema.RentalVehicleUsage,
+  TaxiVehicleUsage: schema.TaxiVehicleUsage,
 };
 
-export type CarUsageType =
-  NamedNode<'http://schema.org/DrivingSchoolVehicleUsage'>
-  | NamedNode<'http://schema.org/RentalVehicleUsage'>
-  | NamedNode<'http://schema.org/TaxiVehicleUsage'>;
+export type CarUsageType = typeof values[keyof typeof values];
+
+export default values;

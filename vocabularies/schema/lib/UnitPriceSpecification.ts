@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -9,8 +9,13 @@ import type * as Schema from '..';
 import { PriceSpecificationMixin } from './PriceSpecification';
 
 export interface UnitPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, RdfResource<D> {
+  billingDuration: Schema.Duration<D> | Schema.QuantitativeValue<D> | undefined;
+  billingDurationLiteral: number | undefined;
   billingIncrement: number | undefined;
+  billingStart: number | undefined;
+  priceComponentType: Schema.PriceComponentTypeEnumeration | undefined;
   priceType: string | undefined;
+  priceTypeTerm: Schema.PriceTypeEnumeration | undefined;
   referenceQuantity: Schema.QuantitativeValue<D> | undefined;
   unitCode: string | undefined;
   unitCodeTerm: RDF.NamedNode | undefined;
@@ -20,10 +25,20 @@ export interface UnitPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetC
 export function UnitPriceSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<UnitPriceSpecification> & RdfResourceCore> & Base {
   @namespace(schema)
   class UnitPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<UnitPriceSpecification> {
+    @property.resource()
+    billingDuration: Schema.Duration | Schema.QuantitativeValue | undefined;
+    @property.literal({ path: schema.billingDuration, type: Number })
+    billingDurationLiteral: number | undefined;
     @property.literal({ type: Number })
     billingIncrement: number | undefined;
+    @property.literal({ type: Number })
+    billingStart: number | undefined;
+    @property()
+    priceComponentType: Schema.PriceComponentTypeEnumeration | undefined;
     @property.literal()
     priceType: string | undefined;
+    @property({ path: schema.priceType })
+    priceTypeTerm: Schema.PriceTypeEnumeration | undefined;
     @property.resource()
     referenceQuantity: Schema.QuantitativeValue | undefined;
     @property.literal()

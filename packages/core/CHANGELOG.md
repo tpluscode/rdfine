@@ -1,5 +1,115 @@
 # Change Log
 
+## 0.5.41
+
+### Patch Changes
+
+- 1cd0c024: Initializer module missing in CJS build
+
+## 0.5.40
+
+### Patch Changes
+
+- 09714d17: RDF List initializer made simpler a helper function. For example, to initialize a `( 'foo', 'bar', 'baz )` list:
+
+  ```js
+  import * as initialize from "@tpluscode/rdfine/initializer";
+
+  let node;
+  const resource = fromPointer(node, {
+    listProp: initialize.rdfList("foo", "bar", "baz")
+  });
+  ```
+
+  closes (#143)
+
+## 0.5.39
+
+### Patch Changes
+
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+
+## 0.5.38
+
+### Patch Changes
+
+- 5cb8a316: Make `@types/clownface` a regular dependency (re hypermedia-app/Alcaeus#288)
+
+## 0.5.37
+
+### Patch Changes
+
+- 32a92788: `fromPointer` function did not work due to inaccurate types
+
+## 0.5.36
+
+### Patch Changes
+
+- a2484ec2: Initializer factory only allowed URI nodes
+
+## 0.5.35
+
+### Patch Changes
+
+- 76c13f14: Fix peer dependencies (re hypermedia-app/shaperone#173)
+
+## 0.5.34
+
+### Patch Changes
+
+- 292c9d7b: Possibility for setting properties using factories (fixes #191)
+- 292c9d7b: Pointers could not have been set to proxied properties
+
+## 0.5.33
+
+### Patch Changes
+
+- 658c9e98: Optimise setting URI property from existing resource object
+- 7a52025d: Initializing URI property with factory would throw
+
+## 0.5.32
+
+### Patch Changes
+
+- 20f5f01c: Initializing properties with factory functions
+
+## 0.5.31
+
+### Patch Changes
+
+- 64e8907e: Filter decorator option
+
+## 0.5.30
+
+### Patch Changes
+
+- 6207e784: Fix serialization of list of literals to JSON
+
+## 0.5.29
+
+### Patch Changes
+
+- 247137f2: Extending interface relaxed to allow Partial base class
+
+## 0.5.28
+
+### Patch Changes
+
+- 377c603b: Update typing which appears to cause an error `TS2344: Type 'T' does not satisfy the constraint 'RdfResourceCore<DatasetCore<Quad, Quad>>'` on later versions of TypeScript
+
+## 0.5.27
+
+### Patch Changes
+
+- a63ec35a: Update `@tpluscode/rdf-ns-builders` and typescript RDF/JS types
+
+## 0.5.26
+
+### Patch Changes
+
+- 97c0dd19: toJSON: serialize lists which are not strongly typed properties
+- 0a04fa75: Initializing optional properties only allowed arrays
+
 ## 0.5.25
 
 ### Patch Changes

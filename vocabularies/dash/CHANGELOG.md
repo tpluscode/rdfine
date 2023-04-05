@@ -1,5 +1,72 @@
 # @rdfine/dash
 
+## 0.2.4
+
+### Patch Changes
+
+- 4ce19cbe: Introduce a more stable order of members, exports and imports
+- f7cfefff: Update `@tpluscode/rdf-ns-builders` to v2
+- Updated dependencies [4ce19cbe]
+- Updated dependencies [f7cfefff]
+  - @rdfine/rdfs@0.6.10
+  - @rdfine/shacl@0.8.7
+  - @tpluscode/rdfine@0.5.39
+  - @rdfine/rdf@0.5.7
+
+## 0.2.3
+
+### Patch Changes
+
+- 5e2681a4: Update @tpluscode/rdfine
+- Updated dependencies [5e2681a4]
+  - @rdfine/rdf@0.5.6
+  - @rdfine/rdfs@0.6.9
+  - @rdfine/shacl@0.8.4
+
+## 0.2.2
+
+### Patch Changes
+
+- d6f77ced: `fromPointer` methods should typed as `Factory<T>`
+- Updated dependencies [d6f77ced]
+  - @rdfine/rdf@0.5.5
+  - @rdfine/rdfs@0.6.8
+  - @rdfine/shacl@0.8.3
+
+## 0.2.1
+
+### Patch Changes
+
+- 45a4be9c: Broken imports or exports of extension modules
+- Updated dependencies [45a4be9c]
+- Updated dependencies [46a6b035]
+  - @rdfine/rdfs@0.6.7
+  - @rdfine/shacl@0.8.2
+
+## 0.2.0
+
+### Minor Changes
+
+- f9adc9b2: Update to latest terms for DASH and schema
+
+### Patch Changes
+
+- Updated dependencies [afe232c3]
+- Updated dependencies [247137f2]
+  - @rdfine/rdfs@0.6.6
+  - @tpluscode/rdfine@0.5.29
+
+## 0.1.4
+
+### Patch Changes
+
+- a63ec35a: Update `@tpluscode/rdf-ns-builders` and typescript RDF/JS types
+- Updated dependencies [a63ec35a]
+  - @tpluscode/rdfine@0.5.27
+  - @rdfine/rdf@0.5.4
+  - @rdfine/rdfs@0.6.5
+  - @rdfine/shacl@0.8.1
+
 ## 0.1.3
 
 ### Patch Changes

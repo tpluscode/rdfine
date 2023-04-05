@@ -3,13 +3,13 @@ import cf from 'clownface'
 import { namespace, property, crossBoundaries, Constructor } from '../index'
 import RdfResource from '../RdfResource'
 import { parse, ex } from './_helpers'
-import { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from 'rdf-js'
+import type { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from '@rdfjs/types'
 import * as RDF from '@rdf-esm/data-model'
 import rdfExt from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
-import { foaf, schema, rdf } from '@tpluscode/rdf-ns-builders'
-import clownface from 'clownface'
-import $rdf from 'rdf-ext'
+import { foaf, schema, rdf } from '@tpluscode/rdf-ns-builders/loose'
+import { turtle } from '@tpluscode/rdf-string'
+import type { AnyFactory } from '../factory'
 
 describe('decorator', () => {
   describe('term', () => {
@@ -480,6 +480,33 @@ describe('decorator', () => {
         // then
         expect(friends.length).toBe(3)
       })
+
+      describe('filtered', () => {
+        it('returns only value which satisfy filter', async () => {
+          // given
+          const dataset = await parse(turtle`
+            ${ex.res} ${foaf.knows} ${ex.Will} , "Foo" .
+          `)
+          class Resource extends RdfResource {
+            @property({
+              path: foaf.knows,
+              values: 'array',
+              filter: term => term.termType === 'NamedNode',
+            })
+            friends!: Term[]
+          }
+
+          // when
+          const [friend, ...rest] = new Resource(cf({
+            dataset,
+            term: ex.res,
+          })).friends
+
+          // then
+          expect(friend).toStrictEqual(ex.Will)
+          expect(rest).toHaveLength(0)
+        })
+      })
     })
 
     describe('setter', () => {
@@ -702,7 +729,7 @@ describe('decorator', () => {
 
       it('can set an rdf resource', async () => {
         // given
-        const ptr = clownface({ dataset: $rdf.dataset() }).node(ex.res)
+        const ptr = cf({ dataset: rdfExt.dataset() }).node(ex.res)
         class Resource extends RdfResource {
           @property({ path: foaf.knows })
           friend!: any
@@ -710,7 +737,7 @@ describe('decorator', () => {
 
         // when
         const instance = new Resource(ptr)
-        instance.friend = new Resource(clownface({ dataset: $rdf.dataset() }).node(ex.friend))
+        instance.friend = new Resource(cf({ dataset: rdfExt.dataset() }).node(ex.friend))
 
         // then
         expect(ptr.out(foaf.knows).term).toStrictEqual(ex.friend)
@@ -718,7 +745,7 @@ describe('decorator', () => {
 
       it('can set a pointer', async () => {
         // given
-        const ptr = clownface({ dataset: $rdf.dataset() }).node(ex.res)
+        const ptr = cf({ dataset: rdfExt.dataset() }).node(ex.res)
         class Resource extends RdfResource {
           @property({ path: foaf.knows })
           friend!: any
@@ -726,10 +753,53 @@ describe('decorator', () => {
 
         // when
         const instance = new Resource(ptr)
-        instance.friend = clownface({ dataset: $rdf.dataset() }).node(ex.friend)
+        instance.friend = cf({ dataset: rdfExt.dataset() }).node(ex.friend)
 
         // then
         expect(ptr.out(foaf.knows).term).toStrictEqual(ex.friend)
+      })
+
+      it('can set from factory', async () => {
+        // given
+        const ptr = cf({ dataset: rdfExt.dataset() }).node(ex.res)
+        class Resource extends RdfResource {
+          @property({ path: foaf.knows })
+          friend!: any
+        }
+
+        // when
+        const instance = new Resource(ptr)
+        const createFriend: AnyFactory<Resource> = graph => graph.node(ex.friend).addOut(schema.name, 'Friend')
+        instance.friend = createFriend
+
+        // then
+        expect(ptr.out(foaf.knows).term).toStrictEqual(ex.friend)
+      })
+
+      describe('filtered', () => {
+        it('sets only values matching filter', () => {
+          // given
+          const ptr = cf({ dataset: rdfExt.dataset() }).node(ex.res)
+          class Resource extends RdfResource {
+            @property({
+              path: foaf.knows,
+              values: 'array',
+              filter: (term) => term.termType === 'NamedNode',
+            })
+            friends!: any[]
+          }
+
+          // when
+          const instance = new Resource(ptr)
+          instance.friends = [
+            ex.friend,
+            rdfExt.blankNode(),
+            rdfExt.literal('foo'),
+          ]
+
+          // then
+          expect(ptr.out(foaf.knows).term).toStrictEqual(ex.friend)
+        })
       })
     })
 

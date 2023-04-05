@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { OrganizeActionMixin } from '../lib/OrganizeAction';
 import { BookmarkActionMixin } from '../lib/BookmarkAction';
+import { OrganizeActionMixin } from '../lib/OrganizeAction';
 
 export const BookmarkActionBundle = [
-  OrganizeActionMixin as Mixin,
-  BookmarkActionMixin as Mixin];
+  BookmarkActionMixin as Mixin,
+  OrganizeActionMixin as Mixin];

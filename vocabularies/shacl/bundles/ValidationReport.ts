@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ValidationResultMixin } from '../lib/ValidationResult';
 import { ValidationReportMixin } from '../lib/ValidationReport';
+import { ValidationResultMixin } from '../lib/ValidationResult';
 
 export const ValidationReportBundle = [
-  ValidationResultMixin as Mixin,
-  ValidationReportMixin as Mixin];
+  ValidationReportMixin as Mixin,
+  ValidationResultMixin as Mixin];

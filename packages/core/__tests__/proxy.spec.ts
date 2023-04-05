@@ -2,11 +2,13 @@ import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { literal } from '@rdf-esm/data-model'
 import DatasetExt from 'rdf-ext/lib/Dataset'
+import { schema } from '@tpluscode/rdf-ns-builders'
 import { createProxy } from '../lib/proxy'
 import RdfResourceImpl, { RdfResource } from '../RdfResource'
-import { Literal, NamedNode } from 'rdf-js'
+import type { Literal, NamedNode } from '@rdfjs/types'
 import { property, ResourceIndexer } from '../index'
 import { ex } from './_helpers'
+import type { AnyFactory } from '../factory'
 
 describe('proxy', () => {
   let node: GraphPointer<NamedNode, DatasetExt>
@@ -177,6 +179,23 @@ describe('proxy', () => {
       expect(node.dataset.toCanonical()).toMatchSnapshot()
     })
 
+    it('single factory', () => {
+      // given
+      const resource = new RdfResourceImpl(node)
+      const proxy = createProxy(resource)
+      const child: AnyFactory<RdfResourceImpl> = (pointer) => {
+        return new RdfResourceImpl(pointer.blankNode(), {
+          [schema.name.value]: 'Child',
+        })
+      }
+
+      // when
+      proxy[ex.set.value] = <any>child
+
+      // then
+      expect(node.out(ex.set).out(schema.name).value).toEqual('Child')
+    })
+
     it('multiple literals', () => {
       // given
       const resource = new RdfResourceImpl(node)
@@ -202,6 +221,26 @@ describe('proxy', () => {
 
       // then
       expect(node.dataset.toCanonical()).toMatchSnapshot()
+    })
+
+    it('multiple factories and values', () => {
+      // given
+      const resource = new RdfResourceImpl(node)
+      const Baz = node.addOut(schema.name, 'Baz')
+      const proxy = createProxy(resource)
+      const child = (name: string): AnyFactory<RdfResourceImpl> => (pointer) => {
+        return new RdfResourceImpl(pointer.blankNode(), {
+          [schema.name.value]: name,
+        })
+      }
+
+      // when
+      proxy[ex.set.value] = <any>[child('Foo'), child('Bar'), Baz]
+
+      // then
+      expect(node.out(ex.set).out(schema.name).values).toEqual(
+        expect.arrayContaining(['Foo', 'Bar', 'Baz']),
+      )
     })
 
     it('null removes triples', () => {

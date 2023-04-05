@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MixinModule does not add datatype annotation to literal property when datatype is ambiguous: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
+exports[`MixinModule does not add datatype annotation to literal property when datatype is ambiguous 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
     foo: string | undefined;
@@ -35,18 +35,18 @@ ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 
 export const fromPointer = createFactory<Class>([ClassMixin], { types: [ex.Class] });
-"
+
 `;
 
-exports[`MixinModule does not try import self when property has range of enclosing class: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
+exports[`MixinModule does not try import self when property has range of enclosing class 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
     foo: Example.Class<D> | undefined;
@@ -73,50 +73,50 @@ ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 
 export const fromPointer = createFactory<Class>([ClassMixin], { types: [ex.Class] });
-"
+
 `;
 
-exports[`MixinModule generates a bundle module with property mixin types but skipping external mixins: toMatchSnapshot 1`] = `
-"import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import { ClassMixin } from \\"../Class\\";
-import { FriendMixin } from \\"../Friend\\";
+exports[`MixinModule generates a bundle module with property mixin types but skipping external mixins 1`] = `
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import { ClassMixin } from "../Class";
+import { FriendMixin } from "../Friend";
 
 export const ClassBundle = [
     ClassMixin as Mixin,
     FriendMixin as Mixin];
-"
+
 `;
 
-exports[`MixinModule generates a bundle module with property mixin types but skipping external mixins: toMatchSnapshot 2`] = `
-"export { ClassBundle } from \\"./Class\\";
-"
+exports[`MixinModule generates a bundle module with property mixin types but skipping external mixins 2`] = `
+export { ClassBundle } from "./Class";
+
 `;
 
-exports[`MixinModule generates a bundle module with super classes but without externals: toMatchSnapshot 1`] = `
-"import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import { SuperMixin } from \\"../Example\\";
-import { ClassMixin } from \\"../Class\\";
+exports[`MixinModule generates a bundle module with super classes but without externals 1`] = `
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import { ClassMixin } from "../Class";
+import { SuperMixin } from "../Example";
 
 export const ClassBundle = [
-    SuperMixin as Mixin,
-    ClassMixin as Mixin];
-"
+    ClassMixin as Mixin,
+    SuperMixin as Mixin];
+
 `;
 
-exports[`MixinModule generates a bundle module with super classes but without externals: toMatchSnapshot 2`] = `
-"export { ClassBundle } from \\"./Class\\";
-"
+exports[`MixinModule generates a bundle module with super classes but without externals 2`] = `
+export { ClassBundle } from "./Class";
+
 `;
 
-exports[`MixinModule generates a mixin class where term is not safe identifier: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
+exports[`MixinModule generates a mixin class where term is not safe identifier 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
 
 export interface _3Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
@@ -131,29 +131,29 @@ export function _3ClassMixin<Base extends Constructor>(Resource: Base): Construc
 class _3ClassImpl extends _3ClassMixin(RdfResourceImpl) {
     constructor(arg: ResourceNode, init?: Initializer<_3Class>) {
         super(arg, init)
-        this.types.add(ex._3Class)
+        this.types.add(ex['3Class'])
     }
 
     static readonly __mixins: Mixin[] = [_3ClassMixin];
 }
-_3ClassMixin.appliesTo = ex['Class']
+_3ClassMixin.appliesTo = ex['3Class']
 _3ClassMixin.Class = _3ClassImpl
 
-export const fromPointer = createFactory<_3Class>([_3ClassMixin], { types: [ex._3Class] });
-"
+export const fromPointer = createFactory<_3Class>([_3ClassMixin], { types: [ex['3Class']] });
+
 `;
 
-exports[`MixinModule generates a mixin class with external super classes: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
-import type * as Schema from \\"@rdfine/schema\\";
-import { Person as PersonMixin } from \\"@rdfine/schema/Person\\";
+exports[`MixinModule generates a mixin class with external super classes 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
+import type * as Schema from "@rdfine/schema";
+import { Person as PersonMixin } from "@rdfine/schema/Person";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Person<D>, RdfResource<D> {
 }
@@ -177,18 +177,18 @@ ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 
 export const fromPointer = createFactory<Class>([PersonMixin, ClassMixin], { types: [ex.Class] });
-"
+
 `;
 
-exports[`MixinModule generates a mixin class without props: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
+exports[`MixinModule generates a mixin class without props 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }
@@ -212,18 +212,18 @@ ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 
 export const fromPointer = createFactory<Class>([ClassMixin], { types: [ex.Class] });
-"
+
 `;
 
-exports[`MixinModule generates array property: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
+exports[`MixinModule generates array property 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
     foo: Array<Example.Foo<D>>;
@@ -250,18 +250,18 @@ ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 
 export const fromPointer = createFactory<Class>([ClassMixin], { types: [ex.Class] });
-"
+
 `;
 
-exports[`MixinModule generates date property: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
+exports[`MixinModule generates date property 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
     foo: Date | undefined;
@@ -288,18 +288,18 @@ ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 
 export const fromPointer = createFactory<Class>([ClassMixin], { types: [ex.Class] });
-"
+
 `;
 
-exports[`MixinModule generates list property: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
+exports[`MixinModule generates list property 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
     foo: Array<Example.Foo<D>>;
@@ -326,18 +326,18 @@ ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 
 export const fromPointer = createFactory<Class>([ClassMixin], { types: [ex.Class] });
-"
+
 `;
 
-exports[`MixinModule generates list/single property: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
+exports[`MixinModule generates list/single property 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
     foo: Example.Foo<D> | Array<Example.Foo<D>> | undefined;
@@ -364,18 +364,18 @@ ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 
 export const fromPointer = createFactory<Class>([ClassMixin], { types: [ex.Class] });
-"
+
 `;
 
-exports[`MixinModule generates literal property with unioned string return types: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
+exports[`MixinModule generates literal property with unioned string return types 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
     foo: 'bar' | 'baz' | 'foo' | undefined;
@@ -402,20 +402,20 @@ ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 
 export const fromPointer = createFactory<Class>([ClassMixin], { types: [ex.Class] });
-"
+
 `;
 
-exports[`MixinModule generates property with automatic external type cast when predicate has strict semantics: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
-import type * as Example from \\"@rdfine/example\\";
-import { Foo as FooMixin } from \\"@rdfine/example/Foo\\";
+exports[`MixinModule generates property with automatic external type cast when predicate has strict semantics 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
+import type * as Example from "@rdfine/example";
+import { Foo as FooMixin } from "@rdfine/example/Foo";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
     foo: Example.Foo<D> | undefined;
@@ -442,18 +442,18 @@ ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 
 export const fromPointer = createFactory<Class>([ClassMixin], { types: [ex.Class] });
-"
+
 `;
 
-exports[`MixinModule generates property with automatic type cast when predicate has strict semantics: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
+exports[`MixinModule generates property with automatic type cast when predicate has strict semantics 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
     foo: Example.Foo<D> | undefined;
@@ -480,18 +480,18 @@ ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 
 export const fromPointer = createFactory<Class>([ClassMixin], { types: [ex.Class] });
-"
+
 `;
 
-exports[`MixinModule generates property with datatype-annotated literal: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
+exports[`MixinModule generates property with datatype-annotated literal 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
     foo: string | undefined;
@@ -518,18 +518,18 @@ ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 
 export const fromPointer = createFactory<Class>([ClassMixin], { types: [ex.Class] });
-"
+
 `;
 
-exports[`MixinModule wraps property name in quotes when term has non-alpha characters: toMatchSnapshot 1`] = `
-"import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from \\"@tpluscode/rdfine\\";
-import { createFactory } from \\"@tpluscode/rdfine/factory\\";
-import * as $rdf from \\"@rdf-esm/data-model\\";
-import type * as RDF from \\"rdf-js\\";
-import { ex } from \\"./namespace\\";
-import type { Initializer, ResourceNode, RdfResourceCore } from \\"@tpluscode/rdfine/RdfResource\\";
-import type { Mixin } from \\"@tpluscode/rdfine/lib/ResourceFactory\\";
-import type * as Example from \\"..\\";
+exports[`MixinModule wraps property name in quotes when term has non-alpha characters 1`] = `
+import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from "@tpluscode/rdfine";
+import { createFactory } from "@tpluscode/rdfine/factory";
+import * as $rdf from "@rdf-esm/data-model";
+import type * as RDF from "@rdfjs/types";
+import { ex } from "./namespace";
+import type { Initializer, ResourceNode, RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
+import type { Mixin } from "@tpluscode/rdfine/lib/ResourceFactory";
+import type * as Example from "..";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
     'foo-bar': string | undefined;
@@ -556,5 +556,5 @@ ClassMixin.appliesTo = ex.Class
 ClassMixin.Class = ClassImpl
 
 export const fromPointer = createFactory<Class>([ClassMixin], { types: [ex.Class] });
-"
+
 `;

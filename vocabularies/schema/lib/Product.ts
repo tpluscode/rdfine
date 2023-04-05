@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -18,12 +18,17 @@ export interface Product<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   category: Schema.Thing<D> | undefined;
   categoryLiteral: string | undefined;
   color: string | undefined;
+  countryOfAssembly: string | undefined;
+  countryOfLastProcessing: string | undefined;
+  countryOfOrigin: Schema.Country<D> | undefined;
   depth: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
   gtin: string | undefined;
   'gtin12': string | undefined;
   'gtin13': string | undefined;
   'gtin14': string | undefined;
   'gtin8': string | undefined;
+  hasEnergyConsumptionDetails: Schema.EnergyConsumptionDetails<D> | undefined;
+  hasMeasurement: Schema.QuantitativeValue<D> | undefined;
   hasMerchantReturnPolicy: Schema.MerchantReturnPolicy<D> | undefined;
   height: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
   inProductGroupWithID: string | undefined;
@@ -78,6 +83,12 @@ export function ProductMixin<Base extends Constructor>(Resource: Base): Construc
     categoryLiteral: string | undefined;
     @property.literal()
     color: string | undefined;
+    @property.literal()
+    countryOfAssembly: string | undefined;
+    @property.literal()
+    countryOfLastProcessing: string | undefined;
+    @property.resource()
+    countryOfOrigin: Schema.Country | undefined;
     @property.resource()
     depth: Schema.Distance | Schema.QuantitativeValue | undefined;
     @property.literal()
@@ -90,6 +101,10 @@ export function ProductMixin<Base extends Constructor>(Resource: Base): Construc
     'gtin14': string | undefined;
     @property.literal()
     'gtin8': string | undefined;
+    @property.resource()
+    hasEnergyConsumptionDetails: Schema.EnergyConsumptionDetails | undefined;
+    @property.resource()
+    hasMeasurement: Schema.QuantitativeValue | undefined;
     @property.resource()
     hasMerchantReturnPolicy: Schema.MerchantReturnPolicy | undefined;
     @property.resource()

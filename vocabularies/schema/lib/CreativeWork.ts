@@ -1,7 +1,7 @@
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
-import type * as RDF from 'rdf-js';
+import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
@@ -22,6 +22,7 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   acquireLicensePage: Schema.CreativeWork<D> | undefined;
   aggregateRating: Schema.AggregateRating<D> | undefined;
   alternativeHeadline: string | undefined;
+  archivedAt: Schema.WebPage<D> | undefined;
   assesses: string | undefined;
   associatedMedia: Schema.MediaObject<D> | undefined;
   audience: Schema.Audience<D> | undefined;
@@ -41,11 +42,14 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   contentReferenceTime: Date | undefined;
   contributor: Schema.Organization<D> | Schema.Person<D> | undefined;
   copyrightHolder: Schema.Organization<D> | Schema.Person<D> | undefined;
+  copyrightNotice: string | undefined;
   copyrightYear: number | undefined;
   correction: Schema.CorrectionComment<D> | undefined;
   correctionLiteral: string | undefined;
+  countryOfOrigin: Schema.Country<D> | undefined;
   creativeWorkStatus: string | undefined;
   creator: Schema.Organization<D> | Schema.Person<D> | undefined;
+  creditText: string | undefined;
   dateCreated: Date | undefined;
   dateModified: Date | undefined;
   datePublished: Date | undefined;
@@ -74,21 +78,23 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   inLanguageLiteral: string | undefined;
   interactionStatistic: Schema.InteractionCounter<D> | undefined;
   interactivityType: string | undefined;
+  interpretedAsClaim: Schema.Claim<D> | undefined;
   isAccessibleForFree: boolean | undefined;
   isBasedOn: Schema.CreativeWork<D> | Schema.Product<D> | undefined;
   isBasedOnUrl: Schema.CreativeWork<D> | Schema.Product<D> | undefined;
   isFamilyFriendly: boolean | undefined;
   isPartOf: Schema.CreativeWork<D> | undefined;
   keywords: string | undefined;
+  keywordsTerm: RDF.NamedNode | undefined;
   learningResourceType: string | undefined;
   license: Schema.CreativeWork<D> | undefined;
   locationCreated: Schema.Place<D> | undefined;
   mainEntity: Schema.Thing<D> | undefined;
   maintainer: Schema.Organization<D> | Schema.Person<D> | undefined;
   material: Schema.Product<D> | undefined;
-  materialLiteral: string | undefined;
   materialExtent: Schema.QuantitativeValue<D> | undefined;
   materialExtentLiteral: string | undefined;
+  materialLiteral: string | undefined;
   mentions: Schema.Thing<D> | undefined;
   offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
   pattern: string | undefined;
@@ -160,6 +166,8 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Con
     aggregateRating: Schema.AggregateRating | undefined;
     @property.literal()
     alternativeHeadline: string | undefined;
+    @property.resource()
+    archivedAt: Schema.WebPage | undefined;
     @property.literal()
     assesses: string | undefined;
     @property.resource()
@@ -198,16 +206,22 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Con
     contributor: Schema.Organization | Schema.Person | undefined;
     @property.resource()
     copyrightHolder: Schema.Organization | Schema.Person | undefined;
+    @property.literal()
+    copyrightNotice: string | undefined;
     @property.literal({ type: Number })
     copyrightYear: number | undefined;
     @property.resource()
     correction: Schema.CorrectionComment | undefined;
     @property.literal({ path: schema.correction })
     correctionLiteral: string | undefined;
+    @property.resource()
+    countryOfOrigin: Schema.Country | undefined;
     @property.literal()
     creativeWorkStatus: string | undefined;
     @property.resource()
     creator: Schema.Organization | Schema.Person | undefined;
+    @property.literal()
+    creditText: string | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateCreated: Date | undefined;
     @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
@@ -264,6 +278,8 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Con
     interactionStatistic: Schema.InteractionCounter | undefined;
     @property.literal()
     interactivityType: string | undefined;
+    @property.resource()
+    interpretedAsClaim: Schema.Claim | undefined;
     @property.literal({ type: Boolean })
     isAccessibleForFree: boolean | undefined;
     @property.resource()
@@ -276,6 +292,8 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Con
     isPartOf: Schema.CreativeWork | undefined;
     @property.literal()
     keywords: string | undefined;
+    @property({ path: schema.keywords })
+    keywordsTerm: RDF.NamedNode | undefined;
     @property.literal()
     learningResourceType: string | undefined;
     @property.resource()
@@ -288,12 +306,12 @@ export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Con
     maintainer: Schema.Organization | Schema.Person | undefined;
     @property.resource()
     material: Schema.Product | undefined;
-    @property.literal({ path: schema.material })
-    materialLiteral: string | undefined;
     @property.resource()
     materialExtent: Schema.QuantitativeValue | undefined;
     @property.literal({ path: schema.materialExtent })
     materialExtentLiteral: string | undefined;
+    @property.literal({ path: schema.material })
+    materialLiteral: string | undefined;
     @property.resource()
     mentions: Schema.Thing | undefined;
     @property.resource()

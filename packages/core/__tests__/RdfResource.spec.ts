@@ -1,6 +1,6 @@
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { NamedNode, Term, Literal } from 'rdf-js'
+import type { NamedNode, Term, Literal } from '@rdfjs/types'
 import {
   defaultGraph,
   namedNode,
@@ -16,10 +16,11 @@ import {
   dcterms,
   rdfs,
   sh,
-} from '@tpluscode/rdf-ns-builders'
+} from '@tpluscode/rdf-ns-builders/loose'
 import RdfResource, { Initializer, RdfResourceCore, ResourceNode } from '../RdfResource'
 import { parse, ex } from './_helpers'
 import { Constructor, crossBoundaries, namespace, property, ResourceFactory } from '../index'
+import * as initialize from '../initializer'
 
 describe('RdfResource', () => {
   describe('constructor', () => {
@@ -187,6 +188,27 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
       interface Resource extends RdfResource {
         name: string
+      }
+      class ResourceImpl extends RdfResource implements Resource {
+        @property.literal({ path: ex.name })
+        name!: string;
+      }
+      const initializer: Initializer<Resource> = {
+        name: literal('baz'),
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.name).toEqual('baz')
+    })
+
+    it('allows RDF/JS literal to initialize optional literal properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Resource extends RdfResource {
+        name: string | undefined
       }
       class ResourceImpl extends RdfResource implements Resource {
         @property.literal({ path: ex.name })
@@ -895,6 +917,109 @@ describe('RdfResource', () => {
       expect(resource.in).toStrictEqual(
         expect.arrayContaining([ex.foo, ex.bar]),
       )
+    })
+
+    it('initializes ad-hoc list using helper', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Shape extends RdfResourceCore {
+        in: Term[]
+      }
+      function ShapeMixin<Base extends Constructor>(Resource: Base) {
+        class ShapeImpl extends Resource implements Shape {
+          @property({ path: sh.in, values: 'list' })
+          in!: Term[];
+        }
+
+        return ShapeImpl
+      }
+      const factory = new ResourceFactory(RdfResource)
+
+      // when
+      const resource = factory.createEntity(node, [ShapeMixin], {
+        initializer: {
+          [sh.in.value]: initialize.rdfList(ex.foo, ex.bar),
+        },
+      })
+
+      // then
+      expect(resource.in).toStrictEqual(
+        expect.arrayContaining([ex.foo, ex.bar]),
+      )
+    })
+
+    it('initializes empty ad-hoc list using helper', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Shape extends RdfResourceCore {
+        in: Term[]
+      }
+      function ShapeMixin<Base extends Constructor>(Resource: Base) {
+        class ShapeImpl extends Resource implements Shape {
+          @property({ path: sh.in, values: 'list' })
+          in!: Term[];
+        }
+
+        return ShapeImpl
+      }
+      const factory = new ResourceFactory(RdfResource)
+
+      // when
+      const resource = factory.createEntity(node, [ShapeMixin], {
+        initializer: {
+          [sh.in.value]: initialize.rdfList(),
+        },
+      })
+
+      // then
+      expect(resource.in).toStrictEqual([])
+    })
+
+    describe('with curried factory', () => {
+      it('blank node initializing Term property', () => {
+        // given
+        const node = cf({ dataset: $rdf.dataset() }).blankNode()
+        interface TestResource extends RdfResourceCore {
+          child?: Term
+        }
+        function TestMixin<Base extends Constructor>(Resource: Base) {
+          class Impl extends Resource implements TestResource {
+            @property({ path: ex.child })
+            child!: Term;
+          }
+
+          return Impl
+        }
+        TestMixin.shouldApply = true
+        const factory = new ResourceFactory(RdfResource)
+        factory.addMixin(TestMixin)
+
+        // when
+        const resource = factory.createEntity<TestResource>(node, [TestMixin], {
+          initializer: {
+            child: (graph) => factory.createEntity(graph.blankNode('foo')),
+          },
+        })
+
+        // then
+        expect(resource.child).toEqual($rdf.blankNode('foo'))
+      })
+
+      it('named node initializing URI property', () => {
+        // given
+        const node = cf({ dataset: $rdf.dataset() }).blankNode()
+        const factory = new ResourceFactory(RdfResource)
+
+        // when
+        const resource = factory.createEntity(node, [], {
+          initializer: {
+            [ex.foo.value]: (graph: AnyPointer) => graph.namedNode('foo'),
+          },
+        })
+
+        // then
+        expect(resource.pointer.out(ex.foo).term).toEqual($rdf.namedNode('foo'))
+      })
     })
   })
 
@@ -2072,6 +2197,46 @@ describe('RdfResource', () => {
             "type": "@type",
           },
           "foo": Array [
+            "foo",
+            Object {
+              "@language": "en",
+              "@value": "bar",
+            },
+            Object {
+              "@type": "http://www.w3.org/2001/XMLSchema#anyType",
+              "@value": "bar",
+            },
+          ],
+          "id": "john",
+        }
+      `)
+    })
+
+    it('serializes RDF list of literals (without mixin)', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const node = cf({ dataset })
+        .namedNode('john')
+        .addList(ex.foo, [
+          'foo',
+          $rdf.literal('bar', 'en'),
+          $rdf.literal('bar', xsd.anyType),
+        ])
+
+      const resource = RdfResource.factory.createEntity(node)
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).toBeValidJsonLd()
+      expect(json).toMatchInlineSnapshot(`
+        Object {
+          "@context": Object {
+            "id": "@id",
+            "type": "@type",
+          },
+          "http://example.com/foo": Array [
             "foo",
             Object {
               "@language": "en",

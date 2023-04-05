@@ -1,6 +1,6 @@
 import { AnyPointer, GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import { DatasetCore, Term } from 'rdf-js'
+import type { NamedNode, DatasetCore, Term } from '@rdfjs/types'
 import type { RdfResource } from '../RdfResource'
 
 function isLast(node: AnyPointer): boolean {
@@ -44,4 +44,26 @@ export function enumerateList<T, D extends DatasetCore = DatasetCore>(parent: Rd
   }
 
   return items
+}
+
+type Iri<N> = N extends NamedNode<infer I> ? I : never
+
+type rdfFirst = Iri<typeof rdf.first>
+type rdfRest = Iri<typeof rdf.rest>
+type ListInit<T> = { [key in rdfFirst]: T} & { [key in rdfRest]: ListInit<T> | typeof rdf.nil }
+
+export function initialize<T>(...items: T[]): ListInit<T> | typeof rdf.nil {
+  return items.reduceRight((prev: ListInit<T> | null, item): ListInit<T> => {
+    if (!prev) {
+      return {
+        [rdf.first.value]: item,
+        [rdf.rest.value]: rdf.nil,
+      }
+    }
+
+    return {
+      [rdf.first.value]: item,
+      [rdf.rest.value]: prev,
+    }
+  }, null) || rdf.nil
 }

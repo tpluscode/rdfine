@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StructuredValueMixin } from '../lib/StructuredValue';
+import { CountryMixin } from '../lib/Country';
 import { GeoCoordinatesMixin } from '../lib/GeoCoordinates';
 import { PostalAddressMixin } from '../lib/PostalAddress';
-import { CountryMixin } from '../lib/Country';
+import { StructuredValueMixin } from '../lib/StructuredValue';
 
 export const GeoCoordinatesBundle = [
-  StructuredValueMixin as Mixin,
+  CountryMixin as Mixin,
   GeoCoordinatesMixin as Mixin,
   PostalAddressMixin as Mixin,
-  CountryMixin as Mixin];
+  StructuredValueMixin as Mixin];

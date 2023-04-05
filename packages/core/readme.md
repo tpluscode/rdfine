@@ -95,7 +95,7 @@ closely matching the actual quad data.
 ```typescript
 // Person.ts
 import { Constructor, namespace, property, RdfResource } from '@tplusode/rdfine'
-import { Term } from 'rdf-js'
+import { Term } from '@rdfjs/types'
 import { namedNode } from 'rdf-data-model'
 
 // TS: define an interface for your object model
@@ -155,7 +155,7 @@ Instead of directly creating resource types, which would require deciding up-fro
 mixins to add to the constructed class, a factory can be used.
 
 ```typescript
-import { DatasetCore } from 'rdf-js'
+import { DatasetCore } from '@rdfjs/types'
 import { namedNode } from 'rdf-data-model'
 import { RdfResourceImpl } from '@tpluscode/rdfine'
 import { Person, PersonMixin } from './Person'

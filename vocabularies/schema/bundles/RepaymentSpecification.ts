@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { StructuredValueMixin } from '../lib/StructuredValue';
-import { RepaymentSpecificationMixin } from '../lib/RepaymentSpecification';
 import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
+import { RepaymentSpecificationMixin } from '../lib/RepaymentSpecification';
+import { StructuredValueMixin } from '../lib/StructuredValue';
 
 export const RepaymentSpecificationBundle = [
-  StructuredValueMixin as Mixin,
+  MonetaryAmountMixin as Mixin,
   RepaymentSpecificationMixin as Mixin,
-  MonetaryAmountMixin as Mixin];
+  StructuredValueMixin as Mixin];

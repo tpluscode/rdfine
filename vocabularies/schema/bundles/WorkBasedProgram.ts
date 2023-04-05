@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { EducationalOccupationalProgramMixin } from '../lib/EducationalOccupationalProgram';
-import { WorkBasedProgramMixin } from '../lib/WorkBasedProgram';
 import { CategoryCodeMixin } from '../lib/CategoryCode';
+import { EducationalOccupationalProgramMixin } from '../lib/EducationalOccupationalProgram';
 import { MonetaryAmountDistributionMixin } from '../lib/MonetaryAmountDistribution';
+import { WorkBasedProgramMixin } from '../lib/WorkBasedProgram';
 
 export const WorkBasedProgramBundle = [
-  EducationalOccupationalProgramMixin as Mixin,
-  WorkBasedProgramMixin as Mixin,
   CategoryCodeMixin as Mixin,
-  MonetaryAmountDistributionMixin as Mixin];
+  EducationalOccupationalProgramMixin as Mixin,
+  MonetaryAmountDistributionMixin as Mixin,
+  WorkBasedProgramMixin as Mixin];

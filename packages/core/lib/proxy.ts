@@ -1,8 +1,9 @@
-import { Literal, Term } from 'rdf-js'
-import type { GraphPointer } from 'clownface'
+import type { Term } from '@rdfjs/types'
+import type { GraphPointer, MultiPointer } from 'clownface'
 import type { RdfResource, RdfResourceCore } from '../RdfResource'
 import * as rdfList from './rdf-list'
 import type { ResourceIndexer } from './ResourceFactory'
+import type { Factory } from '../factory'
 
 function nodeToValue(target: RdfResource) {
   const fromTerm = (obj: GraphPointer): any => {
@@ -22,6 +23,8 @@ function nodeToValue(target: RdfResource) {
   return fromTerm
 }
 
+type SetValue<T extends RdfResourceCore<any>> = Factory<T> | T | Term | MultiPointer | null
+
 export function createProxy<T extends RdfResourceCore<any>>(resource: T): T & ResourceIndexer<T> {
   return new Proxy(resource, {
     get(target, property) {
@@ -40,7 +43,7 @@ export function createProxy<T extends RdfResourceCore<any>>(resource: T): T & Re
       return results.length === 1 ? results[0] : results
     },
 
-    set(target: T, property: string | number | symbol, value: T | Literal | Array<T | Literal | null> | null): boolean {
+    set(target: T, property: string | number | symbol, value: SetValue<T> | Array<SetValue<T>>): boolean {
       if (property in target || typeof property === 'symbol') {
         (target as any)[property.toString()] = value
         return true
@@ -53,16 +56,20 @@ export function createProxy<T extends RdfResourceCore<any>>(resource: T): T & Re
       const values = Array.isArray(value) ? value : [value]
       const valueNodes = values
         .reduce((values, value) => {
+          if (typeof value === 'function') {
+            value = value(target.pointer)
+          }
+
           if (!value || typeof value !== 'object') {
             return values
           }
 
-          if (value && 'termType' in value) {
+          if (value && ('termType' in value || '_context' in value)) {
             return [...values, value]
           }
 
           return [...values, value.id]
-        }, [] as Term[])
+        }, [] as (Term | MultiPointer)[])
 
       const predicate = target.pointer.namedNode(property.toString())
       target.pointer.deleteOut(predicate)
