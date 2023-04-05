@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.42
+
+### Patch Changes
+
+- e07c0889: Initializing literal properties triggered design-time type error when initialised from a plain JS (string, number ,etc)
+
 ## 0.5.41
 
 ### Patch Changes
