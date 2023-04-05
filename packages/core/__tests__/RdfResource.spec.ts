@@ -318,7 +318,7 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.age).toEqual(literal('10', xsd.integer))
+      expect(resource.age).toBeUndefined()
     })
 
     it('allows literal to initialize optional raw literal properties', () => {
