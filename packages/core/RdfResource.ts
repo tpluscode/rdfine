@@ -331,15 +331,17 @@ export type Initializer<T> = Omit<{
     ? T[P] | InitialLiteral
     : T[P] extends (RdfResourceCore | undefined)
       ? InitializeSingle<T[P]>
-      : T[P] extends Term
-        ? T[P] | InitialNode<T[P]>
-        : Extract<T[P], Array<any>> extends (infer U)[]
-          ? U extends RdfResourceCore
-            ? InitializeArray<U> | InitializeSingle<U>
-            : U extends Term
-              ? T[P] | (InitialNode<Term> | InitializeSingle<RdfResourceCore>)[]
-              : T[P] | InitialLiteral | InitialLiteral[]
-          : unknown
+      : T[P] extends Literal
+        ? InitialLiteral | string | number | boolean
+        : T[P] extends Term
+          ? T[P] | InitialNode<T[P]>
+          : Extract<T[P], Array<any>> extends (infer U)[]
+            ? U extends RdfResourceCore
+              ? InitializeArray<U> | InitializeSingle<U>
+              : U extends Term
+                ? T[P] | (InitialNode<Term> | InitializeSingle<RdfResourceCore>)[]
+                : T[P] | InitialLiteral | InitialLiteral[]
+            : unknown
 }, keyof RdfResource> & BaseInitializer
 
 // eslint-disable-next-line @typescript-eslint/ban-types
