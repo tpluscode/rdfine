@@ -1,4 +1,4 @@
-import { Term } from '@rdfjs/types'
+import type { Term } from '@rdfjs/types'
 import type { RdfResourceCore } from '../../../RdfResource'
 import { EdgeTraversalFactory, PropRef } from '../../path'
 import literalPropertyDecorator, { LiteralValues } from '../property/literal'

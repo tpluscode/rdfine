@@ -1,5 +1,5 @@
 import { RdfResourceCore } from '../../../RdfResource'
-import { Literal, NamedNode, Term } from '@rdfjs/types'
+import type { Literal, NamedNode, Term } from '@rdfjs/types'
 import { fromLiteral, toLiteral } from '../../conversion'
 import type { AccessorOptions } from './index'
 import { propertyDecorator, ObjectOrFactory } from './decoratorFactory'

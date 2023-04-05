@@ -1,5 +1,5 @@
 import { AnyPointer, GraphPointer } from 'clownface'
-import { BlankNode, NamedNode } from '@rdfjs/types'
+import type { BlankNode, NamedNode } from '@rdfjs/types'
 import type { Initializer, RdfResourceCore, ResourceIdentifier } from '../RdfResource'
 
 export function getPointer(graph: AnyPointer, id?: ResourceIdentifier | string): GraphPointer<BlankNode | NamedNode> {

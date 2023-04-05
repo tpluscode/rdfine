@@ -225,6 +225,75 @@ describe('RdfResource', () => {
       expect(resource.name).toEqual('baz')
     })
 
+    it('allows string to initialize raw literal properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+
+      interface Resource extends RdfResource {
+        name: Literal
+      }
+
+      class ResourceImpl extends RdfResource implements Resource {
+        @property({ path: ex.name })
+        name!: Literal;
+      }
+
+      const initializer: Initializer<Resource> = {
+        name: 'baz',
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.name).toEqual(literal('baz'))
+    })
+
+    it('allows number to initialize raw literal properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+
+      interface Resource extends RdfResource {
+        age: Literal
+      }
+
+      class ResourceImpl extends RdfResource implements Resource {
+        @property({ path: ex.name })
+        age!: Literal;
+      }
+
+      const initializer: Initializer<Resource> = {
+        age: 10,
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.age).toEqual(literal('10', xsd.integer))
+    })
+
+    it('allows RDF/JS literal to initialize optional literal properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+      interface Resource extends RdfResource {
+        name: string | undefined
+      }
+      class ResourceImpl extends RdfResource implements Resource {
+        @property.literal({ path: ex.name })
+        name!: string;
+      }
+      const initializer: Initializer<Resource> = {
+        name: literal('baz'),
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.name).toEqual('baz')
+    })
+
     it('allows RDF/JS literal to initialize literal array properties', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() }).blankNode()

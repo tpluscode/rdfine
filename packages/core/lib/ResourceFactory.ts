@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { DatasetCore, Literal, NamedNode, Term } from '@rdfjs/types'
+import type { DatasetCore, Literal, NamedNode, Term } from '@rdfjs/types'
 import type { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
