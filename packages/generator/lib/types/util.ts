@@ -1,5 +1,5 @@
 import { GraphPointer } from 'clownface'
-import { TypeMap } from '../types'
+import { TypeMap } from '../types/index.js'
 import { rdf, rdfs, schema } from '@tpluscode/rdf-ns-builders'
 
 export function isDatatype(term: GraphPointer, typeMappings: TypeMap): boolean {

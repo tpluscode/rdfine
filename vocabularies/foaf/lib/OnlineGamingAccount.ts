@@ -2,11 +2,11 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { foaf } from './namespace';
+import { foaf } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Foaf from '..';
-import { OnlineAccountMixin } from './OnlineAccount';
+import type * as Foaf from '../index.js';
+import { OnlineAccountMixin } from './OnlineAccount.js';
 
 export interface OnlineGamingAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.OnlineAccount<D>, RdfResource<D> {
 }

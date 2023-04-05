@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DistanceMixin } from '../lib/Distance';
-import { MoveActionMixin } from '../lib/MoveAction';
-import { TravelActionMixin } from '../lib/TravelAction';
+import { DistanceMixin } from '../lib/Distance.js';
+import { MoveActionMixin } from '../lib/MoveAction.js';
+import { TravelActionMixin } from '../lib/TravelAction.js';
 
 export const TravelActionBundle = [
   DistanceMixin as Mixin,

@@ -1,11 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CollectionMixin } from '../lib/Collection';
-import { IriTemplateMixin } from '../lib/IriTemplate';
-import { OperationMixin } from '../lib/Operation';
-import { ResourceMixin } from '../lib/Resource';
+import { IriTemplateMixin } from '../lib/IriTemplate.js';
+import { OperationMixin } from '../lib/Operation.js';
+import { ResourceMixin } from '../lib/Resource.js';
 
 export const ResourceBundle = [
-  CollectionMixin as Mixin, // DO NOT REMOVE
   IriTemplateMixin as Mixin,
   OperationMixin as Mixin,
   ResourceMixin as Mixin];

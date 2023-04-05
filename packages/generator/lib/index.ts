@@ -3,18 +3,18 @@ import { Debugger } from 'debug'
 import { Stream } from '@rdfjs/types'
 import rdf from 'rdf-ext'
 import nsBuilder from '@rdfjs/namespace'
-import { expand, prefixes } from '@zazuko/rdf-vocabularies'
+import prefixes, { expand } from '@zazuko/prefixes'
 import { IndentationText, Project, QuoteKind, SourceFile } from 'ts-morph'
-import FileSystem from './util/FileSystem'
-import * as generator from './generator'
-import * as EnumerationGenerator from './EnumerationGenerator'
-import { EnumerationType, ExternalResourceType, ResourceType, TypeMap, TypeMetaCollection } from './types'
-import * as MixinGenerator from './MixinGenerator'
-import * as ExtensionMixinGenerator from './ExtensionMixinGenerator'
-import * as factories from './types/metaFactories'
-import { toUpperInitial } from './util/string'
-import { expandMapKeys } from './util/overrideMap'
-import { DatatypeName } from './types/wellKnownDatatypes'
+import FileSystem from './util/FileSystem.js'
+import * as generator from './generator.js'
+import * as EnumerationGenerator from './EnumerationGenerator/index.js'
+import { EnumerationType, ExternalResourceType, ResourceType, TypeMap, TypeMetaCollection } from './types/index.js'
+import * as MixinGenerator from './MixinGenerator/index.js'
+import * as ExtensionMixinGenerator from './ExtensionMixinGenerator/index.js'
+import * as factories from './types/metaFactories.js'
+import { toUpperInitial } from './util/string.js'
+import { expandMapKeys } from './util/overrideMap.js'
+import { DatatypeName } from './types/wellKnownDatatypes.js'
 
 type PropertyOverrides = Record<string, {
   values?: 'array' | 'list' | 'single' | Array<'array' | 'list' | 'single'>
@@ -57,7 +57,7 @@ interface GeneratorOptions {
   namespace: string
   outDir: string
   prefix: string
-  exclude: string[]
+  exclude?: string[]
   types?: Record<string, TypeOverride>
   properties?: PropertyOverrides
 }
@@ -79,7 +79,7 @@ export async function generate(options: GeneratorOptions, logger: Debugger) {
   }
 
   if (!prefixes[options.prefix]) {
-    throw new Error(`The prefix ${options.prefix} is not known to @zazuko/rdf-vocabularies. It has to provided as parameter`)
+    throw new Error(`The prefix ${options.prefix} is not known to @zazuko/prefixes. It has to provided as parameter`)
   }
 
   const dataset = await rdf.dataset().import(options.stream)
@@ -95,7 +95,7 @@ export async function generate(options: GeneratorOptions, logger: Debugger) {
   })
 
   const namespace = nsBuilder(prefixes[options.prefix])
-  const excludedTerms = options.exclude
+  const excludedTerms = (options.exclude || [])
     .map(excludedTerm => {
       return excludedTerm.includes(':') ? rdf.namedNode(expand(excludedTerm)) : namespace(excludedTerm)
     })

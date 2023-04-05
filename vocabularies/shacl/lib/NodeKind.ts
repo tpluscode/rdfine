@@ -1,4 +1,4 @@
-import { sh } from './namespace';
+import { sh } from './namespace.js';
 
 const values = {
   BlankNode: sh.BlankNode,

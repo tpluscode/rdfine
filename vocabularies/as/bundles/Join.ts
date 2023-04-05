@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActivityMixin } from '../lib/Activity';
-import { JoinMixin } from '../lib/Join';
+import { ActivityMixin } from '../lib/Activity.js';
+import { JoinMixin } from '../lib/Join.js';
 
 export const JoinBundle = [
   ActivityMixin as Mixin,

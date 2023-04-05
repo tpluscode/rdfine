@@ -2,12 +2,12 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CategoryCodeMixin } from './CategoryCode';
-import { MedicalIntangibleMixin } from './MedicalIntangible';
+import type * as Schema from '../index.js';
+import { CategoryCodeMixin } from './CategoryCode.js';
+import { MedicalIntangibleMixin } from './MedicalIntangible.js';
 
 export interface MedicalCode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CategoryCode<D>, Schema.MedicalIntangible<D>, RdfResource<D> {
   codeValue: string | undefined;

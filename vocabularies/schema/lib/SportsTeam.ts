@@ -2,11 +2,11 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { SportsOrganizationMixin } from './SportsOrganization';
+import type * as Schema from '../index.js';
+import { SportsOrganizationMixin } from './SportsOrganization.js';
 
 export interface SportsTeam<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SportsOrganization<D>, RdfResource<D> {
   athlete: Schema.Person<D> | undefined;

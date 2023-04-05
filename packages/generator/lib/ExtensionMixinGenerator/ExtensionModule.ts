@@ -1,14 +1,14 @@
 import { NamespaceDeclarationKind, Project, SourceFile } from 'ts-morph'
 import { GraphPointer } from 'clownface'
-import { shrink } from '@zazuko/rdf-vocabularies'
-import { ExternalResourceType, TypeMetaCollection } from '../types'
-import { Context } from '../index'
-import { JavascriptProperty } from '../property/JsProperties'
-import { PropertyWriter } from '../property/PropertyWriter'
-import { MixinModuleBase } from '../MixinGenerator/MixinModuleBase'
+import { shrink } from '@zazuko/prefixes'
+import { ExternalResourceType, TypeMetaCollection } from '../types/index.js'
+import { Context } from '../index.js'
+import { JavascriptProperty } from '../property/JsProperties.js'
+import { PropertyWriter } from '../property/PropertyWriter.js'
+import { MixinModuleBase } from '../MixinGenerator/MixinModuleBase.js'
 
 export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
-  properties: JavascriptProperty[];
+  properties: JavascriptProperty[]
   extended: { prefix: string; term: string }
   interfaceName: string
 
@@ -128,11 +128,11 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
     })
     mixinFile.addImportDeclaration({
       namedImports: [context.prefix],
-      moduleSpecifier: '../../lib/namespace',
+      moduleSpecifier: '../../lib/namespace.js',
     })
     mixinFile.addImportDeclaration({
       namespaceImport: context.defaultExport,
-      moduleSpecifier: '../..',
+      moduleSpecifier: '../../index.js',
       isTypeOnly: true,
     })
 
@@ -151,12 +151,12 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
       .forEach(imported => {
         if (imported.type === 'Resource') {
           mixinFile.addImportDeclaration({
-            moduleSpecifier: './' + imported.localName,
+            moduleSpecifier: `./${imported.localName}.js`,
             namedImports: [imported.mixinName],
           })
         } else {
           const superImport = mixinFile.addImportDeclaration({
-            moduleSpecifier: imported.module,
+            moduleSpecifier: `${imported.module}.js`,
           })
 
           superImport.addNamedImport({

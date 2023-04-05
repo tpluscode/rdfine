@@ -1,4 +1,4 @@
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 
 const values = {
   ReservationCancelled: schema.ReservationCancelled,

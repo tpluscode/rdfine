@@ -1,16 +1,16 @@
-import '../extensions/wgs/SpatialThing';
-import { SpatialThingMixinEx } from '../extensions/wgs/SpatialThing';
+import '../extensions/wgs/SpatialThing.js';
+import { SpatialThingMixinEx } from '../extensions/wgs/SpatialThing.js';
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { foaf } from './namespace';
+import { foaf } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Foaf from '..';
+import type * as Foaf from '../index.js';
 import type * as Wgs from '@rdfine/wgs';
-import { AgentMixin } from './Agent';
-import { SpatialThingMixin as WgsSpatialThingMixin } from '@rdfine/wgs/lib/SpatialThing';
+import { AgentMixin } from './Agent.js';
+import { SpatialThingMixin as WgsSpatialThingMixin } from '@rdfine/wgs/lib/SpatialThing.js';
 
 export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Agent<D>, Wgs.SpatialThing<D>, RdfResource<D> {
   currentProject: RDF.NamedNode | undefined;

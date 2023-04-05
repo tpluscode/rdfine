@@ -1,1 +1,1 @@
-export { SpatialThingMixinEx } from './wgs/SpatialThing';
+export { SpatialThingMixinEx } from './wgs/SpatialThing.js';

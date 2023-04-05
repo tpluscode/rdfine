@@ -2,11 +2,11 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { ClipMixin } from './Clip';
+import type * as Schema from '../index.js';
+import { ClipMixin } from './Clip.js';
 
 export interface TVClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Clip<D>, RdfResource<D> {
   partOfTVSeries: Schema.TVSeries<D> | undefined;

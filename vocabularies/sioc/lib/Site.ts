@@ -2,11 +2,11 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { sioc } from './namespace';
+import { sioc } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Sioc from '..';
-import { SpaceMixin } from './Space';
+import type * as Sioc from '../index.js';
+import { SpaceMixin } from './Space.js';
 
 export interface Site<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc.Space<D>, RdfResource<D> {
   'has_administrator': Sioc.UserAccount<D> | undefined;

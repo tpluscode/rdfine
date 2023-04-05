@@ -3,7 +3,7 @@ import rdf from 'rdf-ext'
 import Parser from '@rdfjs/parser-n3'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import ns from '@rdf-esm/namespace'
-import { prefixes } from '@zazuko/rdf-vocabularies'
+import prefixes from '@zazuko/prefixes'
 import { TurtleTemplateResult } from '@tpluscode/rdf-string'
 
 const parser = new Parser()

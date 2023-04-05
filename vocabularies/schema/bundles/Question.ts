@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AnswerMixin } from '../lib/Answer';
-import { CommentMixin } from '../lib/Comment';
-import { ItemListMixin } from '../lib/ItemList';
-import { QuestionMixin } from '../lib/Question';
+import { AnswerMixin } from '../lib/Answer.js';
+import { CommentMixin } from '../lib/Comment.js';
+import { ItemListMixin } from '../lib/ItemList.js';
+import { QuestionMixin } from '../lib/Question.js';
 
 export const QuestionBundle = [
   AnswerMixin as Mixin,

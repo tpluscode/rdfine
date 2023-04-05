@@ -1,7 +1,7 @@
 import { Literal, NamedNode } from '@rdfjs/types'
 import { AnyPointer, GraphPointer } from 'clownface'
-import { Context } from '../index'
-import { TypeMeta, TypeMetaCollection, TypeMetaFactory } from './index'
+import { Context } from '../index.js'
+import { TypeMeta, TypeMetaCollection, TypeMetaFactory } from './index.js'
 
 interface TypeMapInit {
   excluded: NamedNode[]

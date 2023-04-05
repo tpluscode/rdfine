@@ -1,23 +1,23 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
-import { AggregateRatingMixin } from '../lib/AggregateRating';
-import { AudienceMixin } from '../lib/Audience';
-import { BrandMixin } from '../lib/Brand';
-import { DemandMixin } from '../lib/Demand';
-import { GeoShapeMixin } from '../lib/GeoShape';
-import { ImageObjectMixin } from '../lib/ImageObject';
-import { IntangibleMixin } from '../lib/Intangible';
-import { OfferCatalogMixin } from '../lib/OfferCatalog';
-import { OfferMixin } from '../lib/Offer';
-import { OpeningHoursSpecificationMixin } from '../lib/OpeningHoursSpecification';
-import { OrganizationMixin } from '../lib/Organization';
-import { PersonMixin } from '../lib/Person';
-import { PlaceMixin } from '../lib/Place';
-import { ProductMixin } from '../lib/Product';
-import { ReviewMixin } from '../lib/Review';
-import { ServiceChannelMixin } from '../lib/ServiceChannel';
-import { ServiceMixin } from '../lib/Service';
-import { ThingMixin } from '../lib/Thing';
+import { AdministrativeAreaMixin } from '../lib/AdministrativeArea.js';
+import { AggregateRatingMixin } from '../lib/AggregateRating.js';
+import { AudienceMixin } from '../lib/Audience.js';
+import { BrandMixin } from '../lib/Brand.js';
+import { DemandMixin } from '../lib/Demand.js';
+import { GeoShapeMixin } from '../lib/GeoShape.js';
+import { ImageObjectMixin } from '../lib/ImageObject.js';
+import { IntangibleMixin } from '../lib/Intangible.js';
+import { OfferCatalogMixin } from '../lib/OfferCatalog.js';
+import { OfferMixin } from '../lib/Offer.js';
+import { OpeningHoursSpecificationMixin } from '../lib/OpeningHoursSpecification.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PersonMixin } from '../lib/Person.js';
+import { PlaceMixin } from '../lib/Place.js';
+import { ProductMixin } from '../lib/Product.js';
+import { ReviewMixin } from '../lib/Review.js';
+import { ServiceChannelMixin } from '../lib/ServiceChannel.js';
+import { ServiceMixin } from '../lib/Service.js';
+import { ThingMixin } from '../lib/Thing.js';
 
 export const ServiceBundle = [
   AdministrativeAreaMixin as Mixin,

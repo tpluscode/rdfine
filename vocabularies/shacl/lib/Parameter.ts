@@ -2,11 +2,11 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { sh } from './namespace';
+import { sh } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Sh from '..';
-import { PropertyShapeMixin } from './PropertyShape';
+import type * as Sh from '../index.js';
+import { PropertyShapeMixin } from './PropertyShape.js';
 
 export interface Parameter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.PropertyShape<D>, RdfResource<D> {
   optional: boolean | undefined;

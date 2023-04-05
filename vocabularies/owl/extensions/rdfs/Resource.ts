@@ -3,12 +3,12 @@ import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rdfs } from '@tpluscode/rdf-ns-builders';
-import { owl } from '../../lib/namespace';
-import type * as Owl from '../..';
-import type * as Rdf from '@rdfine/rdf';
-import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
-import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List';
+import { owl } from '../../lib/namespace.js';
+import type * as Owl from '../../index.js';
+import type * as Rdf from '@rdfine/rdf.js';
+import type * as Rdfs from '@rdfine/rdfs.js';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource.js';
+import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List.js';
 
 interface ResourceEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   annotatedProperty: Rdfs.Resource<D> | undefined;

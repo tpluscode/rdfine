@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CollectionMixin } from '../lib/Collection';
-import { CollectionPageMixin } from '../lib/CollectionPage';
-import { LinkMixin } from '../lib/Link';
+import { CollectionMixin } from '../lib/Collection.js';
+import { CollectionPageMixin } from '../lib/CollectionPage.js';
+import { LinkMixin } from '../lib/Link.js';
 
 export const CollectionPageBundle = [
   CollectionMixin as Mixin,

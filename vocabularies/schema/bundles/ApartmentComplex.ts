@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ApartmentComplexMixin } from '../lib/ApartmentComplex';
-import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
-import { ResidenceMixin } from '../lib/Residence';
+import { ApartmentComplexMixin } from '../lib/ApartmentComplex.js';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue.js';
+import { ResidenceMixin } from '../lib/Residence.js';
 
 export const ApartmentComplexBundle = [
   ApartmentComplexMixin as Mixin,

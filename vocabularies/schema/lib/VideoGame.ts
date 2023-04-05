@@ -2,12 +2,12 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { GameMixin } from './Game';
-import { SoftwareApplicationMixin } from './SoftwareApplication';
+import type * as Schema from '../index.js';
+import { GameMixin } from './Game.js';
+import { SoftwareApplicationMixin } from './SoftwareApplication.js';
 
 export interface VideoGame<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Game<D>, Schema.SoftwareApplication<D>, RdfResource<D> {
   actor: Schema.Person<D> | undefined;

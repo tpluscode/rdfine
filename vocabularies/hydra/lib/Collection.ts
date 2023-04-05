@@ -2,11 +2,11 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { hydra } from './namespace';
+import { hydra } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Hydra from '..';
-import { ResourceMixin } from './Resource';
+import type * as Hydra from '../index.js';
+import { ResourceMixin } from './Resource.js';
 import { CollectionExMixin } from '../extensions/CollectionEx';
 
 export interface Collection<M extends RdfResourceCore<any> = RdfResourceCore<any>, D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
@@ -31,7 +31,7 @@ class CollectionImpl extends CollectionMixin(RdfResourceImpl) {
     this.types.add(hydra.Collection)
   }
 
-  static readonly __mixins: Mixin[] = [CollectionExMixin, CollectionMixin, ResourceMixin];
+  static readonly __mixins: Mixin[] = [CollectionMixin, ResourceMixin];
 }
 CollectionMixin.appliesTo = hydra.Collection
 CollectionMixin.Class = CollectionImpl

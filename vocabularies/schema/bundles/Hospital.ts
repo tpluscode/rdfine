@@ -1,13 +1,13 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CDCPMDRecordMixin } from '../lib/CDCPMDRecord';
-import { CivicStructureMixin } from '../lib/CivicStructure';
-import { DatasetMixin } from '../lib/Dataset';
-import { EmergencyServiceMixin } from '../lib/EmergencyService';
-import { HospitalMixin } from '../lib/Hospital';
-import { MedicalOrganizationMixin } from '../lib/MedicalOrganization';
-import { MedicalProcedureMixin } from '../lib/MedicalProcedure';
-import { MedicalTestMixin } from '../lib/MedicalTest';
-import { MedicalTherapyMixin } from '../lib/MedicalTherapy';
+import { CDCPMDRecordMixin } from '../lib/CDCPMDRecord.js';
+import { CivicStructureMixin } from '../lib/CivicStructure.js';
+import { DatasetMixin } from '../lib/Dataset.js';
+import { EmergencyServiceMixin } from '../lib/EmergencyService.js';
+import { HospitalMixin } from '../lib/Hospital.js';
+import { MedicalOrganizationMixin } from '../lib/MedicalOrganization.js';
+import { MedicalProcedureMixin } from '../lib/MedicalProcedure.js';
+import { MedicalTestMixin } from '../lib/MedicalTest.js';
+import { MedicalTherapyMixin } from '../lib/MedicalTherapy.js';
 
 export const HospitalBundle = [
   CDCPMDRecordMixin as Mixin,

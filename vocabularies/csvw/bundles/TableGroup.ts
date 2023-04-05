@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DatatypeMixin } from '../lib/Datatype';
-import { DialectMixin } from '../lib/Dialect';
-import { DirectionMixin } from '../lib/Direction';
-import { SchemaMixin } from '../lib/Schema';
-import { TableGroupMixin } from '../lib/TableGroup';
-import { TableMixin } from '../lib/Table';
-import { TransformationMixin } from '../lib/Transformation';
+import { DatatypeMixin } from '../lib/Datatype.js';
+import { DialectMixin } from '../lib/Dialect.js';
+import { DirectionMixin } from '../lib/Direction.js';
+import { SchemaMixin } from '../lib/Schema.js';
+import { TableGroupMixin } from '../lib/TableGroup.js';
+import { TableMixin } from '../lib/Table.js';
+import { TransformationMixin } from '../lib/Transformation.js';
 
 export const TableGroupBundle = [
   DatatypeMixin as Mixin,

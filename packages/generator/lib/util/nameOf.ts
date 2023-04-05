@@ -1,4 +1,4 @@
-import { shrink } from '@zazuko/rdf-vocabularies'
+import { shrink } from '@zazuko/prefixes'
 import { GraphPointer } from 'clownface'
 
 const rdfineBaseNames = ['equals', 'types', 'pointer', 'unionGraphPointer', '_graphId', '_parent', 'isAnonymous', 'hasType', 'get', 'getArray', 'getBoolean', 'getString', 'getNumber', 'toJSON', '_getObjects', '_create']

@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DictionaryMixin } from '../lib/Dictionary';
-import { InsertionMixin } from '../lib/Insertion';
-import { KeyEntityPairMixin } from '../lib/KeyEntityPair';
-import { RemovalMixin } from '../lib/Removal';
+import { DictionaryMixin } from '../lib/Dictionary.js';
+import { InsertionMixin } from '../lib/Insertion.js';
+import { KeyEntityPairMixin } from '../lib/KeyEntityPair.js';
+import { RemovalMixin } from '../lib/Removal.js';
 
 export const DictionaryBundle = [
   DictionaryMixin as Mixin,

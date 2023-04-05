@@ -3,10 +3,10 @@ import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from '@tpluscode/rdf-ns-builders';
-import { dash } from '../../lib/namespace';
-import type * as Dash from '../..';
-import type * as Shacl from '@rdfine/shacl';
-import { NodeShapeMixin as ShaclNodeShapeMixin } from '@rdfine/shacl/lib/NodeShape';
+import { dash } from '../../lib/namespace.js';
+import type * as Dash from '../../index.js';
+import type * as Shacl from '@rdfine/shacl.js';
+import { NodeShapeMixin as ShaclNodeShapeMixin } from '@rdfine/shacl/lib/NodeShape.js';
 
 interface PropertyShapeEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   composite: boolean | undefined;

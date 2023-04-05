@@ -2,13 +2,12 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { hydra } from './namespace';
+import { hydra } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Hydra from '..';
+import type * as Hydra from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
-import { ResourceExMixin } from '../extensions/ResourceEx';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource.js';
 
 export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
   first: Hydra.Resource<D> | undefined;
@@ -23,7 +22,7 @@ export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
 
 export function ResourceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Resource> & RdfResourceCore> & Base {
   @namespace(hydra)
-  class ResourceClass extends ResourceExMixin(RdfsResourceMixin(Resource)) implements Partial<Resource> {
+  class ResourceClass extends RdfsResourceMixin(Resource) implements Partial<Resource> {
     @property.resource({ as: [ResourceMixin] })
     first: Hydra.Resource | undefined;
     @property.literal()
@@ -50,7 +49,7 @@ class ResourceImpl extends ResourceMixin(RdfResourceImpl) {
     this.types.add(hydra.Resource)
   }
 
-  static readonly __mixins: Mixin[] = [ResourceExMixin, ResourceMixin, RdfsResourceMixin];
+  static readonly __mixins: Mixin[] = [ResourceMixin, RdfsResourceMixin];
 }
 ResourceMixin.appliesTo = hydra.Resource
 ResourceMixin.Class = ResourceImpl

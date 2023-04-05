@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
-import { CategoryCodeMixin } from '../lib/CategoryCode';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { LegislationMixin } from '../lib/Legislation';
-import { OrganizationMixin } from '../lib/Organization';
-import { PersonMixin } from '../lib/Person';
+import { AdministrativeAreaMixin } from '../lib/AdministrativeArea.js';
+import { CategoryCodeMixin } from '../lib/CategoryCode.js';
+import { CreativeWorkMixin } from '../lib/CreativeWork.js';
+import { LegislationMixin } from '../lib/Legislation.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PersonMixin } from '../lib/Person.js';
 
 export const LegislationBundle = [
   AdministrativeAreaMixin as Mixin,

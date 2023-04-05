@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PlanActionMixin } from '../lib/PlanAction';
-import { ScheduleActionMixin } from '../lib/ScheduleAction';
+import { PlanActionMixin } from '../lib/PlanAction.js';
+import { ScheduleActionMixin } from '../lib/ScheduleAction.js';
 
 export const ScheduleActionBundle = [
   PlanActionMixin as Mixin,

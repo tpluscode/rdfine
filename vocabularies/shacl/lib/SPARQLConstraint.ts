@@ -2,11 +2,11 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { sh } from './namespace';
+import { sh } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Sh from '..';
-import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable';
+import type * as Sh from '../index.js';
+import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable.js';
 
 export interface SPARQLConstraint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLSelectExecutable<D>, RdfResource<D> {
 }

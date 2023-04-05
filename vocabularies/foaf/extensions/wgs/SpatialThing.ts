@@ -3,10 +3,10 @@ import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
 import { wgs } from '@tpluscode/rdf-ns-builders';
-import { foaf } from '../../lib/namespace';
-import type * as Foaf from '../..';
-import type * as Wgs from '@rdfine/wgs';
-import { SpatialThingMixin as WgsSpatialThingMixin } from '@rdfine/wgs/lib/SpatialThing';
+import { foaf } from '../../lib/namespace.js';
+import type * as Foaf from '../../index.js';
+import type * as Wgs from '@rdfine/wgs.js';
+import { SpatialThingMixin as WgsSpatialThingMixin } from '@rdfine/wgs/lib/SpatialThing.js';
 
 interface SpatialThingEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   'based_near': Wgs.SpatialThing<D> | undefined;

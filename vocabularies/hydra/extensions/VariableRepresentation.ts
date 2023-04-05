@@ -1,9 +1,9 @@
 import { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Term } from '@rdfjs/types';
 import { Constructor } from '@tpluscode/rdfine';
-import { hydra } from '../lib/namespace';
+import { hydra } from '../lib/namespace.js';
 import { xsd } from '@tpluscode/rdf-ns-builders';
-import { VariableRepresentation } from '../lib/VariableRepresentation';
+import { VariableRepresentation } from '../lib/VariableRepresentation.js';
 
 interface TemplateValueMapper {
   mapValue(term: Term): string;

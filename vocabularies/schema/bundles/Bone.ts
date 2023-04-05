@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AnatomicalStructureMixin } from '../lib/AnatomicalStructure';
-import { BoneMixin } from '../lib/Bone';
+import { AnatomicalStructureMixin } from '../lib/AnatomicalStructure.js';
+import { BoneMixin } from '../lib/Bone.js';
 
 export const BoneBundle = [
   AnatomicalStructureMixin as Mixin,

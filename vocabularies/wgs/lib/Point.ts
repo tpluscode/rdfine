@@ -2,11 +2,11 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { wgs } from './namespace';
+import { wgs } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Wgs from '..';
-import { SpatialThingMixin } from './SpatialThing';
+import type * as Wgs from '../index.js';
+import { SpatialThingMixin } from './SpatialThing.js';
 
 export interface Point<D extends RDF.DatasetCore = RDF.DatasetCore> extends Wgs.SpatialThing<D>, RdfResource<D> {
 }

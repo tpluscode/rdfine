@@ -2,13 +2,13 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { skos } from './namespace';
+import { skos } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Skos from '..';
+import type * as Skos from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
-import { CollectionMixin } from './Collection';
-import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List';
+import { CollectionMixin } from './Collection.js';
+import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List.js';
 
 export interface OrderedCollection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Skos.Collection<D>, RdfResource<D> {
   memberList: Rdf.List<D> | undefined;

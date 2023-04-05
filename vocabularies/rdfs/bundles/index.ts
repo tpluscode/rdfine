@@ -1,5 +1,5 @@
-export { ClassBundle } from './Class';
-export { ContainerBundle } from './Container';
-export { ContainerMembershipPropertyBundle } from './ContainerMembershipProperty';
-export { DatatypeBundle } from './Datatype';
-export { ResourceBundle } from './Resource';
+export { ClassBundle } from './Class.js';
+export { ContainerBundle } from './Container.js';
+export { ContainerMembershipPropertyBundle } from './ContainerMembershipProperty.js';
+export { DatatypeBundle } from './Datatype.js';
+export { ResourceBundle } from './Resource.js';

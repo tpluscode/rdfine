@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../lib/Intangible';
-import { OrganizationMixin } from '../lib/Organization';
-import { PersonMixin } from '../lib/Person';
-import { ProgramMembershipMixin } from '../lib/ProgramMembership';
-import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
+import { IntangibleMixin } from '../lib/Intangible.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PersonMixin } from '../lib/Person.js';
+import { ProgramMembershipMixin } from '../lib/ProgramMembership.js';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue.js';
 
 export const ProgramMembershipBundle = [
   IntangibleMixin as Mixin,

@@ -1,17 +1,17 @@
-import '../extensions/rdfs/Class';
-import { ClassMixinEx } from '../extensions/rdfs/Class';
+import '../extensions/rdfs/Class.js';
+import { ClassMixinEx } from '../extensions/rdfs/Class.js';
 import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { owl } from './namespace';
+import { owl } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Owl from '..';
+import type * as Owl from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import type * as Rdfs from '@rdfine/rdfs';
-import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
-import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List';
+import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class.js';
+import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List.js';
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, RdfResource<D> {
   complementOf: Owl.Class<D> | undefined;

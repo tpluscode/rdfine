@@ -1,5 +1,5 @@
 import { GraphPointer } from 'clownface'
-import { shrink } from '@zazuko/rdf-vocabularies'
+import { shrink } from '@zazuko/prefixes'
 import { dash, hydra, owl, rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
 import { NamedNode } from '@rdfjs/types'
 import { identifier } from 'safe-identifier'
@@ -9,11 +9,11 @@ import {
   ExternalResourceType,
   LiteralType,
   ResourceType, TermType,
-} from './index'
-import type { Context, TypeOverride } from '../index'
-import { toUpperInitial } from '../util/string'
-import { isEnumerationType } from './util'
-import { DatatypeName, wellKnownDatatypes } from './wellKnownDatatypes'
+} from './index.js'
+import type { Context, TypeOverride } from '../index.js'
+import { toUpperInitial } from '../util/string.js'
+import { isEnumerationType } from './util.js'
+import { DatatypeName, wellKnownDatatypes } from './wellKnownDatatypes.js'
 
 const externalPrefixMap: Record<string, string> = {
   sh: 'shacl',

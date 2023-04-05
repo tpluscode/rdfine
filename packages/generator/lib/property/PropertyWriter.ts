@@ -1,8 +1,8 @@
 import { ClassDeclaration, DecoratorStructure, InterfaceDeclaration, OptionalKind } from 'ts-morph'
-import { JavascriptProperty } from './JsProperties'
-import { Context } from '../index'
-import { TypeMeta, LiteralType, ResourceType, ExternalResourceType } from '../types'
-import { MixinModuleBase } from '../MixinGenerator/MixinModuleBase'
+import { JavascriptProperty } from './JsProperties.js'
+import { Context } from '../index.js'
+import { TypeMeta, LiteralType, ResourceType, ExternalResourceType } from '../types/index.js'
+import { MixinModuleBase } from '../MixinGenerator/MixinModuleBase.js'
 import TermSet from '@rdfjs/term-set'
 
 interface PropertyWriterInit {

@@ -1,4 +1,4 @@
-import { prefixes } from '@zazuko/rdf-vocabularies'
+import prefixes from '@zazuko/prefixes'
 import namespace from '@rdfjs/namespace'
 
 prefixes.ex = 'http://example.com/'

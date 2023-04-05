@@ -1,9 +1,9 @@
 import type { Constructor, RdfResource } from '@tpluscode/rdfine'
 import { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { AnyPointer } from 'clownface'
-import type { IriTemplate } from '..'
+import type { IriTemplate } from '../index.js'
 import { hydra } from '@tpluscode/rdf-ns-builders'
-import { TemplateExpander } from './TemplateExpander'
+import { TemplateExpander } from './TemplateExpander.js'
 
 export interface IriTemplateEx {
   expand(base?: string, ...models: Array<AnyPointer | RdfResource>): string;

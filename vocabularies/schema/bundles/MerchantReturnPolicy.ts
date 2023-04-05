@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CountryMixin } from '../lib/Country';
-import { IntangibleMixin } from '../lib/Intangible';
-import { MerchantReturnPolicyMixin } from '../lib/MerchantReturnPolicy';
-import { MerchantReturnPolicySeasonalOverrideMixin } from '../lib/MerchantReturnPolicySeasonalOverride';
-import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
-import { PropertyValueMixin } from '../lib/PropertyValue';
+import { CountryMixin } from '../lib/Country.js';
+import { IntangibleMixin } from '../lib/Intangible.js';
+import { MerchantReturnPolicyMixin } from '../lib/MerchantReturnPolicy.js';
+import { MerchantReturnPolicySeasonalOverrideMixin } from '../lib/MerchantReturnPolicySeasonalOverride.js';
+import { MonetaryAmountMixin } from '../lib/MonetaryAmount.js';
+import { PropertyValueMixin } from '../lib/PropertyValue.js';
 
 export const MerchantReturnPolicyBundle = [
   CountryMixin as Mixin,

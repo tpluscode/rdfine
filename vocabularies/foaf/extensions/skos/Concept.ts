@@ -3,9 +3,9 @@ import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
 import { skos } from '@tpluscode/rdf-ns-builders';
-import { foaf } from '../../lib/namespace';
-import type * as Foaf from '../..';
-import type * as Skos from '@rdfine/skos';
+import { foaf } from '../../lib/namespace.js';
+import type * as Foaf from '../../index.js';
+import type * as Skos from '@rdfine/skos.js';
 
 interface ConceptEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   focus: RDF.NamedNode | undefined;

@@ -1,17 +1,17 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActivityMixin } from '../lib/Activity';
-import { AgentMixin } from '../lib/Agent';
-import { AttributionMixin } from '../lib/Attribution';
-import { BundleMixin } from '../lib/Bundle';
-import { DerivationMixin } from '../lib/Derivation';
-import { EntityMixin } from '../lib/Entity';
-import { GenerationMixin } from '../lib/Generation';
-import { InfluenceMixin } from '../lib/Influence';
-import { InvalidationMixin } from '../lib/Invalidation';
-import { LocationMixin } from '../lib/Location';
-import { PrimarySourceMixin } from '../lib/PrimarySource';
-import { QuotationMixin } from '../lib/Quotation';
-import { RevisionMixin } from '../lib/Revision';
+import { ActivityMixin } from '../lib/Activity.js';
+import { AgentMixin } from '../lib/Agent.js';
+import { AttributionMixin } from '../lib/Attribution.js';
+import { BundleMixin } from '../lib/Bundle.js';
+import { DerivationMixin } from '../lib/Derivation.js';
+import { EntityMixin } from '../lib/Entity.js';
+import { GenerationMixin } from '../lib/Generation.js';
+import { InfluenceMixin } from '../lib/Influence.js';
+import { InvalidationMixin } from '../lib/Invalidation.js';
+import { LocationMixin } from '../lib/Location.js';
+import { PrimarySourceMixin } from '../lib/PrimarySource.js';
+import { QuotationMixin } from '../lib/Quotation.js';
+import { RevisionMixin } from '../lib/Revision.js';
 
 export const EntityBundle = [
   ActivityMixin as Mixin,

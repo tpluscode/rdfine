@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DerivationMixin } from '../lib/Derivation';
-import { QuotationMixin } from '../lib/Quotation';
+import { DerivationMixin } from '../lib/Derivation.js';
+import { QuotationMixin } from '../lib/Quotation.js';
 
 export const QuotationBundle = [
   DerivationMixin as Mixin,

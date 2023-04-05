@@ -2,10 +2,10 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { csvw } from './namespace';
+import { csvw } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Csvw from '..';
+import type * as Csvw from '../index.js';
 
 export interface Transformation<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   scriptFormat: string | undefined;

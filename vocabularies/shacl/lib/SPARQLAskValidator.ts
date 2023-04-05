@@ -2,12 +2,12 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { sh } from './namespace';
+import { sh } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Sh from '..';
-import { SPARQLAskExecutableMixin } from './SPARQLAskExecutable';
-import { ValidatorMixin } from './Validator';
+import type * as Sh from '../index.js';
+import { SPARQLAskExecutableMixin } from './SPARQLAskExecutable.js';
+import { ValidatorMixin } from './Validator.js';
 
 export interface SPARQLAskValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLAskExecutable<D>, Sh.Validator<D>, RdfResource<D> {
 }

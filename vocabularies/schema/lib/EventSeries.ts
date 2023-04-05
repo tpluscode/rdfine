@@ -2,12 +2,12 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { EventMixin } from './Event';
-import { SeriesMixin } from './Series';
+import type * as Schema from '../index.js';
+import { EventMixin } from './Event.js';
+import { SeriesMixin } from './Series.js';
 
 export interface EventSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, Schema.Series<D>, RdfResource<D> {
 }

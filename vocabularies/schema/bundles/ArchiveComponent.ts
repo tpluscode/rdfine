@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ArchiveComponentMixin } from '../lib/ArchiveComponent';
-import { ArchiveOrganizationMixin } from '../lib/ArchiveOrganization';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { PlaceMixin } from '../lib/Place';
-import { PostalAddressMixin } from '../lib/PostalAddress';
+import { ArchiveComponentMixin } from '../lib/ArchiveComponent.js';
+import { ArchiveOrganizationMixin } from '../lib/ArchiveOrganization.js';
+import { CreativeWorkMixin } from '../lib/CreativeWork.js';
+import { PlaceMixin } from '../lib/Place.js';
+import { PostalAddressMixin } from '../lib/PostalAddress.js';
 
 export const ArchiveComponentBundle = [
   ArchiveComponentMixin as Mixin,

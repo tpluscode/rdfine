@@ -1,3 +1,3 @@
-export { ClassMixinEx } from './rdfs/Class';
-export { DatatypeMixinEx } from './rdfs/Datatype';
-export { ResourceMixinEx } from './rdfs/Resource';
+export { ClassMixinEx } from './rdfs/Class.js';
+export { DatatypeMixinEx } from './rdfs/Datatype.js';
+export { ResourceMixinEx } from './rdfs/Resource.js';

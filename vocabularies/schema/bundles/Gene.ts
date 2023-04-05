@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AnatomicalStructureMixin } from '../lib/AnatomicalStructure';
-import { AnatomicalSystemMixin } from '../lib/AnatomicalSystem';
-import { BioChemEntityMixin } from '../lib/BioChemEntity';
-import { GeneMixin } from '../lib/Gene';
+import { AnatomicalStructureMixin } from '../lib/AnatomicalStructure.js';
+import { AnatomicalSystemMixin } from '../lib/AnatomicalSystem.js';
+import { BioChemEntityMixin } from '../lib/BioChemEntity.js';
+import { GeneMixin } from '../lib/Gene.js';
 
 export const GeneBundle = [
   AnatomicalStructureMixin as Mixin,

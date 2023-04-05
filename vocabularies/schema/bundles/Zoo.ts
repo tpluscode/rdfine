@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CivicStructureMixin } from '../lib/CivicStructure';
-import { ZooMixin } from '../lib/Zoo';
+import { CivicStructureMixin } from '../lib/CivicStructure.js';
+import { ZooMixin } from '../lib/Zoo.js';
 
 export const ZooBundle = [
   CivicStructureMixin as Mixin,

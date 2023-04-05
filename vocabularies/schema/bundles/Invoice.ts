@@ -1,13 +1,13 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DurationMixin } from '../lib/Duration';
-import { IntangibleMixin } from '../lib/Intangible';
-import { InvoiceMixin } from '../lib/Invoice';
-import { MonetaryAmountMixin } from '../lib/MonetaryAmount';
-import { OrderMixin } from '../lib/Order';
-import { OrganizationMixin } from '../lib/Organization';
-import { PersonMixin } from '../lib/Person';
-import { PriceSpecificationMixin } from '../lib/PriceSpecification';
-import { ThingMixin } from '../lib/Thing';
+import { DurationMixin } from '../lib/Duration.js';
+import { IntangibleMixin } from '../lib/Intangible.js';
+import { InvoiceMixin } from '../lib/Invoice.js';
+import { MonetaryAmountMixin } from '../lib/MonetaryAmount.js';
+import { OrderMixin } from '../lib/Order.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PersonMixin } from '../lib/Person.js';
+import { PriceSpecificationMixin } from '../lib/PriceSpecification.js';
+import { ThingMixin } from '../lib/Thing.js';
 
 export const InvoiceBundle = [
   DurationMixin as Mixin,

@@ -3,9 +3,9 @@ import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rdfs } from '@tpluscode/rdf-ns-builders';
-import { dash } from '../../lib/namespace';
-import type * as Dash from '../..';
-import type * as Rdfs from '@rdfine/rdfs';
+import { dash } from '../../lib/namespace.js';
+import type * as Dash from '../../index.js';
+import type * as Rdfs from '@rdfine/rdfs.js';
 
 interface ClassEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   abstract: boolean | undefined;

@@ -1,18 +1,18 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AggregateRatingMixin } from '../lib/AggregateRating';
-import { EventMixin } from '../lib/Event';
-import { GeoCoordinatesMixin } from '../lib/GeoCoordinates';
-import { GeoShapeMixin } from '../lib/GeoShape';
-import { ImageObjectMixin } from '../lib/ImageObject';
-import { LocationFeatureSpecificationMixin } from '../lib/LocationFeatureSpecification';
-import { MapMixin } from '../lib/Map';
-import { OpeningHoursSpecificationMixin } from '../lib/OpeningHoursSpecification';
-import { PhotographMixin } from '../lib/Photograph';
-import { PlaceMixin } from '../lib/Place';
-import { PostalAddressMixin } from '../lib/PostalAddress';
-import { PropertyValueMixin } from '../lib/PropertyValue';
-import { ReviewMixin } from '../lib/Review';
-import { ThingMixin } from '../lib/Thing';
+import { AggregateRatingMixin } from '../lib/AggregateRating.js';
+import { EventMixin } from '../lib/Event.js';
+import { GeoCoordinatesMixin } from '../lib/GeoCoordinates.js';
+import { GeoShapeMixin } from '../lib/GeoShape.js';
+import { ImageObjectMixin } from '../lib/ImageObject.js';
+import { LocationFeatureSpecificationMixin } from '../lib/LocationFeatureSpecification.js';
+import { MapMixin } from '../lib/Map.js';
+import { OpeningHoursSpecificationMixin } from '../lib/OpeningHoursSpecification.js';
+import { PhotographMixin } from '../lib/Photograph.js';
+import { PlaceMixin } from '../lib/Place.js';
+import { PostalAddressMixin } from '../lib/PostalAddress.js';
+import { PropertyValueMixin } from '../lib/PropertyValue.js';
+import { ReviewMixin } from '../lib/Review.js';
+import { ThingMixin } from '../lib/Thing.js';
 
 export const PlaceBundle = [
   AggregateRatingMixin as Mixin,

@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { MathSolverMixin } from '../lib/MathSolver';
-import { SolveMathActionMixin } from '../lib/SolveMathAction';
+import { CreativeWorkMixin } from '../lib/CreativeWork.js';
+import { MathSolverMixin } from '../lib/MathSolver.js';
+import { SolveMathActionMixin } from '../lib/SolveMathAction.js';
 
 export const MathSolverBundle = [
   CreativeWorkMixin as Mixin,

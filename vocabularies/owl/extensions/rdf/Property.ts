@@ -3,10 +3,10 @@ import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rdf } from '@tpluscode/rdf-ns-builders';
-import { owl } from '../../lib/namespace';
-import type * as Owl from '../..';
-import type * as Rdf from '@rdfine/rdf';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
+import { owl } from '../../lib/namespace.js';
+import type * as Owl from '../../index.js';
+import type * as Rdf from '@rdfine/rdf.js';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property.js';
 
 interface PropertyEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   equivalentProperty: Array<Rdf.Property<D>>;

@@ -1,14 +1,14 @@
 import { rdfs } from '@tpluscode/rdf-ns-builders'
-import { TypeMetaCollection } from '../types'
-import { Context, GeneratedModule } from '../index'
-import { prefixes, shrink } from '@zazuko/rdf-vocabularies'
+import { TypeMetaCollection } from '../types/index.js'
+import { Context, GeneratedModule } from '../index.js'
+import prefixes, { shrink } from '@zazuko/prefixes'
 import TermMap from '@rdfjs/term-map'
 import { NamedNode } from '@rdfjs/types'
 import { GraphPointer } from 'clownface'
-import { ExtensionModule } from './ExtensionModule'
-import { toJavascriptProperties } from '../property/JsProperties'
-import { findRanges } from '../property'
-import { ExtensionIndexModule } from './ExtensionIndexModule'
+import { ExtensionModule } from './ExtensionModule.js'
+import { toJavascriptProperties } from '../property/JsProperties.js'
+import { findRanges } from '../property/index.js'
+import { ExtensionIndexModule } from './ExtensionIndexModule.js'
 
 interface AddToMapParams {
   property: GraphPointer

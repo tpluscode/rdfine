@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { BorrowActionMixin } from '../lib/BorrowAction';
-import { OrganizationMixin } from '../lib/Organization';
-import { PersonMixin } from '../lib/Person';
-import { TransferActionMixin } from '../lib/TransferAction';
+import { BorrowActionMixin } from '../lib/BorrowAction.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PersonMixin } from '../lib/Person.js';
+import { TransferActionMixin } from '../lib/TransferAction.js';
 
 export const BorrowActionBundle = [
   BorrowActionMixin as Mixin,

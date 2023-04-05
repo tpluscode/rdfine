@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../lib/Intangible';
-import { PropertyValueSpecificationMixin } from '../lib/PropertyValueSpecification';
-import { ThingMixin } from '../lib/Thing';
+import { IntangibleMixin } from '../lib/Intangible.js';
+import { PropertyValueSpecificationMixin } from '../lib/PropertyValueSpecification.js';
+import { ThingMixin } from '../lib/Thing.js';
 
 export const PropertyValueSpecificationBundle = [
   IntangibleMixin as Mixin,

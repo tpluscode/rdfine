@@ -2,12 +2,12 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { as } from './namespace';
+import { as } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as As from '..';
-import { CollectionPageMixin } from './CollectionPage';
-import { OrderedCollectionMixin } from './OrderedCollection';
+import type * as As from '../index.js';
+import { CollectionPageMixin } from './CollectionPage.js';
+import { OrderedCollectionMixin } from './OrderedCollection.js';
 
 export interface OrderedCollectionPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.CollectionPage<D>, As.OrderedCollection<D>, RdfResource<D> {
   startIndex: number | undefined;

@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { HowToTipMixin } from '../lib/HowToTip';
-import { ListItemMixin } from '../lib/ListItem';
+import { CreativeWorkMixin } from '../lib/CreativeWork.js';
+import { HowToTipMixin } from '../lib/HowToTip.js';
+import { ListItemMixin } from '../lib/ListItem.js';
 
 export const HowToTipBundle = [
   CreativeWorkMixin as Mixin,

@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SPARQLAskExecutableMixin } from '../lib/SPARQLAskExecutable';
-import { SPARQLSelectExecutableMixin } from '../lib/SPARQLSelectExecutable';
-import { SPARQLTargetMixin } from '../lib/SPARQLTarget';
-import { TargetMixin } from '../lib/Target';
+import { SPARQLAskExecutableMixin } from '../lib/SPARQLAskExecutable.js';
+import { SPARQLSelectExecutableMixin } from '../lib/SPARQLSelectExecutable.js';
+import { SPARQLTargetMixin } from '../lib/SPARQLTarget.js';
+import { TargetMixin } from '../lib/Target.js';
 
 export const SPARQLTargetBundle = [
   SPARQLAskExecutableMixin as Mixin,

@@ -1,4 +1,4 @@
-import { prefixes } from '@zazuko/rdf-vocabularies'
+import prefixes from '@zazuko/prefixes'
 import cf from 'clownface'
 import $rdf from 'rdf-ext'
 import { Constructor, namespace, property } from '../index'

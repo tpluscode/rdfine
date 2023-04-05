@@ -2,11 +2,11 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { as } from './namespace';
+import { as } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as As from '..';
-import { IgnoreMixin } from './Ignore';
+import type * as As from '../index.js';
+import { IgnoreMixin } from './Ignore.js';
 
 export interface Block<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Ignore<D>, RdfResource<D> {
 }

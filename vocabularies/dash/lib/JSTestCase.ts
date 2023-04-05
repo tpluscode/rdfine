@@ -2,13 +2,13 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { dash } from './namespace';
+import { dash } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Dash from '..';
+import type * as Dash from '../index.js';
 import type * as Shacl from '@rdfine/shacl';
-import { JSFunctionMixin as ShaclJSFunctionMixin } from '@rdfine/shacl/lib/JSFunction';
-import { TestCaseMixin } from './TestCase';
+import { JSFunctionMixin as ShaclJSFunctionMixin } from '@rdfine/shacl/lib/JSFunction.js';
+import { TestCaseMixin } from './TestCase.js';
 
 export interface JSTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.JSFunction<D>, Dash.TestCase<D>, RdfResource<D> {
 }

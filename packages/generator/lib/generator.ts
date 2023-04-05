@@ -1,8 +1,8 @@
-import { prefixes } from '@zazuko/rdf-vocabularies'
+import prefixes from '@zazuko/prefixes'
 import { Project } from 'ts-morph'
-import { generateNamespace } from './namespace'
-import { Context, ModuleStrategy } from './index'
-import { TypeMetaCollection } from './types'
+import { TypeMetaCollection } from './types/index.js'
+import { generateNamespace } from './namespace.js'
+import { Context, ModuleStrategy } from './index.js'
 
 export async function generate(project: Project, types: TypeMetaCollection, strategies: ModuleStrategy[], context: Context) {
   const { log, prefix } = context
@@ -28,7 +28,7 @@ export async function generate(project: Project, types: TypeMetaCollection, stra
       return previous.then(async () => {
         try {
           moduleWriter.writeModule({ project, types, context, indexModule, allGenerators })
-        } catch (e) {
+        } catch (e: any) {
           context.log.error('Failed to generate module %s (type %s)\n%s', moduleWriter.constructor.name, moduleWriter.node?.value, e.message)
         }
 

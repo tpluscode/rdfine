@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { GrantMixin } from '../lib/Grant';
-import { IntangibleMixin } from '../lib/Intangible';
-import { OrganizationMixin } from '../lib/Organization';
-import { PersonMixin } from '../lib/Person';
-import { ThingMixin } from '../lib/Thing';
+import { GrantMixin } from '../lib/Grant.js';
+import { IntangibleMixin } from '../lib/Intangible.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PersonMixin } from '../lib/Person.js';
+import { ThingMixin } from '../lib/Thing.js';
 
 export const GrantBundle = [
   GrantMixin as Mixin,

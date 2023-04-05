@@ -2,10 +2,10 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { prov } from './namespace';
+import { prov } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Prov from '..';
+import type * as Prov from '../index.js';
 
 export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   atLocation: Prov.Location<D> | undefined;

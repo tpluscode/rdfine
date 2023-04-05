@@ -1,12 +1,12 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
-import { ContactPointMixin } from '../lib/ContactPoint';
-import { GeoShapeMixin } from '../lib/GeoShape';
-import { LanguageMixin } from '../lib/Language';
-import { OpeningHoursSpecificationMixin } from '../lib/OpeningHoursSpecification';
-import { PlaceMixin } from '../lib/Place';
-import { ProductMixin } from '../lib/Product';
-import { StructuredValueMixin } from '../lib/StructuredValue';
+import { AdministrativeAreaMixin } from '../lib/AdministrativeArea.js';
+import { ContactPointMixin } from '../lib/ContactPoint.js';
+import { GeoShapeMixin } from '../lib/GeoShape.js';
+import { LanguageMixin } from '../lib/Language.js';
+import { OpeningHoursSpecificationMixin } from '../lib/OpeningHoursSpecification.js';
+import { PlaceMixin } from '../lib/Place.js';
+import { ProductMixin } from '../lib/Product.js';
+import { StructuredValueMixin } from '../lib/StructuredValue.js';
 
 export const ContactPointBundle = [
   AdministrativeAreaMixin as Mixin,

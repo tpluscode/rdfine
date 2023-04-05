@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActivityInfluenceMixin } from '../lib/ActivityInfluence';
-import { ActivityMixin } from '../lib/Activity';
-import { InfluenceMixin } from '../lib/Influence';
+import { ActivityInfluenceMixin } from '../lib/ActivityInfluence.js';
+import { ActivityMixin } from '../lib/Activity.js';
+import { InfluenceMixin } from '../lib/Influence.js';
 
 export const ActivityInfluenceBundle = [
   ActivityInfluenceMixin as Mixin,

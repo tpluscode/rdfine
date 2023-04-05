@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PsychologicalTreatmentMixin } from '../lib/PsychologicalTreatment';
-import { TherapeuticProcedureMixin } from '../lib/TherapeuticProcedure';
+import { PsychologicalTreatmentMixin } from '../lib/PsychologicalTreatment.js';
+import { TherapeuticProcedureMixin } from '../lib/TherapeuticProcedure.js';
 
 export const PsychologicalTreatmentBundle = [
   PsychologicalTreatmentMixin as Mixin,

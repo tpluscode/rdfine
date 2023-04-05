@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ReplaceActionMixin } from '../lib/ReplaceAction';
-import { ThingMixin } from '../lib/Thing';
-import { UpdateActionMixin } from '../lib/UpdateAction';
+import { ReplaceActionMixin } from '../lib/ReplaceAction.js';
+import { ThingMixin } from '../lib/Thing.js';
+import { UpdateActionMixin } from '../lib/UpdateAction.js';
 
 export const ReplaceActionBundle = [
   ReplaceActionMixin as Mixin,

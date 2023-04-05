@@ -2,13 +2,13 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreativeWorkMixin } from './CreativeWork';
-import { ItemListMixin } from './ItemList';
-import { ListItemMixin } from './ListItem';
+import type * as Schema from '../index.js';
+import { CreativeWorkMixin } from './CreativeWork.js';
+import { ItemListMixin } from './ItemList.js';
+import { ListItemMixin } from './ListItem.js';
 
 export interface HowToSection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ItemList<D>, Schema.ListItem<D>, RdfResource<D> {
   steps: Array<Schema.CreativeWork<D> | Schema.ItemList<D>>;

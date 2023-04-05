@@ -1,1 +1,1 @@
-export { OntologyMixinEx } from './owl/Ontology';
+export { OntologyMixinEx } from './owl/Ontology.js';

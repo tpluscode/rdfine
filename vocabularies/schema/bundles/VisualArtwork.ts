@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { DistanceMixin } from '../lib/Distance';
-import { PersonMixin } from '../lib/Person';
-import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
-import { VisualArtworkMixin } from '../lib/VisualArtwork';
+import { CreativeWorkMixin } from '../lib/CreativeWork.js';
+import { DistanceMixin } from '../lib/Distance.js';
+import { PersonMixin } from '../lib/Person.js';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue.js';
+import { VisualArtworkMixin } from '../lib/VisualArtwork.js';
 
 export const VisualArtworkBundle = [
   CreativeWorkMixin as Mixin,

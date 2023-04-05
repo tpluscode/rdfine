@@ -1,4 +1,4 @@
-import { prefixes } from '@zazuko/rdf-vocabularies'
+import prefixes from '@zazuko/prefixes'
 import cf, { GraphPointer } from 'clownface'
 import type { DatasetCore, Literal, NamedNode, Term } from '@rdfjs/types'
 import rdfExt from 'rdf-ext'

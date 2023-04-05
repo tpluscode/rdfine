@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { ItemListMixin } from '../lib/ItemList';
-import { ListItemMixin } from '../lib/ListItem';
-import { RatingMixin } from '../lib/Rating';
-import { ReviewMixin } from '../lib/Review';
-import { ThingMixin } from '../lib/Thing';
-import { WebContentMixin } from '../lib/WebContent';
+import { CreativeWorkMixin } from '../lib/CreativeWork.js';
+import { ItemListMixin } from '../lib/ItemList.js';
+import { ListItemMixin } from '../lib/ListItem.js';
+import { RatingMixin } from '../lib/Rating.js';
+import { ReviewMixin } from '../lib/Review.js';
+import { ThingMixin } from '../lib/Thing.js';
+import { WebContentMixin } from '../lib/WebContent.js';
 
 export const ReviewBundle = [
   CreativeWorkMixin as Mixin,

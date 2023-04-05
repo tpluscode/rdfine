@@ -3,10 +3,10 @@ import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from '@tpluscode/rdf-ns-builders';
-import { dash } from '../../lib/namespace';
-import type * as Dash from '../..';
-import type * as Shacl from '@rdfine/shacl';
-import { ShapeMixin as ShaclShapeMixin } from '@rdfine/shacl/lib/Shape';
+import { dash } from '../../lib/namespace.js';
+import type * as Dash from '../../index.js';
+import type * as Shacl from '@rdfine/shacl.js';
+import { ShapeMixin as ShaclShapeMixin } from '@rdfine/shacl/lib/Shape.js';
 
 interface NodeShapeEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   defaultViewForRole: Shacl.Shape<D> | undefined;

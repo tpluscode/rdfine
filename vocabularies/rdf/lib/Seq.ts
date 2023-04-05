@@ -2,10 +2,10 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rdf } from './namespace';
+import { rdf } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rdf from '..';
+import type * as Rdf from '../index.js';
 
 export interface Seq<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
 }

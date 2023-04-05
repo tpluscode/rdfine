@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ReviewMixin } from '../lib/Review';
-import { UserReviewMixin } from '../lib/UserReview';
+import { ReviewMixin } from '../lib/Review.js';
+import { UserReviewMixin } from '../lib/UserReview.js';
 
 export const UserReviewBundle = [
   ReviewMixin as Mixin,

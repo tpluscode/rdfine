@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { DigitalDocumentMixin } from '../lib/DigitalDocument';
-import { DigitalDocumentPermissionMixin } from '../lib/DigitalDocumentPermission';
+import { CreativeWorkMixin } from '../lib/CreativeWork.js';
+import { DigitalDocumentMixin } from '../lib/DigitalDocument.js';
+import { DigitalDocumentPermissionMixin } from '../lib/DigitalDocumentPermission.js';
 
 export const DigitalDocumentBundle = [
   CreativeWorkMixin as Mixin,

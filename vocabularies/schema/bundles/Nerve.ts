@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AnatomicalStructureMixin } from '../lib/AnatomicalStructure';
-import { BrainStructureMixin } from '../lib/BrainStructure';
-import { MuscleMixin } from '../lib/Muscle';
-import { NerveMixin } from '../lib/Nerve';
-import { SuperficialAnatomyMixin } from '../lib/SuperficialAnatomy';
+import { AnatomicalStructureMixin } from '../lib/AnatomicalStructure.js';
+import { BrainStructureMixin } from '../lib/BrainStructure.js';
+import { MuscleMixin } from '../lib/Muscle.js';
+import { NerveMixin } from '../lib/Nerve.js';
+import { SuperficialAnatomyMixin } from '../lib/SuperficialAnatomy.js';
 
 export const NerveBundle = [
   AnatomicalStructureMixin as Mixin,

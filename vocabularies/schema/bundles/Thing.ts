@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActionMixin } from '../lib/Action';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { EventMixin } from '../lib/Event';
-import { ImageObjectMixin } from '../lib/ImageObject';
-import { PropertyValueMixin } from '../lib/PropertyValue';
-import { ThingMixin } from '../lib/Thing';
+import { ActionMixin } from '../lib/Action.js';
+import { CreativeWorkMixin } from '../lib/CreativeWork.js';
+import { EventMixin } from '../lib/Event.js';
+import { ImageObjectMixin } from '../lib/ImageObject.js';
+import { PropertyValueMixin } from '../lib/PropertyValue.js';
+import { ThingMixin } from '../lib/Thing.js';
 
 export const ThingBundle = [
   ActionMixin as Mixin,

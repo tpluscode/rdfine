@@ -2,18 +2,18 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { owl } from './namespace';
+import { owl } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Owl from '..';
+import type * as Owl from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import type * as Rdfs from '@rdfine/rdfs';
-import { ClassMixin } from './Class';
-import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
-import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype';
-import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
+import { ClassMixin } from './Class.js';
+import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class.js';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource.js';
+import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype.js';
+import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List.js';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property.js';
 
 export interface Restriction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.Class<D>, RdfResource<D> {
   allValuesFrom: Rdfs.Class<D> | undefined;

@@ -1,5 +1,5 @@
 import { AnyPointer, GraphPointer } from 'clownface'
-import { Context } from '../index'
+import { Context } from '../index.js'
 import { owl, rdfs, schema } from '@tpluscode/rdf-ns-builders'
 import TermMap from '@rdfjs/term-map'
 import { Term } from '@rdfjs/types'

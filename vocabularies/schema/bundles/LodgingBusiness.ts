@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AudienceMixin } from '../lib/Audience';
-import { LanguageMixin } from '../lib/Language';
-import { LocalBusinessMixin } from '../lib/LocalBusiness';
-import { LocationFeatureSpecificationMixin } from '../lib/LocationFeatureSpecification';
-import { LodgingBusinessMixin } from '../lib/LodgingBusiness';
-import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
-import { RatingMixin } from '../lib/Rating';
+import { AudienceMixin } from '../lib/Audience.js';
+import { LanguageMixin } from '../lib/Language.js';
+import { LocalBusinessMixin } from '../lib/LocalBusiness.js';
+import { LocationFeatureSpecificationMixin } from '../lib/LocationFeatureSpecification.js';
+import { LodgingBusinessMixin } from '../lib/LodgingBusiness.js';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue.js';
+import { RatingMixin } from '../lib/Rating.js';
 
 export const LodgingBusinessBundle = [
   AudienceMixin as Mixin,

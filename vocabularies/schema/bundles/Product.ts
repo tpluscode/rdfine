@@ -1,23 +1,23 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AggregateRatingMixin } from '../lib/AggregateRating';
-import { AudienceMixin } from '../lib/Audience';
-import { BrandMixin } from '../lib/Brand';
-import { CountryMixin } from '../lib/Country';
-import { DemandMixin } from '../lib/Demand';
-import { DistanceMixin } from '../lib/Distance';
-import { EnergyConsumptionDetailsMixin } from '../lib/EnergyConsumptionDetails';
-import { ImageObjectMixin } from '../lib/ImageObject';
-import { MerchantReturnPolicyMixin } from '../lib/MerchantReturnPolicy';
-import { OfferMixin } from '../lib/Offer';
-import { OrganizationMixin } from '../lib/Organization';
-import { ProductGroupMixin } from '../lib/ProductGroup';
-import { ProductMixin } from '../lib/Product';
-import { ProductModelMixin } from '../lib/ProductModel';
-import { PropertyValueMixin } from '../lib/PropertyValue';
-import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
-import { ReviewMixin } from '../lib/Review';
-import { ServiceMixin } from '../lib/Service';
-import { ThingMixin } from '../lib/Thing';
+import { AggregateRatingMixin } from '../lib/AggregateRating.js';
+import { AudienceMixin } from '../lib/Audience.js';
+import { BrandMixin } from '../lib/Brand.js';
+import { CountryMixin } from '../lib/Country.js';
+import { DemandMixin } from '../lib/Demand.js';
+import { DistanceMixin } from '../lib/Distance.js';
+import { EnergyConsumptionDetailsMixin } from '../lib/EnergyConsumptionDetails.js';
+import { ImageObjectMixin } from '../lib/ImageObject.js';
+import { MerchantReturnPolicyMixin } from '../lib/MerchantReturnPolicy.js';
+import { OfferMixin } from '../lib/Offer.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { ProductGroupMixin } from '../lib/ProductGroup.js';
+import { ProductMixin } from '../lib/Product.js';
+import { ProductModelMixin } from '../lib/ProductModel.js';
+import { PropertyValueMixin } from '../lib/PropertyValue.js';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue.js';
+import { ReviewMixin } from '../lib/Review.js';
+import { ServiceMixin } from '../lib/Service.js';
+import { ThingMixin } from '../lib/Thing.js';
 
 export const ProductBundle = [
   AggregateRatingMixin as Mixin,

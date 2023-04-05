@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { GraphStoreTestCaseMixin } from '../lib/GraphStoreTestCase';
-import { TestCaseMixin } from '../lib/TestCase';
+import { GraphStoreTestCaseMixin } from '../lib/GraphStoreTestCase.js';
+import { TestCaseMixin } from '../lib/TestCase.js';
 
 export const GraphStoreTestCaseBundle = [
   GraphStoreTestCaseMixin as Mixin,

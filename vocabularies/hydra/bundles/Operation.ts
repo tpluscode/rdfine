@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ClassMixin } from '../lib/Class';
-import { HeaderSpecificationMixin } from '../lib/HeaderSpecification';
-import { OperationMixin } from '../lib/Operation';
-import { ResourceMixin } from '../lib/Resource';
-import { StatusMixin } from '../lib/Status';
+import { ClassMixin } from '../lib/Class.js';
+import { HeaderSpecificationMixin } from '../lib/HeaderSpecification.js';
+import { OperationMixin } from '../lib/Operation.js';
+import { ResourceMixin } from '../lib/Resource.js';
+import { StatusMixin } from '../lib/Status.js';
 
 export const OperationBundle = [
   ClassMixin as Mixin,

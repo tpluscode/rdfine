@@ -2,11 +2,11 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { as } from './namespace';
+import { as } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as As from '..';
-import { CollectionMixin } from './Collection';
+import type * as As from '../index.js';
+import { CollectionMixin } from './Collection.js';
 
 export interface CollectionPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Collection<D>, RdfResource<D> {
   next: As.CollectionPage<D> | As.Link<D> | undefined;

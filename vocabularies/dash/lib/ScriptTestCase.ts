@@ -2,12 +2,12 @@ import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode
 import { createFactory } from '@tpluscode/rdfine/factory';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
-import { dash } from './namespace';
+import { dash } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Dash from '..';
-import { ScriptMixin } from './Script';
-import { TestCaseMixin } from './TestCase';
+import type * as Dash from '../index.js';
+import { ScriptMixin } from './Script.js';
+import { TestCaseMixin } from './TestCase.js';
 
 export interface ScriptTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, Dash.TestCase<D>, RdfResource<D> {
 }

@@ -47,7 +47,7 @@ Options:
 The easiest way is to pipe the output from [@zazuko/rdf-vocabularies CLI](https://npm.im/@zazuko/rdf-vocabularies#command-line)
 
 ```
-npm i -g @zazuko/rdf-vocabularies
+npm i -g @zazuko/vocabularies
 rdf-vocab prefix foaf | rdfine-gen \
   --format application/n-triples \
   --prefix foaf 

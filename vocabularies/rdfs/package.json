@@ -2,35 +2,22 @@
   "name": "@rdfine/rdfs",
   "version": "0.6.10",
   "main": "index.js",
-  "module": "index.mjs",
-  "browser": "index.mjs",
+  "module": "index.ms",
+  "browser": "index.js",
   "types": "index.d.ts",
+  "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": {
-      "require": "./index.js",
-      "import": "./index.mjs"
-    },
-    "./bundles": {
-      "require": "./bundles/index.js",
-      "import": "./bundles/index.mjs"
-    },
-    "./lib/*": {
-      "require": "./lib/*.js",
-      "import": "./lib/*.mjs"
-    },
-    "./extensions/*": {
-      "require": "./extensions/*.js",
-      "import": "./extensions/*.mjs"
-    }
+    ".": "./index.js",
+    "./bundles": "./bundles/index.js",
+    "./lib/*": "./lib/*.js",
+    "./extensions/*": "./extensions/*.js"
   },
   "scripts": {
     "prepack": "npm run build",
     "clean": "rimraf lib bundles",
-    "build": "run-p build:*",
-    "build:cjs": "tsc -p tsconfig.build.json",
-    "build:mjs": "BABEL_ENV=modules babel . --out-dir . --extensions .ts --out-file-extension .mjs --config-file ../../babel.config.json",
-    "generate": "rdf-vocab prefix rdfs | rdfine-gen --format application/n-quads --dev"
+    "build": "tsc -p tsconfig.build.json",
+    "generate": "rdf-vocab prefix rdfs | node --loader ts-node/esm ../../packages/generator/bin/rdfine-gen.ts --format application/n-quads "
   },
   "rdfine": {
     "prefix": "rdfs",
@@ -61,7 +48,7 @@
   "dependencies": {
     "@rdf-esm/data-model": "^0.5.3",
     "@rdfine/rdf": "^0.5.7",
-    "@tpluscode/rdf-ns-builders": "^2.0.1",
+    "@tpluscode/rdf-ns-builders": "^3.0.2",
     "@tpluscode/rdfine": "^0.5.39"
   },
   "repository": {

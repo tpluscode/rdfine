@@ -1,14 +1,14 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActivityMixin } from '../lib/Activity';
-import { AgentMixin } from '../lib/Agent';
-import { AssociationMixin } from '../lib/Association';
-import { CommunicationMixin } from '../lib/Communication';
-import { EndMixin } from '../lib/End';
-import { EntityMixin } from '../lib/Entity';
-import { InfluenceMixin } from '../lib/Influence';
-import { LocationMixin } from '../lib/Location';
-import { StartMixin } from '../lib/Start';
-import { UsageMixin } from '../lib/Usage';
+import { ActivityMixin } from '../lib/Activity.js';
+import { AgentMixin } from '../lib/Agent.js';
+import { AssociationMixin } from '../lib/Association.js';
+import { CommunicationMixin } from '../lib/Communication.js';
+import { EndMixin } from '../lib/End.js';
+import { EntityMixin } from '../lib/Entity.js';
+import { InfluenceMixin } from '../lib/Influence.js';
+import { LocationMixin } from '../lib/Location.js';
+import { StartMixin } from '../lib/Start.js';
+import { UsageMixin } from '../lib/Usage.js';
 
 export const ActivityBundle = [
   ActivityMixin as Mixin,

@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../lib/Intangible';
-import { SeriesMixin } from '../lib/Series';
+import { IntangibleMixin } from '../lib/Intangible.js';
+import { SeriesMixin } from '../lib/Series.js';
 
 export const SeriesBundle = [
   IntangibleMixin as Mixin,

@@ -3,11 +3,11 @@ import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import * as $rdf from '@rdf-esm/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from '@tpluscode/rdf-ns-builders';
-import { dash } from '../../lib/namespace';
-import type * as Dash from '../..';
-import type * as Rdfs from '@rdfine/rdfs';
-import type * as Shacl from '@rdfine/shacl';
-import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
+import { dash } from '../../lib/namespace.js';
+import type * as Dash from '../../index.js';
+import type * as Rdfs from '@rdfine/rdfs.js';
+import type * as Shacl from '@rdfine/shacl.js';
+import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class.js';
 
 interface ShapeEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   applicableToClass: Array<Rdfs.Class<D>>;

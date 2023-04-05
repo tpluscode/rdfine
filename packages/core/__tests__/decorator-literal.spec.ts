@@ -1,5 +1,5 @@
 /* global BigInt */
-import { prefixes } from '@zazuko/rdf-vocabularies'
+import prefixes from '@zazuko/prefixes'
 import { property } from '../index'
 import RdfResource from '../RdfResource'
 import { parse, ex } from './_helpers'

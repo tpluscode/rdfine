@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ObjectMixin } from '../lib/Object';
-import { PageMixin } from '../lib/Page';
+import { ObjectMixin } from '../lib/Object.js';
+import { PageMixin } from '../lib/Page.js';
 
 export const PageBundle = [
   ObjectMixin as Mixin,
