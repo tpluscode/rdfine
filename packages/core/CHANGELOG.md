@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.43
+
+### Patch Changes
+
+- 29474b07: It would still be impossible to initialise literal prop, when it allowed `undefined`
+
 ## 0.5.42
 
 ### Patch Changes
