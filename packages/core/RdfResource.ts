@@ -360,7 +360,7 @@ export type Initializer<T> = Omit<{
     ? T[P] | InitialLiteral
     : T[P] extends (RdfResourceCore | undefined)
       ? InitializeSingle<T[P]>
-      : T[P] extends Literal
+      : T[P] extends (Literal | undefined)
         ? InitialLiteral | string | number | boolean
         : T[P] extends Term
           ? T[P] | InitialNode<T[P]>
