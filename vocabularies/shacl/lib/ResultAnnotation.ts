@@ -8,8 +8,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource.js';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property.js';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
 export interface ResultAnnotation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
   annotationProperty: Rdf.Property<D> | undefined;

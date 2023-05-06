@@ -9,7 +9,7 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
-import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype.js';
+import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype';
 
 export interface DataRange<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Datatype<D>, RdfResource<D> {
 }

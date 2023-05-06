@@ -7,8 +7,8 @@ import { owl } from '../../lib/namespace.js';
 import type * as Owl from '../../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import type * as Rdfs from '@rdfine/rdfs';
-import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype.js';
-import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List.js';
+import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype';
+import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List';
 
 interface DatatypeEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   datatypeComplementOf: Rdfs.Datatype<D> | undefined;

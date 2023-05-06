@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ParameterizableMixin } from './Parameterizable.js';
-import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class.js';
+import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
 
 export interface Function<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Parameterizable<D>, RdfResource<D> {
   returnType: Rdfs.Class<D> | undefined;

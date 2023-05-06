@@ -7,8 +7,8 @@ import { owl } from '../../lib/namespace.js';
 import type * as Owl from '../../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import type * as Rdfs from '@rdfine/rdfs';
-import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class.js';
-import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List.js';
+import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
+import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List';
 
 interface ClassEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   equivalentClass: Array<Rdfs.Class<D>>;

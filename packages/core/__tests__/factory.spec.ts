@@ -1,11 +1,11 @@
 import clownface from 'clownface'
 import $rdf from 'rdf-ext'
+import { expect } from 'chai'
 import { createFactory } from '../factory.js'
 import { Constructor } from '../lib/ResourceFactory.js'
 import { RdfResource } from '../RdfResource.js'
 import { property } from '../lib/decorators/index.js'
 import { ex } from './_helpers/index.js'
-import {expect} from "chai";
 
 interface TestResource extends RdfResource {
   foo?: string
@@ -72,7 +72,7 @@ describe('@tpluscode/rdfine/factory', () => {
       const res = curriedFactory(blankNode())
 
       // then
-      expect(res.id).to.eq($rdf.namedNode('http://foo.bar/baz'))
+      expect(res.id).to.deep.eq($rdf.namedNode('http://foo.bar/baz'))
     })
 
     it('creates resource with URI provided as Term', () => {

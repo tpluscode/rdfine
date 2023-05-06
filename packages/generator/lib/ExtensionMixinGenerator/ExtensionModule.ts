@@ -155,8 +155,9 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
             namedImports: [imported.mixinName],
           })
         } else {
+          const moduleSpecifier = imported.module.startsWith('.') ? `${imported.module}.js` : imported.module
           const superImport = mixinFile.addImportDeclaration({
-            moduleSpecifier: `${imported.module}.js`,
+            moduleSpecifier,
           })
 
           superImport.addNamedImport({

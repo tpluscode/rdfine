@@ -1,6 +1,7 @@
 {
   "name": "@rdfine/shacl",
   "version": "0.8.7",
+  "type": "module",
   "main": "index.js",
   "module": "index.js",
   "browser": "index.js",
@@ -78,6 +79,8 @@
   },
   "devDependencies": {
     "@rdfjs/dataset": "^2",
+    "@rdfjs/namespace": "^2",
+    "chai": "^4.3.7",
     "clownface": "^1",
     "rdf-ext": "^2"
   },

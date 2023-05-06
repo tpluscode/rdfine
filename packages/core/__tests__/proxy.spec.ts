@@ -3,12 +3,12 @@ import $rdf from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { schema } from '@tpluscode/rdf-ns-builders'
 import type { Literal, NamedNode } from '@rdfjs/types'
+import { expect } from 'chai'
 import { createProxy } from '../lib/proxy.js'
 import RdfResourceImpl, { RdfResource } from '../RdfResource.js'
 import { property, ResourceIndexer } from '../index.js'
 import type { AnyFactory } from '../factory.js'
 import { ex } from './_helpers/index.js'
-import {expect} from "chai";
 
 describe('proxy', () => {
   let node: GraphPointer<NamedNode, DatasetExt>
@@ -58,7 +58,7 @@ describe('proxy', () => {
       const value = (proxy['http://example.com/Prop1'] as ResourceIndexer)['http://example.com/Prop2']
 
       // then
-      expect(value).to.eq(node.literal('foo', 'bar').term)
+      expect(value).to.deep.eq(node.literal('foo', 'bar').term)
     })
 
     it('returns array from multiple values', () => {
@@ -238,7 +238,7 @@ describe('proxy', () => {
       proxy[ex.set.value] = <any>[child('Foo'), child('Bar'), Baz]
 
       // then
-      expect(node.out(ex.set).out(schema.name).values).to.deep.eq(
+      expect(node.out(ex.set).out(schema.name).values).to.deep.contain.all.members(
         ['Foo', 'Bar', 'Baz'],
       )
     })

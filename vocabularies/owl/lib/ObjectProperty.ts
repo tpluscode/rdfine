@@ -9,8 +9,8 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property.js';
-import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List.js';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
+import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List';
 
 export interface ObjectProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, RdfResource<D> {
   inverseOf: Owl.ObjectProperty<D> | undefined;

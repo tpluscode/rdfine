@@ -1,6 +1,6 @@
 import { schema } from '@tpluscode/rdf-ns-builders'
+import { expect } from 'chai'
 import { expandMapKeys } from '../../lib/util/overrideMap.js'
-import {expect} from "chai";
 
 describe('util/overrideMap', () => {
   describe('expandMapKeys', () => {
@@ -9,7 +9,7 @@ describe('util/overrideMap', () => {
       const result = expandMapKeys(null, 'ex')
 
       // then
-      expect(result).to.eq({})
+      expect(result).to.deep.eq({})
     })
 
     it('expands prefixed names of known vocabularies', () => {
@@ -22,7 +22,7 @@ describe('util/overrideMap', () => {
       const result = expandMapKeys(map, 'ex')
 
       // then
-      expect(result).to.eq({
+      expect(result).to.deep.eq({
         [schema.name.value]: 'bar',
       })
     })
@@ -37,7 +37,7 @@ describe('util/overrideMap', () => {
       const result = expandMapKeys(map, 'http://example.com/')
 
       // then
-      expect(result).to.eq({
+      expect(result).to.deep.eq({
         'http://example.com/name': 'bar',
       })
     })

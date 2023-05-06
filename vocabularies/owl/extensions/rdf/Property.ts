@@ -6,7 +6,7 @@ import { rdf } from '@tpluscode/rdf-ns-builders';
 import { owl } from '../../lib/namespace.js';
 import type * as Owl from '../../index.js';
 import type * as Rdf from '@rdfine/rdf';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property.js';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
 interface PropertyEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   equivalentProperty: Array<Rdf.Property<D>>;

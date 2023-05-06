@@ -30,8 +30,8 @@ describe('IriTemplate', () => {
      | ${'tagged string'}     | ${explicit}    | ${$rdf.literal('A simple string', 'en')}      | ${'http://example.com/find/%22A%20simple%20string%22%40en'}                                      |
      | ${'typed literal'}     | ${basic}       | ${$rdf.literal('5.5', xsd.decimal)}           | ${'http://example.com/find/5.5'}                                                                 |
      | ${'typed literal'}     | ${explicit}    | ${$rdf.literal('5.5', xsd.decimal)}           | ${'http://example.com/find/%225.5%22%5E%5Ehttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23decimal'} |
-    `(({ representation, term, expected }: any) => {
-      it('should correctly represent $type with $representation', () => {
+    `(({ type, representation, term, expected }: any) => {
+      it(`should correctly represent ${type} with ${representation}`, () => {
         // given
         const dataset = $rdf.dataset()
         const pointer = clownface({ dataset }).blankNode()

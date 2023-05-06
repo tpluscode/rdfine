@@ -1,4 +1,3 @@
-const chai = require("chai")
-const { jestSnapshotPlugin } = require("mocha-chai-jest-snapshot")
-
-chai.use(jestSnapshotPlugin())
+var chai = require('chai');
+var chaiSubset = require('chai-subset');
+chai.use(chaiSubset);

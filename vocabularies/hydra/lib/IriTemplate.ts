@@ -6,6 +6,7 @@ import { hydra } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '../index.js';
+import { IriTemplateExMixin } from '../extensions/index.js';
 
 export interface IriTemplate<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   mapping: Array<Hydra.IriTemplateMapping<D>>;
@@ -16,7 +17,7 @@ export interface IriTemplate<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 
 export function IriTemplateMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<IriTemplate> & RdfResourceCore> & Base {
   @namespace(hydra)
-  class IriTemplateClass extends Resource implements Partial<IriTemplate> {
+  class IriTemplateClass extends IriTemplateExMixin(Resource) implements Partial<IriTemplate> {
     @property.resource({ values: 'array', implicitTypes: [hydra.IriTemplateMapping] })
     mapping!: Array<Hydra.IriTemplateMapping>;
     @property()
@@ -35,7 +36,7 @@ class IriTemplateImpl extends IriTemplateMixin(RdfResourceImpl) {
     this.types.add(hydra.IriTemplate)
   }
 
-  static readonly __mixins: Mixin[] = [IriTemplateMixin];
+  static readonly __mixins: Mixin[] = [IriTemplateExMixin, IriTemplateMixin];
 }
 IriTemplateMixin.appliesTo = hydra.IriTemplate
 IriTemplateMixin.Class = IriTemplateImpl

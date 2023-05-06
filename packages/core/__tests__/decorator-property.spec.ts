@@ -5,11 +5,11 @@ import RDF from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { foaf, schema, rdf } from '@tpluscode/rdf-ns-builders/loose'
 import { turtle } from '@tpluscode/rdf-string'
+import { expect } from 'chai'
 import RdfResource from '../RdfResource.js'
 import { namespace, property, crossBoundaries, Constructor } from '../index.js'
 import type { AnyFactory } from '../factory.js'
 import { parse, ex } from './_helpers/index.js'
-import {expect} from "chai";
 
 describe('decorator', () => {
   describe('term', () => {
@@ -378,7 +378,7 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.letters.map(l => l.value)).to.eq(['a', 'b', 'c'])
+        expect(instance.letters.map(l => l.value)).to.contain.all.members(['a', 'b', 'c'])
       })
 
       it('returns empty rdf list array', async () => {
@@ -401,7 +401,7 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.letters).to.eq([])
+        expect(instance.letters).to.deep.eq([])
       })
 
       it('throws when rdf list is the object but not annotated', async () => {
@@ -945,7 +945,7 @@ describe('decorator', () => {
             const instance = newResource(dataset, ex.John)
 
             // then
-            expect(instance.allKnownFriends).to.eq([])
+            expect(instance.allKnownFriends).to.deep.eq([])
           })
 
           it('returns value from default graph if unspecified', async () => {

@@ -1,13 +1,13 @@
 import $rdf from 'rdf-ext'
 import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
 import cf, { AnyPointer } from 'clownface'
+import { expect } from 'chai'
+import sinon from 'sinon'
 import { TypeMap } from '../../lib/types/TypeMap.js'
 import { Context } from '../../lib/index.js'
 import { fakeLog } from '../_helpers/util.js'
 import { TermType } from '../../lib/types/index.js'
 import { ex } from '../_helpers/prefix.js'
-import {expect} from "chai";
-import sinon from "sinon";
 
 describe('TypeMap', () => {
   let context: Context
@@ -59,7 +59,7 @@ describe('TypeMap', () => {
       const meta = typeMap.get(vocabulary.node(ex.Type))
 
       // then
-      expect(meta).to.eq({
+      expect(meta).to.deep.eq({
         termType: 'Term',
         type: 'Term',
       } as TermType)

@@ -7,7 +7,7 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource.js';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
 export interface Validator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
 }

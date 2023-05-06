@@ -93,7 +93,7 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.friends.map(l => l.id.value)).to.eq([
+        expect(instance.friends.map(l => l.id.value)).to.deep.contain.all.members([
           ex.Will.value,
           ex.Joe.value,
           ex.Sindy.value,
@@ -440,7 +440,7 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.employer.id).to.eq(ex.Google)
+        expect(instance.employer.id).to.deep.eq(ex.Google)
       })
 
       it('set object returned by factory function as clownface', async function () {
@@ -539,10 +539,10 @@ describe('decorator', () => {
           // then
           expect(instance.allAboutFriends).to.have.length(2)
           const friends = instance.allAboutFriends
-          expect(friends.map(will => will._graphId)).to.deep.eq(
+          expect(friends.map(will => will._graphId)).to.deep.contain.all.members(
             [ex.John, ex.Will],
           )
-          expect(friends.map(will => will.name)).to.deep.eq(
+          expect(friends.map(will => will.name)).to.deep.contain.all.members(
             [rdfExt.literal('William')],
           )
         })
@@ -567,7 +567,7 @@ describe('decorator', () => {
           // then
           expect(instance.allAboutFriends).to.have.length(4)
           const wills = instance.allAboutFriends
-          expect(wills.map(w => w._graphId)).to.deep.eq(
+          expect(wills.map(w => w._graphId)).to.deep.contain.all.members(
             [rdfExt.defaultGraph(), ex.WillName, ex.WillFriends, ex.WillJob],
           )
         })

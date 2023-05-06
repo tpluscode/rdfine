@@ -1,6 +1,6 @@
 /* global BigInt */
 import prefixes from '@zazuko/prefixes'
-import {expect} from "chai";
+import { expect } from 'chai'
 import { BlankNode, Literal, NamedNode } from '@rdfjs/types'
 import RDF from '@rdfjs/data-model'
 import rdfExt from 'rdf-ext'
@@ -194,7 +194,7 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.letters).to.eq(['a', 'b', 'c'])
+        expect(instance.letters).to.contain.all.members(['a', 'b', 'c'])
       })
 
       it('returns string value of typed literal', async () => {

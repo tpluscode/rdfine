@@ -8,8 +8,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '../index.js';
 import type * as Owl from '@rdfine/owl';
 import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource.js';
-import { OntologyMixin as OwlOntologyMixin } from '@rdfine/owl/lib/Ontology.js';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
+import { OntologyMixin as OwlOntologyMixin } from '@rdfine/owl/lib/Ontology';
 
 export interface SPARQLExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
   prefixes: Owl.Ontology<D> | undefined;

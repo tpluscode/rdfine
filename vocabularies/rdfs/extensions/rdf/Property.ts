@@ -6,7 +6,7 @@ import { rdf } from '@tpluscode/rdf-ns-builders';
 import { rdfs } from '../../lib/namespace.js';
 import type * as Rdfs from '../../index.js';
 import type * as Rdf from '@rdfine/rdf';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property.js';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
 interface PropertyEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   domain: Array<Rdfs.Class<D>>;

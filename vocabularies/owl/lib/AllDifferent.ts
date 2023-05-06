@@ -10,8 +10,8 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource.js';
-import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List.js';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
+import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List';
 
 export interface AllDifferent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
   distinctMembers: Rdf.List<D> | undefined;

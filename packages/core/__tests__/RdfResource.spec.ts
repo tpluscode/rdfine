@@ -12,14 +12,17 @@ import {
   rdfs,
   sh,
 } from '@tpluscode/rdf-ns-builders/loose'
-import { expect } from 'chai'
-import 'mocha-chai-jest-snapshot'
+import chai, { expect } from 'chai'
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
 import RdfResource, { Initializer, RdfResourceCore, ResourceNode } from '../RdfResource.js'
 import { Constructor, crossBoundaries, namespace, property, ResourceFactory } from '../index.js'
 import * as initialize from '../initializer.js'
 import { parse, ex } from './_helpers/index.js'
 
 describe('RdfResource', () => {
+  chai.use(jestSnapshotPlugin())
+  before(() => import('../../../__tests__/helpers/matchers.js'))
+
   describe('constructor', () => {
     it('throws when node is literal', () => {
       expect(() => {
@@ -282,7 +285,7 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.other.id).to.eq($rdf.namedNode('baz'))
+      expect(resource.other.id).to.deep.eq($rdf.namedNode('baz'))
     })
 
     it('allows clownface named node to initialize named node properties', () => {
@@ -308,7 +311,7 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.other).to.eq($rdf.namedNode('bar'))
+      expect(resource.other).to.deep.eq($rdf.namedNode('bar'))
       expect(resource.others).to.deep.eq(
         [$rdf.namedNode('baz')],
       )
@@ -342,13 +345,13 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.others).to.eq(
-        expect.arrayContaining([
-          expect.objectContaining({ termType: 'BlankNode' }),
+      expect(resource.others).to.containSubset(
+        [
+          { termType: 'BlankNode' },
           $rdf.literal('foo'),
           $rdf.namedNode('bar'),
           $rdf.namedNode('baz'),
-        ]),
+        ],
       )
     })
 
@@ -396,13 +399,13 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.others.map(o => o.id)).to.eq(
-        expect.arrayContaining([
-          expect.objectContaining({ termType: 'BlankNode' }),
+      expect(resource.others.map(o => o.id)).to.containSubset(
+        [
+          { termType: 'BlankNode' },
           $rdf.namedNode('bar'),
-          expect.objectContaining({ termType: 'BlankNode' }),
+          { termType: 'BlankNode' },
           $rdf.namedNode('baz'),
-        ]),
+        ],
       )
     })
 
@@ -640,7 +643,7 @@ describe('RdfResource', () => {
       )
 
       // then
-      expect(resource.pointer.dataset).to.matchSnapshot(this)
+      expect(resource.pointer.dataset).toMatchSnapshot()
     })
 
     it('can initialize child resource with string named node id', function () {
@@ -707,11 +710,7 @@ describe('RdfResource', () => {
 
           // then
           expect(resource.pointer.out(ex.prop).term?.value).to.eq(term.value)
-          expect(resource.pointer.out(ex.prop).term).to.deep.contain({
-            datatype: {
-              value: term.datatype.value,
-            },
-          })
+          expect(resource.pointer.out(ex.prop).term).to.have.property('datatype').deep.eq(term.datatype)
         })
 
         it(`initializes annotated term property from native ${name} value`, () => {
@@ -741,11 +740,7 @@ describe('RdfResource', () => {
 
           // then
           expect(resource.pointer.out(ex.prop).term?.value).to.eq(term.value)
-          expect(resource.pointer.out(ex.prop).term).to.deep.contain({
-            datatype: {
-              value: term.datatype.value,
-            },
-          })
+          expect(resource.pointer.out(ex.prop).term).to.have.property('datatype').deep.eq(term.datatype)
         })
       }
     })
@@ -808,7 +803,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.prefLabel).to.eq(['Foo', 'Bar'])
+      expect(resource.prefLabel).to.contain.all.members(['Foo', 'Bar'])
     })
 
     it('initialized list from resource initializers', () => {
@@ -930,7 +925,7 @@ describe('RdfResource', () => {
         })
 
         // then
-        expect(resource.child).to.eq($rdf.blankNode('foo'))
+        expect(resource.child).to.deep.eq($rdf.blankNode('foo'))
       })
 
       it('named node initializing URI property', () => {
@@ -946,7 +941,7 @@ describe('RdfResource', () => {
         })
 
         // then
-        expect(resource.pointer.out(ex.foo).term).to.eq($rdf.namedNode('foo'))
+        expect(resource.pointer.out(ex.foo).term).to.deep.eq($rdf.namedNode('foo'))
       })
     })
   })

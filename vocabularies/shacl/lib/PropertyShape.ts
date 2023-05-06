@@ -9,9 +9,9 @@ import type * as Sh from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ShapeMixin } from './Shape.js';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property.js';
-import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype.js';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource.js';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
+import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
 export interface PropertyShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Shape<D>, RdfResource<D> {
   '_equals': Rdf.Property<D> | undefined;

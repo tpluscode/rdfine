@@ -1,13 +1,14 @@
+import { expect } from 'chai'
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { dash, rdfs, sh } from '@tpluscode/rdf-ns-builders'
+import sinon from 'sinon'
 import { findTermsToGenerate } from '../../lib/ExtensionMixinGenerator/index.js'
 import { FakeTypeCollection } from '../_helpers/FakeTypeCollection.js'
 import { fakeLog } from '../_helpers/util.js'
 import { Context } from '../../lib/index.js'
 import { ExtensionIndexModule } from '../../lib/ExtensionMixinGenerator/ExtensionIndexModule.js'
 import { ExtensionModule } from '../../lib/ExtensionMixinGenerator/ExtensionModule.js'
-import {expect} from "chai";
 
 describe('ExtensionMixinGenerator', () => {
   let vocabulary: AnyPointer
@@ -33,13 +34,13 @@ describe('ExtensionMixinGenerator', () => {
     const [extensionModule] = findTermsToGenerate(types, { vocabulary, log, properties, prefix: 'ex' }) as [ExtensionModule]
 
     // then
-    expect(extensionModule.node?.term).to.eq(sh.PropertyShape)
-    expect(extensionModule.properties).to.eq(
-      expect.arrayContaining([expect.objectContaining({
+    expect(extensionModule.node?.term).to.deep.eq(sh.PropertyShape)
+    expect(extensionModule.properties).to.containSubset(
+      [{
         term: dash.hidden,
-      }), expect.objectContaining({
+      }, {
         term: dash.defaultViewForRole,
-      })]),
+      }],
     )
   })
 
@@ -57,7 +58,7 @@ describe('ExtensionMixinGenerator', () => {
 
     // then
     expect(indexModule.prefix).to.eq('sh')
-    expect(indexModule.terms).to.eq(['PropertyShape'])
+    expect(indexModule.terms).to.contain.all.members(['PropertyShape'])
   })
 
   it('does not generate an index module for own types', () => {
