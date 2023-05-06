@@ -27,7 +27,7 @@ expect.extend({
         message: () => 'Object was valid JSON-LD',
         pass: true,
       }
-    } catch (e) {
+    } catch (e: any) {
       return {
         message: () => `Failed to parse JSON-LD: ${e.message}`,
         pass: false,

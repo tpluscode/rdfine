@@ -26,8 +26,8 @@
     ]
   },
   "dependencies": {
-    "@rdf-esm/data-model": "^0.5.3",
-    "@tpluscode/rdf-ns-builders": "^3.0.2",
+    "@rdfjs/data-model": "^2",
+    "@tpluscode/rdf-ns-builders": ">=3.0.2",
     "@tpluscode/rdfine": "^0.5.39",
     "@rdfine/rdf": "^0.5.7"
   },

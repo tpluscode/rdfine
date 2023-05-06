@@ -1,5 +1,5 @@
 import ns from '@rdfjs/namespace'
-import { prefixes } from '@zazuko/rdf-vocabularies'
+import prefixes from '@zazuko/prefixes'
 import RdfResourceImpl, { namespace, property, Constructor, RdfResource } from '@tpluscode/rdfine'
 import ResourceFactoryImpl, { ResourceFactory } from '@tpluscode/rdfine/lib/ResourceFactory'
 

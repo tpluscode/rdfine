@@ -2,7 +2,6 @@ import prefixes from '@zazuko/prefixes'
 import cf, { GraphPointer } from 'clownface'
 import type { DatasetCore, Literal, NamedNode, Term } from '@rdfjs/types'
 import rdfExt from 'rdf-ext'
-import { defaultGraph, literal } from '@rdf-esm/data-model'
 import { turtle } from '@tpluscode/rdf-string'
 import {
   property,
@@ -542,7 +541,7 @@ describe('decorator', () => {
             expect.arrayContaining([ex.John, ex.Will]),
           )
           expect(friends.map(will => will.name)).toEqual(
-            expect.arrayContaining([literal('William')]),
+            expect.arrayContaining([rdfExt.literal('William')]),
           )
         })
 
@@ -567,7 +566,7 @@ describe('decorator', () => {
           expect(instance.allAboutFriends).toHaveLength(4)
           const wills = instance.allAboutFriends
           expect(wills.map(w => w._graphId)).toEqual(
-            expect.arrayContaining([defaultGraph(), ex.WillName, ex.WillFriends, ex.WillJob]),
+            expect.arrayContaining([rdfExt.defaultGraph(), ex.WillName, ex.WillFriends, ex.WillJob]),
           )
         })
 
@@ -634,7 +633,7 @@ describe('decorator', () => {
 
           // then
           expect(friendNames).toEqual(
-            expect.arrayContaining([literal('Will'), undefined]),
+            expect.arrayContaining([rdfExt.literal('Will'), undefined]),
           )
         })
       })

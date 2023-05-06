@@ -1,6 +1,5 @@
 import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { literal } from '@rdf-esm/data-model'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { schema } from '@tpluscode/rdf-ns-builders'
 import { createProxy } from '../lib/proxy'
@@ -161,7 +160,7 @@ describe('proxy', () => {
       const proxy = createProxy(resource)
 
       // when
-      proxy[ex.set.value] = literal('foo')
+      proxy[ex.set.value] = $rdf.literal('foo')
 
       // then
       expect(node.dataset.toCanonical()).toMatchSnapshot()
@@ -202,7 +201,7 @@ describe('proxy', () => {
       const proxy = createProxy(resource)
 
       // when
-      proxy[ex.set.value] = [literal('foo'), literal('bar')]
+      proxy[ex.set.value] = [ $rdf.literal('foo'),  $rdf.literal('bar')]
 
       // then
       expect(node.dataset.toCanonical()).toMatchSnapshot()

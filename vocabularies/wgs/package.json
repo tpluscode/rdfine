@@ -23,10 +23,10 @@
     "prefix": "wgs"
   },
   "dependencies": {
-    "@rdf-esm/data-model": "^0.5.3",
+    "@rdfjs/data-model": "^2",
     "@rdfine/foaf": "^0.1.9",
     "@rdfine/rdfs": "^0.6.10",
-    "@tpluscode/rdf-ns-builders": "^3.0.2",
+    "@tpluscode/rdf-ns-builders": ">=3.0.2",
     "@tpluscode/rdfine": "^0.5.39"
   },
   "repository": {

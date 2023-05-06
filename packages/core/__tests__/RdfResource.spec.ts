@@ -2,12 +2,6 @@ import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import type { NamedNode, Term, Literal } from '@rdfjs/types'
 import {
-  defaultGraph,
-  namedNode,
-  literal,
-  blankNode,
-} from '@rdf-esm/data-model'
-import {
   skos,
   rdf,
   schema,
@@ -133,7 +127,7 @@ describe('RdfResource', () => {
       const res = new RdfResource(node)
 
       // then
-      expect(res._graphId.equals(defaultGraph()))
+      expect(res._graphId.equals($rdf.defaultGraph()))
     })
   })
 
@@ -194,7 +188,7 @@ describe('RdfResource', () => {
         name!: string;
       }
       const initializer: Initializer<Resource> = {
-        name: literal('baz'),
+        name: $rdf.literal('baz'),
       }
 
       // when
@@ -215,7 +209,7 @@ describe('RdfResource', () => {
         name!: string;
       }
       const initializer: Initializer<Resource> = {
-        name: literal('baz'),
+        name: $rdf.literal('baz'),
       }
 
       // when
@@ -236,7 +230,7 @@ describe('RdfResource', () => {
         names!: string[];
       }
       const initializer: Initializer<Resource> = {
-        names: [literal('bar'), node.literal('baz')],
+        names: [$rdf.literal('bar'), node.literal('baz')],
       }
 
       // when
@@ -278,14 +272,14 @@ describe('RdfResource', () => {
         other!: Resource;
       }
       const initializer: Initializer<Resource> = {
-        other: namedNode('baz'),
+        other: $rdf.namedNode('baz'),
       }
 
       // when
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.other.id).toEqual(namedNode('baz'))
+      expect(resource.other.id).toEqual($rdf.namedNode('baz'))
     })
 
     it('allows clownface named node to initialize named node properties', () => {
@@ -311,9 +305,9 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.other).toEqual(namedNode('bar'))
+      expect(resource.other).toEqual($rdf.namedNode('bar'))
       expect(resource.others).toEqual(
-        expect.arrayContaining([namedNode('baz')]),
+        expect.arrayContaining([$rdf.namedNode('baz')]),
       )
     })
 
@@ -336,7 +330,7 @@ describe('RdfResource', () => {
         others: [
           node.blankNode(),
           literal('foo'),
-          namedNode('bar'),
+          $rdf.namedNode('bar'),
           node.namedNode('baz'),
         ],
       }
@@ -349,8 +343,8 @@ describe('RdfResource', () => {
         expect.arrayContaining([
           expect.objectContaining({ termType: 'BlankNode' }),
           literal('foo'),
-          namedNode('bar'),
-          namedNode('baz'),
+          $rdf.namedNode('bar'),
+          $rdf.namedNode('baz'),
         ]),
       )
     })
@@ -389,7 +383,7 @@ describe('RdfResource', () => {
       const initializer: Initializer<Resource> = {
         others: [
           blankNode(),
-          namedNode('bar'),
+          $rdf.namedNode('bar'),
           node.blankNode(),
           node.namedNode('baz'),
         ],
@@ -402,9 +396,9 @@ describe('RdfResource', () => {
       expect(resource.others.map(o => o.id)).toEqual(
         expect.arrayContaining([
           expect.objectContaining({ termType: 'BlankNode' }),
-          namedNode('bar'),
+          $rdf.namedNode('bar'),
           expect.objectContaining({ termType: 'BlankNode' }),
-          namedNode('baz'),
+          $rdf.namedNode('baz'),
         ]),
       )
     })
@@ -1343,8 +1337,8 @@ describe('RdfResource', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
-        .addOut(schema.name, literal('foo', 'en'))
-        .addOut(schema.name, literal('bar', 'de'))
+        .addOut(schema.name, $rdf.literal('foo', 'en'))
+        .addOut(schema.name, $rdf.literal('bar', 'de'))
       const resource = new RdfResource(node)
 
       // when
@@ -1377,7 +1371,7 @@ describe('RdfResource', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
-        .addOut(schema.knows, namedNode('jane'))
+        .addOut(schema.knows, $rdf.namedNode('jane'))
       node.namedNode('jane').addOut(schema.name, 'jane')
       const resource = new RdfResource(node)
 
@@ -1405,8 +1399,8 @@ describe('RdfResource', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
-        .addOut(schema.knows, namedNode('jane'))
-        .addOut(schema.knows, namedNode('jenny'))
+        .addOut(schema.knows, $rdf.namedNode('jane'))
+        .addOut(schema.knows, $rdf.namedNode('jenny'))
       node.namedNode('jane').addOut(schema.name, 'jane')
       node.namedNode('jenny').addOut(schema.name, 'jenny')
       const resource = new RdfResource(node)
@@ -1445,12 +1439,12 @@ describe('RdfResource', () => {
         .addOut(schema.contentSize, 22.5)
         .addOut(
           schema.datePublished,
-          literal(new Date().toISOString(), xsd.dateTime),
+          $rdf.literal(new Date().toISOString(), xsd.dateTime),
         )
         .addOut(schema.isLiveBroadcast, true)
         .addOut(schema.isAccessibleForFree, false)
         .addOut(schema.contentUrl, 'http://example.com/foo')
-        .addOut(schema.name, literal('foo', 'en'))
+        .addOut(schema.name, $rdf.literal('foo', 'en'))
       class TestResource extends RdfResource {
         @property.literal({ path: schema.age, type: Number })
         age!: number;
@@ -1594,7 +1588,7 @@ describe('RdfResource', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
-        .addOut(schema.knows, namedNode('jane'), jane => {
+        .addOut(schema.knows, $rdf.namedNode('jane'), jane => {
           jane.addOut(schema.givenName, 'Jane')
         })
       function PersonMixin<Base extends Constructor>(base: Base) {
@@ -1639,8 +1633,8 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
         .addOut(schema.givenName, 'John')
-        .addOut(schema.knows, namedNode('jane'), jane => {
-          jane.addOut(schema.knows, namedNode('john'))
+        .addOut(schema.knows, $rdf.namedNode('jane'), jane => {
+          jane.addOut(schema.knows, $rdf.namedNode('john'))
         })
       function PersonMixin<Base extends Constructor>(base: Base) {
         class TestPerson extends base {
@@ -1686,7 +1680,7 @@ describe('RdfResource', () => {
         .namedNode('john')
         .addOut(
           schema.knows,
-          [namedNode('jane'), namedNode('jenny')],
+          [$rdf.namedNode('jane'), $rdf.namedNode('jenny')],
           friends => {
             friends.forEach(friend =>
               friend.addOut(schema.givenName, friend.value),
@@ -1747,7 +1741,7 @@ describe('RdfResource', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
-        .addList(schema.knows, [namedNode('jane'), namedNode('jenny')])
+        .addList(schema.knows, [ $rdf.namedNode('jane'),  $rdf.namedNode('jenny')])
       node.namedNode('jane').addOut(schema.givenName, 'jane')
       node.namedNode('jenny').addOut(schema.givenName, 'jenny')
       function PersonMixin<Base extends Constructor>(base: Base) {
@@ -1808,7 +1802,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
         .addOut(schema.givenName, 'John')
-        .addOut(schema.knows, namedNode('jane'), jane => {
+        .addOut(schema.knows, $rdf.namedNode('jane'), jane => {
           jane.addOut(schema.givenName, 'Jane')
         })
       function PersonMixin<Base extends Constructor>(base: Base) {
@@ -1851,7 +1845,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('article')
         .addOut(dcterms.title, 'Using alcaeus')
-        .addOut(dcterms.creator, namedNode('john'), john => {
+        .addOut(dcterms.creator, $rdf.namedNode('john'), john => {
           john.addOut(schema.givenName, 'John')
         })
       function PersonMixin<Base extends Constructor>(base: Base) {
@@ -1900,7 +1894,7 @@ describe('RdfResource', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
-        .addOut(schema.knows, namedNode('jane'), jane => {
+        .addOut(schema.knows, $rdf.namedNode('jane'), jane => {
           jane.addOut(schema.givenName, 'Jane')
         })
       class TestPerson extends RdfResource {

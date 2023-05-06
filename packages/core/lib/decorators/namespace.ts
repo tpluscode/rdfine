@@ -1,5 +1,5 @@
-import ns from '@rdf-esm/namespace'
-import type { NamespaceBuilder } from '@rdf-esm/namespace'
+import ns from '@rdfjs/namespace'
+import type { NamespaceBuilder } from '@rdfjs/namespace'
 import type { Constructor } from '../ResourceFactory'
 import type { ClassDescriptor } from '.'
 import type { RdfResourceCore } from '../../RdfResource'

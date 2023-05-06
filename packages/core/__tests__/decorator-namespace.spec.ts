@@ -6,7 +6,7 @@ import RdfResource from '../RdfResource'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { foaf } from '@tpluscode/rdf-ns-builders'
 import { rdfs, schema } from '@tpluscode/rdf-ns-builders/loose'
-import builder, { NamespaceBuilder } from '@rdf-esm/namespace'
+import builder, { NamespaceBuilder } from '@rdfjs/namespace'
 
 describe('decorator', () => {
   describe('namespace', () => {

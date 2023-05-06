@@ -1,6 +1,6 @@
 import factory from '@rdfjs/dataset'
 import fetch from '@rdfjs/fetch'
-import { namedNode } from '@rdfjs/data-model'
+import RDF from 'rdf-ext'
 import { turtle } from '@tpluscode/rdf-string'
 import * as Schema from '@rdfine/schema'
 import RdfResource from '@tpluscode/rdfine'
@@ -14,7 +14,7 @@ RdfResource.factory.addMixin(Schema.PersonMixin)
 async function main() {
   // download the triples about Howard
   const response = await fetch(howard, {
-    factory,
+    factory: RDF,
   })
   const dataset = await response.dataset()
 
@@ -23,7 +23,7 @@ async function main() {
   // the <Schema.Person> is just syntactic sugar to make TypeScript happy
   const person = RdfResource.factory.createEntity<Schema.Person>(cf({
     dataset,
-    term: namedNode(howard),
+    term: RDF.namedNode(howard),
   }))
 
   // access the properties like plain JavaScript

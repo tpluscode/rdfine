@@ -4,8 +4,7 @@ import { namespace, property, crossBoundaries, Constructor } from '../index'
 import RdfResource from '../RdfResource'
 import { parse, ex } from './_helpers'
 import type { DatasetCore, DefaultGraph, Literal, NamedNode, Term } from '@rdfjs/types'
-import * as RDF from '@rdf-esm/data-model'
-import rdfExt from 'rdf-ext'
+import RDF from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { foaf, schema, rdf } from '@tpluscode/rdf-ns-builders/loose'
 import { turtle } from '@tpluscode/rdf-string'
@@ -246,7 +245,7 @@ describe('decorator', () => {
 
       it('strict throws when object not found', async () => {
         // given
-        const dataset = rdfExt.dataset()
+        const dataset = RDF.dataset()
         class Resource extends RdfResource {
           @property({ path: foaf.name, strict: true })
           name!: Literal
@@ -265,7 +264,7 @@ describe('decorator', () => {
 
       it('strict can be initialized', async () => {
         // given
-        const dataset = rdfExt.dataset()
+        const dataset = RDF.dataset()
         class Resource extends RdfResource {
           @property.literal({ path: foaf.name, strict: true, initial: 'bar' })
           foo!: string
@@ -284,7 +283,7 @@ describe('decorator', () => {
 
       it('array can be initialized', async () => {
         // given
-        const dataset = rdfExt.dataset()
+        const dataset = RDF.dataset()
         class Resource extends RdfResource {
           @property.literal({ path: foaf.name, values: 'array', initial: 'bar' })
           foo!: string
@@ -305,7 +304,7 @@ describe('decorator', () => {
 
       it('array can be initialized with multiple values', async () => {
         // given
-        const dataset = rdfExt.dataset()
+        const dataset = RDF.dataset()
         class Resource extends RdfResource {
           @property.literal({ path: foaf.name, values: 'array', initial: ['foo', 'bar'] })
           foo!: string
@@ -326,7 +325,7 @@ describe('decorator', () => {
 
       it('rdf list can be initialized', async () => {
         // given
-        const dataset = rdfExt.dataset()
+        const dataset = RDF.dataset()
         class Resource extends RdfResource {
           @property.literal({ path: foaf.name, values: 'list', initial: 'bar' })
           foo!: string
@@ -347,7 +346,7 @@ describe('decorator', () => {
 
       it('rdf list can be initialized with multiple values', async () => {
         // given
-        const dataset = rdfExt.dataset()
+        const dataset = RDF.dataset()
         class Resource extends RdfResource {
           @property.literal({ path: foaf.name, values: 'list', initial: ['foo', 'bar'] })
           foo!: string
@@ -697,7 +696,7 @@ describe('decorator', () => {
           dataset,
           term: ex.res,
         }))
-        instance.friend = [rdfExt.literal('bar'), rdfExt.literal('baz')]
+        instance.friend = [RDF.literal('bar'), RDF.literal('baz')]
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
@@ -729,7 +728,7 @@ describe('decorator', () => {
 
       it('can set an rdf resource', async () => {
         // given
-        const ptr = cf({ dataset: rdfExt.dataset() }).node(ex.res)
+        const ptr = cf({ dataset: RDF.dataset() }).node(ex.res)
         class Resource extends RdfResource {
           @property({ path: foaf.knows })
           friend!: any
@@ -737,7 +736,7 @@ describe('decorator', () => {
 
         // when
         const instance = new Resource(ptr)
-        instance.friend = new Resource(cf({ dataset: rdfExt.dataset() }).node(ex.friend))
+        instance.friend = new Resource(cf({ dataset: RDF.dataset() }).node(ex.friend))
 
         // then
         expect(ptr.out(foaf.knows).term).toStrictEqual(ex.friend)
@@ -745,7 +744,7 @@ describe('decorator', () => {
 
       it('can set a pointer', async () => {
         // given
-        const ptr = cf({ dataset: rdfExt.dataset() }).node(ex.res)
+        const ptr = cf({ dataset: RDF.dataset() }).node(ex.res)
         class Resource extends RdfResource {
           @property({ path: foaf.knows })
           friend!: any
@@ -753,7 +752,7 @@ describe('decorator', () => {
 
         // when
         const instance = new Resource(ptr)
-        instance.friend = cf({ dataset: rdfExt.dataset() }).node(ex.friend)
+        instance.friend = cf({ dataset: RDF.dataset() }).node(ex.friend)
 
         // then
         expect(ptr.out(foaf.knows).term).toStrictEqual(ex.friend)
@@ -761,7 +760,7 @@ describe('decorator', () => {
 
       it('can set from factory', async () => {
         // given
-        const ptr = cf({ dataset: rdfExt.dataset() }).node(ex.res)
+        const ptr = cf({ dataset: RDF.dataset() }).node(ex.res)
         class Resource extends RdfResource {
           @property({ path: foaf.knows })
           friend!: any
@@ -779,7 +778,7 @@ describe('decorator', () => {
       describe('filtered', () => {
         it('sets only values matching filter', () => {
           // given
-          const ptr = cf({ dataset: rdfExt.dataset() }).node(ex.res)
+          const ptr = cf({ dataset: RDF.dataset() }).node(ex.res)
           class Resource extends RdfResource {
             @property({
               path: foaf.knows,
@@ -793,8 +792,8 @@ describe('decorator', () => {
           const instance = new Resource(ptr)
           instance.friends = [
             ex.friend,
-            rdfExt.blankNode(),
-            rdfExt.literal('foo'),
+            RDF.blankNode(),
+            RDF.literal('foo'),
           ]
 
           // then
@@ -806,7 +805,7 @@ describe('decorator', () => {
     describe('initial', () => {
       it('sets initial value from node', async () => {
         // given
-        const dataset = rdfExt.dataset()
+        const dataset = RDF.dataset()
         class Resource extends RdfResource {
           @property({
             path: schema.name,
@@ -828,7 +827,7 @@ describe('decorator', () => {
 
       it('sets initial value from clownface object', async () => {
         // given
-        const dataset = rdfExt.dataset()
+        const dataset = RDF.dataset()
         class Resource extends RdfResource {
           @property({
             path: schema.name,
@@ -850,7 +849,7 @@ describe('decorator', () => {
 
       it('sets initial value from function', async () => {
         // given
-        const dataset = rdfExt.dataset()
+        const dataset = RDF.dataset()
         class Resource extends RdfResource {
           @property({
             path: schema.name,
@@ -872,7 +871,7 @@ describe('decorator', () => {
 
       it('sets all initial values from all mixins', async () => {
         // given
-        const dataset = rdfExt.dataset()
+        const dataset = RDF.dataset()
         function NameMixin<Base extends Constructor>(Resource: Base) {
           class Name extends Resource {
             @property.literal({
@@ -947,7 +946,7 @@ describe('decorator', () => {
 
           it('returns self when dataset is empty', async () => {
             // given
-            const dataset = rdfExt.dataset()
+            const dataset = RDF.dataset()
 
             // when
             const instance = newResource(dataset, ex.John)
@@ -1054,7 +1053,7 @@ describe('decorator', () => {
         describe('initial', () => {
           it('sets initial values in self graph', () => {
             // given
-            const dataset = rdfExt.dataset()
+            const dataset = RDF.dataset()
             const instance = newResource(dataset, ex.John, ex.John)
 
             // when

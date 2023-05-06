@@ -1,7 +1,7 @@
 import { NamedNode } from '@rdfjs/types'
-import RDF from '@rdf-esm/data-model'
+import RDF from '@rdfjs/data-model'
 import cf, { GraphPointer } from 'clownface'
-import type { NamespaceBuilder } from '@rdf-esm/namespace'
+import type { NamespaceBuilder } from '@rdfjs/namespace'
 
 export interface EdgeTraversal {
   (subject: GraphPointer): GraphPointer[]

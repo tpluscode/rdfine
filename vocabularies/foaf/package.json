@@ -23,9 +23,9 @@
     "prefix": "foaf"
   },
   "dependencies": {
-    "@rdf-esm/data-model": "^0.5.3",
+    "@rdfjs/data-model": "^2",
     "@rdfine/skos": "^0.1.6",
-    "@tpluscode/rdf-ns-builders": "^3.0.2",
+    "@tpluscode/rdf-ns-builders": ">=3.0.2",
     "@tpluscode/rdfine": "^0.5.39"
   },
   "peerDependencies": {

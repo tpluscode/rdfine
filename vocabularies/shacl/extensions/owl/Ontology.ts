@@ -1,12 +1,12 @@
 import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { owl } from '@tpluscode/rdf-ns-builders';
 import { sh } from '../../lib/namespace.js';
 import type * as Sh from '../../index.js';
-import type * as Owl from '@rdfine/owl.js';
-import type * as Rdfs from '@rdfine/rdfs.js';
+import type * as Owl from '@rdfine/owl';
+import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource.js';
 import { OntologyMixin as OwlOntologyMixin } from '@rdfine/owl/lib/Ontology.js';
 

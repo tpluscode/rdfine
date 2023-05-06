@@ -4,9 +4,9 @@ import { Context, GeneratedModule, WriteModule } from '../index.js'
 import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types/index.js'
 import { PropertyWriter } from '../property/PropertyWriter.js'
 import { JavascriptProperty } from '../property/JsProperties.js'
+import { ExtensionModule } from '../ExtensionMixinGenerator/ExtensionModule.js'
 import { MixinModuleBase } from './MixinModuleBase.js'
 import { getSuperClasses } from './index.js'
-import { ExtensionModule } from '../ExtensionMixinGenerator/ExtensionModule.js'
 
 export class MixinModule extends MixinModuleBase<ResourceType> {
   superClasses: Array<ResourceType | ExternalResourceType>
@@ -180,8 +180,8 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     })
 
     mixinFile.addImportDeclaration({
-      namespaceImport: '$rdf',
-      moduleSpecifier: '@rdf-esm/data-model',
+      defaultImport: '$rdf',
+      moduleSpecifier: '@rdfjs/data-model',
     })
     mixinFile.addImportDeclaration({
       namespaceImport: 'RDF',

@@ -1,11 +1,11 @@
 import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from '@tpluscode/rdf-ns-builders';
 import { dash } from '../../lib/namespace.js';
 import type * as Dash from '../../index.js';
-import type * as Shacl from '@rdfine/shacl.js';
+import type * as Shacl from '@rdfine/shacl';
 import { NodeShapeMixin as ShaclNodeShapeMixin } from '@rdfine/shacl/lib/NodeShape.js';
 
 interface PropertyShapeEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
@@ -13,8 +13,8 @@ interface PropertyShapeEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   editor: Dash.Editor<D> | undefined;
   hidden: boolean | undefined;
   indexed: boolean | undefined;
-  localValues: boolean | undefined;
   mimeTypes: string | undefined;
+  neverMaterialize: boolean | undefined;
   readOnly: boolean | undefined;
   reifiableBy: Array<Shacl.NodeShape<D>>;
   viewer: Dash.Viewer<D> | undefined;
@@ -36,10 +36,10 @@ export function PropertyShapeMixinEx<Base extends ExtendingConstructor<Shacl.Pro
     hidden: boolean | undefined;
     @property.literal({ type: Boolean })
     indexed: boolean | undefined;
-    @property.literal({ type: Boolean })
-    localValues: boolean | undefined;
     @property.literal()
     mimeTypes: string | undefined;
+    @property.literal({ type: Boolean })
+    neverMaterialize: boolean | undefined;
     @property.literal({ type: Boolean })
     readOnly: boolean | undefined;
     @property.resource({ values: 'array', as: [ShaclNodeShapeMixin] })

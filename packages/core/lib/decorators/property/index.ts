@@ -5,7 +5,7 @@ import literalPropertyDecorator, { LiteralValues } from '../property/literal'
 import resourcePropertyDecorator from '../property/resource'
 import * as compare from '../../compare'
 import { toLiteral } from '../../conversion'
-import { literal } from '@rdf-esm/data-model'
+import $rdf from '@rdfjs/data-model'
 import { propertyDecorator, ObjectOrFactory, PropertyReturnKind, ArrayOrSingle } from './decoratorFactory'
 import { Initializer } from '../../../RdfResource'
 import { fromInitializer } from '../../resource'
@@ -37,7 +37,7 @@ export function property<R extends RdfResourceCore<any>>(options: AccessorOption
         return fromInitializer(this, value).id
       }
 
-      return toLiteral(value) || literal(value.toString())
+      return toLiteral(value) || $rdf.literal(value.toString())
     },
     valueTypeName: 'RDF/JS term object',
     assertSetValue: () => true,

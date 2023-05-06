@@ -1,10 +1,10 @@
-import { createFactory } from '../factory'
-import { Constructor } from '../lib/ResourceFactory'
-import { RdfResource } from '../RdfResource'
-import { property } from '../lib/decorators'
-import { ex } from './_helpers'
 import clownface from 'clownface'
 import $rdf from 'rdf-ext'
+import { createFactory } from '../factory.js'
+import { Constructor } from '../lib/ResourceFactory.js'
+import { RdfResource } from '../RdfResource.js'
+import { property } from '../lib/decorators/index.js'
+import { ex } from './_helpers/index.js'
 
 interface TestResource extends RdfResource {
   foo?: string

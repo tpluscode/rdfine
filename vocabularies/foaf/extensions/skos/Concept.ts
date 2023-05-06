@@ -1,11 +1,11 @@
 import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { skos } from '@tpluscode/rdf-ns-builders';
 import { foaf } from '../../lib/namespace.js';
 import type * as Foaf from '../../index.js';
-import type * as Skos from '@rdfine/skos.js';
+import type * as Skos from '@rdfine/skos';
 
 interface ConceptEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   focus: RDF.NamedNode | undefined;

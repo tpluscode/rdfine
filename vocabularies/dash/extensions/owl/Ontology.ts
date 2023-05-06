@@ -1,11 +1,11 @@
 import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { owl } from '@tpluscode/rdf-ns-builders';
 import { dash } from '../../lib/namespace.js';
 import type * as Dash from '../../index.js';
-import type * as Owl from '@rdfine/owl.js';
+import type * as Owl from '@rdfine/owl';
 
 interface OntologyEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   defaultLang: string | undefined;

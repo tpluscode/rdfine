@@ -2,7 +2,7 @@ import { DatasetCore, Term } from '@rdfjs/types'
 import cf, { GraphPointer } from 'clownface'
 import type { RdfResourceCore, ResourceIdentifier } from '../RdfResource'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import RDF from '@rdf-esm/data-model'
+import RDF from '@rdfjs/data-model'
 import { onlyUnique } from './filter'
 import * as compare from './compare'
 
@@ -78,7 +78,9 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
     return this.__values[Symbol.iterator]()
   }
 
-  [Symbol.toStringTag]: string;
+  get [Symbol.toStringTag](): string {
+    return this.__values.toString()
+}
 
   public constructor(resource: RdfResourceCore<D>, allGraphs = false) {
     this.__resource = resource

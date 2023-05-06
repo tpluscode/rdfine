@@ -1,11 +1,11 @@
 import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rdfs } from '@tpluscode/rdf-ns-builders';
 import { hydra } from '../../lib/namespace.js';
 import type * as Hydra from '../../index.js';
-import type * as Rdfs from '@rdfine/rdfs.js';
+import type * as Rdfs from '@rdfine/rdfs';
 
 interface ClassEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   supportedProperty: Array<Hydra.SupportedProperty<D>>;

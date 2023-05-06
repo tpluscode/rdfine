@@ -52,14 +52,13 @@
     ]
   },
   "dependencies": {
-    "@rdf-esm/data-model": "^0.5.3",
-    "@tpluscode/rdf-ns-builders": "^3.0.2",
+    "@rdfjs/data-model": "^2",
+    "@tpluscode/rdf-ns-builders": ">=3.0.2",
     "@tpluscode/rdfine": "^0.5.39"
   },
   "devDependencies": {
-    "@rdfjs/data-model": "^1.2.0",
-    "@rdfjs/dataset": "^1.0.1",
-    "clownface": "^1"
+    "clownface": "^1",
+    "rdf-ext": "^2"
   },
   "repository": {
     "type": "git",

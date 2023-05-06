@@ -1,6 +1,5 @@
 import clownface from 'clownface';
-import { dataset } from '@rdfjs/dataset';
-import { namedNode } from '@rdf-esm/data-model';
+import $rdf from 'rdf-ext';
 import { fromPointer, PersonMixin } from '../lib/Person';
 import { schema } from '@tpluscode/rdf-ns-builders';
 import RdfResourceImpl, { ResourceFactory } from '@tpluscode/rdfine';
@@ -15,7 +14,7 @@ describe('curried initializers', () => {
 
   it('initializes blank', () => {
     // given
-    const id = clownface({ dataset: dataset() }).namedNode('foo')
+    const id = clownface({ dataset: $rdf.dataset() }).namedNode('foo')
 
     // when
     const person = fromPointer(id, {
@@ -31,7 +30,7 @@ describe('curried initializers', () => {
 
   it('initializes named from string', () => {
     // given
-    const id = clownface({ dataset: dataset() }).namedNode('foo')
+    const id = clownface({ dataset: $rdf.dataset() }).namedNode('foo')
 
     // when
     const person = fromPointer(id, {
@@ -42,29 +41,29 @@ describe('curried initializers', () => {
 
     // then
     expect(person.parent?.name).toEqual('John')
-    expect(person.parent?.id).toEqual(namedNode('http://foo.bar/John'))
+    expect(person.parent?.id).toEqual($rdf.namedNode('http://foo.bar/John'))
   })
 
   it('initializes named from term', () => {
     // given
-    const id = clownface({ dataset: dataset() }).namedNode('foo')
+    const id = clownface({ dataset: $rdf.dataset() }).namedNode('foo')
 
     // when
     const person = fromPointer(id, {
-      parent: fromPointer(namedNode('http://foo.bar/John'), {
+      parent: fromPointer($rdf.namedNode('http://foo.bar/John'), {
         name: 'John',
       }),
     }, { factory })
 
     // then
     expect(person.parent?.name).toEqual('John')
-    expect(person.parent?.id).toEqual(namedNode('http://foo.bar/John'))
+    expect(person.parent?.id).toEqual($rdf.namedNode('http://foo.bar/John'))
   })
 
   it('initializes URI property from existing resource', () => {
     // given
-    const id = clownface({ dataset: dataset() }).namedNode('foo')
-    const john = fromPointer(clownface({ dataset: dataset() }).namedNode('http://foo.bar/John'))
+    const id = clownface({ dataset: $rdf.dataset() }).namedNode('foo')
+    const john = fromPointer(clownface({ dataset: $rdf.dataset() }).namedNode('http://foo.bar/John'))
 
     // when
     const person = fromPointer(id, {
@@ -72,22 +71,22 @@ describe('curried initializers', () => {
     })
 
     // then
-    expect(person.parent?.id).toEqual(namedNode('http://foo.bar/John'))
+    expect(person.parent?.id).toEqual($rdf.namedNode('http://foo.bar/John'))
   })
 
   it('initializes URI property from term', () => {
     // given
-    const id = clownface({ dataset: dataset() }).namedNode('foo')
+    const id = clownface({ dataset: $rdf.dataset() }).namedNode('foo')
 
     // when
     const person = fromPointer(id, {
-      [schema.parent.value]: fromPointer(namedNode('http://foo.bar/John'), {
+      [schema.parent.value]: fromPointer($rdf.namedNode('http://foo.bar/John'), {
         name: 'John',
       }),
     }, { factory })
 
     // then
     expect(person.parent?.name).toEqual('John')
-    expect(person.parent?.id).toEqual(namedNode('http://foo.bar/John'))
+    expect(person.parent?.id).toEqual($rdf.namedNode('http://foo.bar/John'))
   })
 })

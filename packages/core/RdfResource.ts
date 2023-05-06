@@ -1,5 +1,5 @@
 /* eslint-disable camelcase,no-dupe-class-members,no-use-before-define */
-import type { NamespaceBuilder } from '@rdf-esm/namespace'
+import type { NamespaceBuilder } from '@rdfjs/namespace'
 import { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from '@rdfjs/types'
 import cf, { MultiPointer, GraphPointer, AnyPointer } from 'clownface'
 import ResourceFactoryImpl from './lib/ResourceFactory'
@@ -14,7 +14,7 @@ import once from 'once'
 import type { TypeCollection } from './lib/TypeCollection'
 import TypeCollectionCtor from './lib/TypeCollection'
 import { xsd } from '@tpluscode/rdf-ns-builders'
-import { defaultGraphInstance } from '@rdf-esm/data-model'
+import $rdf from '@rdfjs/data-model'
 import { toJSON } from './lib/toJSON'
 import type { Jsonified } from './lib/toJSON'
 import { fromInitializer } from './lib/resource'
@@ -177,7 +177,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       this.pointer = selfGraph
       this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: undefined })
     } else {
-      this.pointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: defaultGraphInstance })
+      this.pointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: $rdf.defaultGraph() })
       this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term })
     }
 

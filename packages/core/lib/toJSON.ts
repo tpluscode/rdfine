@@ -1,7 +1,7 @@
-import TermMap from '@rdf-esm/term-map'
+import TermMap from '@rdfjs/term-map'
 import type { BlankNode, DatasetCore, Literal, NamedNode, Term } from '@rdfjs/types'
-import { namedNode } from '@rdf-esm/data-model'
-import TermSet from '@rdf-esm/term-set'
+import $rdf from '@rdfjs/data-model'
+import TermSet from '@rdfjs/term-set'
 import { rdf, xsd } from '@tpluscode/rdf-ns-builders'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
 import type { ResourceIndexer } from './ResourceFactory'
@@ -190,7 +190,7 @@ function jsonifyProperties(params: ToJsonContext & JsonifyPropertiesContext) {
     }
 
     let propertyAddedToContext = false
-    const predicate = typeof path === 'string' ? namedNode(path) : path
+    const predicate = typeof path === 'string' ? $rdf.namedNode(path) : path
     const terms = remainingObjects.get(predicate)
     if (!terms) {
       return { json, contextPopulated }

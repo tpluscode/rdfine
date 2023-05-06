@@ -114,8 +114,8 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
     })
 
     mixinFile.addImportDeclaration({
-      namespaceImport: '$rdf',
-      moduleSpecifier: '@rdf-esm/data-model',
+      defaultImport: '$rdf',
+      moduleSpecifier: '@rdfjs/data-model',
     })
     mixinFile.addImportDeclaration({
       namespaceImport: 'RDF',

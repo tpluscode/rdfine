@@ -2,7 +2,7 @@ import stringToStream from 'string-to-stream'
 import rdf from 'rdf-ext'
 import Parser from '@rdfjs/parser-n3'
 import DatasetExt from 'rdf-ext/lib/Dataset'
-import ns from '@rdf-esm/namespace'
+import ns from '@rdfjs/namespace'
 import prefixes from '@zazuko/prefixes'
 import { TurtleTemplateResult } from '@tpluscode/rdf-string'
 

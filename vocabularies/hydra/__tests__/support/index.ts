@@ -1,7 +1,7 @@
 import stringToStream from 'string-to-stream'
 import rdf from 'rdf-ext'
 import Parser from '@rdfjs/parser-n3'
-import { prefixes } from '@zazuko/rdf-vocabularies'
+import prefixes from '@zazuko/prefixes'
 
 const parser = new Parser()
 
