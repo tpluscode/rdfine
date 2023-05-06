@@ -2,7 +2,8 @@ import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import type { NamedNode } from '@rdfjs/types'
 import { hydra } from '@tpluscode/rdf-ns-builders'
-import { fromPointer } from '../lib/Collection'
+import { fromPointer } from '../lib/Collection.js'
+import {expect} from "chai";
 
 describe('Collection', () => {
   let collectionNode: GraphPointer<NamedNode>
@@ -22,8 +23,8 @@ describe('Collection', () => {
       const collection = fromPointer(collectionNode)
 
       // then
-      expect(Array.isArray(collection.member)).toBe(true)
-      expect(collection.member[0]).toHaveProperty(['http://example.com/text', 'value'], 'hello')
+      expect(Array.isArray(collection.member)).to.eq(true)
+      expect(collection.member[0]).to.have.property(['http://example.com/text', 'value'], 'hello')
     })
   })
 
@@ -33,8 +34,8 @@ describe('Collection', () => {
       const collection = fromPointer(collectionNode)
 
       // then
-      expect(Array.isArray(collection.view)).toBe(true)
-      expect(collection.view.length).toBe(0)
+      expect(Array.isArray(collection.view)).to.eq(true)
+      expect(collection.view.length).to.eq(0)
     })
   })
 
@@ -45,7 +46,7 @@ describe('Collection', () => {
       const collection = fromPointer(collectionNode)
 
       // then
-      expect(collection.manages).toHaveLength(1)
+      expect(collection.manages).to.have.length(1)
     })
   })
 
@@ -56,7 +57,7 @@ describe('Collection', () => {
       const collection = fromPointer(collectionNode)
 
       // then
-      expect(Array.isArray(collection.memberAssertion)).toBe(true)
+      expect(Array.isArray(collection.memberAssertion)).to.eq(true)
     })
   })
 
@@ -67,7 +68,7 @@ describe('Collection', () => {
       const collection = fromPointer(collectionNode)
 
       // then
-      expect(collection.totalItems).toBe(167)
+      expect(collection.totalItems).to.eq(167)
     })
   })
 })

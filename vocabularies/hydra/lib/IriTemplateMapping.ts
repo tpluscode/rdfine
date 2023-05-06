@@ -7,7 +7,7 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
-import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property.js';
+import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
 export interface IriTemplateMapping<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
   property: Rdf.Property<D> | undefined;

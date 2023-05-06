@@ -1,19 +1,18 @@
 import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import DatasetExt from 'rdf-ext/lib/Dataset'
-import type { NamedNode } from '@rdfjs/types'
+import type { DatasetCore, NamedNode } from '@rdfjs/types'
 import namespace from '@rdfjs/namespace'
 import Parser from '@rdfjs/parser-n3'
-import { fromPointer } from '../lib/Class'
+import { fromPointer } from '../lib/Class.js'
 import { hydra } from '@tpluscode/rdf-ns-builders'
-import * as graphs from './Class-spec-graphs'
+import { expect } from 'chai';
 
 const parser = new Parser()
 const vocab = namespace('http://example.com/vocab#')
 
 describe('Class', () => {
   let hydraClassNode: GraphPointer<NamedNode>
-  let dataset: DatasetExt
+  let dataset: DatasetCore
 
   beforeEach(() => {
     dataset = $rdf.dataset()
@@ -30,7 +29,7 @@ describe('Class', () => {
       const clas = fromPointer(hydraClassNode)
 
       // then
-      expect(clas.supportedOperation.length).toBe(1)
+      expect(clas.supportedOperation.length).to.eq(1)
     })
 
     it('should return empty array if property is missing', () => {
@@ -38,7 +37,7 @@ describe('Class', () => {
       const clas = fromPointer(hydraClassNode)
 
       // then
-      expect(clas.supportedOperation.length).toBe(0)
+      expect(clas.supportedOperation.length).to.eq(0)
     })
   })
 
@@ -51,13 +50,13 @@ describe('Class', () => {
       const clas = fromPointer(hydraClassNode)
 
       // then
-      expect(clas.supportedProperty.length).toBe(1)
+      expect(clas.supportedProperty.length).to.eq(1)
     })
 
     it('should return empty array if property is missing', () => {
       const clas = fromPointer(hydraClassNode)
 
-      expect(clas.supportedProperty.length).toBe(0)
+      expect(clas.supportedProperty.length).to.eq(0)
     })
   })
 })

@@ -83,6 +83,7 @@
     "@rdfjs/parser-n3": "^2",
     "@tpluscode/rdf-string": "^1.0.3",
     "@zazuko/prefixes": ">=1",
+    "chai": "^4.3.7",
     "clownface": "^1",
     "rdf-ext": "^2",
     "string-to-stream": "^3.0.1"

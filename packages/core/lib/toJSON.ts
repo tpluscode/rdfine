@@ -4,12 +4,12 @@ import $rdf from '@rdfjs/data-model'
 import TermSet from '@rdfjs/term-set'
 import { rdf, xsd } from '@tpluscode/rdf-ns-builders'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
-import type { ResourceIndexer } from './ResourceFactory'
-import type { RdfResource, ResourceIdentifier } from '../RdfResource'
-import { enumerateList, isList } from './rdf-list'
-import { PropertyMeta } from './decorators/property'
-import { mixins } from './mixins'
 import { GraphPointer } from 'clownface'
+import type { RdfResource, ResourceIdentifier } from '../RdfResource.js'
+import type { ResourceIndexer } from './ResourceFactory.js'
+import { enumerateList, isList } from './rdf-list.js'
+import { PropertyMeta } from './decorators/property/index.js'
+import { mixins } from './mixins.js'
 
 type PropertyValue = RdfResource | Term
 

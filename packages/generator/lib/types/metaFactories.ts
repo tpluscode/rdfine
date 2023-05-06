@@ -3,6 +3,10 @@ import { shrink } from '@zazuko/prefixes'
 import { dash, hydra, owl, rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
 import { NamedNode } from '@rdfjs/types'
 import { identifier } from 'safe-identifier'
+import type { Context, TypeOverride } from '../index.js'
+import { toUpperInitial } from '../util/string.js'
+import { isEnumerationType } from './util.js'
+import { DatatypeName, wellKnownDatatypes } from './wellKnownDatatypes.js'
 import {
   EnumerationMember,
   EnumerationType,
@@ -10,10 +14,6 @@ import {
   LiteralType,
   ResourceType, TermType,
 } from './index.js'
-import type { Context, TypeOverride } from '../index.js'
-import { toUpperInitial } from '../util/string.js'
-import { isEnumerationType } from './util.js'
-import { DatatypeName, wellKnownDatatypes } from './wellKnownDatatypes.js'
 
 const externalPrefixMap: Record<string, string> = {
   sh: 'shacl',

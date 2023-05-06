@@ -1,8 +1,9 @@
 import { Debugger } from 'debug'
-import { Context } from '../../lib'
+import sinon from 'sinon'
+import { Context } from '../../lib/index.js'
 
 export const fakeLog = (): Context['log'] => ({
-  debug: jest.fn<Debugger, any>(),
-  warn: jest.fn<Debugger, any>(),
-  error: jest.fn<Debugger, any>(),
+  debug: sinon.stub(),
+  warn: sinon.stub(),
+  error: sinon.stub(),
 } as any)

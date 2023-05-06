@@ -1,10 +1,10 @@
 import { DatasetCore, Term } from '@rdfjs/types'
 import cf, { GraphPointer } from 'clownface'
-import type { RdfResourceCore, ResourceIdentifier } from '../RdfResource'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import RDF from '@rdfjs/data-model'
-import { onlyUnique } from './filter'
-import * as compare from './compare'
+import type { RdfResourceCore, ResourceIdentifier } from '../RdfResource.js'
+import { onlyUnique } from './filter.js'
+import * as compare from './compare.js'
 
 function getNode(value: RdfResourceCore | ResourceIdentifier | string): ResourceIdentifier {
   if (typeof value === 'string') {
@@ -80,7 +80,7 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
 
   get [Symbol.toStringTag](): string {
     return this.__values.toString()
-}
+  }
 
   public constructor(resource: RdfResourceCore<D>, allGraphs = false) {
     this.__resource = resource

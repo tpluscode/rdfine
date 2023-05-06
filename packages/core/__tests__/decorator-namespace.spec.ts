@@ -1,12 +1,13 @@
 import prefixes from '@zazuko/prefixes'
 import cf from 'clownface'
 import $rdf from 'rdf-ext'
-import { Constructor, namespace, property } from '../index'
-import RdfResource from '../RdfResource'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { foaf } from '@tpluscode/rdf-ns-builders'
 import { rdfs, schema } from '@tpluscode/rdf-ns-builders/loose'
 import builder, { NamespaceBuilder } from '@rdfjs/namespace'
+import RdfResource from '../RdfResource.js'
+import { Constructor, namespace, property } from '../index.js'
+import {expect} from "chai";
 
 describe('decorator', () => {
   describe('namespace', () => {
@@ -20,7 +21,7 @@ describe('decorator', () => {
       const ns = WithNamespace.__ns!()
 
       // then
-      expect(ns.value).toEqual('http://foo/')
+      expect(ns.value).to.eq('http://foo/')
     })
 
     it('sets namespace property from builder', () => {
@@ -33,7 +34,7 @@ describe('decorator', () => {
       const ns = WithNamespace.__ns!()
 
       // then
-      expect(ns.value).toEqual(foaf('').value)
+      expect(ns.value).to.eq(foaf('').value)
     })
 
     it('works with typed namespace builder', () => {
@@ -47,7 +48,7 @@ describe('decorator', () => {
       const ns = WithNamespace.__ns!()
 
       // then
-      expect(ns.value).toEqual('http://example.com/')
+      expect(ns.value).to.eq('http://example.com/')
     })
 
     it('can be used on class extending specific dataset type', () => {
@@ -60,7 +61,7 @@ describe('decorator', () => {
       const ns = WithNamespace.__ns!()
 
       // then
-      expect(ns.value).toEqual(foaf('').value)
+      expect(ns.value).to.eq(foaf('').value)
     })
 
     describe('used on mixins', () => {
@@ -100,8 +101,8 @@ describe('decorator', () => {
         const resource = new TwoNamespaces(node as any)
 
         // then
-        expect(resource.name).toBe('schema name')
-        expect(resource.label).toBe('rdfs label')
+        expect(resource.name).to.eq('schema name')
+        expect(resource.label).to.eq('rdfs label')
       })
     })
   })

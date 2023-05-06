@@ -1,23 +1,28 @@
-import { toMatchSnapshot } from 'jest-snapshot'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { SourceFile } from 'ts-morph'
 import Parser from '@rdfjs/parser-jsonld'
 import toStream from 'string-to-stream'
 import $rdf from 'rdf-ext'
+import {Assertion, expect} from "chai";
+import {addSerializer} from "jest-snapshot";
 
 const parser = new Parser()
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace jest {
-    interface Matchers<R> {
-      toBeValidJsonLd(): R
+  namespace Chai {
+    interface TypeComparison {
+      validJsonLd(): void
+    }
+
+    interface Assertion {
+      toMatchInlineSnapshot(snapshot: string): void
     }
   }
 }
+Assertion.addMethod('validJsonLd', async function (this: Chai.AssertionStatic) {
+  const received: string | Record<string, any> = this._obj
 
-expect.extend({
-  async toBeValidJsonLd(received: string | Record<string, any>) {
     const jsonld = typeof received === 'string' ? received : JSON.stringify(received)
 
     try {
@@ -33,10 +38,9 @@ expect.extend({
         pass: false,
       }
     }
-  },
 })
 
-expect.addSnapshotSerializer({
+addSerializer({
   test(val) {
     return typeof val === 'object' && val && 'toCanonical' in val
   },
@@ -45,7 +49,7 @@ expect.addSnapshotSerializer({
   },
 })
 
-expect.addSnapshotSerializer({
+addSerializer({
   test(val) {
     return typeof val === 'object' && 'saveSync' in val
   },
@@ -54,3 +58,4 @@ expect.addSnapshotSerializer({
     return val.getProject().getFileSystem().readFileSync(val.getFilePath())
   },
 })
+

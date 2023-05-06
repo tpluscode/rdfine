@@ -4,7 +4,8 @@ import DatasetExt from 'rdf-ext/lib/Dataset'
 import type { NamedNode } from '@rdfjs/types'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import RdfResourceImpl from '@tpluscode/rdfine';
-import { IriTemplateMappingMixin } from '../lib/IriTemplateMapping';
+import { IriTemplateMappingMixin } from '../lib/IriTemplateMapping.js';
+import {expect} from "chai";
 
 class IriTemplateMapping extends IriTemplateMappingMixin(RdfResourceImpl) {}
 
@@ -22,7 +23,7 @@ describe('IriTemplateMapping', () => {
       const iriTemplate = new IriTemplateMapping(node)
 
       // then
-      expect(iriTemplate.required).toBe(false)
+      expect(iriTemplate.required).to.eq(false)
     })
   })
 
@@ -34,7 +35,7 @@ describe('IriTemplateMapping', () => {
       const iriTemplate = new IriTemplateMapping(node)
 
       // then
-      expect(iriTemplate.variable).toBe('test')
+      expect(iriTemplate.variable).to.eq('test')
     })
   })
 
@@ -45,7 +46,7 @@ describe('IriTemplateMapping', () => {
       const iriTemplate = new IriTemplateMapping(node)
 
       // then
-      expect(iriTemplate.property?.id.value).toBe('http://example.com/test')
+      expect(iriTemplate.property?.id.value).to.eq('http://example.com/test')
     })
   })
 })

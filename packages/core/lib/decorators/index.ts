@@ -1,5 +1,5 @@
-import type { RdfResource } from '../../RdfResource'
-import type { Constructor } from '../ResourceFactory'
+import type { RdfResource } from '../../RdfResource.js'
+import type { Constructor } from '../ResourceFactory.js'
 
 // From the TC39 Decorators proposal
 export interface ClassElement {
@@ -20,5 +20,5 @@ export interface ClassDescriptor {
   finisher?: <T extends RdfResource>(clazz: Constructor<T>) => undefined | Constructor<T>
 }
 
-export { namespace } from './namespace'
-export { property } from './property'
+export { namespace } from './namespace.js'
+export { property } from './property/index.js'

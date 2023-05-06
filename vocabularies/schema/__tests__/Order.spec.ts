@@ -1,7 +1,8 @@
+import { expect } from 'chai'
 import clownface from 'clownface'
 import RDF from 'rdf-ext'
 import { schema } from '@tpluscode/rdf-ns-builders';
-import { fromPointer } from '../lib/Order'
+import { fromPointer } from '../lib/Order.js'
 
 describe('Order', () => {
   describe('status', () => {
@@ -15,7 +16,7 @@ describe('Order', () => {
       const order = fromPointer(graph)
 
       // then
-      expect(order.orderStatus?.termType).toEqual('NamedNode')
+      expect(order.orderStatus?.termType).to.eq('NamedNode')
     })
   })
 })

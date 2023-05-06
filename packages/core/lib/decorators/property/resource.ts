@@ -1,12 +1,12 @@
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import { NamedNode, Term } from '@rdfjs/types'
 import type { GraphPointer } from 'clownface'
-import type { Initializer, RdfResourceCore, ResourceIdentifier } from '../../../RdfResource'
-import type { AccessorOptions } from './index'
-import { propertyDecorator, ObjectOrFactory } from './decoratorFactory'
-import type { Constructor, Mixin } from '../../ResourceFactory'
-import * as compare from '../../compare'
-import { getPointer } from '../../resource'
+import type { Initializer, RdfResourceCore, ResourceIdentifier } from '../../../RdfResource.js'
+import type { Constructor, Mixin } from '../../ResourceFactory.js'
+import * as compare from '../../compare.js'
+import { getPointer } from '../../resource.js'
+import { propertyDecorator, ObjectOrFactory } from './decoratorFactory.js'
+import type { AccessorOptions } from './index.js'
 
 type InitialValue = GraphPointer<ResourceIdentifier> | RdfResourceCore
 

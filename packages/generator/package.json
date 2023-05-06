@@ -45,8 +45,10 @@
     "@types/rdfjs__formats-common": "^2.0.2",
     "@types/rdfjs__namespace": "^2.0.2",
     "@types/rdfjs__parser-n3": "^1.1.5",
-    "string-to-stream": "^3.0.1",
-    "typescript": "^3.8.3"
+    "@types/sinon": "^10.0.14",
+    "chai": "^4.3.7",
+    "sinon": "^15.0.4",
+    "string-to-stream": "^3.0.1"
   },
   "repository": {
     "type": "git",

@@ -1,14 +1,15 @@
 /* global BigInt */
 import prefixes from '@zazuko/prefixes'
-import { property } from '../index'
-import RdfResource from '../RdfResource'
-import { parse, ex } from './_helpers'
+import {expect} from "chai";
 import { BlankNode, Literal, NamedNode } from '@rdfjs/types'
 import RDF from '@rdfjs/data-model'
 import rdfExt from 'rdf-ext'
 import { schema, xsd } from '@tpluscode/rdf-ns-builders'
 import { turtle } from '@tpluscode/rdf-string'
 import cf, { GraphPointer } from 'clownface'
+import RdfResource from '../RdfResource.js'
+import { property } from '../index.js'
+import { parse, ex } from './_helpers/index.js'
 
 describe('decorator', () => {
   describe('literal', () => {
@@ -23,7 +24,7 @@ describe('decorator', () => {
         `)
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
-          name?: string
+            name?: string
         }
 
         // when
@@ -33,7 +34,7 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.name).toEqual('John Doe')
+        expect(instance.name).to.eq('John Doe')
       })
 
       it('returns boolean when type is set', async () => {
@@ -48,10 +49,10 @@ describe('decorator', () => {
         `)
         class Resource extends RdfResource {
           @property.literal({ path: ex.isMarried, type: Boolean })
-          married?: boolean
+            married?: boolean
 
           @property.literal({ path: ex.isSingle, type: Boolean })
-          single?: boolean
+            single?: boolean
         }
 
         // when
@@ -61,8 +62,8 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.single).toStrictEqual(false)
-        expect(instance.married).toStrictEqual(true)
+        expect(instance.single).to.deep.eq(false)
+        expect(instance.married).to.deep.eq(true)
       })
 
       it('returns integer when type is set', async () => {
@@ -76,7 +77,7 @@ describe('decorator', () => {
         `)
         class Resource extends RdfResource {
           @property.literal({ path: ex.age, type: Number })
-          age!: number
+            age!: number
         }
 
         // when
@@ -86,7 +87,7 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.age).toStrictEqual(30)
+        expect(instance.age).to.deep.eq(30)
       })
 
       it('returns date when type is set', async () => {
@@ -96,7 +97,7 @@ describe('decorator', () => {
         `)
         class Resource extends RdfResource {
           @property.literal({ path: schema.birthDate, type: Date })
-          birthDay!: Date
+            birthDay!: Date
         }
 
         // when
@@ -106,7 +107,7 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.birthDay).toStrictEqual(new Date(-135907200000))
+        expect(instance.birthDay).to.deep.eq(new Date(-135907200000))
       })
 
       it('returns date/time when type is set and node is datetime', async () => {
@@ -116,7 +117,7 @@ describe('decorator', () => {
         `)
         class Resource extends RdfResource {
           @property.literal({ path: schema.birthDate, type: Date })
-          birthDay!: Date
+            birthDay!: Date
         }
 
         // when
@@ -126,7 +127,7 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.birthDay).toStrictEqual(new Date(1965, 8, 11, 19, 56, 9))
+        expect(instance.birthDay).to.deep.eq(new Date(1965, 8, 11, 19, 56, 9))
       })
 
       it('returns actual date/time despite xsd:date datatype', async () => {
@@ -136,7 +137,7 @@ describe('decorator', () => {
         `)
         class Resource extends RdfResource {
           @property.literal({ path: schema.birthDate, type: Date, datatype: xsd.date })
-          birthDay!: Date
+            birthDay!: Date
         }
 
         // when
@@ -146,7 +147,7 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.birthDay).toStrictEqual(new Date(1965, 8, 11, 19, 56, 9))
+        expect(instance.birthDay).to.deep.eq(new Date(1965, 8, 11, 19, 56, 9))
       })
 
       it('returns float when type is set and node is floating point', async () => {
@@ -160,7 +161,7 @@ describe('decorator', () => {
         `)
         class Resource extends RdfResource {
           @property.literal({ path: ex.age, type: Number })
-          age!: number
+            age!: number
         }
 
         // when
@@ -170,7 +171,7 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.age).toStrictEqual(30.6)
+        expect(instance.age).to.deep.eq(30.6)
       })
 
       it('returns rdf list array', async () => {
@@ -183,7 +184,7 @@ describe('decorator', () => {
         `)
         class Resource extends RdfResource {
           @property.literal({ path: ex.letters, values: 'list' })
-          letters?: string[]
+            letters?: string[]
         }
 
         // when
@@ -193,7 +194,7 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.letters).toEqual(['a', 'b', 'c'])
+        expect(instance.letters).to.eq(['a', 'b', 'c'])
       })
 
       it('returns string value of typed literal', async () => {
@@ -206,7 +207,7 @@ describe('decorator', () => {
         `)
         class Resource extends RdfResource {
           @property.literal({ path: ex.age, datatype: xsd.double })
-          age!: string
+            age!: string
         }
 
         // when
@@ -216,7 +217,7 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.age).toStrictEqual('30.3')
+        expect(instance.age).to.deep.eq('30.3')
       })
 
       it('returns string value of typed literal with different datatype', async () => {
@@ -229,7 +230,7 @@ describe('decorator', () => {
         `)
         class Resource extends RdfResource {
           @property.literal({ path: ex.age, datatype: xsd.double })
-          age!: string
+            age!: string
         }
 
         // when
@@ -239,12 +240,12 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.age).toStrictEqual('30.3')
+        expect(instance.age).to.deep.eq('30.3')
       })
     })
 
     describe('setter', () => {
-      it('accepts raw term', async () => {
+      it('accepts raw term', async function () {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -255,7 +256,7 @@ describe('decorator', () => {
         `)
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
-          name?: string | Literal
+            name?: string | Literal
         }
 
         const instance = new Resource(cf({
@@ -267,10 +268,10 @@ describe('decorator', () => {
         instance.name = RDF.literal('John', 'en-gb')
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
 
-      it('replaces boolean object value', async () => {
+      it('replaces boolean object value', async function () {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -282,7 +283,7 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: ex.isMarried, type: Boolean })
-          married?: boolean
+            married?: boolean
         }
 
         const instance = new Resource(cf({
@@ -294,16 +295,16 @@ describe('decorator', () => {
         instance.married = false
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
 
-      it('sets xsd:integer literal for int number', async () => {
+      it('sets xsd:integer literal for int number', async function () {
         // given
         const dataset = rdfExt.dataset()
 
         class Resource extends RdfResource {
           @property.literal({ path: ex.age, type: Number })
-          age!: number
+            age!: number
         }
 
         const instance = new Resource(cf({
@@ -315,16 +316,16 @@ describe('decorator', () => {
         instance.age = 30
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
 
-      it('sets xsd:float literal for float number', async () => {
+      it('sets xsd:float literal for float number', async function () {
         // given
         const dataset = rdfExt.dataset()
 
         class Resource extends RdfResource {
           @property.literal({ path: ex.age, type: Number })
-          age!: number
+            age!: number
         }
 
         const instance = new Resource(cf({
@@ -336,16 +337,16 @@ describe('decorator', () => {
         instance.age = 30.4
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
 
-      it('sets xsd:long literal for bigint', async () => {
+      it('sets xsd:long literal for bigint', async function () {
         // given
         const dataset = rdfExt.dataset()
 
         class Resource extends RdfResource {
           @property.literal({ path: ex.age, type: Number })
-          age!: bigint
+            age!: bigint
         }
 
         const instance = new Resource(cf({
@@ -357,7 +358,7 @@ describe('decorator', () => {
         instance.age = BigInt(9007199254740991)
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
 
       it('sets xsd:dateTime literal for Date', async () => {
@@ -366,7 +367,7 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.birthDate, type: Date })
-          birthDate!: Date
+            birthDate!: Date
         }
 
         const pointer = cf({
@@ -380,7 +381,7 @@ describe('decorator', () => {
 
         // then
         expect(pointer.out(schema.birthDate).term)
-          .toStrictEqual(RDF.literal('1987-10-09T00:00:00.000Z', xsd.dateTime))
+          .to.deep.eq(RDF.literal('1987-10-09T00:00:00.000Z', xsd.dateTime))
       })
 
       it('sets xsd:date literal for Date with forced xsd type', async () => {
@@ -389,7 +390,7 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.birthDate, type: Date, datatype: xsd.date })
-          birthDate!: Date
+            birthDate!: Date
         }
 
         const pointer = cf({
@@ -403,10 +404,10 @@ describe('decorator', () => {
 
         // then
         expect(pointer.out(schema.birthDate).term)
-          .toStrictEqual(RDF.literal('1987-10-09', xsd.date))
+          .to.deep.eq(RDF.literal('1987-10-09', xsd.date))
       })
 
-      it('replaces string object value', async () => {
+      it('replaces string object value', async function () {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -418,7 +419,7 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
-          name?: string
+            name?: string
         }
 
         const instance = new Resource(cf({
@@ -430,10 +431,10 @@ describe('decorator', () => {
         instance.name = 'Jane'
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
 
-      it('replaces string literal node value', async () => {
+      it('replaces string literal node value', async function () {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -445,7 +446,7 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
-          name?: string | Literal
+            name?: string | Literal
         }
 
         const instance = new Resource(cf({
@@ -457,10 +458,10 @@ describe('decorator', () => {
         instance.name = RDF.literal('Jane', ex.Name)
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
 
-      it('replaces string literal node value', async () => {
+      it('replaces string literal node value', async function () {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -472,7 +473,7 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
-          name?: string | GraphPointer<Literal>
+            name?: string | GraphPointer<Literal>
         }
 
         const instance = new Resource(cf({
@@ -484,10 +485,10 @@ describe('decorator', () => {
         instance.name = instance.pointer.literal('Jane', ex.Name)
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
 
-      it('unsets string object when null is set', async () => {
+      it('unsets string object when null is set', async function () {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -499,7 +500,7 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
-          name: string | null = null
+            name: string | null = null
         }
 
         const instance = new Resource(cf({
@@ -511,7 +512,7 @@ describe('decorator', () => {
         instance.name = null
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
 
       it('throws when trying to set a named node', async () => {
@@ -526,7 +527,7 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
-          name?: string | NamedNode
+            name?: string | NamedNode
         }
 
         const instance = new Resource(cf({
@@ -537,7 +538,7 @@ describe('decorator', () => {
         // the
         expect(() => {
           instance.name = RDF.namedNode('foo')
-        }).toThrow()
+        }).to.throw()
       })
 
       it('throws when trying to set a blank node', async () => {
@@ -552,7 +553,7 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
-          name?: string | BlankNode
+            name?: string | BlankNode
         }
 
         const instance = new Resource(cf({
@@ -563,7 +564,7 @@ describe('decorator', () => {
         // the
         expect(() => {
           instance.name = RDF.blankNode('foo')
-        }).toThrow()
+        }).to.throw()
       })
 
       it('throws when trying to set a resource', async () => {
@@ -578,7 +579,7 @@ describe('decorator', () => {
 
         class Resource extends RdfResource {
           @property.literal({ path: schema.name })
-          name?: string
+            name?: string
         }
 
         const instance = new Resource(cf({
@@ -589,10 +590,10 @@ describe('decorator', () => {
         // the
         expect(() => {
           instance.name = instance as any
-        }).toThrow()
+        }).to.throw()
       })
 
-      it('sets a literal with the annotated type', async () => {
+      it('sets a literal with the annotated type', async function () {
         // given
         const dataset = await parse(turtle`
           @prefix ex: <${prefixes.ex}> .
@@ -602,7 +603,7 @@ describe('decorator', () => {
         `)
         class Resource extends RdfResource {
           @property.literal({ path: ex.age, datatype: xsd.double })
-          age!: string
+            age!: string
         }
 
         // when
@@ -613,10 +614,10 @@ describe('decorator', () => {
         instance.age = '20'
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
 
-      it('sets a numeric literal with the annotated type', async () => {
+      it('sets a numeric literal with the annotated type', async function () {
         // given
         const dataset = await parse(turtle`
           @prefix ex: <${prefixes.ex}> .
@@ -626,7 +627,7 @@ describe('decorator', () => {
         `)
         class Resource extends RdfResource {
           @property.literal({ path: ex.age, type: Number, datatype: xsd.double })
-          age!: number
+            age!: number
         }
 
         // when
@@ -637,12 +638,12 @@ describe('decorator', () => {
         instance.age = 20
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
     })
 
     describe('initial', () => {
-      it('sets default value when not present in dataset', async () => {
+      it('sets default value when not present in dataset', async function () {
         // given
         const dataset = rdfExt.dataset()
         class Resource extends RdfResource {
@@ -650,7 +651,7 @@ describe('decorator', () => {
             path: schema.name,
             initial: 'foo',
           })
-          name = 'foo'
+            name = 'foo'
         }
 
         // when
@@ -660,11 +661,11 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.name).toEqual('foo')
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(instance.name).to.eq('foo')
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
 
-      it('does not set initialized value when present in initial dataset', async () => {
+      it('does not set initialized value when present in initial dataset', async function () {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -678,7 +679,7 @@ describe('decorator', () => {
             path: schema.name,
             initial: 'foo',
           })
-          name!: string
+            name!: string
         }
 
         // when
@@ -688,11 +689,11 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.name).toEqual('bar')
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(instance.name).to.eq('bar')
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
 
-      it('sets initial value from node', async () => {
+      it('sets initial value from node', async function () {
         // given
         const dataset = rdfExt.dataset()
         class Resource extends RdfResource {
@@ -700,7 +701,7 @@ describe('decorator', () => {
             path: schema.name,
             initial: RDF.literal('foo'),
           })
-          name!: string
+            name!: string
         }
 
         // when
@@ -710,11 +711,11 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.name).toEqual('foo')
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(instance.name).to.eq('foo')
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
 
-      it('sets initial value from function', async () => {
+      it('sets initial value from function', async function () {
         // given
         const dataset = rdfExt.dataset()
         class Resource extends RdfResource {
@@ -722,7 +723,7 @@ describe('decorator', () => {
             path: schema.name,
             initial: (self: Resource) => self.id.value,
           })
-          name!: string
+            name!: string
         }
 
         // when
@@ -732,8 +733,8 @@ describe('decorator', () => {
         }))
 
         // then
-        expect(instance.name).toEqual(instance.id.value)
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(instance.name).to.eq(instance.id.value)
+        expect(dataset.toCanonical()).to.matchSnapshot(this)
       })
     })
   })

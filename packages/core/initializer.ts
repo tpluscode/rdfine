@@ -1,1 +1,1 @@
-export { initialize as rdfList } from './lib/rdf-list'
+export { initialize as rdfList } from './lib/rdf-list.js'

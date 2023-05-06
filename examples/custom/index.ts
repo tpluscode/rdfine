@@ -3,7 +3,7 @@ import cf from 'clownface'
 import $rdf from 'rdf-ext'
 import fetch from '@rdfjs/fetch'
 import formats from '@rdfjs/formats-common'
-import { Collection, CollectionMixin, HydraResource } from './resources'
+import { Collection, CollectionMixin, HydraResource } from './resources.js'
 
 HydraResource.factory.addMixin(CollectionMixin)
 

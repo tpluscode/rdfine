@@ -1,12 +1,13 @@
 import ns from '@rdfjs/namespace'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
-import type { Constructor } from '../ResourceFactory'
-import type { ClassDescriptor } from '.'
-import type { RdfResourceCore } from '../../RdfResource'
+import type { Constructor } from '../ResourceFactory.js'
+import type { RdfResourceCore } from '../../RdfResource.js'
+import type { ClassDescriptor } from './index.js'
 
 function setNamespace(clazz: Constructor, stringOrNamespace: string | NamespaceBuilder) {
   clazz.__ns = typeof stringOrNamespace === 'string'
-    ? ns(stringOrNamespace) : stringOrNamespace
+    ? ns(stringOrNamespace)
+    : stringOrNamespace
 }
 
 const legacyNamespace =

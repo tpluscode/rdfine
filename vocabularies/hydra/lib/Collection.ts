@@ -7,7 +7,7 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '../index.js';
 import { ResourceMixin } from './Resource.js';
-import { CollectionExMixin } from '../extensions/CollectionEx';
+import { CollectionExMixin } from '../extensions/CollectionEx.js';
 
 export interface Collection<M extends RdfResourceCore<any> = RdfResourceCore<any>, D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
   member: Array<Hydra.Resource<D> & M>;

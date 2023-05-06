@@ -5,7 +5,7 @@ import { ExternalResourceType, ResourceType, TypeMeta, TypeMetaCollection } from
 
 export abstract class MixinModuleBase<T extends ResourceType | ExternalResourceType> implements GeneratedModule<T> {
   type: T
-  node: GraphPointer;
+  node: GraphPointer
   protected namespaceImports: Record<string, string> = {}
   protected mixinImports: Array<ResourceType | ExternalResourceType> = []
 

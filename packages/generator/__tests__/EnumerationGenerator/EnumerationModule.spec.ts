@@ -2,10 +2,11 @@ import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import { Project, SourceFile } from 'ts-morph'
-import { EnumerationModule } from '../../lib/EnumerationGenerator/EnumerationModule'
-import { fakeLog } from '../_helpers/util'
-import { FakeTypeCollection } from '../_helpers/FakeTypeCollection'
-import { ex } from '../_helpers/prefix'
+import { EnumerationModule } from '../../lib/EnumerationGenerator/EnumerationModule.js'
+import { fakeLog } from '../_helpers/util.js'
+import { FakeTypeCollection } from '../_helpers/FakeTypeCollection.js'
+import { ex } from '../_helpers/prefix.js'
+import {expect} from "chai";
 
 describe('EnumerationModule', () => {
   let project: Project
@@ -21,7 +22,7 @@ describe('EnumerationModule', () => {
     graph = cf({ dataset: $rdf.dataset() })
   })
 
-  it('writes a module with enumeration members', () => {
+  it('writes a module with enumeration members', function () {
     // given
     const types = new FakeTypeCollection([
       [ex.Member1, { type: 'EnumerationMember', termName: 'Member1', prefixedName: 'ex.Member1' }],
@@ -49,10 +50,10 @@ describe('EnumerationModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('./lib/Enum.ts')).toMatchSnapshot()
+    expect(project.getSourceFile('./lib/Enum.ts')).to.matchSnapshot(this)
   })
 
-  it('uses plain NamedNode for enumerations without members', () => {
+  it('uses plain NamedNode for enumerations without members', function () {
     // given
     const types = new FakeTypeCollection([
     ])
@@ -78,6 +79,6 @@ describe('EnumerationModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('./lib/Enum.ts')).toMatchSnapshot()
+    expect(project.getSourceFile('./lib/Enum.ts')).to.matchSnapshot(this)
   })
 })

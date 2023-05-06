@@ -28,4 +28,4 @@ export { TemplatedLinkMixin } from './lib/TemplatedLink.js';
 export type { TemplatedLink } from './lib/TemplatedLink.js';
 export { VariableRepresentationMixin } from './lib/VariableRepresentation.js';
 export type { VariableRepresentation } from './lib/VariableRepresentation.js';
-export * from './extensions'
+export * from './extensions/index.js'

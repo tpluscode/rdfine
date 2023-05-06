@@ -1,12 +1,13 @@
 import clownface from 'clownface'
-import $rdf from '@rdfjs/dataset'
-import RDF from '@rdfjs/data-model'
-import { fromPointer, IriTemplate } from '../lib/IriTemplate'
-import { hydra } from '../lib/namespace';
+import $rdf from 'rdf-ext'
+import { fromPointer, IriTemplate } from '../lib/IriTemplate.js'
+import { hydra } from '../lib/namespace.js';
 import namespace from '@rdfjs/namespace'
 import { xsd } from '@tpluscode/rdf-ns-builders';
 import RdfResource from '@tpluscode/rdfine';
-import { IriTemplateBundle } from '../bundles';
+import { IriTemplateBundle } from '../bundles/index.js';
+import { expect } from 'chai';
+import { testEach } from './support/testEach.js';
 
 RdfResource.factory.addMixin(...IriTemplateBundle)
 
@@ -17,42 +18,44 @@ describe('IriTemplate', () => {
     const basic = hydra.BasicRepresentation.value
     const explicit = hydra.ExplicitRepresentation.value
 
-    test.each`
-      type                   | representation | term                                         | expected
-      ${'IRI'}               | ${basic}       | ${RDF.namedNode('http://www.hydra-cg.com/')} | ${'http://example.com/find/http%3A%2F%2Fwww.hydra-cg.com%2F'}
-      ${'IRI'}               | ${explicit}    | ${RDF.namedNode('http://www.hydra-cg.com/')} | ${'http://example.com/find/http%3A%2F%2Fwww.hydra-cg.com%2F'}
-      ${'string'}            | ${basic}       | ${RDF.literal('A simple string')}            | ${'http://example.com/find/A%20simple%20string'}
-      ${'string'}            | ${explicit}    | ${RDF.literal('A simple string')}            | ${'http://example.com/find/%22A%20simple%20string%22'}
-      ${'string with quote'} | ${basic}       | ${RDF.literal('A string " with a quote')}    | ${'http://example.com/find/A%20string%20%22%20with%20a%20quote'}
-      ${'string with quote'} | ${explicit}    | ${RDF.literal('A string " with a quote')}    | ${'http://example.com/find/%22A%20string%20%22%20with%20a%20quote%22'}
-      ${'tagged string'}     | ${basic}       | ${RDF.literal('A simple string', 'en')}      | ${'http://example.com/find/A%20simple%20string'}
-      ${'tagged string'}     | ${explicit}    | ${RDF.literal('A simple string', 'en')}      | ${'http://example.com/find/%22A%20simple%20string%22%40en'}
-      ${'typed literal'}     | ${basic}       | ${RDF.literal('5.5', xsd.decimal)}           | ${'http://example.com/find/5.5'}
-      ${'typed literal'}     | ${explicit}    | ${RDF.literal('5.5', xsd.decimal)}           | ${'http://example.com/find/%225.5%22%5E%5Ehttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23decimal'}
-    `('should correctly represent $type with $representation', ({ representation, term, expected }) => {
-      // given
-      const dataset = $rdf.dataset()
-      const pointer = clownface({ dataset }).blankNode()
-      const iriTemplate = fromPointer(pointer, {
-        template: 'http://example.com/find/{value}',
-        variableRepresentation: RDF.namedNode(representation),
-        mapping: [
-          {
-            types: [hydra.IriTemplateMapping],
-            variable: 'value',
-            property: ex.value,
-          },
-        ],
+    testEach`
+     | type                   | representation | term                                          | expected                                                                                         |
+     | ${'IRI'}               | ${basic}       | ${$rdf.namedNode('http://www.hydra-cg.com/')} | ${'http://example.com/find/http%3A%2F%2Fwww.hydra-cg.com%2F'}                                    |
+     | ${'IRI'}               | ${explicit}    | ${$rdf.namedNode('http://www.hydra-cg.com/')} | ${'http://example.com/find/http%3A%2F%2Fwww.hydra-cg.com%2F'}                                    |
+     | ${'string'}            | ${basic}       | ${$rdf.literal('A simple string')}            | ${'http://example.com/find/A%20simple%20string'}                                                 |
+     | ${'string'}            | ${explicit}    | ${$rdf.literal('A simple string')}            | ${'http://example.com/find/%22A%20simple%20string%22'}                                           |
+     | ${'string with quote'} | ${basic}       | ${$rdf.literal('A string " with a quote')}    | ${'http://example.com/find/A%20string%20%22%20with%20a%20quote'}                                 |
+     | ${'string with quote'} | ${explicit}    | ${$rdf.literal('A string " with a quote')}    | ${'http://example.com/find/%22A%20string%20%22%20with%20a%20quote%22'}                           |
+     | ${'tagged string'}     | ${basic}       | ${$rdf.literal('A simple string', 'en')}      | ${'http://example.com/find/A%20simple%20string'}                                                 |
+     | ${'tagged string'}     | ${explicit}    | ${$rdf.literal('A simple string', 'en')}      | ${'http://example.com/find/%22A%20simple%20string%22%40en'}                                      |
+     | ${'typed literal'}     | ${basic}       | ${$rdf.literal('5.5', xsd.decimal)}           | ${'http://example.com/find/5.5'}                                                                 |
+     | ${'typed literal'}     | ${explicit}    | ${$rdf.literal('5.5', xsd.decimal)}           | ${'http://example.com/find/%225.5%22%5E%5Ehttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23decimal'} |
+    `(({ representation, term, expected }: any) => {
+      it('should correctly represent $type with $representation', () => {
+        // given
+        const dataset = $rdf.dataset()
+        const pointer = clownface({ dataset }).blankNode()
+        const iriTemplate = fromPointer(pointer, {
+          template: 'http://example.com/find/{value}',
+          variableRepresentation: $rdf.namedNode(representation),
+          mapping: [
+            {
+              types: [hydra.IriTemplateMapping],
+              variable: 'value',
+              property: ex.value,
+            },
+          ],
+        })
+
+        // when
+        const bindings = clownface({ dataset })
+          .blankNode()
+          .addOut(ex.value, term)
+        const expanded = iriTemplate.expand(bindings)
+
+        // then
+        expect(expanded).to.eq(expected)
       })
-
-      // when
-      const bindings = clownface({ dataset })
-        .blankNode()
-        .addOut(ex.value, term)
-      const expanded = iriTemplate.expand(bindings)
-
-      // then
-      expect(expanded).toEqual(expected)
     })
 
     it('lets variable override the expansion model', () => {
@@ -79,7 +82,7 @@ describe('IriTemplate', () => {
       const expanded = iriTemplate.expand(bindings)
 
       // then
-      expect(expanded).toEqual('http://example.com/find/%225.5%22%5E%5Ehttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23decimal')
+      expect(expanded).to.eq('http://example.com/find/%225.5%22%5E%5Ehttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23decimal')
     })
 
     it('does not expand variables with no values', () => {
@@ -110,11 +113,11 @@ describe('IriTemplate', () => {
       // when
       const bindings = clownface({ dataset })
         .blankNode()
-        .addOut(ex.bar, RDF.literal('bar'))
+        .addOut(ex.bar, $rdf.literal('bar'))
       const expanded = iriTemplate.expand(bindings)
 
       // then
-      expect(expanded).toEqual('http://example.com/find/?bar=bar')
+      expect(expanded).to.eq('http://example.com/find/?bar=bar')
     })
 
     it('combines multiple models to expand template', () => {
@@ -143,13 +146,13 @@ describe('IriTemplate', () => {
       })
 
       // when
-      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('foo'))
-      const bar = clownface({ dataset }).blankNode().addOut(ex.bar, RDF.literal('bar'))
-      const baz = clownface({ dataset }).blankNode().addOut(ex.baz, RDF.literal('baz'))
+      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, $rdf.literal('foo'))
+      const bar = clownface({ dataset }).blankNode().addOut(ex.bar, $rdf.literal('bar'))
+      const baz = clownface({ dataset }).blankNode().addOut(ex.baz, $rdf.literal('baz'))
       const expanded = iriTemplate.expand(foo, bar, baz)
 
       // then
-      expect(expanded).toEqual('http://example.com/find/?foo=foo&bar=bar&baz=baz')
+      expect(expanded).to.eq('http://example.com/find/?foo=foo&bar=bar&baz=baz')
     })
 
     it('uses latter models to override template bindings', () => {
@@ -168,12 +171,12 @@ describe('IriTemplate', () => {
       })
 
       // when
-      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('foo'))
-      const bar = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('bar'))
+      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, $rdf.literal('foo'))
+      const bar = clownface({ dataset }).blankNode().addOut(ex.foo, $rdf.literal('bar'))
       const expanded = iriTemplate.expand(foo, bar)
 
       // then
-      expect(expanded).toEqual('http://example.com/find/?foo=bar')
+      expect(expanded).to.eq('http://example.com/find/?foo=bar')
     })
 
     it('expands against base if given as first argument', () => {
@@ -192,12 +195,12 @@ describe('IriTemplate', () => {
       })
 
       // when
-      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('foo'))
-      const bar = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('bar'))
+      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, $rdf.literal('foo'))
+      const bar = clownface({ dataset }).blankNode().addOut(ex.foo, $rdf.literal('bar'))
       const expanded = iriTemplate.expand('http://example.com/find/', foo, bar)
 
       // then
-      expect(expanded).toEqual('http://example.com/find/?foo=bar')
+      expect(expanded).to.eq('http://example.com/find/?foo=bar')
     })
 
     it("uses parent's URI as base", () => {
@@ -221,11 +224,11 @@ describe('IriTemplate', () => {
       const iriTemplate = parent.get<IriTemplate>(hydra.search)
 
       // when
-      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, RDF.literal('foo'))
+      const foo = clownface({ dataset }).blankNode().addOut(ex.foo, $rdf.literal('foo'))
       const expanded = iriTemplate.expand(foo)
 
       // then
-      expect(expanded).toEqual('http://example.com/find/?foo=foo')
+      expect(expanded).to.eq('http://example.com/find/?foo=foo')
     })
 
     it('walks up parents to find first NamedNode to use as base', () => {
@@ -252,11 +255,11 @@ describe('IriTemplate', () => {
       }).get(hydra.collection).get<IriTemplate>(hydra.search)
 
       // when
-      const foo = clownface({ dataset: $rdf.dataset() }).blankNode().addOut(ex.foo, RDF.literal('foo'))
+      const foo = clownface({ dataset: $rdf.dataset() }).blankNode().addOut(ex.foo, $rdf.literal('foo'))
       const expanded = iriTemplate.expand(foo)
 
       // then
-      expect(expanded).toEqual('http://example.com/find/?foo=foo')
+      expect(expanded).to.eq('http://example.com/find/?foo=foo')
     })
 
     it('should ensure that mapValue method exists on VariableRepresentation', () => {
@@ -268,7 +271,7 @@ describe('IriTemplate', () => {
       })
 
       // then
-      expect(iriTemplate.variableRepresentation?.mapValue).toBeTruthy()
+      expect(iriTemplate.variableRepresentation?.mapValue).to.be.ok
     })
   })
 })

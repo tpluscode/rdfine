@@ -1,7 +1,7 @@
 import type { RdfResource } from '@tpluscode/rdfine'
 import type { AnyPointer } from 'clownface';
 import URITemplate from 'es6-url-template'
-import { IriTemplate, IriTemplateMapping } from '../'
+import { IriTemplate, IriTemplateMapping } from '..//index.js'
 
 export class TemplateExpander {
   private readonly __template: IriTemplate

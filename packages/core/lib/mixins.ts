@@ -1,5 +1,5 @@
-import { RdfResource } from '../RdfResource'
-import { Constructor } from './ResourceFactory'
+import { RdfResource } from '../RdfResource.js'
+import { Constructor } from './ResourceFactory.js'
 
 export function * mixins(resource: RdfResource): Generator<Constructor> {
   // eslint-disable-next-line @typescript-eslint/ban-types

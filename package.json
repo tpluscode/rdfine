@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint . --ext .ts,.js --quiet --ignore-path .eslintignore --ignore-path .gitignore",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+    "test": "c8 mocha vocabularies/**/*.spec.ts packages/**/*.spec.ts",
     "example": "wsrun -p rdfine-example --no-prefix -c start",
     "generate": "npm run generate:one",
     "generate:one": "wsrun --no-prefix -rltm -p $npm_config_package -c generate && echo",
@@ -18,32 +18,32 @@
     "@rdfjs/parser-jsonld": "^2.1.0",
     "@rdfjs/types": "*",
     "@tpluscode/eslint-config": "^0.4.2",
+    "@types/chai": "^4.3.5",
     "@types/clownface": "^1",
-    "@types/jest": "^29.5.0",
+    "@types/mocha": "^10",
     "@types/node": "^18",
     "@types/rdfjs__parser-jsonld": "^1.2.5",
-    "@typescript-eslint/eslint-plugin": "^5.55.0",
-    "@typescript-eslint/parser": "^5.55.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "c8": "^7.13.0",
     "eslint": "^8.36.0",
     "eslint-config-standard": "^17.0.0",
-    "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-require-extensions": "^0.1.3",
     "eslint-plugin-standard": "^4.0.1",
     "husky": "^3.1.0",
-    "jest": "^29.5.0",
-    "jest-snapshot": "^29.5.0",
     "lint-staged": "^10.2.12",
+    "mocha": "^10.2.0",
+    "mocha-chai-jest-snapshot": "^1.1.4",
     "npm-run-all": "^4.1.5",
     "rdf-ext": "^2.2.0",
     "rimraf": "^3.0.2",
     "standard": "^17.0.0",
     "string-to-stream": "^3.0.1",
-    "ts-jest": "^29.1.0",
     "ts-morph": "^7.1.2",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2",
@@ -62,6 +62,12 @@
   "lint-staged": {
     "*.{js,ts}": [
       "eslint --fix --quiet"
+    ]
+  },
+  "mocha": {
+    "loader": "ts-node/esm",
+    "require": [
+      "mocha-setup.cjs"
     ]
   }
 }

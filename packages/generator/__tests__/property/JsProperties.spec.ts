@@ -1,11 +1,12 @@
 import clownface from 'clownface'
 import $rdf from 'rdf-ext'
 import { doap, as, rdfs, owl } from '@tpluscode/rdf-ns-builders'
-import { toJavascriptProperties } from '../../lib/property/JsProperties'
-import { FakeTypeCollection } from '../_helpers/FakeTypeCollection'
-import { fakeLog } from '../_helpers/util'
-import { TypeMap } from '../../lib/types'
-import { Range } from '../../lib/property'
+import { toJavascriptProperties } from '../../lib/property/JsProperties.js'
+import { FakeTypeCollection } from '../_helpers/FakeTypeCollection.js'
+import { fakeLog } from '../_helpers/util.js'
+import { TypeMap } from '../../lib/types/index.js'
+import { Range } from '../../lib/property/index.js'
+import {expect} from "chai";
 
 describe('JsProperties', () => {
   describe('toJavascriptProperties', () => {
@@ -22,7 +23,7 @@ describe('JsProperties', () => {
       const [property] = [...toJavascriptProperties(prop, [], new FakeTypeCollection(), context)]
 
       // then
-      expect(property.prefixedTerm).toEqual("doap['file-release']")
+      expect(property.prefixedTerm).to.eq("doap['file-release']")
     })
 
     it('returns constant ranges for property with owl:oneOf', () => {
@@ -50,14 +51,14 @@ describe('JsProperties', () => {
       const [property] = [...toJavascriptProperties(prop, range, typeMap, context)]
 
       // then
-      expect(property.range).toStrictEqual(
-        expect.arrayContaining([
+      expect(property.range).to.deep.eq(
+        [
           { type: 'Constant', value: 'foo' },
           { type: 'Constant', value: 'bar' },
           { type: 'Constant', value: 'baz' },
-        ]),
+        ],
       )
-      expect(property.range).toHaveLength(3)
+      expect(property.range).to.have.length(3)
     })
   })
 })

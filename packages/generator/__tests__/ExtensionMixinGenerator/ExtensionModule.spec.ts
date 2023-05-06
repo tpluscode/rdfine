@@ -1,11 +1,12 @@
-import { ExtensionModule } from '../../lib/ExtensionMixinGenerator/ExtensionModule'
 import { Project, SourceFile } from 'ts-morph'
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { FakeTypeCollection } from '../_helpers/FakeTypeCollection'
-import { Context } from '../../lib'
-import { fakeLog } from '../_helpers/util'
 import { sh } from '@tpluscode/rdf-ns-builders'
+import { ExtensionModule } from '../../lib/ExtensionMixinGenerator/ExtensionModule.js'
+import { FakeTypeCollection } from '../_helpers/FakeTypeCollection.js'
+import { Context } from '../../lib/index.js'
+import { fakeLog } from '../_helpers/util.js'
+import {expect} from "chai";
 
 describe('ExtensionModule', () => {
   describe('writeModule', () => {
@@ -24,7 +25,7 @@ describe('ExtensionModule', () => {
       log = fakeLog()
     })
 
-    it('creates an extension module', () => {
+    it('creates an extension module',  function () {
       // given
       const module = new ExtensionModule({
         domain: vocabulary.namedNode(sh.PropertyShape),
@@ -55,7 +56,7 @@ describe('ExtensionModule', () => {
       })
 
       // then
-      expect(project.getSourceFile('extensions/sh/PropertyShape.ts')).toMatchSnapshot()
+      expect(project.getSourceFile('extensions/sh/PropertyShape.ts')).to.matchSnapshot(this)
     })
   })
 })

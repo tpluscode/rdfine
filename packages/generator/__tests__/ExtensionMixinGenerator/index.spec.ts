@@ -1,12 +1,13 @@
-import { findTermsToGenerate } from '../../lib/ExtensionMixinGenerator'
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { FakeTypeCollection } from '../_helpers/FakeTypeCollection'
-import { fakeLog } from '../_helpers/util'
-import { Context } from '../../lib'
 import { dash, rdfs, sh } from '@tpluscode/rdf-ns-builders'
-import { ExtensionIndexModule } from '../../lib/ExtensionMixinGenerator/ExtensionIndexModule'
-import { ExtensionModule } from '../../lib/ExtensionMixinGenerator/ExtensionModule'
+import { findTermsToGenerate } from '../../lib/ExtensionMixinGenerator/index.js'
+import { FakeTypeCollection } from '../_helpers/FakeTypeCollection.js'
+import { fakeLog } from '../_helpers/util.js'
+import { Context } from '../../lib/index.js'
+import { ExtensionIndexModule } from '../../lib/ExtensionMixinGenerator/ExtensionIndexModule.js'
+import { ExtensionModule } from '../../lib/ExtensionMixinGenerator/ExtensionModule.js'
+import {expect} from "chai";
 
 describe('ExtensionMixinGenerator', () => {
   let vocabulary: AnyPointer
@@ -32,8 +33,8 @@ describe('ExtensionMixinGenerator', () => {
     const [extensionModule] = findTermsToGenerate(types, { vocabulary, log, properties, prefix: 'ex' }) as [ExtensionModule]
 
     // then
-    expect(extensionModule.node?.term).toEqual(sh.PropertyShape)
-    expect(extensionModule.properties).toEqual(
+    expect(extensionModule.node?.term).to.eq(sh.PropertyShape)
+    expect(extensionModule.properties).to.eq(
       expect.arrayContaining([expect.objectContaining({
         term: dash.hidden,
       }), expect.objectContaining({
@@ -55,8 +56,8 @@ describe('ExtensionMixinGenerator', () => {
     const [, indexModule] = findTermsToGenerate(types, { vocabulary, log, properties, prefix: 'ex' }) as [any, ExtensionIndexModule]
 
     // then
-    expect(indexModule.prefix).toEqual('sh')
-    expect(indexModule.terms).toEqual(['PropertyShape'])
+    expect(indexModule.prefix).to.eq('sh')
+    expect(indexModule.terms).to.eq(['PropertyShape'])
   })
 
   it('does not generate an index module for own types', () => {
@@ -70,6 +71,6 @@ describe('ExtensionMixinGenerator', () => {
     const modules = findTermsToGenerate(types, { vocabulary, log, properties, prefix: 'dash' })
 
     // then
-    expect(modules).toHaveLength(0)
+    expect(modules).to.have.length(0)
   })
 })

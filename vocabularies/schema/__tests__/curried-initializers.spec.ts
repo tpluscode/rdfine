@@ -1,13 +1,14 @@
 import clownface from 'clownface';
 import $rdf from 'rdf-ext';
-import { fromPointer, PersonMixin } from '../lib/Person';
+import { fromPointer, PersonMixin } from '../lib/Person.js';
 import { schema } from '@tpluscode/rdf-ns-builders';
 import RdfResourceImpl, { ResourceFactory } from '@tpluscode/rdfine';
+import { expect } from 'chai';
 
 describe('curried initializers', () => {
   let factory: ResourceFactory
 
-  beforeAll(() => {
+  before(() => {
     factory = new ResourceFactory(RdfResourceImpl)
     factory.addMixin(PersonMixin)
   })
@@ -24,8 +25,8 @@ describe('curried initializers', () => {
     }, { factory })
 
     // then
-    expect(person.parent?.name).toEqual('John')
-    expect(person.parent?.id.termType).toEqual('BlankNode')
+    expect(person.parent?.name).to.eq('John')
+    expect(person.parent?.id.termType).to.eq('BlankNode')
   })
 
   it('initializes named from string', () => {
@@ -40,8 +41,8 @@ describe('curried initializers', () => {
     }, { factory })
 
     // then
-    expect(person.parent?.name).toEqual('John')
-    expect(person.parent?.id).toEqual($rdf.namedNode('http://foo.bar/John'))
+    expect(person.parent?.name).to.eq('John')
+    expect(person.parent?.id).to.deep.eq($rdf.namedNode('http://foo.bar/John'))
   })
 
   it('initializes named from term', () => {
@@ -56,8 +57,8 @@ describe('curried initializers', () => {
     }, { factory })
 
     // then
-    expect(person.parent?.name).toEqual('John')
-    expect(person.parent?.id).toEqual($rdf.namedNode('http://foo.bar/John'))
+    expect(person.parent?.name).to.eq('John')
+    expect(person.parent?.id).to.deep.eq($rdf.namedNode('http://foo.bar/John'))
   })
 
   it('initializes URI property from existing resource', () => {
@@ -71,7 +72,7 @@ describe('curried initializers', () => {
     })
 
     // then
-    expect(person.parent?.id).toEqual($rdf.namedNode('http://foo.bar/John'))
+    expect(person.parent?.id).to.deep.eq($rdf.namedNode('http://foo.bar/John'))
   })
 
   it('initializes URI property from term', () => {
@@ -86,7 +87,7 @@ describe('curried initializers', () => {
     }, { factory })
 
     // then
-    expect(person.parent?.name).toEqual('John')
-    expect(person.parent?.id).toEqual($rdf.namedNode('http://foo.bar/John'))
+    expect(person.parent?.name).to.eq('John')
+    expect(person.parent?.id).to.deep.eq($rdf.namedNode('http://foo.bar/John'))
   })
 })

@@ -1,7 +1,7 @@
 import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
 import { Context, GeneratedModule } from '../index.js'
-import { EnumerationModule } from './EnumerationModule.js'
 import { TypeMetaCollection } from '../types/index.js'
+import { EnumerationModule } from './EnumerationModule.js'
 
 export function findTermsToGenerate(types: TypeMetaCollection, { vocabulary }: Pick<Context, 'vocabulary'>): GeneratedModule[] {
   return vocabulary

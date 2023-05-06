@@ -57,6 +57,7 @@
     "@tpluscode/rdfine": "^0.5.39"
   },
   "devDependencies": {
+    "chai": "^4.3.7",
     "clownface": "^1",
     "rdf-ext": "^2"
   },

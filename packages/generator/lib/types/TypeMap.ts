@@ -17,7 +17,7 @@ export class TypeMap implements TypeMetaCollection {
   private readonly __excluded: string[]
   private readonly __map = new Map<string, TypeMeta>()
   private readonly __context: Context
-  private readonly __factories: TypeMetaFactory[];
+  private readonly __factories: TypeMetaFactory[]
 
   private get __graph(): AnyPointer {
     return this.__context.vocabulary

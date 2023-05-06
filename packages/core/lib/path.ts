@@ -1,4 +1,4 @@
-import { NamedNode } from '@rdfjs/types'
+import type { NamedNode } from '@rdfjs/types'
 import RDF from '@rdfjs/data-model'
 import cf, { GraphPointer } from 'clownface'
 import type { NamespaceBuilder } from '@rdfjs/namespace'

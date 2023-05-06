@@ -2,10 +2,11 @@ import cf from 'clownface'
 import { foaf, rdf, schema } from '@tpluscode/rdf-ns-builders'
 import { turtle } from '@tpluscode/rdf-string'
 import $rdf from 'rdf-ext'
-import ResourceFactory, { Constructor } from '../lib/ResourceFactory'
-import { parse, ex } from './_helpers'
-import RdfResourceImpl from '../RdfResource'
 import clownface from 'clownface'
+import { expect } from 'chai'
+import ResourceFactory, { Constructor } from '../lib/ResourceFactory.js'
+import RdfResourceImpl from '../RdfResource.js'
+import { parse, ex } from './_helpers/index.js'
 
 function NeverApply() {
   return class {
@@ -48,9 +49,9 @@ describe('ResourceFactory', () => {
 
     // then
     const ctor = entity.constructor as Constructor
-    expect(ctor.__mixins).toHaveLength(2)
-    expect(entity).not.toHaveProperty('notFound')
-    expect(entity).toHaveProperty('alwaysThere')
+    expect(ctor.__mixins).to.have.length(2)
+    expect(entity).not.to.have.property('notFound')
+    expect(entity).to.have.property('alwaysThere')
   })
 
   it('applies mixins selected by type named node', async () => {
@@ -85,8 +86,8 @@ describe('ResourceFactory', () => {
     const entity = factory.createEntity(term)
 
     // then
-    expect(entity).toHaveProperty('foafName')
-    expect(entity).toHaveProperty('schemaName')
+    expect(entity).to.have.property('foafName')
+    expect(entity).to.have.property('schemaName')
   })
 
   it('returns correct type for changed base class in subsequent calls', () => {
@@ -107,7 +108,7 @@ describe('ResourceFactory', () => {
     const entity = factory.createEntity(term, [Foo])
 
     // then
-    expect(entity.bar).toBe('baz')
+    expect(entity.bar).to.eq('baz')
   })
 
   it('sets rdf:types initialized with TypeCollection', () => {
@@ -123,6 +124,6 @@ describe('ResourceFactory', () => {
     })
 
     // then
-    expect(resource.types.has(schema.Person)).toBe(true)
+    expect(resource.types.has(schema.Person)).to.eq(true)
   })
 })

@@ -2,11 +2,8 @@
   "root": true,
   "extends": [ "@tpluscode" ],
   "env": {
-    "jest": true
+    "mocha": true
   },
-  "plugins": [
-    "jest"
-  ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },

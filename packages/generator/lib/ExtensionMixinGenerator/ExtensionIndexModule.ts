@@ -1,5 +1,5 @@
-import { GeneratedModule } from '../index.js'
 import { Project } from 'ts-morph'
+import { GeneratedModule } from '../index.js'
 
 export class ExtensionIndexModule implements GeneratedModule {
   constructor(public prefix: string, public terms: string[]) {

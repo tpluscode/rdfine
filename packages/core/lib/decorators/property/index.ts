@@ -1,16 +1,16 @@
 import { Term } from '@rdfjs/types'
-import type { RdfResourceCore } from '../../../RdfResource'
-import { EdgeTraversalFactory, PropRef } from '../../path'
-import literalPropertyDecorator, { LiteralValues } from '../property/literal'
-import resourcePropertyDecorator from '../property/resource'
-import * as compare from '../../compare'
-import { toLiteral } from '../../conversion'
 import $rdf from '@rdfjs/data-model'
-import { propertyDecorator, ObjectOrFactory, PropertyReturnKind, ArrayOrSingle } from './decoratorFactory'
-import { Initializer } from '../../../RdfResource'
-import { fromInitializer } from '../../resource'
+import type { RdfResourceCore } from '../../../RdfResource.js'
+import { EdgeTraversalFactory, PropRef } from '../../path.js'
+import literalPropertyDecorator, { LiteralValues } from '../property/literal.js'
+import resourcePropertyDecorator from '../property/resource.js'
+import * as compare from '../../compare.js'
+import { toLiteral } from '../../conversion.js'
+import { Initializer } from '../../../RdfResource.js'
+import { fromInitializer } from '../../resource.js'
+import { propertyDecorator, ObjectOrFactory, PropertyReturnKind, ArrayOrSingle } from './decoratorFactory.js'
 
-export type { PropertyMeta } from './decoratorFactory'
+export type { PropertyMeta } from './decoratorFactory.js'
 
 export interface AccessorOptions {
   values?: PropertyReturnKind | PropertyReturnKind[]

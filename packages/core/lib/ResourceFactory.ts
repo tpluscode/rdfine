@@ -3,9 +3,9 @@ import { DatasetCore, Literal, NamedNode, Term } from '@rdfjs/types'
 import type { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
-import type { Initializer, RdfResource, RdfResourceCore, ResourceNode } from '../RdfResource'
-import { createProxy } from './proxy'
-import type { PropertyMeta } from './decorators/property'
+import type { Initializer, RdfResource, RdfResourceCore, ResourceNode } from '../RdfResource.js'
+import { createProxy } from './proxy.js'
+import type { PropertyMeta } from './decorators/property/index.js'
 
 export type AnyFunction<A = any> = (...input: any[]) => A
 export interface Constructor<A extends RdfResourceCore<any> = RdfResourceCore> {

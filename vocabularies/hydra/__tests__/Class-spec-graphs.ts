@@ -1,4 +1,4 @@
-import { createGraph } from './support'
+import { createGraph } from './support/index.js'
 
 export const multiLevelSupportedOperations = createGraph(`
 @prefix vocab: <http://example.com/vocab#> .

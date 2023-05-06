@@ -1,11 +1,13 @@
 import $rdf from 'rdf-ext'
 import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
 import cf, { AnyPointer } from 'clownface'
-import { TypeMap } from '../../lib/types/TypeMap'
-import { Context } from '../../lib'
-import { fakeLog } from '../_helpers/util'
-import { TermType } from '../../lib/types'
-import { ex } from '../_helpers/prefix'
+import { TypeMap } from '../../lib/types/TypeMap.js'
+import { Context } from '../../lib/index.js'
+import { fakeLog } from '../_helpers/util.js'
+import { TermType } from '../../lib/types/index.js'
+import { ex } from '../_helpers/prefix.js'
+import {expect} from "chai";
+import sinon from "sinon";
 
 describe('TypeMap', () => {
   let context: Context
@@ -32,7 +34,7 @@ describe('TypeMap', () => {
       const typeMap = new TypeMap({
         context,
         factories: [
-          jest.fn().mockReturnValue(expected),
+          sinon.stub().returns(expected),
         ],
         excluded: [],
       })
@@ -41,7 +43,7 @@ describe('TypeMap', () => {
       const meta = typeMap.get(vocabulary.node(ex.Type))
 
       // then
-      expect(meta).toBe(expected)
+      expect(meta).to.eq(expected)
     })
 
     it('returns a TermType when not found', () => {
@@ -57,7 +59,7 @@ describe('TypeMap', () => {
       const meta = typeMap.get(vocabulary.node(ex.Type))
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.eq({
         termType: 'Term',
         type: 'Term',
       } as TermType)
@@ -77,7 +79,7 @@ describe('TypeMap', () => {
       const meta = typeMap.get(vocabulary.node(ex.Type))
 
       // then
-      expect(meta).toBeUndefined()
+      expect(meta).to.be.undefined
     })
 
     it('returns value verbatim when it is a literal', () => {
@@ -91,7 +93,7 @@ describe('TypeMap', () => {
       const meta = typeMap.get(vocabulary.node('foo'))
 
       // then
-      expect(meta).toStrictEqual({
+      expect(meta).to.deep.eq({
         type: 'Constant',
         value: 'foo',
       })
@@ -112,7 +114,7 @@ describe('TypeMap', () => {
       expect(() => {
         // when
         typeMap.getOrThrow(vocabulary.node(ex.Type))
-      }).toThrow()
+      }).to.throw()
     })
 
     it('returns a meta object for class', () => {
@@ -123,7 +125,7 @@ describe('TypeMap', () => {
       const typeMap = new TypeMap({
         context,
         factories: [
-          jest.fn().mockReturnValue(expected),
+          sinon.stub().returns(expected),
         ],
         excluded: [],
       })
@@ -132,7 +134,7 @@ describe('TypeMap', () => {
       const meta = typeMap.getOrThrow(vocabulary.node(ex.Type))
 
       // then
-      expect(meta).toBe(expected)
+      expect(meta).to.eq(expected)
     })
   })
 })

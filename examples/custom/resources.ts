@@ -13,7 +13,7 @@ export function CollectionMixin<Base extends Constructor>(base: Base) {
   @namespace(hydra)
   class C extends base implements Collection {
     @property.resource({ path: 'member', values: 'array' })
-    members!: HydraResource[]
+      members!: HydraResource[]
   }
 
   return C

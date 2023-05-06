@@ -1,9 +1,9 @@
 import { ClassDeclaration, DecoratorStructure, InterfaceDeclaration, OptionalKind } from 'ts-morph'
-import { JavascriptProperty } from './JsProperties.js'
+import TermSet from '@rdfjs/term-set'
 import { Context } from '../index.js'
 import { TypeMeta, LiteralType, ResourceType, ExternalResourceType } from '../types/index.js'
 import { MixinModuleBase } from '../MixinGenerator/MixinModuleBase.js'
-import TermSet from '@rdfjs/term-set'
+import { JavascriptProperty } from './JsProperties.js'
 
 interface PropertyWriterInit {
   interfaceDeclaration: InterfaceDeclaration
@@ -42,10 +42,10 @@ function rangesToPropertyTypes(result: string[], range: TypeMeta) {
 }
 
 export class PropertyWriter {
-  private readonly __interface: InterfaceDeclaration;
-  private readonly __class: ClassDeclaration;
+  private readonly __interface: InterfaceDeclaration
+  private readonly __class: ClassDeclaration
   private readonly __context: Omit<Context, 'properties'>
-  private readonly __module: MixinModuleBase<ResourceType | ExternalResourceType>;
+  private readonly __module: MixinModuleBase<ResourceType | ExternalResourceType>
 
   public constructor({ interfaceDeclaration, classDeclaration, context, module }: PropertyWriterInit) {
     this.__interface = interfaceDeclaration
