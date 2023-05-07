@@ -15,7 +15,7 @@ RdfResourceImpl.factory.addMixin(PropertyShapeMixin)
 
 describe('NodeShape', () => {
   describe('initializer', () => {
-    it('sets an array as list deep in the initialized graph', function () {
+    it('sets an array as list deep in the initialized graph', () => {
       // given
       const dataset = $rdf.dataset()
       const graph = clownface({ dataset, term: RDF.namedNode('http://example.com/shape') })
@@ -38,7 +38,7 @@ describe('NodeShape', () => {
       })
 
       // then
-      expect(dataset.toCanonical()).to.matchSnapshot(this)
+      expect(dataset.toCanonical()).toMatchSnapshot()
     })
   })
 })

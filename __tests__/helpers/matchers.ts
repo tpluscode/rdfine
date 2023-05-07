@@ -3,8 +3,9 @@ import { SourceFile } from 'ts-morph'
 import Parser from '@rdfjs/parser-jsonld'
 import toStream from 'string-to-stream'
 import $rdf from 'rdf-ext'
-import {Assertion, expect} from "chai";
-import {addSerializer} from "jest-snapshot";
+import { Assertion, AssertionError } from 'chai'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { addSerializer } from 'jest-snapshot'
 
 const parser = new Parser()
 
@@ -14,30 +15,18 @@ declare global {
     interface TypeComparison {
       validJsonLd(): void
     }
-
-    interface Assertion {
-      toMatchInlineSnapshot(snapshot: string): void
-    }
   }
 }
 Assertion.addMethod('validJsonLd', async function (this: Chai.AssertionStatic) {
   const received: string | Record<string, any> = this._obj
 
-    const jsonld = typeof received === 'string' ? received : JSON.stringify(received)
+  const jsonld = typeof received === 'string' ? received : JSON.stringify(received)
 
-    try {
-      await $rdf.dataset().import(parser.import(toStream(jsonld)))
-
-      return {
-        message: () => 'Object was valid JSON-LD',
-        pass: true,
-      }
-    } catch (e: any) {
-      return {
-        message: () => `Failed to parse JSON-LD: ${e.message}`,
-        pass: false,
-      }
-    }
+  try {
+    await $rdf.dataset().import(parser.import(toStream(jsonld)))
+  } catch (e: any) {
+    throw new AssertionError(`Failed to parse JSON-LD: ${e.message}`)
+  }
 })
 
 addSerializer({
@@ -58,4 +47,3 @@ addSerializer({
     return val.getProject().getFileSystem().readFileSync(val.getFilePath())
   },
 })
-

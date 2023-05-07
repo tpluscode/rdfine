@@ -245,7 +245,7 @@ describe('decorator', () => {
     })
 
     describe('setter', () => {
-      it('accepts raw term', async function () {
+      it('accepts raw term', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -268,10 +268,10 @@ describe('decorator', () => {
         instance.name = RDF.literal('John', 'en-gb')
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('replaces boolean object value', async function () {
+      it('replaces boolean object value', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -295,10 +295,10 @@ describe('decorator', () => {
         instance.married = false
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('sets xsd:integer literal for int number', async function () {
+      it('sets xsd:integer literal for int number', async () => {
         // given
         const dataset = rdfExt.dataset()
 
@@ -316,10 +316,10 @@ describe('decorator', () => {
         instance.age = 30
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('sets xsd:float literal for float number', async function () {
+      it('sets xsd:float literal for float number', async () => {
         // given
         const dataset = rdfExt.dataset()
 
@@ -337,10 +337,10 @@ describe('decorator', () => {
         instance.age = 30.4
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('sets xsd:long literal for bigint', async function () {
+      it('sets xsd:long literal for bigint', async () => {
         // given
         const dataset = rdfExt.dataset()
 
@@ -358,7 +358,7 @@ describe('decorator', () => {
         instance.age = BigInt(9007199254740991)
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
       it('sets xsd:dateTime literal for Date', async () => {
@@ -407,7 +407,7 @@ describe('decorator', () => {
           .to.deep.eq(RDF.literal('1987-10-09', xsd.date))
       })
 
-      it('replaces string object value', async function () {
+      it('replaces string object value', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -431,10 +431,10 @@ describe('decorator', () => {
         instance.name = 'Jane'
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('replaces string literal node value', async function () {
+      it('replaces string literal node value', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -458,10 +458,10 @@ describe('decorator', () => {
         instance.name = RDF.literal('Jane', ex.Name)
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('replaces string literal node value', async function () {
+      it('replaces string literal node value', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -485,10 +485,10 @@ describe('decorator', () => {
         instance.name = instance.pointer.literal('Jane', ex.Name)
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('unsets string object when null is set', async function () {
+      it('unsets string object when null is set', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -512,7 +512,7 @@ describe('decorator', () => {
         instance.name = null
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
       it('throws when trying to set a named node', async () => {
@@ -593,7 +593,7 @@ describe('decorator', () => {
         }).to.throw()
       })
 
-      it('sets a literal with the annotated type', async function () {
+      it('sets a literal with the annotated type', async () => {
         // given
         const dataset = await parse(turtle`
           @prefix ex: <${prefixes.ex}> .
@@ -614,10 +614,10 @@ describe('decorator', () => {
         instance.age = '20'
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('sets a numeric literal with the annotated type', async function () {
+      it('sets a numeric literal with the annotated type', async () => {
         // given
         const dataset = await parse(turtle`
           @prefix ex: <${prefixes.ex}> .
@@ -638,12 +638,12 @@ describe('decorator', () => {
         instance.age = 20
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
     })
 
     describe('initial', () => {
-      it('sets default value when not present in dataset', async function () {
+      it('sets default value when not present in dataset', async () => {
         // given
         const dataset = rdfExt.dataset()
         class Resource extends RdfResource {
@@ -662,10 +662,10 @@ describe('decorator', () => {
 
         // then
         expect(instance.name).to.eq('foo')
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('does not set initialized value when present in initial dataset', async function () {
+      it('does not set initialized value when present in initial dataset', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -690,10 +690,10 @@ describe('decorator', () => {
 
         // then
         expect(instance.name).to.eq('bar')
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('sets initial value from node', async function () {
+      it('sets initial value from node', async () => {
         // given
         const dataset = rdfExt.dataset()
         class Resource extends RdfResource {
@@ -712,10 +712,10 @@ describe('decorator', () => {
 
         // then
         expect(instance.name).to.eq('foo')
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('sets initial value from function', async function () {
+      it('sets initial value from function', async () => {
         // given
         const dataset = rdfExt.dataset()
         class Resource extends RdfResource {
@@ -734,7 +734,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.name).to.eq(instance.id.value)
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
     })
   })

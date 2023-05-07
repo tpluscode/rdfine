@@ -263,7 +263,7 @@ describe('decorator', () => {
         expect(getName).to.throw()
       })
 
-      it('strict can be initialized', async function () {
+      it('strict can be initialized', async () => {
         // given
         const dataset = RDF.dataset()
         class Resource extends RdfResource {
@@ -279,10 +279,10 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).to.eq('bar')
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('array can be initialized', async function () {
+      it('array can be initialized', async () => {
         // given
         const dataset = RDF.dataset()
         class Resource extends RdfResource {
@@ -298,10 +298,10 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).to.contain.members(['bar'])
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('array can be initialized with multiple values', async function () {
+      it('array can be initialized with multiple values', async () => {
         // given
         const dataset = RDF.dataset()
         class Resource extends RdfResource {
@@ -317,10 +317,10 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).to.deep.eq(['foo', 'bar'])
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('rdf list can be initialized', async function () {
+      it('rdf list can be initialized', async () => {
         // given
         const dataset = RDF.dataset()
         class Resource extends RdfResource {
@@ -336,10 +336,10 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).to.deep.eq(['bar'])
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('rdf list can be initialized with multiple values', async function () {
+      it('rdf list can be initialized with multiple values', async () => {
         // given
         const dataset = RDF.dataset()
         class Resource extends RdfResource {
@@ -355,7 +355,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).to.deep.eq(['foo', 'bar'])
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
       it('returns rdf list array', async () => {
@@ -502,7 +502,7 @@ describe('decorator', () => {
     })
 
     describe('setter', () => {
-      it('can replace literal with blank', async function () {
+      it('can replace literal with blank', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -530,10 +530,10 @@ describe('decorator', () => {
         instance.name = cf({ dataset }).has(rdf.type, ex.BlankNodeName).term
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('can set empty array, removing objects', async function () {
+      it('can set empty array, removing objects', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -556,10 +556,10 @@ describe('decorator', () => {
         instance.name = []
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('can set array', async function () {
+      it('can set array', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -585,7 +585,7 @@ describe('decorator', () => {
         ]
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
       it('throws when setting array to non-array getter', async () => {
@@ -614,7 +614,7 @@ describe('decorator', () => {
         expect(setArray).to.throw()
       })
 
-      it('sets value at paths of arbitrary length', async function () {
+      it('sets value at paths of arbitrary length', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -644,10 +644,10 @@ describe('decorator', () => {
         instance.friendsWorkplaceName = RDF.literal('Google')
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('sets nil for empty rdf list', async function () {
+      it('sets nil for empty rdf list', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -668,10 +668,10 @@ describe('decorator', () => {
         instance.friend = []
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('sets list when property allows list or single and setting array with multiple items', async function () {
+      it('sets list when property allows list or single and setting array with multiple items', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -692,10 +692,10 @@ describe('decorator', () => {
         instance.friend = [RDF.literal('bar'), RDF.literal('baz')]
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('setting null to rdf list removes triple', async function () {
+      it('setting null to rdf list removes triple', async () => {
         // given
         const dataset = await parse(`
           @prefix ex: <${prefixes.ex}> .
@@ -716,7 +716,7 @@ describe('decorator', () => {
         instance.friend = null
 
         // then
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
       it('can set an rdf resource', async () => {
@@ -796,7 +796,7 @@ describe('decorator', () => {
     })
 
     describe('initial', () => {
-      it('sets initial value from node', async function () {
+      it('sets initial value from node', async () => {
         // given
         const dataset = RDF.dataset()
         class Resource extends RdfResource {
@@ -815,10 +815,10 @@ describe('decorator', () => {
 
         // then
         expect(instance.name.value).to.eq('foo')
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('sets initial value from clownface object', async function () {
+      it('sets initial value from clownface object', async () => {
         // given
         const dataset = RDF.dataset()
         class Resource extends RdfResource {
@@ -837,10 +837,10 @@ describe('decorator', () => {
 
         // then
         expect(instance.name.value).to.eq('foo')
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
-      it('sets initial value from function', async function () {
+      it('sets initial value from function', async () => {
         // given
         const dataset = RDF.dataset()
         class Resource extends RdfResource {
@@ -859,7 +859,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.child.value).to.eq('http://example.com/res/child')
-        expect(dataset.toCanonical()).to.matchSnapshot(this)
+        expect(dataset.toCanonical()).toMatchSnapshot()
       })
 
       it('sets all initial values from all mixins', async () => {
@@ -1004,7 +1004,7 @@ describe('decorator', () => {
         })
 
         describe('setter', () => {
-          it('sets value to same graph', async function () {
+          it('sets value to same graph', async () => {
             // given
             const dataset = await parse(`
               @prefix ex: <${prefixes.ex}> .
@@ -1020,10 +1020,10 @@ describe('decorator', () => {
             instance.friend = ex.Holly
 
             // then
-            expect(instance.unionGraphPointer.dataset.toCanonical()).to.matchSnapshot(this)
+            expect(instance.unionGraphPointer.dataset.toCanonical()).toMatchSnapshot()
           })
 
-          it('sets value to default graph if unspecified', async function () {
+          it('sets value to default graph if unspecified', async () => {
             // given
             const dataset = await parse(`
               @prefix ex: <${prefixes.ex}> .
@@ -1039,12 +1039,12 @@ describe('decorator', () => {
             instance.friend = ex.Holly
 
             // then
-            expect(instance.unionGraphPointer.dataset.toCanonical()).to.matchSnapshot(this)
+            expect(instance.unionGraphPointer.dataset.toCanonical()).toMatchSnapshot()
           })
         })
 
         describe('initial', () => {
-          it('sets initial values in self graph', function () {
+          it('sets initial values in self graph', () => {
             // given
             const dataset = RDF.dataset()
             const instance = newResource(dataset, ex.John, ex.John)
@@ -1053,7 +1053,7 @@ describe('decorator', () => {
             instance.friend = ex.Holly
 
             // then
-            expect(instance.unionGraphPointer.dataset.toCanonical()).to.matchSnapshot(this)
+            expect(instance.unionGraphPointer.dataset.toCanonical()).toMatchSnapshot()
           })
         })
       }

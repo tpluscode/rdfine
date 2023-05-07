@@ -155,7 +155,7 @@ describe('proxy', () => {
   })
 
   describe('set', () => {
-    it('single literal', function () {
+    it('single literal', () => {
       // given
       const resource = new RdfResourceImpl(node)
       const proxy = createProxy(resource)
@@ -164,10 +164,10 @@ describe('proxy', () => {
       proxy[ex.set.value] = $rdf.literal('foo')
 
       // then
-      expect(node.dataset.toCanonical()).to.matchSnapshot(this)
+      expect(node.dataset.toCanonical()).toMatchSnapshot()
     })
 
-    it('single resource', function () {
+    it('single resource', () => {
       // given
       const resource = new RdfResourceImpl(node)
       const proxy = createProxy(resource)
@@ -176,7 +176,7 @@ describe('proxy', () => {
       proxy[ex.set.value] = new RdfResourceImpl(node.namedNode(ex.other))
 
       // then
-      expect(node.dataset.toCanonical()).to.matchSnapshot(this)
+      expect(node.dataset.toCanonical()).toMatchSnapshot()
     })
 
     it('single factory', () => {
@@ -196,7 +196,7 @@ describe('proxy', () => {
       expect(node.out(ex.set).out(schema.name).value).to.eq('Child')
     })
 
-    it('multiple literals', function () {
+    it('multiple literals', () => {
       // given
       const resource = new RdfResourceImpl(node)
       const proxy = createProxy(resource)
@@ -205,10 +205,10 @@ describe('proxy', () => {
       proxy[ex.set.value] = [$rdf.literal('foo'), $rdf.literal('bar')]
 
       // then
-      expect(node.dataset.toCanonical()).to.matchSnapshot(this)
+      expect(node.dataset.toCanonical()).toMatchSnapshot()
     })
 
-    it('multiple resources', function () {
+    it('multiple resources', () => {
       // given
       const resource = new RdfResourceImpl(node)
       const proxy = createProxy(resource)
@@ -220,7 +220,7 @@ describe('proxy', () => {
       ]
 
       // then
-      expect(node.dataset.toCanonical()).to.matchSnapshot(this)
+      expect(node.dataset.toCanonical()).toMatchSnapshot()
     })
 
     it('multiple factories and values', () => {
@@ -243,7 +243,7 @@ describe('proxy', () => {
       )
     })
 
-    it('null removes triples', function () {
+    it('null removes triples', () => {
       // given
       const resource = new RdfResourceImpl(node)
       const proxy = createProxy(resource)
@@ -252,10 +252,10 @@ describe('proxy', () => {
       proxy[ex.multi.value] = null
 
       // then
-      expect(node.dataset.toCanonical()).to.matchSnapshot(this)
+      expect(node.dataset.toCanonical()).toMatchSnapshot()
     })
 
-    it('empty array removes triples', function () {
+    it('empty array removes triples', () => {
       // given
       const resource = new RdfResourceImpl(node)
       const proxy = createProxy(resource)
@@ -264,10 +264,10 @@ describe('proxy', () => {
       proxy[ex.multi.value] = []
 
       // then
-      expect(node.dataset.toCanonical()).to.matchSnapshot(this)
+      expect(node.dataset.toCanonical()).toMatchSnapshot()
     })
 
-    it('does not proxy declared properties', function () {
+    it('does not proxy declared properties', () => {
       // given
       class Specialized extends RdfResourceImpl {
         @property.literal({ type: Number, path: 'http://example.com/number', initial: 5 })
@@ -279,7 +279,7 @@ describe('proxy', () => {
       proxy.foo = 10
 
       // then
-      expect(node.dataset.toCanonical()).to.matchSnapshot(this)
+      expect(node.dataset.toCanonical()).toMatchSnapshot()
     })
   })
 })

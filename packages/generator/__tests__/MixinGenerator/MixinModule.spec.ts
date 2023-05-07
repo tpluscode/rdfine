@@ -2,11 +2,11 @@ import { Project, SourceFile } from 'ts-morph'
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { xsd } from '@tpluscode/rdf-ns-builders'
+import { expect } from 'chai'
 import { MixinModule } from '../../lib/MixinGenerator/MixinModule.js'
 import { FakeTypeCollection } from '../_helpers/FakeTypeCollection.js'
 import { ex } from '../_helpers/prefix.js'
 import { fakeLog } from '../_helpers/util.js'
-import {expect} from "chai";
 
 describe('MixinModule', () => {
   let project: Project
@@ -22,7 +22,7 @@ describe('MixinModule', () => {
     vocabulary = cf({ dataset: $rdf.dataset() })
   })
 
-  it('generates a mixin class without props', function () {
+  it('generates a mixin class without props', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -49,10 +49,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('generates a mixin class where term is not safe identifier', function () {
+  it('generates a mixin class where term is not safe identifier', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex['3Class']), {
       type: 'Resource',
@@ -79,10 +79,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('3Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('3Class.ts')).toMatchSnapshot()
   })
 
-  it('generates a mixin class with external super classes', function () {
+  it('generates a mixin class with external super classes', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -119,10 +119,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('generates property with automatic type cast when predicate has strict semantics', function () {
+  it('generates property with automatic type cast when predicate has strict semantics', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -164,10 +164,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('generates array property', function () {
+  it('generates array property', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -210,10 +210,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('generates list property', function () {
+  it('generates list property', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -256,10 +256,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('generates list/single property', function () {
+  it('generates list/single property', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -302,10 +302,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('does not try import self when property has range of enclosing class', function () {
+  it('does not try import self when property has range of enclosing class', () => {
     // given
     const generateType = {
       type: 'Resource' as const,
@@ -341,10 +341,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('generates property with automatic external type cast when predicate has strict semantics', function () {
+  it('generates property with automatic external type cast when predicate has strict semantics', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -389,10 +389,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('generates property with datatype-annotated literal', function () {
+  it('generates property with datatype-annotated literal', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -437,10 +437,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('generates date property', function () {
+  it('generates date property', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -480,10 +480,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('generates literal property with unioned string return types', function () {
+  it('generates literal property with unioned string return types', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -527,10 +527,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('wraps property name in quotes when term has non-alpha characters', function () {
+  it('wraps property name in quotes when term has non-alpha characters', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -569,10 +569,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('does not add datatype annotation to literal property when datatype is ambiguous', function () {
+  it('does not add datatype annotation to literal property when datatype is ambiguous', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -617,10 +617,10 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('Class.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('Class.ts')).toMatchSnapshot()
   })
 
-  it('generates a bundle module with property mixin types but skipping external mixins', function () {
+  it('generates a bundle module with property mixin types but skipping external mixins', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -672,11 +672,11 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('bundles/Class.ts')).to.matchSnapshot(this)
-    expect(project.getSourceFile('bundles/index.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('bundles/Class.ts')).toMatchSnapshot()
+    expect(project.getSourceFile('bundles/index.ts')).toMatchSnapshot()
   })
 
-  it('generates a bundle module with super classes but without externals', function () {
+  it('generates a bundle module with super classes but without externals', () => {
     // given
     const module = new MixinModule(vocabulary.node(ex.Class), {
       type: 'Resource',
@@ -720,7 +720,7 @@ describe('MixinModule', () => {
     })
 
     // then
-    expect(project.getSourceFile('bundles/Class.ts')).to.matchSnapshot(this)
-    expect(project.getSourceFile('bundles/index.ts')).to.matchSnapshot(this)
+    expect(project.getSourceFile('bundles/Class.ts')).toMatchSnapshot()
+    expect(project.getSourceFile('bundles/index.ts')).toMatchSnapshot()
   })
 })

@@ -6,14 +6,14 @@ import { rdfs, skos } from '@tpluscode/rdf-ns-builders'
 import { ResourceMixin } from '@rdfine/rdfs/lib/Resource'
 import { PropertyShape, fromPointer } from '../lib/PropertyShape.js';
 import { PropertyShapeBundle } from '../bundles/index.js'
-import {expect} from "chai";
+import { expect } from 'chai';
 
 RdfResource.factory.addMixin(...PropertyShapeBundle)
 RdfResource.factory.addMixin(ResourceMixin)
 
 describe('PropertyShape', () => {
   describe('initializer', () => {
-    it('lets initializing path with named node',  function () {
+    it('lets initializing path with named node', () => {
       // given
       const dataset = $rdf.dataset()
       const graph = clownface({ dataset, term: RDF.namedNode('http://example.com/shape') })
@@ -24,10 +24,10 @@ describe('PropertyShape', () => {
       })
 
       // then
-      expect(dataset.toCanonical()).to.matchSnapshot(this)
+      expect(dataset.toCanonical()).toMatchSnapshot()
     })
 
-    it('lets initializing path with named node array', function () {
+    it('lets initializing path with named node array', () => {
       // given
       const dataset = $rdf.dataset()
       const graph = clownface({ dataset, term: RDF.namedNode('http://example.com/shape') })
@@ -38,10 +38,10 @@ describe('PropertyShape', () => {
       })
 
       // then
-      expect(dataset.toCanonical()).to.matchSnapshot(this)
+      expect(dataset.toCanonical()).toMatchSnapshot()
     })
 
-    it('initializes a single path property without an RDF List',  function () {
+    it('initializes a single path property without an RDF List', () => {
       // given
       const dataset = $rdf.dataset()
       const graph = clownface({ dataset, term: RDF.namedNode('http://example.com/shape') })
@@ -52,10 +52,10 @@ describe('PropertyShape', () => {
       })
 
       // then
-      expect(shape).to.matchSnapshot(this)
+      expect(shape).toMatchSnapshot()
     })
 
-    it('initializes a single element array as an RDF List',  function () {
+    it('initializes a single element array as an RDF List', () => {
       // given
       const dataset = $rdf.dataset()
       const graph = clownface({ dataset, term: RDF.namedNode('http://example.com/shape') })
@@ -66,7 +66,7 @@ describe('PropertyShape', () => {
       })
 
       // then
-      expect(shape).to.matchSnapshot(this)
+      expect(shape).toMatchSnapshot()
     })
   })
 })

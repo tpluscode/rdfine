@@ -1,10 +1,10 @@
 import $rdf from 'rdf-ext'
 import cf, { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
+import { expect } from 'chai'
 import TypeCollection from '../lib/TypeCollection.js'
 import RdfResourceImpl, { RdfResource, ResourceIdentifier } from '../RdfResource.js'
 import { parse, ex } from './_helpers/index.js'
-import {expect} from "chai";
 
 const nullResource = {} as RdfResource
 
@@ -182,7 +182,7 @@ describe('TypeCollection', () => {
   })
 
   describe('clear', () => {
-    it('removes all resource\'s triples', async function () {
+    it('removes all resource\'s triples', async () => {
       // given
       const dataset = await parse(`
       @prefix ex: <${ex().value}> .
@@ -200,12 +200,12 @@ describe('TypeCollection', () => {
 
       // then
       expect(dataset.size).to.eq(1)
-      expect(dataset.toCanonical()).to.matchSnapshot(this)
+      expect(dataset.toCanonical()).toMatchSnapshot()
     })
   })
 
   describe('add', () => {
-    it('modifies the dataset when adding named node', function () {
+    it('modifies the dataset when adding named node', () => {
       // given
       const dataset = $rdf.dataset()
       node = cf({
@@ -217,10 +217,10 @@ describe('TypeCollection', () => {
       tc.add(ex.Type)
 
       // then
-      expect(dataset.toCanonical()).to.matchSnapshot(this)
+      expect(dataset.toCanonical()).toMatchSnapshot()
     })
 
-    it('modifies the dataset when adding resource', function () {
+    it('modifies the dataset when adding resource', () => {
       // given
       const dataset = $rdf.dataset()
       node = cf({
@@ -236,10 +236,10 @@ describe('TypeCollection', () => {
       tc.add(newType)
 
       // then
-      expect(dataset.toCanonical()).to.matchSnapshot(this)
+      expect(dataset.toCanonical()).toMatchSnapshot()
     })
 
-    it('does not modify the dataset when type already exists on resource', async function () {
+    it('does not modify the dataset when type already exists on resource', async () => {
       // given
       const dataset = await parse(`
         @prefix ex: <${ex().value}> .
@@ -259,12 +259,12 @@ describe('TypeCollection', () => {
       tc.add(newType)
 
       // then
-      expect(dataset.toCanonical()).to.matchSnapshot(this)
+      expect(dataset.toCanonical()).toMatchSnapshot()
     })
   })
 
   describe('delete', () => {
-    it('removes the correct triple', async function () {
+    it('removes the correct triple', async () => {
       // given
       const dataset = await parse(`
       @prefix ex: <${ex().value}> .
@@ -282,7 +282,7 @@ describe('TypeCollection', () => {
 
       // then
       expect(dataset.size).to.eq(4)
-      expect(dataset.toCanonical()).to.matchSnapshot(this)
+      expect(dataset.toCanonical()).toMatchSnapshot()
     })
 
     it('returns true if deleted triples', async () => {

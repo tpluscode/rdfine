@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "postinstall": "patch-package",
     "lint": "eslint . --ext .ts,.js --quiet --ignore-path .eslintignore --ignore-path .gitignore",
     "test": "c8 mocha vocabularies/**/*.spec.ts packages/**/*.spec.ts",
     "example": "wsrun -p rdfine-example --no-prefix -c start",
@@ -27,6 +28,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
     "c8": "^7.13.0",
+    "chai-string": "^1.5.0",
     "chai-subset": "^1.6.0",
     "eslint": "^8.36.0",
     "eslint-config-standard": "^17.0.0",
@@ -42,6 +44,7 @@
     "mocha": "^10.2.0",
     "mocha-chai-jest-snapshot": "^1.1.4",
     "npm-run-all": "^4.1.5",
+    "patch-package": "^7.0.0",
     "rdf-ext": "^2.2.0",
     "rimraf": "^3.0.2",
     "standard": "^17.0.0",
@@ -67,7 +70,7 @@
     ]
   },
   "mocha": {
-    "loader": "ts-node/esm",
+    "loader": "ts-node/esm/transpile-only",
     "require": [
       "mocha-setup.cjs"
     ]

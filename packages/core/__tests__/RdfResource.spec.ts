@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import cf, { AnyPointer } from 'clownface'
+import cf, { AnyPointer, GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import type { NamedNode, Term, Literal } from '@rdfjs/types'
 import {
@@ -491,7 +491,7 @@ describe('RdfResource', () => {
       expect(resource.broader[0].getString(skos.prefLabel)).to.eq('Bar')
     })
 
-    it('initializes T|T[] property with IRI', function () {
+    it('initializes T|T[] property with IRI', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
       class SkosResource extends RdfResource {
@@ -505,7 +505,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.pointer.dataset).to.matchSnapshot(this)
+      expect(resource.pointer.dataset).to.matchSnapshot()
     })
 
     it('initializes annotated property with a resource using http properties', () => {
@@ -576,7 +576,7 @@ describe('RdfResource', () => {
       expect(resource.get(skos.broader)!.id.value).to.eq(ex.Bar.value)
     })
 
-    it('assigns literal node to arbitrary URI property', function () {
+    it('assigns literal node to arbitrary URI property', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
 
@@ -586,10 +586,10 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.pointer.dataset).to.matchSnapshot(this)
+      expect(resource.pointer.dataset).toMatchSnapshot()
     })
 
-    it('can initialize child resource with object decomposition', function () {
+    it('can initialize child resource with object decomposition', () => {
       // given
       class Child extends RdfResource {
         @property.literal({ path: ex.foo })
@@ -619,10 +619,10 @@ describe('RdfResource', () => {
       )
 
       // then
-      expect(resource.pointer.dataset).to.matchSnapshot(this)
+      expect(resource.pointer.dataset).toMatchSnapshot()
     })
 
-    it('can initialize child resource with string blank node id', function () {
+    it('can initialize child resource with string blank node id', () => {
       // given
       class Resource extends RdfResource {
         @property.resource({ path: ex.foo })
@@ -646,7 +646,7 @@ describe('RdfResource', () => {
       expect(resource.pointer.dataset).toMatchSnapshot()
     })
 
-    it('can initialize child resource with string named node id', function () {
+    it('can initialize child resource with string named node id', () => {
       // given
       class Resource extends RdfResource {
         @property.resource({ path: ex.foo })
@@ -667,10 +667,10 @@ describe('RdfResource', () => {
       )
 
       // then
-      expect(resource.pointer.dataset).to.matchSnapshot(this)
+      expect(resource.pointer.dataset).toMatchSnapshot()
     })
 
-    it('uses implicitTypes of annotated properties to initialize child resources', function () {
+    it('uses implicitTypes of annotated properties to initialize child resources', () => {
       // given
       class Resource extends RdfResource {
         @property.resource({ path: ex.foo, implicitTypes: [ex.Foo, ex.Bar] })
@@ -688,7 +688,7 @@ describe('RdfResource', () => {
       )
 
       // then
-      expect(resource.pointer.dataset).to.matchSnapshot(this)
+      expect(resource.pointer.dataset).toMatchSnapshot()
     })
 
     const nativeSetters: [string, any, Literal][] = [
@@ -1180,8 +1180,8 @@ describe('RdfResource', () => {
 
       // then
       expect(json).to.be.validJsonLd()
-      expect(json.type).to.eq(
-        expect.arrayContaining([foaf.Person.value, schema.Person.value]),
+      expect(json.type).to.deep.contain.all.members(
+        [foaf.Person.value, schema.Person.value],
       )
       expect(json).toMatchInlineSnapshot(`
         Object {
@@ -1283,7 +1283,7 @@ describe('RdfResource', () => {
         .addOut(schema.contentSize, 22.5)
         .addOut(
           schema.datePublished,
-          $rdf.literal(new Date().toISOString(), xsd.dateTime),
+          $rdf.literal('2023-05-07T20:00:30', xsd.dateTime),
         )
         .addOut(schema.isLiveBroadcast, true)
         .addOut(schema.name, $rdf.literal('foo', 'en'))
@@ -1299,12 +1299,6 @@ describe('RdfResource', () => {
       // then
       expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(
-        {
-          [schema.datePublished.value]: {
-            '@value': expect.any(String),
-            '@type': xsd.dateTime.value,
-          },
-        },
         `
         Object {
           "@context": Object {
@@ -1316,7 +1310,7 @@ describe('RdfResource', () => {
           "http://schema.org/contentSize": 22.5,
           "http://schema.org/datePublished": Object {
             "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
-            "@value": Any<String>,
+            "@value": "2023-05-07T20:00:30",
           },
           "http://schema.org/familyName": "Doe",
           "http://schema.org/isLiveBroadcast": true,
@@ -1437,7 +1431,7 @@ describe('RdfResource', () => {
         .addOut(schema.contentSize, 22.5)
         .addOut(
           schema.datePublished,
-          $rdf.literal(new Date().toISOString(), xsd.dateTime),
+          $rdf.literal('2023-05-07T20:00:30', xsd.dateTime),
         )
         .addOut(schema.isLiveBroadcast, true)
         .addOut(schema.isAccessibleForFree, false)
@@ -1478,12 +1472,6 @@ describe('RdfResource', () => {
       expect(json.isAccessibleForFree).to.eq(false)
       expect(json.contentUrl).to.eq('http://example.com/foo')
       expect(json).toMatchInlineSnapshot(
-        {
-          datePublished: {
-            '@value': expect.any(String),
-            '@type': xsd.dateTime.value,
-          },
-        },
         `
         Object {
           "@context": Object {
@@ -1502,7 +1490,7 @@ describe('RdfResource', () => {
           "contentUrl": "http://example.com/foo",
           "datePublished": Object {
             "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
-            "@value": Any<String>,
+            "@value": "2023-05-07T20:00:30",
           },
           "id": "test",
           "isAccessibleForFree": false,
@@ -1680,7 +1668,7 @@ describe('RdfResource', () => {
           schema.knows,
           [$rdf.namedNode('jane'), $rdf.namedNode('jenny')],
           friends => {
-            friends.forEach(friend =>
+            friends.forEach((friend: GraphPointer) =>
               friend.addOut(schema.givenName, friend.value),
             )
           },
@@ -2061,7 +2049,7 @@ describe('RdfResource', () => {
 
       // then
       expect(json).to.be.validJsonLd()
-      expect(json).to(`
+      expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
             "foo": "http://example.com/foo",

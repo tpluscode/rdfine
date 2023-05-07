@@ -78,7 +78,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     let explicitMixins: Mixin[] = typeAndMixins
     if (typeAndMixins.length > 0) {
       const [BaseClassOrMixin, ...rest] = typeAndMixins
-      if ('factory' in BaseClassOrMixin) {
+      if (BaseClassOrMixin instanceof Object && 'factory' in BaseClassOrMixin) {
         BaseClass = BaseClassOrMixin
         explicitMixins = rest
       }
