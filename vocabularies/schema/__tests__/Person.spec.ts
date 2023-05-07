@@ -1,6 +1,6 @@
 import { PersonMixin } from '../lib/Person.js';
 import RdfResource from '@tpluscode/rdfine';
-import {expect} from "chai";
+import { expect } from 'chai';
 
 class Person extends PersonMixin(RdfResource) {}
 
