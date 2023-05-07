@@ -31,8 +31,8 @@
     "prefix": "rico"
   },
   "dependencies": {
-    "@rdf-esm/data-model": "^0.5.3",
-    "@tpluscode/rdf-ns-builders": "^2.0.1",
+    "@rdfjs/data-model": "^2",
+    "@tpluscode/rdf-ns-builders": ">=3.0.2",
     "@tpluscode/rdfine": "^0.5.39"
   },
   "repository": {
