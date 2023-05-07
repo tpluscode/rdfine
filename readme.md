@@ -21,6 +21,7 @@ Core library to define the JavaScript object model for RDF classes and propertie
 * [@rdfine/prov](vocabularies/prov) - [W3C PROVenance Interchange](https://www.w3.org/blog/SW/2013/03/21/prov-a-framework-for-provenance-interchange/)
 * [@rdfine/rdf](vocabularies/rdf) - [The RDF Concepts Vocabulary](https://www.w3.org/TR/rdf11-concepts/)
 * [@rdfine/rdfs](vocabularies/rdfs) - [The RDF Schema vocabulary](https://www.w3.org/TR/rdf-schema/)
+* [@rdfine/rico](vocabularies/rico) - [Records in Contexts Ontology](https://ica-egad.github.io/RiC-O/)
 * [@rdfine/schema](vocabularies/schema) - http://schema.org/
 * [@rdfine/shacl](vocabularies/shacl) - [Shapes Constraint Language](https://www.w3.org/TR/shacl/)
 * [@rdfine/sioc](vocabularies/sioc) - [SIOC (Semantically-Interlinked Online Communities)](http://rdfs.org/sioc/spec/)

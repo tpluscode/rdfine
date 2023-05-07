@@ -1,7 +1,7 @@
 /* global BigInt */
 import prefixes from '@zazuko/prefixes'
 import { expect } from 'chai'
-import { BlankNode, Literal, NamedNode } from '@rdfjs/types'
+import type { BlankNode, Literal, NamedNode } from '@rdfjs/types'
 import RDF from '@rdfjs/data-model'
 import rdfExt from 'rdf-ext'
 import { schema, xsd } from '@tpluscode/rdf-ns-builders'

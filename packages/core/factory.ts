@@ -1,4 +1,4 @@
-import * as RDF from '@rdfjs/types'
+import type * as RDF from '@rdfjs/types'
 import { AnyContext, AnyPointer } from 'clownface'
 import { Initializer, RdfResourceCore, ResourceIdentifier, ResourceNode } from './RdfResource.js'
 import { ResourceFactory, Mixin } from './lib/ResourceFactory.js'

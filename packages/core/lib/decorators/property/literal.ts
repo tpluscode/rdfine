@@ -1,4 +1,4 @@
-import { Literal, NamedNode, Term } from '@rdfjs/types'
+import type { Literal, NamedNode, Term } from '@rdfjs/types'
 import { RdfResourceCore } from '../../../RdfResource.js'
 import { fromLiteral, toLiteral } from '../../conversion.js'
 import { propertyDecorator, ObjectOrFactory } from './decoratorFactory.js'

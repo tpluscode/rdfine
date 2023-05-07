@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.5.43
+
+### Patch Changes
+
+- 29474b07: It would still be impossible to initialise literal prop, when it allowed `undefined`
+
+## 0.5.42
+
+### Patch Changes
+
+- e07c0889: Initializing literal properties triggered design-time type error when initialised from a plain JS (string, number ,etc)
+
 ## 0.5.41
 
 ### Patch Changes

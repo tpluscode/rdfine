@@ -1,4 +1,4 @@
-import { DatasetCore, Term } from '@rdfjs/types'
+import type { DatasetCore, Term } from '@rdfjs/types'
 import cf, { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import RDF from '@rdfjs/data-model'

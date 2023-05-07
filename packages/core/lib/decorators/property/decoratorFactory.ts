@@ -1,4 +1,4 @@
-import { Quad, Term } from '@rdfjs/types'
+import type { Quad, Term } from '@rdfjs/types'
 import cf, { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import TermSet from '@rdfjs/term-set'

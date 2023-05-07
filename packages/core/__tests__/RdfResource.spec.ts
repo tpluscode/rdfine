@@ -225,6 +225,126 @@ describe('RdfResource', () => {
       expect(resource.name).to.eq('baz')
     })
 
+    it('allows string to initialize raw literal properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+
+      interface Resource extends RdfResource {
+        name: Literal
+      }
+
+      class ResourceImpl extends RdfResource implements Resource {
+        @property({ path: ex.name })
+          name!: Literal
+      }
+
+      const initializer: Initializer<Resource> = {
+        name: 'baz',
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.name).toEqual(literal('baz'))
+    })
+
+    it('allows number to initialize raw literal properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+
+      interface Resource extends RdfResource {
+        age: Literal
+      }
+
+      class ResourceImpl extends RdfResource implements Resource {
+        @property({ path: ex.name })
+          age!: Literal
+      }
+
+      const initializer: Initializer<Resource> = {
+        age: 10,
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.age).toEqual(literal('10', xsd.integer))
+    })
+
+    it('allows number to initialize optional raw literal properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+
+      interface Resource extends RdfResource {
+        age: Literal | undefined
+      }
+
+      class ResourceImpl extends RdfResource implements Resource {
+        @property({ path: ex.name })
+          age!: Literal
+      }
+
+      const initializer: Initializer<Resource> = {
+        age: 10,
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.age).toEqual(literal('10', xsd.integer))
+    })
+
+    it('allows undefined to initialize optional raw literal properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+
+      interface Resource extends RdfResource {
+        age: Literal | undefined
+      }
+
+      class ResourceImpl extends RdfResource implements Resource {
+        @property({ path: ex.name })
+          age!: Literal
+      }
+
+      const initializer: Initializer<Resource> = {
+        age: undefined,
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.age).toBeUndefined()
+    })
+
+    it('allows literal to initialize optional raw literal properties', () => {
+      // given
+      const node = cf({ dataset: $rdf.dataset() }).blankNode()
+
+      interface Resource extends RdfResource {
+        age: Literal | undefined
+      }
+
+      class ResourceImpl extends RdfResource implements Resource {
+        @property({ path: ex.name })
+          age!: Literal
+      }
+
+      const initializer: Initializer<Resource> = {
+        age: literal('foo'),
+      }
+
+      // when
+      const resource = new ResourceImpl(node, initializer)
+
+      // then
+      expect(resource.age).toEqual(literal('foo'))
+    })
+
     it('allows RDF/JS literal to initialize literal array properties', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() }).blankNode()

@@ -1,6 +1,6 @@
 /* eslint-disable camelcase,no-dupe-class-members,no-use-before-define */
 import type { NamespaceBuilder } from '@rdfjs/namespace'
-import { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from '@rdfjs/types'
+import type { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from '@rdfjs/types'
 import cf, { MultiPointer, GraphPointer, AnyPointer } from 'clownface'
 import once from 'once'
 import { xsd } from '@tpluscode/rdf-ns-builders'
@@ -360,15 +360,17 @@ export type Initializer<T> = Omit<{
     ? T[P] | InitialLiteral
     : T[P] extends (RdfResourceCore | undefined)
       ? InitializeSingle<T[P]>
-      : T[P] extends Term
-        ? T[P] | InitialNode<T[P]>
-        : Extract<T[P], Array<any>> extends (infer U)[]
-          ? U extends RdfResourceCore
-            ? InitializeArray<U> | InitializeSingle<U>
-            : U extends Term
-              ? T[P] | (InitialNode<Term> | InitializeSingle<RdfResourceCore>)[]
-              : T[P] | InitialLiteral | InitialLiteral[]
-          : unknown
+      : T[P] extends (Literal | undefined)
+        ? InitialLiteral | string | number | boolean
+        : T[P] extends Term
+          ? T[P] | InitialNode<T[P]>
+          : Extract<T[P], Array<any>> extends (infer U)[]
+            ? U extends RdfResourceCore
+              ? InitializeArray<U> | InitializeSingle<U>
+              : U extends Term
+                ? T[P] | (InitialNode<Term> | InitializeSingle<RdfResourceCore>)[]
+                : T[P] | InitialLiteral | InitialLiteral[]
+            : unknown
 }, keyof RdfResource> & BaseInitializer
 
 // eslint-disable-next-line @typescript-eslint/ban-types

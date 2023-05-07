@@ -1,4 +1,4 @@
-import { Term } from '@rdfjs/types'
+import type { Term } from '@rdfjs/types'
 import $rdf from '@rdfjs/data-model'
 import type { RdfResourceCore } from '../../../RdfResource.js'
 import { EdgeTraversalFactory, PropRef } from '../../path.js'
