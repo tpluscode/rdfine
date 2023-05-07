@@ -5,9 +5,9 @@ import DatasetExt from 'rdf-ext/lib/Dataset'
 import { foaf } from '@tpluscode/rdf-ns-builders'
 import { rdfs, schema } from '@tpluscode/rdf-ns-builders/loose'
 import builder, { NamespaceBuilder } from '@rdfjs/namespace'
+import { expect } from 'chai'
 import RdfResource from '../RdfResource.js'
 import { Constructor, namespace, property } from '../index.js'
-import {expect} from "chai";
 
 describe('decorator', () => {
   describe('namespace', () => {

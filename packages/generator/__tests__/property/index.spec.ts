@@ -5,8 +5,8 @@ import { owl, rdfs, schema, xsd } from '@tpluscode/rdf-ns-builders'
 import cf from 'clownface'
 import Parser from '@rdfjs/parser-n3'
 import stringToStream from 'string-to-stream'
+import { expect } from 'chai'
 import { findProperties } from '../../lib/property/index.js'
-import {expect} from "chai";
 
 const parser = new Parser()
 

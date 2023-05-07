@@ -8,7 +8,7 @@ import { fromPointer } from '../lib/Shape.js';
 import { ShapeBundle } from '../bundles/index.js'
 import { sh } from '../lib/namespace.js'
 import { PropertyShapeMixin } from '../lib/PropertyShape.js'
-import {expect} from "chai";
+import { expect } from 'chai';
 
 RdfResource.factory.addMixin(...ShapeBundle)
 RdfResource.factory.addMixin(ResourceMixin)

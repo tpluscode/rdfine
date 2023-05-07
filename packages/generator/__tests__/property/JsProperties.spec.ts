@@ -1,12 +1,12 @@
 import clownface from 'clownface'
 import $rdf from 'rdf-ext'
 import { doap, as, rdfs, owl } from '@tpluscode/rdf-ns-builders'
+import { expect } from 'chai'
 import { toJavascriptProperties } from '../../lib/property/JsProperties.js'
 import { FakeTypeCollection } from '../_helpers/FakeTypeCollection.js'
 import { fakeLog } from '../_helpers/util.js'
 import { TypeMap } from '../../lib/types/index.js'
 import { Range } from '../../lib/property/index.js'
-import {expect} from "chai";
 
 describe('JsProperties', () => {
   describe('toJavascriptProperties', () => {

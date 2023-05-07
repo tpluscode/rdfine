@@ -5,7 +5,7 @@ import type { NamedNode } from '@rdfjs/types'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import RdfResourceImpl from '@tpluscode/rdfine';
 import { IriTemplateMappingMixin } from '../lib/IriTemplateMapping.js';
-import {expect} from "chai";
+import { expect } from 'chai';
 
 class IriTemplateMapping extends IriTemplateMappingMixin(RdfResourceImpl) {}
 

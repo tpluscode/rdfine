@@ -3,7 +3,7 @@ import $rdf from 'rdf-ext'
 import type { NamedNode } from '@rdfjs/types'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import { fromPointer } from '../lib/Collection.js'
-import {expect} from "chai";
+import { expect } from 'chai';
 
 describe('Collection', () => {
   let collectionNode: GraphPointer<NamedNode>
