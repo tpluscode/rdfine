@@ -5,8 +5,9 @@ import { fromPointer, NodeShapeMixin } from '../lib/NodeShape.js';
 import RdfResourceImpl from '@tpluscode/rdfine';
 import { PropertyShapeMixin } from '../lib/PropertyShape.js';
 import { rdfs } from '@tpluscode/rdf-ns-builders';
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
 import ns from '@rdfjs/namespace';
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot';
 
 const ex = ns('http://example.com/')
 
@@ -14,6 +15,8 @@ RdfResourceImpl.factory.addMixin(NodeShapeMixin)
 RdfResourceImpl.factory.addMixin(PropertyShapeMixin)
 
 describe('NodeShape', () => {
+  chai.use(jestSnapshotPlugin())
+
   describe('initializer', () => {
     it('sets an array as list deep in the initialized graph', () => {
       // given

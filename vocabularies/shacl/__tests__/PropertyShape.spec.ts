@@ -6,12 +6,15 @@ import { rdfs, skos } from '@tpluscode/rdf-ns-builders'
 import { ResourceMixin } from '@rdfine/rdfs/lib/Resource'
 import { PropertyShape, fromPointer } from '../lib/PropertyShape.js';
 import { PropertyShapeBundle } from '../bundles/index.js'
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot';
 
 RdfResource.factory.addMixin(...PropertyShapeBundle)
 RdfResource.factory.addMixin(ResourceMixin)
 
 describe('PropertyShape', () => {
+  chai.use(jestSnapshotPlugin())
+
   describe('initializer', () => {
     it('lets initializing path with named node', () => {
       // given

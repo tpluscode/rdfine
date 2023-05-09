@@ -70,7 +70,7 @@
     ]
   },
   "mocha": {
-    "loader": "ts-node/esm/transpile-only",
+    "loader": "ts-node/esm",
     "require": [
       "mocha-setup.cjs"
     ],

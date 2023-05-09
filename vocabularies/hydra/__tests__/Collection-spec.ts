@@ -24,7 +24,8 @@ describe('Collection', () => {
 
       // then
       expect(Array.isArray(collection.member)).to.eq(true)
-      expect(collection.member[0]).to.have.property(['http://example.com/text', 'value'], 'hello')
+      const member: any = collection.member.shift()
+      expect(member['http://example.com/text']).to.have.property('value', 'hello')
     })
   })
 

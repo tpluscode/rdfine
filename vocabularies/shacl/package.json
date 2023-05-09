@@ -82,6 +82,7 @@
     "@rdfjs/namespace": "^2",
     "chai": "^4.3.7",
     "clownface": "^1",
+    "mocha-chai-jest-snapshot": "^1.1.4",
     "rdf-ext": "^2"
   },
   "repository": {
