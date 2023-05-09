@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { PlaceOfWorshipMixin } from './PlaceOfWorship.js';
 
-export interface BuddhistTemple<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlaceOfWorship<D>, RdfResource<D> {
+export interface BuddhistTemple<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlaceOfWorship<D>, rdfine.RdfResource<D> {
 }
 
-export function BuddhistTempleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BuddhistTemple> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function BuddhistTempleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BuddhistTemple> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class BuddhistTempleClass extends PlaceOfWorshipMixin(Resource) implements Partial<BuddhistTemple> {
   }
   return BuddhistTempleClass

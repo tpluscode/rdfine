@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ControlActionMixin } from './ControlAction.js';
 
-export interface DeactivateAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ControlAction<D>, RdfResource<D> {
+export interface DeactivateAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ControlAction<D>, rdfine.RdfResource<D> {
 }
 
-export function DeactivateActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DeactivateAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DeactivateActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DeactivateAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DeactivateActionClass extends ControlActionMixin(Resource) implements Partial<DeactivateAction> {
   }
   return DeactivateActionClass

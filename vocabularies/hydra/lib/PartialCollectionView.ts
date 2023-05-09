@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '../index.js';
 import { ResourceMixin } from './Resource.js';
 
-export interface PartialCollectionView<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
+export interface PartialCollectionView<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function PartialCollectionViewMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PartialCollectionView> & RdfResourceCore> & Base {
-  @namespace(hydra)
+export function PartialCollectionViewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PartialCollectionView> & RdfResourceCore> & Base {
+  @rdfine.namespace(hydra)
   class PartialCollectionViewClass extends ResourceMixin(Resource) implements Partial<PartialCollectionView> {
   }
   return PartialCollectionViewClass

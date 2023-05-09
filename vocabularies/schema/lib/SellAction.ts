@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { TradeActionMixin } from './TradeAction.js';
 
-export interface SellAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, RdfResource<D> {
+export interface SellAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, rdfine.RdfResource<D> {
   buyer: Schema.Organization<D> | Schema.Person<D> | undefined;
   warrantyPromise: Schema.WarrantyPromise<D> | undefined;
 }
 
-export function SellActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SellAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function SellActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SellAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class SellActionClass extends TradeActionMixin(Resource) implements Partial<SellAction> {
-    @property.resource()
+    @rdfine.property.resource()
     buyer: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     warrantyPromise: Schema.WarrantyPromise | undefined;
   }
   return SellActionClass

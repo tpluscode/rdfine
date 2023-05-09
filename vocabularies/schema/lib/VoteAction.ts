@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ChooseActionMixin } from './ChooseAction.js';
 
-export interface VoteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ChooseAction<D>, RdfResource<D> {
+export interface VoteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ChooseAction<D>, rdfine.RdfResource<D> {
   candidate: Schema.Person<D> | undefined;
 }
 
-export function VoteActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<VoteAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function VoteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<VoteAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class VoteActionClass extends ChooseActionMixin(Resource) implements Partial<VoteAction> {
-    @property.resource()
+    @rdfine.property.resource()
     candidate: Schema.Person | undefined;
   }
   return VoteActionClass

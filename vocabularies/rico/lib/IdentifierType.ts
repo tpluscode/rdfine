@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { TypeMixin } from './Type.js';
 
-export interface IdentifierType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, RdfResource<D> {
+export interface IdentifierType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, rdfine.RdfResource<D> {
   isIdentifierTypeOf: Rico.Identifier<D> | undefined;
 }
 
-export function IdentifierTypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<IdentifierType> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function IdentifierTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<IdentifierType> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class IdentifierTypeClass extends TypeMixin(Resource) implements Partial<IdentifierType> {
-    @property.resource({ implicitTypes: [rico.Identifier] })
+    @rdfine.property.resource({ implicitTypes: [rico.Identifier] })
     isIdentifierTypeOf: Rico.Identifier | undefined;
   }
   return IdentifierTypeClass

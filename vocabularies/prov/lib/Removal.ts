@@ -1,6 +1,6 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdfjs/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Prov from '../index.js';
 import { DerivationMixin } from './Derivation.js';
 
-export interface Removal<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Derivation<D>, RdfResource<D> {
+export interface Removal<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Derivation<D>, rdfine.RdfResource<D> {
   dictionary: Prov.Dictionary<D> | undefined;
   removedKey: RDF.Literal | undefined;
 }
 
-export function RemovalMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Removal> & RdfResourceCore> & Base {
-  @namespace(prov)
+export function RemovalMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Removal> & RdfResourceCore> & Base {
+  @rdfine.namespace(prov)
   class RemovalClass extends DerivationMixin(Resource) implements Partial<Removal> {
-    @property.resource({ implicitTypes: [prov.Dictionary] })
+    @rdfine.property.resource({ implicitTypes: [prov.Dictionary] })
     dictionary: Prov.Dictionary | undefined;
-    @property()
+    @rdfine.property()
     removedKey: RDF.Literal | undefined;
   }
   return RemovalClass

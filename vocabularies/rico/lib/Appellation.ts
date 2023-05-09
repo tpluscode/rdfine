@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { ConceptMixin } from './Concept.js';
 
-export interface Appellation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Concept<D>, RdfResource<D> {
+export interface Appellation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Concept<D>, rdfine.RdfResource<D> {
   appellationIsSourceOfAppellationRelation: Rico.AppellationRelation<D> | undefined;
   isOrWasAppellationOf: Rico.Thing<D> | undefined;
   normalizedValue: RDF.Literal | undefined;
@@ -19,24 +19,24 @@ export interface Appellation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   wasUsedToDate: Rico.Date<D> | undefined;
 }
 
-export function AppellationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Appellation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function AppellationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Appellation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class AppellationClass extends ConceptMixin(Resource) implements Partial<Appellation> {
-    @property.resource({ implicitTypes: [rico.AppellationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AppellationRelation] })
     appellationIsSourceOfAppellationRelation: Rico.AppellationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isOrWasAppellationOf: Rico.Thing | undefined;
-    @property()
+    @rdfine.property()
     normalizedValue: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     textualValue: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     usedFromDate: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     usedToDate: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.Date] })
+    @rdfine.property.resource({ implicitTypes: [rico.Date] })
     wasUsedFromDate: Rico.Date | undefined;
-    @property.resource({ implicitTypes: [rico.Date] })
+    @rdfine.property.resource({ implicitTypes: [rico.Date] })
     wasUsedToDate: Rico.Date | undefined;
   }
   return AppellationClass

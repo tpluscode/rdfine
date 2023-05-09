@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { BroadcastChannelMixin } from './BroadcastChannel.js';
 
-export interface TelevisionChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BroadcastChannel<D>, RdfResource<D> {
+export interface TelevisionChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BroadcastChannel<D>, rdfine.RdfResource<D> {
 }
 
-export function TelevisionChannelMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TelevisionChannel> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function TelevisionChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TelevisionChannel> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class TelevisionChannelClass extends BroadcastChannelMixin(Resource) implements Partial<TelevisionChannel> {
   }
   return TelevisionChannelClass

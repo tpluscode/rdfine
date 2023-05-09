@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { ThingMixin } from './Thing.js';
 
-export interface PhysicalLocation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, RdfResource<D> {
+export interface PhysicalLocation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, rdfine.RdfResource<D> {
   hasOrHadCoordinates: Rico.Coordinates<D> | undefined;
   isOrWasPhysicalLocationOf: Rico.Place<D> | undefined;
 }
 
-export function PhysicalLocationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PhysicalLocation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function PhysicalLocationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PhysicalLocation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class PhysicalLocationClass extends ThingMixin(Resource) implements Partial<PhysicalLocation> {
-    @property.resource({ implicitTypes: [rico.Coordinates] })
+    @rdfine.property.resource({ implicitTypes: [rico.Coordinates] })
     hasOrHadCoordinates: Rico.Coordinates | undefined;
-    @property.resource({ implicitTypes: [rico.Place] })
+    @rdfine.property.resource({ implicitTypes: [rico.Place] })
     isOrWasPhysicalLocationOf: Rico.Place | undefined;
   }
   return PhysicalLocationClass

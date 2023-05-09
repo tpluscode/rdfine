@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ThingMixin } from './Thing.js';
 
-export interface Event<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, RdfResource<D> {
+export interface Event<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, rdfine.RdfResource<D> {
   about: Schema.Thing<D> | undefined;
   actor: Schema.Person<D> | undefined;
   aggregateRating: Schema.AggregateRating<D> | undefined;
@@ -25,9 +25,12 @@ export interface Event<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   eventSchedule: Schema.Schedule<D> | undefined;
   eventStatus: Schema.EventStatusType | undefined;
   funder: Schema.Organization<D> | Schema.Person<D> | undefined;
+  funding: Schema.Grant<D> | undefined;
   inLanguage: Schema.Language<D> | undefined;
   inLanguageLiteral: string | undefined;
   isAccessibleForFree: boolean | undefined;
+  keywords: string | undefined;
+  keywordsTerm: RDF.NamedNode | undefined;
   location: Schema.Place<D> | Schema.PostalAddress<D> | undefined;
   locationLiteral: string | undefined;
   maximumAttendeeCapacity: number | undefined;
@@ -52,90 +55,96 @@ export interface Event<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   workPerformed: Schema.CreativeWork<D> | undefined;
 }
 
-export function EventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Event> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function EventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Event> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class EventClass extends ThingMixin(Resource) implements Partial<Event> {
-    @property.resource()
+    @rdfine.property.resource()
     about: Schema.Thing | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     actor: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     aggregateRating: Schema.AggregateRating | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     attendee: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     attendees: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     audience: Schema.Audience | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     composer: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     contributor: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     director: Schema.Person | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     doorTime: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     duration: Schema.Duration | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate: Date | undefined;
-    @property()
+    @rdfine.property()
     eventAttendanceMode: Schema.EventAttendanceModeEnumeration | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     eventSchedule: Schema.Schedule | undefined;
-    @property()
+    @rdfine.property()
     eventStatus: Schema.EventStatusType | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     funder: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
+    funding: Schema.Grant | undefined;
+    @rdfine.property.resource()
     inLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.inLanguage })
+    @rdfine.property.literal({ path: schema.inLanguage })
     inLanguageLiteral: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     isAccessibleForFree: boolean | undefined;
-    @property.resource()
+    @rdfine.property.literal()
+    keywords: string | undefined;
+    @rdfine.property({ path: schema.keywords })
+    keywordsTerm: RDF.NamedNode | undefined;
+    @rdfine.property.resource()
     location: Schema.Place | Schema.PostalAddress | undefined;
-    @property.literal({ path: schema.location })
+    @rdfine.property.literal({ path: schema.location })
     locationLiteral: string | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     maximumAttendeeCapacity: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     maximumPhysicalAttendeeCapacity: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     maximumVirtualAttendeeCapacity: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     offers: Schema.Demand | Schema.Offer | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     organizer: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     performer: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     performers: Schema.Organization | Schema.Person | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     previousStartDate: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     recordedIn: Schema.CreativeWork | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     remainingAttendeeCapacity: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     review: Schema.Review | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     sponsor: Schema.Organization | Schema.Person | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     subEvent: Schema.Event | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     subEvents: Schema.Event | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     superEvent: Schema.Event | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     translator: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     typicalAgeRange: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     workFeatured: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     workPerformed: Schema.CreativeWork | undefined;
   }
   return EventClass

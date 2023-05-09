@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   associatedArticle: Schema.NewsArticle<D> | undefined;
   bitrate: string | undefined;
   contentSize: string | undefined;
@@ -34,54 +34,54 @@ export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function MediaObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MediaObject> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MediaObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MediaObject> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MediaObjectClass extends CreativeWorkMixin(Resource) implements Partial<MediaObject> {
-    @property.resource()
+    @rdfine.property.resource()
     associatedArticle: Schema.NewsArticle | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     bitrate: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     contentSize: string | undefined;
-    @property()
+    @rdfine.property()
     contentUrl: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     duration: Schema.Duration | undefined;
-    @property()
+    @rdfine.property()
     embedUrl: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     encodesCreativeWork: Schema.CreativeWork | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     encodingFormat: string | undefined;
-    @property({ path: schema.encodingFormat })
+    @rdfine.property({ path: schema.encodingFormat })
     encodingFormatTerm: RDF.NamedNode | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     endTime: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     height: Schema.Distance | Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     ineligibleRegion: Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.ineligibleRegion })
+    @rdfine.property.literal({ path: schema.ineligibleRegion })
     ineligibleRegionLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     interpretedAsClaim: Schema.Claim | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     playerType: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     productionCompany: Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     regionsAllowed: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     requiresSubscription: Schema.MediaSubscription | undefined;
-    @property.literal({ path: schema.requiresSubscription, type: Boolean })
+    @rdfine.property.literal({ path: schema.requiresSubscription, type: Boolean })
     requiresSubscriptionLiteral: boolean | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     'sha256': string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     startTime: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     uploadDate: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     width: Schema.Distance | Schema.QuantitativeValue | undefined;
   }
   return MediaObjectClass

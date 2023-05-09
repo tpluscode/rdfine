@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { OrganizationRoleMixin } from './OrganizationRole.js';
 
-export interface EmployeeRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OrganizationRole<D>, RdfResource<D> {
+export interface EmployeeRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OrganizationRole<D>, rdfine.RdfResource<D> {
   baseSalary: Schema.MonetaryAmount<D> | Schema.PriceSpecification<D> | undefined;
   baseSalaryLiteral: number | undefined;
   salaryCurrency: string | undefined;
 }
 
-export function EmployeeRoleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EmployeeRole> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function EmployeeRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EmployeeRole> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class EmployeeRoleClass extends OrganizationRoleMixin(Resource) implements Partial<EmployeeRole> {
-    @property.resource()
+    @rdfine.property.resource()
     baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
-    @property.literal({ path: schema.baseSalary, type: Number })
+    @rdfine.property.literal({ path: schema.baseSalary, type: Number })
     baseSalaryLiteral: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     salaryCurrency: string | undefined;
   }
   return EmployeeRoleClass

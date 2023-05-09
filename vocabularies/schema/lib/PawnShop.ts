@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { StoreMixin } from './Store.js';
 
-export interface PawnShop<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, RdfResource<D> {
+export interface PawnShop<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
-export function PawnShopMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PawnShop> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PawnShopMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PawnShop> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PawnShopClass extends StoreMixin(Resource) implements Partial<PawnShop> {
   }
   return PawnShopClass

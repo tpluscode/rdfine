@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { ThingMixin } from './Thing.js';
 
-export interface Extent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, RdfResource<D> {
+export interface Extent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, rdfine.RdfResource<D> {
   hasExtentType: Rico.ExtentType<D> | undefined;
   hasUnitOfMeasurement: Rico.UnitOfMeasurement<D> | undefined;
   isExtentOf: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
@@ -17,20 +17,20 @@ export interface Extent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Ric
   unitOfMeasurement: RDF.Literal | undefined;
 }
 
-export function ExtentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Extent> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function ExtentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Extent> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class ExtentClass extends ThingMixin(Resource) implements Partial<Extent> {
-    @property.resource({ implicitTypes: [rico.ExtentType] })
+    @rdfine.property.resource({ implicitTypes: [rico.ExtentType] })
     hasExtentType: Rico.ExtentType | undefined;
-    @property.resource({ implicitTypes: [rico.UnitOfMeasurement] })
+    @rdfine.property.resource({ implicitTypes: [rico.UnitOfMeasurement] })
     hasUnitOfMeasurement: Rico.UnitOfMeasurement | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isExtentOf: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     quantity: number | undefined;
-    @property()
+    @rdfine.property()
     textualValue: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     unitOfMeasurement: RDF.Literal | undefined;
   }
   return ExtentClass

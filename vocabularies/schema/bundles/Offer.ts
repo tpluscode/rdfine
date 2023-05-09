@@ -2,6 +2,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { AdministrativeAreaMixin } from '../lib/AdministrativeArea.js';
 import { AggregateOfferMixin } from '../lib/AggregateOffer.js';
 import { AggregateRatingMixin } from '../lib/AggregateRating.js';
+import { CategoryCodeMixin } from '../lib/CategoryCode.js';
 import { CreativeWorkMixin } from '../lib/CreativeWork.js';
 import { DurationMixin } from '../lib/Duration.js';
 import { EventMixin } from '../lib/Event.js';
@@ -29,6 +30,7 @@ export const OfferBundle = [
   AdministrativeAreaMixin as Mixin,
   AggregateOfferMixin as Mixin,
   AggregateRatingMixin as Mixin,
+  CategoryCodeMixin as Mixin,
   CreativeWorkMixin as Mixin,
   DurationMixin as Mixin,
   EventMixin as Mixin,

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { StoreMixin } from './Store.js';
 
-export interface ComputerStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, RdfResource<D> {
+export interface ComputerStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
-export function ComputerStoreMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ComputerStore> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ComputerStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ComputerStore> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ComputerStoreClass extends StoreMixin(Resource) implements Partial<ComputerStore> {
   }
   return ComputerStoreClass

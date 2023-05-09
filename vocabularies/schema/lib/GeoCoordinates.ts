@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface GeoCoordinates<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface GeoCoordinates<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   address: Schema.PostalAddress<D> | undefined;
   addressCountry: Schema.Country<D> | undefined;
   addressCountryLiteral: string | undefined;
@@ -19,24 +19,24 @@ export interface GeoCoordinates<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   postalCode: string | undefined;
 }
 
-export function GeoCoordinatesMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<GeoCoordinates> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function GeoCoordinatesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GeoCoordinates> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class GeoCoordinatesClass extends StructuredValueMixin(Resource) implements Partial<GeoCoordinates> {
-    @property.resource()
+    @rdfine.property.resource()
     address: Schema.PostalAddress | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     addressCountry: Schema.Country | undefined;
-    @property.literal({ path: schema.addressCountry })
+    @rdfine.property.literal({ path: schema.addressCountry })
     addressCountryLiteral: string | undefined;
-    @property.literal({ path: schema.address })
+    @rdfine.property.literal({ path: schema.address })
     addressLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     elevation: number | string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     latitude: number | string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     longitude: number | string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     postalCode: string | undefined;
   }
   return GeoCoordinatesClass

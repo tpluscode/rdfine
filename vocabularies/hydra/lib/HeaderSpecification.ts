@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Hydra from '../index.js';
 import { ResourceMixin } from './Resource.js';
 
-export interface HeaderSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
+export interface HeaderSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, rdfine.RdfResource<D> {
   closedSet: boolean | undefined;
   headerName: string | undefined;
   possibleValue: Array<string>;
 }
 
-export function HeaderSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<HeaderSpecification> & RdfResourceCore> & Base {
-  @namespace(hydra)
+export function HeaderSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HeaderSpecification> & RdfResourceCore> & Base {
+  @rdfine.namespace(hydra)
   class HeaderSpecificationClass extends ResourceMixin(Resource) implements Partial<HeaderSpecification> {
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     closedSet: boolean | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     headerName: string | undefined;
-    @property.literal({ values: 'array' })
+    @rdfine.property.literal({ values: 'array' })
     possibleValue!: Array<string>;
   }
   return HeaderSpecificationClass

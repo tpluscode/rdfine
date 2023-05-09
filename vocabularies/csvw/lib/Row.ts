@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,23 +7,23 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '../index.js';
 
-export interface Row<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Row<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   describes: RDF.Term | undefined;
   primaryKey: string | undefined;
   referencedRow: RDF.Term | undefined;
   title: RDF.Term | undefined;
 }
 
-export function RowMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Row> & RdfResourceCore> & Base {
-  @namespace(csvw)
+export function RowMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Row> & RdfResourceCore> & Base {
+  @rdfine.namespace(csvw)
   class RowClass extends Resource implements Partial<Row> {
-    @property()
+    @rdfine.property()
     describes: RDF.Term | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     primaryKey: string | undefined;
-    @property()
+    @rdfine.property()
     referencedRow: RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     title: RDF.Term | undefined;
   }
   return RowClass

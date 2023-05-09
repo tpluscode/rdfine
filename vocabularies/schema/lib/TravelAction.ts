@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { MoveActionMixin } from './MoveAction.js';
 
-export interface TravelAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MoveAction<D>, RdfResource<D> {
+export interface TravelAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MoveAction<D>, rdfine.RdfResource<D> {
   distance: Schema.Distance<D> | undefined;
 }
 
-export function TravelActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TravelAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function TravelActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TravelAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class TravelActionClass extends MoveActionMixin(Resource) implements Partial<TravelAction> {
-    @property.resource()
+    @rdfine.property.resource()
     distance: Schema.Distance | undefined;
   }
   return TravelActionClass

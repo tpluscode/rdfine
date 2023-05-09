@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface OpeningHoursSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface OpeningHoursSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   closes: Date | undefined;
   dayOfWeek: Schema.DayOfWeek | undefined;
   opens: Date | undefined;
@@ -16,18 +16,18 @@ export interface OpeningHoursSpecification<D extends RDF.DatasetCore = RDF.Datas
   validThrough: Date | undefined;
 }
 
-export function OpeningHoursSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<OpeningHoursSpecification> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function OpeningHoursSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OpeningHoursSpecification> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class OpeningHoursSpecificationClass extends StructuredValueMixin(Resource) implements Partial<OpeningHoursSpecification> {
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     closes: Date | undefined;
-    @property()
+    @rdfine.property()
     dayOfWeek: Schema.DayOfWeek | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     opens: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validFrom: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validThrough: Date | undefined;
   }
   return OpeningHoursSpecificationClass

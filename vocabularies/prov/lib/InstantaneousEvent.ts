@@ -1,26 +1,26 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdfjs/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Prov from '../index.js';
 
-export interface InstantaneousEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface InstantaneousEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   atLocation: Prov.Location<D> | undefined;
   atTime: Date | undefined;
   hadRole: Prov.Role<D> | undefined;
 }
 
-export function InstantaneousEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<InstantaneousEvent> & RdfResourceCore> & Base {
-  @namespace(prov)
+export function InstantaneousEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InstantaneousEvent> & RdfResourceCore> & Base {
+  @rdfine.namespace(prov)
   class InstantaneousEventClass extends Resource implements Partial<InstantaneousEvent> {
-    @property.resource({ implicitTypes: [prov.Location] })
+    @rdfine.property.resource({ implicitTypes: [prov.Location] })
     atLocation: Prov.Location | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     atTime: Date | undefined;
-    @property.resource({ implicitTypes: [prov.Role] })
+    @rdfine.property.resource({ implicitTypes: [prov.Role] })
     hadRole: Prov.Role | undefined;
   }
   return InstantaneousEventClass

@@ -9,6 +9,7 @@ import { CreativeWorkMixin } from '../lib/CreativeWork.js';
 import { DemandMixin } from '../lib/Demand.js';
 import { EventMixin } from '../lib/Event.js';
 import { GeoShapeMixin } from '../lib/GeoShape.js';
+import { GrantMixin } from '../lib/Grant.js';
 import { ImageObjectMixin } from '../lib/ImageObject.js';
 import { InteractionCounterMixin } from '../lib/InteractionCounter.js';
 import { LanguageMixin } from '../lib/Language.js';
@@ -37,6 +38,7 @@ export const OrganizationBundle = [
   DemandMixin as Mixin,
   EventMixin as Mixin,
   GeoShapeMixin as Mixin,
+  GrantMixin as Mixin,
   ImageObjectMixin as Mixin,
   InteractionCounterMixin as Mixin,
   LanguageMixin as Mixin,

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,17 +9,17 @@ import type * as Rico from '../index.js';
 import { AgentTemporalRelationMixin } from './AgentTemporalRelation.js';
 import { FamilyRelationMixin } from './FamilyRelation.js';
 
-export interface DescendanceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentTemporalRelation<D>, Rico.FamilyRelation<D>, RdfResource<D> {
+export interface DescendanceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentTemporalRelation<D>, Rico.FamilyRelation<D>, rdfine.RdfResource<D> {
   descendanceRelationHasSource: Rico.Person<D> | undefined;
   descendanceRelationHasTarget: Rico.Person<D> | undefined;
 }
 
-export function DescendanceRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DescendanceRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function DescendanceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DescendanceRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class DescendanceRelationClass extends FamilyRelationMixin(AgentTemporalRelationMixin(Resource)) implements Partial<DescendanceRelation> {
-    @property.resource({ implicitTypes: [rico.Person] })
+    @rdfine.property.resource({ implicitTypes: [rico.Person] })
     descendanceRelationHasSource: Rico.Person | undefined;
-    @property.resource({ implicitTypes: [rico.Person] })
+    @rdfine.property.resource({ implicitTypes: [rico.Person] })
     descendanceRelationHasTarget: Rico.Person | undefined;
   }
   return DescendanceRelationClass

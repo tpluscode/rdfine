@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { MoveActionMixin } from './MoveAction.js';
 
-export interface ArriveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MoveAction<D>, RdfResource<D> {
+export interface ArriveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MoveAction<D>, rdfine.RdfResource<D> {
 }
 
-export function ArriveActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ArriveAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ArriveActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ArriveAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ArriveActionClass extends MoveActionMixin(Resource) implements Partial<ArriveAction> {
   }
   return ArriveActionClass

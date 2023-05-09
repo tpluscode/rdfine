@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { MedicalProcedureMixin } from './MedicalProcedure.js';
 
-export interface DiagnosticProcedure<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalProcedure<D>, RdfResource<D> {
+export interface DiagnosticProcedure<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalProcedure<D>, rdfine.RdfResource<D> {
 }
 
-export function DiagnosticProcedureMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DiagnosticProcedure> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DiagnosticProcedureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DiagnosticProcedure> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DiagnosticProcedureClass extends MedicalProcedureMixin(Resource) implements Partial<DiagnosticProcedure> {
   }
   return DiagnosticProcedureClass

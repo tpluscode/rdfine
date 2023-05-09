@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,7 +7,7 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '../index.js';
 
-export interface Datatype<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Datatype<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   base: string | undefined;
   format: string | undefined;
   length: number | undefined;
@@ -19,26 +19,26 @@ export interface Datatype<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   minLength: number | undefined;
 }
 
-export function DatatypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Datatype> & RdfResourceCore> & Base {
-  @namespace(csvw)
+export function DatatypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Datatype> & RdfResourceCore> & Base {
+  @rdfine.namespace(csvw)
   class DatatypeClass extends Resource implements Partial<Datatype> {
-    @property.literal()
+    @rdfine.property.literal()
     base: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     format: string | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     length: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     maxExclusive: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     maxInclusive: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     maxLength: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     minExclusive: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     minInclusive: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     minLength: number | undefined;
   }
   return DatatypeClass

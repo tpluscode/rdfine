@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ProductMixin } from './Product.js';
 
-export interface SomeProducts<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Product<D>, RdfResource<D> {
+export interface SomeProducts<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Product<D>, rdfine.RdfResource<D> {
   inventoryLevel: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function SomeProductsMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SomeProducts> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function SomeProductsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SomeProducts> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class SomeProductsClass extends ProductMixin(Resource) implements Partial<SomeProducts> {
-    @property.resource()
+    @rdfine.property.resource()
     inventoryLevel: Schema.QuantitativeValue | undefined;
   }
   return SomeProductsClass

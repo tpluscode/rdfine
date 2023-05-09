@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { ConceptMixin } from './Concept.js';
 
-export interface Proxy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Concept<D>, RdfResource<D> {
+export interface Proxy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Concept<D>, rdfine.RdfResource<D> {
   proxyFor: Rico.RecordResource<D> | undefined;
   proxyIn: Rico.RecordSet<D> | undefined;
 }
 
-export function ProxyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Proxy> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function ProxyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Proxy> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class ProxyClass extends ConceptMixin(Resource) implements Partial<Proxy> {
-    @property.resource({ implicitTypes: [rico.RecordResource] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResource] })
     proxyFor: Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.RecordSet] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     proxyIn: Rico.RecordSet | undefined;
   }
   return ProxyClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { SequentialRelationMixin } from './SequentialRelation.js';
 
-export interface TemporalRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.SequentialRelation<D>, RdfResource<D> {
+export interface TemporalRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.SequentialRelation<D>, rdfine.RdfResource<D> {
   temporalRelationHasSource: Rico.Thing<D> | undefined;
   temporalRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function TemporalRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TemporalRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function TemporalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TemporalRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class TemporalRelationClass extends SequentialRelationMixin(Resource) implements Partial<TemporalRelation> {
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     temporalRelationHasSource: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     temporalRelationHasTarget: Rico.Thing | undefined;
   }
   return TemporalRelationClass

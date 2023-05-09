@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,7 +7,7 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '../index.js';
 
-export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   account: Foaf.OnlineAccount<D> | undefined;
   age: RDF.Literal | undefined;
   aimChatID: RDF.Literal | undefined;
@@ -30,48 +30,48 @@ export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
   yahooChatID: RDF.Literal | undefined;
 }
 
-export function AgentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Agent> & RdfResourceCore> & Base {
-  @namespace(foaf)
+export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Agent> & RdfResourceCore> & Base {
+  @rdfine.namespace(foaf)
   class AgentClass extends Resource implements Partial<Agent> {
-    @property.resource({ implicitTypes: [foaf.OnlineAccount] })
+    @rdfine.property.resource({ implicitTypes: [foaf.OnlineAccount] })
     account: Foaf.OnlineAccount | undefined;
-    @property()
+    @rdfine.property()
     age: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     aimChatID: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     birthday: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     gender: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [foaf.OnlineAccount] })
+    @rdfine.property.resource({ implicitTypes: [foaf.OnlineAccount] })
     holdsAccount: Foaf.OnlineAccount | undefined;
-    @property()
+    @rdfine.property()
     icqChatID: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [foaf.Document] })
+    @rdfine.property.resource({ implicitTypes: [foaf.Document] })
     interest: Foaf.Document | undefined;
-    @property()
+    @rdfine.property()
     jabberID: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     made: RDF.NamedNode | undefined;
-    @property()
+    @rdfine.property()
     mbox: RDF.NamedNode | undefined;
-    @property()
+    @rdfine.property()
     'mbox_sha1sum': RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     msnChatID: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [foaf.Document] })
+    @rdfine.property.resource({ implicitTypes: [foaf.Document] })
     openid: Foaf.Document | undefined;
-    @property()
+    @rdfine.property()
     skypeID: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     status: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [foaf.Document] })
+    @rdfine.property.resource({ implicitTypes: [foaf.Document] })
     tipjar: Foaf.Document | undefined;
-    @property()
+    @rdfine.property()
     'topic_interest': RDF.NamedNode | undefined;
-    @property.resource({ implicitTypes: [foaf.Document] })
+    @rdfine.property.resource({ implicitTypes: [foaf.Document] })
     weblog: Foaf.Document | undefined;
-    @property()
+    @rdfine.property()
     yahooChatID: RDF.Literal | undefined;
   }
   return AgentClass

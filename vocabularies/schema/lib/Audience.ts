@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
-export interface Audience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Audience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   audienceType: string | undefined;
   geographicArea: Schema.AdministrativeArea<D> | undefined;
 }
 
-export function AudienceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Audience> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function AudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Audience> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class AudienceClass extends IntangibleMixin(Resource) implements Partial<Audience> {
-    @property.literal()
+    @rdfine.property.literal()
     audienceType: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     geographicArea: Schema.AdministrativeArea | undefined;
   }
   return AudienceClass

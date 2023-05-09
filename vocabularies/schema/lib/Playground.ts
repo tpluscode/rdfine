@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CivicStructureMixin } from './CivicStructure.js';
 
-export interface Playground<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, RdfResource<D> {
+export interface Playground<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, rdfine.RdfResource<D> {
 }
 
-export function PlaygroundMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Playground> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PlaygroundMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Playground> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PlaygroundClass extends CivicStructureMixin(Resource) implements Partial<Playground> {
   }
   return PlaygroundClass

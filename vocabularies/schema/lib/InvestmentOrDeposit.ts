@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { FinancialProductMixin } from './FinancialProduct.js';
 
-export interface InvestmentOrDeposit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialProduct<D>, RdfResource<D> {
+export interface InvestmentOrDeposit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialProduct<D>, rdfine.RdfResource<D> {
   amount: Schema.MonetaryAmount<D> | undefined;
   amountLiteral: number | undefined;
 }
 
-export function InvestmentOrDepositMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<InvestmentOrDeposit> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function InvestmentOrDepositMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InvestmentOrDeposit> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class InvestmentOrDepositClass extends FinancialProductMixin(Resource) implements Partial<InvestmentOrDeposit> {
-    @property.resource()
+    @rdfine.property.resource()
     amount: Schema.MonetaryAmount | undefined;
-    @property.literal({ path: schema.amount, type: Number })
+    @rdfine.property.literal({ path: schema.amount, type: Number })
     amountLiteral: number | undefined;
   }
   return InvestmentOrDepositClass

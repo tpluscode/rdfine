@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { DateMixin } from './Date.js';
 
-export interface SingleDate<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Date<D>, RdfResource<D> {
+export interface SingleDate<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Date<D>, rdfine.RdfResource<D> {
 }
 
-export function SingleDateMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SingleDate> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function SingleDateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SingleDate> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class SingleDateClass extends DateMixin(Resource) implements Partial<SingleDate> {
   }
   return SingleDateClass

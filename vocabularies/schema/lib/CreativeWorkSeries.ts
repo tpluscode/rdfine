@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,20 +9,20 @@ import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 import { SeriesMixin } from './Series.js';
 
-export interface CreativeWorkSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.Series<D>, RdfResource<D> {
+export interface CreativeWorkSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.Series<D>, rdfine.RdfResource<D> {
   endDate: Date | undefined;
   issn: string | undefined;
   startDate: Date | undefined;
 }
 
-export function CreativeWorkSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CreativeWorkSeries> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function CreativeWorkSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CreativeWorkSeries> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class CreativeWorkSeriesClass extends SeriesMixin(CreativeWorkMixin(Resource)) implements Partial<CreativeWorkSeries> {
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate: Date | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     issn: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate: Date | undefined;
   }
   return CreativeWorkSeriesClass

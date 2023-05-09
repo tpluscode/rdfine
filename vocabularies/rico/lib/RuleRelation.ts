@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
-export interface RuleRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, RdfResource<D> {
+export interface RuleRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, rdfine.RdfResource<D> {
   ruleRelationHasSource: Rico.Rule<D> | undefined;
   ruleRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function RuleRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RuleRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function RuleRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RuleRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class RuleRelationClass extends RelationMixin(Resource) implements Partial<RuleRelation> {
-    @property.resource({ implicitTypes: [rico.Rule] })
+    @rdfine.property.resource({ implicitTypes: [rico.Rule] })
     ruleRelationHasSource: Rico.Rule | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     ruleRelationHasTarget: Rico.Thing | undefined;
   }
   return RuleRelationClass

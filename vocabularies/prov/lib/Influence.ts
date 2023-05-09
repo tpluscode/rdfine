@@ -1,26 +1,26 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdfjs/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Prov from '../index.js';
 
-export interface Influence<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Influence<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   hadActivity: Prov.Activity<D> | undefined;
   hadRole: Prov.Role<D> | undefined;
   influencer: RDF.NamedNode | undefined;
 }
 
-export function InfluenceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Influence> & RdfResourceCore> & Base {
-  @namespace(prov)
+export function InfluenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Influence> & RdfResourceCore> & Base {
+  @rdfine.namespace(prov)
   class InfluenceClass extends Resource implements Partial<Influence> {
-    @property.resource({ implicitTypes: [prov.Activity] })
+    @rdfine.property.resource({ implicitTypes: [prov.Activity] })
     hadActivity: Prov.Activity | undefined;
-    @property.resource({ implicitTypes: [prov.Role] })
+    @rdfine.property.resource({ implicitTypes: [prov.Role] })
     hadRole: Prov.Role | undefined;
-    @property()
+    @rdfine.property()
     influencer: RDF.NamedNode | undefined;
   }
   return InfluenceClass

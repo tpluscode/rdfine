@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface Guide<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface Guide<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   reviewAspect: string | undefined;
 }
 
-export function GuideMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Guide> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function GuideMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Guide> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class GuideClass extends CreativeWorkMixin(Resource) implements Partial<Guide> {
-    @property.literal()
+    @rdfine.property.literal()
     reviewAspect: string | undefined;
   }
   return GuideClass

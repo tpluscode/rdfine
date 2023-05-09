@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface ShortStory<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface ShortStory<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
 }
 
-export function ShortStoryMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ShortStory> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ShortStoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ShortStory> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ShortStoryClass extends CreativeWorkMixin(Resource) implements Partial<ShortStory> {
   }
   return ShortStoryClass

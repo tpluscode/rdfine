@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { StoreMixin } from './Store.js';
 
-export interface Florist<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, RdfResource<D> {
+export interface Florist<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
-export function FloristMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Florist> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function FloristMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Florist> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class FloristClass extends StoreMixin(Resource) implements Partial<Florist> {
   }
   return FloristClass

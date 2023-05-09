@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CommentMixin } from './Comment.js';
 
-export interface Answer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Comment<D>, RdfResource<D> {
+export interface Answer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Comment<D>, rdfine.RdfResource<D> {
   answerExplanation: Schema.Comment<D> | Schema.WebContent<D> | undefined;
 }
 
-export function AnswerMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Answer> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function AnswerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Answer> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class AnswerClass extends CommentMixin(Resource) implements Partial<Answer> {
-    @property.resource()
+    @rdfine.property.resource()
     answerExplanation: Schema.Comment | Schema.WebContent | undefined;
   }
   return AnswerClass

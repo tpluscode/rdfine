@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { HouseMixin } from './House.js';
 
-export interface SingleFamilyResidence<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.House<D>, RdfResource<D> {
+export interface SingleFamilyResidence<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.House<D>, rdfine.RdfResource<D> {
   numberOfRooms: Schema.QuantitativeValue<D> | undefined;
   numberOfRoomsLiteral: number | undefined;
   occupancy: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function SingleFamilyResidenceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SingleFamilyResidence> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function SingleFamilyResidenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SingleFamilyResidence> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class SingleFamilyResidenceClass extends HouseMixin(Resource) implements Partial<SingleFamilyResidence> {
-    @property.resource()
+    @rdfine.property.resource()
     numberOfRooms: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.numberOfRooms, type: Number })
+    @rdfine.property.literal({ path: schema.numberOfRooms, type: Number })
     numberOfRoomsLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     occupancy: Schema.QuantitativeValue | undefined;
   }
   return SingleFamilyResidenceClass

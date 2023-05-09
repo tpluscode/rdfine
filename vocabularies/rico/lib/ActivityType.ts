@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { TypeMixin } from './Type.js';
 
-export interface ActivityType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, RdfResource<D> {
+export interface ActivityType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, rdfine.RdfResource<D> {
   isActivityTypeOf: Rico.Activity<D> | undefined;
 }
 
-export function ActivityTypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ActivityType> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function ActivityTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ActivityType> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class ActivityTypeClass extends TypeMixin(Resource) implements Partial<ActivityType> {
-    @property.resource({ implicitTypes: [rico.Activity] })
+    @rdfine.property.resource({ implicitTypes: [rico.Activity] })
     isActivityTypeOf: Rico.Activity | undefined;
   }
   return ActivityTypeClass

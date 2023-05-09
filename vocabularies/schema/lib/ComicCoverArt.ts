@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,11 +9,11 @@ import type * as Schema from '../index.js';
 import { ComicStoryMixin } from './ComicStory.js';
 import { CoverArtMixin } from './CoverArt.js';
 
-export interface ComicCoverArt<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ComicStory<D>, Schema.CoverArt<D>, RdfResource<D> {
+export interface ComicCoverArt<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ComicStory<D>, Schema.CoverArt<D>, rdfine.RdfResource<D> {
 }
 
-export function ComicCoverArtMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ComicCoverArt> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ComicCoverArtMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ComicCoverArt> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ComicCoverArtClass extends CoverArtMixin(ComicStoryMixin(Resource)) implements Partial<ComicCoverArt> {
   }
   return ComicCoverArtClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,20 +9,20 @@ import type * as Rico from '../index.js';
 import { AgentToAgentRelationMixin } from './AgentToAgentRelation.js';
 import { TemporalRelationMixin } from './TemporalRelation.js';
 
-export interface AgentTemporalRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, Rico.TemporalRelation<D>, RdfResource<D> {
+export interface AgentTemporalRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, Rico.TemporalRelation<D>, rdfine.RdfResource<D> {
   agentTemporalRelationHasSource: Rico.Agent<D> | undefined;
   agentTemporalRelationHasTarget: Rico.Agent<D> | undefined;
   asConcernsActivity: Rico.Activity<D> | undefined;
 }
 
-export function AgentTemporalRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AgentTemporalRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function AgentTemporalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AgentTemporalRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class AgentTemporalRelationClass extends TemporalRelationMixin(AgentToAgentRelationMixin(Resource)) implements Partial<AgentTemporalRelation> {
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     agentTemporalRelationHasSource: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     agentTemporalRelationHasTarget: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Activity] })
+    @rdfine.property.resource({ implicitTypes: [rico.Activity] })
     asConcernsActivity: Rico.Activity | undefined;
   }
   return AgentTemporalRelationClass

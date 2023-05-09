@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
-export interface InstantiationToInstantiationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, RdfResource<D> {
+export interface InstantiationToInstantiationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, rdfine.RdfResource<D> {
   instantiationToInstantiationRelationConnects: Rico.Instantiation<D> | undefined;
 }
 
-export function InstantiationToInstantiationRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<InstantiationToInstantiationRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function InstantiationToInstantiationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InstantiationToInstantiationRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class InstantiationToInstantiationRelationClass extends RelationMixin(Resource) implements Partial<InstantiationToInstantiationRelation> {
-    @property.resource({ implicitTypes: [rico.Instantiation] })
+    @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     instantiationToInstantiationRelationConnects: Rico.Instantiation | undefined;
   }
   return InstantiationToInstantiationRelationClass

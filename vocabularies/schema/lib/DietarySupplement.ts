@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -6,14 +6,14 @@ import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
+import { ProductMixin } from './Product.js';
 import { SubstanceMixin } from './Substance.js';
 
-export interface DietarySupplement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Substance<D>, RdfResource<D> {
+export interface DietarySupplement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Product<D>, Schema.Substance<D>, rdfine.RdfResource<D> {
   activeIngredient: string | undefined;
   isProprietary: boolean | undefined;
   legalStatus: Schema.DrugLegalStatus<D> | undefined;
   legalStatusLiteral: string | undefined;
-  manufacturer: Schema.Organization<D> | undefined;
   maximumIntake: Schema.MaximumDoseSchedule<D> | undefined;
   mechanismOfAction: string | undefined;
   nonProprietaryName: string | undefined;
@@ -23,32 +23,30 @@ export interface DietarySupplement<D extends RDF.DatasetCore = RDF.DatasetCore> 
   targetPopulation: string | undefined;
 }
 
-export function DietarySupplementMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DietarySupplement> & RdfResourceCore> & Base {
-  @namespace(schema)
-  class DietarySupplementClass extends SubstanceMixin(Resource) implements Partial<DietarySupplement> {
-    @property.literal()
+export function DietarySupplementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DietarySupplement> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
+  class DietarySupplementClass extends SubstanceMixin(ProductMixin(Resource)) implements Partial<DietarySupplement> {
+    @rdfine.property.literal()
     activeIngredient: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     isProprietary: boolean | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     legalStatus: Schema.DrugLegalStatus | undefined;
-    @property.literal({ path: schema.legalStatus })
+    @rdfine.property.literal({ path: schema.legalStatus })
     legalStatusLiteral: string | undefined;
-    @property.resource()
-    manufacturer: Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     maximumIntake: Schema.MaximumDoseSchedule | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     mechanismOfAction: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     nonProprietaryName: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     proprietaryName: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     recommendedIntake: Schema.RecommendedDoseSchedule | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     safetyConsideration: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     targetPopulation: string | undefined;
   }
   return DietarySupplementClass
@@ -60,9 +58,9 @@ class DietarySupplementImpl extends DietarySupplementMixin(RdfResourceImpl) {
     this.types.add(schema.DietarySupplement)
   }
 
-  static readonly __mixins: Mixin[] = [DietarySupplementMixin, SubstanceMixin];
+  static readonly __mixins: Mixin[] = [DietarySupplementMixin, ProductMixin, SubstanceMixin];
 }
 DietarySupplementMixin.appliesTo = schema.DietarySupplement
 DietarySupplementMixin.Class = DietarySupplementImpl
 
-export const fromPointer = createFactory<DietarySupplement>([SubstanceMixin, DietarySupplementMixin], { types: [schema.DietarySupplement] });
+export const fromPointer = createFactory<DietarySupplement>([SubstanceMixin, ProductMixin, DietarySupplementMixin], { types: [schema.DietarySupplement] });

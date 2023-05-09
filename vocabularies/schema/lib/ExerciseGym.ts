@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { SportsActivityLocationMixin } from './SportsActivityLocation.js';
 
-export interface ExerciseGym<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SportsActivityLocation<D>, RdfResource<D> {
+export interface ExerciseGym<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SportsActivityLocation<D>, rdfine.RdfResource<D> {
 }
 
-export function ExerciseGymMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ExerciseGym> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ExerciseGymMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ExerciseGym> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ExerciseGymClass extends SportsActivityLocationMixin(Resource) implements Partial<ExerciseGym> {
   }
   return ExerciseGymClass

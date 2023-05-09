@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { EventMixin } from './Event.js';
 
-export interface SportsEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
+export interface SportsEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
   awayTeam: Schema.Person<D> | Schema.SportsTeam<D> | undefined;
   competitor: Schema.Person<D> | Schema.SportsTeam<D> | undefined;
   homeTeam: Schema.Person<D> | Schema.SportsTeam<D> | undefined;
@@ -16,18 +16,18 @@ export interface SportsEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   sportTerm: RDF.NamedNode | undefined;
 }
 
-export function SportsEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SportsEvent> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function SportsEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SportsEvent> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class SportsEventClass extends EventMixin(Resource) implements Partial<SportsEvent> {
-    @property.resource()
+    @rdfine.property.resource()
     awayTeam: Schema.Person | Schema.SportsTeam | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     competitor: Schema.Person | Schema.SportsTeam | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     homeTeam: Schema.Person | Schema.SportsTeam | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     sport: string | undefined;
-    @property({ path: schema.sport })
+    @rdfine.property({ path: schema.sport })
     sportTerm: RDF.NamedNode | undefined;
   }
   return SportsEventClass

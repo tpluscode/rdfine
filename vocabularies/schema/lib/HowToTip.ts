@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,11 +9,11 @@ import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 import { ListItemMixin } from './ListItem.js';
 
-export interface HowToTip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ListItem<D>, RdfResource<D> {
+export interface HowToTip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ListItem<D>, rdfine.RdfResource<D> {
 }
 
-export function HowToTipMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<HowToTip> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function HowToTipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HowToTip> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class HowToTipClass extends ListItemMixin(CreativeWorkMixin(Resource)) implements Partial<HowToTip> {
   }
   return HowToTipClass

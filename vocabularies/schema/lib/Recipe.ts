@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { HowToMixin } from './HowTo.js';
 
-export interface Recipe<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HowTo<D>, RdfResource<D> {
+export interface Recipe<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HowTo<D>, rdfine.RdfResource<D> {
   cookingMethod: string | undefined;
   cookTime: Schema.Duration<D> | undefined;
   ingredients: string | undefined;
@@ -23,32 +23,32 @@ export interface Recipe<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   suitableForDiet: Schema.RestrictedDiet | undefined;
 }
 
-export function RecipeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Recipe> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function RecipeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Recipe> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class RecipeClass extends HowToMixin(Resource) implements Partial<Recipe> {
-    @property.literal()
+    @rdfine.property.literal()
     cookingMethod: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     cookTime: Schema.Duration | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     ingredients: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     nutrition: Schema.NutritionInformation | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     recipeCategory: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     recipeCuisine: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     recipeIngredient: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     recipeInstructions: Schema.CreativeWork | Schema.ItemList | undefined;
-    @property.literal({ path: schema.recipeInstructions })
+    @rdfine.property.literal({ path: schema.recipeInstructions })
     recipeInstructionsLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     recipeYield: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.recipeYield })
+    @rdfine.property.literal({ path: schema.recipeYield })
     recipeYieldLiteral: string | undefined;
-    @property()
+    @rdfine.property()
     suitableForDiet: Schema.RestrictedDiet | undefined;
   }
   return RecipeClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface Review<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface Review<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   associatedClaimReview: Schema.Review<D> | undefined;
   associatedMediaReview: Schema.Review<D> | undefined;
   associatedReview: Schema.Review<D> | undefined;
@@ -22,30 +22,30 @@ export interface Review<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   reviewRating: Schema.Rating<D> | undefined;
 }
 
-export function ReviewMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Review> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ReviewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Review> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ReviewClass extends CreativeWorkMixin(Resource) implements Partial<Review> {
-    @property.resource()
+    @rdfine.property.resource()
     associatedClaimReview: Schema.Review | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     associatedMediaReview: Schema.Review | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     associatedReview: Schema.Review | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     itemReviewed: Schema.Thing | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     negativeNotes: Schema.ItemList | Schema.ListItem | Schema.WebContent | undefined;
-    @property.literal({ path: schema.negativeNotes })
+    @rdfine.property.literal({ path: schema.negativeNotes })
     negativeNotesLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     positiveNotes: Schema.ItemList | Schema.ListItem | Schema.WebContent | undefined;
-    @property.literal({ path: schema.positiveNotes })
+    @rdfine.property.literal({ path: schema.positiveNotes })
     positiveNotesLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     reviewAspect: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     reviewBody: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     reviewRating: Schema.Rating | undefined;
   }
   return ReviewClass

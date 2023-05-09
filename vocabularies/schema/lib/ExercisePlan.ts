@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,7 +9,7 @@ import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 import { PhysicalActivityMixin } from './PhysicalActivity.js';
 
-export interface ExercisePlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.PhysicalActivity<D>, RdfResource<D> {
+export interface ExercisePlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.PhysicalActivity<D>, rdfine.RdfResource<D> {
   activityDuration: Schema.Duration<D> | Schema.QuantitativeValue<D> | undefined;
   activityFrequency: Schema.QuantitativeValue<D> | undefined;
   activityFrequencyLiteral: string | undefined;
@@ -24,32 +24,32 @@ export interface ExercisePlan<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   workload: Schema.Energy<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function ExercisePlanMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ExercisePlan> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ExercisePlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ExercisePlan> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ExercisePlanClass extends PhysicalActivityMixin(CreativeWorkMixin(Resource)) implements Partial<ExercisePlan> {
-    @property.resource()
+    @rdfine.property.resource()
     activityDuration: Schema.Duration | Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     activityFrequency: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.activityFrequency })
+    @rdfine.property.literal({ path: schema.activityFrequency })
     activityFrequencyLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     additionalVariable: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     exerciseType: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     intensity: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.intensity })
+    @rdfine.property.literal({ path: schema.intensity })
     intensityLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     repetitions: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.repetitions, type: Number })
+    @rdfine.property.literal({ path: schema.repetitions, type: Number })
     repetitionsLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     restPeriods: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.restPeriods })
+    @rdfine.property.literal({ path: schema.restPeriods })
     restPeriodsLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     workload: Schema.Energy | Schema.QuantitativeValue | undefined;
   }
   return ExercisePlanClass

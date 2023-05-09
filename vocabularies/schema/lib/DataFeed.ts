@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { DatasetMixin } from './Dataset.js';
 
-export interface DataFeed<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Dataset<D>, RdfResource<D> {
+export interface DataFeed<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Dataset<D>, rdfine.RdfResource<D> {
   dataFeedElement: Schema.DataFeedItem<D> | Schema.Thing<D> | undefined;
   dataFeedElementLiteral: string | undefined;
 }
 
-export function DataFeedMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DataFeed> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DataFeedMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DataFeed> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DataFeedClass extends DatasetMixin(Resource) implements Partial<DataFeed> {
-    @property.resource()
+    @rdfine.property.resource()
     dataFeedElement: Schema.DataFeedItem | Schema.Thing | undefined;
-    @property.literal({ path: schema.dataFeedElement })
+    @rdfine.property.literal({ path: schema.dataFeedElement })
     dataFeedElementLiteral: string | undefined;
   }
   return DataFeedClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,23 +8,23 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
-export interface Brand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Brand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   aggregateRating: Schema.AggregateRating<D> | undefined;
   logo: Schema.ImageObject<D> | undefined;
   review: Schema.Review<D> | undefined;
   slogan: string | undefined;
 }
 
-export function BrandMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Brand> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function BrandMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Brand> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class BrandClass extends IntangibleMixin(Resource) implements Partial<Brand> {
-    @property.resource()
+    @rdfine.property.resource()
     aggregateRating: Schema.AggregateRating | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     logo: Schema.ImageObject | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     review: Schema.Review | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     slogan: string | undefined;
   }
   return BrandClass

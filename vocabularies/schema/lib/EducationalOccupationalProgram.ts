@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
-export interface EducationalOccupationalProgram<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface EducationalOccupationalProgram<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   applicationDeadline: Date | undefined;
   applicationStartDate: Date | undefined;
   dayOfWeek: Schema.DayOfWeek | undefined;
@@ -42,70 +42,70 @@ export interface EducationalOccupationalProgram<D extends RDF.DatasetCore = RDF.
   typicalCreditsPerTermLiteral: number | undefined;
 }
 
-export function EducationalOccupationalProgramMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EducationalOccupationalProgram> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function EducationalOccupationalProgramMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EducationalOccupationalProgram> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class EducationalOccupationalProgramClass extends IntangibleMixin(Resource) implements Partial<EducationalOccupationalProgram> {
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     applicationDeadline: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     applicationStartDate: Date | undefined;
-    @property()
+    @rdfine.property()
     dayOfWeek: Schema.DayOfWeek | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     educationalCredentialAwarded: string | undefined;
-    @property({ path: schema.educationalCredentialAwarded })
+    @rdfine.property({ path: schema.educationalCredentialAwarded })
     educationalCredentialAwardedTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     educationalProgramMode: string | undefined;
-    @property({ path: schema.educationalProgramMode })
+    @rdfine.property({ path: schema.educationalProgramMode })
     educationalProgramModeTerm: RDF.NamedNode | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate: Date | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     financialAidEligible: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasCourse: Schema.Course | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     maximumEnrollment: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfCredits: Schema.StructuredValue | undefined;
-    @property.literal({ path: schema.numberOfCredits, type: Number })
+    @rdfine.property.literal({ path: schema.numberOfCredits, type: Number })
     numberOfCreditsLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     occupationalCategory: Schema.CategoryCode | undefined;
-    @property.literal({ path: schema.occupationalCategory })
+    @rdfine.property.literal({ path: schema.occupationalCategory })
     occupationalCategoryLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     occupationalCredentialAwarded: string | undefined;
-    @property({ path: schema.occupationalCredentialAwarded })
+    @rdfine.property({ path: schema.occupationalCredentialAwarded })
     occupationalCredentialAwardedTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     offers: Schema.Demand | Schema.Offer | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     programPrerequisites: Schema.AlignmentObject | Schema.Course | undefined;
-    @property.literal({ path: schema.programPrerequisites })
+    @rdfine.property.literal({ path: schema.programPrerequisites })
     programPrerequisitesLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     programType: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     provider: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     salaryUponCompletion: Schema.MonetaryAmountDistribution | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     termDuration: Schema.Duration | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     termsPerYear: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     timeOfDay: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     timeToComplete: Schema.Duration | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     trainingSalary: Schema.MonetaryAmountDistribution | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     typicalCreditsPerTerm: Schema.StructuredValue | undefined;
-    @property.literal({ path: schema.typicalCreditsPerTerm, type: Number })
+    @rdfine.property.literal({ path: schema.typicalCreditsPerTerm, type: Number })
     typicalCreditsPerTermLiteral: number | undefined;
   }
   return EducationalOccupationalProgramClass

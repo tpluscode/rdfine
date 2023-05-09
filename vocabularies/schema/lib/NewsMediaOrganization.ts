@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { OrganizationMixin } from './Organization.js';
 
-export interface NewsMediaOrganization<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, RdfResource<D> {
+export interface NewsMediaOrganization<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, rdfine.RdfResource<D> {
   actionableFeedbackPolicy: Schema.CreativeWork<D> | undefined;
   correctionsPolicy: Schema.CreativeWork<D> | undefined;
   diversityPolicy: Schema.CreativeWork<D> | undefined;
@@ -23,32 +23,32 @@ export interface NewsMediaOrganization<D extends RDF.DatasetCore = RDF.DatasetCo
   verificationFactCheckingPolicy: Schema.CreativeWork<D> | undefined;
 }
 
-export function NewsMediaOrganizationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<NewsMediaOrganization> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function NewsMediaOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NewsMediaOrganization> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class NewsMediaOrganizationClass extends OrganizationMixin(Resource) implements Partial<NewsMediaOrganization> {
-    @property.resource()
+    @rdfine.property.resource()
     actionableFeedbackPolicy: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     correctionsPolicy: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     diversityPolicy: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     diversityStaffingReport: Schema.Article | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     ethicsPolicy: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     masthead: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     missionCoveragePrioritiesPolicy: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     noBylinesPolicy: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     ownershipFundingInfo: Schema.AboutPage | Schema.CreativeWork | undefined;
-    @property.literal({ path: schema.ownershipFundingInfo })
+    @rdfine.property.literal({ path: schema.ownershipFundingInfo })
     ownershipFundingInfoLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     unnamedSourcesPolicy: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     verificationFactCheckingPolicy: Schema.CreativeWork | undefined;
   }
   return NewsMediaOrganizationClass

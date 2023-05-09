@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { AudienceMixin } from './Audience.js';
 
-export interface EducationalAudience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Audience<D>, RdfResource<D> {
+export interface EducationalAudience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Audience<D>, rdfine.RdfResource<D> {
   educationalRole: string | undefined;
 }
 
-export function EducationalAudienceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EducationalAudience> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function EducationalAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EducationalAudience> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class EducationalAudienceClass extends AudienceMixin(Resource) implements Partial<EducationalAudience> {
-    @property.literal()
+    @rdfine.property.literal()
     educationalRole: string | undefined;
   }
   return EducationalAudienceClass

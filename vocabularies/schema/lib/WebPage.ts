@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface WebPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface WebPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   breadcrumb: Schema.BreadcrumbList<D> | undefined;
   breadcrumbLiteral: string | undefined;
   lastReviewed: Date | undefined;
@@ -22,30 +22,30 @@ export interface WebPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   specialty: Schema.Specialty | undefined;
 }
 
-export function WebPageMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<WebPage> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function WebPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WebPage> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class WebPageClass extends CreativeWorkMixin(Resource) implements Partial<WebPage> {
-    @property.resource()
+    @rdfine.property.resource()
     breadcrumb: Schema.BreadcrumbList | undefined;
-    @property.literal({ path: schema.breadcrumb })
+    @rdfine.property.literal({ path: schema.breadcrumb })
     breadcrumbLiteral: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     lastReviewed: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     mainContentOfPage: Schema.WebPageElement | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     primaryImageOfPage: Schema.ImageObject | undefined;
-    @property()
+    @rdfine.property()
     relatedLink: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     reviewedBy: Schema.Organization | Schema.Person | undefined;
-    @property()
+    @rdfine.property()
     significantLink: RDF.NamedNode | undefined;
-    @property()
+    @rdfine.property()
     significantLinks: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     speakable: Schema.SpeakableSpecification | undefined;
-    @property()
+    @rdfine.property()
     specialty: Schema.Specialty | undefined;
   }
   return WebPageClass

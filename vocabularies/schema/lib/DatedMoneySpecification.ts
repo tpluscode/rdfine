@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface DatedMoneySpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface DatedMoneySpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   amount: Schema.MonetaryAmount<D> | undefined;
   amountLiteral: number | undefined;
   currency: string | undefined;
@@ -16,18 +16,18 @@ export interface DatedMoneySpecification<D extends RDF.DatasetCore = RDF.Dataset
   startDate: Date | undefined;
 }
 
-export function DatedMoneySpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DatedMoneySpecification> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DatedMoneySpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DatedMoneySpecification> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DatedMoneySpecificationClass extends StructuredValueMixin(Resource) implements Partial<DatedMoneySpecification> {
-    @property.resource()
+    @rdfine.property.resource()
     amount: Schema.MonetaryAmount | undefined;
-    @property.literal({ path: schema.amount, type: Number })
+    @rdfine.property.literal({ path: schema.amount, type: Number })
     amountLiteral: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     currency: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate: Date | undefined;
   }
   return DatedMoneySpecificationClass

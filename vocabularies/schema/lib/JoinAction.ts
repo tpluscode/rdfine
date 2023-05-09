@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { InteractActionMixin } from './InteractAction.js';
 
-export interface JoinAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, RdfResource<D> {
+export interface JoinAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, rdfine.RdfResource<D> {
   event: Schema.Event<D> | undefined;
 }
 
-export function JoinActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<JoinAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function JoinActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JoinAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class JoinActionClass extends InteractActionMixin(Resource) implements Partial<JoinAction> {
-    @property.resource()
+    @rdfine.property.resource()
     event: Schema.Event | undefined;
   }
   return JoinActionClass

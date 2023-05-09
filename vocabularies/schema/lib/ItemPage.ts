@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { WebPageMixin } from './WebPage.js';
 
-export interface ItemPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, RdfResource<D> {
+export interface ItemPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, rdfine.RdfResource<D> {
 }
 
-export function ItemPageMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ItemPage> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ItemPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ItemPage> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ItemPageClass extends WebPageMixin(Resource) implements Partial<ItemPage> {
   }
   return ItemPageClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
-export interface AlignmentObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface AlignmentObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   alignmentType: string | undefined;
   educationalFramework: string | undefined;
   targetDescription: string | undefined;
@@ -16,18 +16,18 @@ export interface AlignmentObject<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   targetUrl: RDF.NamedNode | undefined;
 }
 
-export function AlignmentObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AlignmentObject> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function AlignmentObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AlignmentObject> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class AlignmentObjectClass extends IntangibleMixin(Resource) implements Partial<AlignmentObject> {
-    @property.literal()
+    @rdfine.property.literal()
     alignmentType: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     educationalFramework: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     targetDescription: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     targetName: string | undefined;
-    @property()
+    @rdfine.property()
     targetUrl: RDF.NamedNode | undefined;
   }
   return AlignmentObjectClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Doap from '../index.js';
 import { RepositoryMixin } from './Repository.js';
 
-export interface BKRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, RdfResource<D> {
+export interface BKRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, rdfine.RdfResource<D> {
   module: RDF.Term | undefined;
 }
 
-export function BKRepositoryMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BKRepository> & RdfResourceCore> & Base {
-  @namespace(doap)
+export function BKRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BKRepository> & RdfResourceCore> & Base {
+  @rdfine.namespace(doap)
   class BKRepositoryClass extends RepositoryMixin(Resource) implements Partial<BKRepository> {
-    @property()
+    @rdfine.property()
     module: RDF.Term | undefined;
   }
   return BKRepositoryClass

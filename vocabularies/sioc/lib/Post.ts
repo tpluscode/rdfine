@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,10 +7,10 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '../index.js';
 import type * as Foaf from '@rdfine/foaf';
-import { DocumentMixin as FoafDocumentMixin } from '@rdfine/foaf/lib/Document.js';
+import { DocumentMixin as FoafDocumentMixin } from '@rdfine/foaf/lib/Document';
 import { ItemMixin } from './Item.js';
 
-export interface Post<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Document<D>, Sioc.Item<D>, RdfResource<D> {
+export interface Post<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Document<D>, Sioc.Item<D>, rdfine.RdfResource<D> {
   'content_encoded': RDF.Literal | undefined;
   'created_at': RDF.Literal | undefined;
   description: RDF.Literal | undefined;
@@ -20,22 +20,22 @@ export interface Post<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.
   title: RDF.Literal | undefined;
 }
 
-export function PostMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Post> & RdfResourceCore> & Base {
-  @namespace(sioc)
+export function PostMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Post> & RdfResourceCore> & Base {
+  @rdfine.namespace(sioc)
   class PostClass extends ItemMixin(FoafDocumentMixin(Resource)) implements Partial<Post> {
-    @property()
+    @rdfine.property()
     'content_encoded': RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     'created_at': RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     description: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     'modified_at': RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     reference: RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     subject: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     title: RDF.Literal | undefined;
   }
   return PostClass

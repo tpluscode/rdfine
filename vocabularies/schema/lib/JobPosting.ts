@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
-export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   applicantLocationRequirements: Schema.AdministrativeArea<D> | undefined;
   applicationContact: Schema.ContactPoint<D> | undefined;
   baseSalary: Schema.MonetaryAmount<D> | Schema.PriceSpecification<D> | undefined;
@@ -26,7 +26,7 @@ export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   experienceInPlaceOfEducation: boolean | undefined;
   experienceRequirements: Schema.OccupationalExperienceRequirements<D> | undefined;
   experienceRequirementsLiteral: string | undefined;
-  hiringOrganization: Schema.Organization<D> | undefined;
+  hiringOrganization: Schema.Organization<D> | Schema.Person<D> | undefined;
   incentiveCompensation: string | undefined;
   incentives: string | undefined;
   industry: string | undefined;
@@ -55,96 +55,96 @@ export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   workHours: string | undefined;
 }
 
-export function JobPostingMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<JobPosting> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function JobPostingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JobPosting> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class JobPostingClass extends IntangibleMixin(Resource) implements Partial<JobPosting> {
-    @property.resource()
+    @rdfine.property.resource()
     applicantLocationRequirements: Schema.AdministrativeArea | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     applicationContact: Schema.ContactPoint | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
-    @property.literal({ path: schema.baseSalary, type: Number })
+    @rdfine.property.literal({ path: schema.baseSalary, type: Number })
     baseSalaryLiteral: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     benefits: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     datePosted: Date | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     directApply: boolean | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     educationRequirements: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     eligibilityToWorkRequirement: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     employerOverview: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     employmentType: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     employmentUnit: Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution | undefined;
-    @property.literal({ path: schema.estimatedSalary, type: Number })
+    @rdfine.property.literal({ path: schema.estimatedSalary, type: Number })
     estimatedSalaryLiteral: number | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     experienceInPlaceOfEducation: boolean | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     experienceRequirements: Schema.OccupationalExperienceRequirements | undefined;
-    @property.literal({ path: schema.experienceRequirements })
+    @rdfine.property.literal({ path: schema.experienceRequirements })
     experienceRequirementsLiteral: string | undefined;
-    @property.resource()
-    hiringOrganization: Schema.Organization | undefined;
-    @property.literal()
+    @rdfine.property.resource()
+    hiringOrganization: Schema.Organization | Schema.Person | undefined;
+    @rdfine.property.literal()
     incentiveCompensation: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     incentives: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     industry: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     jobBenefits: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     jobImmediateStart: boolean | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     jobLocation: Schema.Place | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     jobLocationType: string | undefined;
-    @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     jobStartDate: Date | string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     occupationalCategory: Schema.CategoryCode | undefined;
-    @property.literal({ path: schema.occupationalCategory })
+    @rdfine.property.literal({ path: schema.occupationalCategory })
     occupationalCategoryLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     physicalRequirement: string | undefined;
-    @property({ path: schema.physicalRequirement })
+    @rdfine.property({ path: schema.physicalRequirement })
     physicalRequirementTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     qualifications: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     relevantOccupation: Schema.Occupation | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     responsibilities: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     salaryCurrency: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     securityClearanceRequirement: string | undefined;
-    @property({ path: schema.securityClearanceRequirement })
+    @rdfine.property({ path: schema.securityClearanceRequirement })
     securityClearanceRequirementTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     sensoryRequirement: string | undefined;
-    @property({ path: schema.sensoryRequirement })
+    @rdfine.property({ path: schema.sensoryRequirement })
     sensoryRequirementTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     skills: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     specialCommitments: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     title: string | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     totalJobOpenings: number | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validThrough: Date | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     workHours: string | undefined;
   }
   return JobPostingClass

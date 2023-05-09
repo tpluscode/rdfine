@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface CreativeWorkSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface CreativeWorkSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   actor: Schema.Person<D> | undefined;
   director: Schema.Person<D> | undefined;
   endDate: Date | undefined;
@@ -22,30 +22,30 @@ export interface CreativeWorkSeason<D extends RDF.DatasetCore = RDF.DatasetCore>
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function CreativeWorkSeasonMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CreativeWorkSeason> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function CreativeWorkSeasonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CreativeWorkSeason> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class CreativeWorkSeasonClass extends CreativeWorkMixin(Resource) implements Partial<CreativeWorkSeason> {
-    @property.resource()
+    @rdfine.property.resource()
     actor: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     director: Schema.Person | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     episode: Schema.Episode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     episodes: Schema.Episode | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     numberOfEpisodes: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     partOfSeries: Schema.CreativeWorkSeries | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     productionCompany: Schema.Organization | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     seasonNumber: number | string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     trailer: Schema.VideoObject | undefined;
   }
   return CreativeWorkSeasonClass

@@ -1,4 +1,5 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import { CategoryCodeMixin } from '../lib/CategoryCode.js';
 import { DurationMixin } from '../lib/Duration.js';
 import { IntangibleMixin } from '../lib/Intangible.js';
 import { InvoiceMixin } from '../lib/Invoice.js';
@@ -10,6 +11,7 @@ import { PriceSpecificationMixin } from '../lib/PriceSpecification.js';
 import { ThingMixin } from '../lib/Thing.js';
 
 export const InvoiceBundle = [
+  CategoryCodeMixin as Mixin,
   DurationMixin as Mixin,
   IntangibleMixin as Mixin,
   InvoiceMixin as Mixin,

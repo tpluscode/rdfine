@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,11 +9,11 @@ import type * as Schema from '../index.js';
 import { CriticReviewMixin } from './CriticReview.js';
 import { NewsArticleMixin } from './NewsArticle.js';
 
-export interface ReviewNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CriticReview<D>, Schema.NewsArticle<D>, RdfResource<D> {
+export interface ReviewNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CriticReview<D>, Schema.NewsArticle<D>, rdfine.RdfResource<D> {
 }
 
-export function ReviewNewsArticleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ReviewNewsArticle> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ReviewNewsArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ReviewNewsArticle> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ReviewNewsArticleClass extends NewsArticleMixin(CriticReviewMixin(Resource)) implements Partial<ReviewNewsArticle> {
   }
   return ReviewNewsArticleClass

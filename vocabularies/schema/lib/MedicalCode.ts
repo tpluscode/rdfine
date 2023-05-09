@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,17 +9,17 @@ import type * as Schema from '../index.js';
 import { CategoryCodeMixin } from './CategoryCode.js';
 import { MedicalIntangibleMixin } from './MedicalIntangible.js';
 
-export interface MedicalCode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CategoryCode<D>, Schema.MedicalIntangible<D>, RdfResource<D> {
+export interface MedicalCode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CategoryCode<D>, Schema.MedicalIntangible<D>, rdfine.RdfResource<D> {
   codeValue: string | undefined;
   codingSystem: string | undefined;
 }
 
-export function MedicalCodeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalCode> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MedicalCodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalCode> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MedicalCodeClass extends MedicalIntangibleMixin(CategoryCodeMixin(Resource)) implements Partial<MedicalCode> {
-    @property.literal()
+    @rdfine.property.literal()
     codeValue: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     codingSystem: string | undefined;
   }
   return MedicalCodeClass

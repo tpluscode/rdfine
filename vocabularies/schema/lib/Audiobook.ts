@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,17 +9,17 @@ import type * as Schema from '../index.js';
 import { AudioObjectMixin } from './AudioObject.js';
 import { BookMixin } from './Book.js';
 
-export interface Audiobook<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AudioObject<D>, Schema.Book<D>, RdfResource<D> {
+export interface Audiobook<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AudioObject<D>, Schema.Book<D>, rdfine.RdfResource<D> {
   duration: Schema.Duration<D> | undefined;
   readBy: Schema.Person<D> | undefined;
 }
 
-export function AudiobookMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Audiobook> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function AudiobookMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Audiobook> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class AudiobookClass extends BookMixin(AudioObjectMixin(Resource)) implements Partial<Audiobook> {
-    @property.resource()
+    @rdfine.property.resource()
     duration: Schema.Duration | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     readBy: Schema.Person | undefined;
   }
   return AudiobookClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as As from '../index.js';
 import { LinkMixin } from './Link.js';
 
-export interface Mention<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Link<D>, RdfResource<D> {
+export interface Mention<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Link<D>, rdfine.RdfResource<D> {
 }
 
-export function MentionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Mention> & RdfResourceCore> & Base {
-  @namespace(as)
+export function MentionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Mention> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class MentionClass extends LinkMixin(Resource) implements Partial<Mention> {
   }
   return MentionClass

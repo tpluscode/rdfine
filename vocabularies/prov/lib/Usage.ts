@@ -1,6 +1,6 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdfjs/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
@@ -9,11 +9,11 @@ import type * as Prov from '../index.js';
 import { EntityInfluenceMixin } from './EntityInfluence.js';
 import { InstantaneousEventMixin } from './InstantaneousEvent.js';
 
-export interface Usage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.EntityInfluence<D>, Prov.InstantaneousEvent<D>, RdfResource<D> {
+export interface Usage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.EntityInfluence<D>, Prov.InstantaneousEvent<D>, rdfine.RdfResource<D> {
 }
 
-export function UsageMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Usage> & RdfResourceCore> & Base {
-  @namespace(prov)
+export function UsageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Usage> & RdfResourceCore> & Base {
+  @rdfine.namespace(prov)
   class UsageClass extends InstantaneousEventMixin(EntityInfluenceMixin(Resource)) implements Partial<Usage> {
   }
   return UsageClass

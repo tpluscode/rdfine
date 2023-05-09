@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ActionMixin } from './Action.js';
 
-export interface FindAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, RdfResource<D> {
+export interface FindAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, rdfine.RdfResource<D> {
 }
 
-export function FindActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FindAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function FindActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FindAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class FindActionClass extends ActionMixin(Resource) implements Partial<FindAction> {
   }
   return FindActionClass

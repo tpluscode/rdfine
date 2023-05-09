@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,23 +7,23 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '../index.js';
 
-export interface NumericFormat<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface NumericFormat<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   decimalChar: string | undefined;
   groupChar: Csvw.NumericFormat<D> | undefined;
   groupCharLiteral: string | undefined;
   pattern: string | undefined;
 }
 
-export function NumericFormatMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<NumericFormat> & RdfResourceCore> & Base {
-  @namespace(csvw)
+export function NumericFormatMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NumericFormat> & RdfResourceCore> & Base {
+  @rdfine.namespace(csvw)
   class NumericFormatClass extends Resource implements Partial<NumericFormat> {
-    @property.literal()
+    @rdfine.property.literal()
     decimalChar: string | undefined;
-    @property.resource({ as: [NumericFormatMixin] })
+    @rdfine.property.resource({ as: [NumericFormatMixin] })
     groupChar: Csvw.NumericFormat | undefined;
-    @property.literal({ path: csvw.groupChar })
+    @rdfine.property.literal({ path: csvw.groupChar })
     groupCharLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     pattern: string | undefined;
   }
   return NumericFormatClass

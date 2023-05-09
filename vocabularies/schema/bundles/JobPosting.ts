@@ -9,6 +9,7 @@ import { MonetaryAmountMixin } from '../lib/MonetaryAmount.js';
 import { OccupationalExperienceRequirementsMixin } from '../lib/OccupationalExperienceRequirements.js';
 import { OccupationMixin } from '../lib/Occupation.js';
 import { OrganizationMixin } from '../lib/Organization.js';
+import { PersonMixin } from '../lib/Person.js';
 import { PlaceMixin } from '../lib/Place.js';
 import { PriceSpecificationMixin } from '../lib/PriceSpecification.js';
 
@@ -23,5 +24,6 @@ export const JobPostingBundle = [
   OccupationalExperienceRequirementsMixin as Mixin,
   OccupationMixin as Mixin,
   OrganizationMixin as Mixin,
+  PersonMixin as Mixin,
   PlaceMixin as Mixin,
   PriceSpecificationMixin as Mixin];

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,7 +7,7 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '../index.js';
 
-export interface Column<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Column<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   aboutUrl: string | undefined;
   datatype: Csvw.Datatype<D> | undefined;
   datatypeLiteral: string | undefined;
@@ -27,42 +27,42 @@ export interface Column<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf
   virtual: boolean | undefined;
 }
 
-export function ColumnMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Column> & RdfResourceCore> & Base {
-  @namespace(csvw)
+export function ColumnMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Column> & RdfResourceCore> & Base {
+  @rdfine.namespace(csvw)
   class ColumnClass extends Resource implements Partial<Column> {
-    @property.literal()
+    @rdfine.property.literal()
     aboutUrl: string | undefined;
-    @property.resource({ implicitTypes: [csvw.Datatype] })
+    @rdfine.property.resource({ implicitTypes: [csvw.Datatype] })
     datatype: Csvw.Datatype | undefined;
-    @property.literal({ path: csvw.datatype })
+    @rdfine.property.literal({ path: csvw.datatype })
     datatypeLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     default: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     lang: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     name: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     null: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     ordered: boolean | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     propertyUrl: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     required: boolean | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     separator: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     suppressOutput: boolean | undefined;
-    @property.resource({ implicitTypes: [csvw.Direction] })
+    @rdfine.property.resource({ implicitTypes: [csvw.Direction] })
     textDirection: Csvw.Direction | undefined;
-    @property()
+    @rdfine.property()
     title: RDF.Term | undefined;
-    @property.resource({ values: 'array', implicitTypes: [csvw.Transformation] })
+    @rdfine.property.resource({ values: 'array', implicitTypes: [csvw.Transformation] })
     transformations!: Array<Csvw.Transformation>;
-    @property.literal()
+    @rdfine.property.literal()
     valueUrl: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     virtual: boolean | undefined;
   }
   return ColumnClass

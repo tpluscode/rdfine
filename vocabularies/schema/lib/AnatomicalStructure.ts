@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { MedicalEntityMixin } from './MedicalEntity.js';
 
-export interface AnatomicalStructure<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, RdfResource<D> {
+export interface AnatomicalStructure<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, rdfine.RdfResource<D> {
   associatedPathophysiology: string | undefined;
   bodyLocation: string | undefined;
   connectedTo: Schema.AnatomicalStructure<D> | undefined;
@@ -19,24 +19,24 @@ export interface AnatomicalStructure<D extends RDF.DatasetCore = RDF.DatasetCore
   subStructure: Schema.AnatomicalStructure<D> | undefined;
 }
 
-export function AnatomicalStructureMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AnatomicalStructure> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function AnatomicalStructureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AnatomicalStructure> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class AnatomicalStructureClass extends MedicalEntityMixin(Resource) implements Partial<AnatomicalStructure> {
-    @property.literal()
+    @rdfine.property.literal()
     associatedPathophysiology: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     bodyLocation: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     connectedTo: Schema.AnatomicalStructure | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     diagram: Schema.ImageObject | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     partOfSystem: Schema.AnatomicalSystem | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     relatedCondition: Schema.MedicalCondition | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     relatedTherapy: Schema.MedicalTherapy | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     subStructure: Schema.AnatomicalStructure | undefined;
   }
   return AnatomicalStructureClass

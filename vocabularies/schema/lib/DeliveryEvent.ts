@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,23 +8,23 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { EventMixin } from './Event.js';
 
-export interface DeliveryEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
+export interface DeliveryEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
   accessCode: string | undefined;
   availableFrom: Date | undefined;
   availableThrough: Date | undefined;
   hasDeliveryMethod: Schema.DeliveryMethod | undefined;
 }
 
-export function DeliveryEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DeliveryEvent> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DeliveryEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DeliveryEvent> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DeliveryEventClass extends EventMixin(Resource) implements Partial<DeliveryEvent> {
-    @property.literal()
+    @rdfine.property.literal()
     accessCode: string | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     availableFrom: Date | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     availableThrough: Date | undefined;
-    @property()
+    @rdfine.property()
     hasDeliveryMethod: Schema.DeliveryMethod | undefined;
   }
   return DeliveryEventClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as As from '../index.js';
 import { IntransitiveActivityMixin } from './IntransitiveActivity.js';
 
-export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.IntransitiveActivity<D>, RdfResource<D> {
+export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.IntransitiveActivity<D>, rdfine.RdfResource<D> {
   anyOf: As.Link<D> | As.Object<D> | undefined;
   oneOf: As.Link<D> | As.Object<D> | undefined;
 }
 
-export function QuestionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Question> & RdfResourceCore> & Base {
-  @namespace(as)
+export function QuestionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Question> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class QuestionClass extends IntransitiveActivityMixin(Resource) implements Partial<Question> {
-    @property.resource()
+    @rdfine.property.resource()
     anyOf: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     oneOf: As.Link | As.Object | undefined;
   }
   return QuestionClass

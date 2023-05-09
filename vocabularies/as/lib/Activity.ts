@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as As from '../index.js';
 import { ObjectMixin } from './Object.js';
 
-export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, RdfResource<D> {
+export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
   actor: As.Link<D> | As.Object<D> | undefined;
   instrument: As.Link<D> | As.Object<D> | undefined;
   object: As.Link<D> | As.Object<D> | undefined;
@@ -18,22 +18,22 @@ export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends A
   verb: string | undefined;
 }
 
-export function ActivityMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Activity> & RdfResourceCore> & Base {
-  @namespace(as)
+export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Activity> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class ActivityClass extends ObjectMixin(Resource) implements Partial<Activity> {
-    @property.resource()
+    @rdfine.property.resource()
     actor: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     instrument: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     object: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     origin: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     result: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     target: As.Link | As.Object | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     verb: string | undefined;
   }
   return ActivityClass

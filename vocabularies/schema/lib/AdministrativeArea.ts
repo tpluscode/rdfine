@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { PlaceMixin } from './Place.js';
 
-export interface AdministrativeArea<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, RdfResource<D> {
+export interface AdministrativeArea<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, rdfine.RdfResource<D> {
 }
 
-export function AdministrativeAreaMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AdministrativeArea> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function AdministrativeAreaMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AdministrativeArea> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class AdministrativeAreaClass extends PlaceMixin(Resource) implements Partial<AdministrativeArea> {
   }
   return AdministrativeAreaClass

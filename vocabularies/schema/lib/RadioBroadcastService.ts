@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { BroadcastServiceMixin } from './BroadcastService.js';
 
-export interface RadioBroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BroadcastService<D>, RdfResource<D> {
+export interface RadioBroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BroadcastService<D>, rdfine.RdfResource<D> {
 }
 
-export function RadioBroadcastServiceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RadioBroadcastService> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function RadioBroadcastServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RadioBroadcastService> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class RadioBroadcastServiceClass extends BroadcastServiceMixin(Resource) implements Partial<RadioBroadcastService> {
   }
   return RadioBroadcastServiceClass

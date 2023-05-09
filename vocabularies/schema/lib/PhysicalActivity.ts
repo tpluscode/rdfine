@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,26 +8,26 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { LifestyleModificationMixin } from './LifestyleModification.js';
 
-export interface PhysicalActivity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LifestyleModification<D>, RdfResource<D> {
+export interface PhysicalActivity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LifestyleModification<D>, rdfine.RdfResource<D> {
   associatedAnatomy: Schema.AnatomicalStructure<D> | Schema.AnatomicalSystem<D> | Schema.SuperficialAnatomy<D> | undefined;
-  category: Schema.Thing<D> | undefined;
+  category: Schema.CategoryCode<D> | Schema.Thing<D> | undefined;
   categoryLiteral: string | undefined;
   epidemiology: string | undefined;
   pathophysiology: string | undefined;
 }
 
-export function PhysicalActivityMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PhysicalActivity> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PhysicalActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PhysicalActivity> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PhysicalActivityClass extends LifestyleModificationMixin(Resource) implements Partial<PhysicalActivity> {
-    @property.resource()
+    @rdfine.property.resource()
     associatedAnatomy: Schema.AnatomicalStructure | Schema.AnatomicalSystem | Schema.SuperficialAnatomy | undefined;
-    @property.resource()
-    category: Schema.Thing | undefined;
-    @property.literal({ path: schema.category })
+    @rdfine.property.resource()
+    category: Schema.CategoryCode | Schema.Thing | undefined;
+    @rdfine.property.literal({ path: schema.category })
     categoryLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     epidemiology: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     pathophysiology: string | undefined;
   }
   return PhysicalActivityClass

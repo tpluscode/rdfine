@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface Game<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface Game<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   characterAttribute: Schema.Thing<D> | undefined;
   gameItem: Schema.Thing<D> | undefined;
   gameLocation: Schema.Place<D> | Schema.PostalAddress<D> | undefined;
@@ -16,18 +16,18 @@ export interface Game<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   quest: Schema.Thing<D> | undefined;
 }
 
-export function GameMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Game> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function GameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Game> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class GameClass extends CreativeWorkMixin(Resource) implements Partial<Game> {
-    @property.resource()
+    @rdfine.property.resource()
     characterAttribute: Schema.Thing | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     gameItem: Schema.Thing | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     gameLocation: Schema.Place | Schema.PostalAddress | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfPlayers: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     quest: Schema.Thing | undefined;
   }
   return GameClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,17 +9,17 @@ import type * as Rico from '../index.js';
 import { InstantiationToInstantiationRelationMixin } from './InstantiationToInstantiationRelation.js';
 import { TemporalRelationMixin } from './TemporalRelation.js';
 
-export interface DerivationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.InstantiationToInstantiationRelation<D>, Rico.TemporalRelation<D>, RdfResource<D> {
+export interface DerivationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.InstantiationToInstantiationRelation<D>, Rico.TemporalRelation<D>, rdfine.RdfResource<D> {
   derivationRelationHasSource: Rico.Instantiation<D> | undefined;
   derivationRelationHasTarget: Rico.Instantiation<D> | undefined;
 }
 
-export function DerivationRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DerivationRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function DerivationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DerivationRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class DerivationRelationClass extends TemporalRelationMixin(InstantiationToInstantiationRelationMixin(Resource)) implements Partial<DerivationRelation> {
-    @property.resource({ implicitTypes: [rico.Instantiation] })
+    @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     derivationRelationHasSource: Rico.Instantiation | undefined;
-    @property.resource({ implicitTypes: [rico.Instantiation] })
+    @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     derivationRelationHasTarget: Rico.Instantiation | undefined;
   }
   return DerivationRelationClass

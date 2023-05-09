@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ActionMixin } from './Action.js';
 
-export interface ConsumeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, RdfResource<D> {
+export interface ConsumeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, rdfine.RdfResource<D> {
   actionAccessibilityRequirement: Schema.ActionAccessSpecification<D> | undefined;
   expectsAcceptanceOf: Schema.Offer<D> | undefined;
 }
 
-export function ConsumeActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ConsumeAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ConsumeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ConsumeAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ConsumeActionClass extends ActionMixin(Resource) implements Partial<ConsumeAction> {
-    @property.resource()
+    @rdfine.property.resource()
     actionAccessibilityRequirement: Schema.ActionAccessSpecification | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     expectsAcceptanceOf: Schema.Offer | undefined;
   }
   return ConsumeActionClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { AudienceMixin } from './Audience.js';
 
-export interface BusinessAudience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Audience<D>, RdfResource<D> {
+export interface BusinessAudience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Audience<D>, rdfine.RdfResource<D> {
   numberOfEmployees: Schema.QuantitativeValue<D> | undefined;
   yearlyRevenue: Schema.QuantitativeValue<D> | undefined;
   yearsInOperation: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function BusinessAudienceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BusinessAudience> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function BusinessAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BusinessAudience> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class BusinessAudienceClass extends AudienceMixin(Resource) implements Partial<BusinessAudience> {
-    @property.resource()
+    @rdfine.property.resource()
     numberOfEmployees: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     yearlyRevenue: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     yearsInOperation: Schema.QuantitativeValue | undefined;
   }
   return BusinessAudienceClass

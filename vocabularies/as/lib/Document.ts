@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as As from '../index.js';
 import { ObjectMixin } from './Object.js';
 
-export interface Document<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, RdfResource<D> {
+export interface Document<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
 }
 
-export function DocumentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Document> & RdfResourceCore> & Base {
-  @namespace(as)
+export function DocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Document> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class DocumentClass extends ObjectMixin(Resource) implements Partial<Document> {
   }
   return DocumentClass

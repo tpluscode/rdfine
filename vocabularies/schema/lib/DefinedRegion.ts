@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface DefinedRegion<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface DefinedRegion<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   addressCountry: Schema.Country<D> | undefined;
   addressCountryLiteral: string | undefined;
   addressRegion: string | undefined;
@@ -17,20 +17,20 @@ export interface DefinedRegion<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   postalCodeRange: Schema.PostalCodeRangeSpecification<D> | undefined;
 }
 
-export function DefinedRegionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DefinedRegion> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DefinedRegionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DefinedRegion> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DefinedRegionClass extends StructuredValueMixin(Resource) implements Partial<DefinedRegion> {
-    @property.resource()
+    @rdfine.property.resource()
     addressCountry: Schema.Country | undefined;
-    @property.literal({ path: schema.addressCountry })
+    @rdfine.property.literal({ path: schema.addressCountry })
     addressCountryLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     addressRegion: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     postalCode: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     postalCodePrefix: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     postalCodeRange: Schema.PostalCodeRangeSpecification | undefined;
   }
   return DefinedRegionClass

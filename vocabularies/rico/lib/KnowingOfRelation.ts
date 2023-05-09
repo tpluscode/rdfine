@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { AgentToAgentRelationMixin } from './AgentToAgentRelation.js';
 
-export interface KnowingOfRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, RdfResource<D> {
+export interface KnowingOfRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, rdfine.RdfResource<D> {
   knowingOfRelationHasSource: Rico.Person<D> | undefined;
   knowingOfRelationHasTarget: Rico.Person<D> | undefined;
 }
 
-export function KnowingOfRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<KnowingOfRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function KnowingOfRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<KnowingOfRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class KnowingOfRelationClass extends AgentToAgentRelationMixin(Resource) implements Partial<KnowingOfRelation> {
-    @property.resource({ implicitTypes: [rico.Person] })
+    @rdfine.property.resource({ implicitTypes: [rico.Person] })
     knowingOfRelationHasSource: Rico.Person | undefined;
-    @property.resource({ implicitTypes: [rico.Person] })
+    @rdfine.property.resource({ implicitTypes: [rico.Person] })
     knowingOfRelationHasTarget: Rico.Person | undefined;
   }
   return KnowingOfRelationClass

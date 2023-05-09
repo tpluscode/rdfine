@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,17 +9,17 @@ import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 import { CreativeWorkSeasonMixin } from './CreativeWorkSeason.js';
 
-export interface TVSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.CreativeWorkSeason<D>, RdfResource<D> {
+export interface TVSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.CreativeWorkSeason<D>, rdfine.RdfResource<D> {
   countryOfOrigin: Schema.Country<D> | undefined;
   partOfTVSeries: Schema.TVSeries<D> | undefined;
 }
 
-export function TVSeasonMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TVSeason> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function TVSeasonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TVSeason> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class TVSeasonClass extends CreativeWorkSeasonMixin(CreativeWorkMixin(Resource)) implements Partial<TVSeason> {
-    @property.resource()
+    @rdfine.property.resource()
     countryOfOrigin: Schema.Country | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     partOfTVSeries: Schema.TVSeries | undefined;
   }
   return TVSeasonClass

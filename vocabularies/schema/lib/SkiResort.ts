@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,11 +9,11 @@ import type * as Schema from '../index.js';
 import { ResortMixin } from './Resort.js';
 import { SportsActivityLocationMixin } from './SportsActivityLocation.js';
 
-export interface SkiResort<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Resort<D>, Schema.SportsActivityLocation<D>, RdfResource<D> {
+export interface SkiResort<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Resort<D>, Schema.SportsActivityLocation<D>, rdfine.RdfResource<D> {
 }
 
-export function SkiResortMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SkiResort> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function SkiResortMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SkiResort> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class SkiResortClass extends SportsActivityLocationMixin(ResortMixin(Resource)) implements Partial<SkiResort> {
   }
   return SkiResortClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,12 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ThingMixin } from './Thing.js';
 
-export interface BioChemEntity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, RdfResource<D> {
+export interface BioChemEntity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, rdfine.RdfResource<D> {
   associatedDisease: Schema.MedicalCondition<D> | Schema.PropertyValue<D> | undefined;
   bioChemInteraction: Schema.BioChemEntity<D> | undefined;
   bioChemSimilarity: Schema.BioChemEntity<D> | undefined;
   biologicalRole: RDF.Term | undefined;
+  funding: Schema.Grant<D> | undefined;
   hasBioChemEntityPart: Schema.BioChemEntity<D> | undefined;
   hasMolecularFunction: Schema.PropertyValue<D> | undefined;
   hasRepresentation: Schema.PropertyValue<D> | undefined;
@@ -25,36 +26,38 @@ export interface BioChemEntity<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   taxonomicRangeLiteral: string | undefined;
 }
 
-export function BioChemEntityMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BioChemEntity> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function BioChemEntityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BioChemEntity> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class BioChemEntityClass extends ThingMixin(Resource) implements Partial<BioChemEntity> {
-    @property.resource()
+    @rdfine.property.resource()
     associatedDisease: Schema.MedicalCondition | Schema.PropertyValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     bioChemInteraction: Schema.BioChemEntity | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     bioChemSimilarity: Schema.BioChemEntity | undefined;
-    @property()
+    @rdfine.property()
     biologicalRole: RDF.Term | undefined;
-    @property.resource()
+    @rdfine.property.resource()
+    funding: Schema.Grant | undefined;
+    @rdfine.property.resource()
     hasBioChemEntityPart: Schema.BioChemEntity | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasMolecularFunction: Schema.PropertyValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasRepresentation: Schema.PropertyValue | undefined;
-    @property.literal({ path: schema.hasRepresentation })
+    @rdfine.property.literal({ path: schema.hasRepresentation })
     hasRepresentationLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isEncodedByBioChemEntity: Schema.Gene | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isInvolvedInBiologicalProcess: Schema.PropertyValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isLocatedInSubcellularLocation: Schema.PropertyValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isPartOfBioChemEntity: Schema.BioChemEntity | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     taxonomicRange: Schema.Taxon | undefined;
-    @property.literal({ path: schema.taxonomicRange })
+    @rdfine.property.literal({ path: schema.taxonomicRange })
     taxonomicRangeLiteral: string | undefined;
   }
   return BioChemEntityClass

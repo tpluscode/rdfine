@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,14 +9,14 @@ import type * as Schema from '../index.js';
 import { LegislationMixin } from './Legislation.js';
 import { MediaObjectMixin } from './MediaObject.js';
 
-export interface LegislationObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Legislation<D>, Schema.MediaObject<D>, RdfResource<D> {
+export interface LegislationObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Legislation<D>, Schema.MediaObject<D>, rdfine.RdfResource<D> {
   legislationLegalValue: Schema.LegalValueLevel | undefined;
 }
 
-export function LegislationObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LegislationObject> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function LegislationObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LegislationObject> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class LegislationObjectClass extends MediaObjectMixin(LegislationMixin(Resource)) implements Partial<LegislationObject> {
-    @property()
+    @rdfine.property()
     legislationLegalValue: Schema.LegalValueLevel | undefined;
   }
   return LegislationObjectClass

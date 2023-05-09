@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CivicStructureMixin } from './CivicStructure.js';
 
-export interface EventVenue<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, RdfResource<D> {
+export interface EventVenue<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, rdfine.RdfResource<D> {
 }
 
-export function EventVenueMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EventVenue> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function EventVenueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EventVenue> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class EventVenueClass extends CivicStructureMixin(Resource) implements Partial<EventVenue> {
   }
   return EventVenueClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { MedicalEntityMixin } from './MedicalEntity.js';
 
-export interface MedicalTest<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, RdfResource<D> {
+export interface MedicalTest<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, rdfine.RdfResource<D> {
   affectedBy: Schema.Drug<D> | undefined;
   normalRange: string | undefined;
   normalRangeTerm: Schema.MedicalEnumeration | undefined;
@@ -17,20 +17,20 @@ export interface MedicalTest<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   usesDevice: Schema.MedicalDevice<D> | undefined;
 }
 
-export function MedicalTestMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalTest> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MedicalTestMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalTest> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MedicalTestClass extends MedicalEntityMixin(Resource) implements Partial<MedicalTest> {
-    @property.resource()
+    @rdfine.property.resource()
     affectedBy: Schema.Drug | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     normalRange: string | undefined;
-    @property({ path: schema.normalRange })
+    @rdfine.property({ path: schema.normalRange })
     normalRangeTerm: Schema.MedicalEnumeration | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     signDetected: Schema.MedicalSign | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     usedToDiagnose: Schema.MedicalCondition | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     usesDevice: Schema.MedicalDevice | undefined;
   }
   return MedicalTestClass

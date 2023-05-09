@@ -1,6 +1,6 @@
 import '../extensions/wgs/SpatialThing.js';
 import { SpatialThingMixinEx } from '../extensions/wgs/SpatialThing.js';
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,9 +10,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '../index.js';
 import type * as Wgs from '@rdfine/wgs';
 import { AgentMixin } from './Agent.js';
-import { SpatialThingMixin as WgsSpatialThingMixin } from '@rdfine/wgs/lib/SpatialThing.js';
+import { SpatialThingMixin as WgsSpatialThingMixin } from '@rdfine/wgs/lib/SpatialThing';
 
-export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Agent<D>, Wgs.SpatialThing<D>, RdfResource<D> {
+export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Agent<D>, Wgs.SpatialThing<D>, rdfine.RdfResource<D> {
   currentProject: RDF.NamedNode | undefined;
   'family_name': RDF.Literal | undefined;
   familyName: RDF.Literal | undefined;
@@ -31,40 +31,40 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foa
   workplaceHomepage: Foaf.Document<D> | undefined;
 }
 
-export function PersonMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Person> & RdfResourceCore> & Base {
-  @namespace(foaf)
+export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Person> & RdfResourceCore> & Base {
+  @rdfine.namespace(foaf)
   class PersonClass extends SpatialThingMixinEx(WgsSpatialThingMixin(AgentMixin(Resource))) implements Partial<Person> {
-    @property()
+    @rdfine.property()
     currentProject: RDF.NamedNode | undefined;
-    @property()
+    @rdfine.property()
     'family_name': RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     familyName: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     firstName: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     geekcode: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [foaf.Image] })
+    @rdfine.property.resource({ implicitTypes: [foaf.Image] })
     img: Foaf.Image | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     knows: Foaf.Person | undefined;
-    @property()
+    @rdfine.property()
     lastName: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     myersBriggs: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     pastProject: RDF.NamedNode | undefined;
-    @property()
+    @rdfine.property()
     plan: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [foaf.Document] })
+    @rdfine.property.resource({ implicitTypes: [foaf.Document] })
     publications: Foaf.Document | undefined;
-    @property.resource({ implicitTypes: [foaf.Document] })
+    @rdfine.property.resource({ implicitTypes: [foaf.Document] })
     schoolHomepage: Foaf.Document | undefined;
-    @property()
+    @rdfine.property()
     surname: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [foaf.Document] })
+    @rdfine.property.resource({ implicitTypes: [foaf.Document] })
     workInfoHomepage: Foaf.Document | undefined;
-    @property.resource({ implicitTypes: [foaf.Document] })
+    @rdfine.property.resource({ implicitTypes: [foaf.Document] })
     workplaceHomepage: Foaf.Document | undefined;
   }
   return PersonClass

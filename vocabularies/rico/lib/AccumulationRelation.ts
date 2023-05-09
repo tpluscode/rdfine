@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { AgentOriginationRelationMixin } from './AgentOriginationRelation.js';
 
-export interface AccumulationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentOriginationRelation<D>, RdfResource<D> {
+export interface AccumulationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentOriginationRelation<D>, rdfine.RdfResource<D> {
   accumulationRelationHasSource: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
   accumulationRelationHasTarget: Rico.Agent<D> | undefined;
 }
 
-export function AccumulationRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AccumulationRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function AccumulationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AccumulationRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class AccumulationRelationClass extends AgentOriginationRelationMixin(Resource) implements Partial<AccumulationRelation> {
-    @property.resource()
+    @rdfine.property.resource()
     accumulationRelationHasSource: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     accumulationRelationHasTarget: Rico.Agent | undefined;
   }
   return AccumulationRelationClass

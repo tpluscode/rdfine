@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { RuleMixin } from './Rule.js';
 
-export interface Mandate<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Rule<D>, RdfResource<D> {
+export interface Mandate<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Rule<D>, rdfine.RdfResource<D> {
   authorizes: Rico.Agent<D> | undefined;
   mandateIsSourceOfMandateRelation: Rico.MandateRelation<D> | undefined;
 }
 
-export function MandateMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Mandate> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function MandateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Mandate> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class MandateClass extends RuleMixin(Resource) implements Partial<Mandate> {
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     authorizes: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.MandateRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.MandateRelation] })
     mandateIsSourceOfMandateRelation: Rico.MandateRelation | undefined;
   }
   return MandateClass

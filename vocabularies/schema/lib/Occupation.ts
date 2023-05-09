@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
-export interface Occupation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Occupation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   educationRequirements: string | undefined;
   estimatedSalary: Schema.MonetaryAmount<D> | Schema.MonetaryAmountDistribution<D> | undefined;
   estimatedSalaryLiteral: number | undefined;
@@ -22,30 +22,30 @@ export interface Occupation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   skills: string | undefined;
 }
 
-export function OccupationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Occupation> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function OccupationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Occupation> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class OccupationClass extends IntangibleMixin(Resource) implements Partial<Occupation> {
-    @property.literal()
+    @rdfine.property.literal()
     educationRequirements: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     estimatedSalary: Schema.MonetaryAmount | Schema.MonetaryAmountDistribution | undefined;
-    @property.literal({ path: schema.estimatedSalary, type: Number })
+    @rdfine.property.literal({ path: schema.estimatedSalary, type: Number })
     estimatedSalaryLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     experienceRequirements: Schema.OccupationalExperienceRequirements | undefined;
-    @property.literal({ path: schema.experienceRequirements })
+    @rdfine.property.literal({ path: schema.experienceRequirements })
     experienceRequirementsLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     occupationalCategory: Schema.CategoryCode | undefined;
-    @property.literal({ path: schema.occupationalCategory })
+    @rdfine.property.literal({ path: schema.occupationalCategory })
     occupationalCategoryLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     occupationLocation: Schema.AdministrativeArea | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     qualifications: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     responsibilities: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     skills: string | undefined;
   }
   return OccupationClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface TypeAndQuantityNode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface TypeAndQuantityNode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   amountOfThisGood: number | undefined;
   businessFunction: Schema.BusinessFunction | undefined;
   typeOfGood: Schema.Product<D> | Schema.Service<D> | undefined;
@@ -17,20 +17,20 @@ export interface TypeAndQuantityNode<D extends RDF.DatasetCore = RDF.DatasetCore
   unitText: string | undefined;
 }
 
-export function TypeAndQuantityNodeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TypeAndQuantityNode> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function TypeAndQuantityNodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TypeAndQuantityNode> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class TypeAndQuantityNodeClass extends StructuredValueMixin(Resource) implements Partial<TypeAndQuantityNode> {
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     amountOfThisGood: number | undefined;
-    @property()
+    @rdfine.property()
     businessFunction: Schema.BusinessFunction | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     typeOfGood: Schema.Product | Schema.Service | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     unitCode: string | undefined;
-    @property({ path: schema.unitCode })
+    @rdfine.property({ path: schema.unitCode })
     unitCodeTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     unitText: string | undefined;
   }
   return TypeAndQuantityNodeClass

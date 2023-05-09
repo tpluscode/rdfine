@@ -1,4 +1,5 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import { CategoryCodeMixin } from '../lib/CategoryCode.js';
 import { CivicStructureMixin } from '../lib/CivicStructure.js';
 import { CreativeWorkMixin } from '../lib/CreativeWork.js';
 import { DataFeedMixin } from '../lib/DataFeed.js';
@@ -11,6 +12,7 @@ import { ThingMixin } from '../lib/Thing.js';
 import { WebContentMixin } from '../lib/WebContent.js';
 
 export const SpecialAnnouncementBundle = [
+  CategoryCodeMixin as Mixin,
   CivicStructureMixin as Mixin,
   CreativeWorkMixin as Mixin,
   DataFeedMixin as Mixin,

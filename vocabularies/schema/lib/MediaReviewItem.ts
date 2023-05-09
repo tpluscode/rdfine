@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface MediaReviewItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface MediaReviewItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   mediaItemAppearance: Schema.MediaObject<D> | undefined;
 }
 
-export function MediaReviewItemMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MediaReviewItem> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MediaReviewItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MediaReviewItem> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MediaReviewItemClass extends CreativeWorkMixin(Resource) implements Partial<MediaReviewItem> {
-    @property.resource()
+    @rdfine.property.resource()
     mediaItemAppearance: Schema.MediaObject | undefined;
   }
   return MediaReviewItemClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { TripMixin } from './Trip.js';
 
-export interface TouristTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Trip<D>, RdfResource<D> {
+export interface TouristTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Trip<D>, rdfine.RdfResource<D> {
   touristType: Schema.Audience<D> | undefined;
   touristTypeLiteral: string | undefined;
 }
 
-export function TouristTripMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TouristTrip> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function TouristTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TouristTrip> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class TouristTripClass extends TripMixin(Resource) implements Partial<TouristTrip> {
-    @property.resource()
+    @rdfine.property.resource()
     touristType: Schema.Audience | undefined;
-    @property.literal({ path: schema.touristType })
+    @rdfine.property.literal({ path: schema.touristType })
     touristTypeLiteral: string | undefined;
   }
   return TouristTripClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface RepaymentSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface RepaymentSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   downPayment: Schema.MonetaryAmount<D> | undefined;
   downPaymentLiteral: number | undefined;
   earlyPrepaymentPenalty: Schema.MonetaryAmount<D> | undefined;
@@ -17,20 +17,20 @@ export interface RepaymentSpecification<D extends RDF.DatasetCore = RDF.DatasetC
   numberOfLoanPayments: number | undefined;
 }
 
-export function RepaymentSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RepaymentSpecification> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function RepaymentSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RepaymentSpecification> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class RepaymentSpecificationClass extends StructuredValueMixin(Resource) implements Partial<RepaymentSpecification> {
-    @property.resource()
+    @rdfine.property.resource()
     downPayment: Schema.MonetaryAmount | undefined;
-    @property.literal({ path: schema.downPayment, type: Number })
+    @rdfine.property.literal({ path: schema.downPayment, type: Number })
     downPaymentLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     earlyPrepaymentPenalty: Schema.MonetaryAmount | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     loanPaymentAmount: Schema.MonetaryAmount | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     loanPaymentFrequency: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     numberOfLoanPayments: number | undefined;
   }
   return RepaymentSpecificationClass

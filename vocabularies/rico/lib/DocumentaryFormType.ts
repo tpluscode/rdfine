@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { TypeMixin } from './Type.js';
 
-export interface DocumentaryFormType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, RdfResource<D> {
+export interface DocumentaryFormType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, rdfine.RdfResource<D> {
   isDocumentaryFormTypeOf: Rico.Record<D> | Rico.RecordPart<D> | undefined;
   isOrWasDocumentaryFormTypeOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasDocumentaryFormTypeOfSomeMembersOf: Rico.RecordSet<D> | undefined;
 }
 
-export function DocumentaryFormTypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DocumentaryFormType> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function DocumentaryFormTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DocumentaryFormType> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class DocumentaryFormTypeClass extends TypeMixin(Resource) implements Partial<DocumentaryFormType> {
-    @property.resource()
+    @rdfine.property.resource()
     isDocumentaryFormTypeOf: Rico.Record | Rico.RecordPart | undefined;
-    @property.resource({ implicitTypes: [rico.RecordSet] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isOrWasDocumentaryFormTypeOfAllMembersOf: Rico.RecordSet | undefined;
-    @property.resource({ implicitTypes: [rico.RecordSet] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isOrWasDocumentaryFormTypeOfSomeMembersOf: Rico.RecordSet | undefined;
   }
   return DocumentaryFormTypeClass

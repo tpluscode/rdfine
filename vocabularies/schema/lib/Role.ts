@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
-export interface Role<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Role<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   endDate: Date | undefined;
   namedPosition: string | undefined;
   namedPositionTerm: RDF.NamedNode | undefined;
@@ -17,20 +17,20 @@ export interface Role<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   startDate: Date | undefined;
 }
 
-export function RoleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Role> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function RoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Role> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class RoleClass extends IntangibleMixin(Resource) implements Partial<Role> {
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate: Date | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     namedPosition: string | undefined;
-    @property({ path: schema.namedPosition })
+    @rdfine.property({ path: schema.namedPosition })
     namedPositionTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     roleName: string | undefined;
-    @property({ path: schema.roleName })
+    @rdfine.property({ path: schema.roleName })
     roleNameTerm: RDF.NamedNode | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate: Date | undefined;
   }
   return RoleClass

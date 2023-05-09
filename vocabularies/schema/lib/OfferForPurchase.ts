@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { OfferMixin } from './Offer.js';
 
-export interface OfferForPurchase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Offer<D>, RdfResource<D> {
+export interface OfferForPurchase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Offer<D>, rdfine.RdfResource<D> {
 }
 
-export function OfferForPurchaseMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<OfferForPurchase> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function OfferForPurchaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OfferForPurchase> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class OfferForPurchaseClass extends OfferMixin(Resource) implements Partial<OfferForPurchase> {
   }
   return OfferForPurchaseClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ConsumeActionMixin } from './ConsumeAction.js';
 
-export interface ListenAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ConsumeAction<D>, RdfResource<D> {
+export interface ListenAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ConsumeAction<D>, rdfine.RdfResource<D> {
 }
 
-export function ListenActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ListenAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ListenActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ListenAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ListenActionClass extends ConsumeActionMixin(Resource) implements Partial<ListenAction> {
   }
   return ListenActionClass

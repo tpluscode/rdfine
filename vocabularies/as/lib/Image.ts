@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as As from '../index.js';
 import { DocumentMixin } from './Document.js';
 
-export interface Image<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Document<D>, RdfResource<D> {
+export interface Image<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Document<D>, rdfine.RdfResource<D> {
 }
 
-export function ImageMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Image> & RdfResourceCore> & Base {
-  @namespace(as)
+export function ImageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Image> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class ImageClass extends DocumentMixin(Resource) implements Partial<Image> {
   }
   return ImageClass

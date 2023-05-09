@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ArticleMixin } from './Article.js';
 
-export interface NewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, RdfResource<D> {
+export interface NewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, rdfine.RdfResource<D> {
   dateline: string | undefined;
   printColumn: string | undefined;
   printEdition: string | undefined;
@@ -16,18 +16,18 @@ export interface NewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   printSection: string | undefined;
 }
 
-export function NewsArticleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<NewsArticle> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function NewsArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NewsArticle> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class NewsArticleClass extends ArticleMixin(Resource) implements Partial<NewsArticle> {
-    @property.literal()
+    @rdfine.property.literal()
     dateline: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     printColumn: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     printEdition: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     printPage: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     printSection: string | undefined;
   }
   return NewsArticleClass

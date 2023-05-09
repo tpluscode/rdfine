@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { ThingMixin } from './Thing.js';
 
-export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, RdfResource<D> {
+export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, rdfine.RdfResource<D> {
   containsOrContained: Rico.Place<D> | undefined;
   geographicalCoordinates: RDF.Literal | undefined;
   hasOrHadPhysicalLocation: Rico.PhysicalLocation<D> | undefined;
@@ -25,36 +25,36 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico
   placeIsSourceOfPlaceRelation: Rico.PlaceRelation<D> | undefined;
 }
 
-export function PlaceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Place> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Place> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class PlaceClass extends ThingMixin(Resource) implements Partial<Place> {
-    @property.resource({ as: [PlaceMixin] })
+    @rdfine.property.resource({ as: [PlaceMixin] })
     containsOrContained: Rico.Place | undefined;
-    @property()
+    @rdfine.property()
     geographicalCoordinates: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.PhysicalLocation] })
+    @rdfine.property.resource({ implicitTypes: [rico.PhysicalLocation] })
     hasOrHadPhysicalLocation: Rico.PhysicalLocation | undefined;
-    @property.resource({ implicitTypes: [rico.PlaceName] })
+    @rdfine.property.resource({ implicitTypes: [rico.PlaceName] })
     hasOrHadPlaceName: Rico.PlaceName | undefined;
-    @property.resource({ implicitTypes: [rico.PlaceType] })
+    @rdfine.property.resource({ implicitTypes: [rico.PlaceType] })
     hasOrHadPlaceType: Rico.PlaceType | undefined;
-    @property()
+    @rdfine.property()
     history: RDF.Literal | undefined;
-    @property.resource({ as: [PlaceMixin] })
+    @rdfine.property.resource({ as: [PlaceMixin] })
     isOrWasAdjacentTo: Rico.Place | undefined;
-    @property.resource({ as: [PlaceMixin] })
+    @rdfine.property.resource({ as: [PlaceMixin] })
     isOrWasContainedBy: Rico.Place | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     isOrWasJurisdictionOf: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isOrWasLocationOf: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isPlaceAssociatedWith: Rico.Thing | undefined;
-    @property()
+    @rdfine.property()
     location: RDF.Literal | undefined;
-    @property.resource({ as: [PlaceMixin] })
+    @rdfine.property.resource({ as: [PlaceMixin] })
     overlapsOrOverlapped: Rico.Place | undefined;
-    @property.resource({ implicitTypes: [rico.PlaceRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.PlaceRelation] })
     placeIsSourceOfPlaceRelation: Rico.PlaceRelation | undefined;
   }
   return PlaceClass

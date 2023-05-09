@@ -3,6 +3,7 @@ import { AdministrativeAreaMixin } from '../lib/AdministrativeArea.js';
 import { AggregateRatingMixin } from '../lib/AggregateRating.js';
 import { AudienceMixin } from '../lib/Audience.js';
 import { BrandMixin } from '../lib/Brand.js';
+import { CategoryCodeMixin } from '../lib/CategoryCode.js';
 import { DemandMixin } from '../lib/Demand.js';
 import { GeoShapeMixin } from '../lib/GeoShape.js';
 import { ImageObjectMixin } from '../lib/ImageObject.js';
@@ -24,6 +25,7 @@ export const ServiceBundle = [
   AggregateRatingMixin as Mixin,
   AudienceMixin as Mixin,
   BrandMixin as Mixin,
+  CategoryCodeMixin as Mixin,
   DemandMixin as Mixin,
   GeoShapeMixin as Mixin,
   ImageObjectMixin as Mixin,

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,23 +8,23 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { OfferMixin } from './Offer.js';
 
-export interface AggregateOffer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Offer<D>, RdfResource<D> {
+export interface AggregateOffer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Offer<D>, rdfine.RdfResource<D> {
   highPrice: number | string | undefined;
   lowPrice: number | string | undefined;
   offerCount: number | undefined;
   offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
 }
 
-export function AggregateOfferMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AggregateOffer> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function AggregateOfferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AggregateOffer> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class AggregateOfferClass extends OfferMixin(Resource) implements Partial<AggregateOffer> {
-    @property.literal()
+    @rdfine.property.literal()
     highPrice: number | string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     lowPrice: number | string | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     offerCount: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     offers: Schema.Demand | Schema.Offer | undefined;
   }
   return AggregateOfferClass

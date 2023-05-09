@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { RoleMixin } from './Role.js';
 
-export interface PerformanceRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Role<D>, RdfResource<D> {
+export interface PerformanceRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Role<D>, rdfine.RdfResource<D> {
   characterName: string | undefined;
 }
 
-export function PerformanceRoleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PerformanceRole> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PerformanceRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PerformanceRole> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PerformanceRoleClass extends RoleMixin(Resource) implements Partial<PerformanceRole> {
-    @property.literal()
+    @rdfine.property.literal()
     characterName: string | undefined;
   }
   return PerformanceRoleClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as As from '../index.js';
 import { ObjectMixin } from './Object.js';
 
-export interface Collection<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, RdfResource<D> {
+export interface Collection<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
   current: As.CollectionPage<D> | As.Link<D> | undefined;
   first: As.CollectionPage<D> | As.Link<D> | undefined;
   items: As.OrderedItems<D> | undefined;
@@ -16,18 +16,18 @@ export interface Collection<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   totalItems: number | undefined;
 }
 
-export function CollectionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Collection> & RdfResourceCore> & Base {
-  @namespace(as)
+export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Collection> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class CollectionClass extends ObjectMixin(Resource) implements Partial<Collection> {
-    @property.resource()
+    @rdfine.property.resource()
     current: As.CollectionPage | As.Link | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     first: As.CollectionPage | As.Link | undefined;
-    @property.resource({ implicitTypes: [as.OrderedItems] })
+    @rdfine.property.resource({ implicitTypes: [as.OrderedItems] })
     items: As.OrderedItems | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     last: As.CollectionPage | As.Link | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     totalItems: number | undefined;
   }
   return CollectionClass

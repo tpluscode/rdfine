@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { PermitMixin } from './Permit.js';
 
-export interface GovernmentPermit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Permit<D>, RdfResource<D> {
+export interface GovernmentPermit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Permit<D>, rdfine.RdfResource<D> {
 }
 
-export function GovernmentPermitMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<GovernmentPermit> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function GovernmentPermitMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GovernmentPermit> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class GovernmentPermitClass extends PermitMixin(Resource) implements Partial<GovernmentPermit> {
   }
   return GovernmentPermitClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { ThingMixin } from './Thing.js';
 
-export interface Date<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, RdfResource<D> {
+export interface Date<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, rdfine.RdfResource<D> {
   calendar: RDF.Literal | undefined;
   certainty: RDF.Literal | undefined;
   dateQualifier: RDF.Literal | undefined;
@@ -28,42 +28,42 @@ export interface Date<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.
   textualValue: RDF.Literal | undefined;
 }
 
-export function DateMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Date> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function DateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Date> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class DateClass extends ThingMixin(Resource) implements Partial<Date> {
-    @property()
+    @rdfine.property()
     calendar: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     certainty: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     dateQualifier: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     dateStandard: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     expressedDate: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isBeginningDateOf: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Person] })
+    @rdfine.property.resource({ implicitTypes: [rico.Person] })
     isBirthDateOf: Rico.Person | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isDateAssociatedWith: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Person] })
+    @rdfine.property.resource({ implicitTypes: [rico.Person] })
     isDeathDateOf: Rico.Person | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isEndDateOf: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Appellation] })
+    @rdfine.property.resource({ implicitTypes: [rico.Appellation] })
     isFromUseDateOf: Rico.Appellation | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isLastUpdateDateOf: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isModificationDateOf: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Appellation] })
+    @rdfine.property.resource({ implicitTypes: [rico.Appellation] })
     isToUseDateOf: Rico.Appellation | undefined;
-    @property()
+    @rdfine.property()
     normalizedDateValue: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     normalizedValue: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     textualValue: RDF.Literal | undefined;
   }
   return DateClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '../index.js';
 import { DocumentMixin } from './Document.js';
 
-export interface PersonalProfileDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Document<D>, RdfResource<D> {
+export interface PersonalProfileDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Document<D>, rdfine.RdfResource<D> {
 }
 
-export function PersonalProfileDocumentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PersonalProfileDocument> & RdfResourceCore> & Base {
-  @namespace(foaf)
+export function PersonalProfileDocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PersonalProfileDocument> & RdfResourceCore> & Base {
+  @rdfine.namespace(foaf)
   class PersonalProfileDocumentClass extends DocumentMixin(Resource) implements Partial<PersonalProfileDocument> {
   }
   return PersonalProfileDocumentClass

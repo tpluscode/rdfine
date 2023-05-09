@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ServiceMixin } from './Service.js';
 
-export interface BroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, RdfResource<D> {
+export interface BroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, rdfine.RdfResource<D> {
   area: Schema.Place<D> | undefined;
   broadcastAffiliateOf: Schema.Organization<D> | undefined;
   broadcastDisplayName: string | undefined;
@@ -24,34 +24,34 @@ export interface BroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> e
   videoFormat: string | undefined;
 }
 
-export function BroadcastServiceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BroadcastService> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function BroadcastServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BroadcastService> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class BroadcastServiceClass extends ServiceMixin(Resource) implements Partial<BroadcastService> {
-    @property.resource()
+    @rdfine.property.resource()
     area: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     broadcastAffiliateOf: Schema.Organization | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     broadcastDisplayName: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     broadcaster: Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     broadcastFrequency: Schema.BroadcastFrequencySpecification | undefined;
-    @property.literal({ path: schema.broadcastFrequency })
+    @rdfine.property.literal({ path: schema.broadcastFrequency })
     broadcastFrequencyLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     broadcastTimezone: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     callSign: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasBroadcastChannel: Schema.BroadcastChannel | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     inLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.inLanguage })
+    @rdfine.property.literal({ path: schema.inLanguage })
     inLanguageLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     parentService: Schema.BroadcastService | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     videoFormat: string | undefined;
   }
   return BroadcastServiceClass

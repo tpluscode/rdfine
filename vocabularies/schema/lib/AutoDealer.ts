@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { AutomotiveBusinessMixin } from './AutomotiveBusiness.js';
 
-export interface AutoDealer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AutomotiveBusiness<D>, RdfResource<D> {
+export interface AutoDealer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AutomotiveBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function AutoDealerMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AutoDealer> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function AutoDealerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AutoDealer> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class AutoDealerClass extends AutomotiveBusinessMixin(Resource) implements Partial<AutoDealer> {
   }
   return AutoDealerClass

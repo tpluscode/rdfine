@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface LearningResource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface LearningResource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   assesses: string | undefined;
   competencyRequired: string | undefined;
   competencyRequiredTerm: RDF.NamedNode | undefined;
@@ -20,26 +20,26 @@ export interface LearningResource<D extends RDF.DatasetCore = RDF.DatasetCore> e
   teaches: string | undefined;
 }
 
-export function LearningResourceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LearningResource> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function LearningResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LearningResource> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class LearningResourceClass extends CreativeWorkMixin(Resource) implements Partial<LearningResource> {
-    @property.literal()
+    @rdfine.property.literal()
     assesses: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     competencyRequired: string | undefined;
-    @property({ path: schema.competencyRequired })
+    @rdfine.property({ path: schema.competencyRequired })
     competencyRequiredTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     educationalAlignment: Schema.AlignmentObject | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     educationalLevel: string | undefined;
-    @property({ path: schema.educationalLevel })
+    @rdfine.property({ path: schema.educationalLevel })
     educationalLevelTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     educationalUse: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     learningResourceType: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     teaches: string | undefined;
   }
   return LearningResourceClass

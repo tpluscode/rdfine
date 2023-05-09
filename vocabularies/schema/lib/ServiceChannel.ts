@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
-export interface ServiceChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface ServiceChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   availableLanguage: Schema.Language<D> | undefined;
   availableLanguageLiteral: string | undefined;
   processingTime: Schema.Duration<D> | undefined;
@@ -20,26 +20,26 @@ export interface ServiceChannel<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   serviceUrl: RDF.NamedNode | undefined;
 }
 
-export function ServiceChannelMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ServiceChannel> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ServiceChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ServiceChannel> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ServiceChannelClass extends IntangibleMixin(Resource) implements Partial<ServiceChannel> {
-    @property.resource()
+    @rdfine.property.resource()
     availableLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.availableLanguage })
+    @rdfine.property.literal({ path: schema.availableLanguage })
     availableLanguageLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     processingTime: Schema.Duration | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     providesService: Schema.Service | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     serviceLocation: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     servicePhone: Schema.ContactPoint | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     servicePostalAddress: Schema.PostalAddress | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     serviceSmsNumber: Schema.ContactPoint | undefined;
-    @property()
+    @rdfine.property()
     serviceUrl: RDF.NamedNode | undefined;
   }
   return ServiceChannelClass

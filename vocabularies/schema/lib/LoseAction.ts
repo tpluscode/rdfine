@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { AchieveActionMixin } from './AchieveAction.js';
 
-export interface LoseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AchieveAction<D>, RdfResource<D> {
+export interface LoseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AchieveAction<D>, rdfine.RdfResource<D> {
   winner: Schema.Person<D> | undefined;
 }
 
-export function LoseActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LoseAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function LoseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LoseAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class LoseActionClass extends AchieveActionMixin(Resource) implements Partial<LoseAction> {
-    @property.resource()
+    @rdfine.property.resource()
     winner: Schema.Person | undefined;
   }
   return LoseActionClass

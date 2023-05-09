@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { TypeMixin } from './Type.js';
 
-export interface DemographicGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, RdfResource<D> {
+export interface DemographicGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, rdfine.RdfResource<D> {
   isOrWasDemographicGroupOf: Rico.Group<D> | Rico.Person<D> | undefined;
 }
 
-export function DemographicGroupMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DemographicGroup> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function DemographicGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DemographicGroup> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class DemographicGroupClass extends TypeMixin(Resource) implements Partial<DemographicGroup> {
-    @property.resource()
+    @rdfine.property.resource()
     isOrWasDemographicGroupOf: Rico.Group | Rico.Person | undefined;
   }
   return DemographicGroupClass

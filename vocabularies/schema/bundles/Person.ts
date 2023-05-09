@@ -7,6 +7,7 @@ import { DemandMixin } from '../lib/Demand.js';
 import { DistanceMixin } from '../lib/Distance.js';
 import { EducationalOrganizationMixin } from '../lib/EducationalOrganization.js';
 import { EventMixin } from '../lib/Event.js';
+import { GrantMixin } from '../lib/Grant.js';
 import { InteractionCounterMixin } from '../lib/InteractionCounter.js';
 import { LanguageMixin } from '../lib/Language.js';
 import { MonetaryAmountMixin } from '../lib/MonetaryAmount.js';
@@ -33,6 +34,7 @@ export const PersonBundle = [
   DistanceMixin as Mixin,
   EducationalOrganizationMixin as Mixin,
   EventMixin as Mixin,
+  GrantMixin as Mixin,
   InteractionCounterMixin as Mixin,
   LanguageMixin as Mixin,
   MonetaryAmountMixin as Mixin,

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,23 +8,23 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { ConceptMixin } from './Concept.js';
 
-export interface Type<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Concept<D>, RdfResource<D> {
+export interface Type<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Concept<D>, rdfine.RdfResource<D> {
   isOrWasCategoryOf: Rico.Thing<D> | undefined;
   isOrWasCategoryOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasCategoryOfSomeMembersOf: Rico.RecordSet<D> | undefined;
   typeIsSourceOfTypeRelation: Rico.TypeRelation<D> | undefined;
 }
 
-export function TypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Type> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function TypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Type> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class TypeClass extends ConceptMixin(Resource) implements Partial<Type> {
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isOrWasCategoryOf: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.RecordSet] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isOrWasCategoryOfAllMembersOf: Rico.RecordSet | undefined;
-    @property.resource({ implicitTypes: [rico.RecordSet] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isOrWasCategoryOfSomeMembersOf: Rico.RecordSet | undefined;
-    @property.resource({ implicitTypes: [rico.TypeRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.TypeRelation] })
     typeIsSourceOfTypeRelation: Rico.TypeRelation | undefined;
   }
   return TypeClass

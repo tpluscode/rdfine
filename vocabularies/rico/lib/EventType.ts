@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { TypeMixin } from './Type.js';
 
-export interface EventType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, RdfResource<D> {
+export interface EventType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, rdfine.RdfResource<D> {
   isEventTypeOf: Rico.Event<D> | undefined;
 }
 
-export function EventTypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EventType> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function EventTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EventType> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class EventTypeClass extends TypeMixin(Resource) implements Partial<EventType> {
-    @property.resource({ implicitTypes: [rico.Event] })
+    @rdfine.property.resource({ implicitTypes: [rico.Event] })
     isEventTypeOf: Rico.Event | undefined;
   }
   return EventTypeClass

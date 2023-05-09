@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { OrganizationMixin } from './Organization.js';
 
-export interface FundingScheme<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, RdfResource<D> {
+export interface FundingScheme<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, rdfine.RdfResource<D> {
 }
 
-export function FundingSchemeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FundingScheme> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function FundingSchemeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FundingScheme> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class FundingSchemeClass extends OrganizationMixin(Resource) implements Partial<FundingScheme> {
   }
   return FundingSchemeClass

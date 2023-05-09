@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { AssessActionMixin } from './AssessAction.js';
 
-export interface ReviewAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AssessAction<D>, RdfResource<D> {
+export interface ReviewAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AssessAction<D>, rdfine.RdfResource<D> {
   resultReview: Schema.Review<D> | undefined;
 }
 
-export function ReviewActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ReviewAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ReviewActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ReviewAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ReviewActionClass extends AssessActionMixin(Resource) implements Partial<ReviewAction> {
-    @property.resource()
+    @rdfine.property.resource()
     resultReview: Schema.Review | undefined;
   }
   return ReviewActionClass

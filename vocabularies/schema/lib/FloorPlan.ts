@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
-export interface FloorPlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface FloorPlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   amenityFeature: Schema.LocationFeatureSpecification<D> | undefined;
   floorSize: Schema.QuantitativeValue<D> | undefined;
   isPlanForApartment: Schema.Accommodation<D> | undefined;
@@ -25,36 +25,36 @@ export interface FloorPlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   petsAllowed: boolean | string | undefined;
 }
 
-export function FloorPlanMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FloorPlan> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function FloorPlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FloorPlan> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class FloorPlanClass extends IntangibleMixin(Resource) implements Partial<FloorPlan> {
-    @property.resource()
+    @rdfine.property.resource()
     amenityFeature: Schema.LocationFeatureSpecification | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     floorSize: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isPlanForApartment: Schema.Accommodation | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     layoutImage: Schema.ImageObject | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfAccommodationUnits: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfAvailableAccommodationUnits: Schema.QuantitativeValue | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     numberOfBathroomsTotal: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfBedrooms: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.numberOfBedrooms, type: Number })
+    @rdfine.property.literal({ path: schema.numberOfBedrooms, type: Number })
     numberOfBedroomsLiteral: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     numberOfFullBathrooms: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     numberOfPartialBathrooms: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfRooms: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.numberOfRooms, type: Number })
+    @rdfine.property.literal({ path: schema.numberOfRooms, type: Number })
     numberOfRoomsLiteral: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     petsAllowed: boolean | string | undefined;
   }
   return FloorPlanClass

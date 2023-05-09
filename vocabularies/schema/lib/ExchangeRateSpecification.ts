@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,23 +8,23 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface ExchangeRateSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface ExchangeRateSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   currency: string | undefined;
   currentExchangeRate: Schema.UnitPriceSpecification<D> | undefined;
   exchangeRateSpread: Schema.MonetaryAmount<D> | undefined;
   exchangeRateSpreadLiteral: number | undefined;
 }
 
-export function ExchangeRateSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ExchangeRateSpecification> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ExchangeRateSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ExchangeRateSpecification> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ExchangeRateSpecificationClass extends StructuredValueMixin(Resource) implements Partial<ExchangeRateSpecification> {
-    @property.literal()
+    @rdfine.property.literal()
     currency: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     currentExchangeRate: Schema.UnitPriceSpecification | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     exchangeRateSpread: Schema.MonetaryAmount | undefined;
-    @property.literal({ path: schema.exchangeRateSpread, type: Number })
+    @rdfine.property.literal({ path: schema.exchangeRateSpread, type: Number })
     exchangeRateSpreadLiteral: number | undefined;
   }
   return ExchangeRateSpecificationClass

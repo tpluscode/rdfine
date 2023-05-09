@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,23 +8,23 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { MediaObjectMixin } from './MediaObject.js';
 
-export interface AudioObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, RdfResource<D> {
+export interface AudioObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, rdfine.RdfResource<D> {
   caption: Schema.MediaObject<D> | undefined;
   captionLiteral: string | undefined;
   embeddedTextCaption: string | undefined;
   transcript: string | undefined;
 }
 
-export function AudioObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AudioObject> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function AudioObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AudioObject> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class AudioObjectClass extends MediaObjectMixin(Resource) implements Partial<AudioObject> {
-    @property.resource()
+    @rdfine.property.resource()
     caption: Schema.MediaObject | undefined;
-    @property.literal({ path: schema.caption })
+    @rdfine.property.literal({ path: schema.caption })
     captionLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     embeddedTextCaption: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     transcript: string | undefined;
   }
   return AudioObjectClass

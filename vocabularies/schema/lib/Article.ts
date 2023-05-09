@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface Article<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface Article<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   articleBody: string | undefined;
   articleSection: string | undefined;
   backstory: Schema.CreativeWork<D> | undefined;
@@ -20,26 +20,26 @@ export interface Article<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   wordCount: number | undefined;
 }
 
-export function ArticleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Article> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Article> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ArticleClass extends CreativeWorkMixin(Resource) implements Partial<Article> {
-    @property.literal()
+    @rdfine.property.literal()
     articleBody: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     articleSection: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     backstory: Schema.CreativeWork | undefined;
-    @property.literal({ path: schema.backstory })
+    @rdfine.property.literal({ path: schema.backstory })
     backstoryLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     pageEnd: number | string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     pageStart: number | string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     pagination: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     speakable: Schema.SpeakableSpecification | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     wordCount: number | undefined;
   }
   return ArticleClass

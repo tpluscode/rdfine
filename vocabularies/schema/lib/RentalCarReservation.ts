@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,23 +8,23 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ReservationMixin } from './Reservation.js';
 
-export interface RentalCarReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, RdfResource<D> {
+export interface RentalCarReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, rdfine.RdfResource<D> {
   dropoffLocation: Schema.Place<D> | undefined;
   dropoffTime: Date | undefined;
   pickupLocation: Schema.Place<D> | undefined;
   pickupTime: Date | undefined;
 }
 
-export function RentalCarReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RentalCarReservation> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function RentalCarReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RentalCarReservation> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class RentalCarReservationClass extends ReservationMixin(Resource) implements Partial<RentalCarReservation> {
-    @property.resource()
+    @rdfine.property.resource()
     dropoffLocation: Schema.Place | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     dropoffTime: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     pickupLocation: Schema.Place | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     pickupTime: Date | undefined;
   }
   return RentalCarReservationClass

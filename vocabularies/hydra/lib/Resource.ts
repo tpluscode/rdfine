@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,7 +10,7 @@ import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 import { ResourceExMixin } from '../extensions/ResourceEx.js';
 
-export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
   first: Hydra.Resource<D> | undefined;
   freetextQuery: string | undefined;
   last: Hydra.Resource<D> | undefined;
@@ -21,24 +21,24 @@ export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   view: Array<Hydra.Resource<D>>;
 }
 
-export function ResourceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Resource> & RdfResourceCore> & Base {
-  @namespace(hydra)
+export function ResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Resource> & RdfResourceCore> & Base {
+  @rdfine.namespace(hydra)
   class ResourceClass extends ResourceExMixin(RdfsResourceMixin(Resource)) implements Partial<Resource> {
-    @property.resource({ as: [ResourceMixin] })
+    @rdfine.property.resource({ as: [ResourceMixin] })
     first: Hydra.Resource | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     freetextQuery: string | undefined;
-    @property.resource({ as: [ResourceMixin] })
+    @rdfine.property.resource({ as: [ResourceMixin] })
     last: Hydra.Resource | undefined;
-    @property.resource({ as: [ResourceMixin] })
+    @rdfine.property.resource({ as: [ResourceMixin] })
     next: Hydra.Resource | undefined;
-    @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
+    @rdfine.property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
     operation!: Array<Hydra.Operation>;
-    @property.resource({ as: [ResourceMixin] })
+    @rdfine.property.resource({ as: [ResourceMixin] })
     previous: Hydra.Resource | undefined;
-    @property.resource({ implicitTypes: [hydra.IriTemplate] })
+    @rdfine.property.resource({ implicitTypes: [hydra.IriTemplate] })
     search: Hydra.IriTemplate | undefined;
-    @property.resource({ values: 'array' })
+    @rdfine.property.resource({ values: 'array' })
     view!: Array<Hydra.Resource>;
   }
   return ResourceClass

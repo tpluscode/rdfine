@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,14 +7,14 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Skos from '../index.js';
 
-export interface Collection<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Collection<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   member: Array<Skos.Collection<D> | Skos.Concept<D>>;
 }
 
-export function CollectionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Collection> & RdfResourceCore> & Base {
-  @namespace(skos)
+export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Collection> & RdfResourceCore> & Base {
+  @rdfine.namespace(skos)
   class CollectionClass extends Resource implements Partial<Collection> {
-    @property.resource({ values: 'array' })
+    @rdfine.property.resource({ values: 'array' })
     member!: Array<Skos.Collection | Skos.Concept>;
   }
   return CollectionClass

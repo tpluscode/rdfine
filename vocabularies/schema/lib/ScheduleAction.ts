@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { PlanActionMixin } from './PlanAction.js';
 
-export interface ScheduleAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlanAction<D>, RdfResource<D> {
+export interface ScheduleAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlanAction<D>, rdfine.RdfResource<D> {
 }
 
-export function ScheduleActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ScheduleAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ScheduleActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ScheduleAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ScheduleActionClass extends PlanActionMixin(Resource) implements Partial<ScheduleAction> {
   }
   return ScheduleActionClass

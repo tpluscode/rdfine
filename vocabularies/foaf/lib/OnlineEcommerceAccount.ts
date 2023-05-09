@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '../index.js';
 import { OnlineAccountMixin } from './OnlineAccount.js';
 
-export interface OnlineEcommerceAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.OnlineAccount<D>, RdfResource<D> {
+export interface OnlineEcommerceAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.OnlineAccount<D>, rdfine.RdfResource<D> {
 }
 
-export function OnlineEcommerceAccountMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<OnlineEcommerceAccount> & RdfResourceCore> & Base {
-  @namespace(foaf)
+export function OnlineEcommerceAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OnlineEcommerceAccount> & RdfResourceCore> & Base {
+  @rdfine.namespace(foaf)
   class OnlineEcommerceAccountClass extends OnlineAccountMixin(Resource) implements Partial<OnlineEcommerceAccount> {
   }
   return OnlineEcommerceAccountClass

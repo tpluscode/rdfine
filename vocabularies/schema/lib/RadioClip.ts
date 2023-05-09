@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ClipMixin } from './Clip.js';
 
-export interface RadioClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Clip<D>, RdfResource<D> {
+export interface RadioClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Clip<D>, rdfine.RdfResource<D> {
 }
 
-export function RadioClipMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RadioClip> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function RadioClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RadioClip> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class RadioClipClass extends ClipMixin(Resource) implements Partial<RadioClip> {
   }
   return RadioClipClass

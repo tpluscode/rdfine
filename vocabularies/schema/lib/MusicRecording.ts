@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface MusicRecording<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface MusicRecording<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   byArtist: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
   duration: Schema.Duration<D> | undefined;
   inAlbum: Schema.MusicAlbum<D> | undefined;
@@ -17,20 +17,20 @@ export interface MusicRecording<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   recordingOf: Schema.MusicComposition<D> | undefined;
 }
 
-export function MusicRecordingMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MusicRecording> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MusicRecordingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MusicRecording> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MusicRecordingClass extends CreativeWorkMixin(Resource) implements Partial<MusicRecording> {
-    @property.resource()
+    @rdfine.property.resource()
     byArtist: Schema.MusicGroup | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     duration: Schema.Duration | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     inAlbum: Schema.MusicAlbum | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     inPlaylist: Schema.MusicPlaylist | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     isrcCode: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     recordingOf: Schema.MusicComposition | undefined;
   }
   return MusicRecordingClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ReviewMixin } from './Review.js';
 
-export interface ClaimReview<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Review<D>, RdfResource<D> {
+export interface ClaimReview<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Review<D>, rdfine.RdfResource<D> {
   claimReviewed: string | undefined;
 }
 
-export function ClaimReviewMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ClaimReview> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ClaimReviewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ClaimReview> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ClaimReviewClass extends ReviewMixin(Resource) implements Partial<ClaimReview> {
-    @property.literal()
+    @rdfine.property.literal()
     claimReviewed: string | undefined;
   }
   return ClaimReviewClass

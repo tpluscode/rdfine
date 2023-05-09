@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,7 +9,7 @@ import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 import { ListItemMixin } from './ListItem.js';
 
-export interface HowToDirection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ListItem<D>, RdfResource<D> {
+export interface HowToDirection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ListItem<D>, rdfine.RdfResource<D> {
   afterMedia: Schema.MediaObject<D> | undefined;
   beforeMedia: Schema.MediaObject<D> | undefined;
   duringMedia: Schema.MediaObject<D> | undefined;
@@ -22,28 +22,28 @@ export interface HowToDirection<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   totalTime: Schema.Duration<D> | undefined;
 }
 
-export function HowToDirectionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<HowToDirection> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function HowToDirectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HowToDirection> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class HowToDirectionClass extends ListItemMixin(CreativeWorkMixin(Resource)) implements Partial<HowToDirection> {
-    @property.resource()
+    @rdfine.property.resource()
     afterMedia: Schema.MediaObject | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     beforeMedia: Schema.MediaObject | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     duringMedia: Schema.MediaObject | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     performTime: Schema.Duration | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     prepTime: Schema.Duration | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     supply: Schema.HowToSupply | undefined;
-    @property.literal({ path: schema.supply })
+    @rdfine.property.literal({ path: schema.supply })
     supplyLiteral: string | undefined;
-    @property.resource({ values: 'array' })
+    @rdfine.property.resource({ values: 'array' })
     tool!: Array<Schema.HowToTool>;
-    @property.literal({ path: schema.tool, values: 'array' })
+    @rdfine.property.literal({ path: schema.tool, values: 'array' })
     toolLiteral!: Array<string>;
-    @property.resource()
+    @rdfine.property.resource()
     totalTime: Schema.Duration | undefined;
   }
   return HowToDirectionClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { EntertainmentBusinessMixin } from './EntertainmentBusiness.js';
 
-export interface NightClub<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.EntertainmentBusiness<D>, RdfResource<D> {
+export interface NightClub<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.EntertainmentBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function NightClubMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<NightClub> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function NightClubMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NightClub> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class NightClubClass extends EntertainmentBusinessMixin(Resource) implements Partial<NightClub> {
   }
   return NightClubClass

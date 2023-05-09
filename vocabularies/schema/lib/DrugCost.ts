@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { MedicalEntityMixin } from './MedicalEntity.js';
 
-export interface DrugCost<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, RdfResource<D> {
+export interface DrugCost<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, rdfine.RdfResource<D> {
   applicableLocation: Schema.AdministrativeArea<D> | undefined;
   costCategory: Schema.DrugCostCategory | undefined;
   costCurrency: string | undefined;
@@ -18,22 +18,22 @@ export interface DrugCost<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   drugUnit: string | undefined;
 }
 
-export function DrugCostMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DrugCost> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DrugCostMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DrugCost> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DrugCostClass extends MedicalEntityMixin(Resource) implements Partial<DrugCost> {
-    @property.resource()
+    @rdfine.property.resource()
     applicableLocation: Schema.AdministrativeArea | undefined;
-    @property()
+    @rdfine.property()
     costCategory: Schema.DrugCostCategory | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     costCurrency: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     costOrigin: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     costPerUnit: number | string | undefined;
-    @property({ path: schema.costPerUnit })
+    @rdfine.property({ path: schema.costPerUnit })
     costPerUnitTerm: Schema.QualitativeValue | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     drugUnit: string | undefined;
   }
   return DrugCostClass

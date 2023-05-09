@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { MedicalEntityMixin } from './MedicalEntity.js';
 
-export interface MedicalRiskEstimator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, RdfResource<D> {
+export interface MedicalRiskEstimator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, rdfine.RdfResource<D> {
   estimatesRiskOf: Schema.MedicalEntity<D> | undefined;
   includedRiskFactor: Schema.MedicalRiskFactor<D> | undefined;
 }
 
-export function MedicalRiskEstimatorMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalRiskEstimator> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MedicalRiskEstimatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalRiskEstimator> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MedicalRiskEstimatorClass extends MedicalEntityMixin(Resource) implements Partial<MedicalRiskEstimator> {
-    @property.resource()
+    @rdfine.property.resource()
     estimatesRiskOf: Schema.MedicalEntity | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     includedRiskFactor: Schema.MedicalRiskFactor | undefined;
   }
   return MedicalRiskEstimatorClass

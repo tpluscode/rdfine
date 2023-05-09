@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { AppellationMixin } from './Appellation.js';
 
-export interface Name<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Appellation<D>, RdfResource<D> {
+export interface Name<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Appellation<D>, rdfine.RdfResource<D> {
   isOrWasNameOf: Rico.Thing<D> | undefined;
 }
 
-export function NameMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Name> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function NameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Name> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class NameClass extends AppellationMixin(Resource) implements Partial<Name> {
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isOrWasNameOf: Rico.Thing | undefined;
   }
   return NameClass

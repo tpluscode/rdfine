@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { HowToItemMixin } from './HowToItem.js';
 
-export interface HowToSupply<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HowToItem<D>, RdfResource<D> {
+export interface HowToSupply<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HowToItem<D>, rdfine.RdfResource<D> {
   estimatedCost: Schema.MonetaryAmount<D> | undefined;
   estimatedCostLiteral: string | undefined;
 }
 
-export function HowToSupplyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<HowToSupply> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function HowToSupplyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HowToSupply> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class HowToSupplyClass extends HowToItemMixin(Resource) implements Partial<HowToSupply> {
-    @property.resource()
+    @rdfine.property.resource()
     estimatedCost: Schema.MonetaryAmount | undefined;
-    @property.literal({ path: schema.estimatedCost })
+    @rdfine.property.literal({ path: schema.estimatedCost })
     estimatedCostLiteral: string | undefined;
   }
   return HowToSupplyClass

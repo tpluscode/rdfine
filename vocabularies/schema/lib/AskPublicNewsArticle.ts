@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { NewsArticleMixin } from './NewsArticle.js';
 
-export interface AskPublicNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.NewsArticle<D>, RdfResource<D> {
+export interface AskPublicNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.NewsArticle<D>, rdfine.RdfResource<D> {
 }
 
-export function AskPublicNewsArticleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AskPublicNewsArticle> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function AskPublicNewsArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AskPublicNewsArticle> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class AskPublicNewsArticleClass extends NewsArticleMixin(Resource) implements Partial<AskPublicNewsArticle> {
   }
   return AskPublicNewsArticleClass

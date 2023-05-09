@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,11 +9,11 @@ import type * as Schema from '../index.js';
 import { AudienceMixin } from './Audience.js';
 import { PeopleAudienceMixin } from './PeopleAudience.js';
 
-export interface MedicalAudience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Audience<D>, Schema.PeopleAudience<D>, RdfResource<D> {
+export interface MedicalAudience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Audience<D>, Schema.PeopleAudience<D>, rdfine.RdfResource<D> {
 }
 
-export function MedicalAudienceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalAudience> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MedicalAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalAudience> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MedicalAudienceClass extends PeopleAudienceMixin(AudienceMixin(Resource)) implements Partial<MedicalAudience> {
   }
   return MedicalAudienceClass

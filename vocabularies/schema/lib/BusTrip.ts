@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,23 +8,23 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { TripMixin } from './Trip.js';
 
-export interface BusTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Trip<D>, RdfResource<D> {
+export interface BusTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Trip<D>, rdfine.RdfResource<D> {
   arrivalBusStop: Schema.BusStation<D> | Schema.BusStop<D> | undefined;
   busName: string | undefined;
   busNumber: string | undefined;
   departureBusStop: Schema.BusStation<D> | Schema.BusStop<D> | undefined;
 }
 
-export function BusTripMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BusTrip> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function BusTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BusTrip> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class BusTripClass extends TripMixin(Resource) implements Partial<BusTrip> {
-    @property.resource()
+    @rdfine.property.resource()
     arrivalBusStop: Schema.BusStation | Schema.BusStop | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     busName: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     busNumber: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     departureBusStop: Schema.BusStation | Schema.BusStop | undefined;
   }
   return BusTripClass

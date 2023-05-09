@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,23 +8,23 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { TherapeuticProcedureMixin } from './TherapeuticProcedure.js';
 
-export interface MedicalTherapy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TherapeuticProcedure<D>, RdfResource<D> {
+export interface MedicalTherapy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TherapeuticProcedure<D>, rdfine.RdfResource<D> {
   contraindication: Schema.MedicalContraindication<D> | undefined;
   contraindicationLiteral: string | undefined;
   duplicateTherapy: Schema.MedicalTherapy<D> | undefined;
   seriousAdverseOutcome: Schema.MedicalEntity<D> | undefined;
 }
 
-export function MedicalTherapyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalTherapy> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MedicalTherapyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalTherapy> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MedicalTherapyClass extends TherapeuticProcedureMixin(Resource) implements Partial<MedicalTherapy> {
-    @property.resource()
+    @rdfine.property.resource()
     contraindication: Schema.MedicalContraindication | undefined;
-    @property.literal({ path: schema.contraindication })
+    @rdfine.property.literal({ path: schema.contraindication })
     contraindicationLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     duplicateTherapy: Schema.MedicalTherapy | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     seriousAdverseOutcome: Schema.MedicalEntity | undefined;
   }
   return MedicalTherapyClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,11 +7,11 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '../index.js';
 
-export interface Community<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Community<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function CommunityMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Community> & RdfResourceCore> & Base {
-  @namespace(sioc)
+export function CommunityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Community> & RdfResourceCore> & Base {
+  @rdfine.namespace(sioc)
   class CommunityClass extends Resource implements Partial<Community> {
   }
   return CommunityClass

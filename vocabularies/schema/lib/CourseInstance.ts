@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,23 +8,23 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { EventMixin } from './Event.js';
 
-export interface CourseInstance<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
+export interface CourseInstance<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
   courseMode: string | undefined;
   courseModeTerm: RDF.NamedNode | undefined;
   courseWorkload: string | undefined;
   instructor: Schema.Person<D> | undefined;
 }
 
-export function CourseInstanceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CourseInstance> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function CourseInstanceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CourseInstance> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class CourseInstanceClass extends EventMixin(Resource) implements Partial<CourseInstance> {
-    @property.literal()
+    @rdfine.property.literal()
     courseMode: string | undefined;
-    @property({ path: schema.courseMode })
+    @rdfine.property({ path: schema.courseMode })
     courseModeTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     courseWorkload: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     instructor: Schema.Person | undefined;
   }
   return CourseInstanceClass

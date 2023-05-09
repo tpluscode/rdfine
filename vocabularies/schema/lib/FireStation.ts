@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,11 +9,11 @@ import type * as Schema from '../index.js';
 import { CivicStructureMixin } from './CivicStructure.js';
 import { EmergencyServiceMixin } from './EmergencyService.js';
 
-export interface FireStation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.EmergencyService<D>, RdfResource<D> {
+export interface FireStation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.EmergencyService<D>, rdfine.RdfResource<D> {
 }
 
-export function FireStationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FireStation> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function FireStationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FireStation> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class FireStationClass extends EmergencyServiceMixin(CivicStructureMixin(Resource)) implements Partial<FireStation> {
   }
   return FireStationClass

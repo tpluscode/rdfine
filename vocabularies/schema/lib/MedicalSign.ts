@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { MedicalSignOrSymptomMixin } from './MedicalSignOrSymptom.js';
 
-export interface MedicalSign<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalSignOrSymptom<D>, RdfResource<D> {
+export interface MedicalSign<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalSignOrSymptom<D>, rdfine.RdfResource<D> {
   identifyingExam: Schema.PhysicalExam | undefined;
   identifyingTest: Schema.MedicalTest<D> | undefined;
 }
 
-export function MedicalSignMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalSign> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MedicalSignMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalSign> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MedicalSignClass extends MedicalSignOrSymptomMixin(Resource) implements Partial<MedicalSign> {
-    @property()
+    @rdfine.property()
     identifyingExam: Schema.PhysicalExam | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     identifyingTest: Schema.MedicalTest | undefined;
   }
   return MedicalSignClass

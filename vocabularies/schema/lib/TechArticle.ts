@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ArticleMixin } from './Article.js';
 
-export interface TechArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, RdfResource<D> {
+export interface TechArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, rdfine.RdfResource<D> {
   dependencies: string | undefined;
   proficiencyLevel: string | undefined;
 }
 
-export function TechArticleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TechArticle> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function TechArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TechArticle> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class TechArticleClass extends ArticleMixin(Resource) implements Partial<TechArticle> {
-    @property.literal()
+    @rdfine.property.literal()
     dependencies: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     proficiencyLevel: string | undefined;
   }
   return TechArticleClass

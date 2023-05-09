@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ActionMixin } from './Action.js';
 
-export interface SolveMathAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, RdfResource<D> {
+export interface SolveMathAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, rdfine.RdfResource<D> {
   eduQuestionType: string | undefined;
 }
 
-export function SolveMathActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SolveMathAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function SolveMathActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SolveMathAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class SolveMathActionClass extends ActionMixin(Resource) implements Partial<SolveMathAction> {
-    @property.literal()
+    @rdfine.property.literal()
     eduQuestionType: string | undefined;
   }
   return SolveMathActionClass

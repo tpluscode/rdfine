@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
-export interface HealthInsurancePlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface HealthInsurancePlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   benefitsSummaryUrl: RDF.NamedNode | undefined;
   contactPoint: Schema.ContactPoint<D> | undefined;
   healthPlanDrugOption: string | undefined;
@@ -21,28 +21,28 @@ export interface HealthInsurancePlan<D extends RDF.DatasetCore = RDF.DatasetCore
   usesHealthPlanIdStandardTerm: RDF.NamedNode | undefined;
 }
 
-export function HealthInsurancePlanMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<HealthInsurancePlan> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function HealthInsurancePlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HealthInsurancePlan> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class HealthInsurancePlanClass extends IntangibleMixin(Resource) implements Partial<HealthInsurancePlan> {
-    @property()
+    @rdfine.property()
     benefitsSummaryUrl: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     contactPoint: Schema.ContactPoint | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     healthPlanDrugOption: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     healthPlanDrugTier: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     healthPlanId: string | undefined;
-    @property()
+    @rdfine.property()
     healthPlanMarketingUrl: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     includesHealthPlanFormulary: Schema.HealthPlanFormulary | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     includesHealthPlanNetwork: Schema.HealthPlanNetwork | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     usesHealthPlanIdStandard: string | undefined;
-    @property({ path: schema.usesHealthPlanIdStandard })
+    @rdfine.property({ path: schema.usesHealthPlanIdStandard })
     usesHealthPlanIdStandardTerm: RDF.NamedNode | undefined;
   }
   return HealthInsurancePlanClass

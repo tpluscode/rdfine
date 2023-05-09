@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { PlaceMixin } from './Place.js';
 
-export interface Accommodation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, RdfResource<D> {
+export interface Accommodation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, rdfine.RdfResource<D> {
   accommodationCategory: string | undefined;
   accommodationFloorPlan: Schema.FloorPlan<D> | undefined;
   amenityFeature: Schema.LocationFeatureSpecification<D> | undefined;
@@ -28,42 +28,42 @@ export interface Accommodation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   yearBuilt: number | undefined;
 }
 
-export function AccommodationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Accommodation> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function AccommodationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Accommodation> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class AccommodationClass extends PlaceMixin(Resource) implements Partial<Accommodation> {
-    @property.literal()
+    @rdfine.property.literal()
     accommodationCategory: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     accommodationFloorPlan: Schema.FloorPlan | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     amenityFeature: Schema.LocationFeatureSpecification | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     floorLevel: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     floorSize: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     leaseLength: Schema.Duration | Schema.QuantitativeValue | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     numberOfBathroomsTotal: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfBedrooms: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.numberOfBedrooms, type: Number })
+    @rdfine.property.literal({ path: schema.numberOfBedrooms, type: Number })
     numberOfBedroomsLiteral: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     numberOfFullBathrooms: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     numberOfPartialBathrooms: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfRooms: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.numberOfRooms, type: Number })
+    @rdfine.property.literal({ path: schema.numberOfRooms, type: Number })
     numberOfRoomsLiteral: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     permittedUsage: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     petsAllowed: boolean | string | undefined;
-    @property()
+    @rdfine.property()
     tourBookingPage: RDF.NamedNode | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     yearBuilt: number | undefined;
   }
   return AccommodationClass

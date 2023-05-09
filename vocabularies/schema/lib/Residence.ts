@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { PlaceMixin } from './Place.js';
 
-export interface Residence<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, RdfResource<D> {
+export interface Residence<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, rdfine.RdfResource<D> {
   accommodationFloorPlan: Schema.FloorPlan<D> | undefined;
 }
 
-export function ResidenceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Residence> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ResidenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Residence> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ResidenceClass extends PlaceMixin(Resource) implements Partial<Residence> {
-    @property.resource()
+    @rdfine.property.resource()
     accommodationFloorPlan: Schema.FloorPlan | undefined;
   }
   return ResidenceClass

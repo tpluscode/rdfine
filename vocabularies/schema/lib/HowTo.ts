@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface HowTo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface HowTo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   estimatedCost: Schema.MonetaryAmount<D> | undefined;
   estimatedCostLiteral: string | undefined;
   performTime: Schema.Duration<D> | undefined;
@@ -26,38 +26,38 @@ export interface HowTo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   yieldLiteral: string | undefined;
 }
 
-export function HowToMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<HowTo> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function HowToMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HowTo> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class HowToClass extends CreativeWorkMixin(Resource) implements Partial<HowTo> {
-    @property.resource()
+    @rdfine.property.resource()
     estimatedCost: Schema.MonetaryAmount | undefined;
-    @property.literal({ path: schema.estimatedCost })
+    @rdfine.property.literal({ path: schema.estimatedCost })
     estimatedCostLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     performTime: Schema.Duration | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     prepTime: Schema.Duration | undefined;
-    @property.resource({ values: 'array' })
+    @rdfine.property.resource({ values: 'array' })
     step!: Array<Schema.CreativeWork | Schema.HowToSection | Schema.HowToStep>;
-    @property.literal({ path: schema.step, values: 'array' })
+    @rdfine.property.literal({ path: schema.step, values: 'array' })
     stepLiteral!: Array<string>;
-    @property.resource({ values: 'array' })
+    @rdfine.property.resource({ values: 'array' })
     steps!: Array<Schema.CreativeWork | Schema.ItemList>;
-    @property.literal({ path: schema.steps, values: 'array' })
+    @rdfine.property.literal({ path: schema.steps, values: 'array' })
     stepsLiteral!: Array<string>;
-    @property.resource()
+    @rdfine.property.resource()
     supply: Schema.HowToSupply | undefined;
-    @property.literal({ path: schema.supply })
+    @rdfine.property.literal({ path: schema.supply })
     supplyLiteral: string | undefined;
-    @property.resource({ values: 'array' })
+    @rdfine.property.resource({ values: 'array' })
     tool!: Array<Schema.HowToTool>;
-    @property.literal({ path: schema.tool, values: 'array' })
+    @rdfine.property.literal({ path: schema.tool, values: 'array' })
     toolLiteral!: Array<string>;
-    @property.resource()
+    @rdfine.property.resource()
     totalTime: Schema.Duration | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     yield: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.yield })
+    @rdfine.property.literal({ path: schema.yield })
     yieldLiteral: string | undefined;
   }
   return HowToClass

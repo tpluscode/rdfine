@@ -6,7 +6,7 @@ import { DrugMixin } from '../lib/Drug.js';
 import { DrugStrengthMixin } from '../lib/DrugStrength.js';
 import { HealthInsurancePlanMixin } from '../lib/HealthInsurancePlan.js';
 import { MaximumDoseScheduleMixin } from '../lib/MaximumDoseSchedule.js';
-import { OrganizationMixin } from '../lib/Organization.js';
+import { ProductMixin } from '../lib/Product.js';
 import { SubstanceMixin } from '../lib/Substance.js';
 
 export const DrugBundle = [
@@ -17,5 +17,5 @@ export const DrugBundle = [
   DrugStrengthMixin as Mixin,
   HealthInsurancePlanMixin as Mixin,
   MaximumDoseScheduleMixin as Mixin,
-  OrganizationMixin as Mixin,
+  ProductMixin as Mixin,
   SubstanceMixin as Mixin];

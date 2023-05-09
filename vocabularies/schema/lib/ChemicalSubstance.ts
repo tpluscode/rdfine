@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { BioChemEntityMixin } from './BioChemEntity.js';
 
-export interface ChemicalSubstance<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BioChemEntity<D>, RdfResource<D> {
+export interface ChemicalSubstance<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BioChemEntity<D>, rdfine.RdfResource<D> {
   chemicalComposition: string | undefined;
   chemicalRole: RDF.Term | undefined;
   potentialUse: RDF.Term | undefined;
 }
 
-export function ChemicalSubstanceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ChemicalSubstance> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ChemicalSubstanceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ChemicalSubstance> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ChemicalSubstanceClass extends BioChemEntityMixin(Resource) implements Partial<ChemicalSubstance> {
-    @property.literal()
+    @rdfine.property.literal()
     chemicalComposition: string | undefined;
-    @property()
+    @rdfine.property()
     chemicalRole: RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     potentialUse: RDF.Term | undefined;
   }
   return ChemicalSubstanceClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CommunicateActionMixin } from './CommunicateAction.js';
 
-export interface CheckInAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, RdfResource<D> {
+export interface CheckInAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, rdfine.RdfResource<D> {
 }
 
-export function CheckInActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CheckInAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function CheckInActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CheckInAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class CheckInActionClass extends CommunicateActionMixin(Resource) implements Partial<CheckInAction> {
   }
   return CheckInActionClass

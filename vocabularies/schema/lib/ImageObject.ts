@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { MediaObjectMixin } from './MediaObject.js';
 
-export interface ImageObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, RdfResource<D> {
+export interface ImageObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, rdfine.RdfResource<D> {
   caption: Schema.MediaObject<D> | undefined;
   captionLiteral: string | undefined;
   embeddedTextCaption: string | undefined;
@@ -18,22 +18,22 @@ export interface ImageObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   thumbnail: Schema.ImageObject<D> | undefined;
 }
 
-export function ImageObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ImageObject> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ImageObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ImageObject> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ImageObjectClass extends MediaObjectMixin(Resource) implements Partial<ImageObject> {
-    @property.resource()
+    @rdfine.property.resource()
     caption: Schema.MediaObject | undefined;
-    @property.literal({ path: schema.caption })
+    @rdfine.property.literal({ path: schema.caption })
     captionLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     embeddedTextCaption: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     exifData: Schema.PropertyValue | undefined;
-    @property.literal({ path: schema.exifData })
+    @rdfine.property.literal({ path: schema.exifData })
     exifDataLiteral: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     representativeOfPage: boolean | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     thumbnail: Schema.ImageObject | undefined;
   }
   return ImageObjectClass

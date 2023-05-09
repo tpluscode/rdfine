@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { GovernmentBuildingMixin } from './GovernmentBuilding.js';
 
-export interface LegislativeBuilding<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentBuilding<D>, RdfResource<D> {
+export interface LegislativeBuilding<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentBuilding<D>, rdfine.RdfResource<D> {
 }
 
-export function LegislativeBuildingMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LegislativeBuilding> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function LegislativeBuildingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LegislativeBuilding> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class LegislativeBuildingClass extends GovernmentBuildingMixin(Resource) implements Partial<LegislativeBuilding> {
   }
   return LegislativeBuildingClass

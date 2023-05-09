@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { EventMixin } from './Event.js';
 
-export interface Festival<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
+export interface Festival<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
 }
 
-export function FestivalMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Festival> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function FestivalMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Festival> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class FestivalClass extends EventMixin(Resource) implements Partial<Festival> {
   }
   return FestivalClass

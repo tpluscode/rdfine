@@ -5,6 +5,7 @@ import { CreativeWorkMixin } from '../lib/CreativeWork.js';
 import { DemandMixin } from '../lib/Demand.js';
 import { DurationMixin } from '../lib/Duration.js';
 import { EventMixin } from '../lib/Event.js';
+import { GrantMixin } from '../lib/Grant.js';
 import { LanguageMixin } from '../lib/Language.js';
 import { OfferMixin } from '../lib/Offer.js';
 import { OrganizationMixin } from '../lib/Organization.js';
@@ -22,6 +23,7 @@ export const EventBundle = [
   DemandMixin as Mixin,
   DurationMixin as Mixin,
   EventMixin as Mixin,
+  GrantMixin as Mixin,
   LanguageMixin as Mixin,
   OfferMixin as Mixin,
   OrganizationMixin as Mixin,

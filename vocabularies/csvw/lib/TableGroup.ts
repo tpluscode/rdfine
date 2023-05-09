@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,7 +7,7 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '../index.js';
 
-export interface TableGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface TableGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   aboutUrl: string | undefined;
   datatype: Csvw.Datatype<D> | undefined;
   datatypeLiteral: string | undefined;
@@ -28,44 +28,44 @@ export interface TableGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   valueUrl: string | undefined;
 }
 
-export function TableGroupMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TableGroup> & RdfResourceCore> & Base {
-  @namespace(csvw)
+export function TableGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TableGroup> & RdfResourceCore> & Base {
+  @rdfine.namespace(csvw)
   class TableGroupClass extends Resource implements Partial<TableGroup> {
-    @property.literal()
+    @rdfine.property.literal()
     aboutUrl: string | undefined;
-    @property.resource({ implicitTypes: [csvw.Datatype] })
+    @rdfine.property.resource({ implicitTypes: [csvw.Datatype] })
     datatype: Csvw.Datatype | undefined;
-    @property.literal({ path: csvw.datatype })
+    @rdfine.property.literal({ path: csvw.datatype })
     datatypeLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     default: string | undefined;
-    @property.resource({ implicitTypes: [csvw.Dialect] })
+    @rdfine.property.resource({ implicitTypes: [csvw.Dialect] })
     dialect: Csvw.Dialect | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     lang: string | undefined;
-    @property()
+    @rdfine.property()
     note: RDF.Term | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     null: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     ordered: boolean | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     propertyUrl: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     required: boolean | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     separator: string | undefined;
-    @property.resource({ implicitTypes: [csvw.Table] })
+    @rdfine.property.resource({ implicitTypes: [csvw.Table] })
     table: Csvw.Table | undefined;
-    @property.resource({ implicitTypes: [csvw.Direction] })
+    @rdfine.property.resource({ implicitTypes: [csvw.Direction] })
     tableDirection: Csvw.Direction | undefined;
-    @property.resource({ implicitTypes: [csvw.Schema] })
+    @rdfine.property.resource({ implicitTypes: [csvw.Schema] })
     tableSchema: Csvw.Schema | undefined;
-    @property.resource({ implicitTypes: [csvw.Direction] })
+    @rdfine.property.resource({ implicitTypes: [csvw.Direction] })
     textDirection: Csvw.Direction | undefined;
-    @property.resource({ values: 'array', implicitTypes: [csvw.Transformation] })
+    @rdfine.property.resource({ values: 'array', implicitTypes: [csvw.Transformation] })
     transformations!: Array<Csvw.Transformation>;
-    @property.literal()
+    @rdfine.property.literal()
     valueUrl: string | undefined;
   }
   return TableGroupClass

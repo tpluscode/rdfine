@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { TypeMixin } from './Type.js';
 
-export interface ContentType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, RdfResource<D> {
+export interface ContentType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, rdfine.RdfResource<D> {
   isContentTypeOf: Rico.Record<D> | Rico.RecordPart<D> | undefined;
   isOrWasContentTypeOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasContentTypeOfSomeMembersOf: Rico.RecordSet<D> | undefined;
 }
 
-export function ContentTypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ContentType> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function ContentTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ContentType> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class ContentTypeClass extends TypeMixin(Resource) implements Partial<ContentType> {
-    @property.resource()
+    @rdfine.property.resource()
     isContentTypeOf: Rico.Record | Rico.RecordPart | undefined;
-    @property.resource({ implicitTypes: [rico.RecordSet] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isOrWasContentTypeOfAllMembersOf: Rico.RecordSet | undefined;
-    @property.resource({ implicitTypes: [rico.RecordSet] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isOrWasContentTypeOfSomeMembersOf: Rico.RecordSet | undefined;
   }
   return ContentTypeClass

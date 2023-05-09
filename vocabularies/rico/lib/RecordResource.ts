@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { ThingMixin } from './Thing.js';
 
-export interface RecordResource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, RdfResource<D> {
+export interface RecordResource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, rdfine.RdfResource<D> {
   authenticityNote: RDF.Literal | undefined;
   classification: RDF.Literal | undefined;
   conditionsOfAccess: RDF.Literal | undefined;
@@ -63,112 +63,112 @@ export interface RecordResource<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   title: RDF.Literal | undefined;
 }
 
-export function RecordResourceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RecordResource> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function RecordResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RecordResource> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class RecordResourceClass extends ThingMixin(Resource) implements Partial<RecordResource> {
-    @property()
+    @rdfine.property()
     authenticityNote: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     classification: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     conditionsOfAccess: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     conditionsOfUse: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     describesOrDescribed: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Activity] })
+    @rdfine.property.resource({ implicitTypes: [rico.Activity] })
     documents: Rico.Activity | undefined;
-    @property.resource({ implicitTypes: [rico.Rule] })
+    @rdfine.property.resource({ implicitTypes: [rico.Rule] })
     expressesOrExpressed: Rico.Rule | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasAccumulator: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasAddressee: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasCollector: Rico.Agent | undefined;
-    @property.resource({ as: [RecordResourceMixin] })
+    @rdfine.property.resource({ as: [RecordResourceMixin] })
     hasCopy: Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasCreator: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Extent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Extent] })
     hasExtent: Rico.Extent | undefined;
-    @property.resource({ as: [RecordResourceMixin] })
+    @rdfine.property.resource({ as: [RecordResourceMixin] })
     hasGeneticLinkToRecordResource: Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.Instantiation] })
+    @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     hasInstantiation: Rico.Instantiation | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasOrHadHolder: Rico.Agent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasOrHadIntellectualPropertyRightsHolder: Rico.Group | Rico.Person | Rico.Position | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     hasOrHadMainSubject: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasOrHadManager: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     hasOrHadSubject: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Title] })
+    @rdfine.property.resource({ implicitTypes: [rico.Title] })
     hasOrHadTitle: Rico.Title | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasProvenance: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasPublisher: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasReceiver: Rico.Agent | undefined;
-    @property.resource({ as: [RecordResourceMixin] })
+    @rdfine.property.resource({ as: [RecordResourceMixin] })
     hasReply: Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasSender: Rico.Agent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasSource: Rico.Agent | Rico.RecordResource | undefined;
-    @property()
+    @rdfine.property()
     history: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     integrity: RDF.Literal | undefined;
-    @property.resource({ as: [RecordResourceMixin] })
+    @rdfine.property.resource({ as: [RecordResourceMixin] })
     isCopyOf: Rico.RecordResource | undefined;
-    @property.resource({ as: [RecordResourceMixin] })
+    @rdfine.property.resource({ as: [RecordResourceMixin] })
     isRecordResourceAssociatedWithRecordResource: Rico.RecordResource | undefined;
-    @property.resource({ as: [RecordResourceMixin] })
+    @rdfine.property.resource({ as: [RecordResourceMixin] })
     isReplyTo: Rico.RecordResource | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isSourceOf: Rico.RecordResource | Rico.Relation | undefined;
-    @property()
+    @rdfine.property()
     physicalOrLogicalExtent: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     publicationDate: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     recordResourceExtent: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.RecordResourceGeneticRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResourceGeneticRelation] })
     recordResourceIsConnectedToRecordResourceGeneticRelation: Rico.RecordResourceGeneticRelation | undefined;
-    @property.resource({ implicitTypes: [rico.RecordResourceToRecordResourceRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResourceToRecordResourceRelation] })
     recordResourceIsConnectedToRecordResourceRelation: Rico.RecordResourceToRecordResourceRelation | undefined;
-    @property.resource({ implicitTypes: [rico.RecordResourceToInstantiationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResourceToInstantiationRelation] })
     recordResourceIsSourceOfRecordResourceToInstantiationRelation: Rico.RecordResourceToInstantiationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AccumulationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AccumulationRelation] })
     recordResourceOrInstantiationIsSourceOfAccumulationRelation: Rico.AccumulationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.ActivityDocumentationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.ActivityDocumentationRelation] })
     recordResourceOrInstantiationIsSourceOfActivityDocumentationRelation: Rico.ActivityDocumentationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AgentOriginationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AgentOriginationRelation] })
     recordResourceOrInstantiationIsSourceOfAgentOriginationRelation: Rico.AgentOriginationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.CreationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.CreationRelation] })
     recordResourceOrInstantiationIsSourceOfCreationRelation: Rico.CreationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.ProvenanceRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.ProvenanceRelation] })
     recordResourceOrInstantiationIsSourceOfProvenanceRelation: Rico.ProvenanceRelation | undefined;
-    @property.resource({ implicitTypes: [rico.IntellectualPropertyRightsRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.IntellectualPropertyRightsRelation] })
     recordResourceOrInstantiationIsTargetOfIntellectualPropertyRightsRelation: Rico.IntellectualPropertyRightsRelation | undefined;
-    @property.resource({ implicitTypes: [rico.ManagementRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.ManagementRelation] })
     recordResourceOrInstantiationIsTargetOfManagementRelation: Rico.ManagementRelation | undefined;
-    @property.resource({ implicitTypes: [rico.RecordResourceHoldingRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResourceHoldingRelation] })
     recordResourceOrInstantiationIsTargetOfRecordResourceHoldingRelation: Rico.RecordResourceHoldingRelation | undefined;
-    @property()
+    @rdfine.property()
     recordResourceStructure: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     scopeAndContent: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     source: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     structure: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     title: RDF.Literal | undefined;
   }
   return RecordResourceClass

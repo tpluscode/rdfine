@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { AppellationMixin } from './Appellation.js';
 
-export interface Identifier<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Appellation<D>, RdfResource<D> {
+export interface Identifier<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Appellation<D>, rdfine.RdfResource<D> {
   hasIdentifierType: Rico.IdentifierType<D> | undefined;
   isOrWasIdentifierOf: Rico.Thing<D> | undefined;
 }
 
-export function IdentifierMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Identifier> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function IdentifierMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Identifier> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class IdentifierClass extends AppellationMixin(Resource) implements Partial<Identifier> {
-    @property.resource({ implicitTypes: [rico.IdentifierType] })
+    @rdfine.property.resource({ implicitTypes: [rico.IdentifierType] })
     hasIdentifierType: Rico.IdentifierType | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isOrWasIdentifierOf: Rico.Thing | undefined;
   }
   return IdentifierClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,7 +7,7 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Csvw from '../index.js';
 
-export interface Transformation<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Transformation<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   scriptFormat: string | undefined;
   source: string | undefined;
   targetFormat: string | undefined;
@@ -15,18 +15,18 @@ export interface Transformation<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   url: string | undefined;
 }
 
-export function TransformationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Transformation> & RdfResourceCore> & Base {
-  @namespace(csvw)
+export function TransformationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Transformation> & RdfResourceCore> & Base {
+  @rdfine.namespace(csvw)
   class TransformationClass extends Resource implements Partial<Transformation> {
-    @property.literal()
+    @rdfine.property.literal()
     scriptFormat: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     source: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     targetFormat: string | undefined;
-    @property()
+    @rdfine.property()
     title: RDF.Term | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     url: string | undefined;
   }
   return TransformationClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,17 +7,17 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 
-export interface CategoryCode<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface CategoryCode<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   codeValue: string | undefined;
   inCodeSet: Schema.CategoryCodeSet<D> | undefined;
 }
 
-export function CategoryCodeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CategoryCode> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function CategoryCodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CategoryCode> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class CategoryCodeClass extends Resource implements Partial<CategoryCode> {
-    @property.literal()
+    @rdfine.property.literal()
     codeValue: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     inCodeSet: Schema.CategoryCodeSet | undefined;
   }
   return CategoryCodeClass

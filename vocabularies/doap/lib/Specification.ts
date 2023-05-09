@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,13 +7,13 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Doap from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource.js';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
-export interface Specification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+export interface Specification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function SpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Specification> & RdfResourceCore> & Base {
-  @namespace(doap)
+export function SpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Specification> & RdfResourceCore> & Base {
+  @rdfine.namespace(doap)
   class SpecificationClass extends RdfsResourceMixin(Resource) implements Partial<Specification> {
   }
   return SpecificationClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { AgentToAgentRelationMixin } from './AgentToAgentRelation.js';
 
-export interface PositionToGroupRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, RdfResource<D> {
+export interface PositionToGroupRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, rdfine.RdfResource<D> {
   positionToGroupRelationHasSource: Rico.Position<D> | undefined;
   positionToGroupRelationHasTarget: Rico.Group<D> | undefined;
 }
 
-export function PositionToGroupRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PositionToGroupRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function PositionToGroupRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PositionToGroupRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class PositionToGroupRelationClass extends AgentToAgentRelationMixin(Resource) implements Partial<PositionToGroupRelation> {
-    @property.resource({ implicitTypes: [rico.Position] })
+    @rdfine.property.resource({ implicitTypes: [rico.Position] })
     positionToGroupRelationHasSource: Rico.Position | undefined;
-    @property.resource({ implicitTypes: [rico.Group] })
+    @rdfine.property.resource({ implicitTypes: [rico.Group] })
     positionToGroupRelationHasTarget: Rico.Group | undefined;
   }
   return PositionToGroupRelationClass

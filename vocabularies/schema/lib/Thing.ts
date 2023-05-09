@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,7 +7,7 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 
-export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   additionalType: RDF.NamedNode | undefined;
   alternateName: string | undefined;
   description: string | undefined;
@@ -23,34 +23,34 @@ export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
   url: RDF.NamedNode | undefined;
 }
 
-export function ThingMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Thing> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Thing> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ThingClass extends Resource implements Partial<Thing> {
-    @property()
+    @rdfine.property()
     additionalType: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     alternateName: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     description: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     disambiguatingDescription: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     identifier: Schema.PropertyValue | undefined;
-    @property.literal({ path: schema.identifier })
+    @rdfine.property.literal({ path: schema.identifier })
     identifierLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     image: Schema.ImageObject | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     mainEntityOfPage: Schema.CreativeWork | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     name: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     potentialAction: Schema.Action | undefined;
-    @property()
+    @rdfine.property()
     sameAs: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     subjectOf: Schema.CreativeWork | Schema.Event | undefined;
-    @property()
+    @rdfine.property()
     url: RDF.NamedNode | undefined;
   }
   return ThingClass

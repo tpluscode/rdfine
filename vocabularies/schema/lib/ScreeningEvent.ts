@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,23 +8,23 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { EventMixin } from './Event.js';
 
-export interface ScreeningEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
+export interface ScreeningEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
   subtitleLanguage: Schema.Language<D> | undefined;
   subtitleLanguageLiteral: string | undefined;
   videoFormat: string | undefined;
   workPresented: Schema.Movie<D> | undefined;
 }
 
-export function ScreeningEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ScreeningEvent> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ScreeningEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ScreeningEvent> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ScreeningEventClass extends EventMixin(Resource) implements Partial<ScreeningEvent> {
-    @property.resource()
+    @rdfine.property.resource()
     subtitleLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.subtitleLanguage })
+    @rdfine.property.literal({ path: schema.subtitleLanguage })
     subtitleLanguageLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     videoFormat: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     workPresented: Schema.Movie | undefined;
   }
   return ScreeningEventClass

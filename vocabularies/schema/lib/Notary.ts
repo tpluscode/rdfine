@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { LegalServiceMixin } from './LegalService.js';
 
-export interface Notary<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LegalService<D>, RdfResource<D> {
+export interface Notary<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LegalService<D>, rdfine.RdfResource<D> {
 }
 
-export function NotaryMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Notary> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function NotaryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Notary> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class NotaryClass extends LegalServiceMixin(Resource) implements Partial<Notary> {
   }
   return NotaryClass

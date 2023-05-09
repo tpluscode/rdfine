@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CommunicateActionMixin } from './CommunicateAction.js';
 
-export interface InformAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, RdfResource<D> {
+export interface InformAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, rdfine.RdfResource<D> {
   event: Schema.Event<D> | undefined;
 }
 
-export function InformActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<InformAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function InformActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InformAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class InformActionClass extends CommunicateActionMixin(Resource) implements Partial<InformAction> {
-    @property.resource()
+    @rdfine.property.resource()
     event: Schema.Event | undefined;
   }
   return InformActionClass

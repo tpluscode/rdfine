@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,23 +8,23 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CommentMixin } from './Comment.js';
 
-export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Comment<D>, RdfResource<D> {
+export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Comment<D>, rdfine.RdfResource<D> {
   acceptedAnswer: Schema.Answer<D> | Schema.ItemList<D> | undefined;
   answerCount: number | undefined;
   eduQuestionType: string | undefined;
   suggestedAnswer: Schema.Answer<D> | Schema.ItemList<D> | undefined;
 }
 
-export function QuestionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Question> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function QuestionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Question> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class QuestionClass extends CommentMixin(Resource) implements Partial<Question> {
-    @property.resource()
+    @rdfine.property.resource()
     acceptedAnswer: Schema.Answer | Schema.ItemList | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     answerCount: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     eduQuestionType: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     suggestedAnswer: Schema.Answer | Schema.ItemList | undefined;
   }
   return QuestionClass

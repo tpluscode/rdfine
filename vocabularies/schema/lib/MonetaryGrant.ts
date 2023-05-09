@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { GrantMixin } from './Grant.js';
 
-export interface MonetaryGrant<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Grant<D>, RdfResource<D> {
+export interface MonetaryGrant<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Grant<D>, rdfine.RdfResource<D> {
   amount: Schema.MonetaryAmount<D> | undefined;
   amountLiteral: number | undefined;
   funder: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function MonetaryGrantMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MonetaryGrant> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MonetaryGrantMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MonetaryGrant> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MonetaryGrantClass extends GrantMixin(Resource) implements Partial<MonetaryGrant> {
-    @property.resource()
+    @rdfine.property.resource()
     amount: Schema.MonetaryAmount | undefined;
-    @property.literal({ path: schema.amount, type: Number })
+    @rdfine.property.literal({ path: schema.amount, type: Number })
     amountLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     funder: Schema.Organization | Schema.Person | undefined;
   }
   return MonetaryGrantClass

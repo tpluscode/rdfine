@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { GroupMixin } from './Group.js';
 
-export interface Family<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Group<D>, RdfResource<D> {
+export interface Family<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Group<D>, rdfine.RdfResource<D> {
   hasFamilyType: Rico.FamilyType<D> | undefined;
 }
 
-export function FamilyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Family> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function FamilyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Family> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class FamilyClass extends GroupMixin(Resource) implements Partial<Family> {
-    @property.resource({ implicitTypes: [rico.FamilyType] })
+    @rdfine.property.resource({ implicitTypes: [rico.FamilyType] })
     hasFamilyType: Rico.FamilyType | undefined;
   }
   return FamilyClass

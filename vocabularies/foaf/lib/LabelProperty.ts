@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,11 +7,11 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Foaf from '../index.js';
 
-export interface LabelProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface LabelProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function LabelPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LabelProperty> & RdfResourceCore> & Base {
-  @namespace(foaf)
+export function LabelPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LabelProperty> & RdfResourceCore> & Base {
+  @rdfine.namespace(foaf)
   class LabelPropertyClass extends Resource implements Partial<LabelProperty> {
   }
   return LabelPropertyClass

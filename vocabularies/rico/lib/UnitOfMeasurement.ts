@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { ConceptMixin } from './Concept.js';
 
-export interface UnitOfMeasurement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Concept<D>, RdfResource<D> {
+export interface UnitOfMeasurement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Concept<D>, rdfine.RdfResource<D> {
   isUnitOfMeasurementOf: Rico.Extent<D> | undefined;
 }
 
-export function UnitOfMeasurementMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<UnitOfMeasurement> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function UnitOfMeasurementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<UnitOfMeasurement> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class UnitOfMeasurementClass extends ConceptMixin(Resource) implements Partial<UnitOfMeasurement> {
-    @property.resource({ implicitTypes: [rico.Extent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Extent] })
     isUnitOfMeasurementOf: Rico.Extent | undefined;
   }
   return UnitOfMeasurementClass

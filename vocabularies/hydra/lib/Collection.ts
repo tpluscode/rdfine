@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,17 +9,17 @@ import type * as Hydra from '../index.js';
 import { ResourceMixin } from './Resource.js';
 import { CollectionExMixin } from '../extensions/CollectionEx.js';
 
-export interface Collection<M extends RdfResourceCore<any> = RdfResourceCore<any>, D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, RdfResource<D> {
+export interface Collection<M extends RdfResourceCore<any> = RdfResourceCore<any>, D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, rdfine.RdfResource<D> {
   member: Array<Hydra.Resource<D> & M>;
   totalItems: number | undefined;
 }
 
-export function CollectionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Collection> & RdfResourceCore> & Base {
-  @namespace(hydra)
+export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Collection> & RdfResourceCore> & Base {
+  @rdfine.namespace(hydra)
   class CollectionClass extends CollectionExMixin(ResourceMixin(Resource)) implements Partial<Collection> {
-    @property.resource({ values: 'array', implicitTypes: [hydra.Resource] })
+    @rdfine.property.resource({ values: 'array', implicitTypes: [hydra.Resource] })
     member!: Array<Hydra.Resource>;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     totalItems: number | undefined;
   }
   return CollectionClass

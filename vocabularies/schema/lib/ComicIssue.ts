@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { PublicationIssueMixin } from './PublicationIssue.js';
 
-export interface ComicIssue<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PublicationIssue<D>, RdfResource<D> {
+export interface ComicIssue<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PublicationIssue<D>, rdfine.RdfResource<D> {
   artist: Schema.Person<D> | undefined;
   colorist: Schema.Person<D> | undefined;
   inker: Schema.Person<D> | undefined;
@@ -17,20 +17,20 @@ export interface ComicIssue<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   variantCover: string | undefined;
 }
 
-export function ComicIssueMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ComicIssue> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ComicIssueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ComicIssue> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ComicIssueClass extends PublicationIssueMixin(Resource) implements Partial<ComicIssue> {
-    @property.resource()
+    @rdfine.property.resource()
     artist: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     colorist: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     inker: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     letterer: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     penciler: Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     variantCover: string | undefined;
   }
   return ComicIssueClass

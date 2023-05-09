@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ReactActionMixin } from './ReactAction.js';
 
-export interface DislikeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ReactAction<D>, RdfResource<D> {
+export interface DislikeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ReactAction<D>, rdfine.RdfResource<D> {
 }
 
-export function DislikeActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DislikeAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DislikeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DislikeAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DislikeActionClass extends ReactActionMixin(Resource) implements Partial<DislikeAction> {
   }
   return DislikeActionClass

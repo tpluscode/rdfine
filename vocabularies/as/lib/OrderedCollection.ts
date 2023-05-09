@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,11 +7,11 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as As from '../index.js';
 
-export interface OrderedCollection<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface OrderedCollection<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function OrderedCollectionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<OrderedCollection> & RdfResourceCore> & Base {
-  @namespace(as)
+export function OrderedCollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OrderedCollection> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class OrderedCollectionClass extends Resource implements Partial<OrderedCollection> {
   }
   return OrderedCollectionClass

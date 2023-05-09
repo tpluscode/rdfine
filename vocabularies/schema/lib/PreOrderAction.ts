@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { TradeActionMixin } from './TradeAction.js';
 
-export interface PreOrderAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, RdfResource<D> {
+export interface PreOrderAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, rdfine.RdfResource<D> {
 }
 
-export function PreOrderActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PreOrderAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PreOrderActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PreOrderAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PreOrderActionClass extends TradeActionMixin(Resource) implements Partial<PreOrderAction> {
   }
   return PreOrderActionClass

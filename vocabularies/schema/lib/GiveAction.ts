@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { TransferActionMixin } from './TransferAction.js';
 
-export interface GiveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, RdfResource<D> {
+export interface GiveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, rdfine.RdfResource<D> {
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function GiveActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<GiveAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function GiveActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GiveAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class GiveActionClass extends TransferActionMixin(Resource) implements Partial<GiveAction> {
-    @property.resource()
+    @rdfine.property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
   return GiveActionClass

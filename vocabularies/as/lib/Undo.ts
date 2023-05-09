@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as As from '../index.js';
 import { ActivityMixin } from './Activity.js';
 
-export interface Undo<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, RdfResource<D> {
+export interface Undo<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function UndoMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Undo> & RdfResourceCore> & Base {
-  @namespace(as)
+export function UndoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Undo> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class UndoClass extends ActivityMixin(Resource) implements Partial<Undo> {
   }
   return UndoClass

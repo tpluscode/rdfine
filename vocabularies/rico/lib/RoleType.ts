@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { TypeMixin } from './Type.js';
 
-export interface RoleType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, RdfResource<D> {
+export interface RoleType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, rdfine.RdfResource<D> {
   roleIsContextOfCreationRelation: Rico.CreationRelation<D> | undefined;
 }
 
-export function RoleTypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RoleType> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function RoleTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RoleType> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class RoleTypeClass extends TypeMixin(Resource) implements Partial<RoleType> {
-    @property.resource({ implicitTypes: [rico.CreationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.CreationRelation] })
     roleIsContextOfCreationRelation: Rico.CreationRelation | undefined;
   }
   return RoleTypeClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { BlogPostingMixin } from './BlogPosting.js';
 
-export interface LiveBlogPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BlogPosting<D>, RdfResource<D> {
+export interface LiveBlogPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BlogPosting<D>, rdfine.RdfResource<D> {
   coverageEndTime: Date | undefined;
   coverageStartTime: Date | undefined;
   liveBlogUpdate: Schema.BlogPosting<D> | undefined;
 }
 
-export function LiveBlogPostingMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LiveBlogPosting> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function LiveBlogPostingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LiveBlogPosting> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class LiveBlogPostingClass extends BlogPostingMixin(Resource) implements Partial<LiveBlogPosting> {
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     coverageEndTime: Date | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     coverageStartTime: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     liveBlogUpdate: Schema.BlogPosting | undefined;
   }
   return LiveBlogPostingClass

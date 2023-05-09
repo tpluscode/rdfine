@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ThingMixin } from './Thing.js';
 
-export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, RdfResource<D> {
+export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, rdfine.RdfResource<D> {
   additionalProperty: Schema.PropertyValue<D> | undefined;
   address: Schema.PostalAddress<D> | undefined;
   addressLiteral: string | undefined;
@@ -37,6 +37,8 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   hasMap: Schema.Map<D> | undefined;
   isAccessibleForFree: boolean | undefined;
   'isicV4': string | undefined;
+  keywords: string | undefined;
+  keywordsTerm: RDF.NamedNode | undefined;
   latitude: number | string | undefined;
   logo: Schema.ImageObject<D> | undefined;
   longitude: number | string | undefined;
@@ -56,98 +58,102 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   tourBookingPage: RDF.NamedNode | undefined;
 }
 
-export function PlaceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Place> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Place> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PlaceClass extends ThingMixin(Resource) implements Partial<Place> {
-    @property.resource()
+    @rdfine.property.resource()
     additionalProperty: Schema.PropertyValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     address: Schema.PostalAddress | undefined;
-    @property.literal({ path: schema.address })
+    @rdfine.property.literal({ path: schema.address })
     addressLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     aggregateRating: Schema.AggregateRating | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     amenityFeature: Schema.LocationFeatureSpecification | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     branchCode: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     containedIn: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     containedInPlace: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     containsPlace: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     event: Schema.Event | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     events: Schema.Event | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     faxNumber: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     geo: Schema.GeoCoordinates | Schema.GeoShape | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     geoContains: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     geoCoveredBy: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     geoCovers: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     geoCrosses: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     geoDisjoint: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     geoEquals: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     geoIntersects: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     geoOverlaps: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     geoTouches: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     geoWithin: Schema.Place | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     globalLocationNumber: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     hasDriveThroughService: boolean | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasMap: Schema.Map | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     isAccessibleForFree: boolean | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     'isicV4': string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
+    keywords: string | undefined;
+    @rdfine.property({ path: schema.keywords })
+    keywordsTerm: RDF.NamedNode | undefined;
+    @rdfine.property.literal()
     latitude: number | string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     logo: Schema.ImageObject | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     longitude: number | string | undefined;
-    @property()
+    @rdfine.property()
     map: RDF.NamedNode | undefined;
-    @property()
+    @rdfine.property()
     maps: RDF.NamedNode | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     maximumAttendeeCapacity: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     openingHoursSpecification: Schema.OpeningHoursSpecification | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     photo: Schema.ImageObject | Schema.Photograph | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     photos: Schema.ImageObject | Schema.Photograph | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     publicAccess: boolean | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     review: Schema.Review | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     reviews: Schema.Review | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     slogan: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     smokingAllowed: boolean | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     specialOpeningHoursSpecification: Schema.OpeningHoursSpecification | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     telephone: string | undefined;
-    @property()
+    @rdfine.property()
     tourBookingPage: RDF.NamedNode | undefined;
   }
   return PlaceClass

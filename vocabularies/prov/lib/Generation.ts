@@ -1,6 +1,6 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdfjs/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
@@ -9,11 +9,11 @@ import type * as Prov from '../index.js';
 import { ActivityInfluenceMixin } from './ActivityInfluence.js';
 import { InstantaneousEventMixin } from './InstantaneousEvent.js';
 
-export interface Generation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.ActivityInfluence<D>, Prov.InstantaneousEvent<D>, RdfResource<D> {
+export interface Generation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.ActivityInfluence<D>, Prov.InstantaneousEvent<D>, rdfine.RdfResource<D> {
 }
 
-export function GenerationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Generation> & RdfResourceCore> & Base {
-  @namespace(prov)
+export function GenerationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Generation> & RdfResourceCore> & Base {
+  @rdfine.namespace(prov)
   class GenerationClass extends InstantaneousEventMixin(ActivityInfluenceMixin(Resource)) implements Partial<Generation> {
   }
   return GenerationClass

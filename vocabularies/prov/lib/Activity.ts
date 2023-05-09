@@ -1,13 +1,13 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdfjs/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Prov from '../index.js';
 
-export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   atLocation: Prov.Location<D> | undefined;
   endedAtTime: Date | undefined;
   generated: Prov.Entity<D> | undefined;
@@ -27,42 +27,42 @@ export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   wasStartedBy: Prov.Entity<D> | undefined;
 }
 
-export function ActivityMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Activity> & RdfResourceCore> & Base {
-  @namespace(prov)
+export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Activity> & RdfResourceCore> & Base {
+  @rdfine.namespace(prov)
   class ActivityClass extends Resource implements Partial<Activity> {
-    @property.resource({ implicitTypes: [prov.Location] })
+    @rdfine.property.resource({ implicitTypes: [prov.Location] })
     atLocation: Prov.Location | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     endedAtTime: Date | undefined;
-    @property.resource({ implicitTypes: [prov.Entity] })
+    @rdfine.property.resource({ implicitTypes: [prov.Entity] })
     generated: Prov.Entity | undefined;
-    @property.resource({ implicitTypes: [prov.Entity] })
+    @rdfine.property.resource({ implicitTypes: [prov.Entity] })
     invalidated: Prov.Entity | undefined;
-    @property.resource({ implicitTypes: [prov.Association] })
+    @rdfine.property.resource({ implicitTypes: [prov.Association] })
     qualifiedAssociation: Prov.Association | undefined;
-    @property.resource({ implicitTypes: [prov.Communication] })
+    @rdfine.property.resource({ implicitTypes: [prov.Communication] })
     qualifiedCommunication: Prov.Communication | undefined;
-    @property.resource({ implicitTypes: [prov.End] })
+    @rdfine.property.resource({ implicitTypes: [prov.End] })
     qualifiedEnd: Prov.End | undefined;
-    @property.resource({ implicitTypes: [prov.Influence] })
+    @rdfine.property.resource({ implicitTypes: [prov.Influence] })
     qualifiedInfluence: Prov.Influence | undefined;
-    @property.resource({ implicitTypes: [prov.Start] })
+    @rdfine.property.resource({ implicitTypes: [prov.Start] })
     qualifiedStart: Prov.Start | undefined;
-    @property.resource({ implicitTypes: [prov.Usage] })
+    @rdfine.property.resource({ implicitTypes: [prov.Usage] })
     qualifiedUsage: Prov.Usage | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     startedAtTime: Date | undefined;
-    @property.resource({ implicitTypes: [prov.Entity] })
+    @rdfine.property.resource({ implicitTypes: [prov.Entity] })
     used: Prov.Entity | undefined;
-    @property.resource({ implicitTypes: [prov.Agent] })
+    @rdfine.property.resource({ implicitTypes: [prov.Agent] })
     wasAssociatedWith: Prov.Agent | undefined;
-    @property.resource({ implicitTypes: [prov.Entity] })
+    @rdfine.property.resource({ implicitTypes: [prov.Entity] })
     wasEndedBy: Prov.Entity | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     wasInfluencedBy: Prov.Activity | Prov.Agent | Prov.Entity | undefined;
-    @property.resource({ as: [ActivityMixin] })
+    @rdfine.property.resource({ as: [ActivityMixin] })
     wasInformedBy: Prov.Activity | undefined;
-    @property.resource({ implicitTypes: [prov.Entity] })
+    @rdfine.property.resource({ implicitTypes: [prov.Entity] })
     wasStartedBy: Prov.Entity | undefined;
   }
   return ActivityClass

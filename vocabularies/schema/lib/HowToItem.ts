@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ListItemMixin } from './ListItem.js';
 
-export interface HowToItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ListItem<D>, RdfResource<D> {
+export interface HowToItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ListItem<D>, rdfine.RdfResource<D> {
   requiredQuantity: Schema.QuantitativeValue<D> | undefined;
   requiredQuantityLiteral: number | string | undefined;
 }
 
-export function HowToItemMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<HowToItem> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function HowToItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HowToItem> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class HowToItemClass extends ListItemMixin(Resource) implements Partial<HowToItem> {
-    @property.resource()
+    @rdfine.property.resource()
     requiredQuantity: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.requiredQuantity })
+    @rdfine.property.literal({ path: schema.requiredQuantity })
     requiredQuantityLiteral: number | string | undefined;
   }
   return HowToItemClass

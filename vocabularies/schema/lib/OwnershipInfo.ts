@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,23 +8,23 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface OwnershipInfo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface OwnershipInfo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   acquiredFrom: Schema.Organization<D> | Schema.Person<D> | undefined;
   ownedFrom: Date | undefined;
   ownedThrough: Date | undefined;
   typeOfGood: Schema.Product<D> | Schema.Service<D> | undefined;
 }
 
-export function OwnershipInfoMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<OwnershipInfo> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function OwnershipInfoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OwnershipInfo> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class OwnershipInfoClass extends StructuredValueMixin(Resource) implements Partial<OwnershipInfo> {
-    @property.resource()
+    @rdfine.property.resource()
     acquiredFrom: Schema.Organization | Schema.Person | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     ownedFrom: Date | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     ownedThrough: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     typeOfGood: Schema.Product | Schema.Service | undefined;
   }
   return OwnershipInfoClass

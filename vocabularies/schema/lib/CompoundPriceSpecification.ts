@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { PriceSpecificationMixin } from './PriceSpecification.js';
 
-export interface CompoundPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, RdfResource<D> {
+export interface CompoundPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, rdfine.RdfResource<D> {
   priceComponent: Schema.UnitPriceSpecification<D> | undefined;
   priceType: string | undefined;
   priceTypeTerm: Schema.PriceTypeEnumeration | undefined;
 }
 
-export function CompoundPriceSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CompoundPriceSpecification> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function CompoundPriceSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CompoundPriceSpecification> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class CompoundPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<CompoundPriceSpecification> {
-    @property.resource()
+    @rdfine.property.resource()
     priceComponent: Schema.UnitPriceSpecification | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     priceType: string | undefined;
-    @property({ path: schema.priceType })
+    @rdfine.property({ path: schema.priceType })
     priceTypeTerm: Schema.PriceTypeEnumeration | undefined;
   }
   return CompoundPriceSpecificationClass

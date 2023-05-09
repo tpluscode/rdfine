@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { VehicleMixin } from './Vehicle.js';
 
-export interface BusOrCoach<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Vehicle<D>, RdfResource<D> {
+export interface BusOrCoach<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Vehicle<D>, rdfine.RdfResource<D> {
   acrissCode: string | undefined;
   roofLoad: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function BusOrCoachMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BusOrCoach> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function BusOrCoachMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BusOrCoach> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class BusOrCoachClass extends VehicleMixin(Resource) implements Partial<BusOrCoach> {
-    @property.literal()
+    @rdfine.property.literal()
     acrissCode: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     roofLoad: Schema.QuantitativeValue | undefined;
   }
   return BusOrCoachClass

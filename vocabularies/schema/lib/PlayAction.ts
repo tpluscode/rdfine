@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ActionMixin } from './Action.js';
 
-export interface PlayAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, RdfResource<D> {
+export interface PlayAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, rdfine.RdfResource<D> {
   audience: Schema.Audience<D> | undefined;
   event: Schema.Event<D> | undefined;
 }
 
-export function PlayActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PlayAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PlayActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PlayAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PlayActionClass extends ActionMixin(Resource) implements Partial<PlayAction> {
-    @property.resource()
+    @rdfine.property.resource()
     audience: Schema.Audience | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     event: Schema.Event | undefined;
   }
   return PlayActionClass

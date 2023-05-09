@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface QuantitativeValueDistribution<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface QuantitativeValueDistribution<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   duration: Schema.Duration<D> | undefined;
   median: number | undefined;
   'percentile10': number | undefined;
@@ -17,20 +17,20 @@ export interface QuantitativeValueDistribution<D extends RDF.DatasetCore = RDF.D
   'percentile90': number | undefined;
 }
 
-export function QuantitativeValueDistributionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<QuantitativeValueDistribution> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function QuantitativeValueDistributionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<QuantitativeValueDistribution> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class QuantitativeValueDistributionClass extends StructuredValueMixin(Resource) implements Partial<QuantitativeValueDistribution> {
-    @property.resource()
+    @rdfine.property.resource()
     duration: Schema.Duration | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     median: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     'percentile10': number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     'percentile25': number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     'percentile75': number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     'percentile90': number | undefined;
   }
   return QuantitativeValueDistributionClass

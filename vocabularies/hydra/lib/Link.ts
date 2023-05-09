@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,20 +10,20 @@ import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 import { ResourceMixin } from './Resource.js';
 
-export interface Link<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, Hydra.Resource<D>, RdfResource<D> {
+export interface Link<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, Hydra.Resource<D>, rdfine.RdfResource<D> {
   description: string | undefined;
   supportedOperation: Array<Hydra.Operation<D>>;
   title: string | undefined;
 }
 
-export function LinkMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Link> & RdfResourceCore> & Base {
-  @namespace(hydra)
+export function LinkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Link> & RdfResourceCore> & Base {
+  @rdfine.namespace(hydra)
   class LinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements Partial<Link> {
-    @property.literal()
+    @rdfine.property.literal()
     description: string | undefined;
-    @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
+    @rdfine.property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
     supportedOperation!: Array<Hydra.Operation>;
-    @property.literal()
+    @rdfine.property.literal()
     title: string | undefined;
   }
   return LinkClass

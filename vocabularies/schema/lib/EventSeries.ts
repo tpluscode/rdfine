@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,11 +9,11 @@ import type * as Schema from '../index.js';
 import { EventMixin } from './Event.js';
 import { SeriesMixin } from './Series.js';
 
-export interface EventSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, Schema.Series<D>, RdfResource<D> {
+export interface EventSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, Schema.Series<D>, rdfine.RdfResource<D> {
 }
 
-export function EventSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EventSeries> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function EventSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EventSeries> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class EventSeriesClass extends SeriesMixin(EventMixin(Resource)) implements Partial<EventSeries> {
   }
   return EventSeriesClass

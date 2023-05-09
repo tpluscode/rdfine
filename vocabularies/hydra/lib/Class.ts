@@ -1,6 +1,6 @@
 import '../extensions/rdfs/Class.js';
 import { ClassMixinEx } from '../extensions/rdfs/Class.js';
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,20 +11,20 @@ import type * as Hydra from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
 
-export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, RdfResource<D> {
+export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, rdfine.RdfResource<D> {
   description: string | undefined;
   supportedOperation: Array<Hydra.Operation<D>>;
   title: string | undefined;
 }
 
-export function ClassMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Class> & RdfResourceCore> & Base {
-  @namespace(hydra)
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+  @rdfine.namespace(hydra)
   class ClassClass extends ClassMixinEx(RdfsClassMixin(Resource)) implements Partial<Class> {
-    @property.literal()
+    @rdfine.property.literal()
     description: string | undefined;
-    @property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
+    @rdfine.property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
     supportedOperation!: Array<Hydra.Operation>;
-    @property.literal()
+    @rdfine.property.literal()
     title: string | undefined;
   }
   return ClassClass

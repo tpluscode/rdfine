@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,10 +7,10 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sioc from '../index.js';
 import type * as Foaf from '@rdfine/foaf';
-import { OnlineAccountMixin as FoafOnlineAccountMixin } from '@rdfine/foaf/lib/OnlineAccount.js';
-import { AgentMixin as FoafAgentMixin } from '@rdfine/foaf/lib/Agent.js';
+import { OnlineAccountMixin as FoafOnlineAccountMixin } from '@rdfine/foaf/lib/OnlineAccount';
+import { AgentMixin as FoafAgentMixin } from '@rdfine/foaf/lib/Agent';
 
-export interface UserAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.OnlineAccount<D>, RdfResource<D> {
+export interface UserAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.OnlineAccount<D>, rdfine.RdfResource<D> {
   'account_of': Foaf.Agent<D> | undefined;
   'administrator_of': Sioc.Site<D> | undefined;
   avatar: RDF.Term | undefined;
@@ -27,36 +27,36 @@ export interface UserAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   'subscriber_of': Sioc.Container<D> | undefined;
 }
 
-export function UserAccountMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<UserAccount> & RdfResourceCore> & Base {
-  @namespace(sioc)
+export function UserAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<UserAccount> & RdfResourceCore> & Base {
+  @rdfine.namespace(sioc)
   class UserAccountClass extends FoafOnlineAccountMixin(Resource) implements Partial<UserAccount> {
-    @property.resource({ as: [FoafAgentMixin] })
+    @rdfine.property.resource({ as: [FoafAgentMixin] })
     'account_of': Foaf.Agent | undefined;
-    @property.resource({ implicitTypes: [sioc.Site] })
+    @rdfine.property.resource({ implicitTypes: [sioc.Site] })
     'administrator_of': Sioc.Site | undefined;
-    @property()
+    @rdfine.property()
     avatar: RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     'creator_of': RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     email: RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     'email_sha1': RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     'first_name': RDF.Literal | undefined;
-    @property.resource({ as: [UserAccountMixin] })
+    @rdfine.property.resource({ as: [UserAccountMixin] })
     follows: Sioc.UserAccount | undefined;
-    @property()
+    @rdfine.property()
     'last_name': RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [sioc.Usergroup] })
+    @rdfine.property.resource({ implicitTypes: [sioc.Usergroup] })
     'member_of': Sioc.Usergroup | undefined;
-    @property.resource({ implicitTypes: [sioc.Forum] })
+    @rdfine.property.resource({ implicitTypes: [sioc.Forum] })
     'moderator_of': Sioc.Forum | undefined;
-    @property()
+    @rdfine.property()
     'modifier_of': RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     'owner_of': RDF.Term | undefined;
-    @property.resource({ implicitTypes: [sioc.Container] })
+    @rdfine.property.resource({ implicitTypes: [sioc.Container] })
     'subscriber_of': Sioc.Container | undefined;
   }
   return UserAccountClass

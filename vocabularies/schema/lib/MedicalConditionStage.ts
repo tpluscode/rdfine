@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { MedicalIntangibleMixin } from './MedicalIntangible.js';
 
-export interface MedicalConditionStage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalIntangible<D>, RdfResource<D> {
+export interface MedicalConditionStage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalIntangible<D>, rdfine.RdfResource<D> {
   stageAsNumber: number | undefined;
   subStageSuffix: string | undefined;
 }
 
-export function MedicalConditionStageMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalConditionStage> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MedicalConditionStageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalConditionStage> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MedicalConditionStageClass extends MedicalIntangibleMixin(Resource) implements Partial<MedicalConditionStage> {
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     stageAsNumber: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     subStageSuffix: string | undefined;
   }
   return MedicalConditionStageClass

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { AgentControlRelationMixin } from './AgentControlRelation.js';
 
-export interface LeadershipRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentControlRelation<D>, RdfResource<D> {
+export interface LeadershipRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentControlRelation<D>, rdfine.RdfResource<D> {
   leadershipRelationHasSource: Rico.Person<D> | undefined;
   leadershipRelationHasTarget: Rico.Group<D> | undefined;
   leadershipWithPosition: Rico.Position<D> | undefined;
 }
 
-export function LeadershipRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LeadershipRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function LeadershipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LeadershipRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class LeadershipRelationClass extends AgentControlRelationMixin(Resource) implements Partial<LeadershipRelation> {
-    @property.resource({ implicitTypes: [rico.Person] })
+    @rdfine.property.resource({ implicitTypes: [rico.Person] })
     leadershipRelationHasSource: Rico.Person | undefined;
-    @property.resource({ implicitTypes: [rico.Group] })
+    @rdfine.property.resource({ implicitTypes: [rico.Group] })
     leadershipRelationHasTarget: Rico.Group | undefined;
-    @property.resource({ implicitTypes: [rico.Position] })
+    @rdfine.property.resource({ implicitTypes: [rico.Position] })
     leadershipWithPosition: Rico.Position | undefined;
   }
   return LeadershipRelationClass

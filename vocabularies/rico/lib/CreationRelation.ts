@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { AgentOriginationRelationMixin } from './AgentOriginationRelation.js';
 
-export interface CreationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentOriginationRelation<D>, RdfResource<D> {
+export interface CreationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentOriginationRelation<D>, rdfine.RdfResource<D> {
   creationRelationHasSource: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
   creationRelationHasTarget: Rico.Agent<D> | undefined;
   creationWithRole: Rico.RoleType<D> | undefined;
 }
 
-export function CreationRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CreationRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function CreationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CreationRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class CreationRelationClass extends AgentOriginationRelationMixin(Resource) implements Partial<CreationRelation> {
-    @property.resource()
+    @rdfine.property.resource()
     creationRelationHasSource: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     creationRelationHasTarget: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.RoleType] })
+    @rdfine.property.resource({ implicitTypes: [rico.RoleType] })
     creationWithRole: Rico.RoleType | undefined;
   }
   return CreationRelationClass

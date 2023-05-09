@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,9 +8,9 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface SpecialAnnouncement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface SpecialAnnouncement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   announcementLocation: Schema.CivicStructure<D> | Schema.LocalBusiness<D> | undefined;
-  category: Schema.Thing<D> | undefined;
+  category: Schema.CategoryCode<D> | Schema.Thing<D> | undefined;
   categoryLiteral: string | undefined;
   datePosted: Date | undefined;
   diseasePreventionInfo: Schema.WebContent<D> | undefined;
@@ -25,36 +25,36 @@ export interface SpecialAnnouncement<D extends RDF.DatasetCore = RDF.DatasetCore
   webFeed: Schema.DataFeed<D> | undefined;
 }
 
-export function SpecialAnnouncementMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SpecialAnnouncement> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function SpecialAnnouncementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SpecialAnnouncement> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class SpecialAnnouncementClass extends CreativeWorkMixin(Resource) implements Partial<SpecialAnnouncement> {
-    @property.resource()
+    @rdfine.property.resource()
     announcementLocation: Schema.CivicStructure | Schema.LocalBusiness | undefined;
-    @property.resource()
-    category: Schema.Thing | undefined;
-    @property.literal({ path: schema.category })
+    @rdfine.property.resource()
+    category: Schema.CategoryCode | Schema.Thing | undefined;
+    @rdfine.property.literal({ path: schema.category })
     categoryLiteral: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     datePosted: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     diseasePreventionInfo: Schema.WebContent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     diseaseSpreadStatistics: Schema.Dataset | Schema.Observation | Schema.WebContent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     gettingTestedInfo: Schema.WebContent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     governmentBenefitsInfo: Schema.GovernmentService | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     newsUpdatesAndGuidelines: Schema.WebContent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     publicTransportClosuresInfo: Schema.WebContent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     quarantineGuidelines: Schema.WebContent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     schoolClosuresInfo: Schema.WebContent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     travelBans: Schema.WebContent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     webFeed: Schema.DataFeed | undefined;
   }
   return SpecialAnnouncementClass

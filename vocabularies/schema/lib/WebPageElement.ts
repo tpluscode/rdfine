@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface WebPageElement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface WebPageElement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   cssSelector: string | undefined;
   xpath: string | undefined;
 }
 
-export function WebPageElementMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<WebPageElement> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function WebPageElementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WebPageElement> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class WebPageElementClass extends CreativeWorkMixin(Resource) implements Partial<WebPageElement> {
-    @property.literal()
+    @rdfine.property.literal()
     cssSelector: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     xpath: string | undefined;
   }
   return WebPageElementClass

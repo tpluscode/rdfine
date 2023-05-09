@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { ReservationMixin } from './Reservation.js';
 
-export interface EventReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, RdfResource<D> {
+export interface EventReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, rdfine.RdfResource<D> {
 }
 
-export function EventReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EventReservation> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function EventReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EventReservation> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class EventReservationClass extends ReservationMixin(Resource) implements Partial<EventReservation> {
   }
   return EventReservationClass

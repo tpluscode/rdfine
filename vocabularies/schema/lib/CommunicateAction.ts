@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { InteractActionMixin } from './InteractAction.js';
 
-export interface CommunicateAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, RdfResource<D> {
+export interface CommunicateAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, rdfine.RdfResource<D> {
   about: Schema.Thing<D> | undefined;
   inLanguage: Schema.Language<D> | undefined;
   inLanguageLiteral: string | undefined;
@@ -16,18 +16,18 @@ export interface CommunicateAction<D extends RDF.DatasetCore = RDF.DatasetCore> 
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function CommunicateActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CommunicateAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function CommunicateActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CommunicateAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class CommunicateActionClass extends InteractActionMixin(Resource) implements Partial<CommunicateAction> {
-    @property.resource()
+    @rdfine.property.resource()
     about: Schema.Thing | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     inLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.inLanguage })
+    @rdfine.property.literal({ path: schema.inLanguage })
     inLanguageLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     language: Schema.Language | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
   return CommunicateActionClass

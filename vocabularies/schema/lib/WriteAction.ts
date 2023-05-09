@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreateActionMixin } from './CreateAction.js';
 
-export interface WriteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, RdfResource<D> {
+export interface WriteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, rdfine.RdfResource<D> {
   inLanguage: Schema.Language<D> | undefined;
   inLanguageLiteral: string | undefined;
   language: Schema.Language<D> | undefined;
 }
 
-export function WriteActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<WriteAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function WriteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WriteAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class WriteActionClass extends CreateActionMixin(Resource) implements Partial<WriteAction> {
-    @property.resource()
+    @rdfine.property.resource()
     inLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.inLanguage })
+    @rdfine.property.literal({ path: schema.inLanguage })
     inLanguageLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     language: Schema.Language | undefined;
   }
   return WriteActionClass

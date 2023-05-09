@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,17 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { CreationRelationMixin } from './CreationRelation.js';
 
-export interface AuthorshipRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.CreationRelation<D>, RdfResource<D> {
+export interface AuthorshipRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.CreationRelation<D>, rdfine.RdfResource<D> {
   authorshipRelationHasSource: Rico.Record<D> | undefined;
   authorshipRelationHasTarget: Rico.Group<D> | Rico.Person<D> | Rico.Position<D> | undefined;
 }
 
-export function AuthorshipRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AuthorshipRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function AuthorshipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AuthorshipRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class AuthorshipRelationClass extends CreationRelationMixin(Resource) implements Partial<AuthorshipRelation> {
-    @property.resource({ implicitTypes: [rico.Record] })
+    @rdfine.property.resource({ implicitTypes: [rico.Record] })
     authorshipRelationHasSource: Rico.Record | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     authorshipRelationHasTarget: Rico.Group | Rico.Person | Rico.Position | undefined;
   }
   return AuthorshipRelationClass

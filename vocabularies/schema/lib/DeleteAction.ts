@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { UpdateActionMixin } from './UpdateAction.js';
 
-export interface DeleteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UpdateAction<D>, RdfResource<D> {
+export interface DeleteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UpdateAction<D>, rdfine.RdfResource<D> {
 }
 
-export function DeleteActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DeleteAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DeleteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DeleteAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DeleteActionClass extends UpdateActionMixin(Resource) implements Partial<DeleteAction> {
   }
   return DeleteActionClass

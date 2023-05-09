@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,17 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
-export interface Grant<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
-  fundedItem: Schema.Thing<D> | undefined;
+export interface Grant<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
+  fundedItem: Schema.BioChemEntity<D> | Schema.CreativeWork<D> | Schema.Event<D> | Schema.MedicalEntity<D> | Schema.Organization<D> | Schema.Person<D> | Schema.Product<D> | undefined;
+  funder: Schema.Organization<D> | Schema.Person<D> | undefined;
   sponsor: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function GrantMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Grant> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function GrantMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Grant> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class GrantClass extends IntangibleMixin(Resource) implements Partial<Grant> {
-    @property.resource()
-    fundedItem: Schema.Thing | undefined;
-    @property.resource()
+    @rdfine.property.resource()
+    fundedItem: Schema.BioChemEntity | Schema.CreativeWork | Schema.Event | Schema.MedicalEntity | Schema.Organization | Schema.Person | Schema.Product | undefined;
+    @rdfine.property.resource()
+    funder: Schema.Organization | Schema.Person | undefined;
+    @rdfine.property.resource()
     sponsor: Schema.Organization | Schema.Person | undefined;
   }
   return GrantClass

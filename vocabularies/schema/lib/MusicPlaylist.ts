@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface MusicPlaylist<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface MusicPlaylist<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   numTracks: number | undefined;
   track: Schema.ItemList<D> | Schema.MusicRecording<D> | undefined;
   tracks: Schema.MusicRecording<D> | undefined;
 }
 
-export function MusicPlaylistMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MusicPlaylist> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MusicPlaylistMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MusicPlaylist> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MusicPlaylistClass extends CreativeWorkMixin(Resource) implements Partial<MusicPlaylist> {
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     numTracks: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     track: Schema.ItemList | Schema.MusicRecording | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     tracks: Schema.MusicRecording | undefined;
   }
   return MusicPlaylistClass

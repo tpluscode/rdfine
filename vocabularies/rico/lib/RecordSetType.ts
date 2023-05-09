@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rico from '../index.js';
 import { TypeMixin } from './Type.js';
 
-export interface RecordSetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, RdfResource<D> {
+export interface RecordSetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, rdfine.RdfResource<D> {
   isRecordSetTypeOf: Rico.RecordSet<D> | undefined;
 }
 
-export function RecordSetTypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RecordSetType> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function RecordSetTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RecordSetType> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class RecordSetTypeClass extends TypeMixin(Resource) implements Partial<RecordSetType> {
-    @property.resource({ implicitTypes: [rico.RecordSet] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isRecordSetTypeOf: Rico.RecordSet | undefined;
   }
   return RecordSetTypeClass

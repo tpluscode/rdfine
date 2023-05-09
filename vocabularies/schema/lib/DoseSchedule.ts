@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,7 +8,7 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Schema from '../index.js';
 import { MedicalIntangibleMixin } from './MedicalIntangible.js';
 
-export interface DoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalIntangible<D>, RdfResource<D> {
+export interface DoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalIntangible<D>, rdfine.RdfResource<D> {
   doseUnit: string | undefined;
   doseValue: number | undefined;
   doseValueTerm: Schema.QualitativeValue | undefined;
@@ -16,18 +16,18 @@ export interface DoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   targetPopulation: string | undefined;
 }
 
-export function DoseScheduleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DoseSchedule> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DoseScheduleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DoseSchedule> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DoseScheduleClass extends MedicalIntangibleMixin(Resource) implements Partial<DoseSchedule> {
-    @property.literal()
+    @rdfine.property.literal()
     doseUnit: string | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     doseValue: number | undefined;
-    @property({ path: schema.doseValue })
+    @rdfine.property({ path: schema.doseValue })
     doseValueTerm: Schema.QualitativeValue | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     frequency: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     targetPopulation: string | undefined;
   }
   return DoseScheduleClass
