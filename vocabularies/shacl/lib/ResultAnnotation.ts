@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,20 +11,20 @@ import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
-export interface ResultAnnotation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+export interface ResultAnnotation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
   annotationProperty: Rdf.Property<D> | undefined;
   annotationValue: RDF.Term | undefined;
   annotationVarName: string | undefined;
 }
 
-export function ResultAnnotationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ResultAnnotation> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function ResultAnnotationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ResultAnnotation> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class ResultAnnotationClass extends RdfsResourceMixin(Resource) implements Partial<ResultAnnotation> {
-    @property.resource({ as: [RdfPropertyMixin] })
+    @rdfine.property.resource({ as: [RdfPropertyMixin] })
     annotationProperty: Rdf.Property | undefined;
-    @property()
+    @rdfine.property()
     annotationValue: RDF.Term | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     annotationVarName: string | undefined;
   }
   return ResultAnnotationClass

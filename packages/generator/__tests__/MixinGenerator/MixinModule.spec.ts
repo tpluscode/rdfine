@@ -2,7 +2,8 @@ import { Project, SourceFile } from 'ts-morph'
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { xsd } from '@tpluscode/rdf-ns-builders'
-import { expect } from 'chai'
+import chai, { expect } from 'chai'
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
 import { MixinModule } from '../../lib/MixinGenerator/MixinModule.js'
 import { FakeTypeCollection } from '../_helpers/FakeTypeCollection.js'
 import { ex } from '../_helpers/prefix.js'
@@ -12,6 +13,9 @@ describe('MixinModule', () => {
   let project: Project
   let vocabulary: AnyPointer
   let indexModule: SourceFile
+
+  chai.use(jestSnapshotPlugin())
+  before(() => import('../../../../__tests__/helpers/matchers.js'))
 
   beforeEach(() => {
     project = new Project({

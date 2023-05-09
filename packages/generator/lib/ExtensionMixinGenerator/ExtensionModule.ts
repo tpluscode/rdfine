@@ -76,13 +76,13 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
       name: `${this.type.localName}MixinEx`,
       typeParameters: [{
         name: 'Base',
-        constraint: `ExtendingConstructor<${this.type.qualifiedName}, ${this.interfaceName}>`,
+        constraint: `rdfine.ExtendingConstructor<${this.type.qualifiedName}, ${this.interfaceName}>`,
       }],
       parameters: [{
         name: 'Resource',
         type: 'Base',
       }],
-      returnType: `Constructor<${this.interfaceName} & RdfResourceCore> & Base`,
+      returnType: `rdfine.Constructor<${this.interfaceName} & RdfResourceCore> & Base`,
       isExported: true,
     })
 
@@ -93,7 +93,7 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
     })
 
     mixinClass.addDecorator({
-      name: 'namespace',
+      name: 'rdfine.namespace',
       arguments: [context.prefix],
     })
 
@@ -104,7 +104,7 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
 
   private addImports(mixinFile: SourceFile, context: Omit<Context, 'properties'>) {
     mixinFile.addImportDeclaration({
-      namedImports: ['ExtendingConstructor', 'Constructor', 'namespace', 'property'],
+      namespaceImport: 'rdfine',
       moduleSpecifier: '@tpluscode/rdfine',
     })
     mixinFile.addImportDeclaration({

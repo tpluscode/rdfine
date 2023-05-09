@@ -5,13 +5,17 @@ import RDF from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { foaf, schema, rdf } from '@tpluscode/rdf-ns-builders/loose'
 import { turtle } from '@tpluscode/rdf-string'
-import { expect } from 'chai'
+import chai, { expect } from 'chai'
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
 import RdfResource from '../RdfResource.js'
 import { namespace, property, crossBoundaries, Constructor } from '../index.js'
 import type { AnyFactory } from '../factory.js'
 import { parse, ex } from './_helpers/index.js'
 
 describe('decorator', () => {
+  chai.use(jestSnapshotPlugin())
+  before(() => import('../../../__tests__/helpers/matchers.js'))
+
   describe('term', () => {
     describe('getter', () => {
       it('returns raw named node from property', async () => {

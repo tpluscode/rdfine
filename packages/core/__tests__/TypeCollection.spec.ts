@@ -1,7 +1,8 @@
 import $rdf from 'rdf-ext'
 import cf, { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import { expect } from 'chai'
+import chai, { expect } from 'chai'
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
 import TypeCollection from '../lib/TypeCollection.js'
 import RdfResourceImpl, { RdfResource, ResourceIdentifier } from '../RdfResource.js'
 import { parse, ex } from './_helpers/index.js'
@@ -10,6 +11,8 @@ const nullResource = {} as RdfResource
 
 describe('TypeCollection', () => {
   let node: GraphPointer<ResourceIdentifier>
+  chai.use(jestSnapshotPlugin())
+  before(() => import('../../../__tests__/helpers/matchers.js'))
 
   describe('size', () => {
     it('returns 0 when no types', () => {

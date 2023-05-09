@@ -3,7 +3,8 @@ import $rdf from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { schema } from '@tpluscode/rdf-ns-builders'
 import type { Literal, NamedNode } from '@rdfjs/types'
-import { expect } from 'chai'
+import chai, { expect } from 'chai'
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
 import { createProxy } from '../lib/proxy.js'
 import RdfResourceImpl, { RdfResource } from '../RdfResource.js'
 import { property, ResourceIndexer } from '../index.js'
@@ -12,6 +13,8 @@ import { ex } from './_helpers/index.js'
 
 describe('proxy', () => {
   let node: GraphPointer<NamedNode, DatasetExt>
+  chai.use(jestSnapshotPlugin())
+  before(() => import('../../../__tests__/helpers/matchers.js'))
 
   beforeEach(() => {
     node = cf({ dataset: $rdf.dataset() })

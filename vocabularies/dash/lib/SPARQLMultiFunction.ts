@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,13 +8,13 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '../index.js';
 import type * as Shacl from '@rdfine/shacl';
 import { MultiFunctionMixin } from './MultiFunction.js';
-import { SPARQLSelectExecutableMixin as ShaclSPARQLSelectExecutableMixin } from '@rdfine/shacl/lib/SPARQLSelectExecutable.js';
+import { SPARQLSelectExecutableMixin as ShaclSPARQLSelectExecutableMixin } from '@rdfine/shacl/lib/SPARQLSelectExecutable';
 
-export interface SPARQLMultiFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.MultiFunction<D>, Shacl.SPARQLSelectExecutable<D>, RdfResource<D> {
+export interface SPARQLMultiFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.MultiFunction<D>, Shacl.SPARQLSelectExecutable<D>, rdfine.RdfResource<D> {
 }
 
-export function SPARQLMultiFunctionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SPARQLMultiFunction> & RdfResourceCore> & Base {
-  @namespace(dash)
+export function SPARQLMultiFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLMultiFunction> & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class SPARQLMultiFunctionClass extends ShaclSPARQLSelectExecutableMixin(MultiFunctionMixin(Resource)) implements Partial<SPARQLMultiFunction> {
   }
   return SPARQLMultiFunctionClass

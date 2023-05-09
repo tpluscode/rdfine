@@ -246,7 +246,7 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.name).toEqual(literal('baz'))
+      expect(resource.name).to.deep.equal($rdf.literal('baz'))
     })
 
     it('allows number to initialize raw literal properties', () => {
@@ -270,7 +270,7 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.age).toEqual(literal('10', xsd.integer))
+      expect(resource.age).to.deep.equal($rdf.literal('10', xsd.integer))
     })
 
     it('allows number to initialize optional raw literal properties', () => {
@@ -294,7 +294,7 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.age).toEqual(literal('10', xsd.integer))
+      expect(resource.age).to.deep.equal($rdf.literal('10', xsd.integer))
     })
 
     it('allows undefined to initialize optional raw literal properties', () => {
@@ -318,7 +318,7 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.age).toBeUndefined()
+      expect(resource.age).to.be.undefined
     })
 
     it('allows literal to initialize optional raw literal properties', () => {
@@ -335,14 +335,14 @@ describe('RdfResource', () => {
       }
 
       const initializer: Initializer<Resource> = {
-        age: literal('foo'),
+        age: $rdf.literal('foo'),
       }
 
       // when
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.age).toEqual(literal('foo'))
+      expect(resource.age).to.deep.equal($rdf.literal('foo'))
     })
 
     it('allows RDF/JS literal to initialize literal array properties', () => {

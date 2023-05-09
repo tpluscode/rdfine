@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,11 +10,11 @@ import { FunctionMixin } from './Function.js';
 import { SPARQLAskExecutableMixin } from './SPARQLAskExecutable.js';
 import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable.js';
 
-export interface SPARQLFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Function<D>, Sh.SPARQLAskExecutable<D>, Sh.SPARQLSelectExecutable<D>, RdfResource<D> {
+export interface SPARQLFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Function<D>, Sh.SPARQLAskExecutable<D>, Sh.SPARQLSelectExecutable<D>, rdfine.RdfResource<D> {
 }
 
-export function SPARQLFunctionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SPARQLFunction> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function SPARQLFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLFunction> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class SPARQLFunctionClass extends SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(FunctionMixin(Resource))) implements Partial<SPARQLFunction> {
   }
   return SPARQLFunctionClass

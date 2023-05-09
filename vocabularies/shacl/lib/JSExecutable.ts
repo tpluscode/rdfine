@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,14 +9,14 @@ import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
-export interface JSExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+export interface JSExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
   jsFunctionName: string | undefined;
 }
 
-export function JSExecutableMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<JSExecutable> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function JSExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JSExecutable> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class JSExecutableClass extends RdfsResourceMixin(Resource) implements Partial<JSExecutable> {
-    @property.literal()
+    @rdfine.property.literal()
     jsFunctionName: string | undefined;
   }
   return JSExecutableClass

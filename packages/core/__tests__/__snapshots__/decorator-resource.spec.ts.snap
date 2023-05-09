@@ -34,8 +34,8 @@ exports[`decorator resource setter accepts deep plain JS object 1`] = `
 <http://example.com/Superman> <http://schema.org/parent> _:c14n0 .
 <http://example.com/Superman> <http://schema.org/parent> _:c14n1 .
 <http://example.com/Superman> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
-_:c14n0 <http://schema.org/name> \\"Lara Lor-Van\\" .
-_:c14n1 <http://schema.org/name> \\"Jor-El\\" .
+_:c14n0 <http://schema.org/name> \\"Jor-El\\" .
+_:c14n1 <http://schema.org/name> \\"Lara Lor-Van\\" .
 "
 `;
 

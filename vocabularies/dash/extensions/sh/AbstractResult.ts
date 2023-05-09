@@ -1,4 +1,4 @@
-import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -16,10 +16,10 @@ declare module '@rdfine/shacl/lib/AbstractResult' {
   }
 }
 
-export function AbstractResultMixinEx<Base extends ExtendingConstructor<Shacl.AbstractResult, AbstractResultEx>>(Resource: Base): Constructor<AbstractResultEx & RdfResourceCore> & Base {
-  @namespace(dash)
+export function AbstractResultMixinEx<Base extends rdfine.ExtendingConstructor<Shacl.AbstractResult, AbstractResultEx>>(Resource: Base): rdfine.Constructor<AbstractResultEx & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class Impl extends Resource implements AbstractResultEx {
-    @property.resource({ values: 'array', implicitTypes: [dash.Suggestion] })
+    @rdfine.property.resource({ values: 'array', implicitTypes: [dash.Suggestion] })
     suggestion!: Array<Dash.Suggestion>;
   }
   return Impl

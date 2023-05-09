@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Owl from '../index.js';
 import { ObjectPropertyMixin } from './ObjectProperty.js';
 
-export interface SymmetricProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, RdfResource<D> {
+export interface SymmetricProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, rdfine.RdfResource<D> {
 }
 
-export function SymmetricPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SymmetricProperty> & RdfResourceCore> & Base {
-  @namespace(owl)
+export function SymmetricPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SymmetricProperty> & RdfResourceCore> & Base {
+  @rdfine.namespace(owl)
   class SymmetricPropertyClass extends ObjectPropertyMixin(Resource) implements Partial<SymmetricProperty> {
   }
   return SymmetricPropertyClass

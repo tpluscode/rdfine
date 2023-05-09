@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '../index.js';
 import { ShapeMixin } from './Shape.js';
 
-export interface NodeShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Shape<D>, RdfResource<D> {
+export interface NodeShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Shape<D>, rdfine.RdfResource<D> {
   ignoredProperties: Array<RDF.Term>;
 }
 
-export function NodeShapeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<NodeShape> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function NodeShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NodeShape> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class NodeShapeClass extends ShapeMixin(Resource) implements Partial<NodeShape> {
-    @property({ values: 'list' })
+    @rdfine.property({ values: 'list' })
     ignoredProperties!: Array<RDF.Term>;
   }
   return NodeShapeClass

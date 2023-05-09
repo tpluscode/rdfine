@@ -1,6 +1,6 @@
 import '../extensions/rdfs/Class.js';
 import { ClassMixinEx } from '../extensions/rdfs/Class.js';
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,11 +11,11 @@ import type * as Owl from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
 
-export interface DeprecatedClass<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, RdfResource<D> {
+export interface DeprecatedClass<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, rdfine.RdfResource<D> {
 }
 
-export function DeprecatedClassMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DeprecatedClass> & RdfResourceCore> & Base {
-  @namespace(owl)
+export function DeprecatedClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DeprecatedClass> & RdfResourceCore> & Base {
+  @rdfine.namespace(owl)
   class DeprecatedClassClass extends ClassMixinEx(RdfsClassMixin(Resource)) implements Partial<DeprecatedClass> {
   }
   return DeprecatedClassClass

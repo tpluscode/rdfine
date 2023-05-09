@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '../index.js';
 import { ScriptMixin } from './Script.js';
 
-export interface ChangeScript<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, RdfResource<D> {
+export interface ChangeScript<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, rdfine.RdfResource<D> {
 }
 
-export function ChangeScriptMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ChangeScript> & RdfResourceCore> & Base {
-  @namespace(dash)
+export function ChangeScriptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ChangeScript> & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class ChangeScriptClass extends ScriptMixin(Resource) implements Partial<ChangeScript> {
   }
   return ChangeScriptClass

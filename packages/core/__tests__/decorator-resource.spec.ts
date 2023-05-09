@@ -1,11 +1,12 @@
 /* eslint-disable no-use-before-define */
-import { expect } from 'chai'
+import chai, { expect } from 'chai'
 import prefixes from '@zazuko/prefixes'
 import cf, { GraphPointer } from 'clownface'
 import type { DatasetCore, Literal, NamedNode, Term } from '@rdfjs/types'
 import rdfExt from 'rdf-ext'
 import { turtle } from '@tpluscode/rdf-string'
 import { foaf, schema, rdf } from '@tpluscode/rdf-ns-builders/loose'
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
 import {
   property,
   namespace,
@@ -18,6 +19,8 @@ import ResourceFactoryImpl from '../lib/ResourceFactory.js'
 import { parse, ex } from './_helpers/index.js'
 
 describe('decorator', () => {
+  chai.use(jestSnapshotPlugin())
+  before(() => import('../../../__tests__/helpers/matchers.js'))
   describe('resource', () => {
     describe('getter', () => {
       it('returns a resource object using path predicate', async () => {

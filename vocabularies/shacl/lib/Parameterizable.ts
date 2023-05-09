@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,17 +9,17 @@ import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
-export interface Parameterizable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+export interface Parameterizable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
   labelTemplate: string | undefined;
   parameter: Sh.Parameter<D> | undefined;
 }
 
-export function ParameterizableMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Parameterizable> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function ParameterizableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Parameterizable> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class ParameterizableClass extends RdfsResourceMixin(Resource) implements Partial<Parameterizable> {
-    @property.literal()
+    @rdfine.property.literal()
     labelTemplate: string | undefined;
-    @property.resource({ implicitTypes: [sh.Parameter] })
+    @rdfine.property.resource({ implicitTypes: [sh.Parameter] })
     parameter: Sh.Parameter | undefined;
   }
   return ParameterizableClass

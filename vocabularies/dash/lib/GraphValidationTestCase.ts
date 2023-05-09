@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '../index.js';
 import { ValidationTestCaseMixin } from './ValidationTestCase.js';
 
-export interface GraphValidationTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.ValidationTestCase<D>, RdfResource<D> {
+export interface GraphValidationTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.ValidationTestCase<D>, rdfine.RdfResource<D> {
   validateShapes: boolean | undefined;
 }
 
-export function GraphValidationTestCaseMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<GraphValidationTestCase> & RdfResourceCore> & Base {
-  @namespace(dash)
+export function GraphValidationTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GraphValidationTestCase> & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class GraphValidationTestCaseClass extends ValidationTestCaseMixin(Resource) implements Partial<GraphValidationTestCase> {
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     validateShapes: boolean | undefined;
   }
   return GraphValidationTestCaseClass

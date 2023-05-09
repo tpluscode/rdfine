@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '../index.js';
 import { ResourceActionMixin } from './ResourceAction.js';
 
-export interface ExploreAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.ResourceAction<D>, RdfResource<D> {
+export interface ExploreAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.ResourceAction<D>, rdfine.RdfResource<D> {
 }
 
-export function ExploreActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ExploreAction> & RdfResourceCore> & Base {
-  @namespace(dash)
+export function ExploreActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ExploreAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class ExploreActionClass extends ResourceActionMixin(Resource) implements Partial<ExploreAction> {
   }
   return ExploreActionClass

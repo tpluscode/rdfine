@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,11 +7,11 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Rdf from '../index.js';
 
-export interface Alt<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Alt<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function AltMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Alt> & RdfResourceCore> & Base {
-  @namespace(rdf)
+export function AltMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Alt> & RdfResourceCore> & Base {
+  @rdfine.namespace(rdf)
   class AltClass extends Resource implements Partial<Alt> {
   }
   return AltClass

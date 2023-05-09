@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,13 +7,13 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
-import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource.js';
+import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
-export interface APIStatus<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+export interface APIStatus<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function APIStatusMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<APIStatus> & RdfResourceCore> & Base {
-  @namespace(dash)
+export function APIStatusMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<APIStatus> & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class APIStatusClass extends RdfsResourceMixin(Resource) implements Partial<APIStatus> {
   }
   return APIStatusClass

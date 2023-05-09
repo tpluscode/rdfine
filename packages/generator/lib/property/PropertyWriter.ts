@@ -139,7 +139,7 @@ export class PropertyWriter {
 
     switch (prop.type) {
       case 'literal': {
-        name = 'property.literal'
+        name = 'rdfine.property.literal'
 
         const uniqueTypes = [...new Set(propertyTypes)]
         const uniqueDatatypes = prop.range.reduce<TermSet>((set, range: LiteralType | Record<string, any>) => {
@@ -170,10 +170,10 @@ export class PropertyWriter {
       }
         break
       case 'resource':
-        name = 'property.resource'
+        name = 'rdfine.property.resource'
         break
       case 'term':
-        name = 'property'
+        name = 'rdfine.property'
         break
     }
 

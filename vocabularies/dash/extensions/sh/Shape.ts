@@ -1,4 +1,4 @@
-import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -7,7 +7,7 @@ import { dash } from '../../lib/namespace.js';
 import type * as Dash from '../../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import type * as Shacl from '@rdfine/shacl';
-import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class.js';
+import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
 
 interface ShapeEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   applicableToClass: Array<Rdfs.Class<D>>;
@@ -18,10 +18,10 @@ declare module '@rdfine/shacl/lib/Shape' {
   }
 }
 
-export function ShapeMixinEx<Base extends ExtendingConstructor<Shacl.Shape, ShapeEx>>(Resource: Base): Constructor<ShapeEx & RdfResourceCore> & Base {
-  @namespace(dash)
+export function ShapeMixinEx<Base extends rdfine.ExtendingConstructor<Shacl.Shape, ShapeEx>>(Resource: Base): rdfine.Constructor<ShapeEx & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class Impl extends Resource implements ShapeEx {
-    @property.resource({ values: 'array', as: [RdfsClassMixin] })
+    @rdfine.property.resource({ values: 'array', as: [RdfsClassMixin] })
     applicableToClass!: Array<Rdfs.Class>;
   }
   return Impl

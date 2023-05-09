@@ -1,6 +1,6 @@
 import '../extensions/rdf/Property.js';
 import { PropertyMixinEx } from '../extensions/rdf/Property.js';
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,11 +11,11 @@ import type * as Owl from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
-export interface FunctionalProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, RdfResource<D> {
+export interface FunctionalProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, rdfine.RdfResource<D> {
 }
 
-export function FunctionalPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FunctionalProperty> & RdfResourceCore> & Base {
-  @namespace(owl)
+export function FunctionalPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FunctionalProperty> & RdfResourceCore> & Base {
+  @rdfine.namespace(owl)
   class FunctionalPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<FunctionalProperty> {
   }
   return FunctionalPropertyClass

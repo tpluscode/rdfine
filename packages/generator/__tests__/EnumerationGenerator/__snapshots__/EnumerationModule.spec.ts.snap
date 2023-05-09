@@ -12,7 +12,7 @@ export default values;
 `;
 
 exports[`EnumerationModule writes a module with enumeration members 1`] = `
-import { ex } from "./namespace";
+import { ex } from "./namespace.js";
 
 const values = {
     Member1: ex.Member1,

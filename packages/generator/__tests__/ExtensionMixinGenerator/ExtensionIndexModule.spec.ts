@@ -1,8 +1,12 @@
 import { Project } from 'ts-morph'
-import { expect } from 'chai'
+import chai, { expect } from 'chai'
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
 import { ExtensionIndexModule } from '../../lib/ExtensionMixinGenerator/ExtensionIndexModule.js'
 
 describe('ExtensionIndexModule', () => {
+  chai.use(jestSnapshotPlugin())
+  before(() => import('../../../../__tests__/helpers/matchers.js'))
+
   it('generates exports for extended terms', () => {
     // given
     const project = new Project({

@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,11 +8,11 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '../index.js';
 import { TestCaseResultMixin } from './TestCaseResult.js';
 
-export interface SuccessTestCaseResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.TestCaseResult<D>, RdfResource<D> {
+export interface SuccessTestCaseResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.TestCaseResult<D>, rdfine.RdfResource<D> {
 }
 
-export function SuccessTestCaseResultMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SuccessTestCaseResult> & RdfResourceCore> & Base {
-  @namespace(dash)
+export function SuccessTestCaseResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SuccessTestCaseResult> & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class SuccessTestCaseResultClass extends TestCaseResultMixin(Resource) implements Partial<SuccessTestCaseResult> {
   }
   return SuccessTestCaseResultClass

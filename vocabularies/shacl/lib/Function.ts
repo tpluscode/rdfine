@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,14 +10,14 @@ import type * as Rdfs from '@rdfine/rdfs';
 import { ParameterizableMixin } from './Parameterizable.js';
 import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
 
-export interface Function<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Parameterizable<D>, RdfResource<D> {
+export interface Function<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Parameterizable<D>, rdfine.RdfResource<D> {
   returnType: Rdfs.Class<D> | undefined;
 }
 
-export function FunctionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Function> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function FunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Function> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class FunctionClass extends ParameterizableMixin(Resource) implements Partial<Function> {
-    @property.resource({ as: [RdfsClassMixin] })
+    @rdfine.property.resource({ as: [RdfsClassMixin] })
     returnType: Rdfs.Class | undefined;
   }
   return FunctionClass

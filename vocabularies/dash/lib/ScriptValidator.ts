@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,13 +8,13 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '../index.js';
 import type * as Shacl from '@rdfine/shacl';
 import { ScriptMixin } from './Script.js';
-import { ValidatorMixin as ShaclValidatorMixin } from '@rdfine/shacl/lib/Validator.js';
+import { ValidatorMixin as ShaclValidatorMixin } from '@rdfine/shacl/lib/Validator';
 
-export interface ScriptValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, Shacl.Validator<D>, RdfResource<D> {
+export interface ScriptValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, Shacl.Validator<D>, rdfine.RdfResource<D> {
 }
 
-export function ScriptValidatorMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ScriptValidator> & RdfResourceCore> & Base {
-  @namespace(dash)
+export function ScriptValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ScriptValidator> & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class ScriptValidatorClass extends ShaclValidatorMixin(ScriptMixin(Resource)) implements Partial<ScriptValidator> {
   }
   return ScriptValidatorClass

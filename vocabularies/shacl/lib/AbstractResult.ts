@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,7 +9,7 @@ import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
-export interface AbstractResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+export interface AbstractResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
   detail: Array<Sh.AbstractResult<D>>;
   focusNode: RDF.Term | undefined;
   resultMessage: string | undefined;
@@ -21,26 +21,26 @@ export interface AbstractResult<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   value: RDF.Term | undefined;
 }
 
-export function AbstractResultMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AbstractResult> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function AbstractResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AbstractResult> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class AbstractResultClass extends RdfsResourceMixin(Resource) implements Partial<AbstractResult> {
-    @property.resource({ values: 'array', as: [AbstractResultMixin] })
+    @rdfine.property.resource({ values: 'array', as: [AbstractResultMixin] })
     detail!: Array<Sh.AbstractResult>;
-    @property()
+    @rdfine.property()
     focusNode: RDF.Term | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     resultMessage: string | undefined;
-    @property.resource({ as: [RdfsResourceMixin] })
+    @rdfine.property.resource({ as: [RdfsResourceMixin] })
     resultPath: Rdfs.Resource | undefined;
-    @property.resource({ implicitTypes: [sh.Severity] })
+    @rdfine.property.resource({ implicitTypes: [sh.Severity] })
     resultSeverity: Sh.Severity | undefined;
-    @property()
+    @rdfine.property()
     sourceConstraint: RDF.Term | undefined;
-    @property.resource({ implicitTypes: [sh.ConstraintComponent] })
+    @rdfine.property.resource({ implicitTypes: [sh.ConstraintComponent] })
     sourceConstraintComponent: Sh.ConstraintComponent | undefined;
-    @property.resource({ implicitTypes: [sh.Shape] })
+    @rdfine.property.resource({ implicitTypes: [sh.Shape] })
     sourceShape: Sh.Shape | undefined;
-    @property()
+    @rdfine.property()
     value: RDF.Term | undefined;
   }
   return AbstractResultClass

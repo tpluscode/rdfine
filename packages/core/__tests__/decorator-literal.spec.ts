@@ -1,17 +1,21 @@
 /* global BigInt */
 import prefixes from '@zazuko/prefixes'
-import { expect } from 'chai'
+import chai, { expect } from 'chai'
 import type { BlankNode, Literal, NamedNode } from '@rdfjs/types'
 import RDF from '@rdfjs/data-model'
 import rdfExt from 'rdf-ext'
 import { schema, xsd } from '@tpluscode/rdf-ns-builders'
 import { turtle } from '@tpluscode/rdf-string'
 import cf, { GraphPointer } from 'clownface'
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
 import RdfResource from '../RdfResource.js'
 import { property } from '../index.js'
 import { parse, ex } from './_helpers/index.js'
 
 describe('decorator', () => {
+  chai.use(jestSnapshotPlugin())
+  before(() => import('../../../__tests__/helpers/matchers.js'))
+
   describe('literal', () => {
     describe('getter', () => {
       it('returns string value of literal', async () => {

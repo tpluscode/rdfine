@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,20 +8,20 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '../index.js';
 import { RuleMixin } from './Rule.js';
 
-export interface TripleRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Rule<D>, RdfResource<D> {
+export interface TripleRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Rule<D>, rdfine.RdfResource<D> {
   object: RDF.Term | undefined;
   predicate: RDF.Term | undefined;
   subject: RDF.Term | undefined;
 }
 
-export function TripleRuleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TripleRule> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function TripleRuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TripleRule> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class TripleRuleClass extends RuleMixin(Resource) implements Partial<TripleRule> {
-    @property()
+    @rdfine.property()
     object: RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     predicate: RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     subject: RDF.Term | undefined;
   }
   return TripleRuleClass

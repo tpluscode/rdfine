@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,7 +13,7 @@ import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
-export interface PropertyShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Shape<D>, RdfResource<D> {
+export interface PropertyShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Shape<D>, rdfine.RdfResource<D> {
   '_equals': Rdf.Property<D> | undefined;
   datatype: Rdfs.Datatype<D> | undefined;
   defaultValue: RDF.Term | undefined;
@@ -40,56 +40,56 @@ export interface PropertyShape<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   uniqueLang: boolean | undefined;
 }
 
-export function PropertyShapeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PropertyShape> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function PropertyShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PropertyShape> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class PropertyShapeClass extends ShapeMixin(Resource) implements Partial<PropertyShape> {
-    @property.resource({ path: sh.equals, as: [RdfPropertyMixin] })
+    @rdfine.property.resource({ path: sh.equals, as: [RdfPropertyMixin] })
     '_equals': Rdf.Property | undefined;
-    @property.resource({ as: [RdfsDatatypeMixin] })
+    @rdfine.property.resource({ as: [RdfsDatatypeMixin] })
     datatype: Rdfs.Datatype | undefined;
-    @property()
+    @rdfine.property()
     defaultValue: RDF.Term | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     description: string | undefined;
-    @property.resource({ as: [RdfPropertyMixin] })
+    @rdfine.property.resource({ as: [RdfPropertyMixin] })
     disjoint: Rdf.Property | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     flags: string | undefined;
-    @property.resource({ implicitTypes: [sh.PropertyGroup] })
+    @rdfine.property.resource({ implicitTypes: [sh.PropertyGroup] })
     group: Sh.PropertyGroup | undefined;
-    @property({ values: 'array' })
+    @rdfine.property({ values: 'array' })
     hasValue!: Array<RDF.Term>;
-    @property.literal({ values: 'list' })
+    @rdfine.property.literal({ values: 'list' })
     languageIn!: Array<string>;
-    @property.resource({ as: [RdfPropertyMixin] })
+    @rdfine.property.resource({ as: [RdfPropertyMixin] })
     lessThan: Rdf.Property | undefined;
-    @property.resource({ as: [RdfPropertyMixin] })
+    @rdfine.property.resource({ as: [RdfPropertyMixin] })
     lessThanOrEquals: Rdf.Property | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     maxCount: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     maxExclusive: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     maxInclusive: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     maxLength: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     minCount: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     minExclusive: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     minInclusive: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     minLength: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     name: string | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     order: number | undefined;
-    @property.resource({ values: ['list', 'single'], as: [RdfsResourceMixin] })
+    @rdfine.property.resource({ values: ['list', 'single'], as: [RdfsResourceMixin] })
     path: Rdfs.Resource | Array<Rdfs.Resource> | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     pattern: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     uniqueLang: boolean | undefined;
   }
   return PropertyShapeClass

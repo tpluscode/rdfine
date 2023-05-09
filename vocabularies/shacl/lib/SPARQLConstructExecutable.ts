@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,14 +8,14 @@ import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Sh from '../index.js';
 import { SPARQLExecutableMixin } from './SPARQLExecutable.js';
 
-export interface SPARQLConstructExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLExecutable<D>, RdfResource<D> {
+export interface SPARQLConstructExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLExecutable<D>, rdfine.RdfResource<D> {
   construct: string | undefined;
 }
 
-export function SPARQLConstructExecutableMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SPARQLConstructExecutable> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function SPARQLConstructExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLConstructExecutable> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class SPARQLConstructExecutableClass extends SPARQLExecutableMixin(Resource) implements Partial<SPARQLConstructExecutable> {
-    @property.literal()
+    @rdfine.property.literal()
     construct: string | undefined;
   }
   return SPARQLConstructExecutableClass

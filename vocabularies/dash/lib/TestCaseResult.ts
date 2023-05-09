@@ -1,6 +1,6 @@
 import '../extensions/sh/AbstractResult.js';
 import { AbstractResultMixinEx } from '../extensions/sh/AbstractResult.js';
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,13 +9,13 @@ import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfi
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import type * as Dash from '../index.js';
 import type * as Shacl from '@rdfine/shacl';
-import { AbstractResultMixin as ShaclAbstractResultMixin } from '@rdfine/shacl/lib/AbstractResult.js';
+import { AbstractResultMixin as ShaclAbstractResultMixin } from '@rdfine/shacl/lib/AbstractResult';
 
-export interface TestCaseResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.AbstractResult<D>, RdfResource<D> {
+export interface TestCaseResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.AbstractResult<D>, rdfine.RdfResource<D> {
 }
 
-export function TestCaseResultMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TestCaseResult> & RdfResourceCore> & Base {
-  @namespace(dash)
+export function TestCaseResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TestCaseResult> & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class TestCaseResultClass extends AbstractResultMixinEx(ShaclAbstractResultMixin(Resource)) implements Partial<TestCaseResult> {
   }
   return TestCaseResultClass

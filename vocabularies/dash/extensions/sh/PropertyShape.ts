@@ -1,4 +1,4 @@
-import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -6,7 +6,7 @@ import { sh } from '@tpluscode/rdf-ns-builders';
 import { dash } from '../../lib/namespace.js';
 import type * as Dash from '../../index.js';
 import type * as Shacl from '@rdfine/shacl';
-import { NodeShapeMixin as ShaclNodeShapeMixin } from '@rdfine/shacl/lib/NodeShape.js';
+import { NodeShapeMixin as ShaclNodeShapeMixin } from '@rdfine/shacl/lib/NodeShape';
 
 interface PropertyShapeEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   composite: boolean | undefined;
@@ -25,26 +25,26 @@ declare module '@rdfine/shacl/lib/PropertyShape' {
   }
 }
 
-export function PropertyShapeMixinEx<Base extends ExtendingConstructor<Shacl.PropertyShape, PropertyShapeEx>>(Resource: Base): Constructor<PropertyShapeEx & RdfResourceCore> & Base {
-  @namespace(dash)
+export function PropertyShapeMixinEx<Base extends rdfine.ExtendingConstructor<Shacl.PropertyShape, PropertyShapeEx>>(Resource: Base): rdfine.Constructor<PropertyShapeEx & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class Impl extends Resource implements PropertyShapeEx {
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     composite: boolean | undefined;
-    @property.resource({ implicitTypes: [dash.Editor] })
+    @rdfine.property.resource({ implicitTypes: [dash.Editor] })
     editor: Dash.Editor | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     hidden: boolean | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     indexed: boolean | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     mimeTypes: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     neverMaterialize: boolean | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     readOnly: boolean | undefined;
-    @property.resource({ values: 'array', as: [ShaclNodeShapeMixin] })
+    @rdfine.property.resource({ values: 'array', as: [ShaclNodeShapeMixin] })
     reifiableBy!: Array<Shacl.NodeShape>;
-    @property.resource({ implicitTypes: [dash.Viewer] })
+    @rdfine.property.resource({ implicitTypes: [dash.Viewer] })
     viewer: Dash.Viewer | undefined;
   }
   return Impl

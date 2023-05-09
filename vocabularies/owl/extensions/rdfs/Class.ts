@@ -1,4 +1,4 @@
-import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -22,16 +22,16 @@ declare module '@rdfine/rdfs/lib/Class' {
   }
 }
 
-export function ClassMixinEx<Base extends ExtendingConstructor<Rdfs.Class, ClassEx>>(Resource: Base): Constructor<ClassEx & RdfResourceCore> & Base {
-  @namespace(owl)
+export function ClassMixinEx<Base extends rdfine.ExtendingConstructor<Rdfs.Class, ClassEx>>(Resource: Base): rdfine.Constructor<ClassEx & RdfResourceCore> & Base {
+  @rdfine.namespace(owl)
   class Impl extends Resource implements ClassEx {
-    @property.resource({ values: 'array', as: [RdfsClassMixin] })
+    @rdfine.property.resource({ values: 'array', as: [RdfsClassMixin] })
     equivalentClass!: Array<Rdfs.Class>;
-    @property.resource({ values: 'array', as: [RdfListMixin] })
+    @rdfine.property.resource({ values: 'array', as: [RdfListMixin] })
     intersectionOf!: Array<Rdf.List>;
-    @property.resource({ values: 'array', as: [RdfListMixin] })
+    @rdfine.property.resource({ values: 'array', as: [RdfListMixin] })
     oneOf!: Array<Rdf.List>;
-    @property.resource({ values: 'array', as: [RdfListMixin] })
+    @rdfine.property.resource({ values: 'array', as: [RdfListMixin] })
     unionOf!: Array<Rdf.List>;
   }
   return Impl

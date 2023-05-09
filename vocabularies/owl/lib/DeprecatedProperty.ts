@@ -1,6 +1,6 @@
 import '../extensions/rdf/Property.js';
 import { PropertyMixinEx } from '../extensions/rdf/Property.js';
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,11 +11,11 @@ import type * as Owl from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
-export interface DeprecatedProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, RdfResource<D> {
+export interface DeprecatedProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, rdfine.RdfResource<D> {
 }
 
-export function DeprecatedPropertyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DeprecatedProperty> & RdfResourceCore> & Base {
-  @namespace(owl)
+export function DeprecatedPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DeprecatedProperty> & RdfResourceCore> & Base {
+  @rdfine.namespace(owl)
   class DeprecatedPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<DeprecatedProperty> {
   }
   return DeprecatedPropertyClass

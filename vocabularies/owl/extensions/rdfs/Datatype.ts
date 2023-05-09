@@ -1,4 +1,4 @@
-import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -21,14 +21,14 @@ declare module '@rdfine/rdfs/lib/Datatype' {
   }
 }
 
-export function DatatypeMixinEx<Base extends ExtendingConstructor<Rdfs.Datatype, DatatypeEx>>(Resource: Base): Constructor<DatatypeEx & RdfResourceCore> & Base {
-  @namespace(owl)
+export function DatatypeMixinEx<Base extends rdfine.ExtendingConstructor<Rdfs.Datatype, DatatypeEx>>(Resource: Base): rdfine.Constructor<DatatypeEx & RdfResourceCore> & Base {
+  @rdfine.namespace(owl)
   class Impl extends Resource implements DatatypeEx {
-    @property.resource({ as: [RdfsDatatypeMixin] })
+    @rdfine.property.resource({ as: [RdfsDatatypeMixin] })
     datatypeComplementOf: Rdfs.Datatype | undefined;
-    @property.resource({ as: [RdfsDatatypeMixin] })
+    @rdfine.property.resource({ as: [RdfsDatatypeMixin] })
     onDatatype: Rdfs.Datatype | undefined;
-    @property.resource({ as: [RdfListMixin] })
+    @rdfine.property.resource({ as: [RdfListMixin] })
     withRestrictions: Rdf.List | undefined;
   }
   return Impl

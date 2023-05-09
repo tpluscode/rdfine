@@ -1,6 +1,6 @@
 import '../extensions/rdfs/Resource.js';
 import { ResourceMixinEx } from '../extensions/rdfs/Resource.js';
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,11 +11,11 @@ import type * as Owl from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
-export interface AllDisjointProperties<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+export interface AllDisjointProperties<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function AllDisjointPropertiesMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AllDisjointProperties> & RdfResourceCore> & Base {
-  @namespace(owl)
+export function AllDisjointPropertiesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AllDisjointProperties> & RdfResourceCore> & Base {
+  @rdfine.namespace(owl)
   class AllDisjointPropertiesClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) implements Partial<AllDisjointProperties> {
   }
   return AllDisjointPropertiesClass

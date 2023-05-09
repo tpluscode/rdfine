@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,14 +11,14 @@ import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 import { OntologyMixin as OwlOntologyMixin } from '@rdfine/owl/lib/Ontology';
 
-export interface SPARQLExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+export interface SPARQLExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
   prefixes: Owl.Ontology<D> | undefined;
 }
 
-export function SPARQLExecutableMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SPARQLExecutable> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function SPARQLExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLExecutable> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class SPARQLExecutableClass extends RdfsResourceMixin(Resource) implements Partial<SPARQLExecutable> {
-    @property.resource({ as: [OwlOntologyMixin] })
+    @rdfine.property.resource({ as: [OwlOntologyMixin] })
     prefixes: Owl.Ontology | undefined;
   }
   return SPARQLExecutableClass

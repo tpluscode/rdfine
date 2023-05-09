@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,11 +9,11 @@ import type * as Sh from '../index.js';
 import { JSExecutableMixin } from './JSExecutable.js';
 import { TargetTypeMixin } from './TargetType.js';
 
-export interface JSTargetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, Sh.TargetType<D>, RdfResource<D> {
+export interface JSTargetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, Sh.TargetType<D>, rdfine.RdfResource<D> {
 }
 
-export function JSTargetTypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<JSTargetType> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function JSTargetTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JSTargetType> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class JSTargetTypeClass extends TargetTypeMixin(JSExecutableMixin(Resource)) implements Partial<JSTargetType> {
   }
   return JSTargetTypeClass

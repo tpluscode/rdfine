@@ -1,4 +1,4 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,11 +9,11 @@ import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
-export interface Target<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+export interface Target<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function TargetMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Target> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function TargetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Target> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class TargetClass extends RdfsResourceMixin(Resource) implements Partial<Target> {
   }
   return TargetClass

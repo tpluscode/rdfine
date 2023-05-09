@@ -163,15 +163,9 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
   }
 
   private addImports(mixinFile: SourceFile, context: Omit<Context, 'properties'>) {
-    const rdfineImports = ['Constructor', 'namespace', 'RdfResource']
-
-    if (Object.keys(this.properties).some(Boolean)) {
-      rdfineImports.push('property')
-    }
-
     mixinFile.addImportDeclaration({
       defaultImport: 'RdfResourceImpl',
-      namedImports: rdfineImports,
+      namespaceImport: 'rdfine',
       moduleSpecifier: '@tpluscode/rdfine',
     })
     mixinFile.addImportDeclaration({
@@ -245,14 +239,14 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       name: this.type.mixinName,
       typeParameters: [{
         name: 'Base',
-        constraint: 'Constructor',
+        constraint: 'rdfine.Constructor',
       }],
       parameters: [{
         name: 'Resource',
         type: 'Base',
       }],
       isExported: true,
-      returnType: `Constructor<Partial<${this.type.localName}> & RdfResourceCore> & Base`,
+      returnType: `rdfine.Constructor<Partial<${this.type.localName}> & RdfResourceCore> & Base`,
     })
 
     function isModuleExtending(superClass: ResourceType | ExternalResourceType) {
@@ -282,7 +276,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     })
 
     mixinClass.addDecorator({
-      name: 'namespace',
+      name: 'rdfine.namespace',
       arguments: [context.prefix],
     })
 
@@ -298,7 +292,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     return mixinFile.addInterface({
       name: `${this.type.localName}<D extends RDF.DatasetCore = RDF.DatasetCore>`,
       isExported: true,
-      extends: [...superInterfaces, 'RdfResource<D>'],
+      extends: [...superInterfaces, 'rdfine.RdfResource<D>'],
     })
   }
 

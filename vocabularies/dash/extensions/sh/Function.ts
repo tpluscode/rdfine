@@ -1,4 +1,4 @@
-import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -16,10 +16,10 @@ declare module '@rdfine/shacl/lib/Function' {
   }
 }
 
-export function FunctionMixinEx<Base extends ExtendingConstructor<Shacl.Function, FunctionEx>>(Resource: Base): Constructor<FunctionEx & RdfResourceCore> & Base {
-  @namespace(dash)
+export function FunctionMixinEx<Base extends rdfine.ExtendingConstructor<Shacl.Function, FunctionEx>>(Resource: Base): rdfine.Constructor<FunctionEx & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class Impl extends Resource implements FunctionEx {
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     cachable: boolean | undefined;
   }
   return Impl
