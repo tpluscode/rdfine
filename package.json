@@ -5,7 +5,7 @@
   "scripts": {
     "postinstall": "patch-package",
     "lint": "eslint . --ext .ts,.js --quiet --ignore-path .eslintignore --ignore-path .gitignore",
-    "test": "c8 mocha vocabularies/**/*.spec.ts packages/**/*.spec.ts",
+    "test": "c8 --reporter lcovonly mocha vocabularies/**/*.spec.ts packages/**/*.spec.ts",
     "example": "wsrun -p rdfine-example --no-prefix -c start",
     "generate": "npm run generate:one",
     "generate:one": "bash -c 'wsrun --no-prefix -rltm -p @rdfine/${0} -c generate'",
