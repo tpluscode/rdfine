@@ -16,7 +16,7 @@
   "scripts": {
     "prepack": "npm run build",
     "clean": "rimraf lib bundles",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc",
     "generate": "rdf-vocab prefix skos | node --loader ts-node/esm ../../packages/generator/bin/rdfine-gen.ts --format application/n-quads "
   },
   "rdfine": {
