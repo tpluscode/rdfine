@@ -1,5 +1,19 @@
 # Change Log
 
+## 0.9.0
+
+### Minor Changes
+
+- 6cee88c8: Package is not ESM-only
+
+### Patch Changes
+
+- Updated dependencies [6cee88c8]
+  - @tpluscode/rdfine@0.6.0
+  - @rdfine/owl@0.5.0
+  - @rdfine/rdf@0.6.0
+  - @rdfine/rdfs@0.7.0
+
 ## 0.8.7
 
 ### Patch Changes

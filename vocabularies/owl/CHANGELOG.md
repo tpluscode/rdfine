@@ -1,5 +1,18 @@
 # Change Log
 
+## 0.5.0
+
+### Minor Changes
+
+- 6cee88c8: Package is not ESM-only
+
+### Patch Changes
+
+- Updated dependencies [6cee88c8]
+  - @tpluscode/rdfine@0.6.0
+  - @rdfine/rdf@0.6.0
+  - @rdfine/rdfs@0.7.0
+
 ## 0.4.9
 
 ### Patch Changes

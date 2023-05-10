@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.0
+
+### Minor Changes
+
+- 6cee88c8: Package is not ESM-only
+
 ## 0.6.10
 
 ### Patch Changes
