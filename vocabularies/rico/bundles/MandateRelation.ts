@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActivityMixin } from '../lib/Activity';
-import { AgentMixin } from '../lib/Agent';
-import { MandateMixin } from '../lib/Mandate';
-import { MandateRelationMixin } from '../lib/MandateRelation';
-import { RuleRelationMixin } from '../lib/RuleRelation';
+import { ActivityMixin } from '../lib/Activity.js';
+import { AgentMixin } from '../lib/Agent.js';
+import { MandateMixin } from '../lib/Mandate.js';
+import { MandateRelationMixin } from '../lib/MandateRelation.js';
+import { RuleRelationMixin } from '../lib/RuleRelation.js';
 
 export const MandateRelationBundle = [
   ActivityMixin as Mixin,

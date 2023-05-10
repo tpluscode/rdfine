@@ -1,29 +1,29 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { as } from './namespace';
+import { as } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as As from '..';
+import type * as As from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
-import { ObjectMixin } from './Object';
+import { ObjectMixin } from './Object.js';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
-export interface Relationship<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, RdfResource<D> {
+export interface Relationship<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
   object: As.Link<D> | As.Object<D> | undefined;
   relationship: Rdf.Property<D> | undefined;
   subject: As.Link<D> | As.Object<D> | undefined;
 }
 
-export function RelationshipMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Relationship> & RdfResourceCore> & Base {
-  @namespace(as)
+export function RelationshipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Relationship> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class RelationshipClass extends ObjectMixin(Resource) implements Partial<Relationship> {
-    @property.resource()
+    @rdfine.property.resource()
     object: As.Link | As.Object | undefined;
-    @property.resource({ as: [RdfPropertyMixin] })
+    @rdfine.property.resource({ as: [RdfPropertyMixin] })
     relationship: Rdf.Property | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     subject: As.Link | As.Object | undefined;
   }
   return RelationshipClass

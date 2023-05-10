@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { as } from './namespace';
+import { as } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as As from '..';
-import { IntransitiveActivityMixin } from './IntransitiveActivity';
+import type * as As from '../index.js';
+import { IntransitiveActivityMixin } from './IntransitiveActivity.js';
 
-export interface Arrive<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.IntransitiveActivity<D>, RdfResource<D> {
+export interface Arrive<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.IntransitiveActivity<D>, rdfine.RdfResource<D> {
 }
 
-export function ArriveMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Arrive> & RdfResourceCore> & Base {
-  @namespace(as)
+export function ArriveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Arrive> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class ArriveClass extends IntransitiveActivityMixin(Resource) implements Partial<Arrive> {
   }
   return ArriveClass

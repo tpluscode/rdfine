@@ -1,28 +1,28 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { sh } from './namespace';
+import { sh } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Sh from '..';
+import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
-export interface ValidationReport<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, RdfResource<D> {
+export interface ValidationReport<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
   conforms: boolean | undefined;
   result: Array<Sh.ValidationResult<D>>;
   shapesGraphWellFormed: boolean | undefined;
 }
 
-export function ValidationReportMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ValidationReport> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function ValidationReportMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ValidationReport> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class ValidationReportClass extends RdfsResourceMixin(Resource) implements Partial<ValidationReport> {
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     conforms: boolean | undefined;
-    @property.resource({ values: 'array', implicitTypes: [sh.ValidationResult] })
+    @rdfine.property.resource({ values: 'array', implicitTypes: [sh.ValidationResult] })
     result!: Array<Sh.ValidationResult>;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     shapesGraphWellFormed: boolean | undefined;
   }
   return ValidationReportClass

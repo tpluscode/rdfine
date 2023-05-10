@@ -1,15 +1,15 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreativeWorkMixin } from './CreativeWork';
-import { LifestyleModificationMixin } from './LifestyleModification';
+import type * as Schema from '../index.js';
+import { CreativeWorkMixin } from './CreativeWork.js';
+import { LifestyleModificationMixin } from './LifestyleModification.js';
 
-export interface Diet<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.LifestyleModification<D>, RdfResource<D> {
+export interface Diet<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.LifestyleModification<D>, rdfine.RdfResource<D> {
   dietFeatures: string | undefined;
   endorsers: Schema.Organization<D> | Schema.Person<D> | undefined;
   expertConsiderations: string | undefined;
@@ -17,18 +17,18 @@ export interface Diet<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   risks: string | undefined;
 }
 
-export function DietMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Diet> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DietMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Diet> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DietClass extends LifestyleModificationMixin(CreativeWorkMixin(Resource)) implements Partial<Diet> {
-    @property.literal()
+    @rdfine.property.literal()
     dietFeatures: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     endorsers: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     expertConsiderations: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     physiologicalBenefits: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     risks: string | undefined;
   }
   return DietClass

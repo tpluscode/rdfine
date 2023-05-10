@@ -1,9 +1,9 @@
 import { ClassDeclaration, DecoratorStructure, InterfaceDeclaration, OptionalKind } from 'ts-morph'
-import { JavascriptProperty } from './JsProperties'
-import { Context } from '../index'
-import { TypeMeta, LiteralType, ResourceType, ExternalResourceType } from '../types'
-import { MixinModuleBase } from '../MixinGenerator/MixinModuleBase'
 import TermSet from '@rdfjs/term-set'
+import { Context } from '../index.js'
+import { TypeMeta, LiteralType, ResourceType, ExternalResourceType } from '../types/index.js'
+import { MixinModuleBase } from '../MixinGenerator/MixinModuleBase.js'
+import { JavascriptProperty } from './JsProperties.js'
 
 interface PropertyWriterInit {
   interfaceDeclaration: InterfaceDeclaration
@@ -42,10 +42,10 @@ function rangesToPropertyTypes(result: string[], range: TypeMeta) {
 }
 
 export class PropertyWriter {
-  private readonly __interface: InterfaceDeclaration;
-  private readonly __class: ClassDeclaration;
+  private readonly __interface: InterfaceDeclaration
+  private readonly __class: ClassDeclaration
   private readonly __context: Omit<Context, 'properties'>
-  private readonly __module: MixinModuleBase<ResourceType | ExternalResourceType>;
+  private readonly __module: MixinModuleBase<ResourceType | ExternalResourceType>
 
   public constructor({ interfaceDeclaration, classDeclaration, context, module }: PropertyWriterInit) {
     this.__interface = interfaceDeclaration
@@ -139,7 +139,7 @@ export class PropertyWriter {
 
     switch (prop.type) {
       case 'literal': {
-        name = 'property.literal'
+        name = 'rdfine.property.literal'
 
         const uniqueTypes = [...new Set(propertyTypes)]
         const uniqueDatatypes = prop.range.reduce<TermSet>((set, range: LiteralType | Record<string, any>) => {
@@ -170,10 +170,10 @@ export class PropertyWriter {
       }
         break
       case 'resource':
-        name = 'property.resource'
+        name = 'rdfine.property.resource'
         break
       case 'term':
-        name = 'property'
+        name = 'rdfine.property'
         break
     }
 

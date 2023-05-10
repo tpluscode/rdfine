@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AuthorshipRelationMixin } from '../lib/AuthorshipRelation';
-import { CreationRelationMixin } from '../lib/CreationRelation';
-import { GroupMixin } from '../lib/Group';
-import { PersonMixin } from '../lib/Person';
-import { PositionMixin } from '../lib/Position';
-import { RecordMixin } from '../lib/Record';
+import { AuthorshipRelationMixin } from '../lib/AuthorshipRelation.js';
+import { CreationRelationMixin } from '../lib/CreationRelation.js';
+import { GroupMixin } from '../lib/Group.js';
+import { PersonMixin } from '../lib/Person.js';
+import { PositionMixin } from '../lib/Position.js';
+import { RecordMixin } from '../lib/Record.js';
 
 export const AuthorshipRelationBundle = [
   AuthorshipRelationMixin as Mixin,

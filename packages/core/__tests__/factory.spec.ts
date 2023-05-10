@@ -1,10 +1,11 @@
-import { createFactory } from '../factory'
-import { Constructor } from '../lib/ResourceFactory'
-import { RdfResource } from '../RdfResource'
-import { property } from '../lib/decorators'
-import { ex } from './_helpers'
 import clownface from 'clownface'
 import $rdf from 'rdf-ext'
+import { expect } from 'chai'
+import { createFactory } from '../factory.js'
+import { Constructor } from '../lib/ResourceFactory.js'
+import { RdfResource } from '../RdfResource.js'
+import { property } from '../lib/decorators/index.js'
+import { ex } from './_helpers/index.js'
 
 interface TestResource extends RdfResource {
   foo?: string
@@ -14,10 +15,10 @@ interface TestResource extends RdfResource {
 function TestMixin<Base extends Constructor>(Resource: Base) {
   class Impl extends Resource implements TestResource {
     @property.literal({ path: ex.foo })
-    foo?: string
+      foo?: string
 
     @property.literal({ path: ex.bar })
-    bar?: string
+      bar?: string
   }
 
   return Impl
@@ -39,8 +40,8 @@ describe('@tpluscode/rdfine/factory', () => {
       const res = factory(blankNode())
 
       // then
-      expect(res.foo).toEqual('foo')
-      expect(res.bar).toBeUndefined()
+      expect(res.foo).to.eq('foo')
+      expect(res.bar).to.be.undefined
     })
 
     it('creates resource initialized with overrides', () => {
@@ -56,8 +57,8 @@ describe('@tpluscode/rdfine/factory', () => {
       })
 
       // then
-      expect(res.foo).toEqual('bar')
-      expect(res.bar).toEqual('foo')
+      expect(res.foo).to.eq('bar')
+      expect(res.bar).to.eq('foo')
     })
   })
 
@@ -71,7 +72,7 @@ describe('@tpluscode/rdfine/factory', () => {
       const res = curriedFactory(blankNode())
 
       // then
-      expect(res.id).toEqual($rdf.namedNode('http://foo.bar/baz'))
+      expect(res.id).to.deep.eq($rdf.namedNode('http://foo.bar/baz'))
     })
 
     it('creates resource with URI provided as Term', () => {
@@ -83,7 +84,7 @@ describe('@tpluscode/rdfine/factory', () => {
       const res = curriedFactory(blankNode())
 
       // then
-      expect(res.id).toStrictEqual($rdf.namedNode('http://foo.bar/baz'))
+      expect(res.id).to.deep.eq($rdf.namedNode('http://foo.bar/baz'))
     })
   })
 
@@ -97,8 +98,8 @@ describe('@tpluscode/rdfine/factory', () => {
       const res = curriedFactory(blankNode('foo'))
 
       // then
-      expect(res.id.termType).toEqual('BlankNode')
-      expect(res.id.value).not.toEqual('foo')
+      expect(res.id.termType).to.eq('BlankNode')
+      expect(res.id.value).not.to.eq('foo')
     })
   })
 })

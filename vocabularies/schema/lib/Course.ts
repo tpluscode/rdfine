@@ -1,15 +1,15 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreativeWorkMixin } from './CreativeWork';
-import { LearningResourceMixin } from './LearningResource';
+import type * as Schema from '../index.js';
+import { CreativeWorkMixin } from './CreativeWork.js';
+import { LearningResourceMixin } from './LearningResource.js';
 
-export interface Course<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.LearningResource<D>, RdfResource<D> {
+export interface Course<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.LearningResource<D>, rdfine.RdfResource<D> {
   courseCode: string | undefined;
   coursePrerequisites: Schema.AlignmentObject<D> | Schema.Course<D> | undefined;
   coursePrerequisitesLiteral: string | undefined;
@@ -22,28 +22,28 @@ export interface Course<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   occupationalCredentialAwardedTerm: RDF.NamedNode | undefined;
 }
 
-export function CourseMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Course> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function CourseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Course> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class CourseClass extends LearningResourceMixin(CreativeWorkMixin(Resource)) implements Partial<Course> {
-    @property.literal()
+    @rdfine.property.literal()
     courseCode: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     coursePrerequisites: Schema.AlignmentObject | Schema.Course | undefined;
-    @property.literal({ path: schema.coursePrerequisites })
+    @rdfine.property.literal({ path: schema.coursePrerequisites })
     coursePrerequisitesLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     educationalCredentialAwarded: string | undefined;
-    @property({ path: schema.educationalCredentialAwarded })
+    @rdfine.property({ path: schema.educationalCredentialAwarded })
     educationalCredentialAwardedTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasCourseInstance: Schema.CourseInstance | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfCredits: Schema.StructuredValue | undefined;
-    @property.literal({ path: schema.numberOfCredits, type: Number })
+    @rdfine.property.literal({ path: schema.numberOfCredits, type: Number })
     numberOfCreditsLiteral: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     occupationalCredentialAwarded: string | undefined;
-    @property({ path: schema.occupationalCredentialAwarded })
+    @rdfine.property({ path: schema.occupationalCredentialAwarded })
     occupationalCredentialAwardedTerm: RDF.NamedNode | undefined;
   }
   return CourseClass

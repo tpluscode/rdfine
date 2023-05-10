@@ -1,12 +1,7 @@
-import cf, { AnyPointer } from 'clownface'
+/* eslint-disable no-use-before-define */
+import cf, { AnyPointer, GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import type { NamedNode, Term, Literal } from '@rdfjs/types'
-import {
-  defaultGraph,
-  namedNode,
-  literal,
-  blankNode,
-} from '@rdf-esm/data-model'
 import {
   skos,
   rdf,
@@ -17,19 +12,24 @@ import {
   rdfs,
   sh,
 } from '@tpluscode/rdf-ns-builders/loose'
-import RdfResource, { Initializer, RdfResourceCore, ResourceNode } from '../RdfResource'
-import { parse, ex } from './_helpers'
-import { Constructor, crossBoundaries, namespace, property, ResourceFactory } from '../index'
-import * as initialize from '../initializer'
+import chai, { expect } from 'chai'
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
+import RdfResource, { Initializer, RdfResourceCore, ResourceNode } from '../RdfResource.js'
+import { Constructor, crossBoundaries, namespace, property, ResourceFactory } from '../index.js'
+import * as initialize from '../initializer.js'
+import { parse, ex } from './_helpers/index.js'
 
 describe('RdfResource', () => {
+  chai.use(jestSnapshotPlugin())
+  before(() => import('../../../__tests__/helpers/matchers.js'))
+
   describe('constructor', () => {
     it('throws when node is literal', () => {
       expect(() => {
         const node = cf({ dataset: $rdf.dataset() }).literal('foo')
 
         return new RdfResource(node as any)
-      }).toThrow()
+      }).to.throw()
     })
 
     it('throws when context represents multiple nodes', () => {
@@ -40,7 +40,7 @@ describe('RdfResource', () => {
         })
 
         return new RdfResource(node as any)
-      }).toThrow()
+      }).to.throw()
     })
   })
 
@@ -55,7 +55,7 @@ describe('RdfResource', () => {
       const areEqual = left.equals(right)
 
       // then
-      expect(areEqual).toBe(true)
+      expect(areEqual).to.eq(true)
     })
 
     it('compares id with term value', () => {
@@ -68,7 +68,7 @@ describe('RdfResource', () => {
       const areEqual = left.equals(right)
 
       // then
-      expect(areEqual).toBe(true)
+      expect(areEqual).to.eq(true)
     })
 
     it('compares id with graph pointer value', () => {
@@ -82,7 +82,7 @@ describe('RdfResource', () => {
       const areEqual = left.equals(right)
 
       // then
-      expect(areEqual).toBe(true)
+      expect(areEqual).to.eq(true)
     })
 
     it('returns false if other resource is falsy', () => {
@@ -94,7 +94,7 @@ describe('RdfResource', () => {
       const areEqual = left.equals(null)
 
       // then
-      expect(areEqual).toBe(false)
+      expect(areEqual).to.eq(false)
     })
 
     it('returns true if "same" blank node is from from same dataset', () => {
@@ -109,7 +109,7 @@ describe('RdfResource', () => {
       const areEqual = left.equals(right)
 
       // then
-      expect(areEqual).toBe(true)
+      expect(areEqual).to.eq(true)
     })
   })
 
@@ -133,7 +133,7 @@ describe('RdfResource', () => {
       const res = new RdfResource(node)
 
       // then
-      expect(res._graphId.equals(defaultGraph()))
+      expect(res._graphId.equals($rdf.defaultGraph()))
     })
   })
 
@@ -153,8 +153,8 @@ describe('RdfResource', () => {
       const tc = new RdfResource(node).types
 
       // then
-      expect([...tc.values()].map(r => r.id)).toEqual(
-        expect.arrayContaining([ex.Type1, ex.Type2, ex.Type3, ex.Type4]),
+      expect([...tc.values()].map(r => r.id)).to.deep.eq(
+        [ex.Type1, ex.Type2, ex.Type3, ex.Type4],
       )
     })
   })
@@ -168,7 +168,7 @@ describe('RdfResource', () => {
       }
       class ResourceImpl extends RdfResource implements Resource {
         @property.literal({ path: ex.name })
-        name!: string;
+          name!: string
       }
 
       // when
@@ -178,9 +178,9 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.name).toEqual('baz')
-      expect(resource.id.termType).toEqual('BlankNode')
-      expect(resource.types.size).toEqual(0)
+      expect(resource.name).to.eq('baz')
+      expect(resource.id.termType).to.eq('BlankNode')
+      expect(resource.types.size).to.eq(0)
     })
 
     it('allows RDF/JS literal to initialize literal properties', () => {
@@ -191,17 +191,17 @@ describe('RdfResource', () => {
       }
       class ResourceImpl extends RdfResource implements Resource {
         @property.literal({ path: ex.name })
-        name!: string;
+          name!: string
       }
       const initializer: Initializer<Resource> = {
-        name: literal('baz'),
+        name: $rdf.literal('baz'),
       }
 
       // when
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.name).toEqual('baz')
+      expect(resource.name).to.eq('baz')
     })
 
     it('allows RDF/JS literal to initialize optional literal properties', () => {
@@ -212,17 +212,17 @@ describe('RdfResource', () => {
       }
       class ResourceImpl extends RdfResource implements Resource {
         @property.literal({ path: ex.name })
-        name!: string;
+          name!: string
       }
       const initializer: Initializer<Resource> = {
-        name: literal('baz'),
+        name: $rdf.literal('baz'),
       }
 
       // when
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.name).toEqual('baz')
+      expect(resource.name).to.eq('baz')
     })
 
     it('allows string to initialize raw literal properties', () => {
@@ -235,7 +235,7 @@ describe('RdfResource', () => {
 
       class ResourceImpl extends RdfResource implements Resource {
         @property({ path: ex.name })
-        name!: Literal;
+          name!: Literal
       }
 
       const initializer: Initializer<Resource> = {
@@ -246,7 +246,7 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.name).toEqual(literal('baz'))
+      expect(resource.name).to.deep.equal($rdf.literal('baz'))
     })
 
     it('allows number to initialize raw literal properties', () => {
@@ -259,7 +259,7 @@ describe('RdfResource', () => {
 
       class ResourceImpl extends RdfResource implements Resource {
         @property({ path: ex.name })
-        age!: Literal;
+          age!: Literal
       }
 
       const initializer: Initializer<Resource> = {
@@ -270,7 +270,7 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.age).toEqual(literal('10', xsd.integer))
+      expect(resource.age).to.deep.equal($rdf.literal('10', xsd.integer))
     })
 
     it('allows number to initialize optional raw literal properties', () => {
@@ -283,7 +283,7 @@ describe('RdfResource', () => {
 
       class ResourceImpl extends RdfResource implements Resource {
         @property({ path: ex.name })
-        age!: Literal;
+          age!: Literal
       }
 
       const initializer: Initializer<Resource> = {
@@ -294,7 +294,7 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.age).toEqual(literal('10', xsd.integer))
+      expect(resource.age).to.deep.equal($rdf.literal('10', xsd.integer))
     })
 
     it('allows undefined to initialize optional raw literal properties', () => {
@@ -307,7 +307,7 @@ describe('RdfResource', () => {
 
       class ResourceImpl extends RdfResource implements Resource {
         @property({ path: ex.name })
-        age!: Literal;
+          age!: Literal
       }
 
       const initializer: Initializer<Resource> = {
@@ -318,7 +318,7 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.age).toBeUndefined()
+      expect(resource.age).to.be.undefined
     })
 
     it('allows literal to initialize optional raw literal properties', () => {
@@ -331,18 +331,18 @@ describe('RdfResource', () => {
 
       class ResourceImpl extends RdfResource implements Resource {
         @property({ path: ex.name })
-        age!: Literal;
+          age!: Literal
       }
 
       const initializer: Initializer<Resource> = {
-        age: literal('foo'),
+        age: $rdf.literal('foo'),
       }
 
       // when
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.age).toEqual(literal('foo'))
+      expect(resource.age).to.deep.equal($rdf.literal('foo'))
     })
 
     it('allows RDF/JS literal to initialize literal array properties', () => {
@@ -353,17 +353,17 @@ describe('RdfResource', () => {
       }
       class ResourceImpl extends RdfResource implements Resource {
         @property.literal({ path: ex.name, values: 'array' })
-        names!: string[];
+          names!: string[]
       }
       const initializer: Initializer<Resource> = {
-        names: [literal('bar'), node.literal('baz')],
+        names: [$rdf.literal('bar'), node.literal('baz')],
       }
 
       // when
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.names).toEqual(expect.arrayContaining(['bar', 'baz']))
+      expect(resource.names).to.deep.eq(['bar', 'baz'])
     })
 
     it('allows clownface literal to initialize literal properties', () => {
@@ -374,7 +374,7 @@ describe('RdfResource', () => {
       }
       class ResourceImpl extends RdfResource implements Resource {
         @property.literal({ path: ex.name })
-        name!: string;
+          name!: string
       }
       const initializer: Initializer<Resource> = {
         name: node.literal('baz'),
@@ -384,7 +384,7 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.name).toEqual('baz')
+      expect(resource.name).to.eq('baz')
     })
 
     it('allows RDF/JS named node to initialize resource properties', () => {
@@ -395,17 +395,17 @@ describe('RdfResource', () => {
       }
       class ResourceImpl extends RdfResource implements Resource {
         @property.resource({ path: ex.other })
-        other!: Resource;
+          other!: Resource
       }
       const initializer: Initializer<Resource> = {
-        other: namedNode('baz'),
+        other: $rdf.namedNode('baz'),
       }
 
       // when
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.other.id).toEqual(namedNode('baz'))
+      expect(resource.other.id).to.deep.eq($rdf.namedNode('baz'))
     })
 
     it('allows clownface named node to initialize named node properties', () => {
@@ -417,10 +417,10 @@ describe('RdfResource', () => {
       }
       class ResourceImpl extends RdfResource implements Resource {
         @property({ path: ex.other })
-        other!: NamedNode;
+          other!: NamedNode
 
         @property({ path: ex.others, values: 'array' })
-        others!: NamedNode[];
+          others!: NamedNode[]
       }
       const initializer: Initializer<Resource> = {
         other: node.namedNode('bar'),
@@ -431,9 +431,9 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.other).toEqual(namedNode('bar'))
-      expect(resource.others).toEqual(
-        expect.arrayContaining([namedNode('baz')]),
+      expect(resource.other).to.deep.eq($rdf.namedNode('bar'))
+      expect(resource.others).to.deep.eq(
+        [$rdf.namedNode('baz')],
       )
     })
 
@@ -446,17 +446,17 @@ describe('RdfResource', () => {
       }
       class ResourceImpl extends RdfResource implements Resource {
         @property({ path: ex.other, values: 'array' })
-        other!: Term;
+          other!: Term
 
         @property({ path: ex.others, values: 'array' })
-        others!: Term[];
+          others!: Term[]
       }
       const initializer: Initializer<Resource> = {
         other: node.blankNode(),
         others: [
           node.blankNode(),
-          literal('foo'),
-          namedNode('bar'),
+          $rdf.literal('foo'),
+          $rdf.namedNode('bar'),
           node.namedNode('baz'),
         ],
       }
@@ -465,13 +465,13 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.others).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({ termType: 'BlankNode' }),
-          literal('foo'),
-          namedNode('bar'),
-          namedNode('baz'),
-        ]),
+      expect(resource.others).to.containSubset(
+        [
+          { termType: 'BlankNode' },
+          $rdf.literal('foo'),
+          $rdf.namedNode('bar'),
+          $rdf.namedNode('baz'),
+        ],
       )
     })
 
@@ -483,17 +483,17 @@ describe('RdfResource', () => {
       }
       class ResourceImpl extends RdfResource implements Resource {
         @property.resource({ path: ex.other })
-        other!: Resource;
+          other!: Resource
       }
       const initializer: Initializer<Resource> = {
-        other: blankNode(),
+        other: $rdf.blankNode(),
       }
 
       // when
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.other.id.termType).toEqual('BlankNode')
+      expect(resource.other.id.termType).to.eq('BlankNode')
     })
 
     it('allows RDF/JS nodes to initialize array resource properties', () => {
@@ -504,12 +504,12 @@ describe('RdfResource', () => {
       }
       class ResourceImpl extends RdfResource implements Resource {
         @property.resource({ path: ex.other, values: 'array' })
-        others!: Resource[];
+          others!: Resource[]
       }
       const initializer: Initializer<Resource> = {
         others: [
-          blankNode(),
-          namedNode('bar'),
+          $rdf.blankNode(),
+          $rdf.namedNode('bar'),
           node.blankNode(),
           node.namedNode('baz'),
         ],
@@ -519,13 +519,13 @@ describe('RdfResource', () => {
       const resource = new ResourceImpl(node, initializer)
 
       // then
-      expect(resource.others.map(o => o.id)).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({ termType: 'BlankNode' }),
-          namedNode('bar'),
-          expect.objectContaining({ termType: 'BlankNode' }),
-          namedNode('baz'),
-        ]),
+      expect(resource.others.map(o => o.id)).to.containSubset(
+        [
+          { termType: 'BlankNode' },
+          $rdf.namedNode('bar'),
+          { termType: 'BlankNode' },
+          $rdf.namedNode('baz'),
+        ],
       )
     })
 
@@ -536,7 +536,7 @@ describe('RdfResource', () => {
         name: string
       }
       class ResourceImpl extends RdfResource implements Resource {
-        name!: string;
+        name!: string
       }
 
       // when
@@ -545,8 +545,8 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.types.size).toEqual(1)
-      expect([...resource.types][0].id.value).toEqual(ex.Bar.value)
+      expect(resource.types.size).to.eq(1)
+      expect([...resource.types][0].id.value).to.eq(ex.Bar.value)
     })
 
     it('allows arbitrary string as RDF property', () => {
@@ -562,8 +562,8 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.getString(skos.prefLabel)).toEqual('Foo')
-      expect(resource.get(skos.broader)!.getString(skos.prefLabel)).toEqual(
+      expect(resource.getString(skos.prefLabel)).to.eq('Foo')
+      expect(resource.get(skos.broader)!.getString(skos.prefLabel)).to.eq(
         'Bar',
       )
     })
@@ -573,7 +573,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
       class Concept extends RdfResource {
         @property.literal({ path: skos.prefLabel })
-        prefLabel!: string;
+          prefLabel!: string
 
         // eslint-disable-next-line no-useless-constructor,@typescript-eslint/no-useless-constructor
         constructor(pointer: ResourceNode, init: Initializer<Concept>) {
@@ -587,7 +587,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.prefLabel).toEqual('Foo')
+      expect(resource.prefLabel).to.eq('Foo')
     })
 
     it('initializes annotated property with nested array of resources which use http properties', () => {
@@ -595,7 +595,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
       class SkosResource extends RdfResource {
         @property.resource({ path: skos.broader, values: 'array' })
-        broader!: SkosResource[];
+          broader!: SkosResource[]
       }
 
       // when
@@ -608,7 +608,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.broader[0].getString(skos.prefLabel)).toEqual('Bar')
+      expect(resource.broader[0].getString(skos.prefLabel)).to.eq('Bar')
     })
 
     it('initializes T|T[] property with IRI', () => {
@@ -616,7 +616,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
       class SkosResource extends RdfResource {
         @property.resource({ path: skos.broader, values: 'array' })
-        broader!: SkosResource[] | SkosResource;
+          broader!: SkosResource[] | SkosResource
       }
 
       // when
@@ -625,7 +625,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.pointer.dataset).toMatchSnapshot()
+      expect(resource.pointer.dataset).to.matchSnapshot()
     })
 
     it('initializes annotated property with a resource using http properties', () => {
@@ -633,7 +633,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
       class SkosResource extends RdfResource {
         @property.resource({ path: skos.broader })
-        broader!: SkosResource;
+          broader!: SkosResource
       }
 
       // when
@@ -644,7 +644,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.broader.getString(skos.prefLabel)).toEqual('Bar')
+      expect(resource.broader.getString(skos.prefLabel)).to.eq('Bar')
     })
 
     it('initializes nested array resources which use http properties', () => {
@@ -661,7 +661,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.get(skos.broader)!.getString(skos.prefLabel)).toEqual(
+      expect(resource.get(skos.broader)!.getString(skos.prefLabel)).to.eq(
         'Bar',
       )
     })
@@ -679,8 +679,8 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.getString(skos.prefLabel)).toEqual('Foo')
-      expect(resource.get(skos.broader)!.id.value).toEqual(ex.Bar.value)
+      expect(resource.getString(skos.prefLabel)).to.eq('Foo')
+      expect(resource.get(skos.broader)!.id.value).to.eq(ex.Bar.value)
     })
 
     it('assigns named node to arbitrary URI property', () => {
@@ -693,7 +693,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.get(skos.broader)!.id.value).toEqual(ex.Bar.value)
+      expect(resource.get(skos.broader)!.id.value).to.eq(ex.Bar.value)
     })
 
     it('assigns literal node to arbitrary URI property', () => {
@@ -713,14 +713,14 @@ describe('RdfResource', () => {
       // given
       class Child extends RdfResource {
         @property.literal({ path: ex.foo })
-        foo?: string;
+          foo?: string
 
         @property.literal({ path: ex.bar })
-        bar?: string;
+          bar?: string
       }
       class Decomposed extends RdfResource {
         @property.resource({ path: ex.child, as: [Child] })
-        child?: Decomposed;
+          child?: Decomposed
       }
       const child = new Child(cf({ dataset: $rdf.dataset() }).blankNode(), {
         foo: 'foo',
@@ -746,7 +746,7 @@ describe('RdfResource', () => {
       // given
       class Resource extends RdfResource {
         @property.resource({ path: ex.foo })
-        foo!: RdfResource;
+          foo!: RdfResource
       }
 
       // when
@@ -770,7 +770,7 @@ describe('RdfResource', () => {
       // given
       class Resource extends RdfResource {
         @property.resource({ path: ex.foo })
-        foo!: RdfResource;
+          foo!: RdfResource
       }
 
       // when
@@ -794,7 +794,7 @@ describe('RdfResource', () => {
       // given
       class Resource extends RdfResource {
         @property.resource({ path: ex.foo, implicitTypes: [ex.Foo, ex.Bar] })
-        foo!: RdfResource;
+          foo!: RdfResource
       }
 
       // when
@@ -829,12 +829,8 @@ describe('RdfResource', () => {
           )
 
           // then
-          expect(resource.pointer.out(ex.prop).term?.value).toEqual(term.value)
-          expect(resource.pointer.out(ex.prop).term).toMatchObject({
-            datatype: {
-              value: term.datatype.value,
-            },
-          })
+          expect(resource.pointer.out(ex.prop).term?.value).to.eq(term.value)
+          expect(resource.pointer.out(ex.prop).term).to.have.property('datatype').deep.eq(term.datatype)
         })
 
         it(`initializes annotated term property from native ${name} value`, () => {
@@ -845,7 +841,7 @@ describe('RdfResource', () => {
           function PersonMixin<Base extends Constructor>(Resource: Base) {
             class PersonImpl extends Resource implements Person {
               @property({ path: ex.prop })
-              prop?: Literal
+                prop?: Literal
             }
 
             return PersonImpl
@@ -863,12 +859,8 @@ describe('RdfResource', () => {
           })
 
           // then
-          expect(resource.pointer.out(ex.prop).term?.value).toEqual(term.value)
-          expect(resource.pointer.out(ex.prop).term).toMatchObject({
-            datatype: {
-              value: term.datatype.value,
-            },
-          })
+          expect(resource.pointer.out(ex.prop).term?.value).to.eq(term.value)
+          expect(resource.pointer.out(ex.prop).term).to.have.property('datatype').deep.eq(term.datatype)
         })
       }
     })
@@ -882,7 +874,7 @@ describe('RdfResource', () => {
       function ConceptMixin<Base extends Constructor>(Resource: Base) {
         class ConceptImpl extends Resource implements Concept {
           @property.literal({ path: skos.prefLabel })
-          prefLabel!: string;
+            prefLabel!: string
         }
 
         return ConceptImpl
@@ -902,7 +894,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.get<Concept>(skos.hasTopConcept)?.prefLabel).toEqual('Foo')
+      expect(resource.get<Concept>(skos.hasTopConcept)?.prefLabel).to.eq('Foo')
     })
 
     it('initialized mixed property as list when given array', () => {
@@ -914,7 +906,7 @@ describe('RdfResource', () => {
       function ConceptMixin<Base extends Constructor>(Resource: Base) {
         class ConceptImpl extends Resource implements Concept {
           @property.literal({ path: skos.prefLabel, values: ['list', 'single'] })
-          prefLabel!: string | string[];
+            prefLabel!: string | string[]
         }
 
         return ConceptImpl
@@ -931,7 +923,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.prefLabel).toEqual(['Foo', 'Bar'])
+      expect(resource.prefLabel).to.contain.all.members(['Foo', 'Bar'])
     })
 
     it('initialized list from resource initializers', () => {
@@ -943,7 +935,7 @@ describe('RdfResource', () => {
       function ShapeMixin<Base extends Constructor>(Resource: Base) {
         class ShapeImpl extends Resource implements Shape {
           @property({ path: sh.in, values: 'list' })
-          in!: Term[];
+            in!: Term[]
         }
 
         return ShapeImpl
@@ -965,8 +957,8 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.in).toStrictEqual(
-        expect.arrayContaining([ex.foo, ex.bar]),
+      expect(resource.in).to.deep.eq(
+        [ex.foo, ex.bar],
       )
     })
 
@@ -979,7 +971,7 @@ describe('RdfResource', () => {
       function ShapeMixin<Base extends Constructor>(Resource: Base) {
         class ShapeImpl extends Resource implements Shape {
           @property({ path: sh.in, values: 'list' })
-          in!: Term[];
+            in!: Term[]
         }
 
         return ShapeImpl
@@ -994,8 +986,8 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.in).toStrictEqual(
-        expect.arrayContaining([ex.foo, ex.bar]),
+      expect(resource.in).to.deep.eq(
+        [ex.foo, ex.bar],
       )
     })
 
@@ -1008,7 +1000,7 @@ describe('RdfResource', () => {
       function ShapeMixin<Base extends Constructor>(Resource: Base) {
         class ShapeImpl extends Resource implements Shape {
           @property({ path: sh.in, values: 'list' })
-          in!: Term[];
+            in!: Term[]
         }
 
         return ShapeImpl
@@ -1023,7 +1015,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.in).toStrictEqual([])
+      expect(resource.in).to.deep.eq([])
     })
 
     describe('with curried factory', () => {
@@ -1036,7 +1028,7 @@ describe('RdfResource', () => {
         function TestMixin<Base extends Constructor>(Resource: Base) {
           class Impl extends Resource implements TestResource {
             @property({ path: ex.child })
-            child!: Term;
+              child!: Term
           }
 
           return Impl
@@ -1053,7 +1045,7 @@ describe('RdfResource', () => {
         })
 
         // then
-        expect(resource.child).toEqual($rdf.blankNode('foo'))
+        expect(resource.child).to.deep.eq($rdf.blankNode('foo'))
       })
 
       it('named node initializing URI property', () => {
@@ -1069,7 +1061,7 @@ describe('RdfResource', () => {
         })
 
         // then
-        expect(resource.pointer.out(ex.foo).term).toEqual($rdf.namedNode('foo'))
+        expect(resource.pointer.out(ex.foo).term).to.deep.eq($rdf.namedNode('foo'))
       })
     })
   })
@@ -1083,7 +1075,7 @@ describe('RdfResource', () => {
       const res = new RdfResource(node)
 
       // then
-      expect(res.isAnonymous).toBe(true)
+      expect(res.isAnonymous).to.eq(true)
     })
 
     it('false for named node', () => {
@@ -1096,7 +1088,7 @@ describe('RdfResource', () => {
       const res = new RdfResource(node)
 
       // then
-      expect(res.isAnonymous).toBe(false)
+      expect(res.isAnonymous).to.eq(false)
     })
   })
 
@@ -1118,8 +1110,8 @@ describe('RdfResource', () => {
         const object = resource.get(ex.foo)
 
         // then
-        expect(object).toBeInstanceOf(RdfResource)
-        expect(object?.id.value).toEqual(ex.bar.value)
+        expect(object).to.be.instanceOf(RdfResource)
+        expect(object?.id.value).to.eq(ex.bar.value)
       })
 
       it('throws when property has no value and calling strict', () => {
@@ -1131,7 +1123,7 @@ describe('RdfResource', () => {
         expect(() => {
           // when
           return resource.get(ex.foo, { strict: true })
-        }).toThrow()
+        }).to.throw()
       })
 
       it('returns null when property has no value and calling not strict', () => {
@@ -1143,7 +1135,7 @@ describe('RdfResource', () => {
         const object = resource.get(ex.foo, { strict: false })
 
         // then
-        expect(object).toBeNull()
+        expect(object).to.be.null
       })
     })
 
@@ -1157,7 +1149,7 @@ describe('RdfResource', () => {
         const object = resource.getArray(ex.foo, { strict: false })
 
         // then
-        expect(object.length).toBe(0)
+        expect(object.length).to.eq(0)
       })
 
       it('skips literals', () => {
@@ -1170,7 +1162,7 @@ describe('RdfResource', () => {
         const object = resource.getArray(ex.foo, { strict: false })
 
         // then
-        expect(object.length).toBe(0)
+        expect(object.length).to.eq(0)
       })
     })
 
@@ -1181,7 +1173,7 @@ describe('RdfResource', () => {
         const resource = new RdfResource(node)
 
         // then
-        expect(() => resource.getBoolean(ex.foo)).toThrow()
+        expect(() => resource.getBoolean(ex.foo)).to.throw()
       })
 
       it('return false when value is undefined', () => {
@@ -1189,7 +1181,7 @@ describe('RdfResource', () => {
         const resource = new RdfResource(node)
 
         // then
-        expect(resource.getBoolean(ex.foo)).toBeFalsy()
+        expect(resource.getBoolean(ex.foo)).not.to.be.ok
       })
 
       it('return the value when it is set', () => {
@@ -1198,7 +1190,7 @@ describe('RdfResource', () => {
         const resource = new RdfResource(node)
 
         // then
-        expect(resource.getBoolean(ex.foo)).toBeTruthy()
+        expect(resource.getBoolean(ex.foo)).to.be.ok
       })
     })
 
@@ -1209,7 +1201,7 @@ describe('RdfResource', () => {
         const resource = new RdfResource(node)
 
         // then
-        expect(() => resource.getNumber(ex.foo)).toThrow()
+        expect(() => resource.getNumber(ex.foo)).to.throw()
       })
 
       it('return null when value is undefined', () => {
@@ -1217,7 +1209,7 @@ describe('RdfResource', () => {
         const resource = new RdfResource(node)
 
         // then
-        expect(resource.getNumber('foo')).toBeNull()
+        expect(resource.getNumber('foo')).to.be.null
       })
 
       it('parses the literal', () => {
@@ -1226,7 +1218,7 @@ describe('RdfResource', () => {
         const resource = new RdfResource(node)
 
         // then
-        expect(resource.getNumber(ex.foo)).toBe(10.5)
+        expect(resource.getNumber(ex.foo)).to.eq(10.5)
       })
     })
 
@@ -1237,7 +1229,7 @@ describe('RdfResource', () => {
         const resource = new RdfResource(node)
 
         // then
-        expect(resource.getString(ex.foo)).toBe('123')
+        expect(resource.getString(ex.foo)).to.eq('123')
       })
 
       it('return null when value is undefined', () => {
@@ -1245,7 +1237,7 @@ describe('RdfResource', () => {
         const resource = new RdfResource(node)
 
         // then
-        expect(resource.getString(ex.foo)).toBeNull()
+        expect(resource.getString(ex.foo)).to.be.null
       })
     })
   })
@@ -1260,8 +1252,8 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
-      expect(json.id).toEqual('_:john')
+      expect(json).to.be.validJsonLd()
+      expect(json.id).to.eq('_:john')
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -1282,8 +1274,8 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
-      expect(json.id).toEqual('foo')
+      expect(json).to.be.validJsonLd()
+      expect(json.id).to.eq('foo')
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -1307,9 +1299,9 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
-      expect(json.type).toEqual(
-        expect.arrayContaining([foaf.Person.value, schema.Person.value]),
+      expect(json).to.be.validJsonLd()
+      expect(json.type).to.deep.contain.all.members(
+        [foaf.Person.value, schema.Person.value],
       )
       expect(json).toMatchInlineSnapshot(`
         Object {
@@ -1334,10 +1326,10 @@ describe('RdfResource', () => {
         .addOut(schema.familyName, 'Doe')
       class TestResource extends RdfResource {
         @property.literal({ path: schema.givenName })
-        name!: string;
+          name!: string
 
         @property.literal({ path: schema.familyName })
-        lastName!: string;
+          lastName!: string
       }
       const resource = new TestResource(node)
 
@@ -1345,9 +1337,9 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
-      expect(json.name).toEqual('John')
-      expect(json['@context'].name).toEqual(schema.givenName.value)
+      expect(json).to.be.validJsonLd()
+      expect(json.name).to.eq('John')
+      expect(json['@context'].name).to.eq(schema.givenName.value)
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -1372,10 +1364,10 @@ describe('RdfResource', () => {
       @namespace(schema)
       class TestResource extends RdfResource {
         @property.literal()
-        givenName!: string;
+          givenName!: string
 
         @property.literal()
-        familyName!: string;
+          familyName!: string
       }
       const resource = new TestResource(node)
 
@@ -1383,9 +1375,9 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
-      expect(json.givenName).toEqual('John')
-      expect(json['@context'].givenName).toEqual(schema.givenName.value)
+      expect(json).to.be.validJsonLd()
+      expect(json.givenName).to.eq('John')
+      expect(json['@context'].givenName).to.eq(schema.givenName.value)
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -1411,13 +1403,13 @@ describe('RdfResource', () => {
         .addOut(schema.contentSize, 22.5)
         .addOut(
           schema.datePublished,
-          literal(new Date().toISOString(), xsd.dateTime),
+          $rdf.literal('2023-05-07T20:00:30', xsd.dateTime),
         )
         .addOut(schema.isLiveBroadcast, true)
-        .addOut(schema.name, literal('foo', 'en'))
+        .addOut(schema.name, $rdf.literal('foo', 'en'))
       class TestResource extends RdfResource {
         @property.literal({ path: schema.givenName })
-        name!: string;
+          name!: string
       }
       const resource = new TestResource(node)
 
@@ -1425,14 +1417,8 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(
-        {
-          [schema.datePublished.value]: {
-            '@value': expect.any(String),
-            '@type': xsd.dateTime.value,
-          },
-        },
         `
         Object {
           "@context": Object {
@@ -1444,7 +1430,7 @@ describe('RdfResource', () => {
           "http://schema.org/contentSize": 22.5,
           "http://schema.org/datePublished": Object {
             "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
-            "@value": Any<String>,
+            "@value": "2023-05-07T20:00:30",
           },
           "http://schema.org/familyName": "Doe",
           "http://schema.org/isLiveBroadcast": true,
@@ -1463,15 +1449,15 @@ describe('RdfResource', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
-        .addOut(schema.name, literal('foo', 'en'))
-        .addOut(schema.name, literal('bar', 'de'))
+        .addOut(schema.name, $rdf.literal('foo', 'en'))
+        .addOut(schema.name, $rdf.literal('bar', 'de'))
       const resource = new RdfResource(node)
 
       // when
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -1497,7 +1483,7 @@ describe('RdfResource', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
-        .addOut(schema.knows, namedNode('jane'))
+        .addOut(schema.knows, $rdf.namedNode('jane'))
       node.namedNode('jane').addOut(schema.name, 'jane')
       const resource = new RdfResource(node)
 
@@ -1505,7 +1491,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -1525,8 +1511,8 @@ describe('RdfResource', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
-        .addOut(schema.knows, namedNode('jane'))
-        .addOut(schema.knows, namedNode('jenny'))
+        .addOut(schema.knows, $rdf.namedNode('jane'))
+        .addOut(schema.knows, $rdf.namedNode('jenny'))
       node.namedNode('jane').addOut(schema.name, 'jane')
       node.namedNode('jenny').addOut(schema.name, 'jenny')
       const resource = new RdfResource(node)
@@ -1535,7 +1521,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -1565,33 +1551,33 @@ describe('RdfResource', () => {
         .addOut(schema.contentSize, 22.5)
         .addOut(
           schema.datePublished,
-          literal(new Date().toISOString(), xsd.dateTime),
+          $rdf.literal('2023-05-07T20:00:30', xsd.dateTime),
         )
         .addOut(schema.isLiveBroadcast, true)
         .addOut(schema.isAccessibleForFree, false)
         .addOut(schema.contentUrl, 'http://example.com/foo')
-        .addOut(schema.name, literal('foo', 'en'))
+        .addOut(schema.name, $rdf.literal('foo', 'en'))
       class TestResource extends RdfResource {
         @property.literal({ path: schema.age, type: Number })
-        age!: number;
+          age!: number
 
         @property.literal({ path: schema.contentSize, type: Number })
-        contentSize!: number;
+          contentSize!: number
 
         @property.literal({ path: schema.datePublished, type: Date })
-        datePublished!: Date;
+          datePublished!: Date
 
         @property.literal({ path: schema.isLiveBroadcast, type: Boolean })
-        isLiveBroadcast!: boolean;
+          isLiveBroadcast!: boolean
 
         @property.literal({ path: schema.isAccessibleForFree, type: Boolean })
-        isAccessibleForFree!: boolean;
+          isAccessibleForFree!: boolean
 
         @property.literal({ path: schema.contentUrl, datatype: xsd.anyURI })
-        contentUrl!: string;
+          contentUrl!: string
 
         @property.literal({ path: schema.name })
-        name!: string;
+          name!: string
       }
       const resource = new TestResource(node)
 
@@ -1599,19 +1585,13 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
-      expect(json.age).toEqual(22)
-      expect(json.contentSize).toEqual(22.5)
-      expect(json.isLiveBroadcast).toEqual(true)
-      expect(json.isAccessibleForFree).toEqual(false)
-      expect(json.contentUrl).toEqual('http://example.com/foo')
+      expect(json).to.be.validJsonLd()
+      expect(json.age).to.eq(22)
+      expect(json.contentSize).to.eq(22.5)
+      expect(json.isLiveBroadcast).to.eq(true)
+      expect(json.isAccessibleForFree).to.eq(false)
+      expect(json.contentUrl).to.eq('http://example.com/foo')
       expect(json).toMatchInlineSnapshot(
-        {
-          datePublished: {
-            '@value': expect.any(String),
-            '@type': xsd.dateTime.value,
-          },
-        },
         `
         Object {
           "@context": Object {
@@ -1630,7 +1610,7 @@ describe('RdfResource', () => {
           "contentUrl": "http://example.com/foo",
           "datePublished": Object {
             "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
-            "@value": Any<String>,
+            "@value": "2023-05-07T20:00:30",
           },
           "id": "test",
           "isAccessibleForFree": false,
@@ -1657,7 +1637,7 @@ describe('RdfResource', () => {
         } as Literal)
       class TestResource extends RdfResource {
         @property.literal({ path: schema.name })
-        name!: string;
+          name!: string
       }
       const resource = new TestResource(node)
 
@@ -1665,7 +1645,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json.name).toEqual('John Doe')
+      expect(json.name).to.eq('John Doe')
     })
 
     it('maps arrays of literals', () => {
@@ -1673,11 +1653,11 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('test')
         .addOut(schema.alternateName, 'Foo')
-        .addOut(schema.alternateName, literal('Bar', 'de'))
-        .addOut(schema.alternateName, literal('Baz', 'fr'))
+        .addOut(schema.alternateName, $rdf.literal('Bar', 'de'))
+        .addOut(schema.alternateName, $rdf.literal('Baz', 'fr'))
       class TestResource extends RdfResource {
         @property.literal({ path: schema.alternateName })
-        alternateNames!: string[];
+          alternateNames!: string[]
       }
       const resource = new TestResource(node)
 
@@ -1685,8 +1665,8 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
-      expect(json.alternateNames).toHaveLength(3)
+      expect(json).to.be.validJsonLd()
+      expect(json.alternateNames).to.have.length(3)
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -1714,16 +1694,16 @@ describe('RdfResource', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
-        .addOut(schema.knows, namedNode('jane'), jane => {
+        .addOut(schema.knows, $rdf.namedNode('jane'), jane => {
           jane.addOut(schema.givenName, 'Jane')
         })
       function PersonMixin<Base extends Constructor>(base: Base) {
         class TestPerson extends base {
           @property.literal({ path: schema.givenName })
-          name!: string;
+            name!: string
 
           @property.resource({ path: schema.knows, as: [PersonMixin] })
-          knows!: TestPerson;
+            knows!: TestPerson
         }
         return TestPerson
       }
@@ -1733,8 +1713,8 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
-      expect(json.knows?.name).toEqual('Jane')
+      expect(json).to.be.validJsonLd()
+      expect(json.knows?.name).to.eq('Jane')
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -1759,16 +1739,16 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
         .addOut(schema.givenName, 'John')
-        .addOut(schema.knows, namedNode('jane'), jane => {
-          jane.addOut(schema.knows, namedNode('john'))
+        .addOut(schema.knows, $rdf.namedNode('jane'), jane => {
+          jane.addOut(schema.knows, $rdf.namedNode('john'))
         })
       function PersonMixin<Base extends Constructor>(base: Base) {
         class TestPerson extends base {
           @property.resource({ path: schema.givenName, as: [PersonMixin] })
-          name!: TestPerson;
+            name!: TestPerson
 
           @property.resource({ path: schema.knows, as: [PersonMixin] })
-          knows!: TestPerson;
+            knows!: TestPerson
         }
         return TestPerson
       }
@@ -1778,8 +1758,8 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
-      expect(json.knows?.knows?.id).toEqual('john')
+      expect(json).to.be.validJsonLd()
+      expect(json.knows?.knows?.id).to.eq('john')
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -1806,9 +1786,9 @@ describe('RdfResource', () => {
         .namedNode('john')
         .addOut(
           schema.knows,
-          [namedNode('jane'), namedNode('jenny')],
+          [$rdf.namedNode('jane'), $rdf.namedNode('jenny')],
           friends => {
-            friends.forEach(friend =>
+            friends.forEach((friend: GraphPointer) =>
               friend.addOut(schema.givenName, friend.value),
             )
           },
@@ -1816,14 +1796,14 @@ describe('RdfResource', () => {
       function PersonMixin<Base extends Constructor>(base: Base) {
         class TestPerson extends base {
           @property.literal({ path: schema.givenName })
-          name!: string;
+            name!: string
 
           @property.resource({
             path: schema.knows,
             as: [PersonMixin],
             values: 'array',
           })
-          knows!: TestPerson[];
+            knows!: TestPerson[]
         }
         return TestPerson
       }
@@ -1833,8 +1813,8 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
-      expect(json.knows![0].name).toEqual('jane')
+      expect(json).to.be.validJsonLd()
+      expect(json.knows![0].name).to.eq('jane')
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -1867,20 +1847,20 @@ describe('RdfResource', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
-        .addList(schema.knows, [namedNode('jane'), namedNode('jenny')])
+        .addList(schema.knows, [$rdf.namedNode('jane'), $rdf.namedNode('jenny')])
       node.namedNode('jane').addOut(schema.givenName, 'jane')
       node.namedNode('jenny').addOut(schema.givenName, 'jenny')
       function PersonMixin<Base extends Constructor>(base: Base) {
         class TestPerson extends base {
           @property.literal({ path: schema.givenName })
-          name!: string;
+            name!: string
 
           @property.resource({
             path: schema.knows,
             as: [PersonMixin],
             values: 'list',
           })
-          knows!: TestPerson[];
+            knows!: TestPerson[]
         }
         return TestPerson
       }
@@ -1890,8 +1870,8 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
-      expect(json.knows![0].name).toEqual('jane')
+      expect(json).to.be.validJsonLd()
+      expect(json.knows![0].name).to.eq('jane')
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -1928,16 +1908,16 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
         .addOut(schema.givenName, 'John')
-        .addOut(schema.knows, namedNode('jane'), jane => {
+        .addOut(schema.knows, $rdf.namedNode('jane'), jane => {
           jane.addOut(schema.givenName, 'Jane')
         })
       function PersonMixin<Base extends Constructor>(base: Base) {
         class TestPerson extends base {
           @property.literal({ path: schema.givenName })
-          name!: string;
+            name!: string
 
           @property.resource({ path: schema.knows, as: [PersonMixin] })
-          knows!: TestPerson;
+            knows!: TestPerson
         }
         return TestPerson
       }
@@ -1947,7 +1927,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -1971,22 +1951,22 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('article')
         .addOut(dcterms.title, 'Using alcaeus')
-        .addOut(dcterms.creator, namedNode('john'), john => {
+        .addOut(dcterms.creator, $rdf.namedNode('john'), john => {
           john.addOut(schema.givenName, 'John')
         })
       function PersonMixin<Base extends Constructor>(base: Base) {
         class TestPerson extends base {
           @property.literal({ path: schema.givenName })
-          name!: string;
+            name!: string
         }
         return TestPerson
       }
       class TestResource extends RdfResource {
         @property({ path: dcterms.title })
-        name!: string;
+          name!: string
 
         @property.resource({ path: dcterms.creator, as: [PersonMixin] })
-        creator!: RdfResource;
+          creator!: RdfResource
       }
       const resource = new TestResource(node)
 
@@ -1994,7 +1974,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -2020,18 +2000,18 @@ describe('RdfResource', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() })
         .namedNode('john')
-        .addOut(schema.knows, namedNode('jane'), jane => {
+        .addOut(schema.knows, $rdf.namedNode('jane'), jane => {
           jane.addOut(schema.givenName, 'Jane')
         })
       class TestPerson extends RdfResource {
         @property.literal({ path: [schema.knows, schema.givenName] })
-        friendsName!: string;
+          friendsName!: string
 
         @property.resource({ path: schema.knows, subjectFromAllGraphs: true })
-        allFriendsFromAnywhere!: RdfResource;
+          allFriendsFromAnywhere!: RdfResource
 
         @property.resource({ path: crossBoundaries(schema.knows) })
-        allFriends!: RdfResource;
+          allFriends!: RdfResource
       }
       const resource = new TestPerson(node)
 
@@ -2039,7 +2019,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -2066,7 +2046,7 @@ describe('RdfResource', () => {
         .addOut(schema.givenName, 'Other name')
       class TestPerson extends RdfResource {
         @property.literal({ path: schema.givenName })
-        name!: string;
+          name!: string
       }
       const resource = new TestPerson(node)
 
@@ -2074,7 +2054,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -2103,7 +2083,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -2127,7 +2107,7 @@ describe('RdfResource', () => {
         @namespace(foaf)
         class NameClass extends base {
           @property.literal()
-          name!: string;
+            name!: string
         }
 
         return NameClass
@@ -2136,7 +2116,7 @@ describe('RdfResource', () => {
         @namespace(schema)
         class AgeClass extends base {
           @property.literal()
-          age!: number;
+            age!: number
         }
 
         return AgeClass
@@ -2150,7 +2130,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -2177,7 +2157,7 @@ describe('RdfResource', () => {
         @namespace(ex)
         class NameClass extends base {
           @property({ values: 'array' })
-          foo!: Term[];
+            foo!: Term[]
         }
 
         return NameClass
@@ -2188,7 +2168,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -2224,7 +2204,7 @@ describe('RdfResource', () => {
         @namespace(ex)
         class NameClass extends base {
           @property.literal({ values: 'list' })
-          foo!: string[];
+            foo!: string[]
         }
 
         return NameClass
@@ -2236,7 +2216,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -2280,7 +2260,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -2318,7 +2298,7 @@ describe('RdfResource', () => {
         @namespace(ex)
         class NameClass extends base {
           @property({ values: 'list' })
-          foo!: Term[];
+            foo!: Term[]
         }
 
         return NameClass
@@ -2330,7 +2310,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -2374,7 +2354,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -2408,7 +2388,7 @@ describe('RdfResource', () => {
         @namespace(ex)
         class NameClass extends base {
           @property.literal()
-          foo!: string;
+            foo!: string
         }
 
         return NameClass
@@ -2420,7 +2400,7 @@ describe('RdfResource', () => {
       const json = resource.toJSON()
 
       // then
-      expect(json).toBeValidJsonLd()
+      expect(json).to.be.validJsonLd()
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
@@ -2453,7 +2433,7 @@ describe('RdfResource', () => {
           @namespace(ex)
           class NameClass extends base {
             @property({ initial: node })
-            foo!: Term;
+              foo!: Term
           }
 
           return NameClass
@@ -2464,8 +2444,8 @@ describe('RdfResource', () => {
         const json = resource.toJSON()
 
         // then
-        expect(json).toBeValidJsonLd()
-        expect(json.foo).toBeNull()
+        expect(json).to.be.validJsonLd()
+        expect(json.foo).to.be.null
       })
     })
   })

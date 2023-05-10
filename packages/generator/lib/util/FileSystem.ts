@@ -1,8 +1,8 @@
-import { RealFileSystemHost } from '@ts-morph/common'
 import path from 'path'
+import { RealFileSystemHost } from '@ts-morph/common'
 
 export default class FileSystem extends RealFileSystemHost {
-  private readonly outDir: string;
+  private readonly outDir: string
 
   constructor(outDir: string) {
     super()

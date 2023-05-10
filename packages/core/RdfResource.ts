@@ -1,25 +1,25 @@
 /* eslint-disable camelcase,no-dupe-class-members,no-use-before-define */
-import type { NamespaceBuilder } from '@rdf-esm/namespace'
+import type { NamespaceBuilder } from '@rdfjs/namespace'
 import type { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from '@rdfjs/types'
 import cf, { MultiPointer, GraphPointer, AnyPointer } from 'clownface'
-import ResourceFactoryImpl from './lib/ResourceFactory'
+import once from 'once'
+import { xsd } from '@tpluscode/rdf-ns-builders'
+import $rdf from '@rdfjs/data-model'
+import ResourceFactoryImpl from './lib/ResourceFactory.js'
 import type {
   Constructor,
   Mixin,
   ResourceCreationOptions,
   ResourceFactory,
   ResourceIndexer,
-} from './lib/ResourceFactory'
-import once from 'once'
-import type { TypeCollection } from './lib/TypeCollection'
-import TypeCollectionCtor from './lib/TypeCollection'
-import { xsd } from '@tpluscode/rdf-ns-builders'
-import { defaultGraphInstance } from '@rdf-esm/data-model'
-import { toJSON } from './lib/toJSON'
-import type { Jsonified } from './lib/toJSON'
-import { fromInitializer } from './lib/resource'
-import { mixins } from './lib/mixins'
-import { toLiteral } from './lib/conversion'
+} from './lib/ResourceFactory.js'
+import type { TypeCollection } from './lib/TypeCollection.js'
+import TypeCollectionCtor from './lib/TypeCollection.js'
+import { toJSON } from './lib/toJSON.js'
+import type { Jsonified } from './lib/toJSON.js'
+import { fromInitializer } from './lib/resource.js'
+import { mixins } from './lib/mixins.js'
+import { toLiteral } from './lib/conversion.js'
 
 export type ResourceIdentifier = BlankNode | NamedNode
 export type ResourceNode<D extends DatasetCore = DatasetCore> = GraphPointer<ResourceIdentifier, D>
@@ -177,7 +177,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       this.pointer = selfGraph
       this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: undefined })
     } else {
-      this.pointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: defaultGraphInstance })
+      this.pointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: $rdf.defaultGraph() })
       this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term })
     }
 

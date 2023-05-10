@@ -1,10 +1,10 @@
-import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rdf } from '@tpluscode/rdf-ns-builders';
-import { rdfs } from '../../lib/namespace';
-import type * as Rdfs from '../..';
+import { rdfs } from '../../lib/namespace.js';
+import type * as Rdfs from '../../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
@@ -19,14 +19,14 @@ declare module '@rdfine/rdf/lib/Property' {
   }
 }
 
-export function PropertyMixinEx<Base extends ExtendingConstructor<Rdf.Property, PropertyEx>>(Resource: Base): Constructor<PropertyEx & RdfResourceCore> & Base {
-  @namespace(rdfs)
+export function PropertyMixinEx<Base extends rdfine.ExtendingConstructor<Rdf.Property, PropertyEx>>(Resource: Base): rdfine.Constructor<PropertyEx & RdfResourceCore> & Base {
+  @rdfine.namespace(rdfs)
   class Impl extends Resource implements PropertyEx {
-    @property.resource({ values: 'array', implicitTypes: [rdfs.Class] })
+    @rdfine.property.resource({ values: 'array', implicitTypes: [rdfs.Class] })
     domain!: Array<Rdfs.Class>;
-    @property.resource({ values: 'array', implicitTypes: [rdfs.Class] })
+    @rdfine.property.resource({ values: 'array', implicitTypes: [rdfs.Class] })
     range!: Array<Rdfs.Class>;
-    @property.resource({ values: 'array', as: [RdfPropertyMixin] })
+    @rdfine.property.resource({ values: 'array', as: [RdfPropertyMixin] })
     subPropertyOf!: Array<Rdf.Property>;
   }
   return Impl

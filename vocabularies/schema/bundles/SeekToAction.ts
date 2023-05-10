@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActionMixin } from '../lib/Action';
-import { HyperTocEntryMixin } from '../lib/HyperTocEntry';
-import { SeekToActionMixin } from '../lib/SeekToAction';
+import { ActionMixin } from '../lib/Action.js';
+import { HyperTocEntryMixin } from '../lib/HyperTocEntry.js';
+import { SeekToActionMixin } from '../lib/SeekToAction.js';
 
 export const SeekToActionBundle = [
   ActionMixin as Mixin,

@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AllocateActionMixin } from '../lib/AllocateAction';
-import { AudienceMixin } from '../lib/Audience';
-import { AuthorizeActionMixin } from '../lib/AuthorizeAction';
-import { ContactPointMixin } from '../lib/ContactPoint';
-import { OrganizationMixin } from '../lib/Organization';
-import { PersonMixin } from '../lib/Person';
+import { AllocateActionMixin } from '../lib/AllocateAction.js';
+import { AudienceMixin } from '../lib/Audience.js';
+import { AuthorizeActionMixin } from '../lib/AuthorizeAction.js';
+import { ContactPointMixin } from '../lib/ContactPoint.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PersonMixin } from '../lib/Person.js';
 
 export const AuthorizeActionBundle = [
   AllocateActionMixin as Mixin,

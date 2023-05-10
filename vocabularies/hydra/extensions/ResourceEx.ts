@@ -3,7 +3,7 @@ import { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import { namespace, property } from '@tpluscode/rdfine';
 import type * as RDF from '@rdfjs/types';
-import * as Hydra from '../index';
+import * as Hydra from '../index.js';
 
 export interface ResourceEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   collection: Array<Hydra.Collection<Hydra.Resource<D>, D>>;

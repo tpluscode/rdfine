@@ -1,26 +1,26 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { csvw } from './namespace';
+import { csvw } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Csvw from '..';
+import type * as Csvw from '../index.js';
 
-export interface TableReference<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface TableReference<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   columnReference: string | undefined;
   resource: string | undefined;
   schemaReference: string | undefined;
 }
 
-export function TableReferenceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TableReference> & RdfResourceCore> & Base {
-  @namespace(csvw)
+export function TableReferenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TableReference> & RdfResourceCore> & Base {
+  @rdfine.namespace(csvw)
   class TableReferenceClass extends Resource implements Partial<TableReference> {
-    @property.literal()
+    @rdfine.property.literal()
     columnReference: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     resource: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     schemaReference: string | undefined;
   }
   return TableReferenceClass

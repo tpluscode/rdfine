@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { TechArticleMixin } from './TechArticle';
+import type * as Schema from '../index.js';
+import { TechArticleMixin } from './TechArticle.js';
 
-export interface APIReference<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TechArticle<D>, RdfResource<D> {
+export interface APIReference<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TechArticle<D>, rdfine.RdfResource<D> {
   assembly: string | undefined;
   assemblyVersion: string | undefined;
   executableLibraryName: string | undefined;
@@ -16,18 +16,18 @@ export interface APIReference<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   targetPlatform: string | undefined;
 }
 
-export function APIReferenceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<APIReference> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function APIReferenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<APIReference> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class APIReferenceClass extends TechArticleMixin(Resource) implements Partial<APIReference> {
-    @property.literal()
+    @rdfine.property.literal()
     assembly: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     assemblyVersion: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     executableLibraryName: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     programmingModel: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     targetPlatform: string | undefined;
   }
   return APIReferenceClass

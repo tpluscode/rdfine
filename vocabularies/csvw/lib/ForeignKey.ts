@@ -1,23 +1,23 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { csvw } from './namespace';
+import { csvw } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Csvw from '..';
+import type * as Csvw from '../index.js';
 
-export interface ForeignKey<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface ForeignKey<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   columnReference: string | undefined;
   reference: Csvw.TableReference<D> | undefined;
 }
 
-export function ForeignKeyMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ForeignKey> & RdfResourceCore> & Base {
-  @namespace(csvw)
+export function ForeignKeyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ForeignKey> & RdfResourceCore> & Base {
+  @rdfine.namespace(csvw)
   class ForeignKeyClass extends Resource implements Partial<ForeignKey> {
-    @property.literal()
+    @rdfine.property.literal()
     columnReference: string | undefined;
-    @property.resource({ implicitTypes: [csvw.TableReference] })
+    @rdfine.property.resource({ implicitTypes: [csvw.TableReference] })
     reference: Csvw.TableReference | undefined;
   }
   return ForeignKeyClass

@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActionMixin } from '../lib/Action';
-import { AudienceMixin } from '../lib/Audience';
-import { EventMixin } from '../lib/Event';
-import { PlayActionMixin } from '../lib/PlayAction';
+import { ActionMixin } from '../lib/Action.js';
+import { AudienceMixin } from '../lib/Audience.js';
+import { EventMixin } from '../lib/Event.js';
+import { PlayActionMixin } from '../lib/PlayAction.js';
 
 export const PlayActionBundle = [
   ActionMixin as Mixin,

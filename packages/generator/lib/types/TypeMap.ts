@@ -1,7 +1,7 @@
 import { Literal, NamedNode } from '@rdfjs/types'
 import { AnyPointer, GraphPointer } from 'clownface'
-import { Context } from '../index'
-import { TypeMeta, TypeMetaCollection, TypeMetaFactory } from './index'
+import { Context } from '../index.js'
+import { TypeMeta, TypeMetaCollection, TypeMetaFactory } from './index.js'
 
 interface TypeMapInit {
   excluded: NamedNode[]
@@ -17,7 +17,7 @@ export class TypeMap implements TypeMetaCollection {
   private readonly __excluded: string[]
   private readonly __map = new Map<string, TypeMeta>()
   private readonly __context: Context
-  private readonly __factories: TypeMetaFactory[];
+  private readonly __factories: TypeMetaFactory[]
 
   private get __graph(): AnyPointer {
     return this.__context.vocabulary

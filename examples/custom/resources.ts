@@ -1,5 +1,5 @@
 import ns from '@rdfjs/namespace'
-import { prefixes } from '@zazuko/rdf-vocabularies'
+import prefixes from '@zazuko/prefixes'
 import RdfResourceImpl, { namespace, property, Constructor, RdfResource } from '@tpluscode/rdfine'
 import ResourceFactoryImpl, { ResourceFactory } from '@tpluscode/rdfine/lib/ResourceFactory'
 
@@ -13,7 +13,7 @@ export function CollectionMixin<Base extends Constructor>(base: Base) {
   @namespace(hydra)
   class C extends base implements Collection {
     @property.resource({ path: 'member', values: 'array' })
-    members!: HydraResource[]
+      members!: HydraResource[]
   }
 
   return C

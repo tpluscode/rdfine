@@ -1,13 +1,13 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { prov } from './namespace';
+import { prov } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Prov from '..';
+import type * as Prov from '../index.js';
 
-export interface Entity<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Entity<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   alternateOf: Prov.Entity<D> | undefined;
   asInBundle: Prov.Bundle<D> | undefined;
   atLocation: Prov.Location<D> | undefined;
@@ -34,56 +34,56 @@ export interface Entity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf
   wasRevisionOf: Prov.Entity<D> | undefined;
 }
 
-export function EntityMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Entity> & RdfResourceCore> & Base {
-  @namespace(prov)
+export function EntityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Entity> & RdfResourceCore> & Base {
+  @rdfine.namespace(prov)
   class EntityClass extends Resource implements Partial<Entity> {
-    @property.resource({ as: [EntityMixin] })
+    @rdfine.property.resource({ as: [EntityMixin] })
     alternateOf: Prov.Entity | undefined;
-    @property.resource({ implicitTypes: [prov.Bundle] })
+    @rdfine.property.resource({ implicitTypes: [prov.Bundle] })
     asInBundle: Prov.Bundle | undefined;
-    @property.resource({ implicitTypes: [prov.Location] })
+    @rdfine.property.resource({ implicitTypes: [prov.Location] })
     atLocation: Prov.Location | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     generatedAtTime: Date | undefined;
-    @property.resource({ as: [EntityMixin] })
+    @rdfine.property.resource({ as: [EntityMixin] })
     hadPrimarySource: Prov.Entity | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     invalidatedAtTime: Date | undefined;
-    @property.resource({ as: [EntityMixin] })
+    @rdfine.property.resource({ as: [EntityMixin] })
     mentionOf: Prov.Entity | undefined;
-    @property.resource({ implicitTypes: [prov.Attribution] })
+    @rdfine.property.resource({ implicitTypes: [prov.Attribution] })
     qualifiedAttribution: Prov.Attribution | undefined;
-    @property.resource({ implicitTypes: [prov.Derivation] })
+    @rdfine.property.resource({ implicitTypes: [prov.Derivation] })
     qualifiedDerivation: Prov.Derivation | undefined;
-    @property.resource({ implicitTypes: [prov.Generation] })
+    @rdfine.property.resource({ implicitTypes: [prov.Generation] })
     qualifiedGeneration: Prov.Generation | undefined;
-    @property.resource({ implicitTypes: [prov.Influence] })
+    @rdfine.property.resource({ implicitTypes: [prov.Influence] })
     qualifiedInfluence: Prov.Influence | undefined;
-    @property.resource({ implicitTypes: [prov.Invalidation] })
+    @rdfine.property.resource({ implicitTypes: [prov.Invalidation] })
     qualifiedInvalidation: Prov.Invalidation | undefined;
-    @property.resource({ implicitTypes: [prov.PrimarySource] })
+    @rdfine.property.resource({ implicitTypes: [prov.PrimarySource] })
     qualifiedPrimarySource: Prov.PrimarySource | undefined;
-    @property.resource({ implicitTypes: [prov.Quotation] })
+    @rdfine.property.resource({ implicitTypes: [prov.Quotation] })
     qualifiedQuotation: Prov.Quotation | undefined;
-    @property.resource({ implicitTypes: [prov.Revision] })
+    @rdfine.property.resource({ implicitTypes: [prov.Revision] })
     qualifiedRevision: Prov.Revision | undefined;
-    @property.resource({ as: [EntityMixin] })
+    @rdfine.property.resource({ as: [EntityMixin] })
     specializationOf: Prov.Entity | undefined;
-    @property()
+    @rdfine.property()
     value: RDF.Term | undefined;
-    @property.resource({ implicitTypes: [prov.Agent] })
+    @rdfine.property.resource({ implicitTypes: [prov.Agent] })
     wasAttributedTo: Prov.Agent | undefined;
-    @property.resource({ as: [EntityMixin] })
+    @rdfine.property.resource({ as: [EntityMixin] })
     wasDerivedFrom: Prov.Entity | undefined;
-    @property.resource({ implicitTypes: [prov.Activity] })
+    @rdfine.property.resource({ implicitTypes: [prov.Activity] })
     wasGeneratedBy: Prov.Activity | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     wasInfluencedBy: Prov.Activity | Prov.Agent | Prov.Entity | undefined;
-    @property.resource({ implicitTypes: [prov.Activity] })
+    @rdfine.property.resource({ implicitTypes: [prov.Activity] })
     wasInvalidatedBy: Prov.Activity | undefined;
-    @property.resource({ as: [EntityMixin] })
+    @rdfine.property.resource({ as: [EntityMixin] })
     wasQuotedFrom: Prov.Entity | undefined;
-    @property.resource({ as: [EntityMixin] })
+    @rdfine.property.resource({ as: [EntityMixin] })
     wasRevisionOf: Prov.Entity | undefined;
   }
   return EntityClass

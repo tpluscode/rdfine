@@ -1,21 +1,21 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { FindActionMixin } from './FindAction';
+import type * as Schema from '../index.js';
+import { FindActionMixin } from './FindAction.js';
 
-export interface TrackAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FindAction<D>, RdfResource<D> {
+export interface TrackAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FindAction<D>, rdfine.RdfResource<D> {
   deliveryMethod: Schema.DeliveryMethod | undefined;
 }
 
-export function TrackActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TrackAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function TrackActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TrackAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class TrackActionClass extends FindActionMixin(Resource) implements Partial<TrackAction> {
-    @property()
+    @rdfine.property()
     deliveryMethod: Schema.DeliveryMethod | undefined;
   }
   return TrackActionClass

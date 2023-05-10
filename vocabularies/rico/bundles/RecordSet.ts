@@ -1,14 +1,14 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ContentTypeMixin } from '../lib/ContentType';
-import { DocumentaryFormTypeMixin } from '../lib/DocumentaryFormType';
-import { LanguageMixin } from '../lib/Language';
-import { LegalStatusMixin } from '../lib/LegalStatus';
-import { RecordMixin } from '../lib/Record';
-import { RecordResourceMixin } from '../lib/RecordResource';
-import { RecordSetMixin } from '../lib/RecordSet';
-import { RecordSetTypeMixin } from '../lib/RecordSetType';
-import { RecordStateMixin } from '../lib/RecordState';
-import { TypeMixin } from '../lib/Type';
+import { ContentTypeMixin } from '../lib/ContentType.js';
+import { DocumentaryFormTypeMixin } from '../lib/DocumentaryFormType.js';
+import { LanguageMixin } from '../lib/Language.js';
+import { LegalStatusMixin } from '../lib/LegalStatus.js';
+import { RecordMixin } from '../lib/Record.js';
+import { RecordResourceMixin } from '../lib/RecordResource.js';
+import { RecordSetMixin } from '../lib/RecordSet.js';
+import { RecordSetTypeMixin } from '../lib/RecordSetType.js';
+import { RecordStateMixin } from '../lib/RecordState.js';
+import { TypeMixin } from '../lib/Type.js';
 
 export const RecordSetBundle = [
   ContentTypeMixin as Mixin,

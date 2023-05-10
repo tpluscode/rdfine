@@ -1,1 +1,1 @@
-export { ConceptMixinEx } from './skos/Concept';
+export { ConceptMixinEx } from './skos/Concept.js';

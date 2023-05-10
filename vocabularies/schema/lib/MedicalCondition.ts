@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { MedicalEntityMixin } from './MedicalEntity';
+import type * as Schema from '../index.js';
+import { MedicalEntityMixin } from './MedicalEntity.js';
 
-export interface MedicalCondition<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, RdfResource<D> {
+export interface MedicalCondition<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, rdfine.RdfResource<D> {
   associatedAnatomy: Schema.AnatomicalStructure<D> | Schema.AnatomicalSystem<D> | Schema.SuperficialAnatomy<D> | undefined;
   differentialDiagnosis: Schema.DDxElement<D> | undefined;
   drug: Schema.Drug<D> | undefined;
@@ -28,42 +28,42 @@ export interface MedicalCondition<D extends RDF.DatasetCore = RDF.DatasetCore> e
   typicalTest: Schema.MedicalTest<D> | undefined;
 }
 
-export function MedicalConditionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalCondition> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MedicalConditionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalCondition> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MedicalConditionClass extends MedicalEntityMixin(Resource) implements Partial<MedicalCondition> {
-    @property.resource()
+    @rdfine.property.resource()
     associatedAnatomy: Schema.AnatomicalStructure | Schema.AnatomicalSystem | Schema.SuperficialAnatomy | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     differentialDiagnosis: Schema.DDxElement | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     drug: Schema.Drug | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     epidemiology: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     expectedPrognosis: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     naturalProgression: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     pathophysiology: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     possibleComplication: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     possibleTreatment: Schema.MedicalTherapy | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     primaryPrevention: Schema.MedicalTherapy | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     riskFactor: Schema.MedicalRiskFactor | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     secondaryPrevention: Schema.MedicalTherapy | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     signOrSymptom: Schema.MedicalSignOrSymptom | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     stage: Schema.MedicalConditionStage | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     status: string | undefined;
-    @property({ path: schema.status })
+    @rdfine.property({ path: schema.status })
     statusTerm: Schema.EventStatusType | Schema.MedicalStudyStatus | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     typicalTest: Schema.MedicalTest | undefined;
   }
   return MedicalConditionClass

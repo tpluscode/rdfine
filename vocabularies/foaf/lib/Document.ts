@@ -1,26 +1,26 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { foaf } from './namespace';
+import { foaf } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Foaf from '..';
+import type * as Foaf from '../index.js';
 
-export interface Document<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Document<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   primaryTopic: RDF.NamedNode | undefined;
   'sha1': RDF.Term | undefined;
   topic: RDF.NamedNode | undefined;
 }
 
-export function DocumentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Document> & RdfResourceCore> & Base {
-  @namespace(foaf)
+export function DocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Document> & RdfResourceCore> & Base {
+  @rdfine.namespace(foaf)
   class DocumentClass extends Resource implements Partial<Document> {
-    @property()
+    @rdfine.property()
     primaryTopic: RDF.NamedNode | undefined;
-    @property()
+    @rdfine.property()
     'sha1': RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     topic: RDF.NamedNode | undefined;
   }
   return DocumentClass

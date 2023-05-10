@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MaximumDoseScheduleMixin } from '../lib/MaximumDoseSchedule';
-import { MedicalEntityMixin } from '../lib/MedicalEntity';
-import { SubstanceMixin } from '../lib/Substance';
+import { MaximumDoseScheduleMixin } from '../lib/MaximumDoseSchedule.js';
+import { MedicalEntityMixin } from '../lib/MedicalEntity.js';
+import { SubstanceMixin } from '../lib/Substance.js';
 
 export const SubstanceBundle = [
   MaximumDoseScheduleMixin as Mixin,

@@ -1,15 +1,15 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActivityDocumentationRelationMixin } from '../lib/ActivityDocumentationRelation';
-import { ActivityMixin } from '../lib/Activity';
-import { ActivityTypeMixin } from '../lib/ActivityType';
-import { AgentMixin } from '../lib/Agent';
-import { AgentTemporalRelationMixin } from '../lib/AgentTemporalRelation';
-import { EventMixin } from '../lib/Event';
-import { InstantiationMixin } from '../lib/Instantiation';
-import { MandateRelationMixin } from '../lib/MandateRelation';
-import { PerformanceRelationMixin } from '../lib/PerformanceRelation';
-import { ProvenanceRelationMixin } from '../lib/ProvenanceRelation';
-import { RecordResourceMixin } from '../lib/RecordResource';
+import { ActivityDocumentationRelationMixin } from '../lib/ActivityDocumentationRelation.js';
+import { ActivityMixin } from '../lib/Activity.js';
+import { ActivityTypeMixin } from '../lib/ActivityType.js';
+import { AgentMixin } from '../lib/Agent.js';
+import { AgentTemporalRelationMixin } from '../lib/AgentTemporalRelation.js';
+import { EventMixin } from '../lib/Event.js';
+import { InstantiationMixin } from '../lib/Instantiation.js';
+import { MandateRelationMixin } from '../lib/MandateRelation.js';
+import { PerformanceRelationMixin } from '../lib/PerformanceRelation.js';
+import { ProvenanceRelationMixin } from '../lib/ProvenanceRelation.js';
+import { RecordResourceMixin } from '../lib/RecordResource.js';
 
 export const ActivityBundle = [
   ActivityDocumentationRelationMixin as Mixin,

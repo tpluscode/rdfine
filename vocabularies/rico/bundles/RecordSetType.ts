@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RecordSetMixin } from '../lib/RecordSet';
-import { RecordSetTypeMixin } from '../lib/RecordSetType';
-import { TypeMixin } from '../lib/Type';
+import { RecordSetMixin } from '../lib/RecordSet.js';
+import { RecordSetTypeMixin } from '../lib/RecordSetType.js';
+import { TypeMixin } from '../lib/Type.js';
 
 export const RecordSetTypeBundle = [
   RecordSetMixin as Mixin,

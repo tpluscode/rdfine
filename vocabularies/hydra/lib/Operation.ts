@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { hydra } from './namespace';
+import { hydra } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Hydra from '..';
+import type * as Hydra from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 
-export interface Operation<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Operation<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   description: string | undefined;
   expects: Array<Hydra.Class<D> | Hydra.Resource<D> | Rdfs.Class<D> | Rdfs.Resource<D>>;
   expectsHeader: Hydra.HeaderSpecification<D> | undefined;
@@ -21,28 +21,28 @@ export interface Operation<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   title: string | undefined;
 }
 
-export function OperationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Operation> & RdfResourceCore> & Base {
-  @namespace(hydra)
+export function OperationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Operation> & RdfResourceCore> & Base {
+  @rdfine.namespace(hydra)
   class OperationClass extends Resource implements Partial<Operation> {
-    @property.literal()
+    @rdfine.property.literal()
     description: string | undefined;
-    @property.resource({ values: 'array' })
+    @rdfine.property.resource({ values: 'array' })
     expects!: Array<Hydra.Class | Hydra.Resource | Rdfs.Class | Rdfs.Resource>;
-    @property.resource()
+    @rdfine.property.resource()
     expectsHeader: Hydra.HeaderSpecification | undefined;
-    @property.literal({ path: hydra.expectsHeader })
+    @rdfine.property.literal({ path: hydra.expectsHeader })
     expectsHeaderLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     method: string | undefined;
-    @property.resource({ values: 'array', implicitTypes: [hydra.Status] })
+    @rdfine.property.resource({ values: 'array', implicitTypes: [hydra.Status] })
     possibleStatus!: Array<Hydra.Status>;
-    @property.resource()
+    @rdfine.property.resource()
     returns: Hydra.Class | Hydra.Resource | Rdfs.Class | Rdfs.Resource | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     returnsHeader: Hydra.HeaderSpecification | undefined;
-    @property.literal({ path: hydra.returnsHeader })
+    @rdfine.property.literal({ path: hydra.returnsHeader })
     returnsHeaderLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     title: string | undefined;
   }
   return OperationClass

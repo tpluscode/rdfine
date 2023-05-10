@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { dash } from './namespace';
+import { dash } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Dash from '..';
-import { ViewerMixin } from './Viewer';
+import type * as Dash from '../index.js';
+import { ViewerMixin } from './Viewer.js';
 
-export interface SingleViewer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Viewer<D>, RdfResource<D> {
+export interface SingleViewer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Viewer<D>, rdfine.RdfResource<D> {
 }
 
-export function SingleViewerMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SingleViewer> & RdfResourceCore> & Base {
-  @namespace(dash)
+export function SingleViewerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SingleViewer> & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class SingleViewerClass extends ViewerMixin(Resource) implements Partial<SingleViewer> {
   }
   return SingleViewerClass

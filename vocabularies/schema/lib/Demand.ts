@@ -1,18 +1,20 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { IntangibleMixin } from './Intangible';
+import type * as Schema from '../index.js';
+import { IntangibleMixin } from './Intangible.js';
 
-export interface Demand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Demand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   acceptedPaymentMethod: Schema.LoanOrCredit<D> | undefined;
   advanceBookingRequirement: Schema.QuantitativeValue<D> | undefined;
   areaServed: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
   areaServedLiteral: string | undefined;
+  asin: string | undefined;
+  asinTerm: RDF.NamedNode | undefined;
   availability: Schema.ItemAvailability | undefined;
   availabilityEnds: Date | undefined;
   availabilityStarts: Date | undefined;
@@ -31,6 +33,7 @@ export interface Demand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   'gtin13': string | undefined;
   'gtin14': string | undefined;
   'gtin8': string | undefined;
+  gtinTerm: RDF.NamedNode | undefined;
   includesObject: Schema.TypeAndQuantityNode<D> | undefined;
   ineligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   ineligibleRegionLiteral: string | undefined;
@@ -47,80 +50,86 @@ export interface Demand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   warranty: Schema.WarrantyPromise<D> | undefined;
 }
 
-export function DemandMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Demand> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DemandMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Demand> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DemandClass extends IntangibleMixin(Resource) implements Partial<Demand> {
-    @property.resource()
+    @rdfine.property.resource()
     acceptedPaymentMethod: Schema.LoanOrCredit | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     advanceBookingRequirement: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.areaServed })
+    @rdfine.property.literal({ path: schema.areaServed })
     areaServedLiteral: string | undefined;
-    @property()
+    @rdfine.property.literal()
+    asin: string | undefined;
+    @rdfine.property({ path: schema.asin })
+    asinTerm: RDF.NamedNode | undefined;
+    @rdfine.property()
     availability: Schema.ItemAvailability | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     availabilityEnds: Date | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     availabilityStarts: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     availableAtOrFrom: Schema.Place | undefined;
-    @property()
+    @rdfine.property()
     availableDeliveryMethod: Schema.DeliveryMethod | undefined;
-    @property()
+    @rdfine.property()
     businessFunction: Schema.BusinessFunction | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     deliveryLeadTime: Schema.QuantitativeValue | undefined;
-    @property()
+    @rdfine.property()
     eligibleCustomerType: Schema.BusinessEntityType | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     eligibleDuration: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     eligibleQuantity: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     eligibleRegion: Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.eligibleRegion })
+    @rdfine.property.literal({ path: schema.eligibleRegion })
     eligibleRegionLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     eligibleTransactionVolume: Schema.PriceSpecification | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     gtin: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     'gtin12': string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     'gtin13': string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     'gtin14': string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     'gtin8': string | undefined;
-    @property.resource()
+    @rdfine.property({ path: schema.gtin })
+    gtinTerm: RDF.NamedNode | undefined;
+    @rdfine.property.resource()
     includesObject: Schema.TypeAndQuantityNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     ineligibleRegion: Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.ineligibleRegion })
+    @rdfine.property.literal({ path: schema.ineligibleRegion })
     ineligibleRegionLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     inventoryLevel: Schema.QuantitativeValue | undefined;
-    @property()
+    @rdfine.property()
     itemCondition: Schema.OfferItemCondition | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     itemOffered: Schema.AggregateOffer | Schema.CreativeWork | Schema.Event | Schema.MenuItem | Schema.Product | Schema.Service | Schema.Trip | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     mpn: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     priceSpecification: Schema.PriceSpecification | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     seller: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     serialNumber: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     sku: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validFrom: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validThrough: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     warranty: Schema.WarrantyPromise | undefined;
   }
   return DemandClass

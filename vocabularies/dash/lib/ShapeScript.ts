@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { dash } from './namespace';
+import { dash } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Dash from '..';
-import { ScriptMixin } from './Script';
+import type * as Dash from '../index.js';
+import { ScriptMixin } from './Script.js';
 
-export interface ShapeScript<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, RdfResource<D> {
+export interface ShapeScript<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, rdfine.RdfResource<D> {
 }
 
-export function ShapeScriptMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ShapeScript> & RdfResourceCore> & Base {
-  @namespace(dash)
+export function ShapeScriptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ShapeScript> & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class ShapeScriptClass extends ScriptMixin(Resource) implements Partial<ShapeScript> {
   }
   return ShapeScriptClass

@@ -1,21 +1,21 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { InstantiationToInstantiationRelationMixin } from './InstantiationToInstantiationRelation';
+import type * as Rico from '../index.js';
+import { InstantiationToInstantiationRelationMixin } from './InstantiationToInstantiationRelation.js';
 
-export interface FunctionalEquivalenceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.InstantiationToInstantiationRelation<D>, RdfResource<D> {
+export interface FunctionalEquivalenceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.InstantiationToInstantiationRelation<D>, rdfine.RdfResource<D> {
   functionalEquivalenceRelationConnects: Rico.Instantiation<D> | undefined;
 }
 
-export function FunctionalEquivalenceRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FunctionalEquivalenceRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function FunctionalEquivalenceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FunctionalEquivalenceRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class FunctionalEquivalenceRelationClass extends InstantiationToInstantiationRelationMixin(Resource) implements Partial<FunctionalEquivalenceRelation> {
-    @property.resource({ implicitTypes: [rico.Instantiation] })
+    @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     functionalEquivalenceRelationConnects: Rico.Instantiation | undefined;
   }
   return FunctionalEquivalenceRelationClass

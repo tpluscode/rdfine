@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { EventMixin } from './Event';
+import type * as Schema from '../index.js';
+import { EventMixin } from './Event.js';
 
-export interface LiteraryEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
+export interface LiteraryEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
 }
 
-export function LiteraryEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LiteraryEvent> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function LiteraryEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LiteraryEvent> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class LiteraryEventClass extends EventMixin(Resource) implements Partial<LiteraryEvent> {
   }
   return LiteraryEventClass

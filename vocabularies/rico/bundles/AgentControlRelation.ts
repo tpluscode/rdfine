@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AgentControlRelationMixin } from '../lib/AgentControlRelation';
-import { AgentHierarchicalRelationMixin } from '../lib/AgentHierarchicalRelation';
-import { AgentMixin } from '../lib/Agent';
-import { AuthorityRelationMixin } from '../lib/AuthorityRelation';
+import { AgentControlRelationMixin } from '../lib/AgentControlRelation.js';
+import { AgentHierarchicalRelationMixin } from '../lib/AgentHierarchicalRelation.js';
+import { AgentMixin } from '../lib/Agent.js';
+import { AuthorityRelationMixin } from '../lib/AuthorityRelation.js';
 
 export const AgentControlRelationBundle = [
   AgentControlRelationMixin as Mixin,

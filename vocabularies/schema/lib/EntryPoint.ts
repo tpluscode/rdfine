@@ -1,17 +1,17 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { IntangibleMixin } from './Intangible';
+import type * as Schema from '../index.js';
+import { IntangibleMixin } from './Intangible.js';
 
-export interface EntryPoint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface EntryPoint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   actionApplication: Schema.SoftwareApplication<D> | undefined;
   actionPlatform: string | undefined;
-  actionPlatformTerm: RDF.NamedNode | undefined;
+  actionPlatformTerm: RDF.NamedNode | Schema.DigitalPlatformEnumeration | undefined;
   application: Schema.SoftwareApplication<D> | undefined;
   contentType: string | undefined;
   encodingType: string | undefined;
@@ -19,24 +19,24 @@ export interface EntryPoint<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   urlTemplate: string | undefined;
 }
 
-export function EntryPointMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EntryPoint> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function EntryPointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EntryPoint> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class EntryPointClass extends IntangibleMixin(Resource) implements Partial<EntryPoint> {
-    @property.resource()
+    @rdfine.property.resource()
     actionApplication: Schema.SoftwareApplication | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     actionPlatform: string | undefined;
-    @property({ path: schema.actionPlatform })
-    actionPlatformTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property({ path: schema.actionPlatform })
+    actionPlatformTerm: RDF.NamedNode | Schema.DigitalPlatformEnumeration | undefined;
+    @rdfine.property.resource()
     application: Schema.SoftwareApplication | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     contentType: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     encodingType: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     httpMethod: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     urlTemplate: string | undefined;
   }
   return EntryPointClass

@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { as } from './namespace';
+import { as } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as As from '..';
-import { ObjectMixin } from './Object';
+import type * as As from '../index.js';
+import { ObjectMixin } from './Object.js';
 
-export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, RdfResource<D> {
+export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
   accuracy: number | undefined;
   altitude: number | undefined;
   latitude: number | undefined;
@@ -17,20 +17,20 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.O
   units: 'cm' | 'feet' | 'inches' | 'km' | 'm' | 'miles' | string | undefined;
 }
 
-export function PlaceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Place> & RdfResourceCore> & Base {
-  @namespace(as)
+export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Place> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class PlaceClass extends ObjectMixin(Resource) implements Partial<Place> {
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     accuracy: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     altitude: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     latitude: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     longitude: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     radius: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     units: 'cm' | 'feet' | 'inches' | 'km' | 'm' | 'miles' | string | undefined;
   }
   return PlaceClass

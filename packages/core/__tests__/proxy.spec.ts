@@ -1,17 +1,20 @@
 import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { literal } from '@rdf-esm/data-model'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { schema } from '@tpluscode/rdf-ns-builders'
-import { createProxy } from '../lib/proxy'
-import RdfResourceImpl, { RdfResource } from '../RdfResource'
 import type { Literal, NamedNode } from '@rdfjs/types'
-import { property, ResourceIndexer } from '../index'
-import { ex } from './_helpers'
-import type { AnyFactory } from '../factory'
+import chai, { expect } from 'chai'
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
+import { createProxy } from '../lib/proxy.js'
+import RdfResourceImpl, { RdfResource } from '../RdfResource.js'
+import { property, ResourceIndexer } from '../index.js'
+import type { AnyFactory } from '../factory.js'
+import { ex } from './_helpers/index.js'
 
 describe('proxy', () => {
   let node: GraphPointer<NamedNode, DatasetExt>
+  chai.use(jestSnapshotPlugin())
+  before(() => import('../../../__tests__/helpers/matchers.js'))
 
   beforeEach(() => {
     node = cf({ dataset: $rdf.dataset() })
@@ -34,7 +37,7 @@ describe('proxy', () => {
       const value = proxy['http://example.com/Prop1'] as RdfResource
 
       // then
-      expect(value.id.value).toEqual('http://example.com/Proxied2')
+      expect(value.id.value).to.eq('http://example.com/Proxied2')
     })
 
     it('works with arbitrary symbol properties', () => {
@@ -46,7 +49,7 @@ describe('proxy', () => {
       proxy[Foo] = 'bar'
 
       // then
-      expect(proxy[Foo]).toEqual('bar')
+      expect(proxy[Foo]).to.eq('bar')
     })
 
     it('returns raw literals', () => {
@@ -58,7 +61,7 @@ describe('proxy', () => {
       const value = (proxy['http://example.com/Prop1'] as ResourceIndexer)['http://example.com/Prop2']
 
       // then
-      expect(value).toEqual(node.literal('foo', 'bar').term)
+      expect(value).to.deep.eq(node.literal('foo', 'bar').term)
     })
 
     it('returns array from multiple values', () => {
@@ -70,7 +73,7 @@ describe('proxy', () => {
       const value = proxy['http://example.com/multi'] as Literal[]
 
       // then
-      expect(value.map(l => l.value)).toStrictEqual(['a', 'z'])
+      expect(value.map(l => l.value)).to.deep.eq(['a', 'z'])
     })
 
     it('does not proxy built-in properties', () => {
@@ -79,19 +82,19 @@ describe('proxy', () => {
       const proxy = createProxy(resource)
 
       // then
-      expect(proxy.id.value).toEqual('http://example.com/Proxied')
+      expect(proxy.id.value).to.eq('http://example.com/Proxied')
     })
 
     it('does not proxy declared properties', () => {
       // given
       class Specialized extends RdfResourceImpl {
         @property.literal({ type: Number, path: 'http://example.com/number', initial: 5 })
-        foo!: number
+          foo!: number
       }
       const proxy = createProxy(new Specialized(node))
 
       // then
-      expect(proxy.foo).toStrictEqual(5)
+      expect(proxy.foo).to.deep.eq(5)
     })
 
     it('returns undefined for missing property', () => {
@@ -103,7 +106,7 @@ describe('proxy', () => {
       const value = proxy['http://example.com/foo']
 
       // then
-      expect(value).toBeUndefined()
+      expect(value).to.be.undefined
     })
 
     it('returns enumerated RDF list of literals', () => {
@@ -116,8 +119,8 @@ describe('proxy', () => {
       const listItems = proxy['http://example.com/listOfLiterals'] as Literal[]
 
       // then
-      expect(listItems.map(l => l.value)).toEqual(
-        expect.arrayContaining(['a', 'B', 'cc']),
+      expect(listItems.map(l => l.value)).to.deep.eq(
+        ['a', 'B', 'cc'],
       )
     })
 
@@ -135,8 +138,8 @@ describe('proxy', () => {
       const listItems = proxy['http://example.com/listOfUris'] as RdfResource[]
 
       // then
-      expect(listItems.map(l => l.id.value)).toEqual(
-        expect.arrayContaining([ex.jane.value, ex.jane.value, ex.john.value]),
+      expect(listItems.map(l => l.id.value)).to.deep.eq(
+        [ex.jane.value, ex.jane.value, ex.john.value],
       )
     })
 
@@ -150,7 +153,7 @@ describe('proxy', () => {
       const child = proxy[ex.foo.value] as RdfResource
 
       // then
-      expect(child._parent).toBe(resource)
+      expect(child._parent).to.eq(resource)
     })
   })
 
@@ -161,7 +164,7 @@ describe('proxy', () => {
       const proxy = createProxy(resource)
 
       // when
-      proxy[ex.set.value] = literal('foo')
+      proxy[ex.set.value] = $rdf.literal('foo')
 
       // then
       expect(node.dataset.toCanonical()).toMatchSnapshot()
@@ -193,7 +196,7 @@ describe('proxy', () => {
       proxy[ex.set.value] = <any>child
 
       // then
-      expect(node.out(ex.set).out(schema.name).value).toEqual('Child')
+      expect(node.out(ex.set).out(schema.name).value).to.eq('Child')
     })
 
     it('multiple literals', () => {
@@ -202,7 +205,7 @@ describe('proxy', () => {
       const proxy = createProxy(resource)
 
       // when
-      proxy[ex.set.value] = [literal('foo'), literal('bar')]
+      proxy[ex.set.value] = [$rdf.literal('foo'), $rdf.literal('bar')]
 
       // then
       expect(node.dataset.toCanonical()).toMatchSnapshot()
@@ -238,8 +241,8 @@ describe('proxy', () => {
       proxy[ex.set.value] = <any>[child('Foo'), child('Bar'), Baz]
 
       // then
-      expect(node.out(ex.set).out(schema.name).values).toEqual(
-        expect.arrayContaining(['Foo', 'Bar', 'Baz']),
+      expect(node.out(ex.set).out(schema.name).values).to.deep.contain.all.members(
+        ['Foo', 'Bar', 'Baz'],
       )
     })
 
@@ -271,7 +274,7 @@ describe('proxy', () => {
       // given
       class Specialized extends RdfResourceImpl {
         @property.literal({ type: Number, path: 'http://example.com/number', initial: 5 })
-        foo!: number
+          foo!: number
       }
       const proxy = createProxy(new Specialized(node))
 

@@ -1,24 +1,24 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { RelationMixin } from './Relation';
+import type * as Rico from '../index.js';
+import { RelationMixin } from './Relation.js';
 
-export interface PlaceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, RdfResource<D> {
+export interface PlaceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, rdfine.RdfResource<D> {
   placeRelationHasSource: Rico.Place<D> | undefined;
   placeRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function PlaceRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PlaceRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function PlaceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PlaceRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class PlaceRelationClass extends RelationMixin(Resource) implements Partial<PlaceRelation> {
-    @property.resource({ implicitTypes: [rico.Place] })
+    @rdfine.property.resource({ implicitTypes: [rico.Place] })
     placeRelationHasSource: Rico.Place | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     placeRelationHasTarget: Rico.Thing | undefined;
   }
   return PlaceRelationClass

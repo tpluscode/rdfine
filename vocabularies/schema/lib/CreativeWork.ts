@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { ThingMixin } from './Thing';
+import type * as Schema from '../index.js';
+import { ThingMixin } from './Thing.js';
 
-export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, RdfResource<D> {
+export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, rdfine.RdfResource<D> {
   about: Schema.Thing<D> | undefined;
   abstract: string | undefined;
   accessibilityAPI: string | undefined;
@@ -70,6 +70,7 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   fileFormat: string | undefined;
   fileFormatTerm: RDF.NamedNode | undefined;
   funder: Schema.Organization<D> | Schema.Person<D> | undefined;
+  funding: Schema.Grant<D> | undefined;
   genre: string | undefined;
   genreTerm: RDF.NamedNode | undefined;
   hasPart: Schema.CreativeWork<D> | undefined;
@@ -137,260 +138,262 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   workTranslation: Schema.CreativeWork<D> | undefined;
 }
 
-export function CreativeWorkMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CreativeWork> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function CreativeWorkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CreativeWork> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class CreativeWorkClass extends ThingMixin(Resource) implements Partial<CreativeWork> {
-    @property.resource()
+    @rdfine.property.resource()
     about: Schema.Thing | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     abstract: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     accessibilityAPI: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     accessibilityControl: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     accessibilityFeature: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     accessibilityHazard: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     accessibilitySummary: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     accessMode: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     accessModeSufficient: Schema.ItemList | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     accountablePerson: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     acquireLicensePage: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     aggregateRating: Schema.AggregateRating | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     alternativeHeadline: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     archivedAt: Schema.WebPage | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     assesses: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     associatedMedia: Schema.MediaObject | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     audience: Schema.Audience | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     audio: Schema.AudioObject | Schema.Clip | Schema.MusicRecording | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     author: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     award: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     awards: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     character: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     citation: Schema.CreativeWork | undefined;
-    @property.literal({ path: schema.citation })
+    @rdfine.property.literal({ path: schema.citation })
     citationLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     comment: Schema.Comment | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     commentCount: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     conditionsOfAccess: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     contentLocation: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     contentRating: Schema.Rating | undefined;
-    @property.literal({ path: schema.contentRating })
+    @rdfine.property.literal({ path: schema.contentRating })
     contentRatingLiteral: string | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     contentReferenceTime: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     contributor: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     copyrightHolder: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     copyrightNotice: string | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     copyrightYear: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     correction: Schema.CorrectionComment | undefined;
-    @property.literal({ path: schema.correction })
+    @rdfine.property.literal({ path: schema.correction })
     correctionLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     countryOfOrigin: Schema.Country | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     creativeWorkStatus: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     creator: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     creditText: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateCreated: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateModified: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     datePublished: Date | undefined;
-    @property()
+    @rdfine.property()
     discussionUrl: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     editEIDR: string | undefined;
-    @property({ path: schema.editEIDR })
+    @rdfine.property({ path: schema.editEIDR })
     editEIDRTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     editor: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     educationalAlignment: Schema.AlignmentObject | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     educationalLevel: string | undefined;
-    @property({ path: schema.educationalLevel })
+    @rdfine.property({ path: schema.educationalLevel })
     educationalLevelTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     educationalUse: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     encoding: Schema.MediaObject | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     encodingFormat: string | undefined;
-    @property({ path: schema.encodingFormat })
+    @rdfine.property({ path: schema.encodingFormat })
     encodingFormatTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     encodings: Schema.MediaObject | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     exampleOfWork: Schema.CreativeWork | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     expires: Date | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     fileFormat: string | undefined;
-    @property({ path: schema.fileFormat })
+    @rdfine.property({ path: schema.fileFormat })
     fileFormatTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     funder: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.resource()
+    funding: Schema.Grant | undefined;
+    @rdfine.property.literal()
     genre: string | undefined;
-    @property({ path: schema.genre })
+    @rdfine.property({ path: schema.genre })
     genreTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasPart: Schema.CreativeWork | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     headline: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     inLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.inLanguage })
+    @rdfine.property.literal({ path: schema.inLanguage })
     inLanguageLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     interactionStatistic: Schema.InteractionCounter | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     interactivityType: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     interpretedAsClaim: Schema.Claim | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     isAccessibleForFree: boolean | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isBasedOn: Schema.CreativeWork | Schema.Product | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isBasedOnUrl: Schema.CreativeWork | Schema.Product | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     isFamilyFriendly: boolean | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isPartOf: Schema.CreativeWork | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     keywords: string | undefined;
-    @property({ path: schema.keywords })
+    @rdfine.property({ path: schema.keywords })
     keywordsTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     learningResourceType: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     license: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     locationCreated: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     mainEntity: Schema.Thing | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     maintainer: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     material: Schema.Product | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     materialExtent: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.materialExtent })
+    @rdfine.property.literal({ path: schema.materialExtent })
     materialExtentLiteral: string | undefined;
-    @property.literal({ path: schema.material })
+    @rdfine.property.literal({ path: schema.material })
     materialLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     mentions: Schema.Thing | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     offers: Schema.Demand | Schema.Offer | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     pattern: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     position: number | string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     producer: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     provider: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     publication: Schema.PublicationEvent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     publisher: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     publisherImprint: Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     publishingPrinciples: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     recordedAt: Schema.Event | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     releasedEvent: Schema.PublicationEvent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     review: Schema.Review | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     reviews: Schema.Review | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     schemaVersion: string | undefined;
-    @property({ path: schema.schemaVersion })
+    @rdfine.property({ path: schema.schemaVersion })
     schemaVersionTerm: RDF.NamedNode | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     sdDatePublished: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     sdLicense: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     sdPublisher: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     size: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.size })
+    @rdfine.property.literal({ path: schema.size })
     sizeLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     sourceOrganization: Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     spatial: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     spatialCoverage: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     sponsor: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     teaches: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     temporal: Date | string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     temporalCoverage: Date | string | undefined;
-    @property({ path: schema.temporalCoverage })
+    @rdfine.property({ path: schema.temporalCoverage })
     temporalCoverageTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     text: string | undefined;
-    @property()
+    @rdfine.property()
     thumbnailUrl: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     timeRequired: Schema.Duration | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     translationOfWork: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     translator: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     typicalAgeRange: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     usageInfo: Schema.CreativeWork | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     version: number | string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     video: Schema.Clip | Schema.VideoObject | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     workExample: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     workTranslation: Schema.CreativeWork | undefined;
   }
   return CreativeWorkClass

@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RuleMixin } from '../lib/Rule';
-import { RuleTypeMixin } from '../lib/RuleType';
-import { TypeMixin } from '../lib/Type';
+import { RuleMixin } from '../lib/Rule.js';
+import { RuleTypeMixin } from '../lib/RuleType.js';
+import { TypeMixin } from '../lib/Type.js';
 
 export const RuleTypeBundle = [
   RuleMixin as Mixin,

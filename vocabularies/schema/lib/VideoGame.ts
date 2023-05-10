@@ -1,20 +1,21 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { GameMixin } from './Game';
-import { SoftwareApplicationMixin } from './SoftwareApplication';
+import type * as Schema from '../index.js';
+import { GameMixin } from './Game.js';
+import { SoftwareApplicationMixin } from './SoftwareApplication.js';
 
-export interface VideoGame<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Game<D>, Schema.SoftwareApplication<D>, RdfResource<D> {
+export interface VideoGame<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Game<D>, Schema.SoftwareApplication<D>, rdfine.RdfResource<D> {
   actor: Schema.Person<D> | undefined;
   actors: Schema.Person<D> | undefined;
   cheatCode: Schema.CreativeWork<D> | undefined;
   director: Schema.Person<D> | undefined;
   directors: Schema.Person<D> | undefined;
+  gameEdition: string | undefined;
   gamePlatform: Schema.Thing<D> | undefined;
   gamePlatformLiteral: string | undefined;
   gameServer: Schema.GameServer<D> | undefined;
@@ -24,32 +25,34 @@ export interface VideoGame<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function VideoGameMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<VideoGame> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function VideoGameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<VideoGame> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class VideoGameClass extends SoftwareApplicationMixin(GameMixin(Resource)) implements Partial<VideoGame> {
-    @property.resource()
+    @rdfine.property.resource()
     actor: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     actors: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     cheatCode: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     director: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     directors: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.literal()
+    gameEdition: string | undefined;
+    @rdfine.property.resource()
     gamePlatform: Schema.Thing | undefined;
-    @property.literal({ path: schema.gamePlatform })
+    @rdfine.property.literal({ path: schema.gamePlatform })
     gamePlatformLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     gameServer: Schema.GameServer | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     gameTip: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     musicBy: Schema.MusicGroup | Schema.Person | undefined;
-    @property()
+    @rdfine.property()
     playMode: Schema.GamePlayMode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     trailer: Schema.VideoObject | undefined;
   }
   return VideoGameClass

@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { prov } from './namespace';
+import { prov } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Prov from '..';
-import { EntityMixin } from './Entity';
+import type * as Prov from '../index.js';
+import { EntityMixin } from './Entity.js';
 
-export interface Plan<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Entity<D>, RdfResource<D> {
+export interface Plan<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Entity<D>, rdfine.RdfResource<D> {
 }
 
-export function PlanMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Plan> & RdfResourceCore> & Base {
-  @namespace(prov)
+export function PlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Plan> & RdfResourceCore> & Base {
+  @rdfine.namespace(prov)
   class PlanClass extends EntityMixin(Resource) implements Partial<Plan> {
   }
   return PlanClass

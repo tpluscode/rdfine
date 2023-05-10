@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SequentialRelationMixin } from '../lib/SequentialRelation';
-import { TemporalRelationMixin } from '../lib/TemporalRelation';
-import { ThingMixin } from '../lib/Thing';
+import { SequentialRelationMixin } from '../lib/SequentialRelation.js';
+import { TemporalRelationMixin } from '../lib/TemporalRelation.js';
+import { ThingMixin } from '../lib/Thing.js';
 
 export const TemporalRelationBundle = [
   SequentialRelationMixin as Mixin,

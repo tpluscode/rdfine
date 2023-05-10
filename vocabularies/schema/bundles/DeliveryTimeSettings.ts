@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DefinedRegionMixin } from '../lib/DefinedRegion';
-import { DeliveryTimeSettingsMixin } from '../lib/DeliveryTimeSettings';
-import { ShippingDeliveryTimeMixin } from '../lib/ShippingDeliveryTime';
-import { StructuredValueMixin } from '../lib/StructuredValue';
+import { DefinedRegionMixin } from '../lib/DefinedRegion.js';
+import { DeliveryTimeSettingsMixin } from '../lib/DeliveryTimeSettings.js';
+import { ShippingDeliveryTimeMixin } from '../lib/ShippingDeliveryTime.js';
+import { StructuredValueMixin } from '../lib/StructuredValue.js';
 
 export const DeliveryTimeSettingsBundle = [
   DefinedRegionMixin as Mixin,

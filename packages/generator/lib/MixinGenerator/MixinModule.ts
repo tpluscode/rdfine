@@ -1,12 +1,12 @@
 import { SourceFile, VariableDeclarationKind } from 'ts-morph'
-import { Context, GeneratedModule, WriteModule } from '../index'
 import { GraphPointer } from 'clownface'
-import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types'
-import { PropertyWriter } from '../property/PropertyWriter'
-import { JavascriptProperty } from '../property/JsProperties'
-import { getSuperClasses } from './index'
-import { MixinModuleBase } from './MixinModuleBase'
-import { ExtensionModule } from '../ExtensionMixinGenerator/ExtensionModule'
+import { Context, GeneratedModule, WriteModule } from '../index.js'
+import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types/index.js'
+import { PropertyWriter } from '../property/PropertyWriter.js'
+import { JavascriptProperty } from '../property/JsProperties.js'
+import { ExtensionModule } from '../ExtensionMixinGenerator/ExtensionModule.js'
+import { MixinModuleBase } from './MixinModuleBase.js'
+import { getSuperClasses } from './index.js'
 
 export class MixinModule extends MixinModuleBase<ResourceType> {
   superClasses: Array<ResourceType | ExternalResourceType>
@@ -91,12 +91,12 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
 
     indexModule.addExportDeclaration({
       namedExports: [mixinName],
-      moduleSpecifier: this.type.module,
+      moduleSpecifier: `${this.type.module}.js`,
     })
 
     indexModule.addExportDeclaration({
       namedExports: [this.type.localName],
-      moduleSpecifier: this.type.module,
+      moduleSpecifier: `${this.type.module}.js`,
       isTypeOnly: true,
     })
   }
@@ -107,7 +107,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     const name = `${this.type.localName}Bundle`
 
     bundleIndex.addExportDeclaration({
-      moduleSpecifier: `./${this.type.term}`,
+      moduleSpecifier: `./${this.type.term}.js`,
       namedExports: [name],
     })
 
@@ -147,7 +147,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
 
         depsModule.addImportDeclaration({
           namedImports: [`${mi.mixinName}`],
-          moduleSpecifier: `${mi.module.replace('./', '../')}`,
+          moduleSpecifier: `${mi.module.replace('./', '../')}.js`,
         })
         exports.push(`${mi.mixinName} as Mixin`)
       })
@@ -163,15 +163,9 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
   }
 
   private addImports(mixinFile: SourceFile, context: Omit<Context, 'properties'>) {
-    const rdfineImports = ['Constructor', 'namespace', 'RdfResource']
-
-    if (Object.keys(this.properties).some(Boolean)) {
-      rdfineImports.push('property')
-    }
-
     mixinFile.addImportDeclaration({
       defaultImport: 'RdfResourceImpl',
-      namedImports: rdfineImports,
+      namespaceImport: 'rdfine',
       moduleSpecifier: '@tpluscode/rdfine',
     })
     mixinFile.addImportDeclaration({
@@ -180,8 +174,8 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     })
 
     mixinFile.addImportDeclaration({
-      namespaceImport: '$rdf',
-      moduleSpecifier: '@rdf-esm/data-model',
+      defaultImport: '$rdf',
+      moduleSpecifier: '@rdfjs/data-model',
     })
     mixinFile.addImportDeclaration({
       namespaceImport: 'RDF',
@@ -190,7 +184,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     })
     mixinFile.addImportDeclaration({
       namedImports: [context.prefix],
-      moduleSpecifier: './namespace',
+      moduleSpecifier: './namespace.js',
     })
     mixinFile.addImportDeclaration({
       namedImports: ['Initializer', 'ResourceNode', 'RdfResourceCore'],
@@ -204,7 +198,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     })
     mixinFile.addImportDeclaration({
       namespaceImport: context.defaultExport,
-      moduleSpecifier: '..',
+      moduleSpecifier: '../index.js',
       isTypeOnly: true,
     })
 
@@ -223,12 +217,13 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       .forEach(imported => {
         if (imported.type === 'Resource') {
           mixinFile.addImportDeclaration({
-            moduleSpecifier: './' + imported.localName,
+            moduleSpecifier: `./${imported.localName}.js`,
             namedImports: [imported.mixinName],
           })
         } else {
+          const moduleSpecifier = imported.module.startsWith('.') ? `${imported.module}.js` : imported.module
           const superImport = mixinFile.addImportDeclaration({
-            moduleSpecifier: imported.module,
+            moduleSpecifier,
           })
 
           superImport.addNamedImport({
@@ -244,14 +239,14 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       name: this.type.mixinName,
       typeParameters: [{
         name: 'Base',
-        constraint: 'Constructor',
+        constraint: 'rdfine.Constructor',
       }],
       parameters: [{
         name: 'Resource',
         type: 'Base',
       }],
       isExported: true,
-      returnType: `Constructor<Partial<${this.type.localName}> & RdfResourceCore> & Base`,
+      returnType: `rdfine.Constructor<Partial<${this.type.localName}> & RdfResourceCore> & Base`,
     })
 
     function isModuleExtending(superClass: ResourceType | ExternalResourceType) {
@@ -281,7 +276,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     })
 
     mixinClass.addDecorator({
-      name: 'namespace',
+      name: 'rdfine.namespace',
       arguments: [context.prefix],
     })
 
@@ -297,18 +292,18 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     return mixinFile.addInterface({
       name: `${this.type.localName}<D extends RDF.DatasetCore = RDF.DatasetCore>`,
       isExported: true,
-      extends: [...superInterfaces, 'RdfResource<D>'],
+      extends: [...superInterfaces, 'rdfine.RdfResource<D>'],
     })
   }
 
   private addExtensionImport(mixinFile: SourceFile, module: ExtensionModule) {
     mixinFile.addImportDeclaration({
-      moduleSpecifier: `../extensions/${module.extended.prefix}/${module.type.localName}`,
+      moduleSpecifier: `../extensions/${module.extended.prefix}/${module.type.localName}.js`,
     })
 
     mixinFile.addImportDeclaration({
       namedImports: [`${module.type.localName}MixinEx`],
-      moduleSpecifier: `../extensions/${module.extended.prefix}/${module.type.localName}`,
+      moduleSpecifier: `../extensions/${module.extended.prefix}/${module.type.localName}.js`,
     })
   }
 }

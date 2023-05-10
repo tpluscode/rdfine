@@ -1,21 +1,21 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CommunicateActionMixin } from './CommunicateAction';
+import type * as Schema from '../index.js';
+import { CommunicateActionMixin } from './CommunicateAction.js';
 
-export interface ReplyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, RdfResource<D> {
+export interface ReplyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, rdfine.RdfResource<D> {
   resultComment: Schema.Comment<D> | undefined;
 }
 
-export function ReplyActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ReplyAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ReplyActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ReplyAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ReplyActionClass extends CommunicateActionMixin(Resource) implements Partial<ReplyAction> {
-    @property.resource()
+    @rdfine.property.resource()
     resultComment: Schema.Comment | undefined;
   }
   return ReplyActionClass

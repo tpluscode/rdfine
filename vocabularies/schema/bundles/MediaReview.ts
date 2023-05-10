@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MediaObjectMixin } from '../lib/MediaObject';
-import { MediaReviewMixin } from '../lib/MediaReview';
-import { ReviewMixin } from '../lib/Review';
-import { WebPageMixin } from '../lib/WebPage';
+import { MediaObjectMixin } from '../lib/MediaObject.js';
+import { MediaReviewMixin } from '../lib/MediaReview.js';
+import { ReviewMixin } from '../lib/Review.js';
+import { WebPageMixin } from '../lib/WebPage.js';
 
 export const MediaReviewBundle = [
   MediaObjectMixin as Mixin,

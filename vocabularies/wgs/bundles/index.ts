@@ -1,2 +1,2 @@
-export { PointBundle } from './Point';
-export { SpatialThingBundle } from './SpatialThing';
+export { PointBundle } from './Point.js';
+export { SpatialThingBundle } from './SpatialThing.js';

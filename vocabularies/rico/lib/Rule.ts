@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { ThingMixin } from './Thing';
+import type * as Rico from '../index.js';
+import { ThingMixin } from './Thing.js';
 
-export interface Rule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, RdfResource<D> {
+export interface Rule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, rdfine.RdfResource<D> {
   hasOrHadRuleType: Rico.RuleType<D> | undefined;
   hasOrHadTitle: Rico.Title<D> | undefined;
   history: RDF.Literal | undefined;
@@ -21,28 +21,28 @@ export interface Rule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.
   title: RDF.Literal | undefined;
 }
 
-export function RuleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Rule> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function RuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Rule> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class RuleClass extends ThingMixin(Resource) implements Partial<Rule> {
-    @property.resource({ implicitTypes: [rico.RuleType] })
+    @rdfine.property.resource({ implicitTypes: [rico.RuleType] })
     hasOrHadRuleType: Rico.RuleType | undefined;
-    @property.resource({ implicitTypes: [rico.Title] })
+    @rdfine.property.resource({ implicitTypes: [rico.Title] })
     hasOrHadTitle: Rico.Title | undefined;
-    @property()
+    @rdfine.property()
     history: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     isOrWasEnforcedBy: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.RecordResource] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResource] })
     isOrWasExpressedBy: Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isRuleAssociatedWith: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     issuedBy: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     regulatesOrRegulated: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.RuleRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.RuleRelation] })
     ruleIsSourceOfRuleRelation: Rico.RuleRelation | undefined;
-    @property()
+    @rdfine.property()
     title: RDF.Literal | undefined;
   }
   return RuleClass

@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
-import { AudienceMixin } from '../lib/Audience';
-import { DurationMixin } from '../lib/Duration';
-import { IntangibleMixin } from '../lib/Intangible';
-import { OrganizationMixin } from '../lib/Organization';
-import { PermitMixin } from '../lib/Permit';
-import { ServiceMixin } from '../lib/Service';
+import { AdministrativeAreaMixin } from '../lib/AdministrativeArea.js';
+import { AudienceMixin } from '../lib/Audience.js';
+import { DurationMixin } from '../lib/Duration.js';
+import { IntangibleMixin } from '../lib/Intangible.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PermitMixin } from '../lib/Permit.js';
+import { ServiceMixin } from '../lib/Service.js';
 
 export const PermitBundle = [
   AdministrativeAreaMixin as Mixin,

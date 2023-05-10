@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { BroadcastEventMixin } from '../lib/BroadcastEvent';
-import { EventMixin } from '../lib/Event';
-import { LanguageMixin } from '../lib/Language';
-import { PublicationEventMixin } from '../lib/PublicationEvent';
+import { BroadcastEventMixin } from '../lib/BroadcastEvent.js';
+import { EventMixin } from '../lib/Event.js';
+import { LanguageMixin } from '../lib/Language.js';
+import { PublicationEventMixin } from '../lib/PublicationEvent.js';
 
 export const BroadcastEventBundle = [
   BroadcastEventMixin as Mixin,

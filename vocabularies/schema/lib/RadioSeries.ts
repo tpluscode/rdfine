@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreativeWorkSeriesMixin } from './CreativeWorkSeries';
+import type * as Schema from '../index.js';
+import { CreativeWorkSeriesMixin } from './CreativeWorkSeries.js';
 
-export interface RadioSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeries<D>, RdfResource<D> {
+export interface RadioSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeries<D>, rdfine.RdfResource<D> {
   actor: Schema.Person<D> | undefined;
   actors: Schema.Person<D> | undefined;
   containsSeason: Schema.CreativeWorkSeason<D> | undefined;
@@ -25,36 +25,36 @@ export interface RadioSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function RadioSeriesMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RadioSeries> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function RadioSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RadioSeries> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class RadioSeriesClass extends CreativeWorkSeriesMixin(Resource) implements Partial<RadioSeries> {
-    @property.resource()
+    @rdfine.property.resource()
     actor: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     actors: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     containsSeason: Schema.CreativeWorkSeason | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     director: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     directors: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     episode: Schema.Episode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     episodes: Schema.Episode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     musicBy: Schema.MusicGroup | Schema.Person | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     numberOfEpisodes: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     numberOfSeasons: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     productionCompany: Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     season: Schema.CreativeWorkSeason | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     seasons: Schema.CreativeWorkSeason | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     trailer: Schema.VideoObject | undefined;
   }
   return RadioSeriesClass

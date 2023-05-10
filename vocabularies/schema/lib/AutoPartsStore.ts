@@ -1,19 +1,19 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { AutomotiveBusinessMixin } from './AutomotiveBusiness';
-import { StoreMixin } from './Store';
+import type * as Schema from '../index.js';
+import { AutomotiveBusinessMixin } from './AutomotiveBusiness.js';
+import { StoreMixin } from './Store.js';
 
-export interface AutoPartsStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AutomotiveBusiness<D>, Schema.Store<D>, RdfResource<D> {
+export interface AutoPartsStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AutomotiveBusiness<D>, Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
-export function AutoPartsStoreMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AutoPartsStore> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function AutoPartsStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AutoPartsStore> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class AutoPartsStoreClass extends StoreMixin(AutomotiveBusinessMixin(Resource)) implements Partial<AutoPartsStore> {
   }
   return AutoPartsStoreClass

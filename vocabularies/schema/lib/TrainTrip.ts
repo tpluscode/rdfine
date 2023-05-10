@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { TripMixin } from './Trip';
+import type * as Schema from '../index.js';
+import { TripMixin } from './Trip.js';
 
-export interface TrainTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Trip<D>, RdfResource<D> {
+export interface TrainTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Trip<D>, rdfine.RdfResource<D> {
   arrivalPlatform: string | undefined;
   arrivalStation: Schema.TrainStation<D> | undefined;
   departurePlatform: string | undefined;
@@ -17,20 +17,20 @@ export interface TrainTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   trainNumber: string | undefined;
 }
 
-export function TrainTripMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TrainTrip> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function TrainTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TrainTrip> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class TrainTripClass extends TripMixin(Resource) implements Partial<TrainTrip> {
-    @property.literal()
+    @rdfine.property.literal()
     arrivalPlatform: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     arrivalStation: Schema.TrainStation | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     departurePlatform: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     departureStation: Schema.TrainStation | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     trainName: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     trainNumber: string | undefined;
   }
   return TrainTripClass

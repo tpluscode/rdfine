@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { StructuredValueMixin } from './StructuredValue';
+import type * as Schema from '../index.js';
+import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface GeoShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface GeoShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   address: Schema.PostalAddress<D> | undefined;
   addressCountry: Schema.Country<D> | undefined;
   addressCountryLiteral: string | undefined;
@@ -21,28 +21,28 @@ export interface GeoShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   postalCode: string | undefined;
 }
 
-export function GeoShapeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<GeoShape> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function GeoShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GeoShape> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class GeoShapeClass extends StructuredValueMixin(Resource) implements Partial<GeoShape> {
-    @property.resource()
+    @rdfine.property.resource()
     address: Schema.PostalAddress | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     addressCountry: Schema.Country | undefined;
-    @property.literal({ path: schema.addressCountry })
+    @rdfine.property.literal({ path: schema.addressCountry })
     addressCountryLiteral: string | undefined;
-    @property.literal({ path: schema.address })
+    @rdfine.property.literal({ path: schema.address })
     addressLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     box: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     circle: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     elevation: number | string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     line: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     polygon: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     postalCode: string | undefined;
   }
   return GeoShapeClass

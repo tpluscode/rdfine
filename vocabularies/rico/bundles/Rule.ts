@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AgentMixin } from '../lib/Agent';
-import { RecordResourceMixin } from '../lib/RecordResource';
-import { RuleMixin } from '../lib/Rule';
-import { RuleRelationMixin } from '../lib/RuleRelation';
-import { RuleTypeMixin } from '../lib/RuleType';
-import { ThingMixin } from '../lib/Thing';
-import { TitleMixin } from '../lib/Title';
+import { AgentMixin } from '../lib/Agent.js';
+import { RecordResourceMixin } from '../lib/RecordResource.js';
+import { RuleMixin } from '../lib/Rule.js';
+import { RuleRelationMixin } from '../lib/RuleRelation.js';
+import { RuleTypeMixin } from '../lib/RuleType.js';
+import { ThingMixin } from '../lib/Thing.js';
+import { TitleMixin } from '../lib/Title.js';
 
 export const RuleBundle = [
   AgentMixin as Mixin,

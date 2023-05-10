@@ -1,22 +1,22 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { as } from './namespace';
+import { as } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as As from '..';
-import { CollectionPageMixin } from './CollectionPage';
-import { OrderedCollectionMixin } from './OrderedCollection';
+import type * as As from '../index.js';
+import { CollectionPageMixin } from './CollectionPage.js';
+import { OrderedCollectionMixin } from './OrderedCollection.js';
 
-export interface OrderedCollectionPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.CollectionPage<D>, As.OrderedCollection<D>, RdfResource<D> {
+export interface OrderedCollectionPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.CollectionPage<D>, As.OrderedCollection<D>, rdfine.RdfResource<D> {
   startIndex: number | undefined;
 }
 
-export function OrderedCollectionPageMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<OrderedCollectionPage> & RdfResourceCore> & Base {
-  @namespace(as)
+export function OrderedCollectionPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OrderedCollectionPage> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class OrderedCollectionPageClass extends OrderedCollectionMixin(CollectionPageMixin(Resource)) implements Partial<OrderedCollectionPage> {
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     startIndex: number | undefined;
   }
   return OrderedCollectionPageClass

@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { EventMixin } from './Event';
+import type * as Rico from '../index.js';
+import { EventMixin } from './Event.js';
 
-export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Event<D>, RdfResource<D> {
+export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Event<D>, rdfine.RdfResource<D> {
   activityIsContextOfRelation: Rico.AgentTemporalRelation<D> | Rico.MandateRelation<D> | undefined;
   activityIsSourceOfPerformanceRelation: Rico.PerformanceRelation<D> | undefined;
   activityIsTargetOfActivityDocumentationRelation: Rico.ActivityDocumentationRelation<D> | undefined;
@@ -19,24 +19,24 @@ export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   isOrWasPerformedBy: Rico.Agent<D> | undefined;
 }
 
-export function ActivityMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Activity> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Activity> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class ActivityClass extends EventMixin(Resource) implements Partial<Activity> {
-    @property.resource()
+    @rdfine.property.resource()
     activityIsContextOfRelation: Rico.AgentTemporalRelation | Rico.MandateRelation | undefined;
-    @property.resource({ implicitTypes: [rico.PerformanceRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.PerformanceRelation] })
     activityIsSourceOfPerformanceRelation: Rico.PerformanceRelation | undefined;
-    @property.resource({ implicitTypes: [rico.ActivityDocumentationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.ActivityDocumentationRelation] })
     activityIsTargetOfActivityDocumentationRelation: Rico.ActivityDocumentationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.ProvenanceRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.ProvenanceRelation] })
     agentOrActivityIsTargetOfProvenanceRelation: Rico.ProvenanceRelation | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     documentedBy: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.ActivityType] })
+    @rdfine.property.resource({ implicitTypes: [rico.ActivityType] })
     hasActivityType: Rico.ActivityType | undefined;
-    @property()
+    @rdfine.property()
     history: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     isOrWasPerformedBy: Rico.Agent | undefined;
   }
   return ActivityClass

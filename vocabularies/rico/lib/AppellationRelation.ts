@@ -1,24 +1,24 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { RelationMixin } from './Relation';
+import type * as Rico from '../index.js';
+import { RelationMixin } from './Relation.js';
 
-export interface AppellationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, RdfResource<D> {
+export interface AppellationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, rdfine.RdfResource<D> {
   appellationRelationHasSource: Rico.Appellation<D> | undefined;
   appellationRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function AppellationRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AppellationRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function AppellationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AppellationRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class AppellationRelationClass extends RelationMixin(Resource) implements Partial<AppellationRelation> {
-    @property.resource({ implicitTypes: [rico.Appellation] })
+    @rdfine.property.resource({ implicitTypes: [rico.Appellation] })
     appellationRelationHasSource: Rico.Appellation | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     appellationRelationHasTarget: Rico.Thing | undefined;
   }
   return AppellationRelationClass

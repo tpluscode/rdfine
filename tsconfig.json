@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
-    "target": "es2019",
+    "module": "ESNext",
+    "target": "ESNext",
     "declaration": true,
     "lib": [
       "es6",
@@ -15,7 +15,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "esModuleInterop": true
   },
   "include": [

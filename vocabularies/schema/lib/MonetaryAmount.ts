@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { StructuredValueMixin } from './StructuredValue';
+import type * as Schema from '../index.js';
+import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface MonetaryAmount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface MonetaryAmount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   currency: string | undefined;
   maxValue: number | undefined;
   minValue: number | undefined;
@@ -18,22 +18,22 @@ export interface MonetaryAmount<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   valueLiteral: boolean | number | string | undefined;
 }
 
-export function MonetaryAmountMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MonetaryAmount> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MonetaryAmountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MonetaryAmount> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MonetaryAmountClass extends StructuredValueMixin(Resource) implements Partial<MonetaryAmount> {
-    @property.literal()
+    @rdfine.property.literal()
     currency: string | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     maxValue: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     minValue: number | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validFrom: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validThrough: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     value: Schema.StructuredValue | undefined;
-    @property.literal({ path: schema.value })
+    @rdfine.property.literal({ path: schema.value })
     valueLiteral: boolean | number | string | undefined;
   }
   return MonetaryAmountClass

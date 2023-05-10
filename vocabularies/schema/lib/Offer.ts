@@ -1,28 +1,31 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { IntangibleMixin } from './Intangible';
+import type * as Schema from '../index.js';
+import { IntangibleMixin } from './Intangible.js';
 
-export interface Offer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Offer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   acceptedPaymentMethod: Schema.LoanOrCredit<D> | undefined;
   addOn: Schema.Offer<D> | undefined;
   advanceBookingRequirement: Schema.QuantitativeValue<D> | undefined;
   aggregateRating: Schema.AggregateRating<D> | undefined;
   areaServed: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
   areaServedLiteral: string | undefined;
+  asin: string | undefined;
+  asinTerm: RDF.NamedNode | undefined;
   availability: Schema.ItemAvailability | undefined;
   availabilityEnds: Date | undefined;
   availabilityStarts: Date | undefined;
   availableAtOrFrom: Schema.Place<D> | undefined;
   availableDeliveryMethod: Schema.DeliveryMethod | undefined;
   businessFunction: Schema.BusinessFunction | undefined;
-  category: Schema.Thing<D> | undefined;
+  category: Schema.CategoryCode<D> | Schema.Thing<D> | undefined;
   categoryLiteral: string | undefined;
+  checkoutPageURLTemplate: string | undefined;
   deliveryLeadTime: Schema.QuantitativeValue<D> | undefined;
   eligibleCustomerType: Schema.BusinessEntityType | undefined;
   eligibleDuration: Schema.QuantitativeValue<D> | undefined;
@@ -35,15 +38,19 @@ export interface Offer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   'gtin13': string | undefined;
   'gtin14': string | undefined;
   'gtin8': string | undefined;
+  gtinTerm: RDF.NamedNode | undefined;
+  hasAdultConsideration: Schema.AdultOrientedEnumeration | undefined;
   hasMeasurement: Schema.QuantitativeValue<D> | undefined;
   hasMerchantReturnPolicy: Schema.MerchantReturnPolicy<D> | undefined;
   includesObject: Schema.TypeAndQuantityNode<D> | undefined;
   ineligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   ineligibleRegionLiteral: string | undefined;
   inventoryLevel: Schema.QuantitativeValue<D> | undefined;
+  isFamilyFriendly: boolean | undefined;
   itemCondition: Schema.OfferItemCondition | undefined;
   itemOffered: Schema.AggregateOffer<D> | Schema.CreativeWork<D> | Schema.Event<D> | Schema.MenuItem<D> | Schema.Product<D> | Schema.Service<D> | Schema.Trip<D> | undefined;
   leaseLength: Schema.Duration<D> | Schema.QuantitativeValue<D> | undefined;
+  mobileUrl: string | undefined;
   mpn: string | undefined;
   offeredBy: Schema.Organization<D> | Schema.Person<D> | undefined;
   price: number | string | undefined;
@@ -61,108 +68,122 @@ export interface Offer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   warranty: Schema.WarrantyPromise<D> | undefined;
 }
 
-export function OfferMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Offer> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function OfferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Offer> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class OfferClass extends IntangibleMixin(Resource) implements Partial<Offer> {
-    @property.resource()
+    @rdfine.property.resource()
     acceptedPaymentMethod: Schema.LoanOrCredit | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     addOn: Schema.Offer | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     advanceBookingRequirement: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     aggregateRating: Schema.AggregateRating | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.areaServed })
+    @rdfine.property.literal({ path: schema.areaServed })
     areaServedLiteral: string | undefined;
-    @property()
+    @rdfine.property.literal()
+    asin: string | undefined;
+    @rdfine.property({ path: schema.asin })
+    asinTerm: RDF.NamedNode | undefined;
+    @rdfine.property()
     availability: Schema.ItemAvailability | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     availabilityEnds: Date | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     availabilityStarts: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     availableAtOrFrom: Schema.Place | undefined;
-    @property()
+    @rdfine.property()
     availableDeliveryMethod: Schema.DeliveryMethod | undefined;
-    @property()
+    @rdfine.property()
     businessFunction: Schema.BusinessFunction | undefined;
-    @property.resource()
-    category: Schema.Thing | undefined;
-    @property.literal({ path: schema.category })
+    @rdfine.property.resource()
+    category: Schema.CategoryCode | Schema.Thing | undefined;
+    @rdfine.property.literal({ path: schema.category })
     categoryLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.literal()
+    checkoutPageURLTemplate: string | undefined;
+    @rdfine.property.resource()
     deliveryLeadTime: Schema.QuantitativeValue | undefined;
-    @property()
+    @rdfine.property()
     eligibleCustomerType: Schema.BusinessEntityType | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     eligibleDuration: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     eligibleQuantity: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     eligibleRegion: Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.eligibleRegion })
+    @rdfine.property.literal({ path: schema.eligibleRegion })
     eligibleRegionLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     eligibleTransactionVolume: Schema.PriceSpecification | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     gtin: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     'gtin12': string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     'gtin13': string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     'gtin14': string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     'gtin8': string | undefined;
-    @property.resource()
+    @rdfine.property({ path: schema.gtin })
+    gtinTerm: RDF.NamedNode | undefined;
+    @rdfine.property()
+    hasAdultConsideration: Schema.AdultOrientedEnumeration | undefined;
+    @rdfine.property.resource()
     hasMeasurement: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasMerchantReturnPolicy: Schema.MerchantReturnPolicy | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     includesObject: Schema.TypeAndQuantityNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     ineligibleRegion: Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.ineligibleRegion })
+    @rdfine.property.literal({ path: schema.ineligibleRegion })
     ineligibleRegionLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     inventoryLevel: Schema.QuantitativeValue | undefined;
-    @property()
+    @rdfine.property.literal({ type: Boolean })
+    isFamilyFriendly: boolean | undefined;
+    @rdfine.property()
     itemCondition: Schema.OfferItemCondition | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     itemOffered: Schema.AggregateOffer | Schema.CreativeWork | Schema.Event | Schema.MenuItem | Schema.Product | Schema.Service | Schema.Trip | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     leaseLength: Schema.Duration | Schema.QuantitativeValue | undefined;
-    @property.literal()
+    @rdfine.property.literal()
+    mobileUrl: string | undefined;
+    @rdfine.property.literal()
     mpn: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     offeredBy: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     price: number | string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     priceCurrency: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     priceSpecification: Schema.PriceSpecification | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     priceValidUntil: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     review: Schema.Review | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     reviews: Schema.Review | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     seller: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     serialNumber: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     shippingDetails: Schema.OfferShippingDetails | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     sku: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validFrom: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validThrough: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     warranty: Schema.WarrantyPromise | undefined;
   }
   return OfferClass

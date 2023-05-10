@@ -1,30 +1,30 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { IntangibleMixin } from './Intangible';
+import type * as Schema from '../index.js';
+import { IntangibleMixin } from './Intangible.js';
 
-export interface ListItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface ListItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   item: Schema.Thing<D> | undefined;
   nextItem: Schema.ListItem<D> | undefined;
   position: number | string | undefined;
   previousItem: Schema.ListItem<D> | undefined;
 }
 
-export function ListItemMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ListItem> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ListItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ListItem> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ListItemClass extends IntangibleMixin(Resource) implements Partial<ListItem> {
-    @property.resource()
+    @rdfine.property.resource()
     item: Schema.Thing | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     nextItem: Schema.ListItem | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     position: number | string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     previousItem: Schema.ListItem | undefined;
   }
   return ListItemClass

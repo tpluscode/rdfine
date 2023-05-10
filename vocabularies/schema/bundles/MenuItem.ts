@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DemandMixin } from '../lib/Demand';
-import { IntangibleMixin } from '../lib/Intangible';
-import { MenuItemMixin } from '../lib/MenuItem';
-import { MenuSectionMixin } from '../lib/MenuSection';
-import { NutritionInformationMixin } from '../lib/NutritionInformation';
-import { OfferMixin } from '../lib/Offer';
+import { DemandMixin } from '../lib/Demand.js';
+import { IntangibleMixin } from '../lib/Intangible.js';
+import { MenuItemMixin } from '../lib/MenuItem.js';
+import { MenuSectionMixin } from '../lib/MenuSection.js';
+import { NutritionInformationMixin } from '../lib/NutritionInformation.js';
+import { OfferMixin } from '../lib/Offer.js';
 
 export const MenuItemBundle = [
   DemandMixin as Mixin,

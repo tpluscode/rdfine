@@ -1,13 +1,13 @@
 import { GraphPointer } from 'clownface'
-import { Context } from '../index'
 import { dash, rdf, rdfs, hydra, owl } from '@tpluscode/rdf-ns-builders'
-import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types'
-import { MixinModule } from './MixinModule'
-import { findProperties } from '../property'
-import { toJavascriptProperties } from '../property/JsProperties'
 import { NamedNode } from '@rdfjs/types'
 import TermSet from '@rdfjs/term-set'
 import TermMap from '@rdfjs/term-map'
+import { toJavascriptProperties } from '../property/JsProperties.js'
+import { findProperties } from '../property/index.js'
+import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types/index.js'
+import { Context } from '../index.js'
+import { MixinModule } from './MixinModule.js'
 
 export function getSuperClasses(clas: GraphPointer, types: TypeMetaCollection) {
   return clas.out(rdfs.subClassOf)

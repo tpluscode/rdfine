@@ -1,4 +1,4 @@
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 
 const values = {
   Nonprofit501a: schema.Nonprofit501a,

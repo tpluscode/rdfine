@@ -4,10 +4,11 @@ import RDF from '@rdfjs/data-model'
 import RdfResource, { Constructor } from '@tpluscode/rdfine'
 import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
 import { ResourceMixin } from '@rdfine/rdfs/lib/Resource'
-import { fromPointer } from '../lib/Shape';
-import { ShapeBundle } from '../bundles'
-import { sh } from '../lib/namespace'
-import { PropertyShapeMixin } from '../lib/PropertyShape'
+import { fromPointer } from '../lib/Shape.js';
+import { ShapeBundle } from '../bundles/index.js'
+import { sh } from '../lib/namespace.js'
+import { PropertyShapeMixin } from '../lib/PropertyShape.js'
+import { expect } from 'chai';
 
 RdfResource.factory.addMixin(...ShapeBundle)
 RdfResource.factory.addMixin(ResourceMixin)
@@ -26,7 +27,7 @@ describe('Shape', () => {
       const shape = fromPointer(graph)
 
       // then
-      expect(shape.property[0].name).toEqual('Foo')
+      expect(shape.property[0].name).to.eq('Foo')
     })
   })
 
@@ -42,9 +43,7 @@ describe('Shape', () => {
       const propType = shape.constructor as Constructor
 
       // then
-      expect(propType.__mixins).toEqual(
-        expect.arrayContaining([PropertyShapeMixin, ResourceMixin]),
-      )
+      expect(propType.__mixins).to.contain.all.members([PropertyShapeMixin, ResourceMixin])
     })
   })
 })

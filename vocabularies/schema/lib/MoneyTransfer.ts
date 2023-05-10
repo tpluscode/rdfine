@@ -1,30 +1,30 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { TransferActionMixin } from './TransferAction';
+import type * as Schema from '../index.js';
+import { TransferActionMixin } from './TransferAction.js';
 
-export interface MoneyTransfer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, RdfResource<D> {
+export interface MoneyTransfer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, rdfine.RdfResource<D> {
   amount: Schema.MonetaryAmount<D> | undefined;
   amountLiteral: number | undefined;
   beneficiaryBank: Schema.BankOrCreditUnion<D> | undefined;
   beneficiaryBankLiteral: string | undefined;
 }
 
-export function MoneyTransferMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MoneyTransfer> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MoneyTransferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MoneyTransfer> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MoneyTransferClass extends TransferActionMixin(Resource) implements Partial<MoneyTransfer> {
-    @property.resource()
+    @rdfine.property.resource()
     amount: Schema.MonetaryAmount | undefined;
-    @property.literal({ path: schema.amount, type: Number })
+    @rdfine.property.literal({ path: schema.amount, type: Number })
     amountLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     beneficiaryBank: Schema.BankOrCreditUnion | undefined;
-    @property.literal({ path: schema.beneficiaryBank })
+    @rdfine.property.literal({ path: schema.beneficiaryBank })
     beneficiaryBankLiteral: string | undefined;
   }
   return MoneyTransferClass

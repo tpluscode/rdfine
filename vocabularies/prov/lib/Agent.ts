@@ -1,13 +1,13 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { prov } from './namespace';
+import { prov } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Prov from '..';
+import type * as Prov from '../index.js';
 
-export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   actedOnBehalfOf: Prov.Agent<D> | undefined;
   atLocation: Prov.Location<D> | undefined;
   qualifiedDelegation: Prov.Delegation<D> | undefined;
@@ -15,18 +15,18 @@ export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
   wasInfluencedBy: Prov.Activity<D> | Prov.Agent<D> | Prov.Entity<D> | undefined;
 }
 
-export function AgentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Agent> & RdfResourceCore> & Base {
-  @namespace(prov)
+export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Agent> & RdfResourceCore> & Base {
+  @rdfine.namespace(prov)
   class AgentClass extends Resource implements Partial<Agent> {
-    @property.resource({ as: [AgentMixin] })
+    @rdfine.property.resource({ as: [AgentMixin] })
     actedOnBehalfOf: Prov.Agent | undefined;
-    @property.resource({ implicitTypes: [prov.Location] })
+    @rdfine.property.resource({ implicitTypes: [prov.Location] })
     atLocation: Prov.Location | undefined;
-    @property.resource({ implicitTypes: [prov.Delegation] })
+    @rdfine.property.resource({ implicitTypes: [prov.Delegation] })
     qualifiedDelegation: Prov.Delegation | undefined;
-    @property.resource({ implicitTypes: [prov.Influence] })
+    @rdfine.property.resource({ implicitTypes: [prov.Influence] })
     qualifiedInfluence: Prov.Influence | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     wasInfluencedBy: Prov.Activity | Prov.Agent | Prov.Entity | undefined;
   }
   return AgentClass

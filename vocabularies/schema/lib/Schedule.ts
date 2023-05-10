@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { IntangibleMixin } from './Intangible';
+import type * as Schema from '../index.js';
+import { IntangibleMixin } from './Intangible.js';
 
-export interface Schedule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Schedule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   byDay: string | undefined;
   byDayTerm: Schema.DayOfWeek | undefined;
   byMonth: number | undefined;
@@ -26,38 +26,38 @@ export interface Schedule<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   startTime: Date | undefined;
 }
 
-export function ScheduleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Schedule> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ScheduleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Schedule> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ScheduleClass extends IntangibleMixin(Resource) implements Partial<Schedule> {
-    @property.literal()
+    @rdfine.property.literal()
     byDay: string | undefined;
-    @property({ path: schema.byDay })
+    @rdfine.property({ path: schema.byDay })
     byDayTerm: Schema.DayOfWeek | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     byMonth: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     byMonthDay: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     byMonthWeek: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     duration: Schema.Duration | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     endTime: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     exceptDate: Date | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     repeatCount: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     repeatFrequency: Schema.Duration | undefined;
-    @property.literal({ path: schema.repeatFrequency })
+    @rdfine.property.literal({ path: schema.repeatFrequency })
     repeatFrequencyLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     scheduleTimezone: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     startTime: Date | undefined;
   }
   return ScheduleClass

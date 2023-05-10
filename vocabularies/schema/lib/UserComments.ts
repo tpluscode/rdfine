@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { UserInteractionMixin } from './UserInteraction';
+import type * as Schema from '../index.js';
+import { UserInteractionMixin } from './UserInteraction.js';
 
-export interface UserComments<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UserInteraction<D>, RdfResource<D> {
+export interface UserComments<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UserInteraction<D>, rdfine.RdfResource<D> {
   commentText: string | undefined;
   commentTime: Date | undefined;
   creator: Schema.Organization<D> | Schema.Person<D> | undefined;
@@ -16,18 +16,18 @@ export interface UserComments<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   replyToUrl: RDF.NamedNode | undefined;
 }
 
-export function UserCommentsMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<UserComments> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function UserCommentsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<UserComments> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class UserCommentsClass extends UserInteractionMixin(Resource) implements Partial<UserComments> {
-    @property.literal()
+    @rdfine.property.literal()
     commentText: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     commentTime: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     creator: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     discusses: Schema.CreativeWork | undefined;
-    @property()
+    @rdfine.property()
     replyToUrl: RDF.NamedNode | undefined;
   }
   return UserCommentsClass

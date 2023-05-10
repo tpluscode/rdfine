@@ -1,21 +1,21 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { NameMixin } from './Name';
+import type * as Rico from '../index.js';
+import { NameMixin } from './Name.js';
 
-export interface Title<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Name<D>, RdfResource<D> {
+export interface Title<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Name<D>, rdfine.RdfResource<D> {
   isOrWasTitleOf: Rico.Instantiation<D> | Rico.RecordResource<D> | Rico.Rule<D> | undefined;
 }
 
-export function TitleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Title> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function TitleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Title> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class TitleClass extends NameMixin(Resource) implements Partial<Title> {
-    @property.resource()
+    @rdfine.property.resource()
     isOrWasTitleOf: Rico.Instantiation | Rico.RecordResource | Rico.Rule | undefined;
   }
   return TitleClass

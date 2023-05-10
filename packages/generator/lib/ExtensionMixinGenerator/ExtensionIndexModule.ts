@@ -1,5 +1,5 @@
-import { GeneratedModule } from '../index'
 import { Project } from 'ts-morph'
+import { GeneratedModule } from '../index.js'
 
 export class ExtensionIndexModule implements GeneratedModule {
   constructor(public prefix: string, public terms: string[]) {
@@ -11,7 +11,7 @@ export class ExtensionIndexModule implements GeneratedModule {
     for (const extendedTerm of this.terms.sort((l, r) => l.localeCompare(r))) {
       extensionsModule.addExportDeclaration({
         namedExports: [`${extendedTerm}MixinEx`],
-        moduleSpecifier: `./${this.prefix}/${extendedTerm}`,
+        moduleSpecifier: `./${this.prefix}/${extendedTerm}.js`,
       })
     }
   }

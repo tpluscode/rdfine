@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DoseScheduleMixin } from '../lib/DoseSchedule';
-import { RecommendedDoseScheduleMixin } from '../lib/RecommendedDoseSchedule';
+import { DoseScheduleMixin } from '../lib/DoseSchedule.js';
+import { RecommendedDoseScheduleMixin } from '../lib/RecommendedDoseSchedule.js';
 
 export const RecommendedDoseScheduleBundle = [
   DoseScheduleMixin as Mixin,

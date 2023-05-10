@@ -1,27 +1,27 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreativeWorkMixin } from './CreativeWork';
+import type * as Schema from '../index.js';
+import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface Blog<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface Blog<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   blogPost: Schema.BlogPosting<D> | undefined;
   blogPosts: Schema.BlogPosting<D> | undefined;
   issn: string | undefined;
 }
 
-export function BlogMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Blog> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function BlogMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Blog> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class BlogClass extends CreativeWorkMixin(Resource) implements Partial<Blog> {
-    @property.resource()
+    @rdfine.property.resource()
     blogPost: Schema.BlogPosting | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     blogPosts: Schema.BlogPosting | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     issn: string | undefined;
   }
   return BlogClass

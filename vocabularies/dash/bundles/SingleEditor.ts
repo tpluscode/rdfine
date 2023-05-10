@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { EditorMixin } from '../lib/Editor';
-import { SingleEditorMixin } from '../lib/SingleEditor';
+import { EditorMixin } from '../lib/Editor.js';
+import { SingleEditorMixin } from '../lib/SingleEditor.js';
 
 export const SingleEditorBundle = [
   EditorMixin as Mixin,

@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RuleMixin } from '../lib/Rule';
-import { SPARQLConstructExecutableMixin } from '../lib/SPARQLConstructExecutable';
-import { SPARQLRuleMixin } from '../lib/SPARQLRule';
+import { RuleMixin } from '../lib/Rule.js';
+import { SPARQLConstructExecutableMixin } from '../lib/SPARQLConstructExecutable.js';
+import { SPARQLRuleMixin } from '../lib/SPARQLRule.js';
 
 export const SPARQLRuleBundle = [
   RuleMixin as Mixin,

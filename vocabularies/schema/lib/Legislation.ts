@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreativeWorkMixin } from './CreativeWork';
+import type * as Schema from '../index.js';
+import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface Legislation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface Legislation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   jurisdiction: Schema.AdministrativeArea<D> | undefined;
   jurisdictionLiteral: string | undefined;
   legislationApplies: Schema.Legislation<D> | undefined;
@@ -28,42 +28,42 @@ export interface Legislation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   legislationTypeLiteral: string | undefined;
 }
 
-export function LegislationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Legislation> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function LegislationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Legislation> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class LegislationClass extends CreativeWorkMixin(Resource) implements Partial<Legislation> {
-    @property.resource()
+    @rdfine.property.resource()
     jurisdiction: Schema.AdministrativeArea | undefined;
-    @property.literal({ path: schema.jurisdiction })
+    @rdfine.property.literal({ path: schema.jurisdiction })
     jurisdictionLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     legislationApplies: Schema.Legislation | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     legislationChanges: Schema.Legislation | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     legislationConsolidates: Schema.Legislation | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     legislationDate: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     legislationDateVersion: Date | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     legislationIdentifier: string | undefined;
-    @property({ path: schema.legislationIdentifier })
+    @rdfine.property({ path: schema.legislationIdentifier })
     legislationIdentifierTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     legislationJurisdiction: Schema.AdministrativeArea | undefined;
-    @property.literal({ path: schema.legislationJurisdiction })
+    @rdfine.property.literal({ path: schema.legislationJurisdiction })
     legislationJurisdictionLiteral: string | undefined;
-    @property()
+    @rdfine.property()
     legislationLegalForce: Schema.LegalForceStatus | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     legislationPassedBy: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     legislationResponsible: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     legislationTransposes: Schema.Legislation | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     legislationType: Schema.CategoryCode | undefined;
-    @property.literal({ path: schema.legislationType })
+    @rdfine.property.literal({ path: schema.legislationType })
     legislationTypeLiteral: string | undefined;
   }
   return LegislationClass

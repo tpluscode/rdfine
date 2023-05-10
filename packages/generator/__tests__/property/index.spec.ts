@@ -5,7 +5,8 @@ import { owl, rdfs, schema, xsd } from '@tpluscode/rdf-ns-builders'
 import cf from 'clownface'
 import Parser from '@rdfjs/parser-n3'
 import stringToStream from 'string-to-stream'
-import { findProperties } from '../../lib/property'
+import { expect } from 'chai'
+import { findProperties } from '../../lib/property/index.js'
 
 const parser = new Parser()
 
@@ -30,7 +31,7 @@ describe('findProperties', () => {
     })
 
     // then
-    expect(properties[0].range[0].strictSemantics).toBe(true)
+    expect(properties[0].range[0].strictSemantics).to.eq(true)
   })
 
   it('returns loose properties defined with schema:rangeIncludes', async () => {
@@ -51,7 +52,7 @@ describe('findProperties', () => {
     })
 
     // then
-    expect(properties[0].range[0].strictSemantics).toBe(false)
+    expect(properties[0].range[0].strictSemantics).to.eq(false)
   })
 
   it('returns strict properties defined with owl:unionOf/rdfs:range', async () => {
@@ -74,8 +75,8 @@ describe('findProperties', () => {
     })
 
     // then
-    expect(properties[0].range[0].strictSemantics).toBe(true)
-    expect(properties[0].range[1].strictSemantics).toBe(true)
+    expect(properties[0].range[0].strictSemantics).to.eq(true)
+    expect(properties[0].range[1].strictSemantics).to.eq(true)
   })
 
   it('returns strict properties defined with rdfs:domain/owl:unionOf rdfs:range/owl:unionOf', async () => {
@@ -98,8 +99,8 @@ describe('findProperties', () => {
     })
 
     // then
-    expect(properties[0].range[0].strictSemantics).toBe(true)
-    expect(properties[0].range[1].strictSemantics).toBe(true)
+    expect(properties[0].range[0].strictSemantics).to.eq(true)
+    expect(properties[0].range[1].strictSemantics).to.eq(true)
   })
 
   it('returns strict properties defined as derived datatype with owl:onDatatype', async () => {
@@ -122,7 +123,7 @@ describe('findProperties', () => {
     })
 
     // then
-    expect(properties[0].range[0].term.term).toStrictEqual(xsd.float)
-    expect(properties[0].range[0].strictSemantics).toBe(true)
+    expect(properties[0].range[0].term.term).to.deep.eq(xsd.float)
+    expect(properties[0].range[0].strictSemantics).to.eq(true)
   })
 })

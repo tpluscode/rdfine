@@ -2,11 +2,8 @@
   "root": true,
   "extends": [ "@tpluscode" ],
   "env": {
-    "jest/globals": true
+    "mocha": true
   },
-  "plugins": [
-    "jest"
-  ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
@@ -18,11 +15,14 @@
   "overrides": [{
     "files": ["vocabularies/**"],
     "rules": {
+      "import/order": "off",
       "import/no-duplicates": "off",
+      "import/no-unresolved": "off",
       "no-unused-vars": "warn",
       "semi": "off",
       "symbol-description": "off",
       "lines-between-class-members": "off",
+      "@typescript-eslint/indent": "off",
       "@typescript-eslint/no-empty-interface": "off",
       "@typescript-eslint/member-delimiter-style": [2, {
         "multiline": {

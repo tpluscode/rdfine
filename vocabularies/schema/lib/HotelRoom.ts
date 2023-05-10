@@ -1,27 +1,27 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { RoomMixin } from './Room';
+import type * as Schema from '../index.js';
+import { RoomMixin } from './Room.js';
 
-export interface HotelRoom<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Room<D>, RdfResource<D> {
+export interface HotelRoom<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Room<D>, rdfine.RdfResource<D> {
   bed: Schema.BedDetails<D> | undefined;
   bedLiteral: string | undefined;
   occupancy: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function HotelRoomMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<HotelRoom> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function HotelRoomMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HotelRoom> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class HotelRoomClass extends RoomMixin(Resource) implements Partial<HotelRoom> {
-    @property.resource()
+    @rdfine.property.resource()
     bed: Schema.BedDetails | undefined;
-    @property.literal({ path: schema.bed })
+    @rdfine.property.literal({ path: schema.bed })
     bedLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     occupancy: Schema.QuantitativeValue | undefined;
   }
   return HotelRoomClass

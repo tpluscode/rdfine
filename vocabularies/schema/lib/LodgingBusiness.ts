@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { LocalBusinessMixin } from './LocalBusiness';
+import type * as Schema from '../index.js';
+import { LocalBusinessMixin } from './LocalBusiness.js';
 
-export interface LodgingBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
+export interface LodgingBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
   amenityFeature: Schema.LocationFeatureSpecification<D> | undefined;
   audience: Schema.Audience<D> | undefined;
   availableLanguage: Schema.Language<D> | undefined;
@@ -21,28 +21,28 @@ export interface LodgingBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   starRating: Schema.Rating<D> | undefined;
 }
 
-export function LodgingBusinessMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LodgingBusiness> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function LodgingBusinessMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LodgingBusiness> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class LodgingBusinessClass extends LocalBusinessMixin(Resource) implements Partial<LodgingBusiness> {
-    @property.resource()
+    @rdfine.property.resource()
     amenityFeature: Schema.LocationFeatureSpecification | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     audience: Schema.Audience | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     availableLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.availableLanguage })
+    @rdfine.property.literal({ path: schema.availableLanguage })
     availableLanguageLiteral: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     checkinTime: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     checkoutTime: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfRooms: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.numberOfRooms, type: Number })
+    @rdfine.property.literal({ path: schema.numberOfRooms, type: Number })
     numberOfRoomsLiteral: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     petsAllowed: boolean | string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     starRating: Schema.Rating | undefined;
   }
   return LodgingBusinessClass

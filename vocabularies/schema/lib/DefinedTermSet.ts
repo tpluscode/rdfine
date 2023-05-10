@@ -1,21 +1,21 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreativeWorkMixin } from './CreativeWork';
+import type * as Schema from '../index.js';
+import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface DefinedTermSet<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface DefinedTermSet<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   hasDefinedTerm: RDF.Term | undefined;
 }
 
-export function DefinedTermSetMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DefinedTermSet> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DefinedTermSetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DefinedTermSet> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DefinedTermSetClass extends CreativeWorkMixin(Resource) implements Partial<DefinedTermSet> {
-    @property()
+    @rdfine.property()
     hasDefinedTerm: RDF.Term | undefined;
   }
   return DefinedTermSetClass

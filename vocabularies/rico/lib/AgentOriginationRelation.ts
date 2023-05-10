@@ -1,24 +1,24 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { ProvenanceRelationMixin } from './ProvenanceRelation';
+import type * as Rico from '../index.js';
+import { ProvenanceRelationMixin } from './ProvenanceRelation.js';
 
-export interface AgentOriginationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.ProvenanceRelation<D>, RdfResource<D> {
+export interface AgentOriginationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.ProvenanceRelation<D>, rdfine.RdfResource<D> {
   agentOriginationRelationHasSource: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
   agentOriginationRelationHasTarget: Rico.Agent<D> | undefined;
 }
 
-export function AgentOriginationRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AgentOriginationRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function AgentOriginationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AgentOriginationRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class AgentOriginationRelationClass extends ProvenanceRelationMixin(Resource) implements Partial<AgentOriginationRelation> {
-    @property.resource()
+    @rdfine.property.resource()
     agentOriginationRelationHasSource: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     agentOriginationRelationHasTarget: Rico.Agent | undefined;
   }
   return AgentOriginationRelationClass

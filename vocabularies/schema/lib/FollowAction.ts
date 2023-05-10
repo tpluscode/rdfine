@@ -1,21 +1,21 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { InteractActionMixin } from './InteractAction';
+import type * as Schema from '../index.js';
+import { InteractActionMixin } from './InteractAction.js';
 
-export interface FollowAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, RdfResource<D> {
+export interface FollowAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, rdfine.RdfResource<D> {
   followee: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function FollowActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FollowAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function FollowActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FollowAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class FollowActionClass extends InteractActionMixin(Resource) implements Partial<FollowAction> {
-    @property.resource()
+    @rdfine.property.resource()
     followee: Schema.Organization | Schema.Person | undefined;
   }
   return FollowActionClass

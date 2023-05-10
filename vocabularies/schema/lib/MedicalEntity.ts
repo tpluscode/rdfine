@@ -1,15 +1,16 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { ThingMixin } from './Thing';
+import type * as Schema from '../index.js';
+import { ThingMixin } from './Thing.js';
 
-export interface MedicalEntity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, RdfResource<D> {
+export interface MedicalEntity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, rdfine.RdfResource<D> {
   code: Schema.MedicalCode<D> | undefined;
+  funding: Schema.Grant<D> | undefined;
   guideline: Schema.MedicalGuideline<D> | undefined;
   legalStatus: Schema.DrugLegalStatus<D> | undefined;
   legalStatusLiteral: string | undefined;
@@ -19,24 +20,26 @@ export interface MedicalEntity<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   study: Schema.MedicalStudy<D> | undefined;
 }
 
-export function MedicalEntityMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MedicalEntity> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MedicalEntityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalEntity> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MedicalEntityClass extends ThingMixin(Resource) implements Partial<MedicalEntity> {
-    @property.resource()
+    @rdfine.property.resource()
     code: Schema.MedicalCode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
+    funding: Schema.Grant | undefined;
+    @rdfine.property.resource()
     guideline: Schema.MedicalGuideline | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     legalStatus: Schema.DrugLegalStatus | undefined;
-    @property.literal({ path: schema.legalStatus })
+    @rdfine.property.literal({ path: schema.legalStatus })
     legalStatusLiteral: string | undefined;
-    @property()
+    @rdfine.property()
     medicineSystem: Schema.MedicineSystem | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     recognizingAuthority: Schema.Organization | undefined;
-    @property()
+    @rdfine.property()
     relevantSpecialty: Schema.MedicalSpecialty | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     study: Schema.MedicalStudy | undefined;
   }
   return MedicalEntityClass

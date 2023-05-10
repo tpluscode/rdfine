@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActivityMixin } from '../lib/Activity';
-import { AgentMixin } from '../lib/Agent';
-import { InstantiationMixin } from '../lib/Instantiation';
-import { ProvenanceRelationMixin } from '../lib/ProvenanceRelation';
-import { RecordResourceMixin } from '../lib/RecordResource';
-import { RelationMixin } from '../lib/Relation';
+import { ActivityMixin } from '../lib/Activity.js';
+import { AgentMixin } from '../lib/Agent.js';
+import { InstantiationMixin } from '../lib/Instantiation.js';
+import { ProvenanceRelationMixin } from '../lib/ProvenanceRelation.js';
+import { RecordResourceMixin } from '../lib/RecordResource.js';
+import { RelationMixin } from '../lib/Relation.js';
 
 export const ProvenanceRelationBundle = [
   ActivityMixin as Mixin,

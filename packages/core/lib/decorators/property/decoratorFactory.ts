@@ -1,14 +1,14 @@
-import RdfResourceImpl, { RdfResourceCore } from '../../../RdfResource'
 import type { Quad, Term } from '@rdfjs/types'
-import { ClassElement } from '../index'
-import { EdgeTraversal, toEdgeTraversals } from '../../path'
-import { enumerateList, isList } from '../../rdf-list'
-import { onlyUnique } from '../../filter'
 import cf, { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import TermSet from '@rdf-esm/term-set'
-import { AccessorOptions } from './index'
-import type { Factory } from '../../../factory'
+import TermSet from '@rdfjs/term-set'
+import RdfResourceImpl, { RdfResourceCore } from '../../../RdfResource.js'
+import { ClassElement } from '../index.js'
+import { EdgeTraversal, toEdgeTraversals } from '../../path.js'
+import { enumerateList, isList } from '../../rdf-list.js'
+import { onlyUnique } from '../../filter.js'
+import type { Factory } from '../../../factory.js'
+import { AccessorOptions } from './index.js'
 
 export type PropertyReturnKind = 'single' | 'array' | 'list'
 export type ArrayOrSingle<T> = T | T[]
@@ -177,15 +177,15 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
           value = valueOrFactory
         }
 
-        if (typeof value === 'object' && 'termType' in value) {
+        if (value && typeof value === 'object' && 'termType' in value) {
           term = value
         } else
 
-        if (typeof value === 'object' && 'term' in value) {
+        if (value && typeof value === 'object' && 'term' in value) {
           term = value.term
         } else
 
-        if (typeof value === 'object' && 'pointer' in value) {
+        if (value && typeof value === 'object' && 'pointer' in value) {
           term = value.id
         } else {
           term = toTerm.call(this, value as any)

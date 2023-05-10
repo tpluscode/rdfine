@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { IntangibleMixin } from './Intangible';
+import type * as Schema from '../index.js';
+import { IntangibleMixin } from './Intangible.js';
 
-export interface Order<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Order<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   acceptedOffer: Schema.Offer<D> | undefined;
   billingAddress: Schema.PostalAddress<D> | undefined;
   broker: Schema.Organization<D> | Schema.Person<D> | undefined;
@@ -33,52 +33,52 @@ export interface Order<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   seller: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function OrderMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Order> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function OrderMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Order> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class OrderClass extends IntangibleMixin(Resource) implements Partial<Order> {
-    @property.resource()
+    @rdfine.property.resource()
     acceptedOffer: Schema.Offer | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     billingAddress: Schema.PostalAddress | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     broker: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     confirmationNumber: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     customer: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     discount: number | string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     discountCode: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     discountCurrency: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     isGift: boolean | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     merchant: Schema.Organization | Schema.Person | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     orderDate: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     orderDelivery: Schema.ParcelDelivery | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     orderedItem: Schema.OrderItem | Schema.Product | Schema.Service | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     orderNumber: string | undefined;
-    @property()
+    @rdfine.property()
     orderStatus: Schema.OrderStatus | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     partOfInvoice: Schema.Invoice | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     paymentDue: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     paymentDueDate: Date | undefined;
-    @property()
+    @rdfine.property()
     paymentMethod: Schema.PaymentMethod | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     paymentMethodId: string | undefined;
-    @property()
+    @rdfine.property()
     paymentUrl: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     seller: Schema.Organization | Schema.Person | undefined;
   }
   return OrderClass

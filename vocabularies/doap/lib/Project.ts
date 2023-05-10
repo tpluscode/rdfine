@@ -1,11 +1,11 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { doap } from './namespace';
+import { doap } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Doap from '..';
+import type * as Doap from '../index.js';
 import type * as Foaf from '@rdfine/foaf';
 import type * as Rdfs from '@rdfine/rdfs';
 import type * as Sioc from '@rdfine/sioc';
@@ -15,7 +15,7 @@ import { PersonMixin as FoafPersonMixin } from '@rdfine/foaf/lib/Person';
 import { ContainerMixin as SiocContainerMixin } from '@rdfine/sioc/lib/Container';
 import { OrganizationMixin as FoafOrganizationMixin } from '@rdfine/foaf/lib/Organization';
 
-export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Project<D>, RdfResource<D> {
+export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Project<D>, rdfine.RdfResource<D> {
   audience: RDF.Literal | undefined;
   blog: Rdfs.Resource<D> | undefined;
   'bug-database': RDF.Term | undefined;
@@ -46,64 +46,64 @@ export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends Fo
   wiki: RDF.NamedNode | undefined;
 }
 
-export function ProjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Project> & RdfResourceCore> & Base {
-  @namespace(doap)
+export function ProjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Project> & RdfResourceCore> & Base {
+  @rdfine.namespace(doap)
   class ProjectClass extends FoafProjectMixin(Resource) implements Partial<Project> {
-    @property()
+    @rdfine.property()
     audience: RDF.Literal | undefined;
-    @property.resource({ as: [RdfsResourceMixin] })
+    @rdfine.property.resource({ as: [RdfsResourceMixin] })
     blog: Rdfs.Resource | undefined;
-    @property()
+    @rdfine.property()
     'bug-database': RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     category: RDF.Term | undefined;
-    @property.resource({ as: [FoafPersonMixin] })
+    @rdfine.property.resource({ as: [FoafPersonMixin] })
     developer: Foaf.Person | undefined;
-    @property.resource({ as: [SiocContainerMixin] })
+    @rdfine.property.resource({ as: [SiocContainerMixin] })
     'developer-forum': Sioc.Container | undefined;
-    @property.resource({ as: [FoafPersonMixin] })
+    @rdfine.property.resource({ as: [FoafPersonMixin] })
     documenter: Foaf.Person | undefined;
-    @property()
+    @rdfine.property()
     'download-mirror': RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     'download-page': RDF.Term | undefined;
-    @property.resource({ as: [FoafPersonMixin] })
+    @rdfine.property.resource({ as: [FoafPersonMixin] })
     helper: Foaf.Person | undefined;
-    @property()
+    @rdfine.property()
     homepage: RDF.Term | undefined;
-    @property.resource({ implicitTypes: [doap.Specification] })
+    @rdfine.property.resource({ implicitTypes: [doap.Specification] })
     implements: Doap.Specification | undefined;
-    @property()
+    @rdfine.property()
     language: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     'mailing-list': RDF.NamedNode | undefined;
-    @property.resource({ as: [FoafPersonMixin] })
+    @rdfine.property.resource({ as: [FoafPersonMixin] })
     maintainer: Foaf.Person | undefined;
-    @property()
+    @rdfine.property()
     'old-homepage': RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     os: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     platform: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     'programming-language': RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [doap.Version] })
+    @rdfine.property.resource({ implicitTypes: [doap.Version] })
     release: Doap.Version | undefined;
-    @property.resource({ implicitTypes: [doap.Repository] })
+    @rdfine.property.resource({ implicitTypes: [doap.Repository] })
     repository: Doap.Repository | undefined;
-    @property()
+    @rdfine.property()
     screenshots: RDF.Term | undefined;
-    @property.resource({ as: [RdfsResourceMixin] })
+    @rdfine.property.resource({ as: [RdfsResourceMixin] })
     'service-endpoint': Rdfs.Resource | undefined;
-    @property.resource({ as: [SiocContainerMixin] })
+    @rdfine.property.resource({ as: [SiocContainerMixin] })
     'support-forum': Sioc.Container | undefined;
-    @property.resource({ as: [FoafPersonMixin] })
+    @rdfine.property.resource({ as: [FoafPersonMixin] })
     tester: Foaf.Person | undefined;
-    @property.resource({ as: [FoafPersonMixin] })
+    @rdfine.property.resource({ as: [FoafPersonMixin] })
     translator: Foaf.Person | undefined;
-    @property.resource({ as: [FoafOrganizationMixin] })
+    @rdfine.property.resource({ as: [FoafOrganizationMixin] })
     vendor: Foaf.Organization | undefined;
-    @property()
+    @rdfine.property()
     wiki: RDF.NamedNode | undefined;
   }
   return ProjectClass

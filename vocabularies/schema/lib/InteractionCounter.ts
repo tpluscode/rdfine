@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { StructuredValueMixin } from './StructuredValue';
+import type * as Schema from '../index.js';
+import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface InteractionCounter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface InteractionCounter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   endTime: Date | undefined;
   interactionService: Schema.SoftwareApplication<D> | Schema.WebSite<D> | undefined;
   interactionType: Schema.Action<D> | undefined;
@@ -18,22 +18,22 @@ export interface InteractionCounter<D extends RDF.DatasetCore = RDF.DatasetCore>
   userInteractionCount: number | undefined;
 }
 
-export function InteractionCounterMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<InteractionCounter> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function InteractionCounterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InteractionCounter> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class InteractionCounterClass extends StructuredValueMixin(Resource) implements Partial<InteractionCounter> {
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     endTime: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     interactionService: Schema.SoftwareApplication | Schema.WebSite | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     interactionType: Schema.Action | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     location: Schema.Place | Schema.PostalAddress | undefined;
-    @property.literal({ path: schema.location })
+    @rdfine.property.literal({ path: schema.location })
     locationLiteral: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     startTime: Date | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     userInteractionCount: number | undefined;
   }
   return InteractionCounterClass

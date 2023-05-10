@@ -1,10 +1,10 @@
 import type { Constructor } from '@tpluscode/rdfine'
 import { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Collection, MemberAssertion } from '..'
+import type { Collection, MemberAssertion } from '../index.js'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import { property } from '@tpluscode/rdfine';
 import type * as RDF from '@rdfjs/types';
-import { MemberAssertionMixin } from '../extensions/MemberAssertion';
+import { MemberAssertionMixin } from '../extensions/MemberAssertion.js';
 
 export interface CollectionEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
   manages: Array<MemberAssertion<D>>;

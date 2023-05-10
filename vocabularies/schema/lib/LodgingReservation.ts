@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { ReservationMixin } from './Reservation';
+import type * as Schema from '../index.js';
+import { ReservationMixin } from './Reservation.js';
 
-export interface LodgingReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, RdfResource<D> {
+export interface LodgingReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, rdfine.RdfResource<D> {
   checkinTime: Date | undefined;
   checkoutTime: Date | undefined;
   lodgingUnitDescription: string | undefined;
@@ -20,26 +20,26 @@ export interface LodgingReservation<D extends RDF.DatasetCore = RDF.DatasetCore>
   numChildrenLiteral: number | undefined;
 }
 
-export function LodgingReservationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LodgingReservation> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function LodgingReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LodgingReservation> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class LodgingReservationClass extends ReservationMixin(Resource) implements Partial<LodgingReservation> {
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     checkinTime: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     checkoutTime: Date | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     lodgingUnitDescription: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     lodgingUnitType: string | undefined;
-    @property({ path: schema.lodgingUnitType })
+    @rdfine.property({ path: schema.lodgingUnitType })
     lodgingUnitTypeTerm: Schema.QualitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numAdults: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.numAdults, type: Number })
+    @rdfine.property.literal({ path: schema.numAdults, type: Number })
     numAdultsLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numChildren: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.numChildren, type: Number })
+    @rdfine.property.literal({ path: schema.numChildren, type: Number })
     numChildrenLiteral: number | undefined;
   }
   return LodgingReservationClass

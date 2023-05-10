@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { GameServerMixin } from '../lib/GameServer';
-import { IntangibleMixin } from '../lib/Intangible';
-import { VideoGameMixin } from '../lib/VideoGame';
+import { GameServerMixin } from '../lib/GameServer.js';
+import { IntangibleMixin } from '../lib/Intangible.js';
+import { VideoGameMixin } from '../lib/VideoGame.js';
 
 export const GameServerBundle = [
   GameServerMixin as Mixin,

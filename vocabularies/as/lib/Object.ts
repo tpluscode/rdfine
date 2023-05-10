@@ -1,13 +1,13 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { as } from './namespace';
+import { as } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as As from '..';
+import type * as As from '../index.js';
 
-export interface Object<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Object<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   attachment: As.Link<D> | As.Object<D> | undefined;
   attachments: As.Link<D> | As.Object<D> | undefined;
   attributedTo: As.Link<D> | As.Object<D> | undefined;
@@ -44,76 +44,76 @@ export interface Object<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf
   url: As.Link<D> | undefined;
 }
 
-export function ObjectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Object> & RdfResourceCore> & Base {
-  @namespace(as)
+export function ObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Object> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class ObjectClass extends Resource implements Partial<Object> {
-    @property.resource()
+    @rdfine.property.resource()
     attachment: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     attachments: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     attributedTo: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     audience: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     author: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     bcc: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     bto: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     cc: As.Link | As.Object | undefined;
-    @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#langString') })
+    @rdfine.property.literal({ datatype: $rdf.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#langString') })
     content: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     context: As.Link | As.Object | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     downstreamDuplicates: string | undefined;
-    @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#duration') })
+    @rdfine.property.literal({ datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#duration') })
     duration: string | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     endTime: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     generator: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     icon: As.Image | As.Link | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     image: As.Image | As.Link | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     inReplyTo: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     location: As.Link | As.Object | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     mediaType: string | undefined;
-    @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#langString') })
+    @rdfine.property.literal({ datatype: $rdf.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#langString') })
     name: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     objectType: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     preview: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     provider: As.Link | As.Object | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     published: Date | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     rating: number | undefined;
-    @property.resource({ implicitTypes: [as.Collection] })
+    @rdfine.property.resource({ implicitTypes: [as.Collection] })
     replies: As.Collection | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     startTime: Date | undefined;
-    @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#langString') })
+    @rdfine.property.literal({ datatype: $rdf.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#langString') })
     summary: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     tag: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     tags: As.Link | As.Object | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     to: As.Link | As.Object | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     updated: Date | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     upstreamDuplicates: string | undefined;
-    @property.resource({ implicitTypes: [as.Link] })
+    @rdfine.property.resource({ implicitTypes: [as.Link] })
     url: As.Link | undefined;
   }
   return ObjectClass

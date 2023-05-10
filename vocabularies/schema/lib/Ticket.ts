@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { IntangibleMixin } from './Intangible';
+import type * as Schema from '../index.js';
+import { IntangibleMixin } from './Intangible.js';
 
-export interface Ticket<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Ticket<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   dateIssued: Date | undefined;
   issuedBy: Schema.Organization<D> | undefined;
   priceCurrency: string | undefined;
@@ -21,28 +21,28 @@ export interface Ticket<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   underName: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function TicketMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Ticket> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function TicketMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Ticket> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class TicketClass extends IntangibleMixin(Resource) implements Partial<Ticket> {
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateIssued: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     issuedBy: Schema.Organization | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     priceCurrency: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     ticketedSeat: Schema.Seat | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     ticketNumber: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     ticketToken: string | undefined;
-    @property({ path: schema.ticketToken })
+    @rdfine.property({ path: schema.ticketToken })
     ticketTokenTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     totalPrice: Schema.PriceSpecification | undefined;
-    @property.literal({ path: schema.totalPrice })
+    @rdfine.property.literal({ path: schema.totalPrice })
     totalPriceLiteral: number | string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     underName: Schema.Organization | Schema.Person | undefined;
   }
   return TicketClass

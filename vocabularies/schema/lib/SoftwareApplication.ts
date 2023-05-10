@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreativeWorkMixin } from './CreativeWork';
+import type * as Schema from '../index.js';
+import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface SoftwareApplication<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface SoftwareApplication<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   applicationCategory: string | undefined;
   applicationCategoryTerm: RDF.NamedNode | undefined;
   applicationSubCategory: string | undefined;
@@ -43,72 +43,72 @@ export interface SoftwareApplication<D extends RDF.DatasetCore = RDF.DatasetCore
   supportingData: Schema.DataFeed<D> | undefined;
 }
 
-export function SoftwareApplicationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SoftwareApplication> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function SoftwareApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SoftwareApplication> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class SoftwareApplicationClass extends CreativeWorkMixin(Resource) implements Partial<SoftwareApplication> {
-    @property.literal()
+    @rdfine.property.literal()
     applicationCategory: string | undefined;
-    @property({ path: schema.applicationCategory })
+    @rdfine.property({ path: schema.applicationCategory })
     applicationCategoryTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     applicationSubCategory: string | undefined;
-    @property({ path: schema.applicationSubCategory })
+    @rdfine.property({ path: schema.applicationSubCategory })
     applicationSubCategoryTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     applicationSuite: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     availableOnDevice: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     countriesNotSupported: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     countriesSupported: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     device: string | undefined;
-    @property()
+    @rdfine.property()
     downloadUrl: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     featureList: string | undefined;
-    @property({ path: schema.featureList })
+    @rdfine.property({ path: schema.featureList })
     featureListTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     fileSize: string | undefined;
-    @property()
+    @rdfine.property()
     installUrl: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     memoryRequirements: string | undefined;
-    @property({ path: schema.memoryRequirements })
+    @rdfine.property({ path: schema.memoryRequirements })
     memoryRequirementsTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     operatingSystem: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     permissions: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     processorRequirements: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     releaseNotes: string | undefined;
-    @property({ path: schema.releaseNotes })
+    @rdfine.property({ path: schema.releaseNotes })
     releaseNotesTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     requirements: string | undefined;
-    @property({ path: schema.requirements })
+    @rdfine.property({ path: schema.requirements })
     requirementsTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     screenshot: Schema.ImageObject | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     softwareAddOn: Schema.SoftwareApplication | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     softwareHelp: Schema.CreativeWork | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     softwareRequirements: string | undefined;
-    @property({ path: schema.softwareRequirements })
+    @rdfine.property({ path: schema.softwareRequirements })
     softwareRequirementsTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     softwareVersion: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     storageRequirements: string | undefined;
-    @property({ path: schema.storageRequirements })
+    @rdfine.property({ path: schema.storageRequirements })
     storageRequirementsTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     supportingData: Schema.DataFeed | undefined;
   }
   return SoftwareApplicationClass

@@ -1,14 +1,18 @@
 import $rdf from 'rdf-ext'
 import cf, { GraphPointer } from 'clownface'
-import TypeCollection from '../lib/TypeCollection'
-import RdfResourceImpl, { RdfResource, ResourceIdentifier } from '../RdfResource'
-import { parse, ex } from './_helpers'
 import { rdf } from '@tpluscode/rdf-ns-builders'
+import chai, { expect } from 'chai'
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
+import TypeCollection from '../lib/TypeCollection.js'
+import RdfResourceImpl, { RdfResource, ResourceIdentifier } from '../RdfResource.js'
+import { parse, ex } from './_helpers/index.js'
 
 const nullResource = {} as RdfResource
 
 describe('TypeCollection', () => {
   let node: GraphPointer<ResourceIdentifier>
+  chai.use(jestSnapshotPlugin())
+  before(() => import('../../../__tests__/helpers/matchers.js'))
 
   describe('size', () => {
     it('returns 0 when no types', () => {
@@ -22,7 +26,7 @@ describe('TypeCollection', () => {
       const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
-      expect(tc.size).toEqual(0)
+      expect(tc.size).to.eq(0)
     })
 
     it('counts types', async () => {
@@ -40,7 +44,7 @@ describe('TypeCollection', () => {
       const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
-      expect(tc.size).toEqual(4)
+      expect(tc.size).to.eq(4)
     })
 
     it('counts unique types', async () => {
@@ -58,7 +62,7 @@ describe('TypeCollection', () => {
       const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
-      expect(tc.size).toEqual(2)
+      expect(tc.size).to.eq(2)
     })
   })
 
@@ -78,7 +82,7 @@ describe('TypeCollection', () => {
       const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
-      expect(tc.has('http://example.com/Type')).toBe(true)
+      expect(tc.has('http://example.com/Type')).to.eq(true)
     })
 
     it('returns true for type found by exact node', async () => {
@@ -96,7 +100,7 @@ describe('TypeCollection', () => {
       const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
-      expect(tc.has(ex.Type)).toBe(true)
+      expect(tc.has(ex.Type)).to.eq(true)
     })
 
     it('returns true for type found by resource', async () => {
@@ -118,7 +122,7 @@ describe('TypeCollection', () => {
       }
 
       // then
-      expect(tc.has(type)).toBe(true)
+      expect(tc.has(type)).to.eq(true)
     })
 
     it('returns false for type not found by string', async () => {
@@ -136,7 +140,7 @@ describe('TypeCollection', () => {
       const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
-      expect(tc.has('http://example.com/Type2')).toBe(false)
+      expect(tc.has('http://example.com/Type2')).to.eq(false)
     })
 
     it('returns false for type not found by exact node', async () => {
@@ -154,7 +158,7 @@ describe('TypeCollection', () => {
       const tc = new TypeCollection(new RdfResourceImpl(node))
 
       // then
-      expect(tc.has(ex.Type2)).toBe(false)
+      expect(tc.has(ex.Type2)).to.eq(false)
     })
 
     it('returns false for type not found by resource', async () => {
@@ -176,7 +180,7 @@ describe('TypeCollection', () => {
       }
 
       // then
-      expect(tc.has(type)).toBe(false)
+      expect(tc.has(type)).to.eq(false)
     })
   })
 
@@ -198,7 +202,7 @@ describe('TypeCollection', () => {
       tc.clear()
 
       // then
-      expect(dataset.size).toEqual(1)
+      expect(dataset.size).to.eq(1)
       expect(dataset.toCanonical()).toMatchSnapshot()
     })
   })
@@ -280,7 +284,7 @@ describe('TypeCollection', () => {
       tc.delete(ex.Type2)
 
       // then
-      expect(dataset.size).toEqual(4)
+      expect(dataset.size).to.eq(4)
       expect(dataset.toCanonical()).toMatchSnapshot()
     })
 
@@ -300,7 +304,7 @@ describe('TypeCollection', () => {
       const deleted = tc.delete(ex.Type1)
 
       // then
-      expect(deleted).toEqual(true)
+      expect(deleted).to.eq(true)
     })
 
     it('returns false if deleted nothing', async () => {
@@ -319,7 +323,7 @@ describe('TypeCollection', () => {
       const deleted = tc.delete(ex.Type2)
 
       // then
-      expect(deleted).toEqual(false)
+      expect(deleted).to.eq(false)
     })
   })
 
@@ -343,8 +347,8 @@ describe('TypeCollection', () => {
       tc.forEach(function (this: any, value, value2, set) {
         expect(ex.res.equals(value.id))
         expect(ex.res.equals(value2.id))
-        expect(set).toBe(tc)
-        expect(this).toBe(thisArg)
+        expect(set).to.eq(tc)
+        expect(this).to.eq(thisArg)
       }, thisArg)
     })
   })
@@ -396,7 +400,7 @@ describe('TypeCollection', () => {
         const tc = new TypeCollection(new RdfResourceImpl(node), true)
 
         // then
-        expect(tc.size).toEqual(2)
+        expect(tc.size).to.eq(2)
       })
     })
 
@@ -419,10 +423,9 @@ describe('TypeCollection', () => {
         const values = [...tc.values()]
 
         // then
-        expect(values).toHaveLength(2)
-        expect(values.map(r => r.id)).toEqual(
-          expect.arrayContaining([ex.Type1, ex.Type2]),
-        )
+        expect(values).to.have.length(2)
+        expect(values.map(r => r.id)).to.deep
+          .contain.all.members([ex.Type1, ex.Type2])
       })
     })
   })

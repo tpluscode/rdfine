@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { PlayActionMixin } from './PlayAction';
+import type * as Schema from '../index.js';
+import { PlayActionMixin } from './PlayAction.js';
 
-export interface ExerciseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlayAction<D>, RdfResource<D> {
+export interface ExerciseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlayAction<D>, rdfine.RdfResource<D> {
   course: Schema.Place<D> | undefined;
   diet: Schema.Diet<D> | undefined;
   distance: Schema.Distance<D> | undefined;
@@ -24,34 +24,34 @@ export interface ExerciseAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   toLocation: Schema.Place<D> | undefined;
 }
 
-export function ExerciseActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ExerciseAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ExerciseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ExerciseAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ExerciseActionClass extends PlayActionMixin(Resource) implements Partial<ExerciseAction> {
-    @property.resource()
+    @rdfine.property.resource()
     course: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     diet: Schema.Diet | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     distance: Schema.Distance | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     exerciseCourse: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     exercisePlan: Schema.ExercisePlan | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     exerciseRelatedDiet: Schema.Diet | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     exerciseType: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     fromLocation: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     opponent: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     sportsActivityLocation: Schema.SportsActivityLocation | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     sportsEvent: Schema.SportsEvent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     sportsTeam: Schema.SportsTeam | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     toLocation: Schema.Place | undefined;
   }
   return ExerciseActionClass

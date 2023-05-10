@@ -1,30 +1,30 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { RuleRelationMixin } from './RuleRelation';
+import type * as Rico from '../index.js';
+import { RuleRelationMixin } from './RuleRelation.js';
 
-export interface MandateRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.RuleRelation<D>, RdfResource<D> {
+export interface MandateRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.RuleRelation<D>, rdfine.RdfResource<D> {
   asConcernsActivity: Rico.Activity<D> | undefined;
   authorizingAgent: Rico.Agent<D> | undefined;
   mandateRelationHasSource: Rico.Mandate<D> | undefined;
   mandateRelationHasTarget: Rico.Agent<D> | undefined;
 }
 
-export function MandateRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MandateRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function MandateRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MandateRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class MandateRelationClass extends RuleRelationMixin(Resource) implements Partial<MandateRelation> {
-    @property.resource({ implicitTypes: [rico.Activity] })
+    @rdfine.property.resource({ implicitTypes: [rico.Activity] })
     asConcernsActivity: Rico.Activity | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     authorizingAgent: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Mandate] })
+    @rdfine.property.resource({ implicitTypes: [rico.Mandate] })
     mandateRelationHasSource: Rico.Mandate | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     mandateRelationHasTarget: Rico.Agent | undefined;
   }
   return MandateRelationClass

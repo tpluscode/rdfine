@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ConceptMixin } from '../lib/Concept';
-import { RecordSetMixin } from '../lib/RecordSet';
-import { ThingMixin } from '../lib/Thing';
-import { TypeMixin } from '../lib/Type';
-import { TypeRelationMixin } from '../lib/TypeRelation';
+import { ConceptMixin } from '../lib/Concept.js';
+import { RecordSetMixin } from '../lib/RecordSet.js';
+import { ThingMixin } from '../lib/Thing.js';
+import { TypeMixin } from '../lib/Type.js';
+import { TypeRelationMixin } from '../lib/TypeRelation.js';
 
 export const TypeBundle = [
   ConceptMixin as Mixin,

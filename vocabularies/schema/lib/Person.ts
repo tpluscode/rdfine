@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { ThingMixin } from './Thing';
+import type * as Schema from '../index.js';
+import { ThingMixin } from './Thing.js';
 
-export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, RdfResource<D> {
+export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, rdfine.RdfResource<D> {
   additionalName: string | undefined;
   address: Schema.PostalAddress<D> | undefined;
   addressLiteral: string | undefined;
@@ -33,6 +33,7 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   faxNumber: string | undefined;
   follows: Schema.Person<D> | undefined;
   funder: Schema.Organization<D> | Schema.Person<D> | undefined;
+  funding: Schema.Grant<D> | undefined;
   gender: string | undefined;
   genderTerm: Schema.GenderType | undefined;
   givenName: string | undefined;
@@ -77,140 +78,142 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   worksFor: Schema.Organization<D> | undefined;
 }
 
-export function PersonMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Person> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Person> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PersonClass extends ThingMixin(Resource) implements Partial<Person> {
-    @property.literal()
+    @rdfine.property.literal()
     additionalName: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     address: Schema.PostalAddress | undefined;
-    @property.literal({ path: schema.address })
+    @rdfine.property.literal({ path: schema.address })
     addressLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     affiliation: Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     alumniOf: Schema.EducationalOrganization | Schema.Organization | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     award: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     awards: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     birthDate: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     birthPlace: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     brand: Schema.Brand | Schema.Organization | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     callSign: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     children: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     colleague: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     colleagues: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     contactPoint: Schema.ContactPoint | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     contactPoints: Schema.ContactPoint | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     deathDate: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     deathPlace: Schema.Place | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     duns: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     email: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     familyName: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     faxNumber: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     follows: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     funder: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.resource()
+    funding: Schema.Grant | undefined;
+    @rdfine.property.literal()
     gender: string | undefined;
-    @property({ path: schema.gender })
+    @rdfine.property({ path: schema.gender })
     genderTerm: Schema.GenderType | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     givenName: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     globalLocationNumber: string | undefined;
-    @property()
+    @rdfine.property()
     hasCredential: RDF.Term | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasOccupation: Schema.Occupation | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasOfferCatalog: Schema.OfferCatalog | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasPOS: Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     height: Schema.Distance | Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     homeLocation: Schema.ContactPoint | Schema.Place | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     honorificPrefix: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     honorificSuffix: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     interactionStatistic: Schema.InteractionCounter | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     'isicV4': string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     jobTitle: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     knows: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     knowsAbout: Schema.Thing | undefined;
-    @property.literal({ path: schema.knowsAbout })
+    @rdfine.property.literal({ path: schema.knowsAbout })
     knowsAboutLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     knowsLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.knowsLanguage })
+    @rdfine.property.literal({ path: schema.knowsLanguage })
     knowsLanguageLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     makesOffer: Schema.Offer | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     memberOf: Schema.Organization | Schema.ProgramMembership | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     naics: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     nationality: Schema.Country | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     netWorth: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     owns: Schema.OwnershipInfo | Schema.Product | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     parent: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     parents: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     performerIn: Schema.Event | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     publishingPrinciples: Schema.CreativeWork | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     relatedTo: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     seeks: Schema.Demand | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     sibling: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     siblings: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     sponsor: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     spouse: Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     taxID: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     telephone: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     vatID: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     weight: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     workLocation: Schema.ContactPoint | Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     worksFor: Schema.Organization | undefined;
   }
   return PersonClass

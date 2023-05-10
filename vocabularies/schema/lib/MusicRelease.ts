@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { MusicPlaylistMixin } from './MusicPlaylist';
+import type * as Schema from '../index.js';
+import { MusicPlaylistMixin } from './MusicPlaylist.js';
 
-export interface MusicRelease<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MusicPlaylist<D>, RdfResource<D> {
+export interface MusicRelease<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MusicPlaylist<D>, rdfine.RdfResource<D> {
   catalogNumber: string | undefined;
   creditedTo: Schema.Organization<D> | Schema.Person<D> | undefined;
   duration: Schema.Duration<D> | undefined;
@@ -17,20 +17,20 @@ export interface MusicRelease<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   releaseOf: Schema.MusicAlbum<D> | undefined;
 }
 
-export function MusicReleaseMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MusicRelease> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MusicReleaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MusicRelease> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MusicReleaseClass extends MusicPlaylistMixin(Resource) implements Partial<MusicRelease> {
-    @property.literal()
+    @rdfine.property.literal()
     catalogNumber: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     creditedTo: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     duration: Schema.Duration | undefined;
-    @property()
+    @rdfine.property()
     musicReleaseFormat: Schema.MusicReleaseFormatType | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     recordLabel: Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     releaseOf: Schema.MusicAlbum | undefined;
   }
   return MusicReleaseClass

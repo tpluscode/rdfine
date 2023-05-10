@@ -1,13 +1,18 @@
-import { ExtensionModule } from '../../lib/ExtensionMixinGenerator/ExtensionModule'
 import { Project, SourceFile } from 'ts-morph'
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
-import { FakeTypeCollection } from '../_helpers/FakeTypeCollection'
-import { Context } from '../../lib'
-import { fakeLog } from '../_helpers/util'
 import { sh } from '@tpluscode/rdf-ns-builders'
+import chai, { expect } from 'chai'
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
+import { ExtensionModule } from '../../lib/ExtensionMixinGenerator/ExtensionModule.js'
+import { FakeTypeCollection } from '../_helpers/FakeTypeCollection.js'
+import { Context } from '../../lib/index.js'
+import { fakeLog } from '../_helpers/util.js'
 
 describe('ExtensionModule', () => {
+  chai.use(jestSnapshotPlugin())
+  before(() => import('../../../../__tests__/helpers/matchers.js'))
+
   describe('writeModule', () => {
     let project: Project
     let vocabulary: AnyPointer

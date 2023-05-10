@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { ImageObjectMixin } from './ImageObject';
+import type * as Schema from '../index.js';
+import { ImageObjectMixin } from './ImageObject.js';
 
-export interface ImageObjectSnapshot<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ImageObject<D>, RdfResource<D> {
+export interface ImageObjectSnapshot<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ImageObject<D>, rdfine.RdfResource<D> {
 }
 
-export function ImageObjectSnapshotMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ImageObjectSnapshot> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ImageObjectSnapshotMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ImageObjectSnapshot> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ImageObjectSnapshotClass extends ImageObjectMixin(Resource) implements Partial<ImageObjectSnapshot> {
   }
   return ImageObjectSnapshotClass

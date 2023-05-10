@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActivityMixin } from '../lib/Activity';
-import { LinkMixin } from '../lib/Link';
-import { ObjectMixin } from '../lib/Object';
+import { ActivityMixin } from '../lib/Activity.js';
+import { LinkMixin } from '../lib/Link.js';
+import { ObjectMixin } from '../lib/Object.js';
 
 export const ActivityBundle = [
   ActivityMixin as Mixin,

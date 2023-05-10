@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreativeWorkMixin } from './CreativeWork';
+import type * as Schema from '../index.js';
+import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface Movie<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface Movie<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   actor: Schema.Person<D> | undefined;
   actors: Schema.Person<D> | undefined;
   countryOfOrigin: Schema.Country<D> | undefined;
@@ -24,34 +24,34 @@ export interface Movie<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function MovieMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Movie> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MovieMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Movie> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MovieClass extends CreativeWorkMixin(Resource) implements Partial<Movie> {
-    @property.resource()
+    @rdfine.property.resource()
     actor: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     actors: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     countryOfOrigin: Schema.Country | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     director: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     directors: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     duration: Schema.Duration | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     musicBy: Schema.MusicGroup | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     productionCompany: Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     subtitleLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.subtitleLanguage })
+    @rdfine.property.literal({ path: schema.subtitleLanguage })
     subtitleLanguageLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     titleEIDR: string | undefined;
-    @property({ path: schema.titleEIDR })
+    @rdfine.property({ path: schema.titleEIDR })
     titleEIDRTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     trailer: Schema.VideoObject | undefined;
   }
   return MovieClass

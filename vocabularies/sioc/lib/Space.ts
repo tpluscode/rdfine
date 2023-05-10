@@ -1,23 +1,23 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { sioc } from './namespace';
+import { sioc } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Sioc from '..';
+import type * as Sioc from '../index.js';
 
-export interface Space<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Space<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   'has_usergroup': Sioc.Usergroup<D> | undefined;
   'space_of': RDF.Term | undefined;
 }
 
-export function SpaceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Space> & RdfResourceCore> & Base {
-  @namespace(sioc)
+export function SpaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Space> & RdfResourceCore> & Base {
+  @rdfine.namespace(sioc)
   class SpaceClass extends Resource implements Partial<Space> {
-    @property.resource({ implicitTypes: [sioc.Usergroup] })
+    @rdfine.property.resource({ implicitTypes: [sioc.Usergroup] })
     'has_usergroup': Sioc.Usergroup | undefined;
-    @property()
+    @rdfine.property()
     'space_of': RDF.Term | undefined;
   }
   return SpaceClass

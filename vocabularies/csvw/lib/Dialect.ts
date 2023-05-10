@@ -1,13 +1,13 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { csvw } from './namespace';
+import { csvw } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Csvw from '..';
+import type * as Csvw from '../index.js';
 
-export interface Dialect<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Dialect<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   commentPrefix: string | undefined;
   delimiter: string | undefined;
   doubleQuote: boolean | undefined;
@@ -23,34 +23,34 @@ export interface Dialect<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rd
   trim: boolean | undefined;
 }
 
-export function DialectMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Dialect> & RdfResourceCore> & Base {
-  @namespace(csvw)
+export function DialectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Dialect> & RdfResourceCore> & Base {
+  @rdfine.namespace(csvw)
   class DialectClass extends Resource implements Partial<Dialect> {
-    @property.literal()
+    @rdfine.property.literal()
     commentPrefix: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     delimiter: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     doubleQuote: boolean | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     encoding: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     header: boolean | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     headerRowCount: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     lineTerminators: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     quoteChar: string | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     skipBlankRows: boolean | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     skipColumns: number | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     skipInitialSpace: boolean | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     skipRows: number | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     trim: boolean | undefined;
   }
   return DialectClass

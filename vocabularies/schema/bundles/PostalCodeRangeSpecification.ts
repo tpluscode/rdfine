@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PostalCodeRangeSpecificationMixin } from '../lib/PostalCodeRangeSpecification';
-import { StructuredValueMixin } from '../lib/StructuredValue';
+import { PostalCodeRangeSpecificationMixin } from '../lib/PostalCodeRangeSpecification.js';
+import { StructuredValueMixin } from '../lib/StructuredValue.js';
 
 export const PostalCodeRangeSpecificationBundle = [
   PostalCodeRangeSpecificationMixin as Mixin,

@@ -1,21 +1,21 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { AgentToAgentRelationMixin } from './AgentToAgentRelation';
+import type * as Rico from '../index.js';
+import { AgentToAgentRelationMixin } from './AgentToAgentRelation.js';
 
-export interface FamilyRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, RdfResource<D> {
+export interface FamilyRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, rdfine.RdfResource<D> {
   familyRelationConnects: Rico.Person<D> | undefined;
 }
 
-export function FamilyRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FamilyRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function FamilyRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FamilyRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class FamilyRelationClass extends AgentToAgentRelationMixin(Resource) implements Partial<FamilyRelation> {
-    @property.resource({ implicitTypes: [rico.Person] })
+    @rdfine.property.resource({ implicitTypes: [rico.Person] })
     familyRelationConnects: Rico.Person | undefined;
   }
   return FamilyRelationClass

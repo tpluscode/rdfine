@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { IntangibleMixin } from './Intangible';
+import type * as Schema from '../index.js';
+import { IntangibleMixin } from './Intangible.js';
 
-export interface ParcelDelivery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface ParcelDelivery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   carrier: Schema.Organization<D> | undefined;
   deliveryAddress: Schema.PostalAddress<D> | undefined;
   deliveryStatus: Schema.DeliveryEvent<D> | undefined;
@@ -23,32 +23,32 @@ export interface ParcelDelivery<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   trackingUrl: RDF.NamedNode | undefined;
 }
 
-export function ParcelDeliveryMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ParcelDelivery> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ParcelDeliveryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ParcelDelivery> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ParcelDeliveryClass extends IntangibleMixin(Resource) implements Partial<ParcelDelivery> {
-    @property.resource()
+    @rdfine.property.resource()
     carrier: Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     deliveryAddress: Schema.PostalAddress | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     deliveryStatus: Schema.DeliveryEvent | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     expectedArrivalFrom: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     expectedArrivalUntil: Date | undefined;
-    @property()
+    @rdfine.property()
     hasDeliveryMethod: Schema.DeliveryMethod | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     itemShipped: Schema.Product | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     originAddress: Schema.PostalAddress | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     partOfOrder: Schema.Order | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     provider: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     trackingNumber: string | undefined;
-    @property()
+    @rdfine.property()
     trackingUrl: RDF.NamedNode | undefined;
   }
   return ParcelDeliveryClass

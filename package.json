@@ -1,11 +1,11 @@
 {
   "name": "rdfine",
   "private": true,
+  "type": "module",
   "scripts": {
+    "postinstall": "patch-package",
     "lint": "eslint . --ext .ts,.js --quiet --ignore-path .eslintignore --ignore-path .gitignore",
-    "test": "run-s test:*",
-    "test:ts-node": "jest --coverage",
-    "test:babel": "jest --coverage -c jest.babel.config.js",
+    "test": "c8 --reporter lcovonly mocha vocabularies/**/*.spec.ts packages/**/*.spec.ts",
     "example": "wsrun -p rdfine-example --no-prefix -c start",
     "generate": "npm run generate:one",
     "generate:one": "bash -c 'wsrun --no-prefix -rltm -p @rdfine/${0} -c generate'",
@@ -16,35 +16,42 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.10.0",
-    "@rdfjs/parser-jsonld": "^1.3.0",
-    "@tpluscode/eslint-config": "0.1.1",
-    "@types/clownface": "^1",
-    "@types/jest": "^26.0.3",
-    "@types/node": "^12",
+    "@rdfjs/parser-jsonld": "^2.1.0",
     "@rdfjs/types": "*",
-    "@types/rdfjs__parser-jsonld": "^1.2.3",
-    "@types/rdf-dataset-indexed": "^0.4.5",
-    "@typescript-eslint/eslint-plugin": "^4.9.0",
-    "@typescript-eslint/parser": "^4.9.0",
-    "eslint": "^7.10.0",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.22.1",
+    "@tpluscode/eslint-config": "^0.4.2",
+    "@types/chai": "^4.3.5",
+    "@types/chai-subset": "^1.3.3",
+    "@types/clownface": "^1",
+    "@types/mocha": "^10",
+    "@types/node": "^18",
+    "@types/rdfjs__parser-jsonld": "^1.2.5",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "c8": "^7.13.0",
+    "chai-string": "^1.5.0",
+    "chai-subset": "^1.6.0",
+    "eslint": "^8.36.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-jest": "^24.0.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-require-extensions": "^0.1.3",
     "eslint-plugin-standard": "^4.0.1",
     "husky": "^3.1.0",
-    "jest": "^27.3.0",
-    "jest-snapshot": "^27.3.0",
     "lint-staged": "^10.2.12",
+    "mocha": "^10.2.0",
+    "mocha-chai-jest-snapshot": "^1.1.4",
     "npm-run-all": "^4.1.5",
-    "rdf-ext": "^1.3.0",
+    "patch-package": "^7.0.0",
+    "rdf-ext": "^2.2.0",
     "rimraf": "^3.0.2",
-    "standard": "^14.3.1",
+    "standard": "^17.0.0",
     "string-to-stream": "^3.0.1",
-    "ts-jest": "^27.0.7",
     "ts-morph": "^7.1.2",
-    "ts-node": "^8.3.0",
-    "typescript": "^3.7.4",
+    "ts-node": "^10.9.1",
+    "typescript": "~4.2",
     "wsrun": "^5.2.4"
   },
   "workspaces": [
@@ -60,6 +67,15 @@
   "lint-staged": {
     "*.{js,ts}": [
       "eslint --fix --quiet"
+    ]
+  },
+  "mocha": {
+    "loader": "ts-node/esm",
+    "require": [
+      "mocha-setup.cjs"
+    ],
+    "reporter": [
+      "mocha-chai-jest-snapshot/reporters/spec"
     ]
   }
 }

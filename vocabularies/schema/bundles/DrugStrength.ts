@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AdministrativeAreaMixin } from '../lib/AdministrativeArea';
-import { DrugStrengthMixin } from '../lib/DrugStrength';
-import { MaximumDoseScheduleMixin } from '../lib/MaximumDoseSchedule';
-import { MedicalIntangibleMixin } from '../lib/MedicalIntangible';
+import { AdministrativeAreaMixin } from '../lib/AdministrativeArea.js';
+import { DrugStrengthMixin } from '../lib/DrugStrength.js';
+import { MaximumDoseScheduleMixin } from '../lib/MaximumDoseSchedule.js';
+import { MedicalIntangibleMixin } from '../lib/MedicalIntangible.js';
 
 export const DrugStrengthBundle = [
   AdministrativeAreaMixin as Mixin,

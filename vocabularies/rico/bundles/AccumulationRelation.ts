@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AccumulationRelationMixin } from '../lib/AccumulationRelation';
-import { AgentMixin } from '../lib/Agent';
-import { AgentOriginationRelationMixin } from '../lib/AgentOriginationRelation';
-import { InstantiationMixin } from '../lib/Instantiation';
-import { RecordResourceMixin } from '../lib/RecordResource';
+import { AccumulationRelationMixin } from '../lib/AccumulationRelation.js';
+import { AgentMixin } from '../lib/Agent.js';
+import { AgentOriginationRelationMixin } from '../lib/AgentOriginationRelation.js';
+import { InstantiationMixin } from '../lib/Instantiation.js';
+import { RecordResourceMixin } from '../lib/RecordResource.js';
 
 export const AccumulationRelationBundle = [
   AccumulationRelationMixin as Mixin,

@@ -2,7 +2,8 @@ import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { owl, rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
 import { schema } from '@tpluscode/rdf-ns-builders/loose'
-import { ex } from '../_helpers/prefix'
+import { expect } from 'chai'
+import { ex } from '../_helpers/prefix.js'
 import {
   EnumerationMember,
   EnumerationType,
@@ -10,9 +11,9 @@ import {
   LiteralType,
   ResourceType,
   TermType,
-} from '../../lib/types'
-import * as factories from '../../lib/types/metaFactories'
-import { coreTerms } from '../../lib/types/metaFactories'
+} from '../../lib/types/index.js'
+import * as factories from '../../lib/types/metaFactories.js'
+import { coreTerms } from '../../lib/types/metaFactories.js'
 
 describe('meta factory', () => {
   let graph: AnyPointer
@@ -32,7 +33,7 @@ describe('meta factory', () => {
       })
 
       // then
-      expect(meta).toBeNull()
+      expect(meta).to.be.null
     })
 
     it('returns null for type which is not from a known namespace', () => {
@@ -45,7 +46,7 @@ describe('meta factory', () => {
       })
 
       // then
-      expect(meta).toBeNull()
+      expect(meta).to.be.null
     })
 
     it('returns meta of term from same namespace', () => {
@@ -58,7 +59,7 @@ describe('meta factory', () => {
       })
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.eq({
         type: 'Resource',
         mixinName: 'HelloMixin',
         module: './lib/Hello',
@@ -78,7 +79,7 @@ describe('meta factory', () => {
       })
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.eq({
         type: 'Resource',
         mixinName: '_3DModelMixin',
         module: './lib/3DModel',
@@ -98,7 +99,7 @@ describe('meta factory', () => {
       })
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.eq({
         type: 'ExternalResource',
         localName: 'Person',
         mixinName: 'SchemaPersonMixin',
@@ -121,7 +122,7 @@ describe('meta factory', () => {
       })
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.eq({
         type: 'ExternalResource',
         localName: '_3DModel',
         mixinName: 'Schema3DModelMixin',
@@ -146,7 +147,7 @@ describe('meta factory', () => {
       const meta = overrides(graph.node(ex.Type))
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.contain({
         type: 'Literal',
         nativeName: 'string',
         nativeType: String,
@@ -163,7 +164,7 @@ describe('meta factory', () => {
       const meta = overrides(graph.node(ex.Type))
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.eq({
         type: 'Term',
         termType: 'NamedNode',
       } as TermType)
@@ -179,7 +180,7 @@ describe('meta factory', () => {
       const meta = overrides(graph.node(ex.Type))
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.eq({
         type: 'Literal',
         nativeType: String,
         datatype: ex.Type,
@@ -197,7 +198,7 @@ describe('meta factory', () => {
       const meta = overrides(graph.node(schema.foo))
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.eq({
         type: 'Term',
         termType: 'NamedNode',
       } as TermType)
@@ -210,7 +211,7 @@ describe('meta factory', () => {
       const meta = factories.datatypes(graph.node(ex.foo))
 
       // then
-      expect(meta).toBeNull()
+      expect(meta).to.be.null
     })
 
     it('returns an object for xsd:int', () => {
@@ -218,7 +219,7 @@ describe('meta factory', () => {
       const meta = factories.datatypes(graph.node(xsd.int))
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.contain({
         nativeType: Number,
         type: 'Literal',
         nativeName: 'number',
@@ -230,7 +231,7 @@ describe('meta factory', () => {
       const meta = factories.datatypes(graph.node(xsd.date))
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.eq({
         nativeType: Date,
         type: 'Literal',
         nativeName: 'Date',
@@ -243,7 +244,7 @@ describe('meta factory', () => {
       const meta = factories.datatypes(graph.node(xsd.time))
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.contain({
         nativeType: Date,
         type: 'Literal',
         nativeName: 'Date',
@@ -256,7 +257,7 @@ describe('meta factory', () => {
       const meta = factories.datatypes(graph.node(xsd.dateTime))
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.contain({
         nativeType: Date,
         type: 'Literal',
         nativeName: 'Date',
@@ -268,7 +269,7 @@ describe('meta factory', () => {
       const meta = factories.datatypes(graph.node(xsd.boolean))
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.contain({
         nativeType: Boolean,
         type: 'Literal',
         nativeName: 'boolean',
@@ -280,7 +281,7 @@ describe('meta factory', () => {
       const meta = factories.datatypes(graph.node(ex.Foo).addOut(rdf.type, rdfs.Datatype))
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.eq({
         nativeType: String,
         type: 'Literal',
         nativeName: 'string',
@@ -300,7 +301,7 @@ describe('meta factory', () => {
       })
 
       // then
-      expect(meta).toBeNull()
+      expect(meta).to.be.null
     })
 
     it('returns EnumerationTypes for enumeration directly declared', () => {
@@ -315,7 +316,7 @@ describe('meta factory', () => {
       })
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.eq({
         type: 'Enumeration',
         qualifiedName: 'Ex.Enumeration',
         module: './Enumeration',
@@ -336,7 +337,7 @@ describe('meta factory', () => {
       const meta = factories.enumerationMembers(node)
 
       // then
-      expect(meta).toEqual({
+      expect(meta).to.deep.eq({
         type: 'EnumerationMember',
         prefixedName: 'ex.EnumerationMember',
         termName: 'EnumerationMember',
@@ -357,7 +358,7 @@ describe('meta factory', () => {
         const propType = coreTerms(pointer)
 
         // then
-        expect(propType?.termType).toEqual(termType)
+        expect(propType?.termType).to.eq(termType)
       })
     })
   })

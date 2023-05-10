@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { ResidenceMixin } from './Residence';
+import type * as Schema from '../index.js';
+import { ResidenceMixin } from './Residence.js';
 
-export interface ApartmentComplex<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Residence<D>, RdfResource<D> {
+export interface ApartmentComplex<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Residence<D>, rdfine.RdfResource<D> {
   numberOfAccommodationUnits: Schema.QuantitativeValue<D> | undefined;
   numberOfAvailableAccommodationUnits: Schema.QuantitativeValue<D> | undefined;
   numberOfBedrooms: Schema.QuantitativeValue<D> | undefined;
@@ -17,20 +17,20 @@ export interface ApartmentComplex<D extends RDF.DatasetCore = RDF.DatasetCore> e
   tourBookingPage: RDF.NamedNode | undefined;
 }
 
-export function ApartmentComplexMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ApartmentComplex> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ApartmentComplexMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ApartmentComplex> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ApartmentComplexClass extends ResidenceMixin(Resource) implements Partial<ApartmentComplex> {
-    @property.resource()
+    @rdfine.property.resource()
     numberOfAccommodationUnits: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfAvailableAccommodationUnits: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfBedrooms: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.numberOfBedrooms, type: Number })
+    @rdfine.property.literal({ path: schema.numberOfBedrooms, type: Number })
     numberOfBedroomsLiteral: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     petsAllowed: boolean | string | undefined;
-    @property()
+    @rdfine.property()
     tourBookingPage: RDF.NamedNode | undefined;
   }
   return ApartmentComplexClass

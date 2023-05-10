@@ -1,10 +1,10 @@
-import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rdfs } from '@tpluscode/rdf-ns-builders';
-import { owl } from '../../lib/namespace';
-import type * as Owl from '../..';
+import { owl } from '../../lib/namespace.js';
+import type * as Owl from '../../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
@@ -24,20 +24,20 @@ declare module '@rdfine/rdfs/lib/Resource' {
   }
 }
 
-export function ResourceMixinEx<Base extends ExtendingConstructor<Rdfs.Resource, ResourceEx>>(Resource: Base): Constructor<ResourceEx & RdfResourceCore> & Base {
-  @namespace(owl)
+export function ResourceMixinEx<Base extends rdfine.ExtendingConstructor<Rdfs.Resource, ResourceEx>>(Resource: Base): rdfine.Constructor<ResourceEx & RdfResourceCore> & Base {
+  @rdfine.namespace(owl)
   class Impl extends Resource implements ResourceEx {
-    @property.resource({ as: [RdfsResourceMixin] })
+    @rdfine.property.resource({ as: [RdfsResourceMixin] })
     annotatedProperty: Rdfs.Resource | undefined;
-    @property.resource({ as: [RdfsResourceMixin] })
+    @rdfine.property.resource({ as: [RdfsResourceMixin] })
     annotatedSource: Rdfs.Resource | undefined;
-    @property.resource({ as: [RdfsResourceMixin] })
+    @rdfine.property.resource({ as: [RdfsResourceMixin] })
     annotatedTarget: Rdfs.Resource | undefined;
-    @property.resource({ as: [RdfsResourceMixin] })
+    @rdfine.property.resource({ as: [RdfsResourceMixin] })
     deprecated: Rdfs.Resource | undefined;
-    @property.resource({ as: [RdfListMixin] })
+    @rdfine.property.resource({ as: [RdfListMixin] })
     members: Rdf.List | undefined;
-    @property.resource({ as: [RdfsResourceMixin] })
+    @rdfine.property.resource({ as: [RdfsResourceMixin] })
     versionInfo: Rdfs.Resource | undefined;
   }
   return Impl

@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { PriceSpecificationMixin } from './PriceSpecification';
+import type * as Schema from '../index.js';
+import { PriceSpecificationMixin } from './PriceSpecification.js';
 
-export interface DeliveryChargeSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, RdfResource<D> {
+export interface DeliveryChargeSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, rdfine.RdfResource<D> {
   appliesToDeliveryMethod: Schema.DeliveryMethod | undefined;
   areaServed: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
   areaServedLiteral: string | undefined;
@@ -18,22 +18,22 @@ export interface DeliveryChargeSpecification<D extends RDF.DatasetCore = RDF.Dat
   ineligibleRegionLiteral: string | undefined;
 }
 
-export function DeliveryChargeSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DeliveryChargeSpecification> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DeliveryChargeSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DeliveryChargeSpecification> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DeliveryChargeSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<DeliveryChargeSpecification> {
-    @property()
+    @rdfine.property()
     appliesToDeliveryMethod: Schema.DeliveryMethod | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.areaServed })
+    @rdfine.property.literal({ path: schema.areaServed })
     areaServedLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     eligibleRegion: Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.eligibleRegion })
+    @rdfine.property.literal({ path: schema.eligibleRegion })
     eligibleRegionLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     ineligibleRegion: Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.ineligibleRegion })
+    @rdfine.property.literal({ path: schema.ineligibleRegion })
     ineligibleRegionLiteral: string | undefined;
   }
   return DeliveryChargeSpecificationClass

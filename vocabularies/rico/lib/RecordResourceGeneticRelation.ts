@@ -1,21 +1,21 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { RecordResourceToRecordResourceRelationMixin } from './RecordResourceToRecordResourceRelation';
+import type * as Rico from '../index.js';
+import { RecordResourceToRecordResourceRelationMixin } from './RecordResourceToRecordResourceRelation.js';
 
-export interface RecordResourceGeneticRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.RecordResourceToRecordResourceRelation<D>, RdfResource<D> {
+export interface RecordResourceGeneticRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.RecordResourceToRecordResourceRelation<D>, rdfine.RdfResource<D> {
   recordResourceGeneticRelationConnects: Rico.RecordResource<D> | undefined;
 }
 
-export function RecordResourceGeneticRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RecordResourceGeneticRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function RecordResourceGeneticRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RecordResourceGeneticRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class RecordResourceGeneticRelationClass extends RecordResourceToRecordResourceRelationMixin(Resource) implements Partial<RecordResourceGeneticRelation> {
-    @property.resource({ implicitTypes: [rico.RecordResource] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResource] })
     recordResourceGeneticRelationConnects: Rico.RecordResource | undefined;
   }
   return RecordResourceGeneticRelationClass

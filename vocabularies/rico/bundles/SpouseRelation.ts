@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { FamilyRelationMixin } from '../lib/FamilyRelation';
-import { PersonMixin } from '../lib/Person';
-import { SpouseRelationMixin } from '../lib/SpouseRelation';
+import { FamilyRelationMixin } from '../lib/FamilyRelation.js';
+import { PersonMixin } from '../lib/Person.js';
+import { SpouseRelationMixin } from '../lib/SpouseRelation.js';
 
 export const SpouseRelationBundle = [
   FamilyRelationMixin as Mixin,

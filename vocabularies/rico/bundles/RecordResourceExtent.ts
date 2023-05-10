@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ExtentMixin } from '../lib/Extent';
-import { RecordResourceExtentMixin } from '../lib/RecordResourceExtent';
+import { ExtentMixin } from '../lib/Extent.js';
+import { RecordResourceExtentMixin } from '../lib/RecordResourceExtent.js';
 
 export const RecordResourceExtentBundle = [
   ExtentMixin as Mixin,

@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActivityMixin } from '../lib/Activity';
-import { AgentMixin } from '../lib/Agent';
-import { EventRelationMixin } from '../lib/EventRelation';
-import { PerformanceRelationMixin } from '../lib/PerformanceRelation';
+import { ActivityMixin } from '../lib/Activity.js';
+import { AgentMixin } from '../lib/Agent.js';
+import { EventRelationMixin } from '../lib/EventRelation.js';
+import { PerformanceRelationMixin } from '../lib/PerformanceRelation.js';
 
 export const PerformanceRelationBundle = [
   ActivityMixin as Mixin,

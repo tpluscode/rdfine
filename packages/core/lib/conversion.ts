@@ -1,5 +1,5 @@
 import type { Literal, NamedNode } from '@rdfjs/types'
-import rdf from '@rdf-esm/data-model'
+import rdf from '@rdfjs/data-model'
 import { xsd } from '@tpluscode/rdf-ns-builders'
 import { GraphPointer } from 'clownface'
 

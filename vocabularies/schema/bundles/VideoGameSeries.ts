@@ -1,17 +1,17 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { CreativeWorkSeasonMixin } from '../lib/CreativeWorkSeason';
-import { CreativeWorkSeriesMixin } from '../lib/CreativeWorkSeries';
-import { EpisodeMixin } from '../lib/Episode';
-import { MusicGroupMixin } from '../lib/MusicGroup';
-import { OrganizationMixin } from '../lib/Organization';
-import { PersonMixin } from '../lib/Person';
-import { PlaceMixin } from '../lib/Place';
-import { PostalAddressMixin } from '../lib/PostalAddress';
-import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
-import { ThingMixin } from '../lib/Thing';
-import { VideoGameSeriesMixin } from '../lib/VideoGameSeries';
-import { VideoObjectMixin } from '../lib/VideoObject';
+import { CreativeWorkMixin } from '../lib/CreativeWork.js';
+import { CreativeWorkSeasonMixin } from '../lib/CreativeWorkSeason.js';
+import { CreativeWorkSeriesMixin } from '../lib/CreativeWorkSeries.js';
+import { EpisodeMixin } from '../lib/Episode.js';
+import { MusicGroupMixin } from '../lib/MusicGroup.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PersonMixin } from '../lib/Person.js';
+import { PlaceMixin } from '../lib/Place.js';
+import { PostalAddressMixin } from '../lib/PostalAddress.js';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue.js';
+import { ThingMixin } from '../lib/Thing.js';
+import { VideoGameSeriesMixin } from '../lib/VideoGameSeries.js';
+import { VideoObjectMixin } from '../lib/VideoObject.js';
 
 export const VideoGameSeriesBundle = [
   CreativeWorkMixin as Mixin,

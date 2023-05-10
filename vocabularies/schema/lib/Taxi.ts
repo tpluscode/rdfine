@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { ServiceMixin } from './Service';
+import type * as Schema from '../index.js';
+import { ServiceMixin } from './Service.js';
 
-export interface Taxi<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, RdfResource<D> {
+export interface Taxi<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, rdfine.RdfResource<D> {
 }
 
-export function TaxiMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Taxi> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function TaxiMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Taxi> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class TaxiClass extends ServiceMixin(Resource) implements Partial<Taxi> {
   }
   return TaxiClass

@@ -1,9 +1,5 @@
 {
   "extends": "../../tsconfig",
-  "compilerOptions": {
-    "target": "ES2016",
-    "module": "CommonJS",
-    "esModuleInterop": true,
-    "allowJs": true
-  }
+  "files": ["index.ts"],
+  "include": ["bundles", "extensions"]
 }

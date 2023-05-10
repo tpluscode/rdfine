@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DerivationMixin } from '../lib/Derivation';
-import { DictionaryMixin } from '../lib/Dictionary';
-import { RemovalMixin } from '../lib/Removal';
+import { DerivationMixin } from '../lib/Derivation.js';
+import { DictionaryMixin } from '../lib/Dictionary.js';
+import { RemovalMixin } from '../lib/Removal.js';
 
 export const RemovalBundle = [
   DerivationMixin as Mixin,

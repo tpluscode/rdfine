@@ -1,24 +1,24 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { KnowingRelationMixin } from './KnowingRelation';
+import type * as Rico from '../index.js';
+import { KnowingRelationMixin } from './KnowingRelation.js';
 
-export interface TeachingRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.KnowingRelation<D>, RdfResource<D> {
+export interface TeachingRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.KnowingRelation<D>, rdfine.RdfResource<D> {
   teachingRelationHasSource: Rico.Person<D> | undefined;
   teachingRelationHasTarget: Rico.Person<D> | undefined;
 }
 
-export function TeachingRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TeachingRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function TeachingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TeachingRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class TeachingRelationClass extends KnowingRelationMixin(Resource) implements Partial<TeachingRelation> {
-    @property.resource({ implicitTypes: [rico.Person] })
+    @rdfine.property.resource({ implicitTypes: [rico.Person] })
     teachingRelationHasSource: Rico.Person | undefined;
-    @property.resource({ implicitTypes: [rico.Person] })
+    @rdfine.property.resource({ implicitTypes: [rico.Person] })
     teachingRelationHasTarget: Rico.Person | undefined;
   }
   return TeachingRelationClass

@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActivityMixin } from '../lib/Activity';
-import { AgentMixin } from '../lib/Agent';
-import { DelegationMixin } from '../lib/Delegation';
-import { EntityMixin } from '../lib/Entity';
-import { InfluenceMixin } from '../lib/Influence';
-import { LocationMixin } from '../lib/Location';
+import { ActivityMixin } from '../lib/Activity.js';
+import { AgentMixin } from '../lib/Agent.js';
+import { DelegationMixin } from '../lib/Delegation.js';
+import { EntityMixin } from '../lib/Entity.js';
+import { InfluenceMixin } from '../lib/Influence.js';
+import { LocationMixin } from '../lib/Location.js';
 
 export const AgentBundle = [
   ActivityMixin as Mixin,

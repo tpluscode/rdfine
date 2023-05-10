@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ContainerMixin } from '../lib/Container';
-import { ForumMixin } from '../lib/Forum';
-import { SiteMixin } from '../lib/Site';
-import { UserAccountMixin } from '../lib/UserAccount';
-import { UsergroupMixin } from '../lib/Usergroup';
+import { ContainerMixin } from '../lib/Container.js';
+import { ForumMixin } from '../lib/Forum.js';
+import { SiteMixin } from '../lib/Site.js';
+import { UserAccountMixin } from '../lib/UserAccount.js';
+import { UsergroupMixin } from '../lib/Usergroup.js';
 
 export const UserAccountBundle = [
   ContainerMixin as Mixin,

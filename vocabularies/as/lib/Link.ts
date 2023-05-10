@@ -1,13 +1,13 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { as } from './namespace';
+import { as } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as As from '..';
+import type * as As from '../index.js';
 
-export interface Link<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Link<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   attributedTo: As.Link<D> | As.Object<D> | undefined;
   height: number | undefined;
   href: string | undefined;
@@ -19,26 +19,26 @@ export interface Link<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRe
   width: number | undefined;
 }
 
-export function LinkMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Link> & RdfResourceCore> & Base {
-  @namespace(as)
+export function LinkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Link> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class LinkClass extends Resource implements Partial<Link> {
-    @property.resource()
+    @rdfine.property.resource()
     attributedTo: As.Link | As.Object | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     height: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     href: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     hreflang: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     mediaType: string | undefined;
-    @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#langString') })
+    @rdfine.property.literal({ datatype: $rdf.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#langString') })
     name: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     preview: As.Link | As.Object | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     rel: string | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     width: number | undefined;
   }
   return LinkClass

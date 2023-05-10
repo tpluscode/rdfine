@@ -1,30 +1,30 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { IntangibleMixin } from './Intangible';
+import type * as Schema from '../index.js';
+import { IntangibleMixin } from './Intangible.js';
 
-export interface MenuItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface MenuItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   menuAddOn: Schema.MenuItem<D> | Schema.MenuSection<D> | undefined;
   nutrition: Schema.NutritionInformation<D> | undefined;
   offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
   suitableForDiet: Schema.RestrictedDiet | undefined;
 }
 
-export function MenuItemMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MenuItem> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MenuItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MenuItem> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MenuItemClass extends IntangibleMixin(Resource) implements Partial<MenuItem> {
-    @property.resource()
+    @rdfine.property.resource()
     menuAddOn: Schema.MenuItem | Schema.MenuSection | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     nutrition: Schema.NutritionInformation | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     offers: Schema.Demand | Schema.Offer | undefined;
-    @property()
+    @rdfine.property()
     suitableForDiet: Schema.RestrictedDiet | undefined;
   }
   return MenuItemClass

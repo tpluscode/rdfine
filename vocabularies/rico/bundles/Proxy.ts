@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ConceptMixin } from '../lib/Concept';
-import { ProxyMixin } from '../lib/Proxy';
-import { RecordResourceMixin } from '../lib/RecordResource';
-import { RecordSetMixin } from '../lib/RecordSet';
+import { ConceptMixin } from '../lib/Concept.js';
+import { ProxyMixin } from '../lib/Proxy.js';
+import { RecordResourceMixin } from '../lib/RecordResource.js';
+import { RecordSetMixin } from '../lib/RecordSet.js';
 
 export const ProxyBundle = [
   ConceptMixin as Mixin,

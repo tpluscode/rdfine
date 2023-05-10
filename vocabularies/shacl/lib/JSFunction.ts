@@ -1,19 +1,19 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { sh } from './namespace';
+import { sh } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Sh from '..';
-import { FunctionMixin } from './Function';
-import { JSExecutableMixin } from './JSExecutable';
+import type * as Sh from '../index.js';
+import { FunctionMixin } from './Function.js';
+import { JSExecutableMixin } from './JSExecutable.js';
 
-export interface JSFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Function<D>, Sh.JSExecutable<D>, RdfResource<D> {
+export interface JSFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Function<D>, Sh.JSExecutable<D>, rdfine.RdfResource<D> {
 }
 
-export function JSFunctionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<JSFunction> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function JSFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JSFunction> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class JSFunctionClass extends JSExecutableMixin(FunctionMixin(Resource)) implements Partial<JSFunction> {
   }
   return JSFunctionClass

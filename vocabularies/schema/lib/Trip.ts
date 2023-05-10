@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { IntangibleMixin } from './Intangible';
+import type * as Schema from '../index.js';
+import { IntangibleMixin } from './Intangible.js';
 
-export interface Trip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Trip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   arrivalTime: Date | undefined;
   departureTime: Date | undefined;
   itinerary: Schema.ItemList<D> | Schema.Place<D> | undefined;
@@ -18,22 +18,22 @@ export interface Trip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   subTrip: Schema.Trip<D> | undefined;
 }
 
-export function TripMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Trip> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function TripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Trip> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class TripClass extends IntangibleMixin(Resource) implements Partial<Trip> {
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     arrivalTime: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     departureTime: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     itinerary: Schema.ItemList | Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     offers: Schema.Demand | Schema.Offer | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     partOfTrip: Schema.Trip | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     provider: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     subTrip: Schema.Trip | undefined;
   }
   return TripClass

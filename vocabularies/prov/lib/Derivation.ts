@@ -1,27 +1,27 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { prov } from './namespace';
+import { prov } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Prov from '..';
-import { EntityInfluenceMixin } from './EntityInfluence';
+import type * as Prov from '../index.js';
+import { EntityInfluenceMixin } from './EntityInfluence.js';
 
-export interface Derivation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.EntityInfluence<D>, RdfResource<D> {
+export interface Derivation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.EntityInfluence<D>, rdfine.RdfResource<D> {
   hadActivity: Prov.Activity<D> | undefined;
   hadGeneration: Prov.Generation<D> | undefined;
   hadUsage: Prov.Usage<D> | undefined;
 }
 
-export function DerivationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Derivation> & RdfResourceCore> & Base {
-  @namespace(prov)
+export function DerivationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Derivation> & RdfResourceCore> & Base {
+  @rdfine.namespace(prov)
   class DerivationClass extends EntityInfluenceMixin(Resource) implements Partial<Derivation> {
-    @property.resource({ implicitTypes: [prov.Activity] })
+    @rdfine.property.resource({ implicitTypes: [prov.Activity] })
     hadActivity: Prov.Activity | undefined;
-    @property.resource({ implicitTypes: [prov.Generation] })
+    @rdfine.property.resource({ implicitTypes: [prov.Generation] })
     hadGeneration: Prov.Generation | undefined;
-    @property.resource({ implicitTypes: [prov.Usage] })
+    @rdfine.property.resource({ implicitTypes: [prov.Usage] })
     hadUsage: Prov.Usage | undefined;
   }
   return DerivationClass

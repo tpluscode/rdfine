@@ -1,27 +1,27 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { RoleMixin } from './Role';
+import type * as Schema from '../index.js';
+import { RoleMixin } from './Role.js';
 
-export interface LinkRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Role<D>, RdfResource<D> {
+export interface LinkRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Role<D>, rdfine.RdfResource<D> {
   inLanguage: Schema.Language<D> | undefined;
   inLanguageLiteral: string | undefined;
   linkRelationship: string | undefined;
 }
 
-export function LinkRoleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<LinkRole> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function LinkRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LinkRole> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class LinkRoleClass extends RoleMixin(Resource) implements Partial<LinkRole> {
-    @property.resource()
+    @rdfine.property.resource()
     inLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.inLanguage })
+    @rdfine.property.literal({ path: schema.inLanguage })
     inLanguageLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     linkRelationship: string | undefined;
   }
   return LinkRoleClass

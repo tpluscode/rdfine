@@ -1,11 +1,11 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActionMixin } from '../lib/Action';
-import { EntryPointMixin } from '../lib/EntryPoint';
-import { OrganizationMixin } from '../lib/Organization';
-import { PersonMixin } from '../lib/Person';
-import { PlaceMixin } from '../lib/Place';
-import { PostalAddressMixin } from '../lib/PostalAddress';
-import { ThingMixin } from '../lib/Thing';
+import { ActionMixin } from '../lib/Action.js';
+import { EntryPointMixin } from '../lib/EntryPoint.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PersonMixin } from '../lib/Person.js';
+import { PlaceMixin } from '../lib/Place.js';
+import { PostalAddressMixin } from '../lib/PostalAddress.js';
+import { ThingMixin } from '../lib/Thing.js';
 
 export const ActionBundle = [
   ActionMixin as Mixin,

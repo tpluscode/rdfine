@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { InformActionMixin } from './InformAction';
+import type * as Schema from '../index.js';
+import { InformActionMixin } from './InformAction.js';
 
-export interface ConfirmAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InformAction<D>, RdfResource<D> {
+export interface ConfirmAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InformAction<D>, rdfine.RdfResource<D> {
 }
 
-export function ConfirmActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ConfirmAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ConfirmActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ConfirmAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ConfirmActionClass extends InformActionMixin(Resource) implements Partial<ConfirmAction> {
   }
   return ConfirmActionClass

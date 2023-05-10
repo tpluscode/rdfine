@@ -1,19 +1,19 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { BankAccountMixin } from './BankAccount';
-import { InvestmentOrDepositMixin } from './InvestmentOrDeposit';
+import type * as Schema from '../index.js';
+import { BankAccountMixin } from './BankAccount.js';
+import { InvestmentOrDepositMixin } from './InvestmentOrDeposit.js';
 
-export interface DepositAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BankAccount<D>, Schema.InvestmentOrDeposit<D>, RdfResource<D> {
+export interface DepositAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BankAccount<D>, Schema.InvestmentOrDeposit<D>, rdfine.RdfResource<D> {
 }
 
-export function DepositAccountMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DepositAccount> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DepositAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DepositAccount> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DepositAccountClass extends InvestmentOrDepositMixin(BankAccountMixin(Resource)) implements Partial<DepositAccount> {
   }
   return DepositAccountClass

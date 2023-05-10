@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CategoryCodeMixin } from '../lib/CategoryCode';
-import { MedicalCodeMixin } from '../lib/MedicalCode';
-import { MedicalIntangibleMixin } from '../lib/MedicalIntangible';
+import { CategoryCodeMixin } from '../lib/CategoryCode.js';
+import { MedicalCodeMixin } from '../lib/MedicalCode.js';
+import { MedicalIntangibleMixin } from '../lib/MedicalIntangible.js';
 
 export const MedicalCodeBundle = [
   CategoryCodeMixin as Mixin,

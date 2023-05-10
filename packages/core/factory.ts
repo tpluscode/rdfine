@@ -1,8 +1,8 @@
 import type * as RDF from '@rdfjs/types'
 import { AnyContext, AnyPointer } from 'clownface'
-import { Initializer, RdfResourceCore, ResourceIdentifier, ResourceNode } from './RdfResource'
-import RdfResourceImpl from '.'
-import { ResourceFactory, Mixin } from './lib/ResourceFactory'
+import { Initializer, RdfResourceCore, ResourceIdentifier, ResourceNode } from './RdfResource.js'
+import { ResourceFactory, Mixin } from './lib/ResourceFactory.js'
+import RdfResourceImpl from './index.js'
 
 export interface FactoryOptions {
   factory?: ResourceFactory

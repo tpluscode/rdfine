@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { SpaceMixin } from '../lib/Space';
-import { UserAccountMixin } from '../lib/UserAccount';
-import { UsergroupMixin } from '../lib/Usergroup';
+import { SpaceMixin } from '../lib/Space.js';
+import { UserAccountMixin } from '../lib/UserAccount.js';
+import { UsergroupMixin } from '../lib/Usergroup.js';
 
 export const UsergroupBundle = [
   SpaceMixin as Mixin,

@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { StoreMixin } from './Store';
+import type * as Schema from '../index.js';
+import { StoreMixin } from './Store.js';
 
-export interface MusicStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, RdfResource<D> {
+export interface MusicStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
-export function MusicStoreMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MusicStore> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MusicStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MusicStore> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MusicStoreClass extends StoreMixin(Resource) implements Partial<MusicStore> {
   }
   return MusicStoreClass

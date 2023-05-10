@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { prov } from './namespace';
+import { prov } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Prov from '..';
-import { RoleMixin } from './Role';
+import type * as Prov from '../index.js';
+import { RoleMixin } from './Role.js';
 
-export interface Publisher<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Role<D>, RdfResource<D> {
+export interface Publisher<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Role<D>, rdfine.RdfResource<D> {
 }
 
-export function PublisherMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Publisher> & RdfResourceCore> & Base {
-  @namespace(prov)
+export function PublisherMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Publisher> & RdfResourceCore> & Base {
+  @rdfine.namespace(prov)
   class PublisherClass extends RoleMixin(Resource) implements Partial<Publisher> {
   }
   return PublisherClass

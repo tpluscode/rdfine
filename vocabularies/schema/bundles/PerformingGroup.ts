@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { OrganizationMixin } from '../lib/Organization';
-import { PerformingGroupMixin } from '../lib/PerformingGroup';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PerformingGroupMixin } from '../lib/PerformingGroup.js';
 
 export const PerformingGroupBundle = [
   OrganizationMixin as Mixin,

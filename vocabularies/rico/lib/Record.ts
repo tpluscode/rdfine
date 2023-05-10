@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { RecordResourceMixin } from './RecordResource';
+import type * as Rico from '../index.js';
+import { RecordResourceMixin } from './RecordResource.js';
 
-export interface Record<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.RecordResource<D>, RdfResource<D> {
+export interface Record<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.RecordResource<D>, rdfine.RdfResource<D> {
   hasAuthor: Rico.Group<D> | Rico.Person<D> | Rico.Position<D> | undefined;
   hasContentOfType: Rico.ContentType<D> | undefined;
   hasDocumentaryFormType: Rico.DocumentaryFormType<D> | undefined;
@@ -24,34 +24,34 @@ export interface Record<D extends RDF.DatasetCore = RDF.DatasetCore> extends Ric
   recordIsSourceOfAuthorshipRelation: Rico.AuthorshipRelation<D> | undefined;
 }
 
-export function RecordMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Record> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function RecordMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Record> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class RecordClass extends RecordResourceMixin(Resource) implements Partial<Record> {
-    @property.resource()
+    @rdfine.property.resource()
     hasAuthor: Rico.Group | Rico.Person | Rico.Position | undefined;
-    @property.resource({ implicitTypes: [rico.ContentType] })
+    @rdfine.property.resource({ implicitTypes: [rico.ContentType] })
     hasContentOfType: Rico.ContentType | undefined;
-    @property.resource({ implicitTypes: [rico.DocumentaryFormType] })
+    @rdfine.property.resource({ implicitTypes: [rico.DocumentaryFormType] })
     hasDocumentaryFormType: Rico.DocumentaryFormType | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasDraft: Rico.Record | Rico.RecordPart | undefined;
-    @property.resource({ implicitTypes: [rico.RecordPart] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordPart] })
     hasOrHadConstituent: Rico.RecordPart | undefined;
-    @property.resource({ implicitTypes: [rico.Language] })
+    @rdfine.property.resource({ implicitTypes: [rico.Language] })
     hasOrHadLanguage: Rico.Language | undefined;
-    @property.resource({ implicitTypes: [rico.LegalStatus] })
+    @rdfine.property.resource({ implicitTypes: [rico.LegalStatus] })
     hasOrHadLegalStatus: Rico.LegalStatus | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasOriginal: Rico.Record | Rico.RecordPart | undefined;
-    @property.resource({ implicitTypes: [rico.RecordState] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordState] })
     hasRecordState: Rico.RecordState | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isDraftOf: Rico.Record | Rico.RecordPart | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isOriginalOf: Rico.Record | Rico.RecordPart | undefined;
-    @property.resource({ implicitTypes: [rico.RecordSet] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isOrWasIncludedIn: Rico.RecordSet | undefined;
-    @property.resource({ implicitTypes: [rico.AuthorshipRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AuthorshipRelation] })
     recordIsSourceOfAuthorshipRelation: Rico.AuthorshipRelation | undefined;
   }
   return RecordClass

@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { EpisodeMixin } from './Episode';
+import type * as Schema from '../index.js';
+import { EpisodeMixin } from './Episode.js';
 
-export interface TVEpisode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Episode<D>, RdfResource<D> {
+export interface TVEpisode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Episode<D>, rdfine.RdfResource<D> {
   countryOfOrigin: Schema.Country<D> | undefined;
   partOfTVSeries: Schema.TVSeries<D> | undefined;
   subtitleLanguage: Schema.Language<D> | undefined;
@@ -17,20 +17,20 @@ export interface TVEpisode<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   titleEIDRTerm: RDF.NamedNode | undefined;
 }
 
-export function TVEpisodeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<TVEpisode> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function TVEpisodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TVEpisode> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class TVEpisodeClass extends EpisodeMixin(Resource) implements Partial<TVEpisode> {
-    @property.resource()
+    @rdfine.property.resource()
     countryOfOrigin: Schema.Country | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     partOfTVSeries: Schema.TVSeries | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     subtitleLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.subtitleLanguage })
+    @rdfine.property.literal({ path: schema.subtitleLanguage })
     subtitleLanguageLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     titleEIDR: string | undefined;
-    @property({ path: schema.titleEIDR })
+    @rdfine.property({ path: schema.titleEIDR })
     titleEIDRTerm: RDF.NamedNode | undefined;
   }
   return TVEpisodeClass

@@ -1,9 +1,9 @@
 import type { Term } from '@rdfjs/types'
 import type { GraphPointer, MultiPointer } from 'clownface'
-import type { RdfResource, RdfResourceCore } from '../RdfResource'
-import * as rdfList from './rdf-list'
-import type { ResourceIndexer } from './ResourceFactory'
-import type { Factory } from '../factory'
+import type { RdfResource, RdfResourceCore } from '../RdfResource.js'
+import type { Factory } from '../factory.js'
+import * as rdfList from './rdf-list.js'
+import type { ResourceIndexer } from './ResourceFactory.js'
 
 function nodeToValue(target: RdfResource) {
   const fromTerm = (obj: GraphPointer): any => {

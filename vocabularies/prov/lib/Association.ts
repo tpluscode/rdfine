@@ -1,24 +1,24 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { prov } from './namespace';
+import { prov } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Prov from '..';
-import { AgentInfluenceMixin } from './AgentInfluence';
+import type * as Prov from '../index.js';
+import { AgentInfluenceMixin } from './AgentInfluence.js';
 
-export interface Association<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.AgentInfluence<D>, RdfResource<D> {
+export interface Association<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.AgentInfluence<D>, rdfine.RdfResource<D> {
   hadPlan: Prov.Plan<D> | undefined;
   hadRole: Prov.Role<D> | undefined;
 }
 
-export function AssociationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Association> & RdfResourceCore> & Base {
-  @namespace(prov)
+export function AssociationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Association> & RdfResourceCore> & Base {
+  @rdfine.namespace(prov)
   class AssociationClass extends AgentInfluenceMixin(Resource) implements Partial<Association> {
-    @property.resource({ implicitTypes: [prov.Plan] })
+    @rdfine.property.resource({ implicitTypes: [prov.Plan] })
     hadPlan: Prov.Plan | undefined;
-    @property.resource({ implicitTypes: [prov.Role] })
+    @rdfine.property.resource({ implicitTypes: [prov.Role] })
     hadRole: Prov.Role | undefined;
   }
   return AssociationClass

@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DictionaryMixin } from '../lib/Dictionary';
-import { EmptyCollectionMixin } from '../lib/EmptyCollection';
-import { EmptyDictionaryMixin } from '../lib/EmptyDictionary';
+import { DictionaryMixin } from '../lib/Dictionary.js';
+import { EmptyCollectionMixin } from '../lib/EmptyCollection.js';
+import { EmptyDictionaryMixin } from '../lib/EmptyDictionary.js';
 
 export const EmptyDictionaryBundle = [
   DictionaryMixin as Mixin,

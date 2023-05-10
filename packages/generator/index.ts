@@ -1,1 +1,1 @@
-export { generate } from './lib'
+export { generate } from './lib/index.js'

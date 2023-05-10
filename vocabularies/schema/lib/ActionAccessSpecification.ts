@@ -1,17 +1,17 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { IntangibleMixin } from './Intangible';
+import type * as Schema from '../index.js';
+import { IntangibleMixin } from './Intangible.js';
 
-export interface ActionAccessSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface ActionAccessSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   availabilityEnds: Date | undefined;
   availabilityStarts: Date | undefined;
-  category: Schema.Thing<D> | undefined;
+  category: Schema.CategoryCode<D> | Schema.Thing<D> | undefined;
   categoryLiteral: string | undefined;
   eligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   eligibleRegionLiteral: string | undefined;
@@ -22,30 +22,30 @@ export interface ActionAccessSpecification<D extends RDF.DatasetCore = RDF.Datas
   requiresSubscriptionLiteral: boolean | undefined;
 }
 
-export function ActionAccessSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ActionAccessSpecification> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ActionAccessSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ActionAccessSpecification> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ActionAccessSpecificationClass extends IntangibleMixin(Resource) implements Partial<ActionAccessSpecification> {
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     availabilityEnds: Date | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     availabilityStarts: Date | undefined;
-    @property.resource()
-    category: Schema.Thing | undefined;
-    @property.literal({ path: schema.category })
+    @rdfine.property.resource()
+    category: Schema.CategoryCode | Schema.Thing | undefined;
+    @rdfine.property.literal({ path: schema.category })
     categoryLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     eligibleRegion: Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.eligibleRegion })
+    @rdfine.property.literal({ path: schema.eligibleRegion })
     eligibleRegionLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     expectsAcceptanceOf: Schema.Offer | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     ineligibleRegion: Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.ineligibleRegion })
+    @rdfine.property.literal({ path: schema.ineligibleRegion })
     ineligibleRegionLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     requiresSubscription: Schema.MediaSubscription | undefined;
-    @property.literal({ path: schema.requiresSubscription, type: Boolean })
+    @rdfine.property.literal({ path: schema.requiresSubscription, type: Boolean })
     requiresSubscriptionLiteral: boolean | undefined;
   }
   return ActionAccessSpecificationClass

@@ -1,23 +1,23 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { skos } from './namespace';
+import { skos } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Skos from '..';
+import type * as Skos from '../index.js';
 
-export interface Concept<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Concept<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   semanticRelation: Array<Skos.Concept<D>>;
   topConceptOf: Array<Skos.ConceptScheme<D>>;
 }
 
-export function ConceptMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Concept> & RdfResourceCore> & Base {
-  @namespace(skos)
+export function ConceptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Concept> & RdfResourceCore> & Base {
+  @rdfine.namespace(skos)
   class ConceptClass extends Resource implements Partial<Concept> {
-    @property.resource({ values: 'array', as: [ConceptMixin] })
+    @rdfine.property.resource({ values: 'array', as: [ConceptMixin] })
     semanticRelation!: Array<Skos.Concept>;
-    @property.resource({ values: 'array', implicitTypes: [skos.ConceptScheme] })
+    @rdfine.property.resource({ values: 'array', implicitTypes: [skos.ConceptScheme] })
     topConceptOf!: Array<Skos.ConceptScheme>;
   }
   return ConceptClass

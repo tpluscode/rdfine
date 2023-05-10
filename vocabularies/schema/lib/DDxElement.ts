@@ -1,24 +1,24 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { MedicalIntangibleMixin } from './MedicalIntangible';
+import type * as Schema from '../index.js';
+import { MedicalIntangibleMixin } from './MedicalIntangible.js';
 
-export interface DDxElement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalIntangible<D>, RdfResource<D> {
+export interface DDxElement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalIntangible<D>, rdfine.RdfResource<D> {
   diagnosis: Schema.MedicalCondition<D> | undefined;
   distinguishingSign: Schema.MedicalSignOrSymptom<D> | undefined;
 }
 
-export function DDxElementMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DDxElement> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DDxElementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DDxElement> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DDxElementClass extends MedicalIntangibleMixin(Resource) implements Partial<DDxElement> {
-    @property.resource()
+    @rdfine.property.resource()
     diagnosis: Schema.MedicalCondition | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     distinguishingSign: Schema.MedicalSignOrSymptom | undefined;
   }
   return DDxElementClass

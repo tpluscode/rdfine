@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { RelationMixin } from '../lib/Relation';
-import { ThingMixin } from '../lib/Thing';
-import { WholePartRelationMixin } from '../lib/WholePartRelation';
+import { RelationMixin } from '../lib/Relation.js';
+import { ThingMixin } from '../lib/Thing.js';
+import { WholePartRelationMixin } from '../lib/WholePartRelation.js';
 
 export const WholePartRelationBundle = [
   RelationMixin as Mixin,

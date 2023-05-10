@@ -1,24 +1,24 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { ManagementRelationMixin } from './ManagementRelation';
+import type * as Rico from '../index.js';
+import { ManagementRelationMixin } from './ManagementRelation.js';
 
-export interface RecordResourceHoldingRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.ManagementRelation<D>, RdfResource<D> {
+export interface RecordResourceHoldingRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.ManagementRelation<D>, rdfine.RdfResource<D> {
   recordResourceHoldingRelationHasSource: Rico.Agent<D> | undefined;
   recordResourceHoldingRelationHasTarget: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
 }
 
-export function RecordResourceHoldingRelationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<RecordResourceHoldingRelation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function RecordResourceHoldingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RecordResourceHoldingRelation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class RecordResourceHoldingRelationClass extends ManagementRelationMixin(Resource) implements Partial<RecordResourceHoldingRelation> {
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     recordResourceHoldingRelationHasSource: Rico.Agent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     recordResourceHoldingRelationHasTarget: Rico.Instantiation | Rico.RecordResource | undefined;
   }
   return RecordResourceHoldingRelationClass

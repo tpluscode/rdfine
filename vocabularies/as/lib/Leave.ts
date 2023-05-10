@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { as } from './namespace';
+import { as } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as As from '..';
-import { ActivityMixin } from './Activity';
+import type * as As from '../index.js';
+import { ActivityMixin } from './Activity.js';
 
-export interface Leave<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, RdfResource<D> {
+export interface Leave<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function LeaveMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Leave> & RdfResourceCore> & Base {
-  @namespace(as)
+export function LeaveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Leave> & RdfResourceCore> & Base {
+  @rdfine.namespace(as)
   class LeaveClass extends ActivityMixin(Resource) implements Partial<Leave> {
   }
   return LeaveClass

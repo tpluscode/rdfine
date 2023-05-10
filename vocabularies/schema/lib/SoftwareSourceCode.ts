@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreativeWorkMixin } from './CreativeWork';
+import type * as Schema from '../index.js';
+import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface SoftwareSourceCode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface SoftwareSourceCode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   codeRepository: RDF.NamedNode | undefined;
   codeSampleType: string | undefined;
   programmingLanguage: Schema.ComputerLanguage<D> | undefined;
@@ -19,24 +19,24 @@ export interface SoftwareSourceCode<D extends RDF.DatasetCore = RDF.DatasetCore>
   targetProduct: Schema.SoftwareApplication<D> | undefined;
 }
 
-export function SoftwareSourceCodeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SoftwareSourceCode> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function SoftwareSourceCodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SoftwareSourceCode> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class SoftwareSourceCodeClass extends CreativeWorkMixin(Resource) implements Partial<SoftwareSourceCode> {
-    @property()
+    @rdfine.property()
     codeRepository: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     codeSampleType: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     programmingLanguage: Schema.ComputerLanguage | undefined;
-    @property.literal({ path: schema.programmingLanguage })
+    @rdfine.property.literal({ path: schema.programmingLanguage })
     programmingLanguageLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     runtime: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     runtimePlatform: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     sampleType: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     targetProduct: Schema.SoftwareApplication | undefined;
   }
   return SoftwareSourceCodeClass

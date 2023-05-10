@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AgentMixin } from '../lib/Agent';
-import { AgentToAgentRelationMixin } from '../lib/AgentToAgentRelation';
-import { WorkRelationMixin } from '../lib/WorkRelation';
+import { AgentMixin } from '../lib/Agent.js';
+import { AgentToAgentRelationMixin } from '../lib/AgentToAgentRelation.js';
+import { WorkRelationMixin } from '../lib/WorkRelation.js';
 
 export const WorkRelationBundle = [
   AgentMixin as Mixin,

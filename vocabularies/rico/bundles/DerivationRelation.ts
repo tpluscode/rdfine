@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DerivationRelationMixin } from '../lib/DerivationRelation';
-import { InstantiationMixin } from '../lib/Instantiation';
-import { InstantiationToInstantiationRelationMixin } from '../lib/InstantiationToInstantiationRelation';
-import { TemporalRelationMixin } from '../lib/TemporalRelation';
+import { DerivationRelationMixin } from '../lib/DerivationRelation.js';
+import { InstantiationMixin } from '../lib/Instantiation.js';
+import { InstantiationToInstantiationRelationMixin } from '../lib/InstantiationToInstantiationRelation.js';
+import { TemporalRelationMixin } from '../lib/TemporalRelation.js';
 
 export const DerivationRelationBundle = [
   DerivationRelationMixin as Mixin,

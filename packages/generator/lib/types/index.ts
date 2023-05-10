@@ -1,8 +1,8 @@
 import { GraphPointer } from 'clownface'
 import { NamedNode, Term } from '@rdfjs/types'
-import { Context } from '../index'
+import { Context } from '../index.js'
 
-export { TypeMap } from './TypeMap'
+export { TypeMap } from './TypeMap.js'
 
 export interface LiteralType {
   type: 'Literal'

@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreateActionMixin } from './CreateAction';
+import type * as Schema from '../index.js';
+import { CreateActionMixin } from './CreateAction.js';
 
-export interface PaintAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, RdfResource<D> {
+export interface PaintAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, rdfine.RdfResource<D> {
 }
 
-export function PaintActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PaintAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PaintActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PaintAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PaintActionClass extends CreateActionMixin(Resource) implements Partial<PaintAction> {
   }
   return PaintActionClass

@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { PriceSpecificationMixin } from './PriceSpecification';
+import type * as Schema from '../index.js';
+import { PriceSpecificationMixin } from './PriceSpecification.js';
 
-export interface UnitPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, RdfResource<D> {
+export interface UnitPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, rdfine.RdfResource<D> {
   billingDuration: Schema.Duration<D> | Schema.QuantitativeValue<D> | undefined;
   billingDurationLiteral: number | undefined;
   billingIncrement: number | undefined;
@@ -22,30 +22,30 @@ export interface UnitPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetC
   unitText: string | undefined;
 }
 
-export function UnitPriceSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<UnitPriceSpecification> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function UnitPriceSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<UnitPriceSpecification> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class UnitPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<UnitPriceSpecification> {
-    @property.resource()
+    @rdfine.property.resource()
     billingDuration: Schema.Duration | Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.billingDuration, type: Number })
+    @rdfine.property.literal({ path: schema.billingDuration, type: Number })
     billingDurationLiteral: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     billingIncrement: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     billingStart: number | undefined;
-    @property()
+    @rdfine.property()
     priceComponentType: Schema.PriceComponentTypeEnumeration | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     priceType: string | undefined;
-    @property({ path: schema.priceType })
+    @rdfine.property({ path: schema.priceType })
     priceTypeTerm: Schema.PriceTypeEnumeration | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     referenceQuantity: Schema.QuantitativeValue | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     unitCode: string | undefined;
-    @property({ path: schema.unitCode })
+    @rdfine.property({ path: schema.unitCode })
     unitCodeTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     unitText: string | undefined;
   }
   return UnitPriceSpecificationClass

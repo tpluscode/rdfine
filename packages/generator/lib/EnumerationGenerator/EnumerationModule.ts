@@ -1,12 +1,12 @@
 import { ObjectLiteralExpression, Project, SourceFile, VariableDeclarationKind } from 'ts-morph'
 import { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import { Context, GeneratedModule } from '../index'
-import { EnumerationType, TypeMetaCollection } from '../types'
+import { Context, GeneratedModule } from '../index.js'
+import { EnumerationType, TypeMetaCollection } from '../types/index.js'
 
 export class EnumerationModule implements GeneratedModule {
   type: EnumerationType
-  node: GraphPointer;
+  node: GraphPointer
 
   public constructor(enumeration: GraphPointer, type: EnumerationType) {
     this.node = enumeration
@@ -51,7 +51,7 @@ export class EnumerationModule implements GeneratedModule {
     } else {
       enumFile.addImportDeclaration({
         namedImports: [context.prefix],
-        moduleSpecifier: './namespace',
+        moduleSpecifier: './namespace.js',
       })
     }
 
@@ -67,10 +67,10 @@ export class EnumerationModule implements GeneratedModule {
     })
 
     indexModule.addExportDeclaration({
-      moduleSpecifier: `./lib/${this.type.name}`,
+      moduleSpecifier: `./lib/${this.type.name}.js`,
     }).toNamespaceExport()
     indexModule.addExportDeclaration({
-      moduleSpecifier: `./lib/${this.type.name}`,
+      moduleSpecifier: `./lib/${this.type.name}.js`,
       namedExports: [`default as ${this.type.name}Enum`],
     })
   }

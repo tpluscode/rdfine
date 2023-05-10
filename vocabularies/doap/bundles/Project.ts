@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ProjectMixin } from '../lib/Project';
-import { RepositoryMixin } from '../lib/Repository';
-import { SpecificationMixin } from '../lib/Specification';
-import { VersionMixin } from '../lib/Version';
+import { ProjectMixin } from '../lib/Project.js';
+import { RepositoryMixin } from '../lib/Repository.js';
+import { SpecificationMixin } from '../lib/Specification.js';
+import { VersionMixin } from '../lib/Version.js';
 
 export const ProjectBundle = [
   ProjectMixin as Mixin,

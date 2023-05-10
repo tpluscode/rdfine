@@ -1,27 +1,27 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreateActionMixin } from './CreateAction';
+import type * as Schema from '../index.js';
+import { CreateActionMixin } from './CreateAction.js';
 
-export interface CookAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, RdfResource<D> {
+export interface CookAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, rdfine.RdfResource<D> {
   foodEstablishment: Schema.FoodEstablishment<D> | Schema.Place<D> | undefined;
   foodEvent: Schema.FoodEvent<D> | undefined;
   recipe: Schema.Recipe<D> | undefined;
 }
 
-export function CookActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CookAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function CookActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CookAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class CookActionClass extends CreateActionMixin(Resource) implements Partial<CookAction> {
-    @property.resource()
+    @rdfine.property.resource()
     foodEstablishment: Schema.FoodEstablishment | Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     foodEvent: Schema.FoodEvent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     recipe: Schema.Recipe | undefined;
   }
   return CookActionClass

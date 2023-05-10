@@ -1,13 +1,13 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { sioc } from './namespace';
+import { sioc } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Sioc from '..';
+import type * as Sioc from '../index.js';
 
-export interface Item<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Item<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   about: RDF.Term | undefined;
   'addressed_to': RDF.Term | undefined;
   attachment: RDF.Term | undefined;
@@ -33,54 +33,54 @@ export interface Item<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfRe
   sibling: Sioc.Item<D> | undefined;
 }
 
-export function ItemMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Item> & RdfResourceCore> & Base {
-  @namespace(sioc)
+export function ItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Item> & RdfResourceCore> & Base {
+  @rdfine.namespace(sioc)
   class ItemClass extends Resource implements Partial<Item> {
-    @property()
+    @rdfine.property()
     about: RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     'addressed_to': RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     attachment: RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     content: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     'delivered_at': RDF.Literal | undefined;
-    @property.resource({ as: [ItemMixin] })
+    @rdfine.property.resource({ as: [ItemMixin] })
     'earlier_version': Sioc.Item | undefined;
-    @property()
+    @rdfine.property()
     'embeds_knowledge': RDF.Term | undefined;
-    @property()
+    @rdfine.property()
     generator: RDF.Term | undefined;
-    @property.resource({ implicitTypes: [sioc.Container] })
+    @rdfine.property.resource({ implicitTypes: [sioc.Container] })
     'has_container': Sioc.Container | undefined;
-    @property()
+    @rdfine.property()
     'has_discussion': RDF.Term | undefined;
-    @property.resource({ as: [ItemMixin] })
+    @rdfine.property.resource({ as: [ItemMixin] })
     'has_reply': Sioc.Item | undefined;
-    @property.resource({ as: [ItemMixin] })
+    @rdfine.property.resource({ as: [ItemMixin] })
     'later_version': Sioc.Item | undefined;
-    @property.resource({ as: [ItemMixin] })
+    @rdfine.property.resource({ as: [ItemMixin] })
     'latest_version': Sioc.Item | undefined;
-    @property.resource({ implicitTypes: [sioc.UserAccount] })
+    @rdfine.property.resource({ implicitTypes: [sioc.UserAccount] })
     mentions: Sioc.UserAccount | undefined;
-    @property.resource({ as: [ItemMixin] })
+    @rdfine.property.resource({ as: [ItemMixin] })
     'next_by_date': Sioc.Item | undefined;
-    @property.resource({ as: [ItemMixin] })
+    @rdfine.property.resource({ as: [ItemMixin] })
     'next_version': Sioc.Item | undefined;
-    @property.resource({ as: [ItemMixin] })
+    @rdfine.property.resource({ as: [ItemMixin] })
     'previous_by_date': Sioc.Item | undefined;
-    @property.resource({ as: [ItemMixin] })
+    @rdfine.property.resource({ as: [ItemMixin] })
     'previous_version': Sioc.Item | undefined;
-    @property()
+    @rdfine.property()
     'read_at': RDF.Literal | undefined;
-    @property.resource({ as: [ItemMixin] })
+    @rdfine.property.resource({ as: [ItemMixin] })
     'reply_of': Sioc.Item | undefined;
-    @property()
+    @rdfine.property()
     'respond_to': RDF.Term | undefined;
-    @property.resource({ implicitTypes: [sioc.UserAccount] })
+    @rdfine.property.resource({ implicitTypes: [sioc.UserAccount] })
     'shared_by': Sioc.UserAccount | undefined;
-    @property.resource({ as: [ItemMixin] })
+    @rdfine.property.resource({ as: [ItemMixin] })
     sibling: Sioc.Item | undefined;
   }
   return ItemClass

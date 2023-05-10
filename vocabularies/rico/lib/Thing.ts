@@ -1,13 +1,13 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
+import type * as Rico from '../index.js';
 
-export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   beginningDate: RDF.Literal | undefined;
   creationDate: RDF.Literal | undefined;
   date: RDF.Literal | undefined;
@@ -73,134 +73,134 @@ export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfR
   width: RDF.Literal | undefined;
 }
 
-export function ThingMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Thing> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Thing> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class ThingClass extends Resource implements Partial<Thing> {
-    @property()
+    @rdfine.property()
     beginningDate: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     creationDate: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     date: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     deletionDate: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     descriptiveNote: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     endDate: RDF.Literal | undefined;
-    @property.resource({ as: [ThingMixin] })
+    @rdfine.property.resource({ as: [ThingMixin] })
     followsInTime: Rico.Thing | undefined;
-    @property.resource({ as: [ThingMixin] })
+    @rdfine.property.resource({ as: [ThingMixin] })
     followsOrFollowed: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Date] })
+    @rdfine.property.resource({ implicitTypes: [rico.Date] })
     hasBeginningDate: Rico.Date | undefined;
-    @property.resource({ implicitTypes: [rico.Date] })
+    @rdfine.property.resource({ implicitTypes: [rico.Date] })
     hasEndDate: Rico.Date | undefined;
-    @property.resource({ implicitTypes: [rico.Date] })
+    @rdfine.property.resource({ implicitTypes: [rico.Date] })
     hasModificationDate: Rico.Date | undefined;
-    @property.resource({ implicitTypes: [rico.Appellation] })
+    @rdfine.property.resource({ implicitTypes: [rico.Appellation] })
     hasOrHadAppellation: Rico.Appellation | undefined;
-    @property.resource({ implicitTypes: [rico.Type] })
+    @rdfine.property.resource({ implicitTypes: [rico.Type] })
     hasOrHadCategory: Rico.Type | undefined;
-    @property.resource({ implicitTypes: [rico.Identifier] })
+    @rdfine.property.resource({ implicitTypes: [rico.Identifier] })
     hasOrHadIdentifier: Rico.Identifier | undefined;
-    @property.resource({ implicitTypes: [rico.Place] })
+    @rdfine.property.resource({ implicitTypes: [rico.Place] })
     hasOrHadLocation: Rico.Place | undefined;
-    @property.resource({ implicitTypes: [rico.Name] })
+    @rdfine.property.resource({ implicitTypes: [rico.Name] })
     hasOrHadName: Rico.Name | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasOrHadOwner: Rico.Group | Rico.Person | Rico.Position | undefined;
-    @property.resource({ as: [ThingMixin] })
+    @rdfine.property.resource({ as: [ThingMixin] })
     hasOrHadPart: Rico.Thing | undefined;
-    @property()
+    @rdfine.property()
     height: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     identifier: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.Date] })
+    @rdfine.property.resource({ implicitTypes: [rico.Date] })
     isAssociatedWithDate: Rico.Date | undefined;
-    @property.resource({ implicitTypes: [rico.Event] })
+    @rdfine.property.resource({ implicitTypes: [rico.Event] })
     isAssociatedWithEvent: Rico.Event | undefined;
-    @property.resource({ implicitTypes: [rico.Place] })
+    @rdfine.property.resource({ implicitTypes: [rico.Place] })
     isAssociatedWithPlace: Rico.Place | undefined;
-    @property.resource({ implicitTypes: [rico.Rule] })
+    @rdfine.property.resource({ implicitTypes: [rico.Rule] })
     isAssociatedWithRule: Rico.Rule | undefined;
-    @property.resource({ as: [ThingMixin] })
+    @rdfine.property.resource({ as: [ThingMixin] })
     isEquivalentTo: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Event] })
+    @rdfine.property.resource({ implicitTypes: [rico.Event] })
     isOrWasAffectedBy: Rico.Event | undefined;
-    @property.resource({ implicitTypes: [rico.RecordResource] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResource] })
     isOrWasDescribedBy: Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.RecordResource] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResource] })
     isOrWasMainSubjectOf: Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.Event] })
+    @rdfine.property.resource({ implicitTypes: [rico.Event] })
     isOrWasParticipantIn: Rico.Event | undefined;
-    @property.resource({ as: [ThingMixin] })
+    @rdfine.property.resource({ as: [ThingMixin] })
     isOrWasPartOf: Rico.Thing | undefined;
-    @property.resource({ implicitTypes: [rico.Rule] })
+    @rdfine.property.resource({ implicitTypes: [rico.Rule] })
     isOrWasRegulatedBy: Rico.Rule | undefined;
-    @property.resource({ implicitTypes: [rico.RecordResource] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResource] })
     isOrWasSubjectOf: Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     isOrWasUnderAuthorityOf: Rico.Agent | undefined;
-    @property.resource({ as: [ThingMixin] })
+    @rdfine.property.resource({ as: [ThingMixin] })
     isRelatedTo: Rico.Thing | undefined;
-    @property()
+    @rdfine.property()
     lastModificationDate: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     measure: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     modificationDate: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     name: RDF.Literal | undefined;
-    @property.resource({ as: [ThingMixin] })
+    @rdfine.property.resource({ as: [ThingMixin] })
     precedesInTime: Rico.Thing | undefined;
-    @property.resource({ as: [ThingMixin] })
+    @rdfine.property.resource({ as: [ThingMixin] })
     precedesOrPreceded: Rico.Thing | undefined;
-    @property()
+    @rdfine.property()
     referenceSystem: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.Event] })
+    @rdfine.property.resource({ implicitTypes: [rico.Event] })
     resultsOrResultedFrom: Rico.Event | undefined;
-    @property()
+    @rdfine.property()
     ruleFollowed: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.Relation] })
+    @rdfine.property.resource({ implicitTypes: [rico.Relation] })
     thingIsConnectedToRelation: Rico.Relation | undefined;
-    @property.resource({ implicitTypes: [rico.Relation] })
+    @rdfine.property.resource({ implicitTypes: [rico.Relation] })
     thingIsContextOfRelation: Rico.Relation | undefined;
-    @property.resource({ implicitTypes: [rico.Relation] })
+    @rdfine.property.resource({ implicitTypes: [rico.Relation] })
     thingIsSourceOfRelation: Rico.Relation | undefined;
-    @property.resource({ implicitTypes: [rico.SequentialRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.SequentialRelation] })
     thingIsSourceOfSequentialRelation: Rico.SequentialRelation | undefined;
-    @property.resource({ implicitTypes: [rico.TemporalRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.TemporalRelation] })
     thingIsSourceOfTemporalRelation: Rico.TemporalRelation | undefined;
-    @property.resource({ implicitTypes: [rico.WholePartRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.WholePartRelation] })
     thingIsSourceOfWholePartRelation: Rico.WholePartRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AppellationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AppellationRelation] })
     thingIsTargetOfAppellationRelation: Rico.AppellationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AuthorityRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AuthorityRelation] })
     thingIsTargetOfAuthorityRelation: Rico.AuthorityRelation | undefined;
-    @property.resource({ implicitTypes: [rico.EventRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.EventRelation] })
     thingIsTargetOfEventRelation: Rico.EventRelation | undefined;
-    @property.resource({ implicitTypes: [rico.OwnershipRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.OwnershipRelation] })
     thingIsTargetOfOwnershipRelation: Rico.OwnershipRelation | undefined;
-    @property.resource({ implicitTypes: [rico.PlaceRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.PlaceRelation] })
     thingIsTargetOfPlaceRelation: Rico.PlaceRelation | undefined;
-    @property.resource({ implicitTypes: [rico.Relation] })
+    @rdfine.property.resource({ implicitTypes: [rico.Relation] })
     thingIsTargetOfRelation: Rico.Relation | undefined;
-    @property.resource({ implicitTypes: [rico.RuleRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.RuleRelation] })
     thingIsTargetOfRuleRelation: Rico.RuleRelation | undefined;
-    @property.resource({ implicitTypes: [rico.SequentialRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.SequentialRelation] })
     thingIsTargetOfSequentialRelation: Rico.SequentialRelation | undefined;
-    @property.resource({ implicitTypes: [rico.TemporalRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.TemporalRelation] })
     thingIsTargetOfTemporalRelation: Rico.TemporalRelation | undefined;
-    @property.resource({ implicitTypes: [rico.TypeRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.TypeRelation] })
     thingIsTargetOfTypeRelation: Rico.TypeRelation | undefined;
-    @property.resource({ implicitTypes: [rico.WholePartRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.WholePartRelation] })
     thingIsTargetOfWholePartRelation: Rico.WholePartRelation | undefined;
-    @property()
+    @rdfine.property()
     type: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.Date] })
+    @rdfine.property.resource({ implicitTypes: [rico.Date] })
     wasLastUpdatedAtDate: Rico.Date | undefined;
-    @property()
+    @rdfine.property()
     width: RDF.Literal | undefined;
   }
   return ThingClass

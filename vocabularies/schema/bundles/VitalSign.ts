@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MedicalSignMixin } from '../lib/MedicalSign';
-import { VitalSignMixin } from '../lib/VitalSign';
+import { MedicalSignMixin } from '../lib/MedicalSign.js';
+import { VitalSignMixin } from '../lib/VitalSign.js';
 
 export const VitalSignBundle = [
   MedicalSignMixin as Mixin,

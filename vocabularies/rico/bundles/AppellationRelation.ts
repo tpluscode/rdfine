@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AppellationMixin } from '../lib/Appellation';
-import { AppellationRelationMixin } from '../lib/AppellationRelation';
-import { RelationMixin } from '../lib/Relation';
-import { ThingMixin } from '../lib/Thing';
+import { AppellationMixin } from '../lib/Appellation.js';
+import { AppellationRelationMixin } from '../lib/AppellationRelation.js';
+import { RelationMixin } from '../lib/Relation.js';
+import { ThingMixin } from '../lib/Thing.js';
 
 export const AppellationRelationBundle = [
   AppellationMixin as Mixin,

@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rdfs } from './namespace';
+import { rdfs } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rdfs from '..';
-import { ClassMixin } from './Class';
+import type * as Rdfs from '../index.js';
+import { ClassMixin } from './Class.js';
 
-export interface Datatype<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, RdfResource<D> {
+export interface Datatype<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, rdfine.RdfResource<D> {
 }
 
-export function DatatypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Datatype> & RdfResourceCore> & Base {
-  @namespace(rdfs)
+export function DatatypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Datatype> & RdfResourceCore> & Base {
+  @rdfine.namespace(rdfs)
   class DatatypeClass extends ClassMixin(Resource) implements Partial<Datatype> {
   }
   return DatatypeClass

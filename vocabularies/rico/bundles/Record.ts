@@ -1,17 +1,17 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AuthorshipRelationMixin } from '../lib/AuthorshipRelation';
-import { ContentTypeMixin } from '../lib/ContentType';
-import { DocumentaryFormTypeMixin } from '../lib/DocumentaryFormType';
-import { GroupMixin } from '../lib/Group';
-import { LanguageMixin } from '../lib/Language';
-import { LegalStatusMixin } from '../lib/LegalStatus';
-import { PersonMixin } from '../lib/Person';
-import { PositionMixin } from '../lib/Position';
-import { RecordMixin } from '../lib/Record';
-import { RecordPartMixin } from '../lib/RecordPart';
-import { RecordResourceMixin } from '../lib/RecordResource';
-import { RecordSetMixin } from '../lib/RecordSet';
-import { RecordStateMixin } from '../lib/RecordState';
+import { AuthorshipRelationMixin } from '../lib/AuthorshipRelation.js';
+import { ContentTypeMixin } from '../lib/ContentType.js';
+import { DocumentaryFormTypeMixin } from '../lib/DocumentaryFormType.js';
+import { GroupMixin } from '../lib/Group.js';
+import { LanguageMixin } from '../lib/Language.js';
+import { LegalStatusMixin } from '../lib/LegalStatus.js';
+import { PersonMixin } from '../lib/Person.js';
+import { PositionMixin } from '../lib/Position.js';
+import { RecordMixin } from '../lib/Record.js';
+import { RecordPartMixin } from '../lib/RecordPart.js';
+import { RecordResourceMixin } from '../lib/RecordResource.js';
+import { RecordSetMixin } from '../lib/RecordSet.js';
+import { RecordStateMixin } from '../lib/RecordState.js';
 
 export const RecordBundle = [
   AuthorshipRelationMixin as Mixin,

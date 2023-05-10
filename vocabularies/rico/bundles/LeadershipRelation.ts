@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AgentControlRelationMixin } from '../lib/AgentControlRelation';
-import { GroupMixin } from '../lib/Group';
-import { LeadershipRelationMixin } from '../lib/LeadershipRelation';
-import { PersonMixin } from '../lib/Person';
-import { PositionMixin } from '../lib/Position';
+import { AgentControlRelationMixin } from '../lib/AgentControlRelation.js';
+import { GroupMixin } from '../lib/Group.js';
+import { LeadershipRelationMixin } from '../lib/LeadershipRelation.js';
+import { PersonMixin } from '../lib/Person.js';
+import { PositionMixin } from '../lib/Position.js';
 
 export const LeadershipRelationBundle = [
   AgentControlRelationMixin as Mixin,

@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { LegislationMixin } from '../lib/Legislation';
-import { LegislationObjectMixin } from '../lib/LegislationObject';
-import { MediaObjectMixin } from '../lib/MediaObject';
+import { LegislationMixin } from '../lib/Legislation.js';
+import { LegislationObjectMixin } from '../lib/LegislationObject.js';
+import { MediaObjectMixin } from '../lib/MediaObject.js';
 
 export const LegislationObjectBundle = [
   LegislationMixin as Mixin,

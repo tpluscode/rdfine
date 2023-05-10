@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { PlaceMixin } from '../lib/Place';
-import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
-import { ReservationMixin } from '../lib/Reservation';
-import { TaxiReservationMixin } from '../lib/TaxiReservation';
+import { PlaceMixin } from '../lib/Place.js';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue.js';
+import { ReservationMixin } from '../lib/Reservation.js';
+import { TaxiReservationMixin } from '../lib/TaxiReservation.js';
 
 export const TaxiReservationBundle = [
   PlaceMixin as Mixin,

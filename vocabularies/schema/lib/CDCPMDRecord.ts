@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { StructuredValueMixin } from './StructuredValue';
+import type * as Schema from '../index.js';
+import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface CDCPMDRecord<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface CDCPMDRecord<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   cvdCollectionDate: Date | string | undefined;
   cvdFacilityCounty: string | undefined;
   cvdFacilityId: string | undefined;
@@ -28,42 +28,42 @@ export interface CDCPMDRecord<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   datePosted: Date | undefined;
 }
 
-export function CDCPMDRecordMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<CDCPMDRecord> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function CDCPMDRecordMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CDCPMDRecord> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class CDCPMDRecordClass extends StructuredValueMixin(Resource) implements Partial<CDCPMDRecord> {
-    @property.literal()
+    @rdfine.property.literal()
     cvdCollectionDate: Date | string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     cvdFacilityCounty: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     cvdFacilityId: string | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     cvdNumBeds: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     cvdNumBedsOcc: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     'cvdNumC19Died': number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     'cvdNumC19HOPats': number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     'cvdNumC19HospPats': number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     'cvdNumC19MechVentPats': number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     'cvdNumC19OFMechVentPats': number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     'cvdNumC19OverflowPats': number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     cvdNumICUBeds: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     cvdNumICUBedsOcc: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     cvdNumTotBeds: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     cvdNumVent: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     cvdNumVentUse: number | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     datePosted: Date | undefined;
   }
   return CDCPMDRecordClass

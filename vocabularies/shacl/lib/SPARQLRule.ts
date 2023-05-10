@@ -1,19 +1,19 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { sh } from './namespace';
+import { sh } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Sh from '..';
-import { RuleMixin } from './Rule';
-import { SPARQLConstructExecutableMixin } from './SPARQLConstructExecutable';
+import type * as Sh from '../index.js';
+import { RuleMixin } from './Rule.js';
+import { SPARQLConstructExecutableMixin } from './SPARQLConstructExecutable.js';
 
-export interface SPARQLRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Rule<D>, Sh.SPARQLConstructExecutable<D>, RdfResource<D> {
+export interface SPARQLRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Rule<D>, Sh.SPARQLConstructExecutable<D>, rdfine.RdfResource<D> {
 }
 
-export function SPARQLRuleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SPARQLRule> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function SPARQLRuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLRule> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class SPARQLRuleClass extends SPARQLConstructExecutableMixin(RuleMixin(Resource)) implements Partial<SPARQLRule> {
   }
   return SPARQLRuleClass

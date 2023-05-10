@@ -1,9 +1,10 @@
 import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
-import { findTermsToGenerate } from '../../lib/EnumerationGenerator'
-import { FakeTypeCollection } from '../_helpers/FakeTypeCollection'
-import { ex } from '../_helpers/prefix'
+import { expect } from 'chai'
+import { findTermsToGenerate } from '../../lib/EnumerationGenerator/index.js'
+import { FakeTypeCollection } from '../_helpers/FakeTypeCollection.js'
+import { ex } from '../_helpers/prefix.js'
 
 describe('EnumerationGenerator', () => {
   let vocabulary: AnyPointer
@@ -28,11 +29,11 @@ describe('EnumerationGenerator', () => {
     })
 
     // then
-    expect(result.map(m => m.node?.value)).toEqual(
-      expect.arrayContaining([
+    expect(result.map(m => m.node?.value)).to.deep.eq(
+      [
         vocabulary.node(ex.Enum1).value,
         vocabulary.node(ex.Enum2).value,
-      ]),
+      ],
     )
   })
 })

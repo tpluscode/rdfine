@@ -1,30 +1,30 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { hydra } from './namespace';
+import { hydra } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Hydra from '..';
-import { IriTemplateExMixin } from '../extensions';
+import type * as Hydra from '../index.js';
+import { IriTemplateExMixin } from '../extensions/index.js';
 
-export interface IriTemplate<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface IriTemplate<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   mapping: Array<Hydra.IriTemplateMapping<D>>;
   resolveRelativeUsing: RDF.NamedNode | undefined;
   template: string | undefined;
   variableRepresentation: Hydra.VariableRepresentation<D> | undefined;
 }
 
-export function IriTemplateMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<IriTemplate> & RdfResourceCore> & Base {
-  @namespace(hydra)
+export function IriTemplateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<IriTemplate> & RdfResourceCore> & Base {
+  @rdfine.namespace(hydra)
   class IriTemplateClass extends IriTemplateExMixin(Resource) implements Partial<IriTemplate> {
-    @property.resource({ values: 'array', implicitTypes: [hydra.IriTemplateMapping] })
+    @rdfine.property.resource({ values: 'array', implicitTypes: [hydra.IriTemplateMapping] })
     mapping!: Array<Hydra.IriTemplateMapping>;
-    @property()
+    @rdfine.property()
     resolveRelativeUsing: RDF.NamedNode | undefined;
-    @property.literal({ datatype: $rdf.namedNode('http://www.w3.org/ns/hydra/core#Rfc6570Template') })
+    @rdfine.property.literal({ datatype: $rdf.namedNode('http://www.w3.org/ns/hydra/core#Rfc6570Template') })
     template: string | undefined;
-    @property.resource({ implicitTypes: [hydra.VariableRepresentation] })
+    @rdfine.property.resource({ implicitTypes: [hydra.VariableRepresentation] })
     variableRepresentation: Hydra.VariableRepresentation | undefined;
   }
   return IriTemplateClass

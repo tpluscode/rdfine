@@ -1,11 +1,11 @@
 import { GraphPointer } from 'clownface'
-import { shrink } from '@zazuko/rdf-vocabularies'
+import { shrink } from '@zazuko/prefixes'
 import { owl } from '@tpluscode/rdf-ns-builders'
 import { Term } from '@rdfjs/types'
-import { TypeMeta, TypeMetaCollection } from '../types'
-import { Context } from '../index'
-import { nameOf } from '../util/nameOf'
-import { Range } from './index'
+import { TypeMeta, TypeMetaCollection } from '../types/index.js'
+import { Context } from '../index.js'
+import { nameOf } from '../util/nameOf.js'
+import { Range } from './index.js'
 
 type PropertyReturnKind = 'array' | 'list' | 'single'
 

@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ResultAnnotationMixin } from '../lib/ResultAnnotation';
-import { SPARQLSelectExecutableMixin } from '../lib/SPARQLSelectExecutable';
-import { SPARQLSelectValidatorMixin } from '../lib/SPARQLSelectValidator';
-import { ValidatorMixin } from '../lib/Validator';
+import { ResultAnnotationMixin } from '../lib/ResultAnnotation.js';
+import { SPARQLSelectExecutableMixin } from '../lib/SPARQLSelectExecutable.js';
+import { SPARQLSelectValidatorMixin } from '../lib/SPARQLSelectValidator.js';
+import { ValidatorMixin } from '../lib/Validator.js';
 
 export const SPARQLSelectValidatorBundle = [
   ResultAnnotationMixin as Mixin,

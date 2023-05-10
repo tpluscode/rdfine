@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AgentMixin } from '../lib/Agent';
-import { ConceptMixin } from '../lib/Concept';
-import { LanguageMixin } from '../lib/Language';
-import { RecordMixin } from '../lib/Record';
-import { RecordPartMixin } from '../lib/RecordPart';
-import { RecordSetMixin } from '../lib/RecordSet';
+import { AgentMixin } from '../lib/Agent.js';
+import { ConceptMixin } from '../lib/Concept.js';
+import { LanguageMixin } from '../lib/Language.js';
+import { RecordMixin } from '../lib/Record.js';
+import { RecordPartMixin } from '../lib/RecordPart.js';
+import { RecordSetMixin } from '../lib/RecordSet.js';
 
 export const LanguageBundle = [
   AgentMixin as Mixin,

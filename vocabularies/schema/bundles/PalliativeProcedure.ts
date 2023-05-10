@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MedicalProcedureMixin } from '../lib/MedicalProcedure';
-import { MedicalTherapyMixin } from '../lib/MedicalTherapy';
-import { PalliativeProcedureMixin } from '../lib/PalliativeProcedure';
+import { MedicalProcedureMixin } from '../lib/MedicalProcedure.js';
+import { MedicalTherapyMixin } from '../lib/MedicalTherapy.js';
+import { PalliativeProcedureMixin } from '../lib/PalliativeProcedure.js';
 
 export const PalliativeProcedureBundle = [
   MedicalProcedureMixin as Mixin,

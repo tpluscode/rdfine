@@ -1,12 +1,12 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AudienceMixin } from '../lib/Audience';
-import { CommunicateActionMixin } from '../lib/CommunicateAction';
-import { ContactPointMixin } from '../lib/ContactPoint';
-import { InteractActionMixin } from '../lib/InteractAction';
-import { LanguageMixin } from '../lib/Language';
-import { OrganizationMixin } from '../lib/Organization';
-import { PersonMixin } from '../lib/Person';
-import { ThingMixin } from '../lib/Thing';
+import { AudienceMixin } from '../lib/Audience.js';
+import { CommunicateActionMixin } from '../lib/CommunicateAction.js';
+import { ContactPointMixin } from '../lib/ContactPoint.js';
+import { InteractActionMixin } from '../lib/InteractAction.js';
+import { LanguageMixin } from '../lib/Language.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PersonMixin } from '../lib/Person.js';
+import { ThingMixin } from '../lib/Thing.js';
 
 export const CommunicateActionBundle = [
   AudienceMixin as Mixin,

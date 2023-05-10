@@ -1,21 +1,21 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { TypeMixin } from './Type';
+import type * as Rico from '../index.js';
+import { TypeMixin } from './Type.js';
 
-export interface ExtentType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, RdfResource<D> {
+export interface ExtentType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, rdfine.RdfResource<D> {
   isExtentTypeOf: Rico.Extent<D> | undefined;
 }
 
-export function ExtentTypeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ExtentType> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function ExtentTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ExtentType> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class ExtentTypeClass extends TypeMixin(Resource) implements Partial<ExtentType> {
-    @property.resource({ implicitTypes: [rico.Extent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Extent] })
     isExtentTypeOf: Rico.Extent | undefined;
   }
   return ExtentTypeClass

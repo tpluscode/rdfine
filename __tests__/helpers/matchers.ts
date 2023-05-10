@@ -1,42 +1,35 @@
-import { toMatchSnapshot } from 'jest-snapshot'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import { SourceFile } from 'ts-morph'
 import Parser from '@rdfjs/parser-jsonld'
 import toStream from 'string-to-stream'
 import $rdf from 'rdf-ext'
+import { Assertion, AssertionError } from 'chai'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { addSerializer } from 'jest-snapshot'
 
 const parser = new Parser()
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace jest {
-    interface Matchers<R> {
-      toBeValidJsonLd(): R
+  namespace Chai {
+    interface TypeComparison {
+      validJsonLd(): void
     }
   }
 }
+Assertion.addMethod('validJsonLd', async function (this: Chai.AssertionStatic) {
+  const received: string | Record<string, any> = this._obj
 
-expect.extend({
-  async toBeValidJsonLd(received: string | Record<string, any>) {
-    const jsonld = typeof received === 'string' ? received : JSON.stringify(received)
+  const jsonld = typeof received === 'string' ? received : JSON.stringify(received)
 
-    try {
-      await $rdf.dataset().import(parser.import(toStream(jsonld)))
-
-      return {
-        message: () => 'Object was valid JSON-LD',
-        pass: true,
-      }
-    } catch (e) {
-      return {
-        message: () => `Failed to parse JSON-LD: ${e.message}`,
-        pass: false,
-      }
-    }
-  },
+  try {
+    await $rdf.dataset().import(parser.import(toStream(jsonld)))
+  } catch (e: any) {
+    throw new AssertionError(`Failed to parse JSON-LD: ${e.message}`)
+  }
 })
 
-expect.addSnapshotSerializer({
+addSerializer({
   test(val) {
     return typeof val === 'object' && val && 'toCanonical' in val
   },
@@ -45,7 +38,7 @@ expect.addSnapshotSerializer({
   },
 })
 
-expect.addSnapshotSerializer({
+addSerializer({
   test(val) {
     return typeof val === 'object' && 'saveSync' in val
   },

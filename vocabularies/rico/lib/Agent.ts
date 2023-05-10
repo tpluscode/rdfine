@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { ThingMixin } from './Thing';
+import type * as Rico from '../index.js';
+import { ThingMixin } from './Thing.js';
 
-export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, RdfResource<D> {
+export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, rdfine.RdfResource<D> {
   agentHasWorkRelation: Rico.WorkRelation<D> | undefined;
   agentIsConnectedToAgentRelation: Rico.AgentToAgentRelation<D> | undefined;
   agentIsSourceOfAgentControlRelation: Rico.AgentControlRelation<D> | undefined;
@@ -59,104 +59,104 @@ export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico
   performsOrPerformed: Rico.Activity<D> | undefined;
 }
 
-export function AgentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Agent> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Agent> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class AgentClass extends ThingMixin(Resource) implements Partial<Agent> {
-    @property.resource({ implicitTypes: [rico.WorkRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.WorkRelation] })
     agentHasWorkRelation: Rico.WorkRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AgentToAgentRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AgentToAgentRelation] })
     agentIsConnectedToAgentRelation: Rico.AgentToAgentRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AgentControlRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AgentControlRelation] })
     agentIsSourceOfAgentControlRelation: Rico.AgentControlRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AgentHierarchicalRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AgentHierarchicalRelation] })
     agentIsSourceOfAgentHierarchicalRelation: Rico.AgentHierarchicalRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AgentTemporalRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AgentTemporalRelation] })
     agentIsSourceOfAgentTemporalRelation: Rico.AgentTemporalRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AuthorityRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AuthorityRelation] })
     agentIsSourceOfAuthorityRelation: Rico.AuthorityRelation | undefined;
-    @property.resource({ implicitTypes: [rico.ManagementRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.ManagementRelation] })
     agentIsSourceOfManagementRelation: Rico.ManagementRelation | undefined;
-    @property.resource({ implicitTypes: [rico.RecordResourceHoldingRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResourceHoldingRelation] })
     agentIsSourceOfRecordResourceHoldingRelation: Rico.RecordResourceHoldingRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AccumulationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AccumulationRelation] })
     agentIsTargetOfAccumulationRelation: Rico.AccumulationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AgentControlRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AgentControlRelation] })
     agentIsTargetOfAgentControlRelation: Rico.AgentControlRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AgentHierarchicalRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AgentHierarchicalRelation] })
     agentIsTargetOfAgentHierarchicalRelation: Rico.AgentHierarchicalRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AgentOriginationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AgentOriginationRelation] })
     agentIsTargetOfAgentOriginationRelation: Rico.AgentOriginationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AgentTemporalRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AgentTemporalRelation] })
     agentIsTargetOfAgentTemporalRelation: Rico.AgentTemporalRelation | undefined;
-    @property.resource({ implicitTypes: [rico.CreationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.CreationRelation] })
     agentIsTargetOfCreationRelation: Rico.CreationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.MandateRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.MandateRelation] })
     agentIsTargetOfMandateRelation: Rico.MandateRelation | undefined;
-    @property.resource({ implicitTypes: [rico.PerformanceRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.PerformanceRelation] })
     agentIsTargetOfPerformanceRelation: Rico.PerformanceRelation | undefined;
-    @property.resource({ implicitTypes: [rico.ProvenanceRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.ProvenanceRelation] })
     agentOrActivityIsTargetOfProvenanceRelation: Rico.ProvenanceRelation | undefined;
-    @property.resource({ implicitTypes: [rico.Mandate] })
+    @rdfine.property.resource({ implicitTypes: [rico.Mandate] })
     authorizedBy: Rico.Mandate | undefined;
-    @property()
+    @rdfine.property()
     authorizingMandate: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.AgentName] })
+    @rdfine.property.resource({ implicitTypes: [rico.AgentName] })
     hasOrHadAgentName: Rico.AgentName | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     hasOrHadAuthorityOver: Rico.Thing | undefined;
-    @property.resource({ as: [AgentMixin] })
+    @rdfine.property.resource({ as: [AgentMixin] })
     hasOrHadController: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Place] })
+    @rdfine.property.resource({ implicitTypes: [rico.Place] })
     hasOrHadJurisdiction: Rico.Place | undefined;
-    @property.resource({ implicitTypes: [rico.Language] })
+    @rdfine.property.resource({ implicitTypes: [rico.Language] })
     hasOrHadLanguage: Rico.Language | undefined;
-    @property.resource({ implicitTypes: [rico.LegalStatus] })
+    @rdfine.property.resource({ implicitTypes: [rico.LegalStatus] })
     hasOrHadLegalStatus: Rico.LegalStatus | undefined;
-    @property.resource({ as: [AgentMixin] })
+    @rdfine.property.resource({ as: [AgentMixin] })
     hasOrHadSubordinate: Rico.Agent | undefined;
-    @property.resource({ as: [AgentMixin] })
+    @rdfine.property.resource({ as: [AgentMixin] })
     hasOrHadWorkRelationWith: Rico.Agent | undefined;
-    @property.resource({ as: [AgentMixin] })
+    @rdfine.property.resource({ as: [AgentMixin] })
     hasSuccessor: Rico.Agent | undefined;
-    @property()
+    @rdfine.property()
     history: RDF.Literal | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isAccumulatorOf: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isAddresseeOf: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource({ as: [AgentMixin] })
+    @rdfine.property.resource({ as: [AgentMixin] })
     isAgentAssociatedWithAgent: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.MandateRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.MandateRelation] })
     isAuthorizingAgentInMandateRelation: Rico.MandateRelation | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isCollectorOf: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isCreatorOf: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource({ as: [AgentMixin] })
+    @rdfine.property.resource({ as: [AgentMixin] })
     isOrWasControllerOf: Rico.Agent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isOrWasHolderOf: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isOrWasManagerOf: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.Rule] })
+    @rdfine.property.resource({ implicitTypes: [rico.Rule] })
     isOrWasResponsibleForEnforcing: Rico.Rule | undefined;
-    @property.resource({ as: [AgentMixin] })
+    @rdfine.property.resource({ as: [AgentMixin] })
     isOrWasSubordinateTo: Rico.Agent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isProvenanceOf: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.RecordResource] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResource] })
     isPublisherOf: Rico.RecordResource | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isReceiverOf: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.Rule] })
+    @rdfine.property.resource({ implicitTypes: [rico.Rule] })
     isResponsibleForIssuing: Rico.Rule | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isSenderOf: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isSourceOf: Rico.RecordResource | Rico.Relation | undefined;
-    @property.resource({ as: [AgentMixin] })
+    @rdfine.property.resource({ as: [AgentMixin] })
     isSuccessorOf: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Activity] })
+    @rdfine.property.resource({ implicitTypes: [rico.Activity] })
     performsOrPerformed: Rico.Activity | undefined;
   }
   return AgentClass

@@ -1,24 +1,24 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { ActionMixin } from './Action';
+import type * as Schema from '../index.js';
+import { ActionMixin } from './Action.js';
 
-export interface SeekToAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, RdfResource<D> {
+export interface SeekToAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, rdfine.RdfResource<D> {
   startOffset: Schema.HyperTocEntry<D> | undefined;
   startOffsetLiteral: number | undefined;
 }
 
-export function SeekToActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SeekToAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function SeekToActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SeekToAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class SeekToActionClass extends ActionMixin(Resource) implements Partial<SeekToAction> {
-    @property.resource()
+    @rdfine.property.resource()
     startOffset: Schema.HyperTocEntry | undefined;
-    @property.literal({ path: schema.startOffset, type: Number })
+    @rdfine.property.literal({ path: schema.startOffset, type: Number })
     startOffsetLiteral: number | undefined;
   }
   return SeekToActionClass

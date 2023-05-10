@@ -1,10 +1,10 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ExtentMixin } from '../lib/Extent';
-import { ExtentTypeMixin } from '../lib/ExtentType';
-import { InstantiationMixin } from '../lib/Instantiation';
-import { RecordResourceMixin } from '../lib/RecordResource';
-import { ThingMixin } from '../lib/Thing';
-import { UnitOfMeasurementMixin } from '../lib/UnitOfMeasurement';
+import { ExtentMixin } from '../lib/Extent.js';
+import { ExtentTypeMixin } from '../lib/ExtentType.js';
+import { InstantiationMixin } from '../lib/Instantiation.js';
+import { RecordResourceMixin } from '../lib/RecordResource.js';
+import { ThingMixin } from '../lib/Thing.js';
+import { UnitOfMeasurementMixin } from '../lib/UnitOfMeasurement.js';
 
 export const ExtentBundle = [
   ExtentMixin as Mixin,

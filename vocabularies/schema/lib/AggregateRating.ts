@@ -1,27 +1,27 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { RatingMixin } from './Rating';
+import type * as Schema from '../index.js';
+import { RatingMixin } from './Rating.js';
 
-export interface AggregateRating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Rating<D>, RdfResource<D> {
+export interface AggregateRating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Rating<D>, rdfine.RdfResource<D> {
   itemReviewed: Schema.Thing<D> | undefined;
   ratingCount: number | undefined;
   reviewCount: number | undefined;
 }
 
-export function AggregateRatingMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<AggregateRating> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function AggregateRatingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AggregateRating> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class AggregateRatingClass extends RatingMixin(Resource) implements Partial<AggregateRating> {
-    @property.resource()
+    @rdfine.property.resource()
     itemReviewed: Schema.Thing | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     ratingCount: number | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     reviewCount: number | undefined;
   }
   return AggregateRatingClass

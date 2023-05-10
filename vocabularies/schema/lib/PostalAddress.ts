@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { ContactPointMixin } from './ContactPoint';
+import type * as Schema from '../index.js';
+import { ContactPointMixin } from './ContactPoint.js';
 
-export interface PostalAddress<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ContactPoint<D>, RdfResource<D> {
+export interface PostalAddress<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ContactPoint<D>, rdfine.RdfResource<D> {
   addressCountry: Schema.Country<D> | undefined;
   addressCountryLiteral: string | undefined;
   addressLocality: string | undefined;
@@ -18,22 +18,22 @@ export interface PostalAddress<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   streetAddress: string | undefined;
 }
 
-export function PostalAddressMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PostalAddress> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PostalAddressMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PostalAddress> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PostalAddressClass extends ContactPointMixin(Resource) implements Partial<PostalAddress> {
-    @property.resource()
+    @rdfine.property.resource()
     addressCountry: Schema.Country | undefined;
-    @property.literal({ path: schema.addressCountry })
+    @rdfine.property.literal({ path: schema.addressCountry })
     addressCountryLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     addressLocality: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     addressRegion: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     postalCode: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     postOfficeBoxNumber: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     streetAddress: string | undefined;
   }
   return PostalAddressClass

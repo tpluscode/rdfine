@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { StructuredValueMixin } from './StructuredValue';
+import type * as Schema from '../index.js';
+import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface ShippingRateSettings<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface ShippingRateSettings<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   doesNotShip: boolean | undefined;
   freeShippingThreshold: Schema.DeliveryChargeSpecification<D> | Schema.MonetaryAmount<D> | undefined;
   isUnlabelledFallback: boolean | undefined;
@@ -17,20 +17,20 @@ export interface ShippingRateSettings<D extends RDF.DatasetCore = RDF.DatasetCor
   shippingRate: Schema.MonetaryAmount<D> | undefined;
 }
 
-export function ShippingRateSettingsMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ShippingRateSettings> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ShippingRateSettingsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ShippingRateSettings> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ShippingRateSettingsClass extends StructuredValueMixin(Resource) implements Partial<ShippingRateSettings> {
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     doesNotShip: boolean | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     freeShippingThreshold: Schema.DeliveryChargeSpecification | Schema.MonetaryAmount | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     isUnlabelledFallback: boolean | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     shippingDestination: Schema.DefinedRegion | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     shippingLabel: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     shippingRate: Schema.MonetaryAmount | undefined;
   }
   return ShippingRateSettingsClass

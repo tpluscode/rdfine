@@ -1,24 +1,24 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { PriceSpecificationMixin } from './PriceSpecification';
+import type * as Schema from '../index.js';
+import { PriceSpecificationMixin } from './PriceSpecification.js';
 
-export interface PaymentChargeSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, RdfResource<D> {
+export interface PaymentChargeSpecification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PriceSpecification<D>, rdfine.RdfResource<D> {
   appliesToDeliveryMethod: Schema.DeliveryMethod | undefined;
   appliesToPaymentMethod: Schema.PaymentMethod | undefined;
 }
 
-export function PaymentChargeSpecificationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PaymentChargeSpecification> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PaymentChargeSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PaymentChargeSpecification> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PaymentChargeSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<PaymentChargeSpecification> {
-    @property()
+    @rdfine.property()
     appliesToDeliveryMethod: Schema.DeliveryMethod | undefined;
-    @property()
+    @rdfine.property()
     appliesToPaymentMethod: Schema.PaymentMethod | undefined;
   }
   return PaymentChargeSpecificationClass

@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AgentToAgentRelationMixin } from '../lib/AgentToAgentRelation';
-import { PersonMixin } from '../lib/Person';
-import { PositionHoldingRelationMixin } from '../lib/PositionHoldingRelation';
-import { PositionMixin } from '../lib/Position';
+import { AgentToAgentRelationMixin } from '../lib/AgentToAgentRelation.js';
+import { PersonMixin } from '../lib/Person.js';
+import { PositionHoldingRelationMixin } from '../lib/PositionHoldingRelation.js';
+import { PositionMixin } from '../lib/Position.js';
 
 export const PositionHoldingRelationBundle = [
   AgentToAgentRelationMixin as Mixin,

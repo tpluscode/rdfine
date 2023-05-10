@@ -1,30 +1,30 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { EventMixin } from './Event';
+import type * as Schema from '../index.js';
+import { EventMixin } from './Event.js';
 
-export interface EducationEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
+export interface EducationEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
   assesses: string | undefined;
   educationalLevel: string | undefined;
   educationalLevelTerm: RDF.NamedNode | undefined;
   teaches: string | undefined;
 }
 
-export function EducationEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<EducationEvent> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function EducationEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EducationEvent> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class EducationEventClass extends EventMixin(Resource) implements Partial<EducationEvent> {
-    @property.literal()
+    @rdfine.property.literal()
     assesses: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     educationalLevel: string | undefined;
-    @property({ path: schema.educationalLevel })
+    @rdfine.property({ path: schema.educationalLevel })
     educationalLevelTerm: RDF.NamedNode | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     teaches: string | undefined;
   }
   return EducationEventClass

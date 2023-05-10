@@ -1,8 +1,7 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "target": "ES2016",
-    "module": "CommonJS",
+    "module": "ES2022",
     "esModuleInterop": true,
     "declaration": true
   },

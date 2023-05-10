@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../lib/Intangible';
-import { MerchantReturnPolicySeasonalOverrideMixin } from '../lib/MerchantReturnPolicySeasonalOverride';
+import { IntangibleMixin } from '../lib/Intangible.js';
+import { MerchantReturnPolicySeasonalOverrideMixin } from '../lib/MerchantReturnPolicySeasonalOverride.js';
 
 export const MerchantReturnPolicySeasonalOverrideBundle = [
   IntangibleMixin as Mixin,

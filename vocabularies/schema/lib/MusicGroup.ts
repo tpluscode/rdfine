@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { PerformingGroupMixin } from './PerformingGroup';
+import type * as Schema from '../index.js';
+import { PerformingGroupMixin } from './PerformingGroup.js';
 
-export interface MusicGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PerformingGroup<D>, RdfResource<D> {
+export interface MusicGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PerformingGroup<D>, rdfine.RdfResource<D> {
   album: Schema.MusicAlbum<D> | undefined;
   albums: Schema.MusicAlbum<D> | undefined;
   genre: string | undefined;
@@ -18,22 +18,22 @@ export interface MusicGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   tracks: Schema.MusicRecording<D> | undefined;
 }
 
-export function MusicGroupMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<MusicGroup> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function MusicGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MusicGroup> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class MusicGroupClass extends PerformingGroupMixin(Resource) implements Partial<MusicGroup> {
-    @property.resource()
+    @rdfine.property.resource()
     album: Schema.MusicAlbum | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     albums: Schema.MusicAlbum | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     genre: string | undefined;
-    @property({ path: schema.genre })
+    @rdfine.property({ path: schema.genre })
     genreTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     musicGroupMember: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     track: Schema.ItemList | Schema.MusicRecording | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     tracks: Schema.MusicRecording | undefined;
   }
   return MusicGroupClass

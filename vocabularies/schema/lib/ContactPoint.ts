@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { StructuredValueMixin } from './StructuredValue';
+import type * as Schema from '../index.js';
+import { StructuredValueMixin } from './StructuredValue.js';
 
-export interface ContactPoint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, RdfResource<D> {
+export interface ContactPoint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   areaServed: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
   areaServedLiteral: string | undefined;
   availableLanguage: Schema.Language<D> | undefined;
@@ -24,34 +24,34 @@ export interface ContactPoint<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   telephone: string | undefined;
 }
 
-export function ContactPointMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ContactPoint> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ContactPointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ContactPoint> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ContactPointClass extends StructuredValueMixin(Resource) implements Partial<ContactPoint> {
-    @property.resource()
+    @rdfine.property.resource()
     areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.areaServed })
+    @rdfine.property.literal({ path: schema.areaServed })
     areaServedLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     availableLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.availableLanguage })
+    @rdfine.property.literal({ path: schema.availableLanguage })
     availableLanguageLiteral: string | undefined;
-    @property()
+    @rdfine.property()
     contactOption: Schema.ContactPointOption | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     contactType: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     email: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     faxNumber: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hoursAvailable: Schema.OpeningHoursSpecification | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     productSupported: Schema.Product | undefined;
-    @property.literal({ path: schema.productSupported })
+    @rdfine.property.literal({ path: schema.productSupported })
     productSupportedLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     serviceArea: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     telephone: string | undefined;
   }
   return ContactPointClass

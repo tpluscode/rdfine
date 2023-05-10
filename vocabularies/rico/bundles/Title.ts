@@ -1,9 +1,9 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { InstantiationMixin } from '../lib/Instantiation';
-import { NameMixin } from '../lib/Name';
-import { RecordResourceMixin } from '../lib/RecordResource';
-import { RuleMixin } from '../lib/Rule';
-import { TitleMixin } from '../lib/Title';
+import { InstantiationMixin } from '../lib/Instantiation.js';
+import { NameMixin } from '../lib/Name.js';
+import { RecordResourceMixin } from '../lib/RecordResource.js';
+import { RuleMixin } from '../lib/Rule.js';
+import { TitleMixin } from '../lib/Title.js';
 
 export const TitleBundle = [
   InstantiationMixin as Mixin,

@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { IntangibleMixin } from './Intangible';
+import type * as Schema from '../index.js';
+import { IntangibleMixin } from './Intangible.js';
 
-export interface Service<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, RdfResource<D> {
+export interface Service<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
   aggregateRating: Schema.AggregateRating<D> | undefined;
   areaServed: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
   areaServedLiteral: string | undefined;
@@ -17,7 +17,7 @@ export interface Service<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   award: string | undefined;
   brand: Schema.Brand<D> | Schema.Organization<D> | undefined;
   broker: Schema.Organization<D> | Schema.Person<D> | undefined;
-  category: Schema.Thing<D> | undefined;
+  category: Schema.CategoryCode<D> | Schema.Thing<D> | undefined;
   categoryLiteral: string | undefined;
   hasOfferCatalog: Schema.OfferCatalog<D> | undefined;
   hoursAvailable: Schema.OpeningHoursSpecification<D> | undefined;
@@ -39,64 +39,64 @@ export interface Service<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   termsOfServiceTerm: RDF.NamedNode | undefined;
 }
 
-export function ServiceMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Service> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Service> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ServiceClass extends IntangibleMixin(Resource) implements Partial<Service> {
-    @property.resource()
+    @rdfine.property.resource()
     aggregateRating: Schema.AggregateRating | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
-    @property.literal({ path: schema.areaServed })
+    @rdfine.property.literal({ path: schema.areaServed })
     areaServedLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     audience: Schema.Audience | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     availableChannel: Schema.ServiceChannel | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     award: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     brand: Schema.Brand | Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     broker: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
-    category: Schema.Thing | undefined;
-    @property.literal({ path: schema.category })
+    @rdfine.property.resource()
+    category: Schema.CategoryCode | Schema.Thing | undefined;
+    @rdfine.property.literal({ path: schema.category })
     categoryLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasOfferCatalog: Schema.OfferCatalog | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hoursAvailable: Schema.OpeningHoursSpecification | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isRelatedTo: Schema.Product | Schema.Service | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isSimilarTo: Schema.Product | Schema.Service | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     logo: Schema.ImageObject | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     offers: Schema.Demand | Schema.Offer | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     produces: Schema.Thing | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     provider: Schema.Organization | Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     providerMobility: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     review: Schema.Review | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     serviceArea: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     serviceAudience: Schema.Audience | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     serviceOutput: Schema.Thing | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     serviceType: string | undefined;
-    @property({ path: schema.serviceType })
+    @rdfine.property({ path: schema.serviceType })
     serviceTypeTerm: Schema.GovernmentBenefitsType | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     slogan: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     termsOfService: string | undefined;
-    @property({ path: schema.termsOfService })
+    @rdfine.property({ path: schema.termsOfService })
     termsOfServiceTerm: RDF.NamedNode | undefined;
   }
   return ServiceClass

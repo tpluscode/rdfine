@@ -2,16 +2,20 @@ import cf, { AnyPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import { Project, SourceFile } from 'ts-morph'
-import { EnumerationModule } from '../../lib/EnumerationGenerator/EnumerationModule'
-import { fakeLog } from '../_helpers/util'
-import { FakeTypeCollection } from '../_helpers/FakeTypeCollection'
-import { ex } from '../_helpers/prefix'
+import chai, { expect } from 'chai'
+import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
+import { EnumerationModule } from '../../lib/EnumerationGenerator/EnumerationModule.js'
+import { fakeLog } from '../_helpers/util.js'
+import { FakeTypeCollection } from '../_helpers/FakeTypeCollection.js'
+import { ex } from '../_helpers/prefix.js'
 
 describe('EnumerationModule', () => {
   let project: Project
   let graph: AnyPointer
   let indexModule: SourceFile
 
+  chai.use(jestSnapshotPlugin())
+  before(() => import('../../../../__tests__/helpers/matchers.js'))
   beforeEach(() => {
     project = new Project({
       useInMemoryFileSystem: true,

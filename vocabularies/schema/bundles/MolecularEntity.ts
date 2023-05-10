@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { BioChemEntityMixin } from '../lib/BioChemEntity';
-import { MolecularEntityMixin } from '../lib/MolecularEntity';
-import { QuantitativeValueMixin } from '../lib/QuantitativeValue';
+import { BioChemEntityMixin } from '../lib/BioChemEntity.js';
+import { MolecularEntityMixin } from '../lib/MolecularEntity.js';
+import { QuantitativeValueMixin } from '../lib/QuantitativeValue.js';
 
 export const MolecularEntityBundle = [
   BioChemEntityMixin as Mixin,

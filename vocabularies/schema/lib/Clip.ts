@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreativeWorkMixin } from './CreativeWork';
+import type * as Schema from '../index.js';
+import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface Clip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface Clip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   actor: Schema.Person<D> | undefined;
   actors: Schema.Person<D> | undefined;
   clipNumber: number | string | undefined;
@@ -24,34 +24,34 @@ export interface Clip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   startOffsetLiteral: number | undefined;
 }
 
-export function ClipMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Clip> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function ClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Clip> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class ClipClass extends CreativeWorkMixin(Resource) implements Partial<Clip> {
-    @property.resource()
+    @rdfine.property.resource()
     actor: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     actors: Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     clipNumber: number | string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     director: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     directors: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     endOffset: Schema.HyperTocEntry | undefined;
-    @property.literal({ path: schema.endOffset, type: Number })
+    @rdfine.property.literal({ path: schema.endOffset, type: Number })
     endOffsetLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     musicBy: Schema.MusicGroup | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     partOfEpisode: Schema.Episode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     partOfSeason: Schema.CreativeWorkSeason | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     partOfSeries: Schema.CreativeWorkSeries | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     startOffset: Schema.HyperTocEntry | undefined;
-    @property.literal({ path: schema.startOffset, type: Number })
+    @rdfine.property.literal({ path: schema.startOffset, type: Number })
     startOffsetLiteral: number | undefined;
   }
   return ClipClass

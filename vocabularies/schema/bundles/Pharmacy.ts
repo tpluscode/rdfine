@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { MedicalOrganizationMixin } from '../lib/MedicalOrganization';
-import { PharmacyMixin } from '../lib/Pharmacy';
+import { MedicalOrganizationMixin } from '../lib/MedicalOrganization.js';
+import { PharmacyMixin } from '../lib/Pharmacy.js';
 
 export const PharmacyBundle = [
   MedicalOrganizationMixin as Mixin,

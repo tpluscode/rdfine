@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { ManuscriptMixin } from '../lib/Manuscript';
+import { CreativeWorkMixin } from '../lib/CreativeWork.js';
+import { ManuscriptMixin } from '../lib/Manuscript.js';
 
 export const ManuscriptBundle = [
   CreativeWorkMixin as Mixin,

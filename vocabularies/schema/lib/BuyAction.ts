@@ -1,27 +1,27 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { TradeActionMixin } from './TradeAction';
+import type * as Schema from '../index.js';
+import { TradeActionMixin } from './TradeAction.js';
 
-export interface BuyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, RdfResource<D> {
+export interface BuyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, rdfine.RdfResource<D> {
   seller: Schema.Organization<D> | Schema.Person<D> | undefined;
   vendor: Schema.Organization<D> | Schema.Person<D> | undefined;
   warrantyPromise: Schema.WarrantyPromise<D> | undefined;
 }
 
-export function BuyActionMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<BuyAction> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function BuyActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BuyAction> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class BuyActionClass extends TradeActionMixin(Resource) implements Partial<BuyAction> {
-    @property.resource()
+    @rdfine.property.resource()
     seller: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     vendor: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     warrantyPromise: Schema.WarrantyPromise | undefined;
   }
   return BuyActionClass

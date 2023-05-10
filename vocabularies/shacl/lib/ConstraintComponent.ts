@@ -1,27 +1,27 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { sh } from './namespace';
+import { sh } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Sh from '..';
-import { ParameterizableMixin } from './Parameterizable';
+import type * as Sh from '../index.js';
+import { ParameterizableMixin } from './Parameterizable.js';
 
-export interface ConstraintComponent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Parameterizable<D>, RdfResource<D> {
+export interface ConstraintComponent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Parameterizable<D>, rdfine.RdfResource<D> {
   nodeValidator: Sh.Validator<D> | undefined;
   propertyValidator: Sh.Validator<D> | undefined;
   validator: Sh.Validator<D> | undefined;
 }
 
-export function ConstraintComponentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<ConstraintComponent> & RdfResourceCore> & Base {
-  @namespace(sh)
+export function ConstraintComponentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ConstraintComponent> & RdfResourceCore> & Base {
+  @rdfine.namespace(sh)
   class ConstraintComponentClass extends ParameterizableMixin(Resource) implements Partial<ConstraintComponent> {
-    @property.resource({ implicitTypes: [sh.Validator] })
+    @rdfine.property.resource({ implicitTypes: [sh.Validator] })
     nodeValidator: Sh.Validator | undefined;
-    @property.resource({ implicitTypes: [sh.Validator] })
+    @rdfine.property.resource({ implicitTypes: [sh.Validator] })
     propertyValidator: Sh.Validator | undefined;
-    @property.resource({ implicitTypes: [sh.Validator] })
+    @rdfine.property.resource({ implicitTypes: [sh.Validator] })
     validator: Sh.Validator | undefined;
   }
   return ConstraintComponentClass

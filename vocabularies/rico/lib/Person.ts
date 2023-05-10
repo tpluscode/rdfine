@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { AgentMixin } from './Agent';
+import type * as Rico from '../index.js';
+import { AgentMixin } from './Agent.js';
 
-export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Agent<D>, RdfResource<D> {
+export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Agent<D>, rdfine.RdfResource<D> {
   agentIsSourceOfIntellectualPropertyRightsRelation: Rico.IntellectualPropertyRightsRelation<D> | undefined;
   agentIsSourceOfOwnershipRelation: Rico.OwnershipRelation<D> | undefined;
   agentIsTargetOfAuthorshipRelation: Rico.AuthorshipRelation<D> | undefined;
@@ -55,96 +55,96 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Ric
   personIsTargetOfTeachingRelation: Rico.TeachingRelation<D> | undefined;
 }
 
-export function PersonMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Person> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Person> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class PersonClass extends AgentMixin(Resource) implements Partial<Person> {
-    @property.resource({ implicitTypes: [rico.IntellectualPropertyRightsRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.IntellectualPropertyRightsRelation] })
     agentIsSourceOfIntellectualPropertyRightsRelation: Rico.IntellectualPropertyRightsRelation | undefined;
-    @property.resource({ implicitTypes: [rico.OwnershipRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.OwnershipRelation] })
     agentIsSourceOfOwnershipRelation: Rico.OwnershipRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AuthorshipRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AuthorshipRelation] })
     agentIsTargetOfAuthorshipRelation: Rico.AuthorshipRelation | undefined;
-    @property()
+    @rdfine.property()
     birthDate: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     deathDate: RDF.Literal | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     hasAncestor: Rico.Person | undefined;
-    @property.resource({ implicitTypes: [rico.Date] })
+    @rdfine.property.resource({ implicitTypes: [rico.Date] })
     hasBirthDate: Rico.Date | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     hasChild: Rico.Person | undefined;
-    @property.resource({ implicitTypes: [rico.Date] })
+    @rdfine.property.resource({ implicitTypes: [rico.Date] })
     hasDeathDate: Rico.Date | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     hasDescendant: Rico.Person | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     hasFamilyAssociationWith: Rico.Person | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     hasOrHadCorrespondent: Rico.Person | undefined;
-    @property.resource({ implicitTypes: [rico.DemographicGroup] })
+    @rdfine.property.resource({ implicitTypes: [rico.DemographicGroup] })
     hasOrHadDemographicGroup: Rico.DemographicGroup | undefined;
-    @property.resource({ implicitTypes: [rico.OccupationType] })
+    @rdfine.property.resource({ implicitTypes: [rico.OccupationType] })
     hasOrHadOccupationOfType: Rico.OccupationType | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     hasOrHadSpouse: Rico.Person | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     hasOrHadStudent: Rico.Person | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     hasOrHadTeacher: Rico.Person | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     hasSibling: Rico.Person | undefined;
-    @property.resource({ implicitTypes: [rico.Record] })
+    @rdfine.property.resource({ implicitTypes: [rico.Record] })
     isAuthorOf: Rico.Record | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     isChildOf: Rico.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     isOrWasHolderOfIntellectualPropertyRightsOf: Rico.Instantiation | Rico.RecordResource | undefined;
-    @property.resource({ implicitTypes: [rico.Group] })
+    @rdfine.property.resource({ implicitTypes: [rico.Group] })
     isOrWasLeaderOf: Rico.Group | undefined;
-    @property.resource({ implicitTypes: [rico.Group] })
+    @rdfine.property.resource({ implicitTypes: [rico.Group] })
     isOrWasMemberOf: Rico.Group | undefined;
-    @property.resource({ implicitTypes: [rico.Thing] })
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isOrWasOwnerOf: Rico.Thing | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     knownBy: Rico.Person | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     knows: Rico.Person | undefined;
-    @property.resource({ as: [PersonMixin] })
+    @rdfine.property.resource({ as: [PersonMixin] })
     knowsOf: Rico.Person | undefined;
-    @property.resource({ implicitTypes: [rico.Position] })
+    @rdfine.property.resource({ implicitTypes: [rico.Position] })
     occupiesOrOccupied: Rico.Position | undefined;
-    @property.resource({ implicitTypes: [rico.CorrespondenceRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.CorrespondenceRelation] })
     personHasCorrespondenceRelation: Rico.CorrespondenceRelation | undefined;
-    @property.resource({ implicitTypes: [rico.FamilyRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.FamilyRelation] })
     personHasFamilyRelation: Rico.FamilyRelation | undefined;
-    @property.resource({ implicitTypes: [rico.KnowingRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.KnowingRelation] })
     personHasKnowingRelation: Rico.KnowingRelation | undefined;
-    @property.resource({ implicitTypes: [rico.SiblingRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.SiblingRelation] })
     personHasSiblingRelation: Rico.SiblingRelation | undefined;
-    @property.resource({ implicitTypes: [rico.SpouseRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.SpouseRelation] })
     personHasSpouseRelation: Rico.SpouseRelation | undefined;
-    @property.resource({ implicitTypes: [rico.ChildRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.ChildRelation] })
     personIsSourceOfChildRelation: Rico.ChildRelation | undefined;
-    @property.resource({ implicitTypes: [rico.DescendanceRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.DescendanceRelation] })
     personIsSourceOfDescendanceRelation: Rico.DescendanceRelation | undefined;
-    @property.resource({ implicitTypes: [rico.KnowingOfRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.KnowingOfRelation] })
     personIsSourceOfKnowingOfRelation: Rico.KnowingOfRelation | undefined;
-    @property.resource({ implicitTypes: [rico.LeadershipRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.LeadershipRelation] })
     personIsSourceOfLeadershipRelation: Rico.LeadershipRelation | undefined;
-    @property.resource({ implicitTypes: [rico.PositionHoldingRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.PositionHoldingRelation] })
     personIsSourceOfPositionHoldingRelation: Rico.PositionHoldingRelation | undefined;
-    @property.resource({ implicitTypes: [rico.TeachingRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.TeachingRelation] })
     personIsSourceOfTeachingRelation: Rico.TeachingRelation | undefined;
-    @property.resource({ implicitTypes: [rico.ChildRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.ChildRelation] })
     personIsTargetOfChildRelation: Rico.ChildRelation | undefined;
-    @property.resource({ implicitTypes: [rico.DescendanceRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.DescendanceRelation] })
     personIsTargetOfDescendanceRelation: Rico.DescendanceRelation | undefined;
-    @property.resource({ implicitTypes: [rico.KnowingOfRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.KnowingOfRelation] })
     personIsTargetOfKnowingOfRelation: Rico.KnowingOfRelation | undefined;
-    @property.resource({ implicitTypes: [rico.MembershipRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.MembershipRelation] })
     personIsTargetOfMembershipRelation: Rico.MembershipRelation | undefined;
-    @property.resource({ implicitTypes: [rico.TeachingRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.TeachingRelation] })
     personIsTargetOfTeachingRelation: Rico.TeachingRelation | undefined;
   }
   return PersonClass

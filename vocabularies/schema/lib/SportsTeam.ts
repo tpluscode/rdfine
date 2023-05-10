@@ -1,30 +1,30 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { SportsOrganizationMixin } from './SportsOrganization';
+import type * as Schema from '../index.js';
+import { SportsOrganizationMixin } from './SportsOrganization.js';
 
-export interface SportsTeam<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SportsOrganization<D>, RdfResource<D> {
+export interface SportsTeam<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SportsOrganization<D>, rdfine.RdfResource<D> {
   athlete: Schema.Person<D> | undefined;
   coach: Schema.Person<D> | undefined;
   gender: string | undefined;
   genderTerm: Schema.GenderType | undefined;
 }
 
-export function SportsTeamMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<SportsTeam> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function SportsTeamMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SportsTeam> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class SportsTeamClass extends SportsOrganizationMixin(Resource) implements Partial<SportsTeam> {
-    @property.resource()
+    @rdfine.property.resource()
     athlete: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     coach: Schema.Person | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     gender: string | undefined;
-    @property({ path: schema.gender })
+    @rdfine.property({ path: schema.gender })
     genderTerm: Schema.GenderType | undefined;
   }
   return SportsTeamClass

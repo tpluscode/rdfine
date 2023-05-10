@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { rico } from './namespace';
+import { rico } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Rico from '..';
-import { ThingMixin } from './Thing';
+import type * as Rico from '../index.js';
+import { ThingMixin } from './Thing.js';
 
-export interface Instantiation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, RdfResource<D> {
+export interface Instantiation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, rdfine.RdfResource<D> {
   authenticityNote: RDF.Literal | undefined;
   carrierExtent: RDF.Literal | undefined;
   conditionsOfAccess: RDF.Literal | undefined;
@@ -65,116 +65,116 @@ export interface Instantiation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   title: RDF.Literal | undefined;
 }
 
-export function InstantiationMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Instantiation> & RdfResourceCore> & Base {
-  @namespace(rico)
+export function InstantiationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Instantiation> & RdfResourceCore> & Base {
+  @rdfine.namespace(rico)
   class InstantiationClass extends ThingMixin(Resource) implements Partial<Instantiation> {
-    @property()
+    @rdfine.property()
     authenticityNote: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     carrierExtent: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     conditionsOfAccess: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     conditionsOfUse: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.Activity] })
+    @rdfine.property.resource({ implicitTypes: [rico.Activity] })
     documents: Rico.Activity | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasAccumulator: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasAddressee: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.CarrierType] })
+    @rdfine.property.resource({ implicitTypes: [rico.CarrierType] })
     hasCarrierType: Rico.CarrierType | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasCollector: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasCreator: Rico.Agent | undefined;
-    @property.resource({ as: [InstantiationMixin] })
+    @rdfine.property.resource({ as: [InstantiationMixin] })
     hasDerivedInstantiation: Rico.Instantiation | undefined;
-    @property.resource({ implicitTypes: [rico.Extent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Extent] })
     hasExtent: Rico.Extent | undefined;
-    @property.resource({ as: [InstantiationMixin] })
+    @rdfine.property.resource({ as: [InstantiationMixin] })
     hasOrHadComponent: Rico.Instantiation | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasOrHadHolder: Rico.Agent | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasOrHadIntellectualPropertyRightsHolder: Rico.Group | Rico.Person | Rico.Position | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasOrHadManager: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Title] })
+    @rdfine.property.resource({ implicitTypes: [rico.Title] })
     hasOrHadTitle: Rico.Title | undefined;
-    @property.resource({ implicitTypes: [rico.ProductionTechniqueType] })
+    @rdfine.property.resource({ implicitTypes: [rico.ProductionTechniqueType] })
     hasProductionTechniqueType: Rico.ProductionTechniqueType | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasProvenance: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasReceiver: Rico.Agent | undefined;
-    @property.resource({ implicitTypes: [rico.RepresentationType] })
+    @rdfine.property.resource({ implicitTypes: [rico.RepresentationType] })
     hasRepresentationType: Rico.RepresentationType | undefined;
-    @property.resource({ implicitTypes: [rico.Agent] })
+    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     hasSender: Rico.Agent | undefined;
-    @property()
+    @rdfine.property()
     history: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     instantiationExtent: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.FunctionalEquivalenceRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.FunctionalEquivalenceRelation] })
     instantiationIsConnectedToFunctionalEquivalenceRelation: Rico.FunctionalEquivalenceRelation | undefined;
-    @property.resource({ implicitTypes: [rico.InstantiationToInstantiationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.InstantiationToInstantiationRelation] })
     instantiationIsConnectedToInstantiationRelation: Rico.InstantiationToInstantiationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.DerivationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.DerivationRelation] })
     instantiationIsSourceOfDerivationRelation: Rico.DerivationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.MigrationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.MigrationRelation] })
     instantiationIsSourceOfMigrationRelation: Rico.MigrationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.DerivationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.DerivationRelation] })
     instantiationIsTargetOfDerivationRelation: Rico.DerivationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.MigrationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.MigrationRelation] })
     instantiationIsTargetOfMigrationRelation: Rico.MigrationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.RecordResourceToInstantiationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResourceToInstantiationRelation] })
     instantiationIsTargetOfRecordResourceToInstantiationRelation: Rico.RecordResourceToInstantiationRelation | undefined;
-    @property()
+    @rdfine.property()
     instantiationStructure: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     integrity: RDF.Literal | undefined;
-    @property.resource({ as: [InstantiationMixin] })
+    @rdfine.property.resource({ as: [InstantiationMixin] })
     isDerivedFromInstantiation: Rico.Instantiation | undefined;
-    @property.resource({ as: [InstantiationMixin] })
+    @rdfine.property.resource({ as: [InstantiationMixin] })
     isFunctionallyEquivalentTo: Rico.Instantiation | undefined;
-    @property.resource({ as: [InstantiationMixin] })
+    @rdfine.property.resource({ as: [InstantiationMixin] })
     isInstantiationAssociatedWithInstantiation: Rico.Instantiation | undefined;
-    @property.resource({ implicitTypes: [rico.RecordResource] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResource] })
     isInstantiationOf: Rico.RecordResource | undefined;
-    @property.resource({ as: [InstantiationMixin] })
+    @rdfine.property.resource({ as: [InstantiationMixin] })
     isOrWasComponentOf: Rico.Instantiation | undefined;
-    @property.resource({ as: [InstantiationMixin] })
+    @rdfine.property.resource({ as: [InstantiationMixin] })
     migratedFrom: Rico.Instantiation | undefined;
-    @property.resource({ as: [InstantiationMixin] })
+    @rdfine.property.resource({ as: [InstantiationMixin] })
     migratedInto: Rico.Instantiation | undefined;
-    @property()
+    @rdfine.property()
     physicalCharacteristics: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     physicalOrLogicalExtent: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     productionTechnique: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     qualityOfRepresentation: RDF.Literal | undefined;
-    @property.resource({ implicitTypes: [rico.AccumulationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AccumulationRelation] })
     recordResourceOrInstantiationIsSourceOfAccumulationRelation: Rico.AccumulationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.ActivityDocumentationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.ActivityDocumentationRelation] })
     recordResourceOrInstantiationIsSourceOfActivityDocumentationRelation: Rico.ActivityDocumentationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.AgentOriginationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.AgentOriginationRelation] })
     recordResourceOrInstantiationIsSourceOfAgentOriginationRelation: Rico.AgentOriginationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.CreationRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.CreationRelation] })
     recordResourceOrInstantiationIsSourceOfCreationRelation: Rico.CreationRelation | undefined;
-    @property.resource({ implicitTypes: [rico.ProvenanceRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.ProvenanceRelation] })
     recordResourceOrInstantiationIsSourceOfProvenanceRelation: Rico.ProvenanceRelation | undefined;
-    @property.resource({ implicitTypes: [rico.IntellectualPropertyRightsRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.IntellectualPropertyRightsRelation] })
     recordResourceOrInstantiationIsTargetOfIntellectualPropertyRightsRelation: Rico.IntellectualPropertyRightsRelation | undefined;
-    @property.resource({ implicitTypes: [rico.ManagementRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.ManagementRelation] })
     recordResourceOrInstantiationIsTargetOfManagementRelation: Rico.ManagementRelation | undefined;
-    @property.resource({ implicitTypes: [rico.RecordResourceHoldingRelation] })
+    @rdfine.property.resource({ implicitTypes: [rico.RecordResourceHoldingRelation] })
     recordResourceOrInstantiationIsTargetOfRecordResourceHoldingRelation: Rico.RecordResourceHoldingRelation | undefined;
-    @property()
+    @rdfine.property()
     structure: RDF.Literal | undefined;
-    @property()
+    @rdfine.property()
     title: RDF.Literal | undefined;
   }
   return InstantiationClass

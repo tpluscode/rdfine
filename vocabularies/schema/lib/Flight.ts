@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { TripMixin } from './Trip';
+import type * as Schema from '../index.js';
+import { TripMixin } from './Trip.js';
 
-export interface Flight<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Trip<D>, RdfResource<D> {
+export interface Flight<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Trip<D>, rdfine.RdfResource<D> {
   aircraft: Schema.Vehicle<D> | undefined;
   aircraftLiteral: string | undefined;
   arrivalAirport: Schema.Airport<D> | undefined;
@@ -29,44 +29,44 @@ export interface Flight<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   webCheckinTime: Date | undefined;
 }
 
-export function FlightMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Flight> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function FlightMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Flight> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class FlightClass extends TripMixin(Resource) implements Partial<Flight> {
-    @property.resource()
+    @rdfine.property.resource()
     aircraft: Schema.Vehicle | undefined;
-    @property.literal({ path: schema.aircraft })
+    @rdfine.property.literal({ path: schema.aircraft })
     aircraftLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     arrivalAirport: Schema.Airport | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     arrivalGate: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     arrivalTerminal: string | undefined;
-    @property()
+    @rdfine.property()
     boardingPolicy: Schema.BoardingPolicyType | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     carrier: Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     departureAirport: Schema.Airport | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     departureGate: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     departureTerminal: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     estimatedFlightDuration: Schema.Duration | undefined;
-    @property.literal({ path: schema.estimatedFlightDuration })
+    @rdfine.property.literal({ path: schema.estimatedFlightDuration })
     estimatedFlightDurationLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     flightDistance: Schema.Distance | undefined;
-    @property.literal({ path: schema.flightDistance })
+    @rdfine.property.literal({ path: schema.flightDistance })
     flightDistanceLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     flightNumber: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     mealService: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     seller: Schema.Organization | Schema.Person | undefined;
-    @property.literal({ type: Date })
+    @rdfine.property.literal({ type: Date })
     webCheckinTime: Date | undefined;
   }
   return FlightClass

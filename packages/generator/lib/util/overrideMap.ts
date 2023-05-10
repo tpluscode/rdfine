@@ -1,4 +1,4 @@
-import { expand } from '@zazuko/rdf-vocabularies'
+import { expand } from '@zazuko/prefixes'
 
 export function expandMapKeys<T>(overrideMap: Record<string, T> | null | undefined, namespace: string): Record<string, T> {
   if (!overrideMap) {

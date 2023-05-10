@@ -1,24 +1,24 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { MediaObjectMixin } from './MediaObject';
+import type * as Schema from '../index.js';
+import { MediaObjectMixin } from './MediaObject.js';
 
-export interface DataDownload<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, RdfResource<D> {
+export interface DataDownload<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, rdfine.RdfResource<D> {
   measurementTechnique: string | undefined;
   measurementTechniqueTerm: RDF.NamedNode | undefined;
 }
 
-export function DataDownloadMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<DataDownload> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function DataDownloadMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DataDownload> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class DataDownloadClass extends MediaObjectMixin(Resource) implements Partial<DataDownload> {
-    @property.literal()
+    @rdfine.property.literal()
     measurementTechnique: string | undefined;
-    @property({ path: schema.measurementTechnique })
+    @rdfine.property({ path: schema.measurementTechnique })
     measurementTechniqueTerm: RDF.NamedNode | undefined;
   }
   return DataDownloadClass

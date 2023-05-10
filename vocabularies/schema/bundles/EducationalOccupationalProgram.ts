@@ -1,16 +1,16 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AlignmentObjectMixin } from '../lib/AlignmentObject';
-import { CategoryCodeMixin } from '../lib/CategoryCode';
-import { CourseMixin } from '../lib/Course';
-import { DemandMixin } from '../lib/Demand';
-import { DurationMixin } from '../lib/Duration';
-import { EducationalOccupationalProgramMixin } from '../lib/EducationalOccupationalProgram';
-import { IntangibleMixin } from '../lib/Intangible';
-import { MonetaryAmountDistributionMixin } from '../lib/MonetaryAmountDistribution';
-import { OfferMixin } from '../lib/Offer';
-import { OrganizationMixin } from '../lib/Organization';
-import { PersonMixin } from '../lib/Person';
-import { StructuredValueMixin } from '../lib/StructuredValue';
+import { AlignmentObjectMixin } from '../lib/AlignmentObject.js';
+import { CategoryCodeMixin } from '../lib/CategoryCode.js';
+import { CourseMixin } from '../lib/Course.js';
+import { DemandMixin } from '../lib/Demand.js';
+import { DurationMixin } from '../lib/Duration.js';
+import { EducationalOccupationalProgramMixin } from '../lib/EducationalOccupationalProgram.js';
+import { IntangibleMixin } from '../lib/Intangible.js';
+import { MonetaryAmountDistributionMixin } from '../lib/MonetaryAmountDistribution.js';
+import { OfferMixin } from '../lib/Offer.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PersonMixin } from '../lib/Person.js';
+import { StructuredValueMixin } from '../lib/StructuredValue.js';
 
 export const EducationalOccupationalProgramBundle = [
   AlignmentObjectMixin as Mixin,

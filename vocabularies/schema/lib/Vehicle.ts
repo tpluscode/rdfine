@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { ProductMixin } from './Product';
+import type * as Schema from '../index.js';
+import { ProductMixin } from './Product.js';
 
-export interface Vehicle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Product<D>, RdfResource<D> {
+export interface Vehicle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Product<D>, rdfine.RdfResource<D> {
   accelerationTime: Schema.QuantitativeValue<D> | undefined;
   bodyType: string | undefined;
   bodyTypeTerm: RDF.NamedNode | Schema.QualitativeValue | undefined;
@@ -62,110 +62,110 @@ export interface Vehicle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   wheelbase: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function VehicleMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Vehicle> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function VehicleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Vehicle> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class VehicleClass extends ProductMixin(Resource) implements Partial<Vehicle> {
-    @property.resource()
+    @rdfine.property.resource()
     accelerationTime: Schema.QuantitativeValue | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     bodyType: string | undefined;
-    @property({ path: schema.bodyType })
+    @rdfine.property({ path: schema.bodyType })
     bodyTypeTerm: RDF.NamedNode | Schema.QualitativeValue | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     callSign: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     cargoVolume: Schema.QuantitativeValue | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateVehicleFirstRegistered: Date | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     driveWheelConfiguration: string | undefined;
-    @property({ path: schema.driveWheelConfiguration })
+    @rdfine.property({ path: schema.driveWheelConfiguration })
     driveWheelConfigurationTerm: Schema.DriveWheelConfigurationValue | undefined;
-    @property.literal({ type: Number })
+    @rdfine.property.literal({ type: Number })
     'emissionsCO2': number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     fuelCapacity: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     fuelConsumption: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     fuelEfficiency: Schema.QuantitativeValue | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     fuelType: string | undefined;
-    @property({ path: schema.fuelType })
+    @rdfine.property({ path: schema.fuelType })
     fuelTypeTerm: RDF.NamedNode | Schema.QualitativeValue | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     knownVehicleDamages: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     meetsEmissionStandard: string | undefined;
-    @property({ path: schema.meetsEmissionStandard })
+    @rdfine.property({ path: schema.meetsEmissionStandard })
     meetsEmissionStandardTerm: RDF.NamedNode | Schema.QualitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     mileageFromOdometer: Schema.QuantitativeValue | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     modelDate: Date | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     numberOfAirbags: number | string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfAxles: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.numberOfAxles, type: Number })
+    @rdfine.property.literal({ path: schema.numberOfAxles, type: Number })
     numberOfAxlesLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfDoors: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.numberOfDoors, type: Number })
+    @rdfine.property.literal({ path: schema.numberOfDoors, type: Number })
     numberOfDoorsLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfForwardGears: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.numberOfForwardGears, type: Number })
+    @rdfine.property.literal({ path: schema.numberOfForwardGears, type: Number })
     numberOfForwardGearsLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     numberOfPreviousOwners: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.numberOfPreviousOwners, type: Number })
+    @rdfine.property.literal({ path: schema.numberOfPreviousOwners, type: Number })
     numberOfPreviousOwnersLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     payload: Schema.QuantitativeValue | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     productionDate: Date | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     purchaseDate: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     seatingCapacity: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.seatingCapacity, type: Number })
+    @rdfine.property.literal({ path: schema.seatingCapacity, type: Number })
     seatingCapacityLiteral: number | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     speed: Schema.QuantitativeValue | undefined;
-    @property()
+    @rdfine.property()
     steeringPosition: Schema.SteeringPositionValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     tongueWeight: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     trailerWeight: Schema.QuantitativeValue | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     vehicleConfiguration: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     vehicleEngine: Schema.EngineSpecification | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     vehicleIdentificationNumber: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     vehicleInteriorColor: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     vehicleInteriorType: string | undefined;
-    @property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
+    @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     vehicleModelDate: Date | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     vehicleSeatingCapacity: Schema.QuantitativeValue | undefined;
-    @property.literal({ path: schema.vehicleSeatingCapacity, type: Number })
+    @rdfine.property.literal({ path: schema.vehicleSeatingCapacity, type: Number })
     vehicleSeatingCapacityLiteral: number | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     vehicleSpecialUsage: string | undefined;
-    @property({ path: schema.vehicleSpecialUsage })
+    @rdfine.property({ path: schema.vehicleSpecialUsage })
     vehicleSpecialUsageTerm: Schema.CarUsageType | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     vehicleTransmission: string | undefined;
-    @property({ path: schema.vehicleTransmission })
+    @rdfine.property({ path: schema.vehicleTransmission })
     vehicleTransmissionTerm: RDF.NamedNode | Schema.QualitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     weightTotal: Schema.QuantitativeValue | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     wheelbase: Schema.QuantitativeValue | undefined;
   }
   return VehicleClass

@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { CreativeWorkMixin } from './CreativeWork';
+import type * as Schema from '../index.js';
+import { CreativeWorkMixin } from './CreativeWork.js';
 
-export interface Episode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, RdfResource<D> {
+export interface Episode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   actor: Schema.Person<D> | undefined;
   actors: Schema.Person<D> | undefined;
   director: Schema.Person<D> | undefined;
@@ -22,30 +22,30 @@ export interface Episode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function EpisodeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<Episode> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function EpisodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Episode> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class EpisodeClass extends CreativeWorkMixin(Resource) implements Partial<Episode> {
-    @property.resource()
+    @rdfine.property.resource()
     actor: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     actors: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     director: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     directors: Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     duration: Schema.Duration | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     episodeNumber: number | string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     musicBy: Schema.MusicGroup | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     partOfSeason: Schema.CreativeWorkSeason | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     partOfSeries: Schema.CreativeWorkSeries | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     productionCompany: Schema.Organization | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     trailer: Schema.VideoObject | undefined;
   }
   return EpisodeClass

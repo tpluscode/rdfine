@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ActivityMixin } from '../lib/Activity';
-import { RemoveMixin } from '../lib/Remove';
+import { ActivityMixin } from '../lib/Activity.js';
+import { RemoveMixin } from '../lib/Remove.js';
 
 export const RemoveBundle = [
   ActivityMixin as Mixin,

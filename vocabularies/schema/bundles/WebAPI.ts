@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { ServiceMixin } from '../lib/Service';
-import { WebAPIMixin } from '../lib/WebAPI';
+import { CreativeWorkMixin } from '../lib/CreativeWork.js';
+import { ServiceMixin } from '../lib/Service.js';
+import { WebAPIMixin } from '../lib/WebAPI.js';
 
 export const WebAPIBundle = [
   CreativeWorkMixin as Mixin,

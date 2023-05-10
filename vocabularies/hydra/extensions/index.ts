@@ -1,4 +1,4 @@
-export type { IriTemplateEx } from './IriTemplateEx'
-export { IriTemplateExMixin } from './IriTemplateEx'
-export type { MemberAssertion } from './MemberAssertion'
-export { VariableRepresentationExMixin } from './VariableRepresentation'
+export type { IriTemplateEx } from './IriTemplateEx.js'
+export { IriTemplateExMixin } from './IriTemplateEx.js'
+export type { MemberAssertion } from './MemberAssertion.js'
+export { VariableRepresentationExMixin } from './VariableRepresentation.js'

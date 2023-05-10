@@ -1,10 +1,10 @@
-import { ExtendingConstructor, Constructor, namespace, property } from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from '@tpluscode/rdf-ns-builders';
-import { dash } from '../../lib/namespace';
-import type * as Dash from '../..';
+import { dash } from '../../lib/namespace.js';
+import type * as Dash from '../../index.js';
 import type * as Shacl from '@rdfine/shacl';
 
 interface ConstraintComponentEx<D extends RDF.DatasetCore = RDF.DatasetCore> {
@@ -18,14 +18,14 @@ declare module '@rdfine/shacl/lib/ConstraintComponent' {
   }
 }
 
-export function ConstraintComponentMixinEx<Base extends ExtendingConstructor<Shacl.ConstraintComponent, ConstraintComponentEx>>(Resource: Base): Constructor<ConstraintComponentEx & RdfResourceCore> & Base {
-  @namespace(dash)
+export function ConstraintComponentMixinEx<Base extends rdfine.ExtendingConstructor<Shacl.ConstraintComponent, ConstraintComponentEx>>(Resource: Base): rdfine.Constructor<ConstraintComponentEx & RdfResourceCore> & Base {
+  @rdfine.namespace(dash)
   class Impl extends Resource implements ConstraintComponentEx {
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     localConstraint: boolean | undefined;
-    @property.resource({ implicitTypes: [dash.SuggestionGenerator] })
+    @rdfine.property.resource({ implicitTypes: [dash.SuggestionGenerator] })
     propertySuggestionGenerator: Dash.SuggestionGenerator | undefined;
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     staticConstraint: boolean | undefined;
   }
   return Impl

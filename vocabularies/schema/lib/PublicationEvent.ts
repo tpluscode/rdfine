@@ -1,27 +1,27 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { EventMixin } from './Event';
+import type * as Schema from '../index.js';
+import { EventMixin } from './Event.js';
 
-export interface PublicationEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, RdfResource<D> {
+export interface PublicationEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
   free: boolean | undefined;
   publishedBy: Schema.Organization<D> | Schema.Person<D> | undefined;
   publishedOn: Schema.BroadcastService<D> | undefined;
 }
 
-export function PublicationEventMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PublicationEvent> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PublicationEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PublicationEvent> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PublicationEventClass extends EventMixin(Resource) implements Partial<PublicationEvent> {
-    @property.literal({ type: Boolean })
+    @rdfine.property.literal({ type: Boolean })
     free: boolean | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     publishedBy: Schema.Organization | Schema.Person | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     publishedOn: Schema.BroadcastService | undefined;
   }
   return PublicationEventClass

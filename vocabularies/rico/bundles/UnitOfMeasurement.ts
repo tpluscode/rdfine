@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { ConceptMixin } from '../lib/Concept';
-import { ExtentMixin } from '../lib/Extent';
-import { UnitOfMeasurementMixin } from '../lib/UnitOfMeasurement';
+import { ConceptMixin } from '../lib/Concept.js';
+import { ExtentMixin } from '../lib/Extent.js';
+import { UnitOfMeasurementMixin } from '../lib/UnitOfMeasurement.js';
 
 export const UnitOfMeasurementBundle = [
   ConceptMixin as Mixin,

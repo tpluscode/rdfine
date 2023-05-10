@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CheckOutActionMixin } from '../lib/CheckOutAction';
-import { CommunicateActionMixin } from '../lib/CommunicateAction';
+import { CheckOutActionMixin } from '../lib/CheckOutAction.js';
+import { CommunicateActionMixin } from '../lib/CommunicateAction.js';
 
 export const CheckOutActionBundle = [
   CheckOutActionMixin as Mixin,

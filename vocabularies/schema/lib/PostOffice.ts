@@ -1,18 +1,18 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { GovernmentOfficeMixin } from './GovernmentOffice';
+import type * as Schema from '../index.js';
+import { GovernmentOfficeMixin } from './GovernmentOffice.js';
 
-export interface PostOffice<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentOffice<D>, RdfResource<D> {
+export interface PostOffice<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentOffice<D>, rdfine.RdfResource<D> {
 }
 
-export function PostOfficeMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PostOffice> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PostOfficeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PostOffice> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PostOfficeClass extends GovernmentOfficeMixin(Resource) implements Partial<PostOffice> {
   }
   return PostOfficeClass

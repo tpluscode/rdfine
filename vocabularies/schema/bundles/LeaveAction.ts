@@ -1,7 +1,7 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { EventMixin } from '../lib/Event';
-import { InteractActionMixin } from '../lib/InteractAction';
-import { LeaveActionMixin } from '../lib/LeaveAction';
+import { EventMixin } from '../lib/Event.js';
+import { InteractActionMixin } from '../lib/InteractAction.js';
+import { LeaveActionMixin } from '../lib/LeaveAction.js';
 
 export const LeaveActionBundle = [
   EventMixin as Mixin,

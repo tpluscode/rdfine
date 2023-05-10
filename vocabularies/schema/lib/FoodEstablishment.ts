@@ -1,14 +1,14 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
-import { LocalBusinessMixin } from './LocalBusiness';
+import type * as Schema from '../index.js';
+import { LocalBusinessMixin } from './LocalBusiness.js';
 
-export interface FoodEstablishment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, RdfResource<D> {
+export interface FoodEstablishment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
   acceptsReservations: boolean | string | undefined;
   acceptsReservationsTerm: RDF.NamedNode | undefined;
   hasMenu: Schema.Menu<D> | undefined;
@@ -19,24 +19,24 @@ export interface FoodEstablishment<D extends RDF.DatasetCore = RDF.DatasetCore> 
   starRating: Schema.Rating<D> | undefined;
 }
 
-export function FoodEstablishmentMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<FoodEstablishment> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function FoodEstablishmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FoodEstablishment> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class FoodEstablishmentClass extends LocalBusinessMixin(Resource) implements Partial<FoodEstablishment> {
-    @property.literal()
+    @rdfine.property.literal()
     acceptsReservations: boolean | string | undefined;
-    @property({ path: schema.acceptsReservations })
+    @rdfine.property({ path: schema.acceptsReservations })
     acceptsReservationsTerm: RDF.NamedNode | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     hasMenu: Schema.Menu | undefined;
-    @property.literal({ path: schema.hasMenu })
+    @rdfine.property.literal({ path: schema.hasMenu })
     hasMenuLiteral: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     menu: Schema.Menu | undefined;
-    @property.literal({ path: schema.menu })
+    @rdfine.property.literal({ path: schema.menu })
     menuLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     servesCuisine: string | undefined;
-    @property.resource()
+    @rdfine.property.resource()
     starRating: Schema.Rating | undefined;
   }
   return FoodEstablishmentClass

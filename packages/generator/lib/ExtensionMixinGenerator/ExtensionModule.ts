@@ -1,14 +1,14 @@
 import { NamespaceDeclarationKind, Project, SourceFile } from 'ts-morph'
 import { GraphPointer } from 'clownface'
-import { shrink } from '@zazuko/rdf-vocabularies'
-import { ExternalResourceType, TypeMetaCollection } from '../types'
-import { Context } from '../index'
-import { JavascriptProperty } from '../property/JsProperties'
-import { PropertyWriter } from '../property/PropertyWriter'
-import { MixinModuleBase } from '../MixinGenerator/MixinModuleBase'
+import { shrink } from '@zazuko/prefixes'
+import { ExternalResourceType, TypeMetaCollection } from '../types/index.js'
+import { Context } from '../index.js'
+import { JavascriptProperty } from '../property/JsProperties.js'
+import { PropertyWriter } from '../property/PropertyWriter.js'
+import { MixinModuleBase } from '../MixinGenerator/MixinModuleBase.js'
 
 export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
-  properties: JavascriptProperty[];
+  properties: JavascriptProperty[]
   extended: { prefix: string; term: string }
   interfaceName: string
 
@@ -76,13 +76,13 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
       name: `${this.type.localName}MixinEx`,
       typeParameters: [{
         name: 'Base',
-        constraint: `ExtendingConstructor<${this.type.qualifiedName}, ${this.interfaceName}>`,
+        constraint: `rdfine.ExtendingConstructor<${this.type.qualifiedName}, ${this.interfaceName}>`,
       }],
       parameters: [{
         name: 'Resource',
         type: 'Base',
       }],
-      returnType: `Constructor<${this.interfaceName} & RdfResourceCore> & Base`,
+      returnType: `rdfine.Constructor<${this.interfaceName} & RdfResourceCore> & Base`,
       isExported: true,
     })
 
@@ -93,7 +93,7 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
     })
 
     mixinClass.addDecorator({
-      name: 'namespace',
+      name: 'rdfine.namespace',
       arguments: [context.prefix],
     })
 
@@ -104,7 +104,7 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
 
   private addImports(mixinFile: SourceFile, context: Omit<Context, 'properties'>) {
     mixinFile.addImportDeclaration({
-      namedImports: ['ExtendingConstructor', 'Constructor', 'namespace', 'property'],
+      namespaceImport: 'rdfine',
       moduleSpecifier: '@tpluscode/rdfine',
     })
     mixinFile.addImportDeclaration({
@@ -114,8 +114,8 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
     })
 
     mixinFile.addImportDeclaration({
-      namespaceImport: '$rdf',
-      moduleSpecifier: '@rdf-esm/data-model',
+      defaultImport: '$rdf',
+      moduleSpecifier: '@rdfjs/data-model',
     })
     mixinFile.addImportDeclaration({
       namespaceImport: 'RDF',
@@ -128,11 +128,11 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
     })
     mixinFile.addImportDeclaration({
       namedImports: [context.prefix],
-      moduleSpecifier: '../../lib/namespace',
+      moduleSpecifier: '../../lib/namespace.js',
     })
     mixinFile.addImportDeclaration({
       namespaceImport: context.defaultExport,
-      moduleSpecifier: '../..',
+      moduleSpecifier: '../../index.js',
       isTypeOnly: true,
     })
 
@@ -151,12 +151,13 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
       .forEach(imported => {
         if (imported.type === 'Resource') {
           mixinFile.addImportDeclaration({
-            moduleSpecifier: './' + imported.localName,
+            moduleSpecifier: `./${imported.localName}.js`,
             namedImports: [imported.mixinName],
           })
         } else {
+          const moduleSpecifier = imported.module.startsWith('.') ? `${imported.module}.js` : imported.module
           const superImport = mixinFile.addImportDeclaration({
-            moduleSpecifier: imported.module,
+            moduleSpecifier,
           })
 
           superImport.addNamedImport({

@@ -1,8 +1,8 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { CreativeWorkMixin } from '../lib/CreativeWork';
-import { OrganizationMixin } from '../lib/Organization';
-import { PersonMixin } from '../lib/Person';
-import { QuotationMixin } from '../lib/Quotation';
+import { CreativeWorkMixin } from '../lib/CreativeWork.js';
+import { OrganizationMixin } from '../lib/Organization.js';
+import { PersonMixin } from '../lib/Person.js';
+import { QuotationMixin } from '../lib/Quotation.js';
 
 export const QuotationBundle = [
   CreativeWorkMixin as Mixin,

@@ -1,11 +1,11 @@
 import { Project, SourceFile } from 'ts-morph'
 import { GraphPointer } from 'clownface'
-import { Context, GeneratedModule } from '../index'
-import { ExternalResourceType, ResourceType, TypeMeta, TypeMetaCollection } from '../types'
+import { Context, GeneratedModule } from '../index.js'
+import { ExternalResourceType, ResourceType, TypeMeta, TypeMetaCollection } from '../types/index.js'
 
 export abstract class MixinModuleBase<T extends ResourceType | ExternalResourceType> implements GeneratedModule<T> {
   type: T
-  node: GraphPointer;
+  node: GraphPointer
   protected namespaceImports: Record<string, string> = {}
   protected mixinImports: Array<ResourceType | ExternalResourceType> = []
 

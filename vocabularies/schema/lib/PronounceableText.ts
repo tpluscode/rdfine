@@ -1,13 +1,13 @@
-import RdfResourceImpl, { Constructor, namespace, RdfResource, property } from '@tpluscode/rdfine';
+import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
-import * as $rdf from '@rdf-esm/data-model';
+import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
-import { schema } from './namespace';
+import { schema } from './namespace.js';
 import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import type * as Schema from '..';
+import type * as Schema from '../index.js';
 
-export interface PronounceableText<D extends RDF.DatasetCore = RDF.DatasetCore> extends RdfResource<D> {
+export interface PronounceableText<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   inLanguage: Schema.Language<D> | undefined;
   inLanguageLiteral: string | undefined;
   phoneticText: string | undefined;
@@ -15,18 +15,18 @@ export interface PronounceableText<D extends RDF.DatasetCore = RDF.DatasetCore> 
   textValue: string | undefined;
 }
 
-export function PronounceableTextMixin<Base extends Constructor>(Resource: Base): Constructor<Partial<PronounceableText> & RdfResourceCore> & Base {
-  @namespace(schema)
+export function PronounceableTextMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PronounceableText> & RdfResourceCore> & Base {
+  @rdfine.namespace(schema)
   class PronounceableTextClass extends Resource implements Partial<PronounceableText> {
-    @property.resource()
+    @rdfine.property.resource()
     inLanguage: Schema.Language | undefined;
-    @property.literal({ path: schema.inLanguage })
+    @rdfine.property.literal({ path: schema.inLanguage })
     inLanguageLiteral: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     phoneticText: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     speechToTextMarkup: string | undefined;
-    @property.literal()
+    @rdfine.property.literal()
     textValue: string | undefined;
   }
   return PronounceableTextClass

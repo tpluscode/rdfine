@@ -1,7 +1,7 @@
-import { prefixes } from '@zazuko/rdf-vocabularies'
+import prefixes from '@zazuko/prefixes'
 import * as namespaces from '@tpluscode/rdf-ns-builders'
 import { Project, VariableDeclarationKind } from 'ts-morph'
-import { Context } from './index'
+import { Context } from './index.js'
 
 export function generateNamespace({ project }: { project: Project}, context: Context) {
   const nsFile = project.createSourceFile('lib/namespace.ts', {}, { overwrite: true })

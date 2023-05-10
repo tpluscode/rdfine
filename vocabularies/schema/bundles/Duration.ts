@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { DurationMixin } from '../lib/Duration';
-import { QuantityMixin } from '../lib/Quantity';
+import { DurationMixin } from '../lib/Duration.js';
+import { QuantityMixin } from '../lib/Quantity.js';
 
 export const DurationBundle = [
   DurationMixin as Mixin,

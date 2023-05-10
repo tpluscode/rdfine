@@ -1,6 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { IntangibleMixin } from '../lib/Intangible';
-import { OccupationalExperienceRequirementsMixin } from '../lib/OccupationalExperienceRequirements';
+import { IntangibleMixin } from '../lib/Intangible.js';
+import { OccupationalExperienceRequirementsMixin } from '../lib/OccupationalExperienceRequirements.js';
 
 export const OccupationalExperienceRequirementsBundle = [
   IntangibleMixin as Mixin,
