@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/foaf",
-  "version": "0.1.9",
+  "version": "1.0.0",
   "main": "index.js",
   "module": "index.js",
   "browser": "index.js",
@@ -24,12 +24,12 @@
   },
   "dependencies": {
     "@rdfjs/data-model": "^2",
-    "@rdfine/skos": "^0.1.6",
+    "@rdfine/skos": "^0.2.0",
     "@tpluscode/rdf-ns-builders": ">=3.0.2",
-    "@tpluscode/rdfine": "^0.5.39"
+    "@tpluscode/rdfine": "^0.6.0"
   },
   "peerDependencies": {
-    "@rdfine/wgs": "^0.1.7"
+    "@rdfine/wgs": "^0.2.0"
   },
   "repository": {
     "type": "git",

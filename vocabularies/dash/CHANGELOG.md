@@ -1,5 +1,19 @@
 # @rdfine/dash
 
+## 0.3.0
+
+### Minor Changes
+
+- 6cee88c8: Package is not ESM-only
+
+### Patch Changes
+
+- Updated dependencies [6cee88c8]
+  - @tpluscode/rdfine@0.6.0
+  - @rdfine/rdf@0.6.0
+  - @rdfine/rdfs@0.7.0
+  - @rdfine/shacl@0.9.0
+
 ## 0.2.4
 
 ### Patch Changes

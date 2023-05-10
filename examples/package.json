@@ -1,6 +1,6 @@
 {
   "name": "rdfine-example",
-  "version": "0.1.13",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,14 +11,14 @@
     "example:deep": "ts-node deep-initialization/index.ts"
   },
   "dependencies": {
-    "@rdfine/schema": "^0.6.11",
+    "@rdfine/schema": "^0.7.0",
     "@rdfjs/data-model": "^2",
     "@rdfjs/dataset": "^2",
     "@rdfjs/fetch": "^3",
     "@rdfjs/namespace": "^2",
     "@tpluscode/rdf-ns-builders": ">=3.0.2",
     "@tpluscode/rdf-string": "^1.0.3",
-    "@tpluscode/rdfine": "^0.5.39",
+    "@tpluscode/rdfine": "^0.6.0",
     "@zazuko/prefixes": ">=1",
     "clownface": "^1",
     "debug": "^4.1.1"
