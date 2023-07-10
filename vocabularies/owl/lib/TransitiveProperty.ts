@@ -11,11 +11,11 @@ import { ObjectPropertyMixin } from './ObjectProperty.js';
 export interface TransitiveProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, rdfine.RdfResource<D> {
 }
 
-export function TransitivePropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TransitiveProperty> & RdfResourceCore> & Base {
+export function TransitivePropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TransitiveProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class TransitivePropertyClass extends ObjectPropertyMixin(Resource) implements Partial<TransitiveProperty> {
+  class TransitivePropertyClass extends ObjectPropertyMixin(Resource) {
   }
-  return TransitivePropertyClass
+  return TransitivePropertyClass as any
 }
 
 class TransitivePropertyImpl extends TransitivePropertyMixin(RdfResourceImpl) {

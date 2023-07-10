@@ -17,9 +17,9 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs
   title: string | undefined;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class ClassClass extends ClassMixinEx(RdfsClassMixin(Resource)) implements Partial<Class> {
+  class ClassClass extends ClassMixinEx(RdfsClassMixin(Resource)) {
     @rdfine.property.literal()
     description: string | undefined;
     @rdfine.property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
@@ -27,7 +27,7 @@ export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.literal()
     title: string | undefined;
   }
-  return ClassClass
+  return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {

@@ -13,15 +13,15 @@ export interface PlayGameAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   gameAvailabilityTypeTerm: Schema.GameAvailabilityEnumeration | undefined;
 }
 
-export function PlayGameActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PlayGameAction> & RdfResourceCore> & Base {
+export function PlayGameActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PlayGameAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PlayGameActionClass extends ConsumeActionMixin(Resource) implements Partial<PlayGameAction> {
+  class PlayGameActionClass extends ConsumeActionMixin(Resource) {
     @rdfine.property.literal()
     gameAvailabilityType: string | undefined;
     @rdfine.property({ path: schema.gameAvailabilityType })
     gameAvailabilityTypeTerm: Schema.GameAvailabilityEnumeration | undefined;
   }
-  return PlayGameActionClass
+  return PlayGameActionClass as any
 }
 
 class PlayGameActionImpl extends PlayGameActionMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { MedicalTestMixin } from './MedicalTest.js';
 export interface BloodTest<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalTest<D>, rdfine.RdfResource<D> {
 }
 
-export function BloodTestMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BloodTest> & RdfResourceCore> & Base {
+export function BloodTestMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BloodTest & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BloodTestClass extends MedicalTestMixin(Resource) implements Partial<BloodTest> {
+  class BloodTestClass extends MedicalTestMixin(Resource) {
   }
-  return BloodTestClass
+  return BloodTestClass as any
 }
 
 class BloodTestImpl extends BloodTestMixin(RdfResourceImpl) {

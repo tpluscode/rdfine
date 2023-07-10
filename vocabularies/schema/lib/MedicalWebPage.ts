@@ -13,15 +13,15 @@ export interface MedicalWebPage<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   medicalAudience: Schema.MedicalAudience<D> | undefined;
 }
 
-export function MedicalWebPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalWebPage> & RdfResourceCore> & Base {
+export function MedicalWebPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalWebPage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalWebPageClass extends WebPageMixin(Resource) implements Partial<MedicalWebPage> {
+  class MedicalWebPageClass extends WebPageMixin(Resource) {
     @rdfine.property.literal()
     aspect: string | undefined;
     @rdfine.property.resource()
     medicalAudience: Schema.MedicalAudience | undefined;
   }
-  return MedicalWebPageClass
+  return MedicalWebPageClass as any
 }
 
 class MedicalWebPageImpl extends MedicalWebPageMixin(RdfResourceImpl) {

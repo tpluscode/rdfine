@@ -10,11 +10,11 @@ import type * as Sioc from '../index.js';
 export interface Community<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function CommunityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Community> & RdfResourceCore> & Base {
+export function CommunityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Community & RdfResourceCore> & Base {
   @rdfine.namespace(sioc)
-  class CommunityClass extends Resource implements Partial<Community> {
+  class CommunityClass extends Resource {
   }
-  return CommunityClass
+  return CommunityClass as any
 }
 
 class CommunityImpl extends CommunityMixin(RdfResourceImpl) {

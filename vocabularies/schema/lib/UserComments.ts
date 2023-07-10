@@ -16,9 +16,9 @@ export interface UserComments<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   replyToUrl: RDF.NamedNode | undefined;
 }
 
-export function UserCommentsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<UserComments> & RdfResourceCore> & Base {
+export function UserCommentsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<UserComments & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class UserCommentsClass extends UserInteractionMixin(Resource) implements Partial<UserComments> {
+  class UserCommentsClass extends UserInteractionMixin(Resource) {
     @rdfine.property.literal()
     commentText: string | undefined;
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
@@ -30,7 +30,7 @@ export function UserCommentsMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property()
     replyToUrl: RDF.NamedNode | undefined;
   }
-  return UserCommentsClass
+  return UserCommentsClass as any
 }
 
 class UserCommentsImpl extends UserCommentsMixin(RdfResourceImpl) {

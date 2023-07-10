@@ -15,9 +15,9 @@ export interface MoneyTransfer<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   beneficiaryBankLiteral: string | undefined;
 }
 
-export function MoneyTransferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MoneyTransfer> & RdfResourceCore> & Base {
+export function MoneyTransferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MoneyTransfer & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MoneyTransferClass extends TransferActionMixin(Resource) implements Partial<MoneyTransfer> {
+  class MoneyTransferClass extends TransferActionMixin(Resource) {
     @rdfine.property.resource()
     amount: Schema.MonetaryAmount | undefined;
     @rdfine.property.literal({ path: schema.amount, type: Number })
@@ -27,7 +27,7 @@ export function MoneyTransferMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.literal({ path: schema.beneficiaryBank })
     beneficiaryBankLiteral: string | undefined;
   }
-  return MoneyTransferClass
+  return MoneyTransferClass as any
 }
 
 class MoneyTransferImpl extends MoneyTransferMixin(RdfResourceImpl) {

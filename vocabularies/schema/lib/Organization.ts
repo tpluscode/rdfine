@@ -84,9 +84,9 @@ export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   vatID: string | undefined;
 }
 
-export function OrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Organization> & RdfResourceCore> & Base {
+export function OrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Organization & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OrganizationClass extends ThingMixin(Resource) implements Partial<Organization> {
+  class OrganizationClass extends ThingMixin(Resource) {
     @rdfine.property.resource()
     actionableFeedbackPolicy: Schema.CreativeWork | undefined;
     @rdfine.property.resource()
@@ -234,7 +234,7 @@ export function OrganizationMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.literal()
     vatID: string | undefined;
   }
-  return OrganizationClass
+  return OrganizationClass as any
 }
 
 class OrganizationImpl extends OrganizationMixin(RdfResourceImpl) {

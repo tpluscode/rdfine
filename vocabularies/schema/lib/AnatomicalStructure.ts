@@ -19,9 +19,9 @@ export interface AnatomicalStructure<D extends RDF.DatasetCore = RDF.DatasetCore
   subStructure: Schema.AnatomicalStructure<D> | undefined;
 }
 
-export function AnatomicalStructureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AnatomicalStructure> & RdfResourceCore> & Base {
+export function AnatomicalStructureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AnatomicalStructure & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AnatomicalStructureClass extends MedicalEntityMixin(Resource) implements Partial<AnatomicalStructure> {
+  class AnatomicalStructureClass extends MedicalEntityMixin(Resource) {
     @rdfine.property.literal()
     associatedPathophysiology: string | undefined;
     @rdfine.property.literal()
@@ -39,7 +39,7 @@ export function AnatomicalStructureMixin<Base extends rdfine.Constructor>(Resour
     @rdfine.property.resource()
     subStructure: Schema.AnatomicalStructure | undefined;
   }
-  return AnatomicalStructureClass
+  return AnatomicalStructureClass as any
 }
 
 class AnatomicalStructureImpl extends AnatomicalStructureMixin(RdfResourceImpl) {

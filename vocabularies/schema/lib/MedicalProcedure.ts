@@ -19,9 +19,9 @@ export interface MedicalProcedure<D extends RDF.DatasetCore = RDF.DatasetCore> e
   statusTerm: Schema.EventStatusType | Schema.MedicalStudyStatus | undefined;
 }
 
-export function MedicalProcedureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalProcedure> & RdfResourceCore> & Base {
+export function MedicalProcedureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalProcedure & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalProcedureClass extends MedicalEntityMixin(Resource) implements Partial<MedicalProcedure> {
+  class MedicalProcedureClass extends MedicalEntityMixin(Resource) {
     @rdfine.property.literal()
     bodyLocation: string | undefined;
     @rdfine.property.literal()
@@ -39,7 +39,7 @@ export function MedicalProcedureMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property({ path: schema.status })
     statusTerm: Schema.EventStatusType | Schema.MedicalStudyStatus | undefined;
   }
-  return MedicalProcedureClass
+  return MedicalProcedureClass as any
 }
 
 class MedicalProcedureImpl extends MedicalProcedureMixin(RdfResourceImpl) {

@@ -12,11 +12,11 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface APIStatus<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function APIStatusMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<APIStatus> & RdfResourceCore> & Base {
+export function APIStatusMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<APIStatus & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class APIStatusClass extends RdfsResourceMixin(Resource) implements Partial<APIStatus> {
+  class APIStatusClass extends RdfsResourceMixin(Resource) {
   }
-  return APIStatusClass
+  return APIStatusClass as any
 }
 
 class APIStatusImpl extends APIStatusMixin(RdfResourceImpl) {

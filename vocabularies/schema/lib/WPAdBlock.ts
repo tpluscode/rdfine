@@ -11,11 +11,11 @@ import { WebPageElementMixin } from './WebPageElement.js';
 export interface WPAdBlock<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, rdfine.RdfResource<D> {
 }
 
-export function WPAdBlockMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WPAdBlock> & RdfResourceCore> & Base {
+export function WPAdBlockMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WPAdBlock & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WPAdBlockClass extends WebPageElementMixin(Resource) implements Partial<WPAdBlock> {
+  class WPAdBlockClass extends WebPageElementMixin(Resource) {
   }
-  return WPAdBlockClass
+  return WPAdBlockClass as any
 }
 
 class WPAdBlockImpl extends WPAdBlockMixin(RdfResourceImpl) {

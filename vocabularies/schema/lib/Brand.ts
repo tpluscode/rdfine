@@ -15,9 +15,9 @@ export interface Brand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   slogan: string | undefined;
 }
 
-export function BrandMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Brand> & RdfResourceCore> & Base {
+export function BrandMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Brand & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BrandClass extends IntangibleMixin(Resource) implements Partial<Brand> {
+  class BrandClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     aggregateRating: Schema.AggregateRating | undefined;
     @rdfine.property.resource()
@@ -27,7 +27,7 @@ export function BrandMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.literal()
     slogan: string | undefined;
   }
-  return BrandClass
+  return BrandClass as any
 }
 
 class BrandImpl extends BrandMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface SearchAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   query: string | undefined;
 }
 
-export function SearchActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SearchAction> & RdfResourceCore> & Base {
+export function SearchActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SearchAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SearchActionClass extends ActionMixin(Resource) implements Partial<SearchAction> {
+  class SearchActionClass extends ActionMixin(Resource) {
     @rdfine.property.literal()
     query: string | undefined;
   }
-  return SearchActionClass
+  return SearchActionClass as any
 }
 
 class SearchActionImpl extends SearchActionMixin(RdfResourceImpl) {

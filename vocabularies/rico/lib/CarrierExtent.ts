@@ -11,11 +11,11 @@ import { ExtentMixin } from './Extent.js';
 export interface CarrierExtent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Extent<D>, rdfine.RdfResource<D> {
 }
 
-export function CarrierExtentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CarrierExtent> & RdfResourceCore> & Base {
+export function CarrierExtentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CarrierExtent & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class CarrierExtentClass extends ExtentMixin(Resource) implements Partial<CarrierExtent> {
+  class CarrierExtentClass extends ExtentMixin(Resource) {
   }
-  return CarrierExtentClass
+  return CarrierExtentClass as any
 }
 
 class CarrierExtentImpl extends CarrierExtentMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { MedicalEntityMixin } from './MedicalEntity.js';
 export interface MedicalIntangible<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, rdfine.RdfResource<D> {
 }
 
-export function MedicalIntangibleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalIntangible> & RdfResourceCore> & Base {
+export function MedicalIntangibleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalIntangible & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalIntangibleClass extends MedicalEntityMixin(Resource) implements Partial<MedicalIntangible> {
+  class MedicalIntangibleClass extends MedicalEntityMixin(Resource) {
   }
-  return MedicalIntangibleClass
+  return MedicalIntangibleClass as any
 }
 
 class MedicalIntangibleImpl extends MedicalIntangibleMixin(RdfResourceImpl) {

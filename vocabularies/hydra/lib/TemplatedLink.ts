@@ -16,9 +16,9 @@ export interface TemplatedLink<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   title: string | undefined;
 }
 
-export function TemplatedLinkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TemplatedLink> & RdfResourceCore> & Base {
+export function TemplatedLinkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TemplatedLink & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class TemplatedLinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements Partial<TemplatedLink> {
+  class TemplatedLinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) {
     @rdfine.property.literal()
     description: string | undefined;
     @rdfine.property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
@@ -26,7 +26,7 @@ export function TemplatedLinkMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.literal()
     title: string | undefined;
   }
-  return TemplatedLinkClass
+  return TemplatedLinkClass as any
 }
 
 class TemplatedLinkImpl extends TemplatedLinkMixin(RdfResourceImpl) {

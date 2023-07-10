@@ -11,11 +11,11 @@ import { EpisodeMixin } from './Episode.js';
 export interface RadioEpisode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Episode<D>, rdfine.RdfResource<D> {
 }
 
-export function RadioEpisodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RadioEpisode> & RdfResourceCore> & Base {
+export function RadioEpisodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RadioEpisode & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RadioEpisodeClass extends EpisodeMixin(Resource) implements Partial<RadioEpisode> {
+  class RadioEpisodeClass extends EpisodeMixin(Resource) {
   }
-  return RadioEpisodeClass
+  return RadioEpisodeClass as any
 }
 
 class RadioEpisodeImpl extends RadioEpisodeMixin(RdfResourceImpl) {

@@ -13,15 +13,15 @@ export interface PositionToGroupRelation<D extends RDF.DatasetCore = RDF.Dataset
   positionToGroupRelationHasTarget: Rico.Group<D> | undefined;
 }
 
-export function PositionToGroupRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PositionToGroupRelation> & RdfResourceCore> & Base {
+export function PositionToGroupRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PositionToGroupRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class PositionToGroupRelationClass extends AgentToAgentRelationMixin(Resource) implements Partial<PositionToGroupRelation> {
+  class PositionToGroupRelationClass extends AgentToAgentRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Position] })
     positionToGroupRelationHasSource: Rico.Position | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Group] })
     positionToGroupRelationHasTarget: Rico.Group | undefined;
   }
-  return PositionToGroupRelationClass
+  return PositionToGroupRelationClass as any
 }
 
 class PositionToGroupRelationImpl extends PositionToGroupRelationMixin(RdfResourceImpl) {

@@ -14,15 +14,15 @@ export interface Collection<M extends RdfResourceCore<any> = RdfResourceCore<any
   totalItems: number | undefined;
 }
 
-export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Collection> & RdfResourceCore> & Base {
+export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Collection & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class CollectionClass extends CollectionExMixin(ResourceMixin(Resource)) implements Partial<Collection> {
+  class CollectionClass extends CollectionExMixin(ResourceMixin(Resource)) {
     @rdfine.property.resource({ values: 'array', implicitTypes: [hydra.Resource] })
     member!: Array<Hydra.Resource>;
     @rdfine.property.literal({ type: Number })
     totalItems: number | undefined;
   }
-  return CollectionClass
+  return CollectionClass as any
 }
 
 class CollectionImpl extends CollectionMixin(RdfResourceImpl) {

@@ -28,9 +28,9 @@ export interface Group<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico
   isOrWasSubdivisionOf: Rico.Group<D> | undefined;
 }
 
-export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Group> & RdfResourceCore> & Base {
+export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Group & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class GroupClass extends AgentMixin(Resource) implements Partial<Group> {
+  class GroupClass extends AgentMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.IntellectualPropertyRightsRelation] })
     agentIsSourceOfIntellectualPropertyRightsRelation: Rico.IntellectualPropertyRightsRelation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.OwnershipRelation] })
@@ -66,7 +66,7 @@ export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource({ as: [GroupMixin] })
     isOrWasSubdivisionOf: Rico.Group | undefined;
   }
-  return GroupClass
+  return GroupClass as any
 }
 
 class GroupImpl extends GroupMixin(RdfResourceImpl) {

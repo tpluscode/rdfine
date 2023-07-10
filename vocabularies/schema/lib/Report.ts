@@ -12,13 +12,13 @@ export interface Report<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   reportNumber: string | undefined;
 }
 
-export function ReportMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Report> & RdfResourceCore> & Base {
+export function ReportMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Report & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ReportClass extends ArticleMixin(Resource) implements Partial<Report> {
+  class ReportClass extends ArticleMixin(Resource) {
     @rdfine.property.literal()
     reportNumber: string | undefined;
   }
-  return ReportClass
+  return ReportClass as any
 }
 
 class ReportImpl extends ReportMixin(RdfResourceImpl) {

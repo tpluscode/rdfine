@@ -10,11 +10,11 @@ import type * as Rdf from '../index.js';
 export interface Property<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function PropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Property> & RdfResourceCore> & Base {
+export function PropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Property & RdfResourceCore> & Base {
   @rdfine.namespace(rdf)
-  class PropertyClass extends Resource implements Partial<Property> {
+  class PropertyClass extends Resource {
   }
-  return PropertyClass
+  return PropertyClass as any
 }
 
 class PropertyImpl extends PropertyMixin(RdfResourceImpl) {

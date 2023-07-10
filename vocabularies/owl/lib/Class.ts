@@ -20,9 +20,9 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs
   hasKey: Rdf.List<D> | undefined;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class ClassClass extends ClassMixinEx(RdfsClassMixin(Resource)) implements Partial<Class> {
+  class ClassClass extends ClassMixinEx(RdfsClassMixin(Resource)) {
     @rdfine.property.resource({ as: [ClassMixin] })
     complementOf: Owl.Class | undefined;
     @rdfine.property.resource({ as: [RdfListMixin] })
@@ -32,7 +32,7 @@ export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource({ as: [RdfListMixin] })
     hasKey: Rdf.List | undefined;
   }
-  return ClassClass
+  return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {

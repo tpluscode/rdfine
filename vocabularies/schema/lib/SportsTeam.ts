@@ -15,9 +15,9 @@ export interface SportsTeam<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   genderTerm: Schema.GenderType | undefined;
 }
 
-export function SportsTeamMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SportsTeam> & RdfResourceCore> & Base {
+export function SportsTeamMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SportsTeam & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SportsTeamClass extends SportsOrganizationMixin(Resource) implements Partial<SportsTeam> {
+  class SportsTeamClass extends SportsOrganizationMixin(Resource) {
     @rdfine.property.resource()
     athlete: Schema.Person | undefined;
     @rdfine.property.resource()
@@ -27,7 +27,7 @@ export function SportsTeamMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property({ path: schema.gender })
     genderTerm: Schema.GenderType | undefined;
   }
-  return SportsTeamClass
+  return SportsTeamClass as any
 }
 
 class SportsTeamImpl extends SportsTeamMixin(RdfResourceImpl) {

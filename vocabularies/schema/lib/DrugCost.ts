@@ -18,9 +18,9 @@ export interface DrugCost<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   drugUnit: string | undefined;
 }
 
-export function DrugCostMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DrugCost> & RdfResourceCore> & Base {
+export function DrugCostMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DrugCost & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DrugCostClass extends MedicalEntityMixin(Resource) implements Partial<DrugCost> {
+  class DrugCostClass extends MedicalEntityMixin(Resource) {
     @rdfine.property.resource()
     applicableLocation: Schema.AdministrativeArea | undefined;
     @rdfine.property()
@@ -36,7 +36,7 @@ export function DrugCostMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.literal()
     drugUnit: string | undefined;
   }
-  return DrugCostClass
+  return DrugCostClass as any
 }
 
 class DrugCostImpl extends DrugCostMixin(RdfResourceImpl) {

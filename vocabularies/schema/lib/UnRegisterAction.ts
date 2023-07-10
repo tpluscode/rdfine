@@ -11,11 +11,11 @@ import { InteractActionMixin } from './InteractAction.js';
 export interface UnRegisterAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, rdfine.RdfResource<D> {
 }
 
-export function UnRegisterActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<UnRegisterAction> & RdfResourceCore> & Base {
+export function UnRegisterActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<UnRegisterAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class UnRegisterActionClass extends InteractActionMixin(Resource) implements Partial<UnRegisterAction> {
+  class UnRegisterActionClass extends InteractActionMixin(Resource) {
   }
-  return UnRegisterActionClass
+  return UnRegisterActionClass as any
 }
 
 class UnRegisterActionImpl extends UnRegisterActionMixin(RdfResourceImpl) {

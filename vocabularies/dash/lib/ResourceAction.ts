@@ -11,11 +11,11 @@ import { ActionMixin } from './Action.js';
 export interface ResourceAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Action<D>, rdfine.RdfResource<D> {
 }
 
-export function ResourceActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ResourceAction> & RdfResourceCore> & Base {
+export function ResourceActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ResourceAction & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class ResourceActionClass extends ActionMixin(Resource) implements Partial<ResourceAction> {
+  class ResourceActionClass extends ActionMixin(Resource) {
   }
-  return ResourceActionClass
+  return ResourceActionClass as any
 }
 
 class ResourceActionImpl extends ResourceActionMixin(RdfResourceImpl) {

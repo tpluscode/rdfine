@@ -13,15 +13,15 @@ export interface DDxElement<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   distinguishingSign: Schema.MedicalSignOrSymptom<D> | undefined;
 }
 
-export function DDxElementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DDxElement> & RdfResourceCore> & Base {
+export function DDxElementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DDxElement & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DDxElementClass extends MedicalIntangibleMixin(Resource) implements Partial<DDxElement> {
+  class DDxElementClass extends MedicalIntangibleMixin(Resource) {
     @rdfine.property.resource()
     diagnosis: Schema.MedicalCondition | undefined;
     @rdfine.property.resource()
     distinguishingSign: Schema.MedicalSignOrSymptom | undefined;
   }
-  return DDxElementClass
+  return DDxElementClass as any
 }
 
 class DDxElementImpl extends DDxElementMixin(RdfResourceImpl) {

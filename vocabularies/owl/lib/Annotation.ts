@@ -14,11 +14,11 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface Annotation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function AnnotationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Annotation> & RdfResourceCore> & Base {
+export function AnnotationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Annotation & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class AnnotationClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) implements Partial<Annotation> {
+  class AnnotationClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) {
   }
-  return AnnotationClass
+  return AnnotationClass as any
 }
 
 class AnnotationImpl extends AnnotationMixin(RdfResourceImpl) {

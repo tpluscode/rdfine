@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Listen<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function ListenMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Listen> & RdfResourceCore> & Base {
+export function ListenMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Listen & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class ListenClass extends ActivityMixin(Resource) implements Partial<Listen> {
+  class ListenClass extends ActivityMixin(Resource) {
   }
-  return ListenClass
+  return ListenClass as any
 }
 
 class ListenImpl extends ListenMixin(RdfResourceImpl) {

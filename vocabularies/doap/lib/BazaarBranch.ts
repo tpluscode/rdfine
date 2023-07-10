@@ -11,11 +11,11 @@ import { RepositoryMixin } from './Repository.js';
 export interface BazaarBranch<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, rdfine.RdfResource<D> {
 }
 
-export function BazaarBranchMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BazaarBranch> & RdfResourceCore> & Base {
+export function BazaarBranchMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BazaarBranch & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
-  class BazaarBranchClass extends RepositoryMixin(Resource) implements Partial<BazaarBranch> {
+  class BazaarBranchClass extends RepositoryMixin(Resource) {
   }
-  return BazaarBranchClass
+  return BazaarBranchClass as any
 }
 
 class BazaarBranchImpl extends BazaarBranchMixin(RdfResourceImpl) {

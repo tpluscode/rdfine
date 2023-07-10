@@ -20,9 +20,9 @@ export interface NegativePropertyAssertion<D extends RDF.DatasetCore = RDF.Datas
   targetValue: string | undefined;
 }
 
-export function NegativePropertyAssertionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NegativePropertyAssertion> & RdfResourceCore> & Base {
+export function NegativePropertyAssertionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NegativePropertyAssertion & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class NegativePropertyAssertionClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) implements Partial<NegativePropertyAssertion> {
+  class NegativePropertyAssertionClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) {
     @rdfine.property.resource({ as: [RdfPropertyMixin] })
     assertionProperty: Rdf.Property | undefined;
     @rdfine.property()
@@ -32,7 +32,7 @@ export function NegativePropertyAssertionMixin<Base extends rdfine.Constructor>(
     @rdfine.property.literal()
     targetValue: string | undefined;
   }
-  return NegativePropertyAssertionClass
+  return NegativePropertyAssertionClass as any
 }
 
 class NegativePropertyAssertionImpl extends NegativePropertyAssertionMixin(RdfResourceImpl) {

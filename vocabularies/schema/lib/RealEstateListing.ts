@@ -13,15 +13,15 @@ export interface RealEstateListing<D extends RDF.DatasetCore = RDF.DatasetCore> 
   leaseLength: Schema.Duration<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function RealEstateListingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RealEstateListing> & RdfResourceCore> & Base {
+export function RealEstateListingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RealEstateListing & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RealEstateListingClass extends WebPageMixin(Resource) implements Partial<RealEstateListing> {
+  class RealEstateListingClass extends WebPageMixin(Resource) {
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     datePosted: Date | undefined;
     @rdfine.property.resource()
     leaseLength: Schema.Duration | Schema.QuantitativeValue | undefined;
   }
-  return RealEstateListingClass
+  return RealEstateListingClass as any
 }
 
 class RealEstateListingImpl extends RealEstateListingMixin(RdfResourceImpl) {

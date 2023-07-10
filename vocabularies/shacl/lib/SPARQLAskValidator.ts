@@ -12,11 +12,11 @@ import { ValidatorMixin } from './Validator.js';
 export interface SPARQLAskValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLAskExecutable<D>, Sh.Validator<D>, rdfine.RdfResource<D> {
 }
 
-export function SPARQLAskValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLAskValidator> & RdfResourceCore> & Base {
+export function SPARQLAskValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLAskValidator & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class SPARQLAskValidatorClass extends ValidatorMixin(SPARQLAskExecutableMixin(Resource)) implements Partial<SPARQLAskValidator> {
+  class SPARQLAskValidatorClass extends ValidatorMixin(SPARQLAskExecutableMixin(Resource)) {
   }
-  return SPARQLAskValidatorClass
+  return SPARQLAskValidatorClass as any
 }
 
 class SPARQLAskValidatorImpl extends SPARQLAskValidatorMixin(RdfResourceImpl) {

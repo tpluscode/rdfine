@@ -14,9 +14,9 @@ export interface ChemicalSubstance<D extends RDF.DatasetCore = RDF.DatasetCore> 
   potentialUse: RDF.Term | undefined;
 }
 
-export function ChemicalSubstanceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ChemicalSubstance> & RdfResourceCore> & Base {
+export function ChemicalSubstanceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ChemicalSubstance & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ChemicalSubstanceClass extends BioChemEntityMixin(Resource) implements Partial<ChemicalSubstance> {
+  class ChemicalSubstanceClass extends BioChemEntityMixin(Resource) {
     @rdfine.property.literal()
     chemicalComposition: string | undefined;
     @rdfine.property()
@@ -24,7 +24,7 @@ export function ChemicalSubstanceMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property()
     potentialUse: RDF.Term | undefined;
   }
-  return ChemicalSubstanceClass
+  return ChemicalSubstanceClass as any
 }
 
 class ChemicalSubstanceImpl extends ChemicalSubstanceMixin(RdfResourceImpl) {

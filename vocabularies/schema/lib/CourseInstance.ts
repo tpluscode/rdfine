@@ -15,9 +15,9 @@ export interface CourseInstance<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   instructor: Schema.Person<D> | undefined;
 }
 
-export function CourseInstanceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CourseInstance> & RdfResourceCore> & Base {
+export function CourseInstanceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CourseInstance & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CourseInstanceClass extends EventMixin(Resource) implements Partial<CourseInstance> {
+  class CourseInstanceClass extends EventMixin(Resource) {
     @rdfine.property.literal()
     courseMode: string | undefined;
     @rdfine.property({ path: schema.courseMode })
@@ -27,7 +27,7 @@ export function CourseInstanceMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.resource()
     instructor: Schema.Person | undefined;
   }
-  return CourseInstanceClass
+  return CourseInstanceClass as any
 }
 
 class CourseInstanceImpl extends CourseInstanceMixin(RdfResourceImpl) {

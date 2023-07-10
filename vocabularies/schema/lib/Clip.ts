@@ -24,9 +24,9 @@ export interface Clip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   startOffsetLiteral: number | undefined;
 }
 
-export function ClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Clip> & RdfResourceCore> & Base {
+export function ClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Clip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ClipClass extends CreativeWorkMixin(Resource) implements Partial<Clip> {
+  class ClipClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     actor: Schema.Person | undefined;
     @rdfine.property.resource()
@@ -54,7 +54,7 @@ export function ClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.literal({ path: schema.startOffset, type: Number })
     startOffsetLiteral: number | undefined;
   }
-  return ClipClass
+  return ClipClass as any
 }
 
 class ClipImpl extends ClipMixin(RdfResourceImpl) {

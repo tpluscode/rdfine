@@ -15,9 +15,9 @@ export interface Gene<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   hasBioPolymerSequence: string | undefined;
 }
 
-export function GeneMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Gene> & RdfResourceCore> & Base {
+export function GeneMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Gene & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class GeneClass extends BioChemEntityMixin(Resource) implements Partial<Gene> {
+  class GeneClass extends BioChemEntityMixin(Resource) {
     @rdfine.property.resource()
     alternativeOf: Schema.Gene | undefined;
     @rdfine.property.resource()
@@ -27,7 +27,7 @@ export function GeneMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.literal()
     hasBioPolymerSequence: string | undefined;
   }
-  return GeneClass
+  return GeneClass as any
 }
 
 class GeneImpl extends GeneMixin(RdfResourceImpl) {

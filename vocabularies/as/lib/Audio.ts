@@ -11,11 +11,11 @@ import { DocumentMixin } from './Document.js';
 export interface Audio<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Document<D>, rdfine.RdfResource<D> {
 }
 
-export function AudioMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Audio> & RdfResourceCore> & Base {
+export function AudioMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Audio & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class AudioClass extends DocumentMixin(Resource) implements Partial<Audio> {
+  class AudioClass extends DocumentMixin(Resource) {
   }
-  return AudioClass
+  return AudioClass as any
 }
 
 class AudioImpl extends AudioMixin(RdfResourceImpl) {

@@ -13,15 +13,15 @@ export interface Image<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf
   thumbnail: Foaf.Image<D> | undefined;
 }
 
-export function ImageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Image> & RdfResourceCore> & Base {
+export function ImageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Image & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
-  class ImageClass extends DocumentMixin(Resource) implements Partial<Image> {
+  class ImageClass extends DocumentMixin(Resource) {
     @rdfine.property()
     depicts: RDF.NamedNode | undefined;
     @rdfine.property.resource({ as: [ImageMixin] })
     thumbnail: Foaf.Image | undefined;
   }
-  return ImageClass
+  return ImageClass as any
 }
 
 class ImageImpl extends ImageMixin(RdfResourceImpl) {

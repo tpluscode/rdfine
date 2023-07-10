@@ -17,9 +17,9 @@ export interface ComicIssue<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   variantCover: string | undefined;
 }
 
-export function ComicIssueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ComicIssue> & RdfResourceCore> & Base {
+export function ComicIssueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ComicIssue & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ComicIssueClass extends PublicationIssueMixin(Resource) implements Partial<ComicIssue> {
+  class ComicIssueClass extends PublicationIssueMixin(Resource) {
     @rdfine.property.resource()
     artist: Schema.Person | undefined;
     @rdfine.property.resource()
@@ -33,7 +33,7 @@ export function ComicIssueMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property.literal()
     variantCover: string | undefined;
   }
-  return ComicIssueClass
+  return ComicIssueClass as any
 }
 
 class ComicIssueImpl extends ComicIssueMixin(RdfResourceImpl) {

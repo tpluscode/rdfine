@@ -12,13 +12,13 @@ export interface DonateAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function DonateActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DonateAction> & RdfResourceCore> & Base {
+export function DonateActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DonateAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DonateActionClass extends TradeActionMixin(Resource) implements Partial<DonateAction> {
+  class DonateActionClass extends TradeActionMixin(Resource) {
     @rdfine.property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
-  return DonateActionClass
+  return DonateActionClass as any
 }
 
 class DonateActionImpl extends DonateActionMixin(RdfResourceImpl) {

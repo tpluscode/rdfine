@@ -13,15 +13,15 @@ export interface UpdateAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   targetCollection: Schema.Thing<D> | undefined;
 }
 
-export function UpdateActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<UpdateAction> & RdfResourceCore> & Base {
+export function UpdateActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<UpdateAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class UpdateActionClass extends ActionMixin(Resource) implements Partial<UpdateAction> {
+  class UpdateActionClass extends ActionMixin(Resource) {
     @rdfine.property.resource()
     collection: Schema.Thing | undefined;
     @rdfine.property.resource()
     targetCollection: Schema.Thing | undefined;
   }
-  return UpdateActionClass
+  return UpdateActionClass as any
 }
 
 class UpdateActionImpl extends UpdateActionMixin(RdfResourceImpl) {

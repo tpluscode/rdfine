@@ -11,11 +11,11 @@ import { AudioObjectMixin } from './AudioObject.js';
 export interface AudioObjectSnapshot<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AudioObject<D>, rdfine.RdfResource<D> {
 }
 
-export function AudioObjectSnapshotMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AudioObjectSnapshot> & RdfResourceCore> & Base {
+export function AudioObjectSnapshotMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AudioObjectSnapshot & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AudioObjectSnapshotClass extends AudioObjectMixin(Resource) implements Partial<AudioObjectSnapshot> {
+  class AudioObjectSnapshotClass extends AudioObjectMixin(Resource) {
   }
-  return AudioObjectSnapshotClass
+  return AudioObjectSnapshotClass as any
 }
 
 class AudioObjectSnapshotImpl extends AudioObjectSnapshotMixin(RdfResourceImpl) {

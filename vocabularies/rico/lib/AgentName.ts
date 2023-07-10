@@ -12,13 +12,13 @@ export interface AgentName<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   isOrWasAgentNameOf: Rico.Agent<D> | undefined;
 }
 
-export function AgentNameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AgentName> & RdfResourceCore> & Base {
+export function AgentNameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentName & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class AgentNameClass extends NameMixin(Resource) implements Partial<AgentName> {
+  class AgentNameClass extends NameMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     isOrWasAgentNameOf: Rico.Agent | undefined;
   }
-  return AgentNameClass
+  return AgentNameClass as any
 }
 
 class AgentNameImpl extends AgentNameMixin(RdfResourceImpl) {

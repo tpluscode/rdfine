@@ -11,11 +11,11 @@ import { LegalServiceMixin } from './LegalService.js';
 export interface Notary<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LegalService<D>, rdfine.RdfResource<D> {
 }
 
-export function NotaryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Notary> & RdfResourceCore> & Base {
+export function NotaryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Notary & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class NotaryClass extends LegalServiceMixin(Resource) implements Partial<Notary> {
+  class NotaryClass extends LegalServiceMixin(Resource) {
   }
-  return NotaryClass
+  return NotaryClass as any
 }
 
 class NotaryImpl extends NotaryMixin(RdfResourceImpl) {

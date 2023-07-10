@@ -14,9 +14,9 @@ export interface LeadershipRelation<D extends RDF.DatasetCore = RDF.DatasetCore>
   leadershipWithPosition: Rico.Position<D> | undefined;
 }
 
-export function LeadershipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LeadershipRelation> & RdfResourceCore> & Base {
+export function LeadershipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LeadershipRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class LeadershipRelationClass extends AgentControlRelationMixin(Resource) implements Partial<LeadershipRelation> {
+  class LeadershipRelationClass extends AgentControlRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     leadershipRelationHasSource: Rico.Person | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Group] })
@@ -24,7 +24,7 @@ export function LeadershipRelationMixin<Base extends rdfine.Constructor>(Resourc
     @rdfine.property.resource({ implicitTypes: [rico.Position] })
     leadershipWithPosition: Rico.Position | undefined;
   }
-  return LeadershipRelationClass
+  return LeadershipRelationClass as any
 }
 
 class LeadershipRelationImpl extends LeadershipRelationMixin(RdfResourceImpl) {

@@ -16,9 +16,9 @@ export interface Muscle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   nerve: Schema.Nerve<D> | undefined;
 }
 
-export function MuscleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Muscle> & RdfResourceCore> & Base {
+export function MuscleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Muscle & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MuscleClass extends AnatomicalStructureMixin(Resource) implements Partial<Muscle> {
+  class MuscleClass extends AnatomicalStructureMixin(Resource) {
     @rdfine.property.resource()
     antagonist: Schema.Muscle | undefined;
     @rdfine.property.resource()
@@ -30,7 +30,7 @@ export function MuscleMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.resource()
     nerve: Schema.Nerve | undefined;
   }
-  return MuscleClass
+  return MuscleClass as any
 }
 
 class MuscleImpl extends MuscleMixin(RdfResourceImpl) {

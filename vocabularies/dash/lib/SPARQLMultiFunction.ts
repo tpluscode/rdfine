@@ -13,11 +13,11 @@ import { SPARQLSelectExecutableMixin as ShaclSPARQLSelectExecutableMixin } from 
 export interface SPARQLMultiFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.MultiFunction<D>, Shacl.SPARQLSelectExecutable<D>, rdfine.RdfResource<D> {
 }
 
-export function SPARQLMultiFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLMultiFunction> & RdfResourceCore> & Base {
+export function SPARQLMultiFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLMultiFunction & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class SPARQLMultiFunctionClass extends ShaclSPARQLSelectExecutableMixin(MultiFunctionMixin(Resource)) implements Partial<SPARQLMultiFunction> {
+  class SPARQLMultiFunctionClass extends ShaclSPARQLSelectExecutableMixin(MultiFunctionMixin(Resource)) {
   }
-  return SPARQLMultiFunctionClass
+  return SPARQLMultiFunctionClass as any
 }
 
 class SPARQLMultiFunctionImpl extends SPARQLMultiFunctionMixin(RdfResourceImpl) {

@@ -23,9 +23,9 @@ export interface DietarySupplement<D extends RDF.DatasetCore = RDF.DatasetCore> 
   targetPopulation: string | undefined;
 }
 
-export function DietarySupplementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DietarySupplement> & RdfResourceCore> & Base {
+export function DietarySupplementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DietarySupplement & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DietarySupplementClass extends SubstanceMixin(ProductMixin(Resource)) implements Partial<DietarySupplement> {
+  class DietarySupplementClass extends SubstanceMixin(ProductMixin(Resource)) {
     @rdfine.property.literal()
     activeIngredient: string | undefined;
     @rdfine.property.literal({ type: Boolean })
@@ -49,7 +49,7 @@ export function DietarySupplementMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property.literal()
     targetPopulation: string | undefined;
   }
-  return DietarySupplementClass
+  return DietarySupplementClass as any
 }
 
 class DietarySupplementImpl extends DietarySupplementMixin(RdfResourceImpl) {

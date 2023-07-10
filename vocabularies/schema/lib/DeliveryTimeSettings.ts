@@ -15,9 +15,9 @@ export interface DeliveryTimeSettings<D extends RDF.DatasetCore = RDF.DatasetCor
   transitTimeLabel: string | undefined;
 }
 
-export function DeliveryTimeSettingsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DeliveryTimeSettings> & RdfResourceCore> & Base {
+export function DeliveryTimeSettingsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DeliveryTimeSettings & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DeliveryTimeSettingsClass extends StructuredValueMixin(Resource) implements Partial<DeliveryTimeSettings> {
+  class DeliveryTimeSettingsClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     deliveryTime: Schema.ShippingDeliveryTime | undefined;
     @rdfine.property.literal({ type: Boolean })
@@ -27,7 +27,7 @@ export function DeliveryTimeSettingsMixin<Base extends rdfine.Constructor>(Resou
     @rdfine.property.literal()
     transitTimeLabel: string | undefined;
   }
-  return DeliveryTimeSettingsClass
+  return DeliveryTimeSettingsClass as any
 }
 
 class DeliveryTimeSettingsImpl extends DeliveryTimeSettingsMixin(RdfResourceImpl) {

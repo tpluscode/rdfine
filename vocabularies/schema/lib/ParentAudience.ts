@@ -13,15 +13,15 @@ export interface ParentAudience<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   childMinAge: number | undefined;
 }
 
-export function ParentAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ParentAudience> & RdfResourceCore> & Base {
+export function ParentAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ParentAudience & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ParentAudienceClass extends PeopleAudienceMixin(Resource) implements Partial<ParentAudience> {
+  class ParentAudienceClass extends PeopleAudienceMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     childMaxAge: number | undefined;
     @rdfine.property.literal({ type: Number })
     childMinAge: number | undefined;
   }
-  return ParentAudienceClass
+  return ParentAudienceClass as any
 }
 
 class ParentAudienceImpl extends ParentAudienceMixin(RdfResourceImpl) {

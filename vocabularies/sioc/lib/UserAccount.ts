@@ -27,9 +27,9 @@ export interface UserAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   'subscriber_of': Sioc.Container<D> | undefined;
 }
 
-export function UserAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<UserAccount> & RdfResourceCore> & Base {
+export function UserAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<UserAccount & RdfResourceCore> & Base {
   @rdfine.namespace(sioc)
-  class UserAccountClass extends FoafOnlineAccountMixin(Resource) implements Partial<UserAccount> {
+  class UserAccountClass extends FoafOnlineAccountMixin(Resource) {
     @rdfine.property.resource({ as: [FoafAgentMixin] })
     'account_of': Foaf.Agent | undefined;
     @rdfine.property.resource({ implicitTypes: [sioc.Site] })
@@ -59,7 +59,7 @@ export function UserAccountMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource({ implicitTypes: [sioc.Container] })
     'subscriber_of': Sioc.Container | undefined;
   }
-  return UserAccountClass
+  return UserAccountClass as any
 }
 
 class UserAccountImpl extends UserAccountMixin(RdfResourceImpl) {

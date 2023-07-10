@@ -24,9 +24,9 @@ export interface BroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> e
   videoFormat: string | undefined;
 }
 
-export function BroadcastServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BroadcastService> & RdfResourceCore> & Base {
+export function BroadcastServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BroadcastService & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BroadcastServiceClass extends ServiceMixin(Resource) implements Partial<BroadcastService> {
+  class BroadcastServiceClass extends ServiceMixin(Resource) {
     @rdfine.property.resource()
     area: Schema.Place | undefined;
     @rdfine.property.resource()
@@ -54,7 +54,7 @@ export function BroadcastServiceMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.literal()
     videoFormat: string | undefined;
   }
-  return BroadcastServiceClass
+  return BroadcastServiceClass as any
 }
 
 class BroadcastServiceImpl extends BroadcastServiceMixin(RdfResourceImpl) {

@@ -23,9 +23,9 @@ export interface NutritionInformation<D extends RDF.DatasetCore = RDF.DatasetCor
   unsaturatedFatContent: Schema.Mass<D> | undefined;
 }
 
-export function NutritionInformationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NutritionInformation> & RdfResourceCore> & Base {
+export function NutritionInformationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NutritionInformation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class NutritionInformationClass extends StructuredValueMixin(Resource) implements Partial<NutritionInformation> {
+  class NutritionInformationClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     calories: Schema.Energy | undefined;
     @rdfine.property.resource()
@@ -51,7 +51,7 @@ export function NutritionInformationMixin<Base extends rdfine.Constructor>(Resou
     @rdfine.property.resource()
     unsaturatedFatContent: Schema.Mass | undefined;
   }
-  return NutritionInformationClass
+  return NutritionInformationClass as any
 }
 
 class NutritionInformationImpl extends NutritionInformationMixin(RdfResourceImpl) {

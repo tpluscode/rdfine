@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Update<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function UpdateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Update> & RdfResourceCore> & Base {
+export function UpdateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Update & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class UpdateClass extends ActivityMixin(Resource) implements Partial<Update> {
+  class UpdateClass extends ActivityMixin(Resource) {
   }
-  return UpdateClass
+  return UpdateClass as any
 }
 
 class UpdateImpl extends UpdateMixin(RdfResourceImpl) {

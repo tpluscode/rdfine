@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Accept<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function AcceptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Accept> & RdfResourceCore> & Base {
+export function AcceptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Accept & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class AcceptClass extends ActivityMixin(Resource) implements Partial<Accept> {
+  class AcceptClass extends ActivityMixin(Resource) {
   }
-  return AcceptClass
+  return AcceptClass as any
 }
 
 class AcceptImpl extends AcceptMixin(RdfResourceImpl) {

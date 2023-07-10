@@ -14,15 +14,15 @@ export interface Suggestion<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   suggestionGroup: RDF.Term | undefined;
 }
 
-export function SuggestionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Suggestion> & RdfResourceCore> & Base {
+export function SuggestionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Suggestion & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class SuggestionClass extends RdfsResourceMixin(Resource) implements Partial<Suggestion> {
+  class SuggestionClass extends RdfsResourceMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     suggestionConfidence: number | undefined;
     @rdfine.property()
     suggestionGroup: RDF.Term | undefined;
   }
-  return SuggestionClass
+  return SuggestionClass as any
 }
 
 class SuggestionImpl extends SuggestionMixin(RdfResourceImpl) {

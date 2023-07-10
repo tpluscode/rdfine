@@ -12,11 +12,11 @@ import { EmptyCollectionMixin } from './EmptyCollection.js';
 export interface EmptyDictionary<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Dictionary<D>, Prov.EmptyCollection<D>, rdfine.RdfResource<D> {
 }
 
-export function EmptyDictionaryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EmptyDictionary> & RdfResourceCore> & Base {
+export function EmptyDictionaryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EmptyDictionary & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class EmptyDictionaryClass extends EmptyCollectionMixin(DictionaryMixin(Resource)) implements Partial<EmptyDictionary> {
+  class EmptyDictionaryClass extends EmptyCollectionMixin(DictionaryMixin(Resource)) {
   }
-  return EmptyDictionaryClass
+  return EmptyDictionaryClass as any
 }
 
 class EmptyDictionaryImpl extends EmptyDictionaryMixin(RdfResourceImpl) {

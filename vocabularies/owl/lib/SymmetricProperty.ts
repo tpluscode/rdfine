@@ -11,11 +11,11 @@ import { ObjectPropertyMixin } from './ObjectProperty.js';
 export interface SymmetricProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, rdfine.RdfResource<D> {
 }
 
-export function SymmetricPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SymmetricProperty> & RdfResourceCore> & Base {
+export function SymmetricPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SymmetricProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class SymmetricPropertyClass extends ObjectPropertyMixin(Resource) implements Partial<SymmetricProperty> {
+  class SymmetricPropertyClass extends ObjectPropertyMixin(Resource) {
   }
-  return SymmetricPropertyClass
+  return SymmetricPropertyClass as any
 }
 
 class SymmetricPropertyImpl extends SymmetricPropertyMixin(RdfResourceImpl) {

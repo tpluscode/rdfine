@@ -11,11 +11,11 @@ import { WebPageMixin } from './WebPage.js';
 export interface ContactPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, rdfine.RdfResource<D> {
 }
 
-export function ContactPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ContactPage> & RdfResourceCore> & Base {
+export function ContactPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ContactPage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ContactPageClass extends WebPageMixin(Resource) implements Partial<ContactPage> {
+  class ContactPageClass extends WebPageMixin(Resource) {
   }
-  return ContactPageClass
+  return ContactPageClass as any
 }
 
 class ContactPageImpl extends ContactPageMixin(RdfResourceImpl) {

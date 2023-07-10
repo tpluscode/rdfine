@@ -11,11 +11,11 @@ import { PlaceMixin } from './Place.js';
 export interface LandmarksOrHistoricalBuildings<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, rdfine.RdfResource<D> {
 }
 
-export function LandmarksOrHistoricalBuildingsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LandmarksOrHistoricalBuildings> & RdfResourceCore> & Base {
+export function LandmarksOrHistoricalBuildingsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LandmarksOrHistoricalBuildings & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LandmarksOrHistoricalBuildingsClass extends PlaceMixin(Resource) implements Partial<LandmarksOrHistoricalBuildings> {
+  class LandmarksOrHistoricalBuildingsClass extends PlaceMixin(Resource) {
   }
-  return LandmarksOrHistoricalBuildingsClass
+  return LandmarksOrHistoricalBuildingsClass as any
 }
 
 class LandmarksOrHistoricalBuildingsImpl extends LandmarksOrHistoricalBuildingsMixin(RdfResourceImpl) {

@@ -15,9 +15,9 @@ export interface ChooseAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   optionLiteral: string | undefined;
 }
 
-export function ChooseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ChooseAction> & RdfResourceCore> & Base {
+export function ChooseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ChooseAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ChooseActionClass extends AssessActionMixin(Resource) implements Partial<ChooseAction> {
+  class ChooseActionClass extends AssessActionMixin(Resource) {
     @rdfine.property.resource()
     actionOption: Schema.Thing | undefined;
     @rdfine.property.literal({ path: schema.actionOption })
@@ -27,7 +27,7 @@ export function ChooseActionMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.literal({ path: schema.option })
     optionLiteral: string | undefined;
   }
-  return ChooseActionClass
+  return ChooseActionClass as any
 }
 
 class ChooseActionImpl extends ChooseActionMixin(RdfResourceImpl) {

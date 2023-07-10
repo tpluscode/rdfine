@@ -12,13 +12,13 @@ export interface ClaimReview<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   claimReviewed: string | undefined;
 }
 
-export function ClaimReviewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ClaimReview> & RdfResourceCore> & Base {
+export function ClaimReviewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ClaimReview & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ClaimReviewClass extends ReviewMixin(Resource) implements Partial<ClaimReview> {
+  class ClaimReviewClass extends ReviewMixin(Resource) {
     @rdfine.property.literal()
     claimReviewed: string | undefined;
   }
-  return ClaimReviewClass
+  return ClaimReviewClass as any
 }
 
 class ClaimReviewImpl extends ClaimReviewMixin(RdfResourceImpl) {

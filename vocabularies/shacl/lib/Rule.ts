@@ -13,13 +13,13 @@ export interface Rule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.
   condition: Sh.Shape<D> | undefined;
 }
 
-export function RuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Rule> & RdfResourceCore> & Base {
+export function RuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Rule & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class RuleClass extends RdfsResourceMixin(Resource) implements Partial<Rule> {
+  class RuleClass extends RdfsResourceMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [sh.Shape] })
     condition: Sh.Shape | undefined;
   }
-  return RuleClass
+  return RuleClass as any
 }
 
 class RuleImpl extends RuleMixin(RdfResourceImpl) {

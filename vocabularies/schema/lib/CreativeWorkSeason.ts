@@ -22,9 +22,9 @@ export interface CreativeWorkSeason<D extends RDF.DatasetCore = RDF.DatasetCore>
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function CreativeWorkSeasonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CreativeWorkSeason> & RdfResourceCore> & Base {
+export function CreativeWorkSeasonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CreativeWorkSeason & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CreativeWorkSeasonClass extends CreativeWorkMixin(Resource) implements Partial<CreativeWorkSeason> {
+  class CreativeWorkSeasonClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     actor: Schema.Person | undefined;
     @rdfine.property.resource()
@@ -48,7 +48,7 @@ export function CreativeWorkSeasonMixin<Base extends rdfine.Constructor>(Resourc
     @rdfine.property.resource()
     trailer: Schema.VideoObject | undefined;
   }
-  return CreativeWorkSeasonClass
+  return CreativeWorkSeasonClass as any
 }
 
 class CreativeWorkSeasonImpl extends CreativeWorkSeasonMixin(RdfResourceImpl) {

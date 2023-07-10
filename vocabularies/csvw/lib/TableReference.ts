@@ -13,9 +13,9 @@ export interface TableReference<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   schemaReference: string | undefined;
 }
 
-export function TableReferenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TableReference> & RdfResourceCore> & Base {
+export function TableReferenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TableReference & RdfResourceCore> & Base {
   @rdfine.namespace(csvw)
-  class TableReferenceClass extends Resource implements Partial<TableReference> {
+  class TableReferenceClass extends Resource {
     @rdfine.property.literal()
     columnReference: string | undefined;
     @rdfine.property.literal()
@@ -23,7 +23,7 @@ export function TableReferenceMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.literal()
     schemaReference: string | undefined;
   }
-  return TableReferenceClass
+  return TableReferenceClass as any
 }
 
 class TableReferenceImpl extends TableReferenceMixin(RdfResourceImpl) {

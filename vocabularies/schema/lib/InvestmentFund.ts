@@ -11,11 +11,11 @@ import { InvestmentOrDepositMixin } from './InvestmentOrDeposit.js';
 export interface InvestmentFund<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InvestmentOrDeposit<D>, rdfine.RdfResource<D> {
 }
 
-export function InvestmentFundMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InvestmentFund> & RdfResourceCore> & Base {
+export function InvestmentFundMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InvestmentFund & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class InvestmentFundClass extends InvestmentOrDepositMixin(Resource) implements Partial<InvestmentFund> {
+  class InvestmentFundClass extends InvestmentOrDepositMixin(Resource) {
   }
-  return InvestmentFundClass
+  return InvestmentFundClass as any
 }
 
 class InvestmentFundImpl extends InvestmentFundMixin(RdfResourceImpl) {

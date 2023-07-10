@@ -11,11 +11,11 @@ import { MessageMixin } from './Message.js';
 export interface EmailMessage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Message<D>, rdfine.RdfResource<D> {
 }
 
-export function EmailMessageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EmailMessage> & RdfResourceCore> & Base {
+export function EmailMessageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EmailMessage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class EmailMessageClass extends MessageMixin(Resource) implements Partial<EmailMessage> {
+  class EmailMessageClass extends MessageMixin(Resource) {
   }
-  return EmailMessageClass
+  return EmailMessageClass as any
 }
 
 class EmailMessageImpl extends EmailMessageMixin(RdfResourceImpl) {

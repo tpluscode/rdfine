@@ -12,13 +12,13 @@ export interface Answer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   answerExplanation: Schema.Comment<D> | Schema.WebContent<D> | undefined;
 }
 
-export function AnswerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Answer> & RdfResourceCore> & Base {
+export function AnswerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Answer & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AnswerClass extends CommentMixin(Resource) implements Partial<Answer> {
+  class AnswerClass extends CommentMixin(Resource) {
     @rdfine.property.resource()
     answerExplanation: Schema.Comment | Schema.WebContent | undefined;
   }
-  return AnswerClass
+  return AnswerClass as any
 }
 
 class AnswerImpl extends AnswerMixin(RdfResourceImpl) {

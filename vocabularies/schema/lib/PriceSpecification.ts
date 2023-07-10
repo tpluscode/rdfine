@@ -20,9 +20,9 @@ export interface PriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore>
   valueAddedTaxIncluded: boolean | undefined;
 }
 
-export function PriceSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PriceSpecification> & RdfResourceCore> & Base {
+export function PriceSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PriceSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PriceSpecificationClass extends StructuredValueMixin(Resource) implements Partial<PriceSpecification> {
+  class PriceSpecificationClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     eligibleQuantity: Schema.QuantitativeValue | undefined;
     @rdfine.property.resource()
@@ -42,7 +42,7 @@ export function PriceSpecificationMixin<Base extends rdfine.Constructor>(Resourc
     @rdfine.property.literal({ type: Boolean })
     valueAddedTaxIncluded: boolean | undefined;
   }
-  return PriceSpecificationClass
+  return PriceSpecificationClass as any
 }
 
 class PriceSpecificationImpl extends PriceSpecificationMixin(RdfResourceImpl) {

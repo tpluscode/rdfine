@@ -20,9 +20,9 @@ export interface LearningResource<D extends RDF.DatasetCore = RDF.DatasetCore> e
   teaches: string | undefined;
 }
 
-export function LearningResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LearningResource> & RdfResourceCore> & Base {
+export function LearningResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LearningResource & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LearningResourceClass extends CreativeWorkMixin(Resource) implements Partial<LearningResource> {
+  class LearningResourceClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal()
     assesses: string | undefined;
     @rdfine.property.literal()
@@ -42,7 +42,7 @@ export function LearningResourceMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.literal()
     teaches: string | undefined;
   }
-  return LearningResourceClass
+  return LearningResourceClass as any
 }
 
 class LearningResourceImpl extends LearningResourceMixin(RdfResourceImpl) {

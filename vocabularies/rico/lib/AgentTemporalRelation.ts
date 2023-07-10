@@ -15,9 +15,9 @@ export interface AgentTemporalRelation<D extends RDF.DatasetCore = RDF.DatasetCo
   asConcernsActivity: Rico.Activity<D> | undefined;
 }
 
-export function AgentTemporalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AgentTemporalRelation> & RdfResourceCore> & Base {
+export function AgentTemporalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentTemporalRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class AgentTemporalRelationClass extends TemporalRelationMixin(AgentToAgentRelationMixin(Resource)) implements Partial<AgentTemporalRelation> {
+  class AgentTemporalRelationClass extends TemporalRelationMixin(AgentToAgentRelationMixin(Resource)) {
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     agentTemporalRelationHasSource: Rico.Agent | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
@@ -25,7 +25,7 @@ export function AgentTemporalRelationMixin<Base extends rdfine.Constructor>(Reso
     @rdfine.property.resource({ implicitTypes: [rico.Activity] })
     asConcernsActivity: Rico.Activity | undefined;
   }
-  return AgentTemporalRelationClass
+  return AgentTemporalRelationClass as any
 }
 
 class AgentTemporalRelationImpl extends AgentTemporalRelationMixin(RdfResourceImpl) {

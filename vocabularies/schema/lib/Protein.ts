@@ -12,13 +12,13 @@ export interface Protein<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   hasBioPolymerSequence: string | undefined;
 }
 
-export function ProteinMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Protein> & RdfResourceCore> & Base {
+export function ProteinMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Protein & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ProteinClass extends BioChemEntityMixin(Resource) implements Partial<Protein> {
+  class ProteinClass extends BioChemEntityMixin(Resource) {
     @rdfine.property.literal()
     hasBioPolymerSequence: string | undefined;
   }
-  return ProteinClass
+  return ProteinClass as any
 }
 
 class ProteinImpl extends ProteinMixin(RdfResourceImpl) {

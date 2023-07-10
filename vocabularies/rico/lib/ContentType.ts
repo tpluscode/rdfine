@@ -14,9 +14,9 @@ export interface ContentType<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   isOrWasContentTypeOfSomeMembersOf: Rico.RecordSet<D> | undefined;
 }
 
-export function ContentTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ContentType> & RdfResourceCore> & Base {
+export function ContentTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ContentType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class ContentTypeClass extends TypeMixin(Resource) implements Partial<ContentType> {
+  class ContentTypeClass extends TypeMixin(Resource) {
     @rdfine.property.resource()
     isContentTypeOf: Rico.Record | Rico.RecordPart | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
@@ -24,7 +24,7 @@ export function ContentTypeMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isOrWasContentTypeOfSomeMembersOf: Rico.RecordSet | undefined;
   }
-  return ContentTypeClass
+  return ContentTypeClass as any
 }
 
 class ContentTypeImpl extends ContentTypeMixin(RdfResourceImpl) {

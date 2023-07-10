@@ -13,15 +13,15 @@ export interface ActivityDocumentationRelation<D extends RDF.DatasetCore = RDF.D
   activityDocumentationRelationHasTarget: Rico.Activity<D> | undefined;
 }
 
-export function ActivityDocumentationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ActivityDocumentationRelation> & RdfResourceCore> & Base {
+export function ActivityDocumentationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ActivityDocumentationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class ActivityDocumentationRelationClass extends ProvenanceRelationMixin(Resource) implements Partial<ActivityDocumentationRelation> {
+  class ActivityDocumentationRelationClass extends ProvenanceRelationMixin(Resource) {
     @rdfine.property.resource()
     activityDocumentationRelationHasSource: Rico.Instantiation | Rico.RecordResource | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Activity] })
     activityDocumentationRelationHasTarget: Rico.Activity | undefined;
   }
-  return ActivityDocumentationRelationClass
+  return ActivityDocumentationRelationClass as any
 }
 
 class ActivityDocumentationRelationImpl extends ActivityDocumentationRelationMixin(RdfResourceImpl) {

@@ -13,15 +13,15 @@ export interface SeekToAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   startOffsetLiteral: number | undefined;
 }
 
-export function SeekToActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SeekToAction> & RdfResourceCore> & Base {
+export function SeekToActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SeekToAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SeekToActionClass extends ActionMixin(Resource) implements Partial<SeekToAction> {
+  class SeekToActionClass extends ActionMixin(Resource) {
     @rdfine.property.resource()
     startOffset: Schema.HyperTocEntry | undefined;
     @rdfine.property.literal({ path: schema.startOffset, type: Number })
     startOffsetLiteral: number | undefined;
   }
-  return SeekToActionClass
+  return SeekToActionClass as any
 }
 
 class SeekToActionImpl extends SeekToActionMixin(RdfResourceImpl) {

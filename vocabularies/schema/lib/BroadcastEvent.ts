@@ -16,9 +16,9 @@ export interface BroadcastEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   videoFormat: string | undefined;
 }
 
-export function BroadcastEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BroadcastEvent> & RdfResourceCore> & Base {
+export function BroadcastEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BroadcastEvent & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BroadcastEventClass extends PublicationEventMixin(Resource) implements Partial<BroadcastEvent> {
+  class BroadcastEventClass extends PublicationEventMixin(Resource) {
     @rdfine.property.resource()
     broadcastOfEvent: Schema.Event | undefined;
     @rdfine.property.literal({ type: Boolean })
@@ -30,7 +30,7 @@ export function BroadcastEventMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.literal()
     videoFormat: string | undefined;
   }
-  return BroadcastEventClass
+  return BroadcastEventClass as any
 }
 
 class BroadcastEventImpl extends BroadcastEventMixin(RdfResourceImpl) {

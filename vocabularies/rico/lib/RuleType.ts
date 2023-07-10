@@ -12,13 +12,13 @@ export interface RuleType<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   isOrWasRuleTypeOf: Rico.Rule<D> | undefined;
 }
 
-export function RuleTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RuleType> & RdfResourceCore> & Base {
+export function RuleTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RuleType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RuleTypeClass extends TypeMixin(Resource) implements Partial<RuleType> {
+  class RuleTypeClass extends TypeMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Rule] })
     isOrWasRuleTypeOf: Rico.Rule | undefined;
   }
-  return RuleTypeClass
+  return RuleTypeClass as any
 }
 
 class RuleTypeImpl extends RuleTypeMixin(RdfResourceImpl) {

@@ -15,9 +15,9 @@ export interface ShippingDeliveryTime<D extends RDF.DatasetCore = RDF.DatasetCor
   transitTime: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function ShippingDeliveryTimeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ShippingDeliveryTime> & RdfResourceCore> & Base {
+export function ShippingDeliveryTimeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ShippingDeliveryTime & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ShippingDeliveryTimeClass extends StructuredValueMixin(Resource) implements Partial<ShippingDeliveryTime> {
+  class ShippingDeliveryTimeClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     businessDays: Schema.OpeningHoursSpecification | undefined;
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
@@ -27,7 +27,7 @@ export function ShippingDeliveryTimeMixin<Base extends rdfine.Constructor>(Resou
     @rdfine.property.resource()
     transitTime: Schema.QuantitativeValue | undefined;
   }
-  return ShippingDeliveryTimeClass
+  return ShippingDeliveryTimeClass as any
 }
 
 class ShippingDeliveryTimeImpl extends ShippingDeliveryTimeMixin(RdfResourceImpl) {

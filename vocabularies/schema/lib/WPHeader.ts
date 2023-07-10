@@ -11,11 +11,11 @@ import { WebPageElementMixin } from './WebPageElement.js';
 export interface WPHeader<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, rdfine.RdfResource<D> {
 }
 
-export function WPHeaderMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WPHeader> & RdfResourceCore> & Base {
+export function WPHeaderMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WPHeader & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WPHeaderClass extends WebPageElementMixin(Resource) implements Partial<WPHeader> {
+  class WPHeaderClass extends WebPageElementMixin(Resource) {
   }
-  return WPHeaderClass
+  return WPHeaderClass as any
 }
 
 class WPHeaderImpl extends WPHeaderMixin(RdfResourceImpl) {

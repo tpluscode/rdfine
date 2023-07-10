@@ -13,15 +13,15 @@ export interface Removal<D extends RDF.DatasetCore = RDF.DatasetCore> extends Pr
   removedKey: RDF.Literal | undefined;
 }
 
-export function RemovalMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Removal> & RdfResourceCore> & Base {
+export function RemovalMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Removal & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class RemovalClass extends DerivationMixin(Resource) implements Partial<Removal> {
+  class RemovalClass extends DerivationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [prov.Dictionary] })
     dictionary: Prov.Dictionary | undefined;
     @rdfine.property()
     removedKey: RDF.Literal | undefined;
   }
-  return RemovalClass
+  return RemovalClass as any
 }
 
 class RemovalImpl extends RemovalMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { FoodEstablishmentMixin } from './FoodEstablishment.js';
 export interface BarOrPub<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FoodEstablishment<D>, rdfine.RdfResource<D> {
 }
 
-export function BarOrPubMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BarOrPub> & RdfResourceCore> & Base {
+export function BarOrPubMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BarOrPub & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BarOrPubClass extends FoodEstablishmentMixin(Resource) implements Partial<BarOrPub> {
+  class BarOrPubClass extends FoodEstablishmentMixin(Resource) {
   }
-  return BarOrPubClass
+  return BarOrPubClass as any
 }
 
 class BarOrPubImpl extends BarOrPubMixin(RdfResourceImpl) {

@@ -17,9 +17,9 @@ export interface RepaymentSpecification<D extends RDF.DatasetCore = RDF.DatasetC
   numberOfLoanPayments: number | undefined;
 }
 
-export function RepaymentSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RepaymentSpecification> & RdfResourceCore> & Base {
+export function RepaymentSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RepaymentSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RepaymentSpecificationClass extends StructuredValueMixin(Resource) implements Partial<RepaymentSpecification> {
+  class RepaymentSpecificationClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     downPayment: Schema.MonetaryAmount | undefined;
     @rdfine.property.literal({ path: schema.downPayment, type: Number })
@@ -33,7 +33,7 @@ export function RepaymentSpecificationMixin<Base extends rdfine.Constructor>(Res
     @rdfine.property.literal({ type: Number })
     numberOfLoanPayments: number | undefined;
   }
-  return RepaymentSpecificationClass
+  return RepaymentSpecificationClass as any
 }
 
 class RepaymentSpecificationImpl extends RepaymentSpecificationMixin(RdfResourceImpl) {

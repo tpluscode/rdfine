@@ -21,9 +21,9 @@ export interface Event<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico
   resultsOrResultedIn: Rico.Thing<D> | undefined;
 }
 
-export function EventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Event> & RdfResourceCore> & Base {
+export function EventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Event & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class EventClass extends ThingMixin(Resource) implements Partial<Event> {
+  class EventClass extends ThingMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     affectsOrAffected: Rico.Thing | undefined;
     @rdfine.property()
@@ -45,7 +45,7 @@ export function EventMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     resultsOrResultedIn: Rico.Thing | undefined;
   }
-  return EventClass
+  return EventClass as any
 }
 
 class EventImpl extends EventMixin(RdfResourceImpl) {

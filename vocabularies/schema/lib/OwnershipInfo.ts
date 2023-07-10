@@ -15,9 +15,9 @@ export interface OwnershipInfo<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   typeOfGood: Schema.Product<D> | Schema.Service<D> | undefined;
 }
 
-export function OwnershipInfoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OwnershipInfo> & RdfResourceCore> & Base {
+export function OwnershipInfoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OwnershipInfo & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OwnershipInfoClass extends StructuredValueMixin(Resource) implements Partial<OwnershipInfo> {
+  class OwnershipInfoClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     acquiredFrom: Schema.Organization | Schema.Person | undefined;
     @rdfine.property.literal({ type: Date })
@@ -27,7 +27,7 @@ export function OwnershipInfoMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.resource()
     typeOfGood: Schema.Product | Schema.Service | undefined;
   }
-  return OwnershipInfoClass
+  return OwnershipInfoClass as any
 }
 
 class OwnershipInfoImpl extends OwnershipInfoMixin(RdfResourceImpl) {

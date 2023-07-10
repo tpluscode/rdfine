@@ -16,9 +16,9 @@ export interface AnatomicalSystem<D extends RDF.DatasetCore = RDF.DatasetCore> e
   relatedTherapy: Schema.MedicalTherapy<D> | undefined;
 }
 
-export function AnatomicalSystemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AnatomicalSystem> & RdfResourceCore> & Base {
+export function AnatomicalSystemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AnatomicalSystem & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AnatomicalSystemClass extends MedicalEntityMixin(Resource) implements Partial<AnatomicalSystem> {
+  class AnatomicalSystemClass extends MedicalEntityMixin(Resource) {
     @rdfine.property.literal()
     associatedPathophysiology: string | undefined;
     @rdfine.property.resource()
@@ -30,7 +30,7 @@ export function AnatomicalSystemMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.resource()
     relatedTherapy: Schema.MedicalTherapy | undefined;
   }
-  return AnatomicalSystemClass
+  return AnatomicalSystemClass as any
 }
 
 class AnatomicalSystemImpl extends AnatomicalSystemMixin(RdfResourceImpl) {

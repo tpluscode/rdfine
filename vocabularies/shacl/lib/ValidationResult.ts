@@ -11,11 +11,11 @@ import { AbstractResultMixin } from './AbstractResult.js';
 export interface ValidationResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.AbstractResult<D>, rdfine.RdfResource<D> {
 }
 
-export function ValidationResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ValidationResult> & RdfResourceCore> & Base {
+export function ValidationResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ValidationResult & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class ValidationResultClass extends AbstractResultMixin(Resource) implements Partial<ValidationResult> {
+  class ValidationResultClass extends AbstractResultMixin(Resource) {
   }
-  return ValidationResultClass
+  return ValidationResultClass as any
 }
 
 class ValidationResultImpl extends ValidationResultMixin(RdfResourceImpl) {

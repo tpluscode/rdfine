@@ -14,9 +14,9 @@ export interface BusinessAudience<D extends RDF.DatasetCore = RDF.DatasetCore> e
   yearsInOperation: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function BusinessAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BusinessAudience> & RdfResourceCore> & Base {
+export function BusinessAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BusinessAudience & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BusinessAudienceClass extends AudienceMixin(Resource) implements Partial<BusinessAudience> {
+  class BusinessAudienceClass extends AudienceMixin(Resource) {
     @rdfine.property.resource()
     numberOfEmployees: Schema.QuantitativeValue | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function BusinessAudienceMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.resource()
     yearsInOperation: Schema.QuantitativeValue | undefined;
   }
-  return BusinessAudienceClass
+  return BusinessAudienceClass as any
 }
 
 class BusinessAudienceImpl extends BusinessAudienceMixin(RdfResourceImpl) {

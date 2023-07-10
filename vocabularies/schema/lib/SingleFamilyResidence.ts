@@ -14,9 +14,9 @@ export interface SingleFamilyResidence<D extends RDF.DatasetCore = RDF.DatasetCo
   occupancy: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function SingleFamilyResidenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SingleFamilyResidence> & RdfResourceCore> & Base {
+export function SingleFamilyResidenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SingleFamilyResidence & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SingleFamilyResidenceClass extends HouseMixin(Resource) implements Partial<SingleFamilyResidence> {
+  class SingleFamilyResidenceClass extends HouseMixin(Resource) {
     @rdfine.property.resource()
     numberOfRooms: Schema.QuantitativeValue | undefined;
     @rdfine.property.literal({ path: schema.numberOfRooms, type: Number })
@@ -24,7 +24,7 @@ export function SingleFamilyResidenceMixin<Base extends rdfine.Constructor>(Reso
     @rdfine.property.resource()
     occupancy: Schema.QuantitativeValue | undefined;
   }
-  return SingleFamilyResidenceClass
+  return SingleFamilyResidenceClass as any
 }
 
 class SingleFamilyResidenceImpl extends SingleFamilyResidenceMixin(RdfResourceImpl) {

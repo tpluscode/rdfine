@@ -13,15 +13,15 @@ export interface DataDownload<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   measurementTechniqueTerm: RDF.NamedNode | undefined;
 }
 
-export function DataDownloadMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DataDownload> & RdfResourceCore> & Base {
+export function DataDownloadMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DataDownload & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DataDownloadClass extends MediaObjectMixin(Resource) implements Partial<DataDownload> {
+  class DataDownloadClass extends MediaObjectMixin(Resource) {
     @rdfine.property.literal()
     measurementTechnique: string | undefined;
     @rdfine.property({ path: schema.measurementTechnique })
     measurementTechniqueTerm: RDF.NamedNode | undefined;
   }
-  return DataDownloadClass
+  return DataDownloadClass as any
 }
 
 class DataDownloadImpl extends DataDownloadMixin(RdfResourceImpl) {

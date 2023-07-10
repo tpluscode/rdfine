@@ -11,11 +11,11 @@ import { RepositoryMixin } from './Repository.js';
 export interface DarcsRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, rdfine.RdfResource<D> {
 }
 
-export function DarcsRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DarcsRepository> & RdfResourceCore> & Base {
+export function DarcsRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DarcsRepository & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
-  class DarcsRepositoryClass extends RepositoryMixin(Resource) implements Partial<DarcsRepository> {
+  class DarcsRepositoryClass extends RepositoryMixin(Resource) {
   }
-  return DarcsRepositoryClass
+  return DarcsRepositoryClass as any
 }
 
 class DarcsRepositoryImpl extends DarcsRepositoryMixin(RdfResourceImpl) {

@@ -13,15 +13,15 @@ export interface PostalCodeRangeSpecification<D extends RDF.DatasetCore = RDF.Da
   postalCodeEnd: string | undefined;
 }
 
-export function PostalCodeRangeSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PostalCodeRangeSpecification> & RdfResourceCore> & Base {
+export function PostalCodeRangeSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PostalCodeRangeSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PostalCodeRangeSpecificationClass extends StructuredValueMixin(Resource) implements Partial<PostalCodeRangeSpecification> {
+  class PostalCodeRangeSpecificationClass extends StructuredValueMixin(Resource) {
     @rdfine.property.literal()
     postalCodeBegin: string | undefined;
     @rdfine.property.literal()
     postalCodeEnd: string | undefined;
   }
-  return PostalCodeRangeSpecificationClass
+  return PostalCodeRangeSpecificationClass as any
 }
 
 class PostalCodeRangeSpecificationImpl extends PostalCodeRangeSpecificationMixin(RdfResourceImpl) {

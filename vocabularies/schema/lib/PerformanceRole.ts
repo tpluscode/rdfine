@@ -12,13 +12,13 @@ export interface PerformanceRole<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   characterName: string | undefined;
 }
 
-export function PerformanceRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PerformanceRole> & RdfResourceCore> & Base {
+export function PerformanceRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PerformanceRole & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PerformanceRoleClass extends RoleMixin(Resource) implements Partial<PerformanceRole> {
+  class PerformanceRoleClass extends RoleMixin(Resource) {
     @rdfine.property.literal()
     characterName: string | undefined;
   }
-  return PerformanceRoleClass
+  return PerformanceRoleClass as any
 }
 
 class PerformanceRoleImpl extends PerformanceRoleMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface RecordState<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   isRecordStateOf: Rico.Record<D> | Rico.RecordPart<D> | undefined;
 }
 
-export function RecordStateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RecordState> & RdfResourceCore> & Base {
+export function RecordStateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordState & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RecordStateClass extends TypeMixin(Resource) implements Partial<RecordState> {
+  class RecordStateClass extends TypeMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isOrWasRecordStateOfAllMembersOf: Rico.RecordSet | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
@@ -24,7 +24,7 @@ export function RecordStateMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource()
     isRecordStateOf: Rico.Record | Rico.RecordPart | undefined;
   }
-  return RecordStateClass
+  return RecordStateClass as any
 }
 
 class RecordStateImpl extends RecordStateMixin(RdfResourceImpl) {

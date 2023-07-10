@@ -21,9 +21,9 @@ export interface LodgingBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   starRating: Schema.Rating<D> | undefined;
 }
 
-export function LodgingBusinessMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LodgingBusiness> & RdfResourceCore> & Base {
+export function LodgingBusinessMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LodgingBusiness & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LodgingBusinessClass extends LocalBusinessMixin(Resource) implements Partial<LodgingBusiness> {
+  class LodgingBusinessClass extends LocalBusinessMixin(Resource) {
     @rdfine.property.resource()
     amenityFeature: Schema.LocationFeatureSpecification | undefined;
     @rdfine.property.resource()
@@ -45,7 +45,7 @@ export function LodgingBusinessMixin<Base extends rdfine.Constructor>(Resource: 
     @rdfine.property.resource()
     starRating: Schema.Rating | undefined;
   }
-  return LodgingBusinessClass
+  return LodgingBusinessClass as any
 }
 
 class LodgingBusinessImpl extends LodgingBusinessMixin(RdfResourceImpl) {

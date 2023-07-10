@@ -11,11 +11,11 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 export interface InternetCafe<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function InternetCafeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InternetCafe> & RdfResourceCore> & Base {
+export function InternetCafeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InternetCafe & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class InternetCafeClass extends LocalBusinessMixin(Resource) implements Partial<InternetCafe> {
+  class InternetCafeClass extends LocalBusinessMixin(Resource) {
   }
-  return InternetCafeClass
+  return InternetCafeClass as any
 }
 
 class InternetCafeImpl extends InternetCafeMixin(RdfResourceImpl) {

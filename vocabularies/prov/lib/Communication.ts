@@ -11,11 +11,11 @@ import { ActivityInfluenceMixin } from './ActivityInfluence.js';
 export interface Communication<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.ActivityInfluence<D>, rdfine.RdfResource<D> {
 }
 
-export function CommunicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Communication> & RdfResourceCore> & Base {
+export function CommunicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Communication & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class CommunicationClass extends ActivityInfluenceMixin(Resource) implements Partial<Communication> {
+  class CommunicationClass extends ActivityInfluenceMixin(Resource) {
   }
-  return CommunicationClass
+  return CommunicationClass as any
 }
 
 class CommunicationImpl extends CommunicationMixin(RdfResourceImpl) {

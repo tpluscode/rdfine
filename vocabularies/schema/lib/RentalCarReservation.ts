@@ -15,9 +15,9 @@ export interface RentalCarReservation<D extends RDF.DatasetCore = RDF.DatasetCor
   pickupTime: Date | undefined;
 }
 
-export function RentalCarReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RentalCarReservation> & RdfResourceCore> & Base {
+export function RentalCarReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RentalCarReservation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RentalCarReservationClass extends ReservationMixin(Resource) implements Partial<RentalCarReservation> {
+  class RentalCarReservationClass extends ReservationMixin(Resource) {
     @rdfine.property.resource()
     dropoffLocation: Schema.Place | undefined;
     @rdfine.property.literal({ type: Date })
@@ -27,7 +27,7 @@ export function RentalCarReservationMixin<Base extends rdfine.Constructor>(Resou
     @rdfine.property.literal({ type: Date })
     pickupTime: Date | undefined;
   }
-  return RentalCarReservationClass
+  return RentalCarReservationClass as any
 }
 
 class RentalCarReservationImpl extends RentalCarReservationMixin(RdfResourceImpl) {

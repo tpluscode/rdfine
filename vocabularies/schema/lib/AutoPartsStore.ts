@@ -12,11 +12,11 @@ import { StoreMixin } from './Store.js';
 export interface AutoPartsStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AutomotiveBusiness<D>, Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
-export function AutoPartsStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AutoPartsStore> & RdfResourceCore> & Base {
+export function AutoPartsStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AutoPartsStore & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AutoPartsStoreClass extends StoreMixin(AutomotiveBusinessMixin(Resource)) implements Partial<AutoPartsStore> {
+  class AutoPartsStoreClass extends StoreMixin(AutomotiveBusinessMixin(Resource)) {
   }
-  return AutoPartsStoreClass
+  return AutoPartsStoreClass as any
 }
 
 class AutoPartsStoreImpl extends AutoPartsStoreMixin(RdfResourceImpl) {

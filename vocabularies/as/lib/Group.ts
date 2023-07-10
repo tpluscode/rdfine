@@ -11,11 +11,11 @@ import { ObjectMixin } from './Object.js';
 export interface Group<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
 }
 
-export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Group> & RdfResourceCore> & Base {
+export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Group & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class GroupClass extends ObjectMixin(Resource) implements Partial<Group> {
+  class GroupClass extends ObjectMixin(Resource) {
   }
-  return GroupClass
+  return GroupClass as any
 }
 
 class GroupImpl extends GroupMixin(RdfResourceImpl) {

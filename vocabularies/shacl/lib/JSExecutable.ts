@@ -13,13 +13,13 @@ export interface JSExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   jsFunctionName: string | undefined;
 }
 
-export function JSExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JSExecutable> & RdfResourceCore> & Base {
+export function JSExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JSExecutable & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class JSExecutableClass extends RdfsResourceMixin(Resource) implements Partial<JSExecutable> {
+  class JSExecutableClass extends RdfsResourceMixin(Resource) {
     @rdfine.property.literal()
     jsFunctionName: string | undefined;
   }
-  return JSExecutableClass
+  return JSExecutableClass as any
 }
 
 class JSExecutableImpl extends JSExecutableMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { SportsActivityLocationMixin } from './SportsActivityLocation.js';
 export interface ExerciseGym<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SportsActivityLocation<D>, rdfine.RdfResource<D> {
 }
 
-export function ExerciseGymMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ExerciseGym> & RdfResourceCore> & Base {
+export function ExerciseGymMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ExerciseGym & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ExerciseGymClass extends SportsActivityLocationMixin(Resource) implements Partial<ExerciseGym> {
+  class ExerciseGymClass extends SportsActivityLocationMixin(Resource) {
   }
-  return ExerciseGymClass
+  return ExerciseGymClass as any
 }
 
 class ExerciseGymImpl extends ExerciseGymMixin(RdfResourceImpl) {

@@ -15,9 +15,9 @@ export interface ExchangeRateSpecification<D extends RDF.DatasetCore = RDF.Datas
   exchangeRateSpreadLiteral: number | undefined;
 }
 
-export function ExchangeRateSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ExchangeRateSpecification> & RdfResourceCore> & Base {
+export function ExchangeRateSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ExchangeRateSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ExchangeRateSpecificationClass extends StructuredValueMixin(Resource) implements Partial<ExchangeRateSpecification> {
+  class ExchangeRateSpecificationClass extends StructuredValueMixin(Resource) {
     @rdfine.property.literal()
     currency: string | undefined;
     @rdfine.property.resource()
@@ -27,7 +27,7 @@ export function ExchangeRateSpecificationMixin<Base extends rdfine.Constructor>(
     @rdfine.property.literal({ path: schema.exchangeRateSpread, type: Number })
     exchangeRateSpreadLiteral: number | undefined;
   }
-  return ExchangeRateSpecificationClass
+  return ExchangeRateSpecificationClass as any
 }
 
 class ExchangeRateSpecificationImpl extends ExchangeRateSpecificationMixin(RdfResourceImpl) {

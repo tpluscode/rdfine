@@ -11,11 +11,11 @@ import { PerformingGroupMixin } from './PerformingGroup.js';
 export interface TheaterGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PerformingGroup<D>, rdfine.RdfResource<D> {
 }
 
-export function TheaterGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TheaterGroup> & RdfResourceCore> & Base {
+export function TheaterGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TheaterGroup & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TheaterGroupClass extends PerformingGroupMixin(Resource) implements Partial<TheaterGroup> {
+  class TheaterGroupClass extends PerformingGroupMixin(Resource) {
   }
-  return TheaterGroupClass
+  return TheaterGroupClass as any
 }
 
 class TheaterGroupImpl extends TheaterGroupMixin(RdfResourceImpl) {

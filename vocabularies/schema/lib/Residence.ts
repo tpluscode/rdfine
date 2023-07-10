@@ -12,13 +12,13 @@ export interface Residence<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   accommodationFloorPlan: Schema.FloorPlan<D> | undefined;
 }
 
-export function ResidenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Residence> & RdfResourceCore> & Base {
+export function ResidenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Residence & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ResidenceClass extends PlaceMixin(Resource) implements Partial<Residence> {
+  class ResidenceClass extends PlaceMixin(Resource) {
     @rdfine.property.resource()
     accommodationFloorPlan: Schema.FloorPlan | undefined;
   }
-  return ResidenceClass
+  return ResidenceClass as any
 }
 
 class ResidenceImpl extends ResidenceMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface CollectionPage<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   prev: As.CollectionPage<D> | As.Link<D> | undefined;
 }
 
-export function CollectionPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CollectionPage> & RdfResourceCore> & Base {
+export function CollectionPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CollectionPage & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class CollectionPageClass extends CollectionMixin(Resource) implements Partial<CollectionPage> {
+  class CollectionPageClass extends CollectionMixin(Resource) {
     @rdfine.property.resource()
     next: As.CollectionPage | As.Link | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function CollectionPageMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.resource()
     prev: As.CollectionPage | As.Link | undefined;
   }
-  return CollectionPageClass
+  return CollectionPageClass as any
 }
 
 class CollectionPageImpl extends CollectionPageMixin(RdfResourceImpl) {

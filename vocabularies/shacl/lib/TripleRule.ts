@@ -14,9 +14,9 @@ export interface TripleRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   subject: RDF.Term | undefined;
 }
 
-export function TripleRuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TripleRule> & RdfResourceCore> & Base {
+export function TripleRuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TripleRule & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class TripleRuleClass extends RuleMixin(Resource) implements Partial<TripleRule> {
+  class TripleRuleClass extends RuleMixin(Resource) {
     @rdfine.property()
     object: RDF.Term | undefined;
     @rdfine.property()
@@ -24,7 +24,7 @@ export function TripleRuleMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property()
     subject: RDF.Term | undefined;
   }
-  return TripleRuleClass
+  return TripleRuleClass as any
 }
 
 class TripleRuleImpl extends TripleRuleMixin(RdfResourceImpl) {

@@ -27,9 +27,9 @@ export interface Schema<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdf
   valueUrl: string | undefined;
 }
 
-export function SchemaMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Schema> & RdfResourceCore> & Base {
+export function SchemaMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Schema & RdfResourceCore> & Base {
   @rdfine.namespace(csvw)
-  class SchemaClass extends Resource implements Partial<Schema> {
+  class SchemaClass extends Resource {
     @rdfine.property.literal()
     aboutUrl: string | undefined;
     @rdfine.property.resource({ values: 'list', implicitTypes: [csvw.Column] })
@@ -65,7 +65,7 @@ export function SchemaMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.literal()
     valueUrl: string | undefined;
   }
-  return SchemaClass
+  return SchemaClass as any
 }
 
 class SchemaImpl extends SchemaMixin(RdfResourceImpl) {

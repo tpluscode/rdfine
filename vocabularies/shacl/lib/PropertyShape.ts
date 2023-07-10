@@ -40,9 +40,9 @@ export interface PropertyShape<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   uniqueLang: boolean | undefined;
 }
 
-export function PropertyShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PropertyShape> & RdfResourceCore> & Base {
+export function PropertyShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PropertyShape & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class PropertyShapeClass extends ShapeMixin(Resource) implements Partial<PropertyShape> {
+  class PropertyShapeClass extends ShapeMixin(Resource) {
     @rdfine.property.resource({ path: sh.equals, as: [RdfPropertyMixin] })
     '_equals': Rdf.Property | undefined;
     @rdfine.property.resource({ as: [RdfsDatatypeMixin] })
@@ -92,7 +92,7 @@ export function PropertyShapeMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.literal({ type: Boolean })
     uniqueLang: boolean | undefined;
   }
-  return PropertyShapeClass
+  return PropertyShapeClass as any
 }
 
 class PropertyShapeImpl extends PropertyShapeMixin(RdfResourceImpl) {

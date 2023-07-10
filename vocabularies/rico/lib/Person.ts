@@ -55,9 +55,9 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Ric
   personIsTargetOfTeachingRelation: Rico.TeachingRelation<D> | undefined;
 }
 
-export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Person> & RdfResourceCore> & Base {
+export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Person & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class PersonClass extends AgentMixin(Resource) implements Partial<Person> {
+  class PersonClass extends AgentMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.IntellectualPropertyRightsRelation] })
     agentIsSourceOfIntellectualPropertyRightsRelation: Rico.IntellectualPropertyRightsRelation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.OwnershipRelation] })
@@ -147,7 +147,7 @@ export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.resource({ implicitTypes: [rico.TeachingRelation] })
     personIsTargetOfTeachingRelation: Rico.TeachingRelation | undefined;
   }
-  return PersonClass
+  return PersonClass as any
 }
 
 class PersonImpl extends PersonMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { ViewerMixin } from './Viewer.js';
 export interface SingleViewer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Viewer<D>, rdfine.RdfResource<D> {
 }
 
-export function SingleViewerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SingleViewer> & RdfResourceCore> & Base {
+export function SingleViewerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SingleViewer & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class SingleViewerClass extends ViewerMixin(Resource) implements Partial<SingleViewer> {
+  class SingleViewerClass extends ViewerMixin(Resource) {
   }
-  return SingleViewerClass
+  return SingleViewerClass as any
 }
 
 class SingleViewerImpl extends SingleViewerMixin(RdfResourceImpl) {

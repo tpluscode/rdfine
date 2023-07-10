@@ -16,9 +16,9 @@ export interface CommunicateAction<D extends RDF.DatasetCore = RDF.DatasetCore> 
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function CommunicateActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CommunicateAction> & RdfResourceCore> & Base {
+export function CommunicateActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CommunicateAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CommunicateActionClass extends InteractActionMixin(Resource) implements Partial<CommunicateAction> {
+  class CommunicateActionClass extends InteractActionMixin(Resource) {
     @rdfine.property.resource()
     about: Schema.Thing | undefined;
     @rdfine.property.resource()
@@ -30,7 +30,7 @@ export function CommunicateActionMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
-  return CommunicateActionClass
+  return CommunicateActionClass as any
 }
 
 class CommunicateActionImpl extends CommunicateActionMixin(RdfResourceImpl) {

@@ -78,9 +78,9 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   worksFor: Schema.Organization<D> | undefined;
 }
 
-export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Person> & RdfResourceCore> & Base {
+export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Person & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PersonClass extends ThingMixin(Resource) implements Partial<Person> {
+  class PersonClass extends ThingMixin(Resource) {
     @rdfine.property.literal()
     additionalName: string | undefined;
     @rdfine.property.resource()
@@ -216,7 +216,7 @@ export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.resource()
     worksFor: Schema.Organization | undefined;
   }
-  return PersonClass
+  return PersonClass as any
 }
 
 class PersonImpl extends PersonMixin(RdfResourceImpl) {

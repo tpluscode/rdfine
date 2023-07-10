@@ -16,9 +16,9 @@ export interface Link<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.P
   title: string | undefined;
 }
 
-export function LinkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Link> & RdfResourceCore> & Base {
+export function LinkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Link & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class LinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) implements Partial<Link> {
+  class LinkClass extends ResourceMixin(RdfPropertyMixin(Resource)) {
     @rdfine.property.literal()
     description: string | undefined;
     @rdfine.property.resource({ values: 'array', implicitTypes: [hydra.Operation] })
@@ -26,7 +26,7 @@ export function LinkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.literal()
     title: string | undefined;
   }
-  return LinkClass
+  return LinkClass as any
 }
 
 class LinkImpl extends LinkMixin(RdfResourceImpl) {

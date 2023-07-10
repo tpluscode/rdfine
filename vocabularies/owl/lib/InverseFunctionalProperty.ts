@@ -11,11 +11,11 @@ import { ObjectPropertyMixin } from './ObjectProperty.js';
 export interface InverseFunctionalProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, rdfine.RdfResource<D> {
 }
 
-export function InverseFunctionalPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InverseFunctionalProperty> & RdfResourceCore> & Base {
+export function InverseFunctionalPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InverseFunctionalProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class InverseFunctionalPropertyClass extends ObjectPropertyMixin(Resource) implements Partial<InverseFunctionalProperty> {
+  class InverseFunctionalPropertyClass extends ObjectPropertyMixin(Resource) {
   }
-  return InverseFunctionalPropertyClass
+  return InverseFunctionalPropertyClass as any
 }
 
 class InverseFunctionalPropertyImpl extends InverseFunctionalPropertyMixin(RdfResourceImpl) {

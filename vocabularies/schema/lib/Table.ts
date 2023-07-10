@@ -11,11 +11,11 @@ import { WebPageElementMixin } from './WebPageElement.js';
 export interface Table<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, rdfine.RdfResource<D> {
 }
 
-export function TableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Table> & RdfResourceCore> & Base {
+export function TableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Table & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TableClass extends WebPageElementMixin(Resource) implements Partial<Table> {
+  class TableClass extends WebPageElementMixin(Resource) {
   }
-  return TableClass
+  return TableClass as any
 }
 
 class TableImpl extends TableMixin(RdfResourceImpl) {

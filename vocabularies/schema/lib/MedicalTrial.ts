@@ -12,13 +12,13 @@ export interface MedicalTrial<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   trialDesign: Schema.MedicalTrialDesign | undefined;
 }
 
-export function MedicalTrialMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalTrial> & RdfResourceCore> & Base {
+export function MedicalTrialMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalTrial & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalTrialClass extends MedicalStudyMixin(Resource) implements Partial<MedicalTrial> {
+  class MedicalTrialClass extends MedicalStudyMixin(Resource) {
     @rdfine.property()
     trialDesign: Schema.MedicalTrialDesign | undefined;
   }
-  return MedicalTrialClass
+  return MedicalTrialClass as any
 }
 
 class MedicalTrialImpl extends MedicalTrialMixin(RdfResourceImpl) {

@@ -16,9 +16,9 @@ export interface OrderItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   orderQuantity: number | undefined;
 }
 
-export function OrderItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OrderItem> & RdfResourceCore> & Base {
+export function OrderItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OrderItem & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OrderItemClass extends IntangibleMixin(Resource) implements Partial<OrderItem> {
+  class OrderItemClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     orderDelivery: Schema.ParcelDelivery | undefined;
     @rdfine.property.resource()
@@ -30,7 +30,7 @@ export function OrderItemMixin<Base extends rdfine.Constructor>(Resource: Base):
     @rdfine.property.literal({ type: Number })
     orderQuantity: number | undefined;
   }
-  return OrderItemClass
+  return OrderItemClass as any
 }
 
 class OrderItemImpl extends OrderItemMixin(RdfResourceImpl) {

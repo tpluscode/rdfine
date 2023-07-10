@@ -17,13 +17,13 @@ export interface AllDifferent<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   distinctMembers: Rdf.List<D> | undefined;
 }
 
-export function AllDifferentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AllDifferent> & RdfResourceCore> & Base {
+export function AllDifferentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AllDifferent & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class AllDifferentClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) implements Partial<AllDifferent> {
+  class AllDifferentClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) {
     @rdfine.property.resource({ as: [RdfListMixin] })
     distinctMembers: Rdf.List | undefined;
   }
-  return AllDifferentClass
+  return AllDifferentClass as any
 }
 
 class AllDifferentImpl extends AllDifferentMixin(RdfResourceImpl) {

@@ -20,9 +20,9 @@ export interface Article<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   wordCount: number | undefined;
 }
 
-export function ArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Article> & RdfResourceCore> & Base {
+export function ArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Article & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ArticleClass extends CreativeWorkMixin(Resource) implements Partial<Article> {
+  class ArticleClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal()
     articleBody: string | undefined;
     @rdfine.property.literal()
@@ -42,7 +42,7 @@ export function ArticleMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property.literal({ type: Number })
     wordCount: number | undefined;
   }
-  return ArticleClass
+  return ArticleClass as any
 }
 
 class ArticleImpl extends ArticleMixin(RdfResourceImpl) {

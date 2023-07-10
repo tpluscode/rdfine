@@ -13,15 +13,15 @@ export interface SpeakableSpecification<D extends RDF.DatasetCore = RDF.DatasetC
   xpath: string | undefined;
 }
 
-export function SpeakableSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SpeakableSpecification> & RdfResourceCore> & Base {
+export function SpeakableSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SpeakableSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SpeakableSpecificationClass extends IntangibleMixin(Resource) implements Partial<SpeakableSpecification> {
+  class SpeakableSpecificationClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal()
     cssSelector: string | undefined;
     @rdfine.property.literal()
     xpath: string | undefined;
   }
-  return SpeakableSpecificationClass
+  return SpeakableSpecificationClass as any
 }
 
 class SpeakableSpecificationImpl extends SpeakableSpecificationMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { MoveActionMixin } from './MoveAction.js';
 export interface ArriveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MoveAction<D>, rdfine.RdfResource<D> {
 }
 
-export function ArriveActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ArriveAction> & RdfResourceCore> & Base {
+export function ArriveActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ArriveAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ArriveActionClass extends MoveActionMixin(Resource) implements Partial<ArriveAction> {
+  class ArriveActionClass extends MoveActionMixin(Resource) {
   }
-  return ArriveActionClass
+  return ArriveActionClass as any
 }
 
 class ArriveActionImpl extends ArriveActionMixin(RdfResourceImpl) {

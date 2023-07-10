@@ -12,11 +12,11 @@ import { SPARQLConstructExecutableMixin } from './SPARQLConstructExecutable.js';
 export interface SPARQLRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Rule<D>, Sh.SPARQLConstructExecutable<D>, rdfine.RdfResource<D> {
 }
 
-export function SPARQLRuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLRule> & RdfResourceCore> & Base {
+export function SPARQLRuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLRule & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class SPARQLRuleClass extends SPARQLConstructExecutableMixin(RuleMixin(Resource)) implements Partial<SPARQLRule> {
+  class SPARQLRuleClass extends SPARQLConstructExecutableMixin(RuleMixin(Resource)) {
   }
-  return SPARQLRuleClass
+  return SPARQLRuleClass as any
 }
 
 class SPARQLRuleImpl extends SPARQLRuleMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface IntransitiveActivity<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function IntransitiveActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<IntransitiveActivity> & RdfResourceCore> & Base {
+export function IntransitiveActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IntransitiveActivity & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class IntransitiveActivityClass extends ActivityMixin(Resource) implements Partial<IntransitiveActivity> {
+  class IntransitiveActivityClass extends ActivityMixin(Resource) {
   }
-  return IntransitiveActivityClass
+  return IntransitiveActivityClass as any
 }
 
 class IntransitiveActivityImpl extends IntransitiveActivityMixin(RdfResourceImpl) {

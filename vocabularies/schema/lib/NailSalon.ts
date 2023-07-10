@@ -11,11 +11,11 @@ import { HealthAndBeautyBusinessMixin } from './HealthAndBeautyBusiness.js';
 export interface NailSalon<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HealthAndBeautyBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function NailSalonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NailSalon> & RdfResourceCore> & Base {
+export function NailSalonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NailSalon & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class NailSalonClass extends HealthAndBeautyBusinessMixin(Resource) implements Partial<NailSalon> {
+  class NailSalonClass extends HealthAndBeautyBusinessMixin(Resource) {
   }
-  return NailSalonClass
+  return NailSalonClass as any
 }
 
 class NailSalonImpl extends NailSalonMixin(RdfResourceImpl) {

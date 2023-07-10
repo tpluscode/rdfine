@@ -11,11 +11,11 @@ import { IntangibleMixin } from './Intangible.js';
 export interface Quantity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
 }
 
-export function QuantityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Quantity> & RdfResourceCore> & Base {
+export function QuantityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Quantity & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class QuantityClass extends IntangibleMixin(Resource) implements Partial<Quantity> {
+  class QuantityClass extends IntangibleMixin(Resource) {
   }
-  return QuantityClass
+  return QuantityClass as any
 }
 
 class QuantityImpl extends QuantityMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface ReplyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   resultComment: Schema.Comment<D> | undefined;
 }
 
-export function ReplyActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ReplyAction> & RdfResourceCore> & Base {
+export function ReplyActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReplyAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ReplyActionClass extends CommunicateActionMixin(Resource) implements Partial<ReplyAction> {
+  class ReplyActionClass extends CommunicateActionMixin(Resource) {
     @rdfine.property.resource()
     resultComment: Schema.Comment | undefined;
   }
-  return ReplyActionClass
+  return ReplyActionClass as any
 }
 
 class ReplyActionImpl extends ReplyActionMixin(RdfResourceImpl) {

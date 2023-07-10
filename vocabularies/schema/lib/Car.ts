@@ -13,15 +13,15 @@ export interface Car<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema
   roofLoad: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function CarMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Car> & RdfResourceCore> & Base {
+export function CarMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Car & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CarClass extends VehicleMixin(Resource) implements Partial<Car> {
+  class CarClass extends VehicleMixin(Resource) {
     @rdfine.property.literal()
     acrissCode: string | undefined;
     @rdfine.property.resource()
     roofLoad: Schema.QuantitativeValue | undefined;
   }
-  return CarClass
+  return CarClass as any
 }
 
 class CarImpl extends CarMixin(RdfResourceImpl) {

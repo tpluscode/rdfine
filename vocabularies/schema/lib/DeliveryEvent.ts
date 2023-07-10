@@ -15,9 +15,9 @@ export interface DeliveryEvent<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   hasDeliveryMethod: Schema.DeliveryMethod | undefined;
 }
 
-export function DeliveryEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DeliveryEvent> & RdfResourceCore> & Base {
+export function DeliveryEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DeliveryEvent & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DeliveryEventClass extends EventMixin(Resource) implements Partial<DeliveryEvent> {
+  class DeliveryEventClass extends EventMixin(Resource) {
     @rdfine.property.literal()
     accessCode: string | undefined;
     @rdfine.property.literal({ type: Date })
@@ -27,7 +27,7 @@ export function DeliveryEventMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property()
     hasDeliveryMethod: Schema.DeliveryMethod | undefined;
   }
-  return DeliveryEventClass
+  return DeliveryEventClass as any
 }
 
 class DeliveryEventImpl extends DeliveryEventMixin(RdfResourceImpl) {

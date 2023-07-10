@@ -12,13 +12,13 @@ export interface CorporateBodyType<D extends RDF.DatasetCore = RDF.DatasetCore> 
   isOrWasCorporateBodyTypeOf: Rico.CorporateBody<D> | undefined;
 }
 
-export function CorporateBodyTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CorporateBodyType> & RdfResourceCore> & Base {
+export function CorporateBodyTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CorporateBodyType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class CorporateBodyTypeClass extends TypeMixin(Resource) implements Partial<CorporateBodyType> {
+  class CorporateBodyTypeClass extends TypeMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.CorporateBody] })
     isOrWasCorporateBodyTypeOf: Rico.CorporateBody | undefined;
   }
-  return CorporateBodyTypeClass
+  return CorporateBodyTypeClass as any
 }
 
 class CorporateBodyTypeImpl extends CorporateBodyTypeMixin(RdfResourceImpl) {

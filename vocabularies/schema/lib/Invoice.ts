@@ -29,9 +29,9 @@ export interface Invoice<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   totalPaymentDue: Schema.MonetaryAmount<D> | Schema.PriceSpecification<D> | undefined;
 }
 
-export function InvoiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Invoice> & RdfResourceCore> & Base {
+export function InvoiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Invoice & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class InvoiceClass extends IntangibleMixin(Resource) implements Partial<Invoice> {
+  class InvoiceClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal()
     accountId: string | undefined;
     @rdfine.property.resource()
@@ -69,7 +69,7 @@ export function InvoiceMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property.resource()
     totalPaymentDue: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
   }
-  return InvoiceClass
+  return InvoiceClass as any
 }
 
 class InvoiceImpl extends InvoiceMixin(RdfResourceImpl) {

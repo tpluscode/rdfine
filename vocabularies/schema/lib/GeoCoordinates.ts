@@ -19,9 +19,9 @@ export interface GeoCoordinates<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   postalCode: string | undefined;
 }
 
-export function GeoCoordinatesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GeoCoordinates> & RdfResourceCore> & Base {
+export function GeoCoordinatesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GeoCoordinates & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class GeoCoordinatesClass extends StructuredValueMixin(Resource) implements Partial<GeoCoordinates> {
+  class GeoCoordinatesClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     address: Schema.PostalAddress | undefined;
     @rdfine.property.resource()
@@ -39,7 +39,7 @@ export function GeoCoordinatesMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.literal()
     postalCode: string | undefined;
   }
-  return GeoCoordinatesClass
+  return GeoCoordinatesClass as any
 }
 
 class GeoCoordinatesImpl extends GeoCoordinatesMixin(RdfResourceImpl) {

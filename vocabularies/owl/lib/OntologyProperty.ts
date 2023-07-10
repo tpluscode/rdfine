@@ -14,11 +14,11 @@ import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 export interface OntologyProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, rdfine.RdfResource<D> {
 }
 
-export function OntologyPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OntologyProperty> & RdfResourceCore> & Base {
+export function OntologyPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OntologyProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class OntologyPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<OntologyProperty> {
+  class OntologyPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) {
   }
-  return OntologyPropertyClass
+  return OntologyPropertyClass as any
 }
 
 class OntologyPropertyImpl extends OntologyPropertyMixin(RdfResourceImpl) {

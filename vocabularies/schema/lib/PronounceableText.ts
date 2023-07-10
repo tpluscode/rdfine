@@ -15,9 +15,9 @@ export interface PronounceableText<D extends RDF.DatasetCore = RDF.DatasetCore> 
   textValue: string | undefined;
 }
 
-export function PronounceableTextMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PronounceableText> & RdfResourceCore> & Base {
+export function PronounceableTextMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PronounceableText & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PronounceableTextClass extends Resource implements Partial<PronounceableText> {
+  class PronounceableTextClass extends Resource {
     @rdfine.property.resource()
     inLanguage: Schema.Language | undefined;
     @rdfine.property.literal({ path: schema.inLanguage })
@@ -29,7 +29,7 @@ export function PronounceableTextMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property.literal()
     textValue: string | undefined;
   }
-  return PronounceableTextClass
+  return PronounceableTextClass as any
 }
 
 class PronounceableTextImpl extends PronounceableTextMixin(RdfResourceImpl) {

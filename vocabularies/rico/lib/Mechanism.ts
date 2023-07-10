@@ -12,13 +12,13 @@ export interface Mechanism<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   technicalCharacteristics: RDF.Literal | undefined;
 }
 
-export function MechanismMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Mechanism> & RdfResourceCore> & Base {
+export function MechanismMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Mechanism & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class MechanismClass extends AgentMixin(Resource) implements Partial<Mechanism> {
+  class MechanismClass extends AgentMixin(Resource) {
     @rdfine.property()
     technicalCharacteristics: RDF.Literal | undefined;
   }
-  return MechanismClass
+  return MechanismClass as any
 }
 
 class MechanismImpl extends MechanismMixin(RdfResourceImpl) {

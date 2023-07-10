@@ -14,9 +14,9 @@ export interface GameServer<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   serverStatus: Schema.GameServerStatus | undefined;
 }
 
-export function GameServerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GameServer> & RdfResourceCore> & Base {
+export function GameServerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GameServer & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class GameServerClass extends IntangibleMixin(Resource) implements Partial<GameServer> {
+  class GameServerClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     game: Schema.VideoGame | undefined;
     @rdfine.property.literal({ type: Number })
@@ -24,7 +24,7 @@ export function GameServerMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property()
     serverStatus: Schema.GameServerStatus | undefined;
   }
-  return GameServerClass
+  return GameServerClass as any
 }
 
 class GameServerImpl extends GameServerMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface Derivation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   hadUsage: Prov.Usage<D> | undefined;
 }
 
-export function DerivationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Derivation> & RdfResourceCore> & Base {
+export function DerivationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Derivation & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class DerivationClass extends EntityInfluenceMixin(Resource) implements Partial<Derivation> {
+  class DerivationClass extends EntityInfluenceMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [prov.Activity] })
     hadActivity: Prov.Activity | undefined;
     @rdfine.property.resource({ implicitTypes: [prov.Generation] })
@@ -24,7 +24,7 @@ export function DerivationMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property.resource({ implicitTypes: [prov.Usage] })
     hadUsage: Prov.Usage | undefined;
   }
-  return DerivationClass
+  return DerivationClass as any
 }
 
 class DerivationImpl extends DerivationMixin(RdfResourceImpl) {

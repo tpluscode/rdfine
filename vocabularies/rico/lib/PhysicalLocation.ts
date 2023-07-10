@@ -13,15 +13,15 @@ export interface PhysicalLocation<D extends RDF.DatasetCore = RDF.DatasetCore> e
   isOrWasPhysicalLocationOf: Rico.Place<D> | undefined;
 }
 
-export function PhysicalLocationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PhysicalLocation> & RdfResourceCore> & Base {
+export function PhysicalLocationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PhysicalLocation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class PhysicalLocationClass extends ThingMixin(Resource) implements Partial<PhysicalLocation> {
+  class PhysicalLocationClass extends ThingMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Coordinates] })
     hasOrHadCoordinates: Rico.Coordinates | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Place] })
     isOrWasPhysicalLocationOf: Rico.Place | undefined;
   }
-  return PhysicalLocationClass
+  return PhysicalLocationClass as any
 }
 
 class PhysicalLocationImpl extends PhysicalLocationMixin(RdfResourceImpl) {

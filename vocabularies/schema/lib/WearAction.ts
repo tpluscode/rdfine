@@ -11,11 +11,11 @@ import { UseActionMixin } from './UseAction.js';
 export interface WearAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UseAction<D>, rdfine.RdfResource<D> {
 }
 
-export function WearActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WearAction> & RdfResourceCore> & Base {
+export function WearActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WearAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WearActionClass extends UseActionMixin(Resource) implements Partial<WearAction> {
+  class WearActionClass extends UseActionMixin(Resource) {
   }
-  return WearActionClass
+  return WearActionClass as any
 }
 
 class WearActionImpl extends WearActionMixin(RdfResourceImpl) {

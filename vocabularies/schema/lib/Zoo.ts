@@ -11,11 +11,11 @@ import { CivicStructureMixin } from './CivicStructure.js';
 export interface Zoo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, rdfine.RdfResource<D> {
 }
 
-export function ZooMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Zoo> & RdfResourceCore> & Base {
+export function ZooMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Zoo & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ZooClass extends CivicStructureMixin(Resource) implements Partial<Zoo> {
+  class ZooClass extends CivicStructureMixin(Resource) {
   }
-  return ZooClass
+  return ZooClass as any
 }
 
 class ZooImpl extends ZooMixin(RdfResourceImpl) {

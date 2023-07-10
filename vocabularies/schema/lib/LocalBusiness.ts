@@ -17,9 +17,9 @@ export interface LocalBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   priceRange: string | undefined;
 }
 
-export function LocalBusinessMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LocalBusiness> & RdfResourceCore> & Base {
+export function LocalBusinessMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LocalBusiness & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LocalBusinessClass extends PlaceMixin(OrganizationMixin(Resource)) implements Partial<LocalBusiness> {
+  class LocalBusinessClass extends PlaceMixin(OrganizationMixin(Resource)) {
     @rdfine.property.resource()
     branchOf: Schema.Organization | undefined;
     @rdfine.property.literal()
@@ -31,7 +31,7 @@ export function LocalBusinessMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.literal()
     priceRange: string | undefined;
   }
-  return LocalBusinessClass
+  return LocalBusinessClass as any
 }
 
 class LocalBusinessImpl extends LocalBusinessMixin(RdfResourceImpl) {

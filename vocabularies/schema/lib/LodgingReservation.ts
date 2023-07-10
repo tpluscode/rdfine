@@ -20,9 +20,9 @@ export interface LodgingReservation<D extends RDF.DatasetCore = RDF.DatasetCore>
   numChildrenLiteral: number | undefined;
 }
 
-export function LodgingReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LodgingReservation> & RdfResourceCore> & Base {
+export function LodgingReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LodgingReservation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LodgingReservationClass extends ReservationMixin(Resource) implements Partial<LodgingReservation> {
+  class LodgingReservationClass extends ReservationMixin(Resource) {
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     checkinTime: Date | undefined;
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
@@ -42,7 +42,7 @@ export function LodgingReservationMixin<Base extends rdfine.Constructor>(Resourc
     @rdfine.property.literal({ path: schema.numChildren, type: Number })
     numChildrenLiteral: number | undefined;
   }
-  return LodgingReservationClass
+  return LodgingReservationClass as any
 }
 
 class LodgingReservationImpl extends LodgingReservationMixin(RdfResourceImpl) {

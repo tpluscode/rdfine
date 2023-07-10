@@ -11,11 +11,11 @@ import { DateMixin } from './Date.js';
 export interface DateRange<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Date<D>, rdfine.RdfResource<D> {
 }
 
-export function DateRangeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DateRange> & RdfResourceCore> & Base {
+export function DateRangeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DateRange & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class DateRangeClass extends DateMixin(Resource) implements Partial<DateRange> {
+  class DateRangeClass extends DateMixin(Resource) {
   }
-  return DateRangeClass
+  return DateRangeClass as any
 }
 
 class DateRangeImpl extends DateRangeMixin(RdfResourceImpl) {

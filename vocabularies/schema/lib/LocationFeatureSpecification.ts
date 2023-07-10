@@ -14,9 +14,9 @@ export interface LocationFeatureSpecification<D extends RDF.DatasetCore = RDF.Da
   validThrough: Date | undefined;
 }
 
-export function LocationFeatureSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LocationFeatureSpecification> & RdfResourceCore> & Base {
+export function LocationFeatureSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LocationFeatureSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LocationFeatureSpecificationClass extends PropertyValueMixin(Resource) implements Partial<LocationFeatureSpecification> {
+  class LocationFeatureSpecificationClass extends PropertyValueMixin(Resource) {
     @rdfine.property.resource()
     hoursAvailable: Schema.OpeningHoursSpecification | undefined;
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
@@ -24,7 +24,7 @@ export function LocationFeatureSpecificationMixin<Base extends rdfine.Constructo
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validThrough: Date | undefined;
   }
-  return LocationFeatureSpecificationClass
+  return LocationFeatureSpecificationClass as any
 }
 
 class LocationFeatureSpecificationImpl extends LocationFeatureSpecificationMixin(RdfResourceImpl) {

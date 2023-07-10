@@ -13,13 +13,13 @@ export interface JSLibrary<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   jsLibraryURL: string | undefined;
 }
 
-export function JSLibraryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JSLibrary> & RdfResourceCore> & Base {
+export function JSLibraryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JSLibrary & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class JSLibraryClass extends RdfsResourceMixin(Resource) implements Partial<JSLibrary> {
+  class JSLibraryClass extends RdfsResourceMixin(Resource) {
     @rdfine.property.literal()
     jsLibraryURL: string | undefined;
   }
-  return JSLibraryClass
+  return JSLibraryClass as any
 }
 
 class JSLibraryImpl extends JSLibraryMixin(RdfResourceImpl) {

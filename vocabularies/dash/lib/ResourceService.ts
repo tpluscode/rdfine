@@ -11,11 +11,11 @@ import { ServiceMixin } from './Service.js';
 export interface ResourceService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Service<D>, rdfine.RdfResource<D> {
 }
 
-export function ResourceServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ResourceService> & RdfResourceCore> & Base {
+export function ResourceServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ResourceService & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class ResourceServiceClass extends ServiceMixin(Resource) implements Partial<ResourceService> {
+  class ResourceServiceClass extends ServiceMixin(Resource) {
   }
-  return ResourceServiceClass
+  return ResourceServiceClass as any
 }
 
 class ResourceServiceImpl extends ResourceServiceMixin(RdfResourceImpl) {

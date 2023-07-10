@@ -29,9 +29,9 @@ export interface Flight<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   webCheckinTime: Date | undefined;
 }
 
-export function FlightMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Flight> & RdfResourceCore> & Base {
+export function FlightMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Flight & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class FlightClass extends TripMixin(Resource) implements Partial<Flight> {
+  class FlightClass extends TripMixin(Resource) {
     @rdfine.property.resource()
     aircraft: Schema.Vehicle | undefined;
     @rdfine.property.literal({ path: schema.aircraft })
@@ -69,7 +69,7 @@ export function FlightMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.literal({ type: Date })
     webCheckinTime: Date | undefined;
   }
-  return FlightClass
+  return FlightClass as any
 }
 
 class FlightImpl extends FlightMixin(RdfResourceImpl) {

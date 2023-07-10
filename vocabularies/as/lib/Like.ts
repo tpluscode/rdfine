@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Like<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function LikeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Like> & RdfResourceCore> & Base {
+export function LikeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Like & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class LikeClass extends ActivityMixin(Resource) implements Partial<Like> {
+  class LikeClass extends ActivityMixin(Resource) {
   }
-  return LikeClass
+  return LikeClass as any
 }
 
 class LikeImpl extends LikeMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface LiveBlogPosting<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   liveBlogUpdate: Schema.BlogPosting<D> | undefined;
 }
 
-export function LiveBlogPostingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LiveBlogPosting> & RdfResourceCore> & Base {
+export function LiveBlogPostingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LiveBlogPosting & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LiveBlogPostingClass extends BlogPostingMixin(Resource) implements Partial<LiveBlogPosting> {
+  class LiveBlogPostingClass extends BlogPostingMixin(Resource) {
     @rdfine.property.literal({ type: Date })
     coverageEndTime: Date | undefined;
     @rdfine.property.literal({ type: Date })
@@ -24,7 +24,7 @@ export function LiveBlogPostingMixin<Base extends rdfine.Constructor>(Resource: 
     @rdfine.property.resource()
     liveBlogUpdate: Schema.BlogPosting | undefined;
   }
-  return LiveBlogPostingClass
+  return LiveBlogPostingClass as any
 }
 
 class LiveBlogPostingImpl extends LiveBlogPostingMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface SPARQLUpdateExecutable<D extends RDF.DatasetCore = RDF.DatasetC
   update: string | undefined;
 }
 
-export function SPARQLUpdateExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLUpdateExecutable> & RdfResourceCore> & Base {
+export function SPARQLUpdateExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLUpdateExecutable & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class SPARQLUpdateExecutableClass extends SPARQLExecutableMixin(Resource) implements Partial<SPARQLUpdateExecutable> {
+  class SPARQLUpdateExecutableClass extends SPARQLExecutableMixin(Resource) {
     @rdfine.property.literal()
     update: string | undefined;
   }
-  return SPARQLUpdateExecutableClass
+  return SPARQLUpdateExecutableClass as any
 }
 
 class SPARQLUpdateExecutableImpl extends SPARQLUpdateExecutableMixin(RdfResourceImpl) {

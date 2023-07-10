@@ -43,9 +43,9 @@ export interface SoftwareApplication<D extends RDF.DatasetCore = RDF.DatasetCore
   supportingData: Schema.DataFeed<D> | undefined;
 }
 
-export function SoftwareApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SoftwareApplication> & RdfResourceCore> & Base {
+export function SoftwareApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SoftwareApplication & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SoftwareApplicationClass extends CreativeWorkMixin(Resource) implements Partial<SoftwareApplication> {
+  class SoftwareApplicationClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal()
     applicationCategory: string | undefined;
     @rdfine.property({ path: schema.applicationCategory })
@@ -111,7 +111,7 @@ export function SoftwareApplicationMixin<Base extends rdfine.Constructor>(Resour
     @rdfine.property.resource()
     supportingData: Schema.DataFeed | undefined;
   }
-  return SoftwareApplicationClass
+  return SoftwareApplicationClass as any
 }
 
 class SoftwareApplicationImpl extends SoftwareApplicationMixin(RdfResourceImpl) {

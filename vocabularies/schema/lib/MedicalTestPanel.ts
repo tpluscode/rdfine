@@ -12,13 +12,13 @@ export interface MedicalTestPanel<D extends RDF.DatasetCore = RDF.DatasetCore> e
   subTest: Schema.MedicalTest<D> | undefined;
 }
 
-export function MedicalTestPanelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalTestPanel> & RdfResourceCore> & Base {
+export function MedicalTestPanelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalTestPanel & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalTestPanelClass extends MedicalTestMixin(Resource) implements Partial<MedicalTestPanel> {
+  class MedicalTestPanelClass extends MedicalTestMixin(Resource) {
     @rdfine.property.resource()
     subTest: Schema.MedicalTest | undefined;
   }
-  return MedicalTestPanelClass
+  return MedicalTestPanelClass as any
 }
 
 class MedicalTestPanelImpl extends MedicalTestPanelMixin(RdfResourceImpl) {

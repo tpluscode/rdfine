@@ -12,15 +12,15 @@ export interface KeyEntityPair<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   pairKey: RDF.Literal | undefined;
 }
 
-export function KeyEntityPairMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<KeyEntityPair> & RdfResourceCore> & Base {
+export function KeyEntityPairMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<KeyEntityPair & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class KeyEntityPairClass extends Resource implements Partial<KeyEntityPair> {
+  class KeyEntityPairClass extends Resource {
     @rdfine.property.resource({ implicitTypes: [prov.Entity] })
     pairEntity: Prov.Entity | undefined;
     @rdfine.property()
     pairKey: RDF.Literal | undefined;
   }
-  return KeyEntityPairClass
+  return KeyEntityPairClass as any
 }
 
 class KeyEntityPairImpl extends KeyEntityPairMixin(RdfResourceImpl) {

@@ -13,15 +13,15 @@ export interface PerformanceRelation<D extends RDF.DatasetCore = RDF.DatasetCore
   performanceRelationHasTarget: Rico.Agent<D> | undefined;
 }
 
-export function PerformanceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PerformanceRelation> & RdfResourceCore> & Base {
+export function PerformanceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PerformanceRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class PerformanceRelationClass extends EventRelationMixin(Resource) implements Partial<PerformanceRelation> {
+  class PerformanceRelationClass extends EventRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Activity] })
     performanceRelationHasSource: Rico.Activity | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     performanceRelationHasTarget: Rico.Agent | undefined;
   }
-  return PerformanceRelationClass
+  return PerformanceRelationClass as any
 }
 
 class PerformanceRelationImpl extends PerformanceRelationMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { TestCaseResultMixin } from './TestCaseResult.js';
 export interface FailureTestCaseResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.TestCaseResult<D>, rdfine.RdfResource<D> {
 }
 
-export function FailureTestCaseResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FailureTestCaseResult> & RdfResourceCore> & Base {
+export function FailureTestCaseResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FailureTestCaseResult & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class FailureTestCaseResultClass extends TestCaseResultMixin(Resource) implements Partial<FailureTestCaseResult> {
+  class FailureTestCaseResultClass extends TestCaseResultMixin(Resource) {
   }
-  return FailureTestCaseResultClass
+  return FailureTestCaseResultClass as any
 }
 
 class FailureTestCaseResultImpl extends FailureTestCaseResultMixin(RdfResourceImpl) {

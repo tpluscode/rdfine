@@ -12,13 +12,13 @@ export interface TVClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   partOfTVSeries: Schema.TVSeries<D> | undefined;
 }
 
-export function TVClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TVClip> & RdfResourceCore> & Base {
+export function TVClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TVClip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TVClipClass extends ClipMixin(Resource) implements Partial<TVClip> {
+  class TVClipClass extends ClipMixin(Resource) {
     @rdfine.property.resource()
     partOfTVSeries: Schema.TVSeries | undefined;
   }
-  return TVClipClass
+  return TVClipClass as any
 }
 
 class TVClipImpl extends TVClipMixin(RdfResourceImpl) {

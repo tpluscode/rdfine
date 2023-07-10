@@ -11,11 +11,11 @@ import { ItemListMixin } from './ItemList.js';
 export interface OfferCatalog<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ItemList<D>, rdfine.RdfResource<D> {
 }
 
-export function OfferCatalogMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OfferCatalog> & RdfResourceCore> & Base {
+export function OfferCatalogMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OfferCatalog & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OfferCatalogClass extends ItemListMixin(Resource) implements Partial<OfferCatalog> {
+  class OfferCatalogClass extends ItemListMixin(Resource) {
   }
-  return OfferCatalogClass
+  return OfferCatalogClass as any
 }
 
 class OfferCatalogImpl extends OfferCatalogMixin(RdfResourceImpl) {

@@ -13,15 +13,15 @@ export interface TransferAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   toLocation: Schema.Place<D> | undefined;
 }
 
-export function TransferActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TransferAction> & RdfResourceCore> & Base {
+export function TransferActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TransferAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TransferActionClass extends ActionMixin(Resource) implements Partial<TransferAction> {
+  class TransferActionClass extends ActionMixin(Resource) {
     @rdfine.property.resource()
     fromLocation: Schema.Place | undefined;
     @rdfine.property.resource()
     toLocation: Schema.Place | undefined;
   }
-  return TransferActionClass
+  return TransferActionClass as any
 }
 
 class TransferActionImpl extends TransferActionMixin(RdfResourceImpl) {

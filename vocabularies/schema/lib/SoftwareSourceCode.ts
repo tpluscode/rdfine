@@ -19,9 +19,9 @@ export interface SoftwareSourceCode<D extends RDF.DatasetCore = RDF.DatasetCore>
   targetProduct: Schema.SoftwareApplication<D> | undefined;
 }
 
-export function SoftwareSourceCodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SoftwareSourceCode> & RdfResourceCore> & Base {
+export function SoftwareSourceCodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SoftwareSourceCode & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SoftwareSourceCodeClass extends CreativeWorkMixin(Resource) implements Partial<SoftwareSourceCode> {
+  class SoftwareSourceCodeClass extends CreativeWorkMixin(Resource) {
     @rdfine.property()
     codeRepository: RDF.NamedNode | undefined;
     @rdfine.property.literal()
@@ -39,7 +39,7 @@ export function SoftwareSourceCodeMixin<Base extends rdfine.Constructor>(Resourc
     @rdfine.property.resource()
     targetProduct: Schema.SoftwareApplication | undefined;
   }
-  return SoftwareSourceCodeClass
+  return SoftwareSourceCodeClass as any
 }
 
 class SoftwareSourceCodeImpl extends SoftwareSourceCodeMixin(RdfResourceImpl) {

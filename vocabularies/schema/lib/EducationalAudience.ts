@@ -12,13 +12,13 @@ export interface EducationalAudience<D extends RDF.DatasetCore = RDF.DatasetCore
   educationalRole: string | undefined;
 }
 
-export function EducationalAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EducationalAudience> & RdfResourceCore> & Base {
+export function EducationalAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EducationalAudience & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class EducationalAudienceClass extends AudienceMixin(Resource) implements Partial<EducationalAudience> {
+  class EducationalAudienceClass extends AudienceMixin(Resource) {
     @rdfine.property.literal()
     educationalRole: string | undefined;
   }
-  return EducationalAudienceClass
+  return EducationalAudienceClass as any
 }
 
 class EducationalAudienceImpl extends EducationalAudienceMixin(RdfResourceImpl) {

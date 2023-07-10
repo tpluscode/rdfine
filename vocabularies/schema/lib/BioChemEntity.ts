@@ -26,9 +26,9 @@ export interface BioChemEntity<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   taxonomicRangeLiteral: string | undefined;
 }
 
-export function BioChemEntityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BioChemEntity> & RdfResourceCore> & Base {
+export function BioChemEntityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BioChemEntity & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BioChemEntityClass extends ThingMixin(Resource) implements Partial<BioChemEntity> {
+  class BioChemEntityClass extends ThingMixin(Resource) {
     @rdfine.property.resource()
     associatedDisease: Schema.MedicalCondition | Schema.PropertyValue | undefined;
     @rdfine.property.resource()
@@ -60,7 +60,7 @@ export function BioChemEntityMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.literal({ path: schema.taxonomicRange })
     taxonomicRangeLiteral: string | undefined;
   }
-  return BioChemEntityClass
+  return BioChemEntityClass as any
 }
 
 class BioChemEntityImpl extends BioChemEntityMixin(RdfResourceImpl) {

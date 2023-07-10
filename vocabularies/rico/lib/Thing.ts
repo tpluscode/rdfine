@@ -73,9 +73,9 @@ export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   width: RDF.Literal | undefined;
 }
 
-export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Thing> & RdfResourceCore> & Base {
+export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Thing & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class ThingClass extends Resource implements Partial<Thing> {
+  class ThingClass extends Resource {
     @rdfine.property()
     beginningDate: RDF.Literal | undefined;
     @rdfine.property()
@@ -203,7 +203,7 @@ export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property()
     width: RDF.Literal | undefined;
   }
-  return ThingClass
+  return ThingClass as any
 }
 
 class ThingImpl extends ThingMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { ResourceMixin } from './Resource.js';
 export interface Container<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function ContainerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Container> & RdfResourceCore> & Base {
+export function ContainerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Container & RdfResourceCore> & Base {
   @rdfine.namespace(rdfs)
-  class ContainerClass extends ResourceMixin(Resource) implements Partial<Container> {
+  class ContainerClass extends ResourceMixin(Resource) {
   }
-  return ContainerClass
+  return ContainerClass as any
 }
 
 class ContainerImpl extends ContainerMixin(RdfResourceImpl) {

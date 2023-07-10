@@ -12,11 +12,11 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface ActionGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function ActionGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ActionGroup> & RdfResourceCore> & Base {
+export function ActionGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ActionGroup & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class ActionGroupClass extends RdfsResourceMixin(Resource) implements Partial<ActionGroup> {
+  class ActionGroupClass extends RdfsResourceMixin(Resource) {
   }
-  return ActionGroupClass
+  return ActionGroupClass as any
 }
 
 class ActionGroupImpl extends ActionGroupMixin(RdfResourceImpl) {

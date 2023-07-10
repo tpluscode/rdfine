@@ -15,15 +15,15 @@ export interface GraphUpdate<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   deletedTriple: Rdf.Statement<D> | undefined;
 }
 
-export function GraphUpdateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GraphUpdate> & RdfResourceCore> & Base {
+export function GraphUpdateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GraphUpdate & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class GraphUpdateClass extends SuggestionMixin(Resource) implements Partial<GraphUpdate> {
+  class GraphUpdateClass extends SuggestionMixin(Resource) {
     @rdfine.property.resource({ as: [RdfStatementMixin] })
     addedTriple: Rdf.Statement | undefined;
     @rdfine.property.resource({ as: [RdfStatementMixin] })
     deletedTriple: Rdf.Statement | undefined;
   }
-  return GraphUpdateClass
+  return GraphUpdateClass as any
 }
 
 class GraphUpdateImpl extends GraphUpdateMixin(RdfResourceImpl) {

@@ -13,15 +13,15 @@ export interface TemporalRelation<D extends RDF.DatasetCore = RDF.DatasetCore> e
   temporalRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function TemporalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TemporalRelation> & RdfResourceCore> & Base {
+export function TemporalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TemporalRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class TemporalRelationClass extends SequentialRelationMixin(Resource) implements Partial<TemporalRelation> {
+  class TemporalRelationClass extends SequentialRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     temporalRelationHasSource: Rico.Thing | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     temporalRelationHasTarget: Rico.Thing | undefined;
   }
-  return TemporalRelationClass
+  return TemporalRelationClass as any
 }
 
 class TemporalRelationImpl extends TemporalRelationMixin(RdfResourceImpl) {

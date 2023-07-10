@@ -13,15 +13,15 @@ export interface BusOrCoach<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   roofLoad: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function BusOrCoachMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BusOrCoach> & RdfResourceCore> & Base {
+export function BusOrCoachMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BusOrCoach & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BusOrCoachClass extends VehicleMixin(Resource) implements Partial<BusOrCoach> {
+  class BusOrCoachClass extends VehicleMixin(Resource) {
     @rdfine.property.literal()
     acrissCode: string | undefined;
     @rdfine.property.resource()
     roofLoad: Schema.QuantitativeValue | undefined;
   }
-  return BusOrCoachClass
+  return BusOrCoachClass as any
 }
 
 class BusOrCoachImpl extends BusOrCoachMixin(RdfResourceImpl) {

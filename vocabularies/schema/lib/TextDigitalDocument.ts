@@ -11,11 +11,11 @@ import { DigitalDocumentMixin } from './DigitalDocument.js';
 export interface TextDigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DigitalDocument<D>, rdfine.RdfResource<D> {
 }
 
-export function TextDigitalDocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TextDigitalDocument> & RdfResourceCore> & Base {
+export function TextDigitalDocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TextDigitalDocument & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TextDigitalDocumentClass extends DigitalDocumentMixin(Resource) implements Partial<TextDigitalDocument> {
+  class TextDigitalDocumentClass extends DigitalDocumentMixin(Resource) {
   }
-  return TextDigitalDocumentClass
+  return TextDigitalDocumentClass as any
 }
 
 class TextDigitalDocumentImpl extends TextDigitalDocumentMixin(RdfResourceImpl) {

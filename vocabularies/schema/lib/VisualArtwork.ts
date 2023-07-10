@@ -28,9 +28,9 @@ export interface VisualArtwork<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function VisualArtworkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<VisualArtwork> & RdfResourceCore> & Base {
+export function VisualArtworkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VisualArtwork & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class VisualArtworkClass extends CreativeWorkMixin(Resource) implements Partial<VisualArtwork> {
+  class VisualArtworkClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal()
     artEdition: number | string | undefined;
     @rdfine.property.literal()
@@ -66,7 +66,7 @@ export function VisualArtworkMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.resource()
     width: Schema.Distance | Schema.QuantitativeValue | undefined;
   }
-  return VisualArtworkClass
+  return VisualArtworkClass as any
 }
 
 class VisualArtworkImpl extends VisualArtworkMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface Collection<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   hadMember: Prov.Entity<D> | undefined;
 }
 
-export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Collection> & RdfResourceCore> & Base {
+export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Collection & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class CollectionClass extends EntityMixin(Resource) implements Partial<Collection> {
+  class CollectionClass extends EntityMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [prov.Entity] })
     hadMember: Prov.Entity | undefined;
   }
-  return CollectionClass
+  return CollectionClass as any
 }
 
 class CollectionImpl extends CollectionMixin(RdfResourceImpl) {

@@ -23,9 +23,9 @@ export interface ParcelDelivery<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   trackingUrl: RDF.NamedNode | undefined;
 }
 
-export function ParcelDeliveryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ParcelDelivery> & RdfResourceCore> & Base {
+export function ParcelDeliveryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ParcelDelivery & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ParcelDeliveryClass extends IntangibleMixin(Resource) implements Partial<ParcelDelivery> {
+  class ParcelDeliveryClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     carrier: Schema.Organization | undefined;
     @rdfine.property.resource()
@@ -51,7 +51,7 @@ export function ParcelDeliveryMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property()
     trackingUrl: RDF.NamedNode | undefined;
   }
-  return ParcelDeliveryClass
+  return ParcelDeliveryClass as any
 }
 
 class ParcelDeliveryImpl extends ParcelDeliveryMixin(RdfResourceImpl) {

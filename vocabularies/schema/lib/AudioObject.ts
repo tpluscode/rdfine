@@ -15,9 +15,9 @@ export interface AudioObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   transcript: string | undefined;
 }
 
-export function AudioObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AudioObject> & RdfResourceCore> & Base {
+export function AudioObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AudioObject & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AudioObjectClass extends MediaObjectMixin(Resource) implements Partial<AudioObject> {
+  class AudioObjectClass extends MediaObjectMixin(Resource) {
     @rdfine.property.resource()
     caption: Schema.MediaObject | undefined;
     @rdfine.property.literal({ path: schema.caption })
@@ -27,7 +27,7 @@ export function AudioObjectMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.literal()
     transcript: string | undefined;
   }
-  return AudioObjectClass
+  return AudioObjectClass as any
 }
 
 class AudioObjectImpl extends AudioObjectMixin(RdfResourceImpl) {

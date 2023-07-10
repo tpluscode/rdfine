@@ -13,15 +13,15 @@ export interface PlaceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   placeRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function PlaceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PlaceRelation> & RdfResourceCore> & Base {
+export function PlaceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PlaceRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class PlaceRelationClass extends RelationMixin(Resource) implements Partial<PlaceRelation> {
+  class PlaceRelationClass extends RelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Place] })
     placeRelationHasSource: Rico.Place | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     placeRelationHasTarget: Rico.Thing | undefined;
   }
-  return PlaceRelationClass
+  return PlaceRelationClass as any
 }
 
 class PlaceRelationImpl extends PlaceRelationMixin(RdfResourceImpl) {

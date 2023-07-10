@@ -11,11 +11,11 @@ import { AcceptMixin } from './Accept.js';
 export interface TentativeAccept<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Accept<D>, rdfine.RdfResource<D> {
 }
 
-export function TentativeAcceptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TentativeAccept> & RdfResourceCore> & Base {
+export function TentativeAcceptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TentativeAccept & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class TentativeAcceptClass extends AcceptMixin(Resource) implements Partial<TentativeAccept> {
+  class TentativeAcceptClass extends AcceptMixin(Resource) {
   }
-  return TentativeAcceptClass
+  return TentativeAcceptClass as any
 }
 
 class TentativeAcceptImpl extends TentativeAcceptMixin(RdfResourceImpl) {

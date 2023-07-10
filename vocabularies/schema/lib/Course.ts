@@ -22,9 +22,9 @@ export interface Course<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   occupationalCredentialAwardedTerm: RDF.NamedNode | undefined;
 }
 
-export function CourseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Course> & RdfResourceCore> & Base {
+export function CourseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Course & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CourseClass extends LearningResourceMixin(CreativeWorkMixin(Resource)) implements Partial<Course> {
+  class CourseClass extends LearningResourceMixin(CreativeWorkMixin(Resource)) {
     @rdfine.property.literal()
     courseCode: string | undefined;
     @rdfine.property.resource()
@@ -46,7 +46,7 @@ export function CourseMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property({ path: schema.occupationalCredentialAwarded })
     occupationalCredentialAwardedTerm: RDF.NamedNode | undefined;
   }
-  return CourseClass
+  return CourseClass as any
 }
 
 class CourseImpl extends CourseMixin(RdfResourceImpl) {

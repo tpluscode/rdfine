@@ -11,11 +11,11 @@ import { RepositoryMixin } from './Repository.js';
 export interface GitRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, rdfine.RdfResource<D> {
 }
 
-export function GitRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GitRepository> & RdfResourceCore> & Base {
+export function GitRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GitRepository & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
-  class GitRepositoryClass extends RepositoryMixin(Resource) implements Partial<GitRepository> {
+  class GitRepositoryClass extends RepositoryMixin(Resource) {
   }
-  return GitRepositoryClass
+  return GitRepositoryClass as any
 }
 
 class GitRepositoryImpl extends GitRepositoryMixin(RdfResourceImpl) {

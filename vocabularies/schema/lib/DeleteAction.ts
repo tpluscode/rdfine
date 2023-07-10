@@ -11,11 +11,11 @@ import { UpdateActionMixin } from './UpdateAction.js';
 export interface DeleteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UpdateAction<D>, rdfine.RdfResource<D> {
 }
 
-export function DeleteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DeleteAction> & RdfResourceCore> & Base {
+export function DeleteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DeleteAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DeleteActionClass extends UpdateActionMixin(Resource) implements Partial<DeleteAction> {
+  class DeleteActionClass extends UpdateActionMixin(Resource) {
   }
-  return DeleteActionClass
+  return DeleteActionClass as any
 }
 
 class DeleteActionImpl extends DeleteActionMixin(RdfResourceImpl) {

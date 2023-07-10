@@ -10,11 +10,11 @@ import type * as Foaf from '../index.js';
 export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function ProjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Project> & RdfResourceCore> & Base {
+export function ProjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Project & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
-  class ProjectClass extends Resource implements Partial<Project> {
+  class ProjectClass extends Resource {
   }
-  return ProjectClass
+  return ProjectClass as any
 }
 
 class ProjectImpl extends ProjectMixin(RdfResourceImpl) {

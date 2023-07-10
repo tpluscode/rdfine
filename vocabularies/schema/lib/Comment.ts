@@ -14,9 +14,9 @@ export interface Comment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   upvoteCount: number | undefined;
 }
 
-export function CommentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Comment> & RdfResourceCore> & Base {
+export function CommentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Comment & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CommentClass extends CreativeWorkMixin(Resource) implements Partial<Comment> {
+  class CommentClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     downvoteCount: number | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function CommentMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property.literal({ type: Number })
     upvoteCount: number | undefined;
   }
-  return CommentClass
+  return CommentClass as any
 }
 
 class CommentImpl extends CommentMixin(RdfResourceImpl) {

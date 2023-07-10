@@ -11,11 +11,11 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 export interface SelfStorage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function SelfStorageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SelfStorage> & RdfResourceCore> & Base {
+export function SelfStorageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SelfStorage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SelfStorageClass extends LocalBusinessMixin(Resource) implements Partial<SelfStorage> {
+  class SelfStorageClass extends LocalBusinessMixin(Resource) {
   }
-  return SelfStorageClass
+  return SelfStorageClass as any
 }
 
 class SelfStorageImpl extends SelfStorageMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface Map<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema
   mapType: Schema.MapCategoryType | undefined;
 }
 
-export function MapMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Map> & RdfResourceCore> & Base {
+export function MapMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Map & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MapClass extends CreativeWorkMixin(Resource) implements Partial<Map> {
+  class MapClass extends CreativeWorkMixin(Resource) {
     @rdfine.property()
     mapType: Schema.MapCategoryType | undefined;
   }
-  return MapClass
+  return MapClass as any
 }
 
 class MapImpl extends MapMixin(RdfResourceImpl) {

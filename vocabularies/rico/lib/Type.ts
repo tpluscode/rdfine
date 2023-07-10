@@ -15,9 +15,9 @@ export interface Type<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.
   typeIsSourceOfTypeRelation: Rico.TypeRelation<D> | undefined;
 }
 
-export function TypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Type> & RdfResourceCore> & Base {
+export function TypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Type & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class TypeClass extends ConceptMixin(Resource) implements Partial<Type> {
+  class TypeClass extends ConceptMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isOrWasCategoryOf: Rico.Thing | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
@@ -27,7 +27,7 @@ export function TypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.resource({ implicitTypes: [rico.TypeRelation] })
     typeIsSourceOfTypeRelation: Rico.TypeRelation | undefined;
   }
-  return TypeClass
+  return TypeClass as any
 }
 
 class TypeImpl extends TypeMixin(RdfResourceImpl) {

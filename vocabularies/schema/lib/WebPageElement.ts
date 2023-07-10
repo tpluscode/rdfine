@@ -13,15 +13,15 @@ export interface WebPageElement<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   xpath: string | undefined;
 }
 
-export function WebPageElementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WebPageElement> & RdfResourceCore> & Base {
+export function WebPageElementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WebPageElement & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WebPageElementClass extends CreativeWorkMixin(Resource) implements Partial<WebPageElement> {
+  class WebPageElementClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal()
     cssSelector: string | undefined;
     @rdfine.property.literal()
     xpath: string | undefined;
   }
-  return WebPageElementClass
+  return WebPageElementClass as any
 }
 
 class WebPageElementImpl extends WebPageElementMixin(RdfResourceImpl) {

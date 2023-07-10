@@ -13,15 +13,15 @@ export interface Substance<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   maximumIntake: Schema.MaximumDoseSchedule<D> | undefined;
 }
 
-export function SubstanceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Substance> & RdfResourceCore> & Base {
+export function SubstanceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Substance & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SubstanceClass extends MedicalEntityMixin(Resource) implements Partial<Substance> {
+  class SubstanceClass extends MedicalEntityMixin(Resource) {
     @rdfine.property.literal()
     activeIngredient: string | undefined;
     @rdfine.property.resource()
     maximumIntake: Schema.MaximumDoseSchedule | undefined;
   }
-  return SubstanceClass
+  return SubstanceClass as any
 }
 
 class SubstanceImpl extends SubstanceMixin(RdfResourceImpl) {

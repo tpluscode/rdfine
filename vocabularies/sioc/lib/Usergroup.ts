@@ -12,15 +12,15 @@ export interface Usergroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   'usergroup_of': Sioc.Space<D> | undefined;
 }
 
-export function UsergroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Usergroup> & RdfResourceCore> & Base {
+export function UsergroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Usergroup & RdfResourceCore> & Base {
   @rdfine.namespace(sioc)
-  class UsergroupClass extends Resource implements Partial<Usergroup> {
+  class UsergroupClass extends Resource {
     @rdfine.property.resource({ implicitTypes: [sioc.UserAccount] })
     'has_member': Sioc.UserAccount | undefined;
     @rdfine.property.resource({ implicitTypes: [sioc.Space] })
     'usergroup_of': Sioc.Space | undefined;
   }
-  return UsergroupClass
+  return UsergroupClass as any
 }
 
 class UsergroupImpl extends UsergroupMixin(RdfResourceImpl) {

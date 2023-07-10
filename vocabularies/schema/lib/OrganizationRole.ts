@@ -12,13 +12,13 @@ export interface OrganizationRole<D extends RDF.DatasetCore = RDF.DatasetCore> e
   numberedPosition: number | undefined;
 }
 
-export function OrganizationRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OrganizationRole> & RdfResourceCore> & Base {
+export function OrganizationRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OrganizationRole & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OrganizationRoleClass extends RoleMixin(Resource) implements Partial<OrganizationRole> {
+  class OrganizationRoleClass extends RoleMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     numberedPosition: number | undefined;
   }
-  return OrganizationRoleClass
+  return OrganizationRoleClass as any
 }
 
 class OrganizationRoleImpl extends OrganizationRoleMixin(RdfResourceImpl) {

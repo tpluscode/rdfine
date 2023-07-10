@@ -11,11 +11,11 @@ import { MedicalOrganizationMixin } from './MedicalOrganization.js';
 export interface Pharmacy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalOrganization<D>, rdfine.RdfResource<D> {
 }
 
-export function PharmacyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Pharmacy> & RdfResourceCore> & Base {
+export function PharmacyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Pharmacy & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PharmacyClass extends MedicalOrganizationMixin(Resource) implements Partial<Pharmacy> {
+  class PharmacyClass extends MedicalOrganizationMixin(Resource) {
   }
-  return PharmacyClass
+  return PharmacyClass as any
 }
 
 class PharmacyImpl extends PharmacyMixin(RdfResourceImpl) {

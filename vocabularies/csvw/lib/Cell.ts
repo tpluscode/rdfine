@@ -10,11 +10,11 @@ import type * as Csvw from '../index.js';
 export interface Cell<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function CellMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Cell> & RdfResourceCore> & Base {
+export function CellMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Cell & RdfResourceCore> & Base {
   @rdfine.namespace(csvw)
-  class CellClass extends Resource implements Partial<Cell> {
+  class CellClass extends Resource {
   }
-  return CellClass
+  return CellClass as any
 }
 
 class CellImpl extends CellMixin(RdfResourceImpl) {

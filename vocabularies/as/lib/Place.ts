@@ -17,9 +17,9 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.O
   units: 'cm' | 'feet' | 'inches' | 'km' | 'm' | 'miles' | string | undefined;
 }
 
-export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Place> & RdfResourceCore> & Base {
+export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Place & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class PlaceClass extends ObjectMixin(Resource) implements Partial<Place> {
+  class PlaceClass extends ObjectMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     accuracy: number | undefined;
     @rdfine.property.literal({ type: Number })
@@ -33,7 +33,7 @@ export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.literal()
     units: 'cm' | 'feet' | 'inches' | 'km' | 'm' | 'miles' | string | undefined;
   }
-  return PlaceClass
+  return PlaceClass as any
 }
 
 class PlaceImpl extends PlaceMixin(RdfResourceImpl) {

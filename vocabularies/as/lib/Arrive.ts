@@ -11,11 +11,11 @@ import { IntransitiveActivityMixin } from './IntransitiveActivity.js';
 export interface Arrive<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.IntransitiveActivity<D>, rdfine.RdfResource<D> {
 }
 
-export function ArriveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Arrive> & RdfResourceCore> & Base {
+export function ArriveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Arrive & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class ArriveClass extends IntransitiveActivityMixin(Resource) implements Partial<Arrive> {
+  class ArriveClass extends IntransitiveActivityMixin(Resource) {
   }
-  return ArriveClass
+  return ArriveClass as any
 }
 
 class ArriveImpl extends ArriveMixin(RdfResourceImpl) {

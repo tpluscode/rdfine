@@ -12,13 +12,13 @@ export interface ReviewAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   resultReview: Schema.Review<D> | undefined;
 }
 
-export function ReviewActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ReviewAction> & RdfResourceCore> & Base {
+export function ReviewActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReviewAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ReviewActionClass extends AssessActionMixin(Resource) implements Partial<ReviewAction> {
+  class ReviewActionClass extends AssessActionMixin(Resource) {
     @rdfine.property.resource()
     resultReview: Schema.Review | undefined;
   }
-  return ReviewActionClass
+  return ReviewActionClass as any
 }
 
 class ReviewActionImpl extends ReviewActionMixin(RdfResourceImpl) {

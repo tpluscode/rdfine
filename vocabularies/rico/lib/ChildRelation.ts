@@ -13,15 +13,15 @@ export interface ChildRelation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   childRelationHasTarget: Rico.Person<D> | undefined;
 }
 
-export function ChildRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ChildRelation> & RdfResourceCore> & Base {
+export function ChildRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ChildRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class ChildRelationClass extends DescendanceRelationMixin(Resource) implements Partial<ChildRelation> {
+  class ChildRelationClass extends DescendanceRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     childRelationHasSource: Rico.Person | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     childRelationHasTarget: Rico.Person | undefined;
   }
-  return ChildRelationClass
+  return ChildRelationClass as any
 }
 
 class ChildRelationImpl extends ChildRelationMixin(RdfResourceImpl) {

@@ -18,9 +18,9 @@ export interface Permit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   validUntil: Date | undefined;
 }
 
-export function PermitMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Permit> & RdfResourceCore> & Base {
+export function PermitMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Permit & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PermitClass extends IntangibleMixin(Resource) implements Partial<Permit> {
+  class PermitClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     issuedBy: Schema.Organization | undefined;
     @rdfine.property.resource()
@@ -36,7 +36,7 @@ export function PermitMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validUntil: Date | undefined;
   }
-  return PermitClass
+  return PermitClass as any
 }
 
 class PermitImpl extends PermitMixin(RdfResourceImpl) {

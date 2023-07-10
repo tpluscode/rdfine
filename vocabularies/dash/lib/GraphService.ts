@@ -11,11 +11,11 @@ import { ServiceMixin } from './Service.js';
 export interface GraphService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Service<D>, rdfine.RdfResource<D> {
 }
 
-export function GraphServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GraphService> & RdfResourceCore> & Base {
+export function GraphServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GraphService & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class GraphServiceClass extends ServiceMixin(Resource) implements Partial<GraphService> {
+  class GraphServiceClass extends ServiceMixin(Resource) {
   }
-  return GraphServiceClass
+  return GraphServiceClass as any
 }
 
 class GraphServiceImpl extends GraphServiceMixin(RdfResourceImpl) {

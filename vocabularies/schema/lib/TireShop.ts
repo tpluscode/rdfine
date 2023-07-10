@@ -11,11 +11,11 @@ import { StoreMixin } from './Store.js';
 export interface TireShop<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
-export function TireShopMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TireShop> & RdfResourceCore> & Base {
+export function TireShopMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TireShop & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TireShopClass extends StoreMixin(Resource) implements Partial<TireShop> {
+  class TireShopClass extends StoreMixin(Resource) {
   }
-  return TireShopClass
+  return TireShopClass as any
 }
 
 class TireShopImpl extends TireShopMixin(RdfResourceImpl) {

@@ -15,9 +15,9 @@ export interface PublicationIssue<D extends RDF.DatasetCore = RDF.DatasetCore> e
   pagination: string | undefined;
 }
 
-export function PublicationIssueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PublicationIssue> & RdfResourceCore> & Base {
+export function PublicationIssueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PublicationIssue & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PublicationIssueClass extends CreativeWorkMixin(Resource) implements Partial<PublicationIssue> {
+  class PublicationIssueClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal()
     issueNumber: number | string | undefined;
     @rdfine.property.literal()
@@ -27,7 +27,7 @@ export function PublicationIssueMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.literal()
     pagination: string | undefined;
   }
-  return PublicationIssueClass
+  return PublicationIssueClass as any
 }
 
 class PublicationIssueImpl extends PublicationIssueMixin(RdfResourceImpl) {

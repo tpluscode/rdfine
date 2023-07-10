@@ -12,13 +12,13 @@ export interface ReservationPackage<D extends RDF.DatasetCore = RDF.DatasetCore>
   subReservation: Schema.Reservation<D> | undefined;
 }
 
-export function ReservationPackageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ReservationPackage> & RdfResourceCore> & Base {
+export function ReservationPackageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReservationPackage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ReservationPackageClass extends ReservationMixin(Resource) implements Partial<ReservationPackage> {
+  class ReservationPackageClass extends ReservationMixin(Resource) {
     @rdfine.property.resource()
     subReservation: Schema.Reservation | undefined;
   }
-  return ReservationPackageClass
+  return ReservationPackageClass as any
 }
 
 class ReservationPackageImpl extends ReservationPackageMixin(RdfResourceImpl) {

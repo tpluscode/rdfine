@@ -15,9 +15,9 @@ export interface MedicalTherapy<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   seriousAdverseOutcome: Schema.MedicalEntity<D> | undefined;
 }
 
-export function MedicalTherapyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalTherapy> & RdfResourceCore> & Base {
+export function MedicalTherapyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalTherapy & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalTherapyClass extends TherapeuticProcedureMixin(Resource) implements Partial<MedicalTherapy> {
+  class MedicalTherapyClass extends TherapeuticProcedureMixin(Resource) {
     @rdfine.property.resource()
     contraindication: Schema.MedicalContraindication | undefined;
     @rdfine.property.literal({ path: schema.contraindication })
@@ -27,7 +27,7 @@ export function MedicalTherapyMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.resource()
     seriousAdverseOutcome: Schema.MedicalEntity | undefined;
   }
-  return MedicalTherapyClass
+  return MedicalTherapyClass as any
 }
 
 class MedicalTherapyImpl extends MedicalTherapyMixin(RdfResourceImpl) {

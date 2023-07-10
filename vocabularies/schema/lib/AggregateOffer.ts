@@ -15,9 +15,9 @@ export interface AggregateOffer<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
 }
 
-export function AggregateOfferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AggregateOffer> & RdfResourceCore> & Base {
+export function AggregateOfferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AggregateOffer & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AggregateOfferClass extends OfferMixin(Resource) implements Partial<AggregateOffer> {
+  class AggregateOfferClass extends OfferMixin(Resource) {
     @rdfine.property.literal()
     highPrice: number | string | undefined;
     @rdfine.property.literal()
@@ -27,7 +27,7 @@ export function AggregateOfferMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.resource()
     offers: Schema.Demand | Schema.Offer | undefined;
   }
-  return AggregateOfferClass
+  return AggregateOfferClass as any
 }
 
 class AggregateOfferImpl extends AggregateOfferMixin(RdfResourceImpl) {

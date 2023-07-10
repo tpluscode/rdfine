@@ -12,13 +12,13 @@ export interface HealthTopicContent<D extends RDF.DatasetCore = RDF.DatasetCore>
   hasHealthAspect: Schema.HealthAspectEnumeration | undefined;
 }
 
-export function HealthTopicContentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HealthTopicContent> & RdfResourceCore> & Base {
+export function HealthTopicContentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HealthTopicContent & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HealthTopicContentClass extends WebContentMixin(Resource) implements Partial<HealthTopicContent> {
+  class HealthTopicContentClass extends WebContentMixin(Resource) {
     @rdfine.property()
     hasHealthAspect: Schema.HealthAspectEnumeration | undefined;
   }
-  return HealthTopicContentClass
+  return HealthTopicContentClass as any
 }
 
 class HealthTopicContentImpl extends HealthTopicContentMixin(RdfResourceImpl) {

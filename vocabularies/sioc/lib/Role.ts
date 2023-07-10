@@ -12,15 +12,15 @@ export interface Role<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfin
   'has_scope': RDF.Term | undefined;
 }
 
-export function RoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Role> & RdfResourceCore> & Base {
+export function RoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Role & RdfResourceCore> & Base {
   @rdfine.namespace(sioc)
-  class RoleClass extends Resource implements Partial<Role> {
+  class RoleClass extends Resource {
     @rdfine.property()
     'function_of': RDF.Term | undefined;
     @rdfine.property()
     'has_scope': RDF.Term | undefined;
   }
-  return RoleClass
+  return RoleClass as any
 }
 
 class RoleImpl extends RoleMixin(RdfResourceImpl) {

@@ -10,11 +10,11 @@ import type * as Rdf from '../index.js';
 export interface Alt<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function AltMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Alt> & RdfResourceCore> & Base {
+export function AltMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Alt & RdfResourceCore> & Base {
   @rdfine.namespace(rdf)
-  class AltClass extends Resource implements Partial<Alt> {
+  class AltClass extends Resource {
   }
-  return AltClass
+  return AltClass as any
 }
 
 class AltImpl extends AltMixin(RdfResourceImpl) {

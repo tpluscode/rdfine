@@ -11,11 +11,11 @@ import { LandformMixin } from './Landform.js';
 export interface Volcano<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Landform<D>, rdfine.RdfResource<D> {
 }
 
-export function VolcanoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Volcano> & RdfResourceCore> & Base {
+export function VolcanoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Volcano & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class VolcanoClass extends LandformMixin(Resource) implements Partial<Volcano> {
+  class VolcanoClass extends LandformMixin(Resource) {
   }
-  return VolcanoClass
+  return VolcanoClass as any
 }
 
 class VolcanoImpl extends VolcanoMixin(RdfResourceImpl) {

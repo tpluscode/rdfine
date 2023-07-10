@@ -12,13 +12,13 @@ export interface Collection<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   collectionSize: number | undefined;
 }
 
-export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Collection> & RdfResourceCore> & Base {
+export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Collection & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CollectionClass extends CreativeWorkMixin(Resource) implements Partial<Collection> {
+  class CollectionClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     collectionSize: number | undefined;
   }
-  return CollectionClass
+  return CollectionClass as any
 }
 
 class CollectionImpl extends CollectionMixin(RdfResourceImpl) {

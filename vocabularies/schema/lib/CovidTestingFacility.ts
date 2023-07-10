@@ -11,11 +11,11 @@ import { MedicalClinicMixin } from './MedicalClinic.js';
 export interface CovidTestingFacility<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalClinic<D>, rdfine.RdfResource<D> {
 }
 
-export function CovidTestingFacilityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CovidTestingFacility> & RdfResourceCore> & Base {
+export function CovidTestingFacilityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CovidTestingFacility & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CovidTestingFacilityClass extends MedicalClinicMixin(Resource) implements Partial<CovidTestingFacility> {
+  class CovidTestingFacilityClass extends MedicalClinicMixin(Resource) {
   }
-  return CovidTestingFacilityClass
+  return CovidTestingFacilityClass as any
 }
 
 class CovidTestingFacilityImpl extends CovidTestingFacilityMixin(RdfResourceImpl) {

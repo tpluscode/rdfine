@@ -11,11 +11,11 @@ import { ClassMixin } from './Class.js';
 export interface Datatype<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, rdfine.RdfResource<D> {
 }
 
-export function DatatypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Datatype> & RdfResourceCore> & Base {
+export function DatatypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Datatype & RdfResourceCore> & Base {
   @rdfine.namespace(rdfs)
-  class DatatypeClass extends ClassMixin(Resource) implements Partial<Datatype> {
+  class DatatypeClass extends ClassMixin(Resource) {
   }
-  return DatatypeClass
+  return DatatypeClass as any
 }
 
 class DatatypeImpl extends DatatypeMixin(RdfResourceImpl) {

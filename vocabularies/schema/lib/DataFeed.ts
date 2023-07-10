@@ -13,15 +13,15 @@ export interface DataFeed<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   dataFeedElementLiteral: string | undefined;
 }
 
-export function DataFeedMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DataFeed> & RdfResourceCore> & Base {
+export function DataFeedMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DataFeed & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DataFeedClass extends DatasetMixin(Resource) implements Partial<DataFeed> {
+  class DataFeedClass extends DatasetMixin(Resource) {
     @rdfine.property.resource()
     dataFeedElement: Schema.DataFeedItem | Schema.Thing | undefined;
     @rdfine.property.literal({ path: schema.dataFeedElement })
     dataFeedElementLiteral: string | undefined;
   }
-  return DataFeedClass
+  return DataFeedClass as any
 }
 
 class DataFeedImpl extends DataFeedMixin(RdfResourceImpl) {

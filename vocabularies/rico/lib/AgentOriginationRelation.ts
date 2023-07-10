@@ -13,15 +13,15 @@ export interface AgentOriginationRelation<D extends RDF.DatasetCore = RDF.Datase
   agentOriginationRelationHasTarget: Rico.Agent<D> | undefined;
 }
 
-export function AgentOriginationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AgentOriginationRelation> & RdfResourceCore> & Base {
+export function AgentOriginationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentOriginationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class AgentOriginationRelationClass extends ProvenanceRelationMixin(Resource) implements Partial<AgentOriginationRelation> {
+  class AgentOriginationRelationClass extends ProvenanceRelationMixin(Resource) {
     @rdfine.property.resource()
     agentOriginationRelationHasSource: Rico.Instantiation | Rico.RecordResource | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     agentOriginationRelationHasTarget: Rico.Agent | undefined;
   }
-  return AgentOriginationRelationClass
+  return AgentOriginationRelationClass as any
 }
 
 class AgentOriginationRelationImpl extends AgentOriginationRelationMixin(RdfResourceImpl) {

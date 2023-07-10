@@ -11,11 +11,11 @@ import { QuantityMixin } from './Quantity.js';
 export interface Distance<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Quantity<D>, rdfine.RdfResource<D> {
 }
 
-export function DistanceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Distance> & RdfResourceCore> & Base {
+export function DistanceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Distance & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DistanceClass extends QuantityMixin(Resource) implements Partial<Distance> {
+  class DistanceClass extends QuantityMixin(Resource) {
   }
-  return DistanceClass
+  return DistanceClass as any
 }
 
 class DistanceImpl extends DistanceMixin(RdfResourceImpl) {

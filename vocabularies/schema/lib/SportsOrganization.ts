@@ -13,15 +13,15 @@ export interface SportsOrganization<D extends RDF.DatasetCore = RDF.DatasetCore>
   sportTerm: RDF.NamedNode | undefined;
 }
 
-export function SportsOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SportsOrganization> & RdfResourceCore> & Base {
+export function SportsOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SportsOrganization & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SportsOrganizationClass extends OrganizationMixin(Resource) implements Partial<SportsOrganization> {
+  class SportsOrganizationClass extends OrganizationMixin(Resource) {
     @rdfine.property.literal()
     sport: string | undefined;
     @rdfine.property({ path: schema.sport })
     sportTerm: RDF.NamedNode | undefined;
   }
-  return SportsOrganizationClass
+  return SportsOrganizationClass as any
 }
 
 class SportsOrganizationImpl extends SportsOrganizationMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface Parameter<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   optional: boolean | undefined;
 }
 
-export function ParameterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Parameter> & RdfResourceCore> & Base {
+export function ParameterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Parameter & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class ParameterClass extends PropertyShapeMixin(Resource) implements Partial<Parameter> {
+  class ParameterClass extends PropertyShapeMixin(Resource) {
     @rdfine.property.literal({ type: Boolean })
     optional: boolean | undefined;
   }
-  return ParameterClass
+  return ParameterClass as any
 }
 
 class ParameterImpl extends ParameterMixin(RdfResourceImpl) {

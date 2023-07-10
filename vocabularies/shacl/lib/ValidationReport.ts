@@ -15,9 +15,9 @@ export interface ValidationReport<D extends RDF.DatasetCore = RDF.DatasetCore> e
   shapesGraphWellFormed: boolean | undefined;
 }
 
-export function ValidationReportMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ValidationReport> & RdfResourceCore> & Base {
+export function ValidationReportMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ValidationReport & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class ValidationReportClass extends RdfsResourceMixin(Resource) implements Partial<ValidationReport> {
+  class ValidationReportClass extends RdfsResourceMixin(Resource) {
     @rdfine.property.literal({ type: Boolean })
     conforms: boolean | undefined;
     @rdfine.property.resource({ values: 'array', implicitTypes: [sh.ValidationResult] })
@@ -25,7 +25,7 @@ export function ValidationReportMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.literal({ type: Boolean })
     shapesGraphWellFormed: boolean | undefined;
   }
-  return ValidationReportClass
+  return ValidationReportClass as any
 }
 
 class ValidationReportImpl extends ValidationReportMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { ItemListMixin } from './ItemList.js';
 export interface BreadcrumbList<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ItemList<D>, rdfine.RdfResource<D> {
 }
 
-export function BreadcrumbListMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BreadcrumbList> & RdfResourceCore> & Base {
+export function BreadcrumbListMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BreadcrumbList & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BreadcrumbListClass extends ItemListMixin(Resource) implements Partial<BreadcrumbList> {
+  class BreadcrumbListClass extends ItemListMixin(Resource) {
   }
-  return BreadcrumbListClass
+  return BreadcrumbListClass as any
 }
 
 class BreadcrumbListImpl extends BreadcrumbListMixin(RdfResourceImpl) {

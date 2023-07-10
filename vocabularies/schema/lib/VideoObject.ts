@@ -23,9 +23,9 @@ export interface VideoObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   videoQuality: string | undefined;
 }
 
-export function VideoObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<VideoObject> & RdfResourceCore> & Base {
+export function VideoObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VideoObject & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class VideoObjectClass extends MediaObjectMixin(Resource) implements Partial<VideoObject> {
+  class VideoObjectClass extends MediaObjectMixin(Resource) {
     @rdfine.property.resource()
     actor: Schema.Person | undefined;
     @rdfine.property.resource()
@@ -51,7 +51,7 @@ export function VideoObjectMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.literal()
     videoQuality: string | undefined;
   }
-  return VideoObjectClass
+  return VideoObjectClass as any
 }
 
 class VideoObjectImpl extends VideoObjectMixin(RdfResourceImpl) {

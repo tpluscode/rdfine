@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Ignore<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function IgnoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Ignore> & RdfResourceCore> & Base {
+export function IgnoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Ignore & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class IgnoreClass extends ActivityMixin(Resource) implements Partial<Ignore> {
+  class IgnoreClass extends ActivityMixin(Resource) {
   }
-  return IgnoreClass
+  return IgnoreClass as any
 }
 
 class IgnoreImpl extends IgnoreMixin(RdfResourceImpl) {

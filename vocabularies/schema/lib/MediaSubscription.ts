@@ -13,15 +13,15 @@ export interface MediaSubscription<D extends RDF.DatasetCore = RDF.DatasetCore> 
   expectsAcceptanceOf: Schema.Offer<D> | undefined;
 }
 
-export function MediaSubscriptionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MediaSubscription> & RdfResourceCore> & Base {
+export function MediaSubscriptionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MediaSubscription & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MediaSubscriptionClass extends IntangibleMixin(Resource) implements Partial<MediaSubscription> {
+  class MediaSubscriptionClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     authenticator: Schema.Organization | undefined;
     @rdfine.property.resource()
     expectsAcceptanceOf: Schema.Offer | undefined;
   }
-  return MediaSubscriptionClass
+  return MediaSubscriptionClass as any
 }
 
 class MediaSubscriptionImpl extends MediaSubscriptionMixin(RdfResourceImpl) {

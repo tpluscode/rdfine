@@ -13,11 +13,11 @@ import { SPARQLSelectExecutableMixin as ShaclSPARQLSelectExecutableMixin } from 
 export interface SPARQLSelectTemplate<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.Parameterizable<D>, Shacl.SPARQLSelectExecutable<D>, rdfine.RdfResource<D> {
 }
 
-export function SPARQLSelectTemplateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLSelectTemplate> & RdfResourceCore> & Base {
+export function SPARQLSelectTemplateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLSelectTemplate & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class SPARQLSelectTemplateClass extends ShaclSPARQLSelectExecutableMixin(ShaclParameterizableMixin(Resource)) implements Partial<SPARQLSelectTemplate> {
+  class SPARQLSelectTemplateClass extends ShaclSPARQLSelectExecutableMixin(ShaclParameterizableMixin(Resource)) {
   }
-  return SPARQLSelectTemplateClass
+  return SPARQLSelectTemplateClass as any
 }
 
 class SPARQLSelectTemplateImpl extends SPARQLSelectTemplateMixin(RdfResourceImpl) {

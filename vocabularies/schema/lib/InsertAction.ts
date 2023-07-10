@@ -12,13 +12,13 @@ export interface InsertAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   toLocation: Schema.Place<D> | undefined;
 }
 
-export function InsertActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InsertAction> & RdfResourceCore> & Base {
+export function InsertActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InsertAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class InsertActionClass extends AddActionMixin(Resource) implements Partial<InsertAction> {
+  class InsertActionClass extends AddActionMixin(Resource) {
     @rdfine.property.resource()
     toLocation: Schema.Place | undefined;
   }
-  return InsertActionClass
+  return InsertActionClass as any
 }
 
 class InsertActionImpl extends InsertActionMixin(RdfResourceImpl) {

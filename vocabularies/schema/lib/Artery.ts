@@ -13,15 +13,15 @@ export interface Artery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   supplyTo: Schema.AnatomicalStructure<D> | undefined;
 }
 
-export function ArteryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Artery> & RdfResourceCore> & Base {
+export function ArteryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Artery & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ArteryClass extends VesselMixin(Resource) implements Partial<Artery> {
+  class ArteryClass extends VesselMixin(Resource) {
     @rdfine.property.resource()
     arterialBranch: Schema.AnatomicalStructure | undefined;
     @rdfine.property.resource()
     supplyTo: Schema.AnatomicalStructure | undefined;
   }
-  return ArteryClass
+  return ArteryClass as any
 }
 
 class ArteryImpl extends ArteryMixin(RdfResourceImpl) {

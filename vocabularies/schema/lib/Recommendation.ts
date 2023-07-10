@@ -13,15 +13,15 @@ export interface Recommendation<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   categoryLiteral: string | undefined;
 }
 
-export function RecommendationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Recommendation> & RdfResourceCore> & Base {
+export function RecommendationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Recommendation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RecommendationClass extends ReviewMixin(Resource) implements Partial<Recommendation> {
+  class RecommendationClass extends ReviewMixin(Resource) {
     @rdfine.property.resource()
     category: Schema.CategoryCode | Schema.Thing | undefined;
     @rdfine.property.literal({ path: schema.category })
     categoryLiteral: string | undefined;
   }
-  return RecommendationClass
+  return RecommendationClass as any
 }
 
 class RecommendationImpl extends RecommendationMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface SiblingRelation<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   siblingRelationConnects: Rico.Person<D> | undefined;
 }
 
-export function SiblingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SiblingRelation> & RdfResourceCore> & Base {
+export function SiblingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SiblingRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class SiblingRelationClass extends FamilyRelationMixin(Resource) implements Partial<SiblingRelation> {
+  class SiblingRelationClass extends FamilyRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     siblingRelationConnects: Rico.Person | undefined;
   }
-  return SiblingRelationClass
+  return SiblingRelationClass as any
 }
 
 class SiblingRelationImpl extends SiblingRelationMixin(RdfResourceImpl) {

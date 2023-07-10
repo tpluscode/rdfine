@@ -12,13 +12,13 @@ export interface ArchiveOrganization<D extends RDF.DatasetCore = RDF.DatasetCore
   archiveHeld: Schema.ArchiveComponent<D> | undefined;
 }
 
-export function ArchiveOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ArchiveOrganization> & RdfResourceCore> & Base {
+export function ArchiveOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ArchiveOrganization & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ArchiveOrganizationClass extends LocalBusinessMixin(Resource) implements Partial<ArchiveOrganization> {
+  class ArchiveOrganizationClass extends LocalBusinessMixin(Resource) {
     @rdfine.property.resource()
     archiveHeld: Schema.ArchiveComponent | undefined;
   }
-  return ArchiveOrganizationClass
+  return ArchiveOrganizationClass as any
 }
 
 class ArchiveOrganizationImpl extends ArchiveOrganizationMixin(RdfResourceImpl) {

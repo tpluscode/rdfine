@@ -11,11 +11,11 @@ import { ResourceMixin } from './Resource.js';
 export interface PartialCollectionView<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function PartialCollectionViewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PartialCollectionView> & RdfResourceCore> & Base {
+export function PartialCollectionViewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PartialCollectionView & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class PartialCollectionViewClass extends ResourceMixin(Resource) implements Partial<PartialCollectionView> {
+  class PartialCollectionViewClass extends ResourceMixin(Resource) {
   }
-  return PartialCollectionViewClass
+  return PartialCollectionViewClass as any
 }
 
 class PartialCollectionViewImpl extends PartialCollectionViewMixin(RdfResourceImpl) {

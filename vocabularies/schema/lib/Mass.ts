@@ -11,11 +11,11 @@ import { QuantityMixin } from './Quantity.js';
 export interface Mass<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Quantity<D>, rdfine.RdfResource<D> {
 }
 
-export function MassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Mass> & RdfResourceCore> & Base {
+export function MassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Mass & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MassClass extends QuantityMixin(Resource) implements Partial<Mass> {
+  class MassClass extends QuantityMixin(Resource) {
   }
-  return MassClass
+  return MassClass as any
 }
 
 class MassImpl extends MassMixin(RdfResourceImpl) {

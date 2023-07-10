@@ -11,11 +11,11 @@ import { IgnoreMixin } from './Ignore.js';
 export interface Block<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Ignore<D>, rdfine.RdfResource<D> {
 }
 
-export function BlockMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Block> & RdfResourceCore> & Base {
+export function BlockMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Block & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class BlockClass extends IgnoreMixin(Resource) implements Partial<Block> {
+  class BlockClass extends IgnoreMixin(Resource) {
   }
-  return BlockClass
+  return BlockClass as any
 }
 
 class BlockImpl extends BlockMixin(RdfResourceImpl) {

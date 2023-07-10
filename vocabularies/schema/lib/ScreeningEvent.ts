@@ -15,9 +15,9 @@ export interface ScreeningEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   workPresented: Schema.Movie<D> | undefined;
 }
 
-export function ScreeningEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ScreeningEvent> & RdfResourceCore> & Base {
+export function ScreeningEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ScreeningEvent & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ScreeningEventClass extends EventMixin(Resource) implements Partial<ScreeningEvent> {
+  class ScreeningEventClass extends EventMixin(Resource) {
     @rdfine.property.resource()
     subtitleLanguage: Schema.Language | undefined;
     @rdfine.property.literal({ path: schema.subtitleLanguage })
@@ -27,7 +27,7 @@ export function ScreeningEventMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.resource()
     workPresented: Schema.Movie | undefined;
   }
-  return ScreeningEventClass
+  return ScreeningEventClass as any
 }
 
 class ScreeningEventImpl extends ScreeningEventMixin(RdfResourceImpl) {

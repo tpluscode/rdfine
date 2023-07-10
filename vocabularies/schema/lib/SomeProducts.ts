@@ -12,13 +12,13 @@ export interface SomeProducts<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   inventoryLevel: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function SomeProductsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SomeProducts> & RdfResourceCore> & Base {
+export function SomeProductsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SomeProducts & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SomeProductsClass extends ProductMixin(Resource) implements Partial<SomeProducts> {
+  class SomeProductsClass extends ProductMixin(Resource) {
     @rdfine.property.resource()
     inventoryLevel: Schema.QuantitativeValue | undefined;
   }
-  return SomeProductsClass
+  return SomeProductsClass as any
 }
 
 class SomeProductsImpl extends SomeProductsMixin(RdfResourceImpl) {

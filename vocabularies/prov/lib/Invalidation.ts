@@ -12,11 +12,11 @@ import { InstantaneousEventMixin } from './InstantaneousEvent.js';
 export interface Invalidation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.ActivityInfluence<D>, Prov.InstantaneousEvent<D>, rdfine.RdfResource<D> {
 }
 
-export function InvalidationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Invalidation> & RdfResourceCore> & Base {
+export function InvalidationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Invalidation & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class InvalidationClass extends InstantaneousEventMixin(ActivityInfluenceMixin(Resource)) implements Partial<Invalidation> {
+  class InvalidationClass extends InstantaneousEventMixin(ActivityInfluenceMixin(Resource)) {
   }
-  return InvalidationClass
+  return InvalidationClass as any
 }
 
 class InvalidationImpl extends InvalidationMixin(RdfResourceImpl) {

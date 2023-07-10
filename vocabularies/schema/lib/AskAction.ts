@@ -12,13 +12,13 @@ export interface AskAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   question: Schema.Question<D> | undefined;
 }
 
-export function AskActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AskAction> & RdfResourceCore> & Base {
+export function AskActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AskAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AskActionClass extends CommunicateActionMixin(Resource) implements Partial<AskAction> {
+  class AskActionClass extends CommunicateActionMixin(Resource) {
     @rdfine.property.resource()
     question: Schema.Question | undefined;
   }
-  return AskActionClass
+  return AskActionClass as any
 }
 
 class AskActionImpl extends AskActionMixin(RdfResourceImpl) {

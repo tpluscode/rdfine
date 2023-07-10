@@ -11,11 +11,11 @@ import { EventMixin } from './Event.js';
 export interface VisualArtsEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
 }
 
-export function VisualArtsEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<VisualArtsEvent> & RdfResourceCore> & Base {
+export function VisualArtsEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VisualArtsEvent & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class VisualArtsEventClass extends EventMixin(Resource) implements Partial<VisualArtsEvent> {
+  class VisualArtsEventClass extends EventMixin(Resource) {
   }
-  return VisualArtsEventClass
+  return VisualArtsEventClass as any
 }
 
 class VisualArtsEventImpl extends VisualArtsEventMixin(RdfResourceImpl) {

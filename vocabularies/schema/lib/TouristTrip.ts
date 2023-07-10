@@ -13,15 +13,15 @@ export interface TouristTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   touristTypeLiteral: string | undefined;
 }
 
-export function TouristTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TouristTrip> & RdfResourceCore> & Base {
+export function TouristTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TouristTrip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TouristTripClass extends TripMixin(Resource) implements Partial<TouristTrip> {
+  class TouristTripClass extends TripMixin(Resource) {
     @rdfine.property.resource()
     touristType: Schema.Audience | undefined;
     @rdfine.property.literal({ path: schema.touristType })
     touristTypeLiteral: string | undefined;
   }
-  return TouristTripClass
+  return TouristTripClass as any
 }
 
 class TouristTripImpl extends TouristTripMixin(RdfResourceImpl) {

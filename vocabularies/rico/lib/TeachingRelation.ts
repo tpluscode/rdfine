@@ -13,15 +13,15 @@ export interface TeachingRelation<D extends RDF.DatasetCore = RDF.DatasetCore> e
   teachingRelationHasTarget: Rico.Person<D> | undefined;
 }
 
-export function TeachingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TeachingRelation> & RdfResourceCore> & Base {
+export function TeachingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TeachingRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class TeachingRelationClass extends KnowingRelationMixin(Resource) implements Partial<TeachingRelation> {
+  class TeachingRelationClass extends KnowingRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     teachingRelationHasSource: Rico.Person | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     teachingRelationHasTarget: Rico.Person | undefined;
   }
-  return TeachingRelationClass
+  return TeachingRelationClass as any
 }
 
 class TeachingRelationImpl extends TeachingRelationMixin(RdfResourceImpl) {

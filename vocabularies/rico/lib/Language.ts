@@ -14,9 +14,9 @@ export interface Language<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   isOrWasLanguageOfSomeMembersOf: Rico.RecordSet<D> | undefined;
 }
 
-export function LanguageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Language> & RdfResourceCore> & Base {
+export function LanguageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Language & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class LanguageClass extends ConceptMixin(Resource) implements Partial<Language> {
+  class LanguageClass extends ConceptMixin(Resource) {
     @rdfine.property.resource()
     isOrWasLanguageOf: Rico.Agent | Rico.Record | Rico.RecordPart | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
@@ -24,7 +24,7 @@ export function LanguageMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isOrWasLanguageOfSomeMembersOf: Rico.RecordSet | undefined;
   }
-  return LanguageClass
+  return LanguageClass as any
 }
 
 class LanguageImpl extends LanguageMixin(RdfResourceImpl) {

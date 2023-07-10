@@ -13,11 +13,11 @@ import { SPARQLConstructExecutableMixin as ShaclSPARQLConstructExecutableMixin }
 export interface SPARQLConstructTemplate<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.Parameterizable<D>, Shacl.SPARQLConstructExecutable<D>, rdfine.RdfResource<D> {
 }
 
-export function SPARQLConstructTemplateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLConstructTemplate> & RdfResourceCore> & Base {
+export function SPARQLConstructTemplateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLConstructTemplate & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class SPARQLConstructTemplateClass extends ShaclSPARQLConstructExecutableMixin(ShaclParameterizableMixin(Resource)) implements Partial<SPARQLConstructTemplate> {
+  class SPARQLConstructTemplateClass extends ShaclSPARQLConstructExecutableMixin(ShaclParameterizableMixin(Resource)) {
   }
-  return SPARQLConstructTemplateClass
+  return SPARQLConstructTemplateClass as any
 }
 
 class SPARQLConstructTemplateImpl extends SPARQLConstructTemplateMixin(RdfResourceImpl) {

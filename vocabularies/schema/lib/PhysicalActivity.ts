@@ -16,9 +16,9 @@ export interface PhysicalActivity<D extends RDF.DatasetCore = RDF.DatasetCore> e
   pathophysiology: string | undefined;
 }
 
-export function PhysicalActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PhysicalActivity> & RdfResourceCore> & Base {
+export function PhysicalActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PhysicalActivity & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PhysicalActivityClass extends LifestyleModificationMixin(Resource) implements Partial<PhysicalActivity> {
+  class PhysicalActivityClass extends LifestyleModificationMixin(Resource) {
     @rdfine.property.resource()
     associatedAnatomy: Schema.AnatomicalStructure | Schema.AnatomicalSystem | Schema.SuperficialAnatomy | undefined;
     @rdfine.property.resource()
@@ -30,7 +30,7 @@ export function PhysicalActivityMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.literal()
     pathophysiology: string | undefined;
   }
-  return PhysicalActivityClass
+  return PhysicalActivityClass as any
 }
 
 class PhysicalActivityImpl extends PhysicalActivityMixin(RdfResourceImpl) {

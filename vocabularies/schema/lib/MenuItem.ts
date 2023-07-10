@@ -15,9 +15,9 @@ export interface MenuItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   suitableForDiet: Schema.RestrictedDiet | undefined;
 }
 
-export function MenuItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MenuItem> & RdfResourceCore> & Base {
+export function MenuItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MenuItem & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MenuItemClass extends IntangibleMixin(Resource) implements Partial<MenuItem> {
+  class MenuItemClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     menuAddOn: Schema.MenuItem | Schema.MenuSection | undefined;
     @rdfine.property.resource()
@@ -27,7 +27,7 @@ export function MenuItemMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property()
     suitableForDiet: Schema.RestrictedDiet | undefined;
   }
-  return MenuItemClass
+  return MenuItemClass as any
 }
 
 class MenuItemImpl extends MenuItemMixin(RdfResourceImpl) {

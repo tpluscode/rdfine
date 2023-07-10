@@ -23,9 +23,9 @@ export interface Recipe<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   suitableForDiet: Schema.RestrictedDiet | undefined;
 }
 
-export function RecipeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Recipe> & RdfResourceCore> & Base {
+export function RecipeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Recipe & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RecipeClass extends HowToMixin(Resource) implements Partial<Recipe> {
+  class RecipeClass extends HowToMixin(Resource) {
     @rdfine.property.literal()
     cookingMethod: string | undefined;
     @rdfine.property.resource()
@@ -51,7 +51,7 @@ export function RecipeMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property()
     suitableForDiet: Schema.RestrictedDiet | undefined;
   }
-  return RecipeClass
+  return RecipeClass as any
 }
 
 class RecipeImpl extends RecipeMixin(RdfResourceImpl) {

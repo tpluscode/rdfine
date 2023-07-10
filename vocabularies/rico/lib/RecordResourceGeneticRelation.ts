@@ -12,13 +12,13 @@ export interface RecordResourceGeneticRelation<D extends RDF.DatasetCore = RDF.D
   recordResourceGeneticRelationConnects: Rico.RecordResource<D> | undefined;
 }
 
-export function RecordResourceGeneticRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RecordResourceGeneticRelation> & RdfResourceCore> & Base {
+export function RecordResourceGeneticRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordResourceGeneticRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RecordResourceGeneticRelationClass extends RecordResourceToRecordResourceRelationMixin(Resource) implements Partial<RecordResourceGeneticRelation> {
+  class RecordResourceGeneticRelationClass extends RecordResourceToRecordResourceRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.RecordResource] })
     recordResourceGeneticRelationConnects: Rico.RecordResource | undefined;
   }
-  return RecordResourceGeneticRelationClass
+  return RecordResourceGeneticRelationClass as any
 }
 
 class RecordResourceGeneticRelationImpl extends RecordResourceGeneticRelationMixin(RdfResourceImpl) {

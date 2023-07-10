@@ -12,13 +12,13 @@ export interface FollowAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   followee: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function FollowActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FollowAction> & RdfResourceCore> & Base {
+export function FollowActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FollowAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class FollowActionClass extends InteractActionMixin(Resource) implements Partial<FollowAction> {
+  class FollowActionClass extends InteractActionMixin(Resource) {
     @rdfine.property.resource()
     followee: Schema.Organization | Schema.Person | undefined;
   }
-  return FollowActionClass
+  return FollowActionClass as any
 }
 
 class FollowActionImpl extends FollowActionMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { RatingMixin } from './Rating.js';
 export interface EndorsementRating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Rating<D>, rdfine.RdfResource<D> {
 }
 
-export function EndorsementRatingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EndorsementRating> & RdfResourceCore> & Base {
+export function EndorsementRatingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EndorsementRating & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class EndorsementRatingClass extends RatingMixin(Resource) implements Partial<EndorsementRating> {
+  class EndorsementRatingClass extends RatingMixin(Resource) {
   }
-  return EndorsementRatingClass
+  return EndorsementRatingClass as any
 }
 
 class EndorsementRatingImpl extends EndorsementRatingMixin(RdfResourceImpl) {

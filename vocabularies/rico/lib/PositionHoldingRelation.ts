@@ -13,15 +13,15 @@ export interface PositionHoldingRelation<D extends RDF.DatasetCore = RDF.Dataset
   positionHoldingRelationHasTarget: Rico.Position<D> | undefined;
 }
 
-export function PositionHoldingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PositionHoldingRelation> & RdfResourceCore> & Base {
+export function PositionHoldingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PositionHoldingRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class PositionHoldingRelationClass extends AgentToAgentRelationMixin(Resource) implements Partial<PositionHoldingRelation> {
+  class PositionHoldingRelationClass extends AgentToAgentRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     positionHoldingRelationHasSource: Rico.Person | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Position] })
     positionHoldingRelationHasTarget: Rico.Position | undefined;
   }
-  return PositionHoldingRelationClass
+  return PositionHoldingRelationClass as any
 }
 
 class PositionHoldingRelationImpl extends PositionHoldingRelationMixin(RdfResourceImpl) {

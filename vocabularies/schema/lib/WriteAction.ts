@@ -14,9 +14,9 @@ export interface WriteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   language: Schema.Language<D> | undefined;
 }
 
-export function WriteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WriteAction> & RdfResourceCore> & Base {
+export function WriteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WriteAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WriteActionClass extends CreateActionMixin(Resource) implements Partial<WriteAction> {
+  class WriteActionClass extends CreateActionMixin(Resource) {
     @rdfine.property.resource()
     inLanguage: Schema.Language | undefined;
     @rdfine.property.literal({ path: schema.inLanguage })
@@ -24,7 +24,7 @@ export function WriteActionMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource()
     language: Schema.Language | undefined;
   }
-  return WriteActionClass
+  return WriteActionClass as any
 }
 
 class WriteActionImpl extends WriteActionMixin(RdfResourceImpl) {

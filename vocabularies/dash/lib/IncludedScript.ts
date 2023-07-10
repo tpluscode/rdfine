@@ -11,11 +11,11 @@ import { ScriptMixin } from './Script.js';
 export interface IncludedScript<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, rdfine.RdfResource<D> {
 }
 
-export function IncludedScriptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<IncludedScript> & RdfResourceCore> & Base {
+export function IncludedScriptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IncludedScript & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class IncludedScriptClass extends ScriptMixin(Resource) implements Partial<IncludedScript> {
+  class IncludedScriptClass extends ScriptMixin(Resource) {
   }
-  return IncludedScriptClass
+  return IncludedScriptClass as any
 }
 
 class IncludedScriptImpl extends IncludedScriptMixin(RdfResourceImpl) {

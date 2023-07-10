@@ -13,15 +13,15 @@ export interface AuthorityRelation<D extends RDF.DatasetCore = RDF.DatasetCore> 
   authorityRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function AuthorityRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AuthorityRelation> & RdfResourceCore> & Base {
+export function AuthorityRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AuthorityRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class AuthorityRelationClass extends RelationMixin(Resource) implements Partial<AuthorityRelation> {
+  class AuthorityRelationClass extends RelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     authorityRelationHasSource: Rico.Agent | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     authorityRelationHasTarget: Rico.Thing | undefined;
   }
-  return AuthorityRelationClass
+  return AuthorityRelationClass as any
 }
 
 class AuthorityRelationImpl extends AuthorityRelationMixin(RdfResourceImpl) {

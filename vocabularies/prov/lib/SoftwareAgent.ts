@@ -11,11 +11,11 @@ import { AgentMixin } from './Agent.js';
 export interface SoftwareAgent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Agent<D>, rdfine.RdfResource<D> {
 }
 
-export function SoftwareAgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SoftwareAgent> & RdfResourceCore> & Base {
+export function SoftwareAgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SoftwareAgent & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class SoftwareAgentClass extends AgentMixin(Resource) implements Partial<SoftwareAgent> {
+  class SoftwareAgentClass extends AgentMixin(Resource) {
   }
-  return SoftwareAgentClass
+  return SoftwareAgentClass as any
 }
 
 class SoftwareAgentImpl extends SoftwareAgentMixin(RdfResourceImpl) {

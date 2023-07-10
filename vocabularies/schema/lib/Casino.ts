@@ -11,11 +11,11 @@ import { EntertainmentBusinessMixin } from './EntertainmentBusiness.js';
 export interface Casino<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.EntertainmentBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function CasinoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Casino> & RdfResourceCore> & Base {
+export function CasinoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Casino & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CasinoClass extends EntertainmentBusinessMixin(Resource) implements Partial<Casino> {
+  class CasinoClass extends EntertainmentBusinessMixin(Resource) {
   }
-  return CasinoClass
+  return CasinoClass as any
 }
 
 class CasinoImpl extends CasinoMixin(RdfResourceImpl) {

@@ -13,15 +13,15 @@ export interface InvestmentOrDeposit<D extends RDF.DatasetCore = RDF.DatasetCore
   amountLiteral: number | undefined;
 }
 
-export function InvestmentOrDepositMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InvestmentOrDeposit> & RdfResourceCore> & Base {
+export function InvestmentOrDepositMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InvestmentOrDeposit & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class InvestmentOrDepositClass extends FinancialProductMixin(Resource) implements Partial<InvestmentOrDeposit> {
+  class InvestmentOrDepositClass extends FinancialProductMixin(Resource) {
     @rdfine.property.resource()
     amount: Schema.MonetaryAmount | undefined;
     @rdfine.property.literal({ path: schema.amount, type: Number })
     amountLiteral: number | undefined;
   }
-  return InvestmentOrDepositClass
+  return InvestmentOrDepositClass as any
 }
 
 class InvestmentOrDepositImpl extends InvestmentOrDepositMixin(RdfResourceImpl) {

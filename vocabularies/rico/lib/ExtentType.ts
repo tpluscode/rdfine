@@ -12,13 +12,13 @@ export interface ExtentType<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   isExtentTypeOf: Rico.Extent<D> | undefined;
 }
 
-export function ExtentTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ExtentType> & RdfResourceCore> & Base {
+export function ExtentTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ExtentType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class ExtentTypeClass extends TypeMixin(Resource) implements Partial<ExtentType> {
+  class ExtentTypeClass extends TypeMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Extent] })
     isExtentTypeOf: Rico.Extent | undefined;
   }
-  return ExtentTypeClass
+  return ExtentTypeClass as any
 }
 
 class ExtentTypeImpl extends ExtentTypeMixin(RdfResourceImpl) {

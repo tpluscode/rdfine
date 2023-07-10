@@ -12,13 +12,13 @@ export interface MedicalSignOrSymptom<D extends RDF.DatasetCore = RDF.DatasetCor
   possibleTreatment: Schema.MedicalTherapy<D> | undefined;
 }
 
-export function MedicalSignOrSymptomMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalSignOrSymptom> & RdfResourceCore> & Base {
+export function MedicalSignOrSymptomMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalSignOrSymptom & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalSignOrSymptomClass extends MedicalConditionMixin(Resource) implements Partial<MedicalSignOrSymptom> {
+  class MedicalSignOrSymptomClass extends MedicalConditionMixin(Resource) {
     @rdfine.property.resource()
     possibleTreatment: Schema.MedicalTherapy | undefined;
   }
-  return MedicalSignOrSymptomClass
+  return MedicalSignOrSymptomClass as any
 }
 
 class MedicalSignOrSymptomImpl extends MedicalSignOrSymptomMixin(RdfResourceImpl) {

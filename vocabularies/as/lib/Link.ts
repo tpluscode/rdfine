@@ -19,9 +19,9 @@ export interface Link<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfin
   width: number | undefined;
 }
 
-export function LinkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Link> & RdfResourceCore> & Base {
+export function LinkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Link & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class LinkClass extends Resource implements Partial<Link> {
+  class LinkClass extends Resource {
     @rdfine.property.resource()
     attributedTo: As.Link | As.Object | undefined;
     @rdfine.property.literal({ type: Number })
@@ -41,7 +41,7 @@ export function LinkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.literal({ type: Number })
     width: number | undefined;
   }
-  return LinkClass
+  return LinkClass as any
 }
 
 class LinkImpl extends LinkMixin(RdfResourceImpl) {

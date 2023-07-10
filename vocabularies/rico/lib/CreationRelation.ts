@@ -14,9 +14,9 @@ export interface CreationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> e
   creationWithRole: Rico.RoleType<D> | undefined;
 }
 
-export function CreationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CreationRelation> & RdfResourceCore> & Base {
+export function CreationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CreationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class CreationRelationClass extends AgentOriginationRelationMixin(Resource) implements Partial<CreationRelation> {
+  class CreationRelationClass extends AgentOriginationRelationMixin(Resource) {
     @rdfine.property.resource()
     creationRelationHasSource: Rico.Instantiation | Rico.RecordResource | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
@@ -24,7 +24,7 @@ export function CreationRelationMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.resource({ implicitTypes: [rico.RoleType] })
     creationWithRole: Rico.RoleType | undefined;
   }
-  return CreationRelationClass
+  return CreationRelationClass as any
 }
 
 class CreationRelationImpl extends CreationRelationMixin(RdfResourceImpl) {

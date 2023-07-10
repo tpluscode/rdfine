@@ -11,11 +11,11 @@ import { AllocateActionMixin } from './AllocateAction.js';
 export interface AcceptAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AllocateAction<D>, rdfine.RdfResource<D> {
 }
 
-export function AcceptActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AcceptAction> & RdfResourceCore> & Base {
+export function AcceptActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AcceptAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AcceptActionClass extends AllocateActionMixin(Resource) implements Partial<AcceptAction> {
+  class AcceptActionClass extends AllocateActionMixin(Resource) {
   }
-  return AcceptActionClass
+  return AcceptActionClass as any
 }
 
 class AcceptActionImpl extends AcceptActionMixin(RdfResourceImpl) {

@@ -14,11 +14,11 @@ import { DatatypeMixin as RdfsDatatypeMixin } from '@rdfine/rdfs/lib/Datatype';
 export interface DataRange<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Datatype<D>, rdfine.RdfResource<D> {
 }
 
-export function DataRangeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DataRange> & RdfResourceCore> & Base {
+export function DataRangeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DataRange & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class DataRangeClass extends DatatypeMixinEx(RdfsDatatypeMixin(Resource)) implements Partial<DataRange> {
+  class DataRangeClass extends DatatypeMixinEx(RdfsDatatypeMixin(Resource)) {
   }
-  return DataRangeClass
+  return DataRangeClass as any
 }
 
 class DataRangeImpl extends DataRangeMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface Vein<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   tributary: Schema.AnatomicalStructure<D> | undefined;
 }
 
-export function VeinMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Vein> & RdfResourceCore> & Base {
+export function VeinMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Vein & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class VeinClass extends VesselMixin(Resource) implements Partial<Vein> {
+  class VeinClass extends VesselMixin(Resource) {
     @rdfine.property.resource()
     drainsTo: Schema.Vessel | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function VeinMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.resource()
     tributary: Schema.AnatomicalStructure | undefined;
   }
-  return VeinClass
+  return VeinClass as any
 }
 
 class VeinImpl extends VeinMixin(RdfResourceImpl) {

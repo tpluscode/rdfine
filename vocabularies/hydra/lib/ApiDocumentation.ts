@@ -18,9 +18,9 @@ export interface ApiDocumentation<D extends RDF.DatasetCore = RDF.DatasetCore> e
   title: string | undefined;
 }
 
-export function ApiDocumentationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ApiDocumentation> & RdfResourceCore> & Base {
+export function ApiDocumentationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ApiDocumentation & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class ApiDocumentationClass extends ResourceMixin(Resource) implements Partial<ApiDocumentation> {
+  class ApiDocumentationClass extends ResourceMixin(Resource) {
     @rdfine.property.literal()
     description: string | undefined;
     @rdfine.property.resource({ implicitTypes: [hydra.Resource] })
@@ -34,7 +34,7 @@ export function ApiDocumentationMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.literal()
     title: string | undefined;
   }
-  return ApiDocumentationClass
+  return ApiDocumentationClass as any
 }
 
 class ApiDocumentationImpl extends ApiDocumentationMixin(RdfResourceImpl) {

@@ -17,9 +17,9 @@ export interface Role<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   startDate: Date | undefined;
 }
 
-export function RoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Role> & RdfResourceCore> & Base {
+export function RoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Role & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RoleClass extends IntangibleMixin(Resource) implements Partial<Role> {
+  class RoleClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate: Date | undefined;
     @rdfine.property.literal()
@@ -33,7 +33,7 @@ export function RoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate: Date | undefined;
   }
-  return RoleClass
+  return RoleClass as any
 }
 
 class RoleImpl extends RoleMixin(RdfResourceImpl) {

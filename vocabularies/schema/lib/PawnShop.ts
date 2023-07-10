@@ -11,11 +11,11 @@ import { StoreMixin } from './Store.js';
 export interface PawnShop<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
-export function PawnShopMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PawnShop> & RdfResourceCore> & Base {
+export function PawnShopMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PawnShop & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PawnShopClass extends StoreMixin(Resource) implements Partial<PawnShop> {
+  class PawnShopClass extends StoreMixin(Resource) {
   }
-  return PawnShopClass
+  return PawnShopClass as any
 }
 
 class PawnShopImpl extends PawnShopMixin(RdfResourceImpl) {

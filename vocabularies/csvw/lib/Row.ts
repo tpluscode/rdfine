@@ -14,9 +14,9 @@ export interface Row<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine
   title: RDF.Term | undefined;
 }
 
-export function RowMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Row> & RdfResourceCore> & Base {
+export function RowMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Row & RdfResourceCore> & Base {
   @rdfine.namespace(csvw)
-  class RowClass extends Resource implements Partial<Row> {
+  class RowClass extends Resource {
     @rdfine.property()
     describes: RDF.Term | undefined;
     @rdfine.property.literal()
@@ -26,7 +26,7 @@ export function RowMixin<Base extends rdfine.Constructor>(Resource: Base): rdfin
     @rdfine.property()
     title: RDF.Term | undefined;
   }
-  return RowClass
+  return RowClass as any
 }
 
 class RowImpl extends RowMixin(RdfResourceImpl) {

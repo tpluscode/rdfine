@@ -11,11 +11,11 @@ import { OfferMixin } from './Offer.js';
 export interface Invite<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Offer<D>, rdfine.RdfResource<D> {
 }
 
-export function InviteMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Invite> & RdfResourceCore> & Base {
+export function InviteMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Invite & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class InviteClass extends OfferMixin(Resource) implements Partial<Invite> {
+  class InviteClass extends OfferMixin(Resource) {
   }
-  return InviteClass
+  return InviteClass as any
 }
 
 class InviteImpl extends InviteMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { InsertActionMixin } from './InsertAction.js';
 export interface PrependAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InsertAction<D>, rdfine.RdfResource<D> {
 }
 
-export function PrependActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PrependAction> & RdfResourceCore> & Base {
+export function PrependActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PrependAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PrependActionClass extends InsertActionMixin(Resource) implements Partial<PrependAction> {
+  class PrependActionClass extends InsertActionMixin(Resource) {
   }
-  return PrependActionClass
+  return PrependActionClass as any
 }
 
 class PrependActionImpl extends PrependActionMixin(RdfResourceImpl) {

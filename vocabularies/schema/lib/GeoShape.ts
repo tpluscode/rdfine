@@ -21,9 +21,9 @@ export interface GeoShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   postalCode: string | undefined;
 }
 
-export function GeoShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GeoShape> & RdfResourceCore> & Base {
+export function GeoShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GeoShape & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class GeoShapeClass extends StructuredValueMixin(Resource) implements Partial<GeoShape> {
+  class GeoShapeClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     address: Schema.PostalAddress | undefined;
     @rdfine.property.resource()
@@ -45,7 +45,7 @@ export function GeoShapeMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.literal()
     postalCode: string | undefined;
   }
-  return GeoShapeClass
+  return GeoShapeClass as any
 }
 
 class GeoShapeImpl extends GeoShapeMixin(RdfResourceImpl) {

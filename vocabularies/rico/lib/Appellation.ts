@@ -19,9 +19,9 @@ export interface Appellation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   wasUsedToDate: Rico.Date<D> | undefined;
 }
 
-export function AppellationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Appellation> & RdfResourceCore> & Base {
+export function AppellationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Appellation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class AppellationClass extends ConceptMixin(Resource) implements Partial<Appellation> {
+  class AppellationClass extends ConceptMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.AppellationRelation] })
     appellationIsSourceOfAppellationRelation: Rico.AppellationRelation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
@@ -39,7 +39,7 @@ export function AppellationMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource({ implicitTypes: [rico.Date] })
     wasUsedToDate: Rico.Date | undefined;
   }
-  return AppellationClass
+  return AppellationClass as any
 }
 
 class AppellationImpl extends AppellationMixin(RdfResourceImpl) {

@@ -12,15 +12,15 @@ export interface OnlineAccount<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   accountServiceHomepage: Foaf.Document<D> | undefined;
 }
 
-export function OnlineAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OnlineAccount> & RdfResourceCore> & Base {
+export function OnlineAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OnlineAccount & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
-  class OnlineAccountClass extends Resource implements Partial<OnlineAccount> {
+  class OnlineAccountClass extends Resource {
     @rdfine.property()
     accountName: RDF.Literal | undefined;
     @rdfine.property.resource({ implicitTypes: [foaf.Document] })
     accountServiceHomepage: Foaf.Document | undefined;
   }
-  return OnlineAccountClass
+  return OnlineAccountClass as any
 }
 
 class OnlineAccountImpl extends OnlineAccountMixin(RdfResourceImpl) {

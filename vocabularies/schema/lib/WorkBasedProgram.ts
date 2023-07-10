@@ -14,9 +14,9 @@ export interface WorkBasedProgram<D extends RDF.DatasetCore = RDF.DatasetCore> e
   trainingSalary: Schema.MonetaryAmountDistribution<D> | undefined;
 }
 
-export function WorkBasedProgramMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WorkBasedProgram> & RdfResourceCore> & Base {
+export function WorkBasedProgramMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WorkBasedProgram & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WorkBasedProgramClass extends EducationalOccupationalProgramMixin(Resource) implements Partial<WorkBasedProgram> {
+  class WorkBasedProgramClass extends EducationalOccupationalProgramMixin(Resource) {
     @rdfine.property.resource()
     occupationalCategory: Schema.CategoryCode | undefined;
     @rdfine.property.literal({ path: schema.occupationalCategory })
@@ -24,7 +24,7 @@ export function WorkBasedProgramMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.resource()
     trainingSalary: Schema.MonetaryAmountDistribution | undefined;
   }
-  return WorkBasedProgramClass
+  return WorkBasedProgramClass as any
 }
 
 class WorkBasedProgramImpl extends WorkBasedProgramMixin(RdfResourceImpl) {

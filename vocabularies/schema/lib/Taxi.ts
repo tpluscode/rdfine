@@ -11,11 +11,11 @@ import { ServiceMixin } from './Service.js';
 export interface Taxi<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, rdfine.RdfResource<D> {
 }
 
-export function TaxiMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Taxi> & RdfResourceCore> & Base {
+export function TaxiMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Taxi & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TaxiClass extends ServiceMixin(Resource) implements Partial<Taxi> {
+  class TaxiClass extends ServiceMixin(Resource) {
   }
-  return TaxiClass
+  return TaxiClass as any
 }
 
 class TaxiImpl extends TaxiMixin(RdfResourceImpl) {

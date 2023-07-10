@@ -14,9 +14,9 @@ export interface CookAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   recipe: Schema.Recipe<D> | undefined;
 }
 
-export function CookActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CookAction> & RdfResourceCore> & Base {
+export function CookActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CookAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CookActionClass extends CreateActionMixin(Resource) implements Partial<CookAction> {
+  class CookActionClass extends CreateActionMixin(Resource) {
     @rdfine.property.resource()
     foodEstablishment: Schema.FoodEstablishment | Schema.Place | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function CookActionMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property.resource()
     recipe: Schema.Recipe | undefined;
   }
-  return CookActionClass
+  return CookActionClass as any
 }
 
 class CookActionImpl extends CookActionMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { TestCaseMixin } from './TestCase.js';
 export interface ValidationTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.TestCase<D>, rdfine.RdfResource<D> {
 }
 
-export function ValidationTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ValidationTestCase> & RdfResourceCore> & Base {
+export function ValidationTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ValidationTestCase & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class ValidationTestCaseClass extends TestCaseMixin(Resource) implements Partial<ValidationTestCase> {
+  class ValidationTestCaseClass extends TestCaseMixin(Resource) {
   }
-  return ValidationTestCaseClass
+  return ValidationTestCaseClass as any
 }
 
 class ValidationTestCaseImpl extends ValidationTestCaseMixin(RdfResourceImpl) {

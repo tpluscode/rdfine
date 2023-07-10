@@ -12,11 +12,11 @@ import { SuggestionGeneratorMixin } from './SuggestionGenerator.js';
 export interface ScriptSuggestionGenerator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, Dash.SuggestionGenerator<D>, rdfine.RdfResource<D> {
 }
 
-export function ScriptSuggestionGeneratorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ScriptSuggestionGenerator> & RdfResourceCore> & Base {
+export function ScriptSuggestionGeneratorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ScriptSuggestionGenerator & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class ScriptSuggestionGeneratorClass extends SuggestionGeneratorMixin(ScriptMixin(Resource)) implements Partial<ScriptSuggestionGenerator> {
+  class ScriptSuggestionGeneratorClass extends SuggestionGeneratorMixin(ScriptMixin(Resource)) {
   }
-  return ScriptSuggestionGeneratorClass
+  return ScriptSuggestionGeneratorClass as any
 }
 
 class ScriptSuggestionGeneratorImpl extends ScriptSuggestionGeneratorMixin(RdfResourceImpl) {

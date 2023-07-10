@@ -17,9 +17,9 @@ export interface FinancialProduct<D extends RDF.DatasetCore = RDF.DatasetCore> e
   interestRateLiteral: number | undefined;
 }
 
-export function FinancialProductMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FinancialProduct> & RdfResourceCore> & Base {
+export function FinancialProductMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FinancialProduct & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class FinancialProductClass extends ServiceMixin(Resource) implements Partial<FinancialProduct> {
+  class FinancialProductClass extends ServiceMixin(Resource) {
     @rdfine.property.resource()
     annualPercentageRate: Schema.QuantitativeValue | undefined;
     @rdfine.property.literal({ path: schema.annualPercentageRate, type: Number })
@@ -33,7 +33,7 @@ export function FinancialProductMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.literal({ path: schema.interestRate, type: Number })
     interestRateLiteral: number | undefined;
   }
-  return FinancialProductClass
+  return FinancialProductClass as any
 }
 
 class FinancialProductImpl extends FinancialProductMixin(RdfResourceImpl) {

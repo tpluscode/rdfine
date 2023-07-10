@@ -24,9 +24,9 @@ export interface Action<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   target: Schema.EntryPoint<D> | undefined;
 }
 
-export function ActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Action> & RdfResourceCore> & Base {
+export function ActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Action & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ActionClass extends ThingMixin(Resource) implements Partial<Action> {
+  class ActionClass extends ThingMixin(Resource) {
     @rdfine.property()
     actionStatus: Schema.ActionStatusType | undefined;
     @rdfine.property.resource()
@@ -54,7 +54,7 @@ export function ActionMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.resource()
     target: Schema.EntryPoint | undefined;
   }
-  return ActionClass
+  return ActionClass as any
 }
 
 class ActionImpl extends ActionMixin(RdfResourceImpl) {

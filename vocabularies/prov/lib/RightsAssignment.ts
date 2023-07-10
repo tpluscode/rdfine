@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface RightsAssignment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function RightsAssignmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RightsAssignment> & RdfResourceCore> & Base {
+export function RightsAssignmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RightsAssignment & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class RightsAssignmentClass extends ActivityMixin(Resource) implements Partial<RightsAssignment> {
+  class RightsAssignmentClass extends ActivityMixin(Resource) {
   }
-  return RightsAssignmentClass
+  return RightsAssignmentClass as any
 }
 
 class RightsAssignmentImpl extends RightsAssignmentMixin(RdfResourceImpl) {

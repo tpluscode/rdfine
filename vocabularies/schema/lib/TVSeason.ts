@@ -14,15 +14,15 @@ export interface TVSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   partOfTVSeries: Schema.TVSeries<D> | undefined;
 }
 
-export function TVSeasonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TVSeason> & RdfResourceCore> & Base {
+export function TVSeasonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TVSeason & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TVSeasonClass extends CreativeWorkSeasonMixin(CreativeWorkMixin(Resource)) implements Partial<TVSeason> {
+  class TVSeasonClass extends CreativeWorkSeasonMixin(CreativeWorkMixin(Resource)) {
     @rdfine.property.resource()
     countryOfOrigin: Schema.Country | undefined;
     @rdfine.property.resource()
     partOfTVSeries: Schema.TVSeries | undefined;
   }
-  return TVSeasonClass
+  return TVSeasonClass as any
 }
 
 class TVSeasonImpl extends TVSeasonMixin(RdfResourceImpl) {

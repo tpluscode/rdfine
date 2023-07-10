@@ -12,13 +12,13 @@ export interface DemographicGroup<D extends RDF.DatasetCore = RDF.DatasetCore> e
   isOrWasDemographicGroupOf: Rico.Group<D> | Rico.Person<D> | undefined;
 }
 
-export function DemographicGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DemographicGroup> & RdfResourceCore> & Base {
+export function DemographicGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DemographicGroup & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class DemographicGroupClass extends TypeMixin(Resource) implements Partial<DemographicGroup> {
+  class DemographicGroupClass extends TypeMixin(Resource) {
     @rdfine.property.resource()
     isOrWasDemographicGroupOf: Rico.Group | Rico.Person | undefined;
   }
-  return DemographicGroupClass
+  return DemographicGroupClass as any
 }
 
 class DemographicGroupImpl extends DemographicGroupMixin(RdfResourceImpl) {

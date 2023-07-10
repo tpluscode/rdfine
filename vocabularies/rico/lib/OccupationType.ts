@@ -13,13 +13,13 @@ export interface OccupationType<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   isOrWasOccupationTypeOf: Rico.Person<D> | undefined;
 }
 
-export function OccupationTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OccupationType> & RdfResourceCore> & Base {
+export function OccupationTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OccupationType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class OccupationTypeClass extends DemographicGroupMixin(ActivityTypeMixin(Resource)) implements Partial<OccupationType> {
+  class OccupationTypeClass extends DemographicGroupMixin(ActivityTypeMixin(Resource)) {
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     isOrWasOccupationTypeOf: Rico.Person | undefined;
   }
-  return OccupationTypeClass
+  return OccupationTypeClass as any
 }
 
 class OccupationTypeImpl extends OccupationTypeMixin(RdfResourceImpl) {

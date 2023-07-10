@@ -12,11 +12,11 @@ import { PeopleAudienceMixin } from './PeopleAudience.js';
 export interface MedicalAudience<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Audience<D>, Schema.PeopleAudience<D>, rdfine.RdfResource<D> {
 }
 
-export function MedicalAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalAudience> & RdfResourceCore> & Base {
+export function MedicalAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalAudience & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalAudienceClass extends PeopleAudienceMixin(AudienceMixin(Resource)) implements Partial<MedicalAudience> {
+  class MedicalAudienceClass extends PeopleAudienceMixin(AudienceMixin(Resource)) {
   }
-  return MedicalAudienceClass
+  return MedicalAudienceClass as any
 }
 
 class MedicalAudienceImpl extends MedicalAudienceMixin(RdfResourceImpl) {

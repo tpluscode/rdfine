@@ -11,11 +11,11 @@ import { ObjectPropertyMixin } from './ObjectProperty.js';
 export interface IrreflexiveProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, rdfine.RdfResource<D> {
 }
 
-export function IrreflexivePropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<IrreflexiveProperty> & RdfResourceCore> & Base {
+export function IrreflexivePropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IrreflexiveProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class IrreflexivePropertyClass extends ObjectPropertyMixin(Resource) implements Partial<IrreflexiveProperty> {
+  class IrreflexivePropertyClass extends ObjectPropertyMixin(Resource) {
   }
-  return IrreflexivePropertyClass
+  return IrreflexivePropertyClass as any
 }
 
 class IrreflexivePropertyImpl extends IrreflexivePropertyMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { TransferActionMixin } from './TransferAction.js';
 export interface DownloadAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, rdfine.RdfResource<D> {
 }
 
-export function DownloadActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DownloadAction> & RdfResourceCore> & Base {
+export function DownloadActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DownloadAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DownloadActionClass extends TransferActionMixin(Resource) implements Partial<DownloadAction> {
+  class DownloadActionClass extends TransferActionMixin(Resource) {
   }
-  return DownloadActionClass
+  return DownloadActionClass as any
 }
 
 class DownloadActionImpl extends DownloadActionMixin(RdfResourceImpl) {

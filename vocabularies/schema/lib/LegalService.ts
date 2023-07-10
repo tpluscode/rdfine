@@ -11,11 +11,11 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 export interface LegalService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function LegalServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LegalService> & RdfResourceCore> & Base {
+export function LegalServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LegalService & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LegalServiceClass extends LocalBusinessMixin(Resource) implements Partial<LegalService> {
+  class LegalServiceClass extends LocalBusinessMixin(Resource) {
   }
-  return LegalServiceClass
+  return LegalServiceClass as any
 }
 
 class LegalServiceImpl extends LegalServiceMixin(RdfResourceImpl) {

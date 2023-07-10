@@ -19,9 +19,9 @@ export interface EntryPoint<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   urlTemplate: string | undefined;
 }
 
-export function EntryPointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EntryPoint> & RdfResourceCore> & Base {
+export function EntryPointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EntryPoint & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class EntryPointClass extends IntangibleMixin(Resource) implements Partial<EntryPoint> {
+  class EntryPointClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     actionApplication: Schema.SoftwareApplication | undefined;
     @rdfine.property.literal()
@@ -39,7 +39,7 @@ export function EntryPointMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property.literal()
     urlTemplate: string | undefined;
   }
-  return EntryPointClass
+  return EntryPointClass as any
 }
 
 class EntryPointImpl extends EntryPointMixin(RdfResourceImpl) {

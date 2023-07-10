@@ -13,13 +13,13 @@ export interface Script<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf
   js: string | undefined;
 }
 
-export function ScriptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Script> & RdfResourceCore> & Base {
+export function ScriptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Script & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class ScriptClass extends RdfsResourceMixin(Resource) implements Partial<Script> {
+  class ScriptClass extends RdfsResourceMixin(Resource) {
     @rdfine.property.literal()
     js: string | undefined;
   }
-  return ScriptClass
+  return ScriptClass as any
 }
 
 class ScriptImpl extends ScriptMixin(RdfResourceImpl) {

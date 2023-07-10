@@ -11,11 +11,11 @@ import { AdministrativeAreaMixin } from './AdministrativeArea.js';
 export interface State<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AdministrativeArea<D>, rdfine.RdfResource<D> {
 }
 
-export function StateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<State> & RdfResourceCore> & Base {
+export function StateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<State & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class StateClass extends AdministrativeAreaMixin(Resource) implements Partial<State> {
+  class StateClass extends AdministrativeAreaMixin(Resource) {
   }
-  return StateClass
+  return StateClass as any
 }
 
 class StateImpl extends StateMixin(RdfResourceImpl) {

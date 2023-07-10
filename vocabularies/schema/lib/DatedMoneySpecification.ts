@@ -16,9 +16,9 @@ export interface DatedMoneySpecification<D extends RDF.DatasetCore = RDF.Dataset
   startDate: Date | undefined;
 }
 
-export function DatedMoneySpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DatedMoneySpecification> & RdfResourceCore> & Base {
+export function DatedMoneySpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DatedMoneySpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DatedMoneySpecificationClass extends StructuredValueMixin(Resource) implements Partial<DatedMoneySpecification> {
+  class DatedMoneySpecificationClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     amount: Schema.MonetaryAmount | undefined;
     @rdfine.property.literal({ path: schema.amount, type: Number })
@@ -30,7 +30,7 @@ export function DatedMoneySpecificationMixin<Base extends rdfine.Constructor>(Re
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate: Date | undefined;
   }
-  return DatedMoneySpecificationClass
+  return DatedMoneySpecificationClass as any
 }
 
 class DatedMoneySpecificationImpl extends DatedMoneySpecificationMixin(RdfResourceImpl) {

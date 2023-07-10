@@ -14,9 +14,9 @@ export interface Grant<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   sponsor: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function GrantMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Grant> & RdfResourceCore> & Base {
+export function GrantMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Grant & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class GrantClass extends IntangibleMixin(Resource) implements Partial<Grant> {
+  class GrantClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     fundedItem: Schema.BioChemEntity | Schema.CreativeWork | Schema.Event | Schema.MedicalEntity | Schema.Organization | Schema.Person | Schema.Product | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function GrantMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource()
     sponsor: Schema.Organization | Schema.Person | undefined;
   }
-  return GrantClass
+  return GrantClass as any
 }
 
 class GrantImpl extends GrantMixin(RdfResourceImpl) {

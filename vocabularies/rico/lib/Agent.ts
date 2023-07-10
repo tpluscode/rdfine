@@ -59,9 +59,9 @@ export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico
   performsOrPerformed: Rico.Activity<D> | undefined;
 }
 
-export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Agent> & RdfResourceCore> & Base {
+export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Agent & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class AgentClass extends ThingMixin(Resource) implements Partial<Agent> {
+  class AgentClass extends ThingMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.WorkRelation] })
     agentHasWorkRelation: Rico.WorkRelation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.AgentToAgentRelation] })
@@ -159,7 +159,7 @@ export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource({ implicitTypes: [rico.Activity] })
     performsOrPerformed: Rico.Activity | undefined;
   }
-  return AgentClass
+  return AgentClass as any
 }
 
 class AgentImpl extends AgentMixin(RdfResourceImpl) {

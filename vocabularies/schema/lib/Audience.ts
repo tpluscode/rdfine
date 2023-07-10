@@ -13,15 +13,15 @@ export interface Audience<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   geographicArea: Schema.AdministrativeArea<D> | undefined;
 }
 
-export function AudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Audience> & RdfResourceCore> & Base {
+export function AudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Audience & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AudienceClass extends IntangibleMixin(Resource) implements Partial<Audience> {
+  class AudienceClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal()
     audienceType: string | undefined;
     @rdfine.property.resource()
     geographicArea: Schema.AdministrativeArea | undefined;
   }
-  return AudienceClass
+  return AudienceClass as any
 }
 
 class AudienceImpl extends AudienceMixin(RdfResourceImpl) {

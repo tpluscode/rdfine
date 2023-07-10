@@ -13,15 +13,15 @@ export interface PodcastSeries<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   webFeed: Schema.DataFeed<D> | undefined;
 }
 
-export function PodcastSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PodcastSeries> & RdfResourceCore> & Base {
+export function PodcastSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PodcastSeries & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PodcastSeriesClass extends CreativeWorkSeriesMixin(Resource) implements Partial<PodcastSeries> {
+  class PodcastSeriesClass extends CreativeWorkSeriesMixin(Resource) {
     @rdfine.property.resource()
     actor: Schema.Person | undefined;
     @rdfine.property.resource()
     webFeed: Schema.DataFeed | undefined;
   }
-  return PodcastSeriesClass
+  return PodcastSeriesClass as any
 }
 
 class PodcastSeriesImpl extends PodcastSeriesMixin(RdfResourceImpl) {

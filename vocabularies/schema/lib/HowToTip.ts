@@ -12,11 +12,11 @@ import { ListItemMixin } from './ListItem.js';
 export interface HowToTip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ListItem<D>, rdfine.RdfResource<D> {
 }
 
-export function HowToTipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HowToTip> & RdfResourceCore> & Base {
+export function HowToTipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowToTip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HowToTipClass extends ListItemMixin(CreativeWorkMixin(Resource)) implements Partial<HowToTip> {
+  class HowToTipClass extends ListItemMixin(CreativeWorkMixin(Resource)) {
   }
-  return HowToTipClass
+  return HowToTipClass as any
 }
 
 class HowToTipImpl extends HowToTipMixin(RdfResourceImpl) {

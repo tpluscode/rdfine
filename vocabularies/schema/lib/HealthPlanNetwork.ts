@@ -14,9 +14,9 @@ export interface HealthPlanNetwork<D extends RDF.DatasetCore = RDF.DatasetCore> 
   healthPlanNetworkTier: string | undefined;
 }
 
-export function HealthPlanNetworkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HealthPlanNetwork> & RdfResourceCore> & Base {
+export function HealthPlanNetworkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HealthPlanNetwork & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HealthPlanNetworkClass extends IntangibleMixin(Resource) implements Partial<HealthPlanNetwork> {
+  class HealthPlanNetworkClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal({ type: Boolean })
     healthPlanCostSharing: boolean | undefined;
     @rdfine.property.literal()
@@ -24,7 +24,7 @@ export function HealthPlanNetworkMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property.literal()
     healthPlanNetworkTier: string | undefined;
   }
-  return HealthPlanNetworkClass
+  return HealthPlanNetworkClass as any
 }
 
 class HealthPlanNetworkImpl extends HealthPlanNetworkMixin(RdfResourceImpl) {

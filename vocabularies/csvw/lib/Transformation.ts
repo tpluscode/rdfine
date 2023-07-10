@@ -15,9 +15,9 @@ export interface Transformation<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   url: string | undefined;
 }
 
-export function TransformationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Transformation> & RdfResourceCore> & Base {
+export function TransformationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Transformation & RdfResourceCore> & Base {
   @rdfine.namespace(csvw)
-  class TransformationClass extends Resource implements Partial<Transformation> {
+  class TransformationClass extends Resource {
     @rdfine.property.literal()
     scriptFormat: string | undefined;
     @rdfine.property.literal()
@@ -29,7 +29,7 @@ export function TransformationMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.literal()
     url: string | undefined;
   }
-  return TransformationClass
+  return TransformationClass as any
 }
 
 class TransformationImpl extends TransformationMixin(RdfResourceImpl) {

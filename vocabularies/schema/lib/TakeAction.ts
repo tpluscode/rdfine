@@ -11,11 +11,11 @@ import { TransferActionMixin } from './TransferAction.js';
 export interface TakeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, rdfine.RdfResource<D> {
 }
 
-export function TakeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TakeAction> & RdfResourceCore> & Base {
+export function TakeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TakeAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TakeActionClass extends TransferActionMixin(Resource) implements Partial<TakeAction> {
+  class TakeActionClass extends TransferActionMixin(Resource) {
   }
-  return TakeActionClass
+  return TakeActionClass as any
 }
 
 class TakeActionImpl extends TakeActionMixin(RdfResourceImpl) {

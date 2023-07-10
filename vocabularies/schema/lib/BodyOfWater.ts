@@ -11,11 +11,11 @@ import { LandformMixin } from './Landform.js';
 export interface BodyOfWater<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Landform<D>, rdfine.RdfResource<D> {
 }
 
-export function BodyOfWaterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BodyOfWater> & RdfResourceCore> & Base {
+export function BodyOfWaterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BodyOfWater & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BodyOfWaterClass extends LandformMixin(Resource) implements Partial<BodyOfWater> {
+  class BodyOfWaterClass extends LandformMixin(Resource) {
   }
-  return BodyOfWaterClass
+  return BodyOfWaterClass as any
 }
 
 class BodyOfWaterImpl extends BodyOfWaterMixin(RdfResourceImpl) {

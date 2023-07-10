@@ -11,11 +11,11 @@ import { StoreMixin } from './Store.js';
 export interface MobilePhoneStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
-export function MobilePhoneStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MobilePhoneStore> & RdfResourceCore> & Base {
+export function MobilePhoneStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MobilePhoneStore & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MobilePhoneStoreClass extends StoreMixin(Resource) implements Partial<MobilePhoneStore> {
+  class MobilePhoneStoreClass extends StoreMixin(Resource) {
   }
-  return MobilePhoneStoreClass
+  return MobilePhoneStoreClass as any
 }
 
 class MobilePhoneStoreImpl extends MobilePhoneStoreMixin(RdfResourceImpl) {

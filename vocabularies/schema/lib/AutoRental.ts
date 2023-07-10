@@ -11,11 +11,11 @@ import { AutomotiveBusinessMixin } from './AutomotiveBusiness.js';
 export interface AutoRental<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AutomotiveBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function AutoRentalMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AutoRental> & RdfResourceCore> & Base {
+export function AutoRentalMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AutoRental & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AutoRentalClass extends AutomotiveBusinessMixin(Resource) implements Partial<AutoRental> {
+  class AutoRentalClass extends AutomotiveBusinessMixin(Resource) {
   }
-  return AutoRentalClass
+  return AutoRentalClass as any
 }
 
 class AutoRentalImpl extends AutoRentalMixin(RdfResourceImpl) {

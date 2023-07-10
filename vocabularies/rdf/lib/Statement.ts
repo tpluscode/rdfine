@@ -13,9 +13,9 @@ export interface Statement<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   subject: RDF.Term | undefined;
 }
 
-export function StatementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Statement> & RdfResourceCore> & Base {
+export function StatementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Statement & RdfResourceCore> & Base {
   @rdfine.namespace(rdf)
-  class StatementClass extends Resource implements Partial<Statement> {
+  class StatementClass extends Resource {
     @rdfine.property()
     object: RDF.Term | undefined;
     @rdfine.property()
@@ -23,7 +23,7 @@ export function StatementMixin<Base extends rdfine.Constructor>(Resource: Base):
     @rdfine.property()
     subject: RDF.Term | undefined;
   }
-  return StatementClass
+  return StatementClass as any
 }
 
 class StatementImpl extends StatementMixin(RdfResourceImpl) {

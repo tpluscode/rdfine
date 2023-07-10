@@ -23,9 +23,9 @@ export interface NewsMediaOrganization<D extends RDF.DatasetCore = RDF.DatasetCo
   verificationFactCheckingPolicy: Schema.CreativeWork<D> | undefined;
 }
 
-export function NewsMediaOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NewsMediaOrganization> & RdfResourceCore> & Base {
+export function NewsMediaOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NewsMediaOrganization & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class NewsMediaOrganizationClass extends OrganizationMixin(Resource) implements Partial<NewsMediaOrganization> {
+  class NewsMediaOrganizationClass extends OrganizationMixin(Resource) {
     @rdfine.property.resource()
     actionableFeedbackPolicy: Schema.CreativeWork | undefined;
     @rdfine.property.resource()
@@ -51,7 +51,7 @@ export function NewsMediaOrganizationMixin<Base extends rdfine.Constructor>(Reso
     @rdfine.property.resource()
     verificationFactCheckingPolicy: Schema.CreativeWork | undefined;
   }
-  return NewsMediaOrganizationClass
+  return NewsMediaOrganizationClass as any
 }
 
 class NewsMediaOrganizationImpl extends NewsMediaOrganizationMixin(RdfResourceImpl) {

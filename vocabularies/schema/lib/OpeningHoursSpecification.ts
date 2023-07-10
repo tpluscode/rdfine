@@ -16,9 +16,9 @@ export interface OpeningHoursSpecification<D extends RDF.DatasetCore = RDF.Datas
   validThrough: Date | undefined;
 }
 
-export function OpeningHoursSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OpeningHoursSpecification> & RdfResourceCore> & Base {
+export function OpeningHoursSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OpeningHoursSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OpeningHoursSpecificationClass extends StructuredValueMixin(Resource) implements Partial<OpeningHoursSpecification> {
+  class OpeningHoursSpecificationClass extends StructuredValueMixin(Resource) {
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     closes: Date | undefined;
     @rdfine.property()
@@ -30,7 +30,7 @@ export function OpeningHoursSpecificationMixin<Base extends rdfine.Constructor>(
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     validThrough: Date | undefined;
   }
-  return OpeningHoursSpecificationClass
+  return OpeningHoursSpecificationClass as any
 }
 
 class OpeningHoursSpecificationImpl extends OpeningHoursSpecificationMixin(RdfResourceImpl) {

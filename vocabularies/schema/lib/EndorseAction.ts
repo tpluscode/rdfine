@@ -12,13 +12,13 @@ export interface EndorseAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   endorsee: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function EndorseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EndorseAction> & RdfResourceCore> & Base {
+export function EndorseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EndorseAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class EndorseActionClass extends ReactActionMixin(Resource) implements Partial<EndorseAction> {
+  class EndorseActionClass extends ReactActionMixin(Resource) {
     @rdfine.property.resource()
     endorsee: Schema.Organization | Schema.Person | undefined;
   }
-  return EndorseActionClass
+  return EndorseActionClass as any
 }
 
 class EndorseActionImpl extends EndorseActionMixin(RdfResourceImpl) {

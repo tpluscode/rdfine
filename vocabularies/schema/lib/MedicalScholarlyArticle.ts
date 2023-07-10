@@ -12,13 +12,13 @@ export interface MedicalScholarlyArticle<D extends RDF.DatasetCore = RDF.Dataset
   publicationType: string | undefined;
 }
 
-export function MedicalScholarlyArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalScholarlyArticle> & RdfResourceCore> & Base {
+export function MedicalScholarlyArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalScholarlyArticle & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalScholarlyArticleClass extends ScholarlyArticleMixin(Resource) implements Partial<MedicalScholarlyArticle> {
+  class MedicalScholarlyArticleClass extends ScholarlyArticleMixin(Resource) {
     @rdfine.property.literal()
     publicationType: string | undefined;
   }
-  return MedicalScholarlyArticleClass
+  return MedicalScholarlyArticleClass as any
 }
 
 class MedicalScholarlyArticleImpl extends MedicalScholarlyArticleMixin(RdfResourceImpl) {

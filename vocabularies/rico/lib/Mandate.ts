@@ -13,15 +13,15 @@ export interface Mandate<D extends RDF.DatasetCore = RDF.DatasetCore> extends Ri
   mandateIsSourceOfMandateRelation: Rico.MandateRelation<D> | undefined;
 }
 
-export function MandateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Mandate> & RdfResourceCore> & Base {
+export function MandateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Mandate & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class MandateClass extends RuleMixin(Resource) implements Partial<Mandate> {
+  class MandateClass extends RuleMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     authorizes: Rico.Agent | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.MandateRelation] })
     mandateIsSourceOfMandateRelation: Rico.MandateRelation | undefined;
   }
-  return MandateClass
+  return MandateClass as any
 }
 
 class MandateImpl extends MandateMixin(RdfResourceImpl) {

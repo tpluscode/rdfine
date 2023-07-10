@@ -33,9 +33,9 @@ export interface Item<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfin
   sibling: Sioc.Item<D> | undefined;
 }
 
-export function ItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Item> & RdfResourceCore> & Base {
+export function ItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Item & RdfResourceCore> & Base {
   @rdfine.namespace(sioc)
-  class ItemClass extends Resource implements Partial<Item> {
+  class ItemClass extends Resource {
     @rdfine.property()
     about: RDF.Term | undefined;
     @rdfine.property()
@@ -83,7 +83,7 @@ export function ItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.resource({ as: [ItemMixin] })
     sibling: Sioc.Item | undefined;
   }
-  return ItemClass
+  return ItemClass as any
 }
 
 class ItemImpl extends ItemMixin(RdfResourceImpl) {

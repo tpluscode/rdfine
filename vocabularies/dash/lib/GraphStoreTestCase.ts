@@ -11,11 +11,11 @@ import { TestCaseMixin } from './TestCase.js';
 export interface GraphStoreTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.TestCase<D>, rdfine.RdfResource<D> {
 }
 
-export function GraphStoreTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GraphStoreTestCase> & RdfResourceCore> & Base {
+export function GraphStoreTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GraphStoreTestCase & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class GraphStoreTestCaseClass extends TestCaseMixin(Resource) implements Partial<GraphStoreTestCase> {
+  class GraphStoreTestCaseClass extends TestCaseMixin(Resource) {
   }
-  return GraphStoreTestCaseClass
+  return GraphStoreTestCaseClass as any
 }
 
 class GraphStoreTestCaseImpl extends GraphStoreTestCaseMixin(RdfResourceImpl) {

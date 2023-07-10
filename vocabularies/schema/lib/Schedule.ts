@@ -26,9 +26,9 @@ export interface Schedule<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   startTime: Date | undefined;
 }
 
-export function ScheduleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Schedule> & RdfResourceCore> & Base {
+export function ScheduleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Schedule & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ScheduleClass extends IntangibleMixin(Resource) implements Partial<Schedule> {
+  class ScheduleClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal()
     byDay: string | undefined;
     @rdfine.property({ path: schema.byDay })
@@ -60,7 +60,7 @@ export function ScheduleMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     startTime: Date | undefined;
   }
-  return ScheduleClass
+  return ScheduleClass as any
 }
 
 class ScheduleImpl extends ScheduleMixin(RdfResourceImpl) {

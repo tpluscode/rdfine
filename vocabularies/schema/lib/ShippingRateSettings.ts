@@ -17,9 +17,9 @@ export interface ShippingRateSettings<D extends RDF.DatasetCore = RDF.DatasetCor
   shippingRate: Schema.MonetaryAmount<D> | undefined;
 }
 
-export function ShippingRateSettingsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ShippingRateSettings> & RdfResourceCore> & Base {
+export function ShippingRateSettingsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ShippingRateSettings & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ShippingRateSettingsClass extends StructuredValueMixin(Resource) implements Partial<ShippingRateSettings> {
+  class ShippingRateSettingsClass extends StructuredValueMixin(Resource) {
     @rdfine.property.literal({ type: Boolean })
     doesNotShip: boolean | undefined;
     @rdfine.property.resource()
@@ -33,7 +33,7 @@ export function ShippingRateSettingsMixin<Base extends rdfine.Constructor>(Resou
     @rdfine.property.resource()
     shippingRate: Schema.MonetaryAmount | undefined;
   }
-  return ShippingRateSettingsClass
+  return ShippingRateSettingsClass as any
 }
 
 class ShippingRateSettingsImpl extends ShippingRateSettingsMixin(RdfResourceImpl) {

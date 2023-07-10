@@ -12,15 +12,15 @@ export interface Space<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   'space_of': RDF.Term | undefined;
 }
 
-export function SpaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Space> & RdfResourceCore> & Base {
+export function SpaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Space & RdfResourceCore> & Base {
   @rdfine.namespace(sioc)
-  class SpaceClass extends Resource implements Partial<Space> {
+  class SpaceClass extends Resource {
     @rdfine.property.resource({ implicitTypes: [sioc.Usergroup] })
     'has_usergroup': Sioc.Usergroup | undefined;
     @rdfine.property()
     'space_of': RDF.Term | undefined;
   }
-  return SpaceClass
+  return SpaceClass as any
 }
 
 class SpaceImpl extends SpaceMixin(RdfResourceImpl) {

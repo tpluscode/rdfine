@@ -20,9 +20,9 @@ export interface Post<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.
   title: RDF.Literal | undefined;
 }
 
-export function PostMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Post> & RdfResourceCore> & Base {
+export function PostMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Post & RdfResourceCore> & Base {
   @rdfine.namespace(sioc)
-  class PostClass extends ItemMixin(FoafDocumentMixin(Resource)) implements Partial<Post> {
+  class PostClass extends ItemMixin(FoafDocumentMixin(Resource)) {
     @rdfine.property()
     'content_encoded': RDF.Literal | undefined;
     @rdfine.property()
@@ -38,7 +38,7 @@ export function PostMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property()
     title: RDF.Literal | undefined;
   }
-  return PostClass
+  return PostClass as any
 }
 
 class PostImpl extends PostMixin(RdfResourceImpl) {

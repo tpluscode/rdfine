@@ -14,15 +14,15 @@ export interface GroupSubdivisionRelation<D extends RDF.DatasetCore = RDF.Datase
   groupSubdivisionRelationHasTarget: Rico.Group<D> | undefined;
 }
 
-export function GroupSubdivisionRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GroupSubdivisionRelation> & RdfResourceCore> & Base {
+export function GroupSubdivisionRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GroupSubdivisionRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class GroupSubdivisionRelationClass extends WholePartRelationMixin(AgentHierarchicalRelationMixin(Resource)) implements Partial<GroupSubdivisionRelation> {
+  class GroupSubdivisionRelationClass extends WholePartRelationMixin(AgentHierarchicalRelationMixin(Resource)) {
     @rdfine.property.resource({ implicitTypes: [rico.Group] })
     groupSubdivisionRelationHasSource: Rico.Group | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Group] })
     groupSubdivisionRelationHasTarget: Rico.Group | undefined;
   }
-  return GroupSubdivisionRelationClass
+  return GroupSubdivisionRelationClass as any
 }
 
 class GroupSubdivisionRelationImpl extends GroupSubdivisionRelationMixin(RdfResourceImpl) {

@@ -18,9 +18,9 @@ export interface PostalAddress<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   streetAddress: string | undefined;
 }
 
-export function PostalAddressMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PostalAddress> & RdfResourceCore> & Base {
+export function PostalAddressMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PostalAddress & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PostalAddressClass extends ContactPointMixin(Resource) implements Partial<PostalAddress> {
+  class PostalAddressClass extends ContactPointMixin(Resource) {
     @rdfine.property.resource()
     addressCountry: Schema.Country | undefined;
     @rdfine.property.literal({ path: schema.addressCountry })
@@ -36,7 +36,7 @@ export function PostalAddressMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.literal()
     streetAddress: string | undefined;
   }
-  return PostalAddressClass
+  return PostalAddressClass as any
 }
 
 class PostalAddressImpl extends PostalAddressMixin(RdfResourceImpl) {

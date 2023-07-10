@@ -17,9 +17,9 @@ export interface TrainTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   trainNumber: string | undefined;
 }
 
-export function TrainTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TrainTrip> & RdfResourceCore> & Base {
+export function TrainTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TrainTrip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TrainTripClass extends TripMixin(Resource) implements Partial<TrainTrip> {
+  class TrainTripClass extends TripMixin(Resource) {
     @rdfine.property.literal()
     arrivalPlatform: string | undefined;
     @rdfine.property.resource()
@@ -33,7 +33,7 @@ export function TrainTripMixin<Base extends rdfine.Constructor>(Resource: Base):
     @rdfine.property.literal()
     trainNumber: string | undefined;
   }
-  return TrainTripClass
+  return TrainTripClass as any
 }
 
 class TrainTripImpl extends TrainTripMixin(RdfResourceImpl) {

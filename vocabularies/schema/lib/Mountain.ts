@@ -11,11 +11,11 @@ import { LandformMixin } from './Landform.js';
 export interface Mountain<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Landform<D>, rdfine.RdfResource<D> {
 }
 
-export function MountainMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Mountain> & RdfResourceCore> & Base {
+export function MountainMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Mountain & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MountainClass extends LandformMixin(Resource) implements Partial<Mountain> {
+  class MountainClass extends LandformMixin(Resource) {
   }
-  return MountainClass
+  return MountainClass as any
 }
 
 class MountainImpl extends MountainMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { OfferMixin } from './Offer.js';
 export interface OfferForLease<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Offer<D>, rdfine.RdfResource<D> {
 }
 
-export function OfferForLeaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OfferForLease> & RdfResourceCore> & Base {
+export function OfferForLeaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OfferForLease & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OfferForLeaseClass extends OfferMixin(Resource) implements Partial<OfferForLease> {
+  class OfferForLeaseClass extends OfferMixin(Resource) {
   }
-  return OfferForLeaseClass
+  return OfferForLeaseClass as any
 }
 
 class OfferForLeaseImpl extends OfferForLeaseMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface GovernmentService<D extends RDF.DatasetCore = RDF.DatasetCore> 
   serviceOperator: Schema.Organization<D> | undefined;
 }
 
-export function GovernmentServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GovernmentService> & RdfResourceCore> & Base {
+export function GovernmentServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GovernmentService & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class GovernmentServiceClass extends ServiceMixin(Resource) implements Partial<GovernmentService> {
+  class GovernmentServiceClass extends ServiceMixin(Resource) {
     @rdfine.property.resource()
     jurisdiction: Schema.AdministrativeArea | undefined;
     @rdfine.property.literal({ path: schema.jurisdiction })
@@ -24,7 +24,7 @@ export function GovernmentServiceMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property.resource()
     serviceOperator: Schema.Organization | undefined;
   }
-  return GovernmentServiceClass
+  return GovernmentServiceClass as any
 }
 
 class GovernmentServiceImpl extends GovernmentServiceMixin(RdfResourceImpl) {

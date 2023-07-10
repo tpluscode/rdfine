@@ -11,11 +11,11 @@ import { OrganizationMixin } from './Organization.js';
 export interface Consortium<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, rdfine.RdfResource<D> {
 }
 
-export function ConsortiumMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Consortium> & RdfResourceCore> & Base {
+export function ConsortiumMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Consortium & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ConsortiumClass extends OrganizationMixin(Resource) implements Partial<Consortium> {
+  class ConsortiumClass extends OrganizationMixin(Resource) {
   }
-  return ConsortiumClass
+  return ConsortiumClass as any
 }
 
 class ConsortiumImpl extends ConsortiumMixin(RdfResourceImpl) {

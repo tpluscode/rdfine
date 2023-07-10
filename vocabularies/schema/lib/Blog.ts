@@ -14,9 +14,9 @@ export interface Blog<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   issn: string | undefined;
 }
 
-export function BlogMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Blog> & RdfResourceCore> & Base {
+export function BlogMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Blog & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BlogClass extends CreativeWorkMixin(Resource) implements Partial<Blog> {
+  class BlogClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     blogPost: Schema.BlogPosting | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function BlogMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.literal()
     issn: string | undefined;
   }
-  return BlogClass
+  return BlogClass as any
 }
 
 class BlogImpl extends BlogMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface MonetaryGrant<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   funder: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function MonetaryGrantMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MonetaryGrant> & RdfResourceCore> & Base {
+export function MonetaryGrantMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MonetaryGrant & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MonetaryGrantClass extends GrantMixin(Resource) implements Partial<MonetaryGrant> {
+  class MonetaryGrantClass extends GrantMixin(Resource) {
     @rdfine.property.resource()
     amount: Schema.MonetaryAmount | undefined;
     @rdfine.property.literal({ path: schema.amount, type: Number })
@@ -24,7 +24,7 @@ export function MonetaryGrantMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.resource()
     funder: Schema.Organization | Schema.Person | undefined;
   }
-  return MonetaryGrantClass
+  return MonetaryGrantClass as any
 }
 
 class MonetaryGrantImpl extends MonetaryGrantMixin(RdfResourceImpl) {

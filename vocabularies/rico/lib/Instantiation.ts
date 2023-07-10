@@ -65,9 +65,9 @@ export interface Instantiation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   title: RDF.Literal | undefined;
 }
 
-export function InstantiationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Instantiation> & RdfResourceCore> & Base {
+export function InstantiationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Instantiation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class InstantiationClass extends ThingMixin(Resource) implements Partial<Instantiation> {
+  class InstantiationClass extends ThingMixin(Resource) {
     @rdfine.property()
     authenticityNote: RDF.Literal | undefined;
     @rdfine.property()
@@ -177,7 +177,7 @@ export function InstantiationMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property()
     title: RDF.Literal | undefined;
   }
-  return InstantiationClass
+  return InstantiationClass as any
 }
 
 class InstantiationImpl extends InstantiationMixin(RdfResourceImpl) {

@@ -10,11 +10,11 @@ import type * as Prov from '../index.js';
 export interface Location<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function LocationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Location> & RdfResourceCore> & Base {
+export function LocationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Location & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class LocationClass extends Resource implements Partial<Location> {
+  class LocationClass extends Resource {
   }
-  return LocationClass
+  return LocationClass as any
 }
 
 class LocationImpl extends LocationMixin(RdfResourceImpl) {

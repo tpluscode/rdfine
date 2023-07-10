@@ -14,13 +14,13 @@ export interface OrderedCollection<D extends RDF.DatasetCore = RDF.DatasetCore> 
   memberList: Rdf.List<D> | undefined;
 }
 
-export function OrderedCollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OrderedCollection> & RdfResourceCore> & Base {
+export function OrderedCollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OrderedCollection & RdfResourceCore> & Base {
   @rdfine.namespace(skos)
-  class OrderedCollectionClass extends CollectionMixin(Resource) implements Partial<OrderedCollection> {
+  class OrderedCollectionClass extends CollectionMixin(Resource) {
     @rdfine.property.resource({ as: [RdfListMixin] })
     memberList: Rdf.List | undefined;
   }
-  return OrderedCollectionClass
+  return OrderedCollectionClass as any
 }
 
 class OrderedCollectionImpl extends OrderedCollectionMixin(RdfResourceImpl) {

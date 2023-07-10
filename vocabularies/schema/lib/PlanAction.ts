@@ -12,13 +12,13 @@ export interface PlanAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   scheduledTime: Date | undefined;
 }
 
-export function PlanActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PlanAction> & RdfResourceCore> & Base {
+export function PlanActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PlanAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PlanActionClass extends OrganizeActionMixin(Resource) implements Partial<PlanAction> {
+  class PlanActionClass extends OrganizeActionMixin(Resource) {
     @rdfine.property.literal({ type: Date })
     scheduledTime: Date | undefined;
   }
-  return PlanActionClass
+  return PlanActionClass as any
 }
 
 class PlanActionImpl extends PlanActionMixin(RdfResourceImpl) {

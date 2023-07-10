@@ -17,9 +17,9 @@ export interface TVEpisode<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   titleEIDRTerm: RDF.NamedNode | undefined;
 }
 
-export function TVEpisodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TVEpisode> & RdfResourceCore> & Base {
+export function TVEpisodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TVEpisode & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TVEpisodeClass extends EpisodeMixin(Resource) implements Partial<TVEpisode> {
+  class TVEpisodeClass extends EpisodeMixin(Resource) {
     @rdfine.property.resource()
     countryOfOrigin: Schema.Country | undefined;
     @rdfine.property.resource()
@@ -33,7 +33,7 @@ export function TVEpisodeMixin<Base extends rdfine.Constructor>(Resource: Base):
     @rdfine.property({ path: schema.titleEIDR })
     titleEIDRTerm: RDF.NamedNode | undefined;
   }
-  return TVEpisodeClass
+  return TVEpisodeClass as any
 }
 
 class TVEpisodeImpl extends TVEpisodeMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { ChurchMixin } from './Church.js';
 export interface CatholicChurch<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Church<D>, rdfine.RdfResource<D> {
 }
 
-export function CatholicChurchMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CatholicChurch> & RdfResourceCore> & Base {
+export function CatholicChurchMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CatholicChurch & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CatholicChurchClass extends ChurchMixin(Resource) implements Partial<CatholicChurch> {
+  class CatholicChurchClass extends ChurchMixin(Resource) {
   }
-  return CatholicChurchClass
+  return CatholicChurchClass as any
 }
 
 class CatholicChurchImpl extends CatholicChurchMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Follow<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function FollowMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Follow> & RdfResourceCore> & Base {
+export function FollowMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Follow & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class FollowClass extends ActivityMixin(Resource) implements Partial<Follow> {
+  class FollowClass extends ActivityMixin(Resource) {
   }
-  return FollowClass
+  return FollowClass as any
 }
 
 class FollowImpl extends FollowMixin(RdfResourceImpl) {

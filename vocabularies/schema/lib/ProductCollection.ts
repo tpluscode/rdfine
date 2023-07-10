@@ -13,13 +13,13 @@ export interface ProductCollection<D extends RDF.DatasetCore = RDF.DatasetCore> 
   includesObject: Schema.TypeAndQuantityNode<D> | undefined;
 }
 
-export function ProductCollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ProductCollection> & RdfResourceCore> & Base {
+export function ProductCollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ProductCollection & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ProductCollectionClass extends ProductMixin(CollectionMixin(Resource)) implements Partial<ProductCollection> {
+  class ProductCollectionClass extends ProductMixin(CollectionMixin(Resource)) {
     @rdfine.property.resource()
     includesObject: Schema.TypeAndQuantityNode | undefined;
   }
-  return ProductCollectionClass
+  return ProductCollectionClass as any
 }
 
 class ProductCollectionImpl extends ProductCollectionMixin(RdfResourceImpl) {

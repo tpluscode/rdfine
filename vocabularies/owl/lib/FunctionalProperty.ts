@@ -14,11 +14,11 @@ import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 export interface FunctionalProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, rdfine.RdfResource<D> {
 }
 
-export function FunctionalPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FunctionalProperty> & RdfResourceCore> & Base {
+export function FunctionalPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FunctionalProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class FunctionalPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<FunctionalProperty> {
+  class FunctionalPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) {
   }
-  return FunctionalPropertyClass
+  return FunctionalPropertyClass as any
 }
 
 class FunctionalPropertyImpl extends FunctionalPropertyMixin(RdfResourceImpl) {

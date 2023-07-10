@@ -23,9 +23,9 @@ export interface Position<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   positionIsTargetOfPositionHoldingRelation: Rico.PositionHoldingRelation<D> | undefined;
 }
 
-export function PositionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Position> & RdfResourceCore> & Base {
+export function PositionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Position & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class PositionClass extends AgentMixin(Resource) implements Partial<Position> {
+  class PositionClass extends AgentMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.IntellectualPropertyRightsRelation] })
     agentIsSourceOfIntellectualPropertyRightsRelation: Rico.IntellectualPropertyRightsRelation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.OwnershipRelation] })
@@ -51,7 +51,7 @@ export function PositionMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.resource({ implicitTypes: [rico.PositionHoldingRelation] })
     positionIsTargetOfPositionHoldingRelation: Rico.PositionHoldingRelation | undefined;
   }
-  return PositionClass
+  return PositionClass as any
 }
 
 class PositionImpl extends PositionMixin(RdfResourceImpl) {

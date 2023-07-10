@@ -12,11 +12,11 @@ import { RuleMixin } from './Rule.js';
 export interface JSRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, Sh.Rule<D>, rdfine.RdfResource<D> {
 }
 
-export function JSRuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JSRule> & RdfResourceCore> & Base {
+export function JSRuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JSRule & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class JSRuleClass extends RuleMixin(JSExecutableMixin(Resource)) implements Partial<JSRule> {
+  class JSRuleClass extends RuleMixin(JSExecutableMixin(Resource)) {
   }
-  return JSRuleClass
+  return JSRuleClass as any
 }
 
 class JSRuleImpl extends JSRuleMixin(RdfResourceImpl) {

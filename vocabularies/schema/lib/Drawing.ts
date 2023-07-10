@@ -11,11 +11,11 @@ import { CreativeWorkMixin } from './CreativeWork.js';
 export interface Drawing<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
 }
 
-export function DrawingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Drawing> & RdfResourceCore> & Base {
+export function DrawingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Drawing & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DrawingClass extends CreativeWorkMixin(Resource) implements Partial<Drawing> {
+  class DrawingClass extends CreativeWorkMixin(Resource) {
   }
-  return DrawingClass
+  return DrawingClass as any
 }
 
 class DrawingImpl extends DrawingMixin(RdfResourceImpl) {

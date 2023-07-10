@@ -28,9 +28,9 @@ export interface CDCPMDRecord<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   datePosted: Date | undefined;
 }
 
-export function CDCPMDRecordMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CDCPMDRecord> & RdfResourceCore> & Base {
+export function CDCPMDRecordMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CDCPMDRecord & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CDCPMDRecordClass extends StructuredValueMixin(Resource) implements Partial<CDCPMDRecord> {
+  class CDCPMDRecordClass extends StructuredValueMixin(Resource) {
     @rdfine.property.literal()
     cvdCollectionDate: Date | string | undefined;
     @rdfine.property.literal()
@@ -66,7 +66,7 @@ export function CDCPMDRecordMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     datePosted: Date | undefined;
   }
-  return CDCPMDRecordClass
+  return CDCPMDRecordClass as any
 }
 
 class CDCPMDRecordImpl extends CDCPMDRecordMixin(RdfResourceImpl) {

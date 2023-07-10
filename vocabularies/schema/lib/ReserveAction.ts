@@ -11,11 +11,11 @@ import { PlanActionMixin } from './PlanAction.js';
 export interface ReserveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlanAction<D>, rdfine.RdfResource<D> {
 }
 
-export function ReserveActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ReserveAction> & RdfResourceCore> & Base {
+export function ReserveActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReserveAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ReserveActionClass extends PlanActionMixin(Resource) implements Partial<ReserveAction> {
+  class ReserveActionClass extends PlanActionMixin(Resource) {
   }
-  return ReserveActionClass
+  return ReserveActionClass as any
 }
 
 class ReserveActionImpl extends ReserveActionMixin(RdfResourceImpl) {

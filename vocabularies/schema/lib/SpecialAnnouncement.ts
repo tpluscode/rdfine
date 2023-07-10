@@ -25,9 +25,9 @@ export interface SpecialAnnouncement<D extends RDF.DatasetCore = RDF.DatasetCore
   webFeed: Schema.DataFeed<D> | undefined;
 }
 
-export function SpecialAnnouncementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SpecialAnnouncement> & RdfResourceCore> & Base {
+export function SpecialAnnouncementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SpecialAnnouncement & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SpecialAnnouncementClass extends CreativeWorkMixin(Resource) implements Partial<SpecialAnnouncement> {
+  class SpecialAnnouncementClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     announcementLocation: Schema.CivicStructure | Schema.LocalBusiness | undefined;
     @rdfine.property.resource()
@@ -57,7 +57,7 @@ export function SpecialAnnouncementMixin<Base extends rdfine.Constructor>(Resour
     @rdfine.property.resource()
     webFeed: Schema.DataFeed | undefined;
   }
-  return SpecialAnnouncementClass
+  return SpecialAnnouncementClass as any
 }
 
 class SpecialAnnouncementImpl extends SpecialAnnouncementMixin(RdfResourceImpl) {

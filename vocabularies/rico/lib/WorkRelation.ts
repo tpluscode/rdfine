@@ -12,13 +12,13 @@ export interface WorkRelation<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   workRelationConnects: Rico.Agent<D> | undefined;
 }
 
-export function WorkRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WorkRelation> & RdfResourceCore> & Base {
+export function WorkRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WorkRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class WorkRelationClass extends AgentToAgentRelationMixin(Resource) implements Partial<WorkRelation> {
+  class WorkRelationClass extends AgentToAgentRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     workRelationConnects: Rico.Agent | undefined;
   }
-  return WorkRelationClass
+  return WorkRelationClass as any
 }
 
 class WorkRelationImpl extends WorkRelationMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { GovernmentBuildingMixin } from './GovernmentBuilding.js';
 export interface DefenceEstablishment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentBuilding<D>, rdfine.RdfResource<D> {
 }
 
-export function DefenceEstablishmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DefenceEstablishment> & RdfResourceCore> & Base {
+export function DefenceEstablishmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DefenceEstablishment & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DefenceEstablishmentClass extends GovernmentBuildingMixin(Resource) implements Partial<DefenceEstablishment> {
+  class DefenceEstablishmentClass extends GovernmentBuildingMixin(Resource) {
   }
-  return DefenceEstablishmentClass
+  return DefenceEstablishmentClass as any
 }
 
 class DefenceEstablishmentImpl extends DefenceEstablishmentMixin(RdfResourceImpl) {

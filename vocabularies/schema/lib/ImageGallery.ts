@@ -11,11 +11,11 @@ import { MediaGalleryMixin } from './MediaGallery.js';
 export interface ImageGallery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaGallery<D>, rdfine.RdfResource<D> {
 }
 
-export function ImageGalleryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ImageGallery> & RdfResourceCore> & Base {
+export function ImageGalleryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ImageGallery & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ImageGalleryClass extends MediaGalleryMixin(Resource) implements Partial<ImageGallery> {
+  class ImageGalleryClass extends MediaGalleryMixin(Resource) {
   }
-  return ImageGalleryClass
+  return ImageGalleryClass as any
 }
 
 class ImageGalleryImpl extends ImageGalleryMixin(RdfResourceImpl) {

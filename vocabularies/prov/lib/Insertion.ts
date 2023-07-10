@@ -13,15 +13,15 @@ export interface Insertion<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   insertedKeyEntityPair: Prov.KeyEntityPair<D> | undefined;
 }
 
-export function InsertionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Insertion> & RdfResourceCore> & Base {
+export function InsertionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Insertion & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class InsertionClass extends DerivationMixin(Resource) implements Partial<Insertion> {
+  class InsertionClass extends DerivationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [prov.Dictionary] })
     dictionary: Prov.Dictionary | undefined;
     @rdfine.property.resource({ implicitTypes: [prov.KeyEntityPair] })
     insertedKeyEntityPair: Prov.KeyEntityPair | undefined;
   }
-  return InsertionClass
+  return InsertionClass as any
 }
 
 class InsertionImpl extends InsertionMixin(RdfResourceImpl) {

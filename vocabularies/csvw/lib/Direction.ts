@@ -10,11 +10,11 @@ import type * as Csvw from '../index.js';
 export interface Direction<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function DirectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Direction> & RdfResourceCore> & Base {
+export function DirectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Direction & RdfResourceCore> & Base {
   @rdfine.namespace(csvw)
-  class DirectionClass extends Resource implements Partial<Direction> {
+  class DirectionClass extends Resource {
   }
-  return DirectionClass
+  return DirectionClass as any
 }
 
 class DirectionImpl extends DirectionMixin(RdfResourceImpl) {

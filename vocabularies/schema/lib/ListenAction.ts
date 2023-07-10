@@ -11,11 +11,11 @@ import { ConsumeActionMixin } from './ConsumeAction.js';
 export interface ListenAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ConsumeAction<D>, rdfine.RdfResource<D> {
 }
 
-export function ListenActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ListenAction> & RdfResourceCore> & Base {
+export function ListenActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ListenAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ListenActionClass extends ConsumeActionMixin(Resource) implements Partial<ListenAction> {
+  class ListenActionClass extends ConsumeActionMixin(Resource) {
   }
-  return ListenActionClass
+  return ListenActionClass as any
 }
 
 class ListenActionImpl extends ListenActionMixin(RdfResourceImpl) {

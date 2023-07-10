@@ -12,13 +12,13 @@ export interface ActivityType<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   isActivityTypeOf: Rico.Activity<D> | undefined;
 }
 
-export function ActivityTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ActivityType> & RdfResourceCore> & Base {
+export function ActivityTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ActivityType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class ActivityTypeClass extends TypeMixin(Resource) implements Partial<ActivityType> {
+  class ActivityTypeClass extends TypeMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Activity] })
     isActivityTypeOf: Rico.Activity | undefined;
   }
-  return ActivityTypeClass
+  return ActivityTypeClass as any
 }
 
 class ActivityTypeImpl extends ActivityTypeMixin(RdfResourceImpl) {

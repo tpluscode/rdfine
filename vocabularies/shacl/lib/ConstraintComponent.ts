@@ -14,9 +14,9 @@ export interface ConstraintComponent<D extends RDF.DatasetCore = RDF.DatasetCore
   validator: Sh.Validator<D> | undefined;
 }
 
-export function ConstraintComponentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ConstraintComponent> & RdfResourceCore> & Base {
+export function ConstraintComponentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ConstraintComponent & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class ConstraintComponentClass extends ParameterizableMixin(Resource) implements Partial<ConstraintComponent> {
+  class ConstraintComponentClass extends ParameterizableMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [sh.Validator] })
     nodeValidator: Sh.Validator | undefined;
     @rdfine.property.resource({ implicitTypes: [sh.Validator] })
@@ -24,7 +24,7 @@ export function ConstraintComponentMixin<Base extends rdfine.Constructor>(Resour
     @rdfine.property.resource({ implicitTypes: [sh.Validator] })
     validator: Sh.Validator | undefined;
   }
-  return ConstraintComponentClass
+  return ConstraintComponentClass as any
 }
 
 class ConstraintComponentImpl extends ConstraintComponentMixin(RdfResourceImpl) {

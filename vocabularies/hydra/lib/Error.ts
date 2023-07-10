@@ -11,11 +11,11 @@ import { StatusMixin } from './Status.js';
 export interface Error<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Status<D>, rdfine.RdfResource<D> {
 }
 
-export function ErrorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Error> & RdfResourceCore> & Base {
+export function ErrorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Error & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class ErrorClass extends StatusMixin(Resource) implements Partial<Error> {
+  class ErrorClass extends StatusMixin(Resource) {
   }
-  return ErrorClass
+  return ErrorClass as any
 }
 
 class ErrorImpl extends ErrorMixin(RdfResourceImpl) {

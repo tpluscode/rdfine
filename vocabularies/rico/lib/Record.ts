@@ -24,9 +24,9 @@ export interface Record<D extends RDF.DatasetCore = RDF.DatasetCore> extends Ric
   recordIsSourceOfAuthorshipRelation: Rico.AuthorshipRelation<D> | undefined;
 }
 
-export function RecordMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Record> & RdfResourceCore> & Base {
+export function RecordMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Record & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RecordClass extends RecordResourceMixin(Resource) implements Partial<Record> {
+  class RecordClass extends RecordResourceMixin(Resource) {
     @rdfine.property.resource()
     hasAuthor: Rico.Group | Rico.Person | Rico.Position | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.ContentType] })
@@ -54,7 +54,7 @@ export function RecordMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.resource({ implicitTypes: [rico.AuthorshipRelation] })
     recordIsSourceOfAuthorshipRelation: Rico.AuthorshipRelation | undefined;
   }
-  return RecordClass
+  return RecordClass as any
 }
 
 class RecordImpl extends RecordMixin(RdfResourceImpl) {

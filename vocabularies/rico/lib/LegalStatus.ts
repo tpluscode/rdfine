@@ -14,9 +14,9 @@ export interface LegalStatus<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   isOrWasLegalStatusOfSomeMembersOf: Rico.RecordSet<D> | undefined;
 }
 
-export function LegalStatusMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LegalStatus> & RdfResourceCore> & Base {
+export function LegalStatusMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LegalStatus & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class LegalStatusClass extends TypeMixin(Resource) implements Partial<LegalStatus> {
+  class LegalStatusClass extends TypeMixin(Resource) {
     @rdfine.property.resource()
     isOrWasLegalStatusOf: Rico.Agent | Rico.Record | Rico.RecordPart | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
@@ -24,7 +24,7 @@ export function LegalStatusMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isOrWasLegalStatusOfSomeMembersOf: Rico.RecordSet | undefined;
   }
-  return LegalStatusClass
+  return LegalStatusClass as any
 }
 
 class LegalStatusImpl extends LegalStatusMixin(RdfResourceImpl) {

@@ -13,11 +13,11 @@ import { ScriptMixin } from './Script.js';
 export interface Constructor<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.Parameterizable<D>, Dash.Script<D>, rdfine.RdfResource<D> {
 }
 
-export function ConstructorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Constructor> & RdfResourceCore> & Base {
+export function ConstructorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Constructor & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class ConstructorClass extends ScriptMixin(ShaclParameterizableMixin(Resource)) implements Partial<Constructor> {
+  class ConstructorClass extends ScriptMixin(ShaclParameterizableMixin(Resource)) {
   }
-  return ConstructorClass
+  return ConstructorClass as any
 }
 
 class ConstructorImpl extends ConstructorMixin(RdfResourceImpl) {

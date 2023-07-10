@@ -14,9 +14,9 @@ export interface LymphaticVessel<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   runsTo: Schema.Vessel<D> | undefined;
 }
 
-export function LymphaticVesselMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LymphaticVessel> & RdfResourceCore> & Base {
+export function LymphaticVesselMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LymphaticVessel & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LymphaticVesselClass extends VesselMixin(Resource) implements Partial<LymphaticVessel> {
+  class LymphaticVesselClass extends VesselMixin(Resource) {
     @rdfine.property.resource()
     originatesFrom: Schema.Vessel | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function LymphaticVesselMixin<Base extends rdfine.Constructor>(Resource: 
     @rdfine.property.resource()
     runsTo: Schema.Vessel | undefined;
   }
-  return LymphaticVesselClass
+  return LymphaticVesselClass as any
 }
 
 class LymphaticVesselImpl extends LymphaticVesselMixin(RdfResourceImpl) {

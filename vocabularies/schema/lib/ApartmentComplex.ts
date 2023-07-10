@@ -17,9 +17,9 @@ export interface ApartmentComplex<D extends RDF.DatasetCore = RDF.DatasetCore> e
   tourBookingPage: RDF.NamedNode | undefined;
 }
 
-export function ApartmentComplexMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ApartmentComplex> & RdfResourceCore> & Base {
+export function ApartmentComplexMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ApartmentComplex & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ApartmentComplexClass extends ResidenceMixin(Resource) implements Partial<ApartmentComplex> {
+  class ApartmentComplexClass extends ResidenceMixin(Resource) {
     @rdfine.property.resource()
     numberOfAccommodationUnits: Schema.QuantitativeValue | undefined;
     @rdfine.property.resource()
@@ -33,7 +33,7 @@ export function ApartmentComplexMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property()
     tourBookingPage: RDF.NamedNode | undefined;
   }
-  return ApartmentComplexClass
+  return ApartmentComplexClass as any
 }
 
 class ApartmentComplexImpl extends ApartmentComplexMixin(RdfResourceImpl) {

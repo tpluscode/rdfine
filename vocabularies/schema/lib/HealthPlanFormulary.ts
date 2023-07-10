@@ -14,9 +14,9 @@ export interface HealthPlanFormulary<D extends RDF.DatasetCore = RDF.DatasetCore
   offersPrescriptionByMail: boolean | undefined;
 }
 
-export function HealthPlanFormularyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HealthPlanFormulary> & RdfResourceCore> & Base {
+export function HealthPlanFormularyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HealthPlanFormulary & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HealthPlanFormularyClass extends IntangibleMixin(Resource) implements Partial<HealthPlanFormulary> {
+  class HealthPlanFormularyClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal({ type: Boolean })
     healthPlanCostSharing: boolean | undefined;
     @rdfine.property.literal()
@@ -24,7 +24,7 @@ export function HealthPlanFormularyMixin<Base extends rdfine.Constructor>(Resour
     @rdfine.property.literal({ type: Boolean })
     offersPrescriptionByMail: boolean | undefined;
   }
-  return HealthPlanFormularyClass
+  return HealthPlanFormularyClass as any
 }
 
 class HealthPlanFormularyImpl extends HealthPlanFormularyMixin(RdfResourceImpl) {

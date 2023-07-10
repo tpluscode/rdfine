@@ -17,9 +17,9 @@ export interface MusicRelease<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   releaseOf: Schema.MusicAlbum<D> | undefined;
 }
 
-export function MusicReleaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MusicRelease> & RdfResourceCore> & Base {
+export function MusicReleaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MusicRelease & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MusicReleaseClass extends MusicPlaylistMixin(Resource) implements Partial<MusicRelease> {
+  class MusicReleaseClass extends MusicPlaylistMixin(Resource) {
     @rdfine.property.literal()
     catalogNumber: string | undefined;
     @rdfine.property.resource()
@@ -33,7 +33,7 @@ export function MusicReleaseMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.resource()
     releaseOf: Schema.MusicAlbum | undefined;
   }
-  return MusicReleaseClass
+  return MusicReleaseClass as any
 }
 
 class MusicReleaseImpl extends MusicReleaseMixin(RdfResourceImpl) {

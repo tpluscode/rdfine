@@ -15,9 +15,9 @@ export interface BusTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   departureBusStop: Schema.BusStation<D> | Schema.BusStop<D> | undefined;
 }
 
-export function BusTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BusTrip> & RdfResourceCore> & Base {
+export function BusTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BusTrip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BusTripClass extends TripMixin(Resource) implements Partial<BusTrip> {
+  class BusTripClass extends TripMixin(Resource) {
     @rdfine.property.resource()
     arrivalBusStop: Schema.BusStation | Schema.BusStop | undefined;
     @rdfine.property.literal()
@@ -27,7 +27,7 @@ export function BusTripMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property.resource()
     departureBusStop: Schema.BusStation | Schema.BusStop | undefined;
   }
-  return BusTripClass
+  return BusTripClass as any
 }
 
 class BusTripImpl extends BusTripMixin(RdfResourceImpl) {

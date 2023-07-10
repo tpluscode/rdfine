@@ -15,9 +15,9 @@ export interface BankAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   bankAccountTypeTerm: RDF.NamedNode | undefined;
 }
 
-export function BankAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BankAccount> & RdfResourceCore> & Base {
+export function BankAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BankAccount & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BankAccountClass extends FinancialProductMixin(Resource) implements Partial<BankAccount> {
+  class BankAccountClass extends FinancialProductMixin(Resource) {
     @rdfine.property.resource()
     accountMinimumInflow: Schema.MonetaryAmount | undefined;
     @rdfine.property.resource()
@@ -27,7 +27,7 @@ export function BankAccountMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property({ path: schema.bankAccountType })
     bankAccountTypeTerm: RDF.NamedNode | undefined;
   }
-  return BankAccountClass
+  return BankAccountClass as any
 }
 
 class BankAccountImpl extends BankAccountMixin(RdfResourceImpl) {

@@ -17,9 +17,9 @@ export interface ResultAnnotation<D extends RDF.DatasetCore = RDF.DatasetCore> e
   annotationVarName: string | undefined;
 }
 
-export function ResultAnnotationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ResultAnnotation> & RdfResourceCore> & Base {
+export function ResultAnnotationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ResultAnnotation & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class ResultAnnotationClass extends RdfsResourceMixin(Resource) implements Partial<ResultAnnotation> {
+  class ResultAnnotationClass extends RdfsResourceMixin(Resource) {
     @rdfine.property.resource({ as: [RdfPropertyMixin] })
     annotationProperty: Rdf.Property | undefined;
     @rdfine.property()
@@ -27,7 +27,7 @@ export function ResultAnnotationMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.literal()
     annotationVarName: string | undefined;
   }
-  return ResultAnnotationClass
+  return ResultAnnotationClass as any
 }
 
 class ResultAnnotationImpl extends ResultAnnotationMixin(RdfResourceImpl) {

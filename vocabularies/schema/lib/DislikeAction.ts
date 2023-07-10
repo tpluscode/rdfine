@@ -11,11 +11,11 @@ import { ReactActionMixin } from './ReactAction.js';
 export interface DislikeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ReactAction<D>, rdfine.RdfResource<D> {
 }
 
-export function DislikeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DislikeAction> & RdfResourceCore> & Base {
+export function DislikeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DislikeAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DislikeActionClass extends ReactActionMixin(Resource) implements Partial<DislikeAction> {
+  class DislikeActionClass extends ReactActionMixin(Resource) {
   }
-  return DislikeActionClass
+  return DislikeActionClass as any
 }
 
 class DislikeActionImpl extends DislikeActionMixin(RdfResourceImpl) {

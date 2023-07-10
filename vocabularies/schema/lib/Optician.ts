@@ -10,11 +10,11 @@ import type * as Schema from '../index.js';
 export interface Optician<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function OpticianMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Optician> & RdfResourceCore> & Base {
+export function OpticianMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Optician & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OpticianClass extends Resource implements Partial<Optician> {
+  class OpticianClass extends Resource {
   }
-  return OpticianClass
+  return OpticianClass as any
 }
 
 class OpticianImpl extends OpticianMixin(RdfResourceImpl) {

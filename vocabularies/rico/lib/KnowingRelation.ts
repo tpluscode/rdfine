@@ -12,13 +12,13 @@ export interface KnowingRelation<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   knowingRelationConnects: Rico.Person<D> | undefined;
 }
 
-export function KnowingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<KnowingRelation> & RdfResourceCore> & Base {
+export function KnowingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<KnowingRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class KnowingRelationClass extends AgentToAgentRelationMixin(Resource) implements Partial<KnowingRelation> {
+  class KnowingRelationClass extends AgentToAgentRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     knowingRelationConnects: Rico.Person | undefined;
   }
-  return KnowingRelationClass
+  return KnowingRelationClass as any
 }
 
 class KnowingRelationImpl extends KnowingRelationMixin(RdfResourceImpl) {

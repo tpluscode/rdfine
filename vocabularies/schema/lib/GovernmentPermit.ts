@@ -11,11 +11,11 @@ import { PermitMixin } from './Permit.js';
 export interface GovernmentPermit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Permit<D>, rdfine.RdfResource<D> {
 }
 
-export function GovernmentPermitMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GovernmentPermit> & RdfResourceCore> & Base {
+export function GovernmentPermitMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GovernmentPermit & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class GovernmentPermitClass extends PermitMixin(Resource) implements Partial<GovernmentPermit> {
+  class GovernmentPermitClass extends PermitMixin(Resource) {
   }
-  return GovernmentPermitClass
+  return GovernmentPermitClass as any
 }
 
 class GovernmentPermitImpl extends GovernmentPermitMixin(RdfResourceImpl) {

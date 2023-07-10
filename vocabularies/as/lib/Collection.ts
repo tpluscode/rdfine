@@ -16,9 +16,9 @@ export interface Collection<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   totalItems: number | undefined;
 }
 
-export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Collection> & RdfResourceCore> & Base {
+export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Collection & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class CollectionClass extends ObjectMixin(Resource) implements Partial<Collection> {
+  class CollectionClass extends ObjectMixin(Resource) {
     @rdfine.property.resource()
     current: As.CollectionPage | As.Link | undefined;
     @rdfine.property.resource()
@@ -30,7 +30,7 @@ export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property.literal({ type: Number })
     totalItems: number | undefined;
   }
-  return CollectionClass
+  return CollectionClass as any
 }
 
 class CollectionImpl extends CollectionMixin(RdfResourceImpl) {

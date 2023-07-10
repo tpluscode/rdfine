@@ -10,11 +10,11 @@ import type * as Hydra from '../index.js';
 export interface VariableRepresentation<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function VariableRepresentationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<VariableRepresentation> & RdfResourceCore> & Base {
+export function VariableRepresentationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VariableRepresentation & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class VariableRepresentationClass extends Resource implements Partial<VariableRepresentation> {
+  class VariableRepresentationClass extends Resource {
   }
-  return VariableRepresentationClass
+  return VariableRepresentationClass as any
 }
 
 class VariableRepresentationImpl extends VariableRepresentationMixin(RdfResourceImpl) {

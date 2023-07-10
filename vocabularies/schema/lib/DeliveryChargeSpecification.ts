@@ -18,9 +18,9 @@ export interface DeliveryChargeSpecification<D extends RDF.DatasetCore = RDF.Dat
   ineligibleRegionLiteral: string | undefined;
 }
 
-export function DeliveryChargeSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DeliveryChargeSpecification> & RdfResourceCore> & Base {
+export function DeliveryChargeSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DeliveryChargeSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DeliveryChargeSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<DeliveryChargeSpecification> {
+  class DeliveryChargeSpecificationClass extends PriceSpecificationMixin(Resource) {
     @rdfine.property()
     appliesToDeliveryMethod: Schema.DeliveryMethod | undefined;
     @rdfine.property.resource()
@@ -36,7 +36,7 @@ export function DeliveryChargeSpecificationMixin<Base extends rdfine.Constructor
     @rdfine.property.literal({ path: schema.ineligibleRegion })
     ineligibleRegionLiteral: string | undefined;
   }
-  return DeliveryChargeSpecificationClass
+  return DeliveryChargeSpecificationClass as any
 }
 
 class DeliveryChargeSpecificationImpl extends DeliveryChargeSpecificationMixin(RdfResourceImpl) {

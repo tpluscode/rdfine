@@ -21,9 +21,9 @@ export interface AbstractResult<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   value: RDF.Term | undefined;
 }
 
-export function AbstractResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AbstractResult> & RdfResourceCore> & Base {
+export function AbstractResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AbstractResult & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class AbstractResultClass extends RdfsResourceMixin(Resource) implements Partial<AbstractResult> {
+  class AbstractResultClass extends RdfsResourceMixin(Resource) {
     @rdfine.property.resource({ values: 'array', as: [AbstractResultMixin] })
     detail!: Array<Sh.AbstractResult>;
     @rdfine.property()
@@ -43,7 +43,7 @@ export function AbstractResultMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property()
     value: RDF.Term | undefined;
   }
-  return AbstractResultClass
+  return AbstractResultClass as any
 }
 
 class AbstractResultImpl extends AbstractResultMixin(RdfResourceImpl) {

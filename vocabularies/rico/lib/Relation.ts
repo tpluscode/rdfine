@@ -19,9 +19,9 @@ export interface Relation<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   source: RDF.Literal | undefined;
 }
 
-export function RelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Relation> & RdfResourceCore> & Base {
+export function RelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Relation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RelationClass extends ThingMixin(Resource) implements Partial<Relation> {
+  class RelationClass extends ThingMixin(Resource) {
     @rdfine.property()
     certainty: RDF.Literal | undefined;
     @rdfine.property.resource()
@@ -39,7 +39,7 @@ export function RelationMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property()
     source: RDF.Literal | undefined;
   }
-  return RelationClass
+  return RelationClass as any
 }
 
 class RelationImpl extends RelationMixin(RdfResourceImpl) {

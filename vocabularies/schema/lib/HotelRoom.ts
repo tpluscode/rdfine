@@ -14,9 +14,9 @@ export interface HotelRoom<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   occupancy: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function HotelRoomMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HotelRoom> & RdfResourceCore> & Base {
+export function HotelRoomMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HotelRoom & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HotelRoomClass extends RoomMixin(Resource) implements Partial<HotelRoom> {
+  class HotelRoomClass extends RoomMixin(Resource) {
     @rdfine.property.resource()
     bed: Schema.BedDetails | undefined;
     @rdfine.property.literal({ path: schema.bed })
@@ -24,7 +24,7 @@ export function HotelRoomMixin<Base extends rdfine.Constructor>(Resource: Base):
     @rdfine.property.resource()
     occupancy: Schema.QuantitativeValue | undefined;
   }
-  return HotelRoomClass
+  return HotelRoomClass as any
 }
 
 class HotelRoomImpl extends HotelRoomMixin(RdfResourceImpl) {

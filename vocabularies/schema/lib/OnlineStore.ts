@@ -11,11 +11,11 @@ import { OnlineBusinessMixin } from './OnlineBusiness.js';
 export interface OnlineStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OnlineBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function OnlineStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OnlineStore> & RdfResourceCore> & Base {
+export function OnlineStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OnlineStore & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OnlineStoreClass extends OnlineBusinessMixin(Resource) implements Partial<OnlineStore> {
+  class OnlineStoreClass extends OnlineBusinessMixin(Resource) {
   }
-  return OnlineStoreClass
+  return OnlineStoreClass as any
 }
 
 class OnlineStoreImpl extends OnlineStoreMixin(RdfResourceImpl) {

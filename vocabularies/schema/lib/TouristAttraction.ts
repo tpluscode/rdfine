@@ -15,9 +15,9 @@ export interface TouristAttraction<D extends RDF.DatasetCore = RDF.DatasetCore> 
   touristTypeLiteral: string | undefined;
 }
 
-export function TouristAttractionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TouristAttraction> & RdfResourceCore> & Base {
+export function TouristAttractionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TouristAttraction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TouristAttractionClass extends PlaceMixin(Resource) implements Partial<TouristAttraction> {
+  class TouristAttractionClass extends PlaceMixin(Resource) {
     @rdfine.property.resource()
     availableLanguage: Schema.Language | undefined;
     @rdfine.property.literal({ path: schema.availableLanguage })
@@ -27,7 +27,7 @@ export function TouristAttractionMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property.literal({ path: schema.touristType })
     touristTypeLiteral: string | undefined;
   }
-  return TouristAttractionClass
+  return TouristAttractionClass as any
 }
 
 class TouristAttractionImpl extends TouristAttractionMixin(RdfResourceImpl) {

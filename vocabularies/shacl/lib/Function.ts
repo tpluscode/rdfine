@@ -14,13 +14,13 @@ export interface Function<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   returnType: Rdfs.Class<D> | undefined;
 }
 
-export function FunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Function> & RdfResourceCore> & Base {
+export function FunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Function & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class FunctionClass extends ParameterizableMixin(Resource) implements Partial<Function> {
+  class FunctionClass extends ParameterizableMixin(Resource) {
     @rdfine.property.resource({ as: [RdfsClassMixin] })
     returnType: Rdfs.Class | undefined;
   }
-  return FunctionClass
+  return FunctionClass as any
 }
 
 class FunctionImpl extends FunctionMixin(RdfResourceImpl) {

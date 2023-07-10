@@ -11,11 +11,11 @@ import { MedicalIndicationMixin } from './MedicalIndication.js';
 export interface ApprovedIndication<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalIndication<D>, rdfine.RdfResource<D> {
 }
 
-export function ApprovedIndicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ApprovedIndication> & RdfResourceCore> & Base {
+export function ApprovedIndicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ApprovedIndication & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ApprovedIndicationClass extends MedicalIndicationMixin(Resource) implements Partial<ApprovedIndication> {
+  class ApprovedIndicationClass extends MedicalIndicationMixin(Resource) {
   }
-  return ApprovedIndicationClass
+  return ApprovedIndicationClass as any
 }
 
 class ApprovedIndicationImpl extends ApprovedIndicationMixin(RdfResourceImpl) {

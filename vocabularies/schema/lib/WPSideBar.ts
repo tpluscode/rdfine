@@ -11,11 +11,11 @@ import { WebPageElementMixin } from './WebPageElement.js';
 export interface WPSideBar<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, rdfine.RdfResource<D> {
 }
 
-export function WPSideBarMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WPSideBar> & RdfResourceCore> & Base {
+export function WPSideBarMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WPSideBar & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WPSideBarClass extends WebPageElementMixin(Resource) implements Partial<WPSideBar> {
+  class WPSideBarClass extends WebPageElementMixin(Resource) {
   }
-  return WPSideBarClass
+  return WPSideBarClass as any
 }
 
 class WPSideBarImpl extends WPSideBarMixin(RdfResourceImpl) {

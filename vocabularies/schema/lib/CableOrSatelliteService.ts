@@ -11,11 +11,11 @@ import { ServiceMixin } from './Service.js';
 export interface CableOrSatelliteService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, rdfine.RdfResource<D> {
 }
 
-export function CableOrSatelliteServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CableOrSatelliteService> & RdfResourceCore> & Base {
+export function CableOrSatelliteServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CableOrSatelliteService & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CableOrSatelliteServiceClass extends ServiceMixin(Resource) implements Partial<CableOrSatelliteService> {
+  class CableOrSatelliteServiceClass extends ServiceMixin(Resource) {
   }
-  return CableOrSatelliteServiceClass
+  return CableOrSatelliteServiceClass as any
 }
 
 class CableOrSatelliteServiceImpl extends CableOrSatelliteServiceMixin(RdfResourceImpl) {

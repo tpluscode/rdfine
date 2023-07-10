@@ -11,11 +11,11 @@ import { WebPageMixin } from './WebPage.js';
 export interface QAPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, rdfine.RdfResource<D> {
 }
 
-export function QAPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<QAPage> & RdfResourceCore> & Base {
+export function QAPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<QAPage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class QAPageClass extends WebPageMixin(Resource) implements Partial<QAPage> {
+  class QAPageClass extends WebPageMixin(Resource) {
   }
-  return QAPageClass
+  return QAPageClass as any
 }
 
 class QAPageImpl extends QAPageMixin(RdfResourceImpl) {

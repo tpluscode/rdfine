@@ -11,11 +11,11 @@ import { IntangibleMixin } from './Intangible.js';
 export interface Language<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
 }
 
-export function LanguageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Language> & RdfResourceCore> & Base {
+export function LanguageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Language & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LanguageClass extends IntangibleMixin(Resource) implements Partial<Language> {
+  class LanguageClass extends IntangibleMixin(Resource) {
   }
-  return LanguageClass
+  return LanguageClass as any
 }
 
 class LanguageImpl extends LanguageMixin(RdfResourceImpl) {

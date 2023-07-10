@@ -15,9 +15,9 @@ export interface FoodEstablishmentReservation<D extends RDF.DatasetCore = RDF.Da
   startTime: Date | undefined;
 }
 
-export function FoodEstablishmentReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FoodEstablishmentReservation> & RdfResourceCore> & Base {
+export function FoodEstablishmentReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FoodEstablishmentReservation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class FoodEstablishmentReservationClass extends ReservationMixin(Resource) implements Partial<FoodEstablishmentReservation> {
+  class FoodEstablishmentReservationClass extends ReservationMixin(Resource) {
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     endTime: Date | undefined;
     @rdfine.property.resource()
@@ -27,7 +27,7 @@ export function FoodEstablishmentReservationMixin<Base extends rdfine.Constructo
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     startTime: Date | undefined;
   }
-  return FoodEstablishmentReservationClass
+  return FoodEstablishmentReservationClass as any
 }
 
 class FoodEstablishmentReservationImpl extends FoodEstablishmentReservationMixin(RdfResourceImpl) {

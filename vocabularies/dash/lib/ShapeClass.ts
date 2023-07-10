@@ -18,11 +18,11 @@ import { NodeShapeMixin as ShaclNodeShapeMixin } from '@rdfine/shacl/lib/NodeSha
 export interface ShapeClass<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, Shacl.NodeShape<D>, rdfine.RdfResource<D> {
 }
 
-export function ShapeClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ShapeClass> & RdfResourceCore> & Base {
+export function ShapeClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ShapeClass & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class ShapeClassClass extends NodeShapeMixinEx(ShaclNodeShapeMixin(ClassMixinEx(RdfsClassMixin(Resource)))) implements Partial<ShapeClass> {
+  class ShapeClassClass extends NodeShapeMixinEx(ShaclNodeShapeMixin(ClassMixinEx(RdfsClassMixin(Resource)))) {
   }
-  return ShapeClassClass
+  return ShapeClassClass as any
 }
 
 class ShapeClassImpl extends ShapeClassMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { HowToItemMixin } from './HowToItem.js';
 export interface HowToTool<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HowToItem<D>, rdfine.RdfResource<D> {
 }
 
-export function HowToToolMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HowToTool> & RdfResourceCore> & Base {
+export function HowToToolMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowToTool & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HowToToolClass extends HowToItemMixin(Resource) implements Partial<HowToTool> {
+  class HowToToolClass extends HowToItemMixin(Resource) {
   }
-  return HowToToolClass
+  return HowToToolClass as any
 }
 
 class HowToToolImpl extends HowToToolMixin(RdfResourceImpl) {

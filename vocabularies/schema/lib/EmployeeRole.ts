@@ -14,9 +14,9 @@ export interface EmployeeRole<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   salaryCurrency: string | undefined;
 }
 
-export function EmployeeRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EmployeeRole> & RdfResourceCore> & Base {
+export function EmployeeRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EmployeeRole & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class EmployeeRoleClass extends OrganizationRoleMixin(Resource) implements Partial<EmployeeRole> {
+  class EmployeeRoleClass extends OrganizationRoleMixin(Resource) {
     @rdfine.property.resource()
     baseSalary: Schema.MonetaryAmount | Schema.PriceSpecification | undefined;
     @rdfine.property.literal({ path: schema.baseSalary, type: Number })
@@ -24,7 +24,7 @@ export function EmployeeRoleMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.literal()
     salaryCurrency: string | undefined;
   }
-  return EmployeeRoleClass
+  return EmployeeRoleClass as any
 }
 
 class EmployeeRoleImpl extends EmployeeRoleMixin(RdfResourceImpl) {

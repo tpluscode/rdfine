@@ -11,11 +11,11 @@ import { CreativeWorkSeriesMixin } from './CreativeWorkSeries.js';
 export interface BookSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeries<D>, rdfine.RdfResource<D> {
 }
 
-export function BookSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BookSeries> & RdfResourceCore> & Base {
+export function BookSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BookSeries & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BookSeriesClass extends CreativeWorkSeriesMixin(Resource) implements Partial<BookSeries> {
+  class BookSeriesClass extends CreativeWorkSeriesMixin(Resource) {
   }
-  return BookSeriesClass
+  return BookSeriesClass as any
 }
 
 class BookSeriesImpl extends BookSeriesMixin(RdfResourceImpl) {

@@ -13,9 +13,9 @@ export interface SpatialThing<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   long: number | undefined;
 }
 
-export function SpatialThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SpatialThing> & RdfResourceCore> & Base {
+export function SpatialThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SpatialThing & RdfResourceCore> & Base {
   @rdfine.namespace(wgs)
-  class SpatialThingClass extends Resource implements Partial<SpatialThing> {
+  class SpatialThingClass extends Resource {
     @rdfine.property.literal({ type: Number })
     alt: number | undefined;
     @rdfine.property.literal({ type: Number })
@@ -23,7 +23,7 @@ export function SpatialThingMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.literal({ type: Number })
     long: number | undefined;
   }
-  return SpatialThingClass
+  return SpatialThingClass as any
 }
 
 class SpatialThingImpl extends SpatialThingMixin(RdfResourceImpl) {

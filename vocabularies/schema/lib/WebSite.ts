@@ -12,13 +12,13 @@ export interface WebSite<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   issn: string | undefined;
 }
 
-export function WebSiteMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WebSite> & RdfResourceCore> & Base {
+export function WebSiteMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WebSite & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WebSiteClass extends CreativeWorkMixin(Resource) implements Partial<WebSite> {
+  class WebSiteClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal()
     issn: string | undefined;
   }
-  return WebSiteClass
+  return WebSiteClass as any
 }
 
 class WebSiteImpl extends WebSiteMixin(RdfResourceImpl) {

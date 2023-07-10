@@ -10,11 +10,11 @@ import type * as Foaf from '../index.js';
 export interface LabelProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function LabelPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LabelProperty> & RdfResourceCore> & Base {
+export function LabelPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LabelProperty & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
-  class LabelPropertyClass extends Resource implements Partial<LabelProperty> {
+  class LabelPropertyClass extends Resource {
   }
-  return LabelPropertyClass
+  return LabelPropertyClass as any
 }
 
 class LabelPropertyImpl extends LabelPropertyMixin(RdfResourceImpl) {

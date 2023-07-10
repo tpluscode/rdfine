@@ -17,9 +17,9 @@ export interface Coordinates<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   longitude: RDF.Literal | undefined;
 }
 
-export function CoordinatesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Coordinates> & RdfResourceCore> & Base {
+export function CoordinatesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Coordinates & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class CoordinatesClass extends ThingMixin(Resource) implements Partial<Coordinates> {
+  class CoordinatesClass extends ThingMixin(Resource) {
     @rdfine.property()
     altimetricSystem: RDF.Literal | undefined;
     @rdfine.property()
@@ -33,7 +33,7 @@ export function CoordinatesMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property()
     longitude: RDF.Literal | undefined;
   }
-  return CoordinatesClass
+  return CoordinatesClass as any
 }
 
 class CoordinatesImpl extends CoordinatesMixin(RdfResourceImpl) {

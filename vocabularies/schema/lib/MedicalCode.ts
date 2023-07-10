@@ -14,15 +14,15 @@ export interface MedicalCode<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   codingSystem: string | undefined;
 }
 
-export function MedicalCodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalCode> & RdfResourceCore> & Base {
+export function MedicalCodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalCode & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalCodeClass extends MedicalIntangibleMixin(CategoryCodeMixin(Resource)) implements Partial<MedicalCode> {
+  class MedicalCodeClass extends MedicalIntangibleMixin(CategoryCodeMixin(Resource)) {
     @rdfine.property.literal()
     codeValue: string | undefined;
     @rdfine.property.literal()
     codingSystem: string | undefined;
   }
-  return MedicalCodeClass
+  return MedicalCodeClass as any
 }
 
 class MedicalCodeImpl extends MedicalCodeMixin(RdfResourceImpl) {

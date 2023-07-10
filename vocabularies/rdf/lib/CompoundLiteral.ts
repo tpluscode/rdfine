@@ -12,15 +12,15 @@ export interface CompoundLiteral<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   language: RDF.Term | undefined;
 }
 
-export function CompoundLiteralMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CompoundLiteral> & RdfResourceCore> & Base {
+export function CompoundLiteralMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CompoundLiteral & RdfResourceCore> & Base {
   @rdfine.namespace(rdf)
-  class CompoundLiteralClass extends Resource implements Partial<CompoundLiteral> {
+  class CompoundLiteralClass extends Resource {
     @rdfine.property()
     direction: RDF.Term | undefined;
     @rdfine.property()
     language: RDF.Term | undefined;
   }
-  return CompoundLiteralClass
+  return CompoundLiteralClass as any
 }
 
 class CompoundLiteralImpl extends CompoundLiteralMixin(RdfResourceImpl) {

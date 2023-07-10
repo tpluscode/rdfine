@@ -23,9 +23,9 @@ export interface Dialect<D extends RDF.DatasetCore = RDF.DatasetCore> extends rd
   trim: boolean | undefined;
 }
 
-export function DialectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Dialect> & RdfResourceCore> & Base {
+export function DialectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Dialect & RdfResourceCore> & Base {
   @rdfine.namespace(csvw)
-  class DialectClass extends Resource implements Partial<Dialect> {
+  class DialectClass extends Resource {
     @rdfine.property.literal()
     commentPrefix: string | undefined;
     @rdfine.property.literal()
@@ -53,7 +53,7 @@ export function DialectMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property.literal({ type: Boolean })
     trim: boolean | undefined;
   }
-  return DialectClass
+  return DialectClass as any
 }
 
 class DialectImpl extends DialectMixin(RdfResourceImpl) {

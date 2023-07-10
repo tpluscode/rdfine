@@ -11,11 +11,11 @@ import { InteractActionMixin } from './InteractAction.js';
 export interface SubscribeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, rdfine.RdfResource<D> {
 }
 
-export function SubscribeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SubscribeAction> & RdfResourceCore> & Base {
+export function SubscribeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SubscribeAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SubscribeActionClass extends InteractActionMixin(Resource) implements Partial<SubscribeAction> {
+  class SubscribeActionClass extends InteractActionMixin(Resource) {
   }
-  return SubscribeActionClass
+  return SubscribeActionClass as any
 }
 
 class SubscribeActionImpl extends SubscribeActionMixin(RdfResourceImpl) {

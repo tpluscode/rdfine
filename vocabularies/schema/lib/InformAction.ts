@@ -12,13 +12,13 @@ export interface InformAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   event: Schema.Event<D> | undefined;
 }
 
-export function InformActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InformAction> & RdfResourceCore> & Base {
+export function InformActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InformAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class InformActionClass extends CommunicateActionMixin(Resource) implements Partial<InformAction> {
+  class InformActionClass extends CommunicateActionMixin(Resource) {
     @rdfine.property.resource()
     event: Schema.Event | undefined;
   }
-  return InformActionClass
+  return InformActionClass as any
 }
 
 class InformActionImpl extends InformActionMixin(RdfResourceImpl) {

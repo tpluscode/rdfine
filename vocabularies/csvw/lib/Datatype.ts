@@ -19,9 +19,9 @@ export interface Datatype<D extends RDF.DatasetCore = RDF.DatasetCore> extends r
   minLength: number | undefined;
 }
 
-export function DatatypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Datatype> & RdfResourceCore> & Base {
+export function DatatypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Datatype & RdfResourceCore> & Base {
   @rdfine.namespace(csvw)
-  class DatatypeClass extends Resource implements Partial<Datatype> {
+  class DatatypeClass extends Resource {
     @rdfine.property.literal()
     base: string | undefined;
     @rdfine.property.literal()
@@ -41,7 +41,7 @@ export function DatatypeMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.literal({ type: Number })
     minLength: number | undefined;
   }
-  return DatatypeClass
+  return DatatypeClass as any
 }
 
 class DatatypeImpl extends DatatypeMixin(RdfResourceImpl) {
