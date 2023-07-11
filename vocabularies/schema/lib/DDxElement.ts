@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalIntangibleMixin } from './MedicalIntangible.js';
 
@@ -23,16 +23,6 @@ export function DDxElementMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return DDxElementClass as any
 }
-
-class DDxElementImpl extends DDxElementMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DDxElement>) {
-    super(arg, init)
-    this.types.add(schema.DDxElement)
-  }
-
-  static readonly __mixins: Mixin[] = [DDxElementMixin, MedicalIntangibleMixin];
-}
 DDxElementMixin.appliesTo = schema.DDxElement
-DDxElementMixin.Class = DDxElementImpl
 
-export const fromPointer = createFactory<DDxElement>([MedicalIntangibleMixin, DDxElementMixin], { types: [schema.DDxElement] });
+export const factory = (env: RdfineEnvironment) => createFactory<DDxElement>([MedicalIntangibleMixin, DDxElementMixin], { types: [schema.DDxElement] }, env);

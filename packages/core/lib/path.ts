@@ -1,7 +1,7 @@
 import type { NamedNode } from '@rdfjs/types'
-import RDF from '@rdfjs/data-model'
 import cf, { GraphPointer } from 'clownface'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
+import {RdfineEnvironment} from '../environment';
 
 export interface EdgeTraversal {
   (subject: GraphPointer): GraphPointer[]
@@ -10,7 +10,7 @@ export interface EdgeTraversal {
 }
 
 export type PropRef = string | NamedNode
-export type EdgeTraversalFactory = (ns: NamespaceBuilder) => EdgeTraversal
+export type EdgeTraversalFactory = (this: RdfineEnvironment, ns: NamespaceBuilder) => EdgeTraversal
 
 function namespacedPredicate(term: string, namespace?: NamespaceBuilder): NamedNode {
   if (!namespace) {
@@ -20,10 +20,10 @@ function namespacedPredicate(term: string, namespace?: NamespaceBuilder): NamedN
   return namespace[term]
 }
 
-function predicate(termOrString: PropRef, namespace?: NamespaceBuilder): NamedNode {
+function predicate(termOrString: PropRef, env: RdfineEnvironment, namespace?: NamespaceBuilder): NamedNode {
   if (typeof termOrString === 'string') {
     if (termOrString.match(/^(http|urn):\/\//)) {
-      return RDF.namedNode(termOrString)
+      return env.namedNode(termOrString)
     }
 
     return namespacedPredicate(termOrString, namespace)
@@ -72,8 +72,8 @@ function anyGraph(prop: NamedNode): EdgeTraversal {
   return edge
 }
 
-export function crossBoundaries(prop: PropRef): EdgeTraversalFactory {
-  return ns => anyGraph(predicate(prop, ns))
+export function crossBoundaries(this: RdfineEnvironment,prop: PropRef): EdgeTraversalFactory {
+  return ns => anyGraph(predicate(prop, this, ns))
 }
 
 export function toEdgeTraversals({ constructor }: any, path: (PropRef | EdgeTraversalFactory)[]): EdgeTraversal[] {
@@ -81,9 +81,9 @@ export function toEdgeTraversals({ constructor }: any, path: (PropRef | EdgeTrav
 
   return path.map(prop => {
     if (typeof prop === 'function') {
-      return prop(namespace)
+      return prop.call(constructor.env, namespace)
     }
 
-    return sameGraph(predicate(prop, namespace))
+    return sameGraph(predicate(prop, constructor.env, namespace))
   })
 }

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { InteractActionMixin } from './InteractAction.js';
 
@@ -17,16 +17,6 @@ export function UnRegisterActionMixin<Base extends rdfine.Constructor>(Resource:
   }
   return UnRegisterActionClass as any
 }
-
-class UnRegisterActionImpl extends UnRegisterActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<UnRegisterAction>) {
-    super(arg, init)
-    this.types.add(schema.UnRegisterAction)
-  }
-
-  static readonly __mixins: Mixin[] = [UnRegisterActionMixin, InteractActionMixin];
-}
 UnRegisterActionMixin.appliesTo = schema.UnRegisterAction
-UnRegisterActionMixin.Class = UnRegisterActionImpl
 
-export const fromPointer = createFactory<UnRegisterAction>([InteractActionMixin, UnRegisterActionMixin], { types: [schema.UnRegisterAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<UnRegisterAction>([InteractActionMixin, UnRegisterActionMixin], { types: [schema.UnRegisterAction] }, env);

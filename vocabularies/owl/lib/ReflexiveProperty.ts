@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { owl } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '../index.js';
 import { ObjectPropertyMixin } from './ObjectProperty.js';
 
@@ -17,16 +17,6 @@ export function ReflexivePropertyMixin<Base extends rdfine.Constructor>(Resource
   }
   return ReflexivePropertyClass as any
 }
-
-class ReflexivePropertyImpl extends ReflexivePropertyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ReflexiveProperty>) {
-    super(arg, init)
-    this.types.add(owl.ReflexiveProperty)
-  }
-
-  static readonly __mixins: Mixin[] = [ReflexivePropertyMixin, ObjectPropertyMixin];
-}
 ReflexivePropertyMixin.appliesTo = owl.ReflexiveProperty
-ReflexivePropertyMixin.Class = ReflexivePropertyImpl
 
-export const fromPointer = createFactory<ReflexiveProperty>([ObjectPropertyMixin, ReflexivePropertyMixin], { types: [owl.ReflexiveProperty] });
+export const factory = (env: RdfineEnvironment) => createFactory<ReflexiveProperty>([ObjectPropertyMixin, ReflexivePropertyMixin], { types: [owl.ReflexiveProperty] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { TransferActionMixin } from './TransferAction.js';
 
@@ -23,16 +23,6 @@ export function SendActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return SendActionClass as any
 }
-
-class SendActionImpl extends SendActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SendAction>) {
-    super(arg, init)
-    this.types.add(schema.SendAction)
-  }
-
-  static readonly __mixins: Mixin[] = [SendActionMixin, TransferActionMixin];
-}
 SendActionMixin.appliesTo = schema.SendAction
-SendActionMixin.Class = SendActionImpl
 
-export const fromPointer = createFactory<SendAction>([TransferActionMixin, SendActionMixin], { types: [schema.SendAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<SendAction>([TransferActionMixin, SendActionMixin], { types: [schema.SendAction] }, env);

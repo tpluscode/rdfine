@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 import { DerivationMixin } from './Derivation.js';
 
@@ -23,16 +23,6 @@ export function RemovalMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return RemovalClass as any
 }
-
-class RemovalImpl extends RemovalMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Removal>) {
-    super(arg, init)
-    this.types.add(prov.Removal)
-  }
-
-  static readonly __mixins: Mixin[] = [RemovalMixin, DerivationMixin];
-}
 RemovalMixin.appliesTo = prov.Removal
-RemovalMixin.Class = RemovalImpl
 
-export const fromPointer = createFactory<Removal>([DerivationMixin, RemovalMixin], { types: [prov.Removal] });
+export const factory = (env: RdfineEnvironment) => createFactory<Removal>([DerivationMixin, RemovalMixin], { types: [prov.Removal] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -32,16 +32,6 @@ export function OrderItemMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return OrderItemClass as any
 }
-
-class OrderItemImpl extends OrderItemMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<OrderItem>) {
-    super(arg, init)
-    this.types.add(schema.OrderItem)
-  }
-
-  static readonly __mixins: Mixin[] = [OrderItemMixin, IntangibleMixin];
-}
 OrderItemMixin.appliesTo = schema.OrderItem
-OrderItemMixin.Class = OrderItemImpl
 
-export const fromPointer = createFactory<OrderItem>([IntangibleMixin, OrderItemMixin], { types: [schema.OrderItem] });
+export const factory = (env: RdfineEnvironment) => createFactory<OrderItem>([IntangibleMixin, OrderItemMixin], { types: [schema.OrderItem] }, env);

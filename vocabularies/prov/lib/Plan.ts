@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 import { EntityMixin } from './Entity.js';
 
@@ -17,16 +17,6 @@ export function PlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return PlanClass as any
 }
-
-class PlanImpl extends PlanMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Plan>) {
-    super(arg, init)
-    this.types.add(prov.Plan)
-  }
-
-  static readonly __mixins: Mixin[] = [PlanMixin, EntityMixin];
-}
 PlanMixin.appliesTo = prov.Plan
-PlanMixin.Class = PlanImpl
 
-export const fromPointer = createFactory<Plan>([EntityMixin, PlanMixin], { types: [prov.Plan] });
+export const factory = (env: RdfineEnvironment) => createFactory<Plan>([EntityMixin, PlanMixin], { types: [prov.Plan] }, env);

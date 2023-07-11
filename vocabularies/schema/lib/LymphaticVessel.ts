@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { VesselMixin } from './Vessel.js';
 
@@ -26,16 +26,6 @@ export function LymphaticVesselMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return LymphaticVesselClass as any
 }
-
-class LymphaticVesselImpl extends LymphaticVesselMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<LymphaticVessel>) {
-    super(arg, init)
-    this.types.add(schema.LymphaticVessel)
-  }
-
-  static readonly __mixins: Mixin[] = [LymphaticVesselMixin, VesselMixin];
-}
 LymphaticVesselMixin.appliesTo = schema.LymphaticVessel
-LymphaticVesselMixin.Class = LymphaticVesselImpl
 
-export const fromPointer = createFactory<LymphaticVessel>([VesselMixin, LymphaticVesselMixin], { types: [schema.LymphaticVessel] });
+export const factory = (env: RdfineEnvironment) => createFactory<LymphaticVessel>([VesselMixin, LymphaticVesselMixin], { types: [schema.LymphaticVessel] }, env);

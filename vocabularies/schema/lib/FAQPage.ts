@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { WebPageMixin } from './WebPage.js';
 
@@ -17,16 +17,6 @@ export function FAQPageMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return FAQPageClass as any
 }
-
-class FAQPageImpl extends FAQPageMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<FAQPage>) {
-    super(arg, init)
-    this.types.add(schema.FAQPage)
-  }
-
-  static readonly __mixins: Mixin[] = [FAQPageMixin, WebPageMixin];
-}
 FAQPageMixin.appliesTo = schema.FAQPage
-FAQPageMixin.Class = FAQPageImpl
 
-export const fromPointer = createFactory<FAQPage>([WebPageMixin, FAQPageMixin], { types: [schema.FAQPage] });
+export const factory = (env: RdfineEnvironment) => createFactory<FAQPage>([WebPageMixin, FAQPageMixin], { types: [schema.FAQPage] }, env);

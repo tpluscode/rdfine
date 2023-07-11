@@ -1065,10 +1065,10 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.2.tgz#5981a8db18b56ba38ef0efb7d995b12aa7b51918"
   integrity sha512-sXXKG+uL9IrKqViTtao2Ws6dy0znu9sOaP1di/jKGW1M6VssO8vlpXCQcpZ+jisQ1tTFAC5Jo/EOzFbggBagFQ==
 
-"@tpluscode/eslint-config@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@tpluscode/eslint-config/-/eslint-config-0.4.2.tgz#7342de86806ebd77d8f0ba7271004cbaf1c26df9"
-  integrity sha512-TtY/x8cGnFjDvil3jwH5JQaeCH29+VU497rZ6fjiJiAOPHwcJNhFRVxGg0s17ylNIJed2RCZTfmH1oNJ5BEysQ==
+"@tpluscode/eslint-config@^0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@tpluscode/eslint-config/-/eslint-config-0.4.3.tgz#782af41ced77f30a437df6599283dbe0220ab2c6"
+  integrity sha512-5YnhrgcwwswtVlNjSTTvetpP7Wtw4wjVFC8gZDFlqmdWVgkv5xPz86kWADmy8sDIIYoURJv1SvsCIZANUx5U/g==
   optionalDependencies:
     "@typescript-eslint/eslint-plugin" ">=2"
     "@typescript-eslint/parser" ">=2"

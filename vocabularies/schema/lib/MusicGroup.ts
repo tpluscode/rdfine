@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { PerformingGroupMixin } from './PerformingGroup.js';
 
@@ -38,16 +38,6 @@ export function MusicGroupMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return MusicGroupClass as any
 }
-
-class MusicGroupImpl extends MusicGroupMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MusicGroup>) {
-    super(arg, init)
-    this.types.add(schema.MusicGroup)
-  }
-
-  static readonly __mixins: Mixin[] = [MusicGroupMixin, PerformingGroupMixin];
-}
 MusicGroupMixin.appliesTo = schema.MusicGroup
-MusicGroupMixin.Class = MusicGroupImpl
 
-export const fromPointer = createFactory<MusicGroup>([PerformingGroupMixin, MusicGroupMixin], { types: [schema.MusicGroup] });
+export const factory = (env: RdfineEnvironment) => createFactory<MusicGroup>([PerformingGroupMixin, MusicGroupMixin], { types: [schema.MusicGroup] }, env);

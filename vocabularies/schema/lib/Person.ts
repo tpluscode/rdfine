@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -218,16 +218,6 @@ export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return PersonClass as any
 }
-
-class PersonImpl extends PersonMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Person>) {
-    super(arg, init)
-    this.types.add(schema.Person)
-  }
-
-  static readonly __mixins: Mixin[] = [PersonMixin, ThingMixin];
-}
 PersonMixin.appliesTo = schema.Person
-PersonMixin.Class = PersonImpl
 
-export const fromPointer = createFactory<Person>([ThingMixin, PersonMixin], { types: [schema.Person] });
+export const factory = (env: RdfineEnvironment) => createFactory<Person>([ThingMixin, PersonMixin], { types: [schema.Person] }, env);

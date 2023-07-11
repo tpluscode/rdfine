@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AdministrativeAreaMixin } from './AdministrativeArea.js';
 
@@ -17,16 +17,6 @@ export function CityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return CityClass as any
 }
-
-class CityImpl extends CityMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<City>) {
-    super(arg, init)
-    this.types.add(schema.City)
-  }
-
-  static readonly __mixins: Mixin[] = [CityMixin, AdministrativeAreaMixin];
-}
 CityMixin.appliesTo = schema.City
-CityMixin.Class = CityImpl
 
-export const fromPointer = createFactory<City>([AdministrativeAreaMixin, CityMixin], { types: [schema.City] });
+export const factory = (env: RdfineEnvironment) => createFactory<City>([AdministrativeAreaMixin, CityMixin], { types: [schema.City] }, env);

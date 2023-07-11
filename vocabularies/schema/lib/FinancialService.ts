@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LocalBusinessMixin } from './LocalBusiness.js';
 
@@ -23,16 +23,6 @@ export function FinancialServiceMixin<Base extends rdfine.Constructor>(Resource:
   }
   return FinancialServiceClass as any
 }
-
-class FinancialServiceImpl extends FinancialServiceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<FinancialService>) {
-    super(arg, init)
-    this.types.add(schema.FinancialService)
-  }
-
-  static readonly __mixins: Mixin[] = [FinancialServiceMixin, LocalBusinessMixin];
-}
 FinancialServiceMixin.appliesTo = schema.FinancialService
-FinancialServiceMixin.Class = FinancialServiceImpl
 
-export const fromPointer = createFactory<FinancialService>([LocalBusinessMixin, FinancialServiceMixin], { types: [schema.FinancialService] });
+export const factory = (env: RdfineEnvironment) => createFactory<FinancialService>([LocalBusinessMixin, FinancialServiceMixin], { types: [schema.FinancialService] }, env);

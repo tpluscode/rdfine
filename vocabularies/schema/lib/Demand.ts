@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -134,16 +134,6 @@ export function DemandMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return DemandClass as any
 }
-
-class DemandImpl extends DemandMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Demand>) {
-    super(arg, init)
-    this.types.add(schema.Demand)
-  }
-
-  static readonly __mixins: Mixin[] = [DemandMixin, IntangibleMixin];
-}
 DemandMixin.appliesTo = schema.Demand
-DemandMixin.Class = DemandImpl
 
-export const fromPointer = createFactory<Demand>([IntangibleMixin, DemandMixin], { types: [schema.Demand] });
+export const factory = (env: RdfineEnvironment) => createFactory<Demand>([IntangibleMixin, DemandMixin], { types: [schema.Demand] }, env);

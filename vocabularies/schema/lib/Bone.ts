@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AnatomicalStructureMixin } from './AnatomicalStructure.js';
 
@@ -17,16 +17,6 @@ export function BoneMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return BoneClass as any
 }
-
-class BoneImpl extends BoneMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Bone>) {
-    super(arg, init)
-    this.types.add(schema.Bone)
-  }
-
-  static readonly __mixins: Mixin[] = [BoneMixin, AnatomicalStructureMixin];
-}
 BoneMixin.appliesTo = schema.Bone
-BoneMixin.Class = BoneImpl
 
-export const fromPointer = createFactory<Bone>([AnatomicalStructureMixin, BoneMixin], { types: [schema.Bone] });
+export const factory = (env: RdfineEnvironment) => createFactory<Bone>([AnatomicalStructureMixin, BoneMixin], { types: [schema.Bone] }, env);

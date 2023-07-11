@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { PublicationIssueMixin } from './PublicationIssue.js';
 
@@ -35,16 +35,6 @@ export function ComicIssueMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return ComicIssueClass as any
 }
-
-class ComicIssueImpl extends ComicIssueMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ComicIssue>) {
-    super(arg, init)
-    this.types.add(schema.ComicIssue)
-  }
-
-  static readonly __mixins: Mixin[] = [ComicIssueMixin, PublicationIssueMixin];
-}
 ComicIssueMixin.appliesTo = schema.ComicIssue
-ComicIssueMixin.Class = ComicIssueImpl
 
-export const fromPointer = createFactory<ComicIssue>([PublicationIssueMixin, ComicIssueMixin], { types: [schema.ComicIssue] });
+export const factory = (env: RdfineEnvironment) => createFactory<ComicIssue>([PublicationIssueMixin, ComicIssueMixin], { types: [schema.ComicIssue] }, env);

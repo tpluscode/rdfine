@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
@@ -21,16 +21,6 @@ export function PropertyGroupMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return PropertyGroupClass as any
 }
-
-class PropertyGroupImpl extends PropertyGroupMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PropertyGroup>) {
-    super(arg, init)
-    this.types.add(sh.PropertyGroup)
-  }
-
-  static readonly __mixins: Mixin[] = [PropertyGroupMixin, RdfsResourceMixin];
-}
 PropertyGroupMixin.appliesTo = sh.PropertyGroup
-PropertyGroupMixin.Class = PropertyGroupImpl
 
-export const fromPointer = createFactory<PropertyGroup>([RdfsResourceMixin, PropertyGroupMixin], { types: [sh.PropertyGroup] });
+export const factory = (env: RdfineEnvironment) => createFactory<PropertyGroup>([RdfsResourceMixin, PropertyGroupMixin], { types: [sh.PropertyGroup] }, env);

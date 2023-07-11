@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { AgentTemporalRelationMixin } from './AgentTemporalRelation.js';
 import { FamilyRelationMixin } from './FamilyRelation.js';
@@ -24,16 +24,6 @@ export function DescendanceRelationMixin<Base extends rdfine.Constructor>(Resour
   }
   return DescendanceRelationClass as any
 }
-
-class DescendanceRelationImpl extends DescendanceRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DescendanceRelation>) {
-    super(arg, init)
-    this.types.add(rico.DescendanceRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [DescendanceRelationMixin, AgentTemporalRelationMixin, FamilyRelationMixin];
-}
 DescendanceRelationMixin.appliesTo = rico.DescendanceRelation
-DescendanceRelationMixin.Class = DescendanceRelationImpl
 
-export const fromPointer = createFactory<DescendanceRelation>([FamilyRelationMixin, AgentTemporalRelationMixin, DescendanceRelationMixin], { types: [rico.DescendanceRelation] });
+export const factory = (env: RdfineEnvironment) => createFactory<DescendanceRelation>([FamilyRelationMixin, AgentTemporalRelationMixin, DescendanceRelationMixin], { types: [rico.DescendanceRelation] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { dash } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Dash from '../index.js';
 import { TestCaseMixin } from './TestCase.js';
 
@@ -17,16 +17,6 @@ export function ValidationTestCaseMixin<Base extends rdfine.Constructor>(Resourc
   }
   return ValidationTestCaseClass as any
 }
-
-class ValidationTestCaseImpl extends ValidationTestCaseMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ValidationTestCase>) {
-    super(arg, init)
-    this.types.add(dash.ValidationTestCase)
-  }
-
-  static readonly __mixins: Mixin[] = [ValidationTestCaseMixin, TestCaseMixin];
-}
 ValidationTestCaseMixin.appliesTo = dash.ValidationTestCase
-ValidationTestCaseMixin.Class = ValidationTestCaseImpl
 
-export const fromPointer = createFactory<ValidationTestCase>([TestCaseMixin, ValidationTestCaseMixin], { types: [dash.ValidationTestCase] });
+export const factory = (env: RdfineEnvironment) => createFactory<ValidationTestCase>([TestCaseMixin, ValidationTestCaseMixin], { types: [dash.ValidationTestCase] }, env);

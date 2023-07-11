@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { ActivityMixin } from './Activity.js';
 
@@ -17,16 +17,6 @@ export function UpdateMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return UpdateClass as any
 }
-
-class UpdateImpl extends UpdateMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Update>) {
-    super(arg, init)
-    this.types.add(as.Update)
-  }
-
-  static readonly __mixins: Mixin[] = [UpdateMixin, ActivityMixin];
-}
 UpdateMixin.appliesTo = as.Update
-UpdateMixin.Class = UpdateImpl
 
-export const fromPointer = createFactory<Update>([ActivityMixin, UpdateMixin], { types: [as.Update] });
+export const factory = (env: RdfineEnvironment) => createFactory<Update>([ActivityMixin, UpdateMixin], { types: [as.Update] }, env);

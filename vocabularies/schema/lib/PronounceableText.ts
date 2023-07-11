@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 
 export interface PronounceableText<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -31,16 +31,6 @@ export function PronounceableTextMixin<Base extends rdfine.Constructor>(Resource
   }
   return PronounceableTextClass as any
 }
-
-class PronounceableTextImpl extends PronounceableTextMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PronounceableText>) {
-    super(arg, init)
-    this.types.add(schema.PronounceableText)
-  }
-
-  static readonly __mixins: Mixin[] = [PronounceableTextMixin];
-}
 PronounceableTextMixin.appliesTo = schema.PronounceableText
-PronounceableTextMixin.Class = PronounceableTextImpl
 
-export const fromPointer = createFactory<PronounceableText>([PronounceableTextMixin], { types: [schema.PronounceableText] });
+export const factory = (env: RdfineEnvironment) => createFactory<PronounceableText>([PronounceableTextMixin], { types: [schema.PronounceableText] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AccommodationMixin } from './Accommodation.js';
 
@@ -32,16 +32,6 @@ export function SuiteMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return SuiteClass as any
 }
-
-class SuiteImpl extends SuiteMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Suite>) {
-    super(arg, init)
-    this.types.add(schema.Suite)
-  }
-
-  static readonly __mixins: Mixin[] = [SuiteMixin, AccommodationMixin];
-}
 SuiteMixin.appliesTo = schema.Suite
-SuiteMixin.Class = SuiteImpl
 
-export const fromPointer = createFactory<Suite>([AccommodationMixin, SuiteMixin], { types: [schema.Suite] });
+export const factory = (env: RdfineEnvironment) => createFactory<Suite>([AccommodationMixin, SuiteMixin], { types: [schema.Suite] }, env);

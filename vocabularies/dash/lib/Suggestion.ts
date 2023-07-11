@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { dash } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Dash from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
@@ -24,16 +24,6 @@ export function SuggestionMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return SuggestionClass as any
 }
-
-class SuggestionImpl extends SuggestionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Suggestion>) {
-    super(arg, init)
-    this.types.add(dash.Suggestion)
-  }
-
-  static readonly __mixins: Mixin[] = [SuggestionMixin, RdfsResourceMixin];
-}
 SuggestionMixin.appliesTo = dash.Suggestion
-SuggestionMixin.Class = SuggestionImpl
 
-export const fromPointer = createFactory<Suggestion>([RdfsResourceMixin, SuggestionMixin], { types: [dash.Suggestion] });
+export const factory = (env: RdfineEnvironment) => createFactory<Suggestion>([RdfsResourceMixin, SuggestionMixin], { types: [dash.Suggestion] }, env);

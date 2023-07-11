@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sioc } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sioc from '../index.js';
 import { ContainerMixin } from './Container.js';
 
@@ -23,16 +23,6 @@ export function ForumMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return ForumClass as any
 }
-
-class ForumImpl extends ForumMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Forum>) {
-    super(arg, init)
-    this.types.add(sioc.Forum)
-  }
-
-  static readonly __mixins: Mixin[] = [ForumMixin, ContainerMixin];
-}
 ForumMixin.appliesTo = sioc.Forum
-ForumMixin.Class = ForumImpl
 
-export const fromPointer = createFactory<Forum>([ContainerMixin, ForumMixin], { types: [sioc.Forum] });
+export const factory = (env: RdfineEnvironment) => createFactory<Forum>([ContainerMixin, ForumMixin], { types: [sioc.Forum] }, env);

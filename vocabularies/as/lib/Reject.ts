@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { ActivityMixin } from './Activity.js';
 
@@ -17,16 +17,6 @@ export function RejectMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return RejectClass as any
 }
-
-class RejectImpl extends RejectMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Reject>) {
-    super(arg, init)
-    this.types.add(as.Reject)
-  }
-
-  static readonly __mixins: Mixin[] = [RejectMixin, ActivityMixin];
-}
 RejectMixin.appliesTo = as.Reject
-RejectMixin.Class = RejectImpl
 
-export const fromPointer = createFactory<Reject>([ActivityMixin, RejectMixin], { types: [as.Reject] });
+export const factory = (env: RdfineEnvironment) => createFactory<Reject>([ActivityMixin, RejectMixin], { types: [as.Reject] }, env);

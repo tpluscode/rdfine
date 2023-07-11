@@ -9,6 +9,7 @@
   "sideEffects": false,
   "exports": {
     ".": "./index.js",
+    "./Factory": "./bundles/Factory.js",
     "./bundles": "./bundles/index.js",
     "./lib/*": "./lib/*.js",
     "./extensions/*": "./extensions/*.js"

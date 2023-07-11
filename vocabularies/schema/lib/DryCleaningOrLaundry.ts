@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LocalBusinessMixin } from './LocalBusiness.js';
 
@@ -17,16 +17,6 @@ export function DryCleaningOrLaundryMixin<Base extends rdfine.Constructor>(Resou
   }
   return DryCleaningOrLaundryClass as any
 }
-
-class DryCleaningOrLaundryImpl extends DryCleaningOrLaundryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DryCleaningOrLaundry>) {
-    super(arg, init)
-    this.types.add(schema.DryCleaningOrLaundry)
-  }
-
-  static readonly __mixins: Mixin[] = [DryCleaningOrLaundryMixin, LocalBusinessMixin];
-}
 DryCleaningOrLaundryMixin.appliesTo = schema.DryCleaningOrLaundry
-DryCleaningOrLaundryMixin.Class = DryCleaningOrLaundryImpl
 
-export const fromPointer = createFactory<DryCleaningOrLaundry>([LocalBusinessMixin, DryCleaningOrLaundryMixin], { types: [schema.DryCleaningOrLaundry] });
+export const factory = (env: RdfineEnvironment) => createFactory<DryCleaningOrLaundry>([LocalBusinessMixin, DryCleaningOrLaundryMixin], { types: [schema.DryCleaningOrLaundry] }, env);

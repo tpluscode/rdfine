@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -26,16 +26,6 @@ export function CommentMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return CommentClass as any
 }
-
-class CommentImpl extends CommentMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Comment>) {
-    super(arg, init)
-    this.types.add(schema.Comment)
-  }
-
-  static readonly __mixins: Mixin[] = [CommentMixin, CreativeWorkMixin];
-}
 CommentMixin.appliesTo = schema.Comment
-CommentMixin.Class = CommentImpl
 
-export const fromPointer = createFactory<Comment>([CreativeWorkMixin, CommentMixin], { types: [schema.Comment] });
+export const factory = (env: RdfineEnvironment) => createFactory<Comment>([CreativeWorkMixin, CommentMixin], { types: [schema.Comment] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -68,16 +68,6 @@ export function DateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return DateClass as any
 }
-
-class DateImpl extends DateMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Date>) {
-    super(arg, init)
-    this.types.add(rico.Date)
-  }
-
-  static readonly __mixins: Mixin[] = [DateMixin, ThingMixin];
-}
 DateMixin.appliesTo = rico.Date
-DateMixin.Class = DateImpl
 
-export const fromPointer = createFactory<Date>([ThingMixin, DateMixin], { types: [rico.Date] });
+export const factory = (env: RdfineEnvironment) => createFactory<Date>([ThingMixin, DateMixin], { types: [rico.Date] }, env);

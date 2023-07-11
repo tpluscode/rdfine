@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ReservationMixin } from './Reservation.js';
 
@@ -17,16 +17,6 @@ export function TrainReservationMixin<Base extends rdfine.Constructor>(Resource:
   }
   return TrainReservationClass as any
 }
-
-class TrainReservationImpl extends TrainReservationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TrainReservation>) {
-    super(arg, init)
-    this.types.add(schema.TrainReservation)
-  }
-
-  static readonly __mixins: Mixin[] = [TrainReservationMixin, ReservationMixin];
-}
 TrainReservationMixin.appliesTo = schema.TrainReservation
-TrainReservationMixin.Class = TrainReservationImpl
 
-export const fromPointer = createFactory<TrainReservation>([ReservationMixin, TrainReservationMixin], { types: [schema.TrainReservation] });
+export const factory = (env: RdfineEnvironment) => createFactory<TrainReservation>([ReservationMixin, TrainReservationMixin], { types: [schema.TrainReservation] }, env);

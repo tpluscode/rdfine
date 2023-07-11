@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -110,16 +110,6 @@ export function EducationalOccupationalProgramMixin<Base extends rdfine.Construc
   }
   return EducationalOccupationalProgramClass as any
 }
-
-class EducationalOccupationalProgramImpl extends EducationalOccupationalProgramMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EducationalOccupationalProgram>) {
-    super(arg, init)
-    this.types.add(schema.EducationalOccupationalProgram)
-  }
-
-  static readonly __mixins: Mixin[] = [EducationalOccupationalProgramMixin, IntangibleMixin];
-}
 EducationalOccupationalProgramMixin.appliesTo = schema.EducationalOccupationalProgram
-EducationalOccupationalProgramMixin.Class = EducationalOccupationalProgramImpl
 
-export const fromPointer = createFactory<EducationalOccupationalProgram>([IntangibleMixin, EducationalOccupationalProgramMixin], { types: [schema.EducationalOccupationalProgram] });
+export const factory = (env: RdfineEnvironment) => createFactory<EducationalOccupationalProgram>([IntangibleMixin, EducationalOccupationalProgramMixin], { types: [schema.EducationalOccupationalProgram] }, env);

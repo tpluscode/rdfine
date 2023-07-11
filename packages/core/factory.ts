@@ -3,6 +3,7 @@ import { AnyContext, AnyPointer } from 'clownface'
 import { Initializer, RdfResourceCore, ResourceIdentifier, ResourceNode } from './RdfResource.js'
 import { ResourceFactory, Mixin } from './lib/ResourceFactory.js'
 import RdfResourceImpl from './index.js'
+import {RdfineEnvironment} from './environment';
 
 export interface FactoryOptions {
   factory?: ResourceFactory
@@ -27,9 +28,9 @@ export interface FullFactory<T extends RdfResourceCore<any>> {
 
 export type Factory<T extends RdfResourceCore<any>> = FullFactory<T> & CurriedFactory<T> & CurriedBlankFactory<T>;
 
-export function createFactory<T extends RdfResourceCore<any>>(mixins: Mixin[], baseInitializer: Initializer<T>): FullFactory<T> & CurriedFactory<T> & CurriedBlankFactory<T> {
-  const fullFactory: FullFactory<T> = (pointer, initializer, { factory = RdfResourceImpl.factory, additionalMixins = [] } = {}) => {
-    return factory.createEntity<T>(pointer, [...mixins, ...additionalMixins], {
+export function createFactory<T extends RdfResourceCore<any>>(mixins: Mixin[], baseInitializer: Initializer<T>, env: RdfineEnvironment): FullFactory<T> & CurriedFactory<T> & CurriedBlankFactory<T> {
+  const fullFactory: FullFactory<T> = (pointer, initializer, { additionalMixins = [] } = {}) => {
+    return env.rdfine._factory.createEntity<T>(pointer, [...mixins, ...additionalMixins], {
       initializer: {
         ...baseInitializer,
         ...(initializer || {}),
@@ -37,10 +38,10 @@ export function createFactory<T extends RdfResourceCore<any>>(mixins: Mixin[], b
     })
   }
 
-  const curriedNamedFactory: CurriedFactory<T> = (id, initializer, { factory = RdfResourceImpl.factory, additionalMixins = [] } = {}) => {
-    return (graph, overrideFactory = factory) => {
+  const curriedNamedFactory: CurriedFactory<T> = (id, initializer, { additionalMixins = [] } = {}) => {
+    return (graph) => {
       const term = typeof id === 'string' ? graph.namedNode(id) : graph.node(id)
-      return overrideFactory.createEntity<T>(term, [...mixins, ...additionalMixins], {
+      return env.rdfine._factory.createEntity<T>(term, [...mixins, ...additionalMixins], {
         initializer: {
           ...baseInitializer,
           ...(initializer || {}),
@@ -49,8 +50,8 @@ export function createFactory<T extends RdfResourceCore<any>>(mixins: Mixin[], b
     }
   }
 
-  const curriedBlankFactory: CurriedBlankFactory<T> = (initializer, { factory = RdfResourceImpl.factory, additionalMixins = [] } = {}) => {
-    return (graph, overrideFactory = factory) => overrideFactory.createEntity<T>(graph.blankNode(), [...mixins, ...additionalMixins], {
+  const curriedBlankFactory: CurriedBlankFactory<T> = (initializer, { additionalMixins = [] } = {}) => {
+    return (graph) => env.rdfine._factory.createEntity<T>(graph.blankNode(), [...mixins, ...additionalMixins], {
       initializer: {
         ...baseInitializer,
         ...(initializer || {}),

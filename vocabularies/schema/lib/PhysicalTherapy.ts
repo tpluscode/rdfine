@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalTherapyMixin } from './MedicalTherapy.js';
 
@@ -17,16 +17,6 @@ export function PhysicalTherapyMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return PhysicalTherapyClass as any
 }
-
-class PhysicalTherapyImpl extends PhysicalTherapyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PhysicalTherapy>) {
-    super(arg, init)
-    this.types.add(schema.PhysicalTherapy)
-  }
-
-  static readonly __mixins: Mixin[] = [PhysicalTherapyMixin, MedicalTherapyMixin];
-}
 PhysicalTherapyMixin.appliesTo = schema.PhysicalTherapy
-PhysicalTherapyMixin.Class = PhysicalTherapyImpl
 
-export const fromPointer = createFactory<PhysicalTherapy>([MedicalTherapyMixin, PhysicalTherapyMixin], { types: [schema.PhysicalTherapy] });
+export const factory = (env: RdfineEnvironment) => createFactory<PhysicalTherapy>([MedicalTherapyMixin, PhysicalTherapyMixin], { types: [schema.PhysicalTherapy] }, env);

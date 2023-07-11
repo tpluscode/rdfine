@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { AuthorityRelationMixin } from './AuthorityRelation.js';
 
@@ -23,16 +23,6 @@ export function OwnershipRelationMixin<Base extends rdfine.Constructor>(Resource
   }
   return OwnershipRelationClass as any
 }
-
-class OwnershipRelationImpl extends OwnershipRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<OwnershipRelation>) {
-    super(arg, init)
-    this.types.add(rico.OwnershipRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [OwnershipRelationMixin, AuthorityRelationMixin];
-}
 OwnershipRelationMixin.appliesTo = rico.OwnershipRelation
-OwnershipRelationMixin.Class = OwnershipRelationImpl
 
-export const fromPointer = createFactory<OwnershipRelation>([AuthorityRelationMixin, OwnershipRelationMixin], { types: [rico.OwnershipRelation] });
+export const factory = (env: RdfineEnvironment) => createFactory<OwnershipRelation>([AuthorityRelationMixin, OwnershipRelationMixin], { types: [rico.OwnershipRelation] }, env);

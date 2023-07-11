@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
@@ -23,16 +23,6 @@ export function WholePartRelationMixin<Base extends rdfine.Constructor>(Resource
   }
   return WholePartRelationClass as any
 }
-
-class WholePartRelationImpl extends WholePartRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<WholePartRelation>) {
-    super(arg, init)
-    this.types.add(rico.WholePartRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [WholePartRelationMixin, RelationMixin];
-}
 WholePartRelationMixin.appliesTo = rico.WholePartRelation
-WholePartRelationMixin.Class = WholePartRelationImpl
 
-export const fromPointer = createFactory<WholePartRelation>([RelationMixin, WholePartRelationMixin], { types: [rico.WholePartRelation] });
+export const factory = (env: RdfineEnvironment) => createFactory<WholePartRelation>([RelationMixin, WholePartRelationMixin], { types: [rico.WholePartRelation] }, env);

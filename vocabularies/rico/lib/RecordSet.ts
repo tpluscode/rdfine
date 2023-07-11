@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { RecordResourceMixin } from './RecordResource.js';
 
@@ -68,16 +68,6 @@ export function RecordSetMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return RecordSetClass as any
 }
-
-class RecordSetImpl extends RecordSetMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RecordSet>) {
-    super(arg, init)
-    this.types.add(rico.RecordSet)
-  }
-
-  static readonly __mixins: Mixin[] = [RecordSetMixin, RecordResourceMixin];
-}
 RecordSetMixin.appliesTo = rico.RecordSet
-RecordSetMixin.Class = RecordSetImpl
 
-export const fromPointer = createFactory<RecordSet>([RecordResourceMixin, RecordSetMixin], { types: [rico.RecordSet] });
+export const factory = (env: RdfineEnvironment) => createFactory<RecordSet>([RecordResourceMixin, RecordSetMixin], { types: [rico.RecordSet] }, env);

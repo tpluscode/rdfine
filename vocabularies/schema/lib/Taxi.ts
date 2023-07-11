@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ServiceMixin } from './Service.js';
 
@@ -17,16 +17,6 @@ export function TaxiMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return TaxiClass as any
 }
-
-class TaxiImpl extends TaxiMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Taxi>) {
-    super(arg, init)
-    this.types.add(schema.Taxi)
-  }
-
-  static readonly __mixins: Mixin[] = [TaxiMixin, ServiceMixin];
-}
 TaxiMixin.appliesTo = schema.Taxi
-TaxiMixin.Class = TaxiImpl
 
-export const fromPointer = createFactory<Taxi>([ServiceMixin, TaxiMixin], { types: [schema.Taxi] });
+export const factory = (env: RdfineEnvironment) => createFactory<Taxi>([ServiceMixin, TaxiMixin], { types: [schema.Taxi] }, env);

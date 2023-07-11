@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { RejectMixin } from './Reject.js';
 
@@ -17,16 +17,6 @@ export function TentativeRejectMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return TentativeRejectClass as any
 }
-
-class TentativeRejectImpl extends TentativeRejectMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TentativeReject>) {
-    super(arg, init)
-    this.types.add(as.TentativeReject)
-  }
-
-  static readonly __mixins: Mixin[] = [TentativeRejectMixin, RejectMixin];
-}
 TentativeRejectMixin.appliesTo = as.TentativeReject
-TentativeRejectMixin.Class = TentativeRejectImpl
 
-export const fromPointer = createFactory<TentativeReject>([RejectMixin, TentativeRejectMixin], { types: [as.TentativeReject] });
+export const factory = (env: RdfineEnvironment) => createFactory<TentativeReject>([RejectMixin, TentativeRejectMixin], { types: [as.TentativeReject] }, env);

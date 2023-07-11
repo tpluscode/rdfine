@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { DigitalDocumentMixin } from './DigitalDocument.js';
 
@@ -17,16 +17,6 @@ export function TextDigitalDocumentMixin<Base extends rdfine.Constructor>(Resour
   }
   return TextDigitalDocumentClass as any
 }
-
-class TextDigitalDocumentImpl extends TextDigitalDocumentMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TextDigitalDocument>) {
-    super(arg, init)
-    this.types.add(schema.TextDigitalDocument)
-  }
-
-  static readonly __mixins: Mixin[] = [TextDigitalDocumentMixin, DigitalDocumentMixin];
-}
 TextDigitalDocumentMixin.appliesTo = schema.TextDigitalDocument
-TextDigitalDocumentMixin.Class = TextDigitalDocumentImpl
 
-export const fromPointer = createFactory<TextDigitalDocument>([DigitalDocumentMixin, TextDigitalDocumentMixin], { types: [schema.TextDigitalDocument] });
+export const factory = (env: RdfineEnvironment) => createFactory<TextDigitalDocument>([DigitalDocumentMixin, TextDigitalDocumentMixin], { types: [schema.TextDigitalDocument] }, env);

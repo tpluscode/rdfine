@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { NameMixin } from './Name.js';
 
@@ -20,16 +20,6 @@ export function TitleMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return TitleClass as any
 }
-
-class TitleImpl extends TitleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Title>) {
-    super(arg, init)
-    this.types.add(rico.Title)
-  }
-
-  static readonly __mixins: Mixin[] = [TitleMixin, NameMixin];
-}
 TitleMixin.appliesTo = rico.Title
-TitleMixin.Class = TitleImpl
 
-export const fromPointer = createFactory<Title>([NameMixin, TitleMixin], { types: [rico.Title] });
+export const factory = (env: RdfineEnvironment) => createFactory<Title>([NameMixin, TitleMixin], { types: [rico.Title] }, env);

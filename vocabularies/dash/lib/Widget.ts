@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { dash } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Dash from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
@@ -18,16 +18,6 @@ export function WidgetMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return WidgetClass as any
 }
-
-class WidgetImpl extends WidgetMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Widget>) {
-    super(arg, init)
-    this.types.add(dash.Widget)
-  }
-
-  static readonly __mixins: Mixin[] = [WidgetMixin, RdfsResourceMixin];
-}
 WidgetMixin.appliesTo = dash.Widget
-WidgetMixin.Class = WidgetImpl
 
-export const fromPointer = createFactory<Widget>([RdfsResourceMixin, WidgetMixin], { types: [dash.Widget] });
+export const factory = (env: RdfineEnvironment) => createFactory<Widget>([RdfsResourceMixin, WidgetMixin], { types: [dash.Widget] }, env);

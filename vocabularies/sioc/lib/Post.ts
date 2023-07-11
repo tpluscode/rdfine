@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sioc } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sioc from '../index.js';
 import type * as Foaf from '@rdfine/foaf';
 import { DocumentMixin as FoafDocumentMixin } from '@rdfine/foaf/lib/Document';
@@ -40,16 +40,6 @@ export function PostMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return PostClass as any
 }
-
-class PostImpl extends PostMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Post>) {
-    super(arg, init)
-    this.types.add(sioc.Post)
-  }
-
-  static readonly __mixins: Mixin[] = [PostMixin, FoafDocumentMixin, ItemMixin];
-}
 PostMixin.appliesTo = sioc.Post
-PostMixin.Class = PostImpl
 
-export const fromPointer = createFactory<Post>([ItemMixin, FoafDocumentMixin, PostMixin], { types: [sioc.Post] });
+export const factory = (env: RdfineEnvironment) => createFactory<Post>([ItemMixin, FoafDocumentMixin, PostMixin], { types: [sioc.Post] }, env);

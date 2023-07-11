@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StoreMixin } from './Store.js';
 
@@ -17,16 +17,6 @@ export function HomeGoodsStoreMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return HomeGoodsStoreClass as any
 }
-
-class HomeGoodsStoreImpl extends HomeGoodsStoreMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<HomeGoodsStore>) {
-    super(arg, init)
-    this.types.add(schema.HomeGoodsStore)
-  }
-
-  static readonly __mixins: Mixin[] = [HomeGoodsStoreMixin, StoreMixin];
-}
 HomeGoodsStoreMixin.appliesTo = schema.HomeGoodsStore
-HomeGoodsStoreMixin.Class = HomeGoodsStoreImpl
 
-export const fromPointer = createFactory<HomeGoodsStore>([StoreMixin, HomeGoodsStoreMixin], { types: [schema.HomeGoodsStore] });
+export const factory = (env: RdfineEnvironment) => createFactory<HomeGoodsStore>([StoreMixin, HomeGoodsStoreMixin], { types: [schema.HomeGoodsStore] }, env);

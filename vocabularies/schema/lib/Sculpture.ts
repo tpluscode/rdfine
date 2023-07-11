@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -17,16 +17,6 @@ export function SculptureMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return SculptureClass as any
 }
-
-class SculptureImpl extends SculptureMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Sculpture>) {
-    super(arg, init)
-    this.types.add(schema.Sculpture)
-  }
-
-  static readonly __mixins: Mixin[] = [SculptureMixin, CreativeWorkMixin];
-}
 SculptureMixin.appliesTo = schema.Sculpture
-SculptureMixin.Class = SculptureImpl
 
-export const fromPointer = createFactory<Sculpture>([CreativeWorkMixin, SculptureMixin], { types: [schema.Sculpture] });
+export const factory = (env: RdfineEnvironment) => createFactory<Sculpture>([CreativeWorkMixin, SculptureMixin], { types: [schema.Sculpture] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -50,16 +50,6 @@ export function ActionAccessSpecificationMixin<Base extends rdfine.Constructor>(
   }
   return ActionAccessSpecificationClass as any
 }
-
-class ActionAccessSpecificationImpl extends ActionAccessSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ActionAccessSpecification>) {
-    super(arg, init)
-    this.types.add(schema.ActionAccessSpecification)
-  }
-
-  static readonly __mixins: Mixin[] = [ActionAccessSpecificationMixin, IntangibleMixin];
-}
 ActionAccessSpecificationMixin.appliesTo = schema.ActionAccessSpecification
-ActionAccessSpecificationMixin.Class = ActionAccessSpecificationImpl
 
-export const fromPointer = createFactory<ActionAccessSpecification>([IntangibleMixin, ActionAccessSpecificationMixin], { types: [schema.ActionAccessSpecification] });
+export const factory = (env: RdfineEnvironment) => createFactory<ActionAccessSpecification>([IntangibleMixin, ActionAccessSpecificationMixin], { types: [schema.ActionAccessSpecification] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LegislationMixin } from './Legislation.js';
 import { MediaObjectMixin } from './MediaObject.js';
@@ -21,16 +21,6 @@ export function LegislationObjectMixin<Base extends rdfine.Constructor>(Resource
   }
   return LegislationObjectClass as any
 }
-
-class LegislationObjectImpl extends LegislationObjectMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<LegislationObject>) {
-    super(arg, init)
-    this.types.add(schema.LegislationObject)
-  }
-
-  static readonly __mixins: Mixin[] = [LegislationObjectMixin, LegislationMixin, MediaObjectMixin];
-}
 LegislationObjectMixin.appliesTo = schema.LegislationObject
-LegislationObjectMixin.Class = LegislationObjectImpl
 
-export const fromPointer = createFactory<LegislationObject>([MediaObjectMixin, LegislationMixin, LegislationObjectMixin], { types: [schema.LegislationObject] });
+export const factory = (env: RdfineEnvironment) => createFactory<LegislationObject>([MediaObjectMixin, LegislationMixin, LegislationObjectMixin], { types: [schema.LegislationObject] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CivicStructureMixin } from './CivicStructure.js';
 
@@ -17,16 +17,6 @@ export function BusStopMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return BusStopClass as any
 }
-
-class BusStopImpl extends BusStopMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<BusStop>) {
-    super(arg, init)
-    this.types.add(schema.BusStop)
-  }
-
-  static readonly __mixins: Mixin[] = [BusStopMixin, CivicStructureMixin];
-}
 BusStopMixin.appliesTo = schema.BusStop
-BusStopMixin.Class = BusStopImpl
 
-export const fromPointer = createFactory<BusStop>([CivicStructureMixin, BusStopMixin], { types: [schema.BusStop] });
+export const factory = (env: RdfineEnvironment) => createFactory<BusStop>([CivicStructureMixin, BusStopMixin], { types: [schema.BusStop] }, env);

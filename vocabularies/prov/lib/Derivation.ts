@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 import { EntityInfluenceMixin } from './EntityInfluence.js';
 
@@ -26,16 +26,6 @@ export function DerivationMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return DerivationClass as any
 }
-
-class DerivationImpl extends DerivationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Derivation>) {
-    super(arg, init)
-    this.types.add(prov.Derivation)
-  }
-
-  static readonly __mixins: Mixin[] = [DerivationMixin, EntityInfluenceMixin];
-}
 DerivationMixin.appliesTo = prov.Derivation
-DerivationMixin.Class = DerivationImpl
 
-export const fromPointer = createFactory<Derivation>([EntityInfluenceMixin, DerivationMixin], { types: [prov.Derivation] });
+export const factory = (env: RdfineEnvironment) => createFactory<Derivation>([EntityInfluenceMixin, DerivationMixin], { types: [prov.Derivation] }, env);

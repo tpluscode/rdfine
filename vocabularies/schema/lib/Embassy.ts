@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { GovernmentBuildingMixin } from './GovernmentBuilding.js';
 
@@ -17,16 +17,6 @@ export function EmbassyMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return EmbassyClass as any
 }
-
-class EmbassyImpl extends EmbassyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Embassy>) {
-    super(arg, init)
-    this.types.add(schema.Embassy)
-  }
-
-  static readonly __mixins: Mixin[] = [EmbassyMixin, GovernmentBuildingMixin];
-}
 EmbassyMixin.appliesTo = schema.Embassy
-EmbassyMixin.Class = EmbassyImpl
 
-export const fromPointer = createFactory<Embassy>([GovernmentBuildingMixin, EmbassyMixin], { types: [schema.Embassy] });
+export const factory = (env: RdfineEnvironment) => createFactory<Embassy>([GovernmentBuildingMixin, EmbassyMixin], { types: [schema.Embassy] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { dash } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Dash from '../index.js';
 import { TestCaseMixin } from './TestCase.js';
 
@@ -17,16 +17,6 @@ export function GraphStoreTestCaseMixin<Base extends rdfine.Constructor>(Resourc
   }
   return GraphStoreTestCaseClass as any
 }
-
-class GraphStoreTestCaseImpl extends GraphStoreTestCaseMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<GraphStoreTestCase>) {
-    super(arg, init)
-    this.types.add(dash.GraphStoreTestCase)
-  }
-
-  static readonly __mixins: Mixin[] = [GraphStoreTestCaseMixin, TestCaseMixin];
-}
 GraphStoreTestCaseMixin.appliesTo = dash.GraphStoreTestCase
-GraphStoreTestCaseMixin.Class = GraphStoreTestCaseImpl
 
-export const fromPointer = createFactory<GraphStoreTestCase>([TestCaseMixin, GraphStoreTestCaseMixin], { types: [dash.GraphStoreTestCase] });
+export const factory = (env: RdfineEnvironment) => createFactory<GraphStoreTestCase>([TestCaseMixin, GraphStoreTestCaseMixin], { types: [dash.GraphStoreTestCase] }, env);

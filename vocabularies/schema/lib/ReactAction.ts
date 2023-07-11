@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AssessActionMixin } from './AssessAction.js';
 
@@ -17,16 +17,6 @@ export function ReactActionMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return ReactActionClass as any
 }
-
-class ReactActionImpl extends ReactActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ReactAction>) {
-    super(arg, init)
-    this.types.add(schema.ReactAction)
-  }
-
-  static readonly __mixins: Mixin[] = [ReactActionMixin, AssessActionMixin];
-}
 ReactActionMixin.appliesTo = schema.ReactAction
-ReactActionMixin.Class = ReactActionImpl
 
-export const fromPointer = createFactory<ReactAction>([AssessActionMixin, ReactActionMixin], { types: [schema.ReactAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<ReactAction>([AssessActionMixin, ReactActionMixin], { types: [schema.ReactAction] }, env);

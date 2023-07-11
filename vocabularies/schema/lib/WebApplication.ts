@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { SoftwareApplicationMixin } from './SoftwareApplication.js';
 
@@ -20,16 +20,6 @@ export function WebApplicationMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return WebApplicationClass as any
 }
-
-class WebApplicationImpl extends WebApplicationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<WebApplication>) {
-    super(arg, init)
-    this.types.add(schema.WebApplication)
-  }
-
-  static readonly __mixins: Mixin[] = [WebApplicationMixin, SoftwareApplicationMixin];
-}
 WebApplicationMixin.appliesTo = schema.WebApplication
-WebApplicationMixin.Class = WebApplicationImpl
 
-export const fromPointer = createFactory<WebApplication>([SoftwareApplicationMixin, WebApplicationMixin], { types: [schema.WebApplication] });
+export const factory = (env: RdfineEnvironment) => createFactory<WebApplication>([SoftwareApplicationMixin, WebApplicationMixin], { types: [schema.WebApplication] }, env);

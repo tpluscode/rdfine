@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { hydra } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 
@@ -47,16 +47,6 @@ export function OperationMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return OperationClass as any
 }
-
-class OperationImpl extends OperationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Operation>) {
-    super(arg, init)
-    this.types.add(hydra.Operation)
-  }
-
-  static readonly __mixins: Mixin[] = [OperationMixin];
-}
 OperationMixin.appliesTo = hydra.Operation
-OperationMixin.Class = OperationImpl
 
-export const fromPointer = createFactory<Operation>([OperationMixin], { types: [hydra.Operation] });
+export const factory = (env: RdfineEnvironment) => createFactory<Operation>([OperationMixin], { types: [hydra.Operation] }, env);

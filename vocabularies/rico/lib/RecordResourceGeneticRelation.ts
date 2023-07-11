@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { RecordResourceToRecordResourceRelationMixin } from './RecordResourceToRecordResourceRelation.js';
 
@@ -20,16 +20,6 @@ export function RecordResourceGeneticRelationMixin<Base extends rdfine.Construct
   }
   return RecordResourceGeneticRelationClass as any
 }
-
-class RecordResourceGeneticRelationImpl extends RecordResourceGeneticRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RecordResourceGeneticRelation>) {
-    super(arg, init)
-    this.types.add(rico.RecordResourceGeneticRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [RecordResourceGeneticRelationMixin, RecordResourceToRecordResourceRelationMixin];
-}
 RecordResourceGeneticRelationMixin.appliesTo = rico.RecordResourceGeneticRelation
-RecordResourceGeneticRelationMixin.Class = RecordResourceGeneticRelationImpl
 
-export const fromPointer = createFactory<RecordResourceGeneticRelation>([RecordResourceToRecordResourceRelationMixin, RecordResourceGeneticRelationMixin], { types: [rico.RecordResourceGeneticRelation] });
+export const factory = (env: RdfineEnvironment) => createFactory<RecordResourceGeneticRelation>([RecordResourceToRecordResourceRelationMixin, RecordResourceGeneticRelationMixin], { types: [rico.RecordResourceGeneticRelation] }, env);

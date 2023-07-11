@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { VesselMixin } from './Vessel.js';
 
@@ -26,16 +26,6 @@ export function VeinMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return VeinClass as any
 }
-
-class VeinImpl extends VeinMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Vein>) {
-    super(arg, init)
-    this.types.add(schema.Vein)
-  }
-
-  static readonly __mixins: Mixin[] = [VeinMixin, VesselMixin];
-}
 VeinMixin.appliesTo = schema.Vein
-VeinMixin.Class = VeinImpl
 
-export const fromPointer = createFactory<Vein>([VesselMixin, VeinMixin], { types: [schema.Vein] });
+export const factory = (env: RdfineEnvironment) => createFactory<Vein>([VesselMixin, VeinMixin], { types: [schema.Vein] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AchieveActionMixin } from './AchieveAction.js';
 
@@ -17,16 +17,6 @@ export function TieActionMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return TieActionClass as any
 }
-
-class TieActionImpl extends TieActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TieAction>) {
-    super(arg, init)
-    this.types.add(schema.TieAction)
-  }
-
-  static readonly __mixins: Mixin[] = [TieActionMixin, AchieveActionMixin];
-}
 TieActionMixin.appliesTo = schema.TieAction
-TieActionMixin.Class = TieActionImpl
 
-export const fromPointer = createFactory<TieAction>([AchieveActionMixin, TieActionMixin], { types: [schema.TieAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<TieAction>([AchieveActionMixin, TieActionMixin], { types: [schema.TieAction] }, env);

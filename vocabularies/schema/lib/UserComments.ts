@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { UserInteractionMixin } from './UserInteraction.js';
 
@@ -32,16 +32,6 @@ export function UserCommentsMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return UserCommentsClass as any
 }
-
-class UserCommentsImpl extends UserCommentsMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<UserComments>) {
-    super(arg, init)
-    this.types.add(schema.UserComments)
-  }
-
-  static readonly __mixins: Mixin[] = [UserCommentsMixin, UserInteractionMixin];
-}
 UserCommentsMixin.appliesTo = schema.UserComments
-UserCommentsMixin.Class = UserCommentsImpl
 
-export const fromPointer = createFactory<UserComments>([UserInteractionMixin, UserCommentsMixin], { types: [schema.UserComments] });
+export const factory = (env: RdfineEnvironment) => createFactory<UserComments>([UserInteractionMixin, UserCommentsMixin], { types: [schema.UserComments] }, env);

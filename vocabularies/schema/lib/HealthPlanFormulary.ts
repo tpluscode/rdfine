@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -26,16 +26,6 @@ export function HealthPlanFormularyMixin<Base extends rdfine.Constructor>(Resour
   }
   return HealthPlanFormularyClass as any
 }
-
-class HealthPlanFormularyImpl extends HealthPlanFormularyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<HealthPlanFormulary>) {
-    super(arg, init)
-    this.types.add(schema.HealthPlanFormulary)
-  }
-
-  static readonly __mixins: Mixin[] = [HealthPlanFormularyMixin, IntangibleMixin];
-}
 HealthPlanFormularyMixin.appliesTo = schema.HealthPlanFormulary
-HealthPlanFormularyMixin.Class = HealthPlanFormularyImpl
 
-export const fromPointer = createFactory<HealthPlanFormulary>([IntangibleMixin, HealthPlanFormularyMixin], { types: [schema.HealthPlanFormulary] });
+export const factory = (env: RdfineEnvironment) => createFactory<HealthPlanFormulary>([IntangibleMixin, HealthPlanFormularyMixin], { types: [schema.HealthPlanFormulary] }, env);

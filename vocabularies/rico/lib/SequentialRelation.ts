@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
@@ -23,16 +23,6 @@ export function SequentialRelationMixin<Base extends rdfine.Constructor>(Resourc
   }
   return SequentialRelationClass as any
 }
-
-class SequentialRelationImpl extends SequentialRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SequentialRelation>) {
-    super(arg, init)
-    this.types.add(rico.SequentialRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [SequentialRelationMixin, RelationMixin];
-}
 SequentialRelationMixin.appliesTo = rico.SequentialRelation
-SequentialRelationMixin.Class = SequentialRelationImpl
 
-export const fromPointer = createFactory<SequentialRelation>([RelationMixin, SequentialRelationMixin], { types: [rico.SequentialRelation] });
+export const factory = (env: RdfineEnvironment) => createFactory<SequentialRelation>([RelationMixin, SequentialRelationMixin], { types: [rico.SequentialRelation] }, env);

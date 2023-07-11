@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sioc } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sioc from '../index.js';
 
 export interface Space<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -22,16 +22,6 @@ export function SpaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return SpaceClass as any
 }
-
-class SpaceImpl extends SpaceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Space>) {
-    super(arg, init)
-    this.types.add(sioc.Space)
-  }
-
-  static readonly __mixins: Mixin[] = [SpaceMixin];
-}
 SpaceMixin.appliesTo = sioc.Space
-SpaceMixin.Class = SpaceImpl
 
-export const fromPointer = createFactory<Space>([SpaceMixin], { types: [sioc.Space] });
+export const factory = (env: RdfineEnvironment) => createFactory<Space>([SpaceMixin], { types: [sioc.Space] }, env);

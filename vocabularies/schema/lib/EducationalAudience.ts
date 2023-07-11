@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AudienceMixin } from './Audience.js';
 
@@ -20,16 +20,6 @@ export function EducationalAudienceMixin<Base extends rdfine.Constructor>(Resour
   }
   return EducationalAudienceClass as any
 }
-
-class EducationalAudienceImpl extends EducationalAudienceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EducationalAudience>) {
-    super(arg, init)
-    this.types.add(schema.EducationalAudience)
-  }
-
-  static readonly __mixins: Mixin[] = [EducationalAudienceMixin, AudienceMixin];
-}
 EducationalAudienceMixin.appliesTo = schema.EducationalAudience
-EducationalAudienceMixin.Class = EducationalAudienceImpl
 
-export const fromPointer = createFactory<EducationalAudience>([AudienceMixin, EducationalAudienceMixin], { types: [schema.EducationalAudience] });
+export const factory = (env: RdfineEnvironment) => createFactory<EducationalAudience>([AudienceMixin, EducationalAudienceMixin], { types: [schema.EducationalAudience] }, env);

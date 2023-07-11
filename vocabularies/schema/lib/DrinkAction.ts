@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ConsumeActionMixin } from './ConsumeAction.js';
 
@@ -17,16 +17,6 @@ export function DrinkActionMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return DrinkActionClass as any
 }
-
-class DrinkActionImpl extends DrinkActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DrinkAction>) {
-    super(arg, init)
-    this.types.add(schema.DrinkAction)
-  }
-
-  static readonly __mixins: Mixin[] = [DrinkActionMixin, ConsumeActionMixin];
-}
 DrinkActionMixin.appliesTo = schema.DrinkAction
-DrinkActionMixin.Class = DrinkActionImpl
 
-export const fromPointer = createFactory<DrinkAction>([ConsumeActionMixin, DrinkActionMixin], { types: [schema.DrinkAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<DrinkAction>([ConsumeActionMixin, DrinkActionMixin], { types: [schema.DrinkAction] }, env);

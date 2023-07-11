@@ -4,13 +4,10 @@ import type { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } fro
 import cf, { MultiPointer, GraphPointer, AnyPointer } from 'clownface'
 import once from 'once'
 import { xsd } from '@tpluscode/rdf-ns-builders'
-import $rdf from '@rdfjs/data-model'
-import ResourceFactoryImpl from './lib/ResourceFactory.js'
 import type {
   Constructor,
   Mixin,
   ResourceCreationOptions,
-  ResourceFactory,
   ResourceIndexer,
 } from './lib/ResourceFactory.js'
 import type { TypeCollection } from './lib/TypeCollection.js'
@@ -20,6 +17,7 @@ import type { Jsonified } from './lib/toJSON.js'
 import { fromInitializer } from './lib/resource.js'
 import { mixins } from './lib/mixins.js'
 import { toLiteral } from './lib/conversion.js'
+import { RdfineEnvironment } from './environment.js'
 
 export type ResourceIdentifier = BlankNode | NamedNode
 export type ResourceNode<D extends DatasetCore = DatasetCore> = GraphPointer<ResourceIdentifier, D>
@@ -29,6 +27,7 @@ export interface GetOptions {
 }
 
 export interface RdfResourceCore<D extends DatasetCore = DatasetCore> {
+  readonly env: RdfineEnvironment
   readonly id: ResourceIdentifier
   readonly types: TypeCollection<D>
   readonly pointer: GraphPointer<ResourceIdentifier, D>
@@ -86,7 +85,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   public readonly _parent?: RdfResource<D>
   private readonly __initializeProperties: (() => boolean)
   public static __ns?: NamespaceBuilder
-  public static factory: ResourceFactory = new ResourceFactoryImpl(RdfResourceImpl)
+  public readonly env: RdfineEnvironment
   public static __mixins: Mixin[] = []
   public static __properties = new Map()
   public static __initializers = new Map()
@@ -132,9 +131,9 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
 
           let literal: Literal | undefined
           if (typeof value === 'object' && 'value' in value && 'datatype' in value) {
-            literal = toLiteral(value.value, value.datatype)
+            literal = toLiteral.call(resource.env, value.value, value.datatype)
           } else {
-            literal = toLiteral(value)
+            literal = toLiteral.call(resource.env, value)
           }
 
           if (literal) {
@@ -154,9 +153,17 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     }
   }
 
-  public constructor(pointer: ResourceNode<D>, init: Initializer<any> = {}, parent?: RdfResource<D>) {
+  public constructor(pointer: ResourceNode<D>, init: Initializer<any> = {}, parentOrEnv: RdfResource<D> | RdfineEnvironment) {
     if (pointer.term.termType !== 'BlankNode' && pointer.term.termType !== 'NamedNode') {
       throw new Error(`RdfResource cannot be initialized from a ${(pointer.term as any).termType} node`)
+    }
+
+    let parent: RdfResource<D> | undefined
+    if ('id' in parentOrEnv) {
+      parent = parentOrEnv
+      this.env = parent.env
+    } else {
+      this.env = parentOrEnv
     }
 
     /* TODO: when clownface gets graph feature
@@ -177,7 +184,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       this.pointer = selfGraph
       this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: undefined })
     } else {
-      this.pointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: $rdf.defaultGraph() })
+      this.pointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: this.env.defaultGraph() })
       this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term })
     }
 
@@ -328,7 +335,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   }
 
   public _create<T extends RdfResourceCore<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D, T> = {}): T & ResourceIndexer {
-    return (this.constructor as Constructor).factory.createEntity<T>(term, mixins, options)
+    return this.env.rdfine._factory.createEntity<T>(term, mixins, options)
   }
 
   public toJSON<T extends RdfResourceCore<any> = this>(): Jsonified<T> {

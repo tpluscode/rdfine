@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { dash } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Dash from '../index.js';
 import { ScriptMixin } from './Script.js';
 
@@ -17,16 +17,6 @@ export function ScriptConstraintMixin<Base extends rdfine.Constructor>(Resource:
   }
   return ScriptConstraintClass as any
 }
-
-class ScriptConstraintImpl extends ScriptConstraintMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ScriptConstraint>) {
-    super(arg, init)
-    this.types.add(dash.ScriptConstraint)
-  }
-
-  static readonly __mixins: Mixin[] = [ScriptConstraintMixin, ScriptMixin];
-}
 ScriptConstraintMixin.appliesTo = dash.ScriptConstraint
-ScriptConstraintMixin.Class = ScriptConstraintImpl
 
-export const fromPointer = createFactory<ScriptConstraint>([ScriptMixin, ScriptConstraintMixin], { types: [dash.ScriptConstraint] });
+export const factory = (env: RdfineEnvironment) => createFactory<ScriptConstraint>([ScriptMixin, ScriptConstraintMixin], { types: [dash.ScriptConstraint] }, env);

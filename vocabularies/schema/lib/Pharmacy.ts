@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalOrganizationMixin } from './MedicalOrganization.js';
 
@@ -17,16 +17,6 @@ export function PharmacyMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return PharmacyClass as any
 }
-
-class PharmacyImpl extends PharmacyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Pharmacy>) {
-    super(arg, init)
-    this.types.add(schema.Pharmacy)
-  }
-
-  static readonly __mixins: Mixin[] = [PharmacyMixin, MedicalOrganizationMixin];
-}
 PharmacyMixin.appliesTo = schema.Pharmacy
-PharmacyMixin.Class = PharmacyImpl
 
-export const fromPointer = createFactory<Pharmacy>([MedicalOrganizationMixin, PharmacyMixin], { types: [schema.Pharmacy] });
+export const factory = (env: RdfineEnvironment) => createFactory<Pharmacy>([MedicalOrganizationMixin, PharmacyMixin], { types: [schema.Pharmacy] }, env);

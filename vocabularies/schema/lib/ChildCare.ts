@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LocalBusinessMixin } from './LocalBusiness.js';
 
@@ -17,16 +17,6 @@ export function ChildCareMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return ChildCareClass as any
 }
-
-class ChildCareImpl extends ChildCareMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ChildCare>) {
-    super(arg, init)
-    this.types.add(schema.ChildCare)
-  }
-
-  static readonly __mixins: Mixin[] = [ChildCareMixin, LocalBusinessMixin];
-}
 ChildCareMixin.appliesTo = schema.ChildCare
-ChildCareMixin.Class = ChildCareImpl
 
-export const fromPointer = createFactory<ChildCare>([LocalBusinessMixin, ChildCareMixin], { types: [schema.ChildCare] });
+export const factory = (env: RdfineEnvironment) => createFactory<ChildCare>([LocalBusinessMixin, ChildCareMixin], { types: [schema.ChildCare] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { FinancialServiceMixin } from './FinancialService.js';
 
@@ -17,16 +17,6 @@ export function InsuranceAgencyMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return InsuranceAgencyClass as any
 }
-
-class InsuranceAgencyImpl extends InsuranceAgencyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<InsuranceAgency>) {
-    super(arg, init)
-    this.types.add(schema.InsuranceAgency)
-  }
-
-  static readonly __mixins: Mixin[] = [InsuranceAgencyMixin, FinancialServiceMixin];
-}
 InsuranceAgencyMixin.appliesTo = schema.InsuranceAgency
-InsuranceAgencyMixin.Class = InsuranceAgencyImpl
 
-export const fromPointer = createFactory<InsuranceAgency>([FinancialServiceMixin, InsuranceAgencyMixin], { types: [schema.InsuranceAgency] });
+export const factory = (env: RdfineEnvironment) => createFactory<InsuranceAgency>([FinancialServiceMixin, InsuranceAgencyMixin], { types: [schema.InsuranceAgency] }, env);

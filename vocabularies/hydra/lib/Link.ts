@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { hydra } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
@@ -28,16 +28,6 @@ export function LinkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return LinkClass as any
 }
-
-class LinkImpl extends LinkMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Link>) {
-    super(arg, init)
-    this.types.add(hydra.Link)
-  }
-
-  static readonly __mixins: Mixin[] = [LinkMixin, RdfPropertyMixin, ResourceMixin];
-}
 LinkMixin.appliesTo = hydra.Link
-LinkMixin.Class = LinkImpl
 
-export const fromPointer = createFactory<Link>([ResourceMixin, RdfPropertyMixin, LinkMixin], { types: [hydra.Link] });
+export const factory = (env: RdfineEnvironment) => createFactory<Link>([ResourceMixin, RdfPropertyMixin, LinkMixin], { types: [hydra.Link] }, env);

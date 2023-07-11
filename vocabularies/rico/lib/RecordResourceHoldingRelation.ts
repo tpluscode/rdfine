@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { ManagementRelationMixin } from './ManagementRelation.js';
 
@@ -23,16 +23,6 @@ export function RecordResourceHoldingRelationMixin<Base extends rdfine.Construct
   }
   return RecordResourceHoldingRelationClass as any
 }
-
-class RecordResourceHoldingRelationImpl extends RecordResourceHoldingRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RecordResourceHoldingRelation>) {
-    super(arg, init)
-    this.types.add(rico.RecordResourceHoldingRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [RecordResourceHoldingRelationMixin, ManagementRelationMixin];
-}
 RecordResourceHoldingRelationMixin.appliesTo = rico.RecordResourceHoldingRelation
-RecordResourceHoldingRelationMixin.Class = RecordResourceHoldingRelationImpl
 
-export const fromPointer = createFactory<RecordResourceHoldingRelation>([ManagementRelationMixin, RecordResourceHoldingRelationMixin], { types: [rico.RecordResourceHoldingRelation] });
+export const factory = (env: RdfineEnvironment) => createFactory<RecordResourceHoldingRelation>([ManagementRelationMixin, RecordResourceHoldingRelationMixin], { types: [rico.RecordResourceHoldingRelation] }, env);

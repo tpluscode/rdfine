@@ -1,7 +1,4 @@
-import TermMap from '@rdfjs/term-map'
 import type { BlankNode, DatasetCore, Literal, NamedNode, Term } from '@rdfjs/types'
-import $rdf from '@rdfjs/data-model'
-import TermSet from '@rdfjs/term-set'
 import { rdf, xsd } from '@tpluscode/rdf-ns-builders'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
 import { GraphPointer } from 'clownface'
@@ -83,7 +80,7 @@ function getObjectMap<D extends DatasetCore>(resource: RdfResource<D>) {
     }
     map.set(quad.predicate, quads)
     return map
-  }, new TermMap<Term, Array<GraphPointer<ResourceIdentifier | Literal>>>())
+  }, resource.env.termMap<Term, Array<GraphPointer<ResourceIdentifier | Literal>>>())
 }
 
 function alreadyMapped(parentContext: Record<string, unknown> | undefined, name: string, prop: NamedNode) {
@@ -190,7 +187,7 @@ function jsonifyProperties(params: ToJsonContext & JsonifyPropertiesContext) {
     }
 
     let propertyAddedToContext = false
-    const predicate = typeof path === 'string' ? $rdf.namedNode(path) : path
+    const predicate = typeof path === 'string' ? params.resource.env.namedNode(path) : path
     const terms = remainingObjects.get(predicate)
     if (!terms) {
       return { json, contextPopulated }
@@ -274,7 +271,7 @@ function jsonifyProperties(params: ToJsonContext & JsonifyPropertiesContext) {
   }
 }
 
-export function toJSON(resource: RdfResource<any> & ResourceIndexer, { parentContexts, visitedResources = new TermSet() }: ToJsonContext = {}) {
+export function toJSON(resource: RdfResource<any> & ResourceIndexer, { parentContexts, visitedResources = resource.env.termSet() }: ToJsonContext = {}) {
   const id = resource.id.termType === 'NamedNode' ? resource.id.value : `_:${resource.id.value}`
   const json: Record<string, any> = { id }
   const types = [...resource.types]

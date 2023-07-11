@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { PlaceOfWorshipMixin } from './PlaceOfWorship.js';
 
@@ -17,16 +17,6 @@ export function ChurchMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return ChurchClass as any
 }
-
-class ChurchImpl extends ChurchMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Church>) {
-    super(arg, init)
-    this.types.add(schema.Church)
-  }
-
-  static readonly __mixins: Mixin[] = [ChurchMixin, PlaceOfWorshipMixin];
-}
 ChurchMixin.appliesTo = schema.Church
-ChurchMixin.Class = ChurchImpl
 
-export const fromPointer = createFactory<Church>([PlaceOfWorshipMixin, ChurchMixin], { types: [schema.Church] });
+export const factory = (env: RdfineEnvironment) => createFactory<Church>([PlaceOfWorshipMixin, ChurchMixin], { types: [schema.Church] }, env);

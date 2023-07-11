@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 import { InfluenceMixin } from './Influence.js';
 
@@ -20,16 +20,6 @@ export function EntityInfluenceMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return EntityInfluenceClass as any
 }
-
-class EntityInfluenceImpl extends EntityInfluenceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EntityInfluence>) {
-    super(arg, init)
-    this.types.add(prov.EntityInfluence)
-  }
-
-  static readonly __mixins: Mixin[] = [EntityInfluenceMixin, InfluenceMixin];
-}
 EntityInfluenceMixin.appliesTo = prov.EntityInfluence
-EntityInfluenceMixin.Class = EntityInfluenceImpl
 
-export const fromPointer = createFactory<EntityInfluence>([InfluenceMixin, EntityInfluenceMixin], { types: [prov.EntityInfluence] });
+export const factory = (env: RdfineEnvironment) => createFactory<EntityInfluence>([InfluenceMixin, EntityInfluenceMixin], { types: [prov.EntityInfluence] }, env);

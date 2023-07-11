@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -20,16 +20,6 @@ export function DefinedTermSetMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return DefinedTermSetClass as any
 }
-
-class DefinedTermSetImpl extends DefinedTermSetMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DefinedTermSet>) {
-    super(arg, init)
-    this.types.add(schema.DefinedTermSet)
-  }
-
-  static readonly __mixins: Mixin[] = [DefinedTermSetMixin, CreativeWorkMixin];
-}
 DefinedTermSetMixin.appliesTo = schema.DefinedTermSet
-DefinedTermSetMixin.Class = DefinedTermSetImpl
 
-export const fromPointer = createFactory<DefinedTermSet>([CreativeWorkMixin, DefinedTermSetMixin], { types: [schema.DefinedTermSet] });
+export const factory = (env: RdfineEnvironment) => createFactory<DefinedTermSet>([CreativeWorkMixin, DefinedTermSetMixin], { types: [schema.DefinedTermSet] }, env);

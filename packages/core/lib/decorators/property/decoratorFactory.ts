@@ -1,7 +1,6 @@
 import type { Quad, Term } from '@rdfjs/types'
 import cf, { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import TermSet from '@rdfjs/term-set'
 import RdfResourceImpl, { RdfResourceCore } from '../../../RdfResource.js'
 import { ClassElement } from '../index.js'
 import { EdgeTraversal, toEdgeTraversals } from '../../path.js'
@@ -9,6 +8,7 @@ import { enumerateList, isList } from '../../rdf-list.js'
 import { onlyUnique } from '../../filter.js'
 import type { Factory } from '../../../factory.js'
 import { AccessorOptions } from './index.js'
+import {RdfineEnvironment} from '../../../environment';
 
 export type PropertyReturnKind = 'single' | 'array' | 'list'
 export type ArrayOrSingle<T> = T | T[]
@@ -29,12 +29,12 @@ function getObjects(subjects: GraphPointer[], path: EdgeTraversal[]): GraphPoint
   }, [] as GraphPointer[])
 }
 
-function getNodeFromEveryGraph(node: GraphPointer): GraphPointer[] {
+function getNodeFromEveryGraph(node: GraphPointer, env: RdfineEnvironment): GraphPointer[] {
   const graphs = node.datasets.reduce<Set<Quad['graph']>>((set, dataset) => {
     return [...dataset].reduce((set, quad) => {
       return set.add(quad.graph)
     }, set)
-  }, new TermSet())
+  }, env.termSet())
 
   const graphNodes = [...graphs.values()]
   if (!graphNodes.length) {
@@ -83,7 +83,7 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
 
   Object.defineProperty(proto, name, {
     get(this: T & RdfResourceImpl): unknown {
-      const rootNode = subjectFromAllGraphs ? getNodeFromEveryGraph(this.pointer) : [this.pointer]
+      const rootNode = subjectFromAllGraphs ? getNodeFromEveryGraph(this.pointer, this.env) : [this.pointer]
       const path = getPath()
       let nodes = getObjects(rootNode, path)
       const crossesBoundaries = path.some(edge => edge.crossesGraphBoundaries)

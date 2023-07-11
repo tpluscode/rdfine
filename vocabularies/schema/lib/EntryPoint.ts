@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -41,16 +41,6 @@ export function EntryPointMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return EntryPointClass as any
 }
-
-class EntryPointImpl extends EntryPointMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EntryPoint>) {
-    super(arg, init)
-    this.types.add(schema.EntryPoint)
-  }
-
-  static readonly __mixins: Mixin[] = [EntryPointMixin, IntangibleMixin];
-}
 EntryPointMixin.appliesTo = schema.EntryPoint
-EntryPointMixin.Class = EntryPointImpl
 
-export const fromPointer = createFactory<EntryPoint>([IntangibleMixin, EntryPointMixin], { types: [schema.EntryPoint] });
+export const factory = (env: RdfineEnvironment) => createFactory<EntryPoint>([IntangibleMixin, EntryPointMixin], { types: [schema.EntryPoint] }, env);

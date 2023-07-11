@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { hydra } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin } from './Resource.js';
@@ -36,16 +36,6 @@ export function ApiDocumentationMixin<Base extends rdfine.Constructor>(Resource:
   }
   return ApiDocumentationClass as any
 }
-
-class ApiDocumentationImpl extends ApiDocumentationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ApiDocumentation>) {
-    super(arg, init)
-    this.types.add(hydra.ApiDocumentation)
-  }
-
-  static readonly __mixins: Mixin[] = [ApiDocumentationMixin, ResourceMixin];
-}
 ApiDocumentationMixin.appliesTo = hydra.ApiDocumentation
-ApiDocumentationMixin.Class = ApiDocumentationImpl
 
-export const fromPointer = createFactory<ApiDocumentation>([ResourceMixin, ApiDocumentationMixin], { types: [hydra.ApiDocumentation] });
+export const factory = (env: RdfineEnvironment) => createFactory<ApiDocumentation>([ResourceMixin, ApiDocumentationMixin], { types: [hydra.ApiDocumentation] }, env);

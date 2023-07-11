@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ConsumeActionMixin } from './ConsumeAction.js';
 
@@ -17,16 +17,6 @@ export function EatActionMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return EatActionClass as any
 }
-
-class EatActionImpl extends EatActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EatAction>) {
-    super(arg, init)
-    this.types.add(schema.EatAction)
-  }
-
-  static readonly __mixins: Mixin[] = [EatActionMixin, ConsumeActionMixin];
-}
 EatActionMixin.appliesTo = schema.EatAction
-EatActionMixin.Class = EatActionImpl
 
-export const fromPointer = createFactory<EatAction>([ConsumeActionMixin, EatActionMixin], { types: [schema.EatAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<EatAction>([ConsumeActionMixin, EatActionMixin], { types: [schema.EatAction] }, env);

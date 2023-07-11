@@ -1,12 +1,12 @@
 import '../extensions/rdf/Property.js';
 import { PropertyMixinEx } from '../extensions/rdf/Property.js';
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { owl } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
@@ -27,16 +27,6 @@ export function ObjectPropertyMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return ObjectPropertyClass as any
 }
-
-class ObjectPropertyImpl extends ObjectPropertyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ObjectProperty>) {
-    super(arg, init)
-    this.types.add(owl.ObjectProperty)
-  }
-
-  static readonly __mixins: Mixin[] = [ObjectPropertyMixin, RdfPropertyMixin];
-}
 ObjectPropertyMixin.appliesTo = owl.ObjectProperty
-ObjectPropertyMixin.Class = ObjectPropertyImpl
 
-export const fromPointer = createFactory<ObjectProperty>([RdfPropertyMixin, ObjectPropertyMixin], { types: [owl.ObjectProperty] });
+export const factory = (env: RdfineEnvironment) => createFactory<ObjectProperty>([RdfPropertyMixin, ObjectPropertyMixin], { types: [owl.ObjectProperty] }, env);

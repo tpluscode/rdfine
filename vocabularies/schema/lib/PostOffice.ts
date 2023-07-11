@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { GovernmentOfficeMixin } from './GovernmentOffice.js';
 
@@ -17,16 +17,6 @@ export function PostOfficeMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return PostOfficeClass as any
 }
-
-class PostOfficeImpl extends PostOfficeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PostOffice>) {
-    super(arg, init)
-    this.types.add(schema.PostOffice)
-  }
-
-  static readonly __mixins: Mixin[] = [PostOfficeMixin, GovernmentOfficeMixin];
-}
 PostOfficeMixin.appliesTo = schema.PostOffice
-PostOfficeMixin.Class = PostOfficeImpl
 
-export const fromPointer = createFactory<PostOffice>([GovernmentOfficeMixin, PostOfficeMixin], { types: [schema.PostOffice] });
+export const factory = (env: RdfineEnvironment) => createFactory<PostOffice>([GovernmentOfficeMixin, PostOfficeMixin], { types: [schema.PostOffice] }, env);

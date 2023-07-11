@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CivicStructureMixin } from './CivicStructure.js';
 import { EmergencyServiceMixin } from './EmergencyService.js';
@@ -18,16 +18,6 @@ export function PoliceStationMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return PoliceStationClass as any
 }
-
-class PoliceStationImpl extends PoliceStationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PoliceStation>) {
-    super(arg, init)
-    this.types.add(schema.PoliceStation)
-  }
-
-  static readonly __mixins: Mixin[] = [PoliceStationMixin, CivicStructureMixin, EmergencyServiceMixin];
-}
 PoliceStationMixin.appliesTo = schema.PoliceStation
-PoliceStationMixin.Class = PoliceStationImpl
 
-export const fromPointer = createFactory<PoliceStation>([EmergencyServiceMixin, CivicStructureMixin, PoliceStationMixin], { types: [schema.PoliceStation] });
+export const factory = (env: RdfineEnvironment) => createFactory<PoliceStation>([EmergencyServiceMixin, CivicStructureMixin, PoliceStationMixin], { types: [schema.PoliceStation] }, env);

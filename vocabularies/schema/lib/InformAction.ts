@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CommunicateActionMixin } from './CommunicateAction.js';
 
@@ -20,16 +20,6 @@ export function InformActionMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return InformActionClass as any
 }
-
-class InformActionImpl extends InformActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<InformAction>) {
-    super(arg, init)
-    this.types.add(schema.InformAction)
-  }
-
-  static readonly __mixins: Mixin[] = [InformActionMixin, CommunicateActionMixin];
-}
 InformActionMixin.appliesTo = schema.InformAction
-InformActionMixin.Class = InformActionImpl
 
-export const fromPointer = createFactory<InformAction>([CommunicateActionMixin, InformActionMixin], { types: [schema.InformAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<InformAction>([CommunicateActionMixin, InformActionMixin], { types: [schema.InformAction] }, env);

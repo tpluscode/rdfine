@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '../index.js';
 import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable.js';
 
@@ -17,16 +17,6 @@ export function SPARQLConstraintMixin<Base extends rdfine.Constructor>(Resource:
   }
   return SPARQLConstraintClass as any
 }
-
-class SPARQLConstraintImpl extends SPARQLConstraintMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SPARQLConstraint>) {
-    super(arg, init)
-    this.types.add(sh.SPARQLConstraint)
-  }
-
-  static readonly __mixins: Mixin[] = [SPARQLConstraintMixin, SPARQLSelectExecutableMixin];
-}
 SPARQLConstraintMixin.appliesTo = sh.SPARQLConstraint
-SPARQLConstraintMixin.Class = SPARQLConstraintImpl
 
-export const fromPointer = createFactory<SPARQLConstraint>([SPARQLSelectExecutableMixin, SPARQLConstraintMixin], { types: [sh.SPARQLConstraint] });
+export const factory = (env: RdfineEnvironment) => createFactory<SPARQLConstraint>([SPARQLSelectExecutableMixin, SPARQLConstraintMixin], { types: [sh.SPARQLConstraint] }, env);

@@ -1,12 +1,12 @@
 import '../extensions/rdfs/Class.js';
 import { ClassMixinEx } from '../extensions/rdfs/Class.js';
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { hydra } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
@@ -29,16 +29,6 @@ export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return ClassClass as any
 }
-
-class ClassImpl extends ClassMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Class>) {
-    super(arg, init)
-    this.types.add(hydra.Class)
-  }
-
-  static readonly __mixins: Mixin[] = [ClassMixin, RdfsClassMixin];
-}
 ClassMixin.appliesTo = hydra.Class
-ClassMixin.Class = ClassImpl
 
-export const fromPointer = createFactory<Class>([RdfsClassMixin, ClassMixin], { types: [hydra.Class] });
+export const factory = (env: RdfineEnvironment) => createFactory<Class>([RdfsClassMixin, ClassMixin], { types: [hydra.Class] }, env);

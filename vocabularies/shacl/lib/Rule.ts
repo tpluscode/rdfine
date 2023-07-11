@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
@@ -21,16 +21,6 @@ export function RuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return RuleClass as any
 }
-
-class RuleImpl extends RuleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Rule>) {
-    super(arg, init)
-    this.types.add(sh.Rule)
-  }
-
-  static readonly __mixins: Mixin[] = [RuleMixin, RdfsResourceMixin];
-}
 RuleMixin.appliesTo = sh.Rule
-RuleMixin.Class = RuleImpl
 
-export const fromPointer = createFactory<Rule>([RdfsResourceMixin, RuleMixin], { types: [sh.Rule] });
+export const factory = (env: RdfineEnvironment) => createFactory<Rule>([RdfsResourceMixin, RuleMixin], { types: [sh.Rule] }, env);

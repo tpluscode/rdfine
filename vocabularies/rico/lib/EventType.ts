@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { TypeMixin } from './Type.js';
 
@@ -20,16 +20,6 @@ export function EventTypeMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return EventTypeClass as any
 }
-
-class EventTypeImpl extends EventTypeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EventType>) {
-    super(arg, init)
-    this.types.add(rico.EventType)
-  }
-
-  static readonly __mixins: Mixin[] = [EventTypeMixin, TypeMixin];
-}
 EventTypeMixin.appliesTo = rico.EventType
-EventTypeMixin.Class = EventTypeImpl
 
-export const fromPointer = createFactory<EventType>([TypeMixin, EventTypeMixin], { types: [rico.EventType] });
+export const factory = (env: RdfineEnvironment) => createFactory<EventType>([TypeMixin, EventTypeMixin], { types: [rico.EventType] }, env);

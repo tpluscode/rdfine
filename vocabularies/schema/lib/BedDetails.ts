@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -26,16 +26,6 @@ export function BedDetailsMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return BedDetailsClass as any
 }
-
-class BedDetailsImpl extends BedDetailsMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<BedDetails>) {
-    super(arg, init)
-    this.types.add(schema.BedDetails)
-  }
-
-  static readonly __mixins: Mixin[] = [BedDetailsMixin, IntangibleMixin];
-}
 BedDetailsMixin.appliesTo = schema.BedDetails
-BedDetailsMixin.Class = BedDetailsImpl
 
-export const fromPointer = createFactory<BedDetails>([IntangibleMixin, BedDetailsMixin], { types: [schema.BedDetails] });
+export const factory = (env: RdfineEnvironment) => createFactory<BedDetails>([IntangibleMixin, BedDetailsMixin], { types: [schema.BedDetails] }, env);

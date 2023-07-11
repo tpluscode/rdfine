@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CommunicateActionMixin } from './CommunicateAction.js';
 
@@ -20,16 +20,6 @@ export function ReplyActionMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return ReplyActionClass as any
 }
-
-class ReplyActionImpl extends ReplyActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ReplyAction>) {
-    super(arg, init)
-    this.types.add(schema.ReplyAction)
-  }
-
-  static readonly __mixins: Mixin[] = [ReplyActionMixin, CommunicateActionMixin];
-}
 ReplyActionMixin.appliesTo = schema.ReplyAction
-ReplyActionMixin.Class = ReplyActionImpl
 
-export const fromPointer = createFactory<ReplyAction>([CommunicateActionMixin, ReplyActionMixin], { types: [schema.ReplyAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<ReplyAction>([CommunicateActionMixin, ReplyActionMixin], { types: [schema.ReplyAction] }, env);

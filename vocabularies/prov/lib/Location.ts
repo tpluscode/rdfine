@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 
 export interface Location<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -16,16 +16,6 @@ export function LocationMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return LocationClass as any
 }
-
-class LocationImpl extends LocationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Location>) {
-    super(arg, init)
-    this.types.add(prov.Location)
-  }
-
-  static readonly __mixins: Mixin[] = [LocationMixin];
-}
 LocationMixin.appliesTo = prov.Location
-LocationMixin.Class = LocationImpl
 
-export const fromPointer = createFactory<Location>([LocationMixin], { types: [prov.Location] });
+export const factory = (env: RdfineEnvironment) => createFactory<Location>([LocationMixin], { types: [prov.Location] }, env);

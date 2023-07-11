@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CivicStructureMixin } from './CivicStructure.js';
 import { LodgingBusinessMixin } from './LodgingBusiness.js';
@@ -18,16 +18,6 @@ export function CampgroundMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return CampgroundClass as any
 }
-
-class CampgroundImpl extends CampgroundMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Campground>) {
-    super(arg, init)
-    this.types.add(schema.Campground)
-  }
-
-  static readonly __mixins: Mixin[] = [CampgroundMixin, CivicStructureMixin, LodgingBusinessMixin];
-}
 CampgroundMixin.appliesTo = schema.Campground
-CampgroundMixin.Class = CampgroundImpl
 
-export const fromPointer = createFactory<Campground>([LodgingBusinessMixin, CivicStructureMixin, CampgroundMixin], { types: [schema.Campground] });
+export const factory = (env: RdfineEnvironment) => createFactory<Campground>([LodgingBusinessMixin, CivicStructureMixin, CampgroundMixin], { types: [schema.Campground] }, env);

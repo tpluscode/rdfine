@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MediaObjectMixin } from './MediaObject.js';
 
@@ -23,16 +23,6 @@ export function DataDownloadMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return DataDownloadClass as any
 }
-
-class DataDownloadImpl extends DataDownloadMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DataDownload>) {
-    super(arg, init)
-    this.types.add(schema.DataDownload)
-  }
-
-  static readonly __mixins: Mixin[] = [DataDownloadMixin, MediaObjectMixin];
-}
 DataDownloadMixin.appliesTo = schema.DataDownload
-DataDownloadMixin.Class = DataDownloadImpl
 
-export const fromPointer = createFactory<DataDownload>([MediaObjectMixin, DataDownloadMixin], { types: [schema.DataDownload] });
+export const factory = (env: RdfineEnvironment) => createFactory<DataDownload>([MediaObjectMixin, DataDownloadMixin], { types: [schema.DataDownload] }, env);

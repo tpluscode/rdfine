@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LocalBusinessMixin } from './LocalBusiness.js';
 
@@ -17,16 +17,6 @@ export function HealthAndBeautyBusinessMixin<Base extends rdfine.Constructor>(Re
   }
   return HealthAndBeautyBusinessClass as any
 }
-
-class HealthAndBeautyBusinessImpl extends HealthAndBeautyBusinessMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<HealthAndBeautyBusiness>) {
-    super(arg, init)
-    this.types.add(schema.HealthAndBeautyBusiness)
-  }
-
-  static readonly __mixins: Mixin[] = [HealthAndBeautyBusinessMixin, LocalBusinessMixin];
-}
 HealthAndBeautyBusinessMixin.appliesTo = schema.HealthAndBeautyBusiness
-HealthAndBeautyBusinessMixin.Class = HealthAndBeautyBusinessImpl
 
-export const fromPointer = createFactory<HealthAndBeautyBusiness>([LocalBusinessMixin, HealthAndBeautyBusinessMixin], { types: [schema.HealthAndBeautyBusiness] });
+export const factory = (env: RdfineEnvironment) => createFactory<HealthAndBeautyBusiness>([LocalBusinessMixin, HealthAndBeautyBusinessMixin], { types: [schema.HealthAndBeautyBusiness] }, env);

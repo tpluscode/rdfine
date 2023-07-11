@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { AgentMixin } from './Agent.js';
 
@@ -53,16 +53,6 @@ export function PositionMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return PositionClass as any
 }
-
-class PositionImpl extends PositionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Position>) {
-    super(arg, init)
-    this.types.add(rico.Position)
-  }
-
-  static readonly __mixins: Mixin[] = [PositionMixin, AgentMixin];
-}
 PositionMixin.appliesTo = rico.Position
-PositionMixin.Class = PositionImpl
 
-export const fromPointer = createFactory<Position>([AgentMixin, PositionMixin], { types: [rico.Position] });
+export const factory = (env: RdfineEnvironment) => createFactory<Position>([AgentMixin, PositionMixin], { types: [rico.Position] }, env);

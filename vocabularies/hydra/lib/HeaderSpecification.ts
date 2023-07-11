@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { hydra } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '../index.js';
 import { ResourceMixin } from './Resource.js';
 
@@ -26,16 +26,6 @@ export function HeaderSpecificationMixin<Base extends rdfine.Constructor>(Resour
   }
   return HeaderSpecificationClass as any
 }
-
-class HeaderSpecificationImpl extends HeaderSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<HeaderSpecification>) {
-    super(arg, init)
-    this.types.add(hydra.HeaderSpecification)
-  }
-
-  static readonly __mixins: Mixin[] = [HeaderSpecificationMixin, ResourceMixin];
-}
 HeaderSpecificationMixin.appliesTo = hydra.HeaderSpecification
-HeaderSpecificationMixin.Class = HeaderSpecificationImpl
 
-export const fromPointer = createFactory<HeaderSpecification>([ResourceMixin, HeaderSpecificationMixin], { types: [hydra.HeaderSpecification] });
+export const factory = (env: RdfineEnvironment) => createFactory<HeaderSpecification>([ResourceMixin, HeaderSpecificationMixin], { types: [hydra.HeaderSpecification] }, env);

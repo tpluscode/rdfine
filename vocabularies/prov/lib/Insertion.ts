@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 import { DerivationMixin } from './Derivation.js';
 
@@ -23,16 +23,6 @@ export function InsertionMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return InsertionClass as any
 }
-
-class InsertionImpl extends InsertionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Insertion>) {
-    super(arg, init)
-    this.types.add(prov.Insertion)
-  }
-
-  static readonly __mixins: Mixin[] = [InsertionMixin, DerivationMixin];
-}
 InsertionMixin.appliesTo = prov.Insertion
-InsertionMixin.Class = InsertionImpl
 
-export const fromPointer = createFactory<Insertion>([DerivationMixin, InsertionMixin], { types: [prov.Insertion] });
+export const factory = (env: RdfineEnvironment) => createFactory<Insertion>([DerivationMixin, InsertionMixin], { types: [prov.Insertion] }, env);

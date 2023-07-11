@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AutomotiveBusinessMixin } from './AutomotiveBusiness.js';
 
@@ -17,16 +17,6 @@ export function AutoBodyShopMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return AutoBodyShopClass as any
 }
-
-class AutoBodyShopImpl extends AutoBodyShopMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AutoBodyShop>) {
-    super(arg, init)
-    this.types.add(schema.AutoBodyShop)
-  }
-
-  static readonly __mixins: Mixin[] = [AutoBodyShopMixin, AutomotiveBusinessMixin];
-}
 AutoBodyShopMixin.appliesTo = schema.AutoBodyShop
-AutoBodyShopMixin.Class = AutoBodyShopImpl
 
-export const fromPointer = createFactory<AutoBodyShop>([AutomotiveBusinessMixin, AutoBodyShopMixin], { types: [schema.AutoBodyShop] });
+export const factory = (env: RdfineEnvironment) => createFactory<AutoBodyShop>([AutomotiveBusinessMixin, AutoBodyShopMixin], { types: [schema.AutoBodyShop] }, env);

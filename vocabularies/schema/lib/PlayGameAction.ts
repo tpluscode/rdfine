@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ConsumeActionMixin } from './ConsumeAction.js';
 
@@ -23,16 +23,6 @@ export function PlayGameActionMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return PlayGameActionClass as any
 }
-
-class PlayGameActionImpl extends PlayGameActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PlayGameAction>) {
-    super(arg, init)
-    this.types.add(schema.PlayGameAction)
-  }
-
-  static readonly __mixins: Mixin[] = [PlayGameActionMixin, ConsumeActionMixin];
-}
 PlayGameActionMixin.appliesTo = schema.PlayGameAction
-PlayGameActionMixin.Class = PlayGameActionImpl
 
-export const fromPointer = createFactory<PlayGameAction>([ConsumeActionMixin, PlayGameActionMixin], { types: [schema.PlayGameAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<PlayGameAction>([ConsumeActionMixin, PlayGameActionMixin], { types: [schema.PlayGameAction] }, env);

@@ -6,11 +6,12 @@ import type { NamespaceBuilder } from '@rdfjs/namespace'
 import type { Initializer, RdfResource, RdfResourceCore, ResourceNode } from '../RdfResource.js'
 import { createProxy } from './proxy.js'
 import type { PropertyMeta } from './decorators/property/index.js'
+import {RdfineEnvironment} from '../environment';
 
 export type AnyFunction<A = any> = (...input: any[]) => A
 export interface Constructor<A extends RdfResourceCore<any> = RdfResourceCore> {
   new (...input: any[]): A
-  factory: ResourceFactory
+  env: RdfineEnvironment
   __mixins: Mixin[]
   __properties: Map<string, PropertyMeta>
   __initializers: Map<string, unknown>
@@ -105,7 +106,6 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     }, new Set(explicitMixins))
 
     const Type = this.__extend(BaseClass, [...mixins])
-    Type.factory = this
 
     return createProxy(new Type(pointer, options.initializer, options.parent)) as R & S & ResourceIndexer<R>
   }

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -62,16 +62,6 @@ export function BioChemEntityMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return BioChemEntityClass as any
 }
-
-class BioChemEntityImpl extends BioChemEntityMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<BioChemEntity>) {
-    super(arg, init)
-    this.types.add(schema.BioChemEntity)
-  }
-
-  static readonly __mixins: Mixin[] = [BioChemEntityMixin, ThingMixin];
-}
 BioChemEntityMixin.appliesTo = schema.BioChemEntity
-BioChemEntityMixin.Class = BioChemEntityImpl
 
-export const fromPointer = createFactory<BioChemEntity>([ThingMixin, BioChemEntityMixin], { types: [schema.BioChemEntity] });
+export const factory = (env: RdfineEnvironment) => createFactory<BioChemEntity>([ThingMixin, BioChemEntityMixin], { types: [schema.BioChemEntity] }, env);

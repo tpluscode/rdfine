@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
@@ -19,16 +19,6 @@ export function TargetTypeMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return TargetTypeClass as any
 }
-
-class TargetTypeImpl extends TargetTypeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TargetType>) {
-    super(arg, init)
-    this.types.add(sh.TargetType)
-  }
-
-  static readonly __mixins: Mixin[] = [TargetTypeMixin, RdfsClassMixin, ParameterizableMixin];
-}
 TargetTypeMixin.appliesTo = sh.TargetType
-TargetTypeMixin.Class = TargetTypeImpl
 
-export const fromPointer = createFactory<TargetType>([ParameterizableMixin, RdfsClassMixin, TargetTypeMixin], { types: [sh.TargetType] });
+export const factory = (env: RdfineEnvironment) => createFactory<TargetType>([ParameterizableMixin, RdfsClassMixin, TargetTypeMixin], { types: [sh.TargetType] }, env);

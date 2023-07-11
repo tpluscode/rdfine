@@ -1,12 +1,12 @@
 import '../extensions/rdf/Property.js';
 import { PropertyMixinEx } from '../extensions/rdf/Property.js';
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { owl } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
@@ -20,16 +20,6 @@ export function OntologyPropertyMixin<Base extends rdfine.Constructor>(Resource:
   }
   return OntologyPropertyClass as any
 }
-
-class OntologyPropertyImpl extends OntologyPropertyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<OntologyProperty>) {
-    super(arg, init)
-    this.types.add(owl.OntologyProperty)
-  }
-
-  static readonly __mixins: Mixin[] = [OntologyPropertyMixin, RdfPropertyMixin];
-}
 OntologyPropertyMixin.appliesTo = owl.OntologyProperty
-OntologyPropertyMixin.Class = OntologyPropertyImpl
 
-export const fromPointer = createFactory<OntologyProperty>([RdfPropertyMixin, OntologyPropertyMixin], { types: [owl.OntologyProperty] });
+export const factory = (env: RdfineEnvironment) => createFactory<OntologyProperty>([RdfPropertyMixin, OntologyPropertyMixin], { types: [owl.OntologyProperty] }, env);

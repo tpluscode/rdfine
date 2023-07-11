@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -29,16 +29,6 @@ export function MerchantReturnPolicySeasonalOverrideMixin<Base extends rdfine.Co
   }
   return MerchantReturnPolicySeasonalOverrideClass as any
 }
-
-class MerchantReturnPolicySeasonalOverrideImpl extends MerchantReturnPolicySeasonalOverrideMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MerchantReturnPolicySeasonalOverride>) {
-    super(arg, init)
-    this.types.add(schema.MerchantReturnPolicySeasonalOverride)
-  }
-
-  static readonly __mixins: Mixin[] = [MerchantReturnPolicySeasonalOverrideMixin, IntangibleMixin];
-}
 MerchantReturnPolicySeasonalOverrideMixin.appliesTo = schema.MerchantReturnPolicySeasonalOverride
-MerchantReturnPolicySeasonalOverrideMixin.Class = MerchantReturnPolicySeasonalOverrideImpl
 
-export const fromPointer = createFactory<MerchantReturnPolicySeasonalOverride>([IntangibleMixin, MerchantReturnPolicySeasonalOverrideMixin], { types: [schema.MerchantReturnPolicySeasonalOverride] });
+export const factory = (env: RdfineEnvironment) => createFactory<MerchantReturnPolicySeasonalOverride>([IntangibleMixin, MerchantReturnPolicySeasonalOverrideMixin], { types: [schema.MerchantReturnPolicySeasonalOverride] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { VehicleMixin } from './Vehicle.js';
 
@@ -23,16 +23,6 @@ export function CarMixin<Base extends rdfine.Constructor>(Resource: Base): rdfin
   }
   return CarClass as any
 }
-
-class CarImpl extends CarMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Car>) {
-    super(arg, init)
-    this.types.add(schema.Car)
-  }
-
-  static readonly __mixins: Mixin[] = [CarMixin, VehicleMixin];
-}
 CarMixin.appliesTo = schema.Car
-CarMixin.Class = CarImpl
 
-export const fromPointer = createFactory<Car>([VehicleMixin, CarMixin], { types: [schema.Car] });
+export const factory = (env: RdfineEnvironment) => createFactory<Car>([VehicleMixin, CarMixin], { types: [schema.Car] }, env);

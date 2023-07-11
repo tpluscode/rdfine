@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LodgingBusinessMixin } from './LodgingBusiness.js';
 
@@ -17,16 +17,6 @@ export function HotelMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return HotelClass as any
 }
-
-class HotelImpl extends HotelMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Hotel>) {
-    super(arg, init)
-    this.types.add(schema.Hotel)
-  }
-
-  static readonly __mixins: Mixin[] = [HotelMixin, LodgingBusinessMixin];
-}
 HotelMixin.appliesTo = schema.Hotel
-HotelMixin.Class = HotelImpl
 
-export const fromPointer = createFactory<Hotel>([LodgingBusinessMixin, HotelMixin], { types: [schema.Hotel] });
+export const factory = (env: RdfineEnvironment) => createFactory<Hotel>([LodgingBusinessMixin, HotelMixin], { types: [schema.Hotel] }, env);

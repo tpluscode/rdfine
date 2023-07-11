@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { dash } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Dash from '../index.js';
 import type * as Shacl from '@rdfine/shacl';
 import { SPARQLSelectExecutableMixin as ShaclSPARQLSelectExecutableMixin } from '@rdfine/shacl/lib/SPARQLSelectExecutable';
@@ -19,16 +19,6 @@ export function QueryTestCaseMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return QueryTestCaseClass as any
 }
-
-class QueryTestCaseImpl extends QueryTestCaseMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<QueryTestCase>) {
-    super(arg, init)
-    this.types.add(dash.QueryTestCase)
-  }
-
-  static readonly __mixins: Mixin[] = [QueryTestCaseMixin, ShaclSPARQLSelectExecutableMixin, TestCaseMixin];
-}
 QueryTestCaseMixin.appliesTo = dash.QueryTestCase
-QueryTestCaseMixin.Class = QueryTestCaseImpl
 
-export const fromPointer = createFactory<QueryTestCase>([TestCaseMixin, ShaclSPARQLSelectExecutableMixin, QueryTestCaseMixin], { types: [dash.QueryTestCase] });
+export const factory = (env: RdfineEnvironment) => createFactory<QueryTestCase>([TestCaseMixin, ShaclSPARQLSelectExecutableMixin, QueryTestCaseMixin], { types: [dash.QueryTestCase] }, env);

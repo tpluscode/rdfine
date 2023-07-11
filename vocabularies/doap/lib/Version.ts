@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { doap } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Doap from '../index.js';
 
 export interface Version<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -28,16 +28,6 @@ export function VersionMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return VersionClass as any
 }
-
-class VersionImpl extends VersionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Version>) {
-    super(arg, init)
-    this.types.add(doap.Version)
-  }
-
-  static readonly __mixins: Mixin[] = [VersionMixin];
-}
 VersionMixin.appliesTo = doap.Version
-VersionMixin.Class = VersionImpl
 
-export const fromPointer = createFactory<Version>([VersionMixin], { types: [doap.Version] });
+export const factory = (env: RdfineEnvironment) => createFactory<Version>([VersionMixin], { types: [doap.Version] }, env);

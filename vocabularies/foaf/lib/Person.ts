@@ -1,12 +1,12 @@
 import '../extensions/wgs/SpatialThing.js';
 import { SpatialThingMixinEx } from '../extensions/wgs/SpatialThing.js';
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { foaf } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Foaf from '../index.js';
 import type * as Wgs from '@rdfine/wgs';
 import { AgentMixin } from './Agent.js';
@@ -69,16 +69,6 @@ export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return PersonClass as any
 }
-
-class PersonImpl extends PersonMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Person>) {
-    super(arg, init)
-    this.types.add(foaf.Person)
-  }
-
-  static readonly __mixins: Mixin[] = [PersonMixin, AgentMixin, WgsSpatialThingMixin];
-}
 PersonMixin.appliesTo = foaf.Person
-PersonMixin.Class = PersonImpl
 
-export const fromPointer = createFactory<Person>([WgsSpatialThingMixin, AgentMixin, PersonMixin], { types: [foaf.Person] });
+export const factory = (env: RdfineEnvironment) => createFactory<Person>([WgsSpatialThingMixin, AgentMixin, PersonMixin], { types: [foaf.Person] }, env);

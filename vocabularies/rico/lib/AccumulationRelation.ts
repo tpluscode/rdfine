@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { AgentOriginationRelationMixin } from './AgentOriginationRelation.js';
 
@@ -23,16 +23,6 @@ export function AccumulationRelationMixin<Base extends rdfine.Constructor>(Resou
   }
   return AccumulationRelationClass as any
 }
-
-class AccumulationRelationImpl extends AccumulationRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AccumulationRelation>) {
-    super(arg, init)
-    this.types.add(rico.AccumulationRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [AccumulationRelationMixin, AgentOriginationRelationMixin];
-}
 AccumulationRelationMixin.appliesTo = rico.AccumulationRelation
-AccumulationRelationMixin.Class = AccumulationRelationImpl
 
-export const fromPointer = createFactory<AccumulationRelation>([AgentOriginationRelationMixin, AccumulationRelationMixin], { types: [rico.AccumulationRelation] });
+export const factory = (env: RdfineEnvironment) => createFactory<AccumulationRelation>([AgentOriginationRelationMixin, AccumulationRelationMixin], { types: [rico.AccumulationRelation] }, env);

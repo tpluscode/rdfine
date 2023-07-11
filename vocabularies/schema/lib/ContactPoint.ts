@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -56,16 +56,6 @@ export function ContactPointMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return ContactPointClass as any
 }
-
-class ContactPointImpl extends ContactPointMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ContactPoint>) {
-    super(arg, init)
-    this.types.add(schema.ContactPoint)
-  }
-
-  static readonly __mixins: Mixin[] = [ContactPointMixin, StructuredValueMixin];
-}
 ContactPointMixin.appliesTo = schema.ContactPoint
-ContactPointMixin.Class = ContactPointImpl
 
-export const fromPointer = createFactory<ContactPoint>([StructuredValueMixin, ContactPointMixin], { types: [schema.ContactPoint] });
+export const factory = (env: RdfineEnvironment) => createFactory<ContactPoint>([StructuredValueMixin, ContactPointMixin], { types: [schema.ContactPoint] }, env);

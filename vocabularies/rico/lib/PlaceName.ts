@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { NameMixin } from './Name.js';
 
@@ -20,16 +20,6 @@ export function PlaceNameMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return PlaceNameClass as any
 }
-
-class PlaceNameImpl extends PlaceNameMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PlaceName>) {
-    super(arg, init)
-    this.types.add(rico.PlaceName)
-  }
-
-  static readonly __mixins: Mixin[] = [PlaceNameMixin, NameMixin];
-}
 PlaceNameMixin.appliesTo = rico.PlaceName
-PlaceNameMixin.Class = PlaceNameImpl
 
-export const fromPointer = createFactory<PlaceName>([NameMixin, PlaceNameMixin], { types: [rico.PlaceName] });
+export const factory = (env: RdfineEnvironment) => createFactory<PlaceName>([NameMixin, PlaceNameMixin], { types: [rico.PlaceName] }, env);

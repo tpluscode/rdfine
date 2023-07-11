@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 import { EntityInfluenceMixin } from './EntityInfluence.js';
 import { InstantaneousEventMixin } from './InstantaneousEvent.js';
@@ -21,16 +21,6 @@ export function EndMixin<Base extends rdfine.Constructor>(Resource: Base): rdfin
   }
   return EndClass as any
 }
-
-class EndImpl extends EndMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<End>) {
-    super(arg, init)
-    this.types.add(prov.End)
-  }
-
-  static readonly __mixins: Mixin[] = [EndMixin, EntityInfluenceMixin, InstantaneousEventMixin];
-}
 EndMixin.appliesTo = prov.End
-EndMixin.Class = EndImpl
 
-export const fromPointer = createFactory<End>([InstantaneousEventMixin, EntityInfluenceMixin, EndMixin], { types: [prov.End] });
+export const factory = (env: RdfineEnvironment) => createFactory<End>([InstantaneousEventMixin, EntityInfluenceMixin, EndMixin], { types: [prov.End] }, env);

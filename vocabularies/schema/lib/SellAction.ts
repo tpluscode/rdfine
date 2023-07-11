@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { TradeActionMixin } from './TradeAction.js';
 
@@ -23,16 +23,6 @@ export function SellActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return SellActionClass as any
 }
-
-class SellActionImpl extends SellActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SellAction>) {
-    super(arg, init)
-    this.types.add(schema.SellAction)
-  }
-
-  static readonly __mixins: Mixin[] = [SellActionMixin, TradeActionMixin];
-}
 SellActionMixin.appliesTo = schema.SellAction
-SellActionMixin.Class = SellActionImpl
 
-export const fromPointer = createFactory<SellAction>([TradeActionMixin, SellActionMixin], { types: [schema.SellAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<SellAction>([TradeActionMixin, SellActionMixin], { types: [schema.SellAction] }, env);

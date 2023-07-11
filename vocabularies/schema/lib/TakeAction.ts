@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { TransferActionMixin } from './TransferAction.js';
 
@@ -17,16 +17,6 @@ export function TakeActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return TakeActionClass as any
 }
-
-class TakeActionImpl extends TakeActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TakeAction>) {
-    super(arg, init)
-    this.types.add(schema.TakeAction)
-  }
-
-  static readonly __mixins: Mixin[] = [TakeActionMixin, TransferActionMixin];
-}
 TakeActionMixin.appliesTo = schema.TakeAction
-TakeActionMixin.Class = TakeActionImpl
 
-export const fromPointer = createFactory<TakeAction>([TransferActionMixin, TakeActionMixin], { types: [schema.TakeAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<TakeAction>([TransferActionMixin, TakeActionMixin], { types: [schema.TakeAction] }, env);

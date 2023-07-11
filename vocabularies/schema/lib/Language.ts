@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -17,16 +17,6 @@ export function LanguageMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return LanguageClass as any
 }
-
-class LanguageImpl extends LanguageMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Language>) {
-    super(arg, init)
-    this.types.add(schema.Language)
-  }
-
-  static readonly __mixins: Mixin[] = [LanguageMixin, IntangibleMixin];
-}
 LanguageMixin.appliesTo = schema.Language
-LanguageMixin.Class = LanguageImpl
 
-export const fromPointer = createFactory<Language>([IntangibleMixin, LanguageMixin], { types: [schema.Language] });
+export const factory = (env: RdfineEnvironment) => createFactory<Language>([IntangibleMixin, LanguageMixin], { types: [schema.Language] }, env);

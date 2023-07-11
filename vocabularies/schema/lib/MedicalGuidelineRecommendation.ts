@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalGuidelineMixin } from './MedicalGuideline.js';
 
@@ -20,16 +20,6 @@ export function MedicalGuidelineRecommendationMixin<Base extends rdfine.Construc
   }
   return MedicalGuidelineRecommendationClass as any
 }
-
-class MedicalGuidelineRecommendationImpl extends MedicalGuidelineRecommendationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MedicalGuidelineRecommendation>) {
-    super(arg, init)
-    this.types.add(schema.MedicalGuidelineRecommendation)
-  }
-
-  static readonly __mixins: Mixin[] = [MedicalGuidelineRecommendationMixin, MedicalGuidelineMixin];
-}
 MedicalGuidelineRecommendationMixin.appliesTo = schema.MedicalGuidelineRecommendation
-MedicalGuidelineRecommendationMixin.Class = MedicalGuidelineRecommendationImpl
 
-export const fromPointer = createFactory<MedicalGuidelineRecommendation>([MedicalGuidelineMixin, MedicalGuidelineRecommendationMixin], { types: [schema.MedicalGuidelineRecommendation] });
+export const factory = (env: RdfineEnvironment) => createFactory<MedicalGuidelineRecommendation>([MedicalGuidelineMixin, MedicalGuidelineRecommendationMixin], { types: [schema.MedicalGuidelineRecommendation] }, env);

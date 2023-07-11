@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { DigitalDocumentMixin } from './DigitalDocument.js';
 
@@ -17,16 +17,6 @@ export function NoteDigitalDocumentMixin<Base extends rdfine.Constructor>(Resour
   }
   return NoteDigitalDocumentClass as any
 }
-
-class NoteDigitalDocumentImpl extends NoteDigitalDocumentMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<NoteDigitalDocument>) {
-    super(arg, init)
-    this.types.add(schema.NoteDigitalDocument)
-  }
-
-  static readonly __mixins: Mixin[] = [NoteDigitalDocumentMixin, DigitalDocumentMixin];
-}
 NoteDigitalDocumentMixin.appliesTo = schema.NoteDigitalDocument
-NoteDigitalDocumentMixin.Class = NoteDigitalDocumentImpl
 
-export const fromPointer = createFactory<NoteDigitalDocument>([DigitalDocumentMixin, NoteDigitalDocumentMixin], { types: [schema.NoteDigitalDocument] });
+export const factory = (env: RdfineEnvironment) => createFactory<NoteDigitalDocument>([DigitalDocumentMixin, NoteDigitalDocumentMixin], { types: [schema.NoteDigitalDocument] }, env);

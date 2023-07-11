@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { foaf } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Foaf from '../index.js';
 
 export interface LabelProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -16,16 +16,6 @@ export function LabelPropertyMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return LabelPropertyClass as any
 }
-
-class LabelPropertyImpl extends LabelPropertyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<LabelProperty>) {
-    super(arg, init)
-    this.types.add(foaf.LabelProperty)
-  }
-
-  static readonly __mixins: Mixin[] = [LabelPropertyMixin];
-}
 LabelPropertyMixin.appliesTo = foaf.LabelProperty
-LabelPropertyMixin.Class = LabelPropertyImpl
 
-export const fromPointer = createFactory<LabelProperty>([LabelPropertyMixin], { types: [foaf.LabelProperty] });
+export const factory = (env: RdfineEnvironment) => createFactory<LabelProperty>([LabelPropertyMixin], { types: [foaf.LabelProperty] }, env);

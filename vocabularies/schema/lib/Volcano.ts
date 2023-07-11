@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LandformMixin } from './Landform.js';
 
@@ -17,16 +17,6 @@ export function VolcanoMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return VolcanoClass as any
 }
-
-class VolcanoImpl extends VolcanoMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Volcano>) {
-    super(arg, init)
-    this.types.add(schema.Volcano)
-  }
-
-  static readonly __mixins: Mixin[] = [VolcanoMixin, LandformMixin];
-}
 VolcanoMixin.appliesTo = schema.Volcano
-VolcanoMixin.Class = VolcanoImpl
 
-export const fromPointer = createFactory<Volcano>([LandformMixin, VolcanoMixin], { types: [schema.Volcano] });
+export const factory = (env: RdfineEnvironment) => createFactory<Volcano>([LandformMixin, VolcanoMixin], { types: [schema.Volcano] }, env);

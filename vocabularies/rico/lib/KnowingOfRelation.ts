@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { AgentToAgentRelationMixin } from './AgentToAgentRelation.js';
 
@@ -23,16 +23,6 @@ export function KnowingOfRelationMixin<Base extends rdfine.Constructor>(Resource
   }
   return KnowingOfRelationClass as any
 }
-
-class KnowingOfRelationImpl extends KnowingOfRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<KnowingOfRelation>) {
-    super(arg, init)
-    this.types.add(rico.KnowingOfRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [KnowingOfRelationMixin, AgentToAgentRelationMixin];
-}
 KnowingOfRelationMixin.appliesTo = rico.KnowingOfRelation
-KnowingOfRelationMixin.Class = KnowingOfRelationImpl
 
-export const fromPointer = createFactory<KnowingOfRelation>([AgentToAgentRelationMixin, KnowingOfRelationMixin], { types: [rico.KnowingOfRelation] });
+export const factory = (env: RdfineEnvironment) => createFactory<KnowingOfRelation>([AgentToAgentRelationMixin, KnowingOfRelationMixin], { types: [rico.KnowingOfRelation] }, env);

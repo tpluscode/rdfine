@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -23,16 +23,6 @@ export function WarrantyPromiseMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return WarrantyPromiseClass as any
 }
-
-class WarrantyPromiseImpl extends WarrantyPromiseMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<WarrantyPromise>) {
-    super(arg, init)
-    this.types.add(schema.WarrantyPromise)
-  }
-
-  static readonly __mixins: Mixin[] = [WarrantyPromiseMixin, StructuredValueMixin];
-}
 WarrantyPromiseMixin.appliesTo = schema.WarrantyPromise
-WarrantyPromiseMixin.Class = WarrantyPromiseImpl
 
-export const fromPointer = createFactory<WarrantyPromise>([StructuredValueMixin, WarrantyPromiseMixin], { types: [schema.WarrantyPromise] });
+export const factory = (env: RdfineEnvironment) => createFactory<WarrantyPromise>([StructuredValueMixin, WarrantyPromiseMixin], { types: [schema.WarrantyPromise] }, env);

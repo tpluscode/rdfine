@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AllocateActionMixin } from './AllocateAction.js';
 
@@ -17,16 +17,6 @@ export function RejectActionMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return RejectActionClass as any
 }
-
-class RejectActionImpl extends RejectActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RejectAction>) {
-    super(arg, init)
-    this.types.add(schema.RejectAction)
-  }
-
-  static readonly __mixins: Mixin[] = [RejectActionMixin, AllocateActionMixin];
-}
 RejectActionMixin.appliesTo = schema.RejectAction
-RejectActionMixin.Class = RejectActionImpl
 
-export const fromPointer = createFactory<RejectAction>([AllocateActionMixin, RejectActionMixin], { types: [schema.RejectAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<RejectAction>([AllocateActionMixin, RejectActionMixin], { types: [schema.RejectAction] }, env);

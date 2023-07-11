@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { AgentToAgentRelationMixin } from './AgentToAgentRelation.js';
 
@@ -23,16 +23,6 @@ export function AgentHierarchicalRelationMixin<Base extends rdfine.Constructor>(
   }
   return AgentHierarchicalRelationClass as any
 }
-
-class AgentHierarchicalRelationImpl extends AgentHierarchicalRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AgentHierarchicalRelation>) {
-    super(arg, init)
-    this.types.add(rico.AgentHierarchicalRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [AgentHierarchicalRelationMixin, AgentToAgentRelationMixin];
-}
 AgentHierarchicalRelationMixin.appliesTo = rico.AgentHierarchicalRelation
-AgentHierarchicalRelationMixin.Class = AgentHierarchicalRelationImpl
 
-export const fromPointer = createFactory<AgentHierarchicalRelation>([AgentToAgentRelationMixin, AgentHierarchicalRelationMixin], { types: [rico.AgentHierarchicalRelation] });
+export const factory = (env: RdfineEnvironment) => createFactory<AgentHierarchicalRelation>([AgentToAgentRelationMixin, AgentHierarchicalRelationMixin], { types: [rico.AgentHierarchicalRelation] }, env);

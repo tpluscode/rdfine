@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 
 export interface Dictionary<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -31,16 +31,6 @@ export function DictionaryMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return DictionaryClass as any
 }
-
-class DictionaryImpl extends DictionaryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Dictionary>) {
-    super(arg, init)
-    this.types.add(prov.Dictionary)
-  }
-
-  static readonly __mixins: Mixin[] = [DictionaryMixin];
-}
 DictionaryMixin.appliesTo = prov.Dictionary
-DictionaryMixin.Class = DictionaryImpl
 
-export const fromPointer = createFactory<Dictionary>([DictionaryMixin], { types: [prov.Dictionary] });
+export const factory = (env: RdfineEnvironment) => createFactory<Dictionary>([DictionaryMixin], { types: [prov.Dictionary] }, env);

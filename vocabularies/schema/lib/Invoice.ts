@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -71,16 +71,6 @@ export function InvoiceMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return InvoiceClass as any
 }
-
-class InvoiceImpl extends InvoiceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Invoice>) {
-    super(arg, init)
-    this.types.add(schema.Invoice)
-  }
-
-  static readonly __mixins: Mixin[] = [InvoiceMixin, IntangibleMixin];
-}
 InvoiceMixin.appliesTo = schema.Invoice
-InvoiceMixin.Class = InvoiceImpl
 
-export const fromPointer = createFactory<Invoice>([IntangibleMixin, InvoiceMixin], { types: [schema.Invoice] });
+export const factory = (env: RdfineEnvironment) => createFactory<Invoice>([IntangibleMixin, InvoiceMixin], { types: [schema.Invoice] }, env);

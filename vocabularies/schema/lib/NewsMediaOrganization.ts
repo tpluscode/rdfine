@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { OrganizationMixin } from './Organization.js';
 
@@ -53,16 +53,6 @@ export function NewsMediaOrganizationMixin<Base extends rdfine.Constructor>(Reso
   }
   return NewsMediaOrganizationClass as any
 }
-
-class NewsMediaOrganizationImpl extends NewsMediaOrganizationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<NewsMediaOrganization>) {
-    super(arg, init)
-    this.types.add(schema.NewsMediaOrganization)
-  }
-
-  static readonly __mixins: Mixin[] = [NewsMediaOrganizationMixin, OrganizationMixin];
-}
 NewsMediaOrganizationMixin.appliesTo = schema.NewsMediaOrganization
-NewsMediaOrganizationMixin.Class = NewsMediaOrganizationImpl
 
-export const fromPointer = createFactory<NewsMediaOrganization>([OrganizationMixin, NewsMediaOrganizationMixin], { types: [schema.NewsMediaOrganization] });
+export const factory = (env: RdfineEnvironment) => createFactory<NewsMediaOrganization>([OrganizationMixin, NewsMediaOrganizationMixin], { types: [schema.NewsMediaOrganization] }, env);

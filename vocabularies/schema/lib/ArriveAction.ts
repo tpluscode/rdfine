@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MoveActionMixin } from './MoveAction.js';
 
@@ -17,16 +17,6 @@ export function ArriveActionMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return ArriveActionClass as any
 }
-
-class ArriveActionImpl extends ArriveActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ArriveAction>) {
-    super(arg, init)
-    this.types.add(schema.ArriveAction)
-  }
-
-  static readonly __mixins: Mixin[] = [ArriveActionMixin, MoveActionMixin];
-}
 ArriveActionMixin.appliesTo = schema.ArriveAction
-ArriveActionMixin.Class = ArriveActionImpl
 
-export const fromPointer = createFactory<ArriveAction>([MoveActionMixin, ArriveActionMixin], { types: [schema.ArriveAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<ArriveAction>([MoveActionMixin, ArriveActionMixin], { types: [schema.ArriveAction] }, env);

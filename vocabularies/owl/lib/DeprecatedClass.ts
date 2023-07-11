@@ -1,12 +1,12 @@
 import '../extensions/rdfs/Class.js';
 import { ClassMixinEx } from '../extensions/rdfs/Class.js';
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { owl } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
@@ -20,16 +20,6 @@ export function DeprecatedClassMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return DeprecatedClassClass as any
 }
-
-class DeprecatedClassImpl extends DeprecatedClassMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DeprecatedClass>) {
-    super(arg, init)
-    this.types.add(owl.DeprecatedClass)
-  }
-
-  static readonly __mixins: Mixin[] = [DeprecatedClassMixin, RdfsClassMixin];
-}
 DeprecatedClassMixin.appliesTo = owl.DeprecatedClass
-DeprecatedClassMixin.Class = DeprecatedClassImpl
 
-export const fromPointer = createFactory<DeprecatedClass>([RdfsClassMixin, DeprecatedClassMixin], { types: [owl.DeprecatedClass] });
+export const factory = (env: RdfineEnvironment) => createFactory<DeprecatedClass>([RdfsClassMixin, DeprecatedClassMixin], { types: [owl.DeprecatedClass] }, env);

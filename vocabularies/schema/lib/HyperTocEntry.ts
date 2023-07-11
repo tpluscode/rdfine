@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -26,16 +26,6 @@ export function HyperTocEntryMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return HyperTocEntryClass as any
 }
-
-class HyperTocEntryImpl extends HyperTocEntryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<HyperTocEntry>) {
-    super(arg, init)
-    this.types.add(schema.HyperTocEntry)
-  }
-
-  static readonly __mixins: Mixin[] = [HyperTocEntryMixin, CreativeWorkMixin];
-}
 HyperTocEntryMixin.appliesTo = schema.HyperTocEntry
-HyperTocEntryMixin.Class = HyperTocEntryImpl
 
-export const fromPointer = createFactory<HyperTocEntry>([CreativeWorkMixin, HyperTocEntryMixin], { types: [schema.HyperTocEntry] });
+export const factory = (env: RdfineEnvironment) => createFactory<HyperTocEntry>([CreativeWorkMixin, HyperTocEntryMixin], { types: [schema.HyperTocEntry] }, env);

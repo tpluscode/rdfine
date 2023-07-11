@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { FoodEstablishmentMixin } from './FoodEstablishment.js';
 
@@ -17,16 +17,6 @@ export function BarOrPubMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return BarOrPubClass as any
 }
-
-class BarOrPubImpl extends BarOrPubMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<BarOrPub>) {
-    super(arg, init)
-    this.types.add(schema.BarOrPub)
-  }
-
-  static readonly __mixins: Mixin[] = [BarOrPubMixin, FoodEstablishmentMixin];
-}
 BarOrPubMixin.appliesTo = schema.BarOrPub
-BarOrPubMixin.Class = BarOrPubImpl
 
-export const fromPointer = createFactory<BarOrPub>([FoodEstablishmentMixin, BarOrPubMixin], { types: [schema.BarOrPub] });
+export const factory = (env: RdfineEnvironment) => createFactory<BarOrPub>([FoodEstablishmentMixin, BarOrPubMixin], { types: [schema.BarOrPub] }, env);

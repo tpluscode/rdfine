@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -179,16 +179,6 @@ export function InstantiationMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return InstantiationClass as any
 }
-
-class InstantiationImpl extends InstantiationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Instantiation>) {
-    super(arg, init)
-    this.types.add(rico.Instantiation)
-  }
-
-  static readonly __mixins: Mixin[] = [InstantiationMixin, ThingMixin];
-}
 InstantiationMixin.appliesTo = rico.Instantiation
-InstantiationMixin.Class = InstantiationImpl
 
-export const fromPointer = createFactory<Instantiation>([ThingMixin, InstantiationMixin], { types: [rico.Instantiation] });
+export const factory = (env: RdfineEnvironment) => createFactory<Instantiation>([ThingMixin, InstantiationMixin], { types: [rico.Instantiation] }, env);

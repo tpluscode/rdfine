@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { EducationalOccupationalProgramMixin } from './EducationalOccupationalProgram.js';
 
@@ -26,16 +26,6 @@ export function WorkBasedProgramMixin<Base extends rdfine.Constructor>(Resource:
   }
   return WorkBasedProgramClass as any
 }
-
-class WorkBasedProgramImpl extends WorkBasedProgramMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<WorkBasedProgram>) {
-    super(arg, init)
-    this.types.add(schema.WorkBasedProgram)
-  }
-
-  static readonly __mixins: Mixin[] = [WorkBasedProgramMixin, EducationalOccupationalProgramMixin];
-}
 WorkBasedProgramMixin.appliesTo = schema.WorkBasedProgram
-WorkBasedProgramMixin.Class = WorkBasedProgramImpl
 
-export const fromPointer = createFactory<WorkBasedProgram>([EducationalOccupationalProgramMixin, WorkBasedProgramMixin], { types: [schema.WorkBasedProgram] });
+export const factory = (env: RdfineEnvironment) => createFactory<WorkBasedProgram>([EducationalOccupationalProgramMixin, WorkBasedProgramMixin], { types: [schema.WorkBasedProgram] }, env);

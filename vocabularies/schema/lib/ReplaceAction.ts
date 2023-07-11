@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { UpdateActionMixin } from './UpdateAction.js';
 
@@ -23,16 +23,6 @@ export function ReplaceActionMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return ReplaceActionClass as any
 }
-
-class ReplaceActionImpl extends ReplaceActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ReplaceAction>) {
-    super(arg, init)
-    this.types.add(schema.ReplaceAction)
-  }
-
-  static readonly __mixins: Mixin[] = [ReplaceActionMixin, UpdateActionMixin];
-}
 ReplaceActionMixin.appliesTo = schema.ReplaceAction
-ReplaceActionMixin.Class = ReplaceActionImpl
 
-export const fromPointer = createFactory<ReplaceAction>([UpdateActionMixin, ReplaceActionMixin], { types: [schema.ReplaceAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<ReplaceAction>([UpdateActionMixin, ReplaceActionMixin], { types: [schema.ReplaceAction] }, env);

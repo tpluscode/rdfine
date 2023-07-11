@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 import { ActivityInfluenceMixin } from './ActivityInfluence.js';
 import { InstantaneousEventMixin } from './InstantaneousEvent.js';
@@ -18,16 +18,6 @@ export function InvalidationMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return InvalidationClass as any
 }
-
-class InvalidationImpl extends InvalidationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Invalidation>) {
-    super(arg, init)
-    this.types.add(prov.Invalidation)
-  }
-
-  static readonly __mixins: Mixin[] = [InvalidationMixin, ActivityInfluenceMixin, InstantaneousEventMixin];
-}
 InvalidationMixin.appliesTo = prov.Invalidation
-InvalidationMixin.Class = InvalidationImpl
 
-export const fromPointer = createFactory<Invalidation>([InstantaneousEventMixin, ActivityInfluenceMixin, InvalidationMixin], { types: [prov.Invalidation] });
+export const factory = (env: RdfineEnvironment) => createFactory<Invalidation>([InstantaneousEventMixin, ActivityInfluenceMixin, InvalidationMixin], { types: [prov.Invalidation] }, env);

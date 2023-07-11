@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 import { DerivationMixin } from './Derivation.js';
 
@@ -17,16 +17,6 @@ export function QuotationMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return QuotationClass as any
 }
-
-class QuotationImpl extends QuotationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Quotation>) {
-    super(arg, init)
-    this.types.add(prov.Quotation)
-  }
-
-  static readonly __mixins: Mixin[] = [QuotationMixin, DerivationMixin];
-}
 QuotationMixin.appliesTo = prov.Quotation
-QuotationMixin.Class = QuotationImpl
 
-export const fromPointer = createFactory<Quotation>([DerivationMixin, QuotationMixin], { types: [prov.Quotation] });
+export const factory = (env: RdfineEnvironment) => createFactory<Quotation>([DerivationMixin, QuotationMixin], { types: [prov.Quotation] }, env);

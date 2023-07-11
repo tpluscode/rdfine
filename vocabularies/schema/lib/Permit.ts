@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -38,16 +38,6 @@ export function PermitMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return PermitClass as any
 }
-
-class PermitImpl extends PermitMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Permit>) {
-    super(arg, init)
-    this.types.add(schema.Permit)
-  }
-
-  static readonly __mixins: Mixin[] = [PermitMixin, IntangibleMixin];
-}
 PermitMixin.appliesTo = schema.Permit
-PermitMixin.Class = PermitImpl
 
-export const fromPointer = createFactory<Permit>([IntangibleMixin, PermitMixin], { types: [schema.Permit] });
+export const factory = (env: RdfineEnvironment) => createFactory<Permit>([IntangibleMixin, PermitMixin], { types: [schema.Permit] }, env);

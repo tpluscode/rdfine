@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { BroadcastServiceMixin } from './BroadcastService.js';
 
@@ -17,16 +17,6 @@ export function RadioBroadcastServiceMixin<Base extends rdfine.Constructor>(Reso
   }
   return RadioBroadcastServiceClass as any
 }
-
-class RadioBroadcastServiceImpl extends RadioBroadcastServiceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RadioBroadcastService>) {
-    super(arg, init)
-    this.types.add(schema.RadioBroadcastService)
-  }
-
-  static readonly __mixins: Mixin[] = [RadioBroadcastServiceMixin, BroadcastServiceMixin];
-}
 RadioBroadcastServiceMixin.appliesTo = schema.RadioBroadcastService
-RadioBroadcastServiceMixin.Class = RadioBroadcastServiceImpl
 
-export const fromPointer = createFactory<RadioBroadcastService>([BroadcastServiceMixin, RadioBroadcastServiceMixin], { types: [schema.RadioBroadcastService] });
+export const factory = (env: RdfineEnvironment) => createFactory<RadioBroadcastService>([BroadcastServiceMixin, RadioBroadcastServiceMixin], { types: [schema.RadioBroadcastService] }, env);

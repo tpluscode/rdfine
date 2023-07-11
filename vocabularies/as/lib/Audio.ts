@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { DocumentMixin } from './Document.js';
 
@@ -17,16 +17,6 @@ export function AudioMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return AudioClass as any
 }
-
-class AudioImpl extends AudioMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Audio>) {
-    super(arg, init)
-    this.types.add(as.Audio)
-  }
-
-  static readonly __mixins: Mixin[] = [AudioMixin, DocumentMixin];
-}
 AudioMixin.appliesTo = as.Audio
-AudioMixin.Class = AudioImpl
 
-export const fromPointer = createFactory<Audio>([DocumentMixin, AudioMixin], { types: [as.Audio] });
+export const factory = (env: RdfineEnvironment) => createFactory<Audio>([DocumentMixin, AudioMixin], { types: [as.Audio] }, env);

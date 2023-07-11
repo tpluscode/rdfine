@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { dash } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Dash from '../index.js';
 import { TestCaseMixin } from './TestCase.js';
 
@@ -17,16 +17,6 @@ export function InferencingTestCaseMixin<Base extends rdfine.Constructor>(Resour
   }
   return InferencingTestCaseClass as any
 }
-
-class InferencingTestCaseImpl extends InferencingTestCaseMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<InferencingTestCase>) {
-    super(arg, init)
-    this.types.add(dash.InferencingTestCase)
-  }
-
-  static readonly __mixins: Mixin[] = [InferencingTestCaseMixin, TestCaseMixin];
-}
 InferencingTestCaseMixin.appliesTo = dash.InferencingTestCase
-InferencingTestCaseMixin.Class = InferencingTestCaseImpl
 
-export const fromPointer = createFactory<InferencingTestCase>([TestCaseMixin, InferencingTestCaseMixin], { types: [dash.InferencingTestCase] });
+export const factory = (env: RdfineEnvironment) => createFactory<InferencingTestCase>([TestCaseMixin, InferencingTestCaseMixin], { types: [dash.InferencingTestCase] }, env);

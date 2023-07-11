@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalTherapyMixin } from './MedicalTherapy.js';
 
@@ -17,16 +17,6 @@ export function RadiationTherapyMixin<Base extends rdfine.Constructor>(Resource:
   }
   return RadiationTherapyClass as any
 }
-
-class RadiationTherapyImpl extends RadiationTherapyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RadiationTherapy>) {
-    super(arg, init)
-    this.types.add(schema.RadiationTherapy)
-  }
-
-  static readonly __mixins: Mixin[] = [RadiationTherapyMixin, MedicalTherapyMixin];
-}
 RadiationTherapyMixin.appliesTo = schema.RadiationTherapy
-RadiationTherapyMixin.Class = RadiationTherapyImpl
 
-export const fromPointer = createFactory<RadiationTherapy>([MedicalTherapyMixin, RadiationTherapyMixin], { types: [schema.RadiationTherapy] });
+export const factory = (env: RdfineEnvironment) => createFactory<RadiationTherapy>([MedicalTherapyMixin, RadiationTherapyMixin], { types: [schema.RadiationTherapy] }, env);

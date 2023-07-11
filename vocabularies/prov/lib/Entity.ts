@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 
 export interface Entity<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -88,16 +88,6 @@ export function EntityMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return EntityClass as any
 }
-
-class EntityImpl extends EntityMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Entity>) {
-    super(arg, init)
-    this.types.add(prov.Entity)
-  }
-
-  static readonly __mixins: Mixin[] = [EntityMixin];
-}
 EntityMixin.appliesTo = prov.Entity
-EntityMixin.Class = EntityImpl
 
-export const fromPointer = createFactory<Entity>([EntityMixin], { types: [prov.Entity] });
+export const factory = (env: RdfineEnvironment) => createFactory<Entity>([EntityMixin], { types: [prov.Entity] }, env);

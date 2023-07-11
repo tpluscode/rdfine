@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StoreMixin } from './Store.js';
 
@@ -17,16 +17,6 @@ export function PawnShopMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return PawnShopClass as any
 }
-
-class PawnShopImpl extends PawnShopMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PawnShop>) {
-    super(arg, init)
-    this.types.add(schema.PawnShop)
-  }
-
-  static readonly __mixins: Mixin[] = [PawnShopMixin, StoreMixin];
-}
 PawnShopMixin.appliesTo = schema.PawnShop
-PawnShopMixin.Class = PawnShopImpl
 
-export const fromPointer = createFactory<PawnShop>([StoreMixin, PawnShopMixin], { types: [schema.PawnShop] });
+export const factory = (env: RdfineEnvironment) => createFactory<PawnShop>([StoreMixin, PawnShopMixin], { types: [schema.PawnShop] }, env);

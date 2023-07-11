@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 import { ListItemMixin } from './ListItem.js';
@@ -18,16 +18,6 @@ export function HowToTipMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return HowToTipClass as any
 }
-
-class HowToTipImpl extends HowToTipMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<HowToTip>) {
-    super(arg, init)
-    this.types.add(schema.HowToTip)
-  }
-
-  static readonly __mixins: Mixin[] = [HowToTipMixin, CreativeWorkMixin, ListItemMixin];
-}
 HowToTipMixin.appliesTo = schema.HowToTip
-HowToTipMixin.Class = HowToTipImpl
 
-export const fromPointer = createFactory<HowToTip>([ListItemMixin, CreativeWorkMixin, HowToTipMixin], { types: [schema.HowToTip] });
+export const factory = (env: RdfineEnvironment) => createFactory<HowToTip>([ListItemMixin, CreativeWorkMixin, HowToTipMixin], { types: [schema.HowToTip] }, env);

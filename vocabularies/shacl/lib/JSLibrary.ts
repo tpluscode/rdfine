@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
@@ -21,16 +21,6 @@ export function JSLibraryMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return JSLibraryClass as any
 }
-
-class JSLibraryImpl extends JSLibraryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<JSLibrary>) {
-    super(arg, init)
-    this.types.add(sh.JSLibrary)
-  }
-
-  static readonly __mixins: Mixin[] = [JSLibraryMixin, RdfsResourceMixin];
-}
 JSLibraryMixin.appliesTo = sh.JSLibrary
-JSLibraryMixin.Class = JSLibraryImpl
 
-export const fromPointer = createFactory<JSLibrary>([RdfsResourceMixin, JSLibraryMixin], { types: [sh.JSLibrary] });
+export const factory = (env: RdfineEnvironment) => createFactory<JSLibrary>([RdfsResourceMixin, JSLibraryMixin], { types: [sh.JSLibrary] }, env);

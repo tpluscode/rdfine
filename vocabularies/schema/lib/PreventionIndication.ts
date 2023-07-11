@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalIndicationMixin } from './MedicalIndication.js';
 
@@ -17,16 +17,6 @@ export function PreventionIndicationMixin<Base extends rdfine.Constructor>(Resou
   }
   return PreventionIndicationClass as any
 }
-
-class PreventionIndicationImpl extends PreventionIndicationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PreventionIndication>) {
-    super(arg, init)
-    this.types.add(schema.PreventionIndication)
-  }
-
-  static readonly __mixins: Mixin[] = [PreventionIndicationMixin, MedicalIndicationMixin];
-}
 PreventionIndicationMixin.appliesTo = schema.PreventionIndication
-PreventionIndicationMixin.Class = PreventionIndicationImpl
 
-export const fromPointer = createFactory<PreventionIndication>([MedicalIndicationMixin, PreventionIndicationMixin], { types: [schema.PreventionIndication] });
+export const factory = (env: RdfineEnvironment) => createFactory<PreventionIndication>([MedicalIndicationMixin, PreventionIndicationMixin], { types: [schema.PreventionIndication] }, env);

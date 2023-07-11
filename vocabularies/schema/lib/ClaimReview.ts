@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ReviewMixin } from './Review.js';
 
@@ -20,16 +20,6 @@ export function ClaimReviewMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return ClaimReviewClass as any
 }
-
-class ClaimReviewImpl extends ClaimReviewMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ClaimReview>) {
-    super(arg, init)
-    this.types.add(schema.ClaimReview)
-  }
-
-  static readonly __mixins: Mixin[] = [ClaimReviewMixin, ReviewMixin];
-}
 ClaimReviewMixin.appliesTo = schema.ClaimReview
-ClaimReviewMixin.Class = ClaimReviewImpl
 
-export const fromPointer = createFactory<ClaimReview>([ReviewMixin, ClaimReviewMixin], { types: [schema.ClaimReview] });
+export const factory = (env: RdfineEnvironment) => createFactory<ClaimReview>([ReviewMixin, ClaimReviewMixin], { types: [schema.ClaimReview] }, env);

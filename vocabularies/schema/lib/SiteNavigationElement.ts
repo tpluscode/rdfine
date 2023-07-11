@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { WebPageElementMixin } from './WebPageElement.js';
 
@@ -17,16 +17,6 @@ export function SiteNavigationElementMixin<Base extends rdfine.Constructor>(Reso
   }
   return SiteNavigationElementClass as any
 }
-
-class SiteNavigationElementImpl extends SiteNavigationElementMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SiteNavigationElement>) {
-    super(arg, init)
-    this.types.add(schema.SiteNavigationElement)
-  }
-
-  static readonly __mixins: Mixin[] = [SiteNavigationElementMixin, WebPageElementMixin];
-}
 SiteNavigationElementMixin.appliesTo = schema.SiteNavigationElement
-SiteNavigationElementMixin.Class = SiteNavigationElementImpl
 
-export const fromPointer = createFactory<SiteNavigationElement>([WebPageElementMixin, SiteNavigationElementMixin], { types: [schema.SiteNavigationElement] });
+export const factory = (env: RdfineEnvironment) => createFactory<SiteNavigationElement>([WebPageElementMixin, SiteNavigationElementMixin], { types: [schema.SiteNavigationElement] }, env);

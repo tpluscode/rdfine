@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { IntransitiveActivityMixin } from './IntransitiveActivity.js';
 
@@ -17,16 +17,6 @@ export function TravelMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return TravelClass as any
 }
-
-class TravelImpl extends TravelMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Travel>) {
-    super(arg, init)
-    this.types.add(as.Travel)
-  }
-
-  static readonly __mixins: Mixin[] = [TravelMixin, IntransitiveActivityMixin];
-}
 TravelMixin.appliesTo = as.Travel
-TravelMixin.Class = TravelImpl
 
-export const fromPointer = createFactory<Travel>([IntransitiveActivityMixin, TravelMixin], { types: [as.Travel] });
+export const factory = (env: RdfineEnvironment) => createFactory<Travel>([IntransitiveActivityMixin, TravelMixin], { types: [as.Travel] }, env);

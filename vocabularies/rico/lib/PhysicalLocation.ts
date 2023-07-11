@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -23,16 +23,6 @@ export function PhysicalLocationMixin<Base extends rdfine.Constructor>(Resource:
   }
   return PhysicalLocationClass as any
 }
-
-class PhysicalLocationImpl extends PhysicalLocationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PhysicalLocation>) {
-    super(arg, init)
-    this.types.add(rico.PhysicalLocation)
-  }
-
-  static readonly __mixins: Mixin[] = [PhysicalLocationMixin, ThingMixin];
-}
 PhysicalLocationMixin.appliesTo = rico.PhysicalLocation
-PhysicalLocationMixin.Class = PhysicalLocationImpl
 
-export const fromPointer = createFactory<PhysicalLocation>([ThingMixin, PhysicalLocationMixin], { types: [rico.PhysicalLocation] });
+export const factory = (env: RdfineEnvironment) => createFactory<PhysicalLocation>([ThingMixin, PhysicalLocationMixin], { types: [rico.PhysicalLocation] }, env);

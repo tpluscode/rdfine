@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { ActivityMixin } from './Activity.js';
 
@@ -17,16 +17,6 @@ export function ReadMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return ReadClass as any
 }
-
-class ReadImpl extends ReadMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Read>) {
-    super(arg, init)
-    this.types.add(as.Read)
-  }
-
-  static readonly __mixins: Mixin[] = [ReadMixin, ActivityMixin];
-}
 ReadMixin.appliesTo = as.Read
-ReadMixin.Class = ReadImpl
 
-export const fromPointer = createFactory<Read>([ActivityMixin, ReadMixin], { types: [as.Read] });
+export const factory = (env: RdfineEnvironment) => createFactory<Read>([ActivityMixin, ReadMixin], { types: [as.Read] }, env);

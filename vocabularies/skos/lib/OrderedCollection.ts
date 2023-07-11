@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { skos } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Skos from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import { CollectionMixin } from './Collection.js';
@@ -22,16 +22,6 @@ export function OrderedCollectionMixin<Base extends rdfine.Constructor>(Resource
   }
   return OrderedCollectionClass as any
 }
-
-class OrderedCollectionImpl extends OrderedCollectionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<OrderedCollection>) {
-    super(arg, init)
-    this.types.add(skos.OrderedCollection)
-  }
-
-  static readonly __mixins: Mixin[] = [OrderedCollectionMixin, CollectionMixin];
-}
 OrderedCollectionMixin.appliesTo = skos.OrderedCollection
-OrderedCollectionMixin.Class = OrderedCollectionImpl
 
-export const fromPointer = createFactory<OrderedCollection>([CollectionMixin, OrderedCollectionMixin], { types: [skos.OrderedCollection] });
+export const factory = (env: RdfineEnvironment) => createFactory<OrderedCollection>([CollectionMixin, OrderedCollectionMixin], { types: [skos.OrderedCollection] }, env);

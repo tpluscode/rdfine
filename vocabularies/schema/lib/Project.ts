@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { OrganizationMixin } from './Organization.js';
 
@@ -17,16 +17,6 @@ export function ProjectMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return ProjectClass as any
 }
-
-class ProjectImpl extends ProjectMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Project>) {
-    super(arg, init)
-    this.types.add(schema.Project)
-  }
-
-  static readonly __mixins: Mixin[] = [ProjectMixin, OrganizationMixin];
-}
 ProjectMixin.appliesTo = schema.Project
-ProjectMixin.Class = ProjectImpl
 
-export const fromPointer = createFactory<Project>([OrganizationMixin, ProjectMixin], { types: [schema.Project] });
+export const factory = (env: RdfineEnvironment) => createFactory<Project>([OrganizationMixin, ProjectMixin], { types: [schema.Project] }, env);

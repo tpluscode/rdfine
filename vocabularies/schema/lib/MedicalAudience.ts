@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AudienceMixin } from './Audience.js';
 import { PeopleAudienceMixin } from './PeopleAudience.js';
@@ -18,16 +18,6 @@ export function MedicalAudienceMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return MedicalAudienceClass as any
 }
-
-class MedicalAudienceImpl extends MedicalAudienceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MedicalAudience>) {
-    super(arg, init)
-    this.types.add(schema.MedicalAudience)
-  }
-
-  static readonly __mixins: Mixin[] = [MedicalAudienceMixin, AudienceMixin, PeopleAudienceMixin];
-}
 MedicalAudienceMixin.appliesTo = schema.MedicalAudience
-MedicalAudienceMixin.Class = MedicalAudienceImpl
 
-export const fromPointer = createFactory<MedicalAudience>([PeopleAudienceMixin, AudienceMixin, MedicalAudienceMixin], { types: [schema.MedicalAudience] });
+export const factory = (env: RdfineEnvironment) => createFactory<MedicalAudience>([PeopleAudienceMixin, AudienceMixin, MedicalAudienceMixin], { types: [schema.MedicalAudience] }, env);

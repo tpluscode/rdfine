@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { InteractActionMixin } from './InteractAction.js';
 
@@ -17,16 +17,6 @@ export function MarryActionMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return MarryActionClass as any
 }
-
-class MarryActionImpl extends MarryActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MarryAction>) {
-    super(arg, init)
-    this.types.add(schema.MarryAction)
-  }
-
-  static readonly __mixins: Mixin[] = [MarryActionMixin, InteractActionMixin];
-}
 MarryActionMixin.appliesTo = schema.MarryAction
-MarryActionMixin.Class = MarryActionImpl
 
-export const fromPointer = createFactory<MarryAction>([InteractActionMixin, MarryActionMixin], { types: [schema.MarryAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<MarryAction>([InteractActionMixin, MarryActionMixin], { types: [schema.MarryAction] }, env);

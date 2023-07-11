@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { owl } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -66,16 +66,6 @@ export function RestrictionMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return RestrictionClass as any
 }
-
-class RestrictionImpl extends RestrictionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Restriction>) {
-    super(arg, init)
-    this.types.add(owl.Restriction)
-  }
-
-  static readonly __mixins: Mixin[] = [RestrictionMixin, ClassMixin];
-}
 RestrictionMixin.appliesTo = owl.Restriction
-RestrictionMixin.Class = RestrictionImpl
 
-export const fromPointer = createFactory<Restriction>([ClassMixin, RestrictionMixin], { types: [owl.Restriction] });
+export const factory = (env: RdfineEnvironment) => createFactory<Restriction>([ClassMixin, RestrictionMixin], { types: [owl.Restriction] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { hydra } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
@@ -28,16 +28,6 @@ export function TemplatedLinkMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return TemplatedLinkClass as any
 }
-
-class TemplatedLinkImpl extends TemplatedLinkMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TemplatedLink>) {
-    super(arg, init)
-    this.types.add(hydra.TemplatedLink)
-  }
-
-  static readonly __mixins: Mixin[] = [TemplatedLinkMixin, RdfPropertyMixin, ResourceMixin];
-}
 TemplatedLinkMixin.appliesTo = hydra.TemplatedLink
-TemplatedLinkMixin.Class = TemplatedLinkImpl
 
-export const fromPointer = createFactory<TemplatedLink>([ResourceMixin, RdfPropertyMixin, TemplatedLinkMixin], { types: [hydra.TemplatedLink] });
+export const factory = (env: RdfineEnvironment) => createFactory<TemplatedLink>([ResourceMixin, RdfPropertyMixin, TemplatedLinkMixin], { types: [hydra.TemplatedLink] }, env);

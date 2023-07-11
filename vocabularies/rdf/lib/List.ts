@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rdf } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rdf from '../index.js';
 
 export interface List<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -22,16 +22,6 @@ export function ListMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return ListClass as any
 }
-
-class ListImpl extends ListMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<List>) {
-    super(arg, init)
-    this.types.add(rdf.List)
-  }
-
-  static readonly __mixins: Mixin[] = [ListMixin];
-}
 ListMixin.appliesTo = rdf.List
-ListMixin.Class = ListImpl
 
-export const fromPointer = createFactory<List>([ListMixin], { types: [rdf.List] });
+export const factory = (env: RdfineEnvironment) => createFactory<List>([ListMixin], { types: [rdf.List] }, env);

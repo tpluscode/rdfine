@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -101,16 +101,6 @@ export function ServiceMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return ServiceClass as any
 }
-
-class ServiceImpl extends ServiceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Service>) {
-    super(arg, init)
-    this.types.add(schema.Service)
-  }
-
-  static readonly __mixins: Mixin[] = [ServiceMixin, IntangibleMixin];
-}
 ServiceMixin.appliesTo = schema.Service
-ServiceMixin.Class = ServiceImpl
 
-export const fromPointer = createFactory<Service>([IntangibleMixin, ServiceMixin], { types: [schema.Service] });
+export const factory = (env: RdfineEnvironment) => createFactory<Service>([IntangibleMixin, ServiceMixin], { types: [schema.Service] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { SportsActivityLocationMixin } from './SportsActivityLocation.js';
 
@@ -17,16 +17,6 @@ export function ExerciseGymMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return ExerciseGymClass as any
 }
-
-class ExerciseGymImpl extends ExerciseGymMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ExerciseGym>) {
-    super(arg, init)
-    this.types.add(schema.ExerciseGym)
-  }
-
-  static readonly __mixins: Mixin[] = [ExerciseGymMixin, SportsActivityLocationMixin];
-}
 ExerciseGymMixin.appliesTo = schema.ExerciseGym
-ExerciseGymMixin.Class = ExerciseGymImpl
 
-export const fromPointer = createFactory<ExerciseGym>([SportsActivityLocationMixin, ExerciseGymMixin], { types: [schema.ExerciseGym] });
+export const factory = (env: RdfineEnvironment) => createFactory<ExerciseGym>([SportsActivityLocationMixin, ExerciseGymMixin], { types: [schema.ExerciseGym] }, env);

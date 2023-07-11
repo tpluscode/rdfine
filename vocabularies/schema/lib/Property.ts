@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -29,16 +29,6 @@ export function PropertyMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return PropertyClass as any
 }
-
-class PropertyImpl extends PropertyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Property>) {
-    super(arg, init)
-    this.types.add(schema.Property)
-  }
-
-  static readonly __mixins: Mixin[] = [PropertyMixin, IntangibleMixin];
-}
 PropertyMixin.appliesTo = schema.Property
-PropertyMixin.Class = PropertyImpl
 
-export const fromPointer = createFactory<Property>([IntangibleMixin, PropertyMixin], { types: [schema.Property] });
+export const factory = (env: RdfineEnvironment) => createFactory<Property>([IntangibleMixin, PropertyMixin], { types: [schema.Property] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreateActionMixin } from './CreateAction.js';
 
@@ -17,16 +17,6 @@ export function PaintActionMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return PaintActionClass as any
 }
-
-class PaintActionImpl extends PaintActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PaintAction>) {
-    super(arg, init)
-    this.types.add(schema.PaintAction)
-  }
-
-  static readonly __mixins: Mixin[] = [PaintActionMixin, CreateActionMixin];
-}
 PaintActionMixin.appliesTo = schema.PaintAction
-PaintActionMixin.Class = PaintActionImpl
 
-export const fromPointer = createFactory<PaintAction>([CreateActionMixin, PaintActionMixin], { types: [schema.PaintAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<PaintAction>([CreateActionMixin, PaintActionMixin], { types: [schema.PaintAction] }, env);

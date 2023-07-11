@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rdfs } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rdfs from '../index.js';
 import { ResourceMixin } from './Resource.js';
 
@@ -17,16 +17,6 @@ export function ContainerMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return ContainerClass as any
 }
-
-class ContainerImpl extends ContainerMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Container>) {
-    super(arg, init)
-    this.types.add(rdfs.Container)
-  }
-
-  static readonly __mixins: Mixin[] = [ContainerMixin, ResourceMixin];
-}
 ContainerMixin.appliesTo = rdfs.Container
-ContainerMixin.Class = ContainerImpl
 
-export const fromPointer = createFactory<Container>([ResourceMixin, ContainerMixin], { types: [rdfs.Container] });
+export const factory = (env: RdfineEnvironment) => createFactory<Container>([ResourceMixin, ContainerMixin], { types: [rdfs.Container] }, env);

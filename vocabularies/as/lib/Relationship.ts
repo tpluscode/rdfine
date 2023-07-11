@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import { ObjectMixin } from './Object.js';
@@ -28,16 +28,6 @@ export function RelationshipMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return RelationshipClass as any
 }
-
-class RelationshipImpl extends RelationshipMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Relationship>) {
-    super(arg, init)
-    this.types.add(as.Relationship)
-  }
-
-  static readonly __mixins: Mixin[] = [RelationshipMixin, ObjectMixin];
-}
 RelationshipMixin.appliesTo = as.Relationship
-RelationshipMixin.Class = RelationshipImpl
 
-export const fromPointer = createFactory<Relationship>([ObjectMixin, RelationshipMixin], { types: [as.Relationship] });
+export const factory = (env: RdfineEnvironment) => createFactory<Relationship>([ObjectMixin, RelationshipMixin], { types: [as.Relationship] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -23,16 +23,6 @@ export function PostalCodeRangeSpecificationMixin<Base extends rdfine.Constructo
   }
   return PostalCodeRangeSpecificationClass as any
 }
-
-class PostalCodeRangeSpecificationImpl extends PostalCodeRangeSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PostalCodeRangeSpecification>) {
-    super(arg, init)
-    this.types.add(schema.PostalCodeRangeSpecification)
-  }
-
-  static readonly __mixins: Mixin[] = [PostalCodeRangeSpecificationMixin, StructuredValueMixin];
-}
 PostalCodeRangeSpecificationMixin.appliesTo = schema.PostalCodeRangeSpecification
-PostalCodeRangeSpecificationMixin.Class = PostalCodeRangeSpecificationImpl
 
-export const fromPointer = createFactory<PostalCodeRangeSpecification>([StructuredValueMixin, PostalCodeRangeSpecificationMixin], { types: [schema.PostalCodeRangeSpecification] });
+export const factory = (env: RdfineEnvironment) => createFactory<PostalCodeRangeSpecification>([StructuredValueMixin, PostalCodeRangeSpecificationMixin], { types: [schema.PostalCodeRangeSpecification] }, env);

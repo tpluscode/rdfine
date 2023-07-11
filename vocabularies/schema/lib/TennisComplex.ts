@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { SportsActivityLocationMixin } from './SportsActivityLocation.js';
 
@@ -17,16 +17,6 @@ export function TennisComplexMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return TennisComplexClass as any
 }
-
-class TennisComplexImpl extends TennisComplexMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TennisComplex>) {
-    super(arg, init)
-    this.types.add(schema.TennisComplex)
-  }
-
-  static readonly __mixins: Mixin[] = [TennisComplexMixin, SportsActivityLocationMixin];
-}
 TennisComplexMixin.appliesTo = schema.TennisComplex
-TennisComplexMixin.Class = TennisComplexImpl
 
-export const fromPointer = createFactory<TennisComplex>([SportsActivityLocationMixin, TennisComplexMixin], { types: [schema.TennisComplex] });
+export const factory = (env: RdfineEnvironment) => createFactory<TennisComplex>([SportsActivityLocationMixin, TennisComplexMixin], { types: [schema.TennisComplex] }, env);

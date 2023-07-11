@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { TripMixin } from './Trip.js';
 
@@ -71,16 +71,6 @@ export function FlightMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return FlightClass as any
 }
-
-class FlightImpl extends FlightMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Flight>) {
-    super(arg, init)
-    this.types.add(schema.Flight)
-  }
-
-  static readonly __mixins: Mixin[] = [FlightMixin, TripMixin];
-}
 FlightMixin.appliesTo = schema.Flight
-FlightMixin.Class = FlightImpl
 
-export const fromPointer = createFactory<Flight>([TripMixin, FlightMixin], { types: [schema.Flight] });
+export const factory = (env: RdfineEnvironment) => createFactory<Flight>([TripMixin, FlightMixin], { types: [schema.Flight] }, env);

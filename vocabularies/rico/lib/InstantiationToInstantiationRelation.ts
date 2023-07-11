@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
@@ -20,16 +20,6 @@ export function InstantiationToInstantiationRelationMixin<Base extends rdfine.Co
   }
   return InstantiationToInstantiationRelationClass as any
 }
-
-class InstantiationToInstantiationRelationImpl extends InstantiationToInstantiationRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<InstantiationToInstantiationRelation>) {
-    super(arg, init)
-    this.types.add(rico.InstantiationToInstantiationRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [InstantiationToInstantiationRelationMixin, RelationMixin];
-}
 InstantiationToInstantiationRelationMixin.appliesTo = rico.InstantiationToInstantiationRelation
-InstantiationToInstantiationRelationMixin.Class = InstantiationToInstantiationRelationImpl
 
-export const fromPointer = createFactory<InstantiationToInstantiationRelation>([RelationMixin, InstantiationToInstantiationRelationMixin], { types: [rico.InstantiationToInstantiationRelation] });
+export const factory = (env: RdfineEnvironment) => createFactory<InstantiationToInstantiationRelation>([RelationMixin, InstantiationToInstantiationRelationMixin], { types: [rico.InstantiationToInstantiationRelation] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { PublicationEventMixin } from './PublicationEvent.js';
 
@@ -17,16 +17,6 @@ export function OnDemandEventMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return OnDemandEventClass as any
 }
-
-class OnDemandEventImpl extends OnDemandEventMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<OnDemandEvent>) {
-    super(arg, init)
-    this.types.add(schema.OnDemandEvent)
-  }
-
-  static readonly __mixins: Mixin[] = [OnDemandEventMixin, PublicationEventMixin];
-}
 OnDemandEventMixin.appliesTo = schema.OnDemandEvent
-OnDemandEventMixin.Class = OnDemandEventImpl
 
-export const fromPointer = createFactory<OnDemandEvent>([PublicationEventMixin, OnDemandEventMixin], { types: [schema.OnDemandEvent] });
+export const factory = (env: RdfineEnvironment) => createFactory<OnDemandEvent>([PublicationEventMixin, OnDemandEventMixin], { types: [schema.OnDemandEvent] }, env);

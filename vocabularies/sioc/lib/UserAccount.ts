@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sioc } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sioc from '../index.js';
 import type * as Foaf from '@rdfine/foaf';
 import { OnlineAccountMixin as FoafOnlineAccountMixin } from '@rdfine/foaf/lib/OnlineAccount';
@@ -61,16 +61,6 @@ export function UserAccountMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return UserAccountClass as any
 }
-
-class UserAccountImpl extends UserAccountMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<UserAccount>) {
-    super(arg, init)
-    this.types.add(sioc.UserAccount)
-  }
-
-  static readonly __mixins: Mixin[] = [UserAccountMixin, FoafOnlineAccountMixin];
-}
 UserAccountMixin.appliesTo = sioc.UserAccount
-UserAccountMixin.Class = UserAccountImpl
 
-export const fromPointer = createFactory<UserAccount>([FoafOnlineAccountMixin, UserAccountMixin], { types: [sioc.UserAccount] });
+export const factory = (env: RdfineEnvironment) => createFactory<UserAccount>([FoafOnlineAccountMixin, UserAccountMixin], { types: [sioc.UserAccount] }, env);

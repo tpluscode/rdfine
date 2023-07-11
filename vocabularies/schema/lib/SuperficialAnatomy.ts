@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalEntityMixin } from './MedicalEntity.js';
 
@@ -32,16 +32,6 @@ export function SuperficialAnatomyMixin<Base extends rdfine.Constructor>(Resourc
   }
   return SuperficialAnatomyClass as any
 }
-
-class SuperficialAnatomyImpl extends SuperficialAnatomyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SuperficialAnatomy>) {
-    super(arg, init)
-    this.types.add(schema.SuperficialAnatomy)
-  }
-
-  static readonly __mixins: Mixin[] = [SuperficialAnatomyMixin, MedicalEntityMixin];
-}
 SuperficialAnatomyMixin.appliesTo = schema.SuperficialAnatomy
-SuperficialAnatomyMixin.Class = SuperficialAnatomyImpl
 
-export const fromPointer = createFactory<SuperficialAnatomy>([MedicalEntityMixin, SuperficialAnatomyMixin], { types: [schema.SuperficialAnatomy] });
+export const factory = (env: RdfineEnvironment) => createFactory<SuperficialAnatomy>([MedicalEntityMixin, SuperficialAnatomyMixin], { types: [schema.SuperficialAnatomy] }, env);

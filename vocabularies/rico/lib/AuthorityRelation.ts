@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
@@ -23,16 +23,6 @@ export function AuthorityRelationMixin<Base extends rdfine.Constructor>(Resource
   }
   return AuthorityRelationClass as any
 }
-
-class AuthorityRelationImpl extends AuthorityRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AuthorityRelation>) {
-    super(arg, init)
-    this.types.add(rico.AuthorityRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [AuthorityRelationMixin, RelationMixin];
-}
 AuthorityRelationMixin.appliesTo = rico.AuthorityRelation
-AuthorityRelationMixin.Class = AuthorityRelationImpl
 
-export const fromPointer = createFactory<AuthorityRelation>([RelationMixin, AuthorityRelationMixin], { types: [rico.AuthorityRelation] });
+export const factory = (env: RdfineEnvironment) => createFactory<AuthorityRelation>([RelationMixin, AuthorityRelationMixin], { types: [rico.AuthorityRelation] }, env);

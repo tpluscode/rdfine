@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MediaGalleryMixin } from './MediaGallery.js';
 
@@ -17,16 +17,6 @@ export function ImageGalleryMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return ImageGalleryClass as any
 }
-
-class ImageGalleryImpl extends ImageGalleryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ImageGallery>) {
-    super(arg, init)
-    this.types.add(schema.ImageGallery)
-  }
-
-  static readonly __mixins: Mixin[] = [ImageGalleryMixin, MediaGalleryMixin];
-}
 ImageGalleryMixin.appliesTo = schema.ImageGallery
-ImageGalleryMixin.Class = ImageGalleryImpl
 
-export const fromPointer = createFactory<ImageGallery>([MediaGalleryMixin, ImageGalleryMixin], { types: [schema.ImageGallery] });
+export const factory = (env: RdfineEnvironment) => createFactory<ImageGallery>([MediaGalleryMixin, ImageGalleryMixin], { types: [schema.ImageGallery] }, env);

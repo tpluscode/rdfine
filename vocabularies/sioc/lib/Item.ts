@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sioc } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sioc from '../index.js';
 
 export interface Item<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -85,16 +85,6 @@ export function ItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return ItemClass as any
 }
-
-class ItemImpl extends ItemMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Item>) {
-    super(arg, init)
-    this.types.add(sioc.Item)
-  }
-
-  static readonly __mixins: Mixin[] = [ItemMixin];
-}
 ItemMixin.appliesTo = sioc.Item
-ItemMixin.Class = ItemImpl
 
-export const fromPointer = createFactory<Item>([ItemMixin], { types: [sioc.Item] });
+export const factory = (env: RdfineEnvironment) => createFactory<Item>([ItemMixin], { types: [sioc.Item] }, env);

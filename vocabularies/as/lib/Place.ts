@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { ObjectMixin } from './Object.js';
 
@@ -35,16 +35,6 @@ export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return PlaceClass as any
 }
-
-class PlaceImpl extends PlaceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Place>) {
-    super(arg, init)
-    this.types.add(as.Place)
-  }
-
-  static readonly __mixins: Mixin[] = [PlaceMixin, ObjectMixin];
-}
 PlaceMixin.appliesTo = as.Place
-PlaceMixin.Class = PlaceImpl
 
-export const fromPointer = createFactory<Place>([ObjectMixin, PlaceMixin], { types: [as.Place] });
+export const factory = (env: RdfineEnvironment) => createFactory<Place>([ObjectMixin, PlaceMixin], { types: [as.Place] }, env);

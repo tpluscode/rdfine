@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { EntertainmentBusinessMixin } from './EntertainmentBusiness.js';
 
@@ -17,16 +17,6 @@ export function CasinoMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return CasinoClass as any
 }
-
-class CasinoImpl extends CasinoMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Casino>) {
-    super(arg, init)
-    this.types.add(schema.Casino)
-  }
-
-  static readonly __mixins: Mixin[] = [CasinoMixin, EntertainmentBusinessMixin];
-}
 CasinoMixin.appliesTo = schema.Casino
-CasinoMixin.Class = CasinoImpl
 
-export const fromPointer = createFactory<Casino>([EntertainmentBusinessMixin, CasinoMixin], { types: [schema.Casino] });
+export const factory = (env: RdfineEnvironment) => createFactory<Casino>([EntertainmentBusinessMixin, CasinoMixin], { types: [schema.Casino] }, env);

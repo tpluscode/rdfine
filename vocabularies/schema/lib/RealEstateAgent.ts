@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LocalBusinessMixin } from './LocalBusiness.js';
 
@@ -17,16 +17,6 @@ export function RealEstateAgentMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return RealEstateAgentClass as any
 }
-
-class RealEstateAgentImpl extends RealEstateAgentMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RealEstateAgent>) {
-    super(arg, init)
-    this.types.add(schema.RealEstateAgent)
-  }
-
-  static readonly __mixins: Mixin[] = [RealEstateAgentMixin, LocalBusinessMixin];
-}
 RealEstateAgentMixin.appliesTo = schema.RealEstateAgent
-RealEstateAgentMixin.Class = RealEstateAgentImpl
 
-export const fromPointer = createFactory<RealEstateAgent>([LocalBusinessMixin, RealEstateAgentMixin], { types: [schema.RealEstateAgent] });
+export const factory = (env: RdfineEnvironment) => createFactory<RealEstateAgent>([LocalBusinessMixin, RealEstateAgentMixin], { types: [schema.RealEstateAgent] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalConditionMixin } from './MedicalCondition.js';
 
@@ -26,16 +26,6 @@ export function InfectiousDiseaseMixin<Base extends rdfine.Constructor>(Resource
   }
   return InfectiousDiseaseClass as any
 }
-
-class InfectiousDiseaseImpl extends InfectiousDiseaseMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<InfectiousDisease>) {
-    super(arg, init)
-    this.types.add(schema.InfectiousDisease)
-  }
-
-  static readonly __mixins: Mixin[] = [InfectiousDiseaseMixin, MedicalConditionMixin];
-}
 InfectiousDiseaseMixin.appliesTo = schema.InfectiousDisease
-InfectiousDiseaseMixin.Class = InfectiousDiseaseImpl
 
-export const fromPointer = createFactory<InfectiousDisease>([MedicalConditionMixin, InfectiousDiseaseMixin], { types: [schema.InfectiousDisease] });
+export const factory = (env: RdfineEnvironment) => createFactory<InfectiousDisease>([MedicalConditionMixin, InfectiousDiseaseMixin], { types: [schema.InfectiousDisease] }, env);

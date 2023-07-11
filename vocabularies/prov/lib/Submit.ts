@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 import { ActivityMixin } from './Activity.js';
 
@@ -17,16 +17,6 @@ export function SubmitMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return SubmitClass as any
 }
-
-class SubmitImpl extends SubmitMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Submit>) {
-    super(arg, init)
-    this.types.add(prov.Submit)
-  }
-
-  static readonly __mixins: Mixin[] = [SubmitMixin, ActivityMixin];
-}
 SubmitMixin.appliesTo = prov.Submit
-SubmitMixin.Class = SubmitImpl
 
-export const fromPointer = createFactory<Submit>([ActivityMixin, SubmitMixin], { types: [prov.Submit] });
+export const factory = (env: RdfineEnvironment) => createFactory<Submit>([ActivityMixin, SubmitMixin], { types: [prov.Submit] }, env);

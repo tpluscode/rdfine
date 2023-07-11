@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { WebPageMixin } from './WebPage.js';
 
@@ -17,16 +17,6 @@ export function QAPageMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return QAPageClass as any
 }
-
-class QAPageImpl extends QAPageMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<QAPage>) {
-    super(arg, init)
-    this.types.add(schema.QAPage)
-  }
-
-  static readonly __mixins: Mixin[] = [QAPageMixin, WebPageMixin];
-}
 QAPageMixin.appliesTo = schema.QAPage
-QAPageMixin.Class = QAPageImpl
 
-export const fromPointer = createFactory<QAPage>([WebPageMixin, QAPageMixin], { types: [schema.QAPage] });
+export const factory = (env: RdfineEnvironment) => createFactory<QAPage>([WebPageMixin, QAPageMixin], { types: [schema.QAPage] }, env);

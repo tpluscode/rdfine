@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { PlaceMixin } from './Place.js';
 
@@ -17,16 +17,6 @@ export function LandmarksOrHistoricalBuildingsMixin<Base extends rdfine.Construc
   }
   return LandmarksOrHistoricalBuildingsClass as any
 }
-
-class LandmarksOrHistoricalBuildingsImpl extends LandmarksOrHistoricalBuildingsMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<LandmarksOrHistoricalBuildings>) {
-    super(arg, init)
-    this.types.add(schema.LandmarksOrHistoricalBuildings)
-  }
-
-  static readonly __mixins: Mixin[] = [LandmarksOrHistoricalBuildingsMixin, PlaceMixin];
-}
 LandmarksOrHistoricalBuildingsMixin.appliesTo = schema.LandmarksOrHistoricalBuildings
-LandmarksOrHistoricalBuildingsMixin.Class = LandmarksOrHistoricalBuildingsImpl
 
-export const fromPointer = createFactory<LandmarksOrHistoricalBuildings>([PlaceMixin, LandmarksOrHistoricalBuildingsMixin], { types: [schema.LandmarksOrHistoricalBuildings] });
+export const factory = (env: RdfineEnvironment) => createFactory<LandmarksOrHistoricalBuildings>([PlaceMixin, LandmarksOrHistoricalBuildingsMixin], { types: [schema.LandmarksOrHistoricalBuildings] }, env);

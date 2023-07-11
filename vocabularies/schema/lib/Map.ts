@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -20,16 +20,6 @@ export function MapMixin<Base extends rdfine.Constructor>(Resource: Base): rdfin
   }
   return MapClass as any
 }
-
-class MapImpl extends MapMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Map>) {
-    super(arg, init)
-    this.types.add(schema.Map)
-  }
-
-  static readonly __mixins: Mixin[] = [MapMixin, CreativeWorkMixin];
-}
 MapMixin.appliesTo = schema.Map
-MapMixin.Class = MapImpl
 
-export const fromPointer = createFactory<Map>([CreativeWorkMixin, MapMixin], { types: [schema.Map] });
+export const factory = (env: RdfineEnvironment) => createFactory<Map>([CreativeWorkMixin, MapMixin], { types: [schema.Map] }, env);

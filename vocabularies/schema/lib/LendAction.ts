@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { TransferActionMixin } from './TransferAction.js';
 
@@ -20,16 +20,6 @@ export function LendActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return LendActionClass as any
 }
-
-class LendActionImpl extends LendActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<LendAction>) {
-    super(arg, init)
-    this.types.add(schema.LendAction)
-  }
-
-  static readonly __mixins: Mixin[] = [LendActionMixin, TransferActionMixin];
-}
 LendActionMixin.appliesTo = schema.LendAction
-LendActionMixin.Class = LendActionImpl
 
-export const fromPointer = createFactory<LendAction>([TransferActionMixin, LendActionMixin], { types: [schema.LendAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<LendAction>([TransferActionMixin, LendActionMixin], { types: [schema.LendAction] }, env);

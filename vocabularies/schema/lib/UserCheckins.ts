@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { UserInteractionMixin } from './UserInteraction.js';
 
@@ -17,16 +17,6 @@ export function UserCheckinsMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return UserCheckinsClass as any
 }
-
-class UserCheckinsImpl extends UserCheckinsMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<UserCheckins>) {
-    super(arg, init)
-    this.types.add(schema.UserCheckins)
-  }
-
-  static readonly __mixins: Mixin[] = [UserCheckinsMixin, UserInteractionMixin];
-}
 UserCheckinsMixin.appliesTo = schema.UserCheckins
-UserCheckinsMixin.Class = UserCheckinsImpl
 
-export const fromPointer = createFactory<UserCheckins>([UserInteractionMixin, UserCheckinsMixin], { types: [schema.UserCheckins] });
+export const factory = (env: RdfineEnvironment) => createFactory<UserCheckins>([UserInteractionMixin, UserCheckinsMixin], { types: [schema.UserCheckins] }, env);

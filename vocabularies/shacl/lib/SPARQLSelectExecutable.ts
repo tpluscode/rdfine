@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '../index.js';
 import { SPARQLExecutableMixin } from './SPARQLExecutable.js';
 
@@ -20,16 +20,6 @@ export function SPARQLSelectExecutableMixin<Base extends rdfine.Constructor>(Res
   }
   return SPARQLSelectExecutableClass as any
 }
-
-class SPARQLSelectExecutableImpl extends SPARQLSelectExecutableMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SPARQLSelectExecutable>) {
-    super(arg, init)
-    this.types.add(sh.SPARQLSelectExecutable)
-  }
-
-  static readonly __mixins: Mixin[] = [SPARQLSelectExecutableMixin, SPARQLExecutableMixin];
-}
 SPARQLSelectExecutableMixin.appliesTo = sh.SPARQLSelectExecutable
-SPARQLSelectExecutableMixin.Class = SPARQLSelectExecutableImpl
 
-export const fromPointer = createFactory<SPARQLSelectExecutable>([SPARQLExecutableMixin, SPARQLSelectExecutableMixin], { types: [sh.SPARQLSelectExecutable] });
+export const factory = (env: RdfineEnvironment) => createFactory<SPARQLSelectExecutable>([SPARQLExecutableMixin, SPARQLSelectExecutableMixin], { types: [sh.SPARQLSelectExecutable] }, env);

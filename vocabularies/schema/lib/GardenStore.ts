@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StoreMixin } from './Store.js';
 
@@ -17,16 +17,6 @@ export function GardenStoreMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return GardenStoreClass as any
 }
-
-class GardenStoreImpl extends GardenStoreMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<GardenStore>) {
-    super(arg, init)
-    this.types.add(schema.GardenStore)
-  }
-
-  static readonly __mixins: Mixin[] = [GardenStoreMixin, StoreMixin];
-}
 GardenStoreMixin.appliesTo = schema.GardenStore
-GardenStoreMixin.Class = GardenStoreImpl
 
-export const fromPointer = createFactory<GardenStore>([StoreMixin, GardenStoreMixin], { types: [schema.GardenStore] });
+export const factory = (env: RdfineEnvironment) => createFactory<GardenStore>([StoreMixin, GardenStoreMixin], { types: [schema.GardenStore] }, env);

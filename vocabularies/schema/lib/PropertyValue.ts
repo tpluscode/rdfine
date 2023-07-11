@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -56,16 +56,6 @@ export function PropertyValueMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return PropertyValueClass as any
 }
-
-class PropertyValueImpl extends PropertyValueMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PropertyValue>) {
-    super(arg, init)
-    this.types.add(schema.PropertyValue)
-  }
-
-  static readonly __mixins: Mixin[] = [PropertyValueMixin, StructuredValueMixin];
-}
 PropertyValueMixin.appliesTo = schema.PropertyValue
-PropertyValueMixin.Class = PropertyValueImpl
 
-export const fromPointer = createFactory<PropertyValue>([StructuredValueMixin, PropertyValueMixin], { types: [schema.PropertyValue] });
+export const factory = (env: RdfineEnvironment) => createFactory<PropertyValue>([StructuredValueMixin, PropertyValueMixin], { types: [schema.PropertyValue] }, env);

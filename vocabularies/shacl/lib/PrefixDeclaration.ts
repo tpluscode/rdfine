@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
@@ -24,16 +24,6 @@ export function PrefixDeclarationMixin<Base extends rdfine.Constructor>(Resource
   }
   return PrefixDeclarationClass as any
 }
-
-class PrefixDeclarationImpl extends PrefixDeclarationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PrefixDeclaration>) {
-    super(arg, init)
-    this.types.add(sh.PrefixDeclaration)
-  }
-
-  static readonly __mixins: Mixin[] = [PrefixDeclarationMixin, RdfsResourceMixin];
-}
 PrefixDeclarationMixin.appliesTo = sh.PrefixDeclaration
-PrefixDeclarationMixin.Class = PrefixDeclarationImpl
 
-export const fromPointer = createFactory<PrefixDeclaration>([RdfsResourceMixin, PrefixDeclarationMixin], { types: [sh.PrefixDeclaration] });
+export const factory = (env: RdfineEnvironment) => createFactory<PrefixDeclaration>([RdfsResourceMixin, PrefixDeclarationMixin], { types: [sh.PrefixDeclaration] }, env);

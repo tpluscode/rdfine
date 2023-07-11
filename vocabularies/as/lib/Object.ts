@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 
 export interface Object<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -118,16 +118,6 @@ export function ObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return ObjectClass as any
 }
-
-class ObjectImpl extends ObjectMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Object>) {
-    super(arg, init)
-    this.types.add(as.Object)
-  }
-
-  static readonly __mixins: Mixin[] = [ObjectMixin];
-}
 ObjectMixin.appliesTo = as.Object
-ObjectMixin.Class = ObjectImpl
 
-export const fromPointer = createFactory<Object>([ObjectMixin], { types: [as.Object] });
+export const factory = (env: RdfineEnvironment) => createFactory<Object>([ObjectMixin], { types: [as.Object] }, env);

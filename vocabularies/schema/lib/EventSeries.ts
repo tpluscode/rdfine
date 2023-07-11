@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { EventMixin } from './Event.js';
 import { SeriesMixin } from './Series.js';
@@ -18,16 +18,6 @@ export function EventSeriesMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return EventSeriesClass as any
 }
-
-class EventSeriesImpl extends EventSeriesMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EventSeries>) {
-    super(arg, init)
-    this.types.add(schema.EventSeries)
-  }
-
-  static readonly __mixins: Mixin[] = [EventSeriesMixin, EventMixin, SeriesMixin];
-}
 EventSeriesMixin.appliesTo = schema.EventSeries
-EventSeriesMixin.Class = EventSeriesImpl
 
-export const fromPointer = createFactory<EventSeries>([SeriesMixin, EventMixin, EventSeriesMixin], { types: [schema.EventSeries] });
+export const factory = (env: RdfineEnvironment) => createFactory<EventSeries>([SeriesMixin, EventMixin, EventSeriesMixin], { types: [schema.EventSeries] }, env);

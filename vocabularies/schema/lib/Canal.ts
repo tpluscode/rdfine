@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { BodyOfWaterMixin } from './BodyOfWater.js';
 
@@ -17,16 +17,6 @@ export function CanalMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return CanalClass as any
 }
-
-class CanalImpl extends CanalMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Canal>) {
-    super(arg, init)
-    this.types.add(schema.Canal)
-  }
-
-  static readonly __mixins: Mixin[] = [CanalMixin, BodyOfWaterMixin];
-}
 CanalMixin.appliesTo = schema.Canal
-CanalMixin.Class = CanalImpl
 
-export const fromPointer = createFactory<Canal>([BodyOfWaterMixin, CanalMixin], { types: [schema.Canal] });
+export const factory = (env: RdfineEnvironment) => createFactory<Canal>([BodyOfWaterMixin, CanalMixin], { types: [schema.Canal] }, env);

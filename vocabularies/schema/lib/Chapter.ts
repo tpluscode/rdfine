@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -26,16 +26,6 @@ export function ChapterMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return ChapterClass as any
 }
-
-class ChapterImpl extends ChapterMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Chapter>) {
-    super(arg, init)
-    this.types.add(schema.Chapter)
-  }
-
-  static readonly __mixins: Mixin[] = [ChapterMixin, CreativeWorkMixin];
-}
 ChapterMixin.appliesTo = schema.Chapter
-ChapterMixin.Class = ChapterImpl
 
-export const fromPointer = createFactory<Chapter>([CreativeWorkMixin, ChapterMixin], { types: [schema.Chapter] });
+export const factory = (env: RdfineEnvironment) => createFactory<Chapter>([CreativeWorkMixin, ChapterMixin], { types: [schema.Chapter] }, env);

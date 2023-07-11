@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { GameMixin } from './Game.js';
 import { SoftwareApplicationMixin } from './SoftwareApplication.js';
@@ -57,16 +57,6 @@ export function VideoGameMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return VideoGameClass as any
 }
-
-class VideoGameImpl extends VideoGameMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<VideoGame>) {
-    super(arg, init)
-    this.types.add(schema.VideoGame)
-  }
-
-  static readonly __mixins: Mixin[] = [VideoGameMixin, GameMixin, SoftwareApplicationMixin];
-}
 VideoGameMixin.appliesTo = schema.VideoGame
-VideoGameMixin.Class = VideoGameImpl
 
-export const fromPointer = createFactory<VideoGame>([SoftwareApplicationMixin, GameMixin, VideoGameMixin], { types: [schema.VideoGame] });
+export const factory = (env: RdfineEnvironment) => createFactory<VideoGame>([SoftwareApplicationMixin, GameMixin, VideoGameMixin], { types: [schema.VideoGame] }, env);

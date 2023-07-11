@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CivicStructureMixin } from './CivicStructure.js';
 
@@ -17,16 +17,6 @@ export function BridgeMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return BridgeClass as any
 }
-
-class BridgeImpl extends BridgeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Bridge>) {
-    super(arg, init)
-    this.types.add(schema.Bridge)
-  }
-
-  static readonly __mixins: Mixin[] = [BridgeMixin, CivicStructureMixin];
-}
 BridgeMixin.appliesTo = schema.Bridge
-BridgeMixin.Class = BridgeImpl
 
-export const fromPointer = createFactory<Bridge>([CivicStructureMixin, BridgeMixin], { types: [schema.Bridge] });
+export const factory = (env: RdfineEnvironment) => createFactory<Bridge>([CivicStructureMixin, BridgeMixin], { types: [schema.Bridge] }, env);

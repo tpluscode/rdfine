@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { ActivityMixin } from './Activity.js';
 
@@ -17,16 +17,6 @@ export function RemoveMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return RemoveClass as any
 }
-
-class RemoveImpl extends RemoveMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Remove>) {
-    super(arg, init)
-    this.types.add(as.Remove)
-  }
-
-  static readonly __mixins: Mixin[] = [RemoveMixin, ActivityMixin];
-}
 RemoveMixin.appliesTo = as.Remove
-RemoveMixin.Class = RemoveImpl
 
-export const fromPointer = createFactory<Remove>([ActivityMixin, RemoveMixin], { types: [as.Remove] });
+export const factory = (env: RdfineEnvironment) => createFactory<Remove>([ActivityMixin, RemoveMixin], { types: [as.Remove] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { dash } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Dash from '../index.js';
 import { ScriptMixin } from './Script.js';
 import { TestCaseMixin } from './TestCase.js';
@@ -18,16 +18,6 @@ export function ScriptTestCaseMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return ScriptTestCaseClass as any
 }
-
-class ScriptTestCaseImpl extends ScriptTestCaseMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ScriptTestCase>) {
-    super(arg, init)
-    this.types.add(dash.ScriptTestCase)
-  }
-
-  static readonly __mixins: Mixin[] = [ScriptTestCaseMixin, ScriptMixin, TestCaseMixin];
-}
 ScriptTestCaseMixin.appliesTo = dash.ScriptTestCase
-ScriptTestCaseMixin.Class = ScriptTestCaseImpl
 
-export const fromPointer = createFactory<ScriptTestCase>([TestCaseMixin, ScriptMixin, ScriptTestCaseMixin], { types: [dash.ScriptTestCase] });
+export const factory = (env: RdfineEnvironment) => createFactory<ScriptTestCase>([TestCaseMixin, ScriptMixin, ScriptTestCaseMixin], { types: [dash.ScriptTestCase] }, env);

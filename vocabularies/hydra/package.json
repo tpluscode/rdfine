@@ -79,6 +79,7 @@
   "devDependencies": {
     "@rdfine/generator": "^0.7.0",
     "@rdfjs/dataset": "^2",
+    "@rdfjs/environment": "^0.1.2",
     "@rdfjs/namespace": "^2",
     "@rdfjs/parser-n3": "^2",
     "@tpluscode/rdf-string": "^1.0.3",

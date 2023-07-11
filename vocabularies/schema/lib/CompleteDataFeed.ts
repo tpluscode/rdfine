@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { DataFeedMixin } from './DataFeed.js';
 
@@ -17,16 +17,6 @@ export function CompleteDataFeedMixin<Base extends rdfine.Constructor>(Resource:
   }
   return CompleteDataFeedClass as any
 }
-
-class CompleteDataFeedImpl extends CompleteDataFeedMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CompleteDataFeed>) {
-    super(arg, init)
-    this.types.add(schema.CompleteDataFeed)
-  }
-
-  static readonly __mixins: Mixin[] = [CompleteDataFeedMixin, DataFeedMixin];
-}
 CompleteDataFeedMixin.appliesTo = schema.CompleteDataFeed
-CompleteDataFeedMixin.Class = CompleteDataFeedImpl
 
-export const fromPointer = createFactory<CompleteDataFeed>([DataFeedMixin, CompleteDataFeedMixin], { types: [schema.CompleteDataFeed] });
+export const factory = (env: RdfineEnvironment) => createFactory<CompleteDataFeed>([DataFeedMixin, CompleteDataFeedMixin], { types: [schema.CompleteDataFeed] }, env);

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { PriceSpecificationMixin } from './PriceSpecification.js';
 
@@ -50,16 +50,6 @@ export function UnitPriceSpecificationMixin<Base extends rdfine.Constructor>(Res
   }
   return UnitPriceSpecificationClass as any
 }
-
-class UnitPriceSpecificationImpl extends UnitPriceSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<UnitPriceSpecification>) {
-    super(arg, init)
-    this.types.add(schema.UnitPriceSpecification)
-  }
-
-  static readonly __mixins: Mixin[] = [UnitPriceSpecificationMixin, PriceSpecificationMixin];
-}
 UnitPriceSpecificationMixin.appliesTo = schema.UnitPriceSpecification
-UnitPriceSpecificationMixin.Class = UnitPriceSpecificationImpl
 
-export const fromPointer = createFactory<UnitPriceSpecification>([PriceSpecificationMixin, UnitPriceSpecificationMixin], { types: [schema.UnitPriceSpecification] });
+export const factory = (env: RdfineEnvironment) => createFactory<UnitPriceSpecification>([PriceSpecificationMixin, UnitPriceSpecificationMixin], { types: [schema.UnitPriceSpecification] }, env);

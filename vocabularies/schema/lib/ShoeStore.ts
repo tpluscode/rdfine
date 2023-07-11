@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StoreMixin } from './Store.js';
 
@@ -17,16 +17,6 @@ export function ShoeStoreMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return ShoeStoreClass as any
 }
-
-class ShoeStoreImpl extends ShoeStoreMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ShoeStore>) {
-    super(arg, init)
-    this.types.add(schema.ShoeStore)
-  }
-
-  static readonly __mixins: Mixin[] = [ShoeStoreMixin, StoreMixin];
-}
 ShoeStoreMixin.appliesTo = schema.ShoeStore
-ShoeStoreMixin.Class = ShoeStoreImpl
 
-export const fromPointer = createFactory<ShoeStore>([StoreMixin, ShoeStoreMixin], { types: [schema.ShoeStore] });
+export const factory = (env: RdfineEnvironment) => createFactory<ShoeStore>([StoreMixin, ShoeStoreMixin], { types: [schema.ShoeStore] }, env);

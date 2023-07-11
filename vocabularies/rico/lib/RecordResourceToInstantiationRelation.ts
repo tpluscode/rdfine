@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
@@ -23,16 +23,6 @@ export function RecordResourceToInstantiationRelationMixin<Base extends rdfine.C
   }
   return RecordResourceToInstantiationRelationClass as any
 }
-
-class RecordResourceToInstantiationRelationImpl extends RecordResourceToInstantiationRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RecordResourceToInstantiationRelation>) {
-    super(arg, init)
-    this.types.add(rico.RecordResourceToInstantiationRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [RecordResourceToInstantiationRelationMixin, RelationMixin];
-}
 RecordResourceToInstantiationRelationMixin.appliesTo = rico.RecordResourceToInstantiationRelation
-RecordResourceToInstantiationRelationMixin.Class = RecordResourceToInstantiationRelationImpl
 
-export const fromPointer = createFactory<RecordResourceToInstantiationRelation>([RelationMixin, RecordResourceToInstantiationRelationMixin], { types: [rico.RecordResourceToInstantiationRelation] });
+export const factory = (env: RdfineEnvironment) => createFactory<RecordResourceToInstantiationRelation>([RelationMixin, RecordResourceToInstantiationRelationMixin], { types: [rico.RecordResourceToInstantiationRelation] }, env);

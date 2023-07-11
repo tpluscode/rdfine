@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ItemListMixin } from './ItemList.js';
 
@@ -17,16 +17,6 @@ export function OfferCatalogMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return OfferCatalogClass as any
 }
-
-class OfferCatalogImpl extends OfferCatalogMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<OfferCatalog>) {
-    super(arg, init)
-    this.types.add(schema.OfferCatalog)
-  }
-
-  static readonly __mixins: Mixin[] = [OfferCatalogMixin, ItemListMixin];
-}
 OfferCatalogMixin.appliesTo = schema.OfferCatalog
-OfferCatalogMixin.Class = OfferCatalogImpl
 
-export const fromPointer = createFactory<OfferCatalog>([ItemListMixin, OfferCatalogMixin], { types: [schema.OfferCatalog] });
+export const factory = (env: RdfineEnvironment) => createFactory<OfferCatalog>([ItemListMixin, OfferCatalogMixin], { types: [schema.OfferCatalog] }, env);

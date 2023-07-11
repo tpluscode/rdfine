@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { DerivationRelationMixin } from './DerivationRelation.js';
 
@@ -23,16 +23,6 @@ export function MigrationRelationMixin<Base extends rdfine.Constructor>(Resource
   }
   return MigrationRelationClass as any
 }
-
-class MigrationRelationImpl extends MigrationRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MigrationRelation>) {
-    super(arg, init)
-    this.types.add(rico.MigrationRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [MigrationRelationMixin, DerivationRelationMixin];
-}
 MigrationRelationMixin.appliesTo = rico.MigrationRelation
-MigrationRelationMixin.Class = MigrationRelationImpl
 
-export const fromPointer = createFactory<MigrationRelation>([DerivationRelationMixin, MigrationRelationMixin], { types: [rico.MigrationRelation] });
+export const factory = (env: RdfineEnvironment) => createFactory<MigrationRelation>([DerivationRelationMixin, MigrationRelationMixin], { types: [rico.MigrationRelation] }, env);

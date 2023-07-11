@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -17,16 +17,6 @@ export function SeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return SeriesClass as any
 }
-
-class SeriesImpl extends SeriesMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Series>) {
-    super(arg, init)
-    this.types.add(schema.Series)
-  }
-
-  static readonly __mixins: Mixin[] = [SeriesMixin, IntangibleMixin];
-}
 SeriesMixin.appliesTo = schema.Series
-SeriesMixin.Class = SeriesImpl
 
-export const fromPointer = createFactory<Series>([IntangibleMixin, SeriesMixin], { types: [schema.Series] });
+export const factory = (env: RdfineEnvironment) => createFactory<Series>([IntangibleMixin, SeriesMixin], { types: [schema.Series] }, env);

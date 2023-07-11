@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { UpdateActionMixin } from './UpdateAction.js';
 
@@ -17,16 +17,6 @@ export function DeleteActionMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return DeleteActionClass as any
 }
-
-class DeleteActionImpl extends DeleteActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DeleteAction>) {
-    super(arg, init)
-    this.types.add(schema.DeleteAction)
-  }
-
-  static readonly __mixins: Mixin[] = [DeleteActionMixin, UpdateActionMixin];
-}
 DeleteActionMixin.appliesTo = schema.DeleteAction
-DeleteActionMixin.Class = DeleteActionImpl
 
-export const fromPointer = createFactory<DeleteAction>([UpdateActionMixin, DeleteActionMixin], { types: [schema.DeleteAction] });
+export const factory = (env: RdfineEnvironment) => createFactory<DeleteAction>([UpdateActionMixin, DeleteActionMixin], { types: [schema.DeleteAction] }, env);

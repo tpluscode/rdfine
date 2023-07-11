@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
+import * as rdfine from '@tpluscode/rdfine';
 import { createFactory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 
 export interface OrderedItems<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -16,16 +16,6 @@ export function OrderedItemsMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return OrderedItemsClass as any
 }
-
-class OrderedItemsImpl extends OrderedItemsMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<OrderedItems>) {
-    super(arg, init)
-    this.types.add(as.OrderedItems)
-  }
-
-  static readonly __mixins: Mixin[] = [OrderedItemsMixin];
-}
 OrderedItemsMixin.appliesTo = as.OrderedItems
-OrderedItemsMixin.Class = OrderedItemsImpl
 
-export const fromPointer = createFactory<OrderedItems>([OrderedItemsMixin], { types: [as.OrderedItems] });
+export const factory = (env: RdfineEnvironment) => createFactory<OrderedItems>([OrderedItemsMixin], { types: [as.OrderedItems] }, env);
