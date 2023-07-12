@@ -4,9 +4,9 @@ import type { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
 import type { Initializer, RdfResource, RdfResourceCore, ResourceNode } from '../RdfResource.js'
+import { RdfineEnvironment } from '../environment.js'
 import { createProxy } from './proxy.js'
 import type { PropertyMeta } from './decorators/property/index.js'
-import {RdfineEnvironment} from '../environment';
 
 export type AnyFunction<A = any> = (...input: any[]) => A
 export interface Constructor<A extends RdfResourceCore<any> = RdfResourceCore> {
@@ -53,7 +53,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
   private __typeCache: Map<string, Constructor> = new Map<string, Constructor>()
   public BaseClass: Constructor
 
-  public constructor(baseClass: Constructor) {
+  public constructor(baseClass: Constructor, private __env: RdfineEnvironment) {
     this.BaseClass = baseClass
   }
 
@@ -95,7 +95,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     }
 
     BaseClass = this.__getBaseClass(BaseClass, types)
-    const entity = new BaseClass(pointer)
+    const entity = new BaseClass(pointer, {}, this.__env)
 
     const mixins = [...this.__mixins].reduce<Set<Mixin<T>>>((selected, next) => {
       if (next.shouldApply === true || (typeof next.shouldApply === 'function' && next.shouldApply(entity))) {
@@ -107,7 +107,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
 
     const Type = this.__extend(BaseClass, [...mixins])
 
-    return createProxy(new Type(pointer, options.initializer, options.parent)) as R & S & ResourceIndexer<R>
+    return createProxy(new Type(pointer, options.initializer, options.parent || this.__env)) as R & S & ResourceIndexer<R>
   }
 
   private __getBaseClass(baseClass: Constructor, types: string[]) {

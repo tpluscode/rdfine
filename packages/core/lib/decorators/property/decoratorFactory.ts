@@ -7,8 +7,8 @@ import { EdgeTraversal, toEdgeTraversals } from '../../path.js'
 import { enumerateList, isList } from '../../rdf-list.js'
 import { onlyUnique } from '../../filter.js'
 import type { Factory } from '../../../factory.js'
+import { RdfineEnvironment } from '../../../environment.js'
 import { AccessorOptions } from './index.js'
-import {RdfineEnvironment} from '../../../environment';
 
 export type PropertyReturnKind = 'single' | 'array' | 'list'
 export type ArrayOrSingle<T> = T | T[]

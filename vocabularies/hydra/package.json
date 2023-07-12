@@ -82,6 +82,7 @@
     "@rdfjs/environment": "^0.1.2",
     "@rdfjs/namespace": "^2",
     "@rdfjs/parser-n3": "^2",
+    "@rdfjs/term-set": "^2",
     "@tpluscode/rdf-string": "^1.0.3",
     "@zazuko/prefixes": ">=1",
     "chai": "^4.3.7",

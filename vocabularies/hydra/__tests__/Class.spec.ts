@@ -16,7 +16,7 @@ describe('Class', () => {
   })
 
   describe('getting operations', () => {
-    it('should return operations', async () => {
+    it('should return operations', () => {
       // then
       hydraClassNode.addOut(hydra.supportedOperation, hydraClassNode.blankNode())
 

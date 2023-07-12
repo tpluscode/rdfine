@@ -21,6 +21,7 @@
     "url": "git+https://github.com/tpluscode/rdfine.git"
   },
   "dependencies": {
+    "@rdfjs/data-model": "^2.0.1",
     "@rdfjs/environment": "^0.1.2",
     "@rdfjs/types": ">=1.1.0",
     "@tpluscode/rdf-ns-builders": ">=3.0.2",
