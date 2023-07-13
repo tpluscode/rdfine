@@ -18,5 +18,4 @@ export function ContainerMixin<Base extends rdfine.Constructor>(Resource: Base):
   return ContainerClass as any
 }
 ContainerMixin.appliesTo = rdfs.Container
-
-export const factory = (env: RdfineEnvironment) => createFactory<Container>([ResourceMixin, ContainerMixin], { types: [rdfs.Container] }, env);
+ContainerMixin.createFactory = (env: RdfineEnvironment) => createFactory<Container>([ResourceMixin, ContainerMixin], { types: [rdfs.Container] }, env)

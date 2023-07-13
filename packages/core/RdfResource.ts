@@ -335,7 +335,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
   }
 
   public _create<T extends RdfResourceCore<D>>(term: GraphPointer<Term, D>, mixins?: Mixin[] | [Constructor, ...Mixin[]], options: ResourceCreationOptions<D, T> = {}): T & ResourceIndexer {
-    return this.env.rdfine._factory.createEntity<T>(term, mixins, options)
+    return this.env.rdfine().factory.createEntity<T>(term, mixins, options)
   }
 
   public toJSON<T extends RdfResourceCore<any> = this>(): Jsonified<T> {

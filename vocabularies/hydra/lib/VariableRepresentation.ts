@@ -17,5 +17,4 @@ export function VariableRepresentationMixin<Base extends rdfine.Constructor>(Res
   return VariableRepresentationClass as any
 }
 VariableRepresentationMixin.appliesTo = hydra.VariableRepresentation
-
-export const factory = (env: RdfineEnvironment) => createFactory<VariableRepresentation>([VariableRepresentationMixin], { types: [hydra.VariableRepresentation] }, env);
+VariableRepresentationMixin.createFactory = (env: RdfineEnvironment) => createFactory<VariableRepresentation>([VariableRepresentationMixin], { types: [hydra.VariableRepresentation] }, env)

@@ -30,5 +30,4 @@ export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return ClassClass as any
 }
 ClassMixin.appliesTo = hydra.Class
-
-export const factory = (env: RdfineEnvironment) => createFactory<Class>([RdfsClassMixin, ClassMixin], { types: [hydra.Class] }, env);
+ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Class>([RdfsClassMixin, ClassMixin], { types: [hydra.Class] }, env)

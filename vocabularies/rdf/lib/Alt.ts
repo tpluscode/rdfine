@@ -17,5 +17,4 @@ export function AltMixin<Base extends rdfine.Constructor>(Resource: Base): rdfin
   return AltClass as any
 }
 AltMixin.appliesTo = rdf.Alt
-
-export const factory = (env: RdfineEnvironment) => createFactory<Alt>([AltMixin], { types: [rdf.Alt] }, env);
+AltMixin.createFactory = (env: RdfineEnvironment) => createFactory<Alt>([AltMixin], { types: [rdf.Alt] }, env)

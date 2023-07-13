@@ -26,5 +26,4 @@ export function StatementMixin<Base extends rdfine.Constructor>(Resource: Base):
   return StatementClass as any
 }
 StatementMixin.appliesTo = rdf.Statement
-
-export const factory = (env: RdfineEnvironment) => createFactory<Statement>([StatementMixin], { types: [rdf.Statement] }, env);
+StatementMixin.createFactory = (env: RdfineEnvironment) => createFactory<Statement>([StatementMixin], { types: [rdf.Statement] }, env)

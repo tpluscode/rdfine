@@ -1,10 +1,9 @@
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import { Factory } from '@tpluscode/rdfine/factory';
-import * as Mixins from './index.js'
-import * as Class from './lib/Class.js';
+import * as Hydra from './index.js'
 
 interface VocabularyFactory {
-  Class: Factory<Class.Class>;
+  Class: Factory<Hydra.Class>;
 }
 
 declare module '@tpluscode/rdfine/environment' {
@@ -15,10 +14,8 @@ declare module '@tpluscode/rdfine/environment' {
 
 export class HydraFactory {
   init(this: RdfineEnvironment) {
-    this.rdfine._factory.addMixin(...Object.values(Mixins))
+    this.rdfine().factory.addMixin(...Object.values(Hydra))
 
-    this.rdfine.hydra = {
-      Class: Class.factory(this),
-    }
+    this.rdfine.hydra = this._initVocabulary(Hydra)
   }
 }

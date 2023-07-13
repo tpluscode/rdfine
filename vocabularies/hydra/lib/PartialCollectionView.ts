@@ -18,5 +18,4 @@ export function PartialCollectionViewMixin<Base extends rdfine.Constructor>(Reso
   return PartialCollectionViewClass as any
 }
 PartialCollectionViewMixin.appliesTo = hydra.PartialCollectionView
-
-export const factory = (env: RdfineEnvironment) => createFactory<PartialCollectionView>([ResourceMixin, PartialCollectionViewMixin], { types: [hydra.PartialCollectionView] }, env);
+PartialCollectionViewMixin.createFactory = (env: RdfineEnvironment) => createFactory<PartialCollectionView>([ResourceMixin, PartialCollectionViewMixin], { types: [hydra.PartialCollectionView] }, env)

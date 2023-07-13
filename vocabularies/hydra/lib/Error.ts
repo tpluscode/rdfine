@@ -18,5 +18,4 @@ export function ErrorMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return ErrorClass as any
 }
 ErrorMixin.appliesTo = hydra.Error
-
-export const factory = (env: RdfineEnvironment) => createFactory<Error>([StatusMixin, ErrorMixin], { types: [hydra.Error] }, env);
+ErrorMixin.createFactory = (env: RdfineEnvironment) => createFactory<Error>([StatusMixin, ErrorMixin], { types: [hydra.Error] }, env)

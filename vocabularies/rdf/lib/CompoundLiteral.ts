@@ -23,5 +23,4 @@ export function CompoundLiteralMixin<Base extends rdfine.Constructor>(Resource: 
   return CompoundLiteralClass as any
 }
 CompoundLiteralMixin.appliesTo = rdf.CompoundLiteral
-
-export const factory = (env: RdfineEnvironment) => createFactory<CompoundLiteral>([CompoundLiteralMixin], { types: [rdf.CompoundLiteral] }, env);
+CompoundLiteralMixin.createFactory = (env: RdfineEnvironment) => createFactory<CompoundLiteral>([CompoundLiteralMixin], { types: [rdf.CompoundLiteral] }, env)

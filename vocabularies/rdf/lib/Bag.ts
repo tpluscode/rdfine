@@ -17,5 +17,4 @@ export function BagMixin<Base extends rdfine.Constructor>(Resource: Base): rdfin
   return BagClass as any
 }
 BagMixin.appliesTo = rdf.Bag
-
-export const factory = (env: RdfineEnvironment) => createFactory<Bag>([BagMixin], { types: [rdf.Bag] }, env);
+BagMixin.createFactory = (env: RdfineEnvironment) => createFactory<Bag>([BagMixin], { types: [rdf.Bag] }, env)

@@ -48,5 +48,4 @@ export function OperationMixin<Base extends rdfine.Constructor>(Resource: Base):
   return OperationClass as any
 }
 OperationMixin.appliesTo = hydra.Operation
-
-export const factory = (env: RdfineEnvironment) => createFactory<Operation>([OperationMixin], { types: [hydra.Operation] }, env);
+OperationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Operation>([OperationMixin], { types: [hydra.Operation] }, env)

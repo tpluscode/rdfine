@@ -21,5 +21,4 @@ export function ContainerMembershipPropertyMixin<Base extends rdfine.Constructor
   return ContainerMembershipPropertyClass as any
 }
 ContainerMembershipPropertyMixin.appliesTo = rdfs.ContainerMembershipProperty
-
-export const factory = (env: RdfineEnvironment) => createFactory<ContainerMembershipProperty>([RdfPropertyMixin, ContainerMembershipPropertyMixin], { types: [rdfs.ContainerMembershipProperty] }, env);
+ContainerMembershipPropertyMixin.createFactory = (env: RdfineEnvironment) => createFactory<ContainerMembershipProperty>([RdfPropertyMixin, ContainerMembershipPropertyMixin], { types: [rdfs.ContainerMembershipProperty] }, env)

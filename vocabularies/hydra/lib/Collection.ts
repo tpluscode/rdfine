@@ -25,5 +25,4 @@ export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base)
   return CollectionClass as any
 }
 CollectionMixin.appliesTo = hydra.Collection
-
-export const factory = (env: RdfineEnvironment) => createFactory<Collection>([ResourceMixin, CollectionMixin], { types: [hydra.Collection] }, env);
+CollectionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Collection>([ResourceMixin, CollectionMixin], { types: [hydra.Collection] }, env)

@@ -26,5 +26,4 @@ export function StatusMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return StatusClass as any
 }
 StatusMixin.appliesTo = hydra.Status
-
-export const factory = (env: RdfineEnvironment) => createFactory<Status>([StatusMixin], { types: [hydra.Status] }, env);
+StatusMixin.createFactory = (env: RdfineEnvironment) => createFactory<Status>([StatusMixin], { types: [hydra.Status] }, env)

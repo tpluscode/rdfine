@@ -15,10 +15,10 @@ declare module '@tpluscode/rdfine/environment' {
 
 export class RdfsFactory {
   init(this: RdfineEnvironment) {
-    this.rdfine._factory.addMixin(...Object.values(Mixins))
+    this.rdfine().factory.addMixin(...Object.values(Mixins))
 
     this.rdfine.rdfs = {
-      Class: Class.factory(this),
+      Class: Class.ClassMixin.createFactory(this),
     }
   }
 }

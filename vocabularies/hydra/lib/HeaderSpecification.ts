@@ -27,5 +27,4 @@ export function HeaderSpecificationMixin<Base extends rdfine.Constructor>(Resour
   return HeaderSpecificationClass as any
 }
 HeaderSpecificationMixin.appliesTo = hydra.HeaderSpecification
-
-export const factory = (env: RdfineEnvironment) => createFactory<HeaderSpecification>([ResourceMixin, HeaderSpecificationMixin], { types: [hydra.HeaderSpecification] }, env);
+HeaderSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<HeaderSpecification>([ResourceMixin, HeaderSpecificationMixin], { types: [hydra.HeaderSpecification] }, env)

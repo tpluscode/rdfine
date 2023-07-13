@@ -37,5 +37,4 @@ export function ApiDocumentationMixin<Base extends rdfine.Constructor>(Resource:
   return ApiDocumentationClass as any
 }
 ApiDocumentationMixin.appliesTo = hydra.ApiDocumentation
-
-export const factory = (env: RdfineEnvironment) => createFactory<ApiDocumentation>([ResourceMixin, ApiDocumentationMixin], { types: [hydra.ApiDocumentation] }, env);
+ApiDocumentationMixin.createFactory = (env: RdfineEnvironment) => createFactory<ApiDocumentation>([ResourceMixin, ApiDocumentationMixin], { types: [hydra.ApiDocumentation] }, env)

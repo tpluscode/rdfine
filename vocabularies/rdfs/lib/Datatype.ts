@@ -18,5 +18,4 @@ export function DatatypeMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return DatatypeClass as any
 }
 DatatypeMixin.appliesTo = rdfs.Datatype
-
-export const factory = (env: RdfineEnvironment) => createFactory<Datatype>([ClassMixin, DatatypeMixin], { types: [rdfs.Datatype] }, env);
+DatatypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<Datatype>([ClassMixin, DatatypeMixin], { types: [rdfs.Datatype] }, env)

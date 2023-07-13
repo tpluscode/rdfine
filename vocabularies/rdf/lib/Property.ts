@@ -17,5 +17,4 @@ export function PropertyMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return PropertyClass as any
 }
 PropertyMixin.appliesTo = rdf.Property
-
-export const factory = (env: RdfineEnvironment) => createFactory<Property>([PropertyMixin], { types: [rdf.Property] }, env);
+PropertyMixin.createFactory = (env: RdfineEnvironment) => createFactory<Property>([PropertyMixin], { types: [rdf.Property] }, env)

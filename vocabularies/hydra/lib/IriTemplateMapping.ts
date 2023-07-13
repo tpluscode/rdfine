@@ -31,5 +31,4 @@ export function IriTemplateMappingMixin<Base extends rdfine.Constructor>(Resourc
   return IriTemplateMappingClass as any
 }
 IriTemplateMappingMixin.appliesTo = hydra.IriTemplateMapping
-
-export const factory = (env: RdfineEnvironment) => createFactory<IriTemplateMapping>([IriTemplateMappingMixin], { types: [hydra.IriTemplateMapping] }, env);
+IriTemplateMappingMixin.createFactory = (env: RdfineEnvironment) => createFactory<IriTemplateMapping>([IriTemplateMappingMixin], { types: [hydra.IriTemplateMapping] }, env)

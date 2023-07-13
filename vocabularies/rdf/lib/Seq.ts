@@ -17,5 +17,4 @@ export function SeqMixin<Base extends rdfine.Constructor>(Resource: Base): rdfin
   return SeqClass as any
 }
 SeqMixin.appliesTo = rdf.Seq
-
-export const factory = (env: RdfineEnvironment) => createFactory<Seq>([SeqMixin], { types: [rdf.Seq] }, env);
+SeqMixin.createFactory = (env: RdfineEnvironment) => createFactory<Seq>([SeqMixin], { types: [rdf.Seq] }, env)

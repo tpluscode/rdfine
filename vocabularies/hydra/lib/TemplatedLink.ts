@@ -29,5 +29,4 @@ export function TemplatedLinkMixin<Base extends rdfine.Constructor>(Resource: Ba
   return TemplatedLinkClass as any
 }
 TemplatedLinkMixin.appliesTo = hydra.TemplatedLink
-
-export const factory = (env: RdfineEnvironment) => createFactory<TemplatedLink>([ResourceMixin, RdfPropertyMixin, TemplatedLinkMixin], { types: [hydra.TemplatedLink] }, env);
+TemplatedLinkMixin.createFactory = (env: RdfineEnvironment) => createFactory<TemplatedLink>([ResourceMixin, RdfPropertyMixin, TemplatedLinkMixin], { types: [hydra.TemplatedLink] }, env)

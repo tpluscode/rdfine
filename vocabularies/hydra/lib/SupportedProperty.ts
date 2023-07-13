@@ -40,5 +40,4 @@ export function SupportedPropertyMixin<Base extends rdfine.Constructor>(Resource
   return SupportedPropertyClass as any
 }
 SupportedPropertyMixin.appliesTo = hydra.SupportedProperty
-
-export const factory = (env: RdfineEnvironment) => createFactory<SupportedProperty>([SupportedPropertyMixin], { types: [hydra.SupportedProperty] }, env);
+SupportedPropertyMixin.createFactory = (env: RdfineEnvironment) => createFactory<SupportedProperty>([SupportedPropertyMixin], { types: [hydra.SupportedProperty] }, env)

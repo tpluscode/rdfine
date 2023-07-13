@@ -29,5 +29,4 @@ export function LinkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return LinkClass as any
 }
 LinkMixin.appliesTo = hydra.Link
-
-export const factory = (env: RdfineEnvironment) => createFactory<Link>([ResourceMixin, RdfPropertyMixin, LinkMixin], { types: [hydra.Link] }, env);
+LinkMixin.createFactory = (env: RdfineEnvironment) => createFactory<Link>([ResourceMixin, RdfPropertyMixin, LinkMixin], { types: [hydra.Link] }, env)

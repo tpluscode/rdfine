@@ -54,14 +54,9 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       `${mixinName}.appliesTo = ${type}`,
     ])
 
-    mixinFile.addVariableStatement({
-      isExported: true,
-      declarationKind: VariableDeclarationKind.Const,
-      declarations: [{
-        name: 'factory',
-        initializer: `(env: RdfineEnvironment) => createFactory<${this.type.localName}>([${mixinNames.reverse().join(', ')}], { types: [${type}] }, env)`,
-      }],
-    })
+    mixinFile.addStatements([
+      `${mixinName}.createFactory = (env: RdfineEnvironment) => createFactory<${this.type.localName}>([${mixinNames.reverse().join(', ')}], { types: [${type}] }, env)`,
+    ])
 
     this.addImports(mixinFile, context)
     this.generateDependenciesModule(bundleModule, bundleIndex, types)

@@ -23,5 +23,4 @@ export function ListMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return ListClass as any
 }
 ListMixin.appliesTo = rdf.List
-
-export const factory = (env: RdfineEnvironment) => createFactory<List>([ListMixin], { types: [rdf.List] }, env);
+ListMixin.createFactory = (env: RdfineEnvironment) => createFactory<List>([ListMixin], { types: [rdf.List] }, env)

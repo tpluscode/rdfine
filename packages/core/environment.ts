@@ -8,7 +8,7 @@ import RdfResourceImpl from './RdfResource.js'
 import ResourceFactoryImpl, { ResourceFactory } from './lib/ResourceFactory.js'
 
 export interface Rdfine {
-  _factory: ResourceFactory
+  (): { factory: ResourceFactory }
 }
 
 export interface RdfineFactory {
@@ -26,13 +26,22 @@ export class RdfineFactory {
       }
     }
 
-    this.rdfine = {
-      _factory: new ResourceFactoryImpl(Base, env),
-    }
+    const factory = new ResourceFactoryImpl(Base, env)
+    this.rdfine = () => ({ factory })
   }
 
   static get exports() {
-    return ['rdfine']
+    return ['_initVocabulary']
+  }
+
+  _initVocabulary(vocabulary: Record<string, any>) {
+    return Object.fromEntries(Object.entries(vocabulary).reduce((previous, [name, mixin]) => {
+      if ('createFactory' in mixin) {
+        return [...previous, [name.replace(/Mixin$/, ''), mixin.createFactory(this)]]
+      }
+
+      return previous
+    }, [] as Array<[string, any]>)) as any
   }
 }
 
