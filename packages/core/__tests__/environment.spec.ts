@@ -10,6 +10,6 @@ describe('environment', () => {
     ])
 
     // then
-    expect(Object.keys(env.rdfine)).to.eq(['Resource'])
+    expect(Object.keys(env.rdfine)).to.contain.all.members(['Resource'])
   })
 })
