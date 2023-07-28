@@ -11,11 +11,11 @@ import { UserInteractionMixin } from './UserInteraction.js';
 export interface UserPageVisits<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UserInteraction<D>, rdfine.RdfResource<D> {
 }
 
-export function UserPageVisitsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<UserPageVisits> & RdfResourceCore> & Base {
+export function UserPageVisitsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<UserPageVisits & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class UserPageVisitsClass extends UserInteractionMixin(Resource) implements Partial<UserPageVisits> {
+  class UserPageVisitsClass extends UserInteractionMixin(Resource) {
   }
-  return UserPageVisitsClass
+  return UserPageVisitsClass as any
 }
 
 class UserPageVisitsImpl extends UserPageVisitsMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { ReviewMixin } from './Review.js';
 export interface CriticReview<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Review<D>, rdfine.RdfResource<D> {
 }
 
-export function CriticReviewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CriticReview> & RdfResourceCore> & Base {
+export function CriticReviewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CriticReview & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CriticReviewClass extends ReviewMixin(Resource) implements Partial<CriticReview> {
+  class CriticReviewClass extends ReviewMixin(Resource) {
   }
-  return CriticReviewClass
+  return CriticReviewClass as any
 }
 
 class CriticReviewImpl extends CriticReviewMixin(RdfResourceImpl) {

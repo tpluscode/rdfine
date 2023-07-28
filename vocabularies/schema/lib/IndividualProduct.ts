@@ -12,13 +12,13 @@ export interface IndividualProduct<D extends RDF.DatasetCore = RDF.DatasetCore> 
   serialNumber: string | undefined;
 }
 
-export function IndividualProductMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<IndividualProduct> & RdfResourceCore> & Base {
+export function IndividualProductMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IndividualProduct & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class IndividualProductClass extends ProductMixin(Resource) implements Partial<IndividualProduct> {
+  class IndividualProductClass extends ProductMixin(Resource) {
     @rdfine.property.literal()
     serialNumber: string | undefined;
   }
-  return IndividualProductClass
+  return IndividualProductClass as any
 }
 
 class IndividualProductImpl extends IndividualProductMixin(RdfResourceImpl) {

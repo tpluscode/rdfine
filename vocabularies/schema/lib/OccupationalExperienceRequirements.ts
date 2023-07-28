@@ -12,13 +12,13 @@ export interface OccupationalExperienceRequirements<D extends RDF.DatasetCore = 
   monthsOfExperience: number | undefined;
 }
 
-export function OccupationalExperienceRequirementsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OccupationalExperienceRequirements> & RdfResourceCore> & Base {
+export function OccupationalExperienceRequirementsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OccupationalExperienceRequirements & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OccupationalExperienceRequirementsClass extends IntangibleMixin(Resource) implements Partial<OccupationalExperienceRequirements> {
+  class OccupationalExperienceRequirementsClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     monthsOfExperience: number | undefined;
   }
-  return OccupationalExperienceRequirementsClass
+  return OccupationalExperienceRequirementsClass as any
 }
 
 class OccupationalExperienceRequirementsImpl extends OccupationalExperienceRequirementsMixin(RdfResourceImpl) {

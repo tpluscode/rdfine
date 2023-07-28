@@ -14,9 +14,9 @@ export interface LinkRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   linkRelationship: string | undefined;
 }
 
-export function LinkRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LinkRole> & RdfResourceCore> & Base {
+export function LinkRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LinkRole & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LinkRoleClass extends RoleMixin(Resource) implements Partial<LinkRole> {
+  class LinkRoleClass extends RoleMixin(Resource) {
     @rdfine.property.resource()
     inLanguage: Schema.Language | undefined;
     @rdfine.property.literal({ path: schema.inLanguage })
@@ -24,7 +24,7 @@ export function LinkRoleMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.literal()
     linkRelationship: string | undefined;
   }
-  return LinkRoleClass
+  return LinkRoleClass as any
 }
 
 class LinkRoleImpl extends LinkRoleMixin(RdfResourceImpl) {

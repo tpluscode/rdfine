@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Replace<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function ReplaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Replace> & RdfResourceCore> & Base {
+export function ReplaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Replace & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class ReplaceClass extends ActivityMixin(Resource) implements Partial<Replace> {
+  class ReplaceClass extends ActivityMixin(Resource) {
   }
-  return ReplaceClass
+  return ReplaceClass as any
 }
 
 class ReplaceImpl extends ReplaceMixin(RdfResourceImpl) {

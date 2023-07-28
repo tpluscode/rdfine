@@ -11,11 +11,11 @@ import { QuantityMixin } from './Quantity.js';
 export interface Duration<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Quantity<D>, rdfine.RdfResource<D> {
 }
 
-export function DurationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Duration> & RdfResourceCore> & Base {
+export function DurationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Duration & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DurationClass extends QuantityMixin(Resource) implements Partial<Duration> {
+  class DurationClass extends QuantityMixin(Resource) {
   }
-  return DurationClass
+  return DurationClass as any
 }
 
 class DurationImpl extends DurationMixin(RdfResourceImpl) {

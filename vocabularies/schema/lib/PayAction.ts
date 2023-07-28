@@ -12,13 +12,13 @@ export interface PayAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function PayActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PayAction> & RdfResourceCore> & Base {
+export function PayActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PayAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PayActionClass extends TradeActionMixin(Resource) implements Partial<PayAction> {
+  class PayActionClass extends TradeActionMixin(Resource) {
     @rdfine.property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
-  return PayActionClass
+  return PayActionClass as any
 }
 
 class PayActionImpl extends PayActionMixin(RdfResourceImpl) {

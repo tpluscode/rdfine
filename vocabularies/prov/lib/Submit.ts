@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Submit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function SubmitMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Submit> & RdfResourceCore> & Base {
+export function SubmitMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Submit & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class SubmitClass extends ActivityMixin(Resource) implements Partial<Submit> {
+  class SubmitClass extends ActivityMixin(Resource) {
   }
-  return SubmitClass
+  return SubmitClass as any
 }
 
 class SubmitImpl extends SubmitMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { EditorMixin } from './Editor.js';
 export interface SingleEditor<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Editor<D>, rdfine.RdfResource<D> {
 }
 
-export function SingleEditorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SingleEditor> & RdfResourceCore> & Base {
+export function SingleEditorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SingleEditor & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class SingleEditorClass extends EditorMixin(Resource) implements Partial<SingleEditor> {
+  class SingleEditorClass extends EditorMixin(Resource) {
   }
-  return SingleEditorClass
+  return SingleEditorClass as any
 }
 
 class SingleEditorImpl extends SingleEditorMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface InstantiationToInstantiationRelation<D extends RDF.DatasetCore 
   instantiationToInstantiationRelationConnects: Rico.Instantiation<D> | undefined;
 }
 
-export function InstantiationToInstantiationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InstantiationToInstantiationRelation> & RdfResourceCore> & Base {
+export function InstantiationToInstantiationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InstantiationToInstantiationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class InstantiationToInstantiationRelationClass extends RelationMixin(Resource) implements Partial<InstantiationToInstantiationRelation> {
+  class InstantiationToInstantiationRelationClass extends RelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     instantiationToInstantiationRelationConnects: Rico.Instantiation | undefined;
   }
-  return InstantiationToInstantiationRelationClass
+  return InstantiationToInstantiationRelationClass as any
 }
 
 class InstantiationToInstantiationRelationImpl extends InstantiationToInstantiationRelationMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface RoleType<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   roleIsContextOfCreationRelation: Rico.CreationRelation<D> | undefined;
 }
 
-export function RoleTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RoleType> & RdfResourceCore> & Base {
+export function RoleTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RoleType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RoleTypeClass extends TypeMixin(Resource) implements Partial<RoleType> {
+  class RoleTypeClass extends TypeMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.CreationRelation] })
     roleIsContextOfCreationRelation: Rico.CreationRelation | undefined;
   }
-  return RoleTypeClass
+  return RoleTypeClass as any
 }
 
 class RoleTypeImpl extends RoleTypeMixin(RdfResourceImpl) {

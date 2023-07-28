@@ -14,11 +14,11 @@ import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
 export interface DeprecatedClass<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, rdfine.RdfResource<D> {
 }
 
-export function DeprecatedClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DeprecatedClass> & RdfResourceCore> & Base {
+export function DeprecatedClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DeprecatedClass & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class DeprecatedClassClass extends ClassMixinEx(RdfsClassMixin(Resource)) implements Partial<DeprecatedClass> {
+  class DeprecatedClassClass extends ClassMixinEx(RdfsClassMixin(Resource)) {
   }
-  return DeprecatedClassClass
+  return DeprecatedClassClass as any
 }
 
 class DeprecatedClassImpl extends DeprecatedClassMixin(RdfResourceImpl) {

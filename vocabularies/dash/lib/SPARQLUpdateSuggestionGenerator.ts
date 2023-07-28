@@ -14,11 +14,11 @@ import { SuggestionGeneratorMixin } from './SuggestionGenerator.js';
 export interface SPARQLUpdateSuggestionGenerator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.SPARQLSelectExecutable<D>, Shacl.SPARQLUpdateExecutable<D>, Dash.SuggestionGenerator<D>, rdfine.RdfResource<D> {
 }
 
-export function SPARQLUpdateSuggestionGeneratorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLUpdateSuggestionGenerator> & RdfResourceCore> & Base {
+export function SPARQLUpdateSuggestionGeneratorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLUpdateSuggestionGenerator & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class SPARQLUpdateSuggestionGeneratorClass extends SuggestionGeneratorMixin(ShaclSPARQLUpdateExecutableMixin(ShaclSPARQLSelectExecutableMixin(Resource))) implements Partial<SPARQLUpdateSuggestionGenerator> {
+  class SPARQLUpdateSuggestionGeneratorClass extends SuggestionGeneratorMixin(ShaclSPARQLUpdateExecutableMixin(ShaclSPARQLSelectExecutableMixin(Resource))) {
   }
-  return SPARQLUpdateSuggestionGeneratorClass
+  return SPARQLUpdateSuggestionGeneratorClass as any
 }
 
 class SPARQLUpdateSuggestionGeneratorImpl extends SPARQLUpdateSuggestionGeneratorMixin(RdfResourceImpl) {

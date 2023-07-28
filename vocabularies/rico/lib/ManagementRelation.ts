@@ -13,15 +13,15 @@ export interface ManagementRelation<D extends RDF.DatasetCore = RDF.DatasetCore>
   managementRelationHasTarget: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
 }
 
-export function ManagementRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ManagementRelation> & RdfResourceCore> & Base {
+export function ManagementRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ManagementRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class ManagementRelationClass extends AuthorityRelationMixin(Resource) implements Partial<ManagementRelation> {
+  class ManagementRelationClass extends AuthorityRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     managementRelationHasSource: Rico.Agent | undefined;
     @rdfine.property.resource()
     managementRelationHasTarget: Rico.Instantiation | Rico.RecordResource | undefined;
   }
-  return ManagementRelationClass
+  return ManagementRelationClass as any
 }
 
 class ManagementRelationImpl extends ManagementRelationMixin(RdfResourceImpl) {

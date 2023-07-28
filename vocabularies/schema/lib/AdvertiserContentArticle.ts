@@ -11,11 +11,11 @@ import { ArticleMixin } from './Article.js';
 export interface AdvertiserContentArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, rdfine.RdfResource<D> {
 }
 
-export function AdvertiserContentArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AdvertiserContentArticle> & RdfResourceCore> & Base {
+export function AdvertiserContentArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AdvertiserContentArticle & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AdvertiserContentArticleClass extends ArticleMixin(Resource) implements Partial<AdvertiserContentArticle> {
+  class AdvertiserContentArticleClass extends ArticleMixin(Resource) {
   }
-  return AdvertiserContentArticleClass
+  return AdvertiserContentArticleClass as any
 }
 
 class AdvertiserContentArticleImpl extends AdvertiserContentArticleMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface BedDetails<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   typeOfBedTerm: Schema.BedType | undefined;
 }
 
-export function BedDetailsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BedDetails> & RdfResourceCore> & Base {
+export function BedDetailsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BedDetails & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BedDetailsClass extends IntangibleMixin(Resource) implements Partial<BedDetails> {
+  class BedDetailsClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     numberOfBeds: number | undefined;
     @rdfine.property.literal()
@@ -24,7 +24,7 @@ export function BedDetailsMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property({ path: schema.typeOfBed })
     typeOfBedTerm: Schema.BedType | undefined;
   }
-  return BedDetailsClass
+  return BedDetailsClass as any
 }
 
 class BedDetailsImpl extends BedDetailsMixin(RdfResourceImpl) {

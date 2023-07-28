@@ -13,13 +13,13 @@ export interface MovieTheater<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   screenCount: number | undefined;
 }
 
-export function MovieTheaterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MovieTheater> & RdfResourceCore> & Base {
+export function MovieTheaterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MovieTheater & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MovieTheaterClass extends EntertainmentBusinessMixin(CivicStructureMixin(Resource)) implements Partial<MovieTheater> {
+  class MovieTheaterClass extends EntertainmentBusinessMixin(CivicStructureMixin(Resource)) {
     @rdfine.property.literal({ type: Number })
     screenCount: number | undefined;
   }
-  return MovieTheaterClass
+  return MovieTheaterClass as any
 }
 
 class MovieTheaterImpl extends MovieTheaterMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 export interface DryCleaningOrLaundry<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function DryCleaningOrLaundryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DryCleaningOrLaundry> & RdfResourceCore> & Base {
+export function DryCleaningOrLaundryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DryCleaningOrLaundry & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DryCleaningOrLaundryClass extends LocalBusinessMixin(Resource) implements Partial<DryCleaningOrLaundry> {
+  class DryCleaningOrLaundryClass extends LocalBusinessMixin(Resource) {
   }
-  return DryCleaningOrLaundryClass
+  return DryCleaningOrLaundryClass as any
 }
 
 class DryCleaningOrLaundryImpl extends DryCleaningOrLaundryMixin(RdfResourceImpl) {

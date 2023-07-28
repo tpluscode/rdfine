@@ -11,11 +11,11 @@ import { RoleMixin } from './Role.js';
 export interface Contributor<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Role<D>, rdfine.RdfResource<D> {
 }
 
-export function ContributorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Contributor> & RdfResourceCore> & Base {
+export function ContributorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Contributor & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class ContributorClass extends RoleMixin(Resource) implements Partial<Contributor> {
+  class ContributorClass extends RoleMixin(Resource) {
   }
-  return ContributorClass
+  return ContributorClass as any
 }
 
 class ContributorImpl extends ContributorMixin(RdfResourceImpl) {

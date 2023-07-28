@@ -246,7 +246,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
         type: 'Base',
       }],
       isExported: true,
-      returnType: `rdfine.Constructor<Partial<${this.type.localName}> & RdfResourceCore> & Base`,
+      returnType: `rdfine.Constructor<${this.type.localName} & RdfResourceCore> & Base`,
     })
 
     function isModuleExtending(superClass: ResourceType | ExternalResourceType) {
@@ -272,7 +272,6 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     const mixinClass = mixinFunction.addClass({
       name: className,
       extends: baseClass,
-      implements: [`Partial<${this.type.localName}>`],
     })
 
     mixinClass.addDecorator({
@@ -280,7 +279,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       arguments: [context.prefix],
     })
 
-    mixinFunction.addStatements('return ' + className)
+    mixinFunction.addStatements(`return ${className} as any`)
 
     return mixinClass
   }

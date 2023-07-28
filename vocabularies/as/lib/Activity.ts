@@ -18,9 +18,9 @@ export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends A
   verb: string | undefined;
 }
 
-export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Activity> & RdfResourceCore> & Base {
+export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Activity & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class ActivityClass extends ObjectMixin(Resource) implements Partial<Activity> {
+  class ActivityClass extends ObjectMixin(Resource) {
     @rdfine.property.resource()
     actor: As.Link | As.Object | undefined;
     @rdfine.property.resource()
@@ -36,7 +36,7 @@ export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.literal()
     verb: string | undefined;
   }
-  return ActivityClass
+  return ActivityClass as any
 }
 
 class ActivityImpl extends ActivityMixin(RdfResourceImpl) {

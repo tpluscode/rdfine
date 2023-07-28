@@ -11,11 +11,11 @@ import { LandformMixin } from './Landform.js';
 export interface Continent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Landform<D>, rdfine.RdfResource<D> {
 }
 
-export function ContinentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Continent> & RdfResourceCore> & Base {
+export function ContinentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Continent & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ContinentClass extends LandformMixin(Resource) implements Partial<Continent> {
+  class ContinentClass extends LandformMixin(Resource) {
   }
-  return ContinentClass
+  return ContinentClass as any
 }
 
 class ContinentImpl extends ContinentMixin(RdfResourceImpl) {

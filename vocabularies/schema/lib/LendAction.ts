@@ -12,13 +12,13 @@ export interface LendAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   borrower: Schema.Person<D> | undefined;
 }
 
-export function LendActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LendAction> & RdfResourceCore> & Base {
+export function LendActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LendAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LendActionClass extends TransferActionMixin(Resource) implements Partial<LendAction> {
+  class LendActionClass extends TransferActionMixin(Resource) {
     @rdfine.property.resource()
     borrower: Schema.Person | undefined;
   }
-  return LendActionClass
+  return LendActionClass as any
 }
 
 class LendActionImpl extends LendActionMixin(RdfResourceImpl) {

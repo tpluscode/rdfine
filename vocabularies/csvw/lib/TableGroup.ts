@@ -28,9 +28,9 @@ export interface TableGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   valueUrl: string | undefined;
 }
 
-export function TableGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TableGroup> & RdfResourceCore> & Base {
+export function TableGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TableGroup & RdfResourceCore> & Base {
   @rdfine.namespace(csvw)
-  class TableGroupClass extends Resource implements Partial<TableGroup> {
+  class TableGroupClass extends Resource {
     @rdfine.property.literal()
     aboutUrl: string | undefined;
     @rdfine.property.resource({ implicitTypes: [csvw.Datatype] })
@@ -68,7 +68,7 @@ export function TableGroupMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property.literal()
     valueUrl: string | undefined;
   }
-  return TableGroupClass
+  return TableGroupClass as any
 }
 
 class TableGroupImpl extends TableGroupMixin(RdfResourceImpl) {

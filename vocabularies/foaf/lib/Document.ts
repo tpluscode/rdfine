@@ -13,9 +13,9 @@ export interface Document<D extends RDF.DatasetCore = RDF.DatasetCore> extends r
   topic: RDF.NamedNode | undefined;
 }
 
-export function DocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Document> & RdfResourceCore> & Base {
+export function DocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Document & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
-  class DocumentClass extends Resource implements Partial<Document> {
+  class DocumentClass extends Resource {
     @rdfine.property()
     primaryTopic: RDF.NamedNode | undefined;
     @rdfine.property()
@@ -23,7 +23,7 @@ export function DocumentMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property()
     topic: RDF.NamedNode | undefined;
   }
-  return DocumentClass
+  return DocumentClass as any
 }
 
 class DocumentImpl extends DocumentMixin(RdfResourceImpl) {

@@ -20,9 +20,9 @@ export interface ServiceChannel<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   serviceUrl: RDF.NamedNode | undefined;
 }
 
-export function ServiceChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ServiceChannel> & RdfResourceCore> & Base {
+export function ServiceChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ServiceChannel & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ServiceChannelClass extends IntangibleMixin(Resource) implements Partial<ServiceChannel> {
+  class ServiceChannelClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     availableLanguage: Schema.Language | undefined;
     @rdfine.property.literal({ path: schema.availableLanguage })
@@ -42,7 +42,7 @@ export function ServiceChannelMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property()
     serviceUrl: RDF.NamedNode | undefined;
   }
-  return ServiceChannelClass
+  return ServiceChannelClass as any
 }
 
 class ServiceChannelImpl extends ServiceChannelMixin(RdfResourceImpl) {

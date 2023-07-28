@@ -11,11 +11,11 @@ import { FinancialServiceMixin } from './FinancialService.js';
 export interface AutomatedTeller<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialService<D>, rdfine.RdfResource<D> {
 }
 
-export function AutomatedTellerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AutomatedTeller> & RdfResourceCore> & Base {
+export function AutomatedTellerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AutomatedTeller & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AutomatedTellerClass extends FinancialServiceMixin(Resource) implements Partial<AutomatedTeller> {
+  class AutomatedTellerClass extends FinancialServiceMixin(Resource) {
   }
-  return AutomatedTellerClass
+  return AutomatedTellerClass as any
 }
 
 class AutomatedTellerImpl extends AutomatedTellerMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface TipAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function TipActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TipAction> & RdfResourceCore> & Base {
+export function TipActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TipAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TipActionClass extends TradeActionMixin(Resource) implements Partial<TipAction> {
+  class TipActionClass extends TradeActionMixin(Resource) {
     @rdfine.property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
-  return TipActionClass
+  return TipActionClass as any
 }
 
 class TipActionImpl extends TipActionMixin(RdfResourceImpl) {

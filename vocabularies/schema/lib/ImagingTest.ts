@@ -12,13 +12,13 @@ export interface ImagingTest<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   imagingTechnique: Schema.MedicalImagingTechnique | undefined;
 }
 
-export function ImagingTestMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ImagingTest> & RdfResourceCore> & Base {
+export function ImagingTestMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ImagingTest & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ImagingTestClass extends MedicalTestMixin(Resource) implements Partial<ImagingTest> {
+  class ImagingTestClass extends MedicalTestMixin(Resource) {
     @rdfine.property()
     imagingTechnique: Schema.MedicalImagingTechnique | undefined;
   }
-  return ImagingTestClass
+  return ImagingTestClass as any
 }
 
 class ImagingTestImpl extends ImagingTestMixin(RdfResourceImpl) {

@@ -14,11 +14,11 @@ import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 export interface DeprecatedProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, rdfine.RdfResource<D> {
 }
 
-export function DeprecatedPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DeprecatedProperty> & RdfResourceCore> & Base {
+export function DeprecatedPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DeprecatedProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class DeprecatedPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<DeprecatedProperty> {
+  class DeprecatedPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) {
   }
-  return DeprecatedPropertyClass
+  return DeprecatedPropertyClass as any
 }
 
 class DeprecatedPropertyImpl extends DeprecatedPropertyMixin(RdfResourceImpl) {

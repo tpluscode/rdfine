@@ -11,11 +11,11 @@ import { ObjectPropertyMixin } from './ObjectProperty.js';
 export interface AsymmetricProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, rdfine.RdfResource<D> {
 }
 
-export function AsymmetricPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AsymmetricProperty> & RdfResourceCore> & Base {
+export function AsymmetricPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AsymmetricProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class AsymmetricPropertyClass extends ObjectPropertyMixin(Resource) implements Partial<AsymmetricProperty> {
+  class AsymmetricPropertyClass extends ObjectPropertyMixin(Resource) {
   }
-  return AsymmetricPropertyClass
+  return AsymmetricPropertyClass as any
 }
 
 class AsymmetricPropertyImpl extends AsymmetricPropertyMixin(RdfResourceImpl) {

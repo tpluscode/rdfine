@@ -23,9 +23,9 @@ export interface PropertyValueSpecification<D extends RDF.DatasetCore = RDF.Data
   valueRequired: boolean | undefined;
 }
 
-export function PropertyValueSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PropertyValueSpecification> & RdfResourceCore> & Base {
+export function PropertyValueSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PropertyValueSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PropertyValueSpecificationClass extends IntangibleMixin(Resource) implements Partial<PropertyValueSpecification> {
+  class PropertyValueSpecificationClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     defaultValue: Schema.Thing | undefined;
     @rdfine.property.literal({ path: schema.defaultValue })
@@ -51,7 +51,7 @@ export function PropertyValueSpecificationMixin<Base extends rdfine.Constructor>
     @rdfine.property.literal({ type: Boolean })
     valueRequired: boolean | undefined;
   }
-  return PropertyValueSpecificationClass
+  return PropertyValueSpecificationClass as any
 }
 
 class PropertyValueSpecificationImpl extends PropertyValueSpecificationMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { OnlineAccountMixin } from './OnlineAccount.js';
 export interface OnlineChatAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.OnlineAccount<D>, rdfine.RdfResource<D> {
 }
 
-export function OnlineChatAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OnlineChatAccount> & RdfResourceCore> & Base {
+export function OnlineChatAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OnlineChatAccount & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
-  class OnlineChatAccountClass extends OnlineAccountMixin(Resource) implements Partial<OnlineChatAccount> {
+  class OnlineChatAccountClass extends OnlineAccountMixin(Resource) {
   }
-  return OnlineChatAccountClass
+  return OnlineChatAccountClass as any
 }
 
 class OnlineChatAccountImpl extends OnlineChatAccountMixin(RdfResourceImpl) {

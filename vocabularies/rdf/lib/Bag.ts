@@ -10,11 +10,11 @@ import type * as Rdf from '../index.js';
 export interface Bag<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function BagMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Bag> & RdfResourceCore> & Base {
+export function BagMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Bag & RdfResourceCore> & Base {
   @rdfine.namespace(rdf)
-  class BagClass extends Resource implements Partial<Bag> {
+  class BagClass extends Resource {
   }
-  return BagClass
+  return BagClass as any
 }
 
 class BagImpl extends BagMixin(RdfResourceImpl) {

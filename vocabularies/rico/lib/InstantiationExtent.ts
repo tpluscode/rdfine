@@ -11,11 +11,11 @@ import { ExtentMixin } from './Extent.js';
 export interface InstantiationExtent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Extent<D>, rdfine.RdfResource<D> {
 }
 
-export function InstantiationExtentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InstantiationExtent> & RdfResourceCore> & Base {
+export function InstantiationExtentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InstantiationExtent & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class InstantiationExtentClass extends ExtentMixin(Resource) implements Partial<InstantiationExtent> {
+  class InstantiationExtentClass extends ExtentMixin(Resource) {
   }
-  return InstantiationExtentClass
+  return InstantiationExtentClass as any
 }
 
 class InstantiationExtentImpl extends InstantiationExtentMixin(RdfResourceImpl) {

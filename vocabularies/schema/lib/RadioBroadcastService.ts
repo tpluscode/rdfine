@@ -11,11 +11,11 @@ import { BroadcastServiceMixin } from './BroadcastService.js';
 export interface RadioBroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BroadcastService<D>, rdfine.RdfResource<D> {
 }
 
-export function RadioBroadcastServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RadioBroadcastService> & RdfResourceCore> & Base {
+export function RadioBroadcastServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RadioBroadcastService & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RadioBroadcastServiceClass extends BroadcastServiceMixin(Resource) implements Partial<RadioBroadcastService> {
+  class RadioBroadcastServiceClass extends BroadcastServiceMixin(Resource) {
   }
-  return RadioBroadcastServiceClass
+  return RadioBroadcastServiceClass as any
 }
 
 class RadioBroadcastServiceImpl extends RadioBroadcastServiceMixin(RdfResourceImpl) {

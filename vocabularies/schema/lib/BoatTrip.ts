@@ -13,15 +13,15 @@ export interface BoatTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   departureBoatTerminal: Schema.BoatTerminal<D> | undefined;
 }
 
-export function BoatTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BoatTrip> & RdfResourceCore> & Base {
+export function BoatTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BoatTrip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BoatTripClass extends TripMixin(Resource) implements Partial<BoatTrip> {
+  class BoatTripClass extends TripMixin(Resource) {
     @rdfine.property.resource()
     arrivalBoatTerminal: Schema.BoatTerminal | undefined;
     @rdfine.property.resource()
     departureBoatTerminal: Schema.BoatTerminal | undefined;
   }
-  return BoatTripClass
+  return BoatTripClass as any
 }
 
 class BoatTripImpl extends BoatTripMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface TradeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   priceSpecification: Schema.PriceSpecification<D> | undefined;
 }
 
-export function TradeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TradeAction> & RdfResourceCore> & Base {
+export function TradeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TradeAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TradeActionClass extends ActionMixin(Resource) implements Partial<TradeAction> {
+  class TradeActionClass extends ActionMixin(Resource) {
     @rdfine.property.literal()
     price: number | string | undefined;
     @rdfine.property.literal()
@@ -24,7 +24,7 @@ export function TradeActionMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource()
     priceSpecification: Schema.PriceSpecification | undefined;
   }
-  return TradeActionClass
+  return TradeActionClass as any
 }
 
 class TradeActionImpl extends TradeActionMixin(RdfResourceImpl) {

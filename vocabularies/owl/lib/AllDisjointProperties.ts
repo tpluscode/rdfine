@@ -14,11 +14,11 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface AllDisjointProperties<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function AllDisjointPropertiesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AllDisjointProperties> & RdfResourceCore> & Base {
+export function AllDisjointPropertiesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AllDisjointProperties & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class AllDisjointPropertiesClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) implements Partial<AllDisjointProperties> {
+  class AllDisjointPropertiesClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) {
   }
-  return AllDisjointPropertiesClass
+  return AllDisjointPropertiesClass as any
 }
 
 class AllDisjointPropertiesImpl extends AllDisjointPropertiesMixin(RdfResourceImpl) {

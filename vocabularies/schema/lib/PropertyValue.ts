@@ -24,9 +24,9 @@ export interface PropertyValue<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   valueReferenceLiteral: string | undefined;
 }
 
-export function PropertyValueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PropertyValue> & RdfResourceCore> & Base {
+export function PropertyValueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PropertyValue & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PropertyValueClass extends StructuredValueMixin(Resource) implements Partial<PropertyValue> {
+  class PropertyValueClass extends StructuredValueMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     maxValue: number | undefined;
     @rdfine.property.literal()
@@ -54,7 +54,7 @@ export function PropertyValueMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.literal({ path: schema.valueReference })
     valueReferenceLiteral: string | undefined;
   }
-  return PropertyValueClass
+  return PropertyValueClass as any
 }
 
 class PropertyValueImpl extends PropertyValueMixin(RdfResourceImpl) {

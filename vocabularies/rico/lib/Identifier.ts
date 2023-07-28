@@ -13,15 +13,15 @@ export interface Identifier<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   isOrWasIdentifierOf: Rico.Thing<D> | undefined;
 }
 
-export function IdentifierMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Identifier> & RdfResourceCore> & Base {
+export function IdentifierMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Identifier & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class IdentifierClass extends AppellationMixin(Resource) implements Partial<Identifier> {
+  class IdentifierClass extends AppellationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.IdentifierType] })
     hasIdentifierType: Rico.IdentifierType | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isOrWasIdentifierOf: Rico.Thing | undefined;
   }
-  return IdentifierClass
+  return IdentifierClass as any
 }
 
 class IdentifierImpl extends IdentifierMixin(RdfResourceImpl) {

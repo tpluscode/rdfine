@@ -34,9 +34,9 @@ export interface VideoGameSeries<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function VideoGameSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<VideoGameSeries> & RdfResourceCore> & Base {
+export function VideoGameSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VideoGameSeries & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class VideoGameSeriesClass extends CreativeWorkSeriesMixin(Resource) implements Partial<VideoGameSeries> {
+  class VideoGameSeriesClass extends CreativeWorkSeriesMixin(Resource) {
     @rdfine.property.resource()
     actor: Schema.Person | undefined;
     @rdfine.property.resource()
@@ -84,7 +84,7 @@ export function VideoGameSeriesMixin<Base extends rdfine.Constructor>(Resource: 
     @rdfine.property.resource()
     trailer: Schema.VideoObject | undefined;
   }
-  return VideoGameSeriesClass
+  return VideoGameSeriesClass as any
 }
 
 class VideoGameSeriesImpl extends VideoGameSeriesMixin(RdfResourceImpl) {

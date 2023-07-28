@@ -13,13 +13,13 @@ export interface End<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.E
   hadActivity: Prov.Activity<D> | undefined;
 }
 
-export function EndMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<End> & RdfResourceCore> & Base {
+export function EndMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<End & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class EndClass extends InstantaneousEventMixin(EntityInfluenceMixin(Resource)) implements Partial<End> {
+  class EndClass extends InstantaneousEventMixin(EntityInfluenceMixin(Resource)) {
     @rdfine.property.resource({ implicitTypes: [prov.Activity] })
     hadActivity: Prov.Activity | undefined;
   }
-  return EndClass
+  return EndClass as any
 }
 
 class EndImpl extends EndMixin(RdfResourceImpl) {

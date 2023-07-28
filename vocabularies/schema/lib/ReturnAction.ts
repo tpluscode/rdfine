@@ -12,13 +12,13 @@ export interface ReturnAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function ReturnActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ReturnAction> & RdfResourceCore> & Base {
+export function ReturnActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReturnAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ReturnActionClass extends TransferActionMixin(Resource) implements Partial<ReturnAction> {
+  class ReturnActionClass extends TransferActionMixin(Resource) {
     @rdfine.property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
-  return ReturnActionClass
+  return ReturnActionClass as any
 }
 
 class ReturnActionImpl extends ReturnActionMixin(RdfResourceImpl) {

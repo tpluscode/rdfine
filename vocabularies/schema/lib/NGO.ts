@@ -11,11 +11,11 @@ import { OrganizationMixin } from './Organization.js';
 export interface NGO<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, rdfine.RdfResource<D> {
 }
 
-export function NGOMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NGO> & RdfResourceCore> & Base {
+export function NGOMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NGO & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class NGOClass extends OrganizationMixin(Resource) implements Partial<NGO> {
+  class NGOClass extends OrganizationMixin(Resource) {
   }
-  return NGOClass
+  return NGOClass as any
 }
 
 class NGOImpl extends NGOMixin(RdfResourceImpl) {

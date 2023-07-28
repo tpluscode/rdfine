@@ -31,9 +31,9 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foa
   workplaceHomepage: Foaf.Document<D> | undefined;
 }
 
-export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Person> & RdfResourceCore> & Base {
+export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Person & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
-  class PersonClass extends SpatialThingMixinEx(WgsSpatialThingMixin(AgentMixin(Resource))) implements Partial<Person> {
+  class PersonClass extends SpatialThingMixinEx(WgsSpatialThingMixin(AgentMixin(Resource))) {
     @rdfine.property()
     currentProject: RDF.NamedNode | undefined;
     @rdfine.property()
@@ -67,7 +67,7 @@ export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.resource({ implicitTypes: [foaf.Document] })
     workplaceHomepage: Foaf.Document | undefined;
   }
-  return PersonClass
+  return PersonClass as any
 }
 
 class PersonImpl extends PersonMixin(RdfResourceImpl) {

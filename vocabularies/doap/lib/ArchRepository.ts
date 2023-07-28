@@ -12,13 +12,13 @@ export interface ArchRepository<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   module: RDF.Term | undefined;
 }
 
-export function ArchRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ArchRepository> & RdfResourceCore> & Base {
+export function ArchRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ArchRepository & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
-  class ArchRepositoryClass extends RepositoryMixin(Resource) implements Partial<ArchRepository> {
+  class ArchRepositoryClass extends RepositoryMixin(Resource) {
     @rdfine.property()
     module: RDF.Term | undefined;
   }
-  return ArchRepositoryClass
+  return ArchRepositoryClass as any
 }
 
 class ArchRepositoryImpl extends ArchRepositoryMixin(RdfResourceImpl) {

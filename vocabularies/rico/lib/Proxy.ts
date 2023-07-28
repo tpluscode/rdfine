@@ -13,15 +13,15 @@ export interface Proxy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico
   proxyIn: Rico.RecordSet<D> | undefined;
 }
 
-export function ProxyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Proxy> & RdfResourceCore> & Base {
+export function ProxyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Proxy & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class ProxyClass extends ConceptMixin(Resource) implements Partial<Proxy> {
+  class ProxyClass extends ConceptMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.RecordResource] })
     proxyFor: Rico.RecordResource | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     proxyIn: Rico.RecordSet | undefined;
   }
-  return ProxyClass
+  return ProxyClass as any
 }
 
 class ProxyImpl extends ProxyMixin(RdfResourceImpl) {

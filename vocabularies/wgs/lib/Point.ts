@@ -11,11 +11,11 @@ import { SpatialThingMixin } from './SpatialThing.js';
 export interface Point<D extends RDF.DatasetCore = RDF.DatasetCore> extends Wgs.SpatialThing<D>, rdfine.RdfResource<D> {
 }
 
-export function PointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Point> & RdfResourceCore> & Base {
+export function PointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Point & RdfResourceCore> & Base {
   @rdfine.namespace(wgs)
-  class PointClass extends SpatialThingMixin(Resource) implements Partial<Point> {
+  class PointClass extends SpatialThingMixin(Resource) {
   }
-  return PointClass
+  return PointClass as any
 }
 
 class PointImpl extends PointMixin(RdfResourceImpl) {

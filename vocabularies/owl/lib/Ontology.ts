@@ -19,9 +19,9 @@ export interface Ontology<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   versionIRI: Owl.Ontology<D> | undefined;
 }
 
-export function OntologyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Ontology> & RdfResourceCore> & Base {
+export function OntologyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Ontology & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class OntologyClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) implements Partial<Ontology> {
+  class OntologyClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) {
     @rdfine.property.resource({ as: [OntologyMixin] })
     backwardCompatibleWith: Owl.Ontology | undefined;
     @rdfine.property.resource({ as: [OntologyMixin] })
@@ -33,7 +33,7 @@ export function OntologyMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.resource({ as: [OntologyMixin] })
     versionIRI: Owl.Ontology | undefined;
   }
-  return OntologyClass
+  return OntologyClass as any
 }
 
 class OntologyImpl extends OntologyMixin(RdfResourceImpl) {

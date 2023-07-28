@@ -11,11 +11,11 @@ import { CreateActionMixin } from './CreateAction.js';
 export interface DrawAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, rdfine.RdfResource<D> {
 }
 
-export function DrawActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DrawAction> & RdfResourceCore> & Base {
+export function DrawActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DrawAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DrawActionClass extends CreateActionMixin(Resource) implements Partial<DrawAction> {
+  class DrawActionClass extends CreateActionMixin(Resource) {
   }
-  return DrawActionClass
+  return DrawActionClass as any
 }
 
 class DrawActionImpl extends DrawActionMixin(RdfResourceImpl) {

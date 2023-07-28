@@ -12,11 +12,11 @@ import { CoverArtMixin } from './CoverArt.js';
 export interface ComicCoverArt<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ComicStory<D>, Schema.CoverArt<D>, rdfine.RdfResource<D> {
 }
 
-export function ComicCoverArtMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ComicCoverArt> & RdfResourceCore> & Base {
+export function ComicCoverArtMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ComicCoverArt & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ComicCoverArtClass extends CoverArtMixin(ComicStoryMixin(Resource)) implements Partial<ComicCoverArt> {
+  class ComicCoverArtClass extends CoverArtMixin(ComicStoryMixin(Resource)) {
   }
-  return ComicCoverArtClass
+  return ComicCoverArtClass as any
 }
 
 class ComicCoverArtImpl extends ComicCoverArtMixin(RdfResourceImpl) {

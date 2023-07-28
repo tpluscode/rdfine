@@ -11,11 +11,11 @@ import { OrganizeActionMixin } from './OrganizeAction.js';
 export interface ApplyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OrganizeAction<D>, rdfine.RdfResource<D> {
 }
 
-export function ApplyActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ApplyAction> & RdfResourceCore> & Base {
+export function ApplyActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ApplyAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ApplyActionClass extends OrganizeActionMixin(Resource) implements Partial<ApplyAction> {
+  class ApplyActionClass extends OrganizeActionMixin(Resource) {
   }
-  return ApplyActionClass
+  return ApplyActionClass as any
 }
 
 class ApplyActionImpl extends ApplyActionMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface CompoundPriceSpecification<D extends RDF.DatasetCore = RDF.Data
   priceTypeTerm: Schema.PriceTypeEnumeration | undefined;
 }
 
-export function CompoundPriceSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CompoundPriceSpecification> & RdfResourceCore> & Base {
+export function CompoundPriceSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CompoundPriceSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CompoundPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<CompoundPriceSpecification> {
+  class CompoundPriceSpecificationClass extends PriceSpecificationMixin(Resource) {
     @rdfine.property.resource()
     priceComponent: Schema.UnitPriceSpecification | undefined;
     @rdfine.property.literal()
@@ -24,7 +24,7 @@ export function CompoundPriceSpecificationMixin<Base extends rdfine.Constructor>
     @rdfine.property({ path: schema.priceType })
     priceTypeTerm: Schema.PriceTypeEnumeration | undefined;
   }
-  return CompoundPriceSpecificationClass
+  return CompoundPriceSpecificationClass as any
 }
 
 class CompoundPriceSpecificationImpl extends CompoundPriceSpecificationMixin(RdfResourceImpl) {

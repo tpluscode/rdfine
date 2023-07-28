@@ -12,13 +12,13 @@ export interface CategoryCodeSet<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   hasCategoryCode: Schema.CategoryCode<D> | undefined;
 }
 
-export function CategoryCodeSetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CategoryCodeSet> & RdfResourceCore> & Base {
+export function CategoryCodeSetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CategoryCodeSet & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CategoryCodeSetClass extends DefinedTermSetMixin(Resource) implements Partial<CategoryCodeSet> {
+  class CategoryCodeSetClass extends DefinedTermSetMixin(Resource) {
     @rdfine.property.resource()
     hasCategoryCode: Schema.CategoryCode | undefined;
   }
-  return CategoryCodeSetClass
+  return CategoryCodeSetClass as any
 }
 
 class CategoryCodeSetImpl extends CategoryCodeSetMixin(RdfResourceImpl) {

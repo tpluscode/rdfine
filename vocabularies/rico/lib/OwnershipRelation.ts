@@ -13,15 +13,15 @@ export interface OwnershipRelation<D extends RDF.DatasetCore = RDF.DatasetCore> 
   ownershipRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function OwnershipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OwnershipRelation> & RdfResourceCore> & Base {
+export function OwnershipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OwnershipRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class OwnershipRelationClass extends AuthorityRelationMixin(Resource) implements Partial<OwnershipRelation> {
+  class OwnershipRelationClass extends AuthorityRelationMixin(Resource) {
     @rdfine.property.resource()
     ownershipRelationHasSource: Rico.Group | Rico.Person | Rico.Position | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     ownershipRelationHasTarget: Rico.Thing | undefined;
   }
-  return OwnershipRelationClass
+  return OwnershipRelationClass as any
 }
 
 class OwnershipRelationImpl extends OwnershipRelationMixin(RdfResourceImpl) {

@@ -35,9 +35,9 @@ export interface MerchantReturnPolicy<D extends RDF.DatasetCore = RDF.DatasetCor
   returnShippingFeesAmount: Schema.MonetaryAmount<D> | undefined;
 }
 
-export function MerchantReturnPolicyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MerchantReturnPolicy> & RdfResourceCore> & Base {
+export function MerchantReturnPolicyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MerchantReturnPolicy & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MerchantReturnPolicyClass extends IntangibleMixin(Resource) implements Partial<MerchantReturnPolicy> {
+  class MerchantReturnPolicyClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     additionalProperty: Schema.PropertyValue | undefined;
     @rdfine.property.resource()
@@ -87,7 +87,7 @@ export function MerchantReturnPolicyMixin<Base extends rdfine.Constructor>(Resou
     @rdfine.property.resource()
     returnShippingFeesAmount: Schema.MonetaryAmount | undefined;
   }
-  return MerchantReturnPolicyClass
+  return MerchantReturnPolicyClass as any
 }
 
 class MerchantReturnPolicyImpl extends MerchantReturnPolicyMixin(RdfResourceImpl) {

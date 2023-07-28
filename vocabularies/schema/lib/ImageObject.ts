@@ -18,9 +18,9 @@ export interface ImageObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   thumbnail: Schema.ImageObject<D> | undefined;
 }
 
-export function ImageObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ImageObject> & RdfResourceCore> & Base {
+export function ImageObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ImageObject & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ImageObjectClass extends MediaObjectMixin(Resource) implements Partial<ImageObject> {
+  class ImageObjectClass extends MediaObjectMixin(Resource) {
     @rdfine.property.resource()
     caption: Schema.MediaObject | undefined;
     @rdfine.property.literal({ path: schema.caption })
@@ -36,7 +36,7 @@ export function ImageObjectMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource()
     thumbnail: Schema.ImageObject | undefined;
   }
-  return ImageObjectClass
+  return ImageObjectClass as any
 }
 
 class ImageObjectImpl extends ImageObjectMixin(RdfResourceImpl) {

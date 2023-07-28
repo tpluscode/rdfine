@@ -13,15 +13,15 @@ export interface MenuSection<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   hasMenuSection: Schema.MenuSection<D> | undefined;
 }
 
-export function MenuSectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MenuSection> & RdfResourceCore> & Base {
+export function MenuSectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MenuSection & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MenuSectionClass extends CreativeWorkMixin(Resource) implements Partial<MenuSection> {
+  class MenuSectionClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     hasMenuItem: Schema.MenuItem | undefined;
     @rdfine.property.resource()
     hasMenuSection: Schema.MenuSection | undefined;
   }
-  return MenuSectionClass
+  return MenuSectionClass as any
 }
 
 class MenuSectionImpl extends MenuSectionMixin(RdfResourceImpl) {

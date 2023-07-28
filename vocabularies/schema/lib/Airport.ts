@@ -13,15 +13,15 @@ export interface Airport<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   icaoCode: string | undefined;
 }
 
-export function AirportMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Airport> & RdfResourceCore> & Base {
+export function AirportMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Airport & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AirportClass extends CivicStructureMixin(Resource) implements Partial<Airport> {
+  class AirportClass extends CivicStructureMixin(Resource) {
     @rdfine.property.literal()
     iataCode: string | undefined;
     @rdfine.property.literal()
     icaoCode: string | undefined;
   }
-  return AirportClass
+  return AirportClass as any
 }
 
 class AirportImpl extends AirportMixin(RdfResourceImpl) {

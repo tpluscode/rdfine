@@ -13,15 +13,15 @@ export interface DigitalDocumentPermission<D extends RDF.DatasetCore = RDF.Datas
   permissionType: Schema.DigitalDocumentPermissionType | undefined;
 }
 
-export function DigitalDocumentPermissionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DigitalDocumentPermission> & RdfResourceCore> & Base {
+export function DigitalDocumentPermissionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DigitalDocumentPermission & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DigitalDocumentPermissionClass extends IntangibleMixin(Resource) implements Partial<DigitalDocumentPermission> {
+  class DigitalDocumentPermissionClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     grantee: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
     @rdfine.property()
     permissionType: Schema.DigitalDocumentPermissionType | undefined;
   }
-  return DigitalDocumentPermissionClass
+  return DigitalDocumentPermissionClass as any
 }
 
 class DigitalDocumentPermissionImpl extends DigitalDocumentPermissionMixin(RdfResourceImpl) {

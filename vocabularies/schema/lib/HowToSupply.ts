@@ -13,15 +13,15 @@ export interface HowToSupply<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   estimatedCostLiteral: string | undefined;
 }
 
-export function HowToSupplyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HowToSupply> & RdfResourceCore> & Base {
+export function HowToSupplyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowToSupply & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HowToSupplyClass extends HowToItemMixin(Resource) implements Partial<HowToSupply> {
+  class HowToSupplyClass extends HowToItemMixin(Resource) {
     @rdfine.property.resource()
     estimatedCost: Schema.MonetaryAmount | undefined;
     @rdfine.property.literal({ path: schema.estimatedCost })
     estimatedCostLiteral: string | undefined;
   }
-  return HowToSupplyClass
+  return HowToSupplyClass as any
 }
 
 class HowToSupplyImpl extends HowToSupplyMixin(RdfResourceImpl) {

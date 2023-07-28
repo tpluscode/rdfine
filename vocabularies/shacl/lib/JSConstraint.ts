@@ -11,11 +11,11 @@ import { JSExecutableMixin } from './JSExecutable.js';
 export interface JSConstraint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, rdfine.RdfResource<D> {
 }
 
-export function JSConstraintMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JSConstraint> & RdfResourceCore> & Base {
+export function JSConstraintMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JSConstraint & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class JSConstraintClass extends JSExecutableMixin(Resource) implements Partial<JSConstraint> {
+  class JSConstraintClass extends JSExecutableMixin(Resource) {
   }
-  return JSConstraintClass
+  return JSConstraintClass as any
 }
 
 class JSConstraintImpl extends JSConstraintMixin(RdfResourceImpl) {

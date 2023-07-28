@@ -12,13 +12,13 @@ export interface RepresentationType<D extends RDF.DatasetCore = RDF.DatasetCore>
   isRepresentationTypeOf: Rico.Instantiation<D> | undefined;
 }
 
-export function RepresentationTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RepresentationType> & RdfResourceCore> & Base {
+export function RepresentationTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RepresentationType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RepresentationTypeClass extends TypeMixin(Resource) implements Partial<RepresentationType> {
+  class RepresentationTypeClass extends TypeMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     isRepresentationTypeOf: Rico.Instantiation | undefined;
   }
-  return RepresentationTypeClass
+  return RepresentationTypeClass as any
 }
 
 class RepresentationTypeImpl extends RepresentationTypeMixin(RdfResourceImpl) {

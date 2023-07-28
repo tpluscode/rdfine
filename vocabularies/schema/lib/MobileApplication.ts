@@ -12,13 +12,13 @@ export interface MobileApplication<D extends RDF.DatasetCore = RDF.DatasetCore> 
   carrierRequirements: string | undefined;
 }
 
-export function MobileApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MobileApplication> & RdfResourceCore> & Base {
+export function MobileApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MobileApplication & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MobileApplicationClass extends SoftwareApplicationMixin(Resource) implements Partial<MobileApplication> {
+  class MobileApplicationClass extends SoftwareApplicationMixin(Resource) {
     @rdfine.property.literal()
     carrierRequirements: string | undefined;
   }
-  return MobileApplicationClass
+  return MobileApplicationClass as any
 }
 
 class MobileApplicationImpl extends MobileApplicationMixin(RdfResourceImpl) {

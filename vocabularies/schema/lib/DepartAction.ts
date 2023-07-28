@@ -11,11 +11,11 @@ import { MoveActionMixin } from './MoveAction.js';
 export interface DepartAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MoveAction<D>, rdfine.RdfResource<D> {
 }
 
-export function DepartActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DepartAction> & RdfResourceCore> & Base {
+export function DepartActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DepartAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DepartActionClass extends MoveActionMixin(Resource) implements Partial<DepartAction> {
+  class DepartActionClass extends MoveActionMixin(Resource) {
   }
-  return DepartActionClass
+  return DepartActionClass as any
 }
 
 class DepartActionImpl extends DepartActionMixin(RdfResourceImpl) {

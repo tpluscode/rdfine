@@ -16,9 +16,9 @@ export interface HealthPlanCostSharingSpecification<D extends RDF.DatasetCore = 
   healthPlanPharmacyCategory: string | undefined;
 }
 
-export function HealthPlanCostSharingSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HealthPlanCostSharingSpecification> & RdfResourceCore> & Base {
+export function HealthPlanCostSharingSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HealthPlanCostSharingSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HealthPlanCostSharingSpecificationClass extends IntangibleMixin(Resource) implements Partial<HealthPlanCostSharingSpecification> {
+  class HealthPlanCostSharingSpecificationClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal()
     healthPlanCoinsuranceOption: string | undefined;
     @rdfine.property.literal({ type: Number })
@@ -30,7 +30,7 @@ export function HealthPlanCostSharingSpecificationMixin<Base extends rdfine.Cons
     @rdfine.property.literal()
     healthPlanPharmacyCategory: string | undefined;
   }
-  return HealthPlanCostSharingSpecificationClass
+  return HealthPlanCostSharingSpecificationClass as any
 }
 
 class HealthPlanCostSharingSpecificationImpl extends HealthPlanCostSharingSpecificationMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface WebAPI<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   documentation: Schema.CreativeWork<D> | undefined;
 }
 
-export function WebAPIMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WebAPI> & RdfResourceCore> & Base {
+export function WebAPIMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WebAPI & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WebAPIClass extends ServiceMixin(Resource) implements Partial<WebAPI> {
+  class WebAPIClass extends ServiceMixin(Resource) {
     @rdfine.property.resource()
     documentation: Schema.CreativeWork | undefined;
   }
-  return WebAPIClass
+  return WebAPIClass as any
 }
 
 class WebAPIImpl extends WebAPIMixin(RdfResourceImpl) {

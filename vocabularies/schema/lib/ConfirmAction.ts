@@ -11,11 +11,11 @@ import { InformActionMixin } from './InformAction.js';
 export interface ConfirmAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InformAction<D>, rdfine.RdfResource<D> {
 }
 
-export function ConfirmActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ConfirmAction> & RdfResourceCore> & Base {
+export function ConfirmActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ConfirmAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ConfirmActionClass extends InformActionMixin(Resource) implements Partial<ConfirmAction> {
+  class ConfirmActionClass extends InformActionMixin(Resource) {
   }
-  return ConfirmActionClass
+  return ConfirmActionClass as any
 }
 
 class ConfirmActionImpl extends ConfirmActionMixin(RdfResourceImpl) {

@@ -13,9 +13,9 @@ export interface Status<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdf
   title: string | undefined;
 }
 
-export function StatusMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Status> & RdfResourceCore> & Base {
+export function StatusMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Status & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class StatusClass extends Resource implements Partial<Status> {
+  class StatusClass extends Resource {
     @rdfine.property.literal()
     description: string | undefined;
     @rdfine.property.literal({ type: Number })
@@ -23,7 +23,7 @@ export function StatusMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.literal()
     title: string | undefined;
   }
-  return StatusClass
+  return StatusClass as any
 }
 
 class StatusImpl extends StatusMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { BroadcastChannelMixin } from './BroadcastChannel.js';
 export interface RadioChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BroadcastChannel<D>, rdfine.RdfResource<D> {
 }
 
-export function RadioChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RadioChannel> & RdfResourceCore> & Base {
+export function RadioChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RadioChannel & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RadioChannelClass extends BroadcastChannelMixin(Resource) implements Partial<RadioChannel> {
+  class RadioChannelClass extends BroadcastChannelMixin(Resource) {
   }
-  return RadioChannelClass
+  return RadioChannelClass as any
 }
 
 class RadioChannelImpl extends RadioChannelMixin(RdfResourceImpl) {

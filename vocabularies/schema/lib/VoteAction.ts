@@ -12,13 +12,13 @@ export interface VoteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   candidate: Schema.Person<D> | undefined;
 }
 
-export function VoteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<VoteAction> & RdfResourceCore> & Base {
+export function VoteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VoteAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class VoteActionClass extends ChooseActionMixin(Resource) implements Partial<VoteAction> {
+  class VoteActionClass extends ChooseActionMixin(Resource) {
     @rdfine.property.resource()
     candidate: Schema.Person | undefined;
   }
-  return VoteActionClass
+  return VoteActionClass as any
 }
 
 class VoteActionImpl extends VoteActionMixin(RdfResourceImpl) {

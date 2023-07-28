@@ -13,15 +13,15 @@ export interface TypeRelation<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   typeRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function TypeRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TypeRelation> & RdfResourceCore> & Base {
+export function TypeRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TypeRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class TypeRelationClass extends RelationMixin(Resource) implements Partial<TypeRelation> {
+  class TypeRelationClass extends RelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Type] })
     typeRelationHasSource: Rico.Type | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     typeRelationHasTarget: Rico.Thing | undefined;
   }
-  return TypeRelationClass
+  return TypeRelationClass as any
 }
 
 class TypeRelationImpl extends TypeRelationMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { FinancialServiceMixin } from './FinancialService.js';
 export interface BankOrCreditUnion<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialService<D>, rdfine.RdfResource<D> {
 }
 
-export function BankOrCreditUnionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BankOrCreditUnion> & RdfResourceCore> & Base {
+export function BankOrCreditUnionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BankOrCreditUnion & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BankOrCreditUnionClass extends FinancialServiceMixin(Resource) implements Partial<BankOrCreditUnion> {
+  class BankOrCreditUnionClass extends FinancialServiceMixin(Resource) {
   }
-  return BankOrCreditUnionClass
+  return BankOrCreditUnionClass as any
 }
 
 class BankOrCreditUnionImpl extends BankOrCreditUnionMixin(RdfResourceImpl) {

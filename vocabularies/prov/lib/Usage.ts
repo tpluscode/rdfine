@@ -12,11 +12,11 @@ import { InstantaneousEventMixin } from './InstantaneousEvent.js';
 export interface Usage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.EntityInfluence<D>, Prov.InstantaneousEvent<D>, rdfine.RdfResource<D> {
 }
 
-export function UsageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Usage> & RdfResourceCore> & Base {
+export function UsageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Usage & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class UsageClass extends InstantaneousEventMixin(EntityInfluenceMixin(Resource)) implements Partial<Usage> {
+  class UsageClass extends InstantaneousEventMixin(EntityInfluenceMixin(Resource)) {
   }
-  return UsageClass
+  return UsageClass as any
 }
 
 class UsageImpl extends UsageMixin(RdfResourceImpl) {

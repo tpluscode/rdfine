@@ -22,9 +22,9 @@ export interface ActionAccessSpecification<D extends RDF.DatasetCore = RDF.Datas
   requiresSubscriptionLiteral: boolean | undefined;
 }
 
-export function ActionAccessSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ActionAccessSpecification> & RdfResourceCore> & Base {
+export function ActionAccessSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ActionAccessSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ActionAccessSpecificationClass extends IntangibleMixin(Resource) implements Partial<ActionAccessSpecification> {
+  class ActionAccessSpecificationClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal({ type: Date })
     availabilityEnds: Date | undefined;
     @rdfine.property.literal({ type: Date })
@@ -48,7 +48,7 @@ export function ActionAccessSpecificationMixin<Base extends rdfine.Constructor>(
     @rdfine.property.literal({ path: schema.requiresSubscription, type: Boolean })
     requiresSubscriptionLiteral: boolean | undefined;
   }
-  return ActionAccessSpecificationClass
+  return ActionAccessSpecificationClass as any
 }
 
 class ActionAccessSpecificationImpl extends ActionAccessSpecificationMixin(RdfResourceImpl) {

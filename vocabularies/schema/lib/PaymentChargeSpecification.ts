@@ -13,15 +13,15 @@ export interface PaymentChargeSpecification<D extends RDF.DatasetCore = RDF.Data
   appliesToPaymentMethod: Schema.PaymentMethod | undefined;
 }
 
-export function PaymentChargeSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PaymentChargeSpecification> & RdfResourceCore> & Base {
+export function PaymentChargeSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PaymentChargeSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PaymentChargeSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<PaymentChargeSpecification> {
+  class PaymentChargeSpecificationClass extends PriceSpecificationMixin(Resource) {
     @rdfine.property()
     appliesToDeliveryMethod: Schema.DeliveryMethod | undefined;
     @rdfine.property()
     appliesToPaymentMethod: Schema.PaymentMethod | undefined;
   }
-  return PaymentChargeSpecificationClass
+  return PaymentChargeSpecificationClass as any
 }
 
 class PaymentChargeSpecificationImpl extends PaymentChargeSpecificationMixin(RdfResourceImpl) {

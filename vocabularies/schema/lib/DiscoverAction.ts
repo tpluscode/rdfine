@@ -11,11 +11,11 @@ import { FindActionMixin } from './FindAction.js';
 export interface DiscoverAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FindAction<D>, rdfine.RdfResource<D> {
 }
 
-export function DiscoverActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DiscoverAction> & RdfResourceCore> & Base {
+export function DiscoverActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DiscoverAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DiscoverActionClass extends FindActionMixin(Resource) implements Partial<DiscoverAction> {
+  class DiscoverActionClass extends FindActionMixin(Resource) {
   }
-  return DiscoverActionClass
+  return DiscoverActionClass as any
 }
 
 class DiscoverActionImpl extends DiscoverActionMixin(RdfResourceImpl) {

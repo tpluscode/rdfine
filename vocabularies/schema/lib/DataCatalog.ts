@@ -14,9 +14,9 @@ export interface DataCatalog<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   measurementTechniqueTerm: RDF.NamedNode | undefined;
 }
 
-export function DataCatalogMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DataCatalog> & RdfResourceCore> & Base {
+export function DataCatalogMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DataCatalog & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DataCatalogClass extends CreativeWorkMixin(Resource) implements Partial<DataCatalog> {
+  class DataCatalogClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     dataset: Schema.Dataset | undefined;
     @rdfine.property.literal()
@@ -24,7 +24,7 @@ export function DataCatalogMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property({ path: schema.measurementTechnique })
     measurementTechniqueTerm: RDF.NamedNode | undefined;
   }
-  return DataCatalogClass
+  return DataCatalogClass as any
 }
 
 class DataCatalogImpl extends DataCatalogMixin(RdfResourceImpl) {

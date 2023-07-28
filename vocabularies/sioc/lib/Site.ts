@@ -13,15 +13,15 @@ export interface Site<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc.
   'host_of': Sioc.Container<D> | undefined;
 }
 
-export function SiteMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Site> & RdfResourceCore> & Base {
+export function SiteMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Site & RdfResourceCore> & Base {
   @rdfine.namespace(sioc)
-  class SiteClass extends SpaceMixin(Resource) implements Partial<Site> {
+  class SiteClass extends SpaceMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [sioc.UserAccount] })
     'has_administrator': Sioc.UserAccount | undefined;
     @rdfine.property.resource({ implicitTypes: [sioc.Container] })
     'host_of': Sioc.Container | undefined;
   }
-  return SiteClass
+  return SiteClass as any
 }
 
 class SiteImpl extends SiteMixin(RdfResourceImpl) {

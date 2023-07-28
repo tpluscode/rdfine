@@ -11,11 +11,11 @@ import { HealthAndBeautyBusinessMixin } from './HealthAndBeautyBusiness.js';
 export interface TattooParlor<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HealthAndBeautyBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function TattooParlorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TattooParlor> & RdfResourceCore> & Base {
+export function TattooParlorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TattooParlor & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TattooParlorClass extends HealthAndBeautyBusinessMixin(Resource) implements Partial<TattooParlor> {
+  class TattooParlorClass extends HealthAndBeautyBusinessMixin(Resource) {
   }
-  return TattooParlorClass
+  return TattooParlorClass as any
 }
 
 class TattooParlorImpl extends TattooParlorMixin(RdfResourceImpl) {

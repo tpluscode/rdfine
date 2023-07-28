@@ -12,13 +12,13 @@ export interface CivicStructure<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   openingHours: string | undefined;
 }
 
-export function CivicStructureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CivicStructure> & RdfResourceCore> & Base {
+export function CivicStructureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CivicStructure & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CivicStructureClass extends PlaceMixin(Resource) implements Partial<CivicStructure> {
+  class CivicStructureClass extends PlaceMixin(Resource) {
     @rdfine.property.literal()
     openingHours: string | undefined;
   }
-  return CivicStructureClass
+  return CivicStructureClass as any
 }
 
 class CivicStructureImpl extends CivicStructureMixin(RdfResourceImpl) {

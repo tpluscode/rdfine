@@ -11,11 +11,11 @@ import { VideoObjectMixin } from './VideoObject.js';
 export interface VideoObjectSnapshot<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.VideoObject<D>, rdfine.RdfResource<D> {
 }
 
-export function VideoObjectSnapshotMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<VideoObjectSnapshot> & RdfResourceCore> & Base {
+export function VideoObjectSnapshotMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VideoObjectSnapshot & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class VideoObjectSnapshotClass extends VideoObjectMixin(Resource) implements Partial<VideoObjectSnapshot> {
+  class VideoObjectSnapshotClass extends VideoObjectMixin(Resource) {
   }
-  return VideoObjectSnapshotClass
+  return VideoObjectSnapshotClass as any
 }
 
 class VideoObjectSnapshotImpl extends VideoObjectSnapshotMixin(RdfResourceImpl) {

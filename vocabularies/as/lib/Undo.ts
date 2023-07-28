@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Undo<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function UndoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Undo> & RdfResourceCore> & Base {
+export function UndoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Undo & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class UndoClass extends ActivityMixin(Resource) implements Partial<Undo> {
+  class UndoClass extends ActivityMixin(Resource) {
   }
-  return UndoClass
+  return UndoClass as any
 }
 
 class UndoImpl extends UndoMixin(RdfResourceImpl) {

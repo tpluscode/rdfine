@@ -13,15 +13,15 @@ export interface EventRelation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   eventRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function EventRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EventRelation> & RdfResourceCore> & Base {
+export function EventRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EventRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class EventRelationClass extends RelationMixin(Resource) implements Partial<EventRelation> {
+  class EventRelationClass extends RelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Event] })
     eventRelationHasSource: Rico.Event | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     eventRelationHasTarget: Rico.Thing | undefined;
   }
-  return EventRelationClass
+  return EventRelationClass as any
 }
 
 class EventRelationImpl extends EventRelationMixin(RdfResourceImpl) {

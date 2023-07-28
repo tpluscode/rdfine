@@ -11,11 +11,11 @@ import { ContributeMixin } from './Contribute.js';
 export interface Create<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Contribute<D>, rdfine.RdfResource<D> {
 }
 
-export function CreateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Create> & RdfResourceCore> & Base {
+export function CreateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Create & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class CreateClass extends ContributeMixin(Resource) implements Partial<Create> {
+  class CreateClass extends ContributeMixin(Resource) {
   }
-  return CreateClass
+  return CreateClass as any
 }
 
 class CreateImpl extends CreateMixin(RdfResourceImpl) {

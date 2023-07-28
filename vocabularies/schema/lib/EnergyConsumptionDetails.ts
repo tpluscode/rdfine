@@ -14,9 +14,9 @@ export interface EnergyConsumptionDetails<D extends RDF.DatasetCore = RDF.Datase
   hasEnergyEfficiencyCategory: Schema.EnergyEfficiencyEnumeration | undefined;
 }
 
-export function EnergyConsumptionDetailsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EnergyConsumptionDetails> & RdfResourceCore> & Base {
+export function EnergyConsumptionDetailsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EnergyConsumptionDetails & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class EnergyConsumptionDetailsClass extends IntangibleMixin(Resource) implements Partial<EnergyConsumptionDetails> {
+  class EnergyConsumptionDetailsClass extends IntangibleMixin(Resource) {
     @rdfine.property()
     energyEfficiencyScaleMax: Schema.EUEnergyEfficiencyEnumeration | undefined;
     @rdfine.property()
@@ -24,7 +24,7 @@ export function EnergyConsumptionDetailsMixin<Base extends rdfine.Constructor>(R
     @rdfine.property()
     hasEnergyEfficiencyCategory: Schema.EnergyEfficiencyEnumeration | undefined;
   }
-  return EnergyConsumptionDetailsClass
+  return EnergyConsumptionDetailsClass as any
 }
 
 class EnergyConsumptionDetailsImpl extends EnergyConsumptionDetailsMixin(RdfResourceImpl) {

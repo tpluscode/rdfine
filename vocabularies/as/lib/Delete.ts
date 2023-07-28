@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Delete<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function DeleteMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Delete> & RdfResourceCore> & Base {
+export function DeleteMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Delete & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class DeleteClass extends ActivityMixin(Resource) implements Partial<Delete> {
+  class DeleteClass extends ActivityMixin(Resource) {
   }
-  return DeleteClass
+  return DeleteClass as any
 }
 
 class DeleteImpl extends DeleteMixin(RdfResourceImpl) {

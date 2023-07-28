@@ -12,11 +12,11 @@ import { MedicalTherapyMixin } from './MedicalTherapy.js';
 export interface PalliativeProcedure<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalProcedure<D>, Schema.MedicalTherapy<D>, rdfine.RdfResource<D> {
 }
 
-export function PalliativeProcedureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PalliativeProcedure> & RdfResourceCore> & Base {
+export function PalliativeProcedureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PalliativeProcedure & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PalliativeProcedureClass extends MedicalTherapyMixin(MedicalProcedureMixin(Resource)) implements Partial<PalliativeProcedure> {
+  class PalliativeProcedureClass extends MedicalTherapyMixin(MedicalProcedureMixin(Resource)) {
   }
-  return PalliativeProcedureClass
+  return PalliativeProcedureClass as any
 }
 
 class PalliativeProcedureImpl extends PalliativeProcedureMixin(RdfResourceImpl) {

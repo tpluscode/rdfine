@@ -16,9 +16,9 @@ export interface APIReference<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   targetPlatform: string | undefined;
 }
 
-export function APIReferenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<APIReference> & RdfResourceCore> & Base {
+export function APIReferenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<APIReference & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class APIReferenceClass extends TechArticleMixin(Resource) implements Partial<APIReference> {
+  class APIReferenceClass extends TechArticleMixin(Resource) {
     @rdfine.property.literal()
     assembly: string | undefined;
     @rdfine.property.literal()
@@ -30,7 +30,7 @@ export function APIReferenceMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.literal()
     targetPlatform: string | undefined;
   }
-  return APIReferenceClass
+  return APIReferenceClass as any
 }
 
 class APIReferenceImpl extends APIReferenceMixin(RdfResourceImpl) {

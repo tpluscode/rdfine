@@ -11,11 +11,11 @@ import { ClipMixin } from './Clip.js';
 export interface RadioClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Clip<D>, rdfine.RdfResource<D> {
 }
 
-export function RadioClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RadioClip> & RdfResourceCore> & Base {
+export function RadioClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RadioClip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RadioClipClass extends ClipMixin(Resource) implements Partial<RadioClip> {
+  class RadioClipClass extends ClipMixin(Resource) {
   }
-  return RadioClipClass
+  return RadioClipClass as any
 }
 
 class RadioClipImpl extends RadioClipMixin(RdfResourceImpl) {

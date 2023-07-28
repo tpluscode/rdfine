@@ -12,11 +12,11 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface TestEnvironment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function TestEnvironmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TestEnvironment> & RdfResourceCore> & Base {
+export function TestEnvironmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TestEnvironment & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class TestEnvironmentClass extends RdfsResourceMixin(Resource) implements Partial<TestEnvironment> {
+  class TestEnvironmentClass extends RdfsResourceMixin(Resource) {
   }
-  return TestEnvironmentClass
+  return TestEnvironmentClass as any
 }
 
 class TestEnvironmentImpl extends TestEnvironmentMixin(RdfResourceImpl) {

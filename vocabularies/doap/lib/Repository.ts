@@ -14,9 +14,9 @@ export interface Repository<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   repositoryOf: Doap.Project<D> | undefined;
 }
 
-export function RepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Repository> & RdfResourceCore> & Base {
+export function RepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Repository & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
-  class RepositoryClass extends Resource implements Partial<Repository> {
+  class RepositoryClass extends Resource {
     @rdfine.property()
     'anon-root': RDF.Literal | undefined;
     @rdfine.property()
@@ -26,7 +26,7 @@ export function RepositoryMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property.resource({ implicitTypes: [doap.Project] })
     repositoryOf: Doap.Project | undefined;
   }
-  return RepositoryClass
+  return RepositoryClass as any
 }
 
 class RepositoryImpl extends RepositoryMixin(RdfResourceImpl) {

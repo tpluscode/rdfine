@@ -22,9 +22,9 @@ export interface WebPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   specialty: Schema.Specialty | undefined;
 }
 
-export function WebPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WebPage> & RdfResourceCore> & Base {
+export function WebPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WebPage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WebPageClass extends CreativeWorkMixin(Resource) implements Partial<WebPage> {
+  class WebPageClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     breadcrumb: Schema.BreadcrumbList | undefined;
     @rdfine.property.literal({ path: schema.breadcrumb })
@@ -48,7 +48,7 @@ export function WebPageMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property()
     specialty: Schema.Specialty | undefined;
   }
-  return WebPageClass
+  return WebPageClass as any
 }
 
 class WebPageImpl extends WebPageMixin(RdfResourceImpl) {

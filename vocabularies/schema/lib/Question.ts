@@ -15,9 +15,9 @@ export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   suggestedAnswer: Schema.Answer<D> | Schema.ItemList<D> | undefined;
 }
 
-export function QuestionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Question> & RdfResourceCore> & Base {
+export function QuestionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Question & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class QuestionClass extends CommentMixin(Resource) implements Partial<Question> {
+  class QuestionClass extends CommentMixin(Resource) {
     @rdfine.property.resource()
     acceptedAnswer: Schema.Answer | Schema.ItemList | undefined;
     @rdfine.property.literal({ type: Number })
@@ -27,7 +27,7 @@ export function QuestionMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.resource()
     suggestedAnswer: Schema.Answer | Schema.ItemList | undefined;
   }
-  return QuestionClass
+  return QuestionClass as any
 }
 
 class QuestionImpl extends QuestionMixin(RdfResourceImpl) {

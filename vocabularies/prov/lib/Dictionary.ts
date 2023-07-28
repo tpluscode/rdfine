@@ -15,9 +15,9 @@ export interface Dictionary<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   qualifiedRemoval: Array<Prov.Removal<D>>;
 }
 
-export function DictionaryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Dictionary> & RdfResourceCore> & Base {
+export function DictionaryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Dictionary & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class DictionaryClass extends Resource implements Partial<Dictionary> {
+  class DictionaryClass extends Resource {
     @rdfine.property.resource({ as: [DictionaryMixin] })
     derivedByInsertionFrom: Prov.Dictionary | undefined;
     @rdfine.property.resource({ as: [DictionaryMixin] })
@@ -29,7 +29,7 @@ export function DictionaryMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property.resource({ values: 'array', implicitTypes: [prov.Removal] })
     qualifiedRemoval!: Array<Prov.Removal>;
   }
-  return DictionaryClass
+  return DictionaryClass as any
 }
 
 class DictionaryImpl extends DictionaryMixin(RdfResourceImpl) {

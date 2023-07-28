@@ -12,13 +12,13 @@ export interface CorrespondenceRelation<D extends RDF.DatasetCore = RDF.DatasetC
   correspondenceRelationConnects: Rico.Person<D> | undefined;
 }
 
-export function CorrespondenceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CorrespondenceRelation> & RdfResourceCore> & Base {
+export function CorrespondenceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CorrespondenceRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class CorrespondenceRelationClass extends KnowingRelationMixin(Resource) implements Partial<CorrespondenceRelation> {
+  class CorrespondenceRelationClass extends KnowingRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     correspondenceRelationConnects: Rico.Person | undefined;
   }
-  return CorrespondenceRelationClass
+  return CorrespondenceRelationClass as any
 }
 
 class CorrespondenceRelationImpl extends CorrespondenceRelationMixin(RdfResourceImpl) {

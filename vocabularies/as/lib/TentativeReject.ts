@@ -11,11 +11,11 @@ import { RejectMixin } from './Reject.js';
 export interface TentativeReject<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Reject<D>, rdfine.RdfResource<D> {
 }
 
-export function TentativeRejectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TentativeReject> & RdfResourceCore> & Base {
+export function TentativeRejectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TentativeReject & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class TentativeRejectClass extends RejectMixin(Resource) implements Partial<TentativeReject> {
+  class TentativeRejectClass extends RejectMixin(Resource) {
   }
-  return TentativeRejectClass
+  return TentativeRejectClass as any
 }
 
 class TentativeRejectImpl extends TentativeRejectMixin(RdfResourceImpl) {

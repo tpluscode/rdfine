@@ -11,11 +11,11 @@ import { BodyOfWaterMixin } from './BodyOfWater.js';
 export interface Pond<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BodyOfWater<D>, rdfine.RdfResource<D> {
 }
 
-export function PondMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Pond> & RdfResourceCore> & Base {
+export function PondMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Pond & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PondClass extends BodyOfWaterMixin(Resource) implements Partial<Pond> {
+  class PondClass extends BodyOfWaterMixin(Resource) {
   }
-  return PondClass
+  return PondClass as any
 }
 
 class PondImpl extends PondMixin(RdfResourceImpl) {

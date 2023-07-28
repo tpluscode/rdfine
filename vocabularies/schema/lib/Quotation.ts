@@ -12,13 +12,13 @@ export interface Quotation<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   spokenByCharacter: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function QuotationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Quotation> & RdfResourceCore> & Base {
+export function QuotationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Quotation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class QuotationClass extends CreativeWorkMixin(Resource) implements Partial<Quotation> {
+  class QuotationClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     spokenByCharacter: Schema.Organization | Schema.Person | undefined;
   }
-  return QuotationClass
+  return QuotationClass as any
 }
 
 class QuotationImpl extends QuotationMixin(RdfResourceImpl) {

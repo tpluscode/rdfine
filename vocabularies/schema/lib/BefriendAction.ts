@@ -11,11 +11,11 @@ import { InteractActionMixin } from './InteractAction.js';
 export interface BefriendAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, rdfine.RdfResource<D> {
 }
 
-export function BefriendActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BefriendAction> & RdfResourceCore> & Base {
+export function BefriendActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BefriendAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BefriendActionClass extends InteractActionMixin(Resource) implements Partial<BefriendAction> {
+  class BefriendActionClass extends InteractActionMixin(Resource) {
   }
-  return BefriendActionClass
+  return BefriendActionClass as any
 }
 
 class BefriendActionImpl extends BefriendActionMixin(RdfResourceImpl) {

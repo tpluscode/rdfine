@@ -12,13 +12,13 @@ export interface Thesis<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   inSupportOf: string | undefined;
 }
 
-export function ThesisMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Thesis> & RdfResourceCore> & Base {
+export function ThesisMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Thesis & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ThesisClass extends CreativeWorkMixin(Resource) implements Partial<Thesis> {
+  class ThesisClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal()
     inSupportOf: string | undefined;
   }
-  return ThesisClass
+  return ThesisClass as any
 }
 
 class ThesisImpl extends ThesisMixin(RdfResourceImpl) {

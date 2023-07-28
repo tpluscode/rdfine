@@ -11,11 +11,11 @@ import { WebPageElementMixin } from './WebPageElement.js';
 export interface WPFooter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, rdfine.RdfResource<D> {
 }
 
-export function WPFooterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WPFooter> & RdfResourceCore> & Base {
+export function WPFooterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WPFooter & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WPFooterClass extends WebPageElementMixin(Resource) implements Partial<WPFooter> {
+  class WPFooterClass extends WebPageElementMixin(Resource) {
   }
-  return WPFooterClass
+  return WPFooterClass as any
 }
 
 class WPFooterImpl extends WPFooterMixin(RdfResourceImpl) {

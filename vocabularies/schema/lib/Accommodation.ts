@@ -28,9 +28,9 @@ export interface Accommodation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   yearBuilt: number | undefined;
 }
 
-export function AccommodationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Accommodation> & RdfResourceCore> & Base {
+export function AccommodationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Accommodation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AccommodationClass extends PlaceMixin(Resource) implements Partial<Accommodation> {
+  class AccommodationClass extends PlaceMixin(Resource) {
     @rdfine.property.literal()
     accommodationCategory: string | undefined;
     @rdfine.property.resource()
@@ -66,7 +66,7 @@ export function AccommodationMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.literal({ type: Number })
     yearBuilt: number | undefined;
   }
-  return AccommodationClass
+  return AccommodationClass as any
 }
 
 class AccommodationImpl extends AccommodationMixin(RdfResourceImpl) {

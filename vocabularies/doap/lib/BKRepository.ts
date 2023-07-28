@@ -12,13 +12,13 @@ export interface BKRepository<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   module: RDF.Term | undefined;
 }
 
-export function BKRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BKRepository> & RdfResourceCore> & Base {
+export function BKRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BKRepository & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
-  class BKRepositoryClass extends RepositoryMixin(Resource) implements Partial<BKRepository> {
+  class BKRepositoryClass extends RepositoryMixin(Resource) {
     @rdfine.property()
     module: RDF.Term | undefined;
   }
-  return BKRepositoryClass
+  return BKRepositoryClass as any
 }
 
 class BKRepositoryImpl extends BKRepositoryMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface DocumentaryFormType<D extends RDF.DatasetCore = RDF.DatasetCore
   isOrWasDocumentaryFormTypeOfSomeMembersOf: Rico.RecordSet<D> | undefined;
 }
 
-export function DocumentaryFormTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DocumentaryFormType> & RdfResourceCore> & Base {
+export function DocumentaryFormTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DocumentaryFormType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class DocumentaryFormTypeClass extends TypeMixin(Resource) implements Partial<DocumentaryFormType> {
+  class DocumentaryFormTypeClass extends TypeMixin(Resource) {
     @rdfine.property.resource()
     isDocumentaryFormTypeOf: Rico.Record | Rico.RecordPart | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
@@ -24,7 +24,7 @@ export function DocumentaryFormTypeMixin<Base extends rdfine.Constructor>(Resour
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isOrWasDocumentaryFormTypeOfSomeMembersOf: Rico.RecordSet | undefined;
   }
-  return DocumentaryFormTypeClass
+  return DocumentaryFormTypeClass as any
 }
 
 class DocumentaryFormTypeImpl extends DocumentaryFormTypeMixin(RdfResourceImpl) {

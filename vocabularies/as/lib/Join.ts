@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Join<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function JoinMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Join> & RdfResourceCore> & Base {
+export function JoinMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Join & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class JoinClass extends ActivityMixin(Resource) implements Partial<Join> {
+  class JoinClass extends ActivityMixin(Resource) {
   }
-  return JoinClass
+  return JoinClass as any
 }
 
 class JoinImpl extends JoinMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { ReactActionMixin } from './ReactAction.js';
 export interface AgreeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ReactAction<D>, rdfine.RdfResource<D> {
 }
 
-export function AgreeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AgreeAction> & RdfResourceCore> & Base {
+export function AgreeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgreeAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AgreeActionClass extends ReactActionMixin(Resource) implements Partial<AgreeAction> {
+  class AgreeActionClass extends ReactActionMixin(Resource) {
   }
-  return AgreeActionClass
+  return AgreeActionClass as any
 }
 
 class AgreeActionImpl extends AgreeActionMixin(RdfResourceImpl) {

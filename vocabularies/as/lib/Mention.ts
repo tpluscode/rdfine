@@ -11,11 +11,11 @@ import { LinkMixin } from './Link.js';
 export interface Mention<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Link<D>, rdfine.RdfResource<D> {
 }
 
-export function MentionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Mention> & RdfResourceCore> & Base {
+export function MentionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Mention & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class MentionClass extends LinkMixin(Resource) implements Partial<Mention> {
+  class MentionClass extends LinkMixin(Resource) {
   }
-  return MentionClass
+  return MentionClass as any
 }
 
 class MentionImpl extends MentionMixin(RdfResourceImpl) {

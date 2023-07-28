@@ -11,11 +11,11 @@ import { MediaObjectMixin } from './MediaObject.js';
 export interface MusicVideoObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, rdfine.RdfResource<D> {
 }
 
-export function MusicVideoObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MusicVideoObject> & RdfResourceCore> & Base {
+export function MusicVideoObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MusicVideoObject & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MusicVideoObjectClass extends MediaObjectMixin(Resource) implements Partial<MusicVideoObject> {
+  class MusicVideoObjectClass extends MediaObjectMixin(Resource) {
   }
-  return MusicVideoObjectClass
+  return MusicVideoObjectClass as any
 }
 
 class MusicVideoObjectImpl extends MusicVideoObjectMixin(RdfResourceImpl) {

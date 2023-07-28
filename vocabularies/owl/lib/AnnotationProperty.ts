@@ -14,11 +14,11 @@ import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 export interface AnnotationProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, rdfine.RdfResource<D> {
 }
 
-export function AnnotationPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AnnotationProperty> & RdfResourceCore> & Base {
+export function AnnotationPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AnnotationProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class AnnotationPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<AnnotationProperty> {
+  class AnnotationPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) {
   }
-  return AnnotationPropertyClass
+  return AnnotationPropertyClass as any
 }
 
 class AnnotationPropertyImpl extends AnnotationPropertyMixin(RdfResourceImpl) {

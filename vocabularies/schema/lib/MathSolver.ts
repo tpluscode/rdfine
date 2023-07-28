@@ -13,15 +13,15 @@ export interface MathSolver<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   mathExpressionLiteral: string | undefined;
 }
 
-export function MathSolverMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MathSolver> & RdfResourceCore> & Base {
+export function MathSolverMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MathSolver & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MathSolverClass extends CreativeWorkMixin(Resource) implements Partial<MathSolver> {
+  class MathSolverClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     mathExpression: Schema.SolveMathAction | undefined;
     @rdfine.property.literal({ path: schema.mathExpression })
     mathExpressionLiteral: string | undefined;
   }
-  return MathSolverClass
+  return MathSolverClass as any
 }
 
 class MathSolverImpl extends MathSolverMixin(RdfResourceImpl) {

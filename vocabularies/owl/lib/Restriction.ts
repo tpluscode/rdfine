@@ -32,9 +32,9 @@ export interface Restriction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   someValuesFrom: Rdfs.Class<D> | undefined;
 }
 
-export function RestrictionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Restriction> & RdfResourceCore> & Base {
+export function RestrictionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Restriction & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class RestrictionClass extends ClassMixin(Resource) implements Partial<Restriction> {
+  class RestrictionClass extends ClassMixin(Resource) {
     @rdfine.property.resource({ as: [RdfsClassMixin] })
     allValuesFrom: Rdfs.Class | undefined;
     @rdfine.property.literal({ type: Number })
@@ -64,7 +64,7 @@ export function RestrictionMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource({ as: [RdfsClassMixin] })
     someValuesFrom: Rdfs.Class | undefined;
   }
-  return RestrictionClass
+  return RestrictionClass as any
 }
 
 class RestrictionImpl extends RestrictionMixin(RdfResourceImpl) {

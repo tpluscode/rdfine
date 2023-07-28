@@ -14,9 +14,9 @@ export interface PublicationEvent<D extends RDF.DatasetCore = RDF.DatasetCore> e
   publishedOn: Schema.BroadcastService<D> | undefined;
 }
 
-export function PublicationEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PublicationEvent> & RdfResourceCore> & Base {
+export function PublicationEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PublicationEvent & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PublicationEventClass extends EventMixin(Resource) implements Partial<PublicationEvent> {
+  class PublicationEventClass extends EventMixin(Resource) {
     @rdfine.property.literal({ type: Boolean })
     free: boolean | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function PublicationEventMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.resource()
     publishedOn: Schema.BroadcastService | undefined;
   }
-  return PublicationEventClass
+  return PublicationEventClass as any
 }
 
 class PublicationEventImpl extends PublicationEventMixin(RdfResourceImpl) {

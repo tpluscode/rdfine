@@ -75,9 +75,9 @@ export interface Product<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function ProductMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Product> & RdfResourceCore> & Base {
+export function ProductMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Product & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ProductClass extends ThingMixin(Resource) implements Partial<Product> {
+  class ProductClass extends ThingMixin(Resource) {
     @rdfine.property.resource()
     additionalProperty: Schema.PropertyValue | undefined;
     @rdfine.property.resource()
@@ -207,7 +207,7 @@ export function ProductMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property.resource()
     width: Schema.Distance | Schema.QuantitativeValue | undefined;
   }
-  return ProductClass
+  return ProductClass as any
 }
 
 class ProductImpl extends ProductMixin(RdfResourceImpl) {

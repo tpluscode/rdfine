@@ -12,13 +12,13 @@ export interface Guide<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   reviewAspect: string | undefined;
 }
 
-export function GuideMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Guide> & RdfResourceCore> & Base {
+export function GuideMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Guide & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class GuideClass extends CreativeWorkMixin(Resource) implements Partial<Guide> {
+  class GuideClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal()
     reviewAspect: string | undefined;
   }
-  return GuideClass
+  return GuideClass as any
 }
 
 class GuideImpl extends GuideMixin(RdfResourceImpl) {

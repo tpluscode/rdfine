@@ -28,9 +28,9 @@ export interface Date<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.
   textualValue: RDF.Literal | undefined;
 }
 
-export function DateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Date> & RdfResourceCore> & Base {
+export function DateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Date & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class DateClass extends ThingMixin(Resource) implements Partial<Date> {
+  class DateClass extends ThingMixin(Resource) {
     @rdfine.property()
     calendar: RDF.Literal | undefined;
     @rdfine.property()
@@ -66,7 +66,7 @@ export function DateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property()
     textualValue: RDF.Literal | undefined;
   }
-  return DateClass
+  return DateClass as any
 }
 
 class DateImpl extends DateMixin(RdfResourceImpl) {

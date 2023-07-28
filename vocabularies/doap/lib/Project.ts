@@ -46,9 +46,9 @@ export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends Fo
   wiki: RDF.NamedNode | undefined;
 }
 
-export function ProjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Project> & RdfResourceCore> & Base {
+export function ProjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Project & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
-  class ProjectClass extends FoafProjectMixin(Resource) implements Partial<Project> {
+  class ProjectClass extends FoafProjectMixin(Resource) {
     @rdfine.property()
     audience: RDF.Literal | undefined;
     @rdfine.property.resource({ as: [RdfsResourceMixin] })
@@ -106,7 +106,7 @@ export function ProjectMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property()
     wiki: RDF.NamedNode | undefined;
   }
-  return ProjectClass
+  return ProjectClass as any
 }
 
 class ProjectImpl extends ProjectMixin(RdfResourceImpl) {

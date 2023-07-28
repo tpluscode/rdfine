@@ -14,9 +14,9 @@ export interface ProductModel<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   successorOf: Schema.ProductModel<D> | undefined;
 }
 
-export function ProductModelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ProductModel> & RdfResourceCore> & Base {
+export function ProductModelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ProductModel & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ProductModelClass extends ProductMixin(Resource) implements Partial<ProductModel> {
+  class ProductModelClass extends ProductMixin(Resource) {
     @rdfine.property.resource()
     isVariantOf: Schema.ProductGroup | Schema.ProductModel | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function ProductModelMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.resource()
     successorOf: Schema.ProductModel | undefined;
   }
-  return ProductModelClass
+  return ProductModelClass as any
 }
 
 class ProductModelImpl extends ProductModelMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface ProductGroup<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   variesBy: string | undefined;
 }
 
-export function ProductGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ProductGroup> & RdfResourceCore> & Base {
+export function ProductGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ProductGroup & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ProductGroupClass extends ProductMixin(Resource) implements Partial<ProductGroup> {
+  class ProductGroupClass extends ProductMixin(Resource) {
     @rdfine.property.resource()
     hasVariant: Schema.Product | undefined;
     @rdfine.property.literal()
@@ -24,7 +24,7 @@ export function ProductGroupMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.literal()
     variesBy: string | undefined;
   }
-  return ProductGroupClass
+  return ProductGroupClass as any
 }
 
 class ProductGroupImpl extends ProductGroupMixin(RdfResourceImpl) {

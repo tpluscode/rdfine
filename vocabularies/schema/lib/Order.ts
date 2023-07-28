@@ -33,9 +33,9 @@ export interface Order<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   seller: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function OrderMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Order> & RdfResourceCore> & Base {
+export function OrderMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Order & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OrderClass extends IntangibleMixin(Resource) implements Partial<Order> {
+  class OrderClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     acceptedOffer: Schema.Offer | undefined;
     @rdfine.property.resource()
@@ -81,7 +81,7 @@ export function OrderMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource()
     seller: Schema.Organization | Schema.Person | undefined;
   }
-  return OrderClass
+  return OrderClass as any
 }
 
 class OrderImpl extends OrderMixin(RdfResourceImpl) {

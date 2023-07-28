@@ -12,11 +12,11 @@ import { SportsActivityLocationMixin } from './SportsActivityLocation.js';
 export interface StadiumOrArena<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.SportsActivityLocation<D>, rdfine.RdfResource<D> {
 }
 
-export function StadiumOrArenaMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<StadiumOrArena> & RdfResourceCore> & Base {
+export function StadiumOrArenaMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<StadiumOrArena & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class StadiumOrArenaClass extends SportsActivityLocationMixin(CivicStructureMixin(Resource)) implements Partial<StadiumOrArena> {
+  class StadiumOrArenaClass extends SportsActivityLocationMixin(CivicStructureMixin(Resource)) {
   }
-  return StadiumOrArenaClass
+  return StadiumOrArenaClass as any
 }
 
 class StadiumOrArenaImpl extends StadiumOrArenaMixin(RdfResourceImpl) {

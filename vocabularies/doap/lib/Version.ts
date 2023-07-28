@@ -14,9 +14,9 @@ export interface Version<D extends RDF.DatasetCore = RDF.DatasetCore> extends rd
   revision: RDF.Literal | undefined;
 }
 
-export function VersionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Version> & RdfResourceCore> & Base {
+export function VersionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Version & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
-  class VersionClass extends Resource implements Partial<Version> {
+  class VersionClass extends Resource {
     @rdfine.property()
     'file-release': RDF.Term | undefined;
     @rdfine.property()
@@ -26,7 +26,7 @@ export function VersionMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property()
     revision: RDF.Literal | undefined;
   }
-  return VersionClass
+  return VersionClass as any
 }
 
 class VersionImpl extends VersionMixin(RdfResourceImpl) {

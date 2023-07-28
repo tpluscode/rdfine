@@ -13,9 +13,9 @@ export interface InstantaneousEvent<D extends RDF.DatasetCore = RDF.DatasetCore>
   hadRole: Prov.Role<D> | undefined;
 }
 
-export function InstantaneousEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InstantaneousEvent> & RdfResourceCore> & Base {
+export function InstantaneousEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InstantaneousEvent & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class InstantaneousEventClass extends Resource implements Partial<InstantaneousEvent> {
+  class InstantaneousEventClass extends Resource {
     @rdfine.property.resource({ implicitTypes: [prov.Location] })
     atLocation: Prov.Location | undefined;
     @rdfine.property.literal({ type: Date })
@@ -23,7 +23,7 @@ export function InstantaneousEventMixin<Base extends rdfine.Constructor>(Resourc
     @rdfine.property.resource({ implicitTypes: [prov.Role] })
     hadRole: Prov.Role | undefined;
   }
-  return InstantaneousEventClass
+  return InstantaneousEventClass as any
 }
 
 class InstantaneousEventImpl extends InstantaneousEventMixin(RdfResourceImpl) {

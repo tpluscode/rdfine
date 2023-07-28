@@ -11,11 +11,11 @@ import { MedicalEntityMixin } from './MedicalEntity.js';
 export interface LifestyleModification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, rdfine.RdfResource<D> {
 }
 
-export function LifestyleModificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LifestyleModification> & RdfResourceCore> & Base {
+export function LifestyleModificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LifestyleModification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LifestyleModificationClass extends MedicalEntityMixin(Resource) implements Partial<LifestyleModification> {
+  class LifestyleModificationClass extends MedicalEntityMixin(Resource) {
   }
-  return LifestyleModificationClass
+  return LifestyleModificationClass as any
 }
 
 class LifestyleModificationImpl extends LifestyleModificationMixin(RdfResourceImpl) {

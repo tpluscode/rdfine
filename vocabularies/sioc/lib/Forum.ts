@@ -13,15 +13,15 @@ export interface Forum<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc
   'num_threads': number | undefined;
 }
 
-export function ForumMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Forum> & RdfResourceCore> & Base {
+export function ForumMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Forum & RdfResourceCore> & Base {
   @rdfine.namespace(sioc)
-  class ForumClass extends ContainerMixin(Resource) implements Partial<Forum> {
+  class ForumClass extends ContainerMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [sioc.UserAccount] })
     'has_moderator': Sioc.UserAccount | undefined;
     @rdfine.property.literal({ type: Number })
     'num_threads': number | undefined;
   }
-  return ForumClass
+  return ForumClass as any
 }
 
 class ForumImpl extends ForumMixin(RdfResourceImpl) {

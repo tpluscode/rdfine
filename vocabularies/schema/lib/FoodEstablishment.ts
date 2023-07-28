@@ -19,9 +19,9 @@ export interface FoodEstablishment<D extends RDF.DatasetCore = RDF.DatasetCore> 
   starRating: Schema.Rating<D> | undefined;
 }
 
-export function FoodEstablishmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FoodEstablishment> & RdfResourceCore> & Base {
+export function FoodEstablishmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FoodEstablishment & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class FoodEstablishmentClass extends LocalBusinessMixin(Resource) implements Partial<FoodEstablishment> {
+  class FoodEstablishmentClass extends LocalBusinessMixin(Resource) {
     @rdfine.property.literal()
     acceptsReservations: boolean | string | undefined;
     @rdfine.property({ path: schema.acceptsReservations })
@@ -39,7 +39,7 @@ export function FoodEstablishmentMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property.resource()
     starRating: Schema.Rating | undefined;
   }
-  return FoodEstablishmentClass
+  return FoodEstablishmentClass as any
 }
 
 class FoodEstablishmentImpl extends FoodEstablishmentMixin(RdfResourceImpl) {

@@ -17,9 +17,9 @@ export interface DefinedRegion<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   postalCodeRange: Schema.PostalCodeRangeSpecification<D> | undefined;
 }
 
-export function DefinedRegionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DefinedRegion> & RdfResourceCore> & Base {
+export function DefinedRegionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DefinedRegion & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DefinedRegionClass extends StructuredValueMixin(Resource) implements Partial<DefinedRegion> {
+  class DefinedRegionClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     addressCountry: Schema.Country | undefined;
     @rdfine.property.literal({ path: schema.addressCountry })
@@ -33,7 +33,7 @@ export function DefinedRegionMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.resource()
     postalCodeRange: Schema.PostalCodeRangeSpecification | undefined;
   }
-  return DefinedRegionClass
+  return DefinedRegionClass as any
 }
 
 class DefinedRegionImpl extends DefinedRegionMixin(RdfResourceImpl) {

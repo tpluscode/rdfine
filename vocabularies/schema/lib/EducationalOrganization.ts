@@ -13,13 +13,13 @@ export interface EducationalOrganization<D extends RDF.DatasetCore = RDF.Dataset
   alumni: Schema.Person<D> | undefined;
 }
 
-export function EducationalOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EducationalOrganization> & RdfResourceCore> & Base {
+export function EducationalOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EducationalOrganization & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class EducationalOrganizationClass extends OrganizationMixin(CivicStructureMixin(Resource)) implements Partial<EducationalOrganization> {
+  class EducationalOrganizationClass extends OrganizationMixin(CivicStructureMixin(Resource)) {
     @rdfine.property.resource()
     alumni: Schema.Person | undefined;
   }
-  return EducationalOrganizationClass
+  return EducationalOrganizationClass as any
 }
 
 class EducationalOrganizationImpl extends EducationalOrganizationMixin(RdfResourceImpl) {

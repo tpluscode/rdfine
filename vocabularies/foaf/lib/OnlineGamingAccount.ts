@@ -11,11 +11,11 @@ import { OnlineAccountMixin } from './OnlineAccount.js';
 export interface OnlineGamingAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.OnlineAccount<D>, rdfine.RdfResource<D> {
 }
 
-export function OnlineGamingAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OnlineGamingAccount> & RdfResourceCore> & Base {
+export function OnlineGamingAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OnlineGamingAccount & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
-  class OnlineGamingAccountClass extends OnlineAccountMixin(Resource) implements Partial<OnlineGamingAccount> {
+  class OnlineGamingAccountClass extends OnlineAccountMixin(Resource) {
   }
-  return OnlineGamingAccountClass
+  return OnlineGamingAccountClass as any
 }
 
 class OnlineGamingAccountImpl extends OnlineGamingAccountMixin(RdfResourceImpl) {

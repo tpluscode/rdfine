@@ -13,15 +13,15 @@ export interface WarrantyPromise<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   warrantyScope: Schema.WarrantyScope | undefined;
 }
 
-export function WarrantyPromiseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WarrantyPromise> & RdfResourceCore> & Base {
+export function WarrantyPromiseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WarrantyPromise & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WarrantyPromiseClass extends StructuredValueMixin(Resource) implements Partial<WarrantyPromise> {
+  class WarrantyPromiseClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     durationOfWarranty: Schema.QuantitativeValue | undefined;
     @rdfine.property()
     warrantyScope: Schema.WarrantyScope | undefined;
   }
-  return WarrantyPromiseClass
+  return WarrantyPromiseClass as any
 }
 
 class WarrantyPromiseImpl extends WarrantyPromiseMixin(RdfResourceImpl) {

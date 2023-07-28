@@ -14,9 +14,9 @@ export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends r
   seeAlso: Array<Rdfs.Resource<D>>;
 }
 
-export function ResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Resource> & RdfResourceCore> & Base {
+export function ResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Resource & RdfResourceCore> & Base {
   @rdfine.namespace(rdfs)
-  class ResourceClass extends Resource implements Partial<Resource> {
+  class ResourceClass extends Resource {
     @rdfine.property.literal()
     comment: string | undefined;
     @rdfine.property.resource({ as: [ResourceMixin] })
@@ -26,7 +26,7 @@ export function ResourceMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.resource({ values: 'array', as: [ResourceMixin] })
     seeAlso!: Array<Rdfs.Resource>;
   }
-  return ResourceClass
+  return ResourceClass as any
 }
 
 class ResourceImpl extends ResourceMixin(RdfResourceImpl) {

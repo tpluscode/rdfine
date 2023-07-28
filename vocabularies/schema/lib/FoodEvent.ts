@@ -11,11 +11,11 @@ import { EventMixin } from './Event.js';
 export interface FoodEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
 }
 
-export function FoodEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FoodEvent> & RdfResourceCore> & Base {
+export function FoodEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FoodEvent & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class FoodEventClass extends EventMixin(Resource) implements Partial<FoodEvent> {
+  class FoodEventClass extends EventMixin(Resource) {
   }
-  return FoodEventClass
+  return FoodEventClass as any
 }
 
 class FoodEventImpl extends FoodEventMixin(RdfResourceImpl) {

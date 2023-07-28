@@ -11,11 +11,11 @@ import { StoreMixin } from './Store.js';
 export interface LiquorStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
-export function LiquorStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LiquorStore> & RdfResourceCore> & Base {
+export function LiquorStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LiquorStore & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LiquorStoreClass extends StoreMixin(Resource) implements Partial<LiquorStore> {
+  class LiquorStoreClass extends StoreMixin(Resource) {
   }
-  return LiquorStoreClass
+  return LiquorStoreClass as any
 }
 
 class LiquorStoreImpl extends LiquorStoreMixin(RdfResourceImpl) {

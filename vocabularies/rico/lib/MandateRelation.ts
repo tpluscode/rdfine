@@ -15,9 +15,9 @@ export interface MandateRelation<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   mandateRelationHasTarget: Rico.Agent<D> | undefined;
 }
 
-export function MandateRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MandateRelation> & RdfResourceCore> & Base {
+export function MandateRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MandateRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class MandateRelationClass extends RuleRelationMixin(Resource) implements Partial<MandateRelation> {
+  class MandateRelationClass extends RuleRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Activity] })
     asConcernsActivity: Rico.Activity | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
@@ -27,7 +27,7 @@ export function MandateRelationMixin<Base extends rdfine.Constructor>(Resource: 
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     mandateRelationHasTarget: Rico.Agent | undefined;
   }
-  return MandateRelationClass
+  return MandateRelationClass as any
 }
 
 class MandateRelationImpl extends MandateRelationMixin(RdfResourceImpl) {

@@ -28,9 +28,9 @@ export interface Legislation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   legislationTypeLiteral: string | undefined;
 }
 
-export function LegislationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Legislation> & RdfResourceCore> & Base {
+export function LegislationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Legislation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LegislationClass extends CreativeWorkMixin(Resource) implements Partial<Legislation> {
+  class LegislationClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     jurisdiction: Schema.AdministrativeArea | undefined;
     @rdfine.property.literal({ path: schema.jurisdiction })
@@ -66,7 +66,7 @@ export function LegislationMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.literal({ path: schema.legislationType })
     legislationTypeLiteral: string | undefined;
   }
-  return LegislationClass
+  return LegislationClass as any
 }
 
 class LegislationImpl extends LegislationMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { StoreMixin } from './Store.js';
 export interface Florist<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
-export function FloristMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Florist> & RdfResourceCore> & Base {
+export function FloristMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Florist & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class FloristClass extends StoreMixin(Resource) implements Partial<Florist> {
+  class FloristClass extends StoreMixin(Resource) {
   }
-  return FloristClass
+  return FloristClass as any
 }
 
 class FloristImpl extends FloristMixin(RdfResourceImpl) {

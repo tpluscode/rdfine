@@ -14,9 +14,9 @@ export interface BuyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   warrantyPromise: Schema.WarrantyPromise<D> | undefined;
 }
 
-export function BuyActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BuyAction> & RdfResourceCore> & Base {
+export function BuyActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BuyAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BuyActionClass extends TradeActionMixin(Resource) implements Partial<BuyAction> {
+  class BuyActionClass extends TradeActionMixin(Resource) {
     @rdfine.property.resource()
     seller: Schema.Organization | Schema.Person | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function BuyActionMixin<Base extends rdfine.Constructor>(Resource: Base):
     @rdfine.property.resource()
     warrantyPromise: Schema.WarrantyPromise | undefined;
   }
-  return BuyActionClass
+  return BuyActionClass as any
 }
 
 class BuyActionImpl extends BuyActionMixin(RdfResourceImpl) {

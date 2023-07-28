@@ -12,13 +12,13 @@ export interface DrugLegalStatus<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   applicableLocation: Schema.AdministrativeArea<D> | undefined;
 }
 
-export function DrugLegalStatusMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DrugLegalStatus> & RdfResourceCore> & Base {
+export function DrugLegalStatusMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DrugLegalStatus & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DrugLegalStatusClass extends MedicalIntangibleMixin(Resource) implements Partial<DrugLegalStatus> {
+  class DrugLegalStatusClass extends MedicalIntangibleMixin(Resource) {
     @rdfine.property.resource()
     applicableLocation: Schema.AdministrativeArea | undefined;
   }
-  return DrugLegalStatusClass
+  return DrugLegalStatusClass as any
 }
 
 class DrugLegalStatusImpl extends DrugLegalStatusMixin(RdfResourceImpl) {

@@ -21,9 +21,9 @@ export interface Operation<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   title: string | undefined;
 }
 
-export function OperationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Operation> & RdfResourceCore> & Base {
+export function OperationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Operation & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class OperationClass extends Resource implements Partial<Operation> {
+  class OperationClass extends Resource {
     @rdfine.property.literal()
     description: string | undefined;
     @rdfine.property.resource({ values: 'array' })
@@ -45,7 +45,7 @@ export function OperationMixin<Base extends rdfine.Constructor>(Resource: Base):
     @rdfine.property.literal()
     title: string | undefined;
   }
-  return OperationClass
+  return OperationClass as any
 }
 
 class OperationImpl extends OperationMixin(RdfResourceImpl) {

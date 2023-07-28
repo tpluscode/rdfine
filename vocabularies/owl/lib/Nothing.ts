@@ -10,11 +10,11 @@ import type * as Owl from '../index.js';
 export interface Nothing<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function NothingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Nothing> & RdfResourceCore> & Base {
+export function NothingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Nothing & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class NothingClass extends Resource implements Partial<Nothing> {
+  class NothingClass extends Resource {
   }
-  return NothingClass
+  return NothingClass as any
 }
 
 class NothingImpl extends NothingMixin(RdfResourceImpl) {

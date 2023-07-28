@@ -16,9 +16,9 @@ export interface Observation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   observedNode: Schema.StatisticalPopulation<D> | undefined;
 }
 
-export function ObservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Observation> & RdfResourceCore> & Base {
+export function ObservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Observation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ObservationClass extends IntangibleMixin(Resource) implements Partial<Observation> {
+  class ObservationClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     marginOfError: Schema.QuantitativeValue | undefined;
     @rdfine.property.resource()
@@ -30,7 +30,7 @@ export function ObservationMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource()
     observedNode: Schema.StatisticalPopulation | undefined;
   }
-  return ObservationClass
+  return ObservationClass as any
 }
 
 class ObservationImpl extends ObservationMixin(RdfResourceImpl) {

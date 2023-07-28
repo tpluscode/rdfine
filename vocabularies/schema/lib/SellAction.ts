@@ -13,15 +13,15 @@ export interface SellAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   warrantyPromise: Schema.WarrantyPromise<D> | undefined;
 }
 
-export function SellActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SellAction> & RdfResourceCore> & Base {
+export function SellActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SellAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SellActionClass extends TradeActionMixin(Resource) implements Partial<SellAction> {
+  class SellActionClass extends TradeActionMixin(Resource) {
     @rdfine.property.resource()
     buyer: Schema.Organization | Schema.Person | undefined;
     @rdfine.property.resource()
     warrantyPromise: Schema.WarrantyPromise | undefined;
   }
-  return SellActionClass
+  return SellActionClass as any
 }
 
 class SellActionImpl extends SellActionMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface MedicalCause<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   causeOf: Schema.MedicalEntity<D> | undefined;
 }
 
-export function MedicalCauseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalCause> & RdfResourceCore> & Base {
+export function MedicalCauseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalCause & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalCauseClass extends MedicalEntityMixin(Resource) implements Partial<MedicalCause> {
+  class MedicalCauseClass extends MedicalEntityMixin(Resource) {
     @rdfine.property.resource()
     causeOf: Schema.MedicalEntity | undefined;
   }
-  return MedicalCauseClass
+  return MedicalCauseClass as any
 }
 
 class MedicalCauseImpl extends MedicalCauseMixin(RdfResourceImpl) {

@@ -12,15 +12,15 @@ export interface List<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfin
   rest: Rdf.List<D> | undefined;
 }
 
-export function ListMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<List> & RdfResourceCore> & Base {
+export function ListMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<List & RdfResourceCore> & Base {
   @rdfine.namespace(rdf)
-  class ListClass extends Resource implements Partial<List> {
+  class ListClass extends Resource {
     @rdfine.property()
     first: RDF.Term | undefined;
     @rdfine.property.resource({ as: [ListMixin] })
     rest: Rdf.List | undefined;
   }
-  return ListClass
+  return ListClass as any
 }
 
 class ListImpl extends ListMixin(RdfResourceImpl) {

@@ -15,9 +15,9 @@ export interface MedicalGuideline<D extends RDF.DatasetCore = RDF.DatasetCore> e
   guidelineSubject: Schema.MedicalEntity<D> | undefined;
 }
 
-export function MedicalGuidelineMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalGuideline> & RdfResourceCore> & Base {
+export function MedicalGuidelineMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalGuideline & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalGuidelineClass extends MedicalEntityMixin(Resource) implements Partial<MedicalGuideline> {
+  class MedicalGuidelineClass extends MedicalEntityMixin(Resource) {
     @rdfine.property()
     evidenceLevel: Schema.MedicalEvidenceLevel | undefined;
     @rdfine.property.literal()
@@ -27,7 +27,7 @@ export function MedicalGuidelineMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.resource()
     guidelineSubject: Schema.MedicalEntity | undefined;
   }
-  return MedicalGuidelineClass
+  return MedicalGuidelineClass as any
 }
 
 class MedicalGuidelineImpl extends MedicalGuidelineMixin(RdfResourceImpl) {

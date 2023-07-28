@@ -45,9 +45,9 @@ export interface Drug<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   warningTerm: RDF.NamedNode | undefined;
 }
 
-export function DrugMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Drug> & RdfResourceCore> & Base {
+export function DrugMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Drug & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DrugClass extends SubstanceMixin(ProductMixin(Resource)) implements Partial<Drug> {
+  class DrugClass extends SubstanceMixin(ProductMixin(Resource)) {
     @rdfine.property.literal()
     activeIngredient: string | undefined;
     @rdfine.property.literal()
@@ -115,7 +115,7 @@ export function DrugMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property({ path: schema.warning })
     warningTerm: RDF.NamedNode | undefined;
   }
-  return DrugClass
+  return DrugClass as any
 }
 
 class DrugImpl extends DrugMixin(RdfResourceImpl) {

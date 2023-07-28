@@ -12,13 +12,13 @@ export interface MonetaryAmountDistribution<D extends RDF.DatasetCore = RDF.Data
   currency: string | undefined;
 }
 
-export function MonetaryAmountDistributionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MonetaryAmountDistribution> & RdfResourceCore> & Base {
+export function MonetaryAmountDistributionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MonetaryAmountDistribution & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MonetaryAmountDistributionClass extends QuantitativeValueDistributionMixin(Resource) implements Partial<MonetaryAmountDistribution> {
+  class MonetaryAmountDistributionClass extends QuantitativeValueDistributionMixin(Resource) {
     @rdfine.property.literal()
     currency: string | undefined;
   }
-  return MonetaryAmountDistributionClass
+  return MonetaryAmountDistributionClass as any
 }
 
 class MonetaryAmountDistributionImpl extends MonetaryAmountDistributionMixin(RdfResourceImpl) {

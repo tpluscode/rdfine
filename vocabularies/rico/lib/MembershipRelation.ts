@@ -14,9 +14,9 @@ export interface MembershipRelation<D extends RDF.DatasetCore = RDF.DatasetCore>
   membershipWithPosition: Rico.Position<D> | undefined;
 }
 
-export function MembershipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MembershipRelation> & RdfResourceCore> & Base {
+export function MembershipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MembershipRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class MembershipRelationClass extends AgentToAgentRelationMixin(Resource) implements Partial<MembershipRelation> {
+  class MembershipRelationClass extends AgentToAgentRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Group] })
     membershipRelationHasSource: Rico.Group | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
@@ -24,7 +24,7 @@ export function MembershipRelationMixin<Base extends rdfine.Constructor>(Resourc
     @rdfine.property.resource({ implicitTypes: [rico.Position] })
     membershipWithPosition: Rico.Position | undefined;
   }
-  return MembershipRelationClass
+  return MembershipRelationClass as any
 }
 
 class MembershipRelationImpl extends MembershipRelationMixin(RdfResourceImpl) {

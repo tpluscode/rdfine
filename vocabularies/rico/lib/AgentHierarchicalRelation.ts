@@ -13,15 +13,15 @@ export interface AgentHierarchicalRelation<D extends RDF.DatasetCore = RDF.Datas
   agentHierarchicalRelationHasTarget: Rico.Agent<D> | undefined;
 }
 
-export function AgentHierarchicalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AgentHierarchicalRelation> & RdfResourceCore> & Base {
+export function AgentHierarchicalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentHierarchicalRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class AgentHierarchicalRelationClass extends AgentToAgentRelationMixin(Resource) implements Partial<AgentHierarchicalRelation> {
+  class AgentHierarchicalRelationClass extends AgentToAgentRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     agentHierarchicalRelationHasSource: Rico.Agent | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     agentHierarchicalRelationHasTarget: Rico.Agent | undefined;
   }
-  return AgentHierarchicalRelationClass
+  return AgentHierarchicalRelationClass as any
 }
 
 class AgentHierarchicalRelationImpl extends AgentHierarchicalRelationMixin(RdfResourceImpl) {

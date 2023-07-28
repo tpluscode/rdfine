@@ -13,13 +13,13 @@ export interface OrderedCollectionPage<D extends RDF.DatasetCore = RDF.DatasetCo
   startIndex: number | undefined;
 }
 
-export function OrderedCollectionPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OrderedCollectionPage> & RdfResourceCore> & Base {
+export function OrderedCollectionPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OrderedCollectionPage & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class OrderedCollectionPageClass extends OrderedCollectionMixin(CollectionPageMixin(Resource)) implements Partial<OrderedCollectionPage> {
+  class OrderedCollectionPageClass extends OrderedCollectionMixin(CollectionPageMixin(Resource)) {
     @rdfine.property.literal({ type: Number })
     startIndex: number | undefined;
   }
-  return OrderedCollectionPageClass
+  return OrderedCollectionPageClass as any
 }
 
 class OrderedCollectionPageImpl extends OrderedCollectionPageMixin(RdfResourceImpl) {

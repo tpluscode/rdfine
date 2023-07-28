@@ -11,11 +11,11 @@ import { ClipMixin } from './Clip.js';
 export interface MovieClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Clip<D>, rdfine.RdfResource<D> {
 }
 
-export function MovieClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MovieClip> & RdfResourceCore> & Base {
+export function MovieClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MovieClip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MovieClipClass extends ClipMixin(Resource) implements Partial<MovieClip> {
+  class MovieClipClass extends ClipMixin(Resource) {
   }
-  return MovieClipClass
+  return MovieClipClass as any
 }
 
 class MovieClipImpl extends MovieClipMixin(RdfResourceImpl) {

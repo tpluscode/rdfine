@@ -17,9 +17,9 @@ export interface QuantitativeValueDistribution<D extends RDF.DatasetCore = RDF.D
   'percentile90': number | undefined;
 }
 
-export function QuantitativeValueDistributionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<QuantitativeValueDistribution> & RdfResourceCore> & Base {
+export function QuantitativeValueDistributionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<QuantitativeValueDistribution & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class QuantitativeValueDistributionClass extends StructuredValueMixin(Resource) implements Partial<QuantitativeValueDistribution> {
+  class QuantitativeValueDistributionClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     duration: Schema.Duration | undefined;
     @rdfine.property.literal({ type: Number })
@@ -33,7 +33,7 @@ export function QuantitativeValueDistributionMixin<Base extends rdfine.Construct
     @rdfine.property.literal({ type: Number })
     'percentile90': number | undefined;
   }
-  return QuantitativeValueDistributionClass
+  return QuantitativeValueDistributionClass as any
 }
 
 class QuantitativeValueDistributionImpl extends QuantitativeValueDistributionMixin(RdfResourceImpl) {

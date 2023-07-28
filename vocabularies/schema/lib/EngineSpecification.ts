@@ -18,9 +18,9 @@ export interface EngineSpecification<D extends RDF.DatasetCore = RDF.DatasetCore
   torque: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function EngineSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EngineSpecification> & RdfResourceCore> & Base {
+export function EngineSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EngineSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class EngineSpecificationClass extends StructuredValueMixin(Resource) implements Partial<EngineSpecification> {
+  class EngineSpecificationClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     engineDisplacement: Schema.QuantitativeValue | undefined;
     @rdfine.property.resource()
@@ -36,7 +36,7 @@ export function EngineSpecificationMixin<Base extends rdfine.Constructor>(Resour
     @rdfine.property.resource()
     torque: Schema.QuantitativeValue | undefined;
   }
-  return EngineSpecificationClass
+  return EngineSpecificationClass as any
 }
 
 class EngineSpecificationImpl extends EngineSpecificationMixin(RdfResourceImpl) {

@@ -12,11 +12,11 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface PropertyRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function PropertyRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PropertyRole> & RdfResourceCore> & Base {
+export function PropertyRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PropertyRole & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class PropertyRoleClass extends RdfsResourceMixin(Resource) implements Partial<PropertyRole> {
+  class PropertyRoleClass extends RdfsResourceMixin(Resource) {
   }
-  return PropertyRoleClass
+  return PropertyRoleClass as any
 }
 
 class PropertyRoleImpl extends PropertyRoleMixin(RdfResourceImpl) {

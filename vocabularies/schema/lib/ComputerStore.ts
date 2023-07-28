@@ -11,11 +11,11 @@ import { StoreMixin } from './Store.js';
 export interface ComputerStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
-export function ComputerStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ComputerStore> & RdfResourceCore> & Base {
+export function ComputerStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ComputerStore & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ComputerStoreClass extends StoreMixin(Resource) implements Partial<ComputerStore> {
+  class ComputerStoreClass extends StoreMixin(Resource) {
   }
-  return ComputerStoreClass
+  return ComputerStoreClass as any
 }
 
 class ComputerStoreImpl extends ComputerStoreMixin(RdfResourceImpl) {

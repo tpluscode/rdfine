@@ -15,9 +15,9 @@ export interface IriTemplate<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   variableRepresentation: Hydra.VariableRepresentation<D> | undefined;
 }
 
-export function IriTemplateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<IriTemplate> & RdfResourceCore> & Base {
+export function IriTemplateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IriTemplate & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class IriTemplateClass extends IriTemplateExMixin(Resource) implements Partial<IriTemplate> {
+  class IriTemplateClass extends IriTemplateExMixin(Resource) {
     @rdfine.property.resource({ values: 'array', implicitTypes: [hydra.IriTemplateMapping] })
     mapping!: Array<Hydra.IriTemplateMapping>;
     @rdfine.property()
@@ -27,7 +27,7 @@ export function IriTemplateMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource({ implicitTypes: [hydra.VariableRepresentation] })
     variableRepresentation: Hydra.VariableRepresentation | undefined;
   }
-  return IriTemplateClass
+  return IriTemplateClass as any
 }
 
 class IriTemplateImpl extends IriTemplateMixin(RdfResourceImpl) {

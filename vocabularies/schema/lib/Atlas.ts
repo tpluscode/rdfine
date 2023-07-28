@@ -11,11 +11,11 @@ import { CreativeWorkMixin } from './CreativeWork.js';
 export interface Atlas<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
 }
 
-export function AtlasMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Atlas> & RdfResourceCore> & Base {
+export function AtlasMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Atlas & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AtlasClass extends CreativeWorkMixin(Resource) implements Partial<Atlas> {
+  class AtlasClass extends CreativeWorkMixin(Resource) {
   }
-  return AtlasClass
+  return AtlasClass as any
 }
 
 class AtlasImpl extends AtlasMixin(RdfResourceImpl) {

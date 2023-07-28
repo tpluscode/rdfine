@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Remove<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function RemoveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Remove> & RdfResourceCore> & Base {
+export function RemoveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Remove & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class RemoveClass extends ActivityMixin(Resource) implements Partial<Remove> {
+  class RemoveClass extends ActivityMixin(Resource) {
   }
-  return RemoveClass
+  return RemoveClass as any
 }
 
 class RemoveImpl extends RemoveMixin(RdfResourceImpl) {

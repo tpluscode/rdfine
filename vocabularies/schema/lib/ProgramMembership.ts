@@ -18,9 +18,9 @@ export interface ProgramMembership<D extends RDF.DatasetCore = RDF.DatasetCore> 
   programName: string | undefined;
 }
 
-export function ProgramMembershipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ProgramMembership> & RdfResourceCore> & Base {
+export function ProgramMembershipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ProgramMembership & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ProgramMembershipClass extends IntangibleMixin(Resource) implements Partial<ProgramMembership> {
+  class ProgramMembershipClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     hostingOrganization: Schema.Organization | undefined;
     @rdfine.property.resource()
@@ -36,7 +36,7 @@ export function ProgramMembershipMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property.literal()
     programName: string | undefined;
   }
-  return ProgramMembershipClass
+  return ProgramMembershipClass as any
 }
 
 class ProgramMembershipImpl extends ProgramMembershipMixin(RdfResourceImpl) {

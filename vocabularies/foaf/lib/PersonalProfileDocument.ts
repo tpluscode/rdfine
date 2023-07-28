@@ -11,11 +11,11 @@ import { DocumentMixin } from './Document.js';
 export interface PersonalProfileDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Document<D>, rdfine.RdfResource<D> {
 }
 
-export function PersonalProfileDocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PersonalProfileDocument> & RdfResourceCore> & Base {
+export function PersonalProfileDocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PersonalProfileDocument & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
-  class PersonalProfileDocumentClass extends DocumentMixin(Resource) implements Partial<PersonalProfileDocument> {
+  class PersonalProfileDocumentClass extends DocumentMixin(Resource) {
   }
-  return PersonalProfileDocumentClass
+  return PersonalProfileDocumentClass as any
 }
 
 class PersonalProfileDocumentImpl extends PersonalProfileDocumentMixin(RdfResourceImpl) {

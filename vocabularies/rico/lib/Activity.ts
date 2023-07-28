@@ -19,9 +19,9 @@ export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   isOrWasPerformedBy: Rico.Agent<D> | undefined;
 }
 
-export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Activity> & RdfResourceCore> & Base {
+export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Activity & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class ActivityClass extends EventMixin(Resource) implements Partial<Activity> {
+  class ActivityClass extends EventMixin(Resource) {
     @rdfine.property.resource()
     activityIsContextOfRelation: Rico.AgentTemporalRelation | Rico.MandateRelation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.PerformanceRelation] })
@@ -39,7 +39,7 @@ export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     isOrWasPerformedBy: Rico.Agent | undefined;
   }
-  return ActivityClass
+  return ActivityClass as any
 }
 
 class ActivityImpl extends ActivityMixin(RdfResourceImpl) {

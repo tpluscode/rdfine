@@ -12,13 +12,13 @@ export interface FunctionalEquivalenceRelation<D extends RDF.DatasetCore = RDF.D
   functionalEquivalenceRelationConnects: Rico.Instantiation<D> | undefined;
 }
 
-export function FunctionalEquivalenceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FunctionalEquivalenceRelation> & RdfResourceCore> & Base {
+export function FunctionalEquivalenceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FunctionalEquivalenceRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class FunctionalEquivalenceRelationClass extends InstantiationToInstantiationRelationMixin(Resource) implements Partial<FunctionalEquivalenceRelation> {
+  class FunctionalEquivalenceRelationClass extends InstantiationToInstantiationRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     functionalEquivalenceRelationConnects: Rico.Instantiation | undefined;
   }
-  return FunctionalEquivalenceRelationClass
+  return FunctionalEquivalenceRelationClass as any
 }
 
 class FunctionalEquivalenceRelationImpl extends FunctionalEquivalenceRelationMixin(RdfResourceImpl) {

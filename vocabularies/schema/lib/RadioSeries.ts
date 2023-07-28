@@ -25,9 +25,9 @@ export interface RadioSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function RadioSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RadioSeries> & RdfResourceCore> & Base {
+export function RadioSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RadioSeries & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RadioSeriesClass extends CreativeWorkSeriesMixin(Resource) implements Partial<RadioSeries> {
+  class RadioSeriesClass extends CreativeWorkSeriesMixin(Resource) {
     @rdfine.property.resource()
     actor: Schema.Person | undefined;
     @rdfine.property.resource()
@@ -57,7 +57,7 @@ export function RadioSeriesMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource()
     trailer: Schema.VideoObject | undefined;
   }
-  return RadioSeriesClass
+  return RadioSeriesClass as any
 }
 
 class RadioSeriesImpl extends RadioSeriesMixin(RdfResourceImpl) {

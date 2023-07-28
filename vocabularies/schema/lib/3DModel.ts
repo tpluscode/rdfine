@@ -12,13 +12,13 @@ export interface _3DModel<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   isResizable: boolean | undefined;
 }
 
-export function _3DModelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<_3DModel> & RdfResourceCore> & Base {
+export function _3DModelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<_3DModel & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class _3DModelClass extends MediaObjectMixin(Resource) implements Partial<_3DModel> {
+  class _3DModelClass extends MediaObjectMixin(Resource) {
     @rdfine.property.literal({ type: Boolean })
     isResizable: boolean | undefined;
   }
-  return _3DModelClass
+  return _3DModelClass as any
 }
 
 class _3DModelImpl extends _3DModelMixin(RdfResourceImpl) {

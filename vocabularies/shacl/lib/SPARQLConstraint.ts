@@ -11,11 +11,11 @@ import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable.js';
 export interface SPARQLConstraint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLSelectExecutable<D>, rdfine.RdfResource<D> {
 }
 
-export function SPARQLConstraintMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLConstraint> & RdfResourceCore> & Base {
+export function SPARQLConstraintMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLConstraint & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class SPARQLConstraintClass extends SPARQLSelectExecutableMixin(Resource) implements Partial<SPARQLConstraint> {
+  class SPARQLConstraintClass extends SPARQLSelectExecutableMixin(Resource) {
   }
-  return SPARQLConstraintClass
+  return SPARQLConstraintClass as any
 }
 
 class SPARQLConstraintImpl extends SPARQLConstraintMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface MedicalGuidelineRecommendation<D extends RDF.DatasetCore = RDF.
   recommendationStrength: string | undefined;
 }
 
-export function MedicalGuidelineRecommendationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalGuidelineRecommendation> & RdfResourceCore> & Base {
+export function MedicalGuidelineRecommendationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalGuidelineRecommendation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalGuidelineRecommendationClass extends MedicalGuidelineMixin(Resource) implements Partial<MedicalGuidelineRecommendation> {
+  class MedicalGuidelineRecommendationClass extends MedicalGuidelineMixin(Resource) {
     @rdfine.property.literal()
     recommendationStrength: string | undefined;
   }
-  return MedicalGuidelineRecommendationClass
+  return MedicalGuidelineRecommendationClass as any
 }
 
 class MedicalGuidelineRecommendationImpl extends MedicalGuidelineRecommendationMixin(RdfResourceImpl) {

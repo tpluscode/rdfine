@@ -13,9 +13,9 @@ export interface Influence<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   influencer: RDF.NamedNode | undefined;
 }
 
-export function InfluenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Influence> & RdfResourceCore> & Base {
+export function InfluenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Influence & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class InfluenceClass extends Resource implements Partial<Influence> {
+  class InfluenceClass extends Resource {
     @rdfine.property.resource({ implicitTypes: [prov.Activity] })
     hadActivity: Prov.Activity | undefined;
     @rdfine.property.resource({ implicitTypes: [prov.Role] })
@@ -23,7 +23,7 @@ export function InfluenceMixin<Base extends rdfine.Constructor>(Resource: Base):
     @rdfine.property()
     influencer: RDF.NamedNode | undefined;
   }
-  return InfluenceClass
+  return InfluenceClass as any
 }
 
 class InfluenceImpl extends InfluenceMixin(RdfResourceImpl) {

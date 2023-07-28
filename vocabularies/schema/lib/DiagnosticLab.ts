@@ -12,13 +12,13 @@ export interface DiagnosticLab<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   availableTest: Schema.MedicalTest<D> | undefined;
 }
 
-export function DiagnosticLabMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DiagnosticLab> & RdfResourceCore> & Base {
+export function DiagnosticLabMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DiagnosticLab & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DiagnosticLabClass extends MedicalOrganizationMixin(Resource) implements Partial<DiagnosticLab> {
+  class DiagnosticLabClass extends MedicalOrganizationMixin(Resource) {
     @rdfine.property.resource()
     availableTest: Schema.MedicalTest | undefined;
   }
-  return DiagnosticLabClass
+  return DiagnosticLabClass as any
 }
 
 class DiagnosticLabImpl extends DiagnosticLabMixin(RdfResourceImpl) {

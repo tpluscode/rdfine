@@ -17,9 +17,9 @@ export interface Container<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   'parent_of': Sioc.Container<D> | undefined;
 }
 
-export function ContainerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Container> & RdfResourceCore> & Base {
+export function ContainerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Container & RdfResourceCore> & Base {
   @rdfine.namespace(sioc)
-  class ContainerClass extends Resource implements Partial<Container> {
+  class ContainerClass extends Resource {
     @rdfine.property.resource({ implicitTypes: [sioc.Item] })
     'container_of': Sioc.Item | undefined;
     @rdfine.property.resource({ implicitTypes: [sioc.Site] })
@@ -35,7 +35,7 @@ export function ContainerMixin<Base extends rdfine.Constructor>(Resource: Base):
     @rdfine.property.resource({ as: [ContainerMixin] })
     'parent_of': Sioc.Container | undefined;
   }
-  return ContainerClass
+  return ContainerClass as any
 }
 
 class ContainerImpl extends ContainerMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface JoinAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   event: Schema.Event<D> | undefined;
 }
 
-export function JoinActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JoinAction> & RdfResourceCore> & Base {
+export function JoinActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JoinAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class JoinActionClass extends InteractActionMixin(Resource) implements Partial<JoinAction> {
+  class JoinActionClass extends InteractActionMixin(Resource) {
     @rdfine.property.resource()
     event: Schema.Event | undefined;
   }
-  return JoinActionClass
+  return JoinActionClass as any
 }
 
 class JoinActionImpl extends JoinActionMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { CommunicateActionMixin } from './CommunicateAction.js';
 export interface CheckOutAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, rdfine.RdfResource<D> {
 }
 
-export function CheckOutActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CheckOutAction> & RdfResourceCore> & Base {
+export function CheckOutActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CheckOutAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CheckOutActionClass extends CommunicateActionMixin(Resource) implements Partial<CheckOutAction> {
+  class CheckOutActionClass extends CommunicateActionMixin(Resource) {
   }
-  return CheckOutActionClass
+  return CheckOutActionClass as any
 }
 
 class CheckOutActionImpl extends CheckOutActionMixin(RdfResourceImpl) {

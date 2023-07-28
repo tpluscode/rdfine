@@ -12,13 +12,13 @@ export interface PlaceType<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   isOrWasPlaceTypeOf: Rico.Place<D> | undefined;
 }
 
-export function PlaceTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PlaceType> & RdfResourceCore> & Base {
+export function PlaceTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PlaceType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class PlaceTypeClass extends TypeMixin(Resource) implements Partial<PlaceType> {
+  class PlaceTypeClass extends TypeMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Place] })
     isOrWasPlaceTypeOf: Rico.Place | undefined;
   }
-  return PlaceTypeClass
+  return PlaceTypeClass as any
 }
 
 class PlaceTypeImpl extends PlaceTypeMixin(RdfResourceImpl) {

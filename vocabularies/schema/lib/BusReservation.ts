@@ -11,11 +11,11 @@ import { ReservationMixin } from './Reservation.js';
 export interface BusReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, rdfine.RdfResource<D> {
 }
 
-export function BusReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BusReservation> & RdfResourceCore> & Base {
+export function BusReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BusReservation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BusReservationClass extends ReservationMixin(Resource) implements Partial<BusReservation> {
+  class BusReservationClass extends ReservationMixin(Resource) {
   }
-  return BusReservationClass
+  return BusReservationClass as any
 }
 
 class BusReservationImpl extends BusReservationMixin(RdfResourceImpl) {

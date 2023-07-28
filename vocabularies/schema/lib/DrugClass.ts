@@ -12,13 +12,13 @@ export interface DrugClass<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   drug: Schema.Drug<D> | undefined;
 }
 
-export function DrugClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DrugClass> & RdfResourceCore> & Base {
+export function DrugClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DrugClass & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DrugClassClass extends MedicalEntityMixin(Resource) implements Partial<DrugClass> {
+  class DrugClassClass extends MedicalEntityMixin(Resource) {
     @rdfine.property.resource()
     drug: Schema.Drug | undefined;
   }
-  return DrugClassClass
+  return DrugClassClass as any
 }
 
 class DrugClassImpl extends DrugClassMixin(RdfResourceImpl) {

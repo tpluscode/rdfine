@@ -21,9 +21,9 @@ export interface HealthInsurancePlan<D extends RDF.DatasetCore = RDF.DatasetCore
   usesHealthPlanIdStandardTerm: RDF.NamedNode | undefined;
 }
 
-export function HealthInsurancePlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HealthInsurancePlan> & RdfResourceCore> & Base {
+export function HealthInsurancePlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HealthInsurancePlan & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HealthInsurancePlanClass extends IntangibleMixin(Resource) implements Partial<HealthInsurancePlan> {
+  class HealthInsurancePlanClass extends IntangibleMixin(Resource) {
     @rdfine.property()
     benefitsSummaryUrl: RDF.NamedNode | undefined;
     @rdfine.property.resource()
@@ -45,7 +45,7 @@ export function HealthInsurancePlanMixin<Base extends rdfine.Constructor>(Resour
     @rdfine.property({ path: schema.usesHealthPlanIdStandard })
     usesHealthPlanIdStandardTerm: RDF.NamedNode | undefined;
   }
-  return HealthInsurancePlanClass
+  return HealthInsurancePlanClass as any
 }
 
 class HealthInsurancePlanImpl extends HealthInsurancePlanMixin(RdfResourceImpl) {

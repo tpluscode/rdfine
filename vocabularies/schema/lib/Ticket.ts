@@ -21,9 +21,9 @@ export interface Ticket<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   underName: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function TicketMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Ticket> & RdfResourceCore> & Base {
+export function TicketMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Ticket & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TicketClass extends IntangibleMixin(Resource) implements Partial<Ticket> {
+  class TicketClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateIssued: Date | undefined;
     @rdfine.property.resource()
@@ -45,7 +45,7 @@ export function TicketMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.resource()
     underName: Schema.Organization | Schema.Person | undefined;
   }
-  return TicketClass
+  return TicketClass as any
 }
 
 class TicketImpl extends TicketMixin(RdfResourceImpl) {

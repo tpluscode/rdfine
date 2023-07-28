@@ -10,11 +10,11 @@ import type * as As from '../index.js';
 export interface OrderedItems<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function OrderedItemsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OrderedItems> & RdfResourceCore> & Base {
+export function OrderedItemsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OrderedItems & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class OrderedItemsClass extends Resource implements Partial<OrderedItems> {
+  class OrderedItemsClass extends Resource {
   }
-  return OrderedItemsClass
+  return OrderedItemsClass as any
 }
 
 class OrderedItemsImpl extends OrderedItemsMixin(RdfResourceImpl) {

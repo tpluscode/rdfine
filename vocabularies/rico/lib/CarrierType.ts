@@ -12,13 +12,13 @@ export interface CarrierType<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   isCarrierTypeOf: Rico.Instantiation<D> | undefined;
 }
 
-export function CarrierTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CarrierType> & RdfResourceCore> & Base {
+export function CarrierTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CarrierType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class CarrierTypeClass extends TypeMixin(Resource) implements Partial<CarrierType> {
+  class CarrierTypeClass extends TypeMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     isCarrierTypeOf: Rico.Instantiation | undefined;
   }
-  return CarrierTypeClass
+  return CarrierTypeClass as any
 }
 
 class CarrierTypeImpl extends CarrierTypeMixin(RdfResourceImpl) {

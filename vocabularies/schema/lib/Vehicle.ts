@@ -62,9 +62,9 @@ export interface Vehicle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   wheelbase: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function VehicleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Vehicle> & RdfResourceCore> & Base {
+export function VehicleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Vehicle & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class VehicleClass extends ProductMixin(Resource) implements Partial<Vehicle> {
+  class VehicleClass extends ProductMixin(Resource) {
     @rdfine.property.resource()
     accelerationTime: Schema.QuantitativeValue | undefined;
     @rdfine.property.literal()
@@ -168,7 +168,7 @@ export function VehicleMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property.resource()
     wheelbase: Schema.QuantitativeValue | undefined;
   }
-  return VehicleClass
+  return VehicleClass as any
 }
 
 class VehicleImpl extends VehicleMixin(RdfResourceImpl) {

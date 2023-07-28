@@ -21,9 +21,9 @@ export interface QuantitativeValue<D extends RDF.DatasetCore = RDF.DatasetCore> 
   valueReferenceLiteral: string | undefined;
 }
 
-export function QuantitativeValueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<QuantitativeValue> & RdfResourceCore> & Base {
+export function QuantitativeValueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<QuantitativeValue & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class QuantitativeValueClass extends StructuredValueMixin(Resource) implements Partial<QuantitativeValue> {
+  class QuantitativeValueClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     additionalProperty: Schema.PropertyValue | undefined;
     @rdfine.property.literal({ type: Number })
@@ -45,7 +45,7 @@ export function QuantitativeValueMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property.literal({ path: schema.valueReference })
     valueReferenceLiteral: string | undefined;
   }
-  return QuantitativeValueClass
+  return QuantitativeValueClass as any
 }
 
 class QuantitativeValueImpl extends QuantitativeValueMixin(RdfResourceImpl) {

@@ -15,9 +15,9 @@ export interface Property<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   supersededBy: Schema.Property<D> | undefined;
 }
 
-export function PropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Property> & RdfResourceCore> & Base {
+export function PropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Property & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PropertyClass extends IntangibleMixin(Resource) implements Partial<Property> {
+  class PropertyClass extends IntangibleMixin(Resource) {
     @rdfine.property()
     domainIncludes: RDF.Term | undefined;
     @rdfine.property.resource()
@@ -27,7 +27,7 @@ export function PropertyMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.resource()
     supersededBy: Schema.Property | undefined;
   }
-  return PropertyClass
+  return PropertyClass as any
 }
 
 class PropertyImpl extends PropertyMixin(RdfResourceImpl) {

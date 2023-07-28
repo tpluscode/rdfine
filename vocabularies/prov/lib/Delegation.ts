@@ -12,13 +12,13 @@ export interface Delegation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   hadActivity: Prov.Activity<D> | undefined;
 }
 
-export function DelegationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Delegation> & RdfResourceCore> & Base {
+export function DelegationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Delegation & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class DelegationClass extends AgentInfluenceMixin(Resource) implements Partial<Delegation> {
+  class DelegationClass extends AgentInfluenceMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [prov.Activity] })
     hadActivity: Prov.Activity | undefined;
   }
-  return DelegationClass
+  return DelegationClass as any
 }
 
 class DelegationImpl extends DelegationMixin(RdfResourceImpl) {

@@ -13,15 +13,15 @@ export interface MedicalRiskEstimator<D extends RDF.DatasetCore = RDF.DatasetCor
   includedRiskFactor: Schema.MedicalRiskFactor<D> | undefined;
 }
 
-export function MedicalRiskEstimatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalRiskEstimator> & RdfResourceCore> & Base {
+export function MedicalRiskEstimatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalRiskEstimator & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalRiskEstimatorClass extends MedicalEntityMixin(Resource) implements Partial<MedicalRiskEstimator> {
+  class MedicalRiskEstimatorClass extends MedicalEntityMixin(Resource) {
     @rdfine.property.resource()
     estimatesRiskOf: Schema.MedicalEntity | undefined;
     @rdfine.property.resource()
     includedRiskFactor: Schema.MedicalRiskFactor | undefined;
   }
-  return MedicalRiskEstimatorClass
+  return MedicalRiskEstimatorClass as any
 }
 
 class MedicalRiskEstimatorImpl extends MedicalRiskEstimatorMixin(RdfResourceImpl) {

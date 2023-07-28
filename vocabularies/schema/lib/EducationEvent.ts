@@ -15,9 +15,9 @@ export interface EducationEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   teaches: string | undefined;
 }
 
-export function EducationEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EducationEvent> & RdfResourceCore> & Base {
+export function EducationEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EducationEvent & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class EducationEventClass extends EventMixin(Resource) implements Partial<EducationEvent> {
+  class EducationEventClass extends EventMixin(Resource) {
     @rdfine.property.literal()
     assesses: string | undefined;
     @rdfine.property.literal()
@@ -27,7 +27,7 @@ export function EducationEventMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.literal()
     teaches: string | undefined;
   }
-  return EducationEventClass
+  return EducationEventClass as any
 }
 
 class EducationEventImpl extends EducationEventMixin(RdfResourceImpl) {

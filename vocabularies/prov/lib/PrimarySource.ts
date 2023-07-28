@@ -11,11 +11,11 @@ import { DerivationMixin } from './Derivation.js';
 export interface PrimarySource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Derivation<D>, rdfine.RdfResource<D> {
 }
 
-export function PrimarySourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PrimarySource> & RdfResourceCore> & Base {
+export function PrimarySourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PrimarySource & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class PrimarySourceClass extends DerivationMixin(Resource) implements Partial<PrimarySource> {
+  class PrimarySourceClass extends DerivationMixin(Resource) {
   }
-  return PrimarySourceClass
+  return PrimarySourceClass as any
 }
 
 class PrimarySourceImpl extends PrimarySourceMixin(RdfResourceImpl) {

@@ -18,9 +18,9 @@ export interface Taxon<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   taxonRankLiteral: string | undefined;
 }
 
-export function TaxonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Taxon> & RdfResourceCore> & Base {
+export function TaxonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Taxon & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TaxonClass extends ThingMixin(Resource) implements Partial<Taxon> {
+  class TaxonClass extends ThingMixin(Resource) {
     @rdfine.property.resource()
     childTaxon: Schema.Taxon | undefined;
     @rdfine.property.literal({ path: schema.childTaxon })
@@ -36,7 +36,7 @@ export function TaxonMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.literal({ path: schema.taxonRank })
     taxonRankLiteral: string | undefined;
   }
-  return TaxonClass
+  return TaxonClass as any
 }
 
 class TaxonImpl extends TaxonMixin(RdfResourceImpl) {

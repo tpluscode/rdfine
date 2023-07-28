@@ -11,11 +11,11 @@ import { ThingMixin } from './Thing.js';
 export interface Concept<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, rdfine.RdfResource<D> {
 }
 
-export function ConceptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Concept> & RdfResourceCore> & Base {
+export function ConceptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Concept & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class ConceptClass extends ThingMixin(Resource) implements Partial<Concept> {
+  class ConceptClass extends ThingMixin(Resource) {
   }
-  return ConceptClass
+  return ConceptClass as any
 }
 
 class ConceptImpl extends ConceptMixin(RdfResourceImpl) {

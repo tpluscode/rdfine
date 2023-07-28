@@ -13,15 +13,15 @@ export interface RecordResourceHoldingRelation<D extends RDF.DatasetCore = RDF.D
   recordResourceHoldingRelationHasTarget: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
 }
 
-export function RecordResourceHoldingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RecordResourceHoldingRelation> & RdfResourceCore> & Base {
+export function RecordResourceHoldingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordResourceHoldingRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RecordResourceHoldingRelationClass extends ManagementRelationMixin(Resource) implements Partial<RecordResourceHoldingRelation> {
+  class RecordResourceHoldingRelationClass extends ManagementRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     recordResourceHoldingRelationHasSource: Rico.Agent | undefined;
     @rdfine.property.resource()
     recordResourceHoldingRelationHasTarget: Rico.Instantiation | Rico.RecordResource | undefined;
   }
-  return RecordResourceHoldingRelationClass
+  return RecordResourceHoldingRelationClass as any
 }
 
 class RecordResourceHoldingRelationImpl extends RecordResourceHoldingRelationMixin(RdfResourceImpl) {

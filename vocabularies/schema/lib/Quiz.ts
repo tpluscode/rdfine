@@ -11,11 +11,11 @@ import { LearningResourceMixin } from './LearningResource.js';
 export interface Quiz<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LearningResource<D>, rdfine.RdfResource<D> {
 }
 
-export function QuizMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Quiz> & RdfResourceCore> & Base {
+export function QuizMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Quiz & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class QuizClass extends LearningResourceMixin(Resource) implements Partial<Quiz> {
+  class QuizClass extends LearningResourceMixin(Resource) {
   }
-  return QuizClass
+  return QuizClass as any
 }
 
 class QuizImpl extends QuizMixin(RdfResourceImpl) {

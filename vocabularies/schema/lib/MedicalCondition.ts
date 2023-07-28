@@ -28,9 +28,9 @@ export interface MedicalCondition<D extends RDF.DatasetCore = RDF.DatasetCore> e
   typicalTest: Schema.MedicalTest<D> | undefined;
 }
 
-export function MedicalConditionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalCondition> & RdfResourceCore> & Base {
+export function MedicalConditionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalCondition & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalConditionClass extends MedicalEntityMixin(Resource) implements Partial<MedicalCondition> {
+  class MedicalConditionClass extends MedicalEntityMixin(Resource) {
     @rdfine.property.resource()
     associatedAnatomy: Schema.AnatomicalStructure | Schema.AnatomicalSystem | Schema.SuperficialAnatomy | undefined;
     @rdfine.property.resource()
@@ -66,7 +66,7 @@ export function MedicalConditionMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.resource()
     typicalTest: Schema.MedicalTest | undefined;
   }
-  return MedicalConditionClass
+  return MedicalConditionClass as any
 }
 
 class MedicalConditionImpl extends MedicalConditionMixin(RdfResourceImpl) {

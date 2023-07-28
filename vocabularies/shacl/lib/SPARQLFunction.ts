@@ -13,11 +13,11 @@ import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable.js';
 export interface SPARQLFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Function<D>, Sh.SPARQLAskExecutable<D>, Sh.SPARQLSelectExecutable<D>, rdfine.RdfResource<D> {
 }
 
-export function SPARQLFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLFunction> & RdfResourceCore> & Base {
+export function SPARQLFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLFunction & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class SPARQLFunctionClass extends SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(FunctionMixin(Resource))) implements Partial<SPARQLFunction> {
+  class SPARQLFunctionClass extends SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(FunctionMixin(Resource))) {
   }
-  return SPARQLFunctionClass
+  return SPARQLFunctionClass as any
 }
 
 class SPARQLFunctionImpl extends SPARQLFunctionMixin(RdfResourceImpl) {

@@ -24,9 +24,9 @@ export interface ExerciseAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   toLocation: Schema.Place<D> | undefined;
 }
 
-export function ExerciseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ExerciseAction> & RdfResourceCore> & Base {
+export function ExerciseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ExerciseAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ExerciseActionClass extends PlayActionMixin(Resource) implements Partial<ExerciseAction> {
+  class ExerciseActionClass extends PlayActionMixin(Resource) {
     @rdfine.property.resource()
     course: Schema.Place | undefined;
     @rdfine.property.resource()
@@ -54,7 +54,7 @@ export function ExerciseActionMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.resource()
     toLocation: Schema.Place | undefined;
   }
-  return ExerciseActionClass
+  return ExerciseActionClass as any
 }
 
 class ExerciseActionImpl extends ExerciseActionMixin(RdfResourceImpl) {

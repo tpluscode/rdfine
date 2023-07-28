@@ -12,11 +12,11 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface Severity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function SeverityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Severity> & RdfResourceCore> & Base {
+export function SeverityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Severity & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class SeverityClass extends RdfsResourceMixin(Resource) implements Partial<Severity> {
+  class SeverityClass extends RdfsResourceMixin(Resource) {
   }
-  return SeverityClass
+  return SeverityClass as any
 }
 
 class SeverityImpl extends SeverityMixin(RdfResourceImpl) {

@@ -22,9 +22,9 @@ export interface HowToDirection<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   totalTime: Schema.Duration<D> | undefined;
 }
 
-export function HowToDirectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HowToDirection> & RdfResourceCore> & Base {
+export function HowToDirectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowToDirection & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HowToDirectionClass extends ListItemMixin(CreativeWorkMixin(Resource)) implements Partial<HowToDirection> {
+  class HowToDirectionClass extends ListItemMixin(CreativeWorkMixin(Resource)) {
     @rdfine.property.resource()
     afterMedia: Schema.MediaObject | undefined;
     @rdfine.property.resource()
@@ -46,7 +46,7 @@ export function HowToDirectionMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.resource()
     totalTime: Schema.Duration | undefined;
   }
-  return HowToDirectionClass
+  return HowToDirectionClass as any
 }
 
 class HowToDirectionImpl extends HowToDirectionMixin(RdfResourceImpl) {

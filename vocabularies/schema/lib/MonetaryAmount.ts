@@ -18,9 +18,9 @@ export interface MonetaryAmount<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   valueLiteral: boolean | number | string | undefined;
 }
 
-export function MonetaryAmountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MonetaryAmount> & RdfResourceCore> & Base {
+export function MonetaryAmountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MonetaryAmount & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MonetaryAmountClass extends StructuredValueMixin(Resource) implements Partial<MonetaryAmount> {
+  class MonetaryAmountClass extends StructuredValueMixin(Resource) {
     @rdfine.property.literal()
     currency: string | undefined;
     @rdfine.property.literal({ type: Number })
@@ -36,7 +36,7 @@ export function MonetaryAmountMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.literal({ path: schema.value })
     valueLiteral: boolean | number | string | undefined;
   }
-  return MonetaryAmountClass
+  return MonetaryAmountClass as any
 }
 
 class MonetaryAmountImpl extends MonetaryAmountMixin(RdfResourceImpl) {

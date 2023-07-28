@@ -12,11 +12,11 @@ import { ValidatorMixin } from './Validator.js';
 export interface JSValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, Sh.Validator<D>, rdfine.RdfResource<D> {
 }
 
-export function JSValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JSValidator> & RdfResourceCore> & Base {
+export function JSValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JSValidator & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class JSValidatorClass extends ValidatorMixin(JSExecutableMixin(Resource)) implements Partial<JSValidator> {
+  class JSValidatorClass extends ValidatorMixin(JSExecutableMixin(Resource)) {
   }
-  return JSValidatorClass
+  return JSValidatorClass as any
 }
 
 class JSValidatorImpl extends JSValidatorMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { AchieveActionMixin } from './AchieveAction.js';
 export interface TieAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AchieveAction<D>, rdfine.RdfResource<D> {
 }
 
-export function TieActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TieAction> & RdfResourceCore> & Base {
+export function TieActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TieAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TieActionClass extends AchieveActionMixin(Resource) implements Partial<TieAction> {
+  class TieActionClass extends AchieveActionMixin(Resource) {
   }
-  return TieActionClass
+  return TieActionClass as any
 }
 
 class TieActionImpl extends TieActionMixin(RdfResourceImpl) {

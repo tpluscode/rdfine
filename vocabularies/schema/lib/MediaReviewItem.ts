@@ -12,13 +12,13 @@ export interface MediaReviewItem<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   mediaItemAppearance: Schema.MediaObject<D> | undefined;
 }
 
-export function MediaReviewItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MediaReviewItem> & RdfResourceCore> & Base {
+export function MediaReviewItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MediaReviewItem & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MediaReviewItemClass extends CreativeWorkMixin(Resource) implements Partial<MediaReviewItem> {
+  class MediaReviewItemClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     mediaItemAppearance: Schema.MediaObject | undefined;
   }
-  return MediaReviewItemClass
+  return MediaReviewItemClass as any
 }
 
 class MediaReviewItemImpl extends MediaReviewItemMixin(RdfResourceImpl) {

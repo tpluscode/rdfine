@@ -12,13 +12,13 @@ export interface DigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   hasDigitalDocumentPermission: Schema.DigitalDocumentPermission<D> | undefined;
 }
 
-export function DigitalDocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DigitalDocument> & RdfResourceCore> & Base {
+export function DigitalDocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DigitalDocument & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DigitalDocumentClass extends CreativeWorkMixin(Resource) implements Partial<DigitalDocument> {
+  class DigitalDocumentClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     hasDigitalDocumentPermission: Schema.DigitalDocumentPermission | undefined;
   }
-  return DigitalDocumentClass
+  return DigitalDocumentClass as any
 }
 
 class DigitalDocumentImpl extends DigitalDocumentMixin(RdfResourceImpl) {

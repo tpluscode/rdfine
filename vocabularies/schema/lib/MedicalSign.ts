@@ -13,15 +13,15 @@ export interface MedicalSign<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   identifyingTest: Schema.MedicalTest<D> | undefined;
 }
 
-export function MedicalSignMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalSign> & RdfResourceCore> & Base {
+export function MedicalSignMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalSign & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalSignClass extends MedicalSignOrSymptomMixin(Resource) implements Partial<MedicalSign> {
+  class MedicalSignClass extends MedicalSignOrSymptomMixin(Resource) {
     @rdfine.property()
     identifyingExam: Schema.PhysicalExam | undefined;
     @rdfine.property.resource()
     identifyingTest: Schema.MedicalTest | undefined;
   }
-  return MedicalSignClass
+  return MedicalSignClass as any
 }
 
 class MedicalSignImpl extends MedicalSignMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { CivicStructureMixin } from './CivicStructure.js';
 export interface Museum<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, rdfine.RdfResource<D> {
 }
 
-export function MuseumMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Museum> & RdfResourceCore> & Base {
+export function MuseumMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Museum & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MuseumClass extends CivicStructureMixin(Resource) implements Partial<Museum> {
+  class MuseumClass extends CivicStructureMixin(Resource) {
   }
-  return MuseumClass
+  return MuseumClass as any
 }
 
 class MuseumImpl extends MuseumMixin(RdfResourceImpl) {

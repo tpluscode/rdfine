@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Move<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function MoveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Move> & RdfResourceCore> & Base {
+export function MoveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Move & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class MoveClass extends ActivityMixin(Resource) implements Partial<Move> {
+  class MoveClass extends ActivityMixin(Resource) {
   }
-  return MoveClass
+  return MoveClass as any
 }
 
 class MoveImpl extends MoveMixin(RdfResourceImpl) {

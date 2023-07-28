@@ -11,11 +11,11 @@ import { AgentInfluenceMixin } from './AgentInfluence.js';
 export interface Attribution<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.AgentInfluence<D>, rdfine.RdfResource<D> {
 }
 
-export function AttributionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Attribution> & RdfResourceCore> & Base {
+export function AttributionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Attribution & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class AttributionClass extends AgentInfluenceMixin(Resource) implements Partial<Attribution> {
+  class AttributionClass extends AgentInfluenceMixin(Resource) {
   }
-  return AttributionClass
+  return AttributionClass as any
 }
 
 class AttributionImpl extends AttributionMixin(RdfResourceImpl) {

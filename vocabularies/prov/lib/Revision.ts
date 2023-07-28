@@ -11,11 +11,11 @@ import { DerivationMixin } from './Derivation.js';
 export interface Revision<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Derivation<D>, rdfine.RdfResource<D> {
 }
 
-export function RevisionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Revision> & RdfResourceCore> & Base {
+export function RevisionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Revision & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class RevisionClass extends DerivationMixin(Resource) implements Partial<Revision> {
+  class RevisionClass extends DerivationMixin(Resource) {
   }
-  return RevisionClass
+  return RevisionClass as any
 }
 
 class RevisionImpl extends RevisionMixin(RdfResourceImpl) {

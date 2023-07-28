@@ -13,11 +13,11 @@ import { TargetTypeMixin } from './TargetType.js';
 export interface SPARQLTargetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLAskExecutable<D>, Sh.SPARQLSelectExecutable<D>, Sh.TargetType<D>, rdfine.RdfResource<D> {
 }
 
-export function SPARQLTargetTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLTargetType> & RdfResourceCore> & Base {
+export function SPARQLTargetTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLTargetType & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class SPARQLTargetTypeClass extends TargetTypeMixin(SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(Resource))) implements Partial<SPARQLTargetType> {
+  class SPARQLTargetTypeClass extends TargetTypeMixin(SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(Resource))) {
   }
-  return SPARQLTargetTypeClass
+  return SPARQLTargetTypeClass as any
 }
 
 class SPARQLTargetTypeImpl extends SPARQLTargetTypeMixin(RdfResourceImpl) {

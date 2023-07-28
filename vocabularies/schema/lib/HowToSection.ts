@@ -15,15 +15,15 @@ export interface HowToSection<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   stepsLiteral: Array<string>;
 }
 
-export function HowToSectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HowToSection> & RdfResourceCore> & Base {
+export function HowToSectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowToSection & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HowToSectionClass extends ListItemMixin(ItemListMixin(CreativeWorkMixin(Resource))) implements Partial<HowToSection> {
+  class HowToSectionClass extends ListItemMixin(ItemListMixin(CreativeWorkMixin(Resource))) {
     @rdfine.property.resource({ values: 'array' })
     steps!: Array<Schema.CreativeWork | Schema.ItemList>;
     @rdfine.property.literal({ path: schema.steps, values: 'array' })
     stepsLiteral!: Array<string>;
   }
-  return HowToSectionClass
+  return HowToSectionClass as any
 }
 
 class HowToSectionImpl extends HowToSectionMixin(RdfResourceImpl) {

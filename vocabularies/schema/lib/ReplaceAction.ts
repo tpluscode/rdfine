@@ -13,15 +13,15 @@ export interface ReplaceAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   replacer: Schema.Thing<D> | undefined;
 }
 
-export function ReplaceActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ReplaceAction> & RdfResourceCore> & Base {
+export function ReplaceActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReplaceAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ReplaceActionClass extends UpdateActionMixin(Resource) implements Partial<ReplaceAction> {
+  class ReplaceActionClass extends UpdateActionMixin(Resource) {
     @rdfine.property.resource()
     replacee: Schema.Thing | undefined;
     @rdfine.property.resource()
     replacer: Schema.Thing | undefined;
   }
-  return ReplaceActionClass
+  return ReplaceActionClass as any
 }
 
 class ReplaceActionImpl extends ReplaceActionMixin(RdfResourceImpl) {

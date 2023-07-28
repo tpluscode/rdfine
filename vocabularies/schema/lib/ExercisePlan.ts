@@ -24,9 +24,9 @@ export interface ExercisePlan<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   workload: Schema.Energy<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function ExercisePlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ExercisePlan> & RdfResourceCore> & Base {
+export function ExercisePlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ExercisePlan & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ExercisePlanClass extends PhysicalActivityMixin(CreativeWorkMixin(Resource)) implements Partial<ExercisePlan> {
+  class ExercisePlanClass extends PhysicalActivityMixin(CreativeWorkMixin(Resource)) {
     @rdfine.property.resource()
     activityDuration: Schema.Duration | Schema.QuantitativeValue | undefined;
     @rdfine.property.resource()
@@ -52,7 +52,7 @@ export function ExercisePlanMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.resource()
     workload: Schema.Energy | Schema.QuantitativeValue | undefined;
   }
-  return ExercisePlanClass
+  return ExercisePlanClass as any
 }
 
 class ExercisePlanImpl extends ExercisePlanMixin(RdfResourceImpl) {

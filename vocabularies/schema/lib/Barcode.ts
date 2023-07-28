@@ -11,11 +11,11 @@ import { ImageObjectMixin } from './ImageObject.js';
 export interface Barcode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ImageObject<D>, rdfine.RdfResource<D> {
 }
 
-export function BarcodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Barcode> & RdfResourceCore> & Base {
+export function BarcodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Barcode & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BarcodeClass extends ImageObjectMixin(Resource) implements Partial<Barcode> {
+  class BarcodeClass extends ImageObjectMixin(Resource) {
   }
-  return BarcodeClass
+  return BarcodeClass as any
 }
 
 class BarcodeImpl extends BarcodeMixin(RdfResourceImpl) {

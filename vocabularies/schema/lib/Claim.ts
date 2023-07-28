@@ -14,9 +14,9 @@ export interface Claim<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   firstAppearance: Schema.CreativeWork<D> | undefined;
 }
 
-export function ClaimMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Claim> & RdfResourceCore> & Base {
+export function ClaimMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Claim & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ClaimClass extends CreativeWorkMixin(Resource) implements Partial<Claim> {
+  class ClaimClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     appearance: Schema.CreativeWork | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function ClaimMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource()
     firstAppearance: Schema.CreativeWork | undefined;
   }
-  return ClaimClass
+  return ClaimClass as any
 }
 
 class ClaimImpl extends ClaimMixin(RdfResourceImpl) {

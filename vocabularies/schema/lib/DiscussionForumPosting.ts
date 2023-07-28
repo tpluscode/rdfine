@@ -11,11 +11,11 @@ import { SocialMediaPostingMixin } from './SocialMediaPosting.js';
 export interface DiscussionForumPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SocialMediaPosting<D>, rdfine.RdfResource<D> {
 }
 
-export function DiscussionForumPostingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DiscussionForumPosting> & RdfResourceCore> & Base {
+export function DiscussionForumPostingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DiscussionForumPosting & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DiscussionForumPostingClass extends SocialMediaPostingMixin(Resource) implements Partial<DiscussionForumPosting> {
+  class DiscussionForumPostingClass extends SocialMediaPostingMixin(Resource) {
   }
-  return DiscussionForumPostingClass
+  return DiscussionForumPostingClass as any
 }
 
 class DiscussionForumPostingImpl extends DiscussionForumPostingMixin(RdfResourceImpl) {

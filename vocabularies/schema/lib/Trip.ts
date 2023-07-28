@@ -18,9 +18,9 @@ export interface Trip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   subTrip: Schema.Trip<D> | undefined;
 }
 
-export function TripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Trip> & RdfResourceCore> & Base {
+export function TripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Trip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TripClass extends IntangibleMixin(Resource) implements Partial<Trip> {
+  class TripClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     arrivalTime: Date | undefined;
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
@@ -36,7 +36,7 @@ export function TripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.resource()
     subTrip: Schema.Trip | undefined;
   }
-  return TripClass
+  return TripClass as any
 }
 
 class TripImpl extends TripMixin(RdfResourceImpl) {

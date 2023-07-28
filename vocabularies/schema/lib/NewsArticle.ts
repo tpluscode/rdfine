@@ -16,9 +16,9 @@ export interface NewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   printSection: string | undefined;
 }
 
-export function NewsArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NewsArticle> & RdfResourceCore> & Base {
+export function NewsArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NewsArticle & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class NewsArticleClass extends ArticleMixin(Resource) implements Partial<NewsArticle> {
+  class NewsArticleClass extends ArticleMixin(Resource) {
     @rdfine.property.literal()
     dateline: string | undefined;
     @rdfine.property.literal()
@@ -30,7 +30,7 @@ export function NewsArticleMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.literal()
     printSection: string | undefined;
   }
-  return NewsArticleClass
+  return NewsArticleClass as any
 }
 
 class NewsArticleImpl extends NewsArticleMixin(RdfResourceImpl) {

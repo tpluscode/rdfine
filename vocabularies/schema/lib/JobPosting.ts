@@ -55,9 +55,9 @@ export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   workHours: string | undefined;
 }
 
-export function JobPostingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JobPosting> & RdfResourceCore> & Base {
+export function JobPostingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JobPosting & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class JobPostingClass extends IntangibleMixin(Resource) implements Partial<JobPosting> {
+  class JobPostingClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     applicantLocationRequirements: Schema.AdministrativeArea | undefined;
     @rdfine.property.resource()
@@ -147,7 +147,7 @@ export function JobPostingMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property.literal()
     workHours: string | undefined;
   }
-  return JobPostingClass
+  return JobPostingClass as any
 }
 
 class JobPostingImpl extends JobPostingMixin(RdfResourceImpl) {

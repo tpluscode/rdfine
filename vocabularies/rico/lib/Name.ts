@@ -12,13 +12,13 @@ export interface Name<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.
   isOrWasNameOf: Rico.Thing<D> | undefined;
 }
 
-export function NameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Name> & RdfResourceCore> & Base {
+export function NameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Name & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class NameClass extends AppellationMixin(Resource) implements Partial<Name> {
+  class NameClass extends AppellationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isOrWasNameOf: Rico.Thing | undefined;
   }
-  return NameClass
+  return NameClass as any
 }
 
 class NameImpl extends NameMixin(RdfResourceImpl) {

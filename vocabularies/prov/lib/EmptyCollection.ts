@@ -11,11 +11,11 @@ import { CollectionMixin } from './Collection.js';
 export interface EmptyCollection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Collection<D>, rdfine.RdfResource<D> {
 }
 
-export function EmptyCollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EmptyCollection> & RdfResourceCore> & Base {
+export function EmptyCollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EmptyCollection & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class EmptyCollectionClass extends CollectionMixin(Resource) implements Partial<EmptyCollection> {
+  class EmptyCollectionClass extends CollectionMixin(Resource) {
   }
-  return EmptyCollectionClass
+  return EmptyCollectionClass as any
 }
 
 class EmptyCollectionImpl extends EmptyCollectionMixin(RdfResourceImpl) {

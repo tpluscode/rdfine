@@ -12,13 +12,13 @@ export interface EntityInfluence<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   entity: Prov.Entity<D> | undefined;
 }
 
-export function EntityInfluenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EntityInfluence> & RdfResourceCore> & Base {
+export function EntityInfluenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EntityInfluence & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class EntityInfluenceClass extends InfluenceMixin(Resource) implements Partial<EntityInfluence> {
+  class EntityInfluenceClass extends InfluenceMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [prov.Entity] })
     entity: Prov.Entity | undefined;
   }
-  return EntityInfluenceClass
+  return EntityInfluenceClass as any
 }
 
 class EntityInfluenceImpl extends EntityInfluenceMixin(RdfResourceImpl) {

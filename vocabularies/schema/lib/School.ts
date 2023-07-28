@@ -11,11 +11,11 @@ import { EducationalOrganizationMixin } from './EducationalOrganization.js';
 export interface School<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.EducationalOrganization<D>, rdfine.RdfResource<D> {
 }
 
-export function SchoolMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<School> & RdfResourceCore> & Base {
+export function SchoolMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<School & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SchoolClass extends EducationalOrganizationMixin(Resource) implements Partial<School> {
+  class SchoolClass extends EducationalOrganizationMixin(Resource) {
   }
-  return SchoolClass
+  return SchoolClass as any
 }
 
 class SchoolImpl extends SchoolMixin(RdfResourceImpl) {

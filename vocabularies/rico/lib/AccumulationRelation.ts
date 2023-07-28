@@ -13,15 +13,15 @@ export interface AccumulationRelation<D extends RDF.DatasetCore = RDF.DatasetCor
   accumulationRelationHasTarget: Rico.Agent<D> | undefined;
 }
 
-export function AccumulationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AccumulationRelation> & RdfResourceCore> & Base {
+export function AccumulationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AccumulationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class AccumulationRelationClass extends AgentOriginationRelationMixin(Resource) implements Partial<AccumulationRelation> {
+  class AccumulationRelationClass extends AgentOriginationRelationMixin(Resource) {
     @rdfine.property.resource()
     accumulationRelationHasSource: Rico.Instantiation | Rico.RecordResource | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     accumulationRelationHasTarget: Rico.Agent | undefined;
   }
-  return AccumulationRelationClass
+  return AccumulationRelationClass as any
 }
 
 class AccumulationRelationImpl extends AccumulationRelationMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { CommunicateActionMixin } from './CommunicateAction.js';
 export interface ShareAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, rdfine.RdfResource<D> {
 }
 
-export function ShareActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ShareAction> & RdfResourceCore> & Base {
+export function ShareActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ShareAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ShareActionClass extends CommunicateActionMixin(Resource) implements Partial<ShareAction> {
+  class ShareActionClass extends CommunicateActionMixin(Resource) {
   }
-  return ShareActionClass
+  return ShareActionClass as any
 }
 
 class ShareActionImpl extends ShareActionMixin(RdfResourceImpl) {

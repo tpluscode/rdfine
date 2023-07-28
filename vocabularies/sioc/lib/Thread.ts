@@ -11,11 +11,11 @@ import { ContainerMixin } from './Container.js';
 export interface Thread<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc.Container<D>, rdfine.RdfResource<D> {
 }
 
-export function ThreadMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Thread> & RdfResourceCore> & Base {
+export function ThreadMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Thread & RdfResourceCore> & Base {
   @rdfine.namespace(sioc)
-  class ThreadClass extends ContainerMixin(Resource) implements Partial<Thread> {
+  class ThreadClass extends ContainerMixin(Resource) {
   }
-  return ThreadClass
+  return ThreadClass as any
 }
 
 class ThreadImpl extends ThreadMixin(RdfResourceImpl) {

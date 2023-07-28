@@ -17,9 +17,9 @@ export interface TypeAndQuantityNode<D extends RDF.DatasetCore = RDF.DatasetCore
   unitText: string | undefined;
 }
 
-export function TypeAndQuantityNodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TypeAndQuantityNode> & RdfResourceCore> & Base {
+export function TypeAndQuantityNodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TypeAndQuantityNode & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TypeAndQuantityNodeClass extends StructuredValueMixin(Resource) implements Partial<TypeAndQuantityNode> {
+  class TypeAndQuantityNodeClass extends StructuredValueMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     amountOfThisGood: number | undefined;
     @rdfine.property()
@@ -33,7 +33,7 @@ export function TypeAndQuantityNodeMixin<Base extends rdfine.Constructor>(Resour
     @rdfine.property.literal()
     unitText: string | undefined;
   }
-  return TypeAndQuantityNodeClass
+  return TypeAndQuantityNodeClass as any
 }
 
 class TypeAndQuantityNodeImpl extends TypeAndQuantityNodeMixin(RdfResourceImpl) {

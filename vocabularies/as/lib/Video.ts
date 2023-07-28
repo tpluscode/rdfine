@@ -11,11 +11,11 @@ import { DocumentMixin } from './Document.js';
 export interface Video<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Document<D>, rdfine.RdfResource<D> {
 }
 
-export function VideoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Video> & RdfResourceCore> & Base {
+export function VideoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Video & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class VideoClass extends DocumentMixin(Resource) implements Partial<Video> {
+  class VideoClass extends DocumentMixin(Resource) {
   }
-  return VideoClass
+  return VideoClass as any
 }
 
 class VideoImpl extends VideoMixin(RdfResourceImpl) {

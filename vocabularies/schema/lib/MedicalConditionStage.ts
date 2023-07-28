@@ -13,15 +13,15 @@ export interface MedicalConditionStage<D extends RDF.DatasetCore = RDF.DatasetCo
   subStageSuffix: string | undefined;
 }
 
-export function MedicalConditionStageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalConditionStage> & RdfResourceCore> & Base {
+export function MedicalConditionStageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalConditionStage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalConditionStageClass extends MedicalIntangibleMixin(Resource) implements Partial<MedicalConditionStage> {
+  class MedicalConditionStageClass extends MedicalIntangibleMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     stageAsNumber: number | undefined;
     @rdfine.property.literal()
     subStageSuffix: string | undefined;
   }
-  return MedicalConditionStageClass
+  return MedicalConditionStageClass as any
 }
 
 class MedicalConditionStageImpl extends MedicalConditionStageMixin(RdfResourceImpl) {

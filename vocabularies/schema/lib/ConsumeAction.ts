@@ -13,15 +13,15 @@ export interface ConsumeAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   expectsAcceptanceOf: Schema.Offer<D> | undefined;
 }
 
-export function ConsumeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ConsumeAction> & RdfResourceCore> & Base {
+export function ConsumeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ConsumeAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ConsumeActionClass extends ActionMixin(Resource) implements Partial<ConsumeAction> {
+  class ConsumeActionClass extends ActionMixin(Resource) {
     @rdfine.property.resource()
     actionAccessibilityRequirement: Schema.ActionAccessSpecification | undefined;
     @rdfine.property.resource()
     expectsAcceptanceOf: Schema.Offer | undefined;
   }
-  return ConsumeActionClass
+  return ConsumeActionClass as any
 }
 
 class ConsumeActionImpl extends ConsumeActionMixin(RdfResourceImpl) {

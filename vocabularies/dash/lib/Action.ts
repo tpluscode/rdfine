@@ -15,15 +15,15 @@ export interface Action<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sha
   actionIconClass: string | undefined;
 }
 
-export function ActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Action> & RdfResourceCore> & Base {
+export function ActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Action & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class ActionClass extends ScriptMixin(ShaclParameterizableMixin(Resource)) implements Partial<Action> {
+  class ActionClass extends ScriptMixin(ShaclParameterizableMixin(Resource)) {
     @rdfine.property.resource({ implicitTypes: [dash.ActionGroup] })
     actionGroup: Dash.ActionGroup | undefined;
     @rdfine.property.literal()
     actionIconClass: string | undefined;
   }
-  return ActionClass
+  return ActionClass as any
 }
 
 class ActionImpl extends ActionMixin(RdfResourceImpl) {

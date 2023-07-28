@@ -34,9 +34,9 @@ export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function MediaObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MediaObject> & RdfResourceCore> & Base {
+export function MediaObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MediaObject & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MediaObjectClass extends CreativeWorkMixin(Resource) implements Partial<MediaObject> {
+  class MediaObjectClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     associatedArticle: Schema.NewsArticle | undefined;
     @rdfine.property.literal()
@@ -84,7 +84,7 @@ export function MediaObjectMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource()
     width: Schema.Distance | Schema.QuantitativeValue | undefined;
   }
-  return MediaObjectClass
+  return MediaObjectClass as any
 }
 
 class MediaObjectImpl extends MediaObjectMixin(RdfResourceImpl) {

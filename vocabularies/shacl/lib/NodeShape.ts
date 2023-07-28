@@ -12,13 +12,13 @@ export interface NodeShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   ignoredProperties: Array<RDF.Term>;
 }
 
-export function NodeShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NodeShape> & RdfResourceCore> & Base {
+export function NodeShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NodeShape & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class NodeShapeClass extends ShapeMixin(Resource) implements Partial<NodeShape> {
+  class NodeShapeClass extends ShapeMixin(Resource) {
     @rdfine.property({ values: 'list' })
     ignoredProperties!: Array<RDF.Term>;
   }
-  return NodeShapeClass
+  return NodeShapeClass as any
 }
 
 class NodeShapeImpl extends NodeShapeMixin(RdfResourceImpl) {

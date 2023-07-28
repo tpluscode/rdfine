@@ -12,11 +12,11 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface Widget<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function WidgetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Widget> & RdfResourceCore> & Base {
+export function WidgetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Widget & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class WidgetClass extends RdfsResourceMixin(Resource) implements Partial<Widget> {
+  class WidgetClass extends RdfsResourceMixin(Resource) {
   }
-  return WidgetClass
+  return WidgetClass as any
 }
 
 class WidgetImpl extends WidgetMixin(RdfResourceImpl) {

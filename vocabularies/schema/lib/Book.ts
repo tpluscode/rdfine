@@ -17,9 +17,9 @@ export interface Book<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   numberOfPages: number | undefined;
 }
 
-export function BookMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Book> & RdfResourceCore> & Base {
+export function BookMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Book & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BookClass extends CreativeWorkMixin(Resource) implements Partial<Book> {
+  class BookClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal({ type: Boolean })
     abridged: boolean | undefined;
     @rdfine.property.literal()
@@ -33,7 +33,7 @@ export function BookMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.literal({ type: Number })
     numberOfPages: number | undefined;
   }
-  return BookClass
+  return BookClass as any
 }
 
 class BookImpl extends BookMixin(RdfResourceImpl) {

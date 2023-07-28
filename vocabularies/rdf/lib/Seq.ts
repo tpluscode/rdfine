@@ -10,11 +10,11 @@ import type * as Rdf from '../index.js';
 export interface Seq<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function SeqMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Seq> & RdfResourceCore> & Base {
+export function SeqMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Seq & RdfResourceCore> & Base {
   @rdfine.namespace(rdf)
-  class SeqClass extends Resource implements Partial<Seq> {
+  class SeqClass extends Resource {
   }
-  return SeqClass
+  return SeqClass as any
 }
 
 class SeqImpl extends SeqMixin(RdfResourceImpl) {

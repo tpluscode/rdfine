@@ -13,13 +13,13 @@ export interface PropertyGroup<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   order: number | undefined;
 }
 
-export function PropertyGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PropertyGroup> & RdfResourceCore> & Base {
+export function PropertyGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PropertyGroup & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class PropertyGroupClass extends RdfsResourceMixin(Resource) implements Partial<PropertyGroup> {
+  class PropertyGroupClass extends RdfsResourceMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     order: number | undefined;
   }
-  return PropertyGroupClass
+  return PropertyGroupClass as any
 }
 
 class PropertyGroupImpl extends PropertyGroupMixin(RdfResourceImpl) {

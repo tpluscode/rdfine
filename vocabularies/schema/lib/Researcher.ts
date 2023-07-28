@@ -11,11 +11,11 @@ import { AudienceMixin } from './Audience.js';
 export interface Researcher<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Audience<D>, rdfine.RdfResource<D> {
 }
 
-export function ResearcherMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Researcher> & RdfResourceCore> & Base {
+export function ResearcherMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Researcher & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ResearcherClass extends AudienceMixin(Resource) implements Partial<Researcher> {
+  class ResearcherClass extends AudienceMixin(Resource) {
   }
-  return ResearcherClass
+  return ResearcherClass as any
 }
 
 class ResearcherImpl extends ResearcherMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface WebApplication<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   browserRequirements: string | undefined;
 }
 
-export function WebApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WebApplication> & RdfResourceCore> & Base {
+export function WebApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WebApplication & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WebApplicationClass extends SoftwareApplicationMixin(Resource) implements Partial<WebApplication> {
+  class WebApplicationClass extends SoftwareApplicationMixin(Resource) {
     @rdfine.property.literal()
     browserRequirements: string | undefined;
   }
-  return WebApplicationClass
+  return WebApplicationClass as any
 }
 
 class WebApplicationImpl extends WebApplicationMixin(RdfResourceImpl) {

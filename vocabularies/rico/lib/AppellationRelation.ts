@@ -13,15 +13,15 @@ export interface AppellationRelation<D extends RDF.DatasetCore = RDF.DatasetCore
   appellationRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function AppellationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AppellationRelation> & RdfResourceCore> & Base {
+export function AppellationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AppellationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class AppellationRelationClass extends RelationMixin(Resource) implements Partial<AppellationRelation> {
+  class AppellationRelationClass extends RelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Appellation] })
     appellationRelationHasSource: Rico.Appellation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     appellationRelationHasTarget: Rico.Thing | undefined;
   }
-  return AppellationRelationClass
+  return AppellationRelationClass as any
 }
 
 class AppellationRelationImpl extends AppellationRelationMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { TradeActionMixin } from './TradeAction.js';
 export interface QuoteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, rdfine.RdfResource<D> {
 }
 
-export function QuoteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<QuoteAction> & RdfResourceCore> & Base {
+export function QuoteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<QuoteAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class QuoteActionClass extends TradeActionMixin(Resource) implements Partial<QuoteAction> {
+  class QuoteActionClass extends TradeActionMixin(Resource) {
   }
-  return QuoteActionClass
+  return QuoteActionClass as any
 }
 
 class QuoteActionImpl extends QuoteActionMixin(RdfResourceImpl) {

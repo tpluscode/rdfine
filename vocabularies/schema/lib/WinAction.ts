@@ -12,13 +12,13 @@ export interface WinAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   loser: Schema.Person<D> | undefined;
 }
 
-export function WinActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WinAction> & RdfResourceCore> & Base {
+export function WinActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WinAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WinActionClass extends AchieveActionMixin(Resource) implements Partial<WinAction> {
+  class WinActionClass extends AchieveActionMixin(Resource) {
     @rdfine.property.resource()
     loser: Schema.Person | undefined;
   }
-  return WinActionClass
+  return WinActionClass as any
 }
 
 class WinActionImpl extends WinActionMixin(RdfResourceImpl) {

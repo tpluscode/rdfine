@@ -11,11 +11,11 @@ import { RoleMixin } from './Role.js';
 export interface Publisher<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Role<D>, rdfine.RdfResource<D> {
 }
 
-export function PublisherMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Publisher> & RdfResourceCore> & Base {
+export function PublisherMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Publisher & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class PublisherClass extends RoleMixin(Resource) implements Partial<Publisher> {
+  class PublisherClass extends RoleMixin(Resource) {
   }
-  return PublisherClass
+  return PublisherClass as any
 }
 
 class PublisherImpl extends PublisherMixin(RdfResourceImpl) {

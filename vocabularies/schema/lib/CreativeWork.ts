@@ -138,9 +138,9 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   workTranslation: Schema.CreativeWork<D> | undefined;
 }
 
-export function CreativeWorkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CreativeWork> & RdfResourceCore> & Base {
+export function CreativeWorkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CreativeWork & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CreativeWorkClass extends ThingMixin(Resource) implements Partial<CreativeWork> {
+  class CreativeWorkClass extends ThingMixin(Resource) {
     @rdfine.property.resource()
     about: Schema.Thing | undefined;
     @rdfine.property.literal()
@@ -396,7 +396,7 @@ export function CreativeWorkMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.resource()
     workTranslation: Schema.CreativeWork | undefined;
   }
-  return CreativeWorkClass
+  return CreativeWorkClass as any
 }
 
 class CreativeWorkImpl extends CreativeWorkMixin(RdfResourceImpl) {

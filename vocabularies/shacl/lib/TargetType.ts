@@ -13,11 +13,11 @@ import { ParameterizableMixin } from './Parameterizable.js';
 export interface TargetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, Sh.Parameterizable<D>, rdfine.RdfResource<D> {
 }
 
-export function TargetTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TargetType> & RdfResourceCore> & Base {
+export function TargetTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TargetType & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class TargetTypeClass extends ParameterizableMixin(RdfsClassMixin(Resource)) implements Partial<TargetType> {
+  class TargetTypeClass extends ParameterizableMixin(RdfsClassMixin(Resource)) {
   }
-  return TargetTypeClass
+  return TargetTypeClass as any
 }
 
 class TargetTypeImpl extends TargetTypeMixin(RdfResourceImpl) {

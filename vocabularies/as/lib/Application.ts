@@ -11,11 +11,11 @@ import { ObjectMixin } from './Object.js';
 export interface Application<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
 }
 
-export function ApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Application> & RdfResourceCore> & Base {
+export function ApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Application & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class ApplicationClass extends ObjectMixin(Resource) implements Partial<Application> {
+  class ApplicationClass extends ObjectMixin(Resource) {
   }
-  return ApplicationClass
+  return ApplicationClass as any
 }
 
 class ApplicationImpl extends ApplicationMixin(RdfResourceImpl) {

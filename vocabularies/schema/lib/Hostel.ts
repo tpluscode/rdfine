@@ -11,11 +11,11 @@ import { LodgingBusinessMixin } from './LodgingBusiness.js';
 export interface Hostel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LodgingBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function HostelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Hostel> & RdfResourceCore> & Base {
+export function HostelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Hostel & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HostelClass extends LodgingBusinessMixin(Resource) implements Partial<Hostel> {
+  class HostelClass extends LodgingBusinessMixin(Resource) {
   }
-  return HostelClass
+  return HostelClass as any
 }
 
 class HostelImpl extends HostelMixin(RdfResourceImpl) {

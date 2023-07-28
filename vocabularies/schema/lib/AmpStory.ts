@@ -12,11 +12,11 @@ import { MediaObjectMixin } from './MediaObject.js';
 export interface AmpStory<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.MediaObject<D>, rdfine.RdfResource<D> {
 }
 
-export function AmpStoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AmpStory> & RdfResourceCore> & Base {
+export function AmpStoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AmpStory & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AmpStoryClass extends MediaObjectMixin(CreativeWorkMixin(Resource)) implements Partial<AmpStory> {
+  class AmpStoryClass extends MediaObjectMixin(CreativeWorkMixin(Resource)) {
   }
-  return AmpStoryClass
+  return AmpStoryClass as any
 }
 
 class AmpStoryImpl extends AmpStoryMixin(RdfResourceImpl) {

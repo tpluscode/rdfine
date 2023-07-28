@@ -14,9 +14,9 @@ export interface AggregateRating<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   reviewCount: number | undefined;
 }
 
-export function AggregateRatingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AggregateRating> & RdfResourceCore> & Base {
+export function AggregateRatingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AggregateRating & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AggregateRatingClass extends RatingMixin(Resource) implements Partial<AggregateRating> {
+  class AggregateRatingClass extends RatingMixin(Resource) {
     @rdfine.property.resource()
     itemReviewed: Schema.Thing | undefined;
     @rdfine.property.literal({ type: Number })
@@ -24,7 +24,7 @@ export function AggregateRatingMixin<Base extends rdfine.Constructor>(Resource: 
     @rdfine.property.literal({ type: Number })
     reviewCount: number | undefined;
   }
-  return AggregateRatingClass
+  return AggregateRatingClass as any
 }
 
 class AggregateRatingImpl extends AggregateRatingMixin(RdfResourceImpl) {

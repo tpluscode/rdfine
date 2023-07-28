@@ -11,11 +11,11 @@ import { PeriodicalMixin } from './Periodical.js';
 export interface Newspaper<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Periodical<D>, rdfine.RdfResource<D> {
 }
 
-export function NewspaperMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Newspaper> & RdfResourceCore> & Base {
+export function NewspaperMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Newspaper & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class NewspaperClass extends PeriodicalMixin(Resource) implements Partial<Newspaper> {
+  class NewspaperClass extends PeriodicalMixin(Resource) {
   }
-  return NewspaperClass
+  return NewspaperClass as any
 }
 
 class NewspaperImpl extends NewspaperMixin(RdfResourceImpl) {

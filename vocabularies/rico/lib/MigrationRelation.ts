@@ -13,15 +13,15 @@ export interface MigrationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> 
   migrationRelationHasTarget: Rico.Instantiation<D> | undefined;
 }
 
-export function MigrationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MigrationRelation> & RdfResourceCore> & Base {
+export function MigrationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MigrationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class MigrationRelationClass extends DerivationRelationMixin(Resource) implements Partial<MigrationRelation> {
+  class MigrationRelationClass extends DerivationRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     migrationRelationHasSource: Rico.Instantiation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     migrationRelationHasTarget: Rico.Instantiation | undefined;
   }
-  return MigrationRelationClass
+  return MigrationRelationClass as any
 }
 
 class MigrationRelationImpl extends MigrationRelationMixin(RdfResourceImpl) {

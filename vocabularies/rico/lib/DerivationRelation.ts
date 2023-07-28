@@ -14,15 +14,15 @@ export interface DerivationRelation<D extends RDF.DatasetCore = RDF.DatasetCore>
   derivationRelationHasTarget: Rico.Instantiation<D> | undefined;
 }
 
-export function DerivationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DerivationRelation> & RdfResourceCore> & Base {
+export function DerivationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DerivationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class DerivationRelationClass extends TemporalRelationMixin(InstantiationToInstantiationRelationMixin(Resource)) implements Partial<DerivationRelation> {
+  class DerivationRelationClass extends TemporalRelationMixin(InstantiationToInstantiationRelationMixin(Resource)) {
     @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     derivationRelationHasSource: Rico.Instantiation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     derivationRelationHasTarget: Rico.Instantiation | undefined;
   }
-  return DerivationRelationClass
+  return DerivationRelationClass as any
 }
 
 class DerivationRelationImpl extends DerivationRelationMixin(RdfResourceImpl) {

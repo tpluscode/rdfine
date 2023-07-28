@@ -14,15 +14,15 @@ export interface DescendanceRelation<D extends RDF.DatasetCore = RDF.DatasetCore
   descendanceRelationHasTarget: Rico.Person<D> | undefined;
 }
 
-export function DescendanceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DescendanceRelation> & RdfResourceCore> & Base {
+export function DescendanceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DescendanceRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class DescendanceRelationClass extends FamilyRelationMixin(AgentTemporalRelationMixin(Resource)) implements Partial<DescendanceRelation> {
+  class DescendanceRelationClass extends FamilyRelationMixin(AgentTemporalRelationMixin(Resource)) {
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     descendanceRelationHasSource: Rico.Person | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     descendanceRelationHasTarget: Rico.Person | undefined;
   }
-  return DescendanceRelationClass
+  return DescendanceRelationClass as any
 }
 
 class DescendanceRelationImpl extends DescendanceRelationMixin(RdfResourceImpl) {

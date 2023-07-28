@@ -28,9 +28,9 @@ export interface RecordSet<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   isOrWasIncludedIn: Rico.RecordSet<D> | undefined;
 }
 
-export function RecordSetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RecordSet> & RdfResourceCore> & Base {
+export function RecordSetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordSet & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RecordSetClass extends RecordResourceMixin(Resource) implements Partial<RecordSet> {
+  class RecordSetClass extends RecordResourceMixin(Resource) {
     @rdfine.property()
     accrual: RDF.Literal | undefined;
     @rdfine.property()
@@ -66,7 +66,7 @@ export function RecordSetMixin<Base extends rdfine.Constructor>(Resource: Base):
     @rdfine.property.resource({ as: [RecordSetMixin] })
     isOrWasIncludedIn: Rico.RecordSet | undefined;
   }
-  return RecordSetClass
+  return RecordSetClass as any
 }
 
 class RecordSetImpl extends RecordSetMixin(RdfResourceImpl) {

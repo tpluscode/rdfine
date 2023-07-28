@@ -12,13 +12,13 @@ export interface AgentToAgentRelation<D extends RDF.DatasetCore = RDF.DatasetCor
   agentRelationConnects: Rico.Agent<D> | undefined;
 }
 
-export function AgentToAgentRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AgentToAgentRelation> & RdfResourceCore> & Base {
+export function AgentToAgentRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentToAgentRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class AgentToAgentRelationClass extends RelationMixin(Resource) implements Partial<AgentToAgentRelation> {
+  class AgentToAgentRelationClass extends RelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     agentRelationConnects: Rico.Agent | undefined;
   }
-  return AgentToAgentRelationClass
+  return AgentToAgentRelationClass as any
 }
 
 class AgentToAgentRelationImpl extends AgentToAgentRelationMixin(RdfResourceImpl) {

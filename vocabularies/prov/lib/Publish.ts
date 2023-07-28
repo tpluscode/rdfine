@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Publish<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function PublishMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Publish> & RdfResourceCore> & Base {
+export function PublishMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Publish & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class PublishClass extends ActivityMixin(Resource) implements Partial<Publish> {
+  class PublishClass extends ActivityMixin(Resource) {
   }
-  return PublishClass
+  return PublishClass as any
 }
 
 class PublishImpl extends PublishMixin(RdfResourceImpl) {

@@ -12,11 +12,11 @@ import { JSExecutableMixin } from './JSExecutable.js';
 export interface JSFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Function<D>, Sh.JSExecutable<D>, rdfine.RdfResource<D> {
 }
 
-export function JSFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JSFunction> & RdfResourceCore> & Base {
+export function JSFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JSFunction & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class JSFunctionClass extends JSExecutableMixin(FunctionMixin(Resource)) implements Partial<JSFunction> {
+  class JSFunctionClass extends JSExecutableMixin(FunctionMixin(Resource)) {
   }
-  return JSFunctionClass
+  return JSFunctionClass as any
 }
 
 class JSFunctionImpl extends JSFunctionMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface OrderAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   deliveryMethod: Schema.DeliveryMethod | undefined;
 }
 
-export function OrderActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OrderAction> & RdfResourceCore> & Base {
+export function OrderActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OrderAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OrderActionClass extends TradeActionMixin(Resource) implements Partial<OrderAction> {
+  class OrderActionClass extends TradeActionMixin(Resource) {
     @rdfine.property()
     deliveryMethod: Schema.DeliveryMethod | undefined;
   }
-  return OrderActionClass
+  return OrderActionClass as any
 }
 
 class OrderActionImpl extends OrderActionMixin(RdfResourceImpl) {

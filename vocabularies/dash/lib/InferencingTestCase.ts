@@ -11,11 +11,11 @@ import { TestCaseMixin } from './TestCase.js';
 export interface InferencingTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.TestCase<D>, rdfine.RdfResource<D> {
 }
 
-export function InferencingTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InferencingTestCase> & RdfResourceCore> & Base {
+export function InferencingTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InferencingTestCase & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class InferencingTestCaseClass extends TestCaseMixin(Resource) implements Partial<InferencingTestCase> {
+  class InferencingTestCaseClass extends TestCaseMixin(Resource) {
   }
-  return InferencingTestCaseClass
+  return InferencingTestCaseClass as any
 }
 
 class InferencingTestCaseImpl extends InferencingTestCaseMixin(RdfResourceImpl) {

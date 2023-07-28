@@ -11,11 +11,11 @@ import { ProjectMixin } from './Project.js';
 export interface ResearchProject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Project<D>, rdfine.RdfResource<D> {
 }
 
-export function ResearchProjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ResearchProject> & RdfResourceCore> & Base {
+export function ResearchProjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ResearchProject & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ResearchProjectClass extends ProjectMixin(Resource) implements Partial<ResearchProject> {
+  class ResearchProjectClass extends ProjectMixin(Resource) {
   }
-  return ResearchProjectClass
+  return ResearchProjectClass as any
 }
 
 class ResearchProjectImpl extends ResearchProjectMixin(RdfResourceImpl) {

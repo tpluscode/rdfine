@@ -11,11 +11,11 @@ import { RepositoryMixin } from './Repository.js';
 export interface HgRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, rdfine.RdfResource<D> {
 }
 
-export function HgRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HgRepository> & RdfResourceCore> & Base {
+export function HgRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HgRepository & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
-  class HgRepositoryClass extends RepositoryMixin(Resource) implements Partial<HgRepository> {
+  class HgRepositoryClass extends RepositoryMixin(Resource) {
   }
-  return HgRepositoryClass
+  return HgRepositoryClass as any
 }
 
 class HgRepositoryImpl extends HgRepositoryMixin(RdfResourceImpl) {

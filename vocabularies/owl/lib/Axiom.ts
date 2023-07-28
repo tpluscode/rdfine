@@ -14,11 +14,11 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface Axiom<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function AxiomMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Axiom> & RdfResourceCore> & Base {
+export function AxiomMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Axiom & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class AxiomClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) implements Partial<Axiom> {
+  class AxiomClass extends ResourceMixinEx(RdfsResourceMixin(Resource)) {
   }
-  return AxiomClass
+  return AxiomClass as any
 }
 
 class AxiomImpl extends AxiomMixin(RdfResourceImpl) {

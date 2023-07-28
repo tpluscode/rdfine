@@ -13,15 +13,15 @@ export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends A
   oneOf: As.Link<D> | As.Object<D> | undefined;
 }
 
-export function QuestionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Question> & RdfResourceCore> & Base {
+export function QuestionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Question & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class QuestionClass extends IntransitiveActivityMixin(Resource) implements Partial<Question> {
+  class QuestionClass extends IntransitiveActivityMixin(Resource) {
     @rdfine.property.resource()
     anyOf: As.Link | As.Object | undefined;
     @rdfine.property.resource()
     oneOf: As.Link | As.Object | undefined;
   }
-  return QuestionClass
+  return QuestionClass as any
 }
 
 class QuestionImpl extends QuestionMixin(RdfResourceImpl) {

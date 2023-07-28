@@ -11,11 +11,11 @@ import { FinancialProductMixin } from './FinancialProduct.js';
 export interface CurrencyConversionService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialProduct<D>, rdfine.RdfResource<D> {
 }
 
-export function CurrencyConversionServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CurrencyConversionService> & RdfResourceCore> & Base {
+export function CurrencyConversionServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CurrencyConversionService & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CurrencyConversionServiceClass extends FinancialProductMixin(Resource) implements Partial<CurrencyConversionService> {
+  class CurrencyConversionServiceClass extends FinancialProductMixin(Resource) {
   }
-  return CurrencyConversionServiceClass
+  return CurrencyConversionServiceClass as any
 }
 
 class CurrencyConversionServiceImpl extends CurrencyConversionServiceMixin(RdfResourceImpl) {

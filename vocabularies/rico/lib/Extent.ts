@@ -17,9 +17,9 @@ export interface Extent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Ric
   unitOfMeasurement: RDF.Literal | undefined;
 }
 
-export function ExtentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Extent> & RdfResourceCore> & Base {
+export function ExtentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Extent & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class ExtentClass extends ThingMixin(Resource) implements Partial<Extent> {
+  class ExtentClass extends ThingMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.ExtentType] })
     hasExtentType: Rico.ExtentType | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.UnitOfMeasurement] })
@@ -33,7 +33,7 @@ export function ExtentMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property()
     unitOfMeasurement: RDF.Literal | undefined;
   }
-  return ExtentClass
+  return ExtentClass as any
 }
 
 class ExtentImpl extends ExtentMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { PlaceMixin } from './Place.js';
 export interface Landform<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, rdfine.RdfResource<D> {
 }
 
-export function LandformMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Landform> & RdfResourceCore> & Base {
+export function LandformMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Landform & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LandformClass extends PlaceMixin(Resource) implements Partial<Landform> {
+  class LandformClass extends PlaceMixin(Resource) {
   }
-  return LandformClass
+  return LandformClass as any
 }
 
 class LandformImpl extends LandformMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { ImageObjectMixin } from './ImageObject.js';
 export interface ImageObjectSnapshot<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ImageObject<D>, rdfine.RdfResource<D> {
 }
 
-export function ImageObjectSnapshotMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ImageObjectSnapshot> & RdfResourceCore> & Base {
+export function ImageObjectSnapshotMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ImageObjectSnapshot & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ImageObjectSnapshotClass extends ImageObjectMixin(Resource) implements Partial<ImageObjectSnapshot> {
+  class ImageObjectSnapshotClass extends ImageObjectMixin(Resource) {
   }
-  return ImageObjectSnapshotClass
+  return ImageObjectSnapshotClass as any
 }
 
 class ImageObjectSnapshotImpl extends ImageObjectSnapshotMixin(RdfResourceImpl) {

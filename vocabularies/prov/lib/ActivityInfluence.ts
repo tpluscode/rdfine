@@ -12,13 +12,13 @@ export interface ActivityInfluence<D extends RDF.DatasetCore = RDF.DatasetCore> 
   activity: Prov.Activity<D> | undefined;
 }
 
-export function ActivityInfluenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ActivityInfluence> & RdfResourceCore> & Base {
+export function ActivityInfluenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ActivityInfluence & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class ActivityInfluenceClass extends InfluenceMixin(Resource) implements Partial<ActivityInfluence> {
+  class ActivityInfluenceClass extends InfluenceMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [prov.Activity] })
     activity: Prov.Activity | undefined;
   }
-  return ActivityInfluenceClass
+  return ActivityInfluenceClass as any
 }
 
 class ActivityInfluenceImpl extends ActivityInfluenceMixin(RdfResourceImpl) {

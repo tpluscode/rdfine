@@ -34,9 +34,9 @@ export interface Entity<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdf
   wasRevisionOf: Prov.Entity<D> | undefined;
 }
 
-export function EntityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Entity> & RdfResourceCore> & Base {
+export function EntityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Entity & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class EntityClass extends Resource implements Partial<Entity> {
+  class EntityClass extends Resource {
     @rdfine.property.resource({ as: [EntityMixin] })
     alternateOf: Prov.Entity | undefined;
     @rdfine.property.resource({ implicitTypes: [prov.Bundle] })
@@ -86,7 +86,7 @@ export function EntityMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.resource({ as: [EntityMixin] })
     wasRevisionOf: Prov.Entity | undefined;
   }
-  return EntityClass
+  return EntityClass as any
 }
 
 class EntityImpl extends EntityMixin(RdfResourceImpl) {

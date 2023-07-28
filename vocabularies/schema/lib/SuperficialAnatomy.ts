@@ -16,9 +16,9 @@ export interface SuperficialAnatomy<D extends RDF.DatasetCore = RDF.DatasetCore>
   significance: string | undefined;
 }
 
-export function SuperficialAnatomyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SuperficialAnatomy> & RdfResourceCore> & Base {
+export function SuperficialAnatomyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SuperficialAnatomy & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SuperficialAnatomyClass extends MedicalEntityMixin(Resource) implements Partial<SuperficialAnatomy> {
+  class SuperficialAnatomyClass extends MedicalEntityMixin(Resource) {
     @rdfine.property.literal()
     associatedPathophysiology: string | undefined;
     @rdfine.property.resource()
@@ -30,7 +30,7 @@ export function SuperficialAnatomyMixin<Base extends rdfine.Constructor>(Resourc
     @rdfine.property.literal()
     significance: string | undefined;
   }
-  return SuperficialAnatomyClass
+  return SuperficialAnatomyClass as any
 }
 
 class SuperficialAnatomyImpl extends SuperficialAnatomyMixin(RdfResourceImpl) {

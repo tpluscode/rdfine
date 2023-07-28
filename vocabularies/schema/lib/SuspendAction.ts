@@ -11,11 +11,11 @@ import { ControlActionMixin } from './ControlAction.js';
 export interface SuspendAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ControlAction<D>, rdfine.RdfResource<D> {
 }
 
-export function SuspendActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SuspendAction> & RdfResourceCore> & Base {
+export function SuspendActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SuspendAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SuspendActionClass extends ControlActionMixin(Resource) implements Partial<SuspendAction> {
+  class SuspendActionClass extends ControlActionMixin(Resource) {
   }
-  return SuspendActionClass
+  return SuspendActionClass as any
 }
 
 class SuspendActionImpl extends SuspendActionMixin(RdfResourceImpl) {

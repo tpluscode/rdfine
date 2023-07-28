@@ -68,9 +68,9 @@ export interface Offer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   warranty: Schema.WarrantyPromise<D> | undefined;
 }
 
-export function OfferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Offer> & RdfResourceCore> & Base {
+export function OfferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Offer & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OfferClass extends IntangibleMixin(Resource) implements Partial<Offer> {
+  class OfferClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     acceptedPaymentMethod: Schema.LoanOrCredit | undefined;
     @rdfine.property.resource()
@@ -186,7 +186,7 @@ export function OfferMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource()
     warranty: Schema.WarrantyPromise | undefined;
   }
-  return OfferClass
+  return OfferClass as any
 }
 
 class OfferImpl extends OfferMixin(RdfResourceImpl) {

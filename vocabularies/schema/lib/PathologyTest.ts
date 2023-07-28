@@ -12,13 +12,13 @@ export interface PathologyTest<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   tissueSample: string | undefined;
 }
 
-export function PathologyTestMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PathologyTest> & RdfResourceCore> & Base {
+export function PathologyTestMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PathologyTest & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PathologyTestClass extends MedicalTestMixin(Resource) implements Partial<PathologyTest> {
+  class PathologyTestClass extends MedicalTestMixin(Resource) {
     @rdfine.property.literal()
     tissueSample: string | undefined;
   }
-  return PathologyTestClass
+  return PathologyTestClass as any
 }
 
 class PathologyTestImpl extends PathologyTestMixin(RdfResourceImpl) {

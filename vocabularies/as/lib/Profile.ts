@@ -12,13 +12,13 @@ export interface Profile<D extends RDF.DatasetCore = RDF.DatasetCore> extends As
   describes: As.Object<D> | undefined;
 }
 
-export function ProfileMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Profile> & RdfResourceCore> & Base {
+export function ProfileMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Profile & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class ProfileClass extends ObjectMixin(Resource) implements Partial<Profile> {
+  class ProfileClass extends ObjectMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [as.Object] })
     describes: As.Object | undefined;
   }
-  return ProfileClass
+  return ProfileClass as any
 }
 
 class ProfileImpl extends ProfileMixin(RdfResourceImpl) {

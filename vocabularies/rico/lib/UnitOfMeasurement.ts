@@ -12,13 +12,13 @@ export interface UnitOfMeasurement<D extends RDF.DatasetCore = RDF.DatasetCore> 
   isUnitOfMeasurementOf: Rico.Extent<D> | undefined;
 }
 
-export function UnitOfMeasurementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<UnitOfMeasurement> & RdfResourceCore> & Base {
+export function UnitOfMeasurementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<UnitOfMeasurement & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class UnitOfMeasurementClass extends ConceptMixin(Resource) implements Partial<UnitOfMeasurement> {
+  class UnitOfMeasurementClass extends ConceptMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Extent] })
     isUnitOfMeasurementOf: Rico.Extent | undefined;
   }
-  return UnitOfMeasurementClass
+  return UnitOfMeasurementClass as any
 }
 
 class UnitOfMeasurementImpl extends UnitOfMeasurementMixin(RdfResourceImpl) {

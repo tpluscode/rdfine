@@ -11,11 +11,11 @@ import { DoseScheduleMixin } from './DoseSchedule.js';
 export interface MaximumDoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DoseSchedule<D>, rdfine.RdfResource<D> {
 }
 
-export function MaximumDoseScheduleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MaximumDoseSchedule> & RdfResourceCore> & Base {
+export function MaximumDoseScheduleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MaximumDoseSchedule & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MaximumDoseScheduleClass extends DoseScheduleMixin(Resource) implements Partial<MaximumDoseSchedule> {
+  class MaximumDoseScheduleClass extends DoseScheduleMixin(Resource) {
   }
-  return MaximumDoseScheduleClass
+  return MaximumDoseScheduleClass as any
 }
 
 class MaximumDoseScheduleImpl extends MaximumDoseScheduleMixin(RdfResourceImpl) {

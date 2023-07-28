@@ -13,15 +13,15 @@ export interface KnowingOfRelation<D extends RDF.DatasetCore = RDF.DatasetCore> 
   knowingOfRelationHasTarget: Rico.Person<D> | undefined;
 }
 
-export function KnowingOfRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<KnowingOfRelation> & RdfResourceCore> & Base {
+export function KnowingOfRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<KnowingOfRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class KnowingOfRelationClass extends AgentToAgentRelationMixin(Resource) implements Partial<KnowingOfRelation> {
+  class KnowingOfRelationClass extends AgentToAgentRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     knowingOfRelationHasSource: Rico.Person | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
     knowingOfRelationHasTarget: Rico.Person | undefined;
   }
-  return KnowingOfRelationClass
+  return KnowingOfRelationClass as any
 }
 
 class KnowingOfRelationImpl extends KnowingOfRelationMixin(RdfResourceImpl) {

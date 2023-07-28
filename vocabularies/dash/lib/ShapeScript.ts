@@ -11,11 +11,11 @@ import { ScriptMixin } from './Script.js';
 export interface ShapeScript<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, rdfine.RdfResource<D> {
 }
 
-export function ShapeScriptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ShapeScript> & RdfResourceCore> & Base {
+export function ShapeScriptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ShapeScript & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class ShapeScriptClass extends ScriptMixin(Resource) implements Partial<ShapeScript> {
+  class ShapeScriptClass extends ScriptMixin(Resource) {
   }
-  return ShapeScriptClass
+  return ShapeScriptClass as any
 }
 
 class ShapeScriptImpl extends ShapeScriptMixin(RdfResourceImpl) {

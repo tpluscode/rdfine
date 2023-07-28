@@ -11,11 +11,11 @@ import { OrganizeActionMixin } from './OrganizeAction.js';
 export interface BookmarkAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OrganizeAction<D>, rdfine.RdfResource<D> {
 }
 
-export function BookmarkActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BookmarkAction> & RdfResourceCore> & Base {
+export function BookmarkActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BookmarkAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BookmarkActionClass extends OrganizeActionMixin(Resource) implements Partial<BookmarkAction> {
+  class BookmarkActionClass extends OrganizeActionMixin(Resource) {
   }
-  return BookmarkActionClass
+  return BookmarkActionClass as any
 }
 
 class BookmarkActionImpl extends BookmarkActionMixin(RdfResourceImpl) {

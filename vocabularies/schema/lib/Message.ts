@@ -20,9 +20,9 @@ export interface Message<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   toRecipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function MessageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Message> & RdfResourceCore> & Base {
+export function MessageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Message & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MessageClass extends CreativeWorkMixin(Resource) implements Partial<Message> {
+  class MessageClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     bccRecipient: Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
     @rdfine.property.resource()
@@ -42,7 +42,7 @@ export function MessageMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property.resource()
     toRecipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
-  return MessageClass
+  return MessageClass as any
 }
 
 class MessageImpl extends MessageMixin(RdfResourceImpl) {

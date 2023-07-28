@@ -11,11 +11,11 @@ import { TherapeuticProcedureMixin } from './TherapeuticProcedure.js';
 export interface PsychologicalTreatment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TherapeuticProcedure<D>, rdfine.RdfResource<D> {
 }
 
-export function PsychologicalTreatmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PsychologicalTreatment> & RdfResourceCore> & Base {
+export function PsychologicalTreatmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PsychologicalTreatment & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PsychologicalTreatmentClass extends TherapeuticProcedureMixin(Resource) implements Partial<PsychologicalTreatment> {
+  class PsychologicalTreatmentClass extends TherapeuticProcedureMixin(Resource) {
   }
-  return PsychologicalTreatmentClass
+  return PsychologicalTreatmentClass as any
 }
 
 class PsychologicalTreatmentImpl extends PsychologicalTreatmentMixin(RdfResourceImpl) {

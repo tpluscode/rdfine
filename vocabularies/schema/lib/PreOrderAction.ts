@@ -11,11 +11,11 @@ import { TradeActionMixin } from './TradeAction.js';
 export interface PreOrderAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, rdfine.RdfResource<D> {
 }
 
-export function PreOrderActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PreOrderAction> & RdfResourceCore> & Base {
+export function PreOrderActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PreOrderAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PreOrderActionClass extends TradeActionMixin(Resource) implements Partial<PreOrderAction> {
+  class PreOrderActionClass extends TradeActionMixin(Resource) {
   }
-  return PreOrderActionClass
+  return PreOrderActionClass as any
 }
 
 class PreOrderActionImpl extends PreOrderActionMixin(RdfResourceImpl) {

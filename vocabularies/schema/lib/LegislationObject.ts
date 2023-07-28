@@ -13,13 +13,13 @@ export interface LegislationObject<D extends RDF.DatasetCore = RDF.DatasetCore> 
   legislationLegalValue: Schema.LegalValueLevel | undefined;
 }
 
-export function LegislationObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LegislationObject> & RdfResourceCore> & Base {
+export function LegislationObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LegislationObject & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LegislationObjectClass extends MediaObjectMixin(LegislationMixin(Resource)) implements Partial<LegislationObject> {
+  class LegislationObjectClass extends MediaObjectMixin(LegislationMixin(Resource)) {
     @rdfine.property()
     legislationLegalValue: Schema.LegalValueLevel | undefined;
   }
-  return LegislationObjectClass
+  return LegislationObjectClass as any
 }
 
 class LegislationObjectImpl extends LegislationObjectMixin(RdfResourceImpl) {

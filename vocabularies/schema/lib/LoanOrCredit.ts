@@ -23,9 +23,9 @@ export interface LoanOrCredit<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   requiredCollateralLiteral: string | undefined;
 }
 
-export function LoanOrCreditMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LoanOrCredit> & RdfResourceCore> & Base {
+export function LoanOrCreditMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LoanOrCredit & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LoanOrCreditClass extends FinancialProductMixin(Resource) implements Partial<LoanOrCredit> {
+  class LoanOrCreditClass extends FinancialProductMixin(Resource) {
     @rdfine.property.resource()
     amount: Schema.MonetaryAmount | undefined;
     @rdfine.property.literal({ path: schema.amount, type: Number })
@@ -51,7 +51,7 @@ export function LoanOrCreditMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.literal({ path: schema.requiredCollateral })
     requiredCollateralLiteral: string | undefined;
   }
-  return LoanOrCreditClass
+  return LoanOrCreditClass as any
 }
 
 class LoanOrCreditImpl extends LoanOrCreditMixin(RdfResourceImpl) {

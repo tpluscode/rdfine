@@ -14,15 +14,15 @@ export interface Audiobook<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   readBy: Schema.Person<D> | undefined;
 }
 
-export function AudiobookMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Audiobook> & RdfResourceCore> & Base {
+export function AudiobookMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Audiobook & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AudiobookClass extends BookMixin(AudioObjectMixin(Resource)) implements Partial<Audiobook> {
+  class AudiobookClass extends BookMixin(AudioObjectMixin(Resource)) {
     @rdfine.property.resource()
     duration: Schema.Duration | undefined;
     @rdfine.property.resource()
     readBy: Schema.Person | undefined;
   }
-  return AudiobookClass
+  return AudiobookClass as any
 }
 
 class AudiobookImpl extends AudiobookMixin(RdfResourceImpl) {

@@ -16,9 +16,9 @@ export interface ComicStory<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   penciler: Schema.Person<D> | undefined;
 }
 
-export function ComicStoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ComicStory> & RdfResourceCore> & Base {
+export function ComicStoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ComicStory & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ComicStoryClass extends CreativeWorkMixin(Resource) implements Partial<ComicStory> {
+  class ComicStoryClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     artist: Schema.Person | undefined;
     @rdfine.property.resource()
@@ -30,7 +30,7 @@ export function ComicStoryMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property.resource()
     penciler: Schema.Person | undefined;
   }
-  return ComicStoryClass
+  return ComicStoryClass as any
 }
 
 class ComicStoryImpl extends ComicStoryMixin(RdfResourceImpl) {

@@ -13,15 +13,15 @@ export interface Association<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   hadRole: Prov.Role<D> | undefined;
 }
 
-export function AssociationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Association> & RdfResourceCore> & Base {
+export function AssociationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Association & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class AssociationClass extends AgentInfluenceMixin(Resource) implements Partial<Association> {
+  class AssociationClass extends AgentInfluenceMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [prov.Plan] })
     hadPlan: Prov.Plan | undefined;
     @rdfine.property.resource({ implicitTypes: [prov.Role] })
     hadRole: Prov.Role | undefined;
   }
-  return AssociationClass
+  return AssociationClass as any
 }
 
 class AssociationImpl extends AssociationMixin(RdfResourceImpl) {

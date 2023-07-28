@@ -12,11 +12,11 @@ import { SportsActivityLocationMixin } from './SportsActivityLocation.js';
 export interface HealthClub<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HealthAndBeautyBusiness<D>, Schema.SportsActivityLocation<D>, rdfine.RdfResource<D> {
 }
 
-export function HealthClubMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HealthClub> & RdfResourceCore> & Base {
+export function HealthClubMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HealthClub & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HealthClubClass extends SportsActivityLocationMixin(HealthAndBeautyBusinessMixin(Resource)) implements Partial<HealthClub> {
+  class HealthClubClass extends SportsActivityLocationMixin(HealthAndBeautyBusinessMixin(Resource)) {
   }
-  return HealthClubClass
+  return HealthClubClass as any
 }
 
 class HealthClubImpl extends HealthClubMixin(RdfResourceImpl) {

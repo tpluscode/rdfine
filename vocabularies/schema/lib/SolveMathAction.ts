@@ -12,13 +12,13 @@ export interface SolveMathAction<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   eduQuestionType: string | undefined;
 }
 
-export function SolveMathActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SolveMathAction> & RdfResourceCore> & Base {
+export function SolveMathActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SolveMathAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SolveMathActionClass extends ActionMixin(Resource) implements Partial<SolveMathAction> {
+  class SolveMathActionClass extends ActionMixin(Resource) {
     @rdfine.property.literal()
     eduQuestionType: string | undefined;
   }
-  return SolveMathActionClass
+  return SolveMathActionClass as any
 }
 
 class SolveMathActionImpl extends SolveMathActionMixin(RdfResourceImpl) {

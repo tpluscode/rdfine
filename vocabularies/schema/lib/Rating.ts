@@ -17,9 +17,9 @@ export interface Rating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   worstRating: number | string | undefined;
 }
 
-export function RatingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Rating> & RdfResourceCore> & Base {
+export function RatingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Rating & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RatingClass extends IntangibleMixin(Resource) implements Partial<Rating> {
+  class RatingClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     author: Schema.Organization | Schema.Person | undefined;
     @rdfine.property.literal()
@@ -33,7 +33,7 @@ export function RatingMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.literal()
     worstRating: number | string | undefined;
   }
-  return RatingClass
+  return RatingClass as any
 }
 
 class RatingImpl extends RatingMixin(RdfResourceImpl) {

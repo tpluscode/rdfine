@@ -15,9 +15,9 @@ export interface Joint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   structuralClass: string | undefined;
 }
 
-export function JointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Joint> & RdfResourceCore> & Base {
+export function JointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Joint & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class JointClass extends AnatomicalStructureMixin(Resource) implements Partial<Joint> {
+  class JointClass extends AnatomicalStructureMixin(Resource) {
     @rdfine.property.literal()
     biomechnicalClass: string | undefined;
     @rdfine.property.resource()
@@ -27,7 +27,7 @@ export function JointMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.literal()
     structuralClass: string | undefined;
   }
-  return JointClass
+  return JointClass as any
 }
 
 class JointImpl extends JointMixin(RdfResourceImpl) {

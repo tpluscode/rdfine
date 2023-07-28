@@ -16,9 +16,9 @@ export interface DoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   targetPopulation: string | undefined;
 }
 
-export function DoseScheduleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DoseSchedule> & RdfResourceCore> & Base {
+export function DoseScheduleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DoseSchedule & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DoseScheduleClass extends MedicalIntangibleMixin(Resource) implements Partial<DoseSchedule> {
+  class DoseScheduleClass extends MedicalIntangibleMixin(Resource) {
     @rdfine.property.literal()
     doseUnit: string | undefined;
     @rdfine.property.literal({ type: Number })
@@ -30,7 +30,7 @@ export function DoseScheduleMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.literal()
     targetPopulation: string | undefined;
   }
-  return DoseScheduleClass
+  return DoseScheduleClass as any
 }
 
 class DoseScheduleImpl extends DoseScheduleMixin(RdfResourceImpl) {

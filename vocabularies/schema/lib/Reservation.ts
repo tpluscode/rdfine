@@ -25,9 +25,9 @@ export interface Reservation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   underName: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function ReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Reservation> & RdfResourceCore> & Base {
+export function ReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Reservation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ReservationClass extends IntangibleMixin(Resource) implements Partial<Reservation> {
+  class ReservationClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     bookingAgent: Schema.Organization | Schema.Person | undefined;
     @rdfine.property.literal({ type: Date })
@@ -57,7 +57,7 @@ export function ReservationMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource()
     underName: Schema.Organization | Schema.Person | undefined;
   }
-  return ReservationClass
+  return ReservationClass as any
 }
 
 class ReservationImpl extends ReservationMixin(RdfResourceImpl) {

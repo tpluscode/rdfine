@@ -15,9 +15,9 @@ export interface CreativeWorkSeries<D extends RDF.DatasetCore = RDF.DatasetCore>
   startDate: Date | undefined;
 }
 
-export function CreativeWorkSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CreativeWorkSeries> & RdfResourceCore> & Base {
+export function CreativeWorkSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CreativeWorkSeries & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CreativeWorkSeriesClass extends SeriesMixin(CreativeWorkMixin(Resource)) implements Partial<CreativeWorkSeries> {
+  class CreativeWorkSeriesClass extends SeriesMixin(CreativeWorkMixin(Resource)) {
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     endDate: Date | undefined;
     @rdfine.property.literal()
@@ -25,7 +25,7 @@ export function CreativeWorkSeriesMixin<Base extends rdfine.Constructor>(Resourc
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     startDate: Date | undefined;
   }
-  return CreativeWorkSeriesClass
+  return CreativeWorkSeriesClass as any
 }
 
 class CreativeWorkSeriesImpl extends CreativeWorkSeriesMixin(RdfResourceImpl) {

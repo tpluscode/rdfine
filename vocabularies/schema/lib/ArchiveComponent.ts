@@ -14,9 +14,9 @@ export interface ArchiveComponent<D extends RDF.DatasetCore = RDF.DatasetCore> e
   itemLocationLiteral: string | undefined;
 }
 
-export function ArchiveComponentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ArchiveComponent> & RdfResourceCore> & Base {
+export function ArchiveComponentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ArchiveComponent & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ArchiveComponentClass extends CreativeWorkMixin(Resource) implements Partial<ArchiveComponent> {
+  class ArchiveComponentClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     holdingArchive: Schema.ArchiveOrganization | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function ArchiveComponentMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.literal({ path: schema.itemLocation })
     itemLocationLiteral: string | undefined;
   }
-  return ArchiveComponentClass
+  return ArchiveComponentClass as any
 }
 
 class ArchiveComponentImpl extends ArchiveComponentMixin(RdfResourceImpl) {

@@ -12,13 +12,13 @@ export interface Family<D extends RDF.DatasetCore = RDF.DatasetCore> extends Ric
   hasFamilyType: Rico.FamilyType<D> | undefined;
 }
 
-export function FamilyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Family> & RdfResourceCore> & Base {
+export function FamilyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Family & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class FamilyClass extends GroupMixin(Resource) implements Partial<Family> {
+  class FamilyClass extends GroupMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.FamilyType] })
     hasFamilyType: Rico.FamilyType | undefined;
   }
-  return FamilyClass
+  return FamilyClass as any
 }
 
 class FamilyImpl extends FamilyMixin(RdfResourceImpl) {

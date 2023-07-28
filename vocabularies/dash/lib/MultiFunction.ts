@@ -12,11 +12,11 @@ import { ParameterizableMixin as ShaclParameterizableMixin } from '@rdfine/shacl
 export interface MultiFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.Parameterizable<D>, rdfine.RdfResource<D> {
 }
 
-export function MultiFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MultiFunction> & RdfResourceCore> & Base {
+export function MultiFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MultiFunction & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class MultiFunctionClass extends ShaclParameterizableMixin(Resource) implements Partial<MultiFunction> {
+  class MultiFunctionClass extends ShaclParameterizableMixin(Resource) {
   }
-  return MultiFunctionClass
+  return MultiFunctionClass as any
 }
 
 class MultiFunctionImpl extends MultiFunctionMixin(RdfResourceImpl) {

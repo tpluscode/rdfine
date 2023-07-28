@@ -11,11 +11,11 @@ import { SoftwareAgentMixin } from './SoftwareAgent.js';
 export interface DirectQueryService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.SoftwareAgent<D>, rdfine.RdfResource<D> {
 }
 
-export function DirectQueryServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DirectQueryService> & RdfResourceCore> & Base {
+export function DirectQueryServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DirectQueryService & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class DirectQueryServiceClass extends SoftwareAgentMixin(Resource) implements Partial<DirectQueryService> {
+  class DirectQueryServiceClass extends SoftwareAgentMixin(Resource) {
   }
-  return DirectQueryServiceClass
+  return DirectQueryServiceClass as any
 }
 
 class DirectQueryServiceImpl extends DirectQueryServiceMixin(RdfResourceImpl) {

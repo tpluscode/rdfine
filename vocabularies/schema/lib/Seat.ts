@@ -16,9 +16,9 @@ export interface Seat<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   seatSection: string | undefined;
 }
 
-export function SeatMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Seat> & RdfResourceCore> & Base {
+export function SeatMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Seat & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SeatClass extends IntangibleMixin(Resource) implements Partial<Seat> {
+  class SeatClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal()
     seatingType: string | undefined;
     @rdfine.property({ path: schema.seatingType })
@@ -30,7 +30,7 @@ export function SeatMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.literal()
     seatSection: string | undefined;
   }
-  return SeatClass
+  return SeatClass as any
 }
 
 class SeatImpl extends SeatMixin(RdfResourceImpl) {

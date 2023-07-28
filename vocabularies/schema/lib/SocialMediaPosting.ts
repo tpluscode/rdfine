@@ -12,13 +12,13 @@ export interface SocialMediaPosting<D extends RDF.DatasetCore = RDF.DatasetCore>
   sharedContent: Schema.CreativeWork<D> | undefined;
 }
 
-export function SocialMediaPostingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SocialMediaPosting> & RdfResourceCore> & Base {
+export function SocialMediaPostingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SocialMediaPosting & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SocialMediaPostingClass extends ArticleMixin(Resource) implements Partial<SocialMediaPosting> {
+  class SocialMediaPostingClass extends ArticleMixin(Resource) {
     @rdfine.property.resource()
     sharedContent: Schema.CreativeWork | undefined;
   }
-  return SocialMediaPostingClass
+  return SocialMediaPostingClass as any
 }
 
 class SocialMediaPostingImpl extends SocialMediaPostingMixin(RdfResourceImpl) {

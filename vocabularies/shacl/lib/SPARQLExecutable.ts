@@ -15,13 +15,13 @@ export interface SPARQLExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> e
   prefixes: Owl.Ontology<D> | undefined;
 }
 
-export function SPARQLExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLExecutable> & RdfResourceCore> & Base {
+export function SPARQLExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLExecutable & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class SPARQLExecutableClass extends RdfsResourceMixin(Resource) implements Partial<SPARQLExecutable> {
+  class SPARQLExecutableClass extends RdfsResourceMixin(Resource) {
     @rdfine.property.resource({ as: [OwlOntologyMixin] })
     prefixes: Owl.Ontology | undefined;
   }
-  return SPARQLExecutableClass
+  return SPARQLExecutableClass as any
 }
 
 class SPARQLExecutableImpl extends SPARQLExecutableMixin(RdfResourceImpl) {

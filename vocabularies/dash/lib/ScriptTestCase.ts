@@ -12,11 +12,11 @@ import { TestCaseMixin } from './TestCase.js';
 export interface ScriptTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, Dash.TestCase<D>, rdfine.RdfResource<D> {
 }
 
-export function ScriptTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ScriptTestCase> & RdfResourceCore> & Base {
+export function ScriptTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ScriptTestCase & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class ScriptTestCaseClass extends TestCaseMixin(ScriptMixin(Resource)) implements Partial<ScriptTestCase> {
+  class ScriptTestCaseClass extends TestCaseMixin(ScriptMixin(Resource)) {
   }
-  return ScriptTestCaseClass
+  return ScriptTestCaseClass as any
 }
 
 class ScriptTestCaseImpl extends ScriptTestCaseMixin(RdfResourceImpl) {

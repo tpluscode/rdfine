@@ -13,15 +13,15 @@ export interface MortgageLoan<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   loanMortgageMandateAmount: Schema.MonetaryAmount<D> | undefined;
 }
 
-export function MortgageLoanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MortgageLoan> & RdfResourceCore> & Base {
+export function MortgageLoanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MortgageLoan & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MortgageLoanClass extends LoanOrCreditMixin(Resource) implements Partial<MortgageLoan> {
+  class MortgageLoanClass extends LoanOrCreditMixin(Resource) {
     @rdfine.property.literal({ type: Boolean })
     domiciledMortgage: boolean | undefined;
     @rdfine.property.resource()
     loanMortgageMandateAmount: Schema.MonetaryAmount | undefined;
   }
-  return MortgageLoanClass
+  return MortgageLoanClass as any
 }
 
 class MortgageLoanImpl extends MortgageLoanMixin(RdfResourceImpl) {

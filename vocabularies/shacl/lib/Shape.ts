@@ -32,9 +32,9 @@ export interface Shape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs
   xone: Array<Sh.Shape<D>>;
 }
 
-export function ShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Shape> & RdfResourceCore> & Base {
+export function ShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Shape & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class ShapeClass extends RdfsResourceMixin(Resource) implements Partial<Shape> {
+  class ShapeClass extends RdfsResourceMixin(Resource) {
     @rdfine.property.resource({ values: 'list', as: [ShapeMixin] })
     and!: Array<Sh.Shape>;
     @rdfine.property.resource({ as: [RdfsClassMixin] })
@@ -70,7 +70,7 @@ export function ShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource({ values: 'list', as: [ShapeMixin] })
     xone!: Array<Sh.Shape>;
   }
-  return ShapeClass
+  return ShapeClass as any
 }
 
 class ShapeImpl extends ShapeMixin(RdfResourceImpl) {

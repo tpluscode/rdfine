@@ -11,11 +11,11 @@ import { ArticleMixin } from './Article.js';
 export interface SatiricalArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, rdfine.RdfResource<D> {
 }
 
-export function SatiricalArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SatiricalArticle> & RdfResourceCore> & Base {
+export function SatiricalArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SatiricalArticle & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SatiricalArticleClass extends ArticleMixin(Resource) implements Partial<SatiricalArticle> {
+  class SatiricalArticleClass extends ArticleMixin(Resource) {
   }
-  return SatiricalArticleClass
+  return SatiricalArticleClass as any
 }
 
 class SatiricalArticleImpl extends SatiricalArticleMixin(RdfResourceImpl) {

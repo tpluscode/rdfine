@@ -27,9 +27,9 @@ export interface TVSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function TVSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TVSeries> & RdfResourceCore> & Base {
+export function TVSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TVSeries & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TVSeriesClass extends CreativeWorkSeriesMixin(CreativeWorkMixin(Resource)) implements Partial<TVSeries> {
+  class TVSeriesClass extends CreativeWorkSeriesMixin(CreativeWorkMixin(Resource)) {
     @rdfine.property.resource()
     actor: Schema.Person | undefined;
     @rdfine.property.resource()
@@ -61,7 +61,7 @@ export function TVSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.resource()
     trailer: Schema.VideoObject | undefined;
   }
-  return TVSeriesClass
+  return TVSeriesClass as any
 }
 
 class TVSeriesImpl extends TVSeriesMixin(RdfResourceImpl) {

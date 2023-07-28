@@ -15,9 +15,9 @@ export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   wasInfluencedBy: Prov.Activity<D> | Prov.Agent<D> | Prov.Entity<D> | undefined;
 }
 
-export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Agent> & RdfResourceCore> & Base {
+export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Agent & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class AgentClass extends Resource implements Partial<Agent> {
+  class AgentClass extends Resource {
     @rdfine.property.resource({ as: [AgentMixin] })
     actedOnBehalfOf: Prov.Agent | undefined;
     @rdfine.property.resource({ implicitTypes: [prov.Location] })
@@ -29,7 +29,7 @@ export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource()
     wasInfluencedBy: Prov.Activity | Prov.Agent | Prov.Entity | undefined;
   }
-  return AgentClass
+  return AgentClass as any
 }
 
 class AgentImpl extends AgentMixin(RdfResourceImpl) {

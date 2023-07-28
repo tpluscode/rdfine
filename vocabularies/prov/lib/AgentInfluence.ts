@@ -12,13 +12,13 @@ export interface AgentInfluence<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   agent: Prov.Agent<D> | undefined;
 }
 
-export function AgentInfluenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AgentInfluence> & RdfResourceCore> & Base {
+export function AgentInfluenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentInfluence & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class AgentInfluenceClass extends InfluenceMixin(Resource) implements Partial<AgentInfluence> {
+  class AgentInfluenceClass extends InfluenceMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [prov.Agent] })
     agent: Prov.Agent | undefined;
   }
-  return AgentInfluenceClass
+  return AgentInfluenceClass as any
 }
 
 class AgentInfluenceImpl extends AgentInfluenceMixin(RdfResourceImpl) {

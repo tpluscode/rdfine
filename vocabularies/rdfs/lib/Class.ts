@@ -12,13 +12,13 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs
   subClassOf: Array<Rdfs.Class<D>>;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
   @rdfine.namespace(rdfs)
-  class ClassClass extends ResourceMixin(Resource) implements Partial<Class> {
+  class ClassClass extends ResourceMixin(Resource) {
     @rdfine.property.resource({ values: 'array', as: [ClassMixin] })
     subClassOf!: Array<Rdfs.Class>;
   }
-  return ClassClass
+  return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {

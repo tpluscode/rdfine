@@ -11,11 +11,11 @@ import { PlaceMixin } from './Place.js';
 export interface AdministrativeArea<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, rdfine.RdfResource<D> {
 }
 
-export function AdministrativeAreaMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AdministrativeArea> & RdfResourceCore> & Base {
+export function AdministrativeAreaMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AdministrativeArea & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AdministrativeAreaClass extends PlaceMixin(Resource) implements Partial<AdministrativeArea> {
+  class AdministrativeAreaClass extends PlaceMixin(Resource) {
   }
-  return AdministrativeAreaClass
+  return AdministrativeAreaClass as any
 }
 
 class AdministrativeAreaImpl extends AdministrativeAreaMixin(RdfResourceImpl) {

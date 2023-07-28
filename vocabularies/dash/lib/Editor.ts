@@ -11,11 +11,11 @@ import { WidgetMixin } from './Widget.js';
 export interface Editor<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Widget<D>, rdfine.RdfResource<D> {
 }
 
-export function EditorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Editor> & RdfResourceCore> & Base {
+export function EditorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Editor & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class EditorClass extends WidgetMixin(Resource) implements Partial<Editor> {
+  class EditorClass extends WidgetMixin(Resource) {
   }
-  return EditorClass
+  return EditorClass as any
 }
 
 class EditorImpl extends EditorMixin(RdfResourceImpl) {

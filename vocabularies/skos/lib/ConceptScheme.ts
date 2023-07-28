@@ -11,13 +11,13 @@ export interface ConceptScheme<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   hasTopConcept: Skos.Concept<D> | undefined;
 }
 
-export function ConceptSchemeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ConceptScheme> & RdfResourceCore> & Base {
+export function ConceptSchemeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ConceptScheme & RdfResourceCore> & Base {
   @rdfine.namespace(skos)
-  class ConceptSchemeClass extends Resource implements Partial<ConceptScheme> {
+  class ConceptSchemeClass extends Resource {
     @rdfine.property.resource({ implicitTypes: [skos.Concept] })
     hasTopConcept: Skos.Concept | undefined;
   }
-  return ConceptSchemeClass
+  return ConceptSchemeClass as any
 }
 
 class ConceptSchemeImpl extends ConceptSchemeMixin(RdfResourceImpl) {

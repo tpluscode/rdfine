@@ -11,11 +11,11 @@ import { EntityMixin } from './Entity.js';
 export interface Plan<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Entity<D>, rdfine.RdfResource<D> {
 }
 
-export function PlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Plan> & RdfResourceCore> & Base {
+export function PlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Plan & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class PlanClass extends EntityMixin(Resource) implements Partial<Plan> {
+  class PlanClass extends EntityMixin(Resource) {
   }
-  return PlanClass
+  return PlanClass as any
 }
 
 class PlanImpl extends PlanMixin(RdfResourceImpl) {

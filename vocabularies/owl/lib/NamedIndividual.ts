@@ -10,11 +10,11 @@ import type * as Owl from '../index.js';
 export interface NamedIndividual<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function NamedIndividualMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NamedIndividual> & RdfResourceCore> & Base {
+export function NamedIndividualMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NamedIndividual & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class NamedIndividualClass extends Resource implements Partial<NamedIndividual> {
+  class NamedIndividualClass extends Resource {
   }
-  return NamedIndividualClass
+  return NamedIndividualClass as any
 }
 
 class NamedIndividualImpl extends NamedIndividualMixin(RdfResourceImpl) {

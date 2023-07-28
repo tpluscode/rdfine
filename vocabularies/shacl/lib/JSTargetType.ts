@@ -12,11 +12,11 @@ import { TargetTypeMixin } from './TargetType.js';
 export interface JSTargetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, Sh.TargetType<D>, rdfine.RdfResource<D> {
 }
 
-export function JSTargetTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<JSTargetType> & RdfResourceCore> & Base {
+export function JSTargetTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JSTargetType & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class JSTargetTypeClass extends TargetTypeMixin(JSExecutableMixin(Resource)) implements Partial<JSTargetType> {
+  class JSTargetTypeClass extends TargetTypeMixin(JSExecutableMixin(Resource)) {
   }
-  return JSTargetTypeClass
+  return JSTargetTypeClass as any
 }
 
 class JSTargetTypeImpl extends JSTargetTypeMixin(RdfResourceImpl) {

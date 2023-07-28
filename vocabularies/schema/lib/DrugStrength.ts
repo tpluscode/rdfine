@@ -16,9 +16,9 @@ export interface DrugStrength<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   strengthValue: number | undefined;
 }
 
-export function DrugStrengthMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DrugStrength> & RdfResourceCore> & Base {
+export function DrugStrengthMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DrugStrength & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DrugStrengthClass extends MedicalIntangibleMixin(Resource) implements Partial<DrugStrength> {
+  class DrugStrengthClass extends MedicalIntangibleMixin(Resource) {
     @rdfine.property.literal()
     activeIngredient: string | undefined;
     @rdfine.property.resource()
@@ -30,7 +30,7 @@ export function DrugStrengthMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.literal({ type: Number })
     strengthValue: number | undefined;
   }
-  return DrugStrengthClass
+  return DrugStrengthClass as any
 }
 
 class DrugStrengthImpl extends DrugStrengthMixin(RdfResourceImpl) {

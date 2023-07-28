@@ -11,11 +11,11 @@ import { OrganizationMixin } from './Organization.js';
 export interface WorkersUnion<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, rdfine.RdfResource<D> {
 }
 
-export function WorkersUnionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WorkersUnion> & RdfResourceCore> & Base {
+export function WorkersUnionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WorkersUnion & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class WorkersUnionClass extends OrganizationMixin(Resource) implements Partial<WorkersUnion> {
+  class WorkersUnionClass extends OrganizationMixin(Resource) {
   }
-  return WorkersUnionClass
+  return WorkersUnionClass as any
 }
 
 class WorkersUnionImpl extends WorkersUnionMixin(RdfResourceImpl) {

@@ -12,11 +12,11 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface Validator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function ValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Validator> & RdfResourceCore> & Base {
+export function ValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Validator & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class ValidatorClass extends RdfsResourceMixin(Resource) implements Partial<Validator> {
+  class ValidatorClass extends RdfsResourceMixin(Resource) {
   }
-  return ValidatorClass
+  return ValidatorClass as any
 }
 
 class ValidatorImpl extends ValidatorMixin(RdfResourceImpl) {

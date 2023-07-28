@@ -12,15 +12,15 @@ export interface Concept<D extends RDF.DatasetCore = RDF.DatasetCore> extends rd
   topConceptOf: Array<Skos.ConceptScheme<D>>;
 }
 
-export function ConceptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Concept> & RdfResourceCore> & Base {
+export function ConceptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Concept & RdfResourceCore> & Base {
   @rdfine.namespace(skos)
-  class ConceptClass extends Resource implements Partial<Concept> {
+  class ConceptClass extends Resource {
     @rdfine.property.resource({ values: 'array', as: [ConceptMixin] })
     semanticRelation!: Array<Skos.Concept>;
     @rdfine.property.resource({ values: 'array', implicitTypes: [skos.ConceptScheme] })
     topConceptOf!: Array<Skos.ConceptScheme>;
   }
-  return ConceptClass
+  return ConceptClass as any
 }
 
 class ConceptImpl extends ConceptMixin(RdfResourceImpl) {

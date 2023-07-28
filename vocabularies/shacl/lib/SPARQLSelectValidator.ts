@@ -13,13 +13,13 @@ export interface SPARQLSelectValidator<D extends RDF.DatasetCore = RDF.DatasetCo
   resultAnnotation: Sh.ResultAnnotation<D> | undefined;
 }
 
-export function SPARQLSelectValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLSelectValidator> & RdfResourceCore> & Base {
+export function SPARQLSelectValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLSelectValidator & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class SPARQLSelectValidatorClass extends ValidatorMixin(SPARQLSelectExecutableMixin(Resource)) implements Partial<SPARQLSelectValidator> {
+  class SPARQLSelectValidatorClass extends ValidatorMixin(SPARQLSelectExecutableMixin(Resource)) {
     @rdfine.property.resource({ implicitTypes: [sh.ResultAnnotation] })
     resultAnnotation: Sh.ResultAnnotation | undefined;
   }
-  return SPARQLSelectValidatorClass
+  return SPARQLSelectValidatorClass as any
 }
 
 class SPARQLSelectValidatorImpl extends SPARQLSelectValidatorMixin(RdfResourceImpl) {

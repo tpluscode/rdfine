@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Leave<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function LeaveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Leave> & RdfResourceCore> & Base {
+export function LeaveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Leave & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class LeaveClass extends ActivityMixin(Resource) implements Partial<Leave> {
+  class LeaveClass extends ActivityMixin(Resource) {
   }
-  return LeaveClass
+  return LeaveClass as any
 }
 
 class LeaveImpl extends LeaveMixin(RdfResourceImpl) {

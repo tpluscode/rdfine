@@ -21,9 +21,9 @@ export interface PeopleAudience<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   suggestedMinAge: number | undefined;
 }
 
-export function PeopleAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PeopleAudience> & RdfResourceCore> & Base {
+export function PeopleAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PeopleAudience & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PeopleAudienceClass extends AudienceMixin(Resource) implements Partial<PeopleAudience> {
+  class PeopleAudienceClass extends AudienceMixin(Resource) {
     @rdfine.property.resource()
     healthCondition: Schema.MedicalCondition | undefined;
     @rdfine.property.literal()
@@ -45,7 +45,7 @@ export function PeopleAudienceMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.literal({ type: Number })
     suggestedMinAge: number | undefined;
   }
-  return PeopleAudienceClass
+  return PeopleAudienceClass as any
 }
 
 class PeopleAudienceImpl extends PeopleAudienceMixin(RdfResourceImpl) {

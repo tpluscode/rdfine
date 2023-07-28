@@ -11,11 +11,11 @@ import { DigitalDocumentMixin } from './DigitalDocument.js';
 export interface PresentationDigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DigitalDocument<D>, rdfine.RdfResource<D> {
 }
 
-export function PresentationDigitalDocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PresentationDigitalDocument> & RdfResourceCore> & Base {
+export function PresentationDigitalDocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PresentationDigitalDocument & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PresentationDigitalDocumentClass extends DigitalDocumentMixin(Resource) implements Partial<PresentationDigitalDocument> {
+  class PresentationDigitalDocumentClass extends DigitalDocumentMixin(Resource) {
   }
-  return PresentationDigitalDocumentClass
+  return PresentationDigitalDocumentClass as any
 }
 
 class PresentationDigitalDocumentImpl extends PresentationDigitalDocumentMixin(RdfResourceImpl) {

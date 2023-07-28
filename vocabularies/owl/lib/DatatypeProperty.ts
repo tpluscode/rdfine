@@ -14,11 +14,11 @@ import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 export interface DatatypeProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, rdfine.RdfResource<D> {
 }
 
-export function DatatypePropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DatatypeProperty> & RdfResourceCore> & Base {
+export function DatatypePropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DatatypeProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class DatatypePropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<DatatypeProperty> {
+  class DatatypePropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) {
   }
-  return DatatypePropertyClass
+  return DatatypePropertyClass as any
 }
 
 class DatatypePropertyImpl extends DatatypePropertyMixin(RdfResourceImpl) {

@@ -17,15 +17,15 @@ export interface ObjectProperty<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   propertyChainAxiom: Rdf.List<D> | undefined;
 }
 
-export function ObjectPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ObjectProperty> & RdfResourceCore> & Base {
+export function ObjectPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ObjectProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
-  class ObjectPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<ObjectProperty> {
+  class ObjectPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) {
     @rdfine.property.resource({ as: [ObjectPropertyMixin] })
     inverseOf: Owl.ObjectProperty | undefined;
     @rdfine.property.resource({ as: [RdfListMixin] })
     propertyChainAxiom: Rdf.List | undefined;
   }
-  return ObjectPropertyClass
+  return ObjectPropertyClass as any
 }
 
 class ObjectPropertyImpl extends ObjectPropertyMixin(RdfResourceImpl) {

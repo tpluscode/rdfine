@@ -13,11 +13,11 @@ import { ValidatorMixin as ShaclValidatorMixin } from '@rdfine/shacl/lib/Validat
 export interface ScriptValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, Shacl.Validator<D>, rdfine.RdfResource<D> {
 }
 
-export function ScriptValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ScriptValidator> & RdfResourceCore> & Base {
+export function ScriptValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ScriptValidator & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class ScriptValidatorClass extends ShaclValidatorMixin(ScriptMixin(Resource)) implements Partial<ScriptValidator> {
+  class ScriptValidatorClass extends ShaclValidatorMixin(ScriptMixin(Resource)) {
   }
-  return ScriptValidatorClass
+  return ScriptValidatorClass as any
 }
 
 class ScriptValidatorImpl extends ScriptValidatorMixin(RdfResourceImpl) {

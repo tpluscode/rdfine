@@ -14,9 +14,9 @@ export interface GeoCircle<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   geoRadiusLiteral: number | string | undefined;
 }
 
-export function GeoCircleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GeoCircle> & RdfResourceCore> & Base {
+export function GeoCircleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GeoCircle & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class GeoCircleClass extends GeoShapeMixin(Resource) implements Partial<GeoCircle> {
+  class GeoCircleClass extends GeoShapeMixin(Resource) {
     @rdfine.property.resource()
     geoMidpoint: Schema.GeoCoordinates | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function GeoCircleMixin<Base extends rdfine.Constructor>(Resource: Base):
     @rdfine.property.literal({ path: schema.geoRadius })
     geoRadiusLiteral: number | string | undefined;
   }
-  return GeoCircleClass
+  return GeoCircleClass as any
 }
 
 class GeoCircleImpl extends GeoCircleMixin(RdfResourceImpl) {

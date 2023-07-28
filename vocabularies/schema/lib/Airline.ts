@@ -13,15 +13,15 @@ export interface Airline<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   iataCode: string | undefined;
 }
 
-export function AirlineMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Airline> & RdfResourceCore> & Base {
+export function AirlineMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Airline & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AirlineClass extends OrganizationMixin(Resource) implements Partial<Airline> {
+  class AirlineClass extends OrganizationMixin(Resource) {
     @rdfine.property()
     boardingPolicy: Schema.BoardingPolicyType | undefined;
     @rdfine.property.literal()
     iataCode: string | undefined;
   }
-  return AirlineClass
+  return AirlineClass as any
 }
 
 class AirlineImpl extends AirlineMixin(RdfResourceImpl) {

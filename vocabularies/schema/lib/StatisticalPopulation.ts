@@ -14,9 +14,9 @@ export interface StatisticalPopulation<D extends RDF.DatasetCore = RDF.DatasetCo
   populationType: RDF.Term | undefined;
 }
 
-export function StatisticalPopulationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<StatisticalPopulation> & RdfResourceCore> & Base {
+export function StatisticalPopulationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<StatisticalPopulation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class StatisticalPopulationClass extends IntangibleMixin(Resource) implements Partial<StatisticalPopulation> {
+  class StatisticalPopulationClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     constrainingProperty: number | undefined;
     @rdfine.property.literal({ type: Number })
@@ -24,7 +24,7 @@ export function StatisticalPopulationMixin<Base extends rdfine.Constructor>(Reso
     @rdfine.property()
     populationType: RDF.Term | undefined;
   }
-  return StatisticalPopulationClass
+  return StatisticalPopulationClass as any
 }
 
 class StatisticalPopulationImpl extends StatisticalPopulationMixin(RdfResourceImpl) {

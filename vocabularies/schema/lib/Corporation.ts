@@ -12,13 +12,13 @@ export interface Corporation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   tickerSymbol: string | undefined;
 }
 
-export function CorporationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Corporation> & RdfResourceCore> & Base {
+export function CorporationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Corporation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CorporationClass extends OrganizationMixin(Resource) implements Partial<Corporation> {
+  class CorporationClass extends OrganizationMixin(Resource) {
     @rdfine.property.literal()
     tickerSymbol: string | undefined;
   }
-  return CorporationClass
+  return CorporationClass as any
 }
 
 class CorporationImpl extends CorporationMixin(RdfResourceImpl) {

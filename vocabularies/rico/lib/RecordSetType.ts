@@ -12,13 +12,13 @@ export interface RecordSetType<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   isRecordSetTypeOf: Rico.RecordSet<D> | undefined;
 }
 
-export function RecordSetTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RecordSetType> & RdfResourceCore> & Base {
+export function RecordSetTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordSetType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RecordSetTypeClass extends TypeMixin(Resource) implements Partial<RecordSetType> {
+  class RecordSetTypeClass extends TypeMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isRecordSetTypeOf: Rico.RecordSet | undefined;
   }
-  return RecordSetTypeClass
+  return RecordSetTypeClass as any
 }
 
 class RecordSetTypeImpl extends RecordSetTypeMixin(RdfResourceImpl) {

@@ -14,15 +14,15 @@ export interface PrefixDeclaration<D extends RDF.DatasetCore = RDF.DatasetCore> 
   prefix: string | undefined;
 }
 
-export function PrefixDeclarationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PrefixDeclaration> & RdfResourceCore> & Base {
+export function PrefixDeclarationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PrefixDeclaration & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class PrefixDeclarationClass extends RdfsResourceMixin(Resource) implements Partial<PrefixDeclaration> {
+  class PrefixDeclarationClass extends RdfsResourceMixin(Resource) {
     @rdfine.property.literal()
     namespace: string | undefined;
     @rdfine.property.literal()
     prefix: string | undefined;
   }
-  return PrefixDeclarationClass
+  return PrefixDeclarationClass as any
 }
 
 class PrefixDeclarationImpl extends PrefixDeclarationMixin(RdfResourceImpl) {

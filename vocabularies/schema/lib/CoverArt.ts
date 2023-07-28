@@ -11,11 +11,11 @@ import { VisualArtworkMixin } from './VisualArtwork.js';
 export interface CoverArt<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.VisualArtwork<D>, rdfine.RdfResource<D> {
 }
 
-export function CoverArtMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CoverArt> & RdfResourceCore> & Base {
+export function CoverArtMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CoverArt & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CoverArtClass extends VisualArtworkMixin(Resource) implements Partial<CoverArt> {
+  class CoverArtClass extends VisualArtworkMixin(Resource) {
   }
-  return CoverArtClass
+  return CoverArtClass as any
 }
 
 class CoverArtImpl extends CoverArtMixin(RdfResourceImpl) {

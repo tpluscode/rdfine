@@ -27,9 +27,9 @@ export interface Column<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdf
   virtual: boolean | undefined;
 }
 
-export function ColumnMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Column> & RdfResourceCore> & Base {
+export function ColumnMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Column & RdfResourceCore> & Base {
   @rdfine.namespace(csvw)
-  class ColumnClass extends Resource implements Partial<Column> {
+  class ColumnClass extends Resource {
     @rdfine.property.literal()
     aboutUrl: string | undefined;
     @rdfine.property.resource({ implicitTypes: [csvw.Datatype] })
@@ -65,7 +65,7 @@ export function ColumnMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.literal({ type: Boolean })
     virtual: boolean | undefined;
   }
-  return ColumnClass
+  return ColumnClass as any
 }
 
 class ColumnImpl extends ColumnMixin(RdfResourceImpl) {

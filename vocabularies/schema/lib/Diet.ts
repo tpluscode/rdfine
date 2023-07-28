@@ -17,9 +17,9 @@ export interface Diet<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   risks: string | undefined;
 }
 
-export function DietMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Diet> & RdfResourceCore> & Base {
+export function DietMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Diet & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DietClass extends LifestyleModificationMixin(CreativeWorkMixin(Resource)) implements Partial<Diet> {
+  class DietClass extends LifestyleModificationMixin(CreativeWorkMixin(Resource)) {
     @rdfine.property.literal()
     dietFeatures: string | undefined;
     @rdfine.property.resource()
@@ -31,7 +31,7 @@ export function DietMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.literal()
     risks: string | undefined;
   }
-  return DietClass
+  return DietClass as any
 }
 
 class DietImpl extends DietMixin(RdfResourceImpl) {

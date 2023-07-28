@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Flag<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function FlagMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Flag> & RdfResourceCore> & Base {
+export function FlagMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Flag & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class FlagClass extends ActivityMixin(Resource) implements Partial<Flag> {
+  class FlagClass extends ActivityMixin(Resource) {
   }
-  return FlagClass
+  return FlagClass as any
 }
 
 class FlagImpl extends FlagMixin(RdfResourceImpl) {

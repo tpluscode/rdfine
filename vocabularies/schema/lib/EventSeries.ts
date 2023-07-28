@@ -12,11 +12,11 @@ import { SeriesMixin } from './Series.js';
 export interface EventSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, Schema.Series<D>, rdfine.RdfResource<D> {
 }
 
-export function EventSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EventSeries> & RdfResourceCore> & Base {
+export function EventSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EventSeries & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class EventSeriesClass extends SeriesMixin(EventMixin(Resource)) implements Partial<EventSeries> {
+  class EventSeriesClass extends SeriesMixin(EventMixin(Resource)) {
   }
-  return EventSeriesClass
+  return EventSeriesClass as any
 }
 
 class EventSeriesImpl extends EventSeriesMixin(RdfResourceImpl) {

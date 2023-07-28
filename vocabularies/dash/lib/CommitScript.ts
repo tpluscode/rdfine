@@ -11,11 +11,11 @@ import { ScriptMixin } from './Script.js';
 export interface CommitScript<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, rdfine.RdfResource<D> {
 }
 
-export function CommitScriptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CommitScript> & RdfResourceCore> & Base {
+export function CommitScriptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CommitScript & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class CommitScriptClass extends ScriptMixin(Resource) implements Partial<CommitScript> {
+  class CommitScriptClass extends ScriptMixin(Resource) {
   }
-  return CommitScriptClass
+  return CommitScriptClass as any
 }
 
 class CommitScriptImpl extends CommitScriptMixin(RdfResourceImpl) {

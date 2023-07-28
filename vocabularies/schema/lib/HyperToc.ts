@@ -13,15 +13,15 @@ export interface HyperToc<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   tocEntry: Schema.HyperTocEntry<D> | undefined;
 }
 
-export function HyperTocMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HyperToc> & RdfResourceCore> & Base {
+export function HyperTocMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HyperToc & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HyperTocClass extends CreativeWorkMixin(Resource) implements Partial<HyperToc> {
+  class HyperTocClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     associatedMedia: Schema.MediaObject | undefined;
     @rdfine.property.resource()
     tocEntry: Schema.HyperTocEntry | undefined;
   }
-  return HyperTocClass
+  return HyperTocClass as any
 }
 
 class HyperTocImpl extends HyperTocMixin(RdfResourceImpl) {

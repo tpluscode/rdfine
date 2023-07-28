@@ -13,15 +13,15 @@ export interface WholePartRelation<D extends RDF.DatasetCore = RDF.DatasetCore> 
   wholePartRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function WholePartRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<WholePartRelation> & RdfResourceCore> & Base {
+export function WholePartRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WholePartRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class WholePartRelationClass extends RelationMixin(Resource) implements Partial<WholePartRelation> {
+  class WholePartRelationClass extends RelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     wholePartRelationHasSource: Rico.Thing | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     wholePartRelationHasTarget: Rico.Thing | undefined;
   }
-  return WholePartRelationClass
+  return WholePartRelationClass as any
 }
 
 class WholePartRelationImpl extends WholePartRelationMixin(RdfResourceImpl) {

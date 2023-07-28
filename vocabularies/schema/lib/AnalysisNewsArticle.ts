@@ -11,11 +11,11 @@ import { NewsArticleMixin } from './NewsArticle.js';
 export interface AnalysisNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.NewsArticle<D>, rdfine.RdfResource<D> {
 }
 
-export function AnalysisNewsArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AnalysisNewsArticle> & RdfResourceCore> & Base {
+export function AnalysisNewsArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AnalysisNewsArticle & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AnalysisNewsArticleClass extends NewsArticleMixin(Resource) implements Partial<AnalysisNewsArticle> {
+  class AnalysisNewsArticleClass extends NewsArticleMixin(Resource) {
   }
-  return AnalysisNewsArticleClass
+  return AnalysisNewsArticleClass as any
 }
 
 class AnalysisNewsArticleImpl extends AnalysisNewsArticleMixin(RdfResourceImpl) {

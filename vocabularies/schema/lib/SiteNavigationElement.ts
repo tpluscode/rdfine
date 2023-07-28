@@ -11,11 +11,11 @@ import { WebPageElementMixin } from './WebPageElement.js';
 export interface SiteNavigationElement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, rdfine.RdfResource<D> {
 }
 
-export function SiteNavigationElementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SiteNavigationElement> & RdfResourceCore> & Base {
+export function SiteNavigationElementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SiteNavigationElement & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SiteNavigationElementClass extends WebPageElementMixin(Resource) implements Partial<SiteNavigationElement> {
+  class SiteNavigationElementClass extends WebPageElementMixin(Resource) {
   }
-  return SiteNavigationElementClass
+  return SiteNavigationElementClass as any
 }
 
 class SiteNavigationElementImpl extends SiteNavigationElementMixin(RdfResourceImpl) {

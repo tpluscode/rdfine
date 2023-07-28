@@ -11,11 +11,11 @@ import { AnatomicalStructureMixin } from './AnatomicalStructure.js';
 export interface BrainStructure<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AnatomicalStructure<D>, rdfine.RdfResource<D> {
 }
 
-export function BrainStructureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BrainStructure> & RdfResourceCore> & Base {
+export function BrainStructureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BrainStructure & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BrainStructureClass extends AnatomicalStructureMixin(Resource) implements Partial<BrainStructure> {
+  class BrainStructureClass extends AnatomicalStructureMixin(Resource) {
   }
-  return BrainStructureClass
+  return BrainStructureClass as any
 }
 
 class BrainStructureImpl extends BrainStructureMixin(RdfResourceImpl) {

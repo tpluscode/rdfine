@@ -13,11 +13,11 @@ import { TestCaseMixin } from './TestCase.js';
 export interface QueryTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.SPARQLSelectExecutable<D>, Dash.TestCase<D>, rdfine.RdfResource<D> {
 }
 
-export function QueryTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<QueryTestCase> & RdfResourceCore> & Base {
+export function QueryTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<QueryTestCase & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class QueryTestCaseClass extends TestCaseMixin(ShaclSPARQLSelectExecutableMixin(Resource)) implements Partial<QueryTestCase> {
+  class QueryTestCaseClass extends TestCaseMixin(ShaclSPARQLSelectExecutableMixin(Resource)) {
   }
-  return QueryTestCaseClass
+  return QueryTestCaseClass as any
 }
 
 class QueryTestCaseImpl extends QueryTestCaseMixin(RdfResourceImpl) {

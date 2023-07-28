@@ -23,9 +23,9 @@ export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   url: RDF.NamedNode | undefined;
 }
 
-export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Thing> & RdfResourceCore> & Base {
+export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Thing & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ThingClass extends Resource implements Partial<Thing> {
+  class ThingClass extends Resource {
     @rdfine.property()
     additionalType: RDF.NamedNode | undefined;
     @rdfine.property.literal()
@@ -53,7 +53,7 @@ export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property()
     url: RDF.NamedNode | undefined;
   }
-  return ThingClass
+  return ThingClass as any
 }
 
 class ThingImpl extends ThingMixin(RdfResourceImpl) {

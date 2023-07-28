@@ -11,11 +11,11 @@ import { CivicStructureMixin } from './CivicStructure.js';
 export interface Bridge<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, rdfine.RdfResource<D> {
 }
 
-export function BridgeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Bridge> & RdfResourceCore> & Base {
+export function BridgeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Bridge & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BridgeClass extends CivicStructureMixin(Resource) implements Partial<Bridge> {
+  class BridgeClass extends CivicStructureMixin(Resource) {
   }
-  return BridgeClass
+  return BridgeClass as any
 }
 
 class BridgeImpl extends BridgeMixin(RdfResourceImpl) {

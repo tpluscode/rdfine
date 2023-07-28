@@ -11,11 +11,11 @@ import { PeriodicalMixin } from './Periodical.js';
 export interface ComicSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Periodical<D>, rdfine.RdfResource<D> {
 }
 
-export function ComicSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ComicSeries> & RdfResourceCore> & Base {
+export function ComicSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ComicSeries & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ComicSeriesClass extends PeriodicalMixin(Resource) implements Partial<ComicSeries> {
+  class ComicSeriesClass extends PeriodicalMixin(Resource) {
   }
-  return ComicSeriesClass
+  return ComicSeriesClass as any
 }
 
 class ComicSeriesImpl extends ComicSeriesMixin(RdfResourceImpl) {

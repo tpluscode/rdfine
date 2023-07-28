@@ -44,9 +44,9 @@ export interface Object<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdf
   url: As.Link<D> | undefined;
 }
 
-export function ObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Object> & RdfResourceCore> & Base {
+export function ObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Object & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class ObjectClass extends Resource implements Partial<Object> {
+  class ObjectClass extends Resource {
     @rdfine.property.resource()
     attachment: As.Link | As.Object | undefined;
     @rdfine.property.resource()
@@ -116,7 +116,7 @@ export function ObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.resource({ implicitTypes: [as.Link] })
     url: As.Link | undefined;
   }
-  return ObjectClass
+  return ObjectClass as any
 }
 
 class ObjectImpl extends ObjectMixin(RdfResourceImpl) {

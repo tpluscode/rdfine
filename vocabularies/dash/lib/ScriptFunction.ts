@@ -15,11 +15,11 @@ import { ScriptMixin } from './Script.js';
 export interface ScriptFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.Function<D>, Dash.Script<D>, rdfine.RdfResource<D> {
 }
 
-export function ScriptFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ScriptFunction> & RdfResourceCore> & Base {
+export function ScriptFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ScriptFunction & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class ScriptFunctionClass extends ScriptMixin(FunctionMixinEx(ShaclFunctionMixin(Resource))) implements Partial<ScriptFunction> {
+  class ScriptFunctionClass extends ScriptMixin(FunctionMixinEx(ShaclFunctionMixin(Resource))) {
   }
-  return ScriptFunctionClass
+  return ScriptFunctionClass as any
 }
 
 class ScriptFunctionImpl extends ScriptFunctionMixin(RdfResourceImpl) {

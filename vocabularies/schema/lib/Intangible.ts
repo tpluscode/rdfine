@@ -11,11 +11,11 @@ import { ThingMixin } from './Thing.js';
 export interface Intangible<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, rdfine.RdfResource<D> {
 }
 
-export function IntangibleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Intangible> & RdfResourceCore> & Base {
+export function IntangibleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Intangible & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class IntangibleClass extends ThingMixin(Resource) implements Partial<Intangible> {
+  class IntangibleClass extends ThingMixin(Resource) {
   }
-  return IntangibleClass
+  return IntangibleClass as any
 }
 
 class IntangibleImpl extends IntangibleMixin(RdfResourceImpl) {

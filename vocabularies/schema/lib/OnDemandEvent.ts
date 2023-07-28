@@ -11,11 +11,11 @@ import { PublicationEventMixin } from './PublicationEvent.js';
 export interface OnDemandEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PublicationEvent<D>, rdfine.RdfResource<D> {
 }
 
-export function OnDemandEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OnDemandEvent> & RdfResourceCore> & Base {
+export function OnDemandEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OnDemandEvent & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OnDemandEventClass extends PublicationEventMixin(Resource) implements Partial<OnDemandEvent> {
+  class OnDemandEventClass extends PublicationEventMixin(Resource) {
   }
-  return OnDemandEventClass
+  return OnDemandEventClass as any
 }
 
 class OnDemandEventImpl extends OnDemandEventMixin(RdfResourceImpl) {

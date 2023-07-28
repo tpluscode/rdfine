@@ -50,9 +50,9 @@ export interface Demand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   warranty: Schema.WarrantyPromise<D> | undefined;
 }
 
-export function DemandMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Demand> & RdfResourceCore> & Base {
+export function DemandMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Demand & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DemandClass extends IntangibleMixin(Resource) implements Partial<Demand> {
+  class DemandClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     acceptedPaymentMethod: Schema.LoanOrCredit | undefined;
     @rdfine.property.resource()
@@ -132,7 +132,7 @@ export function DemandMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.resource()
     warranty: Schema.WarrantyPromise | undefined;
   }
-  return DemandClass
+  return DemandClass as any
 }
 
 class DemandImpl extends DemandMixin(RdfResourceImpl) {

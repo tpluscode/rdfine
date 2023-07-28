@@ -58,9 +58,9 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   tourBookingPage: RDF.NamedNode | undefined;
 }
 
-export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Place> & RdfResourceCore> & Base {
+export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Place & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PlaceClass extends ThingMixin(Resource) implements Partial<Place> {
+  class PlaceClass extends ThingMixin(Resource) {
     @rdfine.property.resource()
     additionalProperty: Schema.PropertyValue | undefined;
     @rdfine.property.resource()
@@ -156,7 +156,7 @@ export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property()
     tourBookingPage: RDF.NamedNode | undefined;
   }
-  return PlaceClass
+  return PlaceClass as any
 }
 
 class PlaceImpl extends PlaceMixin(RdfResourceImpl) {

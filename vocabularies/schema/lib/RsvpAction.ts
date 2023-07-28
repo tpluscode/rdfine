@@ -14,9 +14,9 @@ export interface RsvpAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   rsvpResponse: Schema.RsvpResponseType | undefined;
 }
 
-export function RsvpActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RsvpAction> & RdfResourceCore> & Base {
+export function RsvpActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RsvpAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RsvpActionClass extends InformActionMixin(Resource) implements Partial<RsvpAction> {
+  class RsvpActionClass extends InformActionMixin(Resource) {
     @rdfine.property.literal({ type: Number })
     additionalNumberOfGuests: number | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function RsvpActionMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property()
     rsvpResponse: Schema.RsvpResponseType | undefined;
   }
-  return RsvpActionClass
+  return RsvpActionClass as any
 }
 
 class RsvpActionImpl extends RsvpActionMixin(RdfResourceImpl) {

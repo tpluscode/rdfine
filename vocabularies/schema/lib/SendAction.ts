@@ -13,15 +13,15 @@ export interface SendAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
-export function SendActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SendAction> & RdfResourceCore> & Base {
+export function SendActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SendAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SendActionClass extends TransferActionMixin(Resource) implements Partial<SendAction> {
+  class SendActionClass extends TransferActionMixin(Resource) {
     @rdfine.property()
     deliveryMethod: Schema.DeliveryMethod | undefined;
     @rdfine.property.resource()
     recipient: Schema.Audience | Schema.ContactPoint | Schema.Organization | Schema.Person | undefined;
   }
-  return SendActionClass
+  return SendActionClass as any
 }
 
 class SendActionImpl extends SendActionMixin(RdfResourceImpl) {

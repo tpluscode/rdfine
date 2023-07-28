@@ -11,11 +11,11 @@ import { CreativeWorkSeasonMixin } from './CreativeWorkSeason.js';
 export interface PodcastSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeason<D>, rdfine.RdfResource<D> {
 }
 
-export function PodcastSeasonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PodcastSeason> & RdfResourceCore> & Base {
+export function PodcastSeasonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PodcastSeason & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PodcastSeasonClass extends CreativeWorkSeasonMixin(Resource) implements Partial<PodcastSeason> {
+  class PodcastSeasonClass extends CreativeWorkSeasonMixin(Resource) {
   }
-  return PodcastSeasonClass
+  return PodcastSeasonClass as any
 }
 
 class PodcastSeasonImpl extends PodcastSeasonMixin(RdfResourceImpl) {

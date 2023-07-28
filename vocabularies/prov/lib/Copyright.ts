@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface Copyright<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function CopyrightMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Copyright> & RdfResourceCore> & Base {
+export function CopyrightMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Copyright & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class CopyrightClass extends ActivityMixin(Resource) implements Partial<Copyright> {
+  class CopyrightClass extends ActivityMixin(Resource) {
   }
-  return CopyrightClass
+  return CopyrightClass as any
 }
 
 class CopyrightImpl extends CopyrightMixin(RdfResourceImpl) {

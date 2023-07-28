@@ -12,13 +12,13 @@ export interface EventType<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   isEventTypeOf: Rico.Event<D> | undefined;
 }
 
-export function EventTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EventType> & RdfResourceCore> & Base {
+export function EventTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EventType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class EventTypeClass extends TypeMixin(Resource) implements Partial<EventType> {
+  class EventTypeClass extends TypeMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Event] })
     isEventTypeOf: Rico.Event | undefined;
   }
-  return EventTypeClass
+  return EventTypeClass as any
 }
 
 class EventTypeImpl extends EventTypeMixin(RdfResourceImpl) {

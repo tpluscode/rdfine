@@ -17,9 +17,9 @@ export interface MedicalStudy<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   studySubject: Schema.MedicalEntity<D> | undefined;
 }
 
-export function MedicalStudyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalStudy> & RdfResourceCore> & Base {
+export function MedicalStudyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalStudy & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalStudyClass extends MedicalEntityMixin(Resource) implements Partial<MedicalStudy> {
+  class MedicalStudyClass extends MedicalEntityMixin(Resource) {
     @rdfine.property.resource()
     healthCondition: Schema.MedicalCondition | undefined;
     @rdfine.property.resource()
@@ -33,7 +33,7 @@ export function MedicalStudyMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.resource()
     studySubject: Schema.MedicalEntity | undefined;
   }
-  return MedicalStudyClass
+  return MedicalStudyClass as any
 }
 
 class MedicalStudyImpl extends MedicalStudyMixin(RdfResourceImpl) {

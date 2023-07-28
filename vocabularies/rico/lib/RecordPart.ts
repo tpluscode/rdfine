@@ -21,9 +21,9 @@ export interface RecordPart<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   isOrWasConstituentOf: Rico.Record<D> | undefined;
 }
 
-export function RecordPartMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RecordPart> & RdfResourceCore> & Base {
+export function RecordPartMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordPart & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RecordPartClass extends RecordResourceMixin(Resource) implements Partial<RecordPart> {
+  class RecordPartClass extends RecordResourceMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.ContentType] })
     hasContentOfType: Rico.ContentType | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.DocumentaryFormType] })
@@ -45,7 +45,7 @@ export function RecordPartMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property.resource({ implicitTypes: [rico.Record] })
     isOrWasConstituentOf: Rico.Record | undefined;
   }
-  return RecordPartClass
+  return RecordPartClass as any
 }
 
 class RecordPartImpl extends RecordPartMixin(RdfResourceImpl) {

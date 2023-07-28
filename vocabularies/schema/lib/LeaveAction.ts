@@ -12,13 +12,13 @@ export interface LeaveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   event: Schema.Event<D> | undefined;
 }
 
-export function LeaveActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LeaveAction> & RdfResourceCore> & Base {
+export function LeaveActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LeaveAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LeaveActionClass extends InteractActionMixin(Resource) implements Partial<LeaveAction> {
+  class LeaveActionClass extends InteractActionMixin(Resource) {
     @rdfine.property.resource()
     event: Schema.Event | undefined;
   }
-  return LeaveActionClass
+  return LeaveActionClass as any
 }
 
 class LeaveActionImpl extends LeaveActionMixin(RdfResourceImpl) {

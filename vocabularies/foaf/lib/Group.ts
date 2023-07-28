@@ -12,13 +12,13 @@ export interface Group<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf
   member: Foaf.Agent<D> | undefined;
 }
 
-export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Group> & RdfResourceCore> & Base {
+export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Group & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
-  class GroupClass extends AgentMixin(Resource) implements Partial<Group> {
+  class GroupClass extends AgentMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [foaf.Agent] })
     member: Foaf.Agent | undefined;
   }
-  return GroupClass
+  return GroupClass as any
 }
 
 class GroupImpl extends GroupMixin(RdfResourceImpl) {

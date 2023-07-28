@@ -11,11 +11,11 @@ import { RepositoryMixin } from './Repository.js';
 export interface SVNRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, rdfine.RdfResource<D> {
 }
 
-export function SVNRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SVNRepository> & RdfResourceCore> & Base {
+export function SVNRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SVNRepository & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
-  class SVNRepositoryClass extends RepositoryMixin(Resource) implements Partial<SVNRepository> {
+  class SVNRepositoryClass extends RepositoryMixin(Resource) {
   }
-  return SVNRepositoryClass
+  return SVNRepositoryClass as any
 }
 
 class SVNRepositoryImpl extends SVNRepositoryMixin(RdfResourceImpl) {

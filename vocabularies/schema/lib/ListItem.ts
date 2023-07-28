@@ -15,9 +15,9 @@ export interface ListItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   previousItem: Schema.ListItem<D> | undefined;
 }
 
-export function ListItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ListItem> & RdfResourceCore> & Base {
+export function ListItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ListItem & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ListItemClass extends IntangibleMixin(Resource) implements Partial<ListItem> {
+  class ListItemClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     item: Schema.Thing | undefined;
     @rdfine.property.resource()
@@ -27,7 +27,7 @@ export function ListItemMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.resource()
     previousItem: Schema.ListItem | undefined;
   }
-  return ListItemClass
+  return ListItemClass as any
 }
 
 class ListItemImpl extends ListItemMixin(RdfResourceImpl) {

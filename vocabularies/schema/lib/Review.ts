@@ -22,9 +22,9 @@ export interface Review<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   reviewRating: Schema.Rating<D> | undefined;
 }
 
-export function ReviewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Review> & RdfResourceCore> & Base {
+export function ReviewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Review & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ReviewClass extends CreativeWorkMixin(Resource) implements Partial<Review> {
+  class ReviewClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     associatedClaimReview: Schema.Review | undefined;
     @rdfine.property.resource()
@@ -48,7 +48,7 @@ export function ReviewMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     @rdfine.property.resource()
     reviewRating: Schema.Rating | undefined;
   }
-  return ReviewClass
+  return ReviewClass as any
 }
 
 class ReviewImpl extends ReviewMixin(RdfResourceImpl) {

@@ -24,9 +24,9 @@ export interface ContactPoint<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   telephone: string | undefined;
 }
 
-export function ContactPointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ContactPoint> & RdfResourceCore> & Base {
+export function ContactPointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ContactPoint & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ContactPointClass extends StructuredValueMixin(Resource) implements Partial<ContactPoint> {
+  class ContactPointClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     areaServed: Schema.AdministrativeArea | Schema.GeoShape | Schema.Place | undefined;
     @rdfine.property.literal({ path: schema.areaServed })
@@ -54,7 +54,7 @@ export function ContactPointMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.literal()
     telephone: string | undefined;
   }
-  return ContactPointClass
+  return ContactPointClass as any
 }
 
 class ContactPointImpl extends ContactPointMixin(RdfResourceImpl) {

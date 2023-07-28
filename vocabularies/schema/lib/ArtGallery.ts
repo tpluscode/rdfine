@@ -11,11 +11,11 @@ import { EntertainmentBusinessMixin } from './EntertainmentBusiness.js';
 export interface ArtGallery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.EntertainmentBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function ArtGalleryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ArtGallery> & RdfResourceCore> & Base {
+export function ArtGalleryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ArtGallery & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ArtGalleryClass extends EntertainmentBusinessMixin(Resource) implements Partial<ArtGallery> {
+  class ArtGalleryClass extends EntertainmentBusinessMixin(Resource) {
   }
-  return ArtGalleryClass
+  return ArtGalleryClass as any
 }
 
 class ArtGalleryImpl extends ArtGalleryMixin(RdfResourceImpl) {

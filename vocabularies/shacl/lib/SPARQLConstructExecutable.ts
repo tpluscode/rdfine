@@ -12,13 +12,13 @@ export interface SPARQLConstructExecutable<D extends RDF.DatasetCore = RDF.Datas
   construct: string | undefined;
 }
 
-export function SPARQLConstructExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SPARQLConstructExecutable> & RdfResourceCore> & Base {
+export function SPARQLConstructExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLConstructExecutable & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class SPARQLConstructExecutableClass extends SPARQLExecutableMixin(Resource) implements Partial<SPARQLConstructExecutable> {
+  class SPARQLConstructExecutableClass extends SPARQLExecutableMixin(Resource) {
     @rdfine.property.literal()
     construct: string | undefined;
   }
-  return SPARQLConstructExecutableClass
+  return SPARQLConstructExecutableClass as any
 }
 
 class SPARQLConstructExecutableImpl extends SPARQLConstructExecutableMixin(RdfResourceImpl) {

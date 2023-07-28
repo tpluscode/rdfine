@@ -22,9 +22,9 @@ export interface Occupation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   skills: string | undefined;
 }
 
-export function OccupationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Occupation> & RdfResourceCore> & Base {
+export function OccupationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Occupation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OccupationClass extends IntangibleMixin(Resource) implements Partial<Occupation> {
+  class OccupationClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal()
     educationRequirements: string | undefined;
     @rdfine.property.resource()
@@ -48,7 +48,7 @@ export function OccupationMixin<Base extends rdfine.Constructor>(Resource: Base)
     @rdfine.property.literal()
     skills: string | undefined;
   }
-  return OccupationClass
+  return OccupationClass as any
 }
 
 class OccupationImpl extends OccupationMixin(RdfResourceImpl) {

@@ -17,9 +17,9 @@ export interface MusicRecording<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   recordingOf: Schema.MusicComposition<D> | undefined;
 }
 
-export function MusicRecordingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MusicRecording> & RdfResourceCore> & Base {
+export function MusicRecordingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MusicRecording & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MusicRecordingClass extends CreativeWorkMixin(Resource) implements Partial<MusicRecording> {
+  class MusicRecordingClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     byArtist: Schema.MusicGroup | Schema.Person | undefined;
     @rdfine.property.resource()
@@ -33,7 +33,7 @@ export function MusicRecordingMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property.resource()
     recordingOf: Schema.MusicComposition | undefined;
   }
-  return MusicRecordingClass
+  return MusicRecordingClass as any
 }
 
 class MusicRecordingImpl extends MusicRecordingMixin(RdfResourceImpl) {

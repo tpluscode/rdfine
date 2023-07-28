@@ -14,15 +14,15 @@ export interface Parameterizable<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   parameter: Sh.Parameter<D> | undefined;
 }
 
-export function ParameterizableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Parameterizable> & RdfResourceCore> & Base {
+export function ParameterizableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Parameterizable & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
-  class ParameterizableClass extends RdfsResourceMixin(Resource) implements Partial<Parameterizable> {
+  class ParameterizableClass extends RdfsResourceMixin(Resource) {
     @rdfine.property.literal()
     labelTemplate: string | undefined;
     @rdfine.property.resource({ implicitTypes: [sh.Parameter] })
     parameter: Sh.Parameter | undefined;
   }
-  return ParameterizableClass
+  return ParameterizableClass as any
 }
 
 class ParameterizableImpl extends ParameterizableMixin(RdfResourceImpl) {

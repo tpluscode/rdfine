@@ -11,11 +11,11 @@ import { AnatomicalStructureMixin } from './AnatomicalStructure.js';
 export interface Vessel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AnatomicalStructure<D>, rdfine.RdfResource<D> {
 }
 
-export function VesselMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Vessel> & RdfResourceCore> & Base {
+export function VesselMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Vessel & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class VesselClass extends AnatomicalStructureMixin(Resource) implements Partial<Vessel> {
+  class VesselClass extends AnatomicalStructureMixin(Resource) {
   }
-  return VesselClass
+  return VesselClass as any
 }
 
 class VesselImpl extends VesselMixin(RdfResourceImpl) {

@@ -14,11 +14,11 @@ import { AbstractResultMixin as ShaclAbstractResultMixin } from '@rdfine/shacl/l
 export interface SuccessResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.AbstractResult<D>, rdfine.RdfResource<D> {
 }
 
-export function SuccessResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SuccessResult> & RdfResourceCore> & Base {
+export function SuccessResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SuccessResult & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class SuccessResultClass extends AbstractResultMixinEx(ShaclAbstractResultMixin(Resource)) implements Partial<SuccessResult> {
+  class SuccessResultClass extends AbstractResultMixinEx(ShaclAbstractResultMixin(Resource)) {
   }
-  return SuccessResultClass
+  return SuccessResultClass as any
 }
 
 class SuccessResultImpl extends SuccessResultMixin(RdfResourceImpl) {

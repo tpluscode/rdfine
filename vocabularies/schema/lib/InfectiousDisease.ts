@@ -14,9 +14,9 @@ export interface InfectiousDisease<D extends RDF.DatasetCore = RDF.DatasetCore> 
   transmissionMethod: string | undefined;
 }
 
-export function InfectiousDiseaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InfectiousDisease> & RdfResourceCore> & Base {
+export function InfectiousDiseaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InfectiousDisease & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class InfectiousDiseaseClass extends MedicalConditionMixin(Resource) implements Partial<InfectiousDisease> {
+  class InfectiousDiseaseClass extends MedicalConditionMixin(Resource) {
     @rdfine.property.literal()
     infectiousAgent: string | undefined;
     @rdfine.property()
@@ -24,7 +24,7 @@ export function InfectiousDiseaseMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property.literal()
     transmissionMethod: string | undefined;
   }
-  return InfectiousDiseaseClass
+  return InfectiousDiseaseClass as any
 }
 
 class InfectiousDiseaseImpl extends InfectiousDiseaseMixin(RdfResourceImpl) {

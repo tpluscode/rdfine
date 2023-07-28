@@ -11,11 +11,11 @@ import { CreativeWorkMixin } from './CreativeWork.js';
 export interface SheetMusic<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
 }
 
-export function SheetMusicMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SheetMusic> & RdfResourceCore> & Base {
+export function SheetMusicMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SheetMusic & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SheetMusicClass extends CreativeWorkMixin(Resource) implements Partial<SheetMusic> {
+  class SheetMusicClass extends CreativeWorkMixin(Resource) {
   }
-  return SheetMusicClass
+  return SheetMusicClass as any
 }
 
 class SheetMusicImpl extends SheetMusicMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface NumericFormat<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   pattern: string | undefined;
 }
 
-export function NumericFormatMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<NumericFormat> & RdfResourceCore> & Base {
+export function NumericFormatMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NumericFormat & RdfResourceCore> & Base {
   @rdfine.namespace(csvw)
-  class NumericFormatClass extends Resource implements Partial<NumericFormat> {
+  class NumericFormatClass extends Resource {
     @rdfine.property.literal()
     decimalChar: string | undefined;
     @rdfine.property.resource({ as: [NumericFormatMixin] })
@@ -26,7 +26,7 @@ export function NumericFormatMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.literal()
     pattern: string | undefined;
   }
-  return NumericFormatClass
+  return NumericFormatClass as any
 }
 
 class NumericFormatImpl extends NumericFormatMixin(RdfResourceImpl) {

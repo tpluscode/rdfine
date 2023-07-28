@@ -16,9 +16,9 @@ export interface ItemList<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   numberOfItems: number | undefined;
 }
 
-export function ItemListMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ItemList> & RdfResourceCore> & Base {
+export function ItemListMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ItemList & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ItemListClass extends IntangibleMixin(Resource) implements Partial<ItemList> {
+  class ItemListClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource({ values: 'array' })
     itemListElement!: Array<Schema.ListItem | Schema.Thing>;
     @rdfine.property.literal({ path: schema.itemListElement, values: 'array' })
@@ -30,7 +30,7 @@ export function ItemListMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.literal({ type: Number })
     numberOfItems: number | undefined;
   }
-  return ItemListClass
+  return ItemListClass as any
 }
 
 class ItemListImpl extends ItemListMixin(RdfResourceImpl) {

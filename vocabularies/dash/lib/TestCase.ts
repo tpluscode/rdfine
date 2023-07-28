@@ -14,15 +14,15 @@ export interface TestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   expectedResultIsTTL: boolean | undefined;
 }
 
-export function TestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TestCase> & RdfResourceCore> & Base {
+export function TestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TestCase & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
-  class TestCaseClass extends RdfsResourceMixin(Resource) implements Partial<TestCase> {
+  class TestCaseClass extends RdfsResourceMixin(Resource) {
     @rdfine.property({ values: 'array' })
     expectedResult!: Array<RDF.Term>;
     @rdfine.property.literal({ type: Boolean })
     expectedResultIsTTL: boolean | undefined;
   }
-  return TestCaseClass
+  return TestCaseClass as any
 }
 
 class TestCaseImpl extends TestCaseMixin(RdfResourceImpl) {

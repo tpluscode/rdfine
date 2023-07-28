@@ -14,9 +14,9 @@ export interface Chapter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   pagination: string | undefined;
 }
 
-export function ChapterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Chapter> & RdfResourceCore> & Base {
+export function ChapterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Chapter & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ChapterClass extends CreativeWorkMixin(Resource) implements Partial<Chapter> {
+  class ChapterClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal()
     pageEnd: number | string | undefined;
     @rdfine.property.literal()
@@ -24,7 +24,7 @@ export function ChapterMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property.literal()
     pagination: string | undefined;
   }
-  return ChapterClass
+  return ChapterClass as any
 }
 
 class ChapterImpl extends ChapterMixin(RdfResourceImpl) {

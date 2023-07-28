@@ -13,15 +13,15 @@ export interface MedicalClinic<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   medicalSpecialty: Schema.MedicalSpecialty | undefined;
 }
 
-export function MedicalClinicMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalClinic> & RdfResourceCore> & Base {
+export function MedicalClinicMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalClinic & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalClinicClass extends MedicalOrganizationMixin(Resource) implements Partial<MedicalClinic> {
+  class MedicalClinicClass extends MedicalOrganizationMixin(Resource) {
     @rdfine.property.resource()
     availableService: Schema.MedicalProcedure | Schema.MedicalTest | Schema.MedicalTherapy | undefined;
     @rdfine.property()
     medicalSpecialty: Schema.MedicalSpecialty | undefined;
   }
-  return MedicalClinicClass
+  return MedicalClinicClass as any
 }
 
 class MedicalClinicImpl extends MedicalClinicMixin(RdfResourceImpl) {

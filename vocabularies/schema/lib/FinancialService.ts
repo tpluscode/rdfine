@@ -13,15 +13,15 @@ export interface FinancialService<D extends RDF.DatasetCore = RDF.DatasetCore> e
   feesAndCommissionsSpecificationTerm: RDF.NamedNode | undefined;
 }
 
-export function FinancialServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FinancialService> & RdfResourceCore> & Base {
+export function FinancialServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FinancialService & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class FinancialServiceClass extends LocalBusinessMixin(Resource) implements Partial<FinancialService> {
+  class FinancialServiceClass extends LocalBusinessMixin(Resource) {
     @rdfine.property.literal()
     feesAndCommissionsSpecification: string | undefined;
     @rdfine.property({ path: schema.feesAndCommissionsSpecification })
     feesAndCommissionsSpecificationTerm: RDF.NamedNode | undefined;
   }
-  return FinancialServiceClass
+  return FinancialServiceClass as any
 }
 
 class FinancialServiceImpl extends FinancialServiceMixin(RdfResourceImpl) {

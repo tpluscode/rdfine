@@ -11,11 +11,11 @@ import { AssessActionMixin } from './AssessAction.js';
 export interface ReactAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AssessAction<D>, rdfine.RdfResource<D> {
 }
 
-export function ReactActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ReactAction> & RdfResourceCore> & Base {
+export function ReactActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReactAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ReactActionClass extends AssessActionMixin(Resource) implements Partial<ReactAction> {
+  class ReactActionClass extends AssessActionMixin(Resource) {
   }
-  return ReactActionClass
+  return ReactActionClass as any
 }
 
 class ReactActionImpl extends ReactActionMixin(RdfResourceImpl) {

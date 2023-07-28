@@ -12,13 +12,13 @@ export interface ProductionTechniqueType<D extends RDF.DatasetCore = RDF.Dataset
   isProductionTechniqueTypeOf: Rico.Instantiation<D> | undefined;
 }
 
-export function ProductionTechniqueTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ProductionTechniqueType> & RdfResourceCore> & Base {
+export function ProductionTechniqueTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ProductionTechniqueType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class ProductionTechniqueTypeClass extends TypeMixin(Resource) implements Partial<ProductionTechniqueType> {
+  class ProductionTechniqueTypeClass extends TypeMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
     isProductionTechniqueTypeOf: Rico.Instantiation | undefined;
   }
-  return ProductionTechniqueTypeClass
+  return ProductionTechniqueTypeClass as any
 }
 
 class ProductionTechniqueTypeImpl extends ProductionTechniqueTypeMixin(RdfResourceImpl) {

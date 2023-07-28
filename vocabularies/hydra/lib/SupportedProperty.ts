@@ -19,9 +19,9 @@ export interface SupportedProperty<D extends RDF.DatasetCore = RDF.DatasetCore> 
   writable: boolean | undefined;
 }
 
-export function SupportedPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SupportedProperty> & RdfResourceCore> & Base {
+export function SupportedPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SupportedProperty & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class SupportedPropertyClass extends Resource implements Partial<SupportedProperty> {
+  class SupportedPropertyClass extends Resource {
     @rdfine.property.literal()
     description: string | undefined;
     @rdfine.property.resource({ as: [RdfPropertyMixin] })
@@ -37,7 +37,7 @@ export function SupportedPropertyMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property.literal({ type: Boolean })
     writable: boolean | undefined;
   }
-  return SupportedPropertyClass
+  return SupportedPropertyClass as any
 }
 
 class SupportedPropertyImpl extends SupportedPropertyMixin(RdfResourceImpl) {

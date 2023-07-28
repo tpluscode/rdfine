@@ -22,9 +22,9 @@ export interface UnitPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetC
   unitText: string | undefined;
 }
 
-export function UnitPriceSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<UnitPriceSpecification> & RdfResourceCore> & Base {
+export function UnitPriceSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<UnitPriceSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class UnitPriceSpecificationClass extends PriceSpecificationMixin(Resource) implements Partial<UnitPriceSpecification> {
+  class UnitPriceSpecificationClass extends PriceSpecificationMixin(Resource) {
     @rdfine.property.resource()
     billingDuration: Schema.Duration | Schema.QuantitativeValue | undefined;
     @rdfine.property.literal({ path: schema.billingDuration, type: Number })
@@ -48,7 +48,7 @@ export function UnitPriceSpecificationMixin<Base extends rdfine.Constructor>(Res
     @rdfine.property.literal()
     unitText: string | undefined;
   }
-  return UnitPriceSpecificationClass
+  return UnitPriceSpecificationClass as any
 }
 
 class UnitPriceSpecificationImpl extends UnitPriceSpecificationMixin(RdfResourceImpl) {

@@ -13,15 +13,15 @@ export interface AuthorshipRelation<D extends RDF.DatasetCore = RDF.DatasetCore>
   authorshipRelationHasTarget: Rico.Group<D> | Rico.Person<D> | Rico.Position<D> | undefined;
 }
 
-export function AuthorshipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AuthorshipRelation> & RdfResourceCore> & Base {
+export function AuthorshipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AuthorshipRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class AuthorshipRelationClass extends CreationRelationMixin(Resource) implements Partial<AuthorshipRelation> {
+  class AuthorshipRelationClass extends CreationRelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Record] })
     authorshipRelationHasSource: Rico.Record | undefined;
     @rdfine.property.resource()
     authorshipRelationHasTarget: Rico.Group | Rico.Person | Rico.Position | undefined;
   }
-  return AuthorshipRelationClass
+  return AuthorshipRelationClass as any
 }
 
 class AuthorshipRelationImpl extends AuthorshipRelationMixin(RdfResourceImpl) {

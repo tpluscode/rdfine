@@ -11,11 +11,11 @@ import { VehicleMixin } from './Vehicle.js';
 export interface MotorizedBicycle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Vehicle<D>, rdfine.RdfResource<D> {
 }
 
-export function MotorizedBicycleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MotorizedBicycle> & RdfResourceCore> & Base {
+export function MotorizedBicycleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MotorizedBicycle & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MotorizedBicycleClass extends VehicleMixin(Resource) implements Partial<MotorizedBicycle> {
+  class MotorizedBicycleClass extends VehicleMixin(Resource) {
   }
-  return MotorizedBicycleClass
+  return MotorizedBicycleClass as any
 }
 
 class MotorizedBicycleImpl extends MotorizedBicycleMixin(RdfResourceImpl) {

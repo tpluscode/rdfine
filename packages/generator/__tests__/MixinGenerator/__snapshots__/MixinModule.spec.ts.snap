@@ -14,13 +14,13 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
     foo: string | undefined;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class ClassClass extends Resource implements Partial<Class> {
+    class ClassClass extends Resource {
         @rdfine.property.literal()
         foo: string | undefined;
     }
-    return ClassClass
+    return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {
@@ -52,13 +52,13 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
     foo: Example.Class<D> | undefined;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class ClassClass extends Resource implements Partial<Class> {
+    class ClassClass extends Resource {
         @rdfine.property.resource({ as: [ClassMixin] })
         foo: Example.Class | undefined;
     }
-    return ClassClass
+    return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {
@@ -121,11 +121,11 @@ import type * as Example from "../index.js";
 export interface _3Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function _3ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<_3Class> & RdfResourceCore> & Base {
+export function _3ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<_3Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class _3ClassClass extends Resource implements Partial<_3Class> {
+    class _3ClassClass extends Resource {
     }
-    return _3ClassClass
+    return _3ClassClass as any
 }
 
 class _3ClassImpl extends _3ClassMixin(RdfResourceImpl) {
@@ -158,11 +158,11 @@ import { Person as PersonMixin } from "@rdfine/schema/Person";
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Person<D>, rdfine.RdfResource<D> {
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class ClassClass extends PersonMixin(Resource) implements Partial<Class> {
+    class ClassClass extends PersonMixin(Resource) {
     }
-    return ClassClass
+    return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {
@@ -193,11 +193,11 @@ import type * as Example from "../index.js";
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class ClassClass extends Resource implements Partial<Class> {
+    class ClassClass extends Resource {
     }
-    return ClassClass
+    return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {
@@ -229,13 +229,13 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
     foo: Array<Example.Foo<D>>;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class ClassClass extends Resource implements Partial<Class> {
+    class ClassClass extends Resource {
         @rdfine.property.resource({ values: 'array' })
         foo!: Array<Example.Foo>;
     }
-    return ClassClass
+    return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {
@@ -267,13 +267,13 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
     foo: Date | undefined;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class ClassClass extends Resource implements Partial<Class> {
+    class ClassClass extends Resource {
         @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
         foo: Date | undefined;
     }
-    return ClassClass
+    return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {
@@ -305,13 +305,13 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
     foo: Array<Example.Foo<D>>;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class ClassClass extends Resource implements Partial<Class> {
+    class ClassClass extends Resource {
         @rdfine.property.resource({ values: 'list' })
         foo!: Array<Example.Foo>;
     }
-    return ClassClass
+    return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {
@@ -343,13 +343,13 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
     foo: Example.Foo<D> | Array<Example.Foo<D>> | undefined;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class ClassClass extends Resource implements Partial<Class> {
+    class ClassClass extends Resource {
         @rdfine.property.resource({ values: ['list', 'single'] })
         foo: Example.Foo | Array<Example.Foo> | undefined;
     }
-    return ClassClass
+    return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {
@@ -381,13 +381,13 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
     foo: 'bar' | 'baz' | 'foo' | undefined;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class ClassClass extends Resource implements Partial<Class> {
+    class ClassClass extends Resource {
         @rdfine.property.literal()
         foo: 'bar' | 'baz' | 'foo' | undefined;
     }
-    return ClassClass
+    return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {
@@ -421,13 +421,13 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
     foo: Example.Foo<D> | undefined;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class ClassClass extends Resource implements Partial<Class> {
+    class ClassClass extends Resource {
         @rdfine.property.resource({ as: [FooMixin] })
         foo: Example.Foo | undefined;
     }
-    return ClassClass
+    return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {
@@ -459,13 +459,13 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
     foo: Example.Foo<D> | undefined;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class ClassClass extends Resource implements Partial<Class> {
+    class ClassClass extends Resource {
         @rdfine.property.resource({ implicitTypes: [ex.Foo] })
         foo: Example.Foo | undefined;
     }
-    return ClassClass
+    return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {
@@ -497,13 +497,13 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
     foo: string | undefined;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class ClassClass extends Resource implements Partial<Class> {
+    class ClassClass extends Resource {
         @rdfine.property.literal({ datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#anyURI') })
         foo: string | undefined;
     }
-    return ClassClass
+    return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {
@@ -535,13 +535,13 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
     'foo-bar': string | undefined;
 }
 
-export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Class> & RdfResourceCore> & Base {
+export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
     @rdfine.namespace(ex)
-    class ClassClass extends Resource implements Partial<Class> {
+    class ClassClass extends Resource {
         @rdfine.property.literal()
         'foo-bar': string | undefined;
     }
-    return ClassClass
+    return ClassClass as any
 }
 
 class ClassImpl extends ClassMixin(RdfResourceImpl) {

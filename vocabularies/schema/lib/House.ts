@@ -13,15 +13,15 @@ export interface House<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   numberOfRoomsLiteral: number | undefined;
 }
 
-export function HouseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<House> & RdfResourceCore> & Base {
+export function HouseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<House & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HouseClass extends AccommodationMixin(Resource) implements Partial<House> {
+  class HouseClass extends AccommodationMixin(Resource) {
     @rdfine.property.resource()
     numberOfRooms: Schema.QuantitativeValue | undefined;
     @rdfine.property.literal({ path: schema.numberOfRooms, type: Number })
     numberOfRoomsLiteral: number | undefined;
   }
-  return HouseClass
+  return HouseClass as any
 }
 
 class HouseImpl extends HouseMixin(RdfResourceImpl) {

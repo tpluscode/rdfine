@@ -25,9 +25,9 @@ export interface FloorPlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   petsAllowed: boolean | string | undefined;
 }
 
-export function FloorPlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FloorPlan> & RdfResourceCore> & Base {
+export function FloorPlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FloorPlan & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class FloorPlanClass extends IntangibleMixin(Resource) implements Partial<FloorPlan> {
+  class FloorPlanClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     amenityFeature: Schema.LocationFeatureSpecification | undefined;
     @rdfine.property.resource()
@@ -57,7 +57,7 @@ export function FloorPlanMixin<Base extends rdfine.Constructor>(Resource: Base):
     @rdfine.property.literal()
     petsAllowed: boolean | string | undefined;
   }
-  return FloorPlanClass
+  return FloorPlanClass as any
 }
 
 class FloorPlanImpl extends FloorPlanMixin(RdfResourceImpl) {

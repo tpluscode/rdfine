@@ -42,9 +42,9 @@ export interface EducationalOccupationalProgram<D extends RDF.DatasetCore = RDF.
   typicalCreditsPerTermLiteral: number | undefined;
 }
 
-export function EducationalOccupationalProgramMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<EducationalOccupationalProgram> & RdfResourceCore> & Base {
+export function EducationalOccupationalProgramMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EducationalOccupationalProgram & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class EducationalOccupationalProgramClass extends IntangibleMixin(Resource) implements Partial<EducationalOccupationalProgram> {
+  class EducationalOccupationalProgramClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     applicationDeadline: Date | undefined;
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
@@ -108,7 +108,7 @@ export function EducationalOccupationalProgramMixin<Base extends rdfine.Construc
     @rdfine.property.literal({ path: schema.typicalCreditsPerTerm, type: Number })
     typicalCreditsPerTermLiteral: number | undefined;
   }
-  return EducationalOccupationalProgramClass
+  return EducationalOccupationalProgramClass as any
 }
 
 class EducationalOccupationalProgramImpl extends EducationalOccupationalProgramMixin(RdfResourceImpl) {

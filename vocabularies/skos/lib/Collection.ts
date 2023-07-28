@@ -11,13 +11,13 @@ export interface Collection<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   member: Array<Skos.Collection<D> | Skos.Concept<D>>;
 }
 
-export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Collection> & RdfResourceCore> & Base {
+export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Collection & RdfResourceCore> & Base {
   @rdfine.namespace(skos)
-  class CollectionClass extends Resource implements Partial<Collection> {
+  class CollectionClass extends Resource {
     @rdfine.property.resource({ values: 'array' })
     member!: Array<Skos.Collection | Skos.Concept>;
   }
-  return CollectionClass
+  return CollectionClass as any
 }
 
 class CollectionImpl extends CollectionMixin(RdfResourceImpl) {

@@ -16,9 +16,9 @@ export interface Relationship<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   subject: As.Link<D> | As.Object<D> | undefined;
 }
 
-export function RelationshipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Relationship> & RdfResourceCore> & Base {
+export function RelationshipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Relationship & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class RelationshipClass extends ObjectMixin(Resource) implements Partial<Relationship> {
+  class RelationshipClass extends ObjectMixin(Resource) {
     @rdfine.property.resource()
     object: As.Link | As.Object | undefined;
     @rdfine.property.resource({ as: [RdfPropertyMixin] })
@@ -26,7 +26,7 @@ export function RelationshipMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.resource()
     subject: As.Link | As.Object | undefined;
   }
-  return RelationshipClass
+  return RelationshipClass as any
 }
 
 class RelationshipImpl extends RelationshipMixin(RdfResourceImpl) {

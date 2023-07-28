@@ -21,9 +21,9 @@ export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   view: Array<Hydra.Resource<D>>;
 }
 
-export function ResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Resource> & RdfResourceCore> & Base {
+export function ResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Resource & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class ResourceClass extends ResourceExMixin(RdfsResourceMixin(Resource)) implements Partial<Resource> {
+  class ResourceClass extends ResourceExMixin(RdfsResourceMixin(Resource)) {
     @rdfine.property.resource({ as: [ResourceMixin] })
     first: Hydra.Resource | undefined;
     @rdfine.property.literal()
@@ -41,7 +41,7 @@ export function ResourceMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.resource({ values: 'array' })
     view!: Array<Hydra.Resource>;
   }
-  return ResourceClass
+  return ResourceClass as any
 }
 
 class ResourceImpl extends ResourceMixin(RdfResourceImpl) {

@@ -25,9 +25,9 @@ export interface VideoGame<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   trailer: Schema.VideoObject<D> | undefined;
 }
 
-export function VideoGameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<VideoGame> & RdfResourceCore> & Base {
+export function VideoGameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VideoGame & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class VideoGameClass extends SoftwareApplicationMixin(GameMixin(Resource)) implements Partial<VideoGame> {
+  class VideoGameClass extends SoftwareApplicationMixin(GameMixin(Resource)) {
     @rdfine.property.resource()
     actor: Schema.Person | undefined;
     @rdfine.property.resource()
@@ -55,7 +55,7 @@ export function VideoGameMixin<Base extends rdfine.Constructor>(Resource: Base):
     @rdfine.property.resource()
     trailer: Schema.VideoObject | undefined;
   }
-  return VideoGameClass
+  return VideoGameClass as any
 }
 
 class VideoGameImpl extends VideoGameMixin(RdfResourceImpl) {

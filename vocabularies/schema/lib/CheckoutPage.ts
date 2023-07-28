@@ -11,11 +11,11 @@ import { WebPageMixin } from './WebPage.js';
 export interface CheckoutPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, rdfine.RdfResource<D> {
 }
 
-export function CheckoutPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CheckoutPage> & RdfResourceCore> & Base {
+export function CheckoutPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CheckoutPage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CheckoutPageClass extends WebPageMixin(Resource) implements Partial<CheckoutPage> {
+  class CheckoutPageClass extends WebPageMixin(Resource) {
   }
-  return CheckoutPageClass
+  return CheckoutPageClass as any
 }
 
 class CheckoutPageImpl extends CheckoutPageMixin(RdfResourceImpl) {

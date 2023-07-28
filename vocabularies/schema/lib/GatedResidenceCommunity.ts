@@ -11,11 +11,11 @@ import { ResidenceMixin } from './Residence.js';
 export interface GatedResidenceCommunity<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Residence<D>, rdfine.RdfResource<D> {
 }
 
-export function GatedResidenceCommunityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<GatedResidenceCommunity> & RdfResourceCore> & Base {
+export function GatedResidenceCommunityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GatedResidenceCommunity & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class GatedResidenceCommunityClass extends ResidenceMixin(Resource) implements Partial<GatedResidenceCommunity> {
+  class GatedResidenceCommunityClass extends ResidenceMixin(Resource) {
   }
-  return GatedResidenceCommunityClass
+  return GatedResidenceCommunityClass as any
 }
 
 class GatedResidenceCommunityImpl extends GatedResidenceCommunityMixin(RdfResourceImpl) {

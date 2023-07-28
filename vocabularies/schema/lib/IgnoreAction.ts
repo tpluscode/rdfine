@@ -11,11 +11,11 @@ import { AssessActionMixin } from './AssessAction.js';
 export interface IgnoreAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AssessAction<D>, rdfine.RdfResource<D> {
 }
 
-export function IgnoreActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<IgnoreAction> & RdfResourceCore> & Base {
+export function IgnoreActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IgnoreAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class IgnoreActionClass extends AssessActionMixin(Resource) implements Partial<IgnoreAction> {
+  class IgnoreActionClass extends AssessActionMixin(Resource) {
   }
-  return IgnoreActionClass
+  return IgnoreActionClass as any
 }
 
 class IgnoreActionImpl extends IgnoreActionMixin(RdfResourceImpl) {

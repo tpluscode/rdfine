@@ -11,11 +11,11 @@ import { DataFeedMixin } from './DataFeed.js';
 export interface CompleteDataFeed<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DataFeed<D>, rdfine.RdfResource<D> {
 }
 
-export function CompleteDataFeedMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CompleteDataFeed> & RdfResourceCore> & Base {
+export function CompleteDataFeedMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CompleteDataFeed & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class CompleteDataFeedClass extends DataFeedMixin(Resource) implements Partial<CompleteDataFeed> {
+  class CompleteDataFeedClass extends DataFeedMixin(Resource) {
   }
-  return CompleteDataFeedClass
+  return CompleteDataFeedClass as any
 }
 
 class CompleteDataFeedImpl extends CompleteDataFeedMixin(RdfResourceImpl) {

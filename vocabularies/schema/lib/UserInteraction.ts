@@ -11,11 +11,11 @@ import { EventMixin } from './Event.js';
 export interface UserInteraction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
 }
 
-export function UserInteractionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<UserInteraction> & RdfResourceCore> & Base {
+export function UserInteractionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<UserInteraction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class UserInteractionClass extends EventMixin(Resource) implements Partial<UserInteraction> {
+  class UserInteractionClass extends EventMixin(Resource) {
   }
-  return UserInteractionClass
+  return UserInteractionClass as any
 }
 
 class UserInteractionImpl extends UserInteractionMixin(RdfResourceImpl) {

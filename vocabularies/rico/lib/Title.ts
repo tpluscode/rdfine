@@ -12,13 +12,13 @@ export interface Title<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico
   isOrWasTitleOf: Rico.Instantiation<D> | Rico.RecordResource<D> | Rico.Rule<D> | undefined;
 }
 
-export function TitleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Title> & RdfResourceCore> & Base {
+export function TitleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Title & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class TitleClass extends NameMixin(Resource) implements Partial<Title> {
+  class TitleClass extends NameMixin(Resource) {
     @rdfine.property.resource()
     isOrWasTitleOf: Rico.Instantiation | Rico.RecordResource | Rico.Rule | undefined;
   }
-  return TitleClass
+  return TitleClass as any
 }
 
 class TitleImpl extends TitleMixin(RdfResourceImpl) {

@@ -14,9 +14,9 @@ export interface HeaderSpecification<D extends RDF.DatasetCore = RDF.DatasetCore
   possibleValue: Array<string>;
 }
 
-export function HeaderSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HeaderSpecification> & RdfResourceCore> & Base {
+export function HeaderSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HeaderSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class HeaderSpecificationClass extends ResourceMixin(Resource) implements Partial<HeaderSpecification> {
+  class HeaderSpecificationClass extends ResourceMixin(Resource) {
     @rdfine.property.literal({ type: Boolean })
     closedSet: boolean | undefined;
     @rdfine.property.literal()
@@ -24,7 +24,7 @@ export function HeaderSpecificationMixin<Base extends rdfine.Constructor>(Resour
     @rdfine.property.literal({ values: 'array' })
     possibleValue!: Array<string>;
   }
-  return HeaderSpecificationClass
+  return HeaderSpecificationClass as any
 }
 
 class HeaderSpecificationImpl extends HeaderSpecificationMixin(RdfResourceImpl) {

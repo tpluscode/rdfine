@@ -27,9 +27,9 @@ export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends r
   wasStartedBy: Prov.Entity<D> | undefined;
 }
 
-export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Activity> & RdfResourceCore> & Base {
+export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Activity & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class ActivityClass extends Resource implements Partial<Activity> {
+  class ActivityClass extends Resource {
     @rdfine.property.resource({ implicitTypes: [prov.Location] })
     atLocation: Prov.Location | undefined;
     @rdfine.property.literal({ type: Date })
@@ -65,7 +65,7 @@ export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): 
     @rdfine.property.resource({ implicitTypes: [prov.Entity] })
     wasStartedBy: Prov.Entity | undefined;
   }
-  return ActivityClass
+  return ActivityClass as any
 }
 
 class ActivityImpl extends ActivityMixin(RdfResourceImpl) {

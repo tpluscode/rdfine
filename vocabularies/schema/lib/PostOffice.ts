@@ -11,11 +11,11 @@ import { GovernmentOfficeMixin } from './GovernmentOffice.js';
 export interface PostOffice<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentOffice<D>, rdfine.RdfResource<D> {
 }
 
-export function PostOfficeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PostOffice> & RdfResourceCore> & Base {
+export function PostOfficeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PostOffice & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PostOfficeClass extends GovernmentOfficeMixin(Resource) implements Partial<PostOffice> {
+  class PostOfficeClass extends GovernmentOfficeMixin(Resource) {
   }
-  return PostOfficeClass
+  return PostOfficeClass as any
 }
 
 class PostOfficeImpl extends PostOfficeMixin(RdfResourceImpl) {

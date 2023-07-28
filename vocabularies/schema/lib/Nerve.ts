@@ -15,9 +15,9 @@ export interface Nerve<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   sourcedFrom: Schema.BrainStructure<D> | undefined;
 }
 
-export function NerveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Nerve> & RdfResourceCore> & Base {
+export function NerveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Nerve & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class NerveClass extends AnatomicalStructureMixin(Resource) implements Partial<Nerve> {
+  class NerveClass extends AnatomicalStructureMixin(Resource) {
     @rdfine.property.resource()
     branch: Schema.AnatomicalStructure | undefined;
     @rdfine.property.resource()
@@ -27,7 +27,7 @@ export function NerveMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource()
     sourcedFrom: Schema.BrainStructure | undefined;
   }
-  return NerveClass
+  return NerveClass as any
 }
 
 class NerveImpl extends NerveMixin(RdfResourceImpl) {

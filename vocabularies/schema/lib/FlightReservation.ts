@@ -16,9 +16,9 @@ export interface FlightReservation<D extends RDF.DatasetCore = RDF.DatasetCore> 
   securityScreening: string | undefined;
 }
 
-export function FlightReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FlightReservation> & RdfResourceCore> & Base {
+export function FlightReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FlightReservation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class FlightReservationClass extends ReservationMixin(Resource) implements Partial<FlightReservation> {
+  class FlightReservationClass extends ReservationMixin(Resource) {
     @rdfine.property.literal()
     boardingGroup: string | undefined;
     @rdfine.property.literal()
@@ -30,7 +30,7 @@ export function FlightReservationMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property.literal()
     securityScreening: string | undefined;
   }
-  return FlightReservationClass
+  return FlightReservationClass as any
 }
 
 class FlightReservationImpl extends FlightReservationMixin(RdfResourceImpl) {

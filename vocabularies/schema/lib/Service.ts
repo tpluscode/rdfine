@@ -39,9 +39,9 @@ export interface Service<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   termsOfServiceTerm: RDF.NamedNode | undefined;
 }
 
-export function ServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Service> & RdfResourceCore> & Base {
+export function ServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Service & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class ServiceClass extends IntangibleMixin(Resource) implements Partial<Service> {
+  class ServiceClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     aggregateRating: Schema.AggregateRating | undefined;
     @rdfine.property.resource()
@@ -99,7 +99,7 @@ export function ServiceMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property({ path: schema.termsOfService })
     termsOfServiceTerm: RDF.NamedNode | undefined;
   }
-  return ServiceClass
+  return ServiceClass as any
 }
 
 class ServiceImpl extends ServiceMixin(RdfResourceImpl) {

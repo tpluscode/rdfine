@@ -15,9 +15,9 @@ export interface PublicationVolume<D extends RDF.DatasetCore = RDF.DatasetCore> 
   volumeNumber: number | string | undefined;
 }
 
-export function PublicationVolumeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PublicationVolume> & RdfResourceCore> & Base {
+export function PublicationVolumeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PublicationVolume & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PublicationVolumeClass extends CreativeWorkMixin(Resource) implements Partial<PublicationVolume> {
+  class PublicationVolumeClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.literal()
     pageEnd: number | string | undefined;
     @rdfine.property.literal()
@@ -27,7 +27,7 @@ export function PublicationVolumeMixin<Base extends rdfine.Constructor>(Resource
     @rdfine.property.literal()
     volumeNumber: number | string | undefined;
   }
-  return PublicationVolumeClass
+  return PublicationVolumeClass as any
 }
 
 class PublicationVolumeImpl extends PublicationVolumeMixin(RdfResourceImpl) {

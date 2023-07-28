@@ -13,15 +13,15 @@ export interface ProvenanceRelation<D extends RDF.DatasetCore = RDF.DatasetCore>
   provenanceRelationHasTarget: Rico.Activity<D> | Rico.Agent<D> | undefined;
 }
 
-export function ProvenanceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ProvenanceRelation> & RdfResourceCore> & Base {
+export function ProvenanceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ProvenanceRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class ProvenanceRelationClass extends RelationMixin(Resource) implements Partial<ProvenanceRelation> {
+  class ProvenanceRelationClass extends RelationMixin(Resource) {
     @rdfine.property.resource()
     provenanceRelationHasSource: Rico.Instantiation | Rico.RecordResource | undefined;
     @rdfine.property.resource()
     provenanceRelationHasTarget: Rico.Activity | Rico.Agent | undefined;
   }
-  return ProvenanceRelationClass
+  return ProvenanceRelationClass as any
 }
 
 class ProvenanceRelationImpl extends ProvenanceRelationMixin(RdfResourceImpl) {

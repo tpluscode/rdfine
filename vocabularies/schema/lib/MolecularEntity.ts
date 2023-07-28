@@ -22,9 +22,9 @@ export interface MolecularEntity<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   smiles: string | undefined;
 }
 
-export function MolecularEntityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MolecularEntity> & RdfResourceCore> & Base {
+export function MolecularEntityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MolecularEntity & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MolecularEntityClass extends BioChemEntityMixin(Resource) implements Partial<MolecularEntity> {
+  class MolecularEntityClass extends BioChemEntityMixin(Resource) {
     @rdfine.property()
     chemicalRole: RDF.Term | undefined;
     @rdfine.property.literal()
@@ -48,7 +48,7 @@ export function MolecularEntityMixin<Base extends rdfine.Constructor>(Resource: 
     @rdfine.property.literal()
     smiles: string | undefined;
   }
-  return MolecularEntityClass
+  return MolecularEntityClass as any
 }
 
 class MolecularEntityImpl extends MolecularEntityMixin(RdfResourceImpl) {

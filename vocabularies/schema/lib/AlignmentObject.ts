@@ -16,9 +16,9 @@ export interface AlignmentObject<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   targetUrl: RDF.NamedNode | undefined;
 }
 
-export function AlignmentObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<AlignmentObject> & RdfResourceCore> & Base {
+export function AlignmentObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AlignmentObject & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class AlignmentObjectClass extends IntangibleMixin(Resource) implements Partial<AlignmentObject> {
+  class AlignmentObjectClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal()
     alignmentType: string | undefined;
     @rdfine.property.literal()
@@ -30,7 +30,7 @@ export function AlignmentObjectMixin<Base extends rdfine.Constructor>(Resource: 
     @rdfine.property()
     targetUrl: RDF.NamedNode | undefined;
   }
-  return AlignmentObjectClass
+  return AlignmentObjectClass as any
 }
 
 class AlignmentObjectImpl extends AlignmentObjectMixin(RdfResourceImpl) {

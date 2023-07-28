@@ -12,13 +12,13 @@ export interface CVSRepository<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   module: RDF.Term | undefined;
 }
 
-export function CVSRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<CVSRepository> & RdfResourceCore> & Base {
+export function CVSRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CVSRepository & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
-  class CVSRepositoryClass extends RepositoryMixin(Resource) implements Partial<CVSRepository> {
+  class CVSRepositoryClass extends RepositoryMixin(Resource) {
     @rdfine.property()
     module: RDF.Term | undefined;
   }
-  return CVSRepositoryClass
+  return CVSRepositoryClass as any
 }
 
 class CVSRepositoryImpl extends CVSRepositoryMixin(RdfResourceImpl) {

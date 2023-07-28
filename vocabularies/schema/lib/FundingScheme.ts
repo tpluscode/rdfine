@@ -11,11 +11,11 @@ import { OrganizationMixin } from './Organization.js';
 export interface FundingScheme<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, rdfine.RdfResource<D> {
 }
 
-export function FundingSchemeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FundingScheme> & RdfResourceCore> & Base {
+export function FundingSchemeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FundingScheme & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class FundingSchemeClass extends OrganizationMixin(Resource) implements Partial<FundingScheme> {
+  class FundingSchemeClass extends OrganizationMixin(Resource) {
   }
-  return FundingSchemeClass
+  return FundingSchemeClass as any
 }
 
 class FundingSchemeImpl extends FundingSchemeMixin(RdfResourceImpl) {

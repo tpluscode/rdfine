@@ -13,15 +13,15 @@ export interface RuleRelation<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   ruleRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function RuleRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RuleRelation> & RdfResourceCore> & Base {
+export function RuleRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RuleRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RuleRelationClass extends RelationMixin(Resource) implements Partial<RuleRelation> {
+  class RuleRelationClass extends RelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Rule] })
     ruleRelationHasSource: Rico.Rule | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     ruleRelationHasTarget: Rico.Thing | undefined;
   }
-  return RuleRelationClass
+  return RuleRelationClass as any
 }
 
 class RuleRelationImpl extends RuleRelationMixin(RdfResourceImpl) {

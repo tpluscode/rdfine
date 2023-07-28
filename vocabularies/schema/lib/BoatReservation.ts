@@ -11,11 +11,11 @@ import { ReservationMixin } from './Reservation.js';
 export interface BoatReservation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Reservation<D>, rdfine.RdfResource<D> {
 }
 
-export function BoatReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BoatReservation> & RdfResourceCore> & Base {
+export function BoatReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BoatReservation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BoatReservationClass extends ReservationMixin(Resource) implements Partial<BoatReservation> {
+  class BoatReservationClass extends ReservationMixin(Resource) {
   }
-  return BoatReservationClass
+  return BoatReservationClass as any
 }
 
 class BoatReservationImpl extends BoatReservationMixin(RdfResourceImpl) {

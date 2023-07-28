@@ -13,15 +13,15 @@ export interface RentAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   realEstateAgent: Schema.RealEstateAgent<D> | undefined;
 }
 
-export function RentActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RentAction> & RdfResourceCore> & Base {
+export function RentActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RentAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RentActionClass extends TradeActionMixin(Resource) implements Partial<RentAction> {
+  class RentActionClass extends TradeActionMixin(Resource) {
     @rdfine.property.resource()
     landlord: Schema.Organization | Schema.Person | undefined;
     @rdfine.property.resource()
     realEstateAgent: Schema.RealEstateAgent | undefined;
   }
-  return RentActionClass
+  return RentActionClass as any
 }
 
 class RentActionImpl extends RentActionMixin(RdfResourceImpl) {

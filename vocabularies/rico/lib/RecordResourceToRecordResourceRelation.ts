@@ -12,13 +12,13 @@ export interface RecordResourceToRecordResourceRelation<D extends RDF.DatasetCor
   recordResourceRelationConnects: Rico.RecordResource<D> | undefined;
 }
 
-export function RecordResourceToRecordResourceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RecordResourceToRecordResourceRelation> & RdfResourceCore> & Base {
+export function RecordResourceToRecordResourceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordResourceToRecordResourceRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RecordResourceToRecordResourceRelationClass extends RelationMixin(Resource) implements Partial<RecordResourceToRecordResourceRelation> {
+  class RecordResourceToRecordResourceRelationClass extends RelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.RecordResource] })
     recordResourceRelationConnects: Rico.RecordResource | undefined;
   }
-  return RecordResourceToRecordResourceRelationClass
+  return RecordResourceToRecordResourceRelationClass as any
 }
 
 class RecordResourceToRecordResourceRelationImpl extends RecordResourceToRecordResourceRelationMixin(RdfResourceImpl) {

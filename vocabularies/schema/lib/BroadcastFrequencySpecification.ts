@@ -16,9 +16,9 @@ export interface BroadcastFrequencySpecification<D extends RDF.DatasetCore = RDF
   broadcastSubChannel: string | undefined;
 }
 
-export function BroadcastFrequencySpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BroadcastFrequencySpecification> & RdfResourceCore> & Base {
+export function BroadcastFrequencySpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BroadcastFrequencySpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BroadcastFrequencySpecificationClass extends IntangibleMixin(Resource) implements Partial<BroadcastFrequencySpecification> {
+  class BroadcastFrequencySpecificationClass extends IntangibleMixin(Resource) {
     @rdfine.property.resource()
     broadcastFrequencyValue: Schema.QuantitativeValue | undefined;
     @rdfine.property.literal({ path: schema.broadcastFrequencyValue, type: Number })
@@ -30,7 +30,7 @@ export function BroadcastFrequencySpecificationMixin<Base extends rdfine.Constru
     @rdfine.property.literal()
     broadcastSubChannel: string | undefined;
   }
-  return BroadcastFrequencySpecificationClass
+  return BroadcastFrequencySpecificationClass as any
 }
 
 class BroadcastFrequencySpecificationImpl extends BroadcastFrequencySpecificationMixin(RdfResourceImpl) {

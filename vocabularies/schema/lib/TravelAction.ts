@@ -12,13 +12,13 @@ export interface TravelAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   distance: Schema.Distance<D> | undefined;
 }
 
-export function TravelActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TravelAction> & RdfResourceCore> & Base {
+export function TravelActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TravelAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TravelActionClass extends MoveActionMixin(Resource) implements Partial<TravelAction> {
+  class TravelActionClass extends MoveActionMixin(Resource) {
     @rdfine.property.resource()
     distance: Schema.Distance | undefined;
   }
-  return TravelActionClass
+  return TravelActionClass as any
 }
 
 class TravelActionImpl extends TravelActionMixin(RdfResourceImpl) {

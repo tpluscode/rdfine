@@ -21,9 +21,9 @@ export interface Rule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.
   title: RDF.Literal | undefined;
 }
 
-export function RuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Rule> & RdfResourceCore> & Base {
+export function RuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Rule & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RuleClass extends ThingMixin(Resource) implements Partial<Rule> {
+  class RuleClass extends ThingMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.RuleType] })
     hasOrHadRuleType: Rico.RuleType | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Title] })
@@ -45,7 +45,7 @@ export function RuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property()
     title: RDF.Literal | undefined;
   }
-  return RuleClass
+  return RuleClass as any
 }
 
 class RuleImpl extends RuleMixin(RdfResourceImpl) {

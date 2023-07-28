@@ -11,11 +11,11 @@ import { ActivityMixin } from './Activity.js';
 export interface View<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
-export function ViewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<View> & RdfResourceCore> & Base {
+export function ViewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<View & RdfResourceCore> & Base {
   @rdfine.namespace(as)
-  class ViewClass extends ActivityMixin(Resource) implements Partial<View> {
+  class ViewClass extends ActivityMixin(Resource) {
   }
-  return ViewClass
+  return ViewClass as any
 }
 
 class ViewImpl extends ViewMixin(RdfResourceImpl) {

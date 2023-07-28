@@ -12,11 +12,11 @@ import { InstantaneousEventMixin } from './InstantaneousEvent.js';
 export interface Generation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.ActivityInfluence<D>, Prov.InstantaneousEvent<D>, rdfine.RdfResource<D> {
 }
 
-export function GenerationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Generation> & RdfResourceCore> & Base {
+export function GenerationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Generation & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class GenerationClass extends InstantaneousEventMixin(ActivityInfluenceMixin(Resource)) implements Partial<Generation> {
+  class GenerationClass extends InstantaneousEventMixin(ActivityInfluenceMixin(Resource)) {
   }
-  return GenerationClass
+  return GenerationClass as any
 }
 
 class GenerationImpl extends GenerationMixin(RdfResourceImpl) {

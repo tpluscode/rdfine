@@ -11,11 +11,11 @@ import { RoleMixin } from './Role.js';
 export interface RightsHolder<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Role<D>, rdfine.RdfResource<D> {
 }
 
-export function RightsHolderMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RightsHolder> & RdfResourceCore> & Base {
+export function RightsHolderMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RightsHolder & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
-  class RightsHolderClass extends RoleMixin(Resource) implements Partial<RightsHolder> {
+  class RightsHolderClass extends RoleMixin(Resource) {
   }
-  return RightsHolderClass
+  return RightsHolderClass as any
 }
 
 class RightsHolderImpl extends RightsHolderMixin(RdfResourceImpl) {

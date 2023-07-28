@@ -63,9 +63,9 @@ export interface RecordResource<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   title: RDF.Literal | undefined;
 }
 
-export function RecordResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RecordResource> & RdfResourceCore> & Base {
+export function RecordResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordResource & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class RecordResourceClass extends ThingMixin(Resource) implements Partial<RecordResource> {
+  class RecordResourceClass extends ThingMixin(Resource) {
     @rdfine.property()
     authenticityNote: RDF.Literal | undefined;
     @rdfine.property()
@@ -171,7 +171,7 @@ export function RecordResourceMixin<Base extends rdfine.Constructor>(Resource: B
     @rdfine.property()
     title: RDF.Literal | undefined;
   }
-  return RecordResourceClass
+  return RecordResourceClass as any
 }
 
 class RecordResourceImpl extends RecordResourceMixin(RdfResourceImpl) {

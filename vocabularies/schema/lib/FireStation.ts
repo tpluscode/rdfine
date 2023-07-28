@@ -12,11 +12,11 @@ import { EmergencyServiceMixin } from './EmergencyService.js';
 export interface FireStation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.EmergencyService<D>, rdfine.RdfResource<D> {
 }
 
-export function FireStationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<FireStation> & RdfResourceCore> & Base {
+export function FireStationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FireStation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class FireStationClass extends EmergencyServiceMixin(CivicStructureMixin(Resource)) implements Partial<FireStation> {
+  class FireStationClass extends EmergencyServiceMixin(CivicStructureMixin(Resource)) {
   }
-  return FireStationClass
+  return FireStationClass as any
 }
 
 class FireStationImpl extends FireStationMixin(RdfResourceImpl) {

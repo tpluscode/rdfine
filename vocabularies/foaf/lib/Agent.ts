@@ -30,9 +30,9 @@ export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   yahooChatID: RDF.Literal | undefined;
 }
 
-export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Agent> & RdfResourceCore> & Base {
+export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Agent & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
-  class AgentClass extends Resource implements Partial<Agent> {
+  class AgentClass extends Resource {
     @rdfine.property.resource({ implicitTypes: [foaf.OnlineAccount] })
     account: Foaf.OnlineAccount | undefined;
     @rdfine.property()
@@ -74,7 +74,7 @@ export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property()
     yahooChatID: RDF.Literal | undefined;
   }
-  return AgentClass
+  return AgentClass as any
 }
 
 class AgentImpl extends AgentMixin(RdfResourceImpl) {

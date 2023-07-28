@@ -26,9 +26,9 @@ export interface HowTo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   yieldLiteral: string | undefined;
 }
 
-export function HowToMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HowTo> & RdfResourceCore> & Base {
+export function HowToMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowTo & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HowToClass extends CreativeWorkMixin(Resource) implements Partial<HowTo> {
+  class HowToClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     estimatedCost: Schema.MonetaryAmount | undefined;
     @rdfine.property.literal({ path: schema.estimatedCost })
@@ -60,7 +60,7 @@ export function HowToMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.literal({ path: schema.yield })
     yieldLiteral: string | undefined;
   }
-  return HowToClass
+  return HowToClass as any
 }
 
 class HowToImpl extends HowToMixin(RdfResourceImpl) {

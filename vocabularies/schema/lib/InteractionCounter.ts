@@ -18,9 +18,9 @@ export interface InteractionCounter<D extends RDF.DatasetCore = RDF.DatasetCore>
   userInteractionCount: number | undefined;
 }
 
-export function InteractionCounterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<InteractionCounter> & RdfResourceCore> & Base {
+export function InteractionCounterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InteractionCounter & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class InteractionCounterClass extends StructuredValueMixin(Resource) implements Partial<InteractionCounter> {
+  class InteractionCounterClass extends StructuredValueMixin(Resource) {
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#time') })
     endTime: Date | undefined;
     @rdfine.property.resource()
@@ -36,7 +36,7 @@ export function InteractionCounterMixin<Base extends rdfine.Constructor>(Resourc
     @rdfine.property.literal({ type: Number })
     userInteractionCount: number | undefined;
   }
-  return InteractionCounterClass
+  return InteractionCounterClass as any
 }
 
 class InteractionCounterImpl extends InteractionCounterMixin(RdfResourceImpl) {

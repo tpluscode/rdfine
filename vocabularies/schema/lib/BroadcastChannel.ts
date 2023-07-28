@@ -19,9 +19,9 @@ export interface BroadcastChannel<D extends RDF.DatasetCore = RDF.DatasetCore> e
   providesBroadcastService: Schema.BroadcastService<D> | undefined;
 }
 
-export function BroadcastChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<BroadcastChannel> & RdfResourceCore> & Base {
+export function BroadcastChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BroadcastChannel & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class BroadcastChannelClass extends IntangibleMixin(Resource) implements Partial<BroadcastChannel> {
+  class BroadcastChannelClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal()
     broadcastChannelId: string | undefined;
     @rdfine.property.resource()
@@ -39,7 +39,7 @@ export function BroadcastChannelMixin<Base extends rdfine.Constructor>(Resource:
     @rdfine.property.resource()
     providesBroadcastService: Schema.BroadcastService | undefined;
   }
-  return BroadcastChannelClass
+  return BroadcastChannelClass as any
 }
 
 class BroadcastChannelImpl extends BroadcastChannelMixin(RdfResourceImpl) {

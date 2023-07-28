@@ -12,11 +12,11 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface Specification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
-export function SpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Specification> & RdfResourceCore> & Base {
+export function SpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Specification & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
-  class SpecificationClass extends RdfsResourceMixin(Resource) implements Partial<Specification> {
+  class SpecificationClass extends RdfsResourceMixin(Resource) {
   }
-  return SpecificationClass
+  return SpecificationClass as any
 }
 
 class SpecificationImpl extends SpecificationMixin(RdfResourceImpl) {

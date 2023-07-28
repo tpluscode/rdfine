@@ -55,9 +55,9 @@ export interface Event<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   workPerformed: Schema.CreativeWork<D> | undefined;
 }
 
-export function EventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Event> & RdfResourceCore> & Base {
+export function EventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Event & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class EventClass extends ThingMixin(Resource) implements Partial<Event> {
+  class EventClass extends ThingMixin(Resource) {
     @rdfine.property.resource()
     about: Schema.Thing | undefined;
     @rdfine.property.resource()
@@ -147,7 +147,7 @@ export function EventMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource()
     workPerformed: Schema.CreativeWork | undefined;
   }
-  return EventClass
+  return EventClass as any
 }
 
 class EventImpl extends EventMixin(RdfResourceImpl) {

@@ -11,11 +11,11 @@ import { IntangibleMixin } from './Intangible.js';
 export interface Series<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
 }
 
-export function SeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Series> & RdfResourceCore> & Base {
+export function SeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Series & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SeriesClass extends IntangibleMixin(Resource) implements Partial<Series> {
+  class SeriesClass extends IntangibleMixin(Resource) {
   }
-  return SeriesClass
+  return SeriesClass as any
 }
 
 class SeriesImpl extends SeriesMixin(RdfResourceImpl) {

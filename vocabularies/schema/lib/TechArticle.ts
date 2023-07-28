@@ -13,15 +13,15 @@ export interface TechArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   proficiencyLevel: string | undefined;
 }
 
-export function TechArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TechArticle> & RdfResourceCore> & Base {
+export function TechArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TechArticle & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TechArticleClass extends ArticleMixin(Resource) implements Partial<TechArticle> {
+  class TechArticleClass extends ArticleMixin(Resource) {
     @rdfine.property.literal()
     dependencies: string | undefined;
     @rdfine.property.literal()
     proficiencyLevel: string | undefined;
   }
-  return TechArticleClass
+  return TechArticleClass as any
 }
 
 class TechArticleImpl extends TechArticleMixin(RdfResourceImpl) {

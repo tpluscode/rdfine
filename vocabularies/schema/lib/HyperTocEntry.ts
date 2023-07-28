@@ -14,9 +14,9 @@ export interface HyperTocEntry<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   utterances: string | undefined;
 }
 
-export function HyperTocEntryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<HyperTocEntry> & RdfResourceCore> & Base {
+export function HyperTocEntryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HyperTocEntry & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class HyperTocEntryClass extends CreativeWorkMixin(Resource) implements Partial<HyperTocEntry> {
+  class HyperTocEntryClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     associatedMedia: Schema.MediaObject | undefined;
     @rdfine.property.resource()
@@ -24,7 +24,7 @@ export function HyperTocEntryMixin<Base extends rdfine.Constructor>(Resource: Ba
     @rdfine.property.literal()
     utterances: string | undefined;
   }
-  return HyperTocEntryClass
+  return HyperTocEntryClass as any
 }
 
 class HyperTocEntryImpl extends HyperTocEntryMixin(RdfResourceImpl) {

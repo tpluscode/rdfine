@@ -13,15 +13,15 @@ export interface IntellectualPropertyRightsRelation<D extends RDF.DatasetCore = 
   intellectualPropertyRightsRelationHasTarget: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
 }
 
-export function IntellectualPropertyRightsRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<IntellectualPropertyRightsRelation> & RdfResourceCore> & Base {
+export function IntellectualPropertyRightsRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IntellectualPropertyRightsRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class IntellectualPropertyRightsRelationClass extends AuthorityRelationMixin(Resource) implements Partial<IntellectualPropertyRightsRelation> {
+  class IntellectualPropertyRightsRelationClass extends AuthorityRelationMixin(Resource) {
     @rdfine.property.resource()
     intellectualPropertyRightsRelationHasSource: Rico.Group | Rico.Person | Rico.Position | undefined;
     @rdfine.property.resource()
     intellectualPropertyRightsRelationHasTarget: Rico.Instantiation | Rico.RecordResource | undefined;
   }
-  return IntellectualPropertyRightsRelationClass
+  return IntellectualPropertyRightsRelationClass as any
 }
 
 class IntellectualPropertyRightsRelationImpl extends IntellectualPropertyRightsRelationMixin(RdfResourceImpl) {

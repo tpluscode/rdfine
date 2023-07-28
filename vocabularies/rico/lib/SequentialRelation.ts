@@ -13,15 +13,15 @@ export interface SequentialRelation<D extends RDF.DatasetCore = RDF.DatasetCore>
   sequentialRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
-export function SequentialRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<SequentialRelation> & RdfResourceCore> & Base {
+export function SequentialRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SequentialRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class SequentialRelationClass extends RelationMixin(Resource) implements Partial<SequentialRelation> {
+  class SequentialRelationClass extends RelationMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     sequentialRelationHasSource: Rico.Thing | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     sequentialRelationHasTarget: Rico.Thing | undefined;
   }
-  return SequentialRelationClass
+  return SequentialRelationClass as any
 }
 
 class SequentialRelationImpl extends SequentialRelationMixin(RdfResourceImpl) {

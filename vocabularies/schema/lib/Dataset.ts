@@ -21,9 +21,9 @@ export interface Dataset<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   variableMeasuredLiteral: string | undefined;
 }
 
-export function DatasetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Dataset> & RdfResourceCore> & Base {
+export function DatasetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Dataset & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DatasetClass extends CreativeWorkMixin(Resource) implements Partial<Dataset> {
+  class DatasetClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     catalog: Schema.DataCatalog | undefined;
     @rdfine.property.literal({ type: Date })
@@ -45,7 +45,7 @@ export function DatasetMixin<Base extends rdfine.Constructor>(Resource: Base): r
     @rdfine.property.literal({ path: schema.variableMeasured })
     variableMeasuredLiteral: string | undefined;
   }
-  return DatasetClass
+  return DatasetClass as any
 }
 
 class DatasetImpl extends DatasetMixin(RdfResourceImpl) {

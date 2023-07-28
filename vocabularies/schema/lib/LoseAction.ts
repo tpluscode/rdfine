@@ -12,13 +12,13 @@ export interface LoseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   winner: Schema.Person<D> | undefined;
 }
 
-export function LoseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<LoseAction> & RdfResourceCore> & Base {
+export function LoseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LoseAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class LoseActionClass extends AchieveActionMixin(Resource) implements Partial<LoseAction> {
+  class LoseActionClass extends AchieveActionMixin(Resource) {
     @rdfine.property.resource()
     winner: Schema.Person | undefined;
   }
-  return LoseActionClass
+  return LoseActionClass as any
 }
 
 class LoseActionImpl extends LoseActionMixin(RdfResourceImpl) {

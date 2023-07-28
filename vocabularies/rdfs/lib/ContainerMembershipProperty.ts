@@ -14,11 +14,11 @@ import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 export interface ContainerMembershipProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, rdfine.RdfResource<D> {
 }
 
-export function ContainerMembershipPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<ContainerMembershipProperty> & RdfResourceCore> & Base {
+export function ContainerMembershipPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ContainerMembershipProperty & RdfResourceCore> & Base {
   @rdfine.namespace(rdfs)
-  class ContainerMembershipPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) implements Partial<ContainerMembershipProperty> {
+  class ContainerMembershipPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) {
   }
-  return ContainerMembershipPropertyClass
+  return ContainerMembershipPropertyClass as any
 }
 
 class ContainerMembershipPropertyImpl extends ContainerMembershipPropertyMixin(RdfResourceImpl) {

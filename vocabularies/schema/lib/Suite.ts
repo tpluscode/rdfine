@@ -16,9 +16,9 @@ export interface Suite<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   occupancy: Schema.QuantitativeValue<D> | undefined;
 }
 
-export function SuiteMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Suite> & RdfResourceCore> & Base {
+export function SuiteMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Suite & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class SuiteClass extends AccommodationMixin(Resource) implements Partial<Suite> {
+  class SuiteClass extends AccommodationMixin(Resource) {
     @rdfine.property.resource()
     bed: Schema.BedDetails | undefined;
     @rdfine.property.literal({ path: schema.bed })
@@ -30,7 +30,7 @@ export function SuiteMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource()
     occupancy: Schema.QuantitativeValue | undefined;
   }
-  return SuiteClass
+  return SuiteClass as any
 }
 
 class SuiteImpl extends SuiteMixin(RdfResourceImpl) {

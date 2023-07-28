@@ -11,11 +11,11 @@ import { MedicalTherapyMixin } from './MedicalTherapy.js';
 export interface PhysicalTherapy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalTherapy<D>, rdfine.RdfResource<D> {
 }
 
-export function PhysicalTherapyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PhysicalTherapy> & RdfResourceCore> & Base {
+export function PhysicalTherapyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PhysicalTherapy & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PhysicalTherapyClass extends MedicalTherapyMixin(Resource) implements Partial<PhysicalTherapy> {
+  class PhysicalTherapyClass extends MedicalTherapyMixin(Resource) {
   }
-  return PhysicalTherapyClass
+  return PhysicalTherapyClass as any
 }
 
 class PhysicalTherapyImpl extends PhysicalTherapyMixin(RdfResourceImpl) {

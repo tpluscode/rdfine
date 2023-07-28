@@ -11,11 +11,11 @@ import { IntangibleMixin } from './Intangible.js';
 export interface StructuredValue<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Intangible<D>, rdfine.RdfResource<D> {
 }
 
-export function StructuredValueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<StructuredValue> & RdfResourceCore> & Base {
+export function StructuredValueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<StructuredValue & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class StructuredValueClass extends IntangibleMixin(Resource) implements Partial<StructuredValue> {
+  class StructuredValueClass extends IntangibleMixin(Resource) {
   }
-  return StructuredValueClass
+  return StructuredValueClass as any
 }
 
 class StructuredValueImpl extends StructuredValueMixin(RdfResourceImpl) {

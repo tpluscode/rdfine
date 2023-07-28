@@ -12,13 +12,13 @@ export interface PerformAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   entertainmentBusiness: Schema.EntertainmentBusiness<D> | undefined;
 }
 
-export function PerformActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<PerformAction> & RdfResourceCore> & Base {
+export function PerformActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PerformAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class PerformActionClass extends PlayActionMixin(Resource) implements Partial<PerformAction> {
+  class PerformActionClass extends PlayActionMixin(Resource) {
     @rdfine.property.resource()
     entertainmentBusiness: Schema.EntertainmentBusiness | undefined;
   }
-  return PerformActionClass
+  return PerformActionClass as any
 }
 
 class PerformActionImpl extends PerformActionMixin(RdfResourceImpl) {

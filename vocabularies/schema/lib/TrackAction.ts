@@ -12,13 +12,13 @@ export interface TrackAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   deliveryMethod: Schema.DeliveryMethod | undefined;
 }
 
-export function TrackActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TrackAction> & RdfResourceCore> & Base {
+export function TrackActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TrackAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TrackActionClass extends FindActionMixin(Resource) implements Partial<TrackAction> {
+  class TrackActionClass extends FindActionMixin(Resource) {
     @rdfine.property()
     deliveryMethod: Schema.DeliveryMethod | undefined;
   }
-  return TrackActionClass
+  return TrackActionClass as any
 }
 
 class TrackActionImpl extends TrackActionMixin(RdfResourceImpl) {

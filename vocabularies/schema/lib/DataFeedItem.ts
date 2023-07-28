@@ -15,9 +15,9 @@ export interface DataFeedItem<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   item: Schema.Thing<D> | undefined;
 }
 
-export function DataFeedItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DataFeedItem> & RdfResourceCore> & Base {
+export function DataFeedItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DataFeedItem & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DataFeedItemClass extends IntangibleMixin(Resource) implements Partial<DataFeedItem> {
+  class DataFeedItemClass extends IntangibleMixin(Resource) {
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
     dateCreated: Date | undefined;
     @rdfine.property.literal({ type: Date, datatype: $rdf.namedNode('http://www.w3.org/2001/XMLSchema#date') })
@@ -27,7 +27,7 @@ export function DataFeedItemMixin<Base extends rdfine.Constructor>(Resource: Bas
     @rdfine.property.resource()
     item: Schema.Thing | undefined;
   }
-  return DataFeedItemClass
+  return DataFeedItemClass as any
 }
 
 class DataFeedItemImpl extends DataFeedItemMixin(RdfResourceImpl) {

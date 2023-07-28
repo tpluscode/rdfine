@@ -14,9 +14,9 @@ export interface MediaReview<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   originalMediaLink: Schema.MediaObject<D> | Schema.WebPage<D> | undefined;
 }
 
-export function MediaReviewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MediaReview> & RdfResourceCore> & Base {
+export function MediaReviewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MediaReview & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MediaReviewClass extends ReviewMixin(Resource) implements Partial<MediaReview> {
+  class MediaReviewClass extends ReviewMixin(Resource) {
     @rdfine.property()
     mediaAuthenticityCategory: Schema.MediaManipulationRatingEnumeration | undefined;
     @rdfine.property.literal()
@@ -24,7 +24,7 @@ export function MediaReviewMixin<Base extends rdfine.Constructor>(Resource: Base
     @rdfine.property.resource()
     originalMediaLink: Schema.MediaObject | Schema.WebPage | undefined;
   }
-  return MediaReviewClass
+  return MediaReviewClass as any
 }
 
 class MediaReviewImpl extends MediaReviewMixin(RdfResourceImpl) {

@@ -23,9 +23,9 @@ export interface OfferShippingDetails<D extends RDF.DatasetCore = RDF.DatasetCor
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
-export function OfferShippingDetailsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<OfferShippingDetails> & RdfResourceCore> & Base {
+export function OfferShippingDetailsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OfferShippingDetails & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class OfferShippingDetailsClass extends StructuredValueMixin(Resource) implements Partial<OfferShippingDetails> {
+  class OfferShippingDetailsClass extends StructuredValueMixin(Resource) {
     @rdfine.property.resource()
     deliveryTime: Schema.ShippingDeliveryTime | undefined;
     @rdfine.property.resource()
@@ -51,7 +51,7 @@ export function OfferShippingDetailsMixin<Base extends rdfine.Constructor>(Resou
     @rdfine.property.resource()
     width: Schema.Distance | Schema.QuantitativeValue | undefined;
   }
-  return OfferShippingDetailsClass
+  return OfferShippingDetailsClass as any
 }
 
 class OfferShippingDetailsImpl extends OfferShippingDetailsMixin(RdfResourceImpl) {

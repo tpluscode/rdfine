@@ -11,11 +11,11 @@ import { HomeAndConstructionBusinessMixin } from './HomeAndConstructionBusiness.
 export interface RoofingContractor<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HomeAndConstructionBusiness<D>, rdfine.RdfResource<D> {
 }
 
-export function RoofingContractorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<RoofingContractor> & RdfResourceCore> & Base {
+export function RoofingContractorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RoofingContractor & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class RoofingContractorClass extends HomeAndConstructionBusinessMixin(Resource) implements Partial<RoofingContractor> {
+  class RoofingContractorClass extends HomeAndConstructionBusinessMixin(Resource) {
   }
-  return RoofingContractorClass
+  return RoofingContractorClass as any
 }
 
 class RoofingContractorImpl extends RoofingContractorMixin(RdfResourceImpl) {

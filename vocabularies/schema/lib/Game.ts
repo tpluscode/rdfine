@@ -16,9 +16,9 @@ export interface Game<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   quest: Schema.Thing<D> | undefined;
 }
 
-export function GameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<Game> & RdfResourceCore> & Base {
+export function GameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Game & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class GameClass extends CreativeWorkMixin(Resource) implements Partial<Game> {
+  class GameClass extends CreativeWorkMixin(Resource) {
     @rdfine.property.resource()
     characterAttribute: Schema.Thing | undefined;
     @rdfine.property.resource()
@@ -30,7 +30,7 @@ export function GameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     @rdfine.property.resource()
     quest: Schema.Thing | undefined;
   }
-  return GameClass
+  return GameClass as any
 }
 
 class GameImpl extends GameMixin(RdfResourceImpl) {

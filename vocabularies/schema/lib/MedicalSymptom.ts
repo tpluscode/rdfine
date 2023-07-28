@@ -11,11 +11,11 @@ import { MedicalSignOrSymptomMixin } from './MedicalSignOrSymptom.js';
 export interface MedicalSymptom<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalSignOrSymptom<D>, rdfine.RdfResource<D> {
 }
 
-export function MedicalSymptomMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<MedicalSymptom> & RdfResourceCore> & Base {
+export function MedicalSymptomMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalSymptom & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class MedicalSymptomClass extends MedicalSignOrSymptomMixin(Resource) implements Partial<MedicalSymptom> {
+  class MedicalSymptomClass extends MedicalSignOrSymptomMixin(Resource) {
   }
-  return MedicalSymptomClass
+  return MedicalSymptomClass as any
 }
 
 class MedicalSymptomImpl extends MedicalSymptomMixin(RdfResourceImpl) {

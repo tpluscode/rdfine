@@ -15,9 +15,9 @@ export interface TaxiReservation<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   pickupTime: Date | undefined;
 }
 
-export function TaxiReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<TaxiReservation> & RdfResourceCore> & Base {
+export function TaxiReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TaxiReservation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class TaxiReservationClass extends ReservationMixin(Resource) implements Partial<TaxiReservation> {
+  class TaxiReservationClass extends ReservationMixin(Resource) {
     @rdfine.property.resource()
     partySize: Schema.QuantitativeValue | undefined;
     @rdfine.property.literal({ path: schema.partySize, type: Number })
@@ -27,7 +27,7 @@ export function TaxiReservationMixin<Base extends rdfine.Constructor>(Resource: 
     @rdfine.property.literal({ type: Date })
     pickupTime: Date | undefined;
   }
-  return TaxiReservationClass
+  return TaxiReservationClass as any
 }
 
 class TaxiReservationImpl extends TaxiReservationMixin(RdfResourceImpl) {

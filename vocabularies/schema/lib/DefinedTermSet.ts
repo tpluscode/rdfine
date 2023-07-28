@@ -12,13 +12,13 @@ export interface DefinedTermSet<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   hasDefinedTerm: RDF.Term | undefined;
 }
 
-export function DefinedTermSetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Partial<DefinedTermSet> & RdfResourceCore> & Base {
+export function DefinedTermSetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DefinedTermSet & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
-  class DefinedTermSetClass extends CreativeWorkMixin(Resource) implements Partial<DefinedTermSet> {
+  class DefinedTermSetClass extends CreativeWorkMixin(Resource) {
     @rdfine.property()
     hasDefinedTerm: RDF.Term | undefined;
   }
-  return DefinedTermSetClass
+  return DefinedTermSetClass as any
 }
 
 class DefinedTermSetImpl extends DefinedTermSetMixin(RdfResourceImpl) {
