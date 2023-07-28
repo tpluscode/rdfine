@@ -1,7 +1,7 @@
 import '../extensions/sh/Function.js';
 import { FunctionMixinEx } from '../extensions/sh/Function.js';
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,6 +15,12 @@ import { ScriptMixin } from './Script.js';
 export interface ScriptFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.Function<D>, Dash.Script<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    ScriptFunction: Factory<Dash.ScriptFunction>;
+  }
+}
+
 export function ScriptFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ScriptFunction & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class ScriptFunctionClass extends ScriptMixin(FunctionMixinEx(ShaclFunctionMixin(Resource))) {
@@ -22,5 +28,4 @@ export function ScriptFunctionMixin<Base extends rdfine.Constructor>(Resource: B
   return ScriptFunctionClass as any
 }
 ScriptFunctionMixin.appliesTo = dash.ScriptFunction
-
-export const factory = (env: RdfineEnvironment) => createFactory<ScriptFunction>([ScriptMixin, ShaclFunctionMixin, ScriptFunctionMixin], { types: [dash.ScriptFunction] }, env);
+ScriptFunctionMixin.createFactory = (env: RdfineEnvironment) => createFactory<ScriptFunction>([ScriptMixin, ShaclFunctionMixin, ScriptFunctionMixin], { types: [dash.ScriptFunction] }, env)

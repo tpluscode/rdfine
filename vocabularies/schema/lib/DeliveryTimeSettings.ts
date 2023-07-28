@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface DeliveryTimeSettings<D extends RDF.DatasetCore = RDF.DatasetCor
   isUnlabelledFallback: boolean | undefined;
   shippingDestination: Schema.DefinedRegion<D> | undefined;
   transitTimeLabel: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DeliveryTimeSettings: Factory<Schema.DeliveryTimeSettings>;
+  }
 }
 
 export function DeliveryTimeSettingsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DeliveryTimeSettings & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function DeliveryTimeSettingsMixin<Base extends rdfine.Constructor>(Resou
   return DeliveryTimeSettingsClass as any
 }
 DeliveryTimeSettingsMixin.appliesTo = schema.DeliveryTimeSettings
-
-export const factory = (env: RdfineEnvironment) => createFactory<DeliveryTimeSettings>([StructuredValueMixin, DeliveryTimeSettingsMixin], { types: [schema.DeliveryTimeSettings] }, env);
+DeliveryTimeSettingsMixin.createFactory = (env: RdfineEnvironment) => createFactory<DeliveryTimeSettings>([StructuredValueMixin, DeliveryTimeSettingsMixin], { types: [schema.DeliveryTimeSettings] }, env)

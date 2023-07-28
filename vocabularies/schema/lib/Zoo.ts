@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { CivicStructureMixin } from './CivicStructure.js';
 export interface Zoo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Zoo: Factory<Schema.Zoo>;
+  }
+}
+
 export function ZooMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Zoo & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ZooClass extends CivicStructureMixin(Resource) {
@@ -18,5 +24,4 @@ export function ZooMixin<Base extends rdfine.Constructor>(Resource: Base): rdfin
   return ZooClass as any
 }
 ZooMixin.appliesTo = schema.Zoo
-
-export const factory = (env: RdfineEnvironment) => createFactory<Zoo>([CivicStructureMixin, ZooMixin], { types: [schema.Zoo] }, env);
+ZooMixin.createFactory = (env: RdfineEnvironment) => createFactory<Zoo>([CivicStructureMixin, ZooMixin], { types: [schema.Zoo] }, env)

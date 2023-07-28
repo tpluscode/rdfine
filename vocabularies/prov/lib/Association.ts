@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Association<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   hadRole: Prov.Role<D> | undefined;
 }
 
+declare global {
+  interface ProvVocabulary {
+    Association: Factory<Prov.Association>;
+  }
+}
+
 export function AssociationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Association & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class AssociationClass extends AgentInfluenceMixin(Resource) {
@@ -24,5 +30,4 @@ export function AssociationMixin<Base extends rdfine.Constructor>(Resource: Base
   return AssociationClass as any
 }
 AssociationMixin.appliesTo = prov.Association
-
-export const factory = (env: RdfineEnvironment) => createFactory<Association>([AgentInfluenceMixin, AssociationMixin], { types: [prov.Association] }, env);
+AssociationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Association>([AgentInfluenceMixin, AssociationMixin], { types: [prov.Association] }, env)

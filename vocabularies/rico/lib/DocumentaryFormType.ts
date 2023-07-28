@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface DocumentaryFormType<D extends RDF.DatasetCore = RDF.DatasetCore
   isDocumentaryFormTypeOf: Rico.Record<D> | Rico.RecordPart<D> | undefined;
   isOrWasDocumentaryFormTypeOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasDocumentaryFormTypeOfSomeMembersOf: Rico.RecordSet<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    DocumentaryFormType: Factory<Rico.DocumentaryFormType>;
+  }
 }
 
 export function DocumentaryFormTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DocumentaryFormType & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function DocumentaryFormTypeMixin<Base extends rdfine.Constructor>(Resour
   return DocumentaryFormTypeClass as any
 }
 DocumentaryFormTypeMixin.appliesTo = rico.DocumentaryFormType
-
-export const factory = (env: RdfineEnvironment) => createFactory<DocumentaryFormType>([TypeMixin, DocumentaryFormTypeMixin], { types: [rico.DocumentaryFormType] }, env);
+DocumentaryFormTypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<DocumentaryFormType>([TypeMixin, DocumentaryFormTypeMixin], { types: [rico.DocumentaryFormType] }, env)

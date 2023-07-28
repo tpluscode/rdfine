@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { OrganizationMixin } from './Organization.js';
 export interface GovernmentOrganization<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    GovernmentOrganization: Factory<Schema.GovernmentOrganization>;
+  }
+}
+
 export function GovernmentOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GovernmentOrganization & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class GovernmentOrganizationClass extends OrganizationMixin(Resource) {
@@ -18,5 +24,4 @@ export function GovernmentOrganizationMixin<Base extends rdfine.Constructor>(Res
   return GovernmentOrganizationClass as any
 }
 GovernmentOrganizationMixin.appliesTo = schema.GovernmentOrganization
-
-export const factory = (env: RdfineEnvironment) => createFactory<GovernmentOrganization>([OrganizationMixin, GovernmentOrganizationMixin], { types: [schema.GovernmentOrganization] }, env);
+GovernmentOrganizationMixin.createFactory = (env: RdfineEnvironment) => createFactory<GovernmentOrganization>([OrganizationMixin, GovernmentOrganizationMixin], { types: [schema.GovernmentOrganization] }, env)

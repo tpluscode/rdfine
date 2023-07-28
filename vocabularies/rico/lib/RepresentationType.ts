@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface RepresentationType<D extends RDF.DatasetCore = RDF.DatasetCore>
   isRepresentationTypeOf: Rico.Instantiation<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    RepresentationType: Factory<Rico.RepresentationType>;
+  }
+}
+
 export function RepresentationTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RepresentationType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class RepresentationTypeClass extends TypeMixin(Resource) {
@@ -21,5 +27,4 @@ export function RepresentationTypeMixin<Base extends rdfine.Constructor>(Resourc
   return RepresentationTypeClass as any
 }
 RepresentationTypeMixin.appliesTo = rico.RepresentationType
-
-export const factory = (env: RdfineEnvironment) => createFactory<RepresentationType>([TypeMixin, RepresentationTypeMixin], { types: [rico.RepresentationType] }, env);
+RepresentationTypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<RepresentationType>([TypeMixin, RepresentationTypeMixin], { types: [rico.RepresentationType] }, env)

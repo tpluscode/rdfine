@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { WebPageMixin } from './WebPage.js';
 export interface ContactPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ContactPage: Factory<Schema.ContactPage>;
+  }
+}
+
 export function ContactPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ContactPage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ContactPageClass extends WebPageMixin(Resource) {
@@ -18,5 +24,4 @@ export function ContactPageMixin<Base extends rdfine.Constructor>(Resource: Base
   return ContactPageClass as any
 }
 ContactPageMixin.appliesTo = schema.ContactPage
-
-export const factory = (env: RdfineEnvironment) => createFactory<ContactPage>([WebPageMixin, ContactPageMixin], { types: [schema.ContactPage] }, env);
+ContactPageMixin.createFactory = (env: RdfineEnvironment) => createFactory<ContactPage>([WebPageMixin, ContactPageMixin], { types: [schema.ContactPage] }, env)

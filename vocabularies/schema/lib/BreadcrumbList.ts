@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ItemListMixin } from './ItemList.js';
 export interface BreadcrumbList<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ItemList<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    BreadcrumbList: Factory<Schema.BreadcrumbList>;
+  }
+}
+
 export function BreadcrumbListMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BreadcrumbList & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class BreadcrumbListClass extends ItemListMixin(Resource) {
@@ -18,5 +24,4 @@ export function BreadcrumbListMixin<Base extends rdfine.Constructor>(Resource: B
   return BreadcrumbListClass as any
 }
 BreadcrumbListMixin.appliesTo = schema.BreadcrumbList
-
-export const factory = (env: RdfineEnvironment) => createFactory<BreadcrumbList>([ItemListMixin, BreadcrumbListMixin], { types: [schema.BreadcrumbList] }, env);
+BreadcrumbListMixin.createFactory = (env: RdfineEnvironment) => createFactory<BreadcrumbList>([ItemListMixin, BreadcrumbListMixin], { types: [schema.BreadcrumbList] }, env)

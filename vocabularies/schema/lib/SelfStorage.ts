@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 export interface SelfStorage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    SelfStorage: Factory<Schema.SelfStorage>;
+  }
+}
+
 export function SelfStorageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SelfStorage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class SelfStorageClass extends LocalBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function SelfStorageMixin<Base extends rdfine.Constructor>(Resource: Base
   return SelfStorageClass as any
 }
 SelfStorageMixin.appliesTo = schema.SelfStorage
-
-export const factory = (env: RdfineEnvironment) => createFactory<SelfStorage>([LocalBusinessMixin, SelfStorageMixin], { types: [schema.SelfStorage] }, env);
+SelfStorageMixin.createFactory = (env: RdfineEnvironment) => createFactory<SelfStorage>([LocalBusinessMixin, SelfStorageMixin], { types: [schema.SelfStorage] }, env)

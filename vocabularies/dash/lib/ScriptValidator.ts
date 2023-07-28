@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ import { ValidatorMixin as ShaclValidatorMixin } from '@rdfine/shacl/lib/Validat
 export interface ScriptValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, Shacl.Validator<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    ScriptValidator: Factory<Dash.ScriptValidator>;
+  }
+}
+
 export function ScriptValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ScriptValidator & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class ScriptValidatorClass extends ShaclValidatorMixin(ScriptMixin(Resource)) {
@@ -20,5 +26,4 @@ export function ScriptValidatorMixin<Base extends rdfine.Constructor>(Resource: 
   return ScriptValidatorClass as any
 }
 ScriptValidatorMixin.appliesTo = dash.ScriptValidator
-
-export const factory = (env: RdfineEnvironment) => createFactory<ScriptValidator>([ShaclValidatorMixin, ScriptMixin, ScriptValidatorMixin], { types: [dash.ScriptValidator] }, env);
+ScriptValidatorMixin.createFactory = (env: RdfineEnvironment) => createFactory<ScriptValidator>([ShaclValidatorMixin, ScriptMixin, ScriptValidatorMixin], { types: [dash.ScriptValidator] }, env)

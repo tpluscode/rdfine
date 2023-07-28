@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ClipMixin } from './Clip.js';
 export interface VideoGameClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Clip<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    VideoGameClip: Factory<Schema.VideoGameClip>;
+  }
+}
+
 export function VideoGameClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VideoGameClip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class VideoGameClipClass extends ClipMixin(Resource) {
@@ -18,5 +24,4 @@ export function VideoGameClipMixin<Base extends rdfine.Constructor>(Resource: Ba
   return VideoGameClipClass as any
 }
 VideoGameClipMixin.appliesTo = schema.VideoGameClip
-
-export const factory = (env: RdfineEnvironment) => createFactory<VideoGameClip>([ClipMixin, VideoGameClipMixin], { types: [schema.VideoGameClip] }, env);
+VideoGameClipMixin.createFactory = (env: RdfineEnvironment) => createFactory<VideoGameClip>([ClipMixin, VideoGameClipMixin], { types: [schema.VideoGameClip] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { RoleMixin } from './Role.js';
 export interface Publisher<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Role<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ProvVocabulary {
+    Publisher: Factory<Prov.Publisher>;
+  }
+}
+
 export function PublisherMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Publisher & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class PublisherClass extends RoleMixin(Resource) {
@@ -18,5 +24,4 @@ export function PublisherMixin<Base extends rdfine.Constructor>(Resource: Base):
   return PublisherClass as any
 }
 PublisherMixin.appliesTo = prov.Publisher
-
-export const factory = (env: RdfineEnvironment) => createFactory<Publisher>([RoleMixin, PublisherMixin], { types: [prov.Publisher] }, env);
+PublisherMixin.createFactory = (env: RdfineEnvironment) => createFactory<Publisher>([RoleMixin, PublisherMixin], { types: [prov.Publisher] }, env)

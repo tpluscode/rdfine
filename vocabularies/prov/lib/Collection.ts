@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Collection<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   hadMember: Prov.Entity<D> | undefined;
 }
 
+declare global {
+  interface ProvVocabulary {
+    Collection: Factory<Prov.Collection>;
+  }
+}
+
 export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Collection & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class CollectionClass extends EntityMixin(Resource) {
@@ -21,5 +27,4 @@ export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base)
   return CollectionClass as any
 }
 CollectionMixin.appliesTo = prov.Collection
-
-export const factory = (env: RdfineEnvironment) => createFactory<Collection>([EntityMixin, CollectionMixin], { types: [prov.Collection] }, env);
+CollectionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Collection>([EntityMixin, CollectionMixin], { types: [prov.Collection] }, env)

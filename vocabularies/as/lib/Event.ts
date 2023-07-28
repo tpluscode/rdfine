@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ObjectMixin } from './Object.js';
 export interface Event<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface AsVocabulary {
+    Event: Factory<As.Event>;
+  }
+}
+
 export function EventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Event & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class EventClass extends ObjectMixin(Resource) {
@@ -18,5 +24,4 @@ export function EventMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return EventClass as any
 }
 EventMixin.appliesTo = as.Event
-
-export const factory = (env: RdfineEnvironment) => createFactory<Event>([ObjectMixin, EventMixin], { types: [as.Event] }, env);
+EventMixin.createFactory = (env: RdfineEnvironment) => createFactory<Event>([ObjectMixin, EventMixin], { types: [as.Event] }, env)

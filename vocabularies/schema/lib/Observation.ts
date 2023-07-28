@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface Observation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   measuredValue: RDF.Term | undefined;
   observationDate: Date | undefined;
   observedNode: Schema.StatisticalPopulation<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Observation: Factory<Schema.Observation>;
+  }
 }
 
 export function ObservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Observation & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function ObservationMixin<Base extends rdfine.Constructor>(Resource: Base
   return ObservationClass as any
 }
 ObservationMixin.appliesTo = schema.Observation
-
-export const factory = (env: RdfineEnvironment) => createFactory<Observation>([IntangibleMixin, ObservationMixin], { types: [schema.Observation] }, env);
+ObservationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Observation>([IntangibleMixin, ObservationMixin], { types: [schema.Observation] }, env)

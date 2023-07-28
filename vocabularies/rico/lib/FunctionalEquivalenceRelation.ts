@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface FunctionalEquivalenceRelation<D extends RDF.DatasetCore = RDF.D
   functionalEquivalenceRelationConnects: Rico.Instantiation<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    FunctionalEquivalenceRelation: Factory<Rico.FunctionalEquivalenceRelation>;
+  }
+}
+
 export function FunctionalEquivalenceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FunctionalEquivalenceRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class FunctionalEquivalenceRelationClass extends InstantiationToInstantiationRelationMixin(Resource) {
@@ -21,5 +27,4 @@ export function FunctionalEquivalenceRelationMixin<Base extends rdfine.Construct
   return FunctionalEquivalenceRelationClass as any
 }
 FunctionalEquivalenceRelationMixin.appliesTo = rico.FunctionalEquivalenceRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<FunctionalEquivalenceRelation>([InstantiationToInstantiationRelationMixin, FunctionalEquivalenceRelationMixin], { types: [rico.FunctionalEquivalenceRelation] }, env);
+FunctionalEquivalenceRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<FunctionalEquivalenceRelation>([InstantiationToInstantiationRelationMixin, FunctionalEquivalenceRelationMixin], { types: [rico.FunctionalEquivalenceRelation] }, env)

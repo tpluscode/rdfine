@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ExtentMixin } from './Extent.js';
 export interface RecordResourceExtent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Extent<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface RicoVocabulary {
+    RecordResourceExtent: Factory<Rico.RecordResourceExtent>;
+  }
+}
+
 export function RecordResourceExtentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordResourceExtent & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class RecordResourceExtentClass extends ExtentMixin(Resource) {
@@ -18,5 +24,4 @@ export function RecordResourceExtentMixin<Base extends rdfine.Constructor>(Resou
   return RecordResourceExtentClass as any
 }
 RecordResourceExtentMixin.appliesTo = rico.RecordResourceExtent
-
-export const factory = (env: RdfineEnvironment) => createFactory<RecordResourceExtent>([ExtentMixin, RecordResourceExtentMixin], { types: [rico.RecordResourceExtent] }, env);
+RecordResourceExtentMixin.createFactory = (env: RdfineEnvironment) => createFactory<RecordResourceExtent>([ExtentMixin, RecordResourceExtentMixin], { types: [rico.RecordResourceExtent] }, env)

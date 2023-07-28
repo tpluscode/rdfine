@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -18,6 +18,12 @@ export interface PriceSpecification<D extends RDF.DatasetCore = RDF.DatasetCore>
   validFrom: Date | undefined;
   validThrough: Date | undefined;
   valueAddedTaxIncluded: boolean | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    PriceSpecification: Factory<Schema.PriceSpecification>;
+  }
 }
 
 export function PriceSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PriceSpecification & RdfResourceCore> & Base {
@@ -45,5 +51,4 @@ export function PriceSpecificationMixin<Base extends rdfine.Constructor>(Resourc
   return PriceSpecificationClass as any
 }
 PriceSpecificationMixin.appliesTo = schema.PriceSpecification
-
-export const factory = (env: RdfineEnvironment) => createFactory<PriceSpecification>([StructuredValueMixin, PriceSpecificationMixin], { types: [schema.PriceSpecification] }, env);
+PriceSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<PriceSpecification>([StructuredValueMixin, PriceSpecificationMixin], { types: [schema.PriceSpecification] }, env)

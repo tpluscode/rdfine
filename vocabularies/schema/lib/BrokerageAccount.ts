@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { InvestmentOrDepositMixin } from './InvestmentOrDeposit.js';
 export interface BrokerageAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InvestmentOrDeposit<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    BrokerageAccount: Factory<Schema.BrokerageAccount>;
+  }
+}
+
 export function BrokerageAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BrokerageAccount & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class BrokerageAccountClass extends InvestmentOrDepositMixin(Resource) {
@@ -18,5 +24,4 @@ export function BrokerageAccountMixin<Base extends rdfine.Constructor>(Resource:
   return BrokerageAccountClass as any
 }
 BrokerageAccountMixin.appliesTo = schema.BrokerageAccount
-
-export const factory = (env: RdfineEnvironment) => createFactory<BrokerageAccount>([InvestmentOrDepositMixin, BrokerageAccountMixin], { types: [schema.BrokerageAccount] }, env);
+BrokerageAccountMixin.createFactory = (env: RdfineEnvironment) => createFactory<BrokerageAccount>([InvestmentOrDepositMixin, BrokerageAccountMixin], { types: [schema.BrokerageAccount] }, env)

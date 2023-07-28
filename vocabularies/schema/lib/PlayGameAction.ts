@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface PlayGameAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   gameAvailabilityTypeTerm: Schema.GameAvailabilityEnumeration | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    PlayGameAction: Factory<Schema.PlayGameAction>;
+  }
+}
+
 export function PlayGameActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PlayGameAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class PlayGameActionClass extends ConsumeActionMixin(Resource) {
@@ -24,5 +30,4 @@ export function PlayGameActionMixin<Base extends rdfine.Constructor>(Resource: B
   return PlayGameActionClass as any
 }
 PlayGameActionMixin.appliesTo = schema.PlayGameAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<PlayGameAction>([ConsumeActionMixin, PlayGameActionMixin], { types: [schema.PlayGameAction] }, env);
+PlayGameActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<PlayGameAction>([ConsumeActionMixin, PlayGameActionMixin], { types: [schema.PlayGameAction] }, env)

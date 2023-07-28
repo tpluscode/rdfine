@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { MedicalTherapyMixin } from './MedicalTherapy.js';
 export interface OccupationalTherapy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalTherapy<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    OccupationalTherapy: Factory<Schema.OccupationalTherapy>;
+  }
+}
+
 export function OccupationalTherapyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OccupationalTherapy & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class OccupationalTherapyClass extends MedicalTherapyMixin(Resource) {
@@ -18,5 +24,4 @@ export function OccupationalTherapyMixin<Base extends rdfine.Constructor>(Resour
   return OccupationalTherapyClass as any
 }
 OccupationalTherapyMixin.appliesTo = schema.OccupationalTherapy
-
-export const factory = (env: RdfineEnvironment) => createFactory<OccupationalTherapy>([MedicalTherapyMixin, OccupationalTherapyMixin], { types: [schema.OccupationalTherapy] }, env);
+OccupationalTherapyMixin.createFactory = (env: RdfineEnvironment) => createFactory<OccupationalTherapy>([MedicalTherapyMixin, OccupationalTherapyMixin], { types: [schema.OccupationalTherapy] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   qualifiedDelegation: Prov.Delegation<D> | undefined;
   qualifiedInfluence: Prov.Influence<D> | undefined;
   wasInfluencedBy: Prov.Activity<D> | Prov.Agent<D> | Prov.Entity<D> | undefined;
+}
+
+declare global {
+  interface ProvVocabulary {
+    Agent: Factory<Prov.Agent>;
+  }
 }
 
 export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Agent & RdfResourceCore> & Base {
@@ -32,5 +38,4 @@ export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return AgentClass as any
 }
 AgentMixin.appliesTo = prov.Agent
-
-export const factory = (env: RdfineEnvironment) => createFactory<Agent>([AgentMixin], { types: [prov.Agent] }, env);
+AgentMixin.createFactory = (env: RdfineEnvironment) => createFactory<Agent>([AgentMixin], { types: [prov.Agent] }, env)

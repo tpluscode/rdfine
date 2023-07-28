@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Type<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.
   isOrWasCategoryOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasCategoryOfSomeMembersOf: Rico.RecordSet<D> | undefined;
   typeIsSourceOfTypeRelation: Rico.TypeRelation<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    Type: Factory<Rico.Type>;
+  }
 }
 
 export function TypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Type & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function TypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return TypeClass as any
 }
 TypeMixin.appliesTo = rico.Type
-
-export const factory = (env: RdfineEnvironment) => createFactory<Type>([ConceptMixin, TypeMixin], { types: [rico.Type] }, env);
+TypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<Type>([ConceptMixin, TypeMixin], { types: [rico.Type] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { RuleMixin } from './Rule.js';
 export interface JSRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, Sh.Rule<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ShVocabulary {
+    JSRule: Factory<Sh.JSRule>;
+  }
+}
+
 export function JSRuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JSRule & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class JSRuleClass extends RuleMixin(JSExecutableMixin(Resource)) {
@@ -19,5 +25,4 @@ export function JSRuleMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return JSRuleClass as any
 }
 JSRuleMixin.appliesTo = sh.JSRule
-
-export const factory = (env: RdfineEnvironment) => createFactory<JSRule>([RuleMixin, JSExecutableMixin, JSRuleMixin], { types: [sh.JSRule] }, env);
+JSRuleMixin.createFactory = (env: RdfineEnvironment) => createFactory<JSRule>([RuleMixin, JSExecutableMixin, JSRuleMixin], { types: [sh.JSRule] }, env)

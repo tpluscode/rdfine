@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,6 +15,12 @@ export interface Container<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   'last_item_date': RDF.Literal | undefined;
   'num_items': number | undefined;
   'parent_of': Sioc.Container<D> | undefined;
+}
+
+declare global {
+  interface SiocVocabulary {
+    Container: Factory<Sioc.Container>;
+  }
 }
 
 export function ContainerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Container & RdfResourceCore> & Base {
@@ -38,5 +44,4 @@ export function ContainerMixin<Base extends rdfine.Constructor>(Resource: Base):
   return ContainerClass as any
 }
 ContainerMixin.appliesTo = sioc.Container
-
-export const factory = (env: RdfineEnvironment) => createFactory<Container>([ContainerMixin], { types: [sioc.Container] }, env);
+ContainerMixin.createFactory = (env: RdfineEnvironment) => createFactory<Container>([ContainerMixin], { types: [sioc.Container] }, env)

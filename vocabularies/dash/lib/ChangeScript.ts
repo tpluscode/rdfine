@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ScriptMixin } from './Script.js';
 export interface ChangeScript<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    ChangeScript: Factory<Dash.ChangeScript>;
+  }
+}
+
 export function ChangeScriptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ChangeScript & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class ChangeScriptClass extends ScriptMixin(Resource) {
@@ -18,5 +24,4 @@ export function ChangeScriptMixin<Base extends rdfine.Constructor>(Resource: Bas
   return ChangeScriptClass as any
 }
 ChangeScriptMixin.appliesTo = dash.ChangeScript
-
-export const factory = (env: RdfineEnvironment) => createFactory<ChangeScript>([ScriptMixin, ChangeScriptMixin], { types: [dash.ChangeScript] }, env);
+ChangeScriptMixin.createFactory = (env: RdfineEnvironment) => createFactory<ChangeScript>([ScriptMixin, ChangeScriptMixin], { types: [dash.ChangeScript] }, env)

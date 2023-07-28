@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { AssessActionMixin } from './AssessAction.js';
 export interface ReactAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AssessAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ReactAction: Factory<Schema.ReactAction>;
+  }
+}
+
 export function ReactActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReactAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ReactActionClass extends AssessActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function ReactActionMixin<Base extends rdfine.Constructor>(Resource: Base
   return ReactActionClass as any
 }
 ReactActionMixin.appliesTo = schema.ReactAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<ReactAction>([AssessActionMixin, ReactActionMixin], { types: [schema.ReactAction] }, env);
+ReactActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<ReactAction>([AssessActionMixin, ReactActionMixin], { types: [schema.ReactAction] }, env)

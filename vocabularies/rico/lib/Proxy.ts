@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Proxy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico
   proxyIn: Rico.RecordSet<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    Proxy: Factory<Rico.Proxy>;
+  }
+}
+
 export function ProxyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Proxy & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class ProxyClass extends ConceptMixin(Resource) {
@@ -24,5 +30,4 @@ export function ProxyMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return ProxyClass as any
 }
 ProxyMixin.appliesTo = rico.Proxy
-
-export const factory = (env: RdfineEnvironment) => createFactory<Proxy>([ConceptMixin, ProxyMixin], { types: [rico.Proxy] }, env);
+ProxyMixin.createFactory = (env: RdfineEnvironment) => createFactory<Proxy>([ConceptMixin, ProxyMixin], { types: [rico.Proxy] }, env)

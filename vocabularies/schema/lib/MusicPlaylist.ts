@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface MusicPlaylist<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   numTracks: number | undefined;
   track: Schema.ItemList<D> | Schema.MusicRecording<D> | undefined;
   tracks: Schema.MusicRecording<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MusicPlaylist: Factory<Schema.MusicPlaylist>;
+  }
 }
 
 export function MusicPlaylistMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MusicPlaylist & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function MusicPlaylistMixin<Base extends rdfine.Constructor>(Resource: Ba
   return MusicPlaylistClass as any
 }
 MusicPlaylistMixin.appliesTo = schema.MusicPlaylist
-
-export const factory = (env: RdfineEnvironment) => createFactory<MusicPlaylist>([CreativeWorkMixin, MusicPlaylistMixin], { types: [schema.MusicPlaylist] }, env);
+MusicPlaylistMixin.createFactory = (env: RdfineEnvironment) => createFactory<MusicPlaylist>([CreativeWorkMixin, MusicPlaylistMixin], { types: [schema.MusicPlaylist] }, env)

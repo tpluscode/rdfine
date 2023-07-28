@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { WebPageMixin } from './WebPage.js';
 export interface SearchResultsPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    SearchResultsPage: Factory<Schema.SearchResultsPage>;
+  }
+}
+
 export function SearchResultsPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SearchResultsPage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class SearchResultsPageClass extends WebPageMixin(Resource) {
@@ -18,5 +24,4 @@ export function SearchResultsPageMixin<Base extends rdfine.Constructor>(Resource
   return SearchResultsPageClass as any
 }
 SearchResultsPageMixin.appliesTo = schema.SearchResultsPage
-
-export const factory = (env: RdfineEnvironment) => createFactory<SearchResultsPage>([WebPageMixin, SearchResultsPageMixin], { types: [schema.SearchResultsPage] }, env);
+SearchResultsPageMixin.createFactory = (env: RdfineEnvironment) => createFactory<SearchResultsPage>([WebPageMixin, SearchResultsPageMixin], { types: [schema.SearchResultsPage] }, env)

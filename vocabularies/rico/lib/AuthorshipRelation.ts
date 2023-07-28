@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface AuthorshipRelation<D extends RDF.DatasetCore = RDF.DatasetCore>
   authorshipRelationHasTarget: Rico.Group<D> | Rico.Person<D> | Rico.Position<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    AuthorshipRelation: Factory<Rico.AuthorshipRelation>;
+  }
+}
+
 export function AuthorshipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AuthorshipRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class AuthorshipRelationClass extends CreationRelationMixin(Resource) {
@@ -24,5 +30,4 @@ export function AuthorshipRelationMixin<Base extends rdfine.Constructor>(Resourc
   return AuthorshipRelationClass as any
 }
 AuthorshipRelationMixin.appliesTo = rico.AuthorshipRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<AuthorshipRelation>([CreationRelationMixin, AuthorshipRelationMixin], { types: [rico.AuthorshipRelation] }, env);
+AuthorshipRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<AuthorshipRelation>([CreationRelationMixin, AuthorshipRelationMixin], { types: [rico.AuthorshipRelation] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface VoteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   candidate: Schema.Person<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    VoteAction: Factory<Schema.VoteAction>;
+  }
+}
+
 export function VoteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VoteAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class VoteActionClass extends ChooseActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function VoteActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   return VoteActionClass as any
 }
 VoteActionMixin.appliesTo = schema.VoteAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<VoteAction>([ChooseActionMixin, VoteActionMixin], { types: [schema.VoteAction] }, env);
+VoteActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<VoteAction>([ChooseActionMixin, VoteActionMixin], { types: [schema.VoteAction] }, env)

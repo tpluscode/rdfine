@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { GovernmentBuildingMixin } from './GovernmentBuilding.js';
 export interface Courthouse<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentBuilding<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Courthouse: Factory<Schema.Courthouse>;
+  }
+}
+
 export function CourthouseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Courthouse & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class CourthouseClass extends GovernmentBuildingMixin(Resource) {
@@ -18,5 +24,4 @@ export function CourthouseMixin<Base extends rdfine.Constructor>(Resource: Base)
   return CourthouseClass as any
 }
 CourthouseMixin.appliesTo = schema.Courthouse
-
-export const factory = (env: RdfineEnvironment) => createFactory<Courthouse>([GovernmentBuildingMixin, CourthouseMixin], { types: [schema.Courthouse] }, env);
+CourthouseMixin.createFactory = (env: RdfineEnvironment) => createFactory<Courthouse>([GovernmentBuildingMixin, CourthouseMixin], { types: [schema.Courthouse] }, env)

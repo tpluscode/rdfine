@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ActivityMixin } from './Activity.js';
 export interface Like<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface AsVocabulary {
+    Like: Factory<As.Like>;
+  }
+}
+
 export function LikeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Like & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class LikeClass extends ActivityMixin(Resource) {
@@ -18,5 +24,4 @@ export function LikeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return LikeClass as any
 }
 LikeMixin.appliesTo = as.Like
-
-export const factory = (env: RdfineEnvironment) => createFactory<Like>([ActivityMixin, LikeMixin], { types: [as.Like] }, env);
+LikeMixin.createFactory = (env: RdfineEnvironment) => createFactory<Like>([ActivityMixin, LikeMixin], { types: [as.Like] }, env)

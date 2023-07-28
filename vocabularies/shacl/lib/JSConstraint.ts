@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { JSExecutableMixin } from './JSExecutable.js';
 export interface JSConstraint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ShVocabulary {
+    JSConstraint: Factory<Sh.JSConstraint>;
+  }
+}
+
 export function JSConstraintMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JSConstraint & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class JSConstraintClass extends JSExecutableMixin(Resource) {
@@ -18,5 +24,4 @@ export function JSConstraintMixin<Base extends rdfine.Constructor>(Resource: Bas
   return JSConstraintClass as any
 }
 JSConstraintMixin.appliesTo = sh.JSConstraint
-
-export const factory = (env: RdfineEnvironment) => createFactory<JSConstraint>([JSExecutableMixin, JSConstraintMixin], { types: [sh.JSConstraint] }, env);
+JSConstraintMixin.createFactory = (env: RdfineEnvironment) => createFactory<JSConstraint>([JSExecutableMixin, JSConstraintMixin], { types: [sh.JSConstraint] }, env)

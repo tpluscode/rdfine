@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Profile<D extends RDF.DatasetCore = RDF.DatasetCore> extends As
   describes: As.Object<D> | undefined;
 }
 
+declare global {
+  interface AsVocabulary {
+    Profile: Factory<As.Profile>;
+  }
+}
+
 export function ProfileMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Profile & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class ProfileClass extends ObjectMixin(Resource) {
@@ -21,5 +27,4 @@ export function ProfileMixin<Base extends rdfine.Constructor>(Resource: Base): r
   return ProfileClass as any
 }
 ProfileMixin.appliesTo = as.Profile
-
-export const factory = (env: RdfineEnvironment) => createFactory<Profile>([ObjectMixin, ProfileMixin], { types: [as.Profile] }, env);
+ProfileMixin.createFactory = (env: RdfineEnvironment) => createFactory<Profile>([ObjectMixin, ProfileMixin], { types: [as.Profile] }, env)

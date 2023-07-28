@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -16,6 +16,12 @@ export interface DeliveryChargeSpecification<D extends RDF.DatasetCore = RDF.Dat
   eligibleRegionLiteral: string | undefined;
   ineligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   ineligibleRegionLiteral: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DeliveryChargeSpecification: Factory<Schema.DeliveryChargeSpecification>;
+  }
 }
 
 export function DeliveryChargeSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DeliveryChargeSpecification & RdfResourceCore> & Base {
@@ -39,5 +45,4 @@ export function DeliveryChargeSpecificationMixin<Base extends rdfine.Constructor
   return DeliveryChargeSpecificationClass as any
 }
 DeliveryChargeSpecificationMixin.appliesTo = schema.DeliveryChargeSpecification
-
-export const factory = (env: RdfineEnvironment) => createFactory<DeliveryChargeSpecification>([PriceSpecificationMixin, DeliveryChargeSpecificationMixin], { types: [schema.DeliveryChargeSpecification] }, env);
+DeliveryChargeSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<DeliveryChargeSpecification>([PriceSpecificationMixin, DeliveryChargeSpecificationMixin], { types: [schema.DeliveryChargeSpecification] }, env)

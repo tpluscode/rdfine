@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Map<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema
   mapType: Schema.MapCategoryType | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Map: Factory<Schema.Map>;
+  }
+}
+
 export function MapMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Map & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MapClass extends CreativeWorkMixin(Resource) {
@@ -21,5 +27,4 @@ export function MapMixin<Base extends rdfine.Constructor>(Resource: Base): rdfin
   return MapClass as any
 }
 MapMixin.appliesTo = schema.Map
-
-export const factory = (env: RdfineEnvironment) => createFactory<Map>([CreativeWorkMixin, MapMixin], { types: [schema.Map] }, env);
+MapMixin.createFactory = (env: RdfineEnvironment) => createFactory<Map>([CreativeWorkMixin, MapMixin], { types: [schema.Map] }, env)

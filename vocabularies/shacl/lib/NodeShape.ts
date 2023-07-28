@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface NodeShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   ignoredProperties: Array<RDF.Term>;
 }
 
+declare global {
+  interface ShVocabulary {
+    NodeShape: Factory<Sh.NodeShape>;
+  }
+}
+
 export function NodeShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NodeShape & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class NodeShapeClass extends ShapeMixin(Resource) {
@@ -21,5 +27,4 @@ export function NodeShapeMixin<Base extends rdfine.Constructor>(Resource: Base):
   return NodeShapeClass as any
 }
 NodeShapeMixin.appliesTo = sh.NodeShape
-
-export const factory = (env: RdfineEnvironment) => createFactory<NodeShape>([ShapeMixin, NodeShapeMixin], { types: [sh.NodeShape] }, env);
+NodeShapeMixin.createFactory = (env: RdfineEnvironment) => createFactory<NodeShape>([ShapeMixin, NodeShapeMixin], { types: [sh.NodeShape] }, env)

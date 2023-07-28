@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 export interface DryCleaningOrLaundry<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    DryCleaningOrLaundry: Factory<Schema.DryCleaningOrLaundry>;
+  }
+}
+
 export function DryCleaningOrLaundryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DryCleaningOrLaundry & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class DryCleaningOrLaundryClass extends LocalBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function DryCleaningOrLaundryMixin<Base extends rdfine.Constructor>(Resou
   return DryCleaningOrLaundryClass as any
 }
 DryCleaningOrLaundryMixin.appliesTo = schema.DryCleaningOrLaundry
-
-export const factory = (env: RdfineEnvironment) => createFactory<DryCleaningOrLaundry>([LocalBusinessMixin, DryCleaningOrLaundryMixin], { types: [schema.DryCleaningOrLaundry] }, env);
+DryCleaningOrLaundryMixin.createFactory = (env: RdfineEnvironment) => createFactory<DryCleaningOrLaundry>([LocalBusinessMixin, DryCleaningOrLaundryMixin], { types: [schema.DryCleaningOrLaundry] }, env)

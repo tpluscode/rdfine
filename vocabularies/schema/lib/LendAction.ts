@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface LendAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   borrower: Schema.Person<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    LendAction: Factory<Schema.LendAction>;
+  }
+}
+
 export function LendActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LendAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class LendActionClass extends TransferActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function LendActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   return LendActionClass as any
 }
 LendActionMixin.appliesTo = schema.LendAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<LendAction>([TransferActionMixin, LendActionMixin], { types: [schema.LendAction] }, env);
+LendActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<LendAction>([TransferActionMixin, LendActionMixin], { types: [schema.LendAction] }, env)

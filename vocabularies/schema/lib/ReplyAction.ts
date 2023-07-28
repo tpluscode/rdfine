@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface ReplyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   resultComment: Schema.Comment<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ReplyAction: Factory<Schema.ReplyAction>;
+  }
+}
+
 export function ReplyActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReplyAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ReplyActionClass extends CommunicateActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function ReplyActionMixin<Base extends rdfine.Constructor>(Resource: Base
   return ReplyActionClass as any
 }
 ReplyActionMixin.appliesTo = schema.ReplyAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<ReplyAction>([CommunicateActionMixin, ReplyActionMixin], { types: [schema.ReplyAction] }, env);
+ReplyActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<ReplyAction>([CommunicateActionMixin, ReplyActionMixin], { types: [schema.ReplyAction] }, env)

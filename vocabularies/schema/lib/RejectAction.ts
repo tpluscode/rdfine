@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { AllocateActionMixin } from './AllocateAction.js';
 export interface RejectAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AllocateAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    RejectAction: Factory<Schema.RejectAction>;
+  }
+}
+
 export function RejectActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RejectAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class RejectActionClass extends AllocateActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function RejectActionMixin<Base extends rdfine.Constructor>(Resource: Bas
   return RejectActionClass as any
 }
 RejectActionMixin.appliesTo = schema.RejectAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<RejectAction>([AllocateActionMixin, RejectActionMixin], { types: [schema.RejectAction] }, env);
+RejectActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<RejectAction>([AllocateActionMixin, RejectActionMixin], { types: [schema.RejectAction] }, env)

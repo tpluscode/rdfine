@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ConsumeActionMixin } from './ConsumeAction.js';
 export interface ReadAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ConsumeAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ReadAction: Factory<Schema.ReadAction>;
+  }
+}
+
 export function ReadActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReadAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ReadActionClass extends ConsumeActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function ReadActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   return ReadActionClass as any
 }
 ReadActionMixin.appliesTo = schema.ReadAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<ReadAction>([ConsumeActionMixin, ReadActionMixin], { types: [schema.ReadAction] }, env);
+ReadActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<ReadAction>([ConsumeActionMixin, ReadActionMixin], { types: [schema.ReadAction] }, env)

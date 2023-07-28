@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -19,6 +19,12 @@ export interface LodgingBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   numberOfRoomsLiteral: number | undefined;
   petsAllowed: boolean | string | undefined;
   starRating: Schema.Rating<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    LodgingBusiness: Factory<Schema.LodgingBusiness>;
+  }
 }
 
 export function LodgingBusinessMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LodgingBusiness & RdfResourceCore> & Base {
@@ -48,5 +54,4 @@ export function LodgingBusinessMixin<Base extends rdfine.Constructor>(Resource: 
   return LodgingBusinessClass as any
 }
 LodgingBusinessMixin.appliesTo = schema.LodgingBusiness
-
-export const factory = (env: RdfineEnvironment) => createFactory<LodgingBusiness>([LocalBusinessMixin, LodgingBusinessMixin], { types: [schema.LodgingBusiness] }, env);
+LodgingBusinessMixin.createFactory = (env: RdfineEnvironment) => createFactory<LodgingBusiness>([LocalBusinessMixin, LodgingBusinessMixin], { types: [schema.LodgingBusiness] }, env)

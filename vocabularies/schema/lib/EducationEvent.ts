@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface EducationEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   educationalLevel: string | undefined;
   educationalLevelTerm: RDF.NamedNode | undefined;
   teaches: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    EducationEvent: Factory<Schema.EducationEvent>;
+  }
 }
 
 export function EducationEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EducationEvent & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function EducationEventMixin<Base extends rdfine.Constructor>(Resource: B
   return EducationEventClass as any
 }
 EducationEventMixin.appliesTo = schema.EducationEvent
-
-export const factory = (env: RdfineEnvironment) => createFactory<EducationEvent>([EventMixin, EducationEventMixin], { types: [schema.EducationEvent] }, env);
+EducationEventMixin.createFactory = (env: RdfineEnvironment) => createFactory<EducationEvent>([EventMixin, EducationEventMixin], { types: [schema.EducationEvent] }, env)

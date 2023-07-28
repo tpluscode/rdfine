@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { MedicalOrganizationMixin } from './MedicalOrganization.js';
 export interface VeterinaryCare<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalOrganization<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    VeterinaryCare: Factory<Schema.VeterinaryCare>;
+  }
+}
+
 export function VeterinaryCareMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VeterinaryCare & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class VeterinaryCareClass extends MedicalOrganizationMixin(Resource) {
@@ -18,5 +24,4 @@ export function VeterinaryCareMixin<Base extends rdfine.Constructor>(Resource: B
   return VeterinaryCareClass as any
 }
 VeterinaryCareMixin.appliesTo = schema.VeterinaryCare
-
-export const factory = (env: RdfineEnvironment) => createFactory<VeterinaryCare>([MedicalOrganizationMixin, VeterinaryCareMixin], { types: [schema.VeterinaryCare] }, env);
+VeterinaryCareMixin.createFactory = (env: RdfineEnvironment) => createFactory<VeterinaryCare>([MedicalOrganizationMixin, VeterinaryCareMixin], { types: [schema.VeterinaryCare] }, env)

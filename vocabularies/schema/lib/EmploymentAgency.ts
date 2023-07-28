@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 export interface EmploymentAgency<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    EmploymentAgency: Factory<Schema.EmploymentAgency>;
+  }
+}
+
 export function EmploymentAgencyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EmploymentAgency & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class EmploymentAgencyClass extends LocalBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function EmploymentAgencyMixin<Base extends rdfine.Constructor>(Resource:
   return EmploymentAgencyClass as any
 }
 EmploymentAgencyMixin.appliesTo = schema.EmploymentAgency
-
-export const factory = (env: RdfineEnvironment) => createFactory<EmploymentAgency>([LocalBusinessMixin, EmploymentAgencyMixin], { types: [schema.EmploymentAgency] }, env);
+EmploymentAgencyMixin.createFactory = (env: RdfineEnvironment) => createFactory<EmploymentAgency>([LocalBusinessMixin, EmploymentAgencyMixin], { types: [schema.EmploymentAgency] }, env)

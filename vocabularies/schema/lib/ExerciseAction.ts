@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -22,6 +22,12 @@ export interface ExerciseAction<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   sportsEvent: Schema.SportsEvent<D> | undefined;
   sportsTeam: Schema.SportsTeam<D> | undefined;
   toLocation: Schema.Place<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ExerciseAction: Factory<Schema.ExerciseAction>;
+  }
 }
 
 export function ExerciseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ExerciseAction & RdfResourceCore> & Base {
@@ -57,5 +63,4 @@ export function ExerciseActionMixin<Base extends rdfine.Constructor>(Resource: B
   return ExerciseActionClass as any
 }
 ExerciseActionMixin.appliesTo = schema.ExerciseAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<ExerciseAction>([PlayActionMixin, ExerciseActionMixin], { types: [schema.ExerciseAction] }, env);
+ExerciseActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<ExerciseAction>([PlayActionMixin, ExerciseActionMixin], { types: [schema.ExerciseAction] }, env)

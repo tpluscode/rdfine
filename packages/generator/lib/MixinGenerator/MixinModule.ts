@@ -1,4 +1,4 @@
-import { SourceFile, VariableDeclarationKind } from 'ts-morph'
+import { ModuleDeclarationKind, SourceFile, StructureKind, VariableDeclarationKind } from 'ts-morph'
 import { GraphPointer } from 'clownface'
 import { Context, GeneratedModule, WriteModule } from '../index.js'
 import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types/index.js'
@@ -19,9 +19,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     this.properties = properties
   }
 
-  writeModule(params: WriteModule) {
-    const { project, types, context, indexModule, allGenerators } = params
-
+  writeModule({ project, types, context, indexModule, allGenerators }: WriteModule) {
     context.log.debug(`Generating mixin ${this.type.qualifiedName}`)
 
     const mixinFile = project.createSourceFile(`${this.type.module}.ts`, {}, { overwrite: true })
@@ -30,6 +28,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
 
     const mixinName = this.type.mixinName
     const interfaceDeclaration = this.createInterface(mixinFile)
+    this.augmentFactoryInterface(mixinFile, context)
     const classDeclaration = this.createMixinFunction(mixinFile, allGenerators, context)
 
     const propertyWriter = new PropertyWriter({
@@ -140,7 +139,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       moduleSpecifier: '@tpluscode/rdfine',
     })
     mixinFile.addImportDeclaration({
-      namedImports: ['createFactory'],
+      namedImports: ['createFactory', 'Factory'],
       moduleSpecifier: '@tpluscode/rdfine/factory',
     })
     mixinFile.addImportDeclaration({
@@ -273,6 +272,24 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     mixinFile.addImportDeclaration({
       namedImports: [`${module.type.localName}MixinEx`],
       moduleSpecifier: `../extensions/${module.extended.prefix}/${module.type.localName}.js`,
+    })
+  }
+
+  private augmentFactoryInterface(mixinFile: SourceFile, context: Context) {
+    const global = mixinFile.addModule({
+      name: 'global',
+      kind: StructureKind.Module,
+      declarationKind: ModuleDeclarationKind.Global,
+      hasDeclareKeyword: true,
+    })
+
+    global.addInterface({
+      name: `${context.defaultExport}Vocabulary`,
+      properties: [{
+        kind: StructureKind.PropertySignature,
+        name: this.type.localName,
+        type: `Factory<${context.defaultExport}.${this.type.localName}>`,
+      }],
     })
   }
 }

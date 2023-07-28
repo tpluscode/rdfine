@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -22,6 +22,12 @@ export interface ContactPoint<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   productSupportedLiteral: string | undefined;
   serviceArea: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
   telephone: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ContactPoint: Factory<Schema.ContactPoint>;
+  }
 }
 
 export function ContactPointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ContactPoint & RdfResourceCore> & Base {
@@ -57,5 +63,4 @@ export function ContactPointMixin<Base extends rdfine.Constructor>(Resource: Bas
   return ContactPointClass as any
 }
 ContactPointMixin.appliesTo = schema.ContactPoint
-
-export const factory = (env: RdfineEnvironment) => createFactory<ContactPoint>([StructuredValueMixin, ContactPointMixin], { types: [schema.ContactPoint] }, env);
+ContactPointMixin.createFactory = (env: RdfineEnvironment) => createFactory<ContactPoint>([StructuredValueMixin, ContactPointMixin], { types: [schema.ContactPoint] }, env)

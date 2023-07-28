@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Derivation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   hadActivity: Prov.Activity<D> | undefined;
   hadGeneration: Prov.Generation<D> | undefined;
   hadUsage: Prov.Usage<D> | undefined;
+}
+
+declare global {
+  interface ProvVocabulary {
+    Derivation: Factory<Prov.Derivation>;
+  }
 }
 
 export function DerivationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Derivation & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function DerivationMixin<Base extends rdfine.Constructor>(Resource: Base)
   return DerivationClass as any
 }
 DerivationMixin.appliesTo = prov.Derivation
-
-export const factory = (env: RdfineEnvironment) => createFactory<Derivation>([EntityInfluenceMixin, DerivationMixin], { types: [prov.Derivation] }, env);
+DerivationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Derivation>([EntityInfluenceMixin, DerivationMixin], { types: [prov.Derivation] }, env)

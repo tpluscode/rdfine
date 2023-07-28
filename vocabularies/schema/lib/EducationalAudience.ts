@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface EducationalAudience<D extends RDF.DatasetCore = RDF.DatasetCore
   educationalRole: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    EducationalAudience: Factory<Schema.EducationalAudience>;
+  }
+}
+
 export function EducationalAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EducationalAudience & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class EducationalAudienceClass extends AudienceMixin(Resource) {
@@ -21,5 +27,4 @@ export function EducationalAudienceMixin<Base extends rdfine.Constructor>(Resour
   return EducationalAudienceClass as any
 }
 EducationalAudienceMixin.appliesTo = schema.EducationalAudience
-
-export const factory = (env: RdfineEnvironment) => createFactory<EducationalAudience>([AudienceMixin, EducationalAudienceMixin], { types: [schema.EducationalAudience] }, env);
+EducationalAudienceMixin.createFactory = (env: RdfineEnvironment) => createFactory<EducationalAudience>([AudienceMixin, EducationalAudienceMixin], { types: [schema.EducationalAudience] }, env)

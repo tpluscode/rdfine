@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -17,6 +17,12 @@ export interface MedicalProcedure<D extends RDF.DatasetCore = RDF.DatasetCore> e
   procedureType: Schema.MedicalProcedureType | undefined;
   status: string | undefined;
   statusTerm: Schema.EventStatusType | Schema.MedicalStudyStatus | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MedicalProcedure: Factory<Schema.MedicalProcedure>;
+  }
 }
 
 export function MedicalProcedureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalProcedure & RdfResourceCore> & Base {
@@ -42,5 +48,4 @@ export function MedicalProcedureMixin<Base extends rdfine.Constructor>(Resource:
   return MedicalProcedureClass as any
 }
 MedicalProcedureMixin.appliesTo = schema.MedicalProcedure
-
-export const factory = (env: RdfineEnvironment) => createFactory<MedicalProcedure>([MedicalEntityMixin, MedicalProcedureMixin], { types: [schema.MedicalProcedure] }, env);
+MedicalProcedureMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalProcedure>([MedicalEntityMixin, MedicalProcedureMixin], { types: [schema.MedicalProcedure] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { RoomMixin } from './Room.js';
 export interface MeetingRoom<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Room<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MeetingRoom: Factory<Schema.MeetingRoom>;
+  }
+}
+
 export function MeetingRoomMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MeetingRoom & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MeetingRoomClass extends RoomMixin(Resource) {
@@ -18,5 +24,4 @@ export function MeetingRoomMixin<Base extends rdfine.Constructor>(Resource: Base
   return MeetingRoomClass as any
 }
 MeetingRoomMixin.appliesTo = schema.MeetingRoom
-
-export const factory = (env: RdfineEnvironment) => createFactory<MeetingRoom>([RoomMixin, MeetingRoomMixin], { types: [schema.MeetingRoom] }, env);
+MeetingRoomMixin.createFactory = (env: RdfineEnvironment) => createFactory<MeetingRoom>([RoomMixin, MeetingRoomMixin], { types: [schema.MeetingRoom] }, env)

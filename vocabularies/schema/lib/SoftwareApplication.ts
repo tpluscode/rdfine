@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -41,6 +41,12 @@ export interface SoftwareApplication<D extends RDF.DatasetCore = RDF.DatasetCore
   storageRequirements: string | undefined;
   storageRequirementsTerm: RDF.NamedNode | undefined;
   supportingData: Schema.DataFeed<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    SoftwareApplication: Factory<Schema.SoftwareApplication>;
+  }
 }
 
 export function SoftwareApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SoftwareApplication & RdfResourceCore> & Base {
@@ -114,5 +120,4 @@ export function SoftwareApplicationMixin<Base extends rdfine.Constructor>(Resour
   return SoftwareApplicationClass as any
 }
 SoftwareApplicationMixin.appliesTo = schema.SoftwareApplication
-
-export const factory = (env: RdfineEnvironment) => createFactory<SoftwareApplication>([CreativeWorkMixin, SoftwareApplicationMixin], { types: [schema.SoftwareApplication] }, env);
+SoftwareApplicationMixin.createFactory = (env: RdfineEnvironment) => createFactory<SoftwareApplication>([CreativeWorkMixin, SoftwareApplicationMixin], { types: [schema.SoftwareApplication] }, env)

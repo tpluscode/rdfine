@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { FindActionMixin } from './FindAction.js';
 export interface DiscoverAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FindAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    DiscoverAction: Factory<Schema.DiscoverAction>;
+  }
+}
+
 export function DiscoverActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DiscoverAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class DiscoverActionClass extends FindActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function DiscoverActionMixin<Base extends rdfine.Constructor>(Resource: B
   return DiscoverActionClass as any
 }
 DiscoverActionMixin.appliesTo = schema.DiscoverAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<DiscoverAction>([FindActionMixin, DiscoverActionMixin], { types: [schema.DiscoverAction] }, env);
+DiscoverActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<DiscoverAction>([FindActionMixin, DiscoverActionMixin], { types: [schema.DiscoverAction] }, env)

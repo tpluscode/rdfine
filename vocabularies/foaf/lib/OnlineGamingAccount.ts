@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { OnlineAccountMixin } from './OnlineAccount.js';
 export interface OnlineGamingAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.OnlineAccount<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface FoafVocabulary {
+    OnlineGamingAccount: Factory<Foaf.OnlineGamingAccount>;
+  }
+}
+
 export function OnlineGamingAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OnlineGamingAccount & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
   class OnlineGamingAccountClass extends OnlineAccountMixin(Resource) {
@@ -18,5 +24,4 @@ export function OnlineGamingAccountMixin<Base extends rdfine.Constructor>(Resour
   return OnlineGamingAccountClass as any
 }
 OnlineGamingAccountMixin.appliesTo = foaf.OnlineGamingAccount
-
-export const factory = (env: RdfineEnvironment) => createFactory<OnlineGamingAccount>([OnlineAccountMixin, OnlineGamingAccountMixin], { types: [foaf.OnlineGamingAccount] }, env);
+OnlineGamingAccountMixin.createFactory = (env: RdfineEnvironment) => createFactory<OnlineGamingAccount>([OnlineAccountMixin, OnlineGamingAccountMixin], { types: [foaf.OnlineGamingAccount] }, env)

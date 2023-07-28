@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,6 +10,12 @@ import type * as As from '../index.js';
 export interface OrderedCollection<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface AsVocabulary {
+    OrderedCollection: Factory<As.OrderedCollection>;
+  }
+}
+
 export function OrderedCollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OrderedCollection & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class OrderedCollectionClass extends Resource {
@@ -17,5 +23,4 @@ export function OrderedCollectionMixin<Base extends rdfine.Constructor>(Resource
   return OrderedCollectionClass as any
 }
 OrderedCollectionMixin.appliesTo = as.OrderedCollection
-
-export const factory = (env: RdfineEnvironment) => createFactory<OrderedCollection>([OrderedCollectionMixin], { types: [as.OrderedCollection] }, env);
+OrderedCollectionMixin.createFactory = (env: RdfineEnvironment) => createFactory<OrderedCollection>([OrderedCollectionMixin], { types: [as.OrderedCollection] }, env)

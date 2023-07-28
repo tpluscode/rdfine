@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { GovernmentOfficeMixin } from './GovernmentOffice.js';
 export interface PostOffice<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentOffice<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    PostOffice: Factory<Schema.PostOffice>;
+  }
+}
+
 export function PostOfficeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PostOffice & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class PostOfficeClass extends GovernmentOfficeMixin(Resource) {
@@ -18,5 +24,4 @@ export function PostOfficeMixin<Base extends rdfine.Constructor>(Resource: Base)
   return PostOfficeClass as any
 }
 PostOfficeMixin.appliesTo = schema.PostOffice
-
-export const factory = (env: RdfineEnvironment) => createFactory<PostOffice>([GovernmentOfficeMixin, PostOfficeMixin], { types: [schema.PostOffice] }, env);
+PostOfficeMixin.createFactory = (env: RdfineEnvironment) => createFactory<PostOffice>([GovernmentOfficeMixin, PostOfficeMixin], { types: [schema.PostOffice] }, env)

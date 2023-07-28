@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface MembershipRelation<D extends RDF.DatasetCore = RDF.DatasetCore>
   membershipRelationHasSource: Rico.Group<D> | undefined;
   membershipRelationHasTarget: Rico.Person<D> | undefined;
   membershipWithPosition: Rico.Position<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    MembershipRelation: Factory<Rico.MembershipRelation>;
+  }
 }
 
 export function MembershipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MembershipRelation & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function MembershipRelationMixin<Base extends rdfine.Constructor>(Resourc
   return MembershipRelationClass as any
 }
 MembershipRelationMixin.appliesTo = rico.MembershipRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<MembershipRelation>([AgentToAgentRelationMixin, MembershipRelationMixin], { types: [rico.MembershipRelation] }, env);
+MembershipRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<MembershipRelation>([AgentToAgentRelationMixin, MembershipRelationMixin], { types: [rico.MembershipRelation] }, env)

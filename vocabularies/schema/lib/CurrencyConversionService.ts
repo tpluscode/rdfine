@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { FinancialProductMixin } from './FinancialProduct.js';
 export interface CurrencyConversionService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialProduct<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    CurrencyConversionService: Factory<Schema.CurrencyConversionService>;
+  }
+}
+
 export function CurrencyConversionServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CurrencyConversionService & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class CurrencyConversionServiceClass extends FinancialProductMixin(Resource) {
@@ -18,5 +24,4 @@ export function CurrencyConversionServiceMixin<Base extends rdfine.Constructor>(
   return CurrencyConversionServiceClass as any
 }
 CurrencyConversionServiceMixin.appliesTo = schema.CurrencyConversionService
-
-export const factory = (env: RdfineEnvironment) => createFactory<CurrencyConversionService>([FinancialProductMixin, CurrencyConversionServiceMixin], { types: [schema.CurrencyConversionService] }, env);
+CurrencyConversionServiceMixin.createFactory = (env: RdfineEnvironment) => createFactory<CurrencyConversionService>([FinancialProductMixin, CurrencyConversionServiceMixin], { types: [schema.CurrencyConversionService] }, env)

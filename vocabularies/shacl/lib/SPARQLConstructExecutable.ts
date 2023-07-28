@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface SPARQLConstructExecutable<D extends RDF.DatasetCore = RDF.Datas
   construct: string | undefined;
 }
 
+declare global {
+  interface ShVocabulary {
+    SPARQLConstructExecutable: Factory<Sh.SPARQLConstructExecutable>;
+  }
+}
+
 export function SPARQLConstructExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLConstructExecutable & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class SPARQLConstructExecutableClass extends SPARQLExecutableMixin(Resource) {
@@ -21,5 +27,4 @@ export function SPARQLConstructExecutableMixin<Base extends rdfine.Constructor>(
   return SPARQLConstructExecutableClass as any
 }
 SPARQLConstructExecutableMixin.appliesTo = sh.SPARQLConstructExecutable
-
-export const factory = (env: RdfineEnvironment) => createFactory<SPARQLConstructExecutable>([SPARQLExecutableMixin, SPARQLConstructExecutableMixin], { types: [sh.SPARQLConstructExecutable] }, env);
+SPARQLConstructExecutableMixin.createFactory = (env: RdfineEnvironment) => createFactory<SPARQLConstructExecutable>([SPARQLExecutableMixin, SPARQLConstructExecutableMixin], { types: [sh.SPARQLConstructExecutable] }, env)

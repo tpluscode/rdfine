@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { InstantaneousEventMixin } from './InstantaneousEvent.js';
 export interface Usage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.EntityInfluence<D>, Prov.InstantaneousEvent<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ProvVocabulary {
+    Usage: Factory<Prov.Usage>;
+  }
+}
+
 export function UsageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Usage & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class UsageClass extends InstantaneousEventMixin(EntityInfluenceMixin(Resource)) {
@@ -19,5 +25,4 @@ export function UsageMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return UsageClass as any
 }
 UsageMixin.appliesTo = prov.Usage
-
-export const factory = (env: RdfineEnvironment) => createFactory<Usage>([InstantaneousEventMixin, EntityInfluenceMixin, UsageMixin], { types: [prov.Usage] }, env);
+UsageMixin.createFactory = (env: RdfineEnvironment) => createFactory<Usage>([InstantaneousEventMixin, EntityInfluenceMixin, UsageMixin], { types: [prov.Usage] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Brand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   logo: Schema.ImageObject<D> | undefined;
   review: Schema.Review<D> | undefined;
   slogan: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Brand: Factory<Schema.Brand>;
+  }
 }
 
 export function BrandMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Brand & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function BrandMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return BrandClass as any
 }
 BrandMixin.appliesTo = schema.Brand
-
-export const factory = (env: RdfineEnvironment) => createFactory<Brand>([IntangibleMixin, BrandMixin], { types: [schema.Brand] }, env);
+BrandMixin.createFactory = (env: RdfineEnvironment) => createFactory<Brand>([IntangibleMixin, BrandMixin], { types: [schema.Brand] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface CorporateBody<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   hasOrHadCorporateBodyType: Rico.CorporateBodyType<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    CorporateBody: Factory<Rico.CorporateBody>;
+  }
+}
+
 export function CorporateBodyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CorporateBody & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class CorporateBodyClass extends GroupMixin(Resource) {
@@ -21,5 +27,4 @@ export function CorporateBodyMixin<Base extends rdfine.Constructor>(Resource: Ba
   return CorporateBodyClass as any
 }
 CorporateBodyMixin.appliesTo = rico.CorporateBody
-
-export const factory = (env: RdfineEnvironment) => createFactory<CorporateBody>([GroupMixin, CorporateBodyMixin], { types: [rico.CorporateBody] }, env);
+CorporateBodyMixin.createFactory = (env: RdfineEnvironment) => createFactory<CorporateBody>([GroupMixin, CorporateBodyMixin], { types: [rico.CorporateBody] }, env)

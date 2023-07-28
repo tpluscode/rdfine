@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface LegalStatus<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   isOrWasLegalStatusOf: Rico.Agent<D> | Rico.Record<D> | Rico.RecordPart<D> | undefined;
   isOrWasLegalStatusOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasLegalStatusOfSomeMembersOf: Rico.RecordSet<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    LegalStatus: Factory<Rico.LegalStatus>;
+  }
 }
 
 export function LegalStatusMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LegalStatus & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function LegalStatusMixin<Base extends rdfine.Constructor>(Resource: Base
   return LegalStatusClass as any
 }
 LegalStatusMixin.appliesTo = rico.LegalStatus
-
-export const factory = (env: RdfineEnvironment) => createFactory<LegalStatus>([TypeMixin, LegalStatusMixin], { types: [rico.LegalStatus] }, env);
+LegalStatusMixin.createFactory = (env: RdfineEnvironment) => createFactory<LegalStatus>([TypeMixin, LegalStatusMixin], { types: [rico.LegalStatus] }, env)

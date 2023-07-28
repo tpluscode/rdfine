@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 export interface AnimalShelter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    AnimalShelter: Factory<Schema.AnimalShelter>;
+  }
+}
+
 export function AnimalShelterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AnimalShelter & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class AnimalShelterClass extends LocalBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function AnimalShelterMixin<Base extends rdfine.Constructor>(Resource: Ba
   return AnimalShelterClass as any
 }
 AnimalShelterMixin.appliesTo = schema.AnimalShelter
-
-export const factory = (env: RdfineEnvironment) => createFactory<AnimalShelter>([LocalBusinessMixin, AnimalShelterMixin], { types: [schema.AnimalShelter] }, env);
+AnimalShelterMixin.createFactory = (env: RdfineEnvironment) => createFactory<AnimalShelter>([LocalBusinessMixin, AnimalShelterMixin], { types: [schema.AnimalShelter] }, env)

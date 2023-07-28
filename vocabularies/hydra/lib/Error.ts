@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,6 +9,12 @@ import type * as Hydra from '../index.js';
 import { StatusMixin } from './Status.js';
 
 export interface Error<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Status<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface HydraVocabulary {
+    Error: Factory<Hydra.Error>;
+  }
 }
 
 export function ErrorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Error & RdfResourceCore> & Base {

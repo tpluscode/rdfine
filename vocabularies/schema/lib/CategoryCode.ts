@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,6 +10,12 @@ import type * as Schema from '../index.js';
 export interface CategoryCode<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   codeValue: string | undefined;
   inCodeSet: Schema.CategoryCodeSet<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CategoryCode: Factory<Schema.CategoryCode>;
+  }
 }
 
 export function CategoryCodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CategoryCode & RdfResourceCore> & Base {
@@ -23,5 +29,4 @@ export function CategoryCodeMixin<Base extends rdfine.Constructor>(Resource: Bas
   return CategoryCodeClass as any
 }
 CategoryCodeMixin.appliesTo = schema.CategoryCode
-
-export const factory = (env: RdfineEnvironment) => createFactory<CategoryCode>([CategoryCodeMixin], { types: [schema.CategoryCode] }, env);
+CategoryCodeMixin.createFactory = (env: RdfineEnvironment) => createFactory<CategoryCode>([CategoryCodeMixin], { types: [schema.CategoryCode] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { AutomotiveBusinessMixin } from './AutomotiveBusiness.js';
 export interface AutoWash<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AutomotiveBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    AutoWash: Factory<Schema.AutoWash>;
+  }
+}
+
 export function AutoWashMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AutoWash & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class AutoWashClass extends AutomotiveBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function AutoWashMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return AutoWashClass as any
 }
 AutoWashMixin.appliesTo = schema.AutoWash
-
-export const factory = (env: RdfineEnvironment) => createFactory<AutoWash>([AutomotiveBusinessMixin, AutoWashMixin], { types: [schema.AutoWash] }, env);
+AutoWashMixin.createFactory = (env: RdfineEnvironment) => createFactory<AutoWash>([AutomotiveBusinessMixin, AutoWashMixin], { types: [schema.AutoWash] }, env)

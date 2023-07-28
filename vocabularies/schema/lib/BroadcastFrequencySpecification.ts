@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface BroadcastFrequencySpecification<D extends RDF.DatasetCore = RDF
   broadcastSignalModulation: string | undefined;
   broadcastSignalModulationTerm: Schema.QualitativeValue | undefined;
   broadcastSubChannel: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BroadcastFrequencySpecification: Factory<Schema.BroadcastFrequencySpecification>;
+  }
 }
 
 export function BroadcastFrequencySpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BroadcastFrequencySpecification & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function BroadcastFrequencySpecificationMixin<Base extends rdfine.Constru
   return BroadcastFrequencySpecificationClass as any
 }
 BroadcastFrequencySpecificationMixin.appliesTo = schema.BroadcastFrequencySpecification
-
-export const factory = (env: RdfineEnvironment) => createFactory<BroadcastFrequencySpecification>([IntangibleMixin, BroadcastFrequencySpecificationMixin], { types: [schema.BroadcastFrequencySpecification] }, env);
+BroadcastFrequencySpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<BroadcastFrequencySpecification>([IntangibleMixin, BroadcastFrequencySpecificationMixin], { types: [schema.BroadcastFrequencySpecification] }, env)

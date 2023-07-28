@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,6 +10,12 @@ import type * as Sioc from '../index.js';
 export interface Usergroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   'has_member': Sioc.UserAccount<D> | undefined;
   'usergroup_of': Sioc.Space<D> | undefined;
+}
+
+declare global {
+  interface SiocVocabulary {
+    Usergroup: Factory<Sioc.Usergroup>;
+  }
 }
 
 export function UsergroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Usergroup & RdfResourceCore> & Base {
@@ -23,5 +29,4 @@ export function UsergroupMixin<Base extends rdfine.Constructor>(Resource: Base):
   return UsergroupClass as any
 }
 UsergroupMixin.appliesTo = sioc.Usergroup
-
-export const factory = (env: RdfineEnvironment) => createFactory<Usergroup>([UsergroupMixin], { types: [sioc.Usergroup] }, env);
+UsergroupMixin.createFactory = (env: RdfineEnvironment) => createFactory<Usergroup>([UsergroupMixin], { types: [sioc.Usergroup] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface GroupSubdivisionRelation<D extends RDF.DatasetCore = RDF.Datase
   groupSubdivisionRelationHasTarget: Rico.Group<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    GroupSubdivisionRelation: Factory<Rico.GroupSubdivisionRelation>;
+  }
+}
+
 export function GroupSubdivisionRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GroupSubdivisionRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class GroupSubdivisionRelationClass extends WholePartRelationMixin(AgentHierarchicalRelationMixin(Resource)) {
@@ -25,5 +31,4 @@ export function GroupSubdivisionRelationMixin<Base extends rdfine.Constructor>(R
   return GroupSubdivisionRelationClass as any
 }
 GroupSubdivisionRelationMixin.appliesTo = rico.GroupSubdivisionRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<GroupSubdivisionRelation>([WholePartRelationMixin, AgentHierarchicalRelationMixin, GroupSubdivisionRelationMixin], { types: [rico.GroupSubdivisionRelation] }, env);
+GroupSubdivisionRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<GroupSubdivisionRelation>([WholePartRelationMixin, AgentHierarchicalRelationMixin, GroupSubdivisionRelationMixin], { types: [rico.GroupSubdivisionRelation] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { ParameterizableMixin as ShaclParameterizableMixin } from '@rdfine/shacl
 export interface MultiFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.Parameterizable<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    MultiFunction: Factory<Dash.MultiFunction>;
+  }
+}
+
 export function MultiFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MultiFunction & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class MultiFunctionClass extends ShaclParameterizableMixin(Resource) {
@@ -19,5 +25,4 @@ export function MultiFunctionMixin<Base extends rdfine.Constructor>(Resource: Ba
   return MultiFunctionClass as any
 }
 MultiFunctionMixin.appliesTo = dash.MultiFunction
-
-export const factory = (env: RdfineEnvironment) => createFactory<MultiFunction>([ShaclParameterizableMixin, MultiFunctionMixin], { types: [dash.MultiFunction] }, env);
+MultiFunctionMixin.createFactory = (env: RdfineEnvironment) => createFactory<MultiFunction>([ShaclParameterizableMixin, MultiFunctionMixin], { types: [dash.MultiFunction] }, env)

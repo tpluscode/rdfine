@@ -1,15 +1,13 @@
 import clownface from 'clownface'
 import $rdf from 'rdf-ext'
-import { fromPointer, IriTemplate } from '../lib/IriTemplate.js'
+import { IriTemplate } from '../lib/IriTemplate.js'
 import { hydra } from '../lib/namespace.js';
 import namespace from '@rdfjs/namespace'
 import { xsd } from '@tpluscode/rdf-ns-builders';
-import RdfResource from '@tpluscode/rdfine';
-import { IriTemplateBundle } from '../bundles/index.js';
 import { expect } from 'chai';
 import { testEach } from './support/testEach.js';
-
-RdfResource.factory.addMixin(...IriTemplateBundle)
+import environment from './support/environment.js';
+import { RdfResource } from '@tpluscode/rdfine';
 
 const ex = namespace('http://example.com/')
 
@@ -35,7 +33,7 @@ describe('IriTemplate', () => {
         // given
         const dataset = $rdf.dataset()
         const pointer = clownface({ dataset }).blankNode()
-        const iriTemplate = fromPointer(pointer, {
+        const iriTemplate = environment.rdfine.hydra.IriTemplate(pointer, {
           template: 'http://example.com/find/{value}',
           variableRepresentation: $rdf.namedNode(representation),
           mapping: [
@@ -62,7 +60,7 @@ describe('IriTemplate', () => {
       // given
       const dataset = $rdf.dataset()
       const pointer = clownface({ dataset }).blankNode()
-      const iriTemplate = fromPointer(pointer, {
+      const iriTemplate = environment.rdfine.hydra.IriTemplate(pointer, {
         template: 'http://example.com/find/{value}',
         variableRepresentation: hydra.BasicRepresentation,
         mapping: [
@@ -89,7 +87,7 @@ describe('IriTemplate', () => {
       // given
       const dataset = $rdf.dataset()
       const pointer = clownface({ dataset }).blankNode()
-      const iriTemplate = fromPointer(pointer, {
+      const iriTemplate = environment.rdfine.hydra.IriTemplate(pointer, {
         template: 'http://example.com/find/{?foo,bar,baz}',
         mapping: [
           {
@@ -124,7 +122,7 @@ describe('IriTemplate', () => {
       // given
       const dataset = $rdf.dataset()
       const pointer = clownface({ dataset }).blankNode()
-      const iriTemplate = fromPointer(pointer, {
+      const iriTemplate = environment.rdfine.hydra.IriTemplate(pointer, {
         template: 'http://example.com/find/{?foo,bar,baz}',
         mapping: [
           {
@@ -159,7 +157,7 @@ describe('IriTemplate', () => {
       // given
       const dataset = $rdf.dataset()
       const pointer = clownface({ dataset }).blankNode()
-      const iriTemplate = fromPointer(pointer, {
+      const iriTemplate = environment.rdfine.hydra.IriTemplate(pointer, {
         template: 'http://example.com/find/{?foo}',
         mapping: [
           {
@@ -183,7 +181,7 @@ describe('IriTemplate', () => {
       // given
       const dataset = $rdf.dataset()
       const pointer = clownface({ dataset }).blankNode()
-      const iriTemplate = fromPointer(pointer, {
+      const iriTemplate = environment.rdfine.hydra.IriTemplate(pointer, {
         template: '{?foo}',
         mapping: [
           {
@@ -207,9 +205,9 @@ describe('IriTemplate', () => {
       // given
       const dataset = $rdf.dataset()
       const pointer = clownface({ dataset }).blankNode()
-      const parent = RdfResource.factory.createEntity(pointer.namedNode('http://example.com/find/'), [], {
+      const parent: RdfResource = environment.rdfine().factory.createEntity(pointer.namedNode('http://example.com/find/'), [], {
         initializer: {
-          [hydra.search.value]: fromPointer(pointer, {
+          [hydra.search.value]: environment.rdfine.hydra.IriTemplate(pointer, {
             template: '{?foo}',
             mapping: [
               {
@@ -236,7 +234,7 @@ describe('IriTemplate', () => {
       const graph = clownface({ dataset: $rdf.dataset() })
       const parentPtr = graph.namedNode('http://example.com/find/')
       const templatePtr = graph.blankNode()
-      fromPointer(templatePtr, {
+      environment.rdfine.hydra.IriTemplate(templatePtr, {
         template: '{?foo}',
         mapping: [
           {
@@ -246,13 +244,14 @@ describe('IriTemplate', () => {
           },
         ],
       })
-      const iriTemplate = RdfResource.factory.createEntity(parentPtr, [], {
+      const collection: RdfResource = environment.rdfine().factory.createEntity(parentPtr, [], {
         initializer: {
           [hydra.collection.value]: {
             [hydra.search.value]: templatePtr,
           },
         },
-      }).get(hydra.collection).get<IriTemplate>(hydra.search)
+      })
+      const iriTemplate = collection.get(hydra.collection).get<IriTemplate>(hydra.search)
 
       // when
       const foo = clownface({ dataset: $rdf.dataset() }).blankNode().addOut(ex.foo, $rdf.literal('foo'))
@@ -265,7 +264,7 @@ describe('IriTemplate', () => {
     it('should ensure that mapValue method exists on VariableRepresentation', () => {
       const dataset = $rdf.dataset()
       const pointer = clownface({ dataset }).blankNode()
-      const iriTemplate = fromPointer(pointer, {
+      const iriTemplate = environment.rdfine.hydra.IriTemplate(pointer, {
         template: 'http://example.com/find/{value}',
         variableRepresentation: hydra.BasicRepresentation,
       })

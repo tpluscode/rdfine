@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Blog<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   blogPost: Schema.BlogPosting<D> | undefined;
   blogPosts: Schema.BlogPosting<D> | undefined;
   issn: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Blog: Factory<Schema.Blog>;
+  }
 }
 
 export function BlogMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Blog & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function BlogMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return BlogClass as any
 }
 BlogMixin.appliesTo = schema.Blog
-
-export const factory = (env: RdfineEnvironment) => createFactory<Blog>([CreativeWorkMixin, BlogMixin], { types: [schema.Blog] }, env);
+BlogMixin.createFactory = (env: RdfineEnvironment) => createFactory<Blog>([CreativeWorkMixin, BlogMixin], { types: [schema.Blog] }, env)

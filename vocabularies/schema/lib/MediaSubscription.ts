@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface MediaSubscription<D extends RDF.DatasetCore = RDF.DatasetCore> 
   expectsAcceptanceOf: Schema.Offer<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MediaSubscription: Factory<Schema.MediaSubscription>;
+  }
+}
+
 export function MediaSubscriptionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MediaSubscription & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MediaSubscriptionClass extends IntangibleMixin(Resource) {
@@ -24,5 +30,4 @@ export function MediaSubscriptionMixin<Base extends rdfine.Constructor>(Resource
   return MediaSubscriptionClass as any
 }
 MediaSubscriptionMixin.appliesTo = schema.MediaSubscription
-
-export const factory = (env: RdfineEnvironment) => createFactory<MediaSubscription>([IntangibleMixin, MediaSubscriptionMixin], { types: [schema.MediaSubscription] }, env);
+MediaSubscriptionMixin.createFactory = (env: RdfineEnvironment) => createFactory<MediaSubscription>([IntangibleMixin, MediaSubscriptionMixin], { types: [schema.MediaSubscription] }, env)

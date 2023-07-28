@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { HealthAndBeautyBusinessMixin } from './HealthAndBeautyBusiness.js';
 export interface DaySpa<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HealthAndBeautyBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    DaySpa: Factory<Schema.DaySpa>;
+  }
+}
+
 export function DaySpaMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DaySpa & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class DaySpaClass extends HealthAndBeautyBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function DaySpaMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return DaySpaClass as any
 }
 DaySpaMixin.appliesTo = schema.DaySpa
-
-export const factory = (env: RdfineEnvironment) => createFactory<DaySpa>([HealthAndBeautyBusinessMixin, DaySpaMixin], { types: [schema.DaySpa] }, env);
+DaySpaMixin.createFactory = (env: RdfineEnvironment) => createFactory<DaySpa>([HealthAndBeautyBusinessMixin, DaySpaMixin], { types: [schema.DaySpa] }, env)

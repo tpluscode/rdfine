@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -16,6 +16,12 @@ export interface ImageObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   exifDataLiteral: string | undefined;
   representativeOfPage: boolean | undefined;
   thumbnail: Schema.ImageObject<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ImageObject: Factory<Schema.ImageObject>;
+  }
 }
 
 export function ImageObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ImageObject & RdfResourceCore> & Base {
@@ -39,5 +45,4 @@ export function ImageObjectMixin<Base extends rdfine.Constructor>(Resource: Base
   return ImageObjectClass as any
 }
 ImageObjectMixin.appliesTo = schema.ImageObject
-
-export const factory = (env: RdfineEnvironment) => createFactory<ImageObject>([MediaObjectMixin, ImageObjectMixin], { types: [schema.ImageObject] }, env);
+ImageObjectMixin.createFactory = (env: RdfineEnvironment) => createFactory<ImageObject>([MediaObjectMixin, ImageObjectMixin], { types: [schema.ImageObject] }, env)

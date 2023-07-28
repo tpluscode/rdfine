@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { AssessActionMixin } from './AssessAction.js';
 export interface IgnoreAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AssessAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    IgnoreAction: Factory<Schema.IgnoreAction>;
+  }
+}
+
 export function IgnoreActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IgnoreAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class IgnoreActionClass extends AssessActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function IgnoreActionMixin<Base extends rdfine.Constructor>(Resource: Bas
   return IgnoreActionClass as any
 }
 IgnoreActionMixin.appliesTo = schema.IgnoreAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<IgnoreAction>([AssessActionMixin, IgnoreActionMixin], { types: [schema.IgnoreAction] }, env);
+IgnoreActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<IgnoreAction>([AssessActionMixin, IgnoreActionMixin], { types: [schema.IgnoreAction] }, env)

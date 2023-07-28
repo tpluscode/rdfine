@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,6 +10,12 @@ import type * as Csvw from '../index.js';
 export interface Cell<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface CsvwVocabulary {
+    Cell: Factory<Csvw.Cell>;
+  }
+}
+
 export function CellMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Cell & RdfResourceCore> & Base {
   @rdfine.namespace(csvw)
   class CellClass extends Resource {
@@ -17,5 +23,4 @@ export function CellMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return CellClass as any
 }
 CellMixin.appliesTo = csvw.Cell
-
-export const factory = (env: RdfineEnvironment) => createFactory<Cell>([CellMixin], { types: [csvw.Cell] }, env);
+CellMixin.createFactory = (env: RdfineEnvironment) => createFactory<Cell>([CellMixin], { types: [csvw.Cell] }, env)

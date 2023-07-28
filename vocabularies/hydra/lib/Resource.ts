@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,6 +8,7 @@ import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
+import { ResourceExMixin } from '../extensions/ResourceEx.js';
 
 export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
   first: Hydra.Resource<D> | undefined;
@@ -20,9 +21,15 @@ export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   view: Array<Hydra.Resource<D>>;
 }
 
+declare global {
+  interface HydraVocabulary {
+    Resource: Factory<Hydra.Resource>;
+  }
+}
+
 export function ResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Resource & RdfResourceCore> & Base {
   @rdfine.namespace(hydra)
-  class ResourceClass extends RdfsResourceMixin(Resource) {
+  class ResourceClass extends ResourceExMixin(RdfsResourceMixin(Resource)) {
     @rdfine.property.resource({ as: [ResourceMixin] })
     first: Hydra.Resource | undefined;
     @rdfine.property.literal()

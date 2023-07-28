@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -66,6 +66,12 @@ export interface Offer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   validFrom: Date | undefined;
   validThrough: Date | undefined;
   warranty: Schema.WarrantyPromise<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Offer: Factory<Schema.Offer>;
+  }
 }
 
 export function OfferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Offer & RdfResourceCore> & Base {
@@ -189,5 +195,4 @@ export function OfferMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return OfferClass as any
 }
 OfferMixin.appliesTo = schema.Offer
-
-export const factory = (env: RdfineEnvironment) => createFactory<Offer>([IntangibleMixin, OfferMixin], { types: [schema.Offer] }, env);
+OfferMixin.createFactory = (env: RdfineEnvironment) => createFactory<Offer>([IntangibleMixin, OfferMixin], { types: [schema.Offer] }, env)

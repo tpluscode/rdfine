@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { CommunicateActionMixin } from './CommunicateAction.js';
 export interface CheckOutAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    CheckOutAction: Factory<Schema.CheckOutAction>;
+  }
+}
+
 export function CheckOutActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CheckOutAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class CheckOutActionClass extends CommunicateActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function CheckOutActionMixin<Base extends rdfine.Constructor>(Resource: B
   return CheckOutActionClass as any
 }
 CheckOutActionMixin.appliesTo = schema.CheckOutAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<CheckOutAction>([CommunicateActionMixin, CheckOutActionMixin], { types: [schema.CheckOutAction] }, env);
+CheckOutActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<CheckOutAction>([CommunicateActionMixin, CheckOutActionMixin], { types: [schema.CheckOutAction] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface ScreeningEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   subtitleLanguageLiteral: string | undefined;
   videoFormat: string | undefined;
   workPresented: Schema.Movie<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ScreeningEvent: Factory<Schema.ScreeningEvent>;
+  }
 }
 
 export function ScreeningEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ScreeningEvent & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function ScreeningEventMixin<Base extends rdfine.Constructor>(Resource: B
   return ScreeningEventClass as any
 }
 ScreeningEventMixin.appliesTo = schema.ScreeningEvent
-
-export const factory = (env: RdfineEnvironment) => createFactory<ScreeningEvent>([EventMixin, ScreeningEventMixin], { types: [schema.ScreeningEvent] }, env);
+ScreeningEventMixin.createFactory = (env: RdfineEnvironment) => createFactory<ScreeningEvent>([EventMixin, ScreeningEventMixin], { types: [schema.ScreeningEvent] }, env)

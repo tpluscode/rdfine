@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,6 +10,12 @@ import type * as Owl from '../index.js';
 export interface Nothing<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface OwlVocabulary {
+    Nothing: Factory<Owl.Nothing>;
+  }
+}
+
 export function NothingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Nothing & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
   class NothingClass extends Resource {
@@ -17,5 +23,4 @@ export function NothingMixin<Base extends rdfine.Constructor>(Resource: Base): r
   return NothingClass as any
 }
 NothingMixin.appliesTo = owl.Nothing
-
-export const factory = (env: RdfineEnvironment) => createFactory<Nothing>([NothingMixin], { types: [owl.Nothing] }, env);
+NothingMixin.createFactory = (env: RdfineEnvironment) => createFactory<Nothing>([NothingMixin], { types: [owl.Nothing] }, env)

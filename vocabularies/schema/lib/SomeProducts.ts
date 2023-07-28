@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface SomeProducts<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   inventoryLevel: Schema.QuantitativeValue<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    SomeProducts: Factory<Schema.SomeProducts>;
+  }
+}
+
 export function SomeProductsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SomeProducts & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class SomeProductsClass extends ProductMixin(Resource) {
@@ -21,5 +27,4 @@ export function SomeProductsMixin<Base extends rdfine.Constructor>(Resource: Bas
   return SomeProductsClass as any
 }
 SomeProductsMixin.appliesTo = schema.SomeProducts
-
-export const factory = (env: RdfineEnvironment) => createFactory<SomeProducts>([ProductMixin, SomeProductsMixin], { types: [schema.SomeProducts] }, env);
+SomeProductsMixin.createFactory = (env: RdfineEnvironment) => createFactory<SomeProducts>([ProductMixin, SomeProductsMixin], { types: [schema.SomeProducts] }, env)

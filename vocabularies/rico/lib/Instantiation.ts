@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -63,6 +63,12 @@ export interface Instantiation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   recordResourceOrInstantiationIsTargetOfRecordResourceHoldingRelation: Rico.RecordResourceHoldingRelation<D> | undefined;
   structure: RDF.Literal | undefined;
   title: RDF.Literal | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    Instantiation: Factory<Rico.Instantiation>;
+  }
 }
 
 export function InstantiationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Instantiation & RdfResourceCore> & Base {
@@ -180,5 +186,4 @@ export function InstantiationMixin<Base extends rdfine.Constructor>(Resource: Ba
   return InstantiationClass as any
 }
 InstantiationMixin.appliesTo = rico.Instantiation
-
-export const factory = (env: RdfineEnvironment) => createFactory<Instantiation>([ThingMixin, InstantiationMixin], { types: [rico.Instantiation] }, env);
+InstantiationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Instantiation>([ThingMixin, InstantiationMixin], { types: [rico.Instantiation] }, env)

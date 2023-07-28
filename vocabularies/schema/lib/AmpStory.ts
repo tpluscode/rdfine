@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { MediaObjectMixin } from './MediaObject.js';
 export interface AmpStory<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.MediaObject<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    AmpStory: Factory<Schema.AmpStory>;
+  }
+}
+
 export function AmpStoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AmpStory & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class AmpStoryClass extends MediaObjectMixin(CreativeWorkMixin(Resource)) {
@@ -19,5 +25,4 @@ export function AmpStoryMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return AmpStoryClass as any
 }
 AmpStoryMixin.appliesTo = schema.AmpStory
-
-export const factory = (env: RdfineEnvironment) => createFactory<AmpStory>([MediaObjectMixin, CreativeWorkMixin, AmpStoryMixin], { types: [schema.AmpStory] }, env);
+AmpStoryMixin.createFactory = (env: RdfineEnvironment) => createFactory<AmpStory>([MediaObjectMixin, CreativeWorkMixin, AmpStoryMixin], { types: [schema.AmpStory] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface RecordResourceToInstantiationRelation<D extends RDF.DatasetCore
   recordResourceToInstantiationRelationHasTarget: Rico.Instantiation<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    RecordResourceToInstantiationRelation: Factory<Rico.RecordResourceToInstantiationRelation>;
+  }
+}
+
 export function RecordResourceToInstantiationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordResourceToInstantiationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class RecordResourceToInstantiationRelationClass extends RelationMixin(Resource) {
@@ -24,5 +30,4 @@ export function RecordResourceToInstantiationRelationMixin<Base extends rdfine.C
   return RecordResourceToInstantiationRelationClass as any
 }
 RecordResourceToInstantiationRelationMixin.appliesTo = rico.RecordResourceToInstantiationRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<RecordResourceToInstantiationRelation>([RelationMixin, RecordResourceToInstantiationRelationMixin], { types: [rico.RecordResourceToInstantiationRelation] }, env);
+RecordResourceToInstantiationRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<RecordResourceToInstantiationRelation>([RelationMixin, RecordResourceToInstantiationRelationMixin], { types: [rico.RecordResourceToInstantiationRelation] }, env)

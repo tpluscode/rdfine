@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { MessageMixin } from './Message.js';
 export interface EmailMessage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Message<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    EmailMessage: Factory<Schema.EmailMessage>;
+  }
+}
+
 export function EmailMessageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EmailMessage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class EmailMessageClass extends MessageMixin(Resource) {
@@ -18,5 +24,4 @@ export function EmailMessageMixin<Base extends rdfine.Constructor>(Resource: Bas
   return EmailMessageClass as any
 }
 EmailMessageMixin.appliesTo = schema.EmailMessage
-
-export const factory = (env: RdfineEnvironment) => createFactory<EmailMessage>([MessageMixin, EmailMessageMixin], { types: [schema.EmailMessage] }, env);
+EmailMessageMixin.createFactory = (env: RdfineEnvironment) => createFactory<EmailMessage>([MessageMixin, EmailMessageMixin], { types: [schema.EmailMessage] }, env)

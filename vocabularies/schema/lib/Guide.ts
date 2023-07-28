@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Guide<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   reviewAspect: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Guide: Factory<Schema.Guide>;
+  }
+}
+
 export function GuideMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Guide & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class GuideClass extends CreativeWorkMixin(Resource) {
@@ -21,5 +27,4 @@ export function GuideMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return GuideClass as any
 }
 GuideMixin.appliesTo = schema.Guide
-
-export const factory = (env: RdfineEnvironment) => createFactory<Guide>([CreativeWorkMixin, GuideMixin], { types: [schema.Guide] }, env);
+GuideMixin.createFactory = (env: RdfineEnvironment) => createFactory<Guide>([CreativeWorkMixin, GuideMixin], { types: [schema.Guide] }, env)

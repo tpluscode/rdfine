@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface TherapeuticProcedure<D extends RDF.DatasetCore = RDF.DatasetCor
   adverseOutcome: Schema.MedicalEntity<D> | undefined;
   doseSchedule: Schema.DoseSchedule<D> | undefined;
   drug: Schema.Drug<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    TherapeuticProcedure: Factory<Schema.TherapeuticProcedure>;
+  }
 }
 
 export function TherapeuticProcedureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TherapeuticProcedure & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function TherapeuticProcedureMixin<Base extends rdfine.Constructor>(Resou
   return TherapeuticProcedureClass as any
 }
 TherapeuticProcedureMixin.appliesTo = schema.TherapeuticProcedure
-
-export const factory = (env: RdfineEnvironment) => createFactory<TherapeuticProcedure>([MedicalProcedureMixin, TherapeuticProcedureMixin], { types: [schema.TherapeuticProcedure] }, env);
+TherapeuticProcedureMixin.createFactory = (env: RdfineEnvironment) => createFactory<TherapeuticProcedure>([MedicalProcedureMixin, TherapeuticProcedureMixin], { types: [schema.TherapeuticProcedure] }, env)

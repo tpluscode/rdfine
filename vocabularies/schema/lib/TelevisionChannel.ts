@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { BroadcastChannelMixin } from './BroadcastChannel.js';
 export interface TelevisionChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BroadcastChannel<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    TelevisionChannel: Factory<Schema.TelevisionChannel>;
+  }
+}
+
 export function TelevisionChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TelevisionChannel & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class TelevisionChannelClass extends BroadcastChannelMixin(Resource) {
@@ -18,5 +24,4 @@ export function TelevisionChannelMixin<Base extends rdfine.Constructor>(Resource
   return TelevisionChannelClass as any
 }
 TelevisionChannelMixin.appliesTo = schema.TelevisionChannel
-
-export const factory = (env: RdfineEnvironment) => createFactory<TelevisionChannel>([BroadcastChannelMixin, TelevisionChannelMixin], { types: [schema.TelevisionChannel] }, env);
+TelevisionChannelMixin.createFactory = (env: RdfineEnvironment) => createFactory<TelevisionChannel>([BroadcastChannelMixin, TelevisionChannelMixin], { types: [schema.TelevisionChannel] }, env)

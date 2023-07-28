@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface WriteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   inLanguage: Schema.Language<D> | undefined;
   inLanguageLiteral: string | undefined;
   language: Schema.Language<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    WriteAction: Factory<Schema.WriteAction>;
+  }
 }
 
 export function WriteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WriteAction & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function WriteActionMixin<Base extends rdfine.Constructor>(Resource: Base
   return WriteActionClass as any
 }
 WriteActionMixin.appliesTo = schema.WriteAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<WriteAction>([CreateActionMixin, WriteActionMixin], { types: [schema.WriteAction] }, env);
+WriteActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<WriteAction>([CreateActionMixin, WriteActionMixin], { types: [schema.WriteAction] }, env)

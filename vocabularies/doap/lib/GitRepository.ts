@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { RepositoryMixin } from './Repository.js';
 export interface GitRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DoapVocabulary {
+    GitRepository: Factory<Doap.GitRepository>;
+  }
+}
+
 export function GitRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GitRepository & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
   class GitRepositoryClass extends RepositoryMixin(Resource) {
@@ -18,5 +24,4 @@ export function GitRepositoryMixin<Base extends rdfine.Constructor>(Resource: Ba
   return GitRepositoryClass as any
 }
 GitRepositoryMixin.appliesTo = doap.GitRepository
-
-export const factory = (env: RdfineEnvironment) => createFactory<GitRepository>([RepositoryMixin, GitRepositoryMixin], { types: [doap.GitRepository] }, env);
+GitRepositoryMixin.createFactory = (env: RdfineEnvironment) => createFactory<GitRepository>([RepositoryMixin, GitRepositoryMixin], { types: [doap.GitRepository] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { CreativeWorkMixin } from './CreativeWork.js';
 export interface ShortStory<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ShortStory: Factory<Schema.ShortStory>;
+  }
+}
+
 export function ShortStoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ShortStory & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ShortStoryClass extends CreativeWorkMixin(Resource) {
@@ -18,5 +24,4 @@ export function ShortStoryMixin<Base extends rdfine.Constructor>(Resource: Base)
   return ShortStoryClass as any
 }
 ShortStoryMixin.appliesTo = schema.ShortStory
-
-export const factory = (env: RdfineEnvironment) => createFactory<ShortStory>([CreativeWorkMixin, ShortStoryMixin], { types: [schema.ShortStory] }, env);
+ShortStoryMixin.createFactory = (env: RdfineEnvironment) => createFactory<ShortStory>([CreativeWorkMixin, ShortStoryMixin], { types: [schema.ShortStory] }, env)

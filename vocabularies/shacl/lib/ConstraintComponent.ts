@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface ConstraintComponent<D extends RDF.DatasetCore = RDF.DatasetCore
   nodeValidator: Sh.Validator<D> | undefined;
   propertyValidator: Sh.Validator<D> | undefined;
   validator: Sh.Validator<D> | undefined;
+}
+
+declare global {
+  interface ShVocabulary {
+    ConstraintComponent: Factory<Sh.ConstraintComponent>;
+  }
 }
 
 export function ConstraintComponentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ConstraintComponent & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function ConstraintComponentMixin<Base extends rdfine.Constructor>(Resour
   return ConstraintComponentClass as any
 }
 ConstraintComponentMixin.appliesTo = sh.ConstraintComponent
-
-export const factory = (env: RdfineEnvironment) => createFactory<ConstraintComponent>([ParameterizableMixin, ConstraintComponentMixin], { types: [sh.ConstraintComponent] }, env);
+ConstraintComponentMixin.createFactory = (env: RdfineEnvironment) => createFactory<ConstraintComponent>([ParameterizableMixin, ConstraintComponentMixin], { types: [sh.ConstraintComponent] }, env)

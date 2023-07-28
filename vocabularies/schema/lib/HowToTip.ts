@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { ListItemMixin } from './ListItem.js';
 export interface HowToTip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ListItem<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    HowToTip: Factory<Schema.HowToTip>;
+  }
+}
+
 export function HowToTipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowToTip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class HowToTipClass extends ListItemMixin(CreativeWorkMixin(Resource)) {
@@ -19,5 +25,4 @@ export function HowToTipMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return HowToTipClass as any
 }
 HowToTipMixin.appliesTo = schema.HowToTip
-
-export const factory = (env: RdfineEnvironment) => createFactory<HowToTip>([ListItemMixin, CreativeWorkMixin, HowToTipMixin], { types: [schema.HowToTip] }, env);
+HowToTipMixin.createFactory = (env: RdfineEnvironment) => createFactory<HowToTip>([ListItemMixin, CreativeWorkMixin, HowToTipMixin], { types: [schema.HowToTip] }, env)

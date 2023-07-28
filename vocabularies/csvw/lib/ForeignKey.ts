@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,6 +10,12 @@ import type * as Csvw from '../index.js';
 export interface ForeignKey<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   columnReference: string | undefined;
   reference: Csvw.TableReference<D> | undefined;
+}
+
+declare global {
+  interface CsvwVocabulary {
+    ForeignKey: Factory<Csvw.ForeignKey>;
+  }
 }
 
 export function ForeignKeyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ForeignKey & RdfResourceCore> & Base {
@@ -23,5 +29,4 @@ export function ForeignKeyMixin<Base extends rdfine.Constructor>(Resource: Base)
   return ForeignKeyClass as any
 }
 ForeignKeyMixin.appliesTo = csvw.ForeignKey
-
-export const factory = (env: RdfineEnvironment) => createFactory<ForeignKey>([ForeignKeyMixin], { types: [csvw.ForeignKey] }, env);
+ForeignKeyMixin.createFactory = (env: RdfineEnvironment) => createFactory<ForeignKey>([ForeignKeyMixin], { types: [csvw.ForeignKey] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface TrackAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   deliveryMethod: Schema.DeliveryMethod | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    TrackAction: Factory<Schema.TrackAction>;
+  }
+}
+
 export function TrackActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TrackAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class TrackActionClass extends FindActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function TrackActionMixin<Base extends rdfine.Constructor>(Resource: Base
   return TrackActionClass as any
 }
 TrackActionMixin.appliesTo = schema.TrackAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<TrackAction>([FindActionMixin, TrackActionMixin], { types: [schema.TrackAction] }, env);
+TrackActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<TrackAction>([FindActionMixin, TrackActionMixin], { types: [schema.TrackAction] }, env)

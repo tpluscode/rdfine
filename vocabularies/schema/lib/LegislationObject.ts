@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface LegislationObject<D extends RDF.DatasetCore = RDF.DatasetCore> 
   legislationLegalValue: Schema.LegalValueLevel | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    LegislationObject: Factory<Schema.LegislationObject>;
+  }
+}
+
 export function LegislationObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LegislationObject & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class LegislationObjectClass extends MediaObjectMixin(LegislationMixin(Resource)) {
@@ -22,5 +28,4 @@ export function LegislationObjectMixin<Base extends rdfine.Constructor>(Resource
   return LegislationObjectClass as any
 }
 LegislationObjectMixin.appliesTo = schema.LegislationObject
-
-export const factory = (env: RdfineEnvironment) => createFactory<LegislationObject>([MediaObjectMixin, LegislationMixin, LegislationObjectMixin], { types: [schema.LegislationObject] }, env);
+LegislationObjectMixin.createFactory = (env: RdfineEnvironment) => createFactory<LegislationObject>([MediaObjectMixin, LegislationMixin, LegislationObjectMixin], { types: [schema.LegislationObject] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -29,6 +29,12 @@ export interface Table<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   transformations: Array<Csvw.Transformation<D>>;
   url: string | undefined;
   valueUrl: string | undefined;
+}
+
+declare global {
+  interface CsvwVocabulary {
+    Table: Factory<Csvw.Table>;
+  }
 }
 
 export function TableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Table & RdfResourceCore> & Base {
@@ -80,5 +86,4 @@ export function TableMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return TableClass as any
 }
 TableMixin.appliesTo = csvw.Table
-
-export const factory = (env: RdfineEnvironment) => createFactory<Table>([TableMixin], { types: [csvw.Table] }, env);
+TableMixin.createFactory = (env: RdfineEnvironment) => createFactory<Table>([TableMixin], { types: [csvw.Table] }, env)

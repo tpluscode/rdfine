@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface MonetaryAmountDistribution<D extends RDF.DatasetCore = RDF.Data
   currency: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MonetaryAmountDistribution: Factory<Schema.MonetaryAmountDistribution>;
+  }
+}
+
 export function MonetaryAmountDistributionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MonetaryAmountDistribution & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MonetaryAmountDistributionClass extends QuantitativeValueDistributionMixin(Resource) {
@@ -21,5 +27,4 @@ export function MonetaryAmountDistributionMixin<Base extends rdfine.Constructor>
   return MonetaryAmountDistributionClass as any
 }
 MonetaryAmountDistributionMixin.appliesTo = schema.MonetaryAmountDistribution
-
-export const factory = (env: RdfineEnvironment) => createFactory<MonetaryAmountDistribution>([QuantitativeValueDistributionMixin, MonetaryAmountDistributionMixin], { types: [schema.MonetaryAmountDistribution] }, env);
+MonetaryAmountDistributionMixin.createFactory = (env: RdfineEnvironment) => createFactory<MonetaryAmountDistribution>([QuantitativeValueDistributionMixin, MonetaryAmountDistributionMixin], { types: [schema.MonetaryAmountDistribution] }, env)

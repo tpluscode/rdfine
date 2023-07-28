@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface AskAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   question: Schema.Question<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    AskAction: Factory<Schema.AskAction>;
+  }
+}
+
 export function AskActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AskAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class AskActionClass extends CommunicateActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function AskActionMixin<Base extends rdfine.Constructor>(Resource: Base):
   return AskActionClass as any
 }
 AskActionMixin.appliesTo = schema.AskAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<AskAction>([CommunicateActionMixin, AskActionMixin], { types: [schema.AskAction] }, env);
+AskActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<AskAction>([CommunicateActionMixin, AskActionMixin], { types: [schema.AskAction] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { SportsActivityLocationMixin } from './SportsActivityLocation.js';
 export interface HealthClub<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HealthAndBeautyBusiness<D>, Schema.SportsActivityLocation<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    HealthClub: Factory<Schema.HealthClub>;
+  }
+}
+
 export function HealthClubMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HealthClub & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class HealthClubClass extends SportsActivityLocationMixin(HealthAndBeautyBusinessMixin(Resource)) {
@@ -19,5 +25,4 @@ export function HealthClubMixin<Base extends rdfine.Constructor>(Resource: Base)
   return HealthClubClass as any
 }
 HealthClubMixin.appliesTo = schema.HealthClub
-
-export const factory = (env: RdfineEnvironment) => createFactory<HealthClub>([SportsActivityLocationMixin, HealthAndBeautyBusinessMixin, HealthClubMixin], { types: [schema.HealthClub] }, env);
+HealthClubMixin.createFactory = (env: RdfineEnvironment) => createFactory<HealthClub>([SportsActivityLocationMixin, HealthAndBeautyBusinessMixin, HealthClubMixin], { types: [schema.HealthClub] }, env)

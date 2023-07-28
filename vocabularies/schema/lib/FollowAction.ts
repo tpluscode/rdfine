@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface FollowAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   followee: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    FollowAction: Factory<Schema.FollowAction>;
+  }
+}
+
 export function FollowActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FollowAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class FollowActionClass extends InteractActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function FollowActionMixin<Base extends rdfine.Constructor>(Resource: Bas
   return FollowActionClass as any
 }
 FollowActionMixin.appliesTo = schema.FollowAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<FollowAction>([InteractActionMixin, FollowActionMixin], { types: [schema.FollowAction] }, env);
+FollowActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<FollowAction>([InteractActionMixin, FollowActionMixin], { types: [schema.FollowAction] }, env)

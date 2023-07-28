@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface LinkRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   inLanguage: Schema.Language<D> | undefined;
   inLanguageLiteral: string | undefined;
   linkRelationship: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    LinkRole: Factory<Schema.LinkRole>;
+  }
 }
 
 export function LinkRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LinkRole & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function LinkRoleMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return LinkRoleClass as any
 }
 LinkRoleMixin.appliesTo = schema.LinkRole
-
-export const factory = (env: RdfineEnvironment) => createFactory<LinkRole>([RoleMixin, LinkRoleMixin], { types: [schema.LinkRole] }, env);
+LinkRoleMixin.createFactory = (env: RdfineEnvironment) => createFactory<LinkRole>([RoleMixin, LinkRoleMixin], { types: [schema.LinkRole] }, env)

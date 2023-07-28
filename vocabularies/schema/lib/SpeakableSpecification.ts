@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface SpeakableSpecification<D extends RDF.DatasetCore = RDF.DatasetC
   xpath: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    SpeakableSpecification: Factory<Schema.SpeakableSpecification>;
+  }
+}
+
 export function SpeakableSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SpeakableSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class SpeakableSpecificationClass extends IntangibleMixin(Resource) {
@@ -24,5 +30,4 @@ export function SpeakableSpecificationMixin<Base extends rdfine.Constructor>(Res
   return SpeakableSpecificationClass as any
 }
 SpeakableSpecificationMixin.appliesTo = schema.SpeakableSpecification
-
-export const factory = (env: RdfineEnvironment) => createFactory<SpeakableSpecification>([IntangibleMixin, SpeakableSpecificationMixin], { types: [schema.SpeakableSpecification] }, env);
+SpeakableSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<SpeakableSpecification>([IntangibleMixin, SpeakableSpecificationMixin], { types: [schema.SpeakableSpecification] }, env)

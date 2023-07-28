@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface PlaceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   placeRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    PlaceRelation: Factory<Rico.PlaceRelation>;
+  }
+}
+
 export function PlaceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PlaceRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class PlaceRelationClass extends RelationMixin(Resource) {
@@ -24,5 +30,4 @@ export function PlaceRelationMixin<Base extends rdfine.Constructor>(Resource: Ba
   return PlaceRelationClass as any
 }
 PlaceRelationMixin.appliesTo = rico.PlaceRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<PlaceRelation>([RelationMixin, PlaceRelationMixin], { types: [rico.PlaceRelation] }, env);
+PlaceRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<PlaceRelation>([RelationMixin, PlaceRelationMixin], { types: [rico.PlaceRelation] }, env)

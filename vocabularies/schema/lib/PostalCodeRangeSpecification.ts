@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface PostalCodeRangeSpecification<D extends RDF.DatasetCore = RDF.Da
   postalCodeEnd: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    PostalCodeRangeSpecification: Factory<Schema.PostalCodeRangeSpecification>;
+  }
+}
+
 export function PostalCodeRangeSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PostalCodeRangeSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class PostalCodeRangeSpecificationClass extends StructuredValueMixin(Resource) {
@@ -24,5 +30,4 @@ export function PostalCodeRangeSpecificationMixin<Base extends rdfine.Constructo
   return PostalCodeRangeSpecificationClass as any
 }
 PostalCodeRangeSpecificationMixin.appliesTo = schema.PostalCodeRangeSpecification
-
-export const factory = (env: RdfineEnvironment) => createFactory<PostalCodeRangeSpecification>([StructuredValueMixin, PostalCodeRangeSpecificationMixin], { types: [schema.PostalCodeRangeSpecification] }, env);
+PostalCodeRangeSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<PostalCodeRangeSpecification>([StructuredValueMixin, PostalCodeRangeSpecificationMixin], { types: [schema.PostalCodeRangeSpecification] }, env)

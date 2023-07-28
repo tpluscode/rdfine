@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface ProductionTechniqueType<D extends RDF.DatasetCore = RDF.Dataset
   isProductionTechniqueTypeOf: Rico.Instantiation<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    ProductionTechniqueType: Factory<Rico.ProductionTechniqueType>;
+  }
+}
+
 export function ProductionTechniqueTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ProductionTechniqueType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class ProductionTechniqueTypeClass extends TypeMixin(Resource) {
@@ -21,5 +27,4 @@ export function ProductionTechniqueTypeMixin<Base extends rdfine.Constructor>(Re
   return ProductionTechniqueTypeClass as any
 }
 ProductionTechniqueTypeMixin.appliesTo = rico.ProductionTechniqueType
-
-export const factory = (env: RdfineEnvironment) => createFactory<ProductionTechniqueType>([TypeMixin, ProductionTechniqueTypeMixin], { types: [rico.ProductionTechniqueType] }, env);
+ProductionTechniqueTypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<ProductionTechniqueType>([TypeMixin, ProductionTechniqueTypeMixin], { types: [rico.ProductionTechniqueType] }, env)

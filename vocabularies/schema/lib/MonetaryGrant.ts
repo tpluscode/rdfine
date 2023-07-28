@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface MonetaryGrant<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   amount: Schema.MonetaryAmount<D> | undefined;
   amountLiteral: number | undefined;
   funder: Schema.Organization<D> | Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MonetaryGrant: Factory<Schema.MonetaryGrant>;
+  }
 }
 
 export function MonetaryGrantMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MonetaryGrant & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function MonetaryGrantMixin<Base extends rdfine.Constructor>(Resource: Ba
   return MonetaryGrantClass as any
 }
 MonetaryGrantMixin.appliesTo = schema.MonetaryGrant
-
-export const factory = (env: RdfineEnvironment) => createFactory<MonetaryGrant>([GrantMixin, MonetaryGrantMixin], { types: [schema.MonetaryGrant] }, env);
+MonetaryGrantMixin.createFactory = (env: RdfineEnvironment) => createFactory<MonetaryGrant>([GrantMixin, MonetaryGrantMixin], { types: [schema.MonetaryGrant] }, env)

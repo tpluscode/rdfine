@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -20,6 +20,12 @@ export interface Occupation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   qualifications: string | undefined;
   responsibilities: string | undefined;
   skills: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Occupation: Factory<Schema.Occupation>;
+  }
 }
 
 export function OccupationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Occupation & RdfResourceCore> & Base {
@@ -51,5 +57,4 @@ export function OccupationMixin<Base extends rdfine.Constructor>(Resource: Base)
   return OccupationClass as any
 }
 OccupationMixin.appliesTo = schema.Occupation
-
-export const factory = (env: RdfineEnvironment) => createFactory<Occupation>([IntangibleMixin, OccupationMixin], { types: [schema.Occupation] }, env);
+OccupationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Occupation>([IntangibleMixin, OccupationMixin], { types: [schema.Occupation] }, env)

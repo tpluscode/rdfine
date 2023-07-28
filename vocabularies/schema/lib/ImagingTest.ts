@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface ImagingTest<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   imagingTechnique: Schema.MedicalImagingTechnique | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ImagingTest: Factory<Schema.ImagingTest>;
+  }
+}
+
 export function ImagingTestMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ImagingTest & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ImagingTestClass extends MedicalTestMixin(Resource) {
@@ -21,5 +27,4 @@ export function ImagingTestMixin<Base extends rdfine.Constructor>(Resource: Base
   return ImagingTestClass as any
 }
 ImagingTestMixin.appliesTo = schema.ImagingTest
-
-export const factory = (env: RdfineEnvironment) => createFactory<ImagingTest>([MedicalTestMixin, ImagingTestMixin], { types: [schema.ImagingTest] }, env);
+ImagingTestMixin.createFactory = (env: RdfineEnvironment) => createFactory<ImagingTest>([MedicalTestMixin, ImagingTestMixin], { types: [schema.ImagingTest] }, env)

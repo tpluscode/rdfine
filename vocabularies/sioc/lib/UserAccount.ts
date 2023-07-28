@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -25,6 +25,12 @@ export interface UserAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   'modifier_of': RDF.Term | undefined;
   'owner_of': RDF.Term | undefined;
   'subscriber_of': Sioc.Container<D> | undefined;
+}
+
+declare global {
+  interface SiocVocabulary {
+    UserAccount: Factory<Sioc.UserAccount>;
+  }
 }
 
 export function UserAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<UserAccount & RdfResourceCore> & Base {
@@ -62,5 +68,4 @@ export function UserAccountMixin<Base extends rdfine.Constructor>(Resource: Base
   return UserAccountClass as any
 }
 UserAccountMixin.appliesTo = sioc.UserAccount
-
-export const factory = (env: RdfineEnvironment) => createFactory<UserAccount>([FoafOnlineAccountMixin, UserAccountMixin], { types: [sioc.UserAccount] }, env);
+UserAccountMixin.createFactory = (env: RdfineEnvironment) => createFactory<UserAccount>([FoafOnlineAccountMixin, UserAccountMixin], { types: [sioc.UserAccount] }, env)

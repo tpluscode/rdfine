@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { TradeActionMixin } from './TradeAction.js';
 export interface QuoteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    QuoteAction: Factory<Schema.QuoteAction>;
+  }
+}
+
 export function QuoteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<QuoteAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class QuoteActionClass extends TradeActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function QuoteActionMixin<Base extends rdfine.Constructor>(Resource: Base
   return QuoteActionClass as any
 }
 QuoteActionMixin.appliesTo = schema.QuoteAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<QuoteAction>([TradeActionMixin, QuoteActionMixin], { types: [schema.QuoteAction] }, env);
+QuoteActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<QuoteAction>([TradeActionMixin, QuoteActionMixin], { types: [schema.QuoteAction] }, env)

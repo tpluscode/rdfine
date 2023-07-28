@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ObjectMixin } from './Object.js';
 export interface Group<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface AsVocabulary {
+    Group: Factory<As.Group>;
+  }
+}
+
 export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Group & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class GroupClass extends ObjectMixin(Resource) {
@@ -18,5 +24,4 @@ export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return GroupClass as any
 }
 GroupMixin.appliesTo = as.Group
-
-export const factory = (env: RdfineEnvironment) => createFactory<Group>([ObjectMixin, GroupMixin], { types: [as.Group] }, env);
+GroupMixin.createFactory = (env: RdfineEnvironment) => createFactory<Group>([ObjectMixin, GroupMixin], { types: [as.Group] }, env)

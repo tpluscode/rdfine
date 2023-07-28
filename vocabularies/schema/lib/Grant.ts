@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Grant<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   fundedItem: Schema.BioChemEntity<D> | Schema.CreativeWork<D> | Schema.Event<D> | Schema.MedicalEntity<D> | Schema.Organization<D> | Schema.Person<D> | Schema.Product<D> | undefined;
   funder: Schema.Organization<D> | Schema.Person<D> | undefined;
   sponsor: Schema.Organization<D> | Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Grant: Factory<Schema.Grant>;
+  }
 }
 
 export function GrantMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Grant & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function GrantMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return GrantClass as any
 }
 GrantMixin.appliesTo = schema.Grant
-
-export const factory = (env: RdfineEnvironment) => createFactory<Grant>([IntangibleMixin, GrantMixin], { types: [schema.Grant] }, env);
+GrantMixin.createFactory = (env: RdfineEnvironment) => createFactory<Grant>([IntangibleMixin, GrantMixin], { types: [schema.Grant] }, env)

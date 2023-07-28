@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { TestCaseMixin } from './TestCase.js';
 export interface ActionTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.TestCase<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    ActionTestCase: Factory<Dash.ActionTestCase>;
+  }
+}
+
 export function ActionTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ActionTestCase & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class ActionTestCaseClass extends TestCaseMixin(Resource) {
@@ -18,5 +24,4 @@ export function ActionTestCaseMixin<Base extends rdfine.Constructor>(Resource: B
   return ActionTestCaseClass as any
 }
 ActionTestCaseMixin.appliesTo = dash.ActionTestCase
-
-export const factory = (env: RdfineEnvironment) => createFactory<ActionTestCase>([TestCaseMixin, ActionTestCaseMixin], { types: [dash.ActionTestCase] }, env);
+ActionTestCaseMixin.createFactory = (env: RdfineEnvironment) => createFactory<ActionTestCase>([TestCaseMixin, ActionTestCaseMixin], { types: [dash.ActionTestCase] }, env)

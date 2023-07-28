@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface ReceiveAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   sender: Schema.Audience<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ReceiveAction: Factory<Schema.ReceiveAction>;
+  }
+}
+
 export function ReceiveActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReceiveAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ReceiveActionClass extends TransferActionMixin(Resource) {
@@ -24,5 +30,4 @@ export function ReceiveActionMixin<Base extends rdfine.Constructor>(Resource: Ba
   return ReceiveActionClass as any
 }
 ReceiveActionMixin.appliesTo = schema.ReceiveAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<ReceiveAction>([TransferActionMixin, ReceiveActionMixin], { types: [schema.ReceiveAction] }, env);
+ReceiveActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<ReceiveAction>([TransferActionMixin, ReceiveActionMixin], { types: [schema.ReceiveAction] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ export interface ConceptScheme<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   hasTopConcept: Skos.Concept<D> | undefined;
 }
 
+declare global {
+  interface SkosVocabulary {
+    ConceptScheme: Factory<Skos.ConceptScheme>;
+  }
+}
+
 export function ConceptSchemeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ConceptScheme & RdfResourceCore> & Base {
   @rdfine.namespace(skos)
   class ConceptSchemeClass extends Resource {
@@ -20,5 +26,4 @@ export function ConceptSchemeMixin<Base extends rdfine.Constructor>(Resource: Ba
   return ConceptSchemeClass as any
 }
 ConceptSchemeMixin.appliesTo = skos.ConceptScheme
-
-export const factory = (env: RdfineEnvironment) => createFactory<ConceptScheme>([ConceptSchemeMixin], { types: [skos.ConceptScheme] }, env);
+ConceptSchemeMixin.createFactory = (env: RdfineEnvironment) => createFactory<ConceptScheme>([ConceptSchemeMixin], { types: [skos.ConceptScheme] }, env)

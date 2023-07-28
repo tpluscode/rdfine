@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,6 +15,12 @@ export interface QuantitativeValueDistribution<D extends RDF.DatasetCore = RDF.D
   'percentile25': number | undefined;
   'percentile75': number | undefined;
   'percentile90': number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    QuantitativeValueDistribution: Factory<Schema.QuantitativeValueDistribution>;
+  }
 }
 
 export function QuantitativeValueDistributionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<QuantitativeValueDistribution & RdfResourceCore> & Base {
@@ -36,5 +42,4 @@ export function QuantitativeValueDistributionMixin<Base extends rdfine.Construct
   return QuantitativeValueDistributionClass as any
 }
 QuantitativeValueDistributionMixin.appliesTo = schema.QuantitativeValueDistribution
-
-export const factory = (env: RdfineEnvironment) => createFactory<QuantitativeValueDistribution>([StructuredValueMixin, QuantitativeValueDistributionMixin], { types: [schema.QuantitativeValueDistribution] }, env);
+QuantitativeValueDistributionMixin.createFactory = (env: RdfineEnvironment) => createFactory<QuantitativeValueDistribution>([StructuredValueMixin, QuantitativeValueDistributionMixin], { types: [schema.QuantitativeValueDistribution] }, env)

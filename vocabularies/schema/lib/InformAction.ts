@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface InformAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   event: Schema.Event<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    InformAction: Factory<Schema.InformAction>;
+  }
+}
+
 export function InformActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InformAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class InformActionClass extends CommunicateActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function InformActionMixin<Base extends rdfine.Constructor>(Resource: Bas
   return InformActionClass as any
 }
 InformActionMixin.appliesTo = schema.InformAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<InformAction>([CommunicateActionMixin, InformActionMixin], { types: [schema.InformAction] }, env);
+InformActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<InformAction>([CommunicateActionMixin, InformActionMixin], { types: [schema.InformAction] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -21,6 +21,12 @@ export interface Dialect<D extends RDF.DatasetCore = RDF.DatasetCore> extends rd
   skipInitialSpace: boolean | undefined;
   skipRows: number | undefined;
   trim: boolean | undefined;
+}
+
+declare global {
+  interface CsvwVocabulary {
+    Dialect: Factory<Csvw.Dialect>;
+  }
 }
 
 export function DialectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Dialect & RdfResourceCore> & Base {
@@ -56,5 +62,4 @@ export function DialectMixin<Base extends rdfine.Constructor>(Resource: Base): r
   return DialectClass as any
 }
 DialectMixin.appliesTo = csvw.Dialect
-
-export const factory = (env: RdfineEnvironment) => createFactory<Dialect>([DialectMixin], { types: [csvw.Dialect] }, env);
+DialectMixin.createFactory = (env: RdfineEnvironment) => createFactory<Dialect>([DialectMixin], { types: [csvw.Dialect] }, env)

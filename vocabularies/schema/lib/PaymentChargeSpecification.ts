@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface PaymentChargeSpecification<D extends RDF.DatasetCore = RDF.Data
   appliesToPaymentMethod: Schema.PaymentMethod | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    PaymentChargeSpecification: Factory<Schema.PaymentChargeSpecification>;
+  }
+}
+
 export function PaymentChargeSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PaymentChargeSpecification & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class PaymentChargeSpecificationClass extends PriceSpecificationMixin(Resource) {
@@ -24,5 +30,4 @@ export function PaymentChargeSpecificationMixin<Base extends rdfine.Constructor>
   return PaymentChargeSpecificationClass as any
 }
 PaymentChargeSpecificationMixin.appliesTo = schema.PaymentChargeSpecification
-
-export const factory = (env: RdfineEnvironment) => createFactory<PaymentChargeSpecification>([PriceSpecificationMixin, PaymentChargeSpecificationMixin], { types: [schema.PaymentChargeSpecification] }, env);
+PaymentChargeSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<PaymentChargeSpecification>([PriceSpecificationMixin, PaymentChargeSpecificationMixin], { types: [schema.PaymentChargeSpecification] }, env)

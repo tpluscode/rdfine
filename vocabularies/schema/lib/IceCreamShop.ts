@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { FoodEstablishmentMixin } from './FoodEstablishment.js';
 export interface IceCreamShop<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FoodEstablishment<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    IceCreamShop: Factory<Schema.IceCreamShop>;
+  }
+}
+
 export function IceCreamShopMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IceCreamShop & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class IceCreamShopClass extends FoodEstablishmentMixin(Resource) {
@@ -18,5 +24,4 @@ export function IceCreamShopMixin<Base extends rdfine.Constructor>(Resource: Bas
   return IceCreamShopClass as any
 }
 IceCreamShopMixin.appliesTo = schema.IceCreamShop
-
-export const factory = (env: RdfineEnvironment) => createFactory<IceCreamShop>([FoodEstablishmentMixin, IceCreamShopMixin], { types: [schema.IceCreamShop] }, env);
+IceCreamShopMixin.createFactory = (env: RdfineEnvironment) => createFactory<IceCreamShop>([FoodEstablishmentMixin, IceCreamShopMixin], { types: [schema.IceCreamShop] }, env)

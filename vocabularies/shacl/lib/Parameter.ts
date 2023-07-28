@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Parameter<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   optional: boolean | undefined;
 }
 
+declare global {
+  interface ShVocabulary {
+    Parameter: Factory<Sh.Parameter>;
+  }
+}
+
 export function ParameterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Parameter & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class ParameterClass extends PropertyShapeMixin(Resource) {
@@ -21,5 +27,4 @@ export function ParameterMixin<Base extends rdfine.Constructor>(Resource: Base):
   return ParameterClass as any
 }
 ParameterMixin.appliesTo = sh.Parameter
-
-export const factory = (env: RdfineEnvironment) => createFactory<Parameter>([PropertyShapeMixin, ParameterMixin], { types: [sh.Parameter] }, env);
+ParameterMixin.createFactory = (env: RdfineEnvironment) => createFactory<Parameter>([PropertyShapeMixin, ParameterMixin], { types: [sh.Parameter] }, env)

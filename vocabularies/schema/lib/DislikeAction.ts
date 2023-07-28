@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ReactActionMixin } from './ReactAction.js';
 export interface DislikeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ReactAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    DislikeAction: Factory<Schema.DislikeAction>;
+  }
+}
+
 export function DislikeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DislikeAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class DislikeActionClass extends ReactActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function DislikeActionMixin<Base extends rdfine.Constructor>(Resource: Ba
   return DislikeActionClass as any
 }
 DislikeActionMixin.appliesTo = schema.DislikeAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<DislikeAction>([ReactActionMixin, DislikeActionMixin], { types: [schema.DislikeAction] }, env);
+DislikeActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<DislikeAction>([ReactActionMixin, DislikeActionMixin], { types: [schema.DislikeAction] }, env)

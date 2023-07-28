@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface AgentControlRelation<D extends RDF.DatasetCore = RDF.DatasetCor
   agentControlRelationHasTarget: Rico.Agent<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    AgentControlRelation: Factory<Rico.AgentControlRelation>;
+  }
+}
+
 export function AgentControlRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentControlRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class AgentControlRelationClass extends AuthorityRelationMixin(AgentHierarchicalRelationMixin(Resource)) {
@@ -25,5 +31,4 @@ export function AgentControlRelationMixin<Base extends rdfine.Constructor>(Resou
   return AgentControlRelationClass as any
 }
 AgentControlRelationMixin.appliesTo = rico.AgentControlRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<AgentControlRelation>([AuthorityRelationMixin, AgentHierarchicalRelationMixin, AgentControlRelationMixin], { types: [rico.AgentControlRelation] }, env);
+AgentControlRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<AgentControlRelation>([AuthorityRelationMixin, AgentHierarchicalRelationMixin, AgentControlRelationMixin], { types: [rico.AgentControlRelation] }, env)

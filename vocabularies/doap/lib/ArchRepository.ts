@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface ArchRepository<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   module: RDF.Term | undefined;
 }
 
+declare global {
+  interface DoapVocabulary {
+    ArchRepository: Factory<Doap.ArchRepository>;
+  }
+}
+
 export function ArchRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ArchRepository & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
   class ArchRepositoryClass extends RepositoryMixin(Resource) {
@@ -21,5 +27,4 @@ export function ArchRepositoryMixin<Base extends rdfine.Constructor>(Resource: B
   return ArchRepositoryClass as any
 }
 ArchRepositoryMixin.appliesTo = doap.ArchRepository
-
-export const factory = (env: RdfineEnvironment) => createFactory<ArchRepository>([RepositoryMixin, ArchRepositoryMixin], { types: [doap.ArchRepository] }, env);
+ArchRepositoryMixin.createFactory = (env: RdfineEnvironment) => createFactory<ArchRepository>([RepositoryMixin, ArchRepositoryMixin], { types: [doap.ArchRepository] }, env)

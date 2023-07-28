@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface WarrantyPromise<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   warrantyScope: Schema.WarrantyScope | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    WarrantyPromise: Factory<Schema.WarrantyPromise>;
+  }
+}
+
 export function WarrantyPromiseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WarrantyPromise & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class WarrantyPromiseClass extends StructuredValueMixin(Resource) {
@@ -24,5 +30,4 @@ export function WarrantyPromiseMixin<Base extends rdfine.Constructor>(Resource: 
   return WarrantyPromiseClass as any
 }
 WarrantyPromiseMixin.appliesTo = schema.WarrantyPromise
-
-export const factory = (env: RdfineEnvironment) => createFactory<WarrantyPromise>([StructuredValueMixin, WarrantyPromiseMixin], { types: [schema.WarrantyPromise] }, env);
+WarrantyPromiseMixin.createFactory = (env: RdfineEnvironment) => createFactory<WarrantyPromise>([StructuredValueMixin, WarrantyPromiseMixin], { types: [schema.WarrantyPromise] }, env)

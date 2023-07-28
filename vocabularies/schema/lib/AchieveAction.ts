@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ActionMixin } from './Action.js';
 export interface AchieveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    AchieveAction: Factory<Schema.AchieveAction>;
+  }
+}
+
 export function AchieveActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AchieveAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class AchieveActionClass extends ActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function AchieveActionMixin<Base extends rdfine.Constructor>(Resource: Ba
   return AchieveActionClass as any
 }
 AchieveActionMixin.appliesTo = schema.AchieveAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<AchieveAction>([ActionMixin, AchieveActionMixin], { types: [schema.AchieveAction] }, env);
+AchieveActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<AchieveAction>([ActionMixin, AchieveActionMixin], { types: [schema.AchieveAction] }, env)

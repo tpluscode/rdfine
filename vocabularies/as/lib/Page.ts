@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ObjectMixin } from './Object.js';
 export interface Page<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface AsVocabulary {
+    Page: Factory<As.Page>;
+  }
+}
+
 export function PageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Page & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class PageClass extends ObjectMixin(Resource) {
@@ -18,5 +24,4 @@ export function PageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return PageClass as any
 }
 PageMixin.appliesTo = as.Page
-
-export const factory = (env: RdfineEnvironment) => createFactory<Page>([ObjectMixin, PageMixin], { types: [as.Page] }, env);
+PageMixin.createFactory = (env: RdfineEnvironment) => createFactory<Page>([ObjectMixin, PageMixin], { types: [as.Page] }, env)

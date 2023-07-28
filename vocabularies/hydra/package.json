@@ -78,15 +78,13 @@
   },
   "devDependencies": {
     "@rdfine/generator": "^0.7.0",
-    "@rdfjs/dataset": "^2",
-    "@rdfjs/environment": "^0.1.2",
+    "@rdfine/test-support": "*",
     "@rdfjs/namespace": "^2",
     "@rdfjs/parser-n3": "^2",
-    "@rdfjs/term-set": "^2",
     "@tpluscode/rdf-string": "^1.0.3",
     "@zazuko/prefixes": ">=1",
     "chai": "^4.3.7",
-    "clownface": "^1",
+    "clownface": "^2.0.0",
     "rdf-ext": "^2",
     "string-to-stream": "^3.0.1"
   },

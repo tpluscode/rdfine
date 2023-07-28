@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface ItemList<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   itemListOrder: string | undefined;
   itemListOrderTerm: Schema.ItemListOrderType | undefined;
   numberOfItems: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ItemList: Factory<Schema.ItemList>;
+  }
 }
 
 export function ItemListMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ItemList & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function ItemListMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return ItemListClass as any
 }
 ItemListMixin.appliesTo = schema.ItemList
-
-export const factory = (env: RdfineEnvironment) => createFactory<ItemList>([IntangibleMixin, ItemListMixin], { types: [schema.ItemList] }, env);
+ItemListMixin.createFactory = (env: RdfineEnvironment) => createFactory<ItemList>([IntangibleMixin, ItemListMixin], { types: [schema.ItemList] }, env)

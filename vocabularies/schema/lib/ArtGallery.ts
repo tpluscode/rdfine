@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { EntertainmentBusinessMixin } from './EntertainmentBusiness.js';
 export interface ArtGallery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.EntertainmentBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ArtGallery: Factory<Schema.ArtGallery>;
+  }
+}
+
 export function ArtGalleryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ArtGallery & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ArtGalleryClass extends EntertainmentBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function ArtGalleryMixin<Base extends rdfine.Constructor>(Resource: Base)
   return ArtGalleryClass as any
 }
 ArtGalleryMixin.appliesTo = schema.ArtGallery
-
-export const factory = (env: RdfineEnvironment) => createFactory<ArtGallery>([EntertainmentBusinessMixin, ArtGalleryMixin], { types: [schema.ArtGallery] }, env);
+ArtGalleryMixin.createFactory = (env: RdfineEnvironment) => createFactory<ArtGallery>([EntertainmentBusinessMixin, ArtGalleryMixin], { types: [schema.ArtGallery] }, env)

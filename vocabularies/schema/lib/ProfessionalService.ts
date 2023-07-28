@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 export interface ProfessionalService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ProfessionalService: Factory<Schema.ProfessionalService>;
+  }
+}
+
 export function ProfessionalServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ProfessionalService & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ProfessionalServiceClass extends LocalBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function ProfessionalServiceMixin<Base extends rdfine.Constructor>(Resour
   return ProfessionalServiceClass as any
 }
 ProfessionalServiceMixin.appliesTo = schema.ProfessionalService
-
-export const factory = (env: RdfineEnvironment) => createFactory<ProfessionalService>([LocalBusinessMixin, ProfessionalServiceMixin], { types: [schema.ProfessionalService] }, env);
+ProfessionalServiceMixin.createFactory = (env: RdfineEnvironment) => createFactory<ProfessionalService>([LocalBusinessMixin, ProfessionalServiceMixin], { types: [schema.ProfessionalService] }, env)

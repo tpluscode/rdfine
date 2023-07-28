@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface LymphaticVessel<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   originatesFrom: Schema.Vessel<D> | undefined;
   regionDrained: Schema.AnatomicalStructure<D> | Schema.AnatomicalSystem<D> | undefined;
   runsTo: Schema.Vessel<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    LymphaticVessel: Factory<Schema.LymphaticVessel>;
+  }
 }
 
 export function LymphaticVesselMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LymphaticVessel & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function LymphaticVesselMixin<Base extends rdfine.Constructor>(Resource: 
   return LymphaticVesselClass as any
 }
 LymphaticVesselMixin.appliesTo = schema.LymphaticVessel
-
-export const factory = (env: RdfineEnvironment) => createFactory<LymphaticVessel>([VesselMixin, LymphaticVesselMixin], { types: [schema.LymphaticVessel] }, env);
+LymphaticVesselMixin.createFactory = (env: RdfineEnvironment) => createFactory<LymphaticVessel>([VesselMixin, LymphaticVesselMixin], { types: [schema.LymphaticVessel] }, env)

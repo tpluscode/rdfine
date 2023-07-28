@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface Target<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ShVocabulary {
+    Target: Factory<Sh.Target>;
+  }
+}
+
 export function TargetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Target & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class TargetClass extends RdfsResourceMixin(Resource) {
@@ -19,5 +25,4 @@ export function TargetMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return TargetClass as any
 }
 TargetMixin.appliesTo = sh.Target
-
-export const factory = (env: RdfineEnvironment) => createFactory<Target>([RdfsResourceMixin, TargetMixin], { types: [sh.Target] }, env);
+TargetMixin.createFactory = (env: RdfineEnvironment) => createFactory<Target>([RdfsResourceMixin, TargetMixin], { types: [sh.Target] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface SportsEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   homeTeam: Schema.Person<D> | Schema.SportsTeam<D> | undefined;
   sport: string | undefined;
   sportTerm: RDF.NamedNode | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    SportsEvent: Factory<Schema.SportsEvent>;
+  }
 }
 
 export function SportsEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SportsEvent & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function SportsEventMixin<Base extends rdfine.Constructor>(Resource: Base
   return SportsEventClass as any
 }
 SportsEventMixin.appliesTo = schema.SportsEvent
-
-export const factory = (env: RdfineEnvironment) => createFactory<SportsEvent>([EventMixin, SportsEventMixin], { types: [schema.SportsEvent] }, env);
+SportsEventMixin.createFactory = (env: RdfineEnvironment) => createFactory<SportsEvent>([EventMixin, SportsEventMixin], { types: [schema.SportsEvent] }, env)

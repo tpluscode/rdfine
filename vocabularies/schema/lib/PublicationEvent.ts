@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface PublicationEvent<D extends RDF.DatasetCore = RDF.DatasetCore> e
   free: boolean | undefined;
   publishedBy: Schema.Organization<D> | Schema.Person<D> | undefined;
   publishedOn: Schema.BroadcastService<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    PublicationEvent: Factory<Schema.PublicationEvent>;
+  }
 }
 
 export function PublicationEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PublicationEvent & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function PublicationEventMixin<Base extends rdfine.Constructor>(Resource:
   return PublicationEventClass as any
 }
 PublicationEventMixin.appliesTo = schema.PublicationEvent
-
-export const factory = (env: RdfineEnvironment) => createFactory<PublicationEvent>([EventMixin, PublicationEventMixin], { types: [schema.PublicationEvent] }, env);
+PublicationEventMixin.createFactory = (env: RdfineEnvironment) => createFactory<PublicationEvent>([EventMixin, PublicationEventMixin], { types: [schema.PublicationEvent] }, env)

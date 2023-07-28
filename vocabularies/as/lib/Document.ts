@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ObjectMixin } from './Object.js';
 export interface Document<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface AsVocabulary {
+    Document: Factory<As.Document>;
+  }
+}
+
 export function DocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Document & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class DocumentClass extends ObjectMixin(Resource) {
@@ -18,5 +24,4 @@ export function DocumentMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return DocumentClass as any
 }
 DocumentMixin.appliesTo = as.Document
-
-export const factory = (env: RdfineEnvironment) => createFactory<Document>([ObjectMixin, DocumentMixin], { types: [as.Document] }, env);
+DocumentMixin.createFactory = (env: RdfineEnvironment) => createFactory<Document>([ObjectMixin, DocumentMixin], { types: [as.Document] }, env)

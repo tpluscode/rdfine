@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { PerformingGroupMixin } from './PerformingGroup.js';
 export interface TheaterGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PerformingGroup<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    TheaterGroup: Factory<Schema.TheaterGroup>;
+  }
+}
+
 export function TheaterGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TheaterGroup & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class TheaterGroupClass extends PerformingGroupMixin(Resource) {
@@ -18,5 +24,4 @@ export function TheaterGroupMixin<Base extends rdfine.Constructor>(Resource: Bas
   return TheaterGroupClass as any
 }
 TheaterGroupMixin.appliesTo = schema.TheaterGroup
-
-export const factory = (env: RdfineEnvironment) => createFactory<TheaterGroup>([PerformingGroupMixin, TheaterGroupMixin], { types: [schema.TheaterGroup] }, env);
+TheaterGroupMixin.createFactory = (env: RdfineEnvironment) => createFactory<TheaterGroup>([PerformingGroupMixin, TheaterGroupMixin], { types: [schema.TheaterGroup] }, env)

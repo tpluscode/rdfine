@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface MedicalRiskScore<D extends RDF.DatasetCore = RDF.DatasetCore> e
   algorithm: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MedicalRiskScore: Factory<Schema.MedicalRiskScore>;
+  }
+}
+
 export function MedicalRiskScoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalRiskScore & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MedicalRiskScoreClass extends MedicalRiskEstimatorMixin(Resource) {
@@ -21,5 +27,4 @@ export function MedicalRiskScoreMixin<Base extends rdfine.Constructor>(Resource:
   return MedicalRiskScoreClass as any
 }
 MedicalRiskScoreMixin.appliesTo = schema.MedicalRiskScore
-
-export const factory = (env: RdfineEnvironment) => createFactory<MedicalRiskScore>([MedicalRiskEstimatorMixin, MedicalRiskScoreMixin], { types: [schema.MedicalRiskScore] }, env);
+MedicalRiskScoreMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalRiskScore>([MedicalRiskEstimatorMixin, MedicalRiskScoreMixin], { types: [schema.MedicalRiskScore] }, env)

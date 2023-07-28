@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface RecordResourceGeneticRelation<D extends RDF.DatasetCore = RDF.D
   recordResourceGeneticRelationConnects: Rico.RecordResource<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    RecordResourceGeneticRelation: Factory<Rico.RecordResourceGeneticRelation>;
+  }
+}
+
 export function RecordResourceGeneticRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordResourceGeneticRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class RecordResourceGeneticRelationClass extends RecordResourceToRecordResourceRelationMixin(Resource) {
@@ -21,5 +27,4 @@ export function RecordResourceGeneticRelationMixin<Base extends rdfine.Construct
   return RecordResourceGeneticRelationClass as any
 }
 RecordResourceGeneticRelationMixin.appliesTo = rico.RecordResourceGeneticRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<RecordResourceGeneticRelation>([RecordResourceToRecordResourceRelationMixin, RecordResourceGeneticRelationMixin], { types: [rico.RecordResourceGeneticRelation] }, env);
+RecordResourceGeneticRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<RecordResourceGeneticRelation>([RecordResourceToRecordResourceRelationMixin, RecordResourceGeneticRelationMixin], { types: [rico.RecordResourceGeneticRelation] }, env)

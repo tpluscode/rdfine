@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { StoreMixin } from './Store.js';
 export interface MusicStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MusicStore: Factory<Schema.MusicStore>;
+  }
+}
+
 export function MusicStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MusicStore & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MusicStoreClass extends StoreMixin(Resource) {
@@ -18,5 +24,4 @@ export function MusicStoreMixin<Base extends rdfine.Constructor>(Resource: Base)
   return MusicStoreClass as any
 }
 MusicStoreMixin.appliesTo = schema.MusicStore
-
-export const factory = (env: RdfineEnvironment) => createFactory<MusicStore>([StoreMixin, MusicStoreMixin], { types: [schema.MusicStore] }, env);
+MusicStoreMixin.createFactory = (env: RdfineEnvironment) => createFactory<MusicStore>([StoreMixin, MusicStoreMixin], { types: [schema.MusicStore] }, env)

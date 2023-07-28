@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ActivityMixin } from './Activity.js';
 export interface View<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface AsVocabulary {
+    View: Factory<As.View>;
+  }
+}
+
 export function ViewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<View & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class ViewClass extends ActivityMixin(Resource) {
@@ -18,5 +24,4 @@ export function ViewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return ViewClass as any
 }
 ViewMixin.appliesTo = as.View
-
-export const factory = (env: RdfineEnvironment) => createFactory<View>([ActivityMixin, ViewMixin], { types: [as.View] }, env);
+ViewMixin.createFactory = (env: RdfineEnvironment) => createFactory<View>([ActivityMixin, ViewMixin], { types: [as.View] }, env)

@@ -1,7 +1,7 @@
 import type { NamedNode } from '@rdfjs/types'
 import cf, { GraphPointer } from 'clownface'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
-import {RdfineEnvironment} from '../environment';
+import { RdfineEnvironment } from '../environment.js'
 
 export interface EdgeTraversal {
   (subject: GraphPointer): GraphPointer[]
@@ -10,7 +10,7 @@ export interface EdgeTraversal {
 }
 
 export type PropRef = string | NamedNode
-export type EdgeTraversalFactory = (this: RdfineEnvironment, ns: NamespaceBuilder) => EdgeTraversal
+export type EdgeTraversalFactory = (this: RdfineEnvironment, ns: NamespaceBuilder | undefined) => EdgeTraversal
 
 function namespacedPredicate(term: string, namespace?: NamespaceBuilder): NamedNode {
   if (!namespace) {
@@ -72,18 +72,18 @@ function anyGraph(prop: NamedNode): EdgeTraversal {
   return edge
 }
 
-export function crossBoundaries(this: RdfineEnvironment,prop: PropRef): EdgeTraversalFactory {
-  return ns => anyGraph(predicate(prop, this, ns))
+export function crossBoundaries(prop: PropRef): EdgeTraversalFactory {
+  return function (this: RdfineEnvironment, ns) {
+    return anyGraph(predicate(prop, this, ns))
+  }
 }
 
-export function toEdgeTraversals({ constructor }: any, path: (PropRef | EdgeTraversalFactory)[]): EdgeTraversal[] {
-  const namespace = constructor.__ns
-
+export function toEdgeTraversals(namespace: NamespaceBuilder | undefined, env: RdfineEnvironment, path: (PropRef | EdgeTraversalFactory)[]): EdgeTraversal[] {
   return path.map(prop => {
     if (typeof prop === 'function') {
-      return prop.call(constructor.env, namespace)
+      return prop.call(env, namespace)
     }
 
-    return sameGraph(predicate(prop, constructor.env, namespace))
+    return sameGraph(predicate(prop, env, namespace))
   })
 }

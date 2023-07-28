@@ -1,18 +1,13 @@
 import $rdf from 'rdf-ext';
 import clownface from 'clownface';
 import RDF from '@rdfjs/data-model';
-import { fromPointer, NodeShapeMixin } from '../lib/NodeShape.js';
-import RdfResourceImpl from '@tpluscode/rdfine';
-import { PropertyShapeMixin } from '../lib/PropertyShape.js';
 import { rdfs } from '@tpluscode/rdf-ns-builders';
 import chai, { expect } from 'chai';
 import ns from '@rdfjs/namespace';
 import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot';
+import environment from './environment.js';
 
 const ex = ns('http://example.com/')
-
-RdfResourceImpl.factory.addMixin(NodeShapeMixin)
-RdfResourceImpl.factory.addMixin(PropertyShapeMixin)
 
 describe('NodeShape', () => {
   chai.use(jestSnapshotPlugin())
@@ -24,7 +19,7 @@ describe('NodeShape', () => {
       const graph = clownface({ dataset, term: RDF.namedNode('http://example.com/shape') })
 
       // when
-      fromPointer(graph, {
+      environment.rdfine.sh.NodeShape(graph, {
         property: {
           node: {
             property: [{

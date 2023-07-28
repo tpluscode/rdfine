@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Identifier<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   isOrWasIdentifierOf: Rico.Thing<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    Identifier: Factory<Rico.Identifier>;
+  }
+}
+
 export function IdentifierMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Identifier & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class IdentifierClass extends AppellationMixin(Resource) {
@@ -24,5 +30,4 @@ export function IdentifierMixin<Base extends rdfine.Constructor>(Resource: Base)
   return IdentifierClass as any
 }
 IdentifierMixin.appliesTo = rico.Identifier
-
-export const factory = (env: RdfineEnvironment) => createFactory<Identifier>([AppellationMixin, IdentifierMixin], { types: [rico.Identifier] }, env);
+IdentifierMixin.createFactory = (env: RdfineEnvironment) => createFactory<Identifier>([AppellationMixin, IdentifierMixin], { types: [rico.Identifier] }, env)

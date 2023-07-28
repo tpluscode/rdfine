@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { DigitalDocumentMixin } from './DigitalDocument.js';
 export interface SpreadsheetDigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DigitalDocument<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    SpreadsheetDigitalDocument: Factory<Schema.SpreadsheetDigitalDocument>;
+  }
+}
+
 export function SpreadsheetDigitalDocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SpreadsheetDigitalDocument & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class SpreadsheetDigitalDocumentClass extends DigitalDocumentMixin(Resource) {
@@ -18,5 +24,4 @@ export function SpreadsheetDigitalDocumentMixin<Base extends rdfine.Constructor>
   return SpreadsheetDigitalDocumentClass as any
 }
 SpreadsheetDigitalDocumentMixin.appliesTo = schema.SpreadsheetDigitalDocument
-
-export const factory = (env: RdfineEnvironment) => createFactory<SpreadsheetDigitalDocument>([DigitalDocumentMixin, SpreadsheetDigitalDocumentMixin], { types: [schema.SpreadsheetDigitalDocument] }, env);
+SpreadsheetDigitalDocumentMixin.createFactory = (env: RdfineEnvironment) => createFactory<SpreadsheetDigitalDocument>([DigitalDocumentMixin, SpreadsheetDigitalDocumentMixin], { types: [schema.SpreadsheetDigitalDocument] }, env)

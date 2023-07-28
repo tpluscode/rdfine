@@ -1,15 +1,15 @@
-import {Environment} from 'rdf-ext';
-import {RdfineFactory} from '../environment';
-import {expect} from 'chai';
+import { Environment } from 'rdf-ext'
+import { expect } from 'chai'
+import { RdfineFactory } from '../environment.js'
 
 describe('environment', () => {
   it('creates an empty environment', () => {
     // given
     const env = new Environment([
-      RdfineFactory
+      RdfineFactory,
     ])
 
     // then
-    expect(env.rdfine._factory)
+    expect(Object.keys(env.rdfine)).to.eq(['Resource'])
   })
 })

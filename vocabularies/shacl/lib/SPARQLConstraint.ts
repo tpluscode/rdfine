@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable.js';
 export interface SPARQLConstraint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLSelectExecutable<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ShVocabulary {
+    SPARQLConstraint: Factory<Sh.SPARQLConstraint>;
+  }
+}
+
 export function SPARQLConstraintMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLConstraint & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class SPARQLConstraintClass extends SPARQLSelectExecutableMixin(Resource) {
@@ -18,5 +24,4 @@ export function SPARQLConstraintMixin<Base extends rdfine.Constructor>(Resource:
   return SPARQLConstraintClass as any
 }
 SPARQLConstraintMixin.appliesTo = sh.SPARQLConstraint
-
-export const factory = (env: RdfineEnvironment) => createFactory<SPARQLConstraint>([SPARQLSelectExecutableMixin, SPARQLConstraintMixin], { types: [sh.SPARQLConstraint] }, env);
+SPARQLConstraintMixin.createFactory = (env: RdfineEnvironment) => createFactory<SPARQLConstraint>([SPARQLSelectExecutableMixin, SPARQLConstraintMixin], { types: [sh.SPARQLConstraint] }, env)

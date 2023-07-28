@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface MortgageLoan<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   loanMortgageMandateAmount: Schema.MonetaryAmount<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MortgageLoan: Factory<Schema.MortgageLoan>;
+  }
+}
+
 export function MortgageLoanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MortgageLoan & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MortgageLoanClass extends LoanOrCreditMixin(Resource) {
@@ -24,5 +30,4 @@ export function MortgageLoanMixin<Base extends rdfine.Constructor>(Resource: Bas
   return MortgageLoanClass as any
 }
 MortgageLoanMixin.appliesTo = schema.MortgageLoan
-
-export const factory = (env: RdfineEnvironment) => createFactory<MortgageLoan>([LoanOrCreditMixin, MortgageLoanMixin], { types: [schema.MortgageLoan] }, env);
+MortgageLoanMixin.createFactory = (env: RdfineEnvironment) => createFactory<MortgageLoan>([LoanOrCreditMixin, MortgageLoanMixin], { types: [schema.MortgageLoan] }, env)

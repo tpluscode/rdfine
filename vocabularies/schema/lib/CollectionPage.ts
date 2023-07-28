@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { WebPageMixin } from './WebPage.js';
 export interface CollectionPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    CollectionPage: Factory<Schema.CollectionPage>;
+  }
+}
+
 export function CollectionPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CollectionPage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class CollectionPageClass extends WebPageMixin(Resource) {
@@ -18,5 +24,4 @@ export function CollectionPageMixin<Base extends rdfine.Constructor>(Resource: B
   return CollectionPageClass as any
 }
 CollectionPageMixin.appliesTo = schema.CollectionPage
-
-export const factory = (env: RdfineEnvironment) => createFactory<CollectionPage>([WebPageMixin, CollectionPageMixin], { types: [schema.CollectionPage] }, env);
+CollectionPageMixin.createFactory = (env: RdfineEnvironment) => createFactory<CollectionPage>([WebPageMixin, CollectionPageMixin], { types: [schema.CollectionPage] }, env)

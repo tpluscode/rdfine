@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface EndorseAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   endorsee: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    EndorseAction: Factory<Schema.EndorseAction>;
+  }
+}
+
 export function EndorseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EndorseAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class EndorseActionClass extends ReactActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function EndorseActionMixin<Base extends rdfine.Constructor>(Resource: Ba
   return EndorseActionClass as any
 }
 EndorseActionMixin.appliesTo = schema.EndorseAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<EndorseAction>([ReactActionMixin, EndorseActionMixin], { types: [schema.EndorseAction] }, env);
+EndorseActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<EndorseAction>([ReactActionMixin, EndorseActionMixin], { types: [schema.EndorseAction] }, env)

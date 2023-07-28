@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Mechanism<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   technicalCharacteristics: RDF.Literal | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    Mechanism: Factory<Rico.Mechanism>;
+  }
+}
+
 export function MechanismMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Mechanism & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class MechanismClass extends AgentMixin(Resource) {
@@ -21,5 +27,4 @@ export function MechanismMixin<Base extends rdfine.Constructor>(Resource: Base):
   return MechanismClass as any
 }
 MechanismMixin.appliesTo = rico.Mechanism
-
-export const factory = (env: RdfineEnvironment) => createFactory<Mechanism>([AgentMixin, MechanismMixin], { types: [rico.Mechanism] }, env);
+MechanismMixin.createFactory = (env: RdfineEnvironment) => createFactory<Mechanism>([AgentMixin, MechanismMixin], { types: [rico.Mechanism] }, env)

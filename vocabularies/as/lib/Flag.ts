@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ActivityMixin } from './Activity.js';
 export interface Flag<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface AsVocabulary {
+    Flag: Factory<As.Flag>;
+  }
+}
+
 export function FlagMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Flag & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class FlagClass extends ActivityMixin(Resource) {
@@ -18,5 +24,4 @@ export function FlagMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return FlagClass as any
 }
 FlagMixin.appliesTo = as.Flag
-
-export const factory = (env: RdfineEnvironment) => createFactory<Flag>([ActivityMixin, FlagMixin], { types: [as.Flag] }, env);
+FlagMixin.createFactory = (env: RdfineEnvironment) => createFactory<Flag>([ActivityMixin, FlagMixin], { types: [as.Flag] }, env)

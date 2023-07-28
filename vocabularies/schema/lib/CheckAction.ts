@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { FindActionMixin } from './FindAction.js';
 export interface CheckAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FindAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    CheckAction: Factory<Schema.CheckAction>;
+  }
+}
+
 export function CheckActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CheckAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class CheckActionClass extends FindActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function CheckActionMixin<Base extends rdfine.Constructor>(Resource: Base
   return CheckActionClass as any
 }
 CheckActionMixin.appliesTo = schema.CheckAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<CheckAction>([FindActionMixin, CheckActionMixin], { types: [schema.CheckAction] }, env);
+CheckActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<CheckAction>([FindActionMixin, CheckActionMixin], { types: [schema.CheckAction] }, env)

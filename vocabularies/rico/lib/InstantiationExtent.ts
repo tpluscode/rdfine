@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ExtentMixin } from './Extent.js';
 export interface InstantiationExtent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Extent<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface RicoVocabulary {
+    InstantiationExtent: Factory<Rico.InstantiationExtent>;
+  }
+}
+
 export function InstantiationExtentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InstantiationExtent & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class InstantiationExtentClass extends ExtentMixin(Resource) {
@@ -18,5 +24,4 @@ export function InstantiationExtentMixin<Base extends rdfine.Constructor>(Resour
   return InstantiationExtentClass as any
 }
 InstantiationExtentMixin.appliesTo = rico.InstantiationExtent
-
-export const factory = (env: RdfineEnvironment) => createFactory<InstantiationExtent>([ExtentMixin, InstantiationExtentMixin], { types: [rico.InstantiationExtent] }, env);
+InstantiationExtentMixin.createFactory = (env: RdfineEnvironment) => createFactory<InstantiationExtent>([ExtentMixin, InstantiationExtentMixin], { types: [rico.InstantiationExtent] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface InfectiousDisease<D extends RDF.DatasetCore = RDF.DatasetCore> 
   infectiousAgent: string | undefined;
   infectiousAgentClass: Schema.InfectiousAgentClass | undefined;
   transmissionMethod: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    InfectiousDisease: Factory<Schema.InfectiousDisease>;
+  }
 }
 
 export function InfectiousDiseaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InfectiousDisease & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function InfectiousDiseaseMixin<Base extends rdfine.Constructor>(Resource
   return InfectiousDiseaseClass as any
 }
 InfectiousDiseaseMixin.appliesTo = schema.InfectiousDisease
-
-export const factory = (env: RdfineEnvironment) => createFactory<InfectiousDisease>([MedicalConditionMixin, InfectiousDiseaseMixin], { types: [schema.InfectiousDisease] }, env);
+InfectiousDiseaseMixin.createFactory = (env: RdfineEnvironment) => createFactory<InfectiousDisease>([MedicalConditionMixin, InfectiousDiseaseMixin], { types: [schema.InfectiousDisease] }, env)

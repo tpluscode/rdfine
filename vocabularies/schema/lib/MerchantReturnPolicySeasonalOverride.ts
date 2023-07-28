@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface MerchantReturnPolicySeasonalOverride<D extends RDF.DatasetCore 
   merchantReturnDays: Date | number | undefined;
   returnPolicyCategory: Schema.MerchantReturnEnumeration | undefined;
   startDate: Date | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MerchantReturnPolicySeasonalOverride: Factory<Schema.MerchantReturnPolicySeasonalOverride>;
+  }
 }
 
 export function MerchantReturnPolicySeasonalOverrideMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MerchantReturnPolicySeasonalOverride & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function MerchantReturnPolicySeasonalOverrideMixin<Base extends rdfine.Co
   return MerchantReturnPolicySeasonalOverrideClass as any
 }
 MerchantReturnPolicySeasonalOverrideMixin.appliesTo = schema.MerchantReturnPolicySeasonalOverride
-
-export const factory = (env: RdfineEnvironment) => createFactory<MerchantReturnPolicySeasonalOverride>([IntangibleMixin, MerchantReturnPolicySeasonalOverrideMixin], { types: [schema.MerchantReturnPolicySeasonalOverride] }, env);
+MerchantReturnPolicySeasonalOverrideMixin.createFactory = (env: RdfineEnvironment) => createFactory<MerchantReturnPolicySeasonalOverride>([IntangibleMixin, MerchantReturnPolicySeasonalOverrideMixin], { types: [schema.MerchantReturnPolicySeasonalOverride] }, env)

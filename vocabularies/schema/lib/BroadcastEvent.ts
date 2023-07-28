@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface BroadcastEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   subtitleLanguage: Schema.Language<D> | undefined;
   subtitleLanguageLiteral: string | undefined;
   videoFormat: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BroadcastEvent: Factory<Schema.BroadcastEvent>;
+  }
 }
 
 export function BroadcastEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BroadcastEvent & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function BroadcastEventMixin<Base extends rdfine.Constructor>(Resource: B
   return BroadcastEventClass as any
 }
 BroadcastEventMixin.appliesTo = schema.BroadcastEvent
-
-export const factory = (env: RdfineEnvironment) => createFactory<BroadcastEvent>([PublicationEventMixin, BroadcastEventMixin], { types: [schema.BroadcastEvent] }, env);
+BroadcastEventMixin.createFactory = (env: RdfineEnvironment) => createFactory<BroadcastEvent>([PublicationEventMixin, BroadcastEventMixin], { types: [schema.BroadcastEvent] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface CarrierType<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   isCarrierTypeOf: Rico.Instantiation<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    CarrierType: Factory<Rico.CarrierType>;
+  }
+}
+
 export function CarrierTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CarrierType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class CarrierTypeClass extends TypeMixin(Resource) {
@@ -21,5 +27,4 @@ export function CarrierTypeMixin<Base extends rdfine.Constructor>(Resource: Base
   return CarrierTypeClass as any
 }
 CarrierTypeMixin.appliesTo = rico.CarrierType
-
-export const factory = (env: RdfineEnvironment) => createFactory<CarrierType>([TypeMixin, CarrierTypeMixin], { types: [rico.CarrierType] }, env);
+CarrierTypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<CarrierType>([TypeMixin, CarrierTypeMixin], { types: [rico.CarrierType] }, env)

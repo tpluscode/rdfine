@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { BroadcastServiceMixin } from './BroadcastService.js';
 export interface RadioBroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BroadcastService<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    RadioBroadcastService: Factory<Schema.RadioBroadcastService>;
+  }
+}
+
 export function RadioBroadcastServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RadioBroadcastService & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class RadioBroadcastServiceClass extends BroadcastServiceMixin(Resource) {
@@ -18,5 +24,4 @@ export function RadioBroadcastServiceMixin<Base extends rdfine.Constructor>(Reso
   return RadioBroadcastServiceClass as any
 }
 RadioBroadcastServiceMixin.appliesTo = schema.RadioBroadcastService
-
-export const factory = (env: RdfineEnvironment) => createFactory<RadioBroadcastService>([BroadcastServiceMixin, RadioBroadcastServiceMixin], { types: [schema.RadioBroadcastService] }, env);
+RadioBroadcastServiceMixin.createFactory = (env: RdfineEnvironment) => createFactory<RadioBroadcastService>([BroadcastServiceMixin, RadioBroadcastServiceMixin], { types: [schema.RadioBroadcastService] }, env)

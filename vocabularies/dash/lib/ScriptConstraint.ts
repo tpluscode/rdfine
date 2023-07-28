@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ScriptMixin } from './Script.js';
 export interface ScriptConstraint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    ScriptConstraint: Factory<Dash.ScriptConstraint>;
+  }
+}
+
 export function ScriptConstraintMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ScriptConstraint & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class ScriptConstraintClass extends ScriptMixin(Resource) {
@@ -18,5 +24,4 @@ export function ScriptConstraintMixin<Base extends rdfine.Constructor>(Resource:
   return ScriptConstraintClass as any
 }
 ScriptConstraintMixin.appliesTo = dash.ScriptConstraint
-
-export const factory = (env: RdfineEnvironment) => createFactory<ScriptConstraint>([ScriptMixin, ScriptConstraintMixin], { types: [dash.ScriptConstraint] }, env);
+ScriptConstraintMixin.createFactory = (env: RdfineEnvironment) => createFactory<ScriptConstraint>([ScriptMixin, ScriptConstraintMixin], { types: [dash.ScriptConstraint] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface MovieTheater<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   screenCount: number | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MovieTheater: Factory<Schema.MovieTheater>;
+  }
+}
+
 export function MovieTheaterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MovieTheater & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MovieTheaterClass extends EntertainmentBusinessMixin(CivicStructureMixin(Resource)) {
@@ -22,5 +28,4 @@ export function MovieTheaterMixin<Base extends rdfine.Constructor>(Resource: Bas
   return MovieTheaterClass as any
 }
 MovieTheaterMixin.appliesTo = schema.MovieTheater
-
-export const factory = (env: RdfineEnvironment) => createFactory<MovieTheater>([EntertainmentBusinessMixin, CivicStructureMixin, MovieTheaterMixin], { types: [schema.MovieTheater] }, env);
+MovieTheaterMixin.createFactory = (env: RdfineEnvironment) => createFactory<MovieTheater>([EntertainmentBusinessMixin, CivicStructureMixin, MovieTheaterMixin], { types: [schema.MovieTheater] }, env)

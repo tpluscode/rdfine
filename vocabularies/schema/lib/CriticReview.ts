@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ReviewMixin } from './Review.js';
 export interface CriticReview<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Review<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    CriticReview: Factory<Schema.CriticReview>;
+  }
+}
+
 export function CriticReviewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CriticReview & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class CriticReviewClass extends ReviewMixin(Resource) {
@@ -18,5 +24,4 @@ export function CriticReviewMixin<Base extends rdfine.Constructor>(Resource: Bas
   return CriticReviewClass as any
 }
 CriticReviewMixin.appliesTo = schema.CriticReview
-
-export const factory = (env: RdfineEnvironment) => createFactory<CriticReview>([ReviewMixin, CriticReviewMixin], { types: [schema.CriticReview] }, env);
+CriticReviewMixin.createFactory = (env: RdfineEnvironment) => createFactory<CriticReview>([ReviewMixin, CriticReviewMixin], { types: [schema.CriticReview] }, env)

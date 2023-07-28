@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,6 +15,12 @@ export interface Action<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sha
   actionIconClass: string | undefined;
 }
 
+declare global {
+  interface DashVocabulary {
+    Action: Factory<Dash.Action>;
+  }
+}
+
 export function ActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Action & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class ActionClass extends ScriptMixin(ShaclParameterizableMixin(Resource)) {
@@ -26,5 +32,4 @@ export function ActionMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return ActionClass as any
 }
 ActionMixin.appliesTo = dash.Action
-
-export const factory = (env: RdfineEnvironment) => createFactory<Action>([ScriptMixin, ShaclParameterizableMixin, ActionMixin], { types: [dash.Action] }, env);
+ActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Action>([ScriptMixin, ShaclParameterizableMixin, ActionMixin], { types: [dash.Action] }, env)

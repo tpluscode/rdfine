@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface ComicStory<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   inker: Schema.Person<D> | undefined;
   letterer: Schema.Person<D> | undefined;
   penciler: Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ComicStory: Factory<Schema.ComicStory>;
+  }
 }
 
 export function ComicStoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ComicStory & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function ComicStoryMixin<Base extends rdfine.Constructor>(Resource: Base)
   return ComicStoryClass as any
 }
 ComicStoryMixin.appliesTo = schema.ComicStory
-
-export const factory = (env: RdfineEnvironment) => createFactory<ComicStory>([CreativeWorkMixin, ComicStoryMixin], { types: [schema.ComicStory] }, env);
+ComicStoryMixin.createFactory = (env: RdfineEnvironment) => createFactory<ComicStory>([CreativeWorkMixin, ComicStoryMixin], { types: [schema.ComicStory] }, env)

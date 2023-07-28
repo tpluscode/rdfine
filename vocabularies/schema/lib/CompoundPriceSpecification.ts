@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface CompoundPriceSpecification<D extends RDF.DatasetCore = RDF.Data
   priceComponent: Schema.UnitPriceSpecification<D> | undefined;
   priceType: string | undefined;
   priceTypeTerm: Schema.PriceTypeEnumeration | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CompoundPriceSpecification: Factory<Schema.CompoundPriceSpecification>;
+  }
 }
 
 export function CompoundPriceSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CompoundPriceSpecification & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function CompoundPriceSpecificationMixin<Base extends rdfine.Constructor>
   return CompoundPriceSpecificationClass as any
 }
 CompoundPriceSpecificationMixin.appliesTo = schema.CompoundPriceSpecification
-
-export const factory = (env: RdfineEnvironment) => createFactory<CompoundPriceSpecification>([PriceSpecificationMixin, CompoundPriceSpecificationMixin], { types: [schema.CompoundPriceSpecification] }, env);
+CompoundPriceSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<CompoundPriceSpecification>([PriceSpecificationMixin, CompoundPriceSpecificationMixin], { types: [schema.CompoundPriceSpecification] }, env)

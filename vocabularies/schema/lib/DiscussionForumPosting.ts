@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { SocialMediaPostingMixin } from './SocialMediaPosting.js';
 export interface DiscussionForumPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SocialMediaPosting<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    DiscussionForumPosting: Factory<Schema.DiscussionForumPosting>;
+  }
+}
+
 export function DiscussionForumPostingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DiscussionForumPosting & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class DiscussionForumPostingClass extends SocialMediaPostingMixin(Resource) {
@@ -18,5 +24,4 @@ export function DiscussionForumPostingMixin<Base extends rdfine.Constructor>(Res
   return DiscussionForumPostingClass as any
 }
 DiscussionForumPostingMixin.appliesTo = schema.DiscussionForumPosting
-
-export const factory = (env: RdfineEnvironment) => createFactory<DiscussionForumPosting>([SocialMediaPostingMixin, DiscussionForumPostingMixin], { types: [schema.DiscussionForumPosting] }, env);
+DiscussionForumPostingMixin.createFactory = (env: RdfineEnvironment) => createFactory<DiscussionForumPosting>([SocialMediaPostingMixin, DiscussionForumPostingMixin], { types: [schema.DiscussionForumPosting] }, env)

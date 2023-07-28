@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface TouristAttraction<D extends RDF.DatasetCore = RDF.DatasetCore> 
   availableLanguageLiteral: string | undefined;
   touristType: Schema.Audience<D> | undefined;
   touristTypeLiteral: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    TouristAttraction: Factory<Schema.TouristAttraction>;
+  }
 }
 
 export function TouristAttractionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TouristAttraction & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function TouristAttractionMixin<Base extends rdfine.Constructor>(Resource
   return TouristAttractionClass as any
 }
 TouristAttractionMixin.appliesTo = schema.TouristAttraction
-
-export const factory = (env: RdfineEnvironment) => createFactory<TouristAttraction>([PlaceMixin, TouristAttractionMixin], { types: [schema.TouristAttraction] }, env);
+TouristAttractionMixin.createFactory = (env: RdfineEnvironment) => createFactory<TouristAttraction>([PlaceMixin, TouristAttractionMixin], { types: [schema.TouristAttraction] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface RealEstateListing<D extends RDF.DatasetCore = RDF.DatasetCore> 
   leaseLength: Schema.Duration<D> | Schema.QuantitativeValue<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    RealEstateListing: Factory<Schema.RealEstateListing>;
+  }
+}
+
 export function RealEstateListingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RealEstateListing & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class RealEstateListingClass extends WebPageMixin(Resource) {
@@ -24,5 +30,4 @@ export function RealEstateListingMixin<Base extends rdfine.Constructor>(Resource
   return RealEstateListingClass as any
 }
 RealEstateListingMixin.appliesTo = schema.RealEstateListing
-
-export const factory = (env: RdfineEnvironment) => createFactory<RealEstateListing>([WebPageMixin, RealEstateListingMixin], { types: [schema.RealEstateListing] }, env);
+RealEstateListingMixin.createFactory = (env: RdfineEnvironment) => createFactory<RealEstateListing>([WebPageMixin, RealEstateListingMixin], { types: [schema.RealEstateListing] }, env)

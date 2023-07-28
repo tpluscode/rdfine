@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends A
   oneOf: As.Link<D> | As.Object<D> | undefined;
 }
 
+declare global {
+  interface AsVocabulary {
+    Question: Factory<As.Question>;
+  }
+}
+
 export function QuestionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Question & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class QuestionClass extends IntransitiveActivityMixin(Resource) {
@@ -24,5 +30,4 @@ export function QuestionMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return QuestionClass as any
 }
 QuestionMixin.appliesTo = as.Question
-
-export const factory = (env: RdfineEnvironment) => createFactory<Question>([IntransitiveActivityMixin, QuestionMixin], { types: [as.Question] }, env);
+QuestionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Question>([IntransitiveActivityMixin, QuestionMixin], { types: [as.Question] }, env)

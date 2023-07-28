@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Rule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.
   condition: Sh.Shape<D> | undefined;
 }
 
+declare global {
+  interface ShVocabulary {
+    Rule: Factory<Sh.Rule>;
+  }
+}
+
 export function RuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Rule & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class RuleClass extends RdfsResourceMixin(Resource) {
@@ -22,5 +28,4 @@ export function RuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return RuleClass as any
 }
 RuleMixin.appliesTo = sh.Rule
-
-export const factory = (env: RdfineEnvironment) => createFactory<Rule>([RdfsResourceMixin, RuleMixin], { types: [sh.Rule] }, env);
+RuleMixin.createFactory = (env: RdfineEnvironment) => createFactory<Rule>([RdfsResourceMixin, RuleMixin], { types: [sh.Rule] }, env)

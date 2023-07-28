@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ServiceMixin } from './Service.js';
 export interface ResourceService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Service<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    ResourceService: Factory<Dash.ResourceService>;
+  }
+}
+
 export function ResourceServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ResourceService & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class ResourceServiceClass extends ServiceMixin(Resource) {
@@ -18,5 +24,4 @@ export function ResourceServiceMixin<Base extends rdfine.Constructor>(Resource: 
   return ResourceServiceClass as any
 }
 ResourceServiceMixin.appliesTo = dash.ResourceService
-
-export const factory = (env: RdfineEnvironment) => createFactory<ResourceService>([ServiceMixin, ResourceServiceMixin], { types: [dash.ResourceService] }, env);
+ResourceServiceMixin.createFactory = (env: RdfineEnvironment) => createFactory<ResourceService>([ServiceMixin, ResourceServiceMixin], { types: [dash.ResourceService] }, env)

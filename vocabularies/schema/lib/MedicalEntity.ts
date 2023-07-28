@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -18,6 +18,12 @@ export interface MedicalEntity<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   recognizingAuthority: Schema.Organization<D> | undefined;
   relevantSpecialty: Schema.MedicalSpecialty | undefined;
   study: Schema.MedicalStudy<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MedicalEntity: Factory<Schema.MedicalEntity>;
+  }
 }
 
 export function MedicalEntityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalEntity & RdfResourceCore> & Base {
@@ -45,5 +51,4 @@ export function MedicalEntityMixin<Base extends rdfine.Constructor>(Resource: Ba
   return MedicalEntityClass as any
 }
 MedicalEntityMixin.appliesTo = schema.MedicalEntity
-
-export const factory = (env: RdfineEnvironment) => createFactory<MedicalEntity>([ThingMixin, MedicalEntityMixin], { types: [schema.MedicalEntity] }, env);
+MedicalEntityMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalEntity>([ThingMixin, MedicalEntityMixin], { types: [schema.MedicalEntity] }, env)

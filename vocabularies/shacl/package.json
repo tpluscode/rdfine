@@ -78,11 +78,14 @@
     "@tpluscode/rdfine": "^0.6.0"
   },
   "devDependencies": {
+    "@rdfine/test-support": "*",
     "@rdfjs/dataset": "^2",
     "@rdfjs/namespace": "^2",
+    "@types/rdf-dataset-ext": "^1.0.3",
     "chai": "^4.3.7",
-    "clownface": "^1",
+    "clownface": "^2.0.0",
     "mocha-chai-jest-snapshot": "^1.1.4",
+    "rdf-dataset-ext": "^1.0.1",
     "rdf-ext": "^2"
   },
   "repository": {

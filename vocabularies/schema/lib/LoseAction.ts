@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface LoseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   winner: Schema.Person<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    LoseAction: Factory<Schema.LoseAction>;
+  }
+}
+
 export function LoseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LoseAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class LoseActionClass extends AchieveActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function LoseActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   return LoseActionClass as any
 }
 LoseActionMixin.appliesTo = schema.LoseAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<LoseAction>([AchieveActionMixin, LoseActionMixin], { types: [schema.LoseAction] }, env);
+LoseActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<LoseAction>([AchieveActionMixin, LoseActionMixin], { types: [schema.LoseAction] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface SolveMathAction<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   eduQuestionType: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    SolveMathAction: Factory<Schema.SolveMathAction>;
+  }
+}
+
 export function SolveMathActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SolveMathAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class SolveMathActionClass extends ActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function SolveMathActionMixin<Base extends rdfine.Constructor>(Resource: 
   return SolveMathActionClass as any
 }
 SolveMathActionMixin.appliesTo = schema.SolveMathAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<SolveMathAction>([ActionMixin, SolveMathActionMixin], { types: [schema.SolveMathAction] }, env);
+SolveMathActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<SolveMathAction>([ActionMixin, SolveMathActionMixin], { types: [schema.SolveMathAction] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,6 +15,12 @@ export interface AgentTemporalRelation<D extends RDF.DatasetCore = RDF.DatasetCo
   asConcernsActivity: Rico.Activity<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    AgentTemporalRelation: Factory<Rico.AgentTemporalRelation>;
+  }
+}
+
 export function AgentTemporalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentTemporalRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class AgentTemporalRelationClass extends TemporalRelationMixin(AgentToAgentRelationMixin(Resource)) {
@@ -28,5 +34,4 @@ export function AgentTemporalRelationMixin<Base extends rdfine.Constructor>(Reso
   return AgentTemporalRelationClass as any
 }
 AgentTemporalRelationMixin.appliesTo = rico.AgentTemporalRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<AgentTemporalRelation>([TemporalRelationMixin, AgentToAgentRelationMixin, AgentTemporalRelationMixin], { types: [rico.AgentTemporalRelation] }, env);
+AgentTemporalRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<AgentTemporalRelation>([TemporalRelationMixin, AgentToAgentRelationMixin, AgentTemporalRelationMixin], { types: [rico.AgentTemporalRelation] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,6 +10,12 @@ import type * as Prov from '../index.js';
 export interface Location<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ProvVocabulary {
+    Location: Factory<Prov.Location>;
+  }
+}
+
 export function LocationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Location & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class LocationClass extends Resource {
@@ -17,5 +23,4 @@ export function LocationMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return LocationClass as any
 }
 LocationMixin.appliesTo = prov.Location
-
-export const factory = (env: RdfineEnvironment) => createFactory<Location>([LocationMixin], { types: [prov.Location] }, env);
+LocationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Location>([LocationMixin], { types: [prov.Location] }, env)

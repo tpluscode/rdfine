@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ActivityMixin } from './Activity.js';
 export interface Contribute<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Activity<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ProvVocabulary {
+    Contribute: Factory<Prov.Contribute>;
+  }
+}
+
 export function ContributeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Contribute & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class ContributeClass extends ActivityMixin(Resource) {
@@ -18,5 +24,4 @@ export function ContributeMixin<Base extends rdfine.Constructor>(Resource: Base)
   return ContributeClass as any
 }
 ContributeMixin.appliesTo = prov.Contribute
-
-export const factory = (env: RdfineEnvironment) => createFactory<Contribute>([ActivityMixin, ContributeMixin], { types: [prov.Contribute] }, env);
+ContributeMixin.createFactory = (env: RdfineEnvironment) => createFactory<Contribute>([ActivityMixin, ContributeMixin], { types: [prov.Contribute] }, env)

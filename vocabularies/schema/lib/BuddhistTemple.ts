@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { PlaceOfWorshipMixin } from './PlaceOfWorship.js';
 export interface BuddhistTemple<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlaceOfWorship<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    BuddhistTemple: Factory<Schema.BuddhistTemple>;
+  }
+}
+
 export function BuddhistTempleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BuddhistTemple & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class BuddhistTempleClass extends PlaceOfWorshipMixin(Resource) {
@@ -18,5 +24,4 @@ export function BuddhistTempleMixin<Base extends rdfine.Constructor>(Resource: B
   return BuddhistTempleClass as any
 }
 BuddhistTempleMixin.appliesTo = schema.BuddhistTemple
-
-export const factory = (env: RdfineEnvironment) => createFactory<BuddhistTemple>([PlaceOfWorshipMixin, BuddhistTempleMixin], { types: [schema.BuddhistTemple] }, env);
+BuddhistTempleMixin.createFactory = (env: RdfineEnvironment) => createFactory<BuddhistTemple>([PlaceOfWorshipMixin, BuddhistTempleMixin], { types: [schema.BuddhistTemple] }, env)

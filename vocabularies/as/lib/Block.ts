@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { IgnoreMixin } from './Ignore.js';
 export interface Block<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Ignore<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface AsVocabulary {
+    Block: Factory<As.Block>;
+  }
+}
+
 export function BlockMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Block & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class BlockClass extends IgnoreMixin(Resource) {
@@ -18,5 +24,4 @@ export function BlockMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return BlockClass as any
 }
 BlockMixin.appliesTo = as.Block
-
-export const factory = (env: RdfineEnvironment) => createFactory<Block>([IgnoreMixin, BlockMixin], { types: [as.Block] }, env);
+BlockMixin.createFactory = (env: RdfineEnvironment) => createFactory<Block>([IgnoreMixin, BlockMixin], { types: [as.Block] }, env)

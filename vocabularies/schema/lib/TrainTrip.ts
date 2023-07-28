@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,6 +15,12 @@ export interface TrainTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   departureStation: Schema.TrainStation<D> | undefined;
   trainName: string | undefined;
   trainNumber: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    TrainTrip: Factory<Schema.TrainTrip>;
+  }
 }
 
 export function TrainTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TrainTrip & RdfResourceCore> & Base {
@@ -36,5 +42,4 @@ export function TrainTripMixin<Base extends rdfine.Constructor>(Resource: Base):
   return TrainTripClass as any
 }
 TrainTripMixin.appliesTo = schema.TrainTrip
-
-export const factory = (env: RdfineEnvironment) => createFactory<TrainTrip>([TripMixin, TrainTripMixin], { types: [schema.TrainTrip] }, env);
+TrainTripMixin.createFactory = (env: RdfineEnvironment) => createFactory<TrainTrip>([TripMixin, TrainTripMixin], { types: [schema.TrainTrip] }, env)

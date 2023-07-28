@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface AgentToAgentRelation<D extends RDF.DatasetCore = RDF.DatasetCor
   agentRelationConnects: Rico.Agent<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    AgentToAgentRelation: Factory<Rico.AgentToAgentRelation>;
+  }
+}
+
 export function AgentToAgentRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentToAgentRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class AgentToAgentRelationClass extends RelationMixin(Resource) {
@@ -21,5 +27,4 @@ export function AgentToAgentRelationMixin<Base extends rdfine.Constructor>(Resou
   return AgentToAgentRelationClass as any
 }
 AgentToAgentRelationMixin.appliesTo = rico.AgentToAgentRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<AgentToAgentRelation>([RelationMixin, AgentToAgentRelationMixin], { types: [rico.AgentToAgentRelation] }, env);
+AgentToAgentRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<AgentToAgentRelation>([RelationMixin, AgentToAgentRelationMixin], { types: [rico.AgentToAgentRelation] }, env)

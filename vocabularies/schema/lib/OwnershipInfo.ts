@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface OwnershipInfo<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   ownedFrom: Date | undefined;
   ownedThrough: Date | undefined;
   typeOfGood: Schema.Product<D> | Schema.Service<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    OwnershipInfo: Factory<Schema.OwnershipInfo>;
+  }
 }
 
 export function OwnershipInfoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OwnershipInfo & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function OwnershipInfoMixin<Base extends rdfine.Constructor>(Resource: Ba
   return OwnershipInfoClass as any
 }
 OwnershipInfoMixin.appliesTo = schema.OwnershipInfo
-
-export const factory = (env: RdfineEnvironment) => createFactory<OwnershipInfo>([StructuredValueMixin, OwnershipInfoMixin], { types: [schema.OwnershipInfo] }, env);
+OwnershipInfoMixin.createFactory = (env: RdfineEnvironment) => createFactory<OwnershipInfo>([StructuredValueMixin, OwnershipInfoMixin], { types: [schema.OwnershipInfo] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface JSExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   jsFunctionName: string | undefined;
 }
 
+declare global {
+  interface ShVocabulary {
+    JSExecutable: Factory<Sh.JSExecutable>;
+  }
+}
+
 export function JSExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JSExecutable & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class JSExecutableClass extends RdfsResourceMixin(Resource) {
@@ -22,5 +28,4 @@ export function JSExecutableMixin<Base extends rdfine.Constructor>(Resource: Bas
   return JSExecutableClass as any
 }
 JSExecutableMixin.appliesTo = sh.JSExecutable
-
-export const factory = (env: RdfineEnvironment) => createFactory<JSExecutable>([RdfsResourceMixin, JSExecutableMixin], { types: [sh.JSExecutable] }, env);
+JSExecutableMixin.createFactory = (env: RdfineEnvironment) => createFactory<JSExecutable>([RdfsResourceMixin, JSExecutableMixin], { types: [sh.JSExecutable] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface BKRepository<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   module: RDF.Term | undefined;
 }
 
+declare global {
+  interface DoapVocabulary {
+    BKRepository: Factory<Doap.BKRepository>;
+  }
+}
+
 export function BKRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BKRepository & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
   class BKRepositoryClass extends RepositoryMixin(Resource) {
@@ -21,5 +27,4 @@ export function BKRepositoryMixin<Base extends rdfine.Constructor>(Resource: Bas
   return BKRepositoryClass as any
 }
 BKRepositoryMixin.appliesTo = doap.BKRepository
-
-export const factory = (env: RdfineEnvironment) => createFactory<BKRepository>([RepositoryMixin, BKRepositoryMixin], { types: [doap.BKRepository] }, env);
+BKRepositoryMixin.createFactory = (env: RdfineEnvironment) => createFactory<BKRepository>([RepositoryMixin, BKRepositoryMixin], { types: [doap.BKRepository] }, env)

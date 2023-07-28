@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { FoodEstablishmentMixin } from './FoodEstablishment.js';
 export interface Restaurant<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FoodEstablishment<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Restaurant: Factory<Schema.Restaurant>;
+  }
+}
+
 export function RestaurantMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Restaurant & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class RestaurantClass extends FoodEstablishmentMixin(Resource) {
@@ -18,5 +24,4 @@ export function RestaurantMixin<Base extends rdfine.Constructor>(Resource: Base)
   return RestaurantClass as any
 }
 RestaurantMixin.appliesTo = schema.Restaurant
-
-export const factory = (env: RdfineEnvironment) => createFactory<Restaurant>([FoodEstablishmentMixin, RestaurantMixin], { types: [schema.Restaurant] }, env);
+RestaurantMixin.createFactory = (env: RdfineEnvironment) => createFactory<Restaurant>([FoodEstablishmentMixin, RestaurantMixin], { types: [schema.Restaurant] }, env)

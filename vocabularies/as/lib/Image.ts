@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { DocumentMixin } from './Document.js';
 export interface Image<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Document<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface AsVocabulary {
+    Image: Factory<As.Image>;
+  }
+}
+
 export function ImageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Image & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class ImageClass extends DocumentMixin(Resource) {
@@ -18,5 +24,4 @@ export function ImageMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return ImageClass as any
 }
 ImageMixin.appliesTo = as.Image
-
-export const factory = (env: RdfineEnvironment) => createFactory<Image>([DocumentMixin, ImageMixin], { types: [as.Image] }, env);
+ImageMixin.createFactory = (env: RdfineEnvironment) => createFactory<Image>([DocumentMixin, ImageMixin], { types: [as.Image] }, env)

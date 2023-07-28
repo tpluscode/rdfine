@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface APIStatus<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    APIStatus: Factory<Dash.APIStatus>;
+  }
+}
+
 export function APIStatusMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<APIStatus & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class APIStatusClass extends RdfsResourceMixin(Resource) {
@@ -19,5 +25,4 @@ export function APIStatusMixin<Base extends rdfine.Constructor>(Resource: Base):
   return APIStatusClass as any
 }
 APIStatusMixin.appliesTo = dash.APIStatus
-
-export const factory = (env: RdfineEnvironment) => createFactory<APIStatus>([RdfsResourceMixin, APIStatusMixin], { types: [dash.APIStatus] }, env);
+APIStatusMixin.createFactory = (env: RdfineEnvironment) => createFactory<APIStatus>([RdfsResourceMixin, APIStatusMixin], { types: [dash.APIStatus] }, env)

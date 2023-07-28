@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface PathologyTest<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   tissueSample: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    PathologyTest: Factory<Schema.PathologyTest>;
+  }
+}
+
 export function PathologyTestMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PathologyTest & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class PathologyTestClass extends MedicalTestMixin(Resource) {
@@ -21,5 +27,4 @@ export function PathologyTestMixin<Base extends rdfine.Constructor>(Resource: Ba
   return PathologyTestClass as any
 }
 PathologyTestMixin.appliesTo = schema.PathologyTest
-
-export const factory = (env: RdfineEnvironment) => createFactory<PathologyTest>([MedicalTestMixin, PathologyTestMixin], { types: [schema.PathologyTest] }, env);
+PathologyTestMixin.createFactory = (env: RdfineEnvironment) => createFactory<PathologyTest>([MedicalTestMixin, PathologyTestMixin], { types: [schema.PathologyTest] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,6 +15,12 @@ export interface HowToSection<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   stepsLiteral: Array<string>;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    HowToSection: Factory<Schema.HowToSection>;
+  }
+}
+
 export function HowToSectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowToSection & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class HowToSectionClass extends ListItemMixin(ItemListMixin(CreativeWorkMixin(Resource))) {
@@ -26,5 +32,4 @@ export function HowToSectionMixin<Base extends rdfine.Constructor>(Resource: Bas
   return HowToSectionClass as any
 }
 HowToSectionMixin.appliesTo = schema.HowToSection
-
-export const factory = (env: RdfineEnvironment) => createFactory<HowToSection>([ListItemMixin, ItemListMixin, CreativeWorkMixin, HowToSectionMixin], { types: [schema.HowToSection] }, env);
+HowToSectionMixin.createFactory = (env: RdfineEnvironment) => createFactory<HowToSection>([ListItemMixin, ItemListMixin, CreativeWorkMixin, HowToSectionMixin], { types: [schema.HowToSection] }, env)

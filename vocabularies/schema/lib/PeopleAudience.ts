@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -19,6 +19,12 @@ export interface PeopleAudience<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   suggestedMaxAge: number | undefined;
   suggestedMeasurement: Schema.QuantitativeValue<D> | undefined;
   suggestedMinAge: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    PeopleAudience: Factory<Schema.PeopleAudience>;
+  }
 }
 
 export function PeopleAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PeopleAudience & RdfResourceCore> & Base {
@@ -48,5 +54,4 @@ export function PeopleAudienceMixin<Base extends rdfine.Constructor>(Resource: B
   return PeopleAudienceClass as any
 }
 PeopleAudienceMixin.appliesTo = schema.PeopleAudience
-
-export const factory = (env: RdfineEnvironment) => createFactory<PeopleAudience>([AudienceMixin, PeopleAudienceMixin], { types: [schema.PeopleAudience] }, env);
+PeopleAudienceMixin.createFactory = (env: RdfineEnvironment) => createFactory<PeopleAudience>([AudienceMixin, PeopleAudienceMixin], { types: [schema.PeopleAudience] }, env)

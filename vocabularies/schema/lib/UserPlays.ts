@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { UserInteractionMixin } from './UserInteraction.js';
 export interface UserPlays<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UserInteraction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    UserPlays: Factory<Schema.UserPlays>;
+  }
+}
+
 export function UserPlaysMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<UserPlays & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class UserPlaysClass extends UserInteractionMixin(Resource) {
@@ -18,5 +24,4 @@ export function UserPlaysMixin<Base extends rdfine.Constructor>(Resource: Base):
   return UserPlaysClass as any
 }
 UserPlaysMixin.appliesTo = schema.UserPlays
-
-export const factory = (env: RdfineEnvironment) => createFactory<UserPlays>([UserInteractionMixin, UserPlaysMixin], { types: [schema.UserPlays] }, env);
+UserPlaysMixin.createFactory = (env: RdfineEnvironment) => createFactory<UserPlays>([UserInteractionMixin, UserPlaysMixin], { types: [schema.UserPlays] }, env)

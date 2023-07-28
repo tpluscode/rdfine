@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { OnlineBusinessMixin } from './OnlineBusiness.js';
 export interface OnlineStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OnlineBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    OnlineStore: Factory<Schema.OnlineStore>;
+  }
+}
+
 export function OnlineStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OnlineStore & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class OnlineStoreClass extends OnlineBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function OnlineStoreMixin<Base extends rdfine.Constructor>(Resource: Base
   return OnlineStoreClass as any
 }
 OnlineStoreMixin.appliesTo = schema.OnlineStore
-
-export const factory = (env: RdfineEnvironment) => createFactory<OnlineStore>([OnlineBusinessMixin, OnlineStoreMixin], { types: [schema.OnlineStore] }, env);
+OnlineStoreMixin.createFactory = (env: RdfineEnvironment) => createFactory<OnlineStore>([OnlineBusinessMixin, OnlineStoreMixin], { types: [schema.OnlineStore] }, env)

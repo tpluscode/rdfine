@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface LocationFeatureSpecification<D extends RDF.DatasetCore = RDF.Da
   hoursAvailable: Schema.OpeningHoursSpecification<D> | undefined;
   validFrom: Date | undefined;
   validThrough: Date | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    LocationFeatureSpecification: Factory<Schema.LocationFeatureSpecification>;
+  }
 }
 
 export function LocationFeatureSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LocationFeatureSpecification & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function LocationFeatureSpecificationMixin<Base extends rdfine.Constructo
   return LocationFeatureSpecificationClass as any
 }
 LocationFeatureSpecificationMixin.appliesTo = schema.LocationFeatureSpecification
-
-export const factory = (env: RdfineEnvironment) => createFactory<LocationFeatureSpecification>([PropertyValueMixin, LocationFeatureSpecificationMixin], { types: [schema.LocationFeatureSpecification] }, env);
+LocationFeatureSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<LocationFeatureSpecification>([PropertyValueMixin, LocationFeatureSpecificationMixin], { types: [schema.LocationFeatureSpecification] }, env)

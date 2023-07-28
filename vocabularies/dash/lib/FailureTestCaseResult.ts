@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { TestCaseResultMixin } from './TestCaseResult.js';
 export interface FailureTestCaseResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.TestCaseResult<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    FailureTestCaseResult: Factory<Dash.FailureTestCaseResult>;
+  }
+}
+
 export function FailureTestCaseResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FailureTestCaseResult & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class FailureTestCaseResultClass extends TestCaseResultMixin(Resource) {
@@ -18,5 +24,4 @@ export function FailureTestCaseResultMixin<Base extends rdfine.Constructor>(Reso
   return FailureTestCaseResultClass as any
 }
 FailureTestCaseResultMixin.appliesTo = dash.FailureTestCaseResult
-
-export const factory = (env: RdfineEnvironment) => createFactory<FailureTestCaseResult>([TestCaseResultMixin, FailureTestCaseResultMixin], { types: [dash.FailureTestCaseResult] }, env);
+FailureTestCaseResultMixin.createFactory = (env: RdfineEnvironment) => createFactory<FailureTestCaseResult>([TestCaseResultMixin, FailureTestCaseResultMixin], { types: [dash.FailureTestCaseResult] }, env)

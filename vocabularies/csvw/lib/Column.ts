@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -25,6 +25,12 @@ export interface Column<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdf
   transformations: Array<Csvw.Transformation<D>>;
   valueUrl: string | undefined;
   virtual: boolean | undefined;
+}
+
+declare global {
+  interface CsvwVocabulary {
+    Column: Factory<Csvw.Column>;
+  }
 }
 
 export function ColumnMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Column & RdfResourceCore> & Base {
@@ -68,5 +74,4 @@ export function ColumnMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return ColumnClass as any
 }
 ColumnMixin.appliesTo = csvw.Column
-
-export const factory = (env: RdfineEnvironment) => createFactory<Column>([ColumnMixin], { types: [csvw.Column] }, env);
+ColumnMixin.createFactory = (env: RdfineEnvironment) => createFactory<Column>([ColumnMixin], { types: [csvw.Column] }, env)

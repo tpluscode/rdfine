@@ -11,7 +11,6 @@ import type { PropertyMeta } from './decorators/property/index.js'
 export type AnyFunction<A = any> = (...input: any[]) => A
 export interface Constructor<A extends RdfResourceCore<any> = RdfResourceCore> {
   new (...input: any[]): A
-  env: RdfineEnvironment
   __mixins: Mixin[]
   __properties: Map<string, PropertyMeta>
   __initializers: Map<string, unknown>
@@ -53,8 +52,8 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
   private __typeCache: Map<string, Constructor> = new Map<string, Constructor>()
   public BaseClass: Constructor
 
-  public constructor(baseClass: Constructor, private __env: RdfineEnvironment) {
-    this.BaseClass = baseClass
+  public constructor(private __env: RdfineEnvironment) {
+    this.BaseClass = __env.rdfine.Resource
   }
 
   public addMixin(...mixins: (EvaluatedMixin | SingleTypeMixin)[]): void {
@@ -79,7 +78,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     let explicitMixins: Mixin[] = typeAndMixins
     if (typeAndMixins.length > 0) {
       const [BaseClassOrMixin, ...rest] = typeAndMixins
-      if (BaseClassOrMixin instanceof Object && 'factory' in BaseClassOrMixin) {
+      if (this.__isConstructor(BaseClassOrMixin)) {
         BaseClass = BaseClassOrMixin
         explicitMixins = rest
       }
@@ -95,7 +94,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     }
 
     BaseClass = this.__getBaseClass(BaseClass, types)
-    const entity = new BaseClass(pointer, {}, this.__env)
+    const entity = new BaseClass(pointer, this.__env)
 
     const mixins = [...this.__mixins].reduce<Set<Mixin<T>>>((selected, next) => {
       if (next.shouldApply === true || (typeof next.shouldApply === 'function' && next.shouldApply(entity))) {
@@ -107,7 +106,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
 
     const Type = this.__extend(BaseClass, [...mixins])
 
-    return createProxy(new Type(pointer, options.initializer, options.parent || this.__env)) as R & S & ResourceIndexer<R>
+    return createProxy(new Type(pointer, options.parent || this.__env, options.initializer)) as R & S & ResourceIndexer<R>
   }
 
   private __getBaseClass(baseClass: Constructor, types: string[]) {
@@ -139,5 +138,9 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
     type.__mixins = [...baseMixins, ...mixins]
 
     return type
+  }
+
+  private __isConstructor(value: Constructor | Mixin): value is Constructor {
+    return '__mixins' in value
   }
 }

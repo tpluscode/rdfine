@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface ReservationPackage<D extends RDF.DatasetCore = RDF.DatasetCore>
   subReservation: Schema.Reservation<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ReservationPackage: Factory<Schema.ReservationPackage>;
+  }
+}
+
 export function ReservationPackageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReservationPackage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ReservationPackageClass extends ReservationMixin(Resource) {
@@ -21,5 +27,4 @@ export function ReservationPackageMixin<Base extends rdfine.Constructor>(Resourc
   return ReservationPackageClass as any
 }
 ReservationPackageMixin.appliesTo = schema.ReservationPackage
-
-export const factory = (env: RdfineEnvironment) => createFactory<ReservationPackage>([ReservationMixin, ReservationPackageMixin], { types: [schema.ReservationPackage] }, env);
+ReservationPackageMixin.createFactory = (env: RdfineEnvironment) => createFactory<ReservationPackage>([ReservationMixin, ReservationPackageMixin], { types: [schema.ReservationPackage] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { BodyOfWaterMixin } from './BodyOfWater.js';
 export interface Waterfall<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BodyOfWater<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Waterfall: Factory<Schema.Waterfall>;
+  }
+}
+
 export function WaterfallMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Waterfall & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class WaterfallClass extends BodyOfWaterMixin(Resource) {
@@ -18,5 +24,4 @@ export function WaterfallMixin<Base extends rdfine.Constructor>(Resource: Base):
   return WaterfallClass as any
 }
 WaterfallMixin.appliesTo = schema.Waterfall
-
-export const factory = (env: RdfineEnvironment) => createFactory<Waterfall>([BodyOfWaterMixin, WaterfallMixin], { types: [schema.Waterfall] }, env);
+WaterfallMixin.createFactory = (env: RdfineEnvironment) => createFactory<Waterfall>([BodyOfWaterMixin, WaterfallMixin], { types: [schema.Waterfall] }, env)

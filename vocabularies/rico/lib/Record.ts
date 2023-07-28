@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -22,6 +22,12 @@ export interface Record<D extends RDF.DatasetCore = RDF.DatasetCore> extends Ric
   isOriginalOf: Rico.Record<D> | Rico.RecordPart<D> | undefined;
   isOrWasIncludedIn: Rico.RecordSet<D> | undefined;
   recordIsSourceOfAuthorshipRelation: Rico.AuthorshipRelation<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    Record: Factory<Rico.Record>;
+  }
 }
 
 export function RecordMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Record & RdfResourceCore> & Base {
@@ -57,5 +63,4 @@ export function RecordMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return RecordClass as any
 }
 RecordMixin.appliesTo = rico.Record
-
-export const factory = (env: RdfineEnvironment) => createFactory<Record>([RecordResourceMixin, RecordMixin], { types: [rico.Record] }, env);
+RecordMixin.createFactory = (env: RdfineEnvironment) => createFactory<Record>([RecordResourceMixin, RecordMixin], { types: [rico.Record] }, env)

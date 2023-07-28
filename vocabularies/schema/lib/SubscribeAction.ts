@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { InteractActionMixin } from './InteractAction.js';
 export interface SubscribeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    SubscribeAction: Factory<Schema.SubscribeAction>;
+  }
+}
+
 export function SubscribeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SubscribeAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class SubscribeActionClass extends InteractActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function SubscribeActionMixin<Base extends rdfine.Constructor>(Resource: 
   return SubscribeActionClass as any
 }
 SubscribeActionMixin.appliesTo = schema.SubscribeAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<SubscribeAction>([InteractActionMixin, SubscribeActionMixin], { types: [schema.SubscribeAction] }, env);
+SubscribeActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<SubscribeAction>([InteractActionMixin, SubscribeActionMixin], { types: [schema.SubscribeAction] }, env)

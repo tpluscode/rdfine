@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ActivityMixin } from './Activity.js';
 export interface Submit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Activity<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ProvVocabulary {
+    Submit: Factory<Prov.Submit>;
+  }
+}
+
 export function SubmitMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Submit & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class SubmitClass extends ActivityMixin(Resource) {
@@ -18,5 +24,4 @@ export function SubmitMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return SubmitClass as any
 }
 SubmitMixin.appliesTo = prov.Submit
-
-export const factory = (env: RdfineEnvironment) => createFactory<Submit>([ActivityMixin, SubmitMixin], { types: [prov.Submit] }, env);
+SubmitMixin.createFactory = (env: RdfineEnvironment) => createFactory<Submit>([ActivityMixin, SubmitMixin], { types: [prov.Submit] }, env)

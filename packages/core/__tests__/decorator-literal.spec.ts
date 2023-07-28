@@ -10,11 +10,18 @@ import cf, { GraphPointer } from 'clownface'
 import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
 import RdfResource from '../RdfResource.js'
 import { property } from '../index.js'
+import { RdfineEnvironment } from '../environment.js'
 import { parse, ex } from './_helpers/index.js'
+import { createEnv } from './_helpers/environment.js'
 
 describe('decorator', () => {
   chai.use(jestSnapshotPlugin())
   before(() => import('../../../__tests__/helpers/matchers.js'))
+
+  let environment: RdfineEnvironment
+  beforeEach(() => {
+    environment = createEnv()
+  })
 
   describe('literal', () => {
     describe('getter', () => {
@@ -35,7 +42,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.name).to.eq('John Doe')
@@ -63,7 +70,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.single).to.deep.eq(false)
@@ -88,7 +95,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.age).to.deep.eq(30)
@@ -108,7 +115,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.birthDay).to.deep.eq(new Date(-135907200000))
@@ -128,7 +135,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.birthDay).to.deep.eq(new Date(1965, 8, 11, 19, 56, 9))
@@ -148,7 +155,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.birthDay).to.deep.eq(new Date(1965, 8, 11, 19, 56, 9))
@@ -172,7 +179,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.age).to.deep.eq(30.6)
@@ -195,7 +202,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.letters).to.contain.all.members(['a', 'b', 'c'])
@@ -218,7 +225,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.age).to.deep.eq('30.3')
@@ -241,7 +248,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.age).to.deep.eq('30.3')
@@ -266,7 +273,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // when
         instance.name = RDF.literal('John', 'en-gb')
@@ -293,7 +300,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // when
         instance.married = false
@@ -314,7 +321,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // when
         instance.age = 30
@@ -335,7 +342,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // when
         instance.age = 30.4
@@ -356,7 +363,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // when
         instance.age = BigInt(9007199254740991)
@@ -378,7 +385,7 @@ describe('decorator', () => {
           dataset,
           term: ex.res,
         })
-        const instance = new Resource(pointer)
+        const instance = new Resource(pointer, environment)
 
         // when
         instance.birthDate = new Date(Date.parse('1987-10-09'))
@@ -401,7 +408,7 @@ describe('decorator', () => {
           dataset,
           term: ex.res,
         })
-        const instance = new Resource(pointer)
+        const instance = new Resource(pointer, environment)
 
         // when
         instance.birthDate = new Date(Date.parse('1987-10-09'))
@@ -429,7 +436,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // when
         instance.name = 'Jane'
@@ -456,7 +463,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // when
         instance.name = RDF.literal('Jane', ex.Name)
@@ -483,7 +490,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // when
         instance.name = instance.pointer.literal('Jane', ex.Name)
@@ -510,7 +517,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // when
         instance.name = null
@@ -537,7 +544,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // the
         expect(() => {
@@ -563,7 +570,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // the
         expect(() => {
@@ -589,7 +596,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // the
         expect(() => {
@@ -614,7 +621,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         instance.age = '20'
 
         // then
@@ -638,7 +645,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         instance.age = 20
 
         // then
@@ -662,7 +669,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.name).to.eq('foo')
@@ -690,7 +697,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.name).to.eq('bar')
@@ -712,7 +719,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.name).to.eq('foo')
@@ -734,7 +741,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.name).to.eq(instance.id.value)

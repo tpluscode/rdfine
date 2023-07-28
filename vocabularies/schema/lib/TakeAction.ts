@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { TransferActionMixin } from './TransferAction.js';
 export interface TakeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    TakeAction: Factory<Schema.TakeAction>;
+  }
+}
+
 export function TakeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TakeAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class TakeActionClass extends TransferActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function TakeActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   return TakeActionClass as any
 }
 TakeActionMixin.appliesTo = schema.TakeAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<TakeAction>([TransferActionMixin, TakeActionMixin], { types: [schema.TakeAction] }, env);
+TakeActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<TakeAction>([TransferActionMixin, TakeActionMixin], { types: [schema.TakeAction] }, env)

@@ -3,12 +3,16 @@ import { DataFactory } from '@rdfjs/types'
 import type TermSetFactory from '@rdfjs/term-set/Factory.js'
 import type { TermMapFactory } from '@rdfjs/term-map/Factory.js'
 import type { NamespaceFactory } from '@rdfjs/namespace/Factory.js'
-import type { ClownfaceFactory } from 'rdf-ext/ClownfaceFactory.js'
+import type ClownfaceFactory from 'clownface/Factory.js'
 import RdfResourceImpl from './RdfResource.js'
-import ResourceFactoryImpl, { ResourceFactory } from './lib/ResourceFactory.js'
+import ResourceFactoryImpl, { Constructor, ResourceFactory } from './lib/ResourceFactory.js'
 
 export interface Rdfine {
-  (): { factory: ResourceFactory }
+  (): {
+    createEntity: ResourceFactory['createEntity']
+    factory: ResourceFactory
+  }
+  Resource: Constructor
 }
 
 export interface RdfineFactory {
@@ -26,8 +30,14 @@ export class RdfineFactory {
       }
     }
 
-    const factory = new ResourceFactoryImpl(Base, env)
-    this.rdfine = () => ({ factory })
+    // eslint-disable-next-line prefer-const
+    let factory: ResourceFactory
+    this.rdfine = () => ({
+      factory,
+      createEntity: factory.createEntity.bind(factory),
+    })
+    this.rdfine.Resource = Base
+    factory = new ResourceFactoryImpl(env)
   }
 
   static get exports() {
@@ -35,6 +45,8 @@ export class RdfineFactory {
   }
 
   _initVocabulary(vocabulary: Record<string, any>) {
+    this.rdfine().factory.addMixin(...Object.values(vocabulary))
+
     return Object.fromEntries(Object.entries(vocabulary).reduce((previous, [name, mixin]) => {
       if ('createFactory' in mixin) {
         return [...previous, [name.replace(/Mixin$/, ''), mixin.createFactory(this)]]

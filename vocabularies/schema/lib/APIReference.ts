@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface APIReference<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   executableLibraryName: string | undefined;
   programmingModel: string | undefined;
   targetPlatform: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    APIReference: Factory<Schema.APIReference>;
+  }
 }
 
 export function APIReferenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<APIReference & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function APIReferenceMixin<Base extends rdfine.Constructor>(Resource: Bas
   return APIReferenceClass as any
 }
 APIReferenceMixin.appliesTo = schema.APIReference
-
-export const factory = (env: RdfineEnvironment) => createFactory<APIReference>([TechArticleMixin, APIReferenceMixin], { types: [schema.APIReference] }, env);
+APIReferenceMixin.createFactory = (env: RdfineEnvironment) => createFactory<APIReference>([TechArticleMixin, APIReferenceMixin], { types: [schema.APIReference] }, env)

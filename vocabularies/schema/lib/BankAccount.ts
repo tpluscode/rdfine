@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface BankAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   accountOverdraftLimit: Schema.MonetaryAmount<D> | undefined;
   bankAccountType: string | undefined;
   bankAccountTypeTerm: RDF.NamedNode | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BankAccount: Factory<Schema.BankAccount>;
+  }
 }
 
 export function BankAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BankAccount & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function BankAccountMixin<Base extends rdfine.Constructor>(Resource: Base
   return BankAccountClass as any
 }
 BankAccountMixin.appliesTo = schema.BankAccount
-
-export const factory = (env: RdfineEnvironment) => createFactory<BankAccount>([FinancialProductMixin, BankAccountMixin], { types: [schema.BankAccount] }, env);
+BankAccountMixin.createFactory = (env: RdfineEnvironment) => createFactory<BankAccount>([FinancialProductMixin, BankAccountMixin], { types: [schema.BankAccount] }, env)

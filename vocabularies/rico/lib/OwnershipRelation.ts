@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface OwnershipRelation<D extends RDF.DatasetCore = RDF.DatasetCore> 
   ownershipRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    OwnershipRelation: Factory<Rico.OwnershipRelation>;
+  }
+}
+
 export function OwnershipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OwnershipRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class OwnershipRelationClass extends AuthorityRelationMixin(Resource) {
@@ -24,5 +30,4 @@ export function OwnershipRelationMixin<Base extends rdfine.Constructor>(Resource
   return OwnershipRelationClass as any
 }
 OwnershipRelationMixin.appliesTo = rico.OwnershipRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<OwnershipRelation>([AuthorityRelationMixin, OwnershipRelationMixin], { types: [rico.OwnershipRelation] }, env);
+OwnershipRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<OwnershipRelation>([AuthorityRelationMixin, OwnershipRelationMixin], { types: [rico.OwnershipRelation] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { CivicStructureMixin } from './CivicStructure.js';
 export interface Crematorium<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Crematorium: Factory<Schema.Crematorium>;
+  }
+}
+
 export function CrematoriumMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Crematorium & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class CrematoriumClass extends CivicStructureMixin(Resource) {
@@ -18,5 +24,4 @@ export function CrematoriumMixin<Base extends rdfine.Constructor>(Resource: Base
   return CrematoriumClass as any
 }
 CrematoriumMixin.appliesTo = schema.Crematorium
-
-export const factory = (env: RdfineEnvironment) => createFactory<Crematorium>([CivicStructureMixin, CrematoriumMixin], { types: [schema.Crematorium] }, env);
+CrematoriumMixin.createFactory = (env: RdfineEnvironment) => createFactory<Crematorium>([CivicStructureMixin, CrematoriumMixin], { types: [schema.Crematorium] }, env)

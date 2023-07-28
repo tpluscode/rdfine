@@ -1,7 +1,7 @@
 import '../extensions/rdfs/Class.js';
 import { ClassMixinEx } from '../extensions/rdfs/Class.js';
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -20,6 +20,12 @@ export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs
   hasKey: Rdf.List<D> | undefined;
 }
 
+declare global {
+  interface OwlVocabulary {
+    Class: Factory<Owl.Class>;
+  }
+}
+
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
   class ClassClass extends ClassMixinEx(RdfsClassMixin(Resource)) {
@@ -35,5 +41,4 @@ export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return ClassClass as any
 }
 ClassMixin.appliesTo = owl.Class
-
-export const factory = (env: RdfineEnvironment) => createFactory<Class>([RdfsClassMixin, ClassMixin], { types: [owl.Class] }, env);
+ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Class>([RdfsClassMixin, ClassMixin], { types: [owl.Class] }, env)

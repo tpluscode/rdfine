@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface CreationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> e
   creationRelationHasSource: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
   creationRelationHasTarget: Rico.Agent<D> | undefined;
   creationWithRole: Rico.RoleType<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    CreationRelation: Factory<Rico.CreationRelation>;
+  }
 }
 
 export function CreationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CreationRelation & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function CreationRelationMixin<Base extends rdfine.Constructor>(Resource:
   return CreationRelationClass as any
 }
 CreationRelationMixin.appliesTo = rico.CreationRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<CreationRelation>([AgentOriginationRelationMixin, CreationRelationMixin], { types: [rico.CreationRelation] }, env);
+CreationRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<CreationRelation>([AgentOriginationRelationMixin, CreationRelationMixin], { types: [rico.CreationRelation] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface OrderedCollectionPage<D extends RDF.DatasetCore = RDF.DatasetCo
   startIndex: number | undefined;
 }
 
+declare global {
+  interface AsVocabulary {
+    OrderedCollectionPage: Factory<As.OrderedCollectionPage>;
+  }
+}
+
 export function OrderedCollectionPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OrderedCollectionPage & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class OrderedCollectionPageClass extends OrderedCollectionMixin(CollectionPageMixin(Resource)) {
@@ -22,5 +28,4 @@ export function OrderedCollectionPageMixin<Base extends rdfine.Constructor>(Reso
   return OrderedCollectionPageClass as any
 }
 OrderedCollectionPageMixin.appliesTo = as.OrderedCollectionPage
-
-export const factory = (env: RdfineEnvironment) => createFactory<OrderedCollectionPage>([OrderedCollectionMixin, CollectionPageMixin, OrderedCollectionPageMixin], { types: [as.OrderedCollectionPage] }, env);
+OrderedCollectionPageMixin.createFactory = (env: RdfineEnvironment) => createFactory<OrderedCollectionPage>([OrderedCollectionMixin, CollectionPageMixin, OrderedCollectionPageMixin], { types: [as.OrderedCollectionPage] }, env)

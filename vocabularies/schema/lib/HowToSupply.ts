@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface HowToSupply<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   estimatedCostLiteral: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    HowToSupply: Factory<Schema.HowToSupply>;
+  }
+}
+
 export function HowToSupplyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowToSupply & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class HowToSupplyClass extends HowToItemMixin(Resource) {
@@ -24,5 +30,4 @@ export function HowToSupplyMixin<Base extends rdfine.Constructor>(Resource: Base
   return HowToSupplyClass as any
 }
 HowToSupplyMixin.appliesTo = schema.HowToSupply
-
-export const factory = (env: RdfineEnvironment) => createFactory<HowToSupply>([HowToItemMixin, HowToSupplyMixin], { types: [schema.HowToSupply] }, env);
+HowToSupplyMixin.createFactory = (env: RdfineEnvironment) => createFactory<HowToSupply>([HowToItemMixin, HowToSupplyMixin], { types: [schema.HowToSupply] }, env)

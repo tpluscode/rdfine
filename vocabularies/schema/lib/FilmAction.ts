@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { CreateActionMixin } from './CreateAction.js';
 export interface FilmAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    FilmAction: Factory<Schema.FilmAction>;
+  }
+}
+
 export function FilmActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FilmAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class FilmActionClass extends CreateActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function FilmActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   return FilmActionClass as any
 }
 FilmActionMixin.appliesTo = schema.FilmAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<FilmAction>([CreateActionMixin, FilmActionMixin], { types: [schema.FilmAction] }, env);
+FilmActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<FilmAction>([CreateActionMixin, FilmActionMixin], { types: [schema.FilmAction] }, env)

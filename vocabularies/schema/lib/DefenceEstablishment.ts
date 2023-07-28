@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { GovernmentBuildingMixin } from './GovernmentBuilding.js';
 export interface DefenceEstablishment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentBuilding<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    DefenceEstablishment: Factory<Schema.DefenceEstablishment>;
+  }
+}
+
 export function DefenceEstablishmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DefenceEstablishment & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class DefenceEstablishmentClass extends GovernmentBuildingMixin(Resource) {
@@ -18,5 +24,4 @@ export function DefenceEstablishmentMixin<Base extends rdfine.Constructor>(Resou
   return DefenceEstablishmentClass as any
 }
 DefenceEstablishmentMixin.appliesTo = schema.DefenceEstablishment
-
-export const factory = (env: RdfineEnvironment) => createFactory<DefenceEstablishment>([GovernmentBuildingMixin, DefenceEstablishmentMixin], { types: [schema.DefenceEstablishment] }, env);
+DefenceEstablishmentMixin.createFactory = (env: RdfineEnvironment) => createFactory<DefenceEstablishment>([GovernmentBuildingMixin, DefenceEstablishmentMixin], { types: [schema.DefenceEstablishment] }, env)

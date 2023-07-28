@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 export interface ShoppingCenter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ShoppingCenter: Factory<Schema.ShoppingCenter>;
+  }
+}
+
 export function ShoppingCenterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ShoppingCenter & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ShoppingCenterClass extends LocalBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function ShoppingCenterMixin<Base extends rdfine.Constructor>(Resource: B
   return ShoppingCenterClass as any
 }
 ShoppingCenterMixin.appliesTo = schema.ShoppingCenter
-
-export const factory = (env: RdfineEnvironment) => createFactory<ShoppingCenter>([LocalBusinessMixin, ShoppingCenterMixin], { types: [schema.ShoppingCenter] }, env);
+ShoppingCenterMixin.createFactory = (env: RdfineEnvironment) => createFactory<ShoppingCenter>([LocalBusinessMixin, ShoppingCenterMixin], { types: [schema.ShoppingCenter] }, env)

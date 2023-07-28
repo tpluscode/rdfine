@@ -1,10 +1,10 @@
-import type {DataFactory, DatasetCore, Term} from '@rdfjs/types'
+import type { DataFactory, DatasetCore, Term } from '@rdfjs/types'
 import type { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
+import { Environment } from '@rdfjs/environment/Environment'
 import type { RdfResourceCore, ResourceIdentifier } from '../RdfResource.js'
 import { onlyUnique } from './filter.js'
 import * as compare from './compare.js'
-import {Environment} from '@rdfjs/environment/Environment';
 
 function getNode(value: RdfResourceCore | ResourceIdentifier | string, RDF: Environment<DataFactory>): ResourceIdentifier {
   if (typeof value === 'string') {

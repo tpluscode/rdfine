@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface ChemicalSubstance<D extends RDF.DatasetCore = RDF.DatasetCore> 
   chemicalComposition: string | undefined;
   chemicalRole: RDF.Term | undefined;
   potentialUse: RDF.Term | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ChemicalSubstance: Factory<Schema.ChemicalSubstance>;
+  }
 }
 
 export function ChemicalSubstanceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ChemicalSubstance & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function ChemicalSubstanceMixin<Base extends rdfine.Constructor>(Resource
   return ChemicalSubstanceClass as any
 }
 ChemicalSubstanceMixin.appliesTo = schema.ChemicalSubstance
-
-export const factory = (env: RdfineEnvironment) => createFactory<ChemicalSubstance>([BioChemEntityMixin, ChemicalSubstanceMixin], { types: [schema.ChemicalSubstance] }, env);
+ChemicalSubstanceMixin.createFactory = (env: RdfineEnvironment) => createFactory<ChemicalSubstance>([BioChemEntityMixin, ChemicalSubstanceMixin], { types: [schema.ChemicalSubstance] }, env)

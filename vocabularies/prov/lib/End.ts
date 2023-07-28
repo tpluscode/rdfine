@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface End<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.E
   hadActivity: Prov.Activity<D> | undefined;
 }
 
+declare global {
+  interface ProvVocabulary {
+    End: Factory<Prov.End>;
+  }
+}
+
 export function EndMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<End & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class EndClass extends InstantaneousEventMixin(EntityInfluenceMixin(Resource)) {
@@ -22,5 +28,4 @@ export function EndMixin<Base extends rdfine.Constructor>(Resource: Base): rdfin
   return EndClass as any
 }
 EndMixin.appliesTo = prov.End
-
-export const factory = (env: RdfineEnvironment) => createFactory<End>([InstantaneousEventMixin, EntityInfluenceMixin, EndMixin], { types: [prov.End] }, env);
+EndMixin.createFactory = (env: RdfineEnvironment) => createFactory<End>([InstantaneousEventMixin, EntityInfluenceMixin, EndMixin], { types: [prov.End] }, env)

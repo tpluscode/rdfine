@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -30,6 +30,12 @@ export interface Restriction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   onProperty: Rdf.Property<D> | undefined;
   qualifiedCardinality: number | undefined;
   someValuesFrom: Rdfs.Class<D> | undefined;
+}
+
+declare global {
+  interface OwlVocabulary {
+    Restriction: Factory<Owl.Restriction>;
+  }
 }
 
 export function RestrictionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Restriction & RdfResourceCore> & Base {
@@ -67,5 +73,4 @@ export function RestrictionMixin<Base extends rdfine.Constructor>(Resource: Base
   return RestrictionClass as any
 }
 RestrictionMixin.appliesTo = owl.Restriction
-
-export const factory = (env: RdfineEnvironment) => createFactory<Restriction>([ClassMixin, RestrictionMixin], { types: [owl.Restriction] }, env);
+RestrictionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Restriction>([ClassMixin, RestrictionMixin], { types: [owl.Restriction] }, env)

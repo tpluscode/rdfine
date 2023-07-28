@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface MedicalObservationalStudy<D extends RDF.DatasetCore = RDF.Datas
   studyDesign: Schema.MedicalObservationalStudyDesign | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MedicalObservationalStudy: Factory<Schema.MedicalObservationalStudy>;
+  }
+}
+
 export function MedicalObservationalStudyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalObservationalStudy & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MedicalObservationalStudyClass extends MedicalStudyMixin(Resource) {
@@ -21,5 +27,4 @@ export function MedicalObservationalStudyMixin<Base extends rdfine.Constructor>(
   return MedicalObservationalStudyClass as any
 }
 MedicalObservationalStudyMixin.appliesTo = schema.MedicalObservationalStudy
-
-export const factory = (env: RdfineEnvironment) => createFactory<MedicalObservationalStudy>([MedicalStudyMixin, MedicalObservationalStudyMixin], { types: [schema.MedicalObservationalStudy] }, env);
+MedicalObservationalStudyMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalObservationalStudy>([MedicalStudyMixin, MedicalObservationalStudyMixin], { types: [schema.MedicalObservationalStudy] }, env)

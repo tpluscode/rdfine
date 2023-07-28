@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -21,6 +21,12 @@ export interface LoanOrCredit<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   renegotiableLoan: boolean | undefined;
   requiredCollateral: Schema.Thing<D> | undefined;
   requiredCollateralLiteral: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    LoanOrCredit: Factory<Schema.LoanOrCredit>;
+  }
 }
 
 export function LoanOrCreditMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LoanOrCredit & RdfResourceCore> & Base {
@@ -54,5 +60,4 @@ export function LoanOrCreditMixin<Base extends rdfine.Constructor>(Resource: Bas
   return LoanOrCreditClass as any
 }
 LoanOrCreditMixin.appliesTo = schema.LoanOrCredit
-
-export const factory = (env: RdfineEnvironment) => createFactory<LoanOrCredit>([FinancialProductMixin, LoanOrCreditMixin], { types: [schema.LoanOrCredit] }, env);
+LoanOrCreditMixin.createFactory = (env: RdfineEnvironment) => createFactory<LoanOrCredit>([FinancialProductMixin, LoanOrCreditMixin], { types: [schema.LoanOrCredit] }, env)

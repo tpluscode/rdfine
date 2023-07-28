@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface MedicalTherapy<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   contraindicationLiteral: string | undefined;
   duplicateTherapy: Schema.MedicalTherapy<D> | undefined;
   seriousAdverseOutcome: Schema.MedicalEntity<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MedicalTherapy: Factory<Schema.MedicalTherapy>;
+  }
 }
 
 export function MedicalTherapyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalTherapy & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function MedicalTherapyMixin<Base extends rdfine.Constructor>(Resource: B
   return MedicalTherapyClass as any
 }
 MedicalTherapyMixin.appliesTo = schema.MedicalTherapy
-
-export const factory = (env: RdfineEnvironment) => createFactory<MedicalTherapy>([TherapeuticProcedureMixin, MedicalTherapyMixin], { types: [schema.MedicalTherapy] }, env);
+MedicalTherapyMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalTherapy>([TherapeuticProcedureMixin, MedicalTherapyMixin], { types: [schema.MedicalTherapy] }, env)

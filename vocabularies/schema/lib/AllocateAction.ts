@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { OrganizeActionMixin } from './OrganizeAction.js';
 export interface AllocateAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OrganizeAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    AllocateAction: Factory<Schema.AllocateAction>;
+  }
+}
+
 export function AllocateActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AllocateAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class AllocateActionClass extends OrganizeActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function AllocateActionMixin<Base extends rdfine.Constructor>(Resource: B
   return AllocateActionClass as any
 }
 AllocateActionMixin.appliesTo = schema.AllocateAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<AllocateAction>([OrganizeActionMixin, AllocateActionMixin], { types: [schema.AllocateAction] }, env);
+AllocateActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<AllocateAction>([OrganizeActionMixin, AllocateActionMixin], { types: [schema.AllocateAction] }, env)

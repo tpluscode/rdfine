@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,6 +15,12 @@ export interface Book<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   illustrator: Schema.Person<D> | undefined;
   isbn: string | undefined;
   numberOfPages: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Book: Factory<Schema.Book>;
+  }
 }
 
 export function BookMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Book & RdfResourceCore> & Base {
@@ -36,5 +42,4 @@ export function BookMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return BookClass as any
 }
 BookMixin.appliesTo = schema.Book
-
-export const factory = (env: RdfineEnvironment) => createFactory<Book>([CreativeWorkMixin, BookMixin], { types: [schema.Book] }, env);
+BookMixin.createFactory = (env: RdfineEnvironment) => createFactory<Book>([CreativeWorkMixin, BookMixin], { types: [schema.Book] }, env)

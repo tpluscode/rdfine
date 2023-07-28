@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface WebApplication<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   browserRequirements: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    WebApplication: Factory<Schema.WebApplication>;
+  }
+}
+
 export function WebApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WebApplication & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class WebApplicationClass extends SoftwareApplicationMixin(Resource) {
@@ -21,5 +27,4 @@ export function WebApplicationMixin<Base extends rdfine.Constructor>(Resource: B
   return WebApplicationClass as any
 }
 WebApplicationMixin.appliesTo = schema.WebApplication
-
-export const factory = (env: RdfineEnvironment) => createFactory<WebApplication>([SoftwareApplicationMixin, WebApplicationMixin], { types: [schema.WebApplication] }, env);
+WebApplicationMixin.createFactory = (env: RdfineEnvironment) => createFactory<WebApplication>([SoftwareApplicationMixin, WebApplicationMixin], { types: [schema.WebApplication] }, env)

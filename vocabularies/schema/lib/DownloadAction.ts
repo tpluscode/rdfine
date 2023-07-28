@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { TransferActionMixin } from './TransferAction.js';
 export interface DownloadAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    DownloadAction: Factory<Schema.DownloadAction>;
+  }
+}
+
 export function DownloadActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DownloadAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class DownloadActionClass extends TransferActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function DownloadActionMixin<Base extends rdfine.Constructor>(Resource: B
   return DownloadActionClass as any
 }
 DownloadActionMixin.appliesTo = schema.DownloadAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<DownloadAction>([TransferActionMixin, DownloadActionMixin], { types: [schema.DownloadAction] }, env);
+DownloadActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<DownloadAction>([TransferActionMixin, DownloadActionMixin], { types: [schema.DownloadAction] }, env)

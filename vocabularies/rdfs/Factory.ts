@@ -1,24 +1,15 @@
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import { Factory } from '@tpluscode/rdfine/factory';
-import * as Class from './lib/Class.js';
-import * as Mixins from './index.js'
-
-interface VocabularyFactory {
-  Class: Factory<Class.Class>;
-}
+import * as Rdfs from './index.js';
 
 declare module '@tpluscode/rdfine/environment' {
   interface Rdfine {
-    rdfs: VocabularyFactory;
+    rdfs: RdfsVocabulary;
   }
 }
 
 export class RdfsFactory {
   init(this: RdfineEnvironment) {
-    this.rdfine().factory.addMixin(...Object.values(Mixins))
-
-    this.rdfine.rdfs = {
-      Class: Class.ClassMixin.createFactory(this),
-    }
+    this.rdfine.rdfs = this._initVocabulary(Rdfs)
   }
 }

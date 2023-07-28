@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ImageObjectMixin } from './ImageObject.js';
 export interface Barcode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ImageObject<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Barcode: Factory<Schema.Barcode>;
+  }
+}
+
 export function BarcodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Barcode & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class BarcodeClass extends ImageObjectMixin(Resource) {
@@ -18,5 +24,4 @@ export function BarcodeMixin<Base extends rdfine.Constructor>(Resource: Base): r
   return BarcodeClass as any
 }
 BarcodeMixin.appliesTo = schema.Barcode
-
-export const factory = (env: RdfineEnvironment) => createFactory<Barcode>([ImageObjectMixin, BarcodeMixin], { types: [schema.Barcode] }, env);
+BarcodeMixin.createFactory = (env: RdfineEnvironment) => createFactory<Barcode>([ImageObjectMixin, BarcodeMixin], { types: [schema.Barcode] }, env)

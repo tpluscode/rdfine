@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ContainerMixin } from './Container.js';
 export interface Thread<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc.Container<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SiocVocabulary {
+    Thread: Factory<Sioc.Thread>;
+  }
+}
+
 export function ThreadMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Thread & RdfResourceCore> & Base {
   @rdfine.namespace(sioc)
   class ThreadClass extends ContainerMixin(Resource) {
@@ -18,5 +24,4 @@ export function ThreadMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return ThreadClass as any
 }
 ThreadMixin.appliesTo = sioc.Thread
-
-export const factory = (env: RdfineEnvironment) => createFactory<Thread>([ContainerMixin, ThreadMixin], { types: [sioc.Thread] }, env);
+ThreadMixin.createFactory = (env: RdfineEnvironment) => createFactory<Thread>([ContainerMixin, ThreadMixin], { types: [sioc.Thread] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { CreateActionMixin } from './CreateAction.js';
 export interface PaintAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    PaintAction: Factory<Schema.PaintAction>;
+  }
+}
+
 export function PaintActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PaintAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class PaintActionClass extends CreateActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function PaintActionMixin<Base extends rdfine.Constructor>(Resource: Base
   return PaintActionClass as any
 }
 PaintActionMixin.appliesTo = schema.PaintAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<PaintAction>([CreateActionMixin, PaintActionMixin], { types: [schema.PaintAction] }, env);
+PaintActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<PaintAction>([CreateActionMixin, PaintActionMixin], { types: [schema.PaintAction] }, env)

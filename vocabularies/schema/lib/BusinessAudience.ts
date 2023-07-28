@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface BusinessAudience<D extends RDF.DatasetCore = RDF.DatasetCore> e
   numberOfEmployees: Schema.QuantitativeValue<D> | undefined;
   yearlyRevenue: Schema.QuantitativeValue<D> | undefined;
   yearsInOperation: Schema.QuantitativeValue<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BusinessAudience: Factory<Schema.BusinessAudience>;
+  }
 }
 
 export function BusinessAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BusinessAudience & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function BusinessAudienceMixin<Base extends rdfine.Constructor>(Resource:
   return BusinessAudienceClass as any
 }
 BusinessAudienceMixin.appliesTo = schema.BusinessAudience
-
-export const factory = (env: RdfineEnvironment) => createFactory<BusinessAudience>([AudienceMixin, BusinessAudienceMixin], { types: [schema.BusinessAudience] }, env);
+BusinessAudienceMixin.createFactory = (env: RdfineEnvironment) => createFactory<BusinessAudience>([AudienceMixin, BusinessAudienceMixin], { types: [schema.BusinessAudience] }, env)

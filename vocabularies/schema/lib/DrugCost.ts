@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -16,6 +16,12 @@ export interface DrugCost<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   costPerUnit: number | string | undefined;
   costPerUnitTerm: Schema.QualitativeValue | undefined;
   drugUnit: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DrugCost: Factory<Schema.DrugCost>;
+  }
 }
 
 export function DrugCostMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DrugCost & RdfResourceCore> & Base {
@@ -39,5 +45,4 @@ export function DrugCostMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return DrugCostClass as any
 }
 DrugCostMixin.appliesTo = schema.DrugCost
-
-export const factory = (env: RdfineEnvironment) => createFactory<DrugCost>([MedicalEntityMixin, DrugCostMixin], { types: [schema.DrugCost] }, env);
+DrugCostMixin.createFactory = (env: RdfineEnvironment) => createFactory<DrugCost>([MedicalEntityMixin, DrugCostMixin], { types: [schema.DrugCost] }, env)

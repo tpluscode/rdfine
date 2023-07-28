@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface IndividualProduct<D extends RDF.DatasetCore = RDF.DatasetCore> 
   serialNumber: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    IndividualProduct: Factory<Schema.IndividualProduct>;
+  }
+}
+
 export function IndividualProductMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IndividualProduct & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class IndividualProductClass extends ProductMixin(Resource) {
@@ -21,5 +27,4 @@ export function IndividualProductMixin<Base extends rdfine.Constructor>(Resource
   return IndividualProductClass as any
 }
 IndividualProductMixin.appliesTo = schema.IndividualProduct
-
-export const factory = (env: RdfineEnvironment) => createFactory<IndividualProduct>([ProductMixin, IndividualProductMixin], { types: [schema.IndividualProduct] }, env);
+IndividualProductMixin.createFactory = (env: RdfineEnvironment) => createFactory<IndividualProduct>([ProductMixin, IndividualProductMixin], { types: [schema.IndividualProduct] }, env)

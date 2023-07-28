@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { WebPageMixin } from './WebPage.js';
 export interface FAQPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    FAQPage: Factory<Schema.FAQPage>;
+  }
+}
+
 export function FAQPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FAQPage & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class FAQPageClass extends WebPageMixin(Resource) {
@@ -18,5 +24,4 @@ export function FAQPageMixin<Base extends rdfine.Constructor>(Resource: Base): r
   return FAQPageClass as any
 }
 FAQPageMixin.appliesTo = schema.FAQPage
-
-export const factory = (env: RdfineEnvironment) => createFactory<FAQPage>([WebPageMixin, FAQPageMixin], { types: [schema.FAQPage] }, env);
+FAQPageMixin.createFactory = (env: RdfineEnvironment) => createFactory<FAQPage>([WebPageMixin, FAQPageMixin], { types: [schema.FAQPage] }, env)

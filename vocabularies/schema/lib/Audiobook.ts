@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface Audiobook<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   readBy: Schema.Person<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Audiobook: Factory<Schema.Audiobook>;
+  }
+}
+
 export function AudiobookMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Audiobook & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class AudiobookClass extends BookMixin(AudioObjectMixin(Resource)) {
@@ -25,5 +31,4 @@ export function AudiobookMixin<Base extends rdfine.Constructor>(Resource: Base):
   return AudiobookClass as any
 }
 AudiobookMixin.appliesTo = schema.Audiobook
-
-export const factory = (env: RdfineEnvironment) => createFactory<Audiobook>([BookMixin, AudioObjectMixin, AudiobookMixin], { types: [schema.Audiobook] }, env);
+AudiobookMixin.createFactory = (env: RdfineEnvironment) => createFactory<Audiobook>([BookMixin, AudioObjectMixin, AudiobookMixin], { types: [schema.Audiobook] }, env)

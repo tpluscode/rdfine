@@ -1,7 +1,7 @@
 import '../extensions/rdf/Property.js';
 import { PropertyMixinEx } from '../extensions/rdf/Property.js';
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 export interface FunctionalProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface OwlVocabulary {
+    FunctionalProperty: Factory<Owl.FunctionalProperty>;
+  }
+}
+
 export function FunctionalPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FunctionalProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
   class FunctionalPropertyClass extends PropertyMixinEx(RdfPropertyMixin(Resource)) {
@@ -21,5 +27,4 @@ export function FunctionalPropertyMixin<Base extends rdfine.Constructor>(Resourc
   return FunctionalPropertyClass as any
 }
 FunctionalPropertyMixin.appliesTo = owl.FunctionalProperty
-
-export const factory = (env: RdfineEnvironment) => createFactory<FunctionalProperty>([RdfPropertyMixin, FunctionalPropertyMixin], { types: [owl.FunctionalProperty] }, env);
+FunctionalPropertyMixin.createFactory = (env: RdfineEnvironment) => createFactory<FunctionalProperty>([RdfPropertyMixin, FunctionalPropertyMixin], { types: [owl.FunctionalProperty] }, env)

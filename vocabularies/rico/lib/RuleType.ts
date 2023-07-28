@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface RuleType<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   isOrWasRuleTypeOf: Rico.Rule<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    RuleType: Factory<Rico.RuleType>;
+  }
+}
+
 export function RuleTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RuleType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class RuleTypeClass extends TypeMixin(Resource) {
@@ -21,5 +27,4 @@ export function RuleTypeMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return RuleTypeClass as any
 }
 RuleTypeMixin.appliesTo = rico.RuleType
-
-export const factory = (env: RdfineEnvironment) => createFactory<RuleType>([TypeMixin, RuleTypeMixin], { types: [rico.RuleType] }, env);
+RuleTypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<RuleType>([TypeMixin, RuleTypeMixin], { types: [rico.RuleType] }, env)

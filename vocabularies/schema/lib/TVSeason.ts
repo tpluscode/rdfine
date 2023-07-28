@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface TVSeason<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   partOfTVSeries: Schema.TVSeries<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    TVSeason: Factory<Schema.TVSeason>;
+  }
+}
+
 export function TVSeasonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TVSeason & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class TVSeasonClass extends CreativeWorkSeasonMixin(CreativeWorkMixin(Resource)) {
@@ -25,5 +31,4 @@ export function TVSeasonMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return TVSeasonClass as any
 }
 TVSeasonMixin.appliesTo = schema.TVSeason
-
-export const factory = (env: RdfineEnvironment) => createFactory<TVSeason>([CreativeWorkSeasonMixin, CreativeWorkMixin, TVSeasonMixin], { types: [schema.TVSeason] }, env);
+TVSeasonMixin.createFactory = (env: RdfineEnvironment) => createFactory<TVSeason>([CreativeWorkSeasonMixin, CreativeWorkMixin, TVSeasonMixin], { types: [schema.TVSeason] }, env)

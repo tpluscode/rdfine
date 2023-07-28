@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface SuggestionGenerator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    SuggestionGenerator: Factory<Dash.SuggestionGenerator>;
+  }
+}
+
 export function SuggestionGeneratorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SuggestionGenerator & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class SuggestionGeneratorClass extends RdfsResourceMixin(Resource) {
@@ -19,5 +25,4 @@ export function SuggestionGeneratorMixin<Base extends rdfine.Constructor>(Resour
   return SuggestionGeneratorClass as any
 }
 SuggestionGeneratorMixin.appliesTo = dash.SuggestionGenerator
-
-export const factory = (env: RdfineEnvironment) => createFactory<SuggestionGenerator>([RdfsResourceMixin, SuggestionGeneratorMixin], { types: [dash.SuggestionGenerator] }, env);
+SuggestionGeneratorMixin.createFactory = (env: RdfineEnvironment) => createFactory<SuggestionGenerator>([RdfsResourceMixin, SuggestionGeneratorMixin], { types: [dash.SuggestionGenerator] }, env)

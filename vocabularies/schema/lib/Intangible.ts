@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ThingMixin } from './Thing.js';
 export interface Intangible<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Thing<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Intangible: Factory<Schema.Intangible>;
+  }
+}
+
 export function IntangibleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Intangible & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class IntangibleClass extends ThingMixin(Resource) {
@@ -18,5 +24,4 @@ export function IntangibleMixin<Base extends rdfine.Constructor>(Resource: Base)
   return IntangibleClass as any
 }
 IntangibleMixin.appliesTo = schema.Intangible
-
-export const factory = (env: RdfineEnvironment) => createFactory<Intangible>([ThingMixin, IntangibleMixin], { types: [schema.Intangible] }, env);
+IntangibleMixin.createFactory = (env: RdfineEnvironment) => createFactory<Intangible>([ThingMixin, IntangibleMixin], { types: [schema.Intangible] }, env)

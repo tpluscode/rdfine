@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -16,6 +16,12 @@ export interface Permit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   validFrom: Date | undefined;
   validIn: Schema.AdministrativeArea<D> | undefined;
   validUntil: Date | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Permit: Factory<Schema.Permit>;
+  }
 }
 
 export function PermitMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Permit & RdfResourceCore> & Base {
@@ -39,5 +45,4 @@ export function PermitMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return PermitClass as any
 }
 PermitMixin.appliesTo = schema.Permit
-
-export const factory = (env: RdfineEnvironment) => createFactory<Permit>([IntangibleMixin, PermitMixin], { types: [schema.Permit] }, env);
+PermitMixin.createFactory = (env: RdfineEnvironment) => createFactory<Permit>([IntangibleMixin, PermitMixin], { types: [schema.Permit] }, env)

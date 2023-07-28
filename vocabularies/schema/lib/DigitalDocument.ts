@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface DigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   hasDigitalDocumentPermission: Schema.DigitalDocumentPermission<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    DigitalDocument: Factory<Schema.DigitalDocument>;
+  }
+}
+
 export function DigitalDocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DigitalDocument & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class DigitalDocumentClass extends CreativeWorkMixin(Resource) {
@@ -21,5 +27,4 @@ export function DigitalDocumentMixin<Base extends rdfine.Constructor>(Resource: 
   return DigitalDocumentClass as any
 }
 DigitalDocumentMixin.appliesTo = schema.DigitalDocument
-
-export const factory = (env: RdfineEnvironment) => createFactory<DigitalDocument>([CreativeWorkMixin, DigitalDocumentMixin], { types: [schema.DigitalDocument] }, env);
+DigitalDocumentMixin.createFactory = (env: RdfineEnvironment) => createFactory<DigitalDocument>([CreativeWorkMixin, DigitalDocumentMixin], { types: [schema.DigitalDocument] }, env)

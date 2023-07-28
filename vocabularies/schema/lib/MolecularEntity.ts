@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -20,6 +20,12 @@ export interface MolecularEntity<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   monoisotopicMolecularWeightLiteral: string | undefined;
   potentialUse: RDF.Term | undefined;
   smiles: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MolecularEntity: Factory<Schema.MolecularEntity>;
+  }
 }
 
 export function MolecularEntityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MolecularEntity & RdfResourceCore> & Base {
@@ -51,5 +57,4 @@ export function MolecularEntityMixin<Base extends rdfine.Constructor>(Resource: 
   return MolecularEntityClass as any
 }
 MolecularEntityMixin.appliesTo = schema.MolecularEntity
-
-export const factory = (env: RdfineEnvironment) => createFactory<MolecularEntity>([BioChemEntityMixin, MolecularEntityMixin], { types: [schema.MolecularEntity] }, env);
+MolecularEntityMixin.createFactory = (env: RdfineEnvironment) => createFactory<MolecularEntity>([BioChemEntityMixin, MolecularEntityMixin], { types: [schema.MolecularEntity] }, env)

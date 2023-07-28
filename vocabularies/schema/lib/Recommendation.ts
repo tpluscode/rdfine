@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Recommendation<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   categoryLiteral: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Recommendation: Factory<Schema.Recommendation>;
+  }
+}
+
 export function RecommendationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Recommendation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class RecommendationClass extends ReviewMixin(Resource) {
@@ -24,5 +30,4 @@ export function RecommendationMixin<Base extends rdfine.Constructor>(Resource: B
   return RecommendationClass as any
 }
 RecommendationMixin.appliesTo = schema.Recommendation
-
-export const factory = (env: RdfineEnvironment) => createFactory<Recommendation>([ReviewMixin, RecommendationMixin], { types: [schema.Recommendation] }, env);
+RecommendationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Recommendation>([ReviewMixin, RecommendationMixin], { types: [schema.Recommendation] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface HealthPlanNetwork<D extends RDF.DatasetCore = RDF.DatasetCore> 
   healthPlanCostSharing: boolean | undefined;
   healthPlanNetworkId: string | undefined;
   healthPlanNetworkTier: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    HealthPlanNetwork: Factory<Schema.HealthPlanNetwork>;
+  }
 }
 
 export function HealthPlanNetworkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HealthPlanNetwork & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function HealthPlanNetworkMixin<Base extends rdfine.Constructor>(Resource
   return HealthPlanNetworkClass as any
 }
 HealthPlanNetworkMixin.appliesTo = schema.HealthPlanNetwork
-
-export const factory = (env: RdfineEnvironment) => createFactory<HealthPlanNetwork>([IntangibleMixin, HealthPlanNetworkMixin], { types: [schema.HealthPlanNetwork] }, env);
+HealthPlanNetworkMixin.createFactory = (env: RdfineEnvironment) => createFactory<HealthPlanNetwork>([IntangibleMixin, HealthPlanNetworkMixin], { types: [schema.HealthPlanNetwork] }, env)

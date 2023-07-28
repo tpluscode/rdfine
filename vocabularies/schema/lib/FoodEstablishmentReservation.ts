@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface FoodEstablishmentReservation<D extends RDF.DatasetCore = RDF.Da
   partySize: Schema.QuantitativeValue<D> | undefined;
   partySizeLiteral: number | undefined;
   startTime: Date | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    FoodEstablishmentReservation: Factory<Schema.FoodEstablishmentReservation>;
+  }
 }
 
 export function FoodEstablishmentReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FoodEstablishmentReservation & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function FoodEstablishmentReservationMixin<Base extends rdfine.Constructo
   return FoodEstablishmentReservationClass as any
 }
 FoodEstablishmentReservationMixin.appliesTo = schema.FoodEstablishmentReservation
-
-export const factory = (env: RdfineEnvironment) => createFactory<FoodEstablishmentReservation>([ReservationMixin, FoodEstablishmentReservationMixin], { types: [schema.FoodEstablishmentReservation] }, env);
+FoodEstablishmentReservationMixin.createFactory = (env: RdfineEnvironment) => createFactory<FoodEstablishmentReservation>([ReservationMixin, FoodEstablishmentReservationMixin], { types: [schema.FoodEstablishmentReservation] }, env)

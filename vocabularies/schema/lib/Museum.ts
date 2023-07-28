@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { CivicStructureMixin } from './CivicStructure.js';
 export interface Museum<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Museum: Factory<Schema.Museum>;
+  }
+}
+
 export function MuseumMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Museum & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MuseumClass extends CivicStructureMixin(Resource) {
@@ -18,5 +24,4 @@ export function MuseumMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return MuseumClass as any
 }
 MuseumMixin.appliesTo = schema.Museum
-
-export const factory = (env: RdfineEnvironment) => createFactory<Museum>([CivicStructureMixin, MuseumMixin], { types: [schema.Museum] }, env);
+MuseumMixin.createFactory = (env: RdfineEnvironment) => createFactory<Museum>([CivicStructureMixin, MuseumMixin], { types: [schema.Museum] }, env)

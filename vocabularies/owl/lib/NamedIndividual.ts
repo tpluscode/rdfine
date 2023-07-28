@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,6 +10,12 @@ import type * as Owl from '../index.js';
 export interface NamedIndividual<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface OwlVocabulary {
+    NamedIndividual: Factory<Owl.NamedIndividual>;
+  }
+}
+
 export function NamedIndividualMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NamedIndividual & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
   class NamedIndividualClass extends Resource {
@@ -17,5 +23,4 @@ export function NamedIndividualMixin<Base extends rdfine.Constructor>(Resource: 
   return NamedIndividualClass as any
 }
 NamedIndividualMixin.appliesTo = owl.NamedIndividual
-
-export const factory = (env: RdfineEnvironment) => createFactory<NamedIndividual>([NamedIndividualMixin], { types: [owl.NamedIndividual] }, env);
+NamedIndividualMixin.createFactory = (env: RdfineEnvironment) => createFactory<NamedIndividual>([NamedIndividualMixin], { types: [owl.NamedIndividual] }, env)

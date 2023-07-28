@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { EditorMixin } from './Editor.js';
 export interface MultiEditor<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Editor<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    MultiEditor: Factory<Dash.MultiEditor>;
+  }
+}
+
 export function MultiEditorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MultiEditor & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class MultiEditorClass extends EditorMixin(Resource) {
@@ -18,5 +24,4 @@ export function MultiEditorMixin<Base extends rdfine.Constructor>(Resource: Base
   return MultiEditorClass as any
 }
 MultiEditorMixin.appliesTo = dash.MultiEditor
-
-export const factory = (env: RdfineEnvironment) => createFactory<MultiEditor>([EditorMixin, MultiEditorMixin], { types: [dash.MultiEditor] }, env);
+MultiEditorMixin.createFactory = (env: RdfineEnvironment) => createFactory<MultiEditor>([EditorMixin, MultiEditorMixin], { types: [dash.MultiEditor] }, env)

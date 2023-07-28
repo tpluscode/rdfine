@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Tombstone<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   formerType: As.Object<D> | undefined;
 }
 
+declare global {
+  interface AsVocabulary {
+    Tombstone: Factory<As.Tombstone>;
+  }
+}
+
 export function TombstoneMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Tombstone & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class TombstoneClass extends ObjectMixin(Resource) {
@@ -24,5 +30,4 @@ export function TombstoneMixin<Base extends rdfine.Constructor>(Resource: Base):
   return TombstoneClass as any
 }
 TombstoneMixin.appliesTo = as.Tombstone
-
-export const factory = (env: RdfineEnvironment) => createFactory<Tombstone>([ObjectMixin, TombstoneMixin], { types: [as.Tombstone] }, env);
+TombstoneMixin.createFactory = (env: RdfineEnvironment) => createFactory<Tombstone>([ObjectMixin, TombstoneMixin], { types: [as.Tombstone] }, env)

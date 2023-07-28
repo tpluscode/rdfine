@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { EntertainmentBusinessMixin } from './EntertainmentBusiness.js';
 export interface AmusementPark<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.EntertainmentBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    AmusementPark: Factory<Schema.AmusementPark>;
+  }
+}
+
 export function AmusementParkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AmusementPark & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class AmusementParkClass extends EntertainmentBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function AmusementParkMixin<Base extends rdfine.Constructor>(Resource: Ba
   return AmusementParkClass as any
 }
 AmusementParkMixin.appliesTo = schema.AmusementPark
-
-export const factory = (env: RdfineEnvironment) => createFactory<AmusementPark>([EntertainmentBusinessMixin, AmusementParkMixin], { types: [schema.AmusementPark] }, env);
+AmusementParkMixin.createFactory = (env: RdfineEnvironment) => createFactory<AmusementPark>([EntertainmentBusinessMixin, AmusementParkMixin], { types: [schema.AmusementPark] }, env)

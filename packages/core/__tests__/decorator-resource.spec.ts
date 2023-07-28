@@ -16,11 +16,19 @@ import {
 } from '../index.js'
 import RdfResource, { fromObject } from '../RdfResource.js'
 import ResourceFactoryImpl from '../lib/ResourceFactory.js'
+import { RdfineEnvironment } from '../environment.js'
 import { parse, ex } from './_helpers/index.js'
+import { createEnv } from './_helpers/environment.js'
 
 describe('decorator', () => {
   chai.use(jestSnapshotPlugin())
   before(() => import('../../../__tests__/helpers/matchers.js'))
+
+  let environment: RdfineEnvironment
+  beforeEach(() => {
+    environment = createEnv()
+  })
+
   describe('resource', () => {
     describe('getter', () => {
       it('returns a resource object using path predicate', async () => {
@@ -41,7 +49,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         const friend = instance.friend
 
         // then
@@ -68,7 +76,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         const friend = instance.friend
 
         // then
@@ -93,7 +101,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.friends.map(l => l.id.value)).to.deep.contain.all.members([
@@ -122,7 +130,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         const friend = instance.friend
 
         // then
@@ -148,7 +156,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         const friend = instance.friend
 
         // then
@@ -173,8 +181,8 @@ describe('decorator', () => {
           @property.resource({ path: schema.spouse })
             spouse?: RdfResource
         }
-        const john = new Resource(cf({ dataset, term: ex.john }))
-        const jane = new Resource(cf({ dataset, term: ex.jane }))
+        const john = new Resource(cf({ dataset, term: ex.john }), environment)
+        const jane = new Resource(cf({ dataset, term: ex.jane }), environment)
 
         // when
         john.spouse = jane
@@ -199,7 +207,7 @@ describe('decorator', () => {
           @property.resource({ path: schema.spouse })
             spouse?: RdfResource | null
         }
-        const john = new Resource(cf({ dataset, term: ex.john }))
+        const john = new Resource(cf({ dataset, term: ex.john }), environment)
 
         // when
         john.spouse = null
@@ -222,7 +230,7 @@ describe('decorator', () => {
           @property.resource({ path: schema.spouse })
             spouse?: RdfResource | NamedNode
         }
-        const john = new Resource(cf({ dataset, term: ex.john }))
+        const john = new Resource(cf({ dataset, term: ex.john }), environment)
 
         // when
         john.spouse = ex.jane
@@ -245,7 +253,7 @@ describe('decorator', () => {
           @property.resource({ path: schema.spouse })
             spouse?: RdfResource | GraphPointer
         }
-        const john = new Resource(cf({ dataset, term: ex.john }))
+        const john = new Resource(cf({ dataset, term: ex.john }), environment)
 
         // when
         john.spouse = john.pointer.blankNode()
@@ -270,7 +278,7 @@ describe('decorator', () => {
           @property.resource({ path: foaf.knows, values: 'list' })
             knows?: (RdfResource | NamedNode)[]
         }
-        const john = new Resource(cf({ dataset, term: ex.john }))
+        const john = new Resource(cf({ dataset, term: ex.john }), environment)
 
         // when
         john.knows = [
@@ -295,7 +303,7 @@ describe('decorator', () => {
           @property.resource({ path: foaf.knows, values: 'array' })
             knows?: (RdfResource | NamedNode)[]
         }
-        const john = new Resource(cf({ dataset, term: ex.john }))
+        const john = new Resource(cf({ dataset, term: ex.john }), environment)
 
         // when
         john.knows = [
@@ -321,7 +329,7 @@ describe('decorator', () => {
           @property.resource({ path: schema.spouse })
             spouse?: RdfResource | Term
         }
-        const lois = new Resource(cf({ dataset, term: ex.lois }))
+        const lois = new Resource(cf({ dataset, term: ex.lois }), environment)
 
         // when
         lois.spouse = cf({ dataset }).has(rdf.type, ex.Superman).term
@@ -357,10 +365,8 @@ describe('decorator', () => {
           return Resource
         }
         Mixin.shouldApply = () => true
-        class TestResourceBase extends RdfResource {}
-        TestResourceBase.factory = new ResourceFactoryImpl(TestResourceBase)
-        TestResourceBase.factory.addMixin(Mixin)
-        const lois = TestResourceBase.factory.createEntity<Person>(cf({ dataset, term: ex.Lois }))
+        environment.rdfine().factory.addMixin(Mixin)
+        const lois = environment.rdfine().factory.createEntity<Person>(cf({ dataset, term: ex.Lois }))
 
         // when
         lois.knows = fromObject({
@@ -383,7 +389,7 @@ describe('decorator', () => {
       it('set object returned by factory function', async () => {
         // given
         const dataset = rdfExt.dataset()
-        @namespace('http://example.com/')
+        @namespace(rdfExt.namespace('http://example.com/'))
         class NameResource extends RdfResource {
           @property.literal()
             first!: string
@@ -398,7 +404,7 @@ describe('decorator', () => {
           @property.resource({
             path: foaf.friend,
             initial: (self: Resource) => {
-              const name = new NameResource(self.pointer.blankNode())
+              const name = new NameResource(self.pointer.blankNode(), environment)
               name.first = 'John'
               name.last = 'Doe'
               name.person = self
@@ -408,13 +414,12 @@ describe('decorator', () => {
           })
             name!: NameResource
         }
-        Resource.factory = new ResourceFactoryImpl(RdfResource)
 
         // when
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         const name = instance.name
 
         // then
@@ -440,7 +445,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.employer.id).to.deep.eq(ex.Google)
@@ -464,7 +469,7 @@ describe('decorator', () => {
         new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(dataset.toCanonical()).toMatchSnapshot()
@@ -499,9 +504,6 @@ describe('decorator', () => {
         })
           allFriends!: this[]
       }
-      beforeEach(() => {
-        Resource.factory = new ResourceFactoryImpl(RdfResource)
-      })
 
       describe('getter', () => {
         it('does not cross named graph boundary by default', async () => {
@@ -517,7 +519,7 @@ describe('decorator', () => {
             `)
 
           // when
-          const instance = new Resource(cf({ dataset, term: ex.John, graph: ex.John }))
+          const instance = new Resource(cf({ dataset, term: ex.John, graph: ex.John }), environment)
 
           // then
           expect(instance.friend.name).to.be.undefined
@@ -537,7 +539,7 @@ describe('decorator', () => {
             `)
 
           // when
-          const instance = new Resource(cf({ dataset, term: ex.John, graph: ex.John }))
+          const instance = new Resource(cf({ dataset, term: ex.John, graph: ex.John }), environment)
 
           // then
           expect(instance.allAboutFriends).to.have.length(2)
@@ -565,7 +567,7 @@ describe('decorator', () => {
             `)
 
           // when
-          const instance = new Resource(cf({ dataset, term: ex.John }))
+          const instance = new Resource(cf({ dataset, term: ex.John }), environment)
 
           // then
           expect(instance.allAboutFriends).to.have.length(4)
@@ -587,7 +589,7 @@ describe('decorator', () => {
             `)
 
           // when
-          const instance = new Resource(cf({ dataset, term: ex.John }))
+          const instance = new Resource(cf({ dataset, term: ex.John }), environment)
 
           // then
           expect(instance.name).to.be.undefined
@@ -607,7 +609,7 @@ describe('decorator', () => {
             `)
 
           // when
-          const instance = new Resource(cf({ dataset, term: ex.John }))
+          const instance = new Resource(cf({ dataset, term: ex.John }), environment)
 
           // then
           expect(instance.allAboutAllFriends).to.have.length(2)
@@ -633,7 +635,7 @@ describe('decorator', () => {
             `)
 
           // when
-          const instance = new Resource(cf({ dataset, term: ex.John }))
+          const instance = new Resource(cf({ dataset, term: ex.John }), environment)
           const friendNames = instance.allFriends.map(friend => friend.name)
 
           // then
@@ -657,8 +659,8 @@ describe('decorator', () => {
             `)
 
           // when
-          const john = new Resource(cf({ dataset, term: ex.John, graph: ex.John }))
-          john.friend = new Resource(cf({ dataset, term: ex.Will, graph: ex.Will }))
+          const john = new Resource(cf({ dataset, term: ex.John, graph: ex.John }), environment)
+          john.friend = new Resource(cf({ dataset, term: ex.Will, graph: ex.Will }), environment)
 
           // then
           expect(dataset.toCanonical()).toMatchSnapshot()

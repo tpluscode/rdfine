@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { OrganizationMixin } from './Organization.js';
 export interface Consortium<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Consortium: Factory<Schema.Consortium>;
+  }
+}
+
 export function ConsortiumMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Consortium & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ConsortiumClass extends OrganizationMixin(Resource) {
@@ -18,5 +24,4 @@ export function ConsortiumMixin<Base extends rdfine.Constructor>(Resource: Base)
   return ConsortiumClass as any
 }
 ConsortiumMixin.appliesTo = schema.Consortium
-
-export const factory = (env: RdfineEnvironment) => createFactory<Consortium>([OrganizationMixin, ConsortiumMixin], { types: [schema.Consortium] }, env);
+ConsortiumMixin.createFactory = (env: RdfineEnvironment) => createFactory<Consortium>([OrganizationMixin, ConsortiumMixin], { types: [schema.Consortium] }, env)

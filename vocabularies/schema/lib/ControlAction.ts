@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ActionMixin } from './Action.js';
 export interface ControlAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ControlAction: Factory<Schema.ControlAction>;
+  }
+}
+
 export function ControlActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ControlAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ControlActionClass extends ActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function ControlActionMixin<Base extends rdfine.Constructor>(Resource: Ba
   return ControlActionClass as any
 }
 ControlActionMixin.appliesTo = schema.ControlAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<ControlAction>([ActionMixin, ControlActionMixin], { types: [schema.ControlAction] }, env);
+ControlActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<ControlAction>([ActionMixin, ControlActionMixin], { types: [schema.ControlAction] }, env)

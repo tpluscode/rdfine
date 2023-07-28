@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Car<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema
   roofLoad: Schema.QuantitativeValue<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Car: Factory<Schema.Car>;
+  }
+}
+
 export function CarMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Car & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class CarClass extends VehicleMixin(Resource) {
@@ -24,5 +30,4 @@ export function CarMixin<Base extends rdfine.Constructor>(Resource: Base): rdfin
   return CarClass as any
 }
 CarMixin.appliesTo = schema.Car
-
-export const factory = (env: RdfineEnvironment) => createFactory<Car>([VehicleMixin, CarMixin], { types: [schema.Car] }, env);
+CarMixin.createFactory = (env: RdfineEnvironment) => createFactory<Car>([VehicleMixin, CarMixin], { types: [schema.Car] }, env)

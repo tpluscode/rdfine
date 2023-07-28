@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -17,6 +17,12 @@ export interface ResultAnnotation<D extends RDF.DatasetCore = RDF.DatasetCore> e
   annotationVarName: string | undefined;
 }
 
+declare global {
+  interface ShVocabulary {
+    ResultAnnotation: Factory<Sh.ResultAnnotation>;
+  }
+}
+
 export function ResultAnnotationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ResultAnnotation & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class ResultAnnotationClass extends RdfsResourceMixin(Resource) {
@@ -30,5 +36,4 @@ export function ResultAnnotationMixin<Base extends rdfine.Constructor>(Resource:
   return ResultAnnotationClass as any
 }
 ResultAnnotationMixin.appliesTo = sh.ResultAnnotation
-
-export const factory = (env: RdfineEnvironment) => createFactory<ResultAnnotation>([RdfsResourceMixin, ResultAnnotationMixin], { types: [sh.ResultAnnotation] }, env);
+ResultAnnotationMixin.createFactory = (env: RdfineEnvironment) => createFactory<ResultAnnotation>([RdfsResourceMixin, ResultAnnotationMixin], { types: [sh.ResultAnnotation] }, env)

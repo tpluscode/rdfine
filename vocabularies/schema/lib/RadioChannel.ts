@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { BroadcastChannelMixin } from './BroadcastChannel.js';
 export interface RadioChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BroadcastChannel<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    RadioChannel: Factory<Schema.RadioChannel>;
+  }
+}
+
 export function RadioChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RadioChannel & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class RadioChannelClass extends BroadcastChannelMixin(Resource) {
@@ -18,5 +24,4 @@ export function RadioChannelMixin<Base extends rdfine.Constructor>(Resource: Bas
   return RadioChannelClass as any
 }
 RadioChannelMixin.appliesTo = schema.RadioChannel
-
-export const factory = (env: RdfineEnvironment) => createFactory<RadioChannel>([BroadcastChannelMixin, RadioChannelMixin], { types: [schema.RadioChannel] }, env);
+RadioChannelMixin.createFactory = (env: RdfineEnvironment) => createFactory<RadioChannel>([BroadcastChannelMixin, RadioChannelMixin], { types: [schema.RadioChannel] }, env)

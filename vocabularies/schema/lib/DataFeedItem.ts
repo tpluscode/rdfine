@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface DataFeedItem<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   dateDeleted: Date | undefined;
   dateModified: Date | undefined;
   item: Schema.Thing<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DataFeedItem: Factory<Schema.DataFeedItem>;
+  }
 }
 
 export function DataFeedItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DataFeedItem & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function DataFeedItemMixin<Base extends rdfine.Constructor>(Resource: Bas
   return DataFeedItemClass as any
 }
 DataFeedItemMixin.appliesTo = schema.DataFeedItem
-
-export const factory = (env: RdfineEnvironment) => createFactory<DataFeedItem>([IntangibleMixin, DataFeedItemMixin], { types: [schema.DataFeedItem] }, env);
+DataFeedItemMixin.createFactory = (env: RdfineEnvironment) => createFactory<DataFeedItem>([IntangibleMixin, DataFeedItemMixin], { types: [schema.DataFeedItem] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Forum<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sioc
   'num_threads': number | undefined;
 }
 
+declare global {
+  interface SiocVocabulary {
+    Forum: Factory<Sioc.Forum>;
+  }
+}
+
 export function ForumMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Forum & RdfResourceCore> & Base {
   @rdfine.namespace(sioc)
   class ForumClass extends ContainerMixin(Resource) {
@@ -24,5 +30,4 @@ export function ForumMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return ForumClass as any
 }
 ForumMixin.appliesTo = sioc.Forum
-
-export const factory = (env: RdfineEnvironment) => createFactory<Forum>([ContainerMixin, ForumMixin], { types: [sioc.Forum] }, env);
+ForumMixin.createFactory = (env: RdfineEnvironment) => createFactory<Forum>([ContainerMixin, ForumMixin], { types: [sioc.Forum] }, env)

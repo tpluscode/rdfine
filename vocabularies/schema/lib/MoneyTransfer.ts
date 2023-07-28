@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface MoneyTransfer<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   amountLiteral: number | undefined;
   beneficiaryBank: Schema.BankOrCreditUnion<D> | undefined;
   beneficiaryBankLiteral: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MoneyTransfer: Factory<Schema.MoneyTransfer>;
+  }
 }
 
 export function MoneyTransferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MoneyTransfer & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function MoneyTransferMixin<Base extends rdfine.Constructor>(Resource: Ba
   return MoneyTransferClass as any
 }
 MoneyTransferMixin.appliesTo = schema.MoneyTransfer
-
-export const factory = (env: RdfineEnvironment) => createFactory<MoneyTransfer>([TransferActionMixin, MoneyTransferMixin], { types: [schema.MoneyTransfer] }, env);
+MoneyTransferMixin.createFactory = (env: RdfineEnvironment) => createFactory<MoneyTransfer>([TransferActionMixin, MoneyTransferMixin], { types: [schema.MoneyTransfer] }, env)

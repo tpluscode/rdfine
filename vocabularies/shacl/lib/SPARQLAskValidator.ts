@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { ValidatorMixin } from './Validator.js';
 export interface SPARQLAskValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLAskExecutable<D>, Sh.Validator<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ShVocabulary {
+    SPARQLAskValidator: Factory<Sh.SPARQLAskValidator>;
+  }
+}
+
 export function SPARQLAskValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLAskValidator & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class SPARQLAskValidatorClass extends ValidatorMixin(SPARQLAskExecutableMixin(Resource)) {
@@ -19,5 +25,4 @@ export function SPARQLAskValidatorMixin<Base extends rdfine.Constructor>(Resourc
   return SPARQLAskValidatorClass as any
 }
 SPARQLAskValidatorMixin.appliesTo = sh.SPARQLAskValidator
-
-export const factory = (env: RdfineEnvironment) => createFactory<SPARQLAskValidator>([ValidatorMixin, SPARQLAskExecutableMixin, SPARQLAskValidatorMixin], { types: [sh.SPARQLAskValidator] }, env);
+SPARQLAskValidatorMixin.createFactory = (env: RdfineEnvironment) => createFactory<SPARQLAskValidator>([ValidatorMixin, SPARQLAskExecutableMixin, SPARQLAskValidatorMixin], { types: [sh.SPARQLAskValidator] }, env)

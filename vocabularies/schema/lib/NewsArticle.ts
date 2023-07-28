@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface NewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   printEdition: string | undefined;
   printPage: string | undefined;
   printSection: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    NewsArticle: Factory<Schema.NewsArticle>;
+  }
 }
 
 export function NewsArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NewsArticle & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function NewsArticleMixin<Base extends rdfine.Constructor>(Resource: Base
   return NewsArticleClass as any
 }
 NewsArticleMixin.appliesTo = schema.NewsArticle
-
-export const factory = (env: RdfineEnvironment) => createFactory<NewsArticle>([ArticleMixin, NewsArticleMixin], { types: [schema.NewsArticle] }, env);
+NewsArticleMixin.createFactory = (env: RdfineEnvironment) => createFactory<NewsArticle>([ArticleMixin, NewsArticleMixin], { types: [schema.NewsArticle] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface CorrespondenceRelation<D extends RDF.DatasetCore = RDF.DatasetC
   correspondenceRelationConnects: Rico.Person<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    CorrespondenceRelation: Factory<Rico.CorrespondenceRelation>;
+  }
+}
+
 export function CorrespondenceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CorrespondenceRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class CorrespondenceRelationClass extends KnowingRelationMixin(Resource) {
@@ -21,5 +27,4 @@ export function CorrespondenceRelationMixin<Base extends rdfine.Constructor>(Res
   return CorrespondenceRelationClass as any
 }
 CorrespondenceRelationMixin.appliesTo = rico.CorrespondenceRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<CorrespondenceRelation>([KnowingRelationMixin, CorrespondenceRelationMixin], { types: [rico.CorrespondenceRelation] }, env);
+CorrespondenceRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<CorrespondenceRelation>([KnowingRelationMixin, CorrespondenceRelationMixin], { types: [rico.CorrespondenceRelation] }, env)

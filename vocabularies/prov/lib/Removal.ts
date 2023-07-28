@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Removal<D extends RDF.DatasetCore = RDF.DatasetCore> extends Pr
   removedKey: RDF.Literal | undefined;
 }
 
+declare global {
+  interface ProvVocabulary {
+    Removal: Factory<Prov.Removal>;
+  }
+}
+
 export function RemovalMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Removal & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class RemovalClass extends DerivationMixin(Resource) {
@@ -24,5 +30,4 @@ export function RemovalMixin<Base extends rdfine.Constructor>(Resource: Base): r
   return RemovalClass as any
 }
 RemovalMixin.appliesTo = prov.Removal
-
-export const factory = (env: RdfineEnvironment) => createFactory<Removal>([DerivationMixin, RemovalMixin], { types: [prov.Removal] }, env);
+RemovalMixin.createFactory = (env: RdfineEnvironment) => createFactory<Removal>([DerivationMixin, RemovalMixin], { types: [prov.Removal] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface InsertAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   toLocation: Schema.Place<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    InsertAction: Factory<Schema.InsertAction>;
+  }
+}
+
 export function InsertActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InsertAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class InsertActionClass extends AddActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function InsertActionMixin<Base extends rdfine.Constructor>(Resource: Bas
   return InsertActionClass as any
 }
 InsertActionMixin.appliesTo = schema.InsertAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<InsertAction>([AddActionMixin, InsertActionMixin], { types: [schema.InsertAction] }, env);
+InsertActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<InsertAction>([AddActionMixin, InsertActionMixin], { types: [schema.InsertAction] }, env)

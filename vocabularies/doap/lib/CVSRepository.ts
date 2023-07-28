@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface CVSRepository<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   module: RDF.Term | undefined;
 }
 
+declare global {
+  interface DoapVocabulary {
+    CVSRepository: Factory<Doap.CVSRepository>;
+  }
+}
+
 export function CVSRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CVSRepository & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
   class CVSRepositoryClass extends RepositoryMixin(Resource) {
@@ -21,5 +27,4 @@ export function CVSRepositoryMixin<Base extends rdfine.Constructor>(Resource: Ba
   return CVSRepositoryClass as any
 }
 CVSRepositoryMixin.appliesTo = doap.CVSRepository
-
-export const factory = (env: RdfineEnvironment) => createFactory<CVSRepository>([RepositoryMixin, CVSRepositoryMixin], { types: [doap.CVSRepository] }, env);
+CVSRepositoryMixin.createFactory = (env: RdfineEnvironment) => createFactory<CVSRepository>([RepositoryMixin, CVSRepositoryMixin], { types: [doap.CVSRepository] }, env)

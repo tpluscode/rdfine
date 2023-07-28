@@ -10,11 +10,18 @@ import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
 import RdfResource from '../RdfResource.js'
 import { namespace, property, crossBoundaries, Constructor } from '../index.js'
 import type { AnyFactory } from '../factory.js'
+import { RdfineEnvironment } from '../environment.js'
 import { parse, ex } from './_helpers/index.js'
+import { createEnv } from './_helpers/environment.js'
 
 describe('decorator', () => {
   chai.use(jestSnapshotPlugin())
   before(() => import('../../../__tests__/helpers/matchers.js'))
+
+  let environment: RdfineEnvironment
+  beforeEach(() => {
+    environment = createEnv()
+  })
 
   describe('term', () => {
     describe('getter', () => {
@@ -34,7 +41,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         const friend = instance.friend
 
         // then
@@ -61,7 +68,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.likes!.termType).to.eq('BlankNode')
@@ -85,7 +92,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         const name = instance.name
 
         // then
@@ -111,7 +118,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(() => instance.children).to.throw()
@@ -135,7 +142,7 @@ describe('decorator', () => {
         const { children } = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(children).to.be.instanceOf(Array)
@@ -158,7 +165,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.children).to.have.length(2)
@@ -184,7 +191,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         const friend = instance.friend
 
         // then
@@ -217,7 +224,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.friendsWorkplaceName!.value).to.eq('RDF Software House')
@@ -241,7 +248,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         const friend = instance.colleague
 
         // then
@@ -260,7 +267,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         const getName = () => instance.name
 
         // then
@@ -279,7 +286,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.foo).to.eq('bar')
@@ -298,7 +305,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.foo).to.contain.members(['bar'])
@@ -317,7 +324,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.foo).to.deep.eq(['foo', 'bar'])
@@ -336,7 +343,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.foo).to.deep.eq(['bar'])
@@ -355,7 +362,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.foo).to.deep.eq(['foo', 'bar'])
@@ -379,7 +386,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.letters.map(l => l.value)).to.contain.all.members(['a', 'b', 'c'])
@@ -402,7 +409,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.letters).to.deep.eq([])
@@ -425,7 +432,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(() => instance.friend).to.throw()
@@ -448,7 +455,7 @@ describe('decorator', () => {
         const { friends } = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(friends).to.be.instanceOf(Array)
@@ -471,7 +478,7 @@ describe('decorator', () => {
         const { friends } = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(friends.length).to.eq(3)
@@ -496,7 +503,7 @@ describe('decorator', () => {
           const [friend, ...rest] = new Resource(cf({
             dataset,
             term: ex.res,
-          })).friends
+          }), environment).friends
 
           // then
           expect(friend).to.deep.eq(ex.Will)
@@ -528,7 +535,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // when
         instance.name = cf({ dataset }).has(rdf.type, ex.BlankNodeName).term
@@ -554,7 +561,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // when
         instance.name = []
@@ -580,7 +587,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // when
         instance.name = [
@@ -609,7 +616,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // when
         const setArray = () => { instance.name = [] }
@@ -644,7 +651,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         instance.friendsWorkplaceName = RDF.literal('Google')
 
         // then
@@ -668,7 +675,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         instance.friend = []
 
         // then
@@ -692,7 +699,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         instance.friend = [RDF.literal('bar'), RDF.literal('baz')]
 
         // then
@@ -716,7 +723,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
         instance.friend = null
 
         // then
@@ -732,8 +739,8 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource(ptr)
-        instance.friend = new Resource(cf({ dataset: RDF.dataset() }).node(ex.friend))
+        const instance = new Resource(ptr, environment)
+        instance.friend = new Resource(cf({ dataset: RDF.dataset() }).node(ex.friend), environment)
 
         // then
         expect(ptr.out(foaf.knows).term).to.deep.eq(ex.friend)
@@ -748,7 +755,7 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource(ptr)
+        const instance = new Resource(ptr, environment)
         instance.friend = cf({ dataset: RDF.dataset() }).node(ex.friend)
 
         // then
@@ -764,7 +771,7 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = new Resource(ptr)
+        const instance = new Resource(ptr, environment)
         const createFriend: AnyFactory<Resource> = graph => graph.node(ex.friend).addOut(schema.name, 'Friend')
         instance.friend = createFriend
 
@@ -786,7 +793,7 @@ describe('decorator', () => {
           }
 
           // when
-          const instance = new Resource(ptr)
+          const instance = new Resource(ptr, environment)
           instance.friends = [
             ex.friend,
             RDF.blankNode(),
@@ -815,7 +822,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.name.value).to.eq('foo')
@@ -837,7 +844,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.name.value).to.eq('foo')
@@ -859,7 +866,7 @@ describe('decorator', () => {
         const instance = new Resource(cf({
           dataset,
           term: ex.res,
-        }))
+        }), environment)
 
         // then
         expect(instance.child.value).to.eq('http://example.com/res/child')
@@ -891,7 +898,7 @@ describe('decorator', () => {
         }
 
         // when
-        const instance = RdfResource.factory.createEntity(cf({
+        const instance = environment.rdfine().factory.createEntity(cf({
           dataset,
           term: ex.res,
         }), [NameMixin, AgeMixin])
@@ -1064,7 +1071,7 @@ describe('decorator', () => {
 
       describe('constructed from clownface graph', () => {
         namedGraphTests((dataset, term, graph) => {
-          return new Resource(cf({ dataset, term, graph }))
+          return new Resource(cf({ dataset, term, graph }), environment)
         })
       })
     })

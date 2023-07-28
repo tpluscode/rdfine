@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { SpatialThingMixin } from './SpatialThing.js';
 export interface Point<D extends RDF.DatasetCore = RDF.DatasetCore> extends Wgs.SpatialThing<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface WgsVocabulary {
+    Point: Factory<Wgs.Point>;
+  }
+}
+
 export function PointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Point & RdfResourceCore> & Base {
   @rdfine.namespace(wgs)
   class PointClass extends SpatialThingMixin(Resource) {
@@ -18,5 +24,4 @@ export function PointMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return PointClass as any
 }
 PointMixin.appliesTo = wgs.Point
-
-export const factory = (env: RdfineEnvironment) => createFactory<Point>([SpatialThingMixin, PointMixin], { types: [wgs.Point] }, env);
+PointMixin.createFactory = (env: RdfineEnvironment) => createFactory<Point>([SpatialThingMixin, PointMixin], { types: [wgs.Point] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ArticleMixin } from './Article.js';
 export interface AdvertiserContentArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    AdvertiserContentArticle: Factory<Schema.AdvertiserContentArticle>;
+  }
+}
+
 export function AdvertiserContentArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AdvertiserContentArticle & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class AdvertiserContentArticleClass extends ArticleMixin(Resource) {
@@ -18,5 +24,4 @@ export function AdvertiserContentArticleMixin<Base extends rdfine.Constructor>(R
   return AdvertiserContentArticleClass as any
 }
 AdvertiserContentArticleMixin.appliesTo = schema.AdvertiserContentArticle
-
-export const factory = (env: RdfineEnvironment) => createFactory<AdvertiserContentArticle>([ArticleMixin, AdvertiserContentArticleMixin], { types: [schema.AdvertiserContentArticle] }, env);
+AdvertiserContentArticleMixin.createFactory = (env: RdfineEnvironment) => createFactory<AdvertiserContentArticle>([ArticleMixin, AdvertiserContentArticleMixin], { types: [schema.AdvertiserContentArticle] }, env)

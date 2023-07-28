@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { CreativeWorkMixin } from './CreativeWork.js';
 export interface SheetMusic<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    SheetMusic: Factory<Schema.SheetMusic>;
+  }
+}
+
 export function SheetMusicMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SheetMusic & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class SheetMusicClass extends CreativeWorkMixin(Resource) {
@@ -18,5 +24,4 @@ export function SheetMusicMixin<Base extends rdfine.Constructor>(Resource: Base)
   return SheetMusicClass as any
 }
 SheetMusicMixin.appliesTo = schema.SheetMusic
-
-export const factory = (env: RdfineEnvironment) => createFactory<SheetMusic>([CreativeWorkMixin, SheetMusicMixin], { types: [schema.SheetMusic] }, env);
+SheetMusicMixin.createFactory = (env: RdfineEnvironment) => createFactory<SheetMusic>([CreativeWorkMixin, SheetMusicMixin], { types: [schema.SheetMusic] }, env)

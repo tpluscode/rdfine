@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ScriptMixin } from './Script.js';
 export interface CommitScript<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    CommitScript: Factory<Dash.CommitScript>;
+  }
+}
+
 export function CommitScriptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CommitScript & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class CommitScriptClass extends ScriptMixin(Resource) {
@@ -18,5 +24,4 @@ export function CommitScriptMixin<Base extends rdfine.Constructor>(Resource: Bas
   return CommitScriptClass as any
 }
 CommitScriptMixin.appliesTo = dash.CommitScript
-
-export const factory = (env: RdfineEnvironment) => createFactory<CommitScript>([ScriptMixin, CommitScriptMixin], { types: [dash.CommitScript] }, env);
+CommitScriptMixin.createFactory = (env: RdfineEnvironment) => createFactory<CommitScript>([ScriptMixin, CommitScriptMixin], { types: [dash.CommitScript] }, env)

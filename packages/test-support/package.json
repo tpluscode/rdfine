@@ -1,0 +1,15 @@
+{
+  "name": "@rdfine/test-support",
+  "version": "0.0.0",
+  "main": "index.js",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@rdfjs/data-model":"^2.0.1",
+    "@rdfjs/dataset":"^2",
+    "@rdfjs/environment": "^0.1.2",
+    "@rdfjs/term-set": "^2",
+    "@tpluscode/rdfine": "^0.6.0",
+    "rdf-ext": "^2.2.0"
+  }
+}

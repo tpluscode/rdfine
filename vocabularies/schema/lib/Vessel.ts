@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { AnatomicalStructureMixin } from './AnatomicalStructure.js';
 export interface Vessel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AnatomicalStructure<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Vessel: Factory<Schema.Vessel>;
+  }
+}
+
 export function VesselMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Vessel & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class VesselClass extends AnatomicalStructureMixin(Resource) {
@@ -18,5 +24,4 @@ export function VesselMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return VesselClass as any
 }
 VesselMixin.appliesTo = schema.Vessel
-
-export const factory = (env: RdfineEnvironment) => createFactory<Vessel>([AnatomicalStructureMixin, VesselMixin], { types: [schema.Vessel] }, env);
+VesselMixin.createFactory = (env: RdfineEnvironment) => createFactory<Vessel>([AnatomicalStructureMixin, VesselMixin], { types: [schema.Vessel] }, env)

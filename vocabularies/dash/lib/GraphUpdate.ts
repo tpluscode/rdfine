@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,6 +15,12 @@ export interface GraphUpdate<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   deletedTriple: Rdf.Statement<D> | undefined;
 }
 
+declare global {
+  interface DashVocabulary {
+    GraphUpdate: Factory<Dash.GraphUpdate>;
+  }
+}
+
 export function GraphUpdateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GraphUpdate & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class GraphUpdateClass extends SuggestionMixin(Resource) {
@@ -26,5 +32,4 @@ export function GraphUpdateMixin<Base extends rdfine.Constructor>(Resource: Base
   return GraphUpdateClass as any
 }
 GraphUpdateMixin.appliesTo = dash.GraphUpdate
-
-export const factory = (env: RdfineEnvironment) => createFactory<GraphUpdate>([SuggestionMixin, GraphUpdateMixin], { types: [dash.GraphUpdate] }, env);
+GraphUpdateMixin.createFactory = (env: RdfineEnvironment) => createFactory<GraphUpdate>([SuggestionMixin, GraphUpdateMixin], { types: [dash.GraphUpdate] }, env)

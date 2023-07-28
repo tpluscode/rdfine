@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { MediaObjectMixin } from './MediaObject.js';
 export interface MusicVideoObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MusicVideoObject: Factory<Schema.MusicVideoObject>;
+  }
+}
+
 export function MusicVideoObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MusicVideoObject & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MusicVideoObjectClass extends MediaObjectMixin(Resource) {
@@ -18,5 +24,4 @@ export function MusicVideoObjectMixin<Base extends rdfine.Constructor>(Resource:
   return MusicVideoObjectClass as any
 }
 MusicVideoObjectMixin.appliesTo = schema.MusicVideoObject
-
-export const factory = (env: RdfineEnvironment) => createFactory<MusicVideoObject>([MediaObjectMixin, MusicVideoObjectMixin], { types: [schema.MusicVideoObject] }, env);
+MusicVideoObjectMixin.createFactory = (env: RdfineEnvironment) => createFactory<MusicVideoObject>([MediaObjectMixin, MusicVideoObjectMixin], { types: [schema.MusicVideoObject] }, env)

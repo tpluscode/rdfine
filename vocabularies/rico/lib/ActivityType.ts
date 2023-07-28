@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface ActivityType<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   isActivityTypeOf: Rico.Activity<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    ActivityType: Factory<Rico.ActivityType>;
+  }
+}
+
 export function ActivityTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ActivityType & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class ActivityTypeClass extends TypeMixin(Resource) {
@@ -21,5 +27,4 @@ export function ActivityTypeMixin<Base extends rdfine.Constructor>(Resource: Bas
   return ActivityTypeClass as any
 }
 ActivityTypeMixin.appliesTo = rico.ActivityType
-
-export const factory = (env: RdfineEnvironment) => createFactory<ActivityType>([TypeMixin, ActivityTypeMixin], { types: [rico.ActivityType] }, env);
+ActivityTypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<ActivityType>([TypeMixin, ActivityTypeMixin], { types: [rico.ActivityType] }, env)

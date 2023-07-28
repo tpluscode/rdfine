@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -16,6 +16,12 @@ export interface MonetaryAmount<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   validThrough: Date | undefined;
   value: Schema.StructuredValue<D> | undefined;
   valueLiteral: boolean | number | string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MonetaryAmount: Factory<Schema.MonetaryAmount>;
+  }
 }
 
 export function MonetaryAmountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MonetaryAmount & RdfResourceCore> & Base {
@@ -39,5 +45,4 @@ export function MonetaryAmountMixin<Base extends rdfine.Constructor>(Resource: B
   return MonetaryAmountClass as any
 }
 MonetaryAmountMixin.appliesTo = schema.MonetaryAmount
-
-export const factory = (env: RdfineEnvironment) => createFactory<MonetaryAmount>([StructuredValueMixin, MonetaryAmountMixin], { types: [schema.MonetaryAmount] }, env);
+MonetaryAmountMixin.createFactory = (env: RdfineEnvironment) => createFactory<MonetaryAmount>([StructuredValueMixin, MonetaryAmountMixin], { types: [schema.MonetaryAmount] }, env)

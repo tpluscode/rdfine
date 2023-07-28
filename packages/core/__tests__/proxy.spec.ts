@@ -10,6 +10,7 @@ import RdfResourceImpl, { RdfResource } from '../RdfResource.js'
 import { property, ResourceIndexer } from '../index.js'
 import type { AnyFactory } from '../factory.js'
 import { ex } from './_helpers/index.js'
+import environment from './_helpers/environment.js'
 
 describe('proxy', () => {
   let node: GraphPointer<NamedNode, DatasetExt>
@@ -30,7 +31,7 @@ describe('proxy', () => {
   describe('get', () => {
     it('proxies direct index access', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
 
       // when
@@ -43,7 +44,7 @@ describe('proxy', () => {
     it('works with arbitrary symbol properties', () => {
       // given
       const Foo: unique symbol = Symbol('Foo')
-      const proxy = createProxy(new RdfResourceImpl(node)) as any
+      const proxy = createProxy(new RdfResourceImpl(node, environment)) as any
 
       // when
       proxy[Foo] = 'bar'
@@ -54,7 +55,7 @@ describe('proxy', () => {
 
     it('returns raw literals', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
 
       // when
@@ -66,7 +67,7 @@ describe('proxy', () => {
 
     it('returns array from multiple values', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
 
       // when
@@ -78,7 +79,7 @@ describe('proxy', () => {
 
     it('does not proxy built-in properties', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
 
       // then
@@ -91,7 +92,7 @@ describe('proxy', () => {
         @property.literal({ type: Number, path: 'http://example.com/number', initial: 5 })
           foo!: number
       }
-      const proxy = createProxy(new Specialized(node))
+      const proxy = createProxy(new Specialized(node, environment))
 
       // then
       expect(proxy.foo).to.deep.eq(5)
@@ -99,7 +100,7 @@ describe('proxy', () => {
 
     it('returns undefined for missing property', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
 
       // when
@@ -111,7 +112,7 @@ describe('proxy', () => {
 
     it('returns enumerated RDF list of literals', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
       node.addList(ex.listOfLiterals, ['a', 'B', 'cc'])
 
@@ -126,7 +127,7 @@ describe('proxy', () => {
 
     it('returns enumerated RDF list of resources', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
       node.addList(ex.listOfUris, [
         ex.jane,
@@ -145,7 +146,7 @@ describe('proxy', () => {
 
     it('attaches proxied resource as parent of objects', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
       node.addOut(ex.foo, ex.bar)
 
@@ -160,7 +161,7 @@ describe('proxy', () => {
   describe('set', () => {
     it('single literal', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
 
       // when
@@ -172,11 +173,11 @@ describe('proxy', () => {
 
     it('single resource', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
 
       // when
-      proxy[ex.set.value] = new RdfResourceImpl(node.namedNode(ex.other))
+      proxy[ex.set.value] = new RdfResourceImpl(node.namedNode(ex.other), environment)
 
       // then
       expect(node.dataset.toCanonical()).toMatchSnapshot()
@@ -184,10 +185,10 @@ describe('proxy', () => {
 
     it('single factory', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
       const child: AnyFactory<RdfResourceImpl> = (pointer) => {
-        return new RdfResourceImpl(pointer.blankNode(), {
+        return new RdfResourceImpl(pointer.blankNode(), environment, {
           [schema.name.value]: 'Child',
         })
       }
@@ -201,7 +202,7 @@ describe('proxy', () => {
 
     it('multiple literals', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
 
       // when
@@ -213,13 +214,13 @@ describe('proxy', () => {
 
     it('multiple resources', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
 
       // when
       proxy[ex.set.value] = [
-        new RdfResourceImpl(node.node(ex.one)),
-        new RdfResourceImpl(node.node(ex.two)),
+        new RdfResourceImpl(node.node(ex.one), environment),
+        new RdfResourceImpl(node.node(ex.two), environment),
       ]
 
       // then
@@ -228,11 +229,11 @@ describe('proxy', () => {
 
     it('multiple factories and values', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const Baz = node.addOut(schema.name, 'Baz')
       const proxy = createProxy(resource)
       const child = (name: string): AnyFactory<RdfResourceImpl> => (pointer) => {
-        return new RdfResourceImpl(pointer.blankNode(), {
+        return new RdfResourceImpl(pointer.blankNode(), environment, {
           [schema.name.value]: name,
         })
       }
@@ -248,7 +249,7 @@ describe('proxy', () => {
 
     it('null removes triples', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
 
       // when
@@ -260,7 +261,7 @@ describe('proxy', () => {
 
     it('empty array removes triples', () => {
       // given
-      const resource = new RdfResourceImpl(node)
+      const resource = new RdfResourceImpl(node, environment)
       const proxy = createProxy(resource)
 
       // when
@@ -276,7 +277,7 @@ describe('proxy', () => {
         @property.literal({ type: Number, path: 'http://example.com/number', initial: 5 })
           foo!: number
       }
-      const proxy = createProxy(new Specialized(node))
+      const proxy = createProxy(new Specialized(node, environment))
 
       // when
       proxy.foo = 10

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Title<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico
   isOrWasTitleOf: Rico.Instantiation<D> | Rico.RecordResource<D> | Rico.Rule<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    Title: Factory<Rico.Title>;
+  }
+}
+
 export function TitleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Title & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class TitleClass extends NameMixin(Resource) {
@@ -21,5 +27,4 @@ export function TitleMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return TitleClass as any
 }
 TitleMixin.appliesTo = rico.Title
-
-export const factory = (env: RdfineEnvironment) => createFactory<Title>([NameMixin, TitleMixin], { types: [rico.Title] }, env);
+TitleMixin.createFactory = (env: RdfineEnvironment) => createFactory<Title>([NameMixin, TitleMixin], { types: [rico.Title] }, env)

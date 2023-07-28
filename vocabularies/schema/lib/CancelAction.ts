@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { PlanActionMixin } from './PlanAction.js';
 export interface CancelAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlanAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    CancelAction: Factory<Schema.CancelAction>;
+  }
+}
+
 export function CancelActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CancelAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class CancelActionClass extends PlanActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function CancelActionMixin<Base extends rdfine.Constructor>(Resource: Bas
   return CancelActionClass as any
 }
 CancelActionMixin.appliesTo = schema.CancelAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<CancelAction>([PlanActionMixin, CancelActionMixin], { types: [schema.CancelAction] }, env);
+CancelActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<CancelAction>([PlanActionMixin, CancelActionMixin], { types: [schema.CancelAction] }, env)

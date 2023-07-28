@@ -6,6 +6,7 @@ import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
 import TypeCollection from '../lib/TypeCollection.js'
 import RdfResourceImpl, { RdfResource, ResourceIdentifier } from '../RdfResource.js'
 import { parse, ex } from './_helpers/index.js'
+import environment from './_helpers/environment.js'
 
 const nullResource = {} as RdfResource
 
@@ -23,7 +24,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
 
       // then
       expect(tc.size).to.eq(0)
@@ -41,7 +42,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
 
       // then
       expect(tc.size).to.eq(4)
@@ -59,7 +60,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
 
       // then
       expect(tc.size).to.eq(2)
@@ -79,7 +80,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
 
       // then
       expect(tc.has('http://example.com/Type')).to.eq(true)
@@ -97,7 +98,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
 
       // then
       expect(tc.has(ex.Type)).to.eq(true)
@@ -115,7 +116,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
       const type: RdfResource = {
         ...nullResource,
         id: ex.Type,
@@ -137,7 +138,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
 
       // then
       expect(tc.has('http://example.com/Type2')).to.eq(false)
@@ -155,7 +156,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
 
       // then
       expect(tc.has(ex.Type2)).to.eq(false)
@@ -173,7 +174,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
       const type = {
         ...nullResource,
         id: ex.Type2,
@@ -198,7 +199,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
       tc.clear()
 
       // then
@@ -216,7 +217,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
       tc.add(ex.Type)
 
       // then
@@ -235,7 +236,7 @@ describe('TypeCollection', () => {
       }
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
       tc.add(newType)
 
       // then
@@ -258,7 +259,7 @@ describe('TypeCollection', () => {
       }
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
       tc.add(newType)
 
       // then
@@ -280,7 +281,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
       tc.delete(ex.Type2)
 
       // then
@@ -300,7 +301,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
       const deleted = tc.delete(ex.Type1)
 
       // then
@@ -319,7 +320,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
       const deleted = tc.delete(ex.Type2)
 
       // then
@@ -340,7 +341,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
       const thisArg = {}
 
       // then
@@ -366,7 +367,7 @@ describe('TypeCollection', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new TypeCollection(new RdfResourceImpl(node))
+      const tc = new TypeCollection(new RdfResourceImpl(node, environment))
       const entries = tc.entries()
 
       // then
@@ -397,7 +398,7 @@ describe('TypeCollection', () => {
         }).namedNode(ex.res)
 
         // when
-        const tc = new TypeCollection(new RdfResourceImpl(node), true)
+        const tc = new TypeCollection(new RdfResourceImpl(node, environment), true)
 
         // then
         expect(tc.size).to.eq(2)
@@ -419,7 +420,7 @@ describe('TypeCollection', () => {
         }).namedNode(ex.res)
 
         // when
-        const tc = new TypeCollection(new RdfResourceImpl(node), true)
+        const tc = new TypeCollection(new RdfResourceImpl(node, environment), true)
         const values = [...tc.values()]
 
         // then

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Thesis<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   inSupportOf: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Thesis: Factory<Schema.Thesis>;
+  }
+}
+
 export function ThesisMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Thesis & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ThesisClass extends CreativeWorkMixin(Resource) {
@@ -21,5 +27,4 @@ export function ThesisMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return ThesisClass as any
 }
 ThesisMixin.appliesTo = schema.Thesis
-
-export const factory = (env: RdfineEnvironment) => createFactory<Thesis>([CreativeWorkMixin, ThesisMixin], { types: [schema.Thesis] }, env);
+ThesisMixin.createFactory = (env: RdfineEnvironment) => createFactory<Thesis>([CreativeWorkMixin, ThesisMixin], { types: [schema.Thesis] }, env)

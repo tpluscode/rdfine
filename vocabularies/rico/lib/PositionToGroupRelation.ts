@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface PositionToGroupRelation<D extends RDF.DatasetCore = RDF.Dataset
   positionToGroupRelationHasTarget: Rico.Group<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    PositionToGroupRelation: Factory<Rico.PositionToGroupRelation>;
+  }
+}
+
 export function PositionToGroupRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PositionToGroupRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class PositionToGroupRelationClass extends AgentToAgentRelationMixin(Resource) {
@@ -24,5 +30,4 @@ export function PositionToGroupRelationMixin<Base extends rdfine.Constructor>(Re
   return PositionToGroupRelationClass as any
 }
 PositionToGroupRelationMixin.appliesTo = rico.PositionToGroupRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<PositionToGroupRelation>([AgentToAgentRelationMixin, PositionToGroupRelationMixin], { types: [rico.PositionToGroupRelation] }, env);
+PositionToGroupRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<PositionToGroupRelation>([AgentToAgentRelationMixin, PositionToGroupRelationMixin], { types: [rico.PositionToGroupRelation] }, env)

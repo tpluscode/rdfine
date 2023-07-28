@@ -1,28 +1,20 @@
 import clownface from 'clownface';
 import $rdf from 'rdf-ext';
-import { fromPointer, PersonMixin } from '../lib/Person.js';
 import { schema } from '@tpluscode/rdf-ns-builders';
-import RdfResourceImpl, { ResourceFactory } from '@tpluscode/rdfine';
 import { expect } from 'chai';
+import environment from './environment.js';
 
 describe('curried initializers', () => {
-  let factory: ResourceFactory
-
-  before(() => {
-    factory = new ResourceFactory(RdfResourceImpl)
-    factory.addMixin(PersonMixin)
-  })
-
   it('initializes blank', () => {
     // given
     const id = clownface({ dataset: $rdf.dataset() }).namedNode('foo')
 
     // when
-    const person = fromPointer(id, {
-      parent: fromPointer({
+    const person = environment.rdfine.schema.Person(id, {
+      parent: environment.rdfine.schema.Person({
         name: 'John',
       }),
-    }, { factory })
+    })
 
     // then
     expect(person.parent?.name).to.eq('John')
@@ -34,11 +26,11 @@ describe('curried initializers', () => {
     const id = clownface({ dataset: $rdf.dataset() }).namedNode('foo')
 
     // when
-    const person = fromPointer(id, {
-      parent: fromPointer('http://foo.bar/John', {
+    const person = environment.rdfine.schema.Person(id, {
+      parent: environment.rdfine.schema.Person('http://foo.bar/John', {
         name: 'John',
       }),
-    }, { factory })
+    })
 
     // then
     expect(person.parent?.name).to.eq('John')
@@ -50,11 +42,11 @@ describe('curried initializers', () => {
     const id = clownface({ dataset: $rdf.dataset() }).namedNode('foo')
 
     // when
-    const person = fromPointer(id, {
-      parent: fromPointer($rdf.namedNode('http://foo.bar/John'), {
+    const person = environment.rdfine.schema.Person(id, {
+      parent: environment.rdfine.schema.Person($rdf.namedNode('http://foo.bar/John'), {
         name: 'John',
       }),
-    }, { factory })
+    })
 
     // then
     expect(person.parent?.name).to.eq('John')
@@ -64,10 +56,10 @@ describe('curried initializers', () => {
   it('initializes URI property from existing resource', () => {
     // given
     const id = clownface({ dataset: $rdf.dataset() }).namedNode('foo')
-    const john = fromPointer(clownface({ dataset: $rdf.dataset() }).namedNode('http://foo.bar/John'))
+    const john = environment.rdfine.schema.Person(clownface({ dataset: $rdf.dataset() }).namedNode('http://foo.bar/John'))
 
     // when
-    const person = fromPointer(id, {
+    const person = environment.rdfine.schema.Person(id, {
       [schema.parent.value]: john,
     })
 
@@ -80,11 +72,11 @@ describe('curried initializers', () => {
     const id = clownface({ dataset: $rdf.dataset() }).namedNode('foo')
 
     // when
-    const person = fromPointer(id, {
-      [schema.parent.value]: fromPointer($rdf.namedNode('http://foo.bar/John'), {
+    const person = environment.rdfine.schema.Person(id, {
+      [schema.parent.value]: environment.rdfine.schema.Person($rdf.namedNode('http://foo.bar/John'), {
         name: 'John',
       }),
-    }, { factory })
+    })
 
     // then
     expect(person.parent?.name).to.eq('John')

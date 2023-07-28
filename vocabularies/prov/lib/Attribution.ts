@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { AgentInfluenceMixin } from './AgentInfluence.js';
 export interface Attribution<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.AgentInfluence<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ProvVocabulary {
+    Attribution: Factory<Prov.Attribution>;
+  }
+}
+
 export function AttributionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Attribution & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class AttributionClass extends AgentInfluenceMixin(Resource) {
@@ -18,5 +24,4 @@ export function AttributionMixin<Base extends rdfine.Constructor>(Resource: Base
   return AttributionClass as any
 }
 AttributionMixin.appliesTo = prov.Attribution
-
-export const factory = (env: RdfineEnvironment) => createFactory<Attribution>([AgentInfluenceMixin, AttributionMixin], { types: [prov.Attribution] }, env);
+AttributionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Attribution>([AgentInfluenceMixin, AttributionMixin], { types: [prov.Attribution] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { SportsActivityLocationMixin } from './SportsActivityLocation.js';
 export interface ExerciseGym<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SportsActivityLocation<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ExerciseGym: Factory<Schema.ExerciseGym>;
+  }
+}
+
 export function ExerciseGymMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ExerciseGym & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ExerciseGymClass extends SportsActivityLocationMixin(Resource) {
@@ -18,5 +24,4 @@ export function ExerciseGymMixin<Base extends rdfine.Constructor>(Resource: Base
   return ExerciseGymClass as any
 }
 ExerciseGymMixin.appliesTo = schema.ExerciseGym
-
-export const factory = (env: RdfineEnvironment) => createFactory<ExerciseGym>([SportsActivityLocationMixin, ExerciseGymMixin], { types: [schema.ExerciseGym] }, env);
+ExerciseGymMixin.createFactory = (env: RdfineEnvironment) => createFactory<ExerciseGym>([SportsActivityLocationMixin, ExerciseGymMixin], { types: [schema.ExerciseGym] }, env)

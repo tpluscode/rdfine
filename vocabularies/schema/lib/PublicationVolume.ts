@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface PublicationVolume<D extends RDF.DatasetCore = RDF.DatasetCore> 
   pageStart: number | string | undefined;
   pagination: string | undefined;
   volumeNumber: number | string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    PublicationVolume: Factory<Schema.PublicationVolume>;
+  }
 }
 
 export function PublicationVolumeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PublicationVolume & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function PublicationVolumeMixin<Base extends rdfine.Constructor>(Resource
   return PublicationVolumeClass as any
 }
 PublicationVolumeMixin.appliesTo = schema.PublicationVolume
-
-export const factory = (env: RdfineEnvironment) => createFactory<PublicationVolume>([CreativeWorkMixin, PublicationVolumeMixin], { types: [schema.PublicationVolume] }, env);
+PublicationVolumeMixin.createFactory = (env: RdfineEnvironment) => createFactory<PublicationVolume>([CreativeWorkMixin, PublicationVolumeMixin], { types: [schema.PublicationVolume] }, env)

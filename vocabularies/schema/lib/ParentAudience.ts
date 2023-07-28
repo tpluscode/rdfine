@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface ParentAudience<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   childMinAge: number | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ParentAudience: Factory<Schema.ParentAudience>;
+  }
+}
+
 export function ParentAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ParentAudience & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ParentAudienceClass extends PeopleAudienceMixin(Resource) {
@@ -24,5 +30,4 @@ export function ParentAudienceMixin<Base extends rdfine.Constructor>(Resource: B
   return ParentAudienceClass as any
 }
 ParentAudienceMixin.appliesTo = schema.ParentAudience
-
-export const factory = (env: RdfineEnvironment) => createFactory<ParentAudience>([PeopleAudienceMixin, ParentAudienceMixin], { types: [schema.ParentAudience] }, env);
+ParentAudienceMixin.createFactory = (env: RdfineEnvironment) => createFactory<ParentAudience>([PeopleAudienceMixin, ParentAudienceMixin], { types: [schema.ParentAudience] }, env)

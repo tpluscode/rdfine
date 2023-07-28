@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { ValidatorMixin } from './Validator.js';
 export interface JSValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.JSExecutable<D>, Sh.Validator<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ShVocabulary {
+    JSValidator: Factory<Sh.JSValidator>;
+  }
+}
+
 export function JSValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JSValidator & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class JSValidatorClass extends ValidatorMixin(JSExecutableMixin(Resource)) {
@@ -19,5 +25,4 @@ export function JSValidatorMixin<Base extends rdfine.Constructor>(Resource: Base
   return JSValidatorClass as any
 }
 JSValidatorMixin.appliesTo = sh.JSValidator
-
-export const factory = (env: RdfineEnvironment) => createFactory<JSValidator>([ValidatorMixin, JSExecutableMixin, JSValidatorMixin], { types: [sh.JSValidator] }, env);
+JSValidatorMixin.createFactory = (env: RdfineEnvironment) => createFactory<JSValidator>([ValidatorMixin, JSExecutableMixin, JSValidatorMixin], { types: [sh.JSValidator] }, env)

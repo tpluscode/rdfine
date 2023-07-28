@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface EventRelation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   eventRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    EventRelation: Factory<Rico.EventRelation>;
+  }
+}
+
 export function EventRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EventRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class EventRelationClass extends RelationMixin(Resource) {
@@ -24,5 +30,4 @@ export function EventRelationMixin<Base extends rdfine.Constructor>(Resource: Ba
   return EventRelationClass as any
 }
 EventRelationMixin.appliesTo = rico.EventRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<EventRelation>([RelationMixin, EventRelationMixin], { types: [rico.EventRelation] }, env);
+EventRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<EventRelation>([RelationMixin, EventRelationMixin], { types: [rico.EventRelation] }, env)

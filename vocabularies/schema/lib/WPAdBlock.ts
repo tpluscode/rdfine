@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { WebPageElementMixin } from './WebPageElement.js';
 export interface WPAdBlock<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    WPAdBlock: Factory<Schema.WPAdBlock>;
+  }
+}
+
 export function WPAdBlockMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WPAdBlock & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class WPAdBlockClass extends WebPageElementMixin(Resource) {
@@ -18,5 +24,4 @@ export function WPAdBlockMixin<Base extends rdfine.Constructor>(Resource: Base):
   return WPAdBlockClass as any
 }
 WPAdBlockMixin.appliesTo = schema.WPAdBlock
-
-export const factory = (env: RdfineEnvironment) => createFactory<WPAdBlock>([WebPageElementMixin, WPAdBlockMixin], { types: [schema.WPAdBlock] }, env);
+WPAdBlockMixin.createFactory = (env: RdfineEnvironment) => createFactory<WPAdBlock>([WebPageElementMixin, WPAdBlockMixin], { types: [schema.WPAdBlock] }, env)

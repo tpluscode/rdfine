@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface SuperficialAnatomy<D extends RDF.DatasetCore = RDF.DatasetCore>
   relatedCondition: Schema.MedicalCondition<D> | undefined;
   relatedTherapy: Schema.MedicalTherapy<D> | undefined;
   significance: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    SuperficialAnatomy: Factory<Schema.SuperficialAnatomy>;
+  }
 }
 
 export function SuperficialAnatomyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SuperficialAnatomy & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function SuperficialAnatomyMixin<Base extends rdfine.Constructor>(Resourc
   return SuperficialAnatomyClass as any
 }
 SuperficialAnatomyMixin.appliesTo = schema.SuperficialAnatomy
-
-export const factory = (env: RdfineEnvironment) => createFactory<SuperficialAnatomy>([MedicalEntityMixin, SuperficialAnatomyMixin], { types: [schema.SuperficialAnatomy] }, env);
+SuperficialAnatomyMixin.createFactory = (env: RdfineEnvironment) => createFactory<SuperficialAnatomy>([MedicalEntityMixin, SuperficialAnatomyMixin], { types: [schema.SuperficialAnatomy] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { MedicalClinicMixin } from './MedicalClinic.js';
 export interface CovidTestingFacility<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalClinic<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    CovidTestingFacility: Factory<Schema.CovidTestingFacility>;
+  }
+}
+
 export function CovidTestingFacilityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CovidTestingFacility & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class CovidTestingFacilityClass extends MedicalClinicMixin(Resource) {
@@ -18,5 +24,4 @@ export function CovidTestingFacilityMixin<Base extends rdfine.Constructor>(Resou
   return CovidTestingFacilityClass as any
 }
 CovidTestingFacilityMixin.appliesTo = schema.CovidTestingFacility
-
-export const factory = (env: RdfineEnvironment) => createFactory<CovidTestingFacility>([MedicalClinicMixin, CovidTestingFacilityMixin], { types: [schema.CovidTestingFacility] }, env);
+CovidTestingFacilityMixin.createFactory = (env: RdfineEnvironment) => createFactory<CovidTestingFacility>([MedicalClinicMixin, CovidTestingFacilityMixin], { types: [schema.CovidTestingFacility] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { DigitalDocumentMixin } from './DigitalDocument.js';
 export interface NoteDigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DigitalDocument<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    NoteDigitalDocument: Factory<Schema.NoteDigitalDocument>;
+  }
+}
+
 export function NoteDigitalDocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NoteDigitalDocument & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class NoteDigitalDocumentClass extends DigitalDocumentMixin(Resource) {
@@ -18,5 +24,4 @@ export function NoteDigitalDocumentMixin<Base extends rdfine.Constructor>(Resour
   return NoteDigitalDocumentClass as any
 }
 NoteDigitalDocumentMixin.appliesTo = schema.NoteDigitalDocument
-
-export const factory = (env: RdfineEnvironment) => createFactory<NoteDigitalDocument>([DigitalDocumentMixin, NoteDigitalDocumentMixin], { types: [schema.NoteDigitalDocument] }, env);
+NoteDigitalDocumentMixin.createFactory = (env: RdfineEnvironment) => createFactory<NoteDigitalDocument>([DigitalDocumentMixin, NoteDigitalDocumentMixin], { types: [schema.NoteDigitalDocument] }, env)

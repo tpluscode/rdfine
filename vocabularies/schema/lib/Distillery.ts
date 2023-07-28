@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { FoodEstablishmentMixin } from './FoodEstablishment.js';
 export interface Distillery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FoodEstablishment<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Distillery: Factory<Schema.Distillery>;
+  }
+}
+
 export function DistilleryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Distillery & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class DistilleryClass extends FoodEstablishmentMixin(Resource) {
@@ -18,5 +24,4 @@ export function DistilleryMixin<Base extends rdfine.Constructor>(Resource: Base)
   return DistilleryClass as any
 }
 DistilleryMixin.appliesTo = schema.Distillery
-
-export const factory = (env: RdfineEnvironment) => createFactory<Distillery>([FoodEstablishmentMixin, DistilleryMixin], { types: [schema.Distillery] }, env);
+DistilleryMixin.createFactory = (env: RdfineEnvironment) => createFactory<Distillery>([FoodEstablishmentMixin, DistilleryMixin], { types: [schema.Distillery] }, env)

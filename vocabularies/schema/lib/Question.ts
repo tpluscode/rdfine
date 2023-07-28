@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   answerCount: number | undefined;
   eduQuestionType: string | undefined;
   suggestedAnswer: Schema.Answer<D> | Schema.ItemList<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Question: Factory<Schema.Question>;
+  }
 }
 
 export function QuestionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Question & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function QuestionMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return QuestionClass as any
 }
 QuestionMixin.appliesTo = schema.Question
-
-export const factory = (env: RdfineEnvironment) => createFactory<Question>([CommentMixin, QuestionMixin], { types: [schema.Question] }, env);
+QuestionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Question>([CommentMixin, QuestionMixin], { types: [schema.Question] }, env)

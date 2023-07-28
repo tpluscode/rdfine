@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -20,6 +20,12 @@ export interface Course<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   numberOfCreditsLiteral: number | undefined;
   occupationalCredentialAwarded: string | undefined;
   occupationalCredentialAwardedTerm: RDF.NamedNode | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Course: Factory<Schema.Course>;
+  }
 }
 
 export function CourseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Course & RdfResourceCore> & Base {
@@ -49,5 +55,4 @@ export function CourseMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return CourseClass as any
 }
 CourseMixin.appliesTo = schema.Course
-
-export const factory = (env: RdfineEnvironment) => createFactory<Course>([LearningResourceMixin, CreativeWorkMixin, CourseMixin], { types: [schema.Course] }, env);
+CourseMixin.createFactory = (env: RdfineEnvironment) => createFactory<Course>([LearningResourceMixin, CreativeWorkMixin, CourseMixin], { types: [schema.Course] }, env)

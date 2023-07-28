@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface GameServer<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   game: Schema.VideoGame<D> | undefined;
   playersOnline: number | undefined;
   serverStatus: Schema.GameServerStatus | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    GameServer: Factory<Schema.GameServer>;
+  }
 }
 
 export function GameServerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GameServer & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function GameServerMixin<Base extends rdfine.Constructor>(Resource: Base)
   return GameServerClass as any
 }
 GameServerMixin.appliesTo = schema.GameServer
-
-export const factory = (env: RdfineEnvironment) => createFactory<GameServer>([IntangibleMixin, GameServerMixin], { types: [schema.GameServer] }, env);
+GameServerMixin.createFactory = (env: RdfineEnvironment) => createFactory<GameServer>([IntangibleMixin, GameServerMixin], { types: [schema.GameServer] }, env)

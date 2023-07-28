@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface ChooseAction<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   actionOptionLiteral: string | undefined;
   option: Schema.Thing<D> | undefined;
   optionLiteral: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ChooseAction: Factory<Schema.ChooseAction>;
+  }
 }
 
 export function ChooseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ChooseAction & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function ChooseActionMixin<Base extends rdfine.Constructor>(Resource: Bas
   return ChooseActionClass as any
 }
 ChooseActionMixin.appliesTo = schema.ChooseAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<ChooseAction>([AssessActionMixin, ChooseActionMixin], { types: [schema.ChooseAction] }, env);
+ChooseActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<ChooseAction>([AssessActionMixin, ChooseActionMixin], { types: [schema.ChooseAction] }, env)

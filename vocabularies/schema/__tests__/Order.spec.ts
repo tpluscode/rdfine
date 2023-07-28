@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import clownface from 'clownface'
 import RDF from 'rdf-ext'
 import { schema } from '@tpluscode/rdf-ns-builders';
-import { fromPointer } from '../lib/Order.js'
+import environment from './environment.js';
 
 describe('Order', () => {
   describe('status', () => {
@@ -13,7 +13,7 @@ describe('Order', () => {
         .addOut(schema.orderStatus, schema.OrderCancelled)
 
       // when
-      const order = fromPointer(graph)
+      const order = environment.rdfine.schema.Order(graph)
 
       // then
       expect(order.orderStatus?.termType).to.eq('NamedNode')

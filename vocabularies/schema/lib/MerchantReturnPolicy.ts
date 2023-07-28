@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -33,6 +33,12 @@ export interface MerchantReturnPolicy<D extends RDF.DatasetCore = RDF.DatasetCor
   returnPolicyCountryLiteral: string | undefined;
   returnPolicySeasonalOverride: Schema.MerchantReturnPolicySeasonalOverride<D> | undefined;
   returnShippingFeesAmount: Schema.MonetaryAmount<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MerchantReturnPolicy: Factory<Schema.MerchantReturnPolicy>;
+  }
 }
 
 export function MerchantReturnPolicyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MerchantReturnPolicy & RdfResourceCore> & Base {
@@ -90,5 +96,4 @@ export function MerchantReturnPolicyMixin<Base extends rdfine.Constructor>(Resou
   return MerchantReturnPolicyClass as any
 }
 MerchantReturnPolicyMixin.appliesTo = schema.MerchantReturnPolicy
-
-export const factory = (env: RdfineEnvironment) => createFactory<MerchantReturnPolicy>([IntangibleMixin, MerchantReturnPolicyMixin], { types: [schema.MerchantReturnPolicy] }, env);
+MerchantReturnPolicyMixin.createFactory = (env: RdfineEnvironment) => createFactory<MerchantReturnPolicy>([IntangibleMixin, MerchantReturnPolicyMixin], { types: [schema.MerchantReturnPolicy] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Version<D extends RDF.DatasetCore = RDF.DatasetCore> extends rd
   os: RDF.Literal | undefined;
   platform: RDF.Literal | undefined;
   revision: RDF.Literal | undefined;
+}
+
+declare global {
+  interface DoapVocabulary {
+    Version: Factory<Doap.Version>;
+  }
 }
 
 export function VersionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Version & RdfResourceCore> & Base {
@@ -29,5 +35,4 @@ export function VersionMixin<Base extends rdfine.Constructor>(Resource: Base): r
   return VersionClass as any
 }
 VersionMixin.appliesTo = doap.Version
-
-export const factory = (env: RdfineEnvironment) => createFactory<Version>([VersionMixin], { types: [doap.Version] }, env);
+VersionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Version>([VersionMixin], { types: [doap.Version] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Delegation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   hadActivity: Prov.Activity<D> | undefined;
 }
 
+declare global {
+  interface ProvVocabulary {
+    Delegation: Factory<Prov.Delegation>;
+  }
+}
+
 export function DelegationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Delegation & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class DelegationClass extends AgentInfluenceMixin(Resource) {
@@ -21,5 +27,4 @@ export function DelegationMixin<Base extends rdfine.Constructor>(Resource: Base)
   return DelegationClass as any
 }
 DelegationMixin.appliesTo = prov.Delegation
-
-export const factory = (env: RdfineEnvironment) => createFactory<Delegation>([AgentInfluenceMixin, DelegationMixin], { types: [prov.Delegation] }, env);
+DelegationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Delegation>([AgentInfluenceMixin, DelegationMixin], { types: [prov.Delegation] }, env)

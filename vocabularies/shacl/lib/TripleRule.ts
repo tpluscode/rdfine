@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface TripleRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   object: RDF.Term | undefined;
   predicate: RDF.Term | undefined;
   subject: RDF.Term | undefined;
+}
+
+declare global {
+  interface ShVocabulary {
+    TripleRule: Factory<Sh.TripleRule>;
+  }
 }
 
 export function TripleRuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TripleRule & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function TripleRuleMixin<Base extends rdfine.Constructor>(Resource: Base)
   return TripleRuleClass as any
 }
 TripleRuleMixin.appliesTo = sh.TripleRule
-
-export const factory = (env: RdfineEnvironment) => createFactory<TripleRule>([RuleMixin, TripleRuleMixin], { types: [sh.TripleRule] }, env);
+TripleRuleMixin.createFactory = (env: RdfineEnvironment) => createFactory<TripleRule>([RuleMixin, TripleRuleMixin], { types: [sh.TripleRule] }, env)

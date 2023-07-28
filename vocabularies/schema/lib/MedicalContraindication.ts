@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { MedicalEntityMixin } from './MedicalEntity.js';
 export interface MedicalContraindication<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MedicalContraindication: Factory<Schema.MedicalContraindication>;
+  }
+}
+
 export function MedicalContraindicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalContraindication & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MedicalContraindicationClass extends MedicalEntityMixin(Resource) {
@@ -18,5 +24,4 @@ export function MedicalContraindicationMixin<Base extends rdfine.Constructor>(Re
   return MedicalContraindicationClass as any
 }
 MedicalContraindicationMixin.appliesTo = schema.MedicalContraindication
-
-export const factory = (env: RdfineEnvironment) => createFactory<MedicalContraindication>([MedicalEntityMixin, MedicalContraindicationMixin], { types: [schema.MedicalContraindication] }, env);
+MedicalContraindicationMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalContraindication>([MedicalEntityMixin, MedicalContraindicationMixin], { types: [schema.MedicalContraindication] }, env)

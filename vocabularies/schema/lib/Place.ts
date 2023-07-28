@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -56,6 +56,12 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   specialOpeningHoursSpecification: Schema.OpeningHoursSpecification<D> | undefined;
   telephone: string | undefined;
   tourBookingPage: RDF.NamedNode | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Place: Factory<Schema.Place>;
+  }
 }
 
 export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Place & RdfResourceCore> & Base {
@@ -159,5 +165,4 @@ export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return PlaceClass as any
 }
 PlaceMixin.appliesTo = schema.Place
-
-export const factory = (env: RdfineEnvironment) => createFactory<Place>([ThingMixin, PlaceMixin], { types: [schema.Place] }, env);
+PlaceMixin.createFactory = (env: RdfineEnvironment) => createFactory<Place>([ThingMixin, PlaceMixin], { types: [schema.Place] }, env)

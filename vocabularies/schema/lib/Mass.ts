@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { QuantityMixin } from './Quantity.js';
 export interface Mass<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Quantity<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Mass: Factory<Schema.Mass>;
+  }
+}
+
 export function MassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Mass & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MassClass extends QuantityMixin(Resource) {
@@ -18,5 +24,4 @@ export function MassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return MassClass as any
 }
 MassMixin.appliesTo = schema.Mass
-
-export const factory = (env: RdfineEnvironment) => createFactory<Mass>([QuantityMixin, MassMixin], { types: [schema.Mass] }, env);
+MassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Mass>([QuantityMixin, MassMixin], { types: [schema.Mass] }, env)

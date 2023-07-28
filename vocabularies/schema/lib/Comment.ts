@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Comment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   downvoteCount: number | undefined;
   parentItem: Schema.Comment<D> | undefined;
   upvoteCount: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Comment: Factory<Schema.Comment>;
+  }
 }
 
 export function CommentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Comment & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function CommentMixin<Base extends rdfine.Constructor>(Resource: Base): r
   return CommentClass as any
 }
 CommentMixin.appliesTo = schema.Comment
-
-export const factory = (env: RdfineEnvironment) => createFactory<Comment>([CreativeWorkMixin, CommentMixin], { types: [schema.Comment] }, env);
+CommentMixin.createFactory = (env: RdfineEnvironment) => createFactory<Comment>([CreativeWorkMixin, CommentMixin], { types: [schema.Comment] }, env)

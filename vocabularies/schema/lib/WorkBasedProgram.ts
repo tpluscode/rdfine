@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface WorkBasedProgram<D extends RDF.DatasetCore = RDF.DatasetCore> e
   occupationalCategory: Schema.CategoryCode<D> | undefined;
   occupationalCategoryLiteral: string | undefined;
   trainingSalary: Schema.MonetaryAmountDistribution<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    WorkBasedProgram: Factory<Schema.WorkBasedProgram>;
+  }
 }
 
 export function WorkBasedProgramMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WorkBasedProgram & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function WorkBasedProgramMixin<Base extends rdfine.Constructor>(Resource:
   return WorkBasedProgramClass as any
 }
 WorkBasedProgramMixin.appliesTo = schema.WorkBasedProgram
-
-export const factory = (env: RdfineEnvironment) => createFactory<WorkBasedProgram>([EducationalOccupationalProgramMixin, WorkBasedProgramMixin], { types: [schema.WorkBasedProgram] }, env);
+WorkBasedProgramMixin.createFactory = (env: RdfineEnvironment) => createFactory<WorkBasedProgram>([EducationalOccupationalProgramMixin, WorkBasedProgramMixin], { types: [schema.WorkBasedProgram] }, env)

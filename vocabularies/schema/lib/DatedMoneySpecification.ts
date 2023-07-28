@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface DatedMoneySpecification<D extends RDF.DatasetCore = RDF.Dataset
   currency: string | undefined;
   endDate: Date | undefined;
   startDate: Date | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DatedMoneySpecification: Factory<Schema.DatedMoneySpecification>;
+  }
 }
 
 export function DatedMoneySpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DatedMoneySpecification & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function DatedMoneySpecificationMixin<Base extends rdfine.Constructor>(Re
   return DatedMoneySpecificationClass as any
 }
 DatedMoneySpecificationMixin.appliesTo = schema.DatedMoneySpecification
-
-export const factory = (env: RdfineEnvironment) => createFactory<DatedMoneySpecification>([StructuredValueMixin, DatedMoneySpecificationMixin], { types: [schema.DatedMoneySpecification] }, env);
+DatedMoneySpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<DatedMoneySpecification>([StructuredValueMixin, DatedMoneySpecificationMixin], { types: [schema.DatedMoneySpecification] }, env)

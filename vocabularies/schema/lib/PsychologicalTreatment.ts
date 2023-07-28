@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { TherapeuticProcedureMixin } from './TherapeuticProcedure.js';
 export interface PsychologicalTreatment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TherapeuticProcedure<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    PsychologicalTreatment: Factory<Schema.PsychologicalTreatment>;
+  }
+}
+
 export function PsychologicalTreatmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PsychologicalTreatment & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class PsychologicalTreatmentClass extends TherapeuticProcedureMixin(Resource) {
@@ -18,5 +24,4 @@ export function PsychologicalTreatmentMixin<Base extends rdfine.Constructor>(Res
   return PsychologicalTreatmentClass as any
 }
 PsychologicalTreatmentMixin.appliesTo = schema.PsychologicalTreatment
-
-export const factory = (env: RdfineEnvironment) => createFactory<PsychologicalTreatment>([TherapeuticProcedureMixin, PsychologicalTreatmentMixin], { types: [schema.PsychologicalTreatment] }, env);
+PsychologicalTreatmentMixin.createFactory = (env: RdfineEnvironment) => createFactory<PsychologicalTreatment>([TherapeuticProcedureMixin, PsychologicalTreatmentMixin], { types: [schema.PsychologicalTreatment] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface OrderAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   deliveryMethod: Schema.DeliveryMethod | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    OrderAction: Factory<Schema.OrderAction>;
+  }
+}
+
 export function OrderActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OrderAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class OrderActionClass extends TradeActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function OrderActionMixin<Base extends rdfine.Constructor>(Resource: Base
   return OrderActionClass as any
 }
 OrderActionMixin.appliesTo = schema.OrderAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<OrderAction>([TradeActionMixin, OrderActionMixin], { types: [schema.OrderAction] }, env);
+OrderActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<OrderAction>([TradeActionMixin, OrderActionMixin], { types: [schema.OrderAction] }, env)

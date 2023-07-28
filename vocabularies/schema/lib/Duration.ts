@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { QuantityMixin } from './Quantity.js';
 export interface Duration<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Quantity<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Duration: Factory<Schema.Duration>;
+  }
+}
+
 export function DurationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Duration & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class DurationClass extends QuantityMixin(Resource) {
@@ -18,5 +24,4 @@ export function DurationMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return DurationClass as any
 }
 DurationMixin.appliesTo = schema.Duration
-
-export const factory = (env: RdfineEnvironment) => createFactory<Duration>([QuantityMixin, DurationMixin], { types: [schema.Duration] }, env);
+DurationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Duration>([QuantityMixin, DurationMixin], { types: [schema.Duration] }, env)

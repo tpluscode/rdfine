@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface Link<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.P
   description: string | undefined;
   supportedOperation: Array<Hydra.Operation<D>>;
   title: string | undefined;
+}
+
+declare global {
+  interface HydraVocabulary {
+    Link: Factory<Hydra.Link>;
+  }
 }
 
 export function LinkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Link & RdfResourceCore> & Base {

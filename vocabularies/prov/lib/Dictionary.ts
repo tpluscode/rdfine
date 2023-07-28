@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Dictionary<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   hadDictionaryMember: Array<Prov.KeyEntityPair<D>>;
   qualifiedInsertion: Array<Prov.Insertion<D>>;
   qualifiedRemoval: Array<Prov.Removal<D>>;
+}
+
+declare global {
+  interface ProvVocabulary {
+    Dictionary: Factory<Prov.Dictionary>;
+  }
 }
 
 export function DictionaryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Dictionary & RdfResourceCore> & Base {
@@ -32,5 +38,4 @@ export function DictionaryMixin<Base extends rdfine.Constructor>(Resource: Base)
   return DictionaryClass as any
 }
 DictionaryMixin.appliesTo = prov.Dictionary
-
-export const factory = (env: RdfineEnvironment) => createFactory<Dictionary>([DictionaryMixin], { types: [prov.Dictionary] }, env);
+DictionaryMixin.createFactory = (env: RdfineEnvironment) => createFactory<Dictionary>([DictionaryMixin], { types: [prov.Dictionary] }, env)

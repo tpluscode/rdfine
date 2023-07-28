@@ -14,11 +14,11 @@ export interface AnyFactory<T extends RdfResourceCore<any>> {
 }
 
 export interface CurriedBlankFactory<T extends RdfResourceCore<any>> {
-  <D extends RDF.DatasetCore = RDF.DatasetCore>(initializer?: Initializer<T>, options?: FactoryOptions): (graph: AnyPointer) => T & RdfResourceCore<D>
+  <D extends RDF.DatasetCore = RDF.DatasetCore>(initializer?: Initializer<T>, options?: FactoryOptions): (graph?: AnyPointer) => T & RdfResourceCore<D>
 }
 
 export interface CurriedFactory<T extends RdfResourceCore<any>> {
-  <D extends RDF.DatasetCore = RDF.DatasetCore>(id: string | ResourceIdentifier, initializer?: Initializer<T>, options?: FactoryOptions): (graph: AnyPointer) => T & RdfResourceCore<D>
+  <D extends RDF.DatasetCore = RDF.DatasetCore>(id: string | ResourceIdentifier, initializer?: Initializer<T>, options?: FactoryOptions): (graph?: AnyPointer) => T & RdfResourceCore<D>
 }
 
 export interface FullFactory<T extends RdfResourceCore<any>> {
@@ -38,7 +38,8 @@ export function createFactory<T extends RdfResourceCore<any>>(mixins: Mixin[], b
   }
 
   const curriedNamedFactory: CurriedFactory<T> = (id, initializer, { additionalMixins = [] } = {}) => {
-    return (graph) => {
+    return (ptr) => {
+      const graph = ptr || env.clownface()
       const term = typeof id === 'string' ? graph.namedNode(id) : graph.node(id)
       return env.rdfine().factory.createEntity<T>(term, [...mixins, ...additionalMixins], {
         initializer: {
@@ -50,7 +51,7 @@ export function createFactory<T extends RdfResourceCore<any>>(mixins: Mixin[], b
   }
 
   const curriedBlankFactory: CurriedBlankFactory<T> = (initializer, { additionalMixins = [] } = {}) => {
-    return (graph) => env.rdfine().factory.createEntity<T>(graph.blankNode(), [...mixins, ...additionalMixins], {
+    return (graph) => env.rdfine().factory.createEntity<T>((graph || env.clownface()).blankNode(), [...mixins, ...additionalMixins], {
       initializer: {
         ...baseInitializer,
         ...(initializer || {}),

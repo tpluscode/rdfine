@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ObjectPropertyMixin } from './ObjectProperty.js';
 export interface TransitiveProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface OwlVocabulary {
+    TransitiveProperty: Factory<Owl.TransitiveProperty>;
+  }
+}
+
 export function TransitivePropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TransitiveProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
   class TransitivePropertyClass extends ObjectPropertyMixin(Resource) {
@@ -18,5 +24,4 @@ export function TransitivePropertyMixin<Base extends rdfine.Constructor>(Resourc
   return TransitivePropertyClass as any
 }
 TransitivePropertyMixin.appliesTo = owl.TransitiveProperty
-
-export const factory = (env: RdfineEnvironment) => createFactory<TransitiveProperty>([ObjectPropertyMixin, TransitivePropertyMixin], { types: [owl.TransitiveProperty] }, env);
+TransitivePropertyMixin.createFactory = (env: RdfineEnvironment) => createFactory<TransitiveProperty>([ObjectPropertyMixin, TransitivePropertyMixin], { types: [owl.TransitiveProperty] }, env)

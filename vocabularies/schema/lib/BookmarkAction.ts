@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { OrganizeActionMixin } from './OrganizeAction.js';
 export interface BookmarkAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OrganizeAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    BookmarkAction: Factory<Schema.BookmarkAction>;
+  }
+}
+
 export function BookmarkActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BookmarkAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class BookmarkActionClass extends OrganizeActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function BookmarkActionMixin<Base extends rdfine.Constructor>(Resource: B
   return BookmarkActionClass as any
 }
 BookmarkActionMixin.appliesTo = schema.BookmarkAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<BookmarkAction>([OrganizeActionMixin, BookmarkActionMixin], { types: [schema.BookmarkAction] }, env);
+BookmarkActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<BookmarkAction>([OrganizeActionMixin, BookmarkActionMixin], { types: [schema.BookmarkAction] }, env)

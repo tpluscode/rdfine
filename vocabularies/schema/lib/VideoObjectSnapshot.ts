@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { VideoObjectMixin } from './VideoObject.js';
 export interface VideoObjectSnapshot<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.VideoObject<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    VideoObjectSnapshot: Factory<Schema.VideoObjectSnapshot>;
+  }
+}
+
 export function VideoObjectSnapshotMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VideoObjectSnapshot & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class VideoObjectSnapshotClass extends VideoObjectMixin(Resource) {
@@ -18,5 +24,4 @@ export function VideoObjectSnapshotMixin<Base extends rdfine.Constructor>(Resour
   return VideoObjectSnapshotClass as any
 }
 VideoObjectSnapshotMixin.appliesTo = schema.VideoObjectSnapshot
-
-export const factory = (env: RdfineEnvironment) => createFactory<VideoObjectSnapshot>([VideoObjectMixin, VideoObjectSnapshotMixin], { types: [schema.VideoObjectSnapshot] }, env);
+VideoObjectSnapshotMixin.createFactory = (env: RdfineEnvironment) => createFactory<VideoObjectSnapshot>([VideoObjectMixin, VideoObjectSnapshotMixin], { types: [schema.VideoObjectSnapshot] }, env)

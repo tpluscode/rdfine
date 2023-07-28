@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { DocumentMixin } from './Document.js';
 export interface Audio<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Document<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface AsVocabulary {
+    Audio: Factory<As.Audio>;
+  }
+}
+
 export function AudioMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Audio & RdfResourceCore> & Base {
   @rdfine.namespace(as)
   class AudioClass extends DocumentMixin(Resource) {
@@ -18,5 +24,4 @@ export function AudioMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return AudioClass as any
 }
 AudioMixin.appliesTo = as.Audio
-
-export const factory = (env: RdfineEnvironment) => createFactory<Audio>([DocumentMixin, AudioMixin], { types: [as.Audio] }, env);
+AudioMixin.createFactory = (env: RdfineEnvironment) => createFactory<Audio>([DocumentMixin, AudioMixin], { types: [as.Audio] }, env)

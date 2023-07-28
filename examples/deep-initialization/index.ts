@@ -1,24 +1,19 @@
-import rdf from '@rdfjs/dataset'
-import clownface from 'clownface'
 import { turtle } from '@tpluscode/rdf-string'
 import * as Schema from '@rdfine/schema'
-import { fromPointer } from '@rdfine/schema/lib/Person'
-import { PersonBundle } from '@rdfine/schema/bundles'
-import RdfResource, { fromObject } from '@tpluscode/rdfine/RdfResource'
+import { SchemaFactory } from '@rdfine/schema/Factory'
+import { fromObject } from '@tpluscode/rdfine/RdfResource'
 import { schema } from '@tpluscode/rdf-ns-builders'
-import namespace from '@rdfjs/namespace'
+import { createEnv } from '@rdfine/env'
 
-// Have rdfine recognize the necessary schema.org terms
-RdfResource.factory.addMixin(...PersonBundle)
+const environment = createEnv(SchemaFactory)
 
-const bigBangTheory = namespace('http://tbbt.example.com/')
+const bigBangTheory = environment.namespace('http://tbbt.example.com/')
 
 async function main() {
-  const dataset = rdf.dataset()
-  const graph = clownface({ dataset, term: bigBangTheory.Howard })
+  const graph = environment.clownface({ term: bigBangTheory.Howard })
 
   // the person gets initialized with it whole subgraph
-  const howard = fromPointer(graph, {
+  const howard = environment.rdfine.schema.Person(graph, {
     givenName: 'Howard',
     familyName: 'Wolowitz',
     knows: {
@@ -37,7 +32,7 @@ async function main() {
   })
 
   // existing entities can also be used
-  const penny = fromPointer(graph.node(bigBangTheory.Penny), {
+  const penny = environment.rdfine.schema.Person(graph.node(bigBangTheory.Penny), {
     knows: howard,
   })
   penny.name = 'Penny'
@@ -51,7 +46,7 @@ async function main() {
     alternateName: 'Bernadette Rostenkowski',
   })
 
-  return turtle`${dataset}`.toString()
+  return turtle`${graph.dataset}`.toString()
 }
 
 main()

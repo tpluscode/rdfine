@@ -1,7 +1,7 @@
 import '../extensions/sh/AbstractResult.js';
 import { AbstractResultMixinEx } from '../extensions/sh/AbstractResult.js';
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ import { AbstractResultMixin as ShaclAbstractResultMixin } from '@rdfine/shacl/l
 export interface FailureResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.AbstractResult<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    FailureResult: Factory<Dash.FailureResult>;
+  }
+}
+
 export function FailureResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FailureResult & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class FailureResultClass extends AbstractResultMixinEx(ShaclAbstractResultMixin(Resource)) {
@@ -21,5 +27,4 @@ export function FailureResultMixin<Base extends rdfine.Constructor>(Resource: Ba
   return FailureResultClass as any
 }
 FailureResultMixin.appliesTo = dash.FailureResult
-
-export const factory = (env: RdfineEnvironment) => createFactory<FailureResult>([ShaclAbstractResultMixin, FailureResultMixin], { types: [dash.FailureResult] }, env);
+FailureResultMixin.createFactory = (env: RdfineEnvironment) => createFactory<FailureResult>([ShaclAbstractResultMixin, FailureResultMixin], { types: [dash.FailureResult] }, env)

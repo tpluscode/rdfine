@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ViewerMixin } from './Viewer.js';
 export interface SingleViewer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Viewer<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    SingleViewer: Factory<Dash.SingleViewer>;
+  }
+}
+
 export function SingleViewerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SingleViewer & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class SingleViewerClass extends ViewerMixin(Resource) {
@@ -18,5 +24,4 @@ export function SingleViewerMixin<Base extends rdfine.Constructor>(Resource: Bas
   return SingleViewerClass as any
 }
 SingleViewerMixin.appliesTo = dash.SingleViewer
-
-export const factory = (env: RdfineEnvironment) => createFactory<SingleViewer>([ViewerMixin, SingleViewerMixin], { types: [dash.SingleViewer] }, env);
+SingleViewerMixin.createFactory = (env: RdfineEnvironment) => createFactory<SingleViewer>([ViewerMixin, SingleViewerMixin], { types: [dash.SingleViewer] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { CivicStructureMixin } from './CivicStructure.js';
 export interface BusStation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    BusStation: Factory<Schema.BusStation>;
+  }
+}
+
 export function BusStationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BusStation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class BusStationClass extends CivicStructureMixin(Resource) {
@@ -18,5 +24,4 @@ export function BusStationMixin<Base extends rdfine.Constructor>(Resource: Base)
   return BusStationClass as any
 }
 BusStationMixin.appliesTo = schema.BusStation
-
-export const factory = (env: RdfineEnvironment) => createFactory<BusStation>([CivicStructureMixin, BusStationMixin], { types: [schema.BusStation] }, env);
+BusStationMixin.createFactory = (env: RdfineEnvironment) => createFactory<BusStation>([CivicStructureMixin, BusStationMixin], { types: [schema.BusStation] }, env)

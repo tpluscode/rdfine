@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { MediaGalleryMixin } from './MediaGallery.js';
 export interface VideoGallery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaGallery<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    VideoGallery: Factory<Schema.VideoGallery>;
+  }
+}
+
 export function VideoGalleryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VideoGallery & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class VideoGalleryClass extends MediaGalleryMixin(Resource) {
@@ -18,5 +24,4 @@ export function VideoGalleryMixin<Base extends rdfine.Constructor>(Resource: Bas
   return VideoGalleryClass as any
 }
 VideoGalleryMixin.appliesTo = schema.VideoGallery
-
-export const factory = (env: RdfineEnvironment) => createFactory<VideoGallery>([MediaGalleryMixin, VideoGalleryMixin], { types: [schema.VideoGallery] }, env);
+VideoGalleryMixin.createFactory = (env: RdfineEnvironment) => createFactory<VideoGallery>([MediaGalleryMixin, VideoGalleryMixin], { types: [schema.VideoGallery] }, env)

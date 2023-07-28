@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ObjectPropertyMixin } from './ObjectProperty.js';
 export interface SymmetricProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface OwlVocabulary {
+    SymmetricProperty: Factory<Owl.SymmetricProperty>;
+  }
+}
+
 export function SymmetricPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SymmetricProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
   class SymmetricPropertyClass extends ObjectPropertyMixin(Resource) {
@@ -18,5 +24,4 @@ export function SymmetricPropertyMixin<Base extends rdfine.Constructor>(Resource
   return SymmetricPropertyClass as any
 }
 SymmetricPropertyMixin.appliesTo = owl.SymmetricProperty
-
-export const factory = (env: RdfineEnvironment) => createFactory<SymmetricProperty>([ObjectPropertyMixin, SymmetricPropertyMixin], { types: [owl.SymmetricProperty] }, env);
+SymmetricPropertyMixin.createFactory = (env: RdfineEnvironment) => createFactory<SymmetricProperty>([ObjectPropertyMixin, SymmetricPropertyMixin], { types: [owl.SymmetricProperty] }, env)

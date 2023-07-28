@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -31,6 +31,12 @@ export interface Item<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfin
   'respond_to': RDF.Term | undefined;
   'shared_by': Sioc.UserAccount<D> | undefined;
   sibling: Sioc.Item<D> | undefined;
+}
+
+declare global {
+  interface SiocVocabulary {
+    Item: Factory<Sioc.Item>;
+  }
 }
 
 export function ItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Item & RdfResourceCore> & Base {
@@ -86,5 +92,4 @@ export function ItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return ItemClass as any
 }
 ItemMixin.appliesTo = sioc.Item
-
-export const factory = (env: RdfineEnvironment) => createFactory<Item>([ItemMixin], { types: [sioc.Item] }, env);
+ItemMixin.createFactory = (env: RdfineEnvironment) => createFactory<Item>([ItemMixin], { types: [sioc.Item] }, env)

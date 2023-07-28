@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface DefinedTermSet<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   hasDefinedTerm: RDF.Term | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    DefinedTermSet: Factory<Schema.DefinedTermSet>;
+  }
+}
+
 export function DefinedTermSetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DefinedTermSet & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class DefinedTermSetClass extends CreativeWorkMixin(Resource) {
@@ -21,5 +27,4 @@ export function DefinedTermSetMixin<Base extends rdfine.Constructor>(Resource: B
   return DefinedTermSetClass as any
 }
 DefinedTermSetMixin.appliesTo = schema.DefinedTermSet
-
-export const factory = (env: RdfineEnvironment) => createFactory<DefinedTermSet>([CreativeWorkMixin, DefinedTermSetMixin], { types: [schema.DefinedTermSet] }, env);
+DefinedTermSetMixin.createFactory = (env: RdfineEnvironment) => createFactory<DefinedTermSet>([CreativeWorkMixin, DefinedTermSetMixin], { types: [schema.DefinedTermSet] }, env)

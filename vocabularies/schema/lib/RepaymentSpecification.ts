@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,6 +15,12 @@ export interface RepaymentSpecification<D extends RDF.DatasetCore = RDF.DatasetC
   loanPaymentAmount: Schema.MonetaryAmount<D> | undefined;
   loanPaymentFrequency: number | undefined;
   numberOfLoanPayments: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    RepaymentSpecification: Factory<Schema.RepaymentSpecification>;
+  }
 }
 
 export function RepaymentSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RepaymentSpecification & RdfResourceCore> & Base {
@@ -36,5 +42,4 @@ export function RepaymentSpecificationMixin<Base extends rdfine.Constructor>(Res
   return RepaymentSpecificationClass as any
 }
 RepaymentSpecificationMixin.appliesTo = schema.RepaymentSpecification
-
-export const factory = (env: RdfineEnvironment) => createFactory<RepaymentSpecification>([StructuredValueMixin, RepaymentSpecificationMixin], { types: [schema.RepaymentSpecification] }, env);
+RepaymentSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<RepaymentSpecification>([StructuredValueMixin, RepaymentSpecificationMixin], { types: [schema.RepaymentSpecification] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface EmployeeRole<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   baseSalary: Schema.MonetaryAmount<D> | Schema.PriceSpecification<D> | undefined;
   baseSalaryLiteral: number | undefined;
   salaryCurrency: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    EmployeeRole: Factory<Schema.EmployeeRole>;
+  }
 }
 
 export function EmployeeRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EmployeeRole & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function EmployeeRoleMixin<Base extends rdfine.Constructor>(Resource: Bas
   return EmployeeRoleClass as any
 }
 EmployeeRoleMixin.appliesTo = schema.EmployeeRole
-
-export const factory = (env: RdfineEnvironment) => createFactory<EmployeeRole>([OrganizationRoleMixin, EmployeeRoleMixin], { types: [schema.EmployeeRole] }, env);
+EmployeeRoleMixin.createFactory = (env: RdfineEnvironment) => createFactory<EmployeeRole>([OrganizationRoleMixin, EmployeeRoleMixin], { types: [schema.EmployeeRole] }, env)

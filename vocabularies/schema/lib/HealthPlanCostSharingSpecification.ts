@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface HealthPlanCostSharingSpecification<D extends RDF.DatasetCore = 
   healthPlanCopay: Schema.PriceSpecification<D> | undefined;
   healthPlanCopayOption: string | undefined;
   healthPlanPharmacyCategory: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    HealthPlanCostSharingSpecification: Factory<Schema.HealthPlanCostSharingSpecification>;
+  }
 }
 
 export function HealthPlanCostSharingSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HealthPlanCostSharingSpecification & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function HealthPlanCostSharingSpecificationMixin<Base extends rdfine.Cons
   return HealthPlanCostSharingSpecificationClass as any
 }
 HealthPlanCostSharingSpecificationMixin.appliesTo = schema.HealthPlanCostSharingSpecification
-
-export const factory = (env: RdfineEnvironment) => createFactory<HealthPlanCostSharingSpecification>([IntangibleMixin, HealthPlanCostSharingSpecificationMixin], { types: [schema.HealthPlanCostSharingSpecification] }, env);
+HealthPlanCostSharingSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<HealthPlanCostSharingSpecification>([IntangibleMixin, HealthPlanCostSharingSpecificationMixin], { types: [schema.HealthPlanCostSharingSpecification] }, env)

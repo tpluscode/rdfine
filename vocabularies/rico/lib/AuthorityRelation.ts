@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface AuthorityRelation<D extends RDF.DatasetCore = RDF.DatasetCore> 
   authorityRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    AuthorityRelation: Factory<Rico.AuthorityRelation>;
+  }
+}
+
 export function AuthorityRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AuthorityRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class AuthorityRelationClass extends RelationMixin(Resource) {
@@ -24,5 +30,4 @@ export function AuthorityRelationMixin<Base extends rdfine.Constructor>(Resource
   return AuthorityRelationClass as any
 }
 AuthorityRelationMixin.appliesTo = rico.AuthorityRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<AuthorityRelation>([RelationMixin, AuthorityRelationMixin], { types: [rico.AuthorityRelation] }, env);
+AuthorityRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<AuthorityRelation>([RelationMixin, AuthorityRelationMixin], { types: [rico.AuthorityRelation] }, env)

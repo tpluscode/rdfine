@@ -3,7 +3,7 @@ import { ClassMixinEx } from '../extensions/rdfs/Class.js';
 import '../extensions/sh/NodeShape.js';
 import { NodeShapeMixinEx } from '../extensions/sh/NodeShape.js';
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -18,6 +18,12 @@ import { NodeShapeMixin as ShaclNodeShapeMixin } from '@rdfine/shacl/lib/NodeSha
 export interface ShapeClass<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, Shacl.NodeShape<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    ShapeClass: Factory<Dash.ShapeClass>;
+  }
+}
+
 export function ShapeClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ShapeClass & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class ShapeClassClass extends NodeShapeMixinEx(ShaclNodeShapeMixin(ClassMixinEx(RdfsClassMixin(Resource)))) {
@@ -25,5 +31,4 @@ export function ShapeClassMixin<Base extends rdfine.Constructor>(Resource: Base)
   return ShapeClassClass as any
 }
 ShapeClassMixin.appliesTo = dash.ShapeClass
-
-export const factory = (env: RdfineEnvironment) => createFactory<ShapeClass>([ShaclNodeShapeMixin, RdfsClassMixin, ShapeClassMixin], { types: [dash.ShapeClass] }, env);
+ShapeClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<ShapeClass>([ShaclNodeShapeMixin, RdfsClassMixin, ShapeClassMixin], { types: [dash.ShapeClass] }, env)

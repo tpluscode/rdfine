@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { AudioObjectMixin } from './AudioObject.js';
 export interface AudioObjectSnapshot<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AudioObject<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    AudioObjectSnapshot: Factory<Schema.AudioObjectSnapshot>;
+  }
+}
+
 export function AudioObjectSnapshotMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AudioObjectSnapshot & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class AudioObjectSnapshotClass extends AudioObjectMixin(Resource) {
@@ -18,5 +24,4 @@ export function AudioObjectSnapshotMixin<Base extends rdfine.Constructor>(Resour
   return AudioObjectSnapshotClass as any
 }
 AudioObjectSnapshotMixin.appliesTo = schema.AudioObjectSnapshot
-
-export const factory = (env: RdfineEnvironment) => createFactory<AudioObjectSnapshot>([AudioObjectMixin, AudioObjectSnapshotMixin], { types: [schema.AudioObjectSnapshot] }, env);
+AudioObjectSnapshotMixin.createFactory = (env: RdfineEnvironment) => createFactory<AudioObjectSnapshot>([AudioObjectMixin, AudioObjectSnapshotMixin], { types: [schema.AudioObjectSnapshot] }, env)

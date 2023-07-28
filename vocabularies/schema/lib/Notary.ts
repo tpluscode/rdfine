@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { LegalServiceMixin } from './LegalService.js';
 export interface Notary<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LegalService<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Notary: Factory<Schema.Notary>;
+  }
+}
+
 export function NotaryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Notary & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class NotaryClass extends LegalServiceMixin(Resource) {
@@ -18,5 +24,4 @@ export function NotaryMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return NotaryClass as any
 }
 NotaryMixin.appliesTo = schema.Notary
-
-export const factory = (env: RdfineEnvironment) => createFactory<Notary>([LegalServiceMixin, NotaryMixin], { types: [schema.Notary] }, env);
+NotaryMixin.createFactory = (env: RdfineEnvironment) => createFactory<Notary>([LegalServiceMixin, NotaryMixin], { types: [schema.Notary] }, env)

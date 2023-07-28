@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -22,6 +22,12 @@ export interface Clip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   partOfSeries: Schema.CreativeWorkSeries<D> | undefined;
   startOffset: Schema.HyperTocEntry<D> | undefined;
   startOffsetLiteral: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Clip: Factory<Schema.Clip>;
+  }
 }
 
 export function ClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Clip & RdfResourceCore> & Base {
@@ -57,5 +63,4 @@ export function ClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return ClipClass as any
 }
 ClipMixin.appliesTo = schema.Clip
-
-export const factory = (env: RdfineEnvironment) => createFactory<Clip>([CreativeWorkMixin, ClipMixin], { types: [schema.Clip] }, env);
+ClipMixin.createFactory = (env: RdfineEnvironment) => createFactory<Clip>([CreativeWorkMixin, ClipMixin], { types: [schema.Clip] }, env)

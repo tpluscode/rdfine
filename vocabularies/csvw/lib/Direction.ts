@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,6 +10,12 @@ import type * as Csvw from '../index.js';
 export interface Direction<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface CsvwVocabulary {
+    Direction: Factory<Csvw.Direction>;
+  }
+}
+
 export function DirectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Direction & RdfResourceCore> & Base {
   @rdfine.namespace(csvw)
   class DirectionClass extends Resource {
@@ -17,5 +23,4 @@ export function DirectionMixin<Base extends rdfine.Constructor>(Resource: Base):
   return DirectionClass as any
 }
 DirectionMixin.appliesTo = csvw.Direction
-
-export const factory = (env: RdfineEnvironment) => createFactory<Direction>([DirectionMixin], { types: [csvw.Direction] }, env);
+DirectionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Direction>([DirectionMixin], { types: [csvw.Direction] }, env)

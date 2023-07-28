@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface Suggestion<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   suggestionGroup: RDF.Term | undefined;
 }
 
+declare global {
+  interface DashVocabulary {
+    Suggestion: Factory<Dash.Suggestion>;
+  }
+}
+
 export function SuggestionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Suggestion & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class SuggestionClass extends RdfsResourceMixin(Resource) {
@@ -25,5 +31,4 @@ export function SuggestionMixin<Base extends rdfine.Constructor>(Resource: Base)
   return SuggestionClass as any
 }
 SuggestionMixin.appliesTo = dash.Suggestion
-
-export const factory = (env: RdfineEnvironment) => createFactory<Suggestion>([RdfsResourceMixin, SuggestionMixin], { types: [dash.Suggestion] }, env);
+SuggestionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Suggestion>([RdfsResourceMixin, SuggestionMixin], { types: [dash.Suggestion] }, env)

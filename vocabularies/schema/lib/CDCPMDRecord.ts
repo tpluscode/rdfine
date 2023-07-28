@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -26,6 +26,12 @@ export interface CDCPMDRecord<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   cvdNumVent: number | undefined;
   cvdNumVentUse: number | undefined;
   datePosted: Date | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CDCPMDRecord: Factory<Schema.CDCPMDRecord>;
+  }
 }
 
 export function CDCPMDRecordMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CDCPMDRecord & RdfResourceCore> & Base {
@@ -69,5 +75,4 @@ export function CDCPMDRecordMixin<Base extends rdfine.Constructor>(Resource: Bas
   return CDCPMDRecordClass as any
 }
 CDCPMDRecordMixin.appliesTo = schema.CDCPMDRecord
-
-export const factory = (env: RdfineEnvironment) => createFactory<CDCPMDRecord>([StructuredValueMixin, CDCPMDRecordMixin], { types: [schema.CDCPMDRecord] }, env);
+CDCPMDRecordMixin.createFactory = (env: RdfineEnvironment) => createFactory<CDCPMDRecord>([StructuredValueMixin, CDCPMDRecordMixin], { types: [schema.CDCPMDRecord] }, env)

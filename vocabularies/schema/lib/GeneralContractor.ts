@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { HomeAndConstructionBusinessMixin } from './HomeAndConstructionBusiness.
 export interface GeneralContractor<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HomeAndConstructionBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    GeneralContractor: Factory<Schema.GeneralContractor>;
+  }
+}
+
 export function GeneralContractorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GeneralContractor & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class GeneralContractorClass extends HomeAndConstructionBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function GeneralContractorMixin<Base extends rdfine.Constructor>(Resource
   return GeneralContractorClass as any
 }
 GeneralContractorMixin.appliesTo = schema.GeneralContractor
-
-export const factory = (env: RdfineEnvironment) => createFactory<GeneralContractor>([HomeAndConstructionBusinessMixin, GeneralContractorMixin], { types: [schema.GeneralContractor] }, env);
+GeneralContractorMixin.createFactory = (env: RdfineEnvironment) => createFactory<GeneralContractor>([HomeAndConstructionBusinessMixin, GeneralContractorMixin], { types: [schema.GeneralContractor] }, env)

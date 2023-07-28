@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { BodyOfWaterMixin } from './BodyOfWater.js';
 export interface LakeBodyOfWater<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BodyOfWater<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    LakeBodyOfWater: Factory<Schema.LakeBodyOfWater>;
+  }
+}
+
 export function LakeBodyOfWaterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LakeBodyOfWater & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class LakeBodyOfWaterClass extends BodyOfWaterMixin(Resource) {
@@ -18,5 +24,4 @@ export function LakeBodyOfWaterMixin<Base extends rdfine.Constructor>(Resource: 
   return LakeBodyOfWaterClass as any
 }
 LakeBodyOfWaterMixin.appliesTo = schema.LakeBodyOfWater
-
-export const factory = (env: RdfineEnvironment) => createFactory<LakeBodyOfWater>([BodyOfWaterMixin, LakeBodyOfWaterMixin], { types: [schema.LakeBodyOfWater] }, env);
+LakeBodyOfWaterMixin.createFactory = (env: RdfineEnvironment) => createFactory<LakeBodyOfWater>([BodyOfWaterMixin, LakeBodyOfWaterMixin], { types: [schema.LakeBodyOfWater] }, env)

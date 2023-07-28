@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -17,6 +17,12 @@ export interface BroadcastChannel<D extends RDF.DatasetCore = RDF.DatasetCore> e
   genreTerm: RDF.NamedNode | undefined;
   inBroadcastLineup: Schema.CableOrSatelliteService<D> | undefined;
   providesBroadcastService: Schema.BroadcastService<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BroadcastChannel: Factory<Schema.BroadcastChannel>;
+  }
 }
 
 export function BroadcastChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BroadcastChannel & RdfResourceCore> & Base {
@@ -42,5 +48,4 @@ export function BroadcastChannelMixin<Base extends rdfine.Constructor>(Resource:
   return BroadcastChannelClass as any
 }
 BroadcastChannelMixin.appliesTo = schema.BroadcastChannel
-
-export const factory = (env: RdfineEnvironment) => createFactory<BroadcastChannel>([IntangibleMixin, BroadcastChannelMixin], { types: [schema.BroadcastChannel] }, env);
+BroadcastChannelMixin.createFactory = (env: RdfineEnvironment) => createFactory<BroadcastChannel>([IntangibleMixin, BroadcastChannelMixin], { types: [schema.BroadcastChannel] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { AdministrativeAreaMixin } from './AdministrativeArea.js';
 export interface SchoolDistrict<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AdministrativeArea<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    SchoolDistrict: Factory<Schema.SchoolDistrict>;
+  }
+}
+
 export function SchoolDistrictMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SchoolDistrict & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class SchoolDistrictClass extends AdministrativeAreaMixin(Resource) {
@@ -18,5 +24,4 @@ export function SchoolDistrictMixin<Base extends rdfine.Constructor>(Resource: B
   return SchoolDistrictClass as any
 }
 SchoolDistrictMixin.appliesTo = schema.SchoolDistrict
-
-export const factory = (env: RdfineEnvironment) => createFactory<SchoolDistrict>([AdministrativeAreaMixin, SchoolDistrictMixin], { types: [schema.SchoolDistrict] }, env);
+SchoolDistrictMixin.createFactory = (env: RdfineEnvironment) => createFactory<SchoolDistrict>([AdministrativeAreaMixin, SchoolDistrictMixin], { types: [schema.SchoolDistrict] }, env)

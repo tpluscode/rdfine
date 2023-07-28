@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { StoreMixin } from './Store.js';
 export interface MensClothingStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MensClothingStore: Factory<Schema.MensClothingStore>;
+  }
+}
+
 export function MensClothingStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MensClothingStore & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MensClothingStoreClass extends StoreMixin(Resource) {
@@ -18,5 +24,4 @@ export function MensClothingStoreMixin<Base extends rdfine.Constructor>(Resource
   return MensClothingStoreClass as any
 }
 MensClothingStoreMixin.appliesTo = schema.MensClothingStore
-
-export const factory = (env: RdfineEnvironment) => createFactory<MensClothingStore>([StoreMixin, MensClothingStoreMixin], { types: [schema.MensClothingStore] }, env);
+MensClothingStoreMixin.createFactory = (env: RdfineEnvironment) => createFactory<MensClothingStore>([StoreMixin, MensClothingStoreMixin], { types: [schema.MensClothingStore] }, env)

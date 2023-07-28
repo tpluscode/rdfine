@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -19,6 +19,12 @@ export interface HealthInsurancePlan<D extends RDF.DatasetCore = RDF.DatasetCore
   includesHealthPlanNetwork: Schema.HealthPlanNetwork<D> | undefined;
   usesHealthPlanIdStandard: string | undefined;
   usesHealthPlanIdStandardTerm: RDF.NamedNode | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    HealthInsurancePlan: Factory<Schema.HealthInsurancePlan>;
+  }
 }
 
 export function HealthInsurancePlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HealthInsurancePlan & RdfResourceCore> & Base {
@@ -48,5 +54,4 @@ export function HealthInsurancePlanMixin<Base extends rdfine.Constructor>(Resour
   return HealthInsurancePlanClass as any
 }
 HealthInsurancePlanMixin.appliesTo = schema.HealthInsurancePlan
-
-export const factory = (env: RdfineEnvironment) => createFactory<HealthInsurancePlan>([IntangibleMixin, HealthInsurancePlanMixin], { types: [schema.HealthInsurancePlan] }, env);
+HealthInsurancePlanMixin.createFactory = (env: RdfineEnvironment) => createFactory<HealthInsurancePlan>([IntangibleMixin, HealthInsurancePlanMixin], { types: [schema.HealthInsurancePlan] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface SportsTeam<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   coach: Schema.Person<D> | undefined;
   gender: string | undefined;
   genderTerm: Schema.GenderType | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    SportsTeam: Factory<Schema.SportsTeam>;
+  }
 }
 
 export function SportsTeamMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SportsTeam & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function SportsTeamMixin<Base extends rdfine.Constructor>(Resource: Base)
   return SportsTeamClass as any
 }
 SportsTeamMixin.appliesTo = schema.SportsTeam
-
-export const factory = (env: RdfineEnvironment) => createFactory<SportsTeam>([SportsOrganizationMixin, SportsTeamMixin], { types: [schema.SportsTeam] }, env);
+SportsTeamMixin.createFactory = (env: RdfineEnvironment) => createFactory<SportsTeam>([SportsOrganizationMixin, SportsTeamMixin], { types: [schema.SportsTeam] }, env)

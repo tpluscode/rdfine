@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,6 +15,12 @@ export interface Diet<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   expertConsiderations: string | undefined;
   physiologicalBenefits: string | undefined;
   risks: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Diet: Factory<Schema.Diet>;
+  }
 }
 
 export function DietMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Diet & RdfResourceCore> & Base {
@@ -34,5 +40,4 @@ export function DietMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return DietClass as any
 }
 DietMixin.appliesTo = schema.Diet
-
-export const factory = (env: RdfineEnvironment) => createFactory<Diet>([LifestyleModificationMixin, CreativeWorkMixin, DietMixin], { types: [schema.Diet] }, env);
+DietMixin.createFactory = (env: RdfineEnvironment) => createFactory<Diet>([LifestyleModificationMixin, CreativeWorkMixin, DietMixin], { types: [schema.Diet] }, env)

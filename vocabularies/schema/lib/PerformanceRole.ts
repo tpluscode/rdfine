@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface PerformanceRole<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   characterName: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    PerformanceRole: Factory<Schema.PerformanceRole>;
+  }
+}
+
 export function PerformanceRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PerformanceRole & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class PerformanceRoleClass extends RoleMixin(Resource) {
@@ -21,5 +27,4 @@ export function PerformanceRoleMixin<Base extends rdfine.Constructor>(Resource: 
   return PerformanceRoleClass as any
 }
 PerformanceRoleMixin.appliesTo = schema.PerformanceRole
-
-export const factory = (env: RdfineEnvironment) => createFactory<PerformanceRole>([RoleMixin, PerformanceRoleMixin], { types: [schema.PerformanceRole] }, env);
+PerformanceRoleMixin.createFactory = (env: RdfineEnvironment) => createFactory<PerformanceRole>([RoleMixin, PerformanceRoleMixin], { types: [schema.PerformanceRole] }, env)

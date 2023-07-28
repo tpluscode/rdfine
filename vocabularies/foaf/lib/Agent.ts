@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -28,6 +28,12 @@ export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   'topic_interest': RDF.NamedNode | undefined;
   weblog: Foaf.Document<D> | undefined;
   yahooChatID: RDF.Literal | undefined;
+}
+
+declare global {
+  interface FoafVocabulary {
+    Agent: Factory<Foaf.Agent>;
+  }
 }
 
 export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Agent & RdfResourceCore> & Base {
@@ -77,5 +83,4 @@ export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return AgentClass as any
 }
 AgentMixin.appliesTo = foaf.Agent
-
-export const factory = (env: RdfineEnvironment) => createFactory<Agent>([AgentMixin], { types: [foaf.Agent] }, env);
+AgentMixin.createFactory = (env: RdfineEnvironment) => createFactory<Agent>([AgentMixin], { types: [foaf.Agent] }, env)

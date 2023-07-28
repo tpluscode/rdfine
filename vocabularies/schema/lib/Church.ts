@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { PlaceOfWorshipMixin } from './PlaceOfWorship.js';
 export interface Church<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlaceOfWorship<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Church: Factory<Schema.Church>;
+  }
+}
+
 export function ChurchMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Church & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ChurchClass extends PlaceOfWorshipMixin(Resource) {
@@ -18,5 +24,4 @@ export function ChurchMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return ChurchClass as any
 }
 ChurchMixin.appliesTo = schema.Church
-
-export const factory = (env: RdfineEnvironment) => createFactory<Church>([PlaceOfWorshipMixin, ChurchMixin], { types: [schema.Church] }, env);
+ChurchMixin.createFactory = (env: RdfineEnvironment) => createFactory<Church>([PlaceOfWorshipMixin, ChurchMixin], { types: [schema.Church] }, env)

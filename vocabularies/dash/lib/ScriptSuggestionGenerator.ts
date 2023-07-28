@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { SuggestionGeneratorMixin } from './SuggestionGenerator.js';
 export interface ScriptSuggestionGenerator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, Dash.SuggestionGenerator<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    ScriptSuggestionGenerator: Factory<Dash.ScriptSuggestionGenerator>;
+  }
+}
+
 export function ScriptSuggestionGeneratorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ScriptSuggestionGenerator & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class ScriptSuggestionGeneratorClass extends SuggestionGeneratorMixin(ScriptMixin(Resource)) {
@@ -19,5 +25,4 @@ export function ScriptSuggestionGeneratorMixin<Base extends rdfine.Constructor>(
   return ScriptSuggestionGeneratorClass as any
 }
 ScriptSuggestionGeneratorMixin.appliesTo = dash.ScriptSuggestionGenerator
-
-export const factory = (env: RdfineEnvironment) => createFactory<ScriptSuggestionGenerator>([SuggestionGeneratorMixin, ScriptMixin, ScriptSuggestionGeneratorMixin], { types: [dash.ScriptSuggestionGenerator] }, env);
+ScriptSuggestionGeneratorMixin.createFactory = (env: RdfineEnvironment) => createFactory<ScriptSuggestionGenerator>([SuggestionGeneratorMixin, ScriptMixin, ScriptSuggestionGeneratorMixin], { types: [dash.ScriptSuggestionGenerator] }, env)

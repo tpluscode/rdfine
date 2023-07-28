@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Nerve<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   nerveMotor: Schema.Muscle<D> | undefined;
   sensoryUnit: Schema.AnatomicalStructure<D> | Schema.SuperficialAnatomy<D> | undefined;
   sourcedFrom: Schema.BrainStructure<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Nerve: Factory<Schema.Nerve>;
+  }
 }
 
 export function NerveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Nerve & RdfResourceCore> & Base {
@@ -30,5 +36,4 @@ export function NerveMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return NerveClass as any
 }
 NerveMixin.appliesTo = schema.Nerve
-
-export const factory = (env: RdfineEnvironment) => createFactory<Nerve>([AnatomicalStructureMixin, NerveMixin], { types: [schema.Nerve] }, env);
+NerveMixin.createFactory = (env: RdfineEnvironment) => createFactory<Nerve>([AnatomicalStructureMixin, NerveMixin], { types: [schema.Nerve] }, env)

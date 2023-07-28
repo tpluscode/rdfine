@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface PhysicalActivity<D extends RDF.DatasetCore = RDF.DatasetCore> e
   categoryLiteral: string | undefined;
   epidemiology: string | undefined;
   pathophysiology: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    PhysicalActivity: Factory<Schema.PhysicalActivity>;
+  }
 }
 
 export function PhysicalActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PhysicalActivity & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function PhysicalActivityMixin<Base extends rdfine.Constructor>(Resource:
   return PhysicalActivityClass as any
 }
 PhysicalActivityMixin.appliesTo = schema.PhysicalActivity
-
-export const factory = (env: RdfineEnvironment) => createFactory<PhysicalActivity>([LifestyleModificationMixin, PhysicalActivityMixin], { types: [schema.PhysicalActivity] }, env);
+PhysicalActivityMixin.createFactory = (env: RdfineEnvironment) => createFactory<PhysicalActivity>([LifestyleModificationMixin, PhysicalActivityMixin], { types: [schema.PhysicalActivity] }, env)

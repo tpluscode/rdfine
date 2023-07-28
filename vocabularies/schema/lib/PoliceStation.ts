@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { EmergencyServiceMixin } from './EmergencyService.js';
 export interface PoliceStation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.EmergencyService<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    PoliceStation: Factory<Schema.PoliceStation>;
+  }
+}
+
 export function PoliceStationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PoliceStation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class PoliceStationClass extends EmergencyServiceMixin(CivicStructureMixin(Resource)) {
@@ -19,5 +25,4 @@ export function PoliceStationMixin<Base extends rdfine.Constructor>(Resource: Ba
   return PoliceStationClass as any
 }
 PoliceStationMixin.appliesTo = schema.PoliceStation
-
-export const factory = (env: RdfineEnvironment) => createFactory<PoliceStation>([EmergencyServiceMixin, CivicStructureMixin, PoliceStationMixin], { types: [schema.PoliceStation] }, env);
+PoliceStationMixin.createFactory = (env: RdfineEnvironment) => createFactory<PoliceStation>([EmergencyServiceMixin, CivicStructureMixin, PoliceStationMixin], { types: [schema.PoliceStation] }, env)

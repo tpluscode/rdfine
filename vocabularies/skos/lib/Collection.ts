@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ export interface Collection<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   member: Array<Skos.Collection<D> | Skos.Concept<D>>;
 }
 
+declare global {
+  interface SkosVocabulary {
+    Collection: Factory<Skos.Collection>;
+  }
+}
+
 export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Collection & RdfResourceCore> & Base {
   @rdfine.namespace(skos)
   class CollectionClass extends Resource {
@@ -20,5 +26,4 @@ export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base)
   return CollectionClass as any
 }
 CollectionMixin.appliesTo = skos.Collection
-
-export const factory = (env: RdfineEnvironment) => createFactory<Collection>([CollectionMixin], { types: [skos.Collection] }, env);
+CollectionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Collection>([CollectionMixin], { types: [skos.Collection] }, env)

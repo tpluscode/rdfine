@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { EmptyCollectionMixin } from './EmptyCollection.js';
 export interface EmptyDictionary<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Dictionary<D>, Prov.EmptyCollection<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ProvVocabulary {
+    EmptyDictionary: Factory<Prov.EmptyDictionary>;
+  }
+}
+
 export function EmptyDictionaryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EmptyDictionary & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class EmptyDictionaryClass extends EmptyCollectionMixin(DictionaryMixin(Resource)) {
@@ -19,5 +25,4 @@ export function EmptyDictionaryMixin<Base extends rdfine.Constructor>(Resource: 
   return EmptyDictionaryClass as any
 }
 EmptyDictionaryMixin.appliesTo = prov.EmptyDictionary
-
-export const factory = (env: RdfineEnvironment) => createFactory<EmptyDictionary>([EmptyCollectionMixin, DictionaryMixin, EmptyDictionaryMixin], { types: [prov.EmptyDictionary] }, env);
+EmptyDictionaryMixin.createFactory = (env: RdfineEnvironment) => createFactory<EmptyDictionary>([EmptyCollectionMixin, DictionaryMixin, EmptyDictionaryMixin], { types: [prov.EmptyDictionary] }, env)

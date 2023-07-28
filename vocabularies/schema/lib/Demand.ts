@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -48,6 +48,12 @@ export interface Demand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   validFrom: Date | undefined;
   validThrough: Date | undefined;
   warranty: Schema.WarrantyPromise<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Demand: Factory<Schema.Demand>;
+  }
 }
 
 export function DemandMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Demand & RdfResourceCore> & Base {
@@ -135,5 +141,4 @@ export function DemandMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return DemandClass as any
 }
 DemandMixin.appliesTo = schema.Demand
-
-export const factory = (env: RdfineEnvironment) => createFactory<Demand>([IntangibleMixin, DemandMixin], { types: [schema.Demand] }, env);
+DemandMixin.createFactory = (env: RdfineEnvironment) => createFactory<Demand>([IntangibleMixin, DemandMixin], { types: [schema.Demand] }, env)

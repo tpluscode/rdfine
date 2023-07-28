@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface PropertyGroup<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   order: number | undefined;
 }
 
+declare global {
+  interface ShVocabulary {
+    PropertyGroup: Factory<Sh.PropertyGroup>;
+  }
+}
+
 export function PropertyGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PropertyGroup & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class PropertyGroupClass extends RdfsResourceMixin(Resource) {
@@ -22,5 +28,4 @@ export function PropertyGroupMixin<Base extends rdfine.Constructor>(Resource: Ba
   return PropertyGroupClass as any
 }
 PropertyGroupMixin.appliesTo = sh.PropertyGroup
-
-export const factory = (env: RdfineEnvironment) => createFactory<PropertyGroup>([RdfsResourceMixin, PropertyGroupMixin], { types: [sh.PropertyGroup] }, env);
+PropertyGroupMixin.createFactory = (env: RdfineEnvironment) => createFactory<PropertyGroup>([RdfsResourceMixin, PropertyGroupMixin], { types: [sh.PropertyGroup] }, env)

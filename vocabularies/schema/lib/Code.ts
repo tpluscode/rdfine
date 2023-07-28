@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { CreativeWorkMixin } from './CreativeWork.js';
 export interface Code<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Code: Factory<Schema.Code>;
+  }
+}
+
 export function CodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Code & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class CodeClass extends CreativeWorkMixin(Resource) {
@@ -18,5 +24,4 @@ export function CodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return CodeClass as any
 }
 CodeMixin.appliesTo = schema.Code
-
-export const factory = (env: RdfineEnvironment) => createFactory<Code>([CreativeWorkMixin, CodeMixin], { types: [schema.Code] }, env);
+CodeMixin.createFactory = (env: RdfineEnvironment) => createFactory<Code>([CreativeWorkMixin, CodeMixin], { types: [schema.Code] }, env)

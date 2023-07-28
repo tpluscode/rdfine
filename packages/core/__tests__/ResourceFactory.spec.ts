@@ -7,6 +7,7 @@ import { expect } from 'chai'
 import ResourceFactory, { Constructor } from '../lib/ResourceFactory.js'
 import RdfResourceImpl from '../RdfResource.js'
 import { parse, ex } from './_helpers/index.js'
+import environment from './_helpers/environment.js'
 
 function NeverApply() {
   return class {
@@ -31,7 +32,7 @@ AlwaysApply.shouldApply = true
 describe('ResourceFactory', () => {
   let factory: ResourceFactory
   beforeEach(() => {
-    factory = new ResourceFactory(RdfResourceImpl)
+    factory = new ResourceFactory(environment)
   })
 
   it('adds applicable mixin to resource', async () => {
@@ -114,7 +115,8 @@ describe('ResourceFactory', () => {
   it('sets rdf:types initialized with TypeCollection', () => {
     // given
     const pointer = clownface({ dataset: $rdf.dataset() }).blankNode()
-    const { types } = new RdfResourceImpl(clownface({ dataset: $rdf.dataset() }).blankNode().addOut(rdf.type, schema.Person))
+    const person = clownface({ dataset: $rdf.dataset() }).blankNode().addOut(rdf.type, schema.Person)
+    const { types } = new RdfResourceImpl(person, environment)
 
     // when
     const resource = factory.createEntity(pointer, [], {

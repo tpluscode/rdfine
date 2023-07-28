@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface AppellationRelation<D extends RDF.DatasetCore = RDF.DatasetCore
   appellationRelationHasTarget: Rico.Thing<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    AppellationRelation: Factory<Rico.AppellationRelation>;
+  }
+}
+
 export function AppellationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AppellationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class AppellationRelationClass extends RelationMixin(Resource) {
@@ -24,5 +30,4 @@ export function AppellationRelationMixin<Base extends rdfine.Constructor>(Resour
   return AppellationRelationClass as any
 }
 AppellationRelationMixin.appliesTo = rico.AppellationRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<AppellationRelation>([RelationMixin, AppellationRelationMixin], { types: [rico.AppellationRelation] }, env);
+AppellationRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<AppellationRelation>([RelationMixin, AppellationRelationMixin], { types: [rico.AppellationRelation] }, env)

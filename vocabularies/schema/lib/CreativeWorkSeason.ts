@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -20,6 +20,12 @@ export interface CreativeWorkSeason<D extends RDF.DatasetCore = RDF.DatasetCore>
   seasonNumber: number | string | undefined;
   startDate: Date | undefined;
   trailer: Schema.VideoObject<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CreativeWorkSeason: Factory<Schema.CreativeWorkSeason>;
+  }
 }
 
 export function CreativeWorkSeasonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CreativeWorkSeason & RdfResourceCore> & Base {
@@ -51,5 +57,4 @@ export function CreativeWorkSeasonMixin<Base extends rdfine.Constructor>(Resourc
   return CreativeWorkSeasonClass as any
 }
 CreativeWorkSeasonMixin.appliesTo = schema.CreativeWorkSeason
-
-export const factory = (env: RdfineEnvironment) => createFactory<CreativeWorkSeason>([CreativeWorkMixin, CreativeWorkSeasonMixin], { types: [schema.CreativeWorkSeason] }, env);
+CreativeWorkSeasonMixin.createFactory = (env: RdfineEnvironment) => createFactory<CreativeWorkSeason>([CreativeWorkMixin, CreativeWorkSeasonMixin], { types: [schema.CreativeWorkSeason] }, env)

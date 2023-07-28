@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface PerformAction<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   entertainmentBusiness: Schema.EntertainmentBusiness<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    PerformAction: Factory<Schema.PerformAction>;
+  }
+}
+
 export function PerformActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PerformAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class PerformActionClass extends PlayActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function PerformActionMixin<Base extends rdfine.Constructor>(Resource: Ba
   return PerformActionClass as any
 }
 PerformActionMixin.appliesTo = schema.PerformAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<PerformAction>([PlayActionMixin, PerformActionMixin], { types: [schema.PerformAction] }, env);
+PerformActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<PerformAction>([PlayActionMixin, PerformActionMixin], { types: [schema.PerformAction] }, env)

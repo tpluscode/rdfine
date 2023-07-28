@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface LeaveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   event: Schema.Event<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    LeaveAction: Factory<Schema.LeaveAction>;
+  }
+}
+
 export function LeaveActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LeaveAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class LeaveActionClass extends InteractActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function LeaveActionMixin<Base extends rdfine.Constructor>(Resource: Base
   return LeaveActionClass as any
 }
 LeaveActionMixin.appliesTo = schema.LeaveAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<LeaveAction>([InteractActionMixin, LeaveActionMixin], { types: [schema.LeaveAction] }, env);
+LeaveActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<LeaveAction>([InteractActionMixin, LeaveActionMixin], { types: [schema.LeaveAction] }, env)

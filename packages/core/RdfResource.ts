@@ -153,7 +153,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
     }
   }
 
-  public constructor(pointer: ResourceNode<D>, init: Initializer<any> = {}, parentOrEnv: RdfResource<D> | RdfineEnvironment) {
+  public constructor(pointer: ResourceNode<D>, parentOrEnv: RdfResource<D> | RdfineEnvironment, init: Initializer<any> = {}) {
     if (pointer.term.termType !== 'BlankNode' && pointer.term.termType !== 'NamedNode') {
       throw new Error(`RdfResource cannot be initialized from a ${(pointer.term as any).termType} node`)
     }

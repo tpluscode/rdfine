@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -21,6 +21,12 @@ export interface OfferShippingDetails<D extends RDF.DatasetCore = RDF.DatasetCor
   transitTimeLabel: string | undefined;
   weight: Schema.QuantitativeValue<D> | undefined;
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    OfferShippingDetails: Factory<Schema.OfferShippingDetails>;
+  }
 }
 
 export function OfferShippingDetailsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OfferShippingDetails & RdfResourceCore> & Base {
@@ -54,5 +60,4 @@ export function OfferShippingDetailsMixin<Base extends rdfine.Constructor>(Resou
   return OfferShippingDetailsClass as any
 }
 OfferShippingDetailsMixin.appliesTo = schema.OfferShippingDetails
-
-export const factory = (env: RdfineEnvironment) => createFactory<OfferShippingDetails>([StructuredValueMixin, OfferShippingDetailsMixin], { types: [schema.OfferShippingDetails] }, env);
+OfferShippingDetailsMixin.createFactory = (env: RdfineEnvironment) => createFactory<OfferShippingDetails>([StructuredValueMixin, OfferShippingDetailsMixin], { types: [schema.OfferShippingDetails] }, env)

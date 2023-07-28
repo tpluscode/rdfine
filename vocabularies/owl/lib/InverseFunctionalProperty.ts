@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ObjectPropertyMixin } from './ObjectProperty.js';
 export interface InverseFunctionalProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface OwlVocabulary {
+    InverseFunctionalProperty: Factory<Owl.InverseFunctionalProperty>;
+  }
+}
+
 export function InverseFunctionalPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InverseFunctionalProperty & RdfResourceCore> & Base {
   @rdfine.namespace(owl)
   class InverseFunctionalPropertyClass extends ObjectPropertyMixin(Resource) {
@@ -18,5 +24,4 @@ export function InverseFunctionalPropertyMixin<Base extends rdfine.Constructor>(
   return InverseFunctionalPropertyClass as any
 }
 InverseFunctionalPropertyMixin.appliesTo = owl.InverseFunctionalProperty
-
-export const factory = (env: RdfineEnvironment) => createFactory<InverseFunctionalProperty>([ObjectPropertyMixin, InverseFunctionalPropertyMixin], { types: [owl.InverseFunctionalProperty] }, env);
+InverseFunctionalPropertyMixin.createFactory = (env: RdfineEnvironment) => createFactory<InverseFunctionalProperty>([ObjectPropertyMixin, InverseFunctionalPropertyMixin], { types: [owl.InverseFunctionalProperty] }, env)

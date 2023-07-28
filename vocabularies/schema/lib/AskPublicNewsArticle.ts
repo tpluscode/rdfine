@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { NewsArticleMixin } from './NewsArticle.js';
 export interface AskPublicNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.NewsArticle<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    AskPublicNewsArticle: Factory<Schema.AskPublicNewsArticle>;
+  }
+}
+
 export function AskPublicNewsArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AskPublicNewsArticle & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class AskPublicNewsArticleClass extends NewsArticleMixin(Resource) {
@@ -18,5 +24,4 @@ export function AskPublicNewsArticleMixin<Base extends rdfine.Constructor>(Resou
   return AskPublicNewsArticleClass as any
 }
 AskPublicNewsArticleMixin.appliesTo = schema.AskPublicNewsArticle
-
-export const factory = (env: RdfineEnvironment) => createFactory<AskPublicNewsArticle>([NewsArticleMixin, AskPublicNewsArticleMixin], { types: [schema.AskPublicNewsArticle] }, env);
+AskPublicNewsArticleMixin.createFactory = (env: RdfineEnvironment) => createFactory<AskPublicNewsArticle>([NewsArticleMixin, AskPublicNewsArticleMixin], { types: [schema.AskPublicNewsArticle] }, env)

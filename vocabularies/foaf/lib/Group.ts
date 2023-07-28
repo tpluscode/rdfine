@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Group<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf
   member: Foaf.Agent<D> | undefined;
 }
 
+declare global {
+  interface FoafVocabulary {
+    Group: Factory<Foaf.Group>;
+  }
+}
+
 export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Group & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
   class GroupClass extends AgentMixin(Resource) {
@@ -21,5 +27,4 @@ export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return GroupClass as any
 }
 GroupMixin.appliesTo = foaf.Group
-
-export const factory = (env: RdfineEnvironment) => createFactory<Group>([AgentMixin, GroupMixin], { types: [foaf.Group] }, env);
+GroupMixin.createFactory = (env: RdfineEnvironment) => createFactory<Group>([AgentMixin, GroupMixin], { types: [foaf.Group] }, env)

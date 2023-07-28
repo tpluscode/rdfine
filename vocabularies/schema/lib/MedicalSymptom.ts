@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { MedicalSignOrSymptomMixin } from './MedicalSignOrSymptom.js';
 export interface MedicalSymptom<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalSignOrSymptom<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MedicalSymptom: Factory<Schema.MedicalSymptom>;
+  }
+}
+
 export function MedicalSymptomMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalSymptom & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MedicalSymptomClass extends MedicalSignOrSymptomMixin(Resource) {
@@ -18,5 +24,4 @@ export function MedicalSymptomMixin<Base extends rdfine.Constructor>(Resource: B
   return MedicalSymptomClass as any
 }
 MedicalSymptomMixin.appliesTo = schema.MedicalSymptom
-
-export const factory = (env: RdfineEnvironment) => createFactory<MedicalSymptom>([MedicalSignOrSymptomMixin, MedicalSymptomMixin], { types: [schema.MedicalSymptom] }, env);
+MedicalSymptomMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalSymptom>([MedicalSignOrSymptomMixin, MedicalSymptomMixin], { types: [schema.MedicalSymptom] }, env)

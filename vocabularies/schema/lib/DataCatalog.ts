@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface DataCatalog<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   dataset: Schema.Dataset<D> | undefined;
   measurementTechnique: string | undefined;
   measurementTechniqueTerm: RDF.NamedNode | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DataCatalog: Factory<Schema.DataCatalog>;
+  }
 }
 
 export function DataCatalogMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DataCatalog & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function DataCatalogMixin<Base extends rdfine.Constructor>(Resource: Base
   return DataCatalogClass as any
 }
 DataCatalogMixin.appliesTo = schema.DataCatalog
-
-export const factory = (env: RdfineEnvironment) => createFactory<DataCatalog>([CreativeWorkMixin, DataCatalogMixin], { types: [schema.DataCatalog] }, env);
+DataCatalogMixin.createFactory = (env: RdfineEnvironment) => createFactory<DataCatalog>([CreativeWorkMixin, DataCatalogMixin], { types: [schema.DataCatalog] }, env)

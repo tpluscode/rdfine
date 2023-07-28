@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 export interface RealEstateAgent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    RealEstateAgent: Factory<Schema.RealEstateAgent>;
+  }
+}
+
 export function RealEstateAgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RealEstateAgent & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class RealEstateAgentClass extends LocalBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function RealEstateAgentMixin<Base extends rdfine.Constructor>(Resource: 
   return RealEstateAgentClass as any
 }
 RealEstateAgentMixin.appliesTo = schema.RealEstateAgent
-
-export const factory = (env: RdfineEnvironment) => createFactory<RealEstateAgent>([LocalBusinessMixin, RealEstateAgentMixin], { types: [schema.RealEstateAgent] }, env);
+RealEstateAgentMixin.createFactory = (env: RdfineEnvironment) => createFactory<RealEstateAgent>([LocalBusinessMixin, RealEstateAgentMixin], { types: [schema.RealEstateAgent] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface CommunicateAction<D extends RDF.DatasetCore = RDF.DatasetCore> 
   inLanguageLiteral: string | undefined;
   language: Schema.Language<D> | undefined;
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CommunicateAction: Factory<Schema.CommunicateAction>;
+  }
 }
 
 export function CommunicateActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CommunicateAction & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function CommunicateActionMixin<Base extends rdfine.Constructor>(Resource
   return CommunicateActionClass as any
 }
 CommunicateActionMixin.appliesTo = schema.CommunicateAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<CommunicateAction>([InteractActionMixin, CommunicateActionMixin], { types: [schema.CommunicateAction] }, env);
+CommunicateActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<CommunicateAction>([InteractActionMixin, CommunicateActionMixin], { types: [schema.CommunicateAction] }, env)

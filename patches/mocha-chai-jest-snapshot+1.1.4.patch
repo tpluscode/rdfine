@@ -58,15 +58,3 @@ index 391e1c2..5568925 100644
      saveSnap() {
          if (!this.testFile || !this.snapshotState)
              return;
-diff --git a/node_modules/mocha-chai-jest-snapshot/dist/utils/jest-test-result-helper.d.ts b/node_modules/mocha-chai-jest-snapshot/dist/utils/jest-test-result-helper.d.ts
-index 7ce132e..99e4b17 100644
---- a/node_modules/mocha-chai-jest-snapshot/dist/utils/jest-test-result-helper.d.ts
-+++ b/node_modules/mocha-chai-jest-snapshot/dist/utils/jest-test-result-helper.d.ts
-@@ -7,6 +7,7 @@
- import { SnapshotSummary, TestResult } from "@jest/test-result";
- import { SnapshotState } from "jest-snapshot";
- declare type SnapshotResult = TestResult["snapshot"];
-+type SnapshotStateOptions = ConstructorParameters<typeof SnapshotState>[1];
- export { SnapshotSummary };
- export declare const makeEmptySnapshotSummary: (options: SnapshotStateOptions) => SnapshotSummary;
- export declare const packSnapshotState: (snapshotState: SnapshotState) => SnapshotResult;

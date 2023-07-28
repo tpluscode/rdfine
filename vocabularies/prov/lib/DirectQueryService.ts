@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { SoftwareAgentMixin } from './SoftwareAgent.js';
 export interface DirectQueryService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.SoftwareAgent<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ProvVocabulary {
+    DirectQueryService: Factory<Prov.DirectQueryService>;
+  }
+}
+
 export function DirectQueryServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DirectQueryService & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class DirectQueryServiceClass extends SoftwareAgentMixin(Resource) {
@@ -18,5 +24,4 @@ export function DirectQueryServiceMixin<Base extends rdfine.Constructor>(Resourc
   return DirectQueryServiceClass as any
 }
 DirectQueryServiceMixin.appliesTo = prov.DirectQueryService
-
-export const factory = (env: RdfineEnvironment) => createFactory<DirectQueryService>([SoftwareAgentMixin, DirectQueryServiceMixin], { types: [prov.DirectQueryService] }, env);
+DirectQueryServiceMixin.createFactory = (env: RdfineEnvironment) => createFactory<DirectQueryService>([SoftwareAgentMixin, DirectQueryServiceMixin], { types: [prov.DirectQueryService] }, env)

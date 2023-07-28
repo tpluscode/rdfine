@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { CivicStructureMixin } from './CivicStructure.js';
 export interface ParkingFacility<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    ParkingFacility: Factory<Schema.ParkingFacility>;
+  }
+}
+
 export function ParkingFacilityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ParkingFacility & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class ParkingFacilityClass extends CivicStructureMixin(Resource) {
@@ -18,5 +24,4 @@ export function ParkingFacilityMixin<Base extends rdfine.Constructor>(Resource: 
   return ParkingFacilityClass as any
 }
 ParkingFacilityMixin.appliesTo = schema.ParkingFacility
-
-export const factory = (env: RdfineEnvironment) => createFactory<ParkingFacility>([CivicStructureMixin, ParkingFacilityMixin], { types: [schema.ParkingFacility] }, env);
+ParkingFacilityMixin.createFactory = (env: RdfineEnvironment) => createFactory<ParkingFacility>([CivicStructureMixin, ParkingFacilityMixin], { types: [schema.ParkingFacility] }, env)

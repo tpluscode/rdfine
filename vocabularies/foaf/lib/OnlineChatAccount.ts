@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { OnlineAccountMixin } from './OnlineAccount.js';
 export interface OnlineChatAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.OnlineAccount<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface FoafVocabulary {
+    OnlineChatAccount: Factory<Foaf.OnlineChatAccount>;
+  }
+}
+
 export function OnlineChatAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OnlineChatAccount & RdfResourceCore> & Base {
   @rdfine.namespace(foaf)
   class OnlineChatAccountClass extends OnlineAccountMixin(Resource) {
@@ -18,5 +24,4 @@ export function OnlineChatAccountMixin<Base extends rdfine.Constructor>(Resource
   return OnlineChatAccountClass as any
 }
 OnlineChatAccountMixin.appliesTo = foaf.OnlineChatAccount
-
-export const factory = (env: RdfineEnvironment) => createFactory<OnlineChatAccount>([OnlineAccountMixin, OnlineChatAccountMixin], { types: [foaf.OnlineChatAccount] }, env);
+OnlineChatAccountMixin.createFactory = (env: RdfineEnvironment) => createFactory<OnlineChatAccount>([OnlineAccountMixin, OnlineChatAccountMixin], { types: [foaf.OnlineChatAccount] }, env)

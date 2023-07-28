@@ -1,7 +1,7 @@
 import '../extensions/sh/AbstractResult.js';
 import { AbstractResultMixinEx } from '../extensions/sh/AbstractResult.js';
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ import { AbstractResultMixin as ShaclAbstractResultMixin } from '@rdfine/shacl/l
 export interface SuggestionResult<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.AbstractResult<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    SuggestionResult: Factory<Dash.SuggestionResult>;
+  }
+}
+
 export function SuggestionResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SuggestionResult & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class SuggestionResultClass extends AbstractResultMixinEx(ShaclAbstractResultMixin(Resource)) {
@@ -21,5 +27,4 @@ export function SuggestionResultMixin<Base extends rdfine.Constructor>(Resource:
   return SuggestionResultClass as any
 }
 SuggestionResultMixin.appliesTo = dash.SuggestionResult
-
-export const factory = (env: RdfineEnvironment) => createFactory<SuggestionResult>([ShaclAbstractResultMixin, SuggestionResultMixin], { types: [dash.SuggestionResult] }, env);
+SuggestionResultMixin.createFactory = (env: RdfineEnvironment) => createFactory<SuggestionResult>([ShaclAbstractResultMixin, SuggestionResultMixin], { types: [dash.SuggestionResult] }, env)

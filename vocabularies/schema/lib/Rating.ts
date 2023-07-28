@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,6 +15,12 @@ export interface Rating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   ratingValue: number | string | undefined;
   reviewAspect: string | undefined;
   worstRating: number | string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Rating: Factory<Schema.Rating>;
+  }
 }
 
 export function RatingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Rating & RdfResourceCore> & Base {
@@ -36,5 +42,4 @@ export function RatingMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return RatingClass as any
 }
 RatingMixin.appliesTo = schema.Rating
-
-export const factory = (env: RdfineEnvironment) => createFactory<Rating>([IntangibleMixin, RatingMixin], { types: [schema.Rating] }, env);
+RatingMixin.createFactory = (env: RdfineEnvironment) => createFactory<Rating>([IntangibleMixin, RatingMixin], { types: [schema.Rating] }, env)

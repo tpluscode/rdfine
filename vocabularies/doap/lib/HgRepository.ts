@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { RepositoryMixin } from './Repository.js';
 export interface HgRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DoapVocabulary {
+    HgRepository: Factory<Doap.HgRepository>;
+  }
+}
+
 export function HgRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HgRepository & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
   class HgRepositoryClass extends RepositoryMixin(Resource) {
@@ -18,5 +24,4 @@ export function HgRepositoryMixin<Base extends rdfine.Constructor>(Resource: Bas
   return HgRepositoryClass as any
 }
 HgRepositoryMixin.appliesTo = doap.HgRepository
-
-export const factory = (env: RdfineEnvironment) => createFactory<HgRepository>([RepositoryMixin, HgRepositoryMixin], { types: [doap.HgRepository] }, env);
+HgRepositoryMixin.createFactory = (env: RdfineEnvironment) => createFactory<HgRepository>([RepositoryMixin, HgRepositoryMixin], { types: [doap.HgRepository] }, env)

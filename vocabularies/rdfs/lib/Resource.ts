@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Resource<D extends RDF.DatasetCore = RDF.DatasetCore> extends r
   isDefinedBy: Rdfs.Resource<D> | undefined;
   label: string | undefined;
   seeAlso: Array<Rdfs.Resource<D>>;
+}
+
+declare global {
+  interface RdfsVocabulary {
+    Resource: Factory<Rdfs.Resource>;
+  }
 }
 
 export function ResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Resource & RdfResourceCore> & Base {

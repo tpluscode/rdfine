@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { MedicalTherapyMixin } from './MedicalTherapy.js';
 export interface PalliativeProcedure<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalProcedure<D>, Schema.MedicalTherapy<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    PalliativeProcedure: Factory<Schema.PalliativeProcedure>;
+  }
+}
+
 export function PalliativeProcedureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PalliativeProcedure & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class PalliativeProcedureClass extends MedicalTherapyMixin(MedicalProcedureMixin(Resource)) {
@@ -19,5 +25,4 @@ export function PalliativeProcedureMixin<Base extends rdfine.Constructor>(Resour
   return PalliativeProcedureClass as any
 }
 PalliativeProcedureMixin.appliesTo = schema.PalliativeProcedure
-
-export const factory = (env: RdfineEnvironment) => createFactory<PalliativeProcedure>([MedicalTherapyMixin, MedicalProcedureMixin, PalliativeProcedureMixin], { types: [schema.PalliativeProcedure] }, env);
+PalliativeProcedureMixin.createFactory = (env: RdfineEnvironment) => createFactory<PalliativeProcedure>([MedicalTherapyMixin, MedicalProcedureMixin, PalliativeProcedureMixin], { types: [schema.PalliativeProcedure] }, env)

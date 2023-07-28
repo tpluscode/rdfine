@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { OrganizationMixin } from './Organization.js';
 export interface WorkersUnion<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    WorkersUnion: Factory<Schema.WorkersUnion>;
+  }
+}
+
 export function WorkersUnionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WorkersUnion & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class WorkersUnionClass extends OrganizationMixin(Resource) {
@@ -18,5 +24,4 @@ export function WorkersUnionMixin<Base extends rdfine.Constructor>(Resource: Bas
   return WorkersUnionClass as any
 }
 WorkersUnionMixin.appliesTo = schema.WorkersUnion
-
-export const factory = (env: RdfineEnvironment) => createFactory<WorkersUnion>([OrganizationMixin, WorkersUnionMixin], { types: [schema.WorkersUnion] }, env);
+WorkersUnionMixin.createFactory = (env: RdfineEnvironment) => createFactory<WorkersUnion>([OrganizationMixin, WorkersUnionMixin], { types: [schema.WorkersUnion] }, env)

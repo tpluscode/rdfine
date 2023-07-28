@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface Menu<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   hasMenuSection: Schema.MenuSection<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Menu: Factory<Schema.Menu>;
+  }
+}
+
 export function MenuMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Menu & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MenuClass extends CreativeWorkMixin(Resource) {
@@ -24,5 +30,4 @@ export function MenuMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   return MenuClass as any
 }
 MenuMixin.appliesTo = schema.Menu
-
-export const factory = (env: RdfineEnvironment) => createFactory<Menu>([CreativeWorkMixin, MenuMixin], { types: [schema.Menu] }, env);
+MenuMixin.createFactory = (env: RdfineEnvironment) => createFactory<Menu>([CreativeWorkMixin, MenuMixin], { types: [schema.Menu] }, env)

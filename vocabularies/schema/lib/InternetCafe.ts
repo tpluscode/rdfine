@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 export interface InternetCafe<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    InternetCafe: Factory<Schema.InternetCafe>;
+  }
+}
+
 export function InternetCafeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InternetCafe & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class InternetCafeClass extends LocalBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function InternetCafeMixin<Base extends rdfine.Constructor>(Resource: Bas
   return InternetCafeClass as any
 }
 InternetCafeMixin.appliesTo = schema.InternetCafe
-
-export const factory = (env: RdfineEnvironment) => createFactory<InternetCafe>([LocalBusinessMixin, InternetCafeMixin], { types: [schema.InternetCafe] }, env);
+InternetCafeMixin.createFactory = (env: RdfineEnvironment) => createFactory<InternetCafe>([LocalBusinessMixin, InternetCafeMixin], { types: [schema.InternetCafe] }, env)

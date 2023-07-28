@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ClipMixin } from './Clip.js';
 export interface RadioClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Clip<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    RadioClip: Factory<Schema.RadioClip>;
+  }
+}
+
 export function RadioClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RadioClip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class RadioClipClass extends ClipMixin(Resource) {
@@ -18,5 +24,4 @@ export function RadioClipMixin<Base extends rdfine.Constructor>(Resource: Base):
   return RadioClipClass as any
 }
 RadioClipMixin.appliesTo = schema.RadioClip
-
-export const factory = (env: RdfineEnvironment) => createFactory<RadioClip>([ClipMixin, RadioClipMixin], { types: [schema.RadioClip] }, env);
+RadioClipMixin.createFactory = (env: RdfineEnvironment) => createFactory<RadioClip>([ClipMixin, RadioClipMixin], { types: [schema.RadioClip] }, env)

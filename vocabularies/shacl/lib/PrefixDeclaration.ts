@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface PrefixDeclaration<D extends RDF.DatasetCore = RDF.DatasetCore> 
   prefix: string | undefined;
 }
 
+declare global {
+  interface ShVocabulary {
+    PrefixDeclaration: Factory<Sh.PrefixDeclaration>;
+  }
+}
+
 export function PrefixDeclarationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PrefixDeclaration & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class PrefixDeclarationClass extends RdfsResourceMixin(Resource) {
@@ -25,5 +31,4 @@ export function PrefixDeclarationMixin<Base extends rdfine.Constructor>(Resource
   return PrefixDeclarationClass as any
 }
 PrefixDeclarationMixin.appliesTo = sh.PrefixDeclaration
-
-export const factory = (env: RdfineEnvironment) => createFactory<PrefixDeclaration>([RdfsResourceMixin, PrefixDeclarationMixin], { types: [sh.PrefixDeclaration] }, env);
+PrefixDeclarationMixin.createFactory = (env: RdfineEnvironment) => createFactory<PrefixDeclaration>([RdfsResourceMixin, PrefixDeclarationMixin], { types: [sh.PrefixDeclaration] }, env)

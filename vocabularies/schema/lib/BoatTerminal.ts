@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { CivicStructureMixin } from './CivicStructure.js';
 export interface BoatTerminal<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    BoatTerminal: Factory<Schema.BoatTerminal>;
+  }
+}
+
 export function BoatTerminalMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BoatTerminal & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class BoatTerminalClass extends CivicStructureMixin(Resource) {
@@ -18,5 +24,4 @@ export function BoatTerminalMixin<Base extends rdfine.Constructor>(Resource: Bas
   return BoatTerminalClass as any
 }
 BoatTerminalMixin.appliesTo = schema.BoatTerminal
-
-export const factory = (env: RdfineEnvironment) => createFactory<BoatTerminal>([CivicStructureMixin, BoatTerminalMixin], { types: [schema.BoatTerminal] }, env);
+BoatTerminalMixin.createFactory = (env: RdfineEnvironment) => createFactory<BoatTerminal>([CivicStructureMixin, BoatTerminalMixin], { types: [schema.BoatTerminal] }, env)

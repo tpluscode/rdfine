@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { CommentMixin } from './Comment.js';
 export interface CorrectionComment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Comment<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    CorrectionComment: Factory<Schema.CorrectionComment>;
+  }
+}
+
 export function CorrectionCommentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CorrectionComment & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class CorrectionCommentClass extends CommentMixin(Resource) {
@@ -18,5 +24,4 @@ export function CorrectionCommentMixin<Base extends rdfine.Constructor>(Resource
   return CorrectionCommentClass as any
 }
 CorrectionCommentMixin.appliesTo = schema.CorrectionComment
-
-export const factory = (env: RdfineEnvironment) => createFactory<CorrectionComment>([CommentMixin, CorrectionCommentMixin], { types: [schema.CorrectionComment] }, env);
+CorrectionCommentMixin.createFactory = (env: RdfineEnvironment) => createFactory<CorrectionComment>([CommentMixin, CorrectionCommentMixin], { types: [schema.CorrectionComment] }, env)

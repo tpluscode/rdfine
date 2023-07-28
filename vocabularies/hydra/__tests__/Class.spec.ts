@@ -3,7 +3,7 @@ import $rdf from 'rdf-ext'
 import type { DatasetCore, NamedNode } from '@rdfjs/types'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import { expect } from 'chai';
-import { environment } from './support/environment.js';
+import environment from './support/environment.js';
 
 describe('Class', () => {
   let hydraClassNode: GraphPointer<NamedNode>

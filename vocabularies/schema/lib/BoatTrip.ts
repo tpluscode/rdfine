@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface BoatTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   departureBoatTerminal: Schema.BoatTerminal<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    BoatTrip: Factory<Schema.BoatTrip>;
+  }
+}
+
 export function BoatTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BoatTrip & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class BoatTripClass extends TripMixin(Resource) {
@@ -24,5 +30,4 @@ export function BoatTripMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return BoatTripClass as any
 }
 BoatTripMixin.appliesTo = schema.BoatTrip
-
-export const factory = (env: RdfineEnvironment) => createFactory<BoatTrip>([TripMixin, BoatTripMixin], { types: [schema.BoatTrip] }, env);
+BoatTripMixin.createFactory = (env: RdfineEnvironment) => createFactory<BoatTrip>([TripMixin, BoatTripMixin], { types: [schema.BoatTrip] }, env)

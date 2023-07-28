@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ActivityMixin } from './Activity.js';
 export interface Publish<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Activity<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ProvVocabulary {
+    Publish: Factory<Prov.Publish>;
+  }
+}
+
 export function PublishMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Publish & RdfResourceCore> & Base {
   @rdfine.namespace(prov)
   class PublishClass extends ActivityMixin(Resource) {
@@ -18,5 +24,4 @@ export function PublishMixin<Base extends rdfine.Constructor>(Resource: Base): r
   return PublishClass as any
 }
 PublishMixin.appliesTo = prov.Publish
-
-export const factory = (env: RdfineEnvironment) => createFactory<Publish>([ActivityMixin, PublishMixin], { types: [prov.Publish] }, env);
+PublishMixin.createFactory = (env: RdfineEnvironment) => createFactory<Publish>([ActivityMixin, PublishMixin], { types: [prov.Publish] }, env)

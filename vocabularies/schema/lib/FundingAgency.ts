@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { ProjectMixin } from './Project.js';
 export interface FundingAgency<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Project<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    FundingAgency: Factory<Schema.FundingAgency>;
+  }
+}
+
 export function FundingAgencyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FundingAgency & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class FundingAgencyClass extends ProjectMixin(Resource) {
@@ -18,5 +24,4 @@ export function FundingAgencyMixin<Base extends rdfine.Constructor>(Resource: Ba
   return FundingAgencyClass as any
 }
 FundingAgencyMixin.appliesTo = schema.FundingAgency
-
-export const factory = (env: RdfineEnvironment) => createFactory<FundingAgency>([ProjectMixin, FundingAgencyMixin], { types: [schema.FundingAgency] }, env);
+FundingAgencyMixin.createFactory = (env: RdfineEnvironment) => createFactory<FundingAgency>([ProjectMixin, FundingAgencyMixin], { types: [schema.FundingAgency] }, env)

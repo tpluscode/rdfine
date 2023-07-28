@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,6 +15,12 @@ export interface FinancialProduct<D extends RDF.DatasetCore = RDF.DatasetCore> e
   feesAndCommissionsSpecificationTerm: RDF.NamedNode | undefined;
   interestRate: Schema.QuantitativeValue<D> | undefined;
   interestRateLiteral: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    FinancialProduct: Factory<Schema.FinancialProduct>;
+  }
 }
 
 export function FinancialProductMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FinancialProduct & RdfResourceCore> & Base {
@@ -36,5 +42,4 @@ export function FinancialProductMixin<Base extends rdfine.Constructor>(Resource:
   return FinancialProductClass as any
 }
 FinancialProductMixin.appliesTo = schema.FinancialProduct
-
-export const factory = (env: RdfineEnvironment) => createFactory<FinancialProduct>([ServiceMixin, FinancialProductMixin], { types: [schema.FinancialProduct] }, env);
+FinancialProductMixin.createFactory = (env: RdfineEnvironment) => createFactory<FinancialProduct>([ServiceMixin, FinancialProductMixin], { types: [schema.FinancialProduct] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { InteractActionMixin } from './InteractAction.js';
 export interface RegisterAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    RegisterAction: Factory<Schema.RegisterAction>;
+  }
+}
+
 export function RegisterActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RegisterAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class RegisterActionClass extends InteractActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function RegisterActionMixin<Base extends rdfine.Constructor>(Resource: B
   return RegisterActionClass as any
 }
 RegisterActionMixin.appliesTo = schema.RegisterAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<RegisterAction>([InteractActionMixin, RegisterActionMixin], { types: [schema.RegisterAction] }, env);
+RegisterActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<RegisterAction>([InteractActionMixin, RegisterActionMixin], { types: [schema.RegisterAction] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { InsertActionMixin } from './InsertAction.js';
 export interface PrependAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InsertAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    PrependAction: Factory<Schema.PrependAction>;
+  }
+}
+
 export function PrependActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PrependAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class PrependActionClass extends InsertActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function PrependActionMixin<Base extends rdfine.Constructor>(Resource: Ba
   return PrependActionClass as any
 }
 PrependActionMixin.appliesTo = schema.PrependAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<PrependAction>([InsertActionMixin, PrependActionMixin], { types: [schema.PrependAction] }, env);
+PrependActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<PrependAction>([InsertActionMixin, PrependActionMixin], { types: [schema.PrependAction] }, env)

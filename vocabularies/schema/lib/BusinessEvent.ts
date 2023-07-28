@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { EventMixin } from './Event.js';
 export interface BusinessEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    BusinessEvent: Factory<Schema.BusinessEvent>;
+  }
+}
+
 export function BusinessEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BusinessEvent & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class BusinessEventClass extends EventMixin(Resource) {
@@ -18,5 +24,4 @@ export function BusinessEventMixin<Base extends rdfine.Constructor>(Resource: Ba
   return BusinessEventClass as any
 }
 BusinessEventMixin.appliesTo = schema.BusinessEvent
-
-export const factory = (env: RdfineEnvironment) => createFactory<BusinessEvent>([EventMixin, BusinessEventMixin], { types: [schema.BusinessEvent] }, env);
+BusinessEventMixin.createFactory = (env: RdfineEnvironment) => createFactory<BusinessEvent>([EventMixin, BusinessEventMixin], { types: [schema.BusinessEvent] }, env)

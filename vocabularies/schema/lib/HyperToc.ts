@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface HyperToc<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   tocEntry: Schema.HyperTocEntry<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    HyperToc: Factory<Schema.HyperToc>;
+  }
+}
+
 export function HyperTocMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HyperToc & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class HyperTocClass extends CreativeWorkMixin(Resource) {
@@ -24,5 +30,4 @@ export function HyperTocMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return HyperTocClass as any
 }
 HyperTocMixin.appliesTo = schema.HyperToc
-
-export const factory = (env: RdfineEnvironment) => createFactory<HyperToc>([CreativeWorkMixin, HyperTocMixin], { types: [schema.HyperToc] }, env);
+HyperTocMixin.createFactory = (env: RdfineEnvironment) => createFactory<HyperToc>([CreativeWorkMixin, HyperTocMixin], { types: [schema.HyperToc] }, env)

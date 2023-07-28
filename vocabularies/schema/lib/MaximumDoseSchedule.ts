@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { DoseScheduleMixin } from './DoseSchedule.js';
 export interface MaximumDoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DoseSchedule<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MaximumDoseSchedule: Factory<Schema.MaximumDoseSchedule>;
+  }
+}
+
 export function MaximumDoseScheduleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MaximumDoseSchedule & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MaximumDoseScheduleClass extends DoseScheduleMixin(Resource) {
@@ -18,5 +24,4 @@ export function MaximumDoseScheduleMixin<Base extends rdfine.Constructor>(Resour
   return MaximumDoseScheduleClass as any
 }
 MaximumDoseScheduleMixin.appliesTo = schema.MaximumDoseSchedule
-
-export const factory = (env: RdfineEnvironment) => createFactory<MaximumDoseSchedule>([DoseScheduleMixin, MaximumDoseScheduleMixin], { types: [schema.MaximumDoseSchedule] }, env);
+MaximumDoseScheduleMixin.createFactory = (env: RdfineEnvironment) => createFactory<MaximumDoseSchedule>([DoseScheduleMixin, MaximumDoseScheduleMixin], { types: [schema.MaximumDoseSchedule] }, env)

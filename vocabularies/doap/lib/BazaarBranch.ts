@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { RepositoryMixin } from './Repository.js';
 export interface BazaarBranch<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DoapVocabulary {
+    BazaarBranch: Factory<Doap.BazaarBranch>;
+  }
+}
+
 export function BazaarBranchMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BazaarBranch & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
   class BazaarBranchClass extends RepositoryMixin(Resource) {
@@ -18,5 +24,4 @@ export function BazaarBranchMixin<Base extends rdfine.Constructor>(Resource: Bas
   return BazaarBranchClass as any
 }
 BazaarBranchMixin.appliesTo = doap.BazaarBranch
-
-export const factory = (env: RdfineEnvironment) => createFactory<BazaarBranch>([RepositoryMixin, BazaarBranchMixin], { types: [doap.BazaarBranch] }, env);
+BazaarBranchMixin.createFactory = (env: RdfineEnvironment) => createFactory<BazaarBranch>([RepositoryMixin, BazaarBranchMixin], { types: [doap.BazaarBranch] }, env)

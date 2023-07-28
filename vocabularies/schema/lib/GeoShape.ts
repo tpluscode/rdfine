@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -19,6 +19,12 @@ export interface GeoShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   line: string | undefined;
   polygon: string | undefined;
   postalCode: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    GeoShape: Factory<Schema.GeoShape>;
+  }
 }
 
 export function GeoShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GeoShape & RdfResourceCore> & Base {
@@ -48,5 +54,4 @@ export function GeoShapeMixin<Base extends rdfine.Constructor>(Resource: Base): 
   return GeoShapeClass as any
 }
 GeoShapeMixin.appliesTo = schema.GeoShape
-
-export const factory = (env: RdfineEnvironment) => createFactory<GeoShape>([StructuredValueMixin, GeoShapeMixin], { types: [schema.GeoShape] }, env);
+GeoShapeMixin.createFactory = (env: RdfineEnvironment) => createFactory<GeoShape>([StructuredValueMixin, GeoShapeMixin], { types: [schema.GeoShape] }, env)

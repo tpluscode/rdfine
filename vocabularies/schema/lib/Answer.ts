@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Answer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   answerExplanation: Schema.Comment<D> | Schema.WebContent<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Answer: Factory<Schema.Answer>;
+  }
+}
+
 export function AnswerMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Answer & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class AnswerClass extends CommentMixin(Resource) {
@@ -21,5 +27,4 @@ export function AnswerMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return AnswerClass as any
 }
 AnswerMixin.appliesTo = schema.Answer
-
-export const factory = (env: RdfineEnvironment) => createFactory<Answer>([CommentMixin, AnswerMixin], { types: [schema.Answer] }, env);
+AnswerMixin.createFactory = (env: RdfineEnvironment) => createFactory<Answer>([CommentMixin, AnswerMixin], { types: [schema.Answer] }, env)

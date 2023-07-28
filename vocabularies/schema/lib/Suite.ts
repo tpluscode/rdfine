@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface Suite<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   numberOfRooms: Schema.QuantitativeValue<D> | undefined;
   numberOfRoomsLiteral: number | undefined;
   occupancy: Schema.QuantitativeValue<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Suite: Factory<Schema.Suite>;
+  }
 }
 
 export function SuiteMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Suite & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function SuiteMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return SuiteClass as any
 }
 SuiteMixin.appliesTo = schema.Suite
-
-export const factory = (env: RdfineEnvironment) => createFactory<Suite>([AccommodationMixin, SuiteMixin], { types: [schema.Suite] }, env);
+SuiteMixin.createFactory = (env: RdfineEnvironment) => createFactory<Suite>([AccommodationMixin, SuiteMixin], { types: [schema.Suite] }, env)

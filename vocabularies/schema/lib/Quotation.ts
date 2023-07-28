@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface Quotation<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   spokenByCharacter: Schema.Organization<D> | Schema.Person<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Quotation: Factory<Schema.Quotation>;
+  }
+}
+
 export function QuotationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Quotation & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class QuotationClass extends CreativeWorkMixin(Resource) {
@@ -21,5 +27,4 @@ export function QuotationMixin<Base extends rdfine.Constructor>(Resource: Base):
   return QuotationClass as any
 }
 QuotationMixin.appliesTo = schema.Quotation
-
-export const factory = (env: RdfineEnvironment) => createFactory<Quotation>([CreativeWorkMixin, QuotationMixin], { types: [schema.Quotation] }, env);
+QuotationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Quotation>([CreativeWorkMixin, QuotationMixin], { types: [schema.Quotation] }, env)

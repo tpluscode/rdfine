@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface SpouseRelation<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   spouseRelationConnects: Rico.Person<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    SpouseRelation: Factory<Rico.SpouseRelation>;
+  }
+}
+
 export function SpouseRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SpouseRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class SpouseRelationClass extends FamilyRelationMixin(Resource) {
@@ -21,5 +27,4 @@ export function SpouseRelationMixin<Base extends rdfine.Constructor>(Resource: B
   return SpouseRelationClass as any
 }
 SpouseRelationMixin.appliesTo = rico.SpouseRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<SpouseRelation>([FamilyRelationMixin, SpouseRelationMixin], { types: [rico.SpouseRelation] }, env);
+SpouseRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<SpouseRelation>([FamilyRelationMixin, SpouseRelationMixin], { types: [rico.SpouseRelation] }, env)

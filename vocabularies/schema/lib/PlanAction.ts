@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface PlanAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   scheduledTime: Date | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    PlanAction: Factory<Schema.PlanAction>;
+  }
+}
+
 export function PlanActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PlanAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class PlanActionClass extends OrganizeActionMixin(Resource) {
@@ -21,5 +27,4 @@ export function PlanActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   return PlanActionClass as any
 }
 PlanActionMixin.appliesTo = schema.PlanAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<PlanAction>([OrganizeActionMixin, PlanActionMixin], { types: [schema.PlanAction] }, env);
+PlanActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<PlanAction>([OrganizeActionMixin, PlanActionMixin], { types: [schema.PlanAction] }, env)

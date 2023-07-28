@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { BodyOfWaterMixin } from './BodyOfWater.js';
 export interface Canal<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BodyOfWater<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    Canal: Factory<Schema.Canal>;
+  }
+}
+
 export function CanalMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Canal & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class CanalClass extends BodyOfWaterMixin(Resource) {
@@ -18,5 +24,4 @@ export function CanalMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   return CanalClass as any
 }
 CanalMixin.appliesTo = schema.Canal
-
-export const factory = (env: RdfineEnvironment) => createFactory<Canal>([BodyOfWaterMixin, CanalMixin], { types: [schema.Canal] }, env);
+CanalMixin.createFactory = (env: RdfineEnvironment) => createFactory<Canal>([BodyOfWaterMixin, CanalMixin], { types: [schema.Canal] }, env)

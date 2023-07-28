@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ import { SPARQLConstructExecutableMixin as ShaclSPARQLConstructExecutableMixin }
 export interface SPARQLConstructTemplate<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.Parameterizable<D>, Shacl.SPARQLConstructExecutable<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DashVocabulary {
+    SPARQLConstructTemplate: Factory<Dash.SPARQLConstructTemplate>;
+  }
+}
+
 export function SPARQLConstructTemplateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLConstructTemplate & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class SPARQLConstructTemplateClass extends ShaclSPARQLConstructExecutableMixin(ShaclParameterizableMixin(Resource)) {
@@ -20,5 +26,4 @@ export function SPARQLConstructTemplateMixin<Base extends rdfine.Constructor>(Re
   return SPARQLConstructTemplateClass as any
 }
 SPARQLConstructTemplateMixin.appliesTo = dash.SPARQLConstructTemplate
-
-export const factory = (env: RdfineEnvironment) => createFactory<SPARQLConstructTemplate>([ShaclSPARQLConstructExecutableMixin, ShaclParameterizableMixin, SPARQLConstructTemplateMixin], { types: [dash.SPARQLConstructTemplate] }, env);
+SPARQLConstructTemplateMixin.createFactory = (env: RdfineEnvironment) => createFactory<SPARQLConstructTemplate>([ShaclSPARQLConstructExecutableMixin, ShaclParameterizableMixin, SPARQLConstructTemplateMixin], { types: [dash.SPARQLConstructTemplate] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface PositionHoldingRelation<D extends RDF.DatasetCore = RDF.Dataset
   positionHoldingRelationHasTarget: Rico.Position<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    PositionHoldingRelation: Factory<Rico.PositionHoldingRelation>;
+  }
+}
+
 export function PositionHoldingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PositionHoldingRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class PositionHoldingRelationClass extends AgentToAgentRelationMixin(Resource) {
@@ -24,5 +30,4 @@ export function PositionHoldingRelationMixin<Base extends rdfine.Constructor>(Re
   return PositionHoldingRelationClass as any
 }
 PositionHoldingRelationMixin.appliesTo = rico.PositionHoldingRelation
-
-export const factory = (env: RdfineEnvironment) => createFactory<PositionHoldingRelation>([AgentToAgentRelationMixin, PositionHoldingRelationMixin], { types: [rico.PositionHoldingRelation] }, env);
+PositionHoldingRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<PositionHoldingRelation>([AgentToAgentRelationMixin, PositionHoldingRelationMixin], { types: [rico.PositionHoldingRelation] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface Muscle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   insertion: Schema.AnatomicalStructure<D> | undefined;
   muscleAction: string | undefined;
   nerve: Schema.Nerve<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Muscle: Factory<Schema.Muscle>;
+  }
 }
 
 export function MuscleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Muscle & RdfResourceCore> & Base {
@@ -33,5 +39,4 @@ export function MuscleMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   return MuscleClass as any
 }
 MuscleMixin.appliesTo = schema.Muscle
-
-export const factory = (env: RdfineEnvironment) => createFactory<Muscle>([AnatomicalStructureMixin, MuscleMixin], { types: [schema.Muscle] }, env);
+MuscleMixin.createFactory = (env: RdfineEnvironment) => createFactory<Muscle>([AnatomicalStructureMixin, MuscleMixin], { types: [schema.Muscle] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface AgentName<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   isOrWasAgentNameOf: Rico.Agent<D> | undefined;
 }
 
+declare global {
+  interface RicoVocabulary {
+    AgentName: Factory<Rico.AgentName>;
+  }
+}
+
 export function AgentNameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentName & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class AgentNameClass extends NameMixin(Resource) {
@@ -21,5 +27,4 @@ export function AgentNameMixin<Base extends rdfine.Constructor>(Resource: Base):
   return AgentNameClass as any
 }
 AgentNameMixin.appliesTo = rico.AgentName
-
-export const factory = (env: RdfineEnvironment) => createFactory<AgentName>([NameMixin, AgentNameMixin], { types: [rico.AgentName] }, env);
+AgentNameMixin.createFactory = (env: RdfineEnvironment) => createFactory<AgentName>([NameMixin, AgentNameMixin], { types: [rico.AgentName] }, env)

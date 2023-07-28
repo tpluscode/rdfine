@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { FoodEstablishmentMixin } from './FoodEstablishment.js';
 export interface FastFoodRestaurant<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FoodEstablishment<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    FastFoodRestaurant: Factory<Schema.FastFoodRestaurant>;
+  }
+}
+
 export function FastFoodRestaurantMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FastFoodRestaurant & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class FastFoodRestaurantClass extends FoodEstablishmentMixin(Resource) {
@@ -18,5 +24,4 @@ export function FastFoodRestaurantMixin<Base extends rdfine.Constructor>(Resourc
   return FastFoodRestaurantClass as any
 }
 FastFoodRestaurantMixin.appliesTo = schema.FastFoodRestaurant
-
-export const factory = (env: RdfineEnvironment) => createFactory<FastFoodRestaurant>([FoodEstablishmentMixin, FastFoodRestaurantMixin], { types: [schema.FastFoodRestaurant] }, env);
+FastFoodRestaurantMixin.createFactory = (env: RdfineEnvironment) => createFactory<FastFoodRestaurant>([FoodEstablishmentMixin, FastFoodRestaurantMixin], { types: [schema.FastFoodRestaurant] }, env)

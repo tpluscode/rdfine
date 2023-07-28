@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface GeoCircle<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   geoMidpoint: Schema.GeoCoordinates<D> | undefined;
   geoRadius: Schema.Distance<D> | undefined;
   geoRadiusLiteral: number | string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    GeoCircle: Factory<Schema.GeoCircle>;
+  }
 }
 
 export function GeoCircleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GeoCircle & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function GeoCircleMixin<Base extends rdfine.Constructor>(Resource: Base):
   return GeoCircleClass as any
 }
 GeoCircleMixin.appliesTo = schema.GeoCircle
-
-export const factory = (env: RdfineEnvironment) => createFactory<GeoCircle>([GeoShapeMixin, GeoCircleMixin], { types: [schema.GeoCircle] }, env);
+GeoCircleMixin.createFactory = (env: RdfineEnvironment) => createFactory<GeoCircle>([GeoShapeMixin, GeoCircleMixin], { types: [schema.GeoCircle] }, env)

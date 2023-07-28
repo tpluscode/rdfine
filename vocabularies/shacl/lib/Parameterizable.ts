@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,6 +14,12 @@ export interface Parameterizable<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   parameter: Sh.Parameter<D> | undefined;
 }
 
+declare global {
+  interface ShVocabulary {
+    Parameterizable: Factory<Sh.Parameterizable>;
+  }
+}
+
 export function ParameterizableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Parameterizable & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class ParameterizableClass extends RdfsResourceMixin(Resource) {
@@ -25,5 +31,4 @@ export function ParameterizableMixin<Base extends rdfine.Constructor>(Resource: 
   return ParameterizableClass as any
 }
 ParameterizableMixin.appliesTo = sh.Parameterizable
-
-export const factory = (env: RdfineEnvironment) => createFactory<Parameterizable>([RdfsResourceMixin, ParameterizableMixin], { types: [sh.Parameterizable] }, env);
+ParameterizableMixin.createFactory = (env: RdfineEnvironment) => createFactory<Parameterizable>([RdfsResourceMixin, ParameterizableMixin], { types: [sh.Parameterizable] }, env)

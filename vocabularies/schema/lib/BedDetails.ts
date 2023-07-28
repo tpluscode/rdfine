@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface BedDetails<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   numberOfBeds: number | undefined;
   typeOfBed: string | undefined;
   typeOfBedTerm: Schema.BedType | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BedDetails: Factory<Schema.BedDetails>;
+  }
 }
 
 export function BedDetailsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BedDetails & RdfResourceCore> & Base {
@@ -27,5 +33,4 @@ export function BedDetailsMixin<Base extends rdfine.Constructor>(Resource: Base)
   return BedDetailsClass as any
 }
 BedDetailsMixin.appliesTo = schema.BedDetails
-
-export const factory = (env: RdfineEnvironment) => createFactory<BedDetails>([IntangibleMixin, BedDetailsMixin], { types: [schema.BedDetails] }, env);
+BedDetailsMixin.createFactory = (env: RdfineEnvironment) => createFactory<BedDetails>([IntangibleMixin, BedDetailsMixin], { types: [schema.BedDetails] }, env)

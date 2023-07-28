@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,6 +13,12 @@ export interface BusOrCoach<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   roofLoad: Schema.QuantitativeValue<D> | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    BusOrCoach: Factory<Schema.BusOrCoach>;
+  }
+}
+
 export function BusOrCoachMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BusOrCoach & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class BusOrCoachClass extends VehicleMixin(Resource) {
@@ -24,5 +30,4 @@ export function BusOrCoachMixin<Base extends rdfine.Constructor>(Resource: Base)
   return BusOrCoachClass as any
 }
 BusOrCoachMixin.appliesTo = schema.BusOrCoach
-
-export const factory = (env: RdfineEnvironment) => createFactory<BusOrCoach>([VehicleMixin, BusOrCoachMixin], { types: [schema.BusOrCoach] }, env);
+BusOrCoachMixin.createFactory = (env: RdfineEnvironment) => createFactory<BusOrCoach>([VehicleMixin, BusOrCoachMixin], { types: [schema.BusOrCoach] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface MedicalScholarlyArticle<D extends RDF.DatasetCore = RDF.Dataset
   publicationType: string | undefined;
 }
 
+declare global {
+  interface SchemaVocabulary {
+    MedicalScholarlyArticle: Factory<Schema.MedicalScholarlyArticle>;
+  }
+}
+
 export function MedicalScholarlyArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalScholarlyArticle & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class MedicalScholarlyArticleClass extends ScholarlyArticleMixin(Resource) {
@@ -21,5 +27,4 @@ export function MedicalScholarlyArticleMixin<Base extends rdfine.Constructor>(Re
   return MedicalScholarlyArticleClass as any
 }
 MedicalScholarlyArticleMixin.appliesTo = schema.MedicalScholarlyArticle
-
-export const factory = (env: RdfineEnvironment) => createFactory<MedicalScholarlyArticle>([ScholarlyArticleMixin, MedicalScholarlyArticleMixin], { types: [schema.MedicalScholarlyArticle] }, env);
+MedicalScholarlyArticleMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalScholarlyArticle>([ScholarlyArticleMixin, MedicalScholarlyArticleMixin], { types: [schema.MedicalScholarlyArticle] }, env)

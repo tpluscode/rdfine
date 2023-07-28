@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 export interface Specification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface DoapVocabulary {
+    Specification: Factory<Doap.Specification>;
+  }
+}
+
 export function SpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Specification & RdfResourceCore> & Base {
   @rdfine.namespace(doap)
   class SpecificationClass extends RdfsResourceMixin(Resource) {
@@ -19,5 +25,4 @@ export function SpecificationMixin<Base extends rdfine.Constructor>(Resource: Ba
   return SpecificationClass as any
 }
 SpecificationMixin.appliesTo = doap.Specification
-
-export const factory = (env: RdfineEnvironment) => createFactory<Specification>([RdfsResourceMixin, SpecificationMixin], { types: [doap.Specification] }, env);
+SpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Specification>([RdfsResourceMixin, SpecificationMixin], { types: [doap.Specification] }, env)

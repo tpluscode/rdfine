@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { HomeAndConstructionBusinessMixin } from './HomeAndConstructionBusiness.
 export interface HousePainter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HomeAndConstructionBusiness<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    HousePainter: Factory<Schema.HousePainter>;
+  }
+}
+
 export function HousePainterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HousePainter & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class HousePainterClass extends HomeAndConstructionBusinessMixin(Resource) {
@@ -18,5 +24,4 @@ export function HousePainterMixin<Base extends rdfine.Constructor>(Resource: Bas
   return HousePainterClass as any
 }
 HousePainterMixin.appliesTo = schema.HousePainter
-
-export const factory = (env: RdfineEnvironment) => createFactory<HousePainter>([HomeAndConstructionBusinessMixin, HousePainterMixin], { types: [schema.HousePainter] }, env);
+HousePainterMixin.createFactory = (env: RdfineEnvironment) => createFactory<HousePainter>([HomeAndConstructionBusinessMixin, HousePainterMixin], { types: [schema.HousePainter] }, env)

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,6 +11,12 @@ import { InteractActionMixin } from './InteractAction.js';
 export interface BefriendAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface SchemaVocabulary {
+    BefriendAction: Factory<Schema.BefriendAction>;
+  }
+}
+
 export function BefriendActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BefriendAction & RdfResourceCore> & Base {
   @rdfine.namespace(schema)
   class BefriendActionClass extends InteractActionMixin(Resource) {
@@ -18,5 +24,4 @@ export function BefriendActionMixin<Base extends rdfine.Constructor>(Resource: B
   return BefriendActionClass as any
 }
 BefriendActionMixin.appliesTo = schema.BefriendAction
-
-export const factory = (env: RdfineEnvironment) => createFactory<BefriendAction>([InteractActionMixin, BefriendActionMixin], { types: [schema.BefriendAction] }, env);
+BefriendActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<BefriendAction>([InteractActionMixin, BefriendActionMixin], { types: [schema.BefriendAction] }, env)

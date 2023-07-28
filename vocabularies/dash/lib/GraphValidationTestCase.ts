@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,6 +12,12 @@ export interface GraphValidationTestCase<D extends RDF.DatasetCore = RDF.Dataset
   validateShapes: boolean | undefined;
 }
 
+declare global {
+  interface DashVocabulary {
+    GraphValidationTestCase: Factory<Dash.GraphValidationTestCase>;
+  }
+}
+
 export function GraphValidationTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GraphValidationTestCase & RdfResourceCore> & Base {
   @rdfine.namespace(dash)
   class GraphValidationTestCaseClass extends ValidationTestCaseMixin(Resource) {
@@ -21,5 +27,4 @@ export function GraphValidationTestCaseMixin<Base extends rdfine.Constructor>(Re
   return GraphValidationTestCaseClass as any
 }
 GraphValidationTestCaseMixin.appliesTo = dash.GraphValidationTestCase
-
-export const factory = (env: RdfineEnvironment) => createFactory<GraphValidationTestCase>([ValidationTestCaseMixin, GraphValidationTestCaseMixin], { types: [dash.GraphValidationTestCase] }, env);
+GraphValidationTestCaseMixin.createFactory = (env: RdfineEnvironment) => createFactory<GraphValidationTestCase>([ValidationTestCaseMixin, GraphValidationTestCaseMixin], { types: [dash.GraphValidationTestCase] }, env)
