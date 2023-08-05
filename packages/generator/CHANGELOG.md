@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.8.0
+
+### Minor Changes
+
+- 9d49a7b2: Remove all `Partial` from mixin types to simplify extending classes
+
 ## 0.7.0
 
 ### Minor Changes

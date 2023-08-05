@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/dash",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "index.js",
   "module": "index.js",
   "browser": "index.js",
@@ -45,10 +45,10 @@
   "dependencies": {
     "@rdfjs/data-model": "^2",
     "@tpluscode/rdf-ns-builders": ">=3.0.2",
-    "@tpluscode/rdfine": "^0.6.0",
-    "@rdfine/rdf": "^0.6.0",
-    "@rdfine/rdfs": "^0.7.0",
-    "@rdfine/shacl": "^0.9.0"
+    "@tpluscode/rdfine": "^0.7.0",
+    "@rdfine/rdf": "^0.7.0",
+    "@rdfine/rdfs": "^0.8.0",
+    "@rdfine/shacl": "^0.10.0"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,16 @@
 # Change Log
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [fe473333]
+- Updated dependencies [fe473333]
+- Updated dependencies [9d49a7b2]
+  - @rdfine/env@1.0.0
+  - @tpluscode/rdfine@0.7.0
+  - @rdfine/schema@0.8.0
+
 ## 0.2.0
 
 ### Minor Changes

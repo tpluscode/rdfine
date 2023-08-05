@@ -1,5 +1,19 @@
 # Change Log
 
+## 0.6.0
+
+### Minor Changes
+
+- 9d49a7b2: Remove all `Partial` from mixin types to simplify extending classes
+
+### Patch Changes
+
+- Updated dependencies [fe473333]
+- Updated dependencies [9d49a7b2]
+  - @tpluscode/rdfine@0.7.0
+  - @rdfine/rdf@0.7.0
+  - @rdfine/rdfs@0.8.0
+
 ## 0.5.0
 
 ### Minor Changes
