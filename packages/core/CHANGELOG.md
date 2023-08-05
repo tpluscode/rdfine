@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.0
+
+### Minor Changes
+
+- fe473333: Decorator `@namespace` does not allow `string` any more
+
 ## 0.6.0
 
 ### Minor Changes

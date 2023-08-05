@@ -1,5 +1,20 @@
 # @rdfine/doap
 
+## 0.3.0
+
+### Minor Changes
+
+- 9d49a7b2: Remove all `Partial` from mixin types to simplify extending classes
+
+### Patch Changes
+
+- Updated dependencies [fe473333]
+- Updated dependencies [9d49a7b2]
+  - @tpluscode/rdfine@0.7.0
+  - @rdfine/foaf@2.0.0
+  - @rdfine/rdfs@0.8.0
+  - @rdfine/sioc@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes
