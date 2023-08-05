@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 import { CreativeWorkSeriesMixin } from './CreativeWorkSeries.js';
@@ -25,6 +25,12 @@ export interface TVSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   season: Schema.CreativeWorkSeason<D> | undefined;
   seasons: Schema.CreativeWorkSeason<D> | undefined;
   trailer: Schema.VideoObject<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    TVSeries: Factory<Schema.TVSeries>;
+  }
 }
 
 export function TVSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TVSeries & RdfResourceCore> & Base {
@@ -63,16 +69,5 @@ export function TVSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return TVSeriesClass as any
 }
-
-class TVSeriesImpl extends TVSeriesMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TVSeries>) {
-    super(arg, init)
-    this.types.add(schema.TVSeries)
-  }
-
-  static readonly __mixins: Mixin[] = [TVSeriesMixin, CreativeWorkMixin, CreativeWorkSeriesMixin];
-}
 TVSeriesMixin.appliesTo = schema.TVSeries
-TVSeriesMixin.Class = TVSeriesImpl
-
-export const fromPointer = createFactory<TVSeries>([CreativeWorkSeriesMixin, CreativeWorkMixin, TVSeriesMixin], { types: [schema.TVSeries] });
+TVSeriesMixin.createFactory = (env: RdfineEnvironment) => createFactory<TVSeries>([CreativeWorkSeriesMixin, CreativeWorkMixin, TVSeriesMixin], { types: [schema.TVSeries] }, env)

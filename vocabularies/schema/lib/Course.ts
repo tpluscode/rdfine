@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 import { LearningResourceMixin } from './LearningResource.js';
@@ -20,6 +20,12 @@ export interface Course<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   numberOfCreditsLiteral: number | undefined;
   occupationalCredentialAwarded: string | undefined;
   occupationalCredentialAwardedTerm: RDF.NamedNode | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Course: Factory<Schema.Course>;
+  }
 }
 
 export function CourseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Course & RdfResourceCore> & Base {
@@ -48,16 +54,5 @@ export function CourseMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return CourseClass as any
 }
-
-class CourseImpl extends CourseMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Course>) {
-    super(arg, init)
-    this.types.add(schema.Course)
-  }
-
-  static readonly __mixins: Mixin[] = [CourseMixin, CreativeWorkMixin, LearningResourceMixin];
-}
 CourseMixin.appliesTo = schema.Course
-CourseMixin.Class = CourseImpl
-
-export const fromPointer = createFactory<Course>([LearningResourceMixin, CreativeWorkMixin, CourseMixin], { types: [schema.Course] });
+CourseMixin.createFactory = (env: RdfineEnvironment) => createFactory<Course>([LearningResourceMixin, CreativeWorkMixin, CourseMixin], { types: [schema.Course] }, env)

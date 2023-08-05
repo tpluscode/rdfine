@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ReservationMixin } from './Reservation.js';
 
@@ -13,6 +13,12 @@ export interface RentalCarReservation<D extends RDF.DatasetCore = RDF.DatasetCor
   dropoffTime: Date | undefined;
   pickupLocation: Schema.Place<D> | undefined;
   pickupTime: Date | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    RentalCarReservation: Factory<Schema.RentalCarReservation>;
+  }
 }
 
 export function RentalCarReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RentalCarReservation & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function RentalCarReservationMixin<Base extends rdfine.Constructor>(Resou
   }
   return RentalCarReservationClass as any
 }
-
-class RentalCarReservationImpl extends RentalCarReservationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RentalCarReservation>) {
-    super(arg, init)
-    this.types.add(schema.RentalCarReservation)
-  }
-
-  static readonly __mixins: Mixin[] = [RentalCarReservationMixin, ReservationMixin];
-}
 RentalCarReservationMixin.appliesTo = schema.RentalCarReservation
-RentalCarReservationMixin.Class = RentalCarReservationImpl
-
-export const fromPointer = createFactory<RentalCarReservation>([ReservationMixin, RentalCarReservationMixin], { types: [schema.RentalCarReservation] });
+RentalCarReservationMixin.createFactory = (env: RdfineEnvironment) => createFactory<RentalCarReservation>([ReservationMixin, RentalCarReservationMixin], { types: [schema.RentalCarReservation] }, env)

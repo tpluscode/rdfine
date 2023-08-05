@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { EventMixin } from './Event.js';
 
@@ -13,6 +13,12 @@ export interface EducationEvent<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   educationalLevel: string | undefined;
   educationalLevelTerm: RDF.NamedNode | undefined;
   teaches: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    EducationEvent: Factory<Schema.EducationEvent>;
+  }
 }
 
 export function EducationEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EducationEvent & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function EducationEventMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return EducationEventClass as any
 }
-
-class EducationEventImpl extends EducationEventMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EducationEvent>) {
-    super(arg, init)
-    this.types.add(schema.EducationEvent)
-  }
-
-  static readonly __mixins: Mixin[] = [EducationEventMixin, EventMixin];
-}
 EducationEventMixin.appliesTo = schema.EducationEvent
-EducationEventMixin.Class = EducationEventImpl
-
-export const fromPointer = createFactory<EducationEvent>([EventMixin, EducationEventMixin], { types: [schema.EducationEvent] });
+EducationEventMixin.createFactory = (env: RdfineEnvironment) => createFactory<EducationEvent>([EventMixin, EducationEventMixin], { types: [schema.EducationEvent] }, env)

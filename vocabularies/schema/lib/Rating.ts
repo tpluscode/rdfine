@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -15,6 +15,12 @@ export interface Rating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   ratingValue: number | string | undefined;
   reviewAspect: string | undefined;
   worstRating: number | string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Rating: Factory<Schema.Rating>;
+  }
 }
 
 export function RatingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Rating & RdfResourceCore> & Base {
@@ -35,16 +41,5 @@ export function RatingMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return RatingClass as any
 }
-
-class RatingImpl extends RatingMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Rating>) {
-    super(arg, init)
-    this.types.add(schema.Rating)
-  }
-
-  static readonly __mixins: Mixin[] = [RatingMixin, IntangibleMixin];
-}
 RatingMixin.appliesTo = schema.Rating
-RatingMixin.Class = RatingImpl
-
-export const fromPointer = createFactory<Rating>([IntangibleMixin, RatingMixin], { types: [schema.Rating] });
+RatingMixin.createFactory = (env: RdfineEnvironment) => createFactory<Rating>([IntangibleMixin, RatingMixin], { types: [schema.Rating] }, env)

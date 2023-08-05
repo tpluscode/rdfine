@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MusicPlaylistMixin } from './MusicPlaylist.js';
 
@@ -15,6 +15,12 @@ export interface MusicRelease<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   musicReleaseFormat: Schema.MusicReleaseFormatType | undefined;
   recordLabel: Schema.Organization<D> | undefined;
   releaseOf: Schema.MusicAlbum<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MusicRelease: Factory<Schema.MusicRelease>;
+  }
 }
 
 export function MusicReleaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MusicRelease & RdfResourceCore> & Base {
@@ -35,16 +41,5 @@ export function MusicReleaseMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return MusicReleaseClass as any
 }
-
-class MusicReleaseImpl extends MusicReleaseMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MusicRelease>) {
-    super(arg, init)
-    this.types.add(schema.MusicRelease)
-  }
-
-  static readonly __mixins: Mixin[] = [MusicReleaseMixin, MusicPlaylistMixin];
-}
 MusicReleaseMixin.appliesTo = schema.MusicRelease
-MusicReleaseMixin.Class = MusicReleaseImpl
-
-export const fromPointer = createFactory<MusicRelease>([MusicPlaylistMixin, MusicReleaseMixin], { types: [schema.MusicRelease] });
+MusicReleaseMixin.createFactory = (env: RdfineEnvironment) => createFactory<MusicRelease>([MusicPlaylistMixin, MusicReleaseMixin], { types: [schema.MusicRelease] }, env)

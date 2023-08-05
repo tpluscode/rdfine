@@ -6,8 +6,9 @@ import TermMap from '@rdfjs/term-map'
 import { toJavascriptProperties } from '../property/JsProperties.js'
 import { findProperties } from '../property/index.js'
 import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types/index.js'
-import { Context } from '../index.js'
+import { Context, GeneratedModule } from '../index.js'
 import { MixinModule } from './MixinModule.js'
+import { FactoryModule } from './FactoryModule.js'
 
 export function getSuperClasses(clas: GraphPointer, types: TypeMetaCollection) {
   return clas.out(rdfs.subClassOf)
@@ -42,18 +43,18 @@ export function findTermsToGenerate(excludedTerms: NamedNode[]) {
       .map(pointer => [pointer.term, pointer]))
 
     return [...terms]
-      .map(([, term]) => {
-        const meta = types.getOrThrow(term)
-        if (meta.type !== 'Resource') {
-          throw new Error(`Expected resource type but got ${meta.type}`)
-        }
+      .reduce<GeneratedModule[]>((modules, [, term]) => {
+      const meta = types.getOrThrow(term)
+      if (meta.type !== 'Resource') {
+        throw new Error(`Expected resource type but got ${meta.type}`)
+      }
 
-        const props = [...getProperties(term, types, context, excluded)]
-        return new MixinModule(
-          term,
-          meta,
-          getSuperClasses(term, types),
-          props)
-      })
+      const props = [...getProperties(term, types, context, excluded)]
+      return [...modules, new MixinModule(
+        term,
+        meta,
+        getSuperClasses(term, types),
+        props)]
+    }, [new FactoryModule({ terms })])
   }
 }

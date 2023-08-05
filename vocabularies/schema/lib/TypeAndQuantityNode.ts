@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -15,6 +15,12 @@ export interface TypeAndQuantityNode<D extends RDF.DatasetCore = RDF.DatasetCore
   unitCode: string | undefined;
   unitCodeTerm: RDF.NamedNode | undefined;
   unitText: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    TypeAndQuantityNode: Factory<Schema.TypeAndQuantityNode>;
+  }
 }
 
 export function TypeAndQuantityNodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TypeAndQuantityNode & RdfResourceCore> & Base {
@@ -35,16 +41,5 @@ export function TypeAndQuantityNodeMixin<Base extends rdfine.Constructor>(Resour
   }
   return TypeAndQuantityNodeClass as any
 }
-
-class TypeAndQuantityNodeImpl extends TypeAndQuantityNodeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TypeAndQuantityNode>) {
-    super(arg, init)
-    this.types.add(schema.TypeAndQuantityNode)
-  }
-
-  static readonly __mixins: Mixin[] = [TypeAndQuantityNodeMixin, StructuredValueMixin];
-}
 TypeAndQuantityNodeMixin.appliesTo = schema.TypeAndQuantityNode
-TypeAndQuantityNodeMixin.Class = TypeAndQuantityNodeImpl
-
-export const fromPointer = createFactory<TypeAndQuantityNode>([StructuredValueMixin, TypeAndQuantityNodeMixin], { types: [schema.TypeAndQuantityNode] });
+TypeAndQuantityNodeMixin.createFactory = (env: RdfineEnvironment) => createFactory<TypeAndQuantityNode>([StructuredValueMixin, TypeAndQuantityNodeMixin], { types: [schema.TypeAndQuantityNode] }, env)

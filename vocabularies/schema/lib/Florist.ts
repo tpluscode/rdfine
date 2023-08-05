@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StoreMixin } from './Store.js';
 
 export interface Florist<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Florist: Factory<Schema.Florist>;
+  }
 }
 
 export function FloristMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Florist & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function FloristMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return FloristClass as any
 }
-
-class FloristImpl extends FloristMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Florist>) {
-    super(arg, init)
-    this.types.add(schema.Florist)
-  }
-
-  static readonly __mixins: Mixin[] = [FloristMixin, StoreMixin];
-}
 FloristMixin.appliesTo = schema.Florist
-FloristMixin.Class = FloristImpl
-
-export const fromPointer = createFactory<Florist>([StoreMixin, FloristMixin], { types: [schema.Florist] });
+FloristMixin.createFactory = (env: RdfineEnvironment) => createFactory<Florist>([StoreMixin, FloristMixin], { types: [schema.Florist] }, env)

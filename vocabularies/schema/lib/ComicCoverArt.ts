@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ComicStoryMixin } from './ComicStory.js';
 import { CoverArtMixin } from './CoverArt.js';
 
 export interface ComicCoverArt<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ComicStory<D>, Schema.CoverArt<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ComicCoverArt: Factory<Schema.ComicCoverArt>;
+  }
 }
 
 export function ComicCoverArtMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ComicCoverArt & RdfResourceCore> & Base {
@@ -18,16 +24,5 @@ export function ComicCoverArtMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return ComicCoverArtClass as any
 }
-
-class ComicCoverArtImpl extends ComicCoverArtMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ComicCoverArt>) {
-    super(arg, init)
-    this.types.add(schema.ComicCoverArt)
-  }
-
-  static readonly __mixins: Mixin[] = [ComicCoverArtMixin, ComicStoryMixin, CoverArtMixin];
-}
 ComicCoverArtMixin.appliesTo = schema.ComicCoverArt
-ComicCoverArtMixin.Class = ComicCoverArtImpl
-
-export const fromPointer = createFactory<ComicCoverArt>([CoverArtMixin, ComicStoryMixin, ComicCoverArtMixin], { types: [schema.ComicCoverArt] });
+ComicCoverArtMixin.createFactory = (env: RdfineEnvironment) => createFactory<ComicCoverArt>([CoverArtMixin, ComicStoryMixin, ComicCoverArtMixin], { types: [schema.ComicCoverArt] }, env)

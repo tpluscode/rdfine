@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ActionMixin } from './Action.js';
 
 export interface SolveMathAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, rdfine.RdfResource<D> {
   eduQuestionType: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    SolveMathAction: Factory<Schema.SolveMathAction>;
+  }
 }
 
 export function SolveMathActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SolveMathAction & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function SolveMathActionMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return SolveMathActionClass as any
 }
-
-class SolveMathActionImpl extends SolveMathActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SolveMathAction>) {
-    super(arg, init)
-    this.types.add(schema.SolveMathAction)
-  }
-
-  static readonly __mixins: Mixin[] = [SolveMathActionMixin, ActionMixin];
-}
 SolveMathActionMixin.appliesTo = schema.SolveMathAction
-SolveMathActionMixin.Class = SolveMathActionImpl
-
-export const fromPointer = createFactory<SolveMathAction>([ActionMixin, SolveMathActionMixin], { types: [schema.SolveMathAction] });
+SolveMathActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<SolveMathAction>([ActionMixin, SolveMathActionMixin], { types: [schema.SolveMathAction] }, env)

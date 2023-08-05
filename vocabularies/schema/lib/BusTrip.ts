@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { TripMixin } from './Trip.js';
 
@@ -13,6 +13,12 @@ export interface BusTrip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   busName: string | undefined;
   busNumber: string | undefined;
   departureBusStop: Schema.BusStation<D> | Schema.BusStop<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BusTrip: Factory<Schema.BusTrip>;
+  }
 }
 
 export function BusTripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BusTrip & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function BusTripMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return BusTripClass as any
 }
-
-class BusTripImpl extends BusTripMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<BusTrip>) {
-    super(arg, init)
-    this.types.add(schema.BusTrip)
-  }
-
-  static readonly __mixins: Mixin[] = [BusTripMixin, TripMixin];
-}
 BusTripMixin.appliesTo = schema.BusTrip
-BusTripMixin.Class = BusTripImpl
-
-export const fromPointer = createFactory<BusTrip>([TripMixin, BusTripMixin], { types: [schema.BusTrip] });
+BusTripMixin.createFactory = (env: RdfineEnvironment) => createFactory<BusTrip>([TripMixin, BusTripMixin], { types: [schema.BusTrip] }, env)

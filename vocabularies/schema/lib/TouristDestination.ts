@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { PlaceMixin } from './Place.js';
 
@@ -12,6 +12,12 @@ export interface TouristDestination<D extends RDF.DatasetCore = RDF.DatasetCore>
   includesAttraction: Schema.TouristAttraction<D> | undefined;
   touristType: Schema.Audience<D> | undefined;
   touristTypeLiteral: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    TouristDestination: Factory<Schema.TouristDestination>;
+  }
 }
 
 export function TouristDestinationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TouristDestination & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function TouristDestinationMixin<Base extends rdfine.Constructor>(Resourc
   }
   return TouristDestinationClass as any
 }
-
-class TouristDestinationImpl extends TouristDestinationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TouristDestination>) {
-    super(arg, init)
-    this.types.add(schema.TouristDestination)
-  }
-
-  static readonly __mixins: Mixin[] = [TouristDestinationMixin, PlaceMixin];
-}
 TouristDestinationMixin.appliesTo = schema.TouristDestination
-TouristDestinationMixin.Class = TouristDestinationImpl
-
-export const fromPointer = createFactory<TouristDestination>([PlaceMixin, TouristDestinationMixin], { types: [schema.TouristDestination] });
+TouristDestinationMixin.createFactory = (env: RdfineEnvironment) => createFactory<TouristDestination>([PlaceMixin, TouristDestinationMixin], { types: [schema.TouristDestination] }, env)

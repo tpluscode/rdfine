@@ -1,13 +1,19 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { owl } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '../index.js';
 
 export interface NamedIndividual<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface OwlVocabulary {
+    NamedIndividual: Factory<Owl.NamedIndividual>;
+  }
 }
 
 export function NamedIndividualMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NamedIndividual & RdfResourceCore> & Base {
@@ -16,16 +22,5 @@ export function NamedIndividualMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return NamedIndividualClass as any
 }
-
-class NamedIndividualImpl extends NamedIndividualMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<NamedIndividual>) {
-    super(arg, init)
-    this.types.add(owl.NamedIndividual)
-  }
-
-  static readonly __mixins: Mixin[] = [NamedIndividualMixin];
-}
 NamedIndividualMixin.appliesTo = owl.NamedIndividual
-NamedIndividualMixin.Class = NamedIndividualImpl
-
-export const fromPointer = createFactory<NamedIndividual>([NamedIndividualMixin], { types: [owl.NamedIndividual] });
+NamedIndividualMixin.createFactory = (env: RdfineEnvironment) => createFactory<NamedIndividual>([NamedIndividualMixin], { types: [owl.NamedIndividual] }, env)

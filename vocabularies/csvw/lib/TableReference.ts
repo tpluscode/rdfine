@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { csvw } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '../index.js';
 
 export interface TableReference<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   columnReference: string | undefined;
   resource: string | undefined;
   schemaReference: string | undefined;
+}
+
+declare global {
+  interface CsvwVocabulary {
+    TableReference: Factory<Csvw.TableReference>;
+  }
 }
 
 export function TableReferenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TableReference & RdfResourceCore> & Base {
@@ -25,16 +31,5 @@ export function TableReferenceMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return TableReferenceClass as any
 }
-
-class TableReferenceImpl extends TableReferenceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TableReference>) {
-    super(arg, init)
-    this.types.add(csvw.TableReference)
-  }
-
-  static readonly __mixins: Mixin[] = [TableReferenceMixin];
-}
 TableReferenceMixin.appliesTo = csvw.TableReference
-TableReferenceMixin.Class = TableReferenceImpl
-
-export const fromPointer = createFactory<TableReference>([TableReferenceMixin], { types: [csvw.TableReference] });
+TableReferenceMixin.createFactory = (env: RdfineEnvironment) => createFactory<TableReference>([TableReferenceMixin], { types: [csvw.TableReference] }, env)

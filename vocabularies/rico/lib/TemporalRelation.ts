@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { SequentialRelationMixin } from './SequentialRelation.js';
 
 export interface TemporalRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.SequentialRelation<D>, rdfine.RdfResource<D> {
   temporalRelationHasSource: Rico.Thing<D> | undefined;
   temporalRelationHasTarget: Rico.Thing<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    TemporalRelation: Factory<Rico.TemporalRelation>;
+  }
 }
 
 export function TemporalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TemporalRelation & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function TemporalRelationMixin<Base extends rdfine.Constructor>(Resource:
   }
   return TemporalRelationClass as any
 }
-
-class TemporalRelationImpl extends TemporalRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TemporalRelation>) {
-    super(arg, init)
-    this.types.add(rico.TemporalRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [TemporalRelationMixin, SequentialRelationMixin];
-}
 TemporalRelationMixin.appliesTo = rico.TemporalRelation
-TemporalRelationMixin.Class = TemporalRelationImpl
-
-export const fromPointer = createFactory<TemporalRelation>([SequentialRelationMixin, TemporalRelationMixin], { types: [rico.TemporalRelation] });
+TemporalRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<TemporalRelation>([SequentialRelationMixin, TemporalRelationMixin], { types: [rico.TemporalRelation] }, env)

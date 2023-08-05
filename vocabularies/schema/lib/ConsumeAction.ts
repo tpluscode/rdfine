@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ActionMixin } from './Action.js';
 
 export interface ConsumeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, rdfine.RdfResource<D> {
   actionAccessibilityRequirement: Schema.ActionAccessSpecification<D> | undefined;
   expectsAcceptanceOf: Schema.Offer<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ConsumeAction: Factory<Schema.ConsumeAction>;
+  }
 }
 
 export function ConsumeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ConsumeAction & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function ConsumeActionMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return ConsumeActionClass as any
 }
-
-class ConsumeActionImpl extends ConsumeActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ConsumeAction>) {
-    super(arg, init)
-    this.types.add(schema.ConsumeAction)
-  }
-
-  static readonly __mixins: Mixin[] = [ConsumeActionMixin, ActionMixin];
-}
 ConsumeActionMixin.appliesTo = schema.ConsumeAction
-ConsumeActionMixin.Class = ConsumeActionImpl
-
-export const fromPointer = createFactory<ConsumeAction>([ActionMixin, ConsumeActionMixin], { types: [schema.ConsumeAction] });
+ConsumeActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<ConsumeAction>([ActionMixin, ConsumeActionMixin], { types: [schema.ConsumeAction] }, env)

@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { BodyOfWaterMixin } from './BodyOfWater.js';
 
 export interface LakeBodyOfWater<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BodyOfWater<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    LakeBodyOfWater: Factory<Schema.LakeBodyOfWater>;
+  }
 }
 
 export function LakeBodyOfWaterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LakeBodyOfWater & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function LakeBodyOfWaterMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return LakeBodyOfWaterClass as any
 }
-
-class LakeBodyOfWaterImpl extends LakeBodyOfWaterMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<LakeBodyOfWater>) {
-    super(arg, init)
-    this.types.add(schema.LakeBodyOfWater)
-  }
-
-  static readonly __mixins: Mixin[] = [LakeBodyOfWaterMixin, BodyOfWaterMixin];
-}
 LakeBodyOfWaterMixin.appliesTo = schema.LakeBodyOfWater
-LakeBodyOfWaterMixin.Class = LakeBodyOfWaterImpl
-
-export const fromPointer = createFactory<LakeBodyOfWater>([BodyOfWaterMixin, LakeBodyOfWaterMixin], { types: [schema.LakeBodyOfWater] });
+LakeBodyOfWaterMixin.createFactory = (env: RdfineEnvironment) => createFactory<LakeBodyOfWater>([BodyOfWaterMixin, LakeBodyOfWaterMixin], { types: [schema.LakeBodyOfWater] }, env)

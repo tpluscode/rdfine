@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { ProvenanceRelationMixin } from './ProvenanceRelation.js';
 
 export interface AgentOriginationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.ProvenanceRelation<D>, rdfine.RdfResource<D> {
   agentOriginationRelationHasSource: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
   agentOriginationRelationHasTarget: Rico.Agent<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    AgentOriginationRelation: Factory<Rico.AgentOriginationRelation>;
+  }
 }
 
 export function AgentOriginationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentOriginationRelation & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function AgentOriginationRelationMixin<Base extends rdfine.Constructor>(R
   }
   return AgentOriginationRelationClass as any
 }
-
-class AgentOriginationRelationImpl extends AgentOriginationRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AgentOriginationRelation>) {
-    super(arg, init)
-    this.types.add(rico.AgentOriginationRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [AgentOriginationRelationMixin, ProvenanceRelationMixin];
-}
 AgentOriginationRelationMixin.appliesTo = rico.AgentOriginationRelation
-AgentOriginationRelationMixin.Class = AgentOriginationRelationImpl
-
-export const fromPointer = createFactory<AgentOriginationRelation>([ProvenanceRelationMixin, AgentOriginationRelationMixin], { types: [rico.AgentOriginationRelation] });
+AgentOriginationRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<AgentOriginationRelation>([ProvenanceRelationMixin, AgentOriginationRelationMixin], { types: [rico.AgentOriginationRelation] }, env)

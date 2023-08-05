@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { csvw } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '../index.js';
 
 export interface Schema<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -25,6 +25,12 @@ export interface Schema<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdf
   textDirection: Csvw.Direction<D> | undefined;
   transformations: Array<Csvw.Transformation<D>>;
   valueUrl: string | undefined;
+}
+
+declare global {
+  interface CsvwVocabulary {
+    Schema: Factory<Csvw.Schema>;
+  }
 }
 
 export function SchemaMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Schema & RdfResourceCore> & Base {
@@ -67,16 +73,5 @@ export function SchemaMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return SchemaClass as any
 }
-
-class SchemaImpl extends SchemaMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Schema>) {
-    super(arg, init)
-    this.types.add(csvw.Schema)
-  }
-
-  static readonly __mixins: Mixin[] = [SchemaMixin];
-}
 SchemaMixin.appliesTo = csvw.Schema
-SchemaMixin.Class = SchemaImpl
-
-export const fromPointer = createFactory<Schema>([SchemaMixin], { types: [csvw.Schema] });
+SchemaMixin.createFactory = (env: RdfineEnvironment) => createFactory<Schema>([SchemaMixin], { types: [csvw.Schema] }, env)

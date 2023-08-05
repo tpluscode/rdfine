@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MediaGalleryMixin } from './MediaGallery.js';
 
 export interface VideoGallery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaGallery<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    VideoGallery: Factory<Schema.VideoGallery>;
+  }
 }
 
 export function VideoGalleryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VideoGallery & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function VideoGalleryMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return VideoGalleryClass as any
 }
-
-class VideoGalleryImpl extends VideoGalleryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<VideoGallery>) {
-    super(arg, init)
-    this.types.add(schema.VideoGallery)
-  }
-
-  static readonly __mixins: Mixin[] = [VideoGalleryMixin, MediaGalleryMixin];
-}
 VideoGalleryMixin.appliesTo = schema.VideoGallery
-VideoGalleryMixin.Class = VideoGalleryImpl
-
-export const fromPointer = createFactory<VideoGallery>([MediaGalleryMixin, VideoGalleryMixin], { types: [schema.VideoGallery] });
+VideoGalleryMixin.createFactory = (env: RdfineEnvironment) => createFactory<VideoGallery>([MediaGalleryMixin, VideoGalleryMixin], { types: [schema.VideoGallery] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 import { ItemListMixin } from './ItemList.js';
@@ -13,6 +13,12 @@ import { ListItemMixin } from './ListItem.js';
 export interface HowToSection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ItemList<D>, Schema.ListItem<D>, rdfine.RdfResource<D> {
   steps: Array<Schema.CreativeWork<D> | Schema.ItemList<D>>;
   stepsLiteral: Array<string>;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    HowToSection: Factory<Schema.HowToSection>;
+  }
 }
 
 export function HowToSectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowToSection & RdfResourceCore> & Base {
@@ -25,16 +31,5 @@ export function HowToSectionMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return HowToSectionClass as any
 }
-
-class HowToSectionImpl extends HowToSectionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<HowToSection>) {
-    super(arg, init)
-    this.types.add(schema.HowToSection)
-  }
-
-  static readonly __mixins: Mixin[] = [HowToSectionMixin, CreativeWorkMixin, ItemListMixin, ListItemMixin];
-}
 HowToSectionMixin.appliesTo = schema.HowToSection
-HowToSectionMixin.Class = HowToSectionImpl
-
-export const fromPointer = createFactory<HowToSection>([ListItemMixin, ItemListMixin, CreativeWorkMixin, HowToSectionMixin], { types: [schema.HowToSection] });
+HowToSectionMixin.createFactory = (env: RdfineEnvironment) => createFactory<HowToSection>([ListItemMixin, ItemListMixin, CreativeWorkMixin, HowToSectionMixin], { types: [schema.HowToSection] }, env)

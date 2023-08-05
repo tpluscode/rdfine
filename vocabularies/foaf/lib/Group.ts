@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { foaf } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Foaf from '../index.js';
 import { AgentMixin } from './Agent.js';
 
 export interface Group<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.Agent<D>, rdfine.RdfResource<D> {
   member: Foaf.Agent<D> | undefined;
+}
+
+declare global {
+  interface FoafVocabulary {
+    Group: Factory<Foaf.Group>;
+  }
 }
 
 export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Group & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return GroupClass as any
 }
-
-class GroupImpl extends GroupMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Group>) {
-    super(arg, init)
-    this.types.add(foaf.Group)
-  }
-
-  static readonly __mixins: Mixin[] = [GroupMixin, AgentMixin];
-}
 GroupMixin.appliesTo = foaf.Group
-GroupMixin.Class = GroupImpl
-
-export const fromPointer = createFactory<Group>([AgentMixin, GroupMixin], { types: [foaf.Group] });
+GroupMixin.createFactory = (env: RdfineEnvironment) => createFactory<Group>([AgentMixin, GroupMixin], { types: [foaf.Group] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -16,6 +16,12 @@ export interface Trip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   partOfTrip: Schema.Trip<D> | undefined;
   provider: Schema.Organization<D> | Schema.Person<D> | undefined;
   subTrip: Schema.Trip<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Trip: Factory<Schema.Trip>;
+  }
 }
 
 export function TripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Trip & RdfResourceCore> & Base {
@@ -38,16 +44,5 @@ export function TripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return TripClass as any
 }
-
-class TripImpl extends TripMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Trip>) {
-    super(arg, init)
-    this.types.add(schema.Trip)
-  }
-
-  static readonly __mixins: Mixin[] = [TripMixin, IntangibleMixin];
-}
 TripMixin.appliesTo = schema.Trip
-TripMixin.Class = TripImpl
-
-export const fromPointer = createFactory<Trip>([IntangibleMixin, TripMixin], { types: [schema.Trip] });
+TripMixin.createFactory = (env: RdfineEnvironment) => createFactory<Trip>([IntangibleMixin, TripMixin], { types: [schema.Trip] }, env)

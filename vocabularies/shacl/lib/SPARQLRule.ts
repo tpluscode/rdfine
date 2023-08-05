@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '../index.js';
 import { RuleMixin } from './Rule.js';
 import { SPARQLConstructExecutableMixin } from './SPARQLConstructExecutable.js';
 
 export interface SPARQLRule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Rule<D>, Sh.SPARQLConstructExecutable<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface ShVocabulary {
+    SPARQLRule: Factory<Sh.SPARQLRule>;
+  }
 }
 
 export function SPARQLRuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLRule & RdfResourceCore> & Base {
@@ -18,16 +24,5 @@ export function SPARQLRuleMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return SPARQLRuleClass as any
 }
-
-class SPARQLRuleImpl extends SPARQLRuleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SPARQLRule>) {
-    super(arg, init)
-    this.types.add(sh.SPARQLRule)
-  }
-
-  static readonly __mixins: Mixin[] = [SPARQLRuleMixin, RuleMixin, SPARQLConstructExecutableMixin];
-}
 SPARQLRuleMixin.appliesTo = sh.SPARQLRule
-SPARQLRuleMixin.Class = SPARQLRuleImpl
-
-export const fromPointer = createFactory<SPARQLRule>([SPARQLConstructExecutableMixin, RuleMixin, SPARQLRuleMixin], { types: [sh.SPARQLRule] });
+SPARQLRuleMixin.createFactory = (env: RdfineEnvironment) => createFactory<SPARQLRule>([SPARQLConstructExecutableMixin, RuleMixin, SPARQLRuleMixin], { types: [sh.SPARQLRule] }, env)

@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalProcedureMixin } from './MedicalProcedure.js';
 
 export interface SurgicalProcedure<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalProcedure<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    SurgicalProcedure: Factory<Schema.SurgicalProcedure>;
+  }
 }
 
 export function SurgicalProcedureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SurgicalProcedure & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function SurgicalProcedureMixin<Base extends rdfine.Constructor>(Resource
   }
   return SurgicalProcedureClass as any
 }
-
-class SurgicalProcedureImpl extends SurgicalProcedureMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SurgicalProcedure>) {
-    super(arg, init)
-    this.types.add(schema.SurgicalProcedure)
-  }
-
-  static readonly __mixins: Mixin[] = [SurgicalProcedureMixin, MedicalProcedureMixin];
-}
 SurgicalProcedureMixin.appliesTo = schema.SurgicalProcedure
-SurgicalProcedureMixin.Class = SurgicalProcedureImpl
-
-export const fromPointer = createFactory<SurgicalProcedure>([MedicalProcedureMixin, SurgicalProcedureMixin], { types: [schema.SurgicalProcedure] });
+SurgicalProcedureMixin.createFactory = (env: RdfineEnvironment) => createFactory<SurgicalProcedure>([MedicalProcedureMixin, SurgicalProcedureMixin], { types: [schema.SurgicalProcedure] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -21,6 +21,12 @@ export interface NutritionInformation<D extends RDF.DatasetCore = RDF.DatasetCor
   sugarContent: Schema.Mass<D> | undefined;
   transFatContent: Schema.Mass<D> | undefined;
   unsaturatedFatContent: Schema.Mass<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    NutritionInformation: Factory<Schema.NutritionInformation>;
+  }
 }
 
 export function NutritionInformationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NutritionInformation & RdfResourceCore> & Base {
@@ -53,16 +59,5 @@ export function NutritionInformationMixin<Base extends rdfine.Constructor>(Resou
   }
   return NutritionInformationClass as any
 }
-
-class NutritionInformationImpl extends NutritionInformationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<NutritionInformation>) {
-    super(arg, init)
-    this.types.add(schema.NutritionInformation)
-  }
-
-  static readonly __mixins: Mixin[] = [NutritionInformationMixin, StructuredValueMixin];
-}
 NutritionInformationMixin.appliesTo = schema.NutritionInformation
-NutritionInformationMixin.Class = NutritionInformationImpl
-
-export const fromPointer = createFactory<NutritionInformation>([StructuredValueMixin, NutritionInformationMixin], { types: [schema.NutritionInformation] });
+NutritionInformationMixin.createFactory = (env: RdfineEnvironment) => createFactory<NutritionInformation>([StructuredValueMixin, NutritionInformationMixin], { types: [schema.NutritionInformation] }, env)

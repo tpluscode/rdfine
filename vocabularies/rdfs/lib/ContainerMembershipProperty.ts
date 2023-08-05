@@ -1,17 +1,23 @@
 import '../extensions/rdf/Property.js';
 import { PropertyMixinEx } from '../extensions/rdf/Property.js';
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rdfs } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rdfs from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
 export interface ContainerMembershipProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface RdfsVocabulary {
+    ContainerMembershipProperty: Factory<Rdfs.ContainerMembershipProperty>;
+  }
 }
 
 export function ContainerMembershipPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ContainerMembershipProperty & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function ContainerMembershipPropertyMixin<Base extends rdfine.Constructor
   }
   return ContainerMembershipPropertyClass as any
 }
-
-class ContainerMembershipPropertyImpl extends ContainerMembershipPropertyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ContainerMembershipProperty>) {
-    super(arg, init)
-    this.types.add(rdfs.ContainerMembershipProperty)
-  }
-
-  static readonly __mixins: Mixin[] = [ContainerMembershipPropertyMixin, RdfPropertyMixin];
-}
 ContainerMembershipPropertyMixin.appliesTo = rdfs.ContainerMembershipProperty
-ContainerMembershipPropertyMixin.Class = ContainerMembershipPropertyImpl
-
-export const fromPointer = createFactory<ContainerMembershipProperty>([RdfPropertyMixin, ContainerMembershipPropertyMixin], { types: [rdfs.ContainerMembershipProperty] });
+ContainerMembershipPropertyMixin.createFactory = (env: RdfineEnvironment) => createFactory<ContainerMembershipProperty>([RdfPropertyMixin, ContainerMembershipPropertyMixin], { types: [rdfs.ContainerMembershipProperty] }, env)

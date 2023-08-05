@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { EntertainmentBusinessMixin } from './EntertainmentBusiness.js';
 
 export interface ArtGallery<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.EntertainmentBusiness<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ArtGallery: Factory<Schema.ArtGallery>;
+  }
 }
 
 export function ArtGalleryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ArtGallery & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function ArtGalleryMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return ArtGalleryClass as any
 }
-
-class ArtGalleryImpl extends ArtGalleryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ArtGallery>) {
-    super(arg, init)
-    this.types.add(schema.ArtGallery)
-  }
-
-  static readonly __mixins: Mixin[] = [ArtGalleryMixin, EntertainmentBusinessMixin];
-}
 ArtGalleryMixin.appliesTo = schema.ArtGallery
-ArtGalleryMixin.Class = ArtGalleryImpl
-
-export const fromPointer = createFactory<ArtGallery>([EntertainmentBusinessMixin, ArtGalleryMixin], { types: [schema.ArtGallery] });
+ArtGalleryMixin.createFactory = (env: RdfineEnvironment) => createFactory<ArtGallery>([EntertainmentBusinessMixin, ArtGalleryMixin], { types: [schema.ArtGallery] }, env)

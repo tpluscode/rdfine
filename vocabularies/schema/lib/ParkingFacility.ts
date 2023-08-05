@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CivicStructureMixin } from './CivicStructure.js';
 
 export interface ParkingFacility<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ParkingFacility: Factory<Schema.ParkingFacility>;
+  }
 }
 
 export function ParkingFacilityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ParkingFacility & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function ParkingFacilityMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return ParkingFacilityClass as any
 }
-
-class ParkingFacilityImpl extends ParkingFacilityMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ParkingFacility>) {
-    super(arg, init)
-    this.types.add(schema.ParkingFacility)
-  }
-
-  static readonly __mixins: Mixin[] = [ParkingFacilityMixin, CivicStructureMixin];
-}
 ParkingFacilityMixin.appliesTo = schema.ParkingFacility
-ParkingFacilityMixin.Class = ParkingFacilityImpl
-
-export const fromPointer = createFactory<ParkingFacility>([CivicStructureMixin, ParkingFacilityMixin], { types: [schema.ParkingFacility] });
+ParkingFacilityMixin.createFactory = (env: RdfineEnvironment) => createFactory<ParkingFacility>([CivicStructureMixin, ParkingFacilityMixin], { types: [schema.ParkingFacility] }, env)

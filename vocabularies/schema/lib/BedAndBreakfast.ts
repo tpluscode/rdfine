@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LodgingBusinessMixin } from './LodgingBusiness.js';
 
 export interface BedAndBreakfast<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LodgingBusiness<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BedAndBreakfast: Factory<Schema.BedAndBreakfast>;
+  }
 }
 
 export function BedAndBreakfastMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BedAndBreakfast & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function BedAndBreakfastMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return BedAndBreakfastClass as any
 }
-
-class BedAndBreakfastImpl extends BedAndBreakfastMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<BedAndBreakfast>) {
-    super(arg, init)
-    this.types.add(schema.BedAndBreakfast)
-  }
-
-  static readonly __mixins: Mixin[] = [BedAndBreakfastMixin, LodgingBusinessMixin];
-}
 BedAndBreakfastMixin.appliesTo = schema.BedAndBreakfast
-BedAndBreakfastMixin.Class = BedAndBreakfastImpl
-
-export const fromPointer = createFactory<BedAndBreakfast>([LodgingBusinessMixin, BedAndBreakfastMixin], { types: [schema.BedAndBreakfast] });
+BedAndBreakfastMixin.createFactory = (env: RdfineEnvironment) => createFactory<BedAndBreakfast>([LodgingBusinessMixin, BedAndBreakfastMixin], { types: [schema.BedAndBreakfast] }, env)

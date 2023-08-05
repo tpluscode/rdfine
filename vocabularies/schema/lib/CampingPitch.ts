@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AccommodationMixin } from './Accommodation.js';
 
 export interface CampingPitch<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Accommodation<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CampingPitch: Factory<Schema.CampingPitch>;
+  }
 }
 
 export function CampingPitchMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CampingPitch & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function CampingPitchMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return CampingPitchClass as any
 }
-
-class CampingPitchImpl extends CampingPitchMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CampingPitch>) {
-    super(arg, init)
-    this.types.add(schema.CampingPitch)
-  }
-
-  static readonly __mixins: Mixin[] = [CampingPitchMixin, AccommodationMixin];
-}
 CampingPitchMixin.appliesTo = schema.CampingPitch
-CampingPitchMixin.Class = CampingPitchImpl
-
-export const fromPointer = createFactory<CampingPitch>([AccommodationMixin, CampingPitchMixin], { types: [schema.CampingPitch] });
+CampingPitchMixin.createFactory = (env: RdfineEnvironment) => createFactory<CampingPitch>([AccommodationMixin, CampingPitchMixin], { types: [schema.CampingPitch] }, env)

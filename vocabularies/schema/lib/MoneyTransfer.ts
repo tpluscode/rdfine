@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { TransferActionMixin } from './TransferAction.js';
 
@@ -13,6 +13,12 @@ export interface MoneyTransfer<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   amountLiteral: number | undefined;
   beneficiaryBank: Schema.BankOrCreditUnion<D> | undefined;
   beneficiaryBankLiteral: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MoneyTransfer: Factory<Schema.MoneyTransfer>;
+  }
 }
 
 export function MoneyTransferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MoneyTransfer & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function MoneyTransferMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return MoneyTransferClass as any
 }
-
-class MoneyTransferImpl extends MoneyTransferMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MoneyTransfer>) {
-    super(arg, init)
-    this.types.add(schema.MoneyTransfer)
-  }
-
-  static readonly __mixins: Mixin[] = [MoneyTransferMixin, TransferActionMixin];
-}
 MoneyTransferMixin.appliesTo = schema.MoneyTransfer
-MoneyTransferMixin.Class = MoneyTransferImpl
-
-export const fromPointer = createFactory<MoneyTransfer>([TransferActionMixin, MoneyTransferMixin], { types: [schema.MoneyTransfer] });
+MoneyTransferMixin.createFactory = (env: RdfineEnvironment) => createFactory<MoneyTransfer>([TransferActionMixin, MoneyTransferMixin], { types: [schema.MoneyTransfer] }, env)

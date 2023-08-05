@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CommunicateActionMixin } from './CommunicateAction.js';
 
 export interface CheckOutAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CheckOutAction: Factory<Schema.CheckOutAction>;
+  }
 }
 
 export function CheckOutActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CheckOutAction & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function CheckOutActionMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return CheckOutActionClass as any
 }
-
-class CheckOutActionImpl extends CheckOutActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CheckOutAction>) {
-    super(arg, init)
-    this.types.add(schema.CheckOutAction)
-  }
-
-  static readonly __mixins: Mixin[] = [CheckOutActionMixin, CommunicateActionMixin];
-}
 CheckOutActionMixin.appliesTo = schema.CheckOutAction
-CheckOutActionMixin.Class = CheckOutActionImpl
-
-export const fromPointer = createFactory<CheckOutAction>([CommunicateActionMixin, CheckOutActionMixin], { types: [schema.CheckOutAction] });
+CheckOutActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<CheckOutAction>([CommunicateActionMixin, CheckOutActionMixin], { types: [schema.CheckOutAction] }, env)

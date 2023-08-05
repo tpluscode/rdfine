@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -22,6 +22,12 @@ export interface Clip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   partOfSeries: Schema.CreativeWorkSeries<D> | undefined;
   startOffset: Schema.HyperTocEntry<D> | undefined;
   startOffsetLiteral: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Clip: Factory<Schema.Clip>;
+  }
 }
 
 export function ClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Clip & RdfResourceCore> & Base {
@@ -56,16 +62,5 @@ export function ClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return ClipClass as any
 }
-
-class ClipImpl extends ClipMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Clip>) {
-    super(arg, init)
-    this.types.add(schema.Clip)
-  }
-
-  static readonly __mixins: Mixin[] = [ClipMixin, CreativeWorkMixin];
-}
 ClipMixin.appliesTo = schema.Clip
-ClipMixin.Class = ClipImpl
-
-export const fromPointer = createFactory<Clip>([CreativeWorkMixin, ClipMixin], { types: [schema.Clip] });
+ClipMixin.createFactory = (env: RdfineEnvironment) => createFactory<Clip>([CreativeWorkMixin, ClipMixin], { types: [schema.Clip] }, env)

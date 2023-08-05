@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 import { PhysicalActivityMixin } from './PhysicalActivity.js';
@@ -22,6 +22,12 @@ export interface ExercisePlan<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   restPeriods: Schema.QuantitativeValue<D> | undefined;
   restPeriodsLiteral: string | undefined;
   workload: Schema.Energy<D> | Schema.QuantitativeValue<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ExercisePlan: Factory<Schema.ExercisePlan>;
+  }
 }
 
 export function ExercisePlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ExercisePlan & RdfResourceCore> & Base {
@@ -54,16 +60,5 @@ export function ExercisePlanMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return ExercisePlanClass as any
 }
-
-class ExercisePlanImpl extends ExercisePlanMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ExercisePlan>) {
-    super(arg, init)
-    this.types.add(schema.ExercisePlan)
-  }
-
-  static readonly __mixins: Mixin[] = [ExercisePlanMixin, CreativeWorkMixin, PhysicalActivityMixin];
-}
 ExercisePlanMixin.appliesTo = schema.ExercisePlan
-ExercisePlanMixin.Class = ExercisePlanImpl
-
-export const fromPointer = createFactory<ExercisePlan>([PhysicalActivityMixin, CreativeWorkMixin, ExercisePlanMixin], { types: [schema.ExercisePlan] });
+ExercisePlanMixin.createFactory = (env: RdfineEnvironment) => createFactory<ExercisePlan>([PhysicalActivityMixin, CreativeWorkMixin, ExercisePlanMixin], { types: [schema.ExercisePlan] }, env)

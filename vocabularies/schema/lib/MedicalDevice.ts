@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalEntityMixin } from './MedicalEntity.js';
 
@@ -16,6 +16,12 @@ export interface MedicalDevice<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   preOp: string | undefined;
   procedure: string | undefined;
   seriousAdverseOutcome: Schema.MedicalEntity<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MedicalDevice: Factory<Schema.MedicalDevice>;
+  }
 }
 
 export function MedicalDeviceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalDevice & RdfResourceCore> & Base {
@@ -38,16 +44,5 @@ export function MedicalDeviceMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return MedicalDeviceClass as any
 }
-
-class MedicalDeviceImpl extends MedicalDeviceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MedicalDevice>) {
-    super(arg, init)
-    this.types.add(schema.MedicalDevice)
-  }
-
-  static readonly __mixins: Mixin[] = [MedicalDeviceMixin, MedicalEntityMixin];
-}
 MedicalDeviceMixin.appliesTo = schema.MedicalDevice
-MedicalDeviceMixin.Class = MedicalDeviceImpl
-
-export const fromPointer = createFactory<MedicalDevice>([MedicalEntityMixin, MedicalDeviceMixin], { types: [schema.MedicalDevice] });
+MedicalDeviceMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalDevice>([MedicalEntityMixin, MedicalDeviceMixin], { types: [schema.MedicalDevice] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalIntangibleMixin } from './MedicalIntangible.js';
 
@@ -14,6 +14,12 @@ export interface DoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   doseValueTerm: Schema.QualitativeValue | undefined;
   frequency: string | undefined;
   targetPopulation: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DoseSchedule: Factory<Schema.DoseSchedule>;
+  }
 }
 
 export function DoseScheduleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DoseSchedule & RdfResourceCore> & Base {
@@ -32,16 +38,5 @@ export function DoseScheduleMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return DoseScheduleClass as any
 }
-
-class DoseScheduleImpl extends DoseScheduleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DoseSchedule>) {
-    super(arg, init)
-    this.types.add(schema.DoseSchedule)
-  }
-
-  static readonly __mixins: Mixin[] = [DoseScheduleMixin, MedicalIntangibleMixin];
-}
 DoseScheduleMixin.appliesTo = schema.DoseSchedule
-DoseScheduleMixin.Class = DoseScheduleImpl
-
-export const fromPointer = createFactory<DoseSchedule>([MedicalIntangibleMixin, DoseScheduleMixin], { types: [schema.DoseSchedule] });
+DoseScheduleMixin.createFactory = (env: RdfineEnvironment) => createFactory<DoseSchedule>([MedicalIntangibleMixin, DoseScheduleMixin], { types: [schema.DoseSchedule] }, env)

@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { WebPageElementMixin } from './WebPageElement.js';
 
 export interface WPFooter<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    WPFooter: Factory<Schema.WPFooter>;
+  }
 }
 
 export function WPFooterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WPFooter & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function WPFooterMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return WPFooterClass as any
 }
-
-class WPFooterImpl extends WPFooterMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<WPFooter>) {
-    super(arg, init)
-    this.types.add(schema.WPFooter)
-  }
-
-  static readonly __mixins: Mixin[] = [WPFooterMixin, WebPageElementMixin];
-}
 WPFooterMixin.appliesTo = schema.WPFooter
-WPFooterMixin.Class = WPFooterImpl
-
-export const fromPointer = createFactory<WPFooter>([WebPageElementMixin, WPFooterMixin], { types: [schema.WPFooter] });
+WPFooterMixin.createFactory = (env: RdfineEnvironment) => createFactory<WPFooter>([WebPageElementMixin, WPFooterMixin], { types: [schema.WPFooter] }, env)

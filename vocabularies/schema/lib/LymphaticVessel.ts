@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { VesselMixin } from './Vessel.js';
 
@@ -12,6 +12,12 @@ export interface LymphaticVessel<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   originatesFrom: Schema.Vessel<D> | undefined;
   regionDrained: Schema.AnatomicalStructure<D> | Schema.AnatomicalSystem<D> | undefined;
   runsTo: Schema.Vessel<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    LymphaticVessel: Factory<Schema.LymphaticVessel>;
+  }
 }
 
 export function LymphaticVesselMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LymphaticVessel & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function LymphaticVesselMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return LymphaticVesselClass as any
 }
-
-class LymphaticVesselImpl extends LymphaticVesselMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<LymphaticVessel>) {
-    super(arg, init)
-    this.types.add(schema.LymphaticVessel)
-  }
-
-  static readonly __mixins: Mixin[] = [LymphaticVesselMixin, VesselMixin];
-}
 LymphaticVesselMixin.appliesTo = schema.LymphaticVessel
-LymphaticVesselMixin.Class = LymphaticVesselImpl
-
-export const fromPointer = createFactory<LymphaticVessel>([VesselMixin, LymphaticVesselMixin], { types: [schema.LymphaticVessel] });
+LymphaticVesselMixin.createFactory = (env: RdfineEnvironment) => createFactory<LymphaticVessel>([VesselMixin, LymphaticVesselMixin], { types: [schema.LymphaticVessel] }, env)

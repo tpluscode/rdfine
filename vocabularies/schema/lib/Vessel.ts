@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AnatomicalStructureMixin } from './AnatomicalStructure.js';
 
 export interface Vessel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AnatomicalStructure<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Vessel: Factory<Schema.Vessel>;
+  }
 }
 
 export function VesselMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Vessel & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function VesselMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return VesselClass as any
 }
-
-class VesselImpl extends VesselMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Vessel>) {
-    super(arg, init)
-    this.types.add(schema.Vessel)
-  }
-
-  static readonly __mixins: Mixin[] = [VesselMixin, AnatomicalStructureMixin];
-}
 VesselMixin.appliesTo = schema.Vessel
-VesselMixin.Class = VesselImpl
-
-export const fromPointer = createFactory<Vessel>([AnatomicalStructureMixin, VesselMixin], { types: [schema.Vessel] });
+VesselMixin.createFactory = (env: RdfineEnvironment) => createFactory<Vessel>([AnatomicalStructureMixin, VesselMixin], { types: [schema.Vessel] }, env)

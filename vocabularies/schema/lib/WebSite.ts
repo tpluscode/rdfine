@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
 export interface WebSite<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   issn: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    WebSite: Factory<Schema.WebSite>;
+  }
 }
 
 export function WebSiteMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WebSite & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function WebSiteMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return WebSiteClass as any
 }
-
-class WebSiteImpl extends WebSiteMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<WebSite>) {
-    super(arg, init)
-    this.types.add(schema.WebSite)
-  }
-
-  static readonly __mixins: Mixin[] = [WebSiteMixin, CreativeWorkMixin];
-}
 WebSiteMixin.appliesTo = schema.WebSite
-WebSiteMixin.Class = WebSiteImpl
-
-export const fromPointer = createFactory<WebSite>([CreativeWorkMixin, WebSiteMixin], { types: [schema.WebSite] });
+WebSiteMixin.createFactory = (env: RdfineEnvironment) => createFactory<WebSite>([CreativeWorkMixin, WebSiteMixin], { types: [schema.WebSite] }, env)

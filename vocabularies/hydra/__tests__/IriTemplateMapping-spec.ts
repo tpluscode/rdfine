@@ -3,11 +3,8 @@ import $rdf from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import type { NamedNode } from '@rdfjs/types'
 import { hydra } from '@tpluscode/rdf-ns-builders'
-import RdfResourceImpl from '@tpluscode/rdfine';
-import { IriTemplateMappingMixin } from '../lib/IriTemplateMapping.js';
 import { expect } from 'chai';
-
-class IriTemplateMapping extends IriTemplateMappingMixin(RdfResourceImpl) {}
+import environment from './support/environment.js';
 
 describe('IriTemplateMapping', () => {
   let node: GraphPointer<NamedNode, DatasetExt>
@@ -20,7 +17,7 @@ describe('IriTemplateMapping', () => {
   describe('required', () => {
     it.skip('should return false if missing', () => {
       // given
-      const iriTemplate = new IriTemplateMapping(node)
+      const iriTemplate = environment.rdfine.hydra.IriTemplateMapping(node)
 
       // then
       expect(iriTemplate.required).to.eq(false)
@@ -32,7 +29,7 @@ describe('IriTemplateMapping', () => {
       // given
       node.addOut(hydra.variable, 'test')
 
-      const iriTemplate = new IriTemplateMapping(node)
+      const iriTemplate = environment.rdfine.hydra.IriTemplateMapping(node)
 
       // then
       expect(iriTemplate.variable).to.eq('test')
@@ -43,7 +40,7 @@ describe('IriTemplateMapping', () => {
     it('returns the correct value of hydra term', () => {
       // given
       node.addOut(hydra.property, node.namedNode('http://example.com/test'))
-      const iriTemplate = new IriTemplateMapping(node)
+      const iriTemplate = environment.rdfine.hydra.IriTemplateMapping(node)
 
       // then
       expect(iriTemplate.property?.id.value).to.eq('http://example.com/test')

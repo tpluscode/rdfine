@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -19,6 +19,12 @@ export interface GeoShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   line: string | undefined;
   polygon: string | undefined;
   postalCode: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    GeoShape: Factory<Schema.GeoShape>;
+  }
 }
 
 export function GeoShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GeoShape & RdfResourceCore> & Base {
@@ -47,16 +53,5 @@ export function GeoShapeMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return GeoShapeClass as any
 }
-
-class GeoShapeImpl extends GeoShapeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<GeoShape>) {
-    super(arg, init)
-    this.types.add(schema.GeoShape)
-  }
-
-  static readonly __mixins: Mixin[] = [GeoShapeMixin, StructuredValueMixin];
-}
 GeoShapeMixin.appliesTo = schema.GeoShape
-GeoShapeMixin.Class = GeoShapeImpl
-
-export const fromPointer = createFactory<GeoShape>([StructuredValueMixin, GeoShapeMixin], { types: [schema.GeoShape] });
+GeoShapeMixin.createFactory = (env: RdfineEnvironment) => createFactory<GeoShape>([StructuredValueMixin, GeoShapeMixin], { types: [schema.GeoShape] }, env)

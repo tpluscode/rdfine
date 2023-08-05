@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -82,6 +82,12 @@ export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   telephone: string | undefined;
   unnamedSourcesPolicy: Schema.CreativeWork<D> | undefined;
   vatID: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Organization: Factory<Schema.Organization>;
+  }
 }
 
 export function OrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Organization & RdfResourceCore> & Base {
@@ -236,16 +242,5 @@ export function OrganizationMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return OrganizationClass as any
 }
-
-class OrganizationImpl extends OrganizationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Organization>) {
-    super(arg, init)
-    this.types.add(schema.Organization)
-  }
-
-  static readonly __mixins: Mixin[] = [OrganizationMixin, ThingMixin];
-}
 OrganizationMixin.appliesTo = schema.Organization
-OrganizationMixin.Class = OrganizationImpl
-
-export const fromPointer = createFactory<Organization>([ThingMixin, OrganizationMixin], { types: [schema.Organization] });
+OrganizationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Organization>([ThingMixin, OrganizationMixin], { types: [schema.Organization] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -19,6 +19,12 @@ export interface Dataset<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   measurementTechniqueTerm: RDF.NamedNode | undefined;
   variableMeasured: Schema.PropertyValue<D> | undefined;
   variableMeasuredLiteral: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Dataset: Factory<Schema.Dataset>;
+  }
 }
 
 export function DatasetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Dataset & RdfResourceCore> & Base {
@@ -47,16 +53,5 @@ export function DatasetMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return DatasetClass as any
 }
-
-class DatasetImpl extends DatasetMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Dataset>) {
-    super(arg, init)
-    this.types.add(schema.Dataset)
-  }
-
-  static readonly __mixins: Mixin[] = [DatasetMixin, CreativeWorkMixin];
-}
 DatasetMixin.appliesTo = schema.Dataset
-DatasetMixin.Class = DatasetImpl
-
-export const fromPointer = createFactory<Dataset>([CreativeWorkMixin, DatasetMixin], { types: [schema.Dataset] });
+DatasetMixin.createFactory = (env: RdfineEnvironment) => createFactory<Dataset>([CreativeWorkMixin, DatasetMixin], { types: [schema.Dataset] }, env)

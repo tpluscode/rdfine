@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AutomotiveBusinessMixin } from './AutomotiveBusiness.js';
 
 export interface AutoWash<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AutomotiveBusiness<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    AutoWash: Factory<Schema.AutoWash>;
+  }
 }
 
 export function AutoWashMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AutoWash & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function AutoWashMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return AutoWashClass as any
 }
-
-class AutoWashImpl extends AutoWashMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AutoWash>) {
-    super(arg, init)
-    this.types.add(schema.AutoWash)
-  }
-
-  static readonly __mixins: Mixin[] = [AutoWashMixin, AutomotiveBusinessMixin];
-}
 AutoWashMixin.appliesTo = schema.AutoWash
-AutoWashMixin.Class = AutoWashImpl
-
-export const fromPointer = createFactory<AutoWash>([AutomotiveBusinessMixin, AutoWashMixin], { types: [schema.AutoWash] });
+AutoWashMixin.createFactory = (env: RdfineEnvironment) => createFactory<AutoWash>([AutomotiveBusinessMixin, AutoWashMixin], { types: [schema.AutoWash] }, env)

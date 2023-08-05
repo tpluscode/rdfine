@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '../index.js';
 import { SPARQLAskExecutableMixin } from './SPARQLAskExecutable.js';
 import { SPARQLSelectExecutableMixin } from './SPARQLSelectExecutable.js';
@@ -13,22 +13,17 @@ import { TargetMixin } from './Target.js';
 export interface SPARQLTarget<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLAskExecutable<D>, Sh.SPARQLSelectExecutable<D>, Sh.Target<D>, rdfine.RdfResource<D> {
 }
 
+declare global {
+  interface ShVocabulary {
+    SPARQLTarget: Factory<Sh.SPARQLTarget>;
+  }
+}
+
 export function SPARQLTargetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLTarget & RdfResourceCore> & Base {
   @rdfine.namespace(sh)
   class SPARQLTargetClass extends TargetMixin(SPARQLSelectExecutableMixin(SPARQLAskExecutableMixin(Resource))) {
   }
   return SPARQLTargetClass as any
 }
-
-class SPARQLTargetImpl extends SPARQLTargetMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SPARQLTarget>) {
-    super(arg, init)
-    this.types.add(sh.SPARQLTarget)
-  }
-
-  static readonly __mixins: Mixin[] = [SPARQLTargetMixin, SPARQLAskExecutableMixin, SPARQLSelectExecutableMixin, TargetMixin];
-}
 SPARQLTargetMixin.appliesTo = sh.SPARQLTarget
-SPARQLTargetMixin.Class = SPARQLTargetImpl
-
-export const fromPointer = createFactory<SPARQLTarget>([TargetMixin, SPARQLSelectExecutableMixin, SPARQLAskExecutableMixin, SPARQLTargetMixin], { types: [sh.SPARQLTarget] });
+SPARQLTargetMixin.createFactory = (env: RdfineEnvironment) => createFactory<SPARQLTarget>([TargetMixin, SPARQLSelectExecutableMixin, SPARQLAskExecutableMixin, SPARQLTargetMixin], { types: [sh.SPARQLTarget] }, env)

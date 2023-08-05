@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -16,6 +16,12 @@ export interface EngineSpecification<D extends RDF.DatasetCore = RDF.DatasetCore
   fuelType: string | undefined;
   fuelTypeTerm: RDF.NamedNode | Schema.QualitativeValue | undefined;
   torque: Schema.QuantitativeValue<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    EngineSpecification: Factory<Schema.EngineSpecification>;
+  }
 }
 
 export function EngineSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EngineSpecification & RdfResourceCore> & Base {
@@ -38,16 +44,5 @@ export function EngineSpecificationMixin<Base extends rdfine.Constructor>(Resour
   }
   return EngineSpecificationClass as any
 }
-
-class EngineSpecificationImpl extends EngineSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EngineSpecification>) {
-    super(arg, init)
-    this.types.add(schema.EngineSpecification)
-  }
-
-  static readonly __mixins: Mixin[] = [EngineSpecificationMixin, StructuredValueMixin];
-}
 EngineSpecificationMixin.appliesTo = schema.EngineSpecification
-EngineSpecificationMixin.Class = EngineSpecificationImpl
-
-export const fromPointer = createFactory<EngineSpecification>([StructuredValueMixin, EngineSpecificationMixin], { types: [schema.EngineSpecification] });
+EngineSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<EngineSpecification>([StructuredValueMixin, EngineSpecificationMixin], { types: [schema.EngineSpecification] }, env)

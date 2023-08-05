@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { TradeActionMixin } from './TradeAction.js';
 
@@ -12,6 +12,12 @@ export interface BuyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   seller: Schema.Organization<D> | Schema.Person<D> | undefined;
   vendor: Schema.Organization<D> | Schema.Person<D> | undefined;
   warrantyPromise: Schema.WarrantyPromise<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BuyAction: Factory<Schema.BuyAction>;
+  }
 }
 
 export function BuyActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BuyAction & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function BuyActionMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return BuyActionClass as any
 }
-
-class BuyActionImpl extends BuyActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<BuyAction>) {
-    super(arg, init)
-    this.types.add(schema.BuyAction)
-  }
-
-  static readonly __mixins: Mixin[] = [BuyActionMixin, TradeActionMixin];
-}
 BuyActionMixin.appliesTo = schema.BuyAction
-BuyActionMixin.Class = BuyActionImpl
-
-export const fromPointer = createFactory<BuyAction>([TradeActionMixin, BuyActionMixin], { types: [schema.BuyAction] });
+BuyActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<BuyAction>([TradeActionMixin, BuyActionMixin], { types: [schema.BuyAction] }, env)

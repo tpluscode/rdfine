@@ -1,5 +1,4 @@
 import type { Term } from '@rdfjs/types'
-import $rdf from '@rdfjs/data-model'
 import type { RdfResourceCore } from '../../../RdfResource.js'
 import { EdgeTraversalFactory, PropRef } from '../../path.js'
 import literalPropertyDecorator, { LiteralValues } from '../property/literal.js'
@@ -37,7 +36,7 @@ export function property<R extends RdfResourceCore<any>>(options: AccessorOption
         return fromInitializer(this, value).id
       }
 
-      return toLiteral(value) || $rdf.literal(value.toString())
+      return toLiteral.call(this.env, value) || this.env.literal(value.toString())
     },
     valueTypeName: 'RDF/JS term object',
     assertSetValue: () => true,

@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StoreMixin } from './Store.js';
 
 export interface ElectronicsStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ElectronicsStore: Factory<Schema.ElectronicsStore>;
+  }
 }
 
 export function ElectronicsStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ElectronicsStore & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function ElectronicsStoreMixin<Base extends rdfine.Constructor>(Resource:
   }
   return ElectronicsStoreClass as any
 }
-
-class ElectronicsStoreImpl extends ElectronicsStoreMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ElectronicsStore>) {
-    super(arg, init)
-    this.types.add(schema.ElectronicsStore)
-  }
-
-  static readonly __mixins: Mixin[] = [ElectronicsStoreMixin, StoreMixin];
-}
 ElectronicsStoreMixin.appliesTo = schema.ElectronicsStore
-ElectronicsStoreMixin.Class = ElectronicsStoreImpl
-
-export const fromPointer = createFactory<ElectronicsStore>([StoreMixin, ElectronicsStoreMixin], { types: [schema.ElectronicsStore] });
+ElectronicsStoreMixin.createFactory = (env: RdfineEnvironment) => createFactory<ElectronicsStore>([StoreMixin, ElectronicsStoreMixin], { types: [schema.ElectronicsStore] }, env)

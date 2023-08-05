@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ProductMixin } from './Product.js';
 
@@ -12,6 +12,12 @@ export interface ProductModel<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   isVariantOf: Schema.ProductGroup<D> | Schema.ProductModel<D> | undefined;
   predecessorOf: Schema.ProductModel<D> | undefined;
   successorOf: Schema.ProductModel<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ProductModel: Factory<Schema.ProductModel>;
+  }
 }
 
 export function ProductModelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ProductModel & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function ProductModelMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return ProductModelClass as any
 }
-
-class ProductModelImpl extends ProductModelMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ProductModel>) {
-    super(arg, init)
-    this.types.add(schema.ProductModel)
-  }
-
-  static readonly __mixins: Mixin[] = [ProductModelMixin, ProductMixin];
-}
 ProductModelMixin.appliesTo = schema.ProductModel
-ProductModelMixin.Class = ProductModelImpl
-
-export const fromPointer = createFactory<ProductModel>([ProductMixin, ProductModelMixin], { types: [schema.ProductModel] });
+ProductModelMixin.createFactory = (env: RdfineEnvironment) => createFactory<ProductModel>([ProductMixin, ProductModelMixin], { types: [schema.ProductModel] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { OfferMixin } from './Offer.js';
 
@@ -13,6 +13,12 @@ export interface AggregateOffer<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   lowPrice: number | string | undefined;
   offerCount: number | undefined;
   offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    AggregateOffer: Factory<Schema.AggregateOffer>;
+  }
 }
 
 export function AggregateOfferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AggregateOffer & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function AggregateOfferMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return AggregateOfferClass as any
 }
-
-class AggregateOfferImpl extends AggregateOfferMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AggregateOffer>) {
-    super(arg, init)
-    this.types.add(schema.AggregateOffer)
-  }
-
-  static readonly __mixins: Mixin[] = [AggregateOfferMixin, OfferMixin];
-}
 AggregateOfferMixin.appliesTo = schema.AggregateOffer
-AggregateOfferMixin.Class = AggregateOfferImpl
-
-export const fromPointer = createFactory<AggregateOffer>([OfferMixin, AggregateOfferMixin], { types: [schema.AggregateOffer] });
+AggregateOfferMixin.createFactory = (env: RdfineEnvironment) => createFactory<AggregateOffer>([OfferMixin, AggregateOfferMixin], { types: [schema.AggregateOffer] }, env)

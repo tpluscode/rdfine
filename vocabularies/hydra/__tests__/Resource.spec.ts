@@ -2,9 +2,9 @@ import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import DatasetExt from 'rdf-ext/lib/Dataset'
 import type { NamedNode } from '@rdfjs/types'
-import { fromPointer } from '../lib/Resource.js'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import { expect } from 'chai';
+import environment from './support/environment.js';
 
 describe('Resource', () => {
   let hydraResourceNode: GraphPointer<NamedNode>
@@ -22,7 +22,7 @@ describe('Resource', () => {
       hydraResourceNode.addOut(hydra.collection, hydraResourceNode.namedNode('http://example.com/c'))
 
       // when
-      const resource = fromPointer(hydraResourceNode)
+      const resource = environment.rdfine.hydra.Resource(hydraResourceNode)
 
       // then
       expect(resource.collection.length).to.eq(1)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -14,6 +14,12 @@ export interface Seat<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   seatNumber: string | undefined;
   seatRow: string | undefined;
   seatSection: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Seat: Factory<Schema.Seat>;
+  }
 }
 
 export function SeatMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Seat & RdfResourceCore> & Base {
@@ -32,16 +38,5 @@ export function SeatMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return SeatClass as any
 }
-
-class SeatImpl extends SeatMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Seat>) {
-    super(arg, init)
-    this.types.add(schema.Seat)
-  }
-
-  static readonly __mixins: Mixin[] = [SeatMixin, IntangibleMixin];
-}
 SeatMixin.appliesTo = schema.Seat
-SeatMixin.Class = SeatImpl
-
-export const fromPointer = createFactory<Seat>([IntangibleMixin, SeatMixin], { types: [schema.Seat] });
+SeatMixin.createFactory = (env: RdfineEnvironment) => createFactory<Seat>([IntangibleMixin, SeatMixin], { types: [schema.Seat] }, env)

@@ -15,31 +15,38 @@ import {
 import chai, { expect } from 'chai'
 import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
 import RdfResource, { Initializer, RdfResourceCore, ResourceNode } from '../RdfResource.js'
-import { Constructor, crossBoundaries, namespace, property, ResourceFactory } from '../index.js'
+import { Constructor, crossBoundaries, namespace, property } from '../index.js'
 import * as initialize from '../initializer.js'
+import { RdfineEnvironment } from '../environment.js'
 import { parse, ex } from './_helpers/index.js'
+import { createEnv } from './_helpers/environment.js'
 
 describe('RdfResource', () => {
   chai.use(jestSnapshotPlugin())
   before(() => import('../../../__tests__/helpers/matchers.js'))
 
+  let environment: RdfineEnvironment
+  beforeEach(() => {
+    environment = createEnv()
+  })
+
   describe('constructor', () => {
     it('throws when node is literal', () => {
       expect(() => {
-        const node = cf({ dataset: $rdf.dataset() }).literal('foo')
+        const node: any = cf({ dataset: $rdf.dataset() }).literal('foo')
 
-        return new RdfResource(node as any)
+        return new RdfResource(node, environment)
       }).to.throw()
     })
 
     it('throws when context represents multiple nodes', () => {
       expect(() => {
-        const node = cf({
+        const node: any = cf({
           dataset: $rdf.dataset(),
           term: [$rdf.blankNode(), $rdf.blankNode()],
         })
 
-        return new RdfResource(node as any)
+        return new RdfResource(node, environment)
       }).to.throw()
     })
   })
@@ -48,8 +55,8 @@ describe('RdfResource', () => {
     it('compares id term', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() }).namedNode('urn:foo:bar')
-      const left = new RdfResource(node)
-      const right = new RdfResource(node)
+      const left = new RdfResource(node, environment)
+      const right = new RdfResource(node, environment)
 
       // when
       const areEqual = left.equals(right)
@@ -61,7 +68,7 @@ describe('RdfResource', () => {
     it('compares id with term value', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() }).namedNode('urn:foo:bar')
-      const left = new RdfResource(node)
+      const left = new RdfResource(node, environment)
       const right = $rdf.namedNode('urn:foo:bar')
 
       // when
@@ -75,7 +82,7 @@ describe('RdfResource', () => {
       // given
       const graph = cf({ dataset: $rdf.dataset() })
       const node = graph.namedNode('urn:foo:bar')
-      const left = new RdfResource(node)
+      const left = new RdfResource(node, environment)
       const right = graph.namedNode('urn:foo:bar')
 
       // when
@@ -88,7 +95,7 @@ describe('RdfResource', () => {
     it('returns false if other resource is falsy', () => {
       // given
       const node = cf({ dataset: $rdf.dataset() }).namedNode('urn:foo:bar')
-      const left = new RdfResource(node)
+      const left = new RdfResource(node, environment)
 
       // when
       const areEqual = left.equals(null)
@@ -102,8 +109,8 @@ describe('RdfResource', () => {
       const dataset = $rdf.dataset()
       const foo = cf({ dataset }).blankNode('foo')
       const bar = cf({ dataset }).blankNode('foo')
-      const left = new RdfResource(foo)
-      const right = new RdfResource(bar)
+      const left = new RdfResource(foo, environment)
+      const right = new RdfResource(bar, environment)
 
       // when
       const areEqual = left.equals(right)
@@ -119,7 +126,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset(), graph: ex.graph }).blankNode()
 
       // when
-      const res = new RdfResource(node)
+      const res = new RdfResource(node, environment)
 
       // then
       expect(res._graphId.equals(ex.graph))
@@ -130,7 +137,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
 
       // when
-      const res = new RdfResource(node)
+      const res = new RdfResource(node, environment)
 
       // then
       expect(res._graphId.equals($rdf.defaultGraph()))
@@ -150,7 +157,7 @@ describe('RdfResource', () => {
       }).namedNode(ex.res)
 
       // when
-      const tc = new RdfResource(node).types
+      const tc = new RdfResource(node, environment).types
 
       // then
       expect([...tc.values()].map(r => r.id)).to.deep.eq(
@@ -172,7 +179,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, {
+      const resource = new ResourceImpl(node, environment, {
         id: ex.Foo,
         name: 'baz',
       })
@@ -198,7 +205,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.name).to.eq('baz')
@@ -219,7 +226,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.name).to.eq('baz')
@@ -243,7 +250,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.name).to.deep.equal($rdf.literal('baz'))
@@ -267,7 +274,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.age).to.deep.equal($rdf.literal('10', xsd.integer))
@@ -291,7 +298,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.age).to.deep.equal($rdf.literal('10', xsd.integer))
@@ -315,7 +322,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.age).to.be.undefined
@@ -339,7 +346,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.age).to.deep.equal($rdf.literal('foo'))
@@ -360,7 +367,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.names).to.deep.eq(['bar', 'baz'])
@@ -381,7 +388,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.name).to.eq('baz')
@@ -402,7 +409,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.other.id).to.deep.eq($rdf.namedNode('baz'))
@@ -428,7 +435,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.other).to.deep.eq($rdf.namedNode('bar'))
@@ -462,7 +469,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.others).to.containSubset(
@@ -490,7 +497,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.other.id.termType).to.eq('BlankNode')
@@ -516,7 +523,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, initializer)
+      const resource = new ResourceImpl(node, environment, initializer)
 
       // then
       expect(resource.others.map(o => o.id)).to.containSubset(
@@ -540,7 +547,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new ResourceImpl(node, {
+      const resource = new ResourceImpl(node, environment, {
         types: [ex.Bar],
       })
 
@@ -554,7 +561,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
 
       // when
-      const resource = new RdfResource(node, {
+      const resource = new RdfResource(node, environment, {
         [skos.prefLabel.value]: 'Foo',
         [skos.broader.value]: {
           [skos.prefLabel.value]: 'Bar',
@@ -577,7 +584,7 @@ describe('RdfResource', () => {
 
         // eslint-disable-next-line no-useless-constructor,@typescript-eslint/no-useless-constructor
         constructor(pointer: ResourceNode, init: Initializer<Concept>) {
-          super(pointer, init)
+          super(pointer, environment, init)
         }
       }
 
@@ -599,7 +606,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new SkosResource(node, {
+      const resource = new SkosResource(node, environment, {
         broader: [
           {
             [skos.prefLabel.value]: 'Bar',
@@ -620,7 +627,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new SkosResource(node, {
+      const resource = new SkosResource(node, environment, {
         broader: ex.Foo,
       })
 
@@ -637,7 +644,7 @@ describe('RdfResource', () => {
       }
 
       // when
-      const resource = new SkosResource(node, {
+      const resource = new SkosResource(node, environment, {
         broader: {
           [skos.prefLabel.value]: 'Bar',
         },
@@ -652,7 +659,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
 
       // when
-      const resource = new RdfResource(node, {
+      const resource = new RdfResource(node, environment, {
         [skos.broader.value]: [
           {
             [skos.prefLabel.value]: 'Bar',
@@ -671,7 +678,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
 
       // when
-      const resource = new RdfResource(node, {
+      const resource = new RdfResource(node, environment, {
         [skos.prefLabel.value]: 'Foo',
         [skos.broader.value]: {
           id: ex.Bar,
@@ -688,7 +695,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
 
       // when
-      const resource = new RdfResource(node, {
+      const resource = new RdfResource(node, environment, {
         [skos.broader.value]: ex.Bar,
       })
 
@@ -701,7 +708,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset() }).blankNode()
 
       // when
-      const resource = new RdfResource(node, {
+      const resource = new RdfResource(node, environment, {
         [skos.prefLabel.value]: $rdf.literal('Foo', 'en'),
       })
 
@@ -722,7 +729,7 @@ describe('RdfResource', () => {
         @property.resource({ path: ex.child, as: [Child] })
           child?: Decomposed
       }
-      const child = new Child(cf({ dataset: $rdf.dataset() }).blankNode(), {
+      const child = new Child(cf({ dataset: $rdf.dataset() }).blankNode(), environment, {
         foo: 'foo',
         bar: 'bar',
       })
@@ -730,6 +737,7 @@ describe('RdfResource', () => {
       // when
       const resource = new Decomposed(
         cf({ dataset: $rdf.dataset() }).blankNode(),
+        environment,
         {
           child: {
             ...child.toJSON(),
@@ -752,6 +760,7 @@ describe('RdfResource', () => {
       // when
       const resource = new Resource(
         cf({ dataset: $rdf.dataset() }).blankNode(),
+        environment,
         {
           foo: {
             id: '_:blank-one',
@@ -776,6 +785,7 @@ describe('RdfResource', () => {
       // when
       const resource = new Resource(
         cf({ dataset: $rdf.dataset() }).blankNode(),
+        environment,
         {
           foo: {
             id: ex.Child.value,
@@ -800,6 +810,7 @@ describe('RdfResource', () => {
       // when
       const resource = new Resource(
         cf({ dataset: $rdf.dataset() }).blankNode(),
+        environment,
         {
           foo: {
             [rdfs.label.value]: 'foo',
@@ -822,11 +833,9 @@ describe('RdfResource', () => {
       for (const [name, value, term] of nativeSetters) {
         it(`initializes from native ${name} value`, () => {
         // when
-          const resource = new RdfResource(
-            cf({ dataset: $rdf.dataset() }).blankNode(), {
-              [ex.prop.value]: value,
-            },
-          )
+          const resource = new RdfResource(cf({ dataset: $rdf.dataset() }).blankNode(), environment, {
+            [ex.prop.value]: value,
+          })
 
           // then
           expect(resource.pointer.out(ex.prop).term?.value).to.eq(term.value)
@@ -847,12 +856,11 @@ describe('RdfResource', () => {
             return PersonImpl
           }
           PersonMixin.appliesTo = schema.Person
-          const factory = new ResourceFactory(RdfResource)
-          factory.addMixin(PersonMixin)
+          environment.rdfine().factory.addMixin(PersonMixin)
 
           // when
           const node = cf({ dataset: $rdf.dataset() }).blankNode()
-          const resource = factory.createEntity(node, [PersonMixin], {
+          const resource = environment.rdfine().factory.createEntity(node, [PersonMixin], {
             initializer: {
               prop: value,
             },
@@ -880,11 +888,10 @@ describe('RdfResource', () => {
         return ConceptImpl
       }
       ConceptMixin.appliesTo = skos.Concept
-      const factory = new ResourceFactory(RdfResource)
-      factory.addMixin(ConceptMixin)
+      environment.rdfine().factory.addMixin(ConceptMixin)
 
       // when
-      const resource = factory.createEntity(node, [], {
+      const resource = environment.rdfine().factory.createEntity(node, [], {
         initializer: {
           [skos.hasTopConcept.value]: {
             types: [skos.Concept],
@@ -912,11 +919,10 @@ describe('RdfResource', () => {
         return ConceptImpl
       }
       ConceptMixin.appliesTo = skos.Concept
-      const factory = new ResourceFactory(RdfResource)
-      factory.addMixin(ConceptMixin)
+      environment.rdfine().factory.addMixin(ConceptMixin)
 
       // when
-      const resource = factory.createEntity(node, [], {
+      const resource = environment.rdfine().factory.createEntity(node, [], {
         initializer: {
           prefLabel: ['Foo', 'Bar'],
         },
@@ -941,11 +947,10 @@ describe('RdfResource', () => {
         return ShapeImpl
       }
       ShapeMixin.appliesTo = sh.Shape
-      const factory = new ResourceFactory(RdfResource)
-      factory.addMixin(ShapeMixin)
+      environment.rdfine().factory.addMixin(ShapeMixin)
 
       // when
-      const resource = factory.createEntity<Shape>(node, [], {
+      const resource = environment.rdfine().factory.createEntity<Shape>(node, [], {
         initializer: {
           types: [sh.Shape],
           in: [{
@@ -976,10 +981,9 @@ describe('RdfResource', () => {
 
         return ShapeImpl
       }
-      const factory = new ResourceFactory(RdfResource)
 
       // when
-      const resource = factory.createEntity(node, [ShapeMixin], {
+      const resource = environment.rdfine().factory.createEntity(node, [ShapeMixin], {
         initializer: {
           [sh.in.value]: initialize.rdfList(ex.foo, ex.bar),
         },
@@ -1005,10 +1009,9 @@ describe('RdfResource', () => {
 
         return ShapeImpl
       }
-      const factory = new ResourceFactory(RdfResource)
 
       // when
-      const resource = factory.createEntity(node, [ShapeMixin], {
+      const resource = environment.rdfine().factory.createEntity(node, [ShapeMixin], {
         initializer: {
           [sh.in.value]: initialize.rdfList(),
         },
@@ -1034,13 +1037,12 @@ describe('RdfResource', () => {
           return Impl
         }
         TestMixin.shouldApply = true
-        const factory = new ResourceFactory(RdfResource)
-        factory.addMixin(TestMixin)
+        environment.rdfine().factory.addMixin(TestMixin)
 
         // when
-        const resource = factory.createEntity<TestResource>(node, [TestMixin], {
+        const resource = environment.rdfine().factory.createEntity<TestResource>(node, [TestMixin], {
           initializer: {
-            child: (graph) => factory.createEntity(graph.blankNode('foo')),
+            child: (graph) => environment.rdfine().factory.createEntity(graph.blankNode('foo')),
           },
         })
 
@@ -1051,10 +1053,9 @@ describe('RdfResource', () => {
       it('named node initializing URI property', () => {
         // given
         const node = cf({ dataset: $rdf.dataset() }).blankNode()
-        const factory = new ResourceFactory(RdfResource)
 
         // when
-        const resource = factory.createEntity(node, [], {
+        const resource = environment.rdfine().factory.createEntity(node, [], {
           initializer: {
             [ex.foo.value]: (graph: AnyPointer) => graph.namedNode('foo'),
           },
@@ -1072,7 +1073,7 @@ describe('RdfResource', () => {
       const node = cf({ dataset: $rdf.dataset(), graph: ex.graph }).blankNode()
 
       // when
-      const res = new RdfResource(node)
+      const res = new RdfResource(node, environment)
 
       // then
       expect(res.isAnonymous).to.eq(true)
@@ -1085,7 +1086,7 @@ describe('RdfResource', () => {
       )
 
       // when
-      const res = new RdfResource(node)
+      const res = new RdfResource(node, environment)
 
       // then
       expect(res.isAnonymous).to.eq(false)
@@ -1104,7 +1105,7 @@ describe('RdfResource', () => {
         // given
         const node = graph.blankNode()
         node.addOut(ex.foo, ex.bar)
-        const resource = new RdfResource(node)
+        const resource = new RdfResource(node, environment)
 
         // when
         const object = resource.get(ex.foo)
@@ -1117,7 +1118,7 @@ describe('RdfResource', () => {
       it('throws when property has no value and calling strict', () => {
         // given
         const node = graph.blankNode()
-        const resource = new RdfResource(node)
+        const resource = new RdfResource(node, environment)
 
         // then
         expect(() => {
@@ -1129,7 +1130,7 @@ describe('RdfResource', () => {
       it('returns null when property has no value and calling not strict', () => {
         // given
         const node = graph.blankNode()
-        const resource = new RdfResource(node)
+        const resource = new RdfResource(node, environment)
 
         // when
         const object = resource.get(ex.foo, { strict: false })
@@ -1143,7 +1144,7 @@ describe('RdfResource', () => {
       it('returns empty array when property has no value and calling not strict', () => {
         // given
         const node = graph.blankNode()
-        const resource = new RdfResource(node)
+        const resource = new RdfResource(node, environment)
 
         // when
         const object = resource.getArray(ex.foo, { strict: false })
@@ -1156,7 +1157,7 @@ describe('RdfResource', () => {
         // given
         const node = graph.blankNode()
         node.addOut(ex.foo, graph.literal('bar'))
-        const resource = new RdfResource(node)
+        const resource = new RdfResource(node, environment)
 
         // when
         const object = resource.getArray(ex.foo, { strict: false })
@@ -1170,7 +1171,7 @@ describe('RdfResource', () => {
       it('throws when value is not boolean', () => {
         const node = graph.blankNode()
         node.addOut(ex.foo, ex.bar)
-        const resource = new RdfResource(node)
+        const resource = new RdfResource(node, environment)
 
         // then
         expect(() => resource.getBoolean(ex.foo)).to.throw()
@@ -1178,7 +1179,7 @@ describe('RdfResource', () => {
 
       it('return false when value is undefined', () => {
         const node = graph.blankNode()
-        const resource = new RdfResource(node)
+        const resource = new RdfResource(node, environment)
 
         // then
         expect(resource.getBoolean(ex.foo)).not.to.be.ok
@@ -1187,7 +1188,7 @@ describe('RdfResource', () => {
       it('return the value when it is set', () => {
         const node = graph.blankNode()
         node.addOut(ex.foo, true)
-        const resource = new RdfResource(node)
+        const resource = new RdfResource(node, environment)
 
         // then
         expect(resource.getBoolean(ex.foo)).to.be.ok
@@ -1198,7 +1199,7 @@ describe('RdfResource', () => {
       it('throws when value is not number', () => {
         const node = graph.blankNode()
         node.addOut(ex.foo, ex.bar)
-        const resource = new RdfResource(node)
+        const resource = new RdfResource(node, environment)
 
         // then
         expect(() => resource.getNumber(ex.foo)).to.throw()
@@ -1206,7 +1207,7 @@ describe('RdfResource', () => {
 
       it('return null when value is undefined', () => {
         const node = graph.blankNode()
-        const resource = new RdfResource(node)
+        const resource = new RdfResource(node, environment)
 
         // then
         expect(resource.getNumber('foo')).to.be.null
@@ -1215,7 +1216,7 @@ describe('RdfResource', () => {
       it('parses the literal', () => {
         const node = graph.blankNode()
         node.addOut(ex.foo, node.literal(10.5))
-        const resource = new RdfResource(node)
+        const resource = new RdfResource(node, environment)
 
         // then
         expect(resource.getNumber(ex.foo)).to.eq(10.5)
@@ -1226,7 +1227,7 @@ describe('RdfResource', () => {
       it('returns string value of literal', () => {
         const node = graph.blankNode()
         node.addOut(ex.foo, 123)
-        const resource = new RdfResource(node)
+        const resource = new RdfResource(node, environment)
 
         // then
         expect(resource.getString(ex.foo)).to.eq('123')
@@ -1234,7 +1235,7 @@ describe('RdfResource', () => {
 
       it('return null when value is undefined', () => {
         const node = graph.blankNode()
-        const resource = new RdfResource(node)
+        const resource = new RdfResource(node, environment)
 
         // then
         expect(resource.getString(ex.foo)).to.be.null
@@ -1246,7 +1247,7 @@ describe('RdfResource', () => {
     it("sets blank node id property as '@id'", () => {
       // given
       const node = cf({ dataset: $rdf.dataset() }).blankNode('john')
-      const resource = new RdfResource(node)
+      const resource = new RdfResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1268,7 +1269,7 @@ describe('RdfResource', () => {
     it("sets named node id property as '@id'", () => {
       // given
       const node = cf({ dataset: $rdf.dataset() }).namedNode('foo')
-      const resource = new RdfResource(node)
+      const resource = new RdfResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1293,7 +1294,7 @@ describe('RdfResource', () => {
         .blankNode('john')
         .addOut(rdf.type, schema.Person)
         .addOut(rdf.type, foaf.Person)
-      const resource = new RdfResource(node)
+      const resource = new RdfResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1331,7 +1332,7 @@ describe('RdfResource', () => {
         @property.literal({ path: schema.familyName })
           lastName!: string
       }
-      const resource = new TestResource(node)
+      const resource = new TestResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1369,7 +1370,7 @@ describe('RdfResource', () => {
         @property.literal()
           familyName!: string
       }
-      const resource = new TestResource(node)
+      const resource = new TestResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1411,7 +1412,7 @@ describe('RdfResource', () => {
         @property.literal({ path: schema.givenName })
           name!: string
       }
-      const resource = new TestResource(node)
+      const resource = new TestResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1451,7 +1452,7 @@ describe('RdfResource', () => {
         .namedNode('john')
         .addOut(schema.name, $rdf.literal('foo', 'en'))
         .addOut(schema.name, $rdf.literal('bar', 'de'))
-      const resource = new RdfResource(node)
+      const resource = new RdfResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1485,7 +1486,7 @@ describe('RdfResource', () => {
         .namedNode('john')
         .addOut(schema.knows, $rdf.namedNode('jane'))
       node.namedNode('jane').addOut(schema.name, 'jane')
-      const resource = new RdfResource(node)
+      const resource = new RdfResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1515,7 +1516,7 @@ describe('RdfResource', () => {
         .addOut(schema.knows, $rdf.namedNode('jenny'))
       node.namedNode('jane').addOut(schema.name, 'jane')
       node.namedNode('jenny').addOut(schema.name, 'jenny')
-      const resource = new RdfResource(node)
+      const resource = new RdfResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1579,7 +1580,7 @@ describe('RdfResource', () => {
         @property.literal({ path: schema.name })
           name!: string
       }
-      const resource = new TestResource(node)
+      const resource = new TestResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1639,7 +1640,7 @@ describe('RdfResource', () => {
         @property.literal({ path: schema.name })
           name!: string
       }
-      const resource = new TestResource(node)
+      const resource = new TestResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1659,7 +1660,7 @@ describe('RdfResource', () => {
         @property.literal({ path: schema.alternateName })
           alternateNames!: string[]
       }
-      const resource = new TestResource(node)
+      const resource = new TestResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1707,7 +1708,7 @@ describe('RdfResource', () => {
         }
         return TestPerson
       }
-      const resource = new (PersonMixin(RdfResource))(node)
+      const resource = new (PersonMixin(RdfResource))(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1752,7 +1753,7 @@ describe('RdfResource', () => {
         }
         return TestPerson
       }
-      const resource = new (PersonMixin(RdfResource))(node)
+      const resource = new (PersonMixin(RdfResource))(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1807,7 +1808,7 @@ describe('RdfResource', () => {
         }
         return TestPerson
       }
-      const resource = new (PersonMixin(RdfResource))(node)
+      const resource = new (PersonMixin(RdfResource))(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1864,7 +1865,7 @@ describe('RdfResource', () => {
         }
         return TestPerson
       }
-      const resource = new (PersonMixin(RdfResource))(node)
+      const resource = new (PersonMixin(RdfResource))(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1921,7 +1922,7 @@ describe('RdfResource', () => {
         }
         return TestPerson
       }
-      const resource = new (PersonMixin(RdfResource))(node)
+      const resource = new (PersonMixin(RdfResource))(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -1968,7 +1969,7 @@ describe('RdfResource', () => {
         @property.resource({ path: dcterms.creator, as: [PersonMixin] })
           creator!: RdfResource
       }
-      const resource = new TestResource(node)
+      const resource = new TestResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -2013,7 +2014,7 @@ describe('RdfResource', () => {
         @property.resource({ path: crossBoundaries(schema.knows) })
           allFriends!: RdfResource
       }
-      const resource = new TestPerson(node)
+      const resource = new TestPerson(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -2048,7 +2049,7 @@ describe('RdfResource', () => {
         @property.literal({ path: schema.givenName })
           name!: string
       }
-      const resource = new TestPerson(node)
+      const resource = new TestPerson(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -2077,7 +2078,7 @@ describe('RdfResource', () => {
       cf({ dataset, graph: $rdf.namedNode('also-john') })
         .namedNode('john')
         .addOut(schema.givenName, 'Other name')
-      const resource = new RdfResource(node)
+      const resource = new RdfResource(node, environment)
 
       // when
       const json = resource.toJSON()
@@ -2121,7 +2122,7 @@ describe('RdfResource', () => {
 
         return AgeClass
       }
-      const resource = RdfResource.factory.createEntity(node, [
+      const resource = environment.rdfine().factory.createEntity(node, [
         NameMixin,
         AgeMixin,
       ])
@@ -2162,7 +2163,7 @@ describe('RdfResource', () => {
 
         return NameClass
       }
-      const resource = RdfResource.factory.createEntity(node, [PersonMixin])
+      const resource = environment.rdfine().factory.createEntity(node, [PersonMixin])
 
       // when
       const json = resource.toJSON()
@@ -2210,7 +2211,7 @@ describe('RdfResource', () => {
         return NameClass
       }
 
-      const resource = RdfResource.factory.createEntity(node, [PersonMixin])
+      const resource = environment.rdfine().factory.createEntity(node, [PersonMixin])
 
       // when
       const json = resource.toJSON()
@@ -2254,7 +2255,7 @@ describe('RdfResource', () => {
           $rdf.literal('bar', xsd.anyType),
         ])
 
-      const resource = RdfResource.factory.createEntity(node)
+      const resource = environment.rdfine().factory.createEntity(node)
 
       // when
       const json = resource.toJSON()
@@ -2304,7 +2305,7 @@ describe('RdfResource', () => {
         return NameClass
       }
 
-      const resource = RdfResource.factory.createEntity(node, [PersonMixin])
+      const resource = environment.rdfine().factory.createEntity(node, [PersonMixin])
 
       // when
       const json = resource.toJSON()
@@ -2348,7 +2349,7 @@ describe('RdfResource', () => {
           ex.Baz,
         ])
 
-      const resource = RdfResource.factory.createEntity(node)
+      const resource = environment.rdfine().factory.createEntity(node)
 
       // when
       const json = resource.toJSON()
@@ -2394,7 +2395,7 @@ describe('RdfResource', () => {
         return NameClass
       }
 
-      const resource = RdfResource.factory.createEntity(node, [PersonMixin])
+      const resource = environment.rdfine().factory.createEntity(node, [PersonMixin])
 
       // when
       const json = resource.toJSON()
@@ -2438,7 +2439,7 @@ describe('RdfResource', () => {
 
           return NameClass
         }
-        const resource = RdfResource.factory.createEntity(person, [PersonMixin])
+        const resource = environment.rdfine().factory.createEntity(person, [PersonMixin])
 
         // when
         const json = resource.toJSON()

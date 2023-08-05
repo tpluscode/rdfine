@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 
 export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -13,6 +13,12 @@ export interface Agent<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   qualifiedDelegation: Prov.Delegation<D> | undefined;
   qualifiedInfluence: Prov.Influence<D> | undefined;
   wasInfluencedBy: Prov.Activity<D> | Prov.Agent<D> | Prov.Entity<D> | undefined;
+}
+
+declare global {
+  interface ProvVocabulary {
+    Agent: Factory<Prov.Agent>;
+  }
 }
 
 export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Agent & RdfResourceCore> & Base {
@@ -31,16 +37,5 @@ export function AgentMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return AgentClass as any
 }
-
-class AgentImpl extends AgentMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Agent>) {
-    super(arg, init)
-    this.types.add(prov.Agent)
-  }
-
-  static readonly __mixins: Mixin[] = [AgentMixin];
-}
 AgentMixin.appliesTo = prov.Agent
-AgentMixin.Class = AgentImpl
-
-export const fromPointer = createFactory<Agent>([AgentMixin], { types: [prov.Agent] });
+AgentMixin.createFactory = (env: RdfineEnvironment) => createFactory<Agent>([AgentMixin], { types: [prov.Agent] }, env)

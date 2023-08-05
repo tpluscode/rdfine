@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -66,6 +66,12 @@ export interface Offer<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   validFrom: Date | undefined;
   validThrough: Date | undefined;
   warranty: Schema.WarrantyPromise<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Offer: Factory<Schema.Offer>;
+  }
 }
 
 export function OfferMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Offer & RdfResourceCore> & Base {
@@ -188,16 +194,5 @@ export function OfferMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return OfferClass as any
 }
-
-class OfferImpl extends OfferMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Offer>) {
-    super(arg, init)
-    this.types.add(schema.Offer)
-  }
-
-  static readonly __mixins: Mixin[] = [OfferMixin, IntangibleMixin];
-}
 OfferMixin.appliesTo = schema.Offer
-OfferMixin.Class = OfferImpl
-
-export const fromPointer = createFactory<Offer>([IntangibleMixin, OfferMixin], { types: [schema.Offer] });
+OfferMixin.createFactory = (env: RdfineEnvironment) => createFactory<Offer>([IntangibleMixin, OfferMixin], { types: [schema.Offer] }, env)

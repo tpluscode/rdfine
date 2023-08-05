@@ -1,4 +1,4 @@
-import { NamespaceDeclarationKind, Project, SourceFile } from 'ts-morph'
+import { ModuleDeclarationKind, Project, SourceFile, StructureKind } from 'ts-morph'
 import { GraphPointer } from 'clownface'
 import { shrink } from '@zazuko/prefixes'
 import { ExternalResourceType, TypeMetaCollection } from '../types/index.js'
@@ -61,9 +61,11 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
   }
 
   private augmentExtendedModule(module: SourceFile) {
-    const augmentedModule = module.addNamespace({
+    const augmentedModule = module.addModule({
+      kind: StructureKind.Module,
       name: `'${this.type.module}'`,
-    }).setDeclarationKind(NamespaceDeclarationKind.Module)
+      declarationKind: ModuleDeclarationKind.Module,
+    })
 
     augmentedModule.addInterface({
       name: `${this.type.localName}<D extends RDF.DatasetCore>`,

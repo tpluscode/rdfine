@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -22,6 +22,12 @@ export interface ContactPoint<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   productSupportedLiteral: string | undefined;
   serviceArea: Schema.AdministrativeArea<D> | Schema.GeoShape<D> | Schema.Place<D> | undefined;
   telephone: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ContactPoint: Factory<Schema.ContactPoint>;
+  }
 }
 
 export function ContactPointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ContactPoint & RdfResourceCore> & Base {
@@ -56,16 +62,5 @@ export function ContactPointMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return ContactPointClass as any
 }
-
-class ContactPointImpl extends ContactPointMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ContactPoint>) {
-    super(arg, init)
-    this.types.add(schema.ContactPoint)
-  }
-
-  static readonly __mixins: Mixin[] = [ContactPointMixin, StructuredValueMixin];
-}
 ContactPointMixin.appliesTo = schema.ContactPoint
-ContactPointMixin.Class = ContactPointImpl
-
-export const fromPointer = createFactory<ContactPoint>([StructuredValueMixin, ContactPointMixin], { types: [schema.ContactPoint] });
+ContactPointMixin.createFactory = (env: RdfineEnvironment) => createFactory<ContactPoint>([StructuredValueMixin, ContactPointMixin], { types: [schema.ContactPoint] }, env)

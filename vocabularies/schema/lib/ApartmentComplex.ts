@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ResidenceMixin } from './Residence.js';
 
@@ -15,6 +15,12 @@ export interface ApartmentComplex<D extends RDF.DatasetCore = RDF.DatasetCore> e
   numberOfBedroomsLiteral: number | undefined;
   petsAllowed: boolean | string | undefined;
   tourBookingPage: RDF.NamedNode | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ApartmentComplex: Factory<Schema.ApartmentComplex>;
+  }
 }
 
 export function ApartmentComplexMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ApartmentComplex & RdfResourceCore> & Base {
@@ -35,16 +41,5 @@ export function ApartmentComplexMixin<Base extends rdfine.Constructor>(Resource:
   }
   return ApartmentComplexClass as any
 }
-
-class ApartmentComplexImpl extends ApartmentComplexMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ApartmentComplex>) {
-    super(arg, init)
-    this.types.add(schema.ApartmentComplex)
-  }
-
-  static readonly __mixins: Mixin[] = [ApartmentComplexMixin, ResidenceMixin];
-}
 ApartmentComplexMixin.appliesTo = schema.ApartmentComplex
-ApartmentComplexMixin.Class = ApartmentComplexImpl
-
-export const fromPointer = createFactory<ApartmentComplex>([ResidenceMixin, ApartmentComplexMixin], { types: [schema.ApartmentComplex] });
+ApartmentComplexMixin.createFactory = (env: RdfineEnvironment) => createFactory<ApartmentComplex>([ResidenceMixin, ApartmentComplexMixin], { types: [schema.ApartmentComplex] }, env)

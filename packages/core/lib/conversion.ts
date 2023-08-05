@@ -1,13 +1,11 @@
 import type { Literal, NamedNode } from '@rdfjs/types'
-import rdf from '@rdfjs/data-model'
 import { xsd } from '@tpluscode/rdf-ns-builders'
 import { GraphPointer } from 'clownface'
-
-const trueLiteral: Literal = rdf.literal('true', xsd.boolean)
+import rdf from '@rdfjs/data-model'
 
 export function fromLiteral(type: BooleanConstructor | StringConstructor | NumberConstructor | DateConstructor, obj: GraphPointer) {
   if (type === Boolean) {
-    return trueLiteral.equals(obj.term)
+    return rdf.literal('true', xsd.boolean).equals(obj.term)
   }
 
   if (type === Number) {

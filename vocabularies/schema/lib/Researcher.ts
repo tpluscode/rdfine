@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AudienceMixin } from './Audience.js';
 
 export interface Researcher<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Audience<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Researcher: Factory<Schema.Researcher>;
+  }
 }
 
 export function ResearcherMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Researcher & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function ResearcherMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return ResearcherClass as any
 }
-
-class ResearcherImpl extends ResearcherMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Researcher>) {
-    super(arg, init)
-    this.types.add(schema.Researcher)
-  }
-
-  static readonly __mixins: Mixin[] = [ResearcherMixin, AudienceMixin];
-}
 ResearcherMixin.appliesTo = schema.Researcher
-ResearcherMixin.Class = ResearcherImpl
-
-export const fromPointer = createFactory<Researcher>([AudienceMixin, ResearcherMixin], { types: [schema.Researcher] });
+ResearcherMixin.createFactory = (env: RdfineEnvironment) => createFactory<Researcher>([AudienceMixin, ResearcherMixin], { types: [schema.Researcher] }, env)

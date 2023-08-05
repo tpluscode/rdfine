@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '../index.js';
 import { SPARQLExecutableMixin } from './SPARQLExecutable.js';
 
 export interface SPARQLUpdateExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLExecutable<D>, rdfine.RdfResource<D> {
   update: string | undefined;
+}
+
+declare global {
+  interface ShVocabulary {
+    SPARQLUpdateExecutable: Factory<Sh.SPARQLUpdateExecutable>;
+  }
 }
 
 export function SPARQLUpdateExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLUpdateExecutable & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function SPARQLUpdateExecutableMixin<Base extends rdfine.Constructor>(Res
   }
   return SPARQLUpdateExecutableClass as any
 }
-
-class SPARQLUpdateExecutableImpl extends SPARQLUpdateExecutableMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SPARQLUpdateExecutable>) {
-    super(arg, init)
-    this.types.add(sh.SPARQLUpdateExecutable)
-  }
-
-  static readonly __mixins: Mixin[] = [SPARQLUpdateExecutableMixin, SPARQLExecutableMixin];
-}
 SPARQLUpdateExecutableMixin.appliesTo = sh.SPARQLUpdateExecutable
-SPARQLUpdateExecutableMixin.Class = SPARQLUpdateExecutableImpl
-
-export const fromPointer = createFactory<SPARQLUpdateExecutable>([SPARQLExecutableMixin, SPARQLUpdateExecutableMixin], { types: [sh.SPARQLUpdateExecutable] });
+SPARQLUpdateExecutableMixin.createFactory = (env: RdfineEnvironment) => createFactory<SPARQLUpdateExecutable>([SPARQLExecutableMixin, SPARQLUpdateExecutableMixin], { types: [sh.SPARQLUpdateExecutable] }, env)

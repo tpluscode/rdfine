@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { NewsArticleMixin } from './NewsArticle.js';
 
 export interface ReportageNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.NewsArticle<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ReportageNewsArticle: Factory<Schema.ReportageNewsArticle>;
+  }
 }
 
 export function ReportageNewsArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReportageNewsArticle & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function ReportageNewsArticleMixin<Base extends rdfine.Constructor>(Resou
   }
   return ReportageNewsArticleClass as any
 }
-
-class ReportageNewsArticleImpl extends ReportageNewsArticleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ReportageNewsArticle>) {
-    super(arg, init)
-    this.types.add(schema.ReportageNewsArticle)
-  }
-
-  static readonly __mixins: Mixin[] = [ReportageNewsArticleMixin, NewsArticleMixin];
-}
 ReportageNewsArticleMixin.appliesTo = schema.ReportageNewsArticle
-ReportageNewsArticleMixin.Class = ReportageNewsArticleImpl
-
-export const fromPointer = createFactory<ReportageNewsArticle>([NewsArticleMixin, ReportageNewsArticleMixin], { types: [schema.ReportageNewsArticle] });
+ReportageNewsArticleMixin.createFactory = (env: RdfineEnvironment) => createFactory<ReportageNewsArticle>([NewsArticleMixin, ReportageNewsArticleMixin], { types: [schema.ReportageNewsArticle] }, env)

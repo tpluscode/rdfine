@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { hydra } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '../index.js';
 import { ResourceMixin } from './Resource.js';
 import { CollectionExMixin } from '../extensions/CollectionEx.js';
@@ -12,6 +12,12 @@ import { CollectionExMixin } from '../extensions/CollectionEx.js';
 export interface Collection<M extends RdfResourceCore<any> = RdfResourceCore<any>, D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, rdfine.RdfResource<D> {
   member: Array<Hydra.Resource<D> & M>;
   totalItems: number | undefined;
+}
+
+declare global {
+  interface HydraVocabulary {
+    Collection: Factory<Hydra.Collection>;
+  }
 }
 
 export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Collection & RdfResourceCore> & Base {
@@ -24,16 +30,5 @@ export function CollectionMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return CollectionClass as any
 }
-
-class CollectionImpl extends CollectionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Collection>) {
-    super(arg, init)
-    this.types.add(hydra.Collection)
-  }
-
-  static readonly __mixins: Mixin[] = [CollectionMixin, ResourceMixin];
-}
 CollectionMixin.appliesTo = hydra.Collection
-CollectionMixin.Class = CollectionImpl
-
-export const fromPointer = createFactory<Collection>([ResourceMixin, CollectionMixin], { types: [hydra.Collection] });
+CollectionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Collection>([ResourceMixin, CollectionMixin], { types: [hydra.Collection] }, env)

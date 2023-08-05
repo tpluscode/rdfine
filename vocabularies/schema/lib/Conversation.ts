@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
 export interface Conversation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Conversation: Factory<Schema.Conversation>;
+  }
 }
 
 export function ConversationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Conversation & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function ConversationMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return ConversationClass as any
 }
-
-class ConversationImpl extends ConversationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Conversation>) {
-    super(arg, init)
-    this.types.add(schema.Conversation)
-  }
-
-  static readonly __mixins: Mixin[] = [ConversationMixin, CreativeWorkMixin];
-}
 ConversationMixin.appliesTo = schema.Conversation
-ConversationMixin.Class = ConversationImpl
-
-export const fromPointer = createFactory<Conversation>([CreativeWorkMixin, ConversationMixin], { types: [schema.Conversation] });
+ConversationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Conversation>([CreativeWorkMixin, ConversationMixin], { types: [schema.Conversation] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalEntityMixin } from './MedicalEntity.js';
 
@@ -17,6 +17,12 @@ export interface AnatomicalStructure<D extends RDF.DatasetCore = RDF.DatasetCore
   relatedCondition: Schema.MedicalCondition<D> | undefined;
   relatedTherapy: Schema.MedicalTherapy<D> | undefined;
   subStructure: Schema.AnatomicalStructure<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    AnatomicalStructure: Factory<Schema.AnatomicalStructure>;
+  }
 }
 
 export function AnatomicalStructureMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AnatomicalStructure & RdfResourceCore> & Base {
@@ -41,16 +47,5 @@ export function AnatomicalStructureMixin<Base extends rdfine.Constructor>(Resour
   }
   return AnatomicalStructureClass as any
 }
-
-class AnatomicalStructureImpl extends AnatomicalStructureMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AnatomicalStructure>) {
-    super(arg, init)
-    this.types.add(schema.AnatomicalStructure)
-  }
-
-  static readonly __mixins: Mixin[] = [AnatomicalStructureMixin, MedicalEntityMixin];
-}
 AnatomicalStructureMixin.appliesTo = schema.AnatomicalStructure
-AnatomicalStructureMixin.Class = AnatomicalStructureImpl
-
-export const fromPointer = createFactory<AnatomicalStructure>([MedicalEntityMixin, AnatomicalStructureMixin], { types: [schema.AnatomicalStructure] });
+AnatomicalStructureMixin.createFactory = (env: RdfineEnvironment) => createFactory<AnatomicalStructure>([MedicalEntityMixin, AnatomicalStructureMixin], { types: [schema.AnatomicalStructure] }, env)

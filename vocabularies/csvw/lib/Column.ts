@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { csvw } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '../index.js';
 
 export interface Column<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -25,6 +25,12 @@ export interface Column<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdf
   transformations: Array<Csvw.Transformation<D>>;
   valueUrl: string | undefined;
   virtual: boolean | undefined;
+}
+
+declare global {
+  interface CsvwVocabulary {
+    Column: Factory<Csvw.Column>;
+  }
 }
 
 export function ColumnMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Column & RdfResourceCore> & Base {
@@ -67,16 +73,5 @@ export function ColumnMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return ColumnClass as any
 }
-
-class ColumnImpl extends ColumnMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Column>) {
-    super(arg, init)
-    this.types.add(csvw.Column)
-  }
-
-  static readonly __mixins: Mixin[] = [ColumnMixin];
-}
 ColumnMixin.appliesTo = csvw.Column
-ColumnMixin.Class = ColumnImpl
-
-export const fromPointer = createFactory<Column>([ColumnMixin], { types: [csvw.Column] });
+ColumnMixin.createFactory = (env: RdfineEnvironment) => createFactory<Column>([ColumnMixin], { types: [csvw.Column] }, env)

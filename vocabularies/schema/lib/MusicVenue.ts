@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CivicStructureMixin } from './CivicStructure.js';
 
 export interface MusicVenue<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MusicVenue: Factory<Schema.MusicVenue>;
+  }
 }
 
 export function MusicVenueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MusicVenue & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function MusicVenueMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return MusicVenueClass as any
 }
-
-class MusicVenueImpl extends MusicVenueMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MusicVenue>) {
-    super(arg, init)
-    this.types.add(schema.MusicVenue)
-  }
-
-  static readonly __mixins: Mixin[] = [MusicVenueMixin, CivicStructureMixin];
-}
 MusicVenueMixin.appliesTo = schema.MusicVenue
-MusicVenueMixin.Class = MusicVenueImpl
-
-export const fromPointer = createFactory<MusicVenue>([CivicStructureMixin, MusicVenueMixin], { types: [schema.MusicVenue] });
+MusicVenueMixin.createFactory = (env: RdfineEnvironment) => createFactory<MusicVenue>([CivicStructureMixin, MusicVenueMixin], { types: [schema.MusicVenue] }, env)

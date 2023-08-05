@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalEntityMixin } from './MedicalEntity.js';
 
 export interface MedicalRiskEstimator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, rdfine.RdfResource<D> {
   estimatesRiskOf: Schema.MedicalEntity<D> | undefined;
   includedRiskFactor: Schema.MedicalRiskFactor<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MedicalRiskEstimator: Factory<Schema.MedicalRiskEstimator>;
+  }
 }
 
 export function MedicalRiskEstimatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalRiskEstimator & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function MedicalRiskEstimatorMixin<Base extends rdfine.Constructor>(Resou
   }
   return MedicalRiskEstimatorClass as any
 }
-
-class MedicalRiskEstimatorImpl extends MedicalRiskEstimatorMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MedicalRiskEstimator>) {
-    super(arg, init)
-    this.types.add(schema.MedicalRiskEstimator)
-  }
-
-  static readonly __mixins: Mixin[] = [MedicalRiskEstimatorMixin, MedicalEntityMixin];
-}
 MedicalRiskEstimatorMixin.appliesTo = schema.MedicalRiskEstimator
-MedicalRiskEstimatorMixin.Class = MedicalRiskEstimatorImpl
-
-export const fromPointer = createFactory<MedicalRiskEstimator>([MedicalEntityMixin, MedicalRiskEstimatorMixin], { types: [schema.MedicalRiskEstimator] });
+MedicalRiskEstimatorMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalRiskEstimator>([MedicalEntityMixin, MedicalRiskEstimatorMixin], { types: [schema.MedicalRiskEstimator] }, env)

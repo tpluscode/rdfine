@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { EventMixin } from './Event.js';
 
@@ -13,6 +13,12 @@ export interface DeliveryEvent<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   availableFrom: Date | undefined;
   availableThrough: Date | undefined;
   hasDeliveryMethod: Schema.DeliveryMethod | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DeliveryEvent: Factory<Schema.DeliveryEvent>;
+  }
 }
 
 export function DeliveryEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DeliveryEvent & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function DeliveryEventMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return DeliveryEventClass as any
 }
-
-class DeliveryEventImpl extends DeliveryEventMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DeliveryEvent>) {
-    super(arg, init)
-    this.types.add(schema.DeliveryEvent)
-  }
-
-  static readonly __mixins: Mixin[] = [DeliveryEventMixin, EventMixin];
-}
 DeliveryEventMixin.appliesTo = schema.DeliveryEvent
-DeliveryEventMixin.Class = DeliveryEventImpl
-
-export const fromPointer = createFactory<DeliveryEvent>([EventMixin, DeliveryEventMixin], { types: [schema.DeliveryEvent] });
+DeliveryEventMixin.createFactory = (env: RdfineEnvironment) => createFactory<DeliveryEvent>([EventMixin, DeliveryEventMixin], { types: [schema.DeliveryEvent] }, env)

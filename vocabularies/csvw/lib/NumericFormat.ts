@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { csvw } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '../index.js';
 
 export interface NumericFormat<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -12,6 +12,12 @@ export interface NumericFormat<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   groupChar: Csvw.NumericFormat<D> | undefined;
   groupCharLiteral: string | undefined;
   pattern: string | undefined;
+}
+
+declare global {
+  interface CsvwVocabulary {
+    NumericFormat: Factory<Csvw.NumericFormat>;
+  }
 }
 
 export function NumericFormatMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NumericFormat & RdfResourceCore> & Base {
@@ -28,16 +34,5 @@ export function NumericFormatMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return NumericFormatClass as any
 }
-
-class NumericFormatImpl extends NumericFormatMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<NumericFormat>) {
-    super(arg, init)
-    this.types.add(csvw.NumericFormat)
-  }
-
-  static readonly __mixins: Mixin[] = [NumericFormatMixin];
-}
 NumericFormatMixin.appliesTo = csvw.NumericFormat
-NumericFormatMixin.Class = NumericFormatImpl
-
-export const fromPointer = createFactory<NumericFormat>([NumericFormatMixin], { types: [csvw.NumericFormat] });
+NumericFormatMixin.createFactory = (env: RdfineEnvironment) => createFactory<NumericFormat>([NumericFormatMixin], { types: [csvw.NumericFormat] }, env)

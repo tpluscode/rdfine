@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { HowToMixin } from './HowTo.js';
 
@@ -21,6 +21,12 @@ export interface Recipe<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   recipeYield: Schema.QuantitativeValue<D> | undefined;
   recipeYieldLiteral: string | undefined;
   suitableForDiet: Schema.RestrictedDiet | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Recipe: Factory<Schema.Recipe>;
+  }
 }
 
 export function RecipeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Recipe & RdfResourceCore> & Base {
@@ -53,16 +59,5 @@ export function RecipeMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return RecipeClass as any
 }
-
-class RecipeImpl extends RecipeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Recipe>) {
-    super(arg, init)
-    this.types.add(schema.Recipe)
-  }
-
-  static readonly __mixins: Mixin[] = [RecipeMixin, HowToMixin];
-}
 RecipeMixin.appliesTo = schema.Recipe
-RecipeMixin.Class = RecipeImpl
-
-export const fromPointer = createFactory<Recipe>([HowToMixin, RecipeMixin], { types: [schema.Recipe] });
+RecipeMixin.createFactory = (env: RdfineEnvironment) => createFactory<Recipe>([HowToMixin, RecipeMixin], { types: [schema.Recipe] }, env)

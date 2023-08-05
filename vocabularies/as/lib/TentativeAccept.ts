@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { AcceptMixin } from './Accept.js';
 
 export interface TentativeAccept<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Accept<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface AsVocabulary {
+    TentativeAccept: Factory<As.TentativeAccept>;
+  }
 }
 
 export function TentativeAcceptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TentativeAccept & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function TentativeAcceptMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return TentativeAcceptClass as any
 }
-
-class TentativeAcceptImpl extends TentativeAcceptMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TentativeAccept>) {
-    super(arg, init)
-    this.types.add(as.TentativeAccept)
-  }
-
-  static readonly __mixins: Mixin[] = [TentativeAcceptMixin, AcceptMixin];
-}
 TentativeAcceptMixin.appliesTo = as.TentativeAccept
-TentativeAcceptMixin.Class = TentativeAcceptImpl
-
-export const fromPointer = createFactory<TentativeAccept>([AcceptMixin, TentativeAcceptMixin], { types: [as.TentativeAccept] });
+TentativeAcceptMixin.createFactory = (env: RdfineEnvironment) => createFactory<TentativeAccept>([AcceptMixin, TentativeAcceptMixin], { types: [as.TentativeAccept] }, env)

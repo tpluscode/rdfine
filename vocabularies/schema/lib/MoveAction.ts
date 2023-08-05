@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ActionMixin } from './Action.js';
 
 export interface MoveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, rdfine.RdfResource<D> {
   fromLocation: Schema.Place<D> | undefined;
   toLocation: Schema.Place<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MoveAction: Factory<Schema.MoveAction>;
+  }
 }
 
 export function MoveActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MoveAction & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function MoveActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return MoveActionClass as any
 }
-
-class MoveActionImpl extends MoveActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MoveAction>) {
-    super(arg, init)
-    this.types.add(schema.MoveAction)
-  }
-
-  static readonly __mixins: Mixin[] = [MoveActionMixin, ActionMixin];
-}
 MoveActionMixin.appliesTo = schema.MoveAction
-MoveActionMixin.Class = MoveActionImpl
-
-export const fromPointer = createFactory<MoveAction>([ActionMixin, MoveActionMixin], { types: [schema.MoveAction] });
+MoveActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<MoveAction>([ActionMixin, MoveActionMixin], { types: [schema.MoveAction] }, env)

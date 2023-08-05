@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CivicStructureMixin } from './CivicStructure.js';
 import { SportsActivityLocationMixin } from './SportsActivityLocation.js';
 
 export interface StadiumOrArena<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.SportsActivityLocation<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    StadiumOrArena: Factory<Schema.StadiumOrArena>;
+  }
 }
 
 export function StadiumOrArenaMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<StadiumOrArena & RdfResourceCore> & Base {
@@ -18,16 +24,5 @@ export function StadiumOrArenaMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return StadiumOrArenaClass as any
 }
-
-class StadiumOrArenaImpl extends StadiumOrArenaMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<StadiumOrArena>) {
-    super(arg, init)
-    this.types.add(schema.StadiumOrArena)
-  }
-
-  static readonly __mixins: Mixin[] = [StadiumOrArenaMixin, CivicStructureMixin, SportsActivityLocationMixin];
-}
 StadiumOrArenaMixin.appliesTo = schema.StadiumOrArena
-StadiumOrArenaMixin.Class = StadiumOrArenaImpl
-
-export const fromPointer = createFactory<StadiumOrArena>([SportsActivityLocationMixin, CivicStructureMixin, StadiumOrArenaMixin], { types: [schema.StadiumOrArena] });
+StadiumOrArenaMixin.createFactory = (env: RdfineEnvironment) => createFactory<StadiumOrArena>([SportsActivityLocationMixin, CivicStructureMixin, StadiumOrArenaMixin], { types: [schema.StadiumOrArena] }, env)

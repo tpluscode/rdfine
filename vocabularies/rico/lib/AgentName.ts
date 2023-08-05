@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { NameMixin } from './Name.js';
 
 export interface AgentName<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Name<D>, rdfine.RdfResource<D> {
   isOrWasAgentNameOf: Rico.Agent<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    AgentName: Factory<Rico.AgentName>;
+  }
 }
 
 export function AgentNameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentName & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function AgentNameMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return AgentNameClass as any
 }
-
-class AgentNameImpl extends AgentNameMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AgentName>) {
-    super(arg, init)
-    this.types.add(rico.AgentName)
-  }
-
-  static readonly __mixins: Mixin[] = [AgentNameMixin, NameMixin];
-}
 AgentNameMixin.appliesTo = rico.AgentName
-AgentNameMixin.Class = AgentNameImpl
-
-export const fromPointer = createFactory<AgentName>([NameMixin, AgentNameMixin], { types: [rico.AgentName] });
+AgentNameMixin.createFactory = (env: RdfineEnvironment) => createFactory<AgentName>([NameMixin, AgentNameMixin], { types: [rico.AgentName] }, env)

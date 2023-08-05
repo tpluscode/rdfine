@@ -2,8 +2,8 @@ import cf, { GraphPointer } from 'clownface'
 import $rdf from 'rdf-ext'
 import type { NamedNode } from '@rdfjs/types'
 import { hydra } from '@tpluscode/rdf-ns-builders'
-import { fromPointer } from '../lib/Collection.js'
 import { expect } from 'chai';
+import environment from './support/environment.js';
 
 describe('Collection', () => {
   let collectionNode: GraphPointer<NamedNode>
@@ -20,7 +20,7 @@ describe('Collection', () => {
         .addOut(hydra.member, m => {
           m.addOut(collectionNode.namedNode('http://example.com/text'), 'hello')
         })
-      const collection = fromPointer(collectionNode)
+      const collection = environment.rdfine.hydra.Collection(collectionNode)
 
       // then
       expect(Array.isArray(collection.member)).to.eq(true)
@@ -32,7 +32,7 @@ describe('Collection', () => {
   describe('views', () => {
     it('should return empty array when views are missing', () => {
       // given
-      const collection = fromPointer(collectionNode)
+      const collection = environment.rdfine.hydra.Collection(collectionNode)
 
       // then
       expect(Array.isArray(collection.view)).to.eq(true)
@@ -44,7 +44,7 @@ describe('Collection', () => {
     it('should return array', () => {
       // given
       collectionNode.addOut(hydra.manages, collectionNode.blankNode())
-      const collection = fromPointer(collectionNode)
+      const collection = environment.rdfine.hydra.Collection(collectionNode)
 
       // then
       expect(collection.manages).to.have.length(1)
@@ -55,7 +55,7 @@ describe('Collection', () => {
     it('should return array even for one element', () => {
       // given
       collectionNode.addOut(hydra.memberAssertion, collectionNode.blankNode())
-      const collection = fromPointer(collectionNode)
+      const collection = environment.rdfine.hydra.Collection(collectionNode)
 
       // then
       expect(Array.isArray(collection.memberAssertion)).to.eq(true)
@@ -66,7 +66,7 @@ describe('Collection', () => {
     it('returns the value of the hydra property', () => {
       // given
       collectionNode.addOut(hydra.totalItems, 167)
-      const collection = fromPointer(collectionNode)
+      const collection = environment.rdfine.hydra.Collection(collectionNode)
 
       // then
       expect(collection.totalItems).to.eq(167)

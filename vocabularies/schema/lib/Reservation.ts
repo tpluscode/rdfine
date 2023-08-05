@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -23,6 +23,12 @@ export interface Reservation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   totalPrice: Schema.PriceSpecification<D> | undefined;
   totalPriceLiteral: number | string | undefined;
   underName: Schema.Organization<D> | Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Reservation: Factory<Schema.Reservation>;
+  }
 }
 
 export function ReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Reservation & RdfResourceCore> & Base {
@@ -59,16 +65,5 @@ export function ReservationMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return ReservationClass as any
 }
-
-class ReservationImpl extends ReservationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Reservation>) {
-    super(arg, init)
-    this.types.add(schema.Reservation)
-  }
-
-  static readonly __mixins: Mixin[] = [ReservationMixin, IntangibleMixin];
-}
 ReservationMixin.appliesTo = schema.Reservation
-ReservationMixin.Class = ReservationImpl
-
-export const fromPointer = createFactory<Reservation>([IntangibleMixin, ReservationMixin], { types: [schema.Reservation] });
+ReservationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Reservation>([IntangibleMixin, ReservationMixin], { types: [schema.Reservation] }, env)

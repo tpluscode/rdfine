@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { OrganizationMixin } from './Organization.js';
 
 export interface SearchRescueOrganization<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    SearchRescueOrganization: Factory<Schema.SearchRescueOrganization>;
+  }
 }
 
 export function SearchRescueOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SearchRescueOrganization & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function SearchRescueOrganizationMixin<Base extends rdfine.Constructor>(R
   }
   return SearchRescueOrganizationClass as any
 }
-
-class SearchRescueOrganizationImpl extends SearchRescueOrganizationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SearchRescueOrganization>) {
-    super(arg, init)
-    this.types.add(schema.SearchRescueOrganization)
-  }
-
-  static readonly __mixins: Mixin[] = [SearchRescueOrganizationMixin, OrganizationMixin];
-}
 SearchRescueOrganizationMixin.appliesTo = schema.SearchRescueOrganization
-SearchRescueOrganizationMixin.Class = SearchRescueOrganizationImpl
-
-export const fromPointer = createFactory<SearchRescueOrganization>([OrganizationMixin, SearchRescueOrganizationMixin], { types: [schema.SearchRescueOrganization] });
+SearchRescueOrganizationMixin.createFactory = (env: RdfineEnvironment) => createFactory<SearchRescueOrganization>([OrganizationMixin, SearchRescueOrganizationMixin], { types: [schema.SearchRescueOrganization] }, env)

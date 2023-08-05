@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { OrganizationMixin } from './Organization.js';
 
 export interface FundingScheme<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    FundingScheme: Factory<Schema.FundingScheme>;
+  }
 }
 
 export function FundingSchemeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FundingScheme & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function FundingSchemeMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return FundingSchemeClass as any
 }
-
-class FundingSchemeImpl extends FundingSchemeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<FundingScheme>) {
-    super(arg, init)
-    this.types.add(schema.FundingScheme)
-  }
-
-  static readonly __mixins: Mixin[] = [FundingSchemeMixin, OrganizationMixin];
-}
 FundingSchemeMixin.appliesTo = schema.FundingScheme
-FundingSchemeMixin.Class = FundingSchemeImpl
-
-export const fromPointer = createFactory<FundingScheme>([OrganizationMixin, FundingSchemeMixin], { types: [schema.FundingScheme] });
+FundingSchemeMixin.createFactory = (env: RdfineEnvironment) => createFactory<FundingScheme>([OrganizationMixin, FundingSchemeMixin], { types: [schema.FundingScheme] }, env)

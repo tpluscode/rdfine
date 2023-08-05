@@ -1,16 +1,14 @@
-import rdf from '@rdfjs/dataset'
-import { fromPointer } from '@rdfine/schema/lib/Order'
 import type * as Schema from '@rdfine/schema'
-import RDF from '@rdfjs/data-model'
 import OrderStatus from '@rdfine/schema/lib/OrderStatus'
 import { turtle } from '@tpluscode/rdf-string'
-import cf from 'clownface'
+import { createEnv } from '@rdfine/env'
+import { SchemaFactory } from '@rdfine/schema/Factory'
 
-const dataset = rdf.dataset()
-const order: Schema.Order = fromPointer(cf({
-  dataset,
-  term: RDF.namedNode('http://example.com/store/order/1'),
+const environment = createEnv(SchemaFactory)
+
+const order: Schema.Order = environment.rdfine.schema.Order(environment.clownface({
+  term: environment.namedNode('http://example.com/store/order/1'),
 }))
 order.orderStatus = OrderStatus.OrderDelivered
 
-console.log(turtle`${dataset}`.toString())
+console.log(turtle`${order.pointer.dataset}`.toString())

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -19,6 +19,12 @@ export interface Rule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.
   regulatesOrRegulated: Rico.Thing<D> | undefined;
   ruleIsSourceOfRuleRelation: Rico.RuleRelation<D> | undefined;
   title: RDF.Literal | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    Rule: Factory<Rico.Rule>;
+  }
 }
 
 export function RuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Rule & RdfResourceCore> & Base {
@@ -47,16 +53,5 @@ export function RuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return RuleClass as any
 }
-
-class RuleImpl extends RuleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Rule>) {
-    super(arg, init)
-    this.types.add(rico.Rule)
-  }
-
-  static readonly __mixins: Mixin[] = [RuleMixin, ThingMixin];
-}
 RuleMixin.appliesTo = rico.Rule
-RuleMixin.Class = RuleImpl
-
-export const fromPointer = createFactory<Rule>([ThingMixin, RuleMixin], { types: [rico.Rule] });
+RuleMixin.createFactory = (env: RdfineEnvironment) => createFactory<Rule>([ThingMixin, RuleMixin], { types: [rico.Rule] }, env)

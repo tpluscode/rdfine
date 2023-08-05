@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -32,6 +32,12 @@ export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   startTime: Date | undefined;
   uploadDate: Date | undefined;
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MediaObject: Factory<Schema.MediaObject>;
+  }
 }
 
 export function MediaObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MediaObject & RdfResourceCore> & Base {
@@ -86,16 +92,5 @@ export function MediaObjectMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return MediaObjectClass as any
 }
-
-class MediaObjectImpl extends MediaObjectMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MediaObject>) {
-    super(arg, init)
-    this.types.add(schema.MediaObject)
-  }
-
-  static readonly __mixins: Mixin[] = [MediaObjectMixin, CreativeWorkMixin];
-}
 MediaObjectMixin.appliesTo = schema.MediaObject
-MediaObjectMixin.Class = MediaObjectImpl
-
-export const fromPointer = createFactory<MediaObject>([CreativeWorkMixin, MediaObjectMixin], { types: [schema.MediaObject] });
+MediaObjectMixin.createFactory = (env: RdfineEnvironment) => createFactory<MediaObject>([CreativeWorkMixin, MediaObjectMixin], { types: [schema.MediaObject] }, env)

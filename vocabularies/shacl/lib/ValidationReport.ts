@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
@@ -13,6 +13,12 @@ export interface ValidationReport<D extends RDF.DatasetCore = RDF.DatasetCore> e
   conforms: boolean | undefined;
   result: Array<Sh.ValidationResult<D>>;
   shapesGraphWellFormed: boolean | undefined;
+}
+
+declare global {
+  interface ShVocabulary {
+    ValidationReport: Factory<Sh.ValidationReport>;
+  }
 }
 
 export function ValidationReportMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ValidationReport & RdfResourceCore> & Base {
@@ -27,16 +33,5 @@ export function ValidationReportMixin<Base extends rdfine.Constructor>(Resource:
   }
   return ValidationReportClass as any
 }
-
-class ValidationReportImpl extends ValidationReportMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ValidationReport>) {
-    super(arg, init)
-    this.types.add(sh.ValidationReport)
-  }
-
-  static readonly __mixins: Mixin[] = [ValidationReportMixin, RdfsResourceMixin];
-}
 ValidationReportMixin.appliesTo = sh.ValidationReport
-ValidationReportMixin.Class = ValidationReportImpl
-
-export const fromPointer = createFactory<ValidationReport>([RdfsResourceMixin, ValidationReportMixin], { types: [sh.ValidationReport] });
+ValidationReportMixin.createFactory = (env: RdfineEnvironment) => createFactory<ValidationReport>([RdfsResourceMixin, ValidationReportMixin], { types: [sh.ValidationReport] }, env)

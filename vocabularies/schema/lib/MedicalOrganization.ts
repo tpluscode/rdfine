@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { OrganizationMixin } from './Organization.js';
 
@@ -12,6 +12,12 @@ export interface MedicalOrganization<D extends RDF.DatasetCore = RDF.DatasetCore
   healthPlanNetworkId: string | undefined;
   isAcceptingNewPatients: boolean | undefined;
   medicalSpecialty: Schema.MedicalSpecialty | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MedicalOrganization: Factory<Schema.MedicalOrganization>;
+  }
 }
 
 export function MedicalOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalOrganization & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function MedicalOrganizationMixin<Base extends rdfine.Constructor>(Resour
   }
   return MedicalOrganizationClass as any
 }
-
-class MedicalOrganizationImpl extends MedicalOrganizationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MedicalOrganization>) {
-    super(arg, init)
-    this.types.add(schema.MedicalOrganization)
-  }
-
-  static readonly __mixins: Mixin[] = [MedicalOrganizationMixin, OrganizationMixin];
-}
 MedicalOrganizationMixin.appliesTo = schema.MedicalOrganization
-MedicalOrganizationMixin.Class = MedicalOrganizationImpl
-
-export const fromPointer = createFactory<MedicalOrganization>([OrganizationMixin, MedicalOrganizationMixin], { types: [schema.MedicalOrganization] });
+MedicalOrganizationMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalOrganization>([OrganizationMixin, MedicalOrganizationMixin], { types: [schema.MedicalOrganization] }, env)

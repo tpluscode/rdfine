@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
 export interface Menu<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   hasMenuItem: Schema.MenuItem<D> | undefined;
   hasMenuSection: Schema.MenuSection<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Menu: Factory<Schema.Menu>;
+  }
 }
 
 export function MenuMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Menu & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function MenuMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return MenuClass as any
 }
-
-class MenuImpl extends MenuMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Menu>) {
-    super(arg, init)
-    this.types.add(schema.Menu)
-  }
-
-  static readonly __mixins: Mixin[] = [MenuMixin, CreativeWorkMixin];
-}
 MenuMixin.appliesTo = schema.Menu
-MenuMixin.Class = MenuImpl
-
-export const fromPointer = createFactory<Menu>([CreativeWorkMixin, MenuMixin], { types: [schema.Menu] });
+MenuMixin.createFactory = (env: RdfineEnvironment) => createFactory<Menu>([CreativeWorkMixin, MenuMixin], { types: [schema.Menu] }, env)

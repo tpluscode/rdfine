@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -15,6 +15,12 @@ export interface Book<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   illustrator: Schema.Person<D> | undefined;
   isbn: string | undefined;
   numberOfPages: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Book: Factory<Schema.Book>;
+  }
 }
 
 export function BookMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Book & RdfResourceCore> & Base {
@@ -35,16 +41,5 @@ export function BookMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return BookClass as any
 }
-
-class BookImpl extends BookMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Book>) {
-    super(arg, init)
-    this.types.add(schema.Book)
-  }
-
-  static readonly __mixins: Mixin[] = [BookMixin, CreativeWorkMixin];
-}
 BookMixin.appliesTo = schema.Book
-BookMixin.Class = BookImpl
-
-export const fromPointer = createFactory<Book>([CreativeWorkMixin, BookMixin], { types: [schema.Book] });
+BookMixin.createFactory = (env: RdfineEnvironment) => createFactory<Book>([CreativeWorkMixin, BookMixin], { types: [schema.Book] }, env)

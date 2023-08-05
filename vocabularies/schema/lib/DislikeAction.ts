@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ReactActionMixin } from './ReactAction.js';
 
 export interface DislikeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ReactAction<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DislikeAction: Factory<Schema.DislikeAction>;
+  }
 }
 
 export function DislikeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DislikeAction & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function DislikeActionMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return DislikeActionClass as any
 }
-
-class DislikeActionImpl extends DislikeActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DislikeAction>) {
-    super(arg, init)
-    this.types.add(schema.DislikeAction)
-  }
-
-  static readonly __mixins: Mixin[] = [DislikeActionMixin, ReactActionMixin];
-}
 DislikeActionMixin.appliesTo = schema.DislikeAction
-DislikeActionMixin.Class = DislikeActionImpl
-
-export const fromPointer = createFactory<DislikeAction>([ReactActionMixin, DislikeActionMixin], { types: [schema.DislikeAction] });
+DislikeActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<DislikeAction>([ReactActionMixin, DislikeActionMixin], { types: [schema.DislikeAction] }, env)

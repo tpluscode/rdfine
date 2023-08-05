@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { SportsOrganizationMixin } from './SportsOrganization.js';
 
@@ -13,6 +13,12 @@ export interface SportsTeam<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   coach: Schema.Person<D> | undefined;
   gender: string | undefined;
   genderTerm: Schema.GenderType | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    SportsTeam: Factory<Schema.SportsTeam>;
+  }
 }
 
 export function SportsTeamMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SportsTeam & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function SportsTeamMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return SportsTeamClass as any
 }
-
-class SportsTeamImpl extends SportsTeamMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SportsTeam>) {
-    super(arg, init)
-    this.types.add(schema.SportsTeam)
-  }
-
-  static readonly __mixins: Mixin[] = [SportsTeamMixin, SportsOrganizationMixin];
-}
 SportsTeamMixin.appliesTo = schema.SportsTeam
-SportsTeamMixin.Class = SportsTeamImpl
-
-export const fromPointer = createFactory<SportsTeam>([SportsOrganizationMixin, SportsTeamMixin], { types: [schema.SportsTeam] });
+SportsTeamMixin.createFactory = (env: RdfineEnvironment) => createFactory<SportsTeam>([SportsOrganizationMixin, SportsTeamMixin], { types: [schema.SportsTeam] }, env)

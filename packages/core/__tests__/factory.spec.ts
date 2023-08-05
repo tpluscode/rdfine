@@ -6,6 +6,7 @@ import { Constructor } from '../lib/ResourceFactory.js'
 import { RdfResource } from '../RdfResource.js'
 import { property } from '../lib/decorators/index.js'
 import { ex } from './_helpers/index.js'
+import environment from './_helpers/environment.js'
 
 interface TestResource extends RdfResource {
   foo?: string
@@ -34,7 +35,7 @@ describe('@tpluscode/rdfine/factory', () => {
       // given
       const factory = createFactory<TestResource>([TestMixin], {
         foo: 'foo',
-      })
+      }, environment)
 
       // when
       const res = factory(blankNode())
@@ -48,7 +49,7 @@ describe('@tpluscode/rdfine/factory', () => {
       // given
       const factory = createFactory<TestResource>([TestMixin], {
         foo: 'foo',
-      })
+      }, environment)
 
       // when
       const res = factory(blankNode(), {
@@ -65,7 +66,7 @@ describe('@tpluscode/rdfine/factory', () => {
   describe('curried with named node', () => {
     it('creates resource with URI provided as string', () => {
       // given
-      const factory = createFactory<TestResource>([TestMixin], {})
+      const factory = createFactory<TestResource>([TestMixin], {}, environment)
       const curriedFactory = factory('http://foo.bar/baz', { foo: 'bar' })
 
       // when
@@ -77,7 +78,7 @@ describe('@tpluscode/rdfine/factory', () => {
 
     it('creates resource with URI provided as Term', () => {
       // given
-      const factory = createFactory<TestResource>([TestMixin], {})
+      const factory = createFactory<TestResource>([TestMixin], {}, environment)
       const curriedFactory = factory($rdf.namedNode('http://foo.bar/baz'), { foo: 'bar' })
 
       // when
@@ -91,7 +92,7 @@ describe('@tpluscode/rdfine/factory', () => {
   describe('curried without node', () => {
     it('creates a blank node resource', () => {
       // given
-      const factory = createFactory<TestResource>([TestMixin], {})
+      const factory = createFactory<TestResource>([TestMixin], {}, environment)
       const curriedFactory = factory({ foo: 'bar' })
 
       // when

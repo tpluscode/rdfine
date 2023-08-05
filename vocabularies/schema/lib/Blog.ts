@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -12,6 +12,12 @@ export interface Blog<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   blogPost: Schema.BlogPosting<D> | undefined;
   blogPosts: Schema.BlogPosting<D> | undefined;
   issn: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Blog: Factory<Schema.Blog>;
+  }
 }
 
 export function BlogMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Blog & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function BlogMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return BlogClass as any
 }
-
-class BlogImpl extends BlogMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Blog>) {
-    super(arg, init)
-    this.types.add(schema.Blog)
-  }
-
-  static readonly __mixins: Mixin[] = [BlogMixin, CreativeWorkMixin];
-}
 BlogMixin.appliesTo = schema.Blog
-BlogMixin.Class = BlogImpl
-
-export const fromPointer = createFactory<Blog>([CreativeWorkMixin, BlogMixin], { types: [schema.Blog] });
+BlogMixin.createFactory = (env: RdfineEnvironment) => createFactory<Blog>([CreativeWorkMixin, BlogMixin], { types: [schema.Blog] }, env)

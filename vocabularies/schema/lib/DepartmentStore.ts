@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StoreMixin } from './Store.js';
 
 export interface DepartmentStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DepartmentStore: Factory<Schema.DepartmentStore>;
+  }
 }
 
 export function DepartmentStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DepartmentStore & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function DepartmentStoreMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return DepartmentStoreClass as any
 }
-
-class DepartmentStoreImpl extends DepartmentStoreMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DepartmentStore>) {
-    super(arg, init)
-    this.types.add(schema.DepartmentStore)
-  }
-
-  static readonly __mixins: Mixin[] = [DepartmentStoreMixin, StoreMixin];
-}
 DepartmentStoreMixin.appliesTo = schema.DepartmentStore
-DepartmentStoreMixin.Class = DepartmentStoreImpl
-
-export const fromPointer = createFactory<DepartmentStore>([StoreMixin, DepartmentStoreMixin], { types: [schema.DepartmentStore] });
+DepartmentStoreMixin.createFactory = (env: RdfineEnvironment) => createFactory<DepartmentStore>([StoreMixin, DepartmentStoreMixin], { types: [schema.DepartmentStore] }, env)

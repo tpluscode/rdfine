@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { ConceptMixin } from './Concept.js';
 
@@ -12,6 +12,12 @@ export interface Language<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   isOrWasLanguageOf: Rico.Agent<D> | Rico.Record<D> | Rico.RecordPart<D> | undefined;
   isOrWasLanguageOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasLanguageOfSomeMembersOf: Rico.RecordSet<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    Language: Factory<Rico.Language>;
+  }
 }
 
 export function LanguageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Language & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function LanguageMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return LanguageClass as any
 }
-
-class LanguageImpl extends LanguageMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Language>) {
-    super(arg, init)
-    this.types.add(rico.Language)
-  }
-
-  static readonly __mixins: Mixin[] = [LanguageMixin, ConceptMixin];
-}
 LanguageMixin.appliesTo = rico.Language
-LanguageMixin.Class = LanguageImpl
-
-export const fromPointer = createFactory<Language>([ConceptMixin, LanguageMixin], { types: [rico.Language] });
+LanguageMixin.createFactory = (env: RdfineEnvironment) => createFactory<Language>([ConceptMixin, LanguageMixin], { types: [rico.Language] }, env)

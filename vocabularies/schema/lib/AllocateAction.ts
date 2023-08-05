@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { OrganizeActionMixin } from './OrganizeAction.js';
 
 export interface AllocateAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OrganizeAction<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    AllocateAction: Factory<Schema.AllocateAction>;
+  }
 }
 
 export function AllocateActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AllocateAction & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function AllocateActionMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return AllocateActionClass as any
 }
-
-class AllocateActionImpl extends AllocateActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AllocateAction>) {
-    super(arg, init)
-    this.types.add(schema.AllocateAction)
-  }
-
-  static readonly __mixins: Mixin[] = [AllocateActionMixin, OrganizeActionMixin];
-}
 AllocateActionMixin.appliesTo = schema.AllocateAction
-AllocateActionMixin.Class = AllocateActionImpl
-
-export const fromPointer = createFactory<AllocateAction>([OrganizeActionMixin, AllocateActionMixin], { types: [schema.AllocateAction] });
+AllocateActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<AllocateAction>([OrganizeActionMixin, AllocateActionMixin], { types: [schema.AllocateAction] }, env)

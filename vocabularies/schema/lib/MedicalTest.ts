@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalEntityMixin } from './MedicalEntity.js';
 
@@ -15,6 +15,12 @@ export interface MedicalTest<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   signDetected: Schema.MedicalSign<D> | undefined;
   usedToDiagnose: Schema.MedicalCondition<D> | undefined;
   usesDevice: Schema.MedicalDevice<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MedicalTest: Factory<Schema.MedicalTest>;
+  }
 }
 
 export function MedicalTestMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalTest & RdfResourceCore> & Base {
@@ -35,16 +41,5 @@ export function MedicalTestMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return MedicalTestClass as any
 }
-
-class MedicalTestImpl extends MedicalTestMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MedicalTest>) {
-    super(arg, init)
-    this.types.add(schema.MedicalTest)
-  }
-
-  static readonly __mixins: Mixin[] = [MedicalTestMixin, MedicalEntityMixin];
-}
 MedicalTestMixin.appliesTo = schema.MedicalTest
-MedicalTestMixin.Class = MedicalTestImpl
-
-export const fromPointer = createFactory<MedicalTest>([MedicalEntityMixin, MedicalTestMixin], { types: [schema.MedicalTest] });
+MedicalTestMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalTest>([MedicalEntityMixin, MedicalTestMixin], { types: [schema.MedicalTest] }, env)

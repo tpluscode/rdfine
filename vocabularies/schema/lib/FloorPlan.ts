@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -23,6 +23,12 @@ export interface FloorPlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   numberOfRooms: Schema.QuantitativeValue<D> | undefined;
   numberOfRoomsLiteral: number | undefined;
   petsAllowed: boolean | string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    FloorPlan: Factory<Schema.FloorPlan>;
+  }
 }
 
 export function FloorPlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FloorPlan & RdfResourceCore> & Base {
@@ -59,16 +65,5 @@ export function FloorPlanMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return FloorPlanClass as any
 }
-
-class FloorPlanImpl extends FloorPlanMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<FloorPlan>) {
-    super(arg, init)
-    this.types.add(schema.FloorPlan)
-  }
-
-  static readonly __mixins: Mixin[] = [FloorPlanMixin, IntangibleMixin];
-}
 FloorPlanMixin.appliesTo = schema.FloorPlan
-FloorPlanMixin.Class = FloorPlanImpl
-
-export const fromPointer = createFactory<FloorPlan>([IntangibleMixin, FloorPlanMixin], { types: [schema.FloorPlan] });
+FloorPlanMixin.createFactory = (env: RdfineEnvironment) => createFactory<FloorPlan>([IntangibleMixin, FloorPlanMixin], { types: [schema.FloorPlan] }, env)

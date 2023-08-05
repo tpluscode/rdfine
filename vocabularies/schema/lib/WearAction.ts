@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { UseActionMixin } from './UseAction.js';
 
 export interface WearAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UseAction<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    WearAction: Factory<Schema.WearAction>;
+  }
 }
 
 export function WearActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WearAction & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function WearActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return WearActionClass as any
 }
-
-class WearActionImpl extends WearActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<WearAction>) {
-    super(arg, init)
-    this.types.add(schema.WearAction)
-  }
-
-  static readonly __mixins: Mixin[] = [WearActionMixin, UseActionMixin];
-}
 WearActionMixin.appliesTo = schema.WearAction
-WearActionMixin.Class = WearActionImpl
-
-export const fromPointer = createFactory<WearAction>([UseActionMixin, WearActionMixin], { types: [schema.WearAction] });
+WearActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<WearAction>([UseActionMixin, WearActionMixin], { types: [schema.WearAction] }, env)

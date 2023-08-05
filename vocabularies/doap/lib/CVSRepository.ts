@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { doap } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Doap from '../index.js';
 import { RepositoryMixin } from './Repository.js';
 
 export interface CVSRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, rdfine.RdfResource<D> {
   module: RDF.Term | undefined;
+}
+
+declare global {
+  interface DoapVocabulary {
+    CVSRepository: Factory<Doap.CVSRepository>;
+  }
 }
 
 export function CVSRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CVSRepository & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function CVSRepositoryMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return CVSRepositoryClass as any
 }
-
-class CVSRepositoryImpl extends CVSRepositoryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CVSRepository>) {
-    super(arg, init)
-    this.types.add(doap.CVSRepository)
-  }
-
-  static readonly __mixins: Mixin[] = [CVSRepositoryMixin, RepositoryMixin];
-}
 CVSRepositoryMixin.appliesTo = doap.CVSRepository
-CVSRepositoryMixin.Class = CVSRepositoryImpl
-
-export const fromPointer = createFactory<CVSRepository>([RepositoryMixin, CVSRepositoryMixin], { types: [doap.CVSRepository] });
+CVSRepositoryMixin.createFactory = (env: RdfineEnvironment) => createFactory<CVSRepository>([RepositoryMixin, CVSRepositoryMixin], { types: [doap.CVSRepository] }, env)

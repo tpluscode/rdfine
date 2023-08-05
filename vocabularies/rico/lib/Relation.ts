@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -17,6 +17,12 @@ export interface Relation<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   relationHasTarget: Rico.Thing<D> | undefined;
   relationState: RDF.Literal | undefined;
   source: RDF.Literal | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    Relation: Factory<Rico.Relation>;
+  }
 }
 
 export function RelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Relation & RdfResourceCore> & Base {
@@ -41,16 +47,5 @@ export function RelationMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return RelationClass as any
 }
-
-class RelationImpl extends RelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Relation>) {
-    super(arg, init)
-    this.types.add(rico.Relation)
-  }
-
-  static readonly __mixins: Mixin[] = [RelationMixin, ThingMixin];
-}
 RelationMixin.appliesTo = rico.Relation
-RelationMixin.Class = RelationImpl
-
-export const fromPointer = createFactory<Relation>([ThingMixin, RelationMixin], { types: [rico.Relation] });
+RelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Relation>([ThingMixin, RelationMixin], { types: [rico.Relation] }, env)

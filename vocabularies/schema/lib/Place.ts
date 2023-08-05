@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -56,6 +56,12 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   specialOpeningHoursSpecification: Schema.OpeningHoursSpecification<D> | undefined;
   telephone: string | undefined;
   tourBookingPage: RDF.NamedNode | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Place: Factory<Schema.Place>;
+  }
 }
 
 export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Place & RdfResourceCore> & Base {
@@ -158,16 +164,5 @@ export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return PlaceClass as any
 }
-
-class PlaceImpl extends PlaceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Place>) {
-    super(arg, init)
-    this.types.add(schema.Place)
-  }
-
-  static readonly __mixins: Mixin[] = [PlaceMixin, ThingMixin];
-}
 PlaceMixin.appliesTo = schema.Place
-PlaceMixin.Class = PlaceImpl
-
-export const fromPointer = createFactory<Place>([ThingMixin, PlaceMixin], { types: [schema.Place] });
+PlaceMixin.createFactory = (env: RdfineEnvironment) => createFactory<Place>([ThingMixin, PlaceMixin], { types: [schema.Place] }, env)

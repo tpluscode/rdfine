@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LocalBusinessMixin } from './LocalBusiness.js';
 
 export interface Library<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Library: Factory<Schema.Library>;
+  }
 }
 
 export function LibraryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Library & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function LibraryMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return LibraryClass as any
 }
-
-class LibraryImpl extends LibraryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Library>) {
-    super(arg, init)
-    this.types.add(schema.Library)
-  }
-
-  static readonly __mixins: Mixin[] = [LibraryMixin, LocalBusinessMixin];
-}
 LibraryMixin.appliesTo = schema.Library
-LibraryMixin.Class = LibraryImpl
-
-export const fromPointer = createFactory<Library>([LocalBusinessMixin, LibraryMixin], { types: [schema.Library] });
+LibraryMixin.createFactory = (env: RdfineEnvironment) => createFactory<Library>([LocalBusinessMixin, LibraryMixin], { types: [schema.Library] }, env)

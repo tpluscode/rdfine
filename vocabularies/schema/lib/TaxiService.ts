@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ServiceMixin } from './Service.js';
 
 export interface TaxiService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    TaxiService: Factory<Schema.TaxiService>;
+  }
 }
 
 export function TaxiServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TaxiService & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function TaxiServiceMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return TaxiServiceClass as any
 }
-
-class TaxiServiceImpl extends TaxiServiceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TaxiService>) {
-    super(arg, init)
-    this.types.add(schema.TaxiService)
-  }
-
-  static readonly __mixins: Mixin[] = [TaxiServiceMixin, ServiceMixin];
-}
 TaxiServiceMixin.appliesTo = schema.TaxiService
-TaxiServiceMixin.Class = TaxiServiceImpl
-
-export const fromPointer = createFactory<TaxiService>([ServiceMixin, TaxiServiceMixin], { types: [schema.TaxiService] });
+TaxiServiceMixin.createFactory = (env: RdfineEnvironment) => createFactory<TaxiService>([ServiceMixin, TaxiServiceMixin], { types: [schema.TaxiService] }, env)

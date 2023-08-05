@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { ConceptMixin } from './Concept.js';
 
@@ -17,6 +17,12 @@ export interface Appellation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   usedToDate: RDF.Literal | undefined;
   wasUsedFromDate: Rico.Date<D> | undefined;
   wasUsedToDate: Rico.Date<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    Appellation: Factory<Rico.Appellation>;
+  }
 }
 
 export function AppellationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Appellation & RdfResourceCore> & Base {
@@ -41,16 +47,5 @@ export function AppellationMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return AppellationClass as any
 }
-
-class AppellationImpl extends AppellationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Appellation>) {
-    super(arg, init)
-    this.types.add(rico.Appellation)
-  }
-
-  static readonly __mixins: Mixin[] = [AppellationMixin, ConceptMixin];
-}
 AppellationMixin.appliesTo = rico.Appellation
-AppellationMixin.Class = AppellationImpl
-
-export const fromPointer = createFactory<Appellation>([ConceptMixin, AppellationMixin], { types: [rico.Appellation] });
+AppellationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Appellation>([ConceptMixin, AppellationMixin], { types: [rico.Appellation] }, env)

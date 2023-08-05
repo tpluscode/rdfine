@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { TypeMixin } from './Type.js';
 
 export interface RecordSetType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, rdfine.RdfResource<D> {
   isRecordSetTypeOf: Rico.RecordSet<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    RecordSetType: Factory<Rico.RecordSetType>;
+  }
 }
 
 export function RecordSetTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordSetType & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function RecordSetTypeMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return RecordSetTypeClass as any
 }
-
-class RecordSetTypeImpl extends RecordSetTypeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RecordSetType>) {
-    super(arg, init)
-    this.types.add(rico.RecordSetType)
-  }
-
-  static readonly __mixins: Mixin[] = [RecordSetTypeMixin, TypeMixin];
-}
 RecordSetTypeMixin.appliesTo = rico.RecordSetType
-RecordSetTypeMixin.Class = RecordSetTypeImpl
-
-export const fromPointer = createFactory<RecordSetType>([TypeMixin, RecordSetTypeMixin], { types: [rico.RecordSetType] });
+RecordSetTypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<RecordSetType>([TypeMixin, RecordSetTypeMixin], { types: [rico.RecordSetType] }, env)

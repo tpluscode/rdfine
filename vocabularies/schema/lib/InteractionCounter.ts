@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -16,6 +16,12 @@ export interface InteractionCounter<D extends RDF.DatasetCore = RDF.DatasetCore>
   locationLiteral: string | undefined;
   startTime: Date | undefined;
   userInteractionCount: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    InteractionCounter: Factory<Schema.InteractionCounter>;
+  }
 }
 
 export function InteractionCounterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InteractionCounter & RdfResourceCore> & Base {
@@ -38,16 +44,5 @@ export function InteractionCounterMixin<Base extends rdfine.Constructor>(Resourc
   }
   return InteractionCounterClass as any
 }
-
-class InteractionCounterImpl extends InteractionCounterMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<InteractionCounter>) {
-    super(arg, init)
-    this.types.add(schema.InteractionCounter)
-  }
-
-  static readonly __mixins: Mixin[] = [InteractionCounterMixin, StructuredValueMixin];
-}
 InteractionCounterMixin.appliesTo = schema.InteractionCounter
-InteractionCounterMixin.Class = InteractionCounterImpl
-
-export const fromPointer = createFactory<InteractionCounter>([StructuredValueMixin, InteractionCounterMixin], { types: [schema.InteractionCounter] });
+InteractionCounterMixin.createFactory = (env: RdfineEnvironment) => createFactory<InteractionCounter>([StructuredValueMixin, InteractionCounterMixin], { types: [schema.InteractionCounter] }, env)

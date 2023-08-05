@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { dash } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Dash from '../index.js';
 import { ScriptMixin } from './Script.js';
 
 export interface IncludedScript<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface DashVocabulary {
+    IncludedScript: Factory<Dash.IncludedScript>;
+  }
 }
 
 export function IncludedScriptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IncludedScript & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function IncludedScriptMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return IncludedScriptClass as any
 }
-
-class IncludedScriptImpl extends IncludedScriptMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<IncludedScript>) {
-    super(arg, init)
-    this.types.add(dash.IncludedScript)
-  }
-
-  static readonly __mixins: Mixin[] = [IncludedScriptMixin, ScriptMixin];
-}
 IncludedScriptMixin.appliesTo = dash.IncludedScript
-IncludedScriptMixin.Class = IncludedScriptImpl
-
-export const fromPointer = createFactory<IncludedScript>([ScriptMixin, IncludedScriptMixin], { types: [dash.IncludedScript] });
+IncludedScriptMixin.createFactory = (env: RdfineEnvironment) => createFactory<IncludedScript>([ScriptMixin, IncludedScriptMixin], { types: [dash.IncludedScript] }, env)

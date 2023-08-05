@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { SoftwareApplicationMixin } from './SoftwareApplication.js';
 
 export interface WebApplication<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.SoftwareApplication<D>, rdfine.RdfResource<D> {
   browserRequirements: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    WebApplication: Factory<Schema.WebApplication>;
+  }
 }
 
 export function WebApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WebApplication & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function WebApplicationMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return WebApplicationClass as any
 }
-
-class WebApplicationImpl extends WebApplicationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<WebApplication>) {
-    super(arg, init)
-    this.types.add(schema.WebApplication)
-  }
-
-  static readonly __mixins: Mixin[] = [WebApplicationMixin, SoftwareApplicationMixin];
-}
 WebApplicationMixin.appliesTo = schema.WebApplication
-WebApplicationMixin.Class = WebApplicationImpl
-
-export const fromPointer = createFactory<WebApplication>([SoftwareApplicationMixin, WebApplicationMixin], { types: [schema.WebApplication] });
+WebApplicationMixin.createFactory = (env: RdfineEnvironment) => createFactory<WebApplication>([SoftwareApplicationMixin, WebApplicationMixin], { types: [schema.WebApplication] }, env)

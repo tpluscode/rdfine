@@ -11,6 +11,7 @@
     "example:deep": "ts-node deep-initialization/index.ts"
   },
   "dependencies": {
+    "@rdfine/env": "^0.0.0",
     "@rdfine/schema": "^0.7.0",
     "@rdfjs/data-model": "^2",
     "@rdfjs/dataset": "^2",
@@ -20,7 +21,7 @@
     "@tpluscode/rdf-string": "^1.0.3",
     "@tpluscode/rdfine": "^0.6.0",
     "@zazuko/prefixes": ">=1",
-    "clownface": "^1",
+    "clownface": "^2.0.0",
     "debug": "^4.1.1"
   },
   "devDependencies": {

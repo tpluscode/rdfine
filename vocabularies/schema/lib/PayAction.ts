@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { TradeActionMixin } from './TradeAction.js';
 
 export interface PayAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, rdfine.RdfResource<D> {
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    PayAction: Factory<Schema.PayAction>;
+  }
 }
 
 export function PayActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PayAction & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function PayActionMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return PayActionClass as any
 }
-
-class PayActionImpl extends PayActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PayAction>) {
-    super(arg, init)
-    this.types.add(schema.PayAction)
-  }
-
-  static readonly __mixins: Mixin[] = [PayActionMixin, TradeActionMixin];
-}
 PayActionMixin.appliesTo = schema.PayAction
-PayActionMixin.Class = PayActionImpl
-
-export const fromPointer = createFactory<PayAction>([TradeActionMixin, PayActionMixin], { types: [schema.PayAction] });
+PayActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<PayAction>([TradeActionMixin, PayActionMixin], { types: [schema.PayAction] }, env)

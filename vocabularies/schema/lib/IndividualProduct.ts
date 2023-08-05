@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ProductMixin } from './Product.js';
 
 export interface IndividualProduct<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Product<D>, rdfine.RdfResource<D> {
   serialNumber: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    IndividualProduct: Factory<Schema.IndividualProduct>;
+  }
 }
 
 export function IndividualProductMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IndividualProduct & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function IndividualProductMixin<Base extends rdfine.Constructor>(Resource
   }
   return IndividualProductClass as any
 }
-
-class IndividualProductImpl extends IndividualProductMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<IndividualProduct>) {
-    super(arg, init)
-    this.types.add(schema.IndividualProduct)
-  }
-
-  static readonly __mixins: Mixin[] = [IndividualProductMixin, ProductMixin];
-}
 IndividualProductMixin.appliesTo = schema.IndividualProduct
-IndividualProductMixin.Class = IndividualProductImpl
-
-export const fromPointer = createFactory<IndividualProduct>([ProductMixin, IndividualProductMixin], { types: [schema.IndividualProduct] });
+IndividualProductMixin.createFactory = (env: RdfineEnvironment) => createFactory<IndividualProduct>([ProductMixin, IndividualProductMixin], { types: [schema.IndividualProduct] }, env)

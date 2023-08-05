@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { DigitalDocumentMixin } from './DigitalDocument.js';
 
 export interface SpreadsheetDigitalDocument<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DigitalDocument<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    SpreadsheetDigitalDocument: Factory<Schema.SpreadsheetDigitalDocument>;
+  }
 }
 
 export function SpreadsheetDigitalDocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SpreadsheetDigitalDocument & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function SpreadsheetDigitalDocumentMixin<Base extends rdfine.Constructor>
   }
   return SpreadsheetDigitalDocumentClass as any
 }
-
-class SpreadsheetDigitalDocumentImpl extends SpreadsheetDigitalDocumentMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SpreadsheetDigitalDocument>) {
-    super(arg, init)
-    this.types.add(schema.SpreadsheetDigitalDocument)
-  }
-
-  static readonly __mixins: Mixin[] = [SpreadsheetDigitalDocumentMixin, DigitalDocumentMixin];
-}
 SpreadsheetDigitalDocumentMixin.appliesTo = schema.SpreadsheetDigitalDocument
-SpreadsheetDigitalDocumentMixin.Class = SpreadsheetDigitalDocumentImpl
-
-export const fromPointer = createFactory<SpreadsheetDigitalDocument>([DigitalDocumentMixin, SpreadsheetDigitalDocumentMixin], { types: [schema.SpreadsheetDigitalDocument] });
+SpreadsheetDigitalDocumentMixin.createFactory = (env: RdfineEnvironment) => createFactory<SpreadsheetDigitalDocument>([DigitalDocumentMixin, SpreadsheetDigitalDocumentMixin], { types: [schema.SpreadsheetDigitalDocument] }, env)

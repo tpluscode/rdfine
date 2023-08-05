@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { DerivationRelationMixin } from './DerivationRelation.js';
 
 export interface MigrationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.DerivationRelation<D>, rdfine.RdfResource<D> {
   migrationRelationHasSource: Rico.Instantiation<D> | undefined;
   migrationRelationHasTarget: Rico.Instantiation<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    MigrationRelation: Factory<Rico.MigrationRelation>;
+  }
 }
 
 export function MigrationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MigrationRelation & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function MigrationRelationMixin<Base extends rdfine.Constructor>(Resource
   }
   return MigrationRelationClass as any
 }
-
-class MigrationRelationImpl extends MigrationRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MigrationRelation>) {
-    super(arg, init)
-    this.types.add(rico.MigrationRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [MigrationRelationMixin, DerivationRelationMixin];
-}
 MigrationRelationMixin.appliesTo = rico.MigrationRelation
-MigrationRelationMixin.Class = MigrationRelationImpl
-
-export const fromPointer = createFactory<MigrationRelation>([DerivationRelationMixin, MigrationRelationMixin], { types: [rico.MigrationRelation] });
+MigrationRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<MigrationRelation>([DerivationRelationMixin, MigrationRelationMixin], { types: [rico.MigrationRelation] }, env)

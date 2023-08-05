@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AutomotiveBusinessMixin } from './AutomotiveBusiness.js';
 import { StoreMixin } from './Store.js';
 
 export interface AutoPartsStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AutomotiveBusiness<D>, Schema.Store<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    AutoPartsStore: Factory<Schema.AutoPartsStore>;
+  }
 }
 
 export function AutoPartsStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AutoPartsStore & RdfResourceCore> & Base {
@@ -18,16 +24,5 @@ export function AutoPartsStoreMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return AutoPartsStoreClass as any
 }
-
-class AutoPartsStoreImpl extends AutoPartsStoreMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AutoPartsStore>) {
-    super(arg, init)
-    this.types.add(schema.AutoPartsStore)
-  }
-
-  static readonly __mixins: Mixin[] = [AutoPartsStoreMixin, AutomotiveBusinessMixin, StoreMixin];
-}
 AutoPartsStoreMixin.appliesTo = schema.AutoPartsStore
-AutoPartsStoreMixin.Class = AutoPartsStoreImpl
-
-export const fromPointer = createFactory<AutoPartsStore>([StoreMixin, AutomotiveBusinessMixin, AutoPartsStoreMixin], { types: [schema.AutoPartsStore] });
+AutoPartsStoreMixin.createFactory = (env: RdfineEnvironment) => createFactory<AutoPartsStore>([StoreMixin, AutomotiveBusinessMixin, AutoPartsStoreMixin], { types: [schema.AutoPartsStore] }, env)

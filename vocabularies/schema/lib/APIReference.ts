@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { TechArticleMixin } from './TechArticle.js';
 
@@ -14,6 +14,12 @@ export interface APIReference<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   executableLibraryName: string | undefined;
   programmingModel: string | undefined;
   targetPlatform: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    APIReference: Factory<Schema.APIReference>;
+  }
 }
 
 export function APIReferenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<APIReference & RdfResourceCore> & Base {
@@ -32,16 +38,5 @@ export function APIReferenceMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return APIReferenceClass as any
 }
-
-class APIReferenceImpl extends APIReferenceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<APIReference>) {
-    super(arg, init)
-    this.types.add(schema.APIReference)
-  }
-
-  static readonly __mixins: Mixin[] = [APIReferenceMixin, TechArticleMixin];
-}
 APIReferenceMixin.appliesTo = schema.APIReference
-APIReferenceMixin.Class = APIReferenceImpl
-
-export const fromPointer = createFactory<APIReference>([TechArticleMixin, APIReferenceMixin], { types: [schema.APIReference] });
+APIReferenceMixin.createFactory = (env: RdfineEnvironment) => createFactory<APIReference>([TechArticleMixin, APIReferenceMixin], { types: [schema.APIReference] }, env)

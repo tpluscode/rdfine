@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -18,6 +18,12 @@ export interface Article<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   pagination: string | undefined;
   speakable: Schema.SpeakableSpecification<D> | undefined;
   wordCount: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Article: Factory<Schema.Article>;
+  }
 }
 
 export function ArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Article & RdfResourceCore> & Base {
@@ -44,16 +50,5 @@ export function ArticleMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return ArticleClass as any
 }
-
-class ArticleImpl extends ArticleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Article>) {
-    super(arg, init)
-    this.types.add(schema.Article)
-  }
-
-  static readonly __mixins: Mixin[] = [ArticleMixin, CreativeWorkMixin];
-}
 ArticleMixin.appliesTo = schema.Article
-ArticleMixin.Class = ArticleImpl
-
-export const fromPointer = createFactory<Article>([CreativeWorkMixin, ArticleMixin], { types: [schema.Article] });
+ArticleMixin.createFactory = (env: RdfineEnvironment) => createFactory<Article>([CreativeWorkMixin, ArticleMixin], { types: [schema.Article] }, env)

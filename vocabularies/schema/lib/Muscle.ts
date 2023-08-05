@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AnatomicalStructureMixin } from './AnatomicalStructure.js';
 
@@ -14,6 +14,12 @@ export interface Muscle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   insertion: Schema.AnatomicalStructure<D> | undefined;
   muscleAction: string | undefined;
   nerve: Schema.Nerve<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Muscle: Factory<Schema.Muscle>;
+  }
 }
 
 export function MuscleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Muscle & RdfResourceCore> & Base {
@@ -32,16 +38,5 @@ export function MuscleMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return MuscleClass as any
 }
-
-class MuscleImpl extends MuscleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Muscle>) {
-    super(arg, init)
-    this.types.add(schema.Muscle)
-  }
-
-  static readonly __mixins: Mixin[] = [MuscleMixin, AnatomicalStructureMixin];
-}
 MuscleMixin.appliesTo = schema.Muscle
-MuscleMixin.Class = MuscleImpl
-
-export const fromPointer = createFactory<Muscle>([AnatomicalStructureMixin, MuscleMixin], { types: [schema.Muscle] });
+MuscleMixin.createFactory = (env: RdfineEnvironment) => createFactory<Muscle>([AnatomicalStructureMixin, MuscleMixin], { types: [schema.Muscle] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -13,6 +13,12 @@ export interface PublicationIssue<D extends RDF.DatasetCore = RDF.DatasetCore> e
   pageEnd: number | string | undefined;
   pageStart: number | string | undefined;
   pagination: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    PublicationIssue: Factory<Schema.PublicationIssue>;
+  }
 }
 
 export function PublicationIssueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PublicationIssue & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function PublicationIssueMixin<Base extends rdfine.Constructor>(Resource:
   }
   return PublicationIssueClass as any
 }
-
-class PublicationIssueImpl extends PublicationIssueMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PublicationIssue>) {
-    super(arg, init)
-    this.types.add(schema.PublicationIssue)
-  }
-
-  static readonly __mixins: Mixin[] = [PublicationIssueMixin, CreativeWorkMixin];
-}
 PublicationIssueMixin.appliesTo = schema.PublicationIssue
-PublicationIssueMixin.Class = PublicationIssueImpl
-
-export const fromPointer = createFactory<PublicationIssue>([CreativeWorkMixin, PublicationIssueMixin], { types: [schema.PublicationIssue] });
+PublicationIssueMixin.createFactory = (env: RdfineEnvironment) => createFactory<PublicationIssue>([CreativeWorkMixin, PublicationIssueMixin], { types: [schema.PublicationIssue] }, env)

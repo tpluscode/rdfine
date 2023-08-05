@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { ActivityMixin } from './Activity.js';
 
 export interface Dislike<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface AsVocabulary {
+    Dislike: Factory<As.Dislike>;
+  }
 }
 
 export function DislikeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Dislike & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function DislikeMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return DislikeClass as any
 }
-
-class DislikeImpl extends DislikeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Dislike>) {
-    super(arg, init)
-    this.types.add(as.Dislike)
-  }
-
-  static readonly __mixins: Mixin[] = [DislikeMixin, ActivityMixin];
-}
 DislikeMixin.appliesTo = as.Dislike
-DislikeMixin.Class = DislikeImpl
-
-export const fromPointer = createFactory<Dislike>([ActivityMixin, DislikeMixin], { types: [as.Dislike] });
+DislikeMixin.createFactory = (env: RdfineEnvironment) => createFactory<Dislike>([ActivityMixin, DislikeMixin], { types: [as.Dislike] }, env)

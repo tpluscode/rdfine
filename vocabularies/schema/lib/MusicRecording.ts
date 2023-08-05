@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -15,6 +15,12 @@ export interface MusicRecording<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   inPlaylist: Schema.MusicPlaylist<D> | undefined;
   isrcCode: string | undefined;
   recordingOf: Schema.MusicComposition<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MusicRecording: Factory<Schema.MusicRecording>;
+  }
 }
 
 export function MusicRecordingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MusicRecording & RdfResourceCore> & Base {
@@ -35,16 +41,5 @@ export function MusicRecordingMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return MusicRecordingClass as any
 }
-
-class MusicRecordingImpl extends MusicRecordingMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MusicRecording>) {
-    super(arg, init)
-    this.types.add(schema.MusicRecording)
-  }
-
-  static readonly __mixins: Mixin[] = [MusicRecordingMixin, CreativeWorkMixin];
-}
 MusicRecordingMixin.appliesTo = schema.MusicRecording
-MusicRecordingMixin.Class = MusicRecordingImpl
-
-export const fromPointer = createFactory<MusicRecording>([CreativeWorkMixin, MusicRecordingMixin], { types: [schema.MusicRecording] });
+MusicRecordingMixin.createFactory = (env: RdfineEnvironment) => createFactory<MusicRecording>([CreativeWorkMixin, MusicRecordingMixin], { types: [schema.MusicRecording] }, env)

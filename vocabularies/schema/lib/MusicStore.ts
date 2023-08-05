@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StoreMixin } from './Store.js';
 
 export interface MusicStore<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Store<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MusicStore: Factory<Schema.MusicStore>;
+  }
 }
 
 export function MusicStoreMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MusicStore & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function MusicStoreMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return MusicStoreClass as any
 }
-
-class MusicStoreImpl extends MusicStoreMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MusicStore>) {
-    super(arg, init)
-    this.types.add(schema.MusicStore)
-  }
-
-  static readonly __mixins: Mixin[] = [MusicStoreMixin, StoreMixin];
-}
 MusicStoreMixin.appliesTo = schema.MusicStore
-MusicStoreMixin.Class = MusicStoreImpl
-
-export const fromPointer = createFactory<MusicStore>([StoreMixin, MusicStoreMixin], { types: [schema.MusicStore] });
+MusicStoreMixin.createFactory = (env: RdfineEnvironment) => createFactory<MusicStore>([StoreMixin, MusicStoreMixin], { types: [schema.MusicStore] }, env)

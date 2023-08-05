@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -13,6 +13,12 @@ export interface ExchangeRateSpecification<D extends RDF.DatasetCore = RDF.Datas
   currentExchangeRate: Schema.UnitPriceSpecification<D> | undefined;
   exchangeRateSpread: Schema.MonetaryAmount<D> | undefined;
   exchangeRateSpreadLiteral: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ExchangeRateSpecification: Factory<Schema.ExchangeRateSpecification>;
+  }
 }
 
 export function ExchangeRateSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ExchangeRateSpecification & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function ExchangeRateSpecificationMixin<Base extends rdfine.Constructor>(
   }
   return ExchangeRateSpecificationClass as any
 }
-
-class ExchangeRateSpecificationImpl extends ExchangeRateSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ExchangeRateSpecification>) {
-    super(arg, init)
-    this.types.add(schema.ExchangeRateSpecification)
-  }
-
-  static readonly __mixins: Mixin[] = [ExchangeRateSpecificationMixin, StructuredValueMixin];
-}
 ExchangeRateSpecificationMixin.appliesTo = schema.ExchangeRateSpecification
-ExchangeRateSpecificationMixin.Class = ExchangeRateSpecificationImpl
-
-export const fromPointer = createFactory<ExchangeRateSpecification>([StructuredValueMixin, ExchangeRateSpecificationMixin], { types: [schema.ExchangeRateSpecification] });
+ExchangeRateSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<ExchangeRateSpecification>([StructuredValueMixin, ExchangeRateSpecificationMixin], { types: [schema.ExchangeRateSpecification] }, env)

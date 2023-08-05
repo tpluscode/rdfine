@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 import { SeriesMixin } from './Series.js';
@@ -13,6 +13,12 @@ export interface CreativeWorkSeries<D extends RDF.DatasetCore = RDF.DatasetCore>
   endDate: Date | undefined;
   issn: string | undefined;
   startDate: Date | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CreativeWorkSeries: Factory<Schema.CreativeWorkSeries>;
+  }
 }
 
 export function CreativeWorkSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CreativeWorkSeries & RdfResourceCore> & Base {
@@ -27,16 +33,5 @@ export function CreativeWorkSeriesMixin<Base extends rdfine.Constructor>(Resourc
   }
   return CreativeWorkSeriesClass as any
 }
-
-class CreativeWorkSeriesImpl extends CreativeWorkSeriesMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CreativeWorkSeries>) {
-    super(arg, init)
-    this.types.add(schema.CreativeWorkSeries)
-  }
-
-  static readonly __mixins: Mixin[] = [CreativeWorkSeriesMixin, CreativeWorkMixin, SeriesMixin];
-}
 CreativeWorkSeriesMixin.appliesTo = schema.CreativeWorkSeries
-CreativeWorkSeriesMixin.Class = CreativeWorkSeriesImpl
-
-export const fromPointer = createFactory<CreativeWorkSeries>([SeriesMixin, CreativeWorkMixin, CreativeWorkSeriesMixin], { types: [schema.CreativeWorkSeries] });
+CreativeWorkSeriesMixin.createFactory = (env: RdfineEnvironment) => createFactory<CreativeWorkSeries>([SeriesMixin, CreativeWorkMixin, CreativeWorkSeriesMixin], { types: [schema.CreativeWorkSeries] }, env)

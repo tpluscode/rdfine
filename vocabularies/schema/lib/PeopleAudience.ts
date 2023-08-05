@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AudienceMixin } from './Audience.js';
 
@@ -19,6 +19,12 @@ export interface PeopleAudience<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   suggestedMaxAge: number | undefined;
   suggestedMeasurement: Schema.QuantitativeValue<D> | undefined;
   suggestedMinAge: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    PeopleAudience: Factory<Schema.PeopleAudience>;
+  }
 }
 
 export function PeopleAudienceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PeopleAudience & RdfResourceCore> & Base {
@@ -47,16 +53,5 @@ export function PeopleAudienceMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return PeopleAudienceClass as any
 }
-
-class PeopleAudienceImpl extends PeopleAudienceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PeopleAudience>) {
-    super(arg, init)
-    this.types.add(schema.PeopleAudience)
-  }
-
-  static readonly __mixins: Mixin[] = [PeopleAudienceMixin, AudienceMixin];
-}
 PeopleAudienceMixin.appliesTo = schema.PeopleAudience
-PeopleAudienceMixin.Class = PeopleAudienceImpl
-
-export const fromPointer = createFactory<PeopleAudience>([AudienceMixin, PeopleAudienceMixin], { types: [schema.PeopleAudience] });
+PeopleAudienceMixin.createFactory = (env: RdfineEnvironment) => createFactory<PeopleAudience>([AudienceMixin, PeopleAudienceMixin], { types: [schema.PeopleAudience] }, env)

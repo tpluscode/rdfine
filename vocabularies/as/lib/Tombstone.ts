@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { ObjectMixin } from './Object.js';
 
 export interface Tombstone<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
   deleted: Date | undefined;
   formerType: As.Object<D> | undefined;
+}
+
+declare global {
+  interface AsVocabulary {
+    Tombstone: Factory<As.Tombstone>;
+  }
 }
 
 export function TombstoneMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Tombstone & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function TombstoneMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return TombstoneClass as any
 }
-
-class TombstoneImpl extends TombstoneMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Tombstone>) {
-    super(arg, init)
-    this.types.add(as.Tombstone)
-  }
-
-  static readonly __mixins: Mixin[] = [TombstoneMixin, ObjectMixin];
-}
 TombstoneMixin.appliesTo = as.Tombstone
-TombstoneMixin.Class = TombstoneImpl
-
-export const fromPointer = createFactory<Tombstone>([ObjectMixin, TombstoneMixin], { types: [as.Tombstone] });
+TombstoneMixin.createFactory = (env: RdfineEnvironment) => createFactory<Tombstone>([ObjectMixin, TombstoneMixin], { types: [as.Tombstone] }, env)

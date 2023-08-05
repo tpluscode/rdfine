@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -22,6 +22,12 @@ export interface Movie<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   titleEIDR: string | undefined;
   titleEIDRTerm: RDF.NamedNode | undefined;
   trailer: Schema.VideoObject<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Movie: Factory<Schema.Movie>;
+  }
 }
 
 export function MovieMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Movie & RdfResourceCore> & Base {
@@ -56,16 +62,5 @@ export function MovieMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return MovieClass as any
 }
-
-class MovieImpl extends MovieMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Movie>) {
-    super(arg, init)
-    this.types.add(schema.Movie)
-  }
-
-  static readonly __mixins: Mixin[] = [MovieMixin, CreativeWorkMixin];
-}
 MovieMixin.appliesTo = schema.Movie
-MovieMixin.Class = MovieImpl
-
-export const fromPointer = createFactory<Movie>([CreativeWorkMixin, MovieMixin], { types: [schema.Movie] });
+MovieMixin.createFactory = (env: RdfineEnvironment) => createFactory<Movie>([CreativeWorkMixin, MovieMixin], { types: [schema.Movie] }, env)

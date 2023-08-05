@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { FindActionMixin } from './FindAction.js';
 
 export interface TrackAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FindAction<D>, rdfine.RdfResource<D> {
   deliveryMethod: Schema.DeliveryMethod | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    TrackAction: Factory<Schema.TrackAction>;
+  }
 }
 
 export function TrackActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TrackAction & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function TrackActionMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return TrackActionClass as any
 }
-
-class TrackActionImpl extends TrackActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TrackAction>) {
-    super(arg, init)
-    this.types.add(schema.TrackAction)
-  }
-
-  static readonly __mixins: Mixin[] = [TrackActionMixin, FindActionMixin];
-}
 TrackActionMixin.appliesTo = schema.TrackAction
-TrackActionMixin.Class = TrackActionImpl
-
-export const fromPointer = createFactory<TrackAction>([FindActionMixin, TrackActionMixin], { types: [schema.TrackAction] });
+TrackActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<TrackAction>([FindActionMixin, TrackActionMixin], { types: [schema.TrackAction] }, env)

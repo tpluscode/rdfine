@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
 export interface Drawing<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Drawing: Factory<Schema.Drawing>;
+  }
 }
 
 export function DrawingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Drawing & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function DrawingMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return DrawingClass as any
 }
-
-class DrawingImpl extends DrawingMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Drawing>) {
-    super(arg, init)
-    this.types.add(schema.Drawing)
-  }
-
-  static readonly __mixins: Mixin[] = [DrawingMixin, CreativeWorkMixin];
-}
 DrawingMixin.appliesTo = schema.Drawing
-DrawingMixin.Class = DrawingImpl
-
-export const fromPointer = createFactory<Drawing>([CreativeWorkMixin, DrawingMixin], { types: [schema.Drawing] });
+DrawingMixin.createFactory = (env: RdfineEnvironment) => createFactory<Drawing>([CreativeWorkMixin, DrawingMixin], { types: [schema.Drawing] }, env)

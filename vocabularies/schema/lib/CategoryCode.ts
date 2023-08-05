@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 
 export interface CategoryCode<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   codeValue: string | undefined;
   inCodeSet: Schema.CategoryCodeSet<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CategoryCode: Factory<Schema.CategoryCode>;
+  }
 }
 
 export function CategoryCodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CategoryCode & RdfResourceCore> & Base {
@@ -22,16 +28,5 @@ export function CategoryCodeMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return CategoryCodeClass as any
 }
-
-class CategoryCodeImpl extends CategoryCodeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CategoryCode>) {
-    super(arg, init)
-    this.types.add(schema.CategoryCode)
-  }
-
-  static readonly __mixins: Mixin[] = [CategoryCodeMixin];
-}
 CategoryCodeMixin.appliesTo = schema.CategoryCode
-CategoryCodeMixin.Class = CategoryCodeImpl
-
-export const fromPointer = createFactory<CategoryCode>([CategoryCodeMixin], { types: [schema.CategoryCode] });
+CategoryCodeMixin.createFactory = (env: RdfineEnvironment) => createFactory<CategoryCode>([CategoryCodeMixin], { types: [schema.CategoryCode] }, env)

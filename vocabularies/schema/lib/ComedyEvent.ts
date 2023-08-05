@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { EventMixin } from './Event.js';
 
 export interface ComedyEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ComedyEvent: Factory<Schema.ComedyEvent>;
+  }
 }
 
 export function ComedyEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ComedyEvent & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function ComedyEventMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return ComedyEventClass as any
 }
-
-class ComedyEventImpl extends ComedyEventMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ComedyEvent>) {
-    super(arg, init)
-    this.types.add(schema.ComedyEvent)
-  }
-
-  static readonly __mixins: Mixin[] = [ComedyEventMixin, EventMixin];
-}
 ComedyEventMixin.appliesTo = schema.ComedyEvent
-ComedyEventMixin.Class = ComedyEventImpl
-
-export const fromPointer = createFactory<ComedyEvent>([EventMixin, ComedyEventMixin], { types: [schema.ComedyEvent] });
+ComedyEventMixin.createFactory = (env: RdfineEnvironment) => createFactory<ComedyEvent>([EventMixin, ComedyEventMixin], { types: [schema.ComedyEvent] }, env)

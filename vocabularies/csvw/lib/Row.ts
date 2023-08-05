@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { csvw } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '../index.js';
 
 export interface Row<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -12,6 +12,12 @@ export interface Row<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine
   primaryKey: string | undefined;
   referencedRow: RDF.Term | undefined;
   title: RDF.Term | undefined;
+}
+
+declare global {
+  interface CsvwVocabulary {
+    Row: Factory<Csvw.Row>;
+  }
 }
 
 export function RowMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Row & RdfResourceCore> & Base {
@@ -28,16 +34,5 @@ export function RowMixin<Base extends rdfine.Constructor>(Resource: Base): rdfin
   }
   return RowClass as any
 }
-
-class RowImpl extends RowMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Row>) {
-    super(arg, init)
-    this.types.add(csvw.Row)
-  }
-
-  static readonly __mixins: Mixin[] = [RowMixin];
-}
 RowMixin.appliesTo = csvw.Row
-RowMixin.Class = RowImpl
-
-export const fromPointer = createFactory<Row>([RowMixin], { types: [csvw.Row] });
+RowMixin.createFactory = (env: RdfineEnvironment) => createFactory<Row>([RowMixin], { types: [csvw.Row] }, env)

@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
 export interface Thesis<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   inSupportOf: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Thesis: Factory<Schema.Thesis>;
+  }
 }
 
 export function ThesisMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Thesis & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function ThesisMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return ThesisClass as any
 }
-
-class ThesisImpl extends ThesisMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Thesis>) {
-    super(arg, init)
-    this.types.add(schema.Thesis)
-  }
-
-  static readonly __mixins: Mixin[] = [ThesisMixin, CreativeWorkMixin];
-}
 ThesisMixin.appliesTo = schema.Thesis
-ThesisMixin.Class = ThesisImpl
-
-export const fromPointer = createFactory<Thesis>([CreativeWorkMixin, ThesisMixin], { types: [schema.Thesis] });
+ThesisMixin.createFactory = (env: RdfineEnvironment) => createFactory<Thesis>([CreativeWorkMixin, ThesisMixin], { types: [schema.Thesis] }, env)

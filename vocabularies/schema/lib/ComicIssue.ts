@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { PublicationIssueMixin } from './PublicationIssue.js';
 
@@ -15,6 +15,12 @@ export interface ComicIssue<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   letterer: Schema.Person<D> | undefined;
   penciler: Schema.Person<D> | undefined;
   variantCover: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ComicIssue: Factory<Schema.ComicIssue>;
+  }
 }
 
 export function ComicIssueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ComicIssue & RdfResourceCore> & Base {
@@ -35,16 +41,5 @@ export function ComicIssueMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return ComicIssueClass as any
 }
-
-class ComicIssueImpl extends ComicIssueMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ComicIssue>) {
-    super(arg, init)
-    this.types.add(schema.ComicIssue)
-  }
-
-  static readonly __mixins: Mixin[] = [ComicIssueMixin, PublicationIssueMixin];
-}
 ComicIssueMixin.appliesTo = schema.ComicIssue
-ComicIssueMixin.Class = ComicIssueImpl
-
-export const fromPointer = createFactory<ComicIssue>([PublicationIssueMixin, ComicIssueMixin], { types: [schema.ComicIssue] });
+ComicIssueMixin.createFactory = (env: RdfineEnvironment) => createFactory<ComicIssue>([PublicationIssueMixin, ComicIssueMixin], { types: [schema.ComicIssue] }, env)

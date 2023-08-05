@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { FoodEstablishmentMixin } from './FoodEstablishment.js';
 
 export interface Restaurant<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FoodEstablishment<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Restaurant: Factory<Schema.Restaurant>;
+  }
 }
 
 export function RestaurantMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Restaurant & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function RestaurantMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return RestaurantClass as any
 }
-
-class RestaurantImpl extends RestaurantMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Restaurant>) {
-    super(arg, init)
-    this.types.add(schema.Restaurant)
-  }
-
-  static readonly __mixins: Mixin[] = [RestaurantMixin, FoodEstablishmentMixin];
-}
 RestaurantMixin.appliesTo = schema.Restaurant
-RestaurantMixin.Class = RestaurantImpl
-
-export const fromPointer = createFactory<Restaurant>([FoodEstablishmentMixin, RestaurantMixin], { types: [schema.Restaurant] });
+RestaurantMixin.createFactory = (env: RdfineEnvironment) => createFactory<Restaurant>([FoodEstablishmentMixin, RestaurantMixin], { types: [schema.Restaurant] }, env)

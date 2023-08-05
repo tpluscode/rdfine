@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { TypeMixin } from './Type.js';
 
@@ -12,6 +12,12 @@ export interface DocumentaryFormType<D extends RDF.DatasetCore = RDF.DatasetCore
   isDocumentaryFormTypeOf: Rico.Record<D> | Rico.RecordPart<D> | undefined;
   isOrWasDocumentaryFormTypeOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasDocumentaryFormTypeOfSomeMembersOf: Rico.RecordSet<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    DocumentaryFormType: Factory<Rico.DocumentaryFormType>;
+  }
 }
 
 export function DocumentaryFormTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DocumentaryFormType & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function DocumentaryFormTypeMixin<Base extends rdfine.Constructor>(Resour
   }
   return DocumentaryFormTypeClass as any
 }
-
-class DocumentaryFormTypeImpl extends DocumentaryFormTypeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DocumentaryFormType>) {
-    super(arg, init)
-    this.types.add(rico.DocumentaryFormType)
-  }
-
-  static readonly __mixins: Mixin[] = [DocumentaryFormTypeMixin, TypeMixin];
-}
 DocumentaryFormTypeMixin.appliesTo = rico.DocumentaryFormType
-DocumentaryFormTypeMixin.Class = DocumentaryFormTypeImpl
-
-export const fromPointer = createFactory<DocumentaryFormType>([TypeMixin, DocumentaryFormTypeMixin], { types: [rico.DocumentaryFormType] });
+DocumentaryFormTypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<DocumentaryFormType>([TypeMixin, DocumentaryFormTypeMixin], { types: [rico.DocumentaryFormType] }, env)

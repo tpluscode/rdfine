@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { GrantMixin } from './Grant.js';
 
@@ -12,6 +12,12 @@ export interface MonetaryGrant<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   amount: Schema.MonetaryAmount<D> | undefined;
   amountLiteral: number | undefined;
   funder: Schema.Organization<D> | Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MonetaryGrant: Factory<Schema.MonetaryGrant>;
+  }
 }
 
 export function MonetaryGrantMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MonetaryGrant & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function MonetaryGrantMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return MonetaryGrantClass as any
 }
-
-class MonetaryGrantImpl extends MonetaryGrantMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MonetaryGrant>) {
-    super(arg, init)
-    this.types.add(schema.MonetaryGrant)
-  }
-
-  static readonly __mixins: Mixin[] = [MonetaryGrantMixin, GrantMixin];
-}
 MonetaryGrantMixin.appliesTo = schema.MonetaryGrant
-MonetaryGrantMixin.Class = MonetaryGrantImpl
-
-export const fromPointer = createFactory<MonetaryGrant>([GrantMixin, MonetaryGrantMixin], { types: [schema.MonetaryGrant] });
+MonetaryGrantMixin.createFactory = (env: RdfineEnvironment) => createFactory<MonetaryGrant>([GrantMixin, MonetaryGrantMixin], { types: [schema.MonetaryGrant] }, env)

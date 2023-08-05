@@ -1,4 +1,4 @@
-import { SourceFile, VariableDeclarationKind } from 'ts-morph'
+import { ModuleDeclarationKind, SourceFile, StructureKind, VariableDeclarationKind } from 'ts-morph'
 import { GraphPointer } from 'clownface'
 import { Context, GeneratedModule, WriteModule } from '../index.js'
 import { ExternalResourceType, ResourceType, TypeMetaCollection } from '../types/index.js'
@@ -19,9 +19,7 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     this.properties = properties
   }
 
-  writeModule(params: WriteModule) {
-    const { project, types, context, indexModule, allGenerators } = params
-
+  writeModule({ project, types, context, indexModule, allGenerators }: WriteModule) {
     context.log.debug(`Generating mixin ${this.type.qualifiedName}`)
 
     const mixinFile = project.createSourceFile(`${this.type.module}.ts`, {}, { overwrite: true })
@@ -29,8 +27,8 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     const bundleIndex = project.getSourceFile('bundles/index.ts') || project.createSourceFile('bundles/index.ts', {}, { overwrite: true })
 
     const mixinName = this.type.mixinName
-    const implName = `${this.type.localName}Impl`
     const interfaceDeclaration = this.createInterface(mixinFile)
+    this.augmentFactoryInterface(mixinFile, context)
     const classDeclaration = this.createMixinFunction(mixinFile, allGenerators, context)
 
     const propertyWriter = new PropertyWriter({
@@ -47,44 +45,17 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       ? `${context.prefix}.${this.type.term}`
       : `${context.prefix}['${this.type.term}']`
 
-    const implementationClass = mixinFile.addClass({
-      name: implName,
-      extends: `${mixinName}(RdfResourceImpl)`,
-    })
-    implementationClass.addConstructor({
-      parameters: [
-        { name: 'arg', type: 'ResourceNode' },
-        { name: 'init', type: `Initializer<${this.type.localName}>`, hasQuestionToken: true }],
-      statements: [
-        'super(arg, init)',
-        `this.types.add(${type})`,
-      ],
-    })
-
     const mixinNames = this.superClasses.reduce((mixins, sc) => {
       return [...mixins, sc.mixinName]
     }, [this.type.mixinName])
-    implementationClass.addProperty({
-      isStatic: true,
-      isReadonly: true,
-      name: '__mixins',
-      type: 'Mixin[]',
-      initializer: `[${mixinNames.join(', ')}]`,
-    })
 
     mixinFile.addStatements([
       `${mixinName}.appliesTo = ${type}`,
-      `${mixinName}.Class = ${implName}`,
     ])
 
-    mixinFile.addVariableStatement({
-      isExported: true,
-      declarationKind: VariableDeclarationKind.Const,
-      declarations: [{
-        name: 'fromPointer',
-        initializer: `createFactory<${this.type.localName}>([${mixinNames.reverse().join(', ')}], { types: [${type}] })`,
-      }],
-    })
+    mixinFile.addStatements([
+      `${mixinName}.createFactory = (env: RdfineEnvironment) => createFactory<${this.type.localName}>([${mixinNames.reverse().join(', ')}], { types: [${type}] }, env)`,
+    ])
 
     this.addImports(mixinFile, context)
     this.generateDependenciesModule(bundleModule, bundleIndex, types)
@@ -164,13 +135,16 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
 
   private addImports(mixinFile: SourceFile, context: Omit<Context, 'properties'>) {
     mixinFile.addImportDeclaration({
-      defaultImport: 'RdfResourceImpl',
       namespaceImport: 'rdfine',
       moduleSpecifier: '@tpluscode/rdfine',
     })
     mixinFile.addImportDeclaration({
-      namedImports: ['createFactory'],
+      namedImports: ['createFactory', 'Factory'],
       moduleSpecifier: '@tpluscode/rdfine/factory',
+    })
+    mixinFile.addImportDeclaration({
+      namedImports: ['RdfineEnvironment'],
+      moduleSpecifier: '@tpluscode/rdfine/environment',
     })
 
     mixinFile.addImportDeclaration({
@@ -187,13 +161,8 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
       moduleSpecifier: './namespace.js',
     })
     mixinFile.addImportDeclaration({
-      namedImports: ['Initializer', 'ResourceNode', 'RdfResourceCore'],
+      namedImports: ['RdfResourceCore'],
       moduleSpecifier: '@tpluscode/rdfine/RdfResource',
-      isTypeOnly: true,
-    })
-    mixinFile.addImportDeclaration({
-      namedImports: ['Mixin'],
-      moduleSpecifier: '@tpluscode/rdfine/lib/ResourceFactory',
       isTypeOnly: true,
     })
     mixinFile.addImportDeclaration({
@@ -303,6 +272,24 @@ export class MixinModule extends MixinModuleBase<ResourceType> {
     mixinFile.addImportDeclaration({
       namedImports: [`${module.type.localName}MixinEx`],
       moduleSpecifier: `../extensions/${module.extended.prefix}/${module.type.localName}.js`,
+    })
+  }
+
+  private augmentFactoryInterface(mixinFile: SourceFile, context: Context) {
+    const global = mixinFile.addModule({
+      name: 'global',
+      kind: StructureKind.Module,
+      declarationKind: ModuleDeclarationKind.Global,
+      hasDeclareKeyword: true,
+    })
+
+    global.addInterface({
+      name: `${context.defaultExport}Vocabulary`,
+      properties: [{
+        kind: StructureKind.PropertySignature,
+        name: this.type.localName,
+        type: `Factory<${context.defaultExport}.${this.type.localName}>`,
+      }],
     })
   }
 }

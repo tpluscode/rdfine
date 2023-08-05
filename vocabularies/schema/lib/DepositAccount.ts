@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { BankAccountMixin } from './BankAccount.js';
 import { InvestmentOrDepositMixin } from './InvestmentOrDeposit.js';
 
 export interface DepositAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BankAccount<D>, Schema.InvestmentOrDeposit<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DepositAccount: Factory<Schema.DepositAccount>;
+  }
 }
 
 export function DepositAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DepositAccount & RdfResourceCore> & Base {
@@ -18,16 +24,5 @@ export function DepositAccountMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return DepositAccountClass as any
 }
-
-class DepositAccountImpl extends DepositAccountMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DepositAccount>) {
-    super(arg, init)
-    this.types.add(schema.DepositAccount)
-  }
-
-  static readonly __mixins: Mixin[] = [DepositAccountMixin, BankAccountMixin, InvestmentOrDepositMixin];
-}
 DepositAccountMixin.appliesTo = schema.DepositAccount
-DepositAccountMixin.Class = DepositAccountImpl
-
-export const fromPointer = createFactory<DepositAccount>([InvestmentOrDepositMixin, BankAccountMixin, DepositAccountMixin], { types: [schema.DepositAccount] });
+DepositAccountMixin.createFactory = (env: RdfineEnvironment) => createFactory<DepositAccount>([InvestmentOrDepositMixin, BankAccountMixin, DepositAccountMixin], { types: [schema.DepositAccount] }, env)

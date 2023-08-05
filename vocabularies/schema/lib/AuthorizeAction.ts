@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AllocateActionMixin } from './AllocateAction.js';
 
 export interface AuthorizeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AllocateAction<D>, rdfine.RdfResource<D> {
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    AuthorizeAction: Factory<Schema.AuthorizeAction>;
+  }
 }
 
 export function AuthorizeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AuthorizeAction & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function AuthorizeActionMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return AuthorizeActionClass as any
 }
-
-class AuthorizeActionImpl extends AuthorizeActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AuthorizeAction>) {
-    super(arg, init)
-    this.types.add(schema.AuthorizeAction)
-  }
-
-  static readonly __mixins: Mixin[] = [AuthorizeActionMixin, AllocateActionMixin];
-}
 AuthorizeActionMixin.appliesTo = schema.AuthorizeAction
-AuthorizeActionMixin.Class = AuthorizeActionImpl
-
-export const fromPointer = createFactory<AuthorizeAction>([AllocateActionMixin, AuthorizeActionMixin], { types: [schema.AuthorizeAction] });
+AuthorizeActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<AuthorizeAction>([AllocateActionMixin, AuthorizeActionMixin], { types: [schema.AuthorizeAction] }, env)

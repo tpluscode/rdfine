@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -16,6 +16,12 @@ export interface Taxon<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   parentTaxonLiteral: string | undefined;
   taxonRank: Schema.PropertyValue<D> | undefined;
   taxonRankLiteral: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Taxon: Factory<Schema.Taxon>;
+  }
 }
 
 export function TaxonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Taxon & RdfResourceCore> & Base {
@@ -38,16 +44,5 @@ export function TaxonMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return TaxonClass as any
 }
-
-class TaxonImpl extends TaxonMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Taxon>) {
-    super(arg, init)
-    this.types.add(schema.Taxon)
-  }
-
-  static readonly __mixins: Mixin[] = [TaxonMixin, ThingMixin];
-}
 TaxonMixin.appliesTo = schema.Taxon
-TaxonMixin.Class = TaxonImpl
-
-export const fromPointer = createFactory<Taxon>([ThingMixin, TaxonMixin], { types: [schema.Taxon] });
+TaxonMixin.createFactory = (env: RdfineEnvironment) => createFactory<Taxon>([ThingMixin, TaxonMixin], { types: [schema.Taxon] }, env)

@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { skos } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Skos from '../index.js';
 
 export interface Concept<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   semanticRelation: Array<Skos.Concept<D>>;
   topConceptOf: Array<Skos.ConceptScheme<D>>;
+}
+
+declare global {
+  interface SkosVocabulary {
+    Concept: Factory<Skos.Concept>;
+  }
 }
 
 export function ConceptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Concept & RdfResourceCore> & Base {
@@ -22,16 +28,5 @@ export function ConceptMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return ConceptClass as any
 }
-
-class ConceptImpl extends ConceptMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Concept>) {
-    super(arg, init)
-    this.types.add(skos.Concept)
-  }
-
-  static readonly __mixins: Mixin[] = [ConceptMixin];
-}
 ConceptMixin.appliesTo = skos.Concept
-ConceptMixin.Class = ConceptImpl
-
-export const fromPointer = createFactory<Concept>([ConceptMixin], { types: [skos.Concept] });
+ConceptMixin.createFactory = (env: RdfineEnvironment) => createFactory<Concept>([ConceptMixin], { types: [skos.Concept] }, env)

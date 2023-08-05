@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ReactActionMixin } from './ReactAction.js';
 
 export interface EndorseAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ReactAction<D>, rdfine.RdfResource<D> {
   endorsee: Schema.Organization<D> | Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    EndorseAction: Factory<Schema.EndorseAction>;
+  }
 }
 
 export function EndorseActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EndorseAction & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function EndorseActionMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return EndorseActionClass as any
 }
-
-class EndorseActionImpl extends EndorseActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EndorseAction>) {
-    super(arg, init)
-    this.types.add(schema.EndorseAction)
-  }
-
-  static readonly __mixins: Mixin[] = [EndorseActionMixin, ReactActionMixin];
-}
 EndorseActionMixin.appliesTo = schema.EndorseAction
-EndorseActionMixin.Class = EndorseActionImpl
-
-export const fromPointer = createFactory<EndorseAction>([ReactActionMixin, EndorseActionMixin], { types: [schema.EndorseAction] });
+EndorseActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<EndorseAction>([ReactActionMixin, EndorseActionMixin], { types: [schema.EndorseAction] }, env)

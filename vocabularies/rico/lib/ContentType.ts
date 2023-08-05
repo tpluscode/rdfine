@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { TypeMixin } from './Type.js';
 
@@ -12,6 +12,12 @@ export interface ContentType<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   isContentTypeOf: Rico.Record<D> | Rico.RecordPart<D> | undefined;
   isOrWasContentTypeOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasContentTypeOfSomeMembersOf: Rico.RecordSet<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    ContentType: Factory<Rico.ContentType>;
+  }
 }
 
 export function ContentTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ContentType & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function ContentTypeMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return ContentTypeClass as any
 }
-
-class ContentTypeImpl extends ContentTypeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ContentType>) {
-    super(arg, init)
-    this.types.add(rico.ContentType)
-  }
-
-  static readonly __mixins: Mixin[] = [ContentTypeMixin, TypeMixin];
-}
 ContentTypeMixin.appliesTo = rico.ContentType
-ContentTypeMixin.Class = ContentTypeImpl
-
-export const fromPointer = createFactory<ContentType>([TypeMixin, ContentTypeMixin], { types: [rico.ContentType] });
+ContentTypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<ContentType>([TypeMixin, ContentTypeMixin], { types: [rico.ContentType] }, env)

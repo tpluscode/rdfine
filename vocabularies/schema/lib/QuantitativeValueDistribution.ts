@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -15,6 +15,12 @@ export interface QuantitativeValueDistribution<D extends RDF.DatasetCore = RDF.D
   'percentile25': number | undefined;
   'percentile75': number | undefined;
   'percentile90': number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    QuantitativeValueDistribution: Factory<Schema.QuantitativeValueDistribution>;
+  }
 }
 
 export function QuantitativeValueDistributionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<QuantitativeValueDistribution & RdfResourceCore> & Base {
@@ -35,16 +41,5 @@ export function QuantitativeValueDistributionMixin<Base extends rdfine.Construct
   }
   return QuantitativeValueDistributionClass as any
 }
-
-class QuantitativeValueDistributionImpl extends QuantitativeValueDistributionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<QuantitativeValueDistribution>) {
-    super(arg, init)
-    this.types.add(schema.QuantitativeValueDistribution)
-  }
-
-  static readonly __mixins: Mixin[] = [QuantitativeValueDistributionMixin, StructuredValueMixin];
-}
 QuantitativeValueDistributionMixin.appliesTo = schema.QuantitativeValueDistribution
-QuantitativeValueDistributionMixin.Class = QuantitativeValueDistributionImpl
-
-export const fromPointer = createFactory<QuantitativeValueDistribution>([StructuredValueMixin, QuantitativeValueDistributionMixin], { types: [schema.QuantitativeValueDistribution] });
+QuantitativeValueDistributionMixin.createFactory = (env: RdfineEnvironment) => createFactory<QuantitativeValueDistribution>([StructuredValueMixin, QuantitativeValueDistributionMixin], { types: [schema.QuantitativeValueDistribution] }, env)

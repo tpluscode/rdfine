@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { UpdateActionMixin } from './UpdateAction.js';
 
 export interface ReplaceAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UpdateAction<D>, rdfine.RdfResource<D> {
   replacee: Schema.Thing<D> | undefined;
   replacer: Schema.Thing<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ReplaceAction: Factory<Schema.ReplaceAction>;
+  }
 }
 
 export function ReplaceActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ReplaceAction & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function ReplaceActionMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return ReplaceActionClass as any
 }
-
-class ReplaceActionImpl extends ReplaceActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ReplaceAction>) {
-    super(arg, init)
-    this.types.add(schema.ReplaceAction)
-  }
-
-  static readonly __mixins: Mixin[] = [ReplaceActionMixin, UpdateActionMixin];
-}
 ReplaceActionMixin.appliesTo = schema.ReplaceAction
-ReplaceActionMixin.Class = ReplaceActionImpl
-
-export const fromPointer = createFactory<ReplaceAction>([UpdateActionMixin, ReplaceActionMixin], { types: [schema.ReplaceAction] });
+ReplaceActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<ReplaceAction>([UpdateActionMixin, ReplaceActionMixin], { types: [schema.ReplaceAction] }, env)

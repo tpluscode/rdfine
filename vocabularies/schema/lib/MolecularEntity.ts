@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { BioChemEntityMixin } from './BioChemEntity.js';
 
@@ -20,6 +20,12 @@ export interface MolecularEntity<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   monoisotopicMolecularWeightLiteral: string | undefined;
   potentialUse: RDF.Term | undefined;
   smiles: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MolecularEntity: Factory<Schema.MolecularEntity>;
+  }
 }
 
 export function MolecularEntityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MolecularEntity & RdfResourceCore> & Base {
@@ -50,16 +56,5 @@ export function MolecularEntityMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return MolecularEntityClass as any
 }
-
-class MolecularEntityImpl extends MolecularEntityMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MolecularEntity>) {
-    super(arg, init)
-    this.types.add(schema.MolecularEntity)
-  }
-
-  static readonly __mixins: Mixin[] = [MolecularEntityMixin, BioChemEntityMixin];
-}
 MolecularEntityMixin.appliesTo = schema.MolecularEntity
-MolecularEntityMixin.Class = MolecularEntityImpl
-
-export const fromPointer = createFactory<MolecularEntity>([BioChemEntityMixin, MolecularEntityMixin], { types: [schema.MolecularEntity] });
+MolecularEntityMixin.createFactory = (env: RdfineEnvironment) => createFactory<MolecularEntity>([BioChemEntityMixin, MolecularEntityMixin], { types: [schema.MolecularEntity] }, env)

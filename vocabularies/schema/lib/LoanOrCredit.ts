@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { FinancialProductMixin } from './FinancialProduct.js';
 
@@ -21,6 +21,12 @@ export interface LoanOrCredit<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   renegotiableLoan: boolean | undefined;
   requiredCollateral: Schema.Thing<D> | undefined;
   requiredCollateralLiteral: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    LoanOrCredit: Factory<Schema.LoanOrCredit>;
+  }
 }
 
 export function LoanOrCreditMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LoanOrCredit & RdfResourceCore> & Base {
@@ -53,16 +59,5 @@ export function LoanOrCreditMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return LoanOrCreditClass as any
 }
-
-class LoanOrCreditImpl extends LoanOrCreditMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<LoanOrCredit>) {
-    super(arg, init)
-    this.types.add(schema.LoanOrCredit)
-  }
-
-  static readonly __mixins: Mixin[] = [LoanOrCreditMixin, FinancialProductMixin];
-}
 LoanOrCreditMixin.appliesTo = schema.LoanOrCredit
-LoanOrCreditMixin.Class = LoanOrCreditImpl
-
-export const fromPointer = createFactory<LoanOrCredit>([FinancialProductMixin, LoanOrCreditMixin], { types: [schema.LoanOrCredit] });
+LoanOrCreditMixin.createFactory = (env: RdfineEnvironment) => createFactory<LoanOrCredit>([FinancialProductMixin, LoanOrCreditMixin], { types: [schema.LoanOrCredit] }, env)

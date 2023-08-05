@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -31,6 +31,12 @@ export interface Order<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   paymentMethodId: string | undefined;
   paymentUrl: RDF.NamedNode | undefined;
   seller: Schema.Organization<D> | Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Order: Factory<Schema.Order>;
+  }
 }
 
 export function OrderMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Order & RdfResourceCore> & Base {
@@ -83,16 +89,5 @@ export function OrderMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return OrderClass as any
 }
-
-class OrderImpl extends OrderMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Order>) {
-    super(arg, init)
-    this.types.add(schema.Order)
-  }
-
-  static readonly __mixins: Mixin[] = [OrderMixin, IntangibleMixin];
-}
 OrderMixin.appliesTo = schema.Order
-OrderMixin.Class = OrderImpl
-
-export const fromPointer = createFactory<Order>([IntangibleMixin, OrderMixin], { types: [schema.Order] });
+OrderMixin.createFactory = (env: RdfineEnvironment) => createFactory<Order>([IntangibleMixin, OrderMixin], { types: [schema.Order] }, env)

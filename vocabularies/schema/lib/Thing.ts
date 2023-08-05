@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 
 export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -21,6 +21,12 @@ export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   sameAs: RDF.NamedNode | undefined;
   subjectOf: Schema.CreativeWork<D> | Schema.Event<D> | undefined;
   url: RDF.NamedNode | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Thing: Factory<Schema.Thing>;
+  }
 }
 
 export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Thing & RdfResourceCore> & Base {
@@ -55,16 +61,5 @@ export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return ThingClass as any
 }
-
-class ThingImpl extends ThingMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Thing>) {
-    super(arg, init)
-    this.types.add(schema.Thing)
-  }
-
-  static readonly __mixins: Mixin[] = [ThingMixin];
-}
 ThingMixin.appliesTo = schema.Thing
-ThingMixin.Class = ThingImpl
-
-export const fromPointer = createFactory<Thing>([ThingMixin], { types: [schema.Thing] });
+ThingMixin.createFactory = (env: RdfineEnvironment) => createFactory<Thing>([ThingMixin], { types: [schema.Thing] }, env)

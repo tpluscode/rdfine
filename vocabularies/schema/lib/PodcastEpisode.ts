@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { EpisodeMixin } from './Episode.js';
 
 export interface PodcastEpisode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Episode<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    PodcastEpisode: Factory<Schema.PodcastEpisode>;
+  }
 }
 
 export function PodcastEpisodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PodcastEpisode & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function PodcastEpisodeMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return PodcastEpisodeClass as any
 }
-
-class PodcastEpisodeImpl extends PodcastEpisodeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PodcastEpisode>) {
-    super(arg, init)
-    this.types.add(schema.PodcastEpisode)
-  }
-
-  static readonly __mixins: Mixin[] = [PodcastEpisodeMixin, EpisodeMixin];
-}
 PodcastEpisodeMixin.appliesTo = schema.PodcastEpisode
-PodcastEpisodeMixin.Class = PodcastEpisodeImpl
-
-export const fromPointer = createFactory<PodcastEpisode>([EpisodeMixin, PodcastEpisodeMixin], { types: [schema.PodcastEpisode] });
+PodcastEpisodeMixin.createFactory = (env: RdfineEnvironment) => createFactory<PodcastEpisode>([EpisodeMixin, PodcastEpisodeMixin], { types: [schema.PodcastEpisode] }, env)

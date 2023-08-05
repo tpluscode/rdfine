@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -17,6 +17,12 @@ export interface BroadcastChannel<D extends RDF.DatasetCore = RDF.DatasetCore> e
   genreTerm: RDF.NamedNode | undefined;
   inBroadcastLineup: Schema.CableOrSatelliteService<D> | undefined;
   providesBroadcastService: Schema.BroadcastService<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BroadcastChannel: Factory<Schema.BroadcastChannel>;
+  }
 }
 
 export function BroadcastChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BroadcastChannel & RdfResourceCore> & Base {
@@ -41,16 +47,5 @@ export function BroadcastChannelMixin<Base extends rdfine.Constructor>(Resource:
   }
   return BroadcastChannelClass as any
 }
-
-class BroadcastChannelImpl extends BroadcastChannelMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<BroadcastChannel>) {
-    super(arg, init)
-    this.types.add(schema.BroadcastChannel)
-  }
-
-  static readonly __mixins: Mixin[] = [BroadcastChannelMixin, IntangibleMixin];
-}
 BroadcastChannelMixin.appliesTo = schema.BroadcastChannel
-BroadcastChannelMixin.Class = BroadcastChannelImpl
-
-export const fromPointer = createFactory<BroadcastChannel>([IntangibleMixin, BroadcastChannelMixin], { types: [schema.BroadcastChannel] });
+BroadcastChannelMixin.createFactory = (env: RdfineEnvironment) => createFactory<BroadcastChannel>([IntangibleMixin, BroadcastChannelMixin], { types: [schema.BroadcastChannel] }, env)

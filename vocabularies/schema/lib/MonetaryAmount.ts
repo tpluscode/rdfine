@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -16,6 +16,12 @@ export interface MonetaryAmount<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   validThrough: Date | undefined;
   value: Schema.StructuredValue<D> | undefined;
   valueLiteral: boolean | number | string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MonetaryAmount: Factory<Schema.MonetaryAmount>;
+  }
 }
 
 export function MonetaryAmountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MonetaryAmount & RdfResourceCore> & Base {
@@ -38,16 +44,5 @@ export function MonetaryAmountMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return MonetaryAmountClass as any
 }
-
-class MonetaryAmountImpl extends MonetaryAmountMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MonetaryAmount>) {
-    super(arg, init)
-    this.types.add(schema.MonetaryAmount)
-  }
-
-  static readonly __mixins: Mixin[] = [MonetaryAmountMixin, StructuredValueMixin];
-}
 MonetaryAmountMixin.appliesTo = schema.MonetaryAmount
-MonetaryAmountMixin.Class = MonetaryAmountImpl
-
-export const fromPointer = createFactory<MonetaryAmount>([StructuredValueMixin, MonetaryAmountMixin], { types: [schema.MonetaryAmount] });
+MonetaryAmountMixin.createFactory = (env: RdfineEnvironment) => createFactory<MonetaryAmount>([StructuredValueMixin, MonetaryAmountMixin], { types: [schema.MonetaryAmount] }, env)

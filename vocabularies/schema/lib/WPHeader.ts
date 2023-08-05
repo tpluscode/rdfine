@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { WebPageElementMixin } from './WebPageElement.js';
 
 export interface WPHeader<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPageElement<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    WPHeader: Factory<Schema.WPHeader>;
+  }
 }
 
 export function WPHeaderMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WPHeader & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function WPHeaderMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return WPHeaderClass as any
 }
-
-class WPHeaderImpl extends WPHeaderMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<WPHeader>) {
-    super(arg, init)
-    this.types.add(schema.WPHeader)
-  }
-
-  static readonly __mixins: Mixin[] = [WPHeaderMixin, WebPageElementMixin];
-}
 WPHeaderMixin.appliesTo = schema.WPHeader
-WPHeaderMixin.Class = WPHeaderImpl
-
-export const fromPointer = createFactory<WPHeader>([WebPageElementMixin, WPHeaderMixin], { types: [schema.WPHeader] });
+WPHeaderMixin.createFactory = (env: RdfineEnvironment) => createFactory<WPHeader>([WebPageElementMixin, WPHeaderMixin], { types: [schema.WPHeader] }, env)

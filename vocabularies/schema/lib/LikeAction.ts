@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ReactActionMixin } from './ReactAction.js';
 
 export interface LikeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ReactAction<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    LikeAction: Factory<Schema.LikeAction>;
+  }
 }
 
 export function LikeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LikeAction & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function LikeActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return LikeActionClass as any
 }
-
-class LikeActionImpl extends LikeActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<LikeAction>) {
-    super(arg, init)
-    this.types.add(schema.LikeAction)
-  }
-
-  static readonly __mixins: Mixin[] = [LikeActionMixin, ReactActionMixin];
-}
 LikeActionMixin.appliesTo = schema.LikeAction
-LikeActionMixin.Class = LikeActionImpl
-
-export const fromPointer = createFactory<LikeAction>([ReactActionMixin, LikeActionMixin], { types: [schema.LikeAction] });
+LikeActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<LikeAction>([ReactActionMixin, LikeActionMixin], { types: [schema.LikeAction] }, env)

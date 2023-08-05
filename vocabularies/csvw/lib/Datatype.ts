@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { csvw } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Csvw from '../index.js';
 
 export interface Datatype<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -17,6 +17,12 @@ export interface Datatype<D extends RDF.DatasetCore = RDF.DatasetCore> extends r
   minExclusive: number | undefined;
   minInclusive: number | undefined;
   minLength: number | undefined;
+}
+
+declare global {
+  interface CsvwVocabulary {
+    Datatype: Factory<Csvw.Datatype>;
+  }
 }
 
 export function DatatypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Datatype & RdfResourceCore> & Base {
@@ -43,16 +49,5 @@ export function DatatypeMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return DatatypeClass as any
 }
-
-class DatatypeImpl extends DatatypeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Datatype>) {
-    super(arg, init)
-    this.types.add(csvw.Datatype)
-  }
-
-  static readonly __mixins: Mixin[] = [DatatypeMixin];
-}
 DatatypeMixin.appliesTo = csvw.Datatype
-DatatypeMixin.Class = DatatypeImpl
-
-export const fromPointer = createFactory<Datatype>([DatatypeMixin], { types: [csvw.Datatype] });
+DatatypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<Datatype>([DatatypeMixin], { types: [csvw.Datatype] }, env)

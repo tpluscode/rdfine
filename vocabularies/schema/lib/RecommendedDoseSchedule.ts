@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { DoseScheduleMixin } from './DoseSchedule.js';
 
 export interface RecommendedDoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DoseSchedule<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    RecommendedDoseSchedule: Factory<Schema.RecommendedDoseSchedule>;
+  }
 }
 
 export function RecommendedDoseScheduleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecommendedDoseSchedule & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function RecommendedDoseScheduleMixin<Base extends rdfine.Constructor>(Re
   }
   return RecommendedDoseScheduleClass as any
 }
-
-class RecommendedDoseScheduleImpl extends RecommendedDoseScheduleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RecommendedDoseSchedule>) {
-    super(arg, init)
-    this.types.add(schema.RecommendedDoseSchedule)
-  }
-
-  static readonly __mixins: Mixin[] = [RecommendedDoseScheduleMixin, DoseScheduleMixin];
-}
 RecommendedDoseScheduleMixin.appliesTo = schema.RecommendedDoseSchedule
-RecommendedDoseScheduleMixin.Class = RecommendedDoseScheduleImpl
-
-export const fromPointer = createFactory<RecommendedDoseSchedule>([DoseScheduleMixin, RecommendedDoseScheduleMixin], { types: [schema.RecommendedDoseSchedule] });
+RecommendedDoseScheduleMixin.createFactory = (env: RdfineEnvironment) => createFactory<RecommendedDoseSchedule>([DoseScheduleMixin, RecommendedDoseScheduleMixin], { types: [schema.RecommendedDoseSchedule] }, env)

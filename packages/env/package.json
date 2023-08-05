@@ -1,0 +1,10 @@
+{
+  "name": "@rdfine/env",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "@tpluscode/rdfine": "^0.6.0",
+    "@zazuko/env": "^1.0.1"
+  }
+}

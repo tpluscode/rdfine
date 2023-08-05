@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { EventMixin } from './Event.js';
 
@@ -17,6 +17,12 @@ export interface Activity<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   hasActivityType: Rico.ActivityType<D> | undefined;
   history: RDF.Literal | undefined;
   isOrWasPerformedBy: Rico.Agent<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    Activity: Factory<Rico.Activity>;
+  }
 }
 
 export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Activity & RdfResourceCore> & Base {
@@ -41,16 +47,5 @@ export function ActivityMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return ActivityClass as any
 }
-
-class ActivityImpl extends ActivityMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Activity>) {
-    super(arg, init)
-    this.types.add(rico.Activity)
-  }
-
-  static readonly __mixins: Mixin[] = [ActivityMixin, EventMixin];
-}
 ActivityMixin.appliesTo = rico.Activity
-ActivityMixin.Class = ActivityImpl
-
-export const fromPointer = createFactory<Activity>([EventMixin, ActivityMixin], { types: [rico.Activity] });
+ActivityMixin.createFactory = (env: RdfineEnvironment) => createFactory<Activity>([EventMixin, ActivityMixin], { types: [rico.Activity] }, env)

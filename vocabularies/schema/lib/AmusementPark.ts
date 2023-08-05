@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { EntertainmentBusinessMixin } from './EntertainmentBusiness.js';
 
 export interface AmusementPark<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.EntertainmentBusiness<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    AmusementPark: Factory<Schema.AmusementPark>;
+  }
 }
 
 export function AmusementParkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AmusementPark & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function AmusementParkMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return AmusementParkClass as any
 }
-
-class AmusementParkImpl extends AmusementParkMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AmusementPark>) {
-    super(arg, init)
-    this.types.add(schema.AmusementPark)
-  }
-
-  static readonly __mixins: Mixin[] = [AmusementParkMixin, EntertainmentBusinessMixin];
-}
 AmusementParkMixin.appliesTo = schema.AmusementPark
-AmusementParkMixin.Class = AmusementParkImpl
-
-export const fromPointer = createFactory<AmusementPark>([EntertainmentBusinessMixin, AmusementParkMixin], { types: [schema.AmusementPark] });
+AmusementParkMixin.createFactory = (env: RdfineEnvironment) => createFactory<AmusementPark>([EntertainmentBusinessMixin, AmusementParkMixin], { types: [schema.AmusementPark] }, env)

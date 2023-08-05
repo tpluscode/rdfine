@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { TherapeuticProcedureMixin } from './TherapeuticProcedure.js';
 
 export interface PsychologicalTreatment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TherapeuticProcedure<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    PsychologicalTreatment: Factory<Schema.PsychologicalTreatment>;
+  }
 }
 
 export function PsychologicalTreatmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PsychologicalTreatment & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function PsychologicalTreatmentMixin<Base extends rdfine.Constructor>(Res
   }
   return PsychologicalTreatmentClass as any
 }
-
-class PsychologicalTreatmentImpl extends PsychologicalTreatmentMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PsychologicalTreatment>) {
-    super(arg, init)
-    this.types.add(schema.PsychologicalTreatment)
-  }
-
-  static readonly __mixins: Mixin[] = [PsychologicalTreatmentMixin, TherapeuticProcedureMixin];
-}
 PsychologicalTreatmentMixin.appliesTo = schema.PsychologicalTreatment
-PsychologicalTreatmentMixin.Class = PsychologicalTreatmentImpl
-
-export const fromPointer = createFactory<PsychologicalTreatment>([TherapeuticProcedureMixin, PsychologicalTreatmentMixin], { types: [schema.PsychologicalTreatment] });
+PsychologicalTreatmentMixin.createFactory = (env: RdfineEnvironment) => createFactory<PsychologicalTreatment>([TherapeuticProcedureMixin, PsychologicalTreatmentMixin], { types: [schema.PsychologicalTreatment] }, env)

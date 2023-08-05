@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -16,6 +16,12 @@ export interface ProgramMembership<D extends RDF.DatasetCore = RDF.DatasetCore> 
   membershipPointsEarned: Schema.QuantitativeValue<D> | undefined;
   membershipPointsEarnedLiteral: number | undefined;
   programName: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ProgramMembership: Factory<Schema.ProgramMembership>;
+  }
 }
 
 export function ProgramMembershipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ProgramMembership & RdfResourceCore> & Base {
@@ -38,16 +44,5 @@ export function ProgramMembershipMixin<Base extends rdfine.Constructor>(Resource
   }
   return ProgramMembershipClass as any
 }
-
-class ProgramMembershipImpl extends ProgramMembershipMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ProgramMembership>) {
-    super(arg, init)
-    this.types.add(schema.ProgramMembership)
-  }
-
-  static readonly __mixins: Mixin[] = [ProgramMembershipMixin, IntangibleMixin];
-}
 ProgramMembershipMixin.appliesTo = schema.ProgramMembership
-ProgramMembershipMixin.Class = ProgramMembershipImpl
-
-export const fromPointer = createFactory<ProgramMembership>([IntangibleMixin, ProgramMembershipMixin], { types: [schema.ProgramMembership] });
+ProgramMembershipMixin.createFactory = (env: RdfineEnvironment) => createFactory<ProgramMembership>([IntangibleMixin, ProgramMembershipMixin], { types: [schema.ProgramMembership] }, env)

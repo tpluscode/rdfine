@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
@@ -19,6 +19,12 @@ export interface AbstractResult<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   sourceConstraintComponent: Sh.ConstraintComponent<D> | undefined;
   sourceShape: Sh.Shape<D> | undefined;
   value: RDF.Term | undefined;
+}
+
+declare global {
+  interface ShVocabulary {
+    AbstractResult: Factory<Sh.AbstractResult>;
+  }
 }
 
 export function AbstractResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AbstractResult & RdfResourceCore> & Base {
@@ -45,16 +51,5 @@ export function AbstractResultMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return AbstractResultClass as any
 }
-
-class AbstractResultImpl extends AbstractResultMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AbstractResult>) {
-    super(arg, init)
-    this.types.add(sh.AbstractResult)
-  }
-
-  static readonly __mixins: Mixin[] = [AbstractResultMixin, RdfsResourceMixin];
-}
 AbstractResultMixin.appliesTo = sh.AbstractResult
-AbstractResultMixin.Class = AbstractResultImpl
-
-export const fromPointer = createFactory<AbstractResult>([RdfsResourceMixin, AbstractResultMixin], { types: [sh.AbstractResult] });
+AbstractResultMixin.createFactory = (env: RdfineEnvironment) => createFactory<AbstractResult>([RdfsResourceMixin, AbstractResultMixin], { types: [sh.AbstractResult] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ServiceMixin } from './Service.js';
 
@@ -15,6 +15,12 @@ export interface FinancialProduct<D extends RDF.DatasetCore = RDF.DatasetCore> e
   feesAndCommissionsSpecificationTerm: RDF.NamedNode | undefined;
   interestRate: Schema.QuantitativeValue<D> | undefined;
   interestRateLiteral: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    FinancialProduct: Factory<Schema.FinancialProduct>;
+  }
 }
 
 export function FinancialProductMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FinancialProduct & RdfResourceCore> & Base {
@@ -35,16 +41,5 @@ export function FinancialProductMixin<Base extends rdfine.Constructor>(Resource:
   }
   return FinancialProductClass as any
 }
-
-class FinancialProductImpl extends FinancialProductMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<FinancialProduct>) {
-    super(arg, init)
-    this.types.add(schema.FinancialProduct)
-  }
-
-  static readonly __mixins: Mixin[] = [FinancialProductMixin, ServiceMixin];
-}
 FinancialProductMixin.appliesTo = schema.FinancialProduct
-FinancialProductMixin.Class = FinancialProductImpl
-
-export const fromPointer = createFactory<FinancialProduct>([ServiceMixin, FinancialProductMixin], { types: [schema.FinancialProduct] });
+FinancialProductMixin.createFactory = (env: RdfineEnvironment) => createFactory<FinancialProduct>([ServiceMixin, FinancialProductMixin], { types: [schema.FinancialProduct] }, env)

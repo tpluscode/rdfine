@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { PerformingGroupMixin } from './PerformingGroup.js';
 
@@ -16,6 +16,12 @@ export interface MusicGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   musicGroupMember: Schema.Person<D> | undefined;
   track: Schema.ItemList<D> | Schema.MusicRecording<D> | undefined;
   tracks: Schema.MusicRecording<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MusicGroup: Factory<Schema.MusicGroup>;
+  }
 }
 
 export function MusicGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MusicGroup & RdfResourceCore> & Base {
@@ -38,16 +44,5 @@ export function MusicGroupMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return MusicGroupClass as any
 }
-
-class MusicGroupImpl extends MusicGroupMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MusicGroup>) {
-    super(arg, init)
-    this.types.add(schema.MusicGroup)
-  }
-
-  static readonly __mixins: Mixin[] = [MusicGroupMixin, PerformingGroupMixin];
-}
 MusicGroupMixin.appliesTo = schema.MusicGroup
-MusicGroupMixin.Class = MusicGroupImpl
-
-export const fromPointer = createFactory<MusicGroup>([PerformingGroupMixin, MusicGroupMixin], { types: [schema.MusicGroup] });
+MusicGroupMixin.createFactory = (env: RdfineEnvironment) => createFactory<MusicGroup>([PerformingGroupMixin, MusicGroupMixin], { types: [schema.MusicGroup] }, env)

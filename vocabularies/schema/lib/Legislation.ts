@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -26,6 +26,12 @@ export interface Legislation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   legislationTransposes: Schema.Legislation<D> | undefined;
   legislationType: Schema.CategoryCode<D> | undefined;
   legislationTypeLiteral: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Legislation: Factory<Schema.Legislation>;
+  }
 }
 
 export function LegislationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Legislation & RdfResourceCore> & Base {
@@ -68,16 +74,5 @@ export function LegislationMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return LegislationClass as any
 }
-
-class LegislationImpl extends LegislationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Legislation>) {
-    super(arg, init)
-    this.types.add(schema.Legislation)
-  }
-
-  static readonly __mixins: Mixin[] = [LegislationMixin, CreativeWorkMixin];
-}
 LegislationMixin.appliesTo = schema.Legislation
-LegislationMixin.Class = LegislationImpl
-
-export const fromPointer = createFactory<Legislation>([CreativeWorkMixin, LegislationMixin], { types: [schema.Legislation] });
+LegislationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Legislation>([CreativeWorkMixin, LegislationMixin], { types: [schema.Legislation] }, env)

@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { ConceptMixin } from './Concept.js';
 
 export interface Proxy<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Concept<D>, rdfine.RdfResource<D> {
   proxyFor: Rico.RecordResource<D> | undefined;
   proxyIn: Rico.RecordSet<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    Proxy: Factory<Rico.Proxy>;
+  }
 }
 
 export function ProxyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Proxy & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function ProxyMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return ProxyClass as any
 }
-
-class ProxyImpl extends ProxyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Proxy>) {
-    super(arg, init)
-    this.types.add(rico.Proxy)
-  }
-
-  static readonly __mixins: Mixin[] = [ProxyMixin, ConceptMixin];
-}
 ProxyMixin.appliesTo = rico.Proxy
-ProxyMixin.Class = ProxyImpl
-
-export const fromPointer = createFactory<Proxy>([ConceptMixin, ProxyMixin], { types: [rico.Proxy] });
+ProxyMixin.createFactory = (env: RdfineEnvironment) => createFactory<Proxy>([ConceptMixin, ProxyMixin], { types: [rico.Proxy] }, env)

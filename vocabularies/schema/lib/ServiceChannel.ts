@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -18,6 +18,12 @@ export interface ServiceChannel<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   servicePostalAddress: Schema.PostalAddress<D> | undefined;
   serviceSmsNumber: Schema.ContactPoint<D> | undefined;
   serviceUrl: RDF.NamedNode | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ServiceChannel: Factory<Schema.ServiceChannel>;
+  }
 }
 
 export function ServiceChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ServiceChannel & RdfResourceCore> & Base {
@@ -44,16 +50,5 @@ export function ServiceChannelMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return ServiceChannelClass as any
 }
-
-class ServiceChannelImpl extends ServiceChannelMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ServiceChannel>) {
-    super(arg, init)
-    this.types.add(schema.ServiceChannel)
-  }
-
-  static readonly __mixins: Mixin[] = [ServiceChannelMixin, IntangibleMixin];
-}
 ServiceChannelMixin.appliesTo = schema.ServiceChannel
-ServiceChannelMixin.Class = ServiceChannelImpl
-
-export const fromPointer = createFactory<ServiceChannel>([IntangibleMixin, ServiceChannelMixin], { types: [schema.ServiceChannel] });
+ServiceChannelMixin.createFactory = (env: RdfineEnvironment) => createFactory<ServiceChannel>([IntangibleMixin, ServiceChannelMixin], { types: [schema.ServiceChannel] }, env)

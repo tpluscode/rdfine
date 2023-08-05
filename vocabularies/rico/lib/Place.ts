@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -23,6 +23,12 @@ export interface Place<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico
   location: RDF.Literal | undefined;
   overlapsOrOverlapped: Rico.Place<D> | undefined;
   placeIsSourceOfPlaceRelation: Rico.PlaceRelation<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    Place: Factory<Rico.Place>;
+  }
 }
 
 export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Place & RdfResourceCore> & Base {
@@ -59,16 +65,5 @@ export function PlaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return PlaceClass as any
 }
-
-class PlaceImpl extends PlaceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Place>) {
-    super(arg, init)
-    this.types.add(rico.Place)
-  }
-
-  static readonly __mixins: Mixin[] = [PlaceMixin, ThingMixin];
-}
 PlaceMixin.appliesTo = rico.Place
-PlaceMixin.Class = PlaceImpl
-
-export const fromPointer = createFactory<Place>([ThingMixin, PlaceMixin], { types: [rico.Place] });
+PlaceMixin.createFactory = (env: RdfineEnvironment) => createFactory<Place>([ThingMixin, PlaceMixin], { types: [rico.Place] }, env)

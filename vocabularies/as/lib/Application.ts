@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { ObjectMixin } from './Object.js';
 
 export interface Application<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface AsVocabulary {
+    Application: Factory<As.Application>;
+  }
 }
 
 export function ApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Application & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function ApplicationMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return ApplicationClass as any
 }
-
-class ApplicationImpl extends ApplicationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Application>) {
-    super(arg, init)
-    this.types.add(as.Application)
-  }
-
-  static readonly __mixins: Mixin[] = [ApplicationMixin, ObjectMixin];
-}
 ApplicationMixin.appliesTo = as.Application
-ApplicationMixin.Class = ApplicationImpl
-
-export const fromPointer = createFactory<Application>([ObjectMixin, ApplicationMixin], { types: [as.Application] });
+ApplicationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Application>([ObjectMixin, ApplicationMixin], { types: [as.Application] }, env)

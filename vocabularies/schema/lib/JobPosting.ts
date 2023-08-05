@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -53,6 +53,12 @@ export interface JobPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   totalJobOpenings: number | undefined;
   validThrough: Date | undefined;
   workHours: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    JobPosting: Factory<Schema.JobPosting>;
+  }
 }
 
 export function JobPostingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JobPosting & RdfResourceCore> & Base {
@@ -149,16 +155,5 @@ export function JobPostingMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return JobPostingClass as any
 }
-
-class JobPostingImpl extends JobPostingMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<JobPosting>) {
-    super(arg, init)
-    this.types.add(schema.JobPosting)
-  }
-
-  static readonly __mixins: Mixin[] = [JobPostingMixin, IntangibleMixin];
-}
 JobPostingMixin.appliesTo = schema.JobPosting
-JobPostingMixin.Class = JobPostingImpl
-
-export const fromPointer = createFactory<JobPosting>([IntangibleMixin, JobPostingMixin], { types: [schema.JobPosting] });
+JobPostingMixin.createFactory = (env: RdfineEnvironment) => createFactory<JobPosting>([IntangibleMixin, JobPostingMixin], { types: [schema.JobPosting] }, env)

@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
 export interface WarrantyPromise<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   durationOfWarranty: Schema.QuantitativeValue<D> | undefined;
   warrantyScope: Schema.WarrantyScope | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    WarrantyPromise: Factory<Schema.WarrantyPromise>;
+  }
 }
 
 export function WarrantyPromiseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WarrantyPromise & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function WarrantyPromiseMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return WarrantyPromiseClass as any
 }
-
-class WarrantyPromiseImpl extends WarrantyPromiseMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<WarrantyPromise>) {
-    super(arg, init)
-    this.types.add(schema.WarrantyPromise)
-  }
-
-  static readonly __mixins: Mixin[] = [WarrantyPromiseMixin, StructuredValueMixin];
-}
 WarrantyPromiseMixin.appliesTo = schema.WarrantyPromise
-WarrantyPromiseMixin.Class = WarrantyPromiseImpl
-
-export const fromPointer = createFactory<WarrantyPromise>([StructuredValueMixin, WarrantyPromiseMixin], { types: [schema.WarrantyPromise] });
+WarrantyPromiseMixin.createFactory = (env: RdfineEnvironment) => createFactory<WarrantyPromise>([StructuredValueMixin, WarrantyPromiseMixin], { types: [schema.WarrantyPromise] }, env)

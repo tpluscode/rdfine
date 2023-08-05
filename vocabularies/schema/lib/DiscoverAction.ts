@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { FindActionMixin } from './FindAction.js';
 
 export interface DiscoverAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FindAction<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DiscoverAction: Factory<Schema.DiscoverAction>;
+  }
 }
 
 export function DiscoverActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DiscoverAction & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function DiscoverActionMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return DiscoverActionClass as any
 }
-
-class DiscoverActionImpl extends DiscoverActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DiscoverAction>) {
-    super(arg, init)
-    this.types.add(schema.DiscoverAction)
-  }
-
-  static readonly __mixins: Mixin[] = [DiscoverActionMixin, FindActionMixin];
-}
 DiscoverActionMixin.appliesTo = schema.DiscoverAction
-DiscoverActionMixin.Class = DiscoverActionImpl
-
-export const fromPointer = createFactory<DiscoverAction>([FindActionMixin, DiscoverActionMixin], { types: [schema.DiscoverAction] });
+DiscoverActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<DiscoverAction>([FindActionMixin, DiscoverActionMixin], { types: [schema.DiscoverAction] }, env)

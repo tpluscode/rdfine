@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CommunicateActionMixin } from './CommunicateAction.js';
 
 export interface InviteAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, rdfine.RdfResource<D> {
   event: Schema.Event<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    InviteAction: Factory<Schema.InviteAction>;
+  }
 }
 
 export function InviteActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InviteAction & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function InviteActionMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return InviteActionClass as any
 }
-
-class InviteActionImpl extends InviteActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<InviteAction>) {
-    super(arg, init)
-    this.types.add(schema.InviteAction)
-  }
-
-  static readonly __mixins: Mixin[] = [InviteActionMixin, CommunicateActionMixin];
-}
 InviteActionMixin.appliesTo = schema.InviteAction
-InviteActionMixin.Class = InviteActionImpl
-
-export const fromPointer = createFactory<InviteAction>([CommunicateActionMixin, InviteActionMixin], { types: [schema.InviteAction] });
+InviteActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<InviteAction>([CommunicateActionMixin, InviteActionMixin], { types: [schema.InviteAction] }, env)

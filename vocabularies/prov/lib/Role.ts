@@ -1,13 +1,19 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 
 export interface Role<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface ProvVocabulary {
+    Role: Factory<Prov.Role>;
+  }
 }
 
 export function RoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Role & RdfResourceCore> & Base {
@@ -16,16 +22,5 @@ export function RoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return RoleClass as any
 }
-
-class RoleImpl extends RoleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Role>) {
-    super(arg, init)
-    this.types.add(prov.Role)
-  }
-
-  static readonly __mixins: Mixin[] = [RoleMixin];
-}
 RoleMixin.appliesTo = prov.Role
-RoleMixin.Class = RoleImpl
-
-export const fromPointer = createFactory<Role>([RoleMixin], { types: [prov.Role] });
+RoleMixin.createFactory = (env: RdfineEnvironment) => createFactory<Role>([RoleMixin], { types: [prov.Role] }, env)

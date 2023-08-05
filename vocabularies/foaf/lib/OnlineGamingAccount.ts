@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { foaf } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Foaf from '../index.js';
 import { OnlineAccountMixin } from './OnlineAccount.js';
 
 export interface OnlineGamingAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.OnlineAccount<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface FoafVocabulary {
+    OnlineGamingAccount: Factory<Foaf.OnlineGamingAccount>;
+  }
 }
 
 export function OnlineGamingAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OnlineGamingAccount & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function OnlineGamingAccountMixin<Base extends rdfine.Constructor>(Resour
   }
   return OnlineGamingAccountClass as any
 }
-
-class OnlineGamingAccountImpl extends OnlineGamingAccountMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<OnlineGamingAccount>) {
-    super(arg, init)
-    this.types.add(foaf.OnlineGamingAccount)
-  }
-
-  static readonly __mixins: Mixin[] = [OnlineGamingAccountMixin, OnlineAccountMixin];
-}
 OnlineGamingAccountMixin.appliesTo = foaf.OnlineGamingAccount
-OnlineGamingAccountMixin.Class = OnlineGamingAccountImpl
-
-export const fromPointer = createFactory<OnlineGamingAccount>([OnlineAccountMixin, OnlineGamingAccountMixin], { types: [foaf.OnlineGamingAccount] });
+OnlineGamingAccountMixin.createFactory = (env: RdfineEnvironment) => createFactory<OnlineGamingAccount>([OnlineAccountMixin, OnlineGamingAccountMixin], { types: [foaf.OnlineGamingAccount] }, env)

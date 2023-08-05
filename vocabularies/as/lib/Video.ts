@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { DocumentMixin } from './Document.js';
 
 export interface Video<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Document<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface AsVocabulary {
+    Video: Factory<As.Video>;
+  }
 }
 
 export function VideoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Video & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function VideoMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return VideoClass as any
 }
-
-class VideoImpl extends VideoMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Video>) {
-    super(arg, init)
-    this.types.add(as.Video)
-  }
-
-  static readonly __mixins: Mixin[] = [VideoMixin, DocumentMixin];
-}
 VideoMixin.appliesTo = as.Video
-VideoMixin.Class = VideoImpl
-
-export const fromPointer = createFactory<Video>([DocumentMixin, VideoMixin], { types: [as.Video] });
+VideoMixin.createFactory = (env: RdfineEnvironment) => createFactory<Video>([DocumentMixin, VideoMixin], { types: [as.Video] }, env)

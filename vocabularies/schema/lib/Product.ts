@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -73,6 +73,12 @@ export interface Product<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   slogan: string | undefined;
   weight: Schema.QuantitativeValue<D> | undefined;
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Product: Factory<Schema.Product>;
+  }
 }
 
 export function ProductMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Product & RdfResourceCore> & Base {
@@ -209,16 +215,5 @@ export function ProductMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return ProductClass as any
 }
-
-class ProductImpl extends ProductMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Product>) {
-    super(arg, init)
-    this.types.add(schema.Product)
-  }
-
-  static readonly __mixins: Mixin[] = [ProductMixin, ThingMixin];
-}
 ProductMixin.appliesTo = schema.Product
-ProductMixin.Class = ProductImpl
-
-export const fromPointer = createFactory<Product>([ThingMixin, ProductMixin], { types: [schema.Product] });
+ProductMixin.createFactory = (env: RdfineEnvironment) => createFactory<Product>([ThingMixin, ProductMixin], { types: [schema.Product] }, env)

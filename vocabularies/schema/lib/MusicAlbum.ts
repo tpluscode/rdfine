@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MusicPlaylistMixin } from './MusicPlaylist.js';
 
@@ -13,6 +13,12 @@ export interface MusicAlbum<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   albumRelease: Schema.MusicRelease<D> | undefined;
   albumReleaseType: Schema.MusicAlbumReleaseType | undefined;
   byArtist: Schema.MusicGroup<D> | Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MusicAlbum: Factory<Schema.MusicAlbum>;
+  }
 }
 
 export function MusicAlbumMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MusicAlbum & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function MusicAlbumMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return MusicAlbumClass as any
 }
-
-class MusicAlbumImpl extends MusicAlbumMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MusicAlbum>) {
-    super(arg, init)
-    this.types.add(schema.MusicAlbum)
-  }
-
-  static readonly __mixins: Mixin[] = [MusicAlbumMixin, MusicPlaylistMixin];
-}
 MusicAlbumMixin.appliesTo = schema.MusicAlbum
-MusicAlbumMixin.Class = MusicAlbumImpl
-
-export const fromPointer = createFactory<MusicAlbum>([MusicPlaylistMixin, MusicAlbumMixin], { types: [schema.MusicAlbum] });
+MusicAlbumMixin.createFactory = (env: RdfineEnvironment) => createFactory<MusicAlbum>([MusicPlaylistMixin, MusicAlbumMixin], { types: [schema.MusicAlbum] }, env)

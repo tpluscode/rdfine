@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { BioChemEntityMixin } from './BioChemEntity.js';
 
@@ -13,6 +13,12 @@ export interface Gene<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   encodesBioChemEntity: Schema.BioChemEntity<D> | undefined;
   expressedIn: Schema.AnatomicalStructure<D> | Schema.AnatomicalSystem<D> | Schema.BioChemEntity<D> | undefined;
   hasBioPolymerSequence: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Gene: Factory<Schema.Gene>;
+  }
 }
 
 export function GeneMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Gene & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function GeneMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return GeneClass as any
 }
-
-class GeneImpl extends GeneMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Gene>) {
-    super(arg, init)
-    this.types.add(schema.Gene)
-  }
-
-  static readonly __mixins: Mixin[] = [GeneMixin, BioChemEntityMixin];
-}
 GeneMixin.appliesTo = schema.Gene
-GeneMixin.Class = GeneImpl
-
-export const fromPointer = createFactory<Gene>([BioChemEntityMixin, GeneMixin], { types: [schema.Gene] });
+GeneMixin.createFactory = (env: RdfineEnvironment) => createFactory<Gene>([BioChemEntityMixin, GeneMixin], { types: [schema.Gene] }, env)

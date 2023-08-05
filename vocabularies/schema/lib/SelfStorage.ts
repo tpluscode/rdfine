@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LocalBusinessMixin } from './LocalBusiness.js';
 
 export interface SelfStorage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    SelfStorage: Factory<Schema.SelfStorage>;
+  }
 }
 
 export function SelfStorageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SelfStorage & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function SelfStorageMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return SelfStorageClass as any
 }
-
-class SelfStorageImpl extends SelfStorageMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SelfStorage>) {
-    super(arg, init)
-    this.types.add(schema.SelfStorage)
-  }
-
-  static readonly __mixins: Mixin[] = [SelfStorageMixin, LocalBusinessMixin];
-}
 SelfStorageMixin.appliesTo = schema.SelfStorage
-SelfStorageMixin.Class = SelfStorageImpl
-
-export const fromPointer = createFactory<SelfStorage>([LocalBusinessMixin, SelfStorageMixin], { types: [schema.SelfStorage] });
+SelfStorageMixin.createFactory = (env: RdfineEnvironment) => createFactory<SelfStorage>([LocalBusinessMixin, SelfStorageMixin], { types: [schema.SelfStorage] }, env)

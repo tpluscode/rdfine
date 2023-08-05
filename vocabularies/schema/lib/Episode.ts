@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -20,6 +20,12 @@ export interface Episode<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   partOfSeries: Schema.CreativeWorkSeries<D> | undefined;
   productionCompany: Schema.Organization<D> | undefined;
   trailer: Schema.VideoObject<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Episode: Factory<Schema.Episode>;
+  }
 }
 
 export function EpisodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Episode & RdfResourceCore> & Base {
@@ -50,16 +56,5 @@ export function EpisodeMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return EpisodeClass as any
 }
-
-class EpisodeImpl extends EpisodeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Episode>) {
-    super(arg, init)
-    this.types.add(schema.Episode)
-  }
-
-  static readonly __mixins: Mixin[] = [EpisodeMixin, CreativeWorkMixin];
-}
 EpisodeMixin.appliesTo = schema.Episode
-EpisodeMixin.Class = EpisodeImpl
-
-export const fromPointer = createFactory<Episode>([CreativeWorkMixin, EpisodeMixin], { types: [schema.Episode] });
+EpisodeMixin.createFactory = (env: RdfineEnvironment) => createFactory<Episode>([CreativeWorkMixin, EpisodeMixin], { types: [schema.Episode] }, env)

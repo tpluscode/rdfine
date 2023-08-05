@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ReviewMixin } from './Review.js';
 
 export interface EmployerReview<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Review<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    EmployerReview: Factory<Schema.EmployerReview>;
+  }
 }
 
 export function EmployerReviewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EmployerReview & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function EmployerReviewMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return EmployerReviewClass as any
 }
-
-class EmployerReviewImpl extends EmployerReviewMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EmployerReview>) {
-    super(arg, init)
-    this.types.add(schema.EmployerReview)
-  }
-
-  static readonly __mixins: Mixin[] = [EmployerReviewMixin, ReviewMixin];
-}
 EmployerReviewMixin.appliesTo = schema.EmployerReview
-EmployerReviewMixin.Class = EmployerReviewImpl
-
-export const fromPointer = createFactory<EmployerReview>([ReviewMixin, EmployerReviewMixin], { types: [schema.EmployerReview] });
+EmployerReviewMixin.createFactory = (env: RdfineEnvironment) => createFactory<EmployerReview>([ReviewMixin, EmployerReviewMixin], { types: [schema.EmployerReview] }, env)

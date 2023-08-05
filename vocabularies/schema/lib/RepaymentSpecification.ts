@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -15,6 +15,12 @@ export interface RepaymentSpecification<D extends RDF.DatasetCore = RDF.DatasetC
   loanPaymentAmount: Schema.MonetaryAmount<D> | undefined;
   loanPaymentFrequency: number | undefined;
   numberOfLoanPayments: number | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    RepaymentSpecification: Factory<Schema.RepaymentSpecification>;
+  }
 }
 
 export function RepaymentSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RepaymentSpecification & RdfResourceCore> & Base {
@@ -35,16 +41,5 @@ export function RepaymentSpecificationMixin<Base extends rdfine.Constructor>(Res
   }
   return RepaymentSpecificationClass as any
 }
-
-class RepaymentSpecificationImpl extends RepaymentSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RepaymentSpecification>) {
-    super(arg, init)
-    this.types.add(schema.RepaymentSpecification)
-  }
-
-  static readonly __mixins: Mixin[] = [RepaymentSpecificationMixin, StructuredValueMixin];
-}
 RepaymentSpecificationMixin.appliesTo = schema.RepaymentSpecification
-RepaymentSpecificationMixin.Class = RepaymentSpecificationImpl
-
-export const fromPointer = createFactory<RepaymentSpecification>([StructuredValueMixin, RepaymentSpecificationMixin], { types: [schema.RepaymentSpecification] });
+RepaymentSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<RepaymentSpecification>([StructuredValueMixin, RepaymentSpecificationMixin], { types: [schema.RepaymentSpecification] }, env)

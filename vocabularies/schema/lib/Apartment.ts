@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AccommodationMixin } from './Accommodation.js';
 
@@ -12,6 +12,12 @@ export interface Apartment<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   numberOfRooms: Schema.QuantitativeValue<D> | undefined;
   numberOfRoomsLiteral: number | undefined;
   occupancy: Schema.QuantitativeValue<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Apartment: Factory<Schema.Apartment>;
+  }
 }
 
 export function ApartmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Apartment & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function ApartmentMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return ApartmentClass as any
 }
-
-class ApartmentImpl extends ApartmentMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Apartment>) {
-    super(arg, init)
-    this.types.add(schema.Apartment)
-  }
-
-  static readonly __mixins: Mixin[] = [ApartmentMixin, AccommodationMixin];
-}
 ApartmentMixin.appliesTo = schema.Apartment
-ApartmentMixin.Class = ApartmentImpl
-
-export const fromPointer = createFactory<Apartment>([AccommodationMixin, ApartmentMixin], { types: [schema.Apartment] });
+ApartmentMixin.createFactory = (env: RdfineEnvironment) => createFactory<Apartment>([AccommodationMixin, ApartmentMixin], { types: [schema.Apartment] }, env)

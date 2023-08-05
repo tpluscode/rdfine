@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { ActivityMixin } from './Activity.js';
 
 export interface Listen<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface AsVocabulary {
+    Listen: Factory<As.Listen>;
+  }
 }
 
 export function ListenMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Listen & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function ListenMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return ListenClass as any
 }
-
-class ListenImpl extends ListenMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Listen>) {
-    super(arg, init)
-    this.types.add(as.Listen)
-  }
-
-  static readonly __mixins: Mixin[] = [ListenMixin, ActivityMixin];
-}
 ListenMixin.appliesTo = as.Listen
-ListenMixin.Class = ListenImpl
-
-export const fromPointer = createFactory<Listen>([ActivityMixin, ListenMixin], { types: [as.Listen] });
+ListenMixin.createFactory = (env: RdfineEnvironment) => createFactory<Listen>([ActivityMixin, ListenMixin], { types: [as.Listen] }, env)

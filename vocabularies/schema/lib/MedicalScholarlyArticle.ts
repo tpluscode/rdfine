@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ScholarlyArticleMixin } from './ScholarlyArticle.js';
 
 export interface MedicalScholarlyArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ScholarlyArticle<D>, rdfine.RdfResource<D> {
   publicationType: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MedicalScholarlyArticle: Factory<Schema.MedicalScholarlyArticle>;
+  }
 }
 
 export function MedicalScholarlyArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalScholarlyArticle & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function MedicalScholarlyArticleMixin<Base extends rdfine.Constructor>(Re
   }
   return MedicalScholarlyArticleClass as any
 }
-
-class MedicalScholarlyArticleImpl extends MedicalScholarlyArticleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MedicalScholarlyArticle>) {
-    super(arg, init)
-    this.types.add(schema.MedicalScholarlyArticle)
-  }
-
-  static readonly __mixins: Mixin[] = [MedicalScholarlyArticleMixin, ScholarlyArticleMixin];
-}
 MedicalScholarlyArticleMixin.appliesTo = schema.MedicalScholarlyArticle
-MedicalScholarlyArticleMixin.Class = MedicalScholarlyArticleImpl
-
-export const fromPointer = createFactory<MedicalScholarlyArticle>([ScholarlyArticleMixin, MedicalScholarlyArticleMixin], { types: [schema.MedicalScholarlyArticle] });
+MedicalScholarlyArticleMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalScholarlyArticle>([ScholarlyArticleMixin, MedicalScholarlyArticleMixin], { types: [schema.MedicalScholarlyArticle] }, env)

@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { InteractActionMixin } from './InteractAction.js';
 
 export interface BefriendAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.InteractAction<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BefriendAction: Factory<Schema.BefriendAction>;
+  }
 }
 
 export function BefriendActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BefriendAction & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function BefriendActionMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return BefriendActionClass as any
 }
-
-class BefriendActionImpl extends BefriendActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<BefriendAction>) {
-    super(arg, init)
-    this.types.add(schema.BefriendAction)
-  }
-
-  static readonly __mixins: Mixin[] = [BefriendActionMixin, InteractActionMixin];
-}
 BefriendActionMixin.appliesTo = schema.BefriendAction
-BefriendActionMixin.Class = BefriendActionImpl
-
-export const fromPointer = createFactory<BefriendAction>([InteractActionMixin, BefriendActionMixin], { types: [schema.BefriendAction] });
+BefriendActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<BefriendAction>([InteractActionMixin, BefriendActionMixin], { types: [schema.BefriendAction] }, env)

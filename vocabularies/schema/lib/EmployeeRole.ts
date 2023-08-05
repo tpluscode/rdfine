@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { OrganizationRoleMixin } from './OrganizationRole.js';
 
@@ -12,6 +12,12 @@ export interface EmployeeRole<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   baseSalary: Schema.MonetaryAmount<D> | Schema.PriceSpecification<D> | undefined;
   baseSalaryLiteral: number | undefined;
   salaryCurrency: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    EmployeeRole: Factory<Schema.EmployeeRole>;
+  }
 }
 
 export function EmployeeRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EmployeeRole & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function EmployeeRoleMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return EmployeeRoleClass as any
 }
-
-class EmployeeRoleImpl extends EmployeeRoleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EmployeeRole>) {
-    super(arg, init)
-    this.types.add(schema.EmployeeRole)
-  }
-
-  static readonly __mixins: Mixin[] = [EmployeeRoleMixin, OrganizationRoleMixin];
-}
 EmployeeRoleMixin.appliesTo = schema.EmployeeRole
-EmployeeRoleMixin.Class = EmployeeRoleImpl
-
-export const fromPointer = createFactory<EmployeeRole>([OrganizationRoleMixin, EmployeeRoleMixin], { types: [schema.EmployeeRole] });
+EmployeeRoleMixin.createFactory = (env: RdfineEnvironment) => createFactory<EmployeeRole>([OrganizationRoleMixin, EmployeeRoleMixin], { types: [schema.EmployeeRole] }, env)

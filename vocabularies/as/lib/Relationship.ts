@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import { ObjectMixin } from './Object.js';
@@ -14,6 +14,12 @@ export interface Relationship<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   object: As.Link<D> | As.Object<D> | undefined;
   relationship: Rdf.Property<D> | undefined;
   subject: As.Link<D> | As.Object<D> | undefined;
+}
+
+declare global {
+  interface AsVocabulary {
+    Relationship: Factory<As.Relationship>;
+  }
 }
 
 export function RelationshipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Relationship & RdfResourceCore> & Base {
@@ -28,16 +34,5 @@ export function RelationshipMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return RelationshipClass as any
 }
-
-class RelationshipImpl extends RelationshipMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Relationship>) {
-    super(arg, init)
-    this.types.add(as.Relationship)
-  }
-
-  static readonly __mixins: Mixin[] = [RelationshipMixin, ObjectMixin];
-}
 RelationshipMixin.appliesTo = as.Relationship
-RelationshipMixin.Class = RelationshipImpl
-
-export const fromPointer = createFactory<Relationship>([ObjectMixin, RelationshipMixin], { types: [as.Relationship] });
+RelationshipMixin.createFactory = (env: RdfineEnvironment) => createFactory<Relationship>([ObjectMixin, RelationshipMixin], { types: [as.Relationship] }, env)

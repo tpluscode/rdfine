@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { UserInteractionMixin } from './UserInteraction.js';
 
 export interface UserPageVisits<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.UserInteraction<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    UserPageVisits: Factory<Schema.UserPageVisits>;
+  }
 }
 
 export function UserPageVisitsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<UserPageVisits & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function UserPageVisitsMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return UserPageVisitsClass as any
 }
-
-class UserPageVisitsImpl extends UserPageVisitsMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<UserPageVisits>) {
-    super(arg, init)
-    this.types.add(schema.UserPageVisits)
-  }
-
-  static readonly __mixins: Mixin[] = [UserPageVisitsMixin, UserInteractionMixin];
-}
 UserPageVisitsMixin.appliesTo = schema.UserPageVisits
-UserPageVisitsMixin.Class = UserPageVisitsImpl
-
-export const fromPointer = createFactory<UserPageVisits>([UserInteractionMixin, UserPageVisitsMixin], { types: [schema.UserPageVisits] });
+UserPageVisitsMixin.createFactory = (env: RdfineEnvironment) => createFactory<UserPageVisits>([UserInteractionMixin, UserPageVisitsMixin], { types: [schema.UserPageVisits] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalEntityMixin } from './MedicalEntity.js';
 
@@ -26,6 +26,12 @@ export interface MedicalCondition<D extends RDF.DatasetCore = RDF.DatasetCore> e
   status: string | undefined;
   statusTerm: Schema.EventStatusType | Schema.MedicalStudyStatus | undefined;
   typicalTest: Schema.MedicalTest<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MedicalCondition: Factory<Schema.MedicalCondition>;
+  }
 }
 
 export function MedicalConditionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalCondition & RdfResourceCore> & Base {
@@ -68,16 +74,5 @@ export function MedicalConditionMixin<Base extends rdfine.Constructor>(Resource:
   }
   return MedicalConditionClass as any
 }
-
-class MedicalConditionImpl extends MedicalConditionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MedicalCondition>) {
-    super(arg, init)
-    this.types.add(schema.MedicalCondition)
-  }
-
-  static readonly __mixins: Mixin[] = [MedicalConditionMixin, MedicalEntityMixin];
-}
 MedicalConditionMixin.appliesTo = schema.MedicalCondition
-MedicalConditionMixin.Class = MedicalConditionImpl
-
-export const fromPointer = createFactory<MedicalCondition>([MedicalEntityMixin, MedicalConditionMixin], { types: [schema.MedicalCondition] });
+MedicalConditionMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalCondition>([MedicalEntityMixin, MedicalConditionMixin], { types: [schema.MedicalCondition] }, env)

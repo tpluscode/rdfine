@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalEntityMixin } from './MedicalEntity.js';
 
 export interface LifestyleModification<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalEntity<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    LifestyleModification: Factory<Schema.LifestyleModification>;
+  }
 }
 
 export function LifestyleModificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LifestyleModification & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function LifestyleModificationMixin<Base extends rdfine.Constructor>(Reso
   }
   return LifestyleModificationClass as any
 }
-
-class LifestyleModificationImpl extends LifestyleModificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<LifestyleModification>) {
-    super(arg, init)
-    this.types.add(schema.LifestyleModification)
-  }
-
-  static readonly __mixins: Mixin[] = [LifestyleModificationMixin, MedicalEntityMixin];
-}
 LifestyleModificationMixin.appliesTo = schema.LifestyleModification
-LifestyleModificationMixin.Class = LifestyleModificationImpl
-
-export const fromPointer = createFactory<LifestyleModification>([MedicalEntityMixin, LifestyleModificationMixin], { types: [schema.LifestyleModification] });
+LifestyleModificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<LifestyleModification>([MedicalEntityMixin, LifestyleModificationMixin], { types: [schema.LifestyleModification] }, env)

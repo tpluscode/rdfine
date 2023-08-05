@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LandformMixin } from './Landform.js';
 
 export interface Mountain<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Landform<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Mountain: Factory<Schema.Mountain>;
+  }
 }
 
 export function MountainMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Mountain & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function MountainMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return MountainClass as any
 }
-
-class MountainImpl extends MountainMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Mountain>) {
-    super(arg, init)
-    this.types.add(schema.Mountain)
-  }
-
-  static readonly __mixins: Mixin[] = [MountainMixin, LandformMixin];
-}
 MountainMixin.appliesTo = schema.Mountain
-MountainMixin.Class = MountainImpl
-
-export const fromPointer = createFactory<Mountain>([LandformMixin, MountainMixin], { types: [schema.Mountain] });
+MountainMixin.createFactory = (env: RdfineEnvironment) => createFactory<Mountain>([LandformMixin, MountainMixin], { types: [schema.Mountain] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -14,6 +14,12 @@ export interface Observation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   measuredValue: RDF.Term | undefined;
   observationDate: Date | undefined;
   observedNode: Schema.StatisticalPopulation<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Observation: Factory<Schema.Observation>;
+  }
 }
 
 export function ObservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Observation & RdfResourceCore> & Base {
@@ -32,16 +38,5 @@ export function ObservationMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return ObservationClass as any
 }
-
-class ObservationImpl extends ObservationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Observation>) {
-    super(arg, init)
-    this.types.add(schema.Observation)
-  }
-
-  static readonly __mixins: Mixin[] = [ObservationMixin, IntangibleMixin];
-}
 ObservationMixin.appliesTo = schema.Observation
-ObservationMixin.Class = ObservationImpl
-
-export const fromPointer = createFactory<Observation>([IntangibleMixin, ObservationMixin], { types: [schema.Observation] });
+ObservationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Observation>([IntangibleMixin, ObservationMixin], { types: [schema.Observation] }, env)

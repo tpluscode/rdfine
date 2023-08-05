@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -13,6 +13,12 @@ export interface MenuItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   nutrition: Schema.NutritionInformation<D> | undefined;
   offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
   suitableForDiet: Schema.RestrictedDiet | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MenuItem: Factory<Schema.MenuItem>;
+  }
 }
 
 export function MenuItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MenuItem & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function MenuItemMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return MenuItemClass as any
 }
-
-class MenuItemImpl extends MenuItemMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MenuItem>) {
-    super(arg, init)
-    this.types.add(schema.MenuItem)
-  }
-
-  static readonly __mixins: Mixin[] = [MenuItemMixin, IntangibleMixin];
-}
 MenuItemMixin.appliesTo = schema.MenuItem
-MenuItemMixin.Class = MenuItemImpl
-
-export const fromPointer = createFactory<MenuItem>([IntangibleMixin, MenuItemMixin], { types: [schema.MenuItem] });
+MenuItemMixin.createFactory = (env: RdfineEnvironment) => createFactory<MenuItem>([IntangibleMixin, MenuItemMixin], { types: [schema.MenuItem] }, env)

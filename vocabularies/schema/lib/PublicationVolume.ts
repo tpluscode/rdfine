@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -13,6 +13,12 @@ export interface PublicationVolume<D extends RDF.DatasetCore = RDF.DatasetCore> 
   pageStart: number | string | undefined;
   pagination: string | undefined;
   volumeNumber: number | string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    PublicationVolume: Factory<Schema.PublicationVolume>;
+  }
 }
 
 export function PublicationVolumeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PublicationVolume & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function PublicationVolumeMixin<Base extends rdfine.Constructor>(Resource
   }
   return PublicationVolumeClass as any
 }
-
-class PublicationVolumeImpl extends PublicationVolumeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PublicationVolume>) {
-    super(arg, init)
-    this.types.add(schema.PublicationVolume)
-  }
-
-  static readonly __mixins: Mixin[] = [PublicationVolumeMixin, CreativeWorkMixin];
-}
 PublicationVolumeMixin.appliesTo = schema.PublicationVolume
-PublicationVolumeMixin.Class = PublicationVolumeImpl
-
-export const fromPointer = createFactory<PublicationVolume>([CreativeWorkMixin, PublicationVolumeMixin], { types: [schema.PublicationVolume] });
+PublicationVolumeMixin.createFactory = (env: RdfineEnvironment) => createFactory<PublicationVolume>([CreativeWorkMixin, PublicationVolumeMixin], { types: [schema.PublicationVolume] }, env)

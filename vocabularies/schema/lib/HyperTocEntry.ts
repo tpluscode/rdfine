@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -12,6 +12,12 @@ export interface HyperTocEntry<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   associatedMedia: Schema.MediaObject<D> | undefined;
   tocContinuation: Schema.HyperTocEntry<D> | undefined;
   utterances: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    HyperTocEntry: Factory<Schema.HyperTocEntry>;
+  }
 }
 
 export function HyperTocEntryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HyperTocEntry & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function HyperTocEntryMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return HyperTocEntryClass as any
 }
-
-class HyperTocEntryImpl extends HyperTocEntryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<HyperTocEntry>) {
-    super(arg, init)
-    this.types.add(schema.HyperTocEntry)
-  }
-
-  static readonly __mixins: Mixin[] = [HyperTocEntryMixin, CreativeWorkMixin];
-}
 HyperTocEntryMixin.appliesTo = schema.HyperTocEntry
-HyperTocEntryMixin.Class = HyperTocEntryImpl
-
-export const fromPointer = createFactory<HyperTocEntry>([CreativeWorkMixin, HyperTocEntryMixin], { types: [schema.HyperTocEntry] });
+HyperTocEntryMixin.createFactory = (env: RdfineEnvironment) => createFactory<HyperTocEntry>([CreativeWorkMixin, HyperTocEntryMixin], { types: [schema.HyperTocEntry] }, env)

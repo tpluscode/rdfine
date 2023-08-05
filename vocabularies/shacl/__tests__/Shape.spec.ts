@@ -1,17 +1,13 @@
 import clownface from 'clownface'
 import $rdf from '@rdfjs/dataset'
 import RDF from '@rdfjs/data-model'
-import RdfResource, { Constructor } from '@tpluscode/rdfine'
+import { Constructor } from '@tpluscode/rdfine'
 import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
 import { ResourceMixin } from '@rdfine/rdfs/lib/Resource'
-import { fromPointer } from '../lib/Shape.js';
-import { ShapeBundle } from '../bundles/index.js'
 import { sh } from '../lib/namespace.js'
 import { PropertyShapeMixin } from '../lib/PropertyShape.js'
 import { expect } from 'chai';
-
-RdfResource.factory.addMixin(...ShapeBundle)
-RdfResource.factory.addMixin(ResourceMixin)
+import environment from './environment.js'
 
 describe('Shape', () => {
   describe('property', () => {
@@ -24,7 +20,7 @@ describe('Shape', () => {
         })
 
       // when
-      const shape = fromPointer(graph)
+      const shape = environment.rdfine.sh.Shape(graph)
 
       // then
       expect(shape.property[0].name).to.eq('Foo')
@@ -39,11 +35,11 @@ describe('Shape', () => {
         .addOut(rdf.type, [rdfs.Resource, sh.PropertyShape])
 
       // when
-      const shape = RdfResource.factory.createEntity(graph)
+      const shape = environment.rdfine().factory.createEntity(graph)
       const propType = shape.constructor as Constructor
 
       // then
-      expect(propType.__mixins).to.contain.all.members([PropertyShapeMixin, ResourceMixin])
+      expect(propType.__mixins).to.contain.all.members([PropertyShapeMixin])
     })
   })
 })

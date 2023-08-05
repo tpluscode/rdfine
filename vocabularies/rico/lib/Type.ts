@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { ConceptMixin } from './Concept.js';
 
@@ -13,6 +13,12 @@ export interface Type<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.
   isOrWasCategoryOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasCategoryOfSomeMembersOf: Rico.RecordSet<D> | undefined;
   typeIsSourceOfTypeRelation: Rico.TypeRelation<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    Type: Factory<Rico.Type>;
+  }
 }
 
 export function TypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Type & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function TypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return TypeClass as any
 }
-
-class TypeImpl extends TypeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Type>) {
-    super(arg, init)
-    this.types.add(rico.Type)
-  }
-
-  static readonly __mixins: Mixin[] = [TypeMixin, ConceptMixin];
-}
 TypeMixin.appliesTo = rico.Type
-TypeMixin.Class = TypeImpl
-
-export const fromPointer = createFactory<Type>([ConceptMixin, TypeMixin], { types: [rico.Type] });
+TypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<Type>([ConceptMixin, TypeMixin], { types: [rico.Type] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 import { EntityInfluenceMixin } from './EntityInfluence.js';
 
@@ -12,6 +12,12 @@ export interface Derivation<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   hadActivity: Prov.Activity<D> | undefined;
   hadGeneration: Prov.Generation<D> | undefined;
   hadUsage: Prov.Usage<D> | undefined;
+}
+
+declare global {
+  interface ProvVocabulary {
+    Derivation: Factory<Prov.Derivation>;
+  }
 }
 
 export function DerivationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Derivation & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function DerivationMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return DerivationClass as any
 }
-
-class DerivationImpl extends DerivationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Derivation>) {
-    super(arg, init)
-    this.types.add(prov.Derivation)
-  }
-
-  static readonly __mixins: Mixin[] = [DerivationMixin, EntityInfluenceMixin];
-}
 DerivationMixin.appliesTo = prov.Derivation
-DerivationMixin.Class = DerivationImpl
-
-export const fromPointer = createFactory<Derivation>([EntityInfluenceMixin, DerivationMixin], { types: [prov.Derivation] });
+DerivationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Derivation>([EntityInfluenceMixin, DerivationMixin], { types: [prov.Derivation] }, env)

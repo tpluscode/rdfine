@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -41,6 +41,12 @@ export interface SoftwareApplication<D extends RDF.DatasetCore = RDF.DatasetCore
   storageRequirements: string | undefined;
   storageRequirementsTerm: RDF.NamedNode | undefined;
   supportingData: Schema.DataFeed<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    SoftwareApplication: Factory<Schema.SoftwareApplication>;
+  }
 }
 
 export function SoftwareApplicationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SoftwareApplication & RdfResourceCore> & Base {
@@ -113,16 +119,5 @@ export function SoftwareApplicationMixin<Base extends rdfine.Constructor>(Resour
   }
   return SoftwareApplicationClass as any
 }
-
-class SoftwareApplicationImpl extends SoftwareApplicationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SoftwareApplication>) {
-    super(arg, init)
-    this.types.add(schema.SoftwareApplication)
-  }
-
-  static readonly __mixins: Mixin[] = [SoftwareApplicationMixin, CreativeWorkMixin];
-}
 SoftwareApplicationMixin.appliesTo = schema.SoftwareApplication
-SoftwareApplicationMixin.Class = SoftwareApplicationImpl
-
-export const fromPointer = createFactory<SoftwareApplication>([CreativeWorkMixin, SoftwareApplicationMixin], { types: [schema.SoftwareApplication] });
+SoftwareApplicationMixin.createFactory = (env: RdfineEnvironment) => createFactory<SoftwareApplication>([CreativeWorkMixin, SoftwareApplicationMixin], { types: [schema.SoftwareApplication] }, env)

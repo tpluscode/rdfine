@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AggregateRatingMixin } from './AggregateRating.js';
 
 export interface EmployerAggregateRating<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AggregateRating<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    EmployerAggregateRating: Factory<Schema.EmployerAggregateRating>;
+  }
 }
 
 export function EmployerAggregateRatingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EmployerAggregateRating & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function EmployerAggregateRatingMixin<Base extends rdfine.Constructor>(Re
   }
   return EmployerAggregateRatingClass as any
 }
-
-class EmployerAggregateRatingImpl extends EmployerAggregateRatingMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EmployerAggregateRating>) {
-    super(arg, init)
-    this.types.add(schema.EmployerAggregateRating)
-  }
-
-  static readonly __mixins: Mixin[] = [EmployerAggregateRatingMixin, AggregateRatingMixin];
-}
 EmployerAggregateRatingMixin.appliesTo = schema.EmployerAggregateRating
-EmployerAggregateRatingMixin.Class = EmployerAggregateRatingImpl
-
-export const fromPointer = createFactory<EmployerAggregateRating>([AggregateRatingMixin, EmployerAggregateRatingMixin], { types: [schema.EmployerAggregateRating] });
+EmployerAggregateRatingMixin.createFactory = (env: RdfineEnvironment) => createFactory<EmployerAggregateRating>([AggregateRatingMixin, EmployerAggregateRatingMixin], { types: [schema.EmployerAggregateRating] }, env)

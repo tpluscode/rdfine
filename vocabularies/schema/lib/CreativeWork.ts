@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -136,6 +136,12 @@ export interface CreativeWork<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   video: Schema.Clip<D> | Schema.VideoObject<D> | undefined;
   workExample: Schema.CreativeWork<D> | undefined;
   workTranslation: Schema.CreativeWork<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CreativeWork: Factory<Schema.CreativeWork>;
+  }
 }
 
 export function CreativeWorkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CreativeWork & RdfResourceCore> & Base {
@@ -398,16 +404,5 @@ export function CreativeWorkMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return CreativeWorkClass as any
 }
-
-class CreativeWorkImpl extends CreativeWorkMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CreativeWork>) {
-    super(arg, init)
-    this.types.add(schema.CreativeWork)
-  }
-
-  static readonly __mixins: Mixin[] = [CreativeWorkMixin, ThingMixin];
-}
 CreativeWorkMixin.appliesTo = schema.CreativeWork
-CreativeWorkMixin.Class = CreativeWorkImpl
-
-export const fromPointer = createFactory<CreativeWork>([ThingMixin, CreativeWorkMixin], { types: [schema.CreativeWork] });
+CreativeWorkMixin.createFactory = (env: RdfineEnvironment) => createFactory<CreativeWork>([ThingMixin, CreativeWorkMixin], { types: [schema.CreativeWork] }, env)

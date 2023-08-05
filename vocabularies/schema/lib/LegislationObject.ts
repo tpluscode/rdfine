@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LegislationMixin } from './Legislation.js';
 import { MediaObjectMixin } from './MediaObject.js';
 
 export interface LegislationObject<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Legislation<D>, Schema.MediaObject<D>, rdfine.RdfResource<D> {
   legislationLegalValue: Schema.LegalValueLevel | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    LegislationObject: Factory<Schema.LegislationObject>;
+  }
 }
 
 export function LegislationObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LegislationObject & RdfResourceCore> & Base {
@@ -21,16 +27,5 @@ export function LegislationObjectMixin<Base extends rdfine.Constructor>(Resource
   }
   return LegislationObjectClass as any
 }
-
-class LegislationObjectImpl extends LegislationObjectMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<LegislationObject>) {
-    super(arg, init)
-    this.types.add(schema.LegislationObject)
-  }
-
-  static readonly __mixins: Mixin[] = [LegislationObjectMixin, LegislationMixin, MediaObjectMixin];
-}
 LegislationObjectMixin.appliesTo = schema.LegislationObject
-LegislationObjectMixin.Class = LegislationObjectImpl
-
-export const fromPointer = createFactory<LegislationObject>([MediaObjectMixin, LegislationMixin, LegislationObjectMixin], { types: [schema.LegislationObject] });
+LegislationObjectMixin.createFactory = (env: RdfineEnvironment) => createFactory<LegislationObject>([MediaObjectMixin, LegislationMixin, LegislationObjectMixin], { types: [schema.LegislationObject] }, env)

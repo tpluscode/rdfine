@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ReviewMixin } from './Review.js';
 
 export interface Recommendation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Review<D>, rdfine.RdfResource<D> {
   category: Schema.CategoryCode<D> | Schema.Thing<D> | undefined;
   categoryLiteral: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Recommendation: Factory<Schema.Recommendation>;
+  }
 }
 
 export function RecommendationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Recommendation & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function RecommendationMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return RecommendationClass as any
 }
-
-class RecommendationImpl extends RecommendationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Recommendation>) {
-    super(arg, init)
-    this.types.add(schema.Recommendation)
-  }
-
-  static readonly __mixins: Mixin[] = [RecommendationMixin, ReviewMixin];
-}
 RecommendationMixin.appliesTo = schema.Recommendation
-RecommendationMixin.Class = RecommendationImpl
-
-export const fromPointer = createFactory<Recommendation>([ReviewMixin, RecommendationMixin], { types: [schema.Recommendation] });
+RecommendationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Recommendation>([ReviewMixin, RecommendationMixin], { types: [schema.Recommendation] }, env)

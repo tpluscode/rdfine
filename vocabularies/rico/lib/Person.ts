@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { AgentMixin } from './Agent.js';
 
@@ -53,6 +53,12 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Ric
   personIsTargetOfKnowingOfRelation: Rico.KnowingOfRelation<D> | undefined;
   personIsTargetOfMembershipRelation: Rico.MembershipRelation<D> | undefined;
   personIsTargetOfTeachingRelation: Rico.TeachingRelation<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    Person: Factory<Rico.Person>;
+  }
 }
 
 export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Person & RdfResourceCore> & Base {
@@ -149,16 +155,5 @@ export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return PersonClass as any
 }
-
-class PersonImpl extends PersonMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Person>) {
-    super(arg, init)
-    this.types.add(rico.Person)
-  }
-
-  static readonly __mixins: Mixin[] = [PersonMixin, AgentMixin];
-}
 PersonMixin.appliesTo = rico.Person
-PersonMixin.Class = PersonImpl
-
-export const fromPointer = createFactory<Person>([AgentMixin, PersonMixin], { types: [rico.Person] });
+PersonMixin.createFactory = (env: RdfineEnvironment) => createFactory<Person>([AgentMixin, PersonMixin], { types: [rico.Person] }, env)

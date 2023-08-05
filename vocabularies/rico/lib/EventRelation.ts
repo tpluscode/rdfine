@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
 export interface EventRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, rdfine.RdfResource<D> {
   eventRelationHasSource: Rico.Event<D> | undefined;
   eventRelationHasTarget: Rico.Thing<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    EventRelation: Factory<Rico.EventRelation>;
+  }
 }
 
 export function EventRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EventRelation & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function EventRelationMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return EventRelationClass as any
 }
-
-class EventRelationImpl extends EventRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EventRelation>) {
-    super(arg, init)
-    this.types.add(rico.EventRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [EventRelationMixin, RelationMixin];
-}
 EventRelationMixin.appliesTo = rico.EventRelation
-EventRelationMixin.Class = EventRelationImpl
-
-export const fromPointer = createFactory<EventRelation>([RelationMixin, EventRelationMixin], { types: [rico.EventRelation] });
+EventRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<EventRelation>([RelationMixin, EventRelationMixin], { types: [rico.EventRelation] }, env)

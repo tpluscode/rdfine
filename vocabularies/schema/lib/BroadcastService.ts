@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ServiceMixin } from './Service.js';
 
@@ -22,6 +22,12 @@ export interface BroadcastService<D extends RDF.DatasetCore = RDF.DatasetCore> e
   inLanguageLiteral: string | undefined;
   parentService: Schema.BroadcastService<D> | undefined;
   videoFormat: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BroadcastService: Factory<Schema.BroadcastService>;
+  }
 }
 
 export function BroadcastServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BroadcastService & RdfResourceCore> & Base {
@@ -56,16 +62,5 @@ export function BroadcastServiceMixin<Base extends rdfine.Constructor>(Resource:
   }
   return BroadcastServiceClass as any
 }
-
-class BroadcastServiceImpl extends BroadcastServiceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<BroadcastService>) {
-    super(arg, init)
-    this.types.add(schema.BroadcastService)
-  }
-
-  static readonly __mixins: Mixin[] = [BroadcastServiceMixin, ServiceMixin];
-}
 BroadcastServiceMixin.appliesTo = schema.BroadcastService
-BroadcastServiceMixin.Class = BroadcastServiceImpl
-
-export const fromPointer = createFactory<BroadcastService>([ServiceMixin, BroadcastServiceMixin], { types: [schema.BroadcastService] });
+BroadcastServiceMixin.createFactory = (env: RdfineEnvironment) => createFactory<BroadcastService>([ServiceMixin, BroadcastServiceMixin], { types: [schema.BroadcastService] }, env)

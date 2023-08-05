@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ReservationMixin } from './Reservation.js';
 
@@ -13,6 +13,12 @@ export interface TaxiReservation<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   partySizeLiteral: number | undefined;
   pickupLocation: Schema.Place<D> | undefined;
   pickupTime: Date | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    TaxiReservation: Factory<Schema.TaxiReservation>;
+  }
 }
 
 export function TaxiReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TaxiReservation & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function TaxiReservationMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return TaxiReservationClass as any
 }
-
-class TaxiReservationImpl extends TaxiReservationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TaxiReservation>) {
-    super(arg, init)
-    this.types.add(schema.TaxiReservation)
-  }
-
-  static readonly __mixins: Mixin[] = [TaxiReservationMixin, ReservationMixin];
-}
 TaxiReservationMixin.appliesTo = schema.TaxiReservation
-TaxiReservationMixin.Class = TaxiReservationImpl
-
-export const fromPointer = createFactory<TaxiReservation>([ReservationMixin, TaxiReservationMixin], { types: [schema.TaxiReservation] });
+TaxiReservationMixin.createFactory = (env: RdfineEnvironment) => createFactory<TaxiReservation>([ReservationMixin, TaxiReservationMixin], { types: [schema.TaxiReservation] }, env)

@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 import { ActivityMixin } from './Activity.js';
 
 export interface Replace<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Activity<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface ProvVocabulary {
+    Replace: Factory<Prov.Replace>;
+  }
 }
 
 export function ReplaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Replace & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function ReplaceMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return ReplaceClass as any
 }
-
-class ReplaceImpl extends ReplaceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Replace>) {
-    super(arg, init)
-    this.types.add(prov.Replace)
-  }
-
-  static readonly __mixins: Mixin[] = [ReplaceMixin, ActivityMixin];
-}
 ReplaceMixin.appliesTo = prov.Replace
-ReplaceMixin.Class = ReplaceImpl
-
-export const fromPointer = createFactory<Replace>([ActivityMixin, ReplaceMixin], { types: [prov.Replace] });
+ReplaceMixin.createFactory = (env: RdfineEnvironment) => createFactory<Replace>([ActivityMixin, ReplaceMixin], { types: [prov.Replace] }, env)

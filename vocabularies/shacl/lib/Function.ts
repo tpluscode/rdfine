@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { sh } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sh from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ParameterizableMixin } from './Parameterizable.js';
@@ -12,6 +12,12 @@ import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
 
 export interface Function<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Parameterizable<D>, rdfine.RdfResource<D> {
   returnType: Rdfs.Class<D> | undefined;
+}
+
+declare global {
+  interface ShVocabulary {
+    Function: Factory<Sh.Function>;
+  }
 }
 
 export function FunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Function & RdfResourceCore> & Base {
@@ -22,16 +28,5 @@ export function FunctionMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return FunctionClass as any
 }
-
-class FunctionImpl extends FunctionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Function>) {
-    super(arg, init)
-    this.types.add(sh.Function)
-  }
-
-  static readonly __mixins: Mixin[] = [FunctionMixin, ParameterizableMixin];
-}
 FunctionMixin.appliesTo = sh.Function
-FunctionMixin.Class = FunctionImpl
-
-export const fromPointer = createFactory<Function>([ParameterizableMixin, FunctionMixin], { types: [sh.Function] });
+FunctionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Function>([ParameterizableMixin, FunctionMixin], { types: [sh.Function] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { doap } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Doap from '../index.js';
 import type * as Foaf from '@rdfine/foaf';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -44,6 +44,12 @@ export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends Fo
   translator: Foaf.Person<D> | undefined;
   vendor: Foaf.Organization<D> | undefined;
   wiki: RDF.NamedNode | undefined;
+}
+
+declare global {
+  interface DoapVocabulary {
+    Project: Factory<Doap.Project>;
+  }
 }
 
 export function ProjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Project & RdfResourceCore> & Base {
@@ -108,16 +114,5 @@ export function ProjectMixin<Base extends rdfine.Constructor>(Resource: Base): r
   }
   return ProjectClass as any
 }
-
-class ProjectImpl extends ProjectMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Project>) {
-    super(arg, init)
-    this.types.add(doap.Project)
-  }
-
-  static readonly __mixins: Mixin[] = [ProjectMixin, FoafProjectMixin];
-}
 ProjectMixin.appliesTo = doap.Project
-ProjectMixin.Class = ProjectImpl
-
-export const fromPointer = createFactory<Project>([FoafProjectMixin, ProjectMixin], { types: [doap.Project] });
+ProjectMixin.createFactory = (env: RdfineEnvironment) => createFactory<Project>([FoafProjectMixin, ProjectMixin], { types: [doap.Project] }, env)

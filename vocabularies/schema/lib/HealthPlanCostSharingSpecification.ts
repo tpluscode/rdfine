@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -14,6 +14,12 @@ export interface HealthPlanCostSharingSpecification<D extends RDF.DatasetCore = 
   healthPlanCopay: Schema.PriceSpecification<D> | undefined;
   healthPlanCopayOption: string | undefined;
   healthPlanPharmacyCategory: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    HealthPlanCostSharingSpecification: Factory<Schema.HealthPlanCostSharingSpecification>;
+  }
 }
 
 export function HealthPlanCostSharingSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HealthPlanCostSharingSpecification & RdfResourceCore> & Base {
@@ -32,16 +38,5 @@ export function HealthPlanCostSharingSpecificationMixin<Base extends rdfine.Cons
   }
   return HealthPlanCostSharingSpecificationClass as any
 }
-
-class HealthPlanCostSharingSpecificationImpl extends HealthPlanCostSharingSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<HealthPlanCostSharingSpecification>) {
-    super(arg, init)
-    this.types.add(schema.HealthPlanCostSharingSpecification)
-  }
-
-  static readonly __mixins: Mixin[] = [HealthPlanCostSharingSpecificationMixin, IntangibleMixin];
-}
 HealthPlanCostSharingSpecificationMixin.appliesTo = schema.HealthPlanCostSharingSpecification
-HealthPlanCostSharingSpecificationMixin.Class = HealthPlanCostSharingSpecificationImpl
-
-export const fromPointer = createFactory<HealthPlanCostSharingSpecification>([IntangibleMixin, HealthPlanCostSharingSpecificationMixin], { types: [schema.HealthPlanCostSharingSpecification] });
+HealthPlanCostSharingSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<HealthPlanCostSharingSpecification>([IntangibleMixin, HealthPlanCostSharingSpecificationMixin], { types: [schema.HealthPlanCostSharingSpecification] }, env)

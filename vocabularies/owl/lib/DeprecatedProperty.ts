@@ -1,17 +1,23 @@
 import '../extensions/rdf/Property.js';
 import { PropertyMixinEx } from '../extensions/rdf/Property.js';
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { owl } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import { PropertyMixin as RdfPropertyMixin } from '@rdfine/rdf/lib/Property';
 
 export interface DeprecatedProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface OwlVocabulary {
+    DeprecatedProperty: Factory<Owl.DeprecatedProperty>;
+  }
 }
 
 export function DeprecatedPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DeprecatedProperty & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function DeprecatedPropertyMixin<Base extends rdfine.Constructor>(Resourc
   }
   return DeprecatedPropertyClass as any
 }
-
-class DeprecatedPropertyImpl extends DeprecatedPropertyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DeprecatedProperty>) {
-    super(arg, init)
-    this.types.add(owl.DeprecatedProperty)
-  }
-
-  static readonly __mixins: Mixin[] = [DeprecatedPropertyMixin, RdfPropertyMixin];
-}
 DeprecatedPropertyMixin.appliesTo = owl.DeprecatedProperty
-DeprecatedPropertyMixin.Class = DeprecatedPropertyImpl
-
-export const fromPointer = createFactory<DeprecatedProperty>([RdfPropertyMixin, DeprecatedPropertyMixin], { types: [owl.DeprecatedProperty] });
+DeprecatedPropertyMixin.createFactory = (env: RdfineEnvironment) => createFactory<DeprecatedProperty>([RdfPropertyMixin, DeprecatedPropertyMixin], { types: [owl.DeprecatedProperty] }, env)

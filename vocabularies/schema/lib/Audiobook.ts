@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AudioObjectMixin } from './AudioObject.js';
 import { BookMixin } from './Book.js';
@@ -12,6 +12,12 @@ import { BookMixin } from './Book.js';
 export interface Audiobook<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AudioObject<D>, Schema.Book<D>, rdfine.RdfResource<D> {
   duration: Schema.Duration<D> | undefined;
   readBy: Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Audiobook: Factory<Schema.Audiobook>;
+  }
 }
 
 export function AudiobookMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Audiobook & RdfResourceCore> & Base {
@@ -24,16 +30,5 @@ export function AudiobookMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return AudiobookClass as any
 }
-
-class AudiobookImpl extends AudiobookMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Audiobook>) {
-    super(arg, init)
-    this.types.add(schema.Audiobook)
-  }
-
-  static readonly __mixins: Mixin[] = [AudiobookMixin, AudioObjectMixin, BookMixin];
-}
 AudiobookMixin.appliesTo = schema.Audiobook
-AudiobookMixin.Class = AudiobookImpl
-
-export const fromPointer = createFactory<Audiobook>([BookMixin, AudioObjectMixin, AudiobookMixin], { types: [schema.Audiobook] });
+AudiobookMixin.createFactory = (env: RdfineEnvironment) => createFactory<Audiobook>([BookMixin, AudioObjectMixin, AudiobookMixin], { types: [schema.Audiobook] }, env)

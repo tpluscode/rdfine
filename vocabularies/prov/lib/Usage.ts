@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { prov } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Prov from '../index.js';
 import { EntityInfluenceMixin } from './EntityInfluence.js';
 import { InstantaneousEventMixin } from './InstantaneousEvent.js';
 
 export interface Usage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.EntityInfluence<D>, Prov.InstantaneousEvent<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface ProvVocabulary {
+    Usage: Factory<Prov.Usage>;
+  }
 }
 
 export function UsageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Usage & RdfResourceCore> & Base {
@@ -18,16 +24,5 @@ export function UsageMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return UsageClass as any
 }
-
-class UsageImpl extends UsageMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Usage>) {
-    super(arg, init)
-    this.types.add(prov.Usage)
-  }
-
-  static readonly __mixins: Mixin[] = [UsageMixin, EntityInfluenceMixin, InstantaneousEventMixin];
-}
 UsageMixin.appliesTo = prov.Usage
-UsageMixin.Class = UsageImpl
-
-export const fromPointer = createFactory<Usage>([InstantaneousEventMixin, EntityInfluenceMixin, UsageMixin], { types: [prov.Usage] });
+UsageMixin.createFactory = (env: RdfineEnvironment) => createFactory<Usage>([InstantaneousEventMixin, EntityInfluenceMixin, UsageMixin], { types: [prov.Usage] }, env)

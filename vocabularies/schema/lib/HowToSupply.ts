@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { HowToItemMixin } from './HowToItem.js';
 
 export interface HowToSupply<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.HowToItem<D>, rdfine.RdfResource<D> {
   estimatedCost: Schema.MonetaryAmount<D> | undefined;
   estimatedCostLiteral: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    HowToSupply: Factory<Schema.HowToSupply>;
+  }
 }
 
 export function HowToSupplyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowToSupply & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function HowToSupplyMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return HowToSupplyClass as any
 }
-
-class HowToSupplyImpl extends HowToSupplyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<HowToSupply>) {
-    super(arg, init)
-    this.types.add(schema.HowToSupply)
-  }
-
-  static readonly __mixins: Mixin[] = [HowToSupplyMixin, HowToItemMixin];
-}
 HowToSupplyMixin.appliesTo = schema.HowToSupply
-HowToSupplyMixin.Class = HowToSupplyImpl
-
-export const fromPointer = createFactory<HowToSupply>([HowToItemMixin, HowToSupplyMixin], { types: [schema.HowToSupply] });
+HowToSupplyMixin.createFactory = (env: RdfineEnvironment) => createFactory<HowToSupply>([HowToItemMixin, HowToSupplyMixin], { types: [schema.HowToSupply] }, env)

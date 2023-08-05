@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -20,6 +20,12 @@ export interface CreativeWorkSeason<D extends RDF.DatasetCore = RDF.DatasetCore>
   seasonNumber: number | string | undefined;
   startDate: Date | undefined;
   trailer: Schema.VideoObject<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CreativeWorkSeason: Factory<Schema.CreativeWorkSeason>;
+  }
 }
 
 export function CreativeWorkSeasonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CreativeWorkSeason & RdfResourceCore> & Base {
@@ -50,16 +56,5 @@ export function CreativeWorkSeasonMixin<Base extends rdfine.Constructor>(Resourc
   }
   return CreativeWorkSeasonClass as any
 }
-
-class CreativeWorkSeasonImpl extends CreativeWorkSeasonMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CreativeWorkSeason>) {
-    super(arg, init)
-    this.types.add(schema.CreativeWorkSeason)
-  }
-
-  static readonly __mixins: Mixin[] = [CreativeWorkSeasonMixin, CreativeWorkMixin];
-}
 CreativeWorkSeasonMixin.appliesTo = schema.CreativeWorkSeason
-CreativeWorkSeasonMixin.Class = CreativeWorkSeasonImpl
-
-export const fromPointer = createFactory<CreativeWorkSeason>([CreativeWorkMixin, CreativeWorkSeasonMixin], { types: [schema.CreativeWorkSeason] });
+CreativeWorkSeasonMixin.createFactory = (env: RdfineEnvironment) => createFactory<CreativeWorkSeason>([CreativeWorkMixin, CreativeWorkSeasonMixin], { types: [schema.CreativeWorkSeason] }, env)

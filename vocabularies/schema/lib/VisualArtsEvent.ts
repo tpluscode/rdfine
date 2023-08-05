@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { EventMixin } from './Event.js';
 
 export interface VisualArtsEvent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    VisualArtsEvent: Factory<Schema.VisualArtsEvent>;
+  }
 }
 
 export function VisualArtsEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VisualArtsEvent & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function VisualArtsEventMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return VisualArtsEventClass as any
 }
-
-class VisualArtsEventImpl extends VisualArtsEventMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<VisualArtsEvent>) {
-    super(arg, init)
-    this.types.add(schema.VisualArtsEvent)
-  }
-
-  static readonly __mixins: Mixin[] = [VisualArtsEventMixin, EventMixin];
-}
 VisualArtsEventMixin.appliesTo = schema.VisualArtsEvent
-VisualArtsEventMixin.Class = VisualArtsEventImpl
-
-export const fromPointer = createFactory<VisualArtsEvent>([EventMixin, VisualArtsEventMixin], { types: [schema.VisualArtsEvent] });
+VisualArtsEventMixin.createFactory = (env: RdfineEnvironment) => createFactory<VisualArtsEvent>([EventMixin, VisualArtsEventMixin], { types: [schema.VisualArtsEvent] }, env)

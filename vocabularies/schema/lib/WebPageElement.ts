@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
 export interface WebPageElement<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   cssSelector: string | undefined;
   xpath: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    WebPageElement: Factory<Schema.WebPageElement>;
+  }
 }
 
 export function WebPageElementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WebPageElement & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function WebPageElementMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return WebPageElementClass as any
 }
-
-class WebPageElementImpl extends WebPageElementMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<WebPageElement>) {
-    super(arg, init)
-    this.types.add(schema.WebPageElement)
-  }
-
-  static readonly __mixins: Mixin[] = [WebPageElementMixin, CreativeWorkMixin];
-}
 WebPageElementMixin.appliesTo = schema.WebPageElement
-WebPageElementMixin.Class = WebPageElementImpl
-
-export const fromPointer = createFactory<WebPageElement>([CreativeWorkMixin, WebPageElementMixin], { types: [schema.WebPageElement] });
+WebPageElementMixin.createFactory = (env: RdfineEnvironment) => createFactory<WebPageElement>([CreativeWorkMixin, WebPageElementMixin], { types: [schema.WebPageElement] }, env)

@@ -1,12 +1,12 @@
 import '../extensions/rdfs/Resource.js';
 import { ResourceMixinEx } from '../extensions/rdfs/Resource.js';
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { owl } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '../index.js';
 import type * as Rdf from '@rdfine/rdf';
 import type * as Rdfs from '@rdfine/rdfs';
@@ -18,6 +18,12 @@ export interface NegativePropertyAssertion<D extends RDF.DatasetCore = RDF.Datas
   sourceIndividual: RDF.NamedNode | undefined;
   targetIndividual: RDF.NamedNode | undefined;
   targetValue: string | undefined;
+}
+
+declare global {
+  interface OwlVocabulary {
+    NegativePropertyAssertion: Factory<Owl.NegativePropertyAssertion>;
+  }
 }
 
 export function NegativePropertyAssertionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NegativePropertyAssertion & RdfResourceCore> & Base {
@@ -34,16 +40,5 @@ export function NegativePropertyAssertionMixin<Base extends rdfine.Constructor>(
   }
   return NegativePropertyAssertionClass as any
 }
-
-class NegativePropertyAssertionImpl extends NegativePropertyAssertionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<NegativePropertyAssertion>) {
-    super(arg, init)
-    this.types.add(owl.NegativePropertyAssertion)
-  }
-
-  static readonly __mixins: Mixin[] = [NegativePropertyAssertionMixin, RdfsResourceMixin];
-}
 NegativePropertyAssertionMixin.appliesTo = owl.NegativePropertyAssertion
-NegativePropertyAssertionMixin.Class = NegativePropertyAssertionImpl
-
-export const fromPointer = createFactory<NegativePropertyAssertion>([RdfsResourceMixin, NegativePropertyAssertionMixin], { types: [owl.NegativePropertyAssertion] });
+NegativePropertyAssertionMixin.createFactory = (env: RdfineEnvironment) => createFactory<NegativePropertyAssertion>([RdfsResourceMixin, NegativePropertyAssertionMixin], { types: [owl.NegativePropertyAssertion] }, env)

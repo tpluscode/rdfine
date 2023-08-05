@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ReservationMixin } from './Reservation.js';
 
@@ -13,6 +13,12 @@ export interface FoodEstablishmentReservation<D extends RDF.DatasetCore = RDF.Da
   partySize: Schema.QuantitativeValue<D> | undefined;
   partySizeLiteral: number | undefined;
   startTime: Date | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    FoodEstablishmentReservation: Factory<Schema.FoodEstablishmentReservation>;
+  }
 }
 
 export function FoodEstablishmentReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FoodEstablishmentReservation & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function FoodEstablishmentReservationMixin<Base extends rdfine.Constructo
   }
   return FoodEstablishmentReservationClass as any
 }
-
-class FoodEstablishmentReservationImpl extends FoodEstablishmentReservationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<FoodEstablishmentReservation>) {
-    super(arg, init)
-    this.types.add(schema.FoodEstablishmentReservation)
-  }
-
-  static readonly __mixins: Mixin[] = [FoodEstablishmentReservationMixin, ReservationMixin];
-}
 FoodEstablishmentReservationMixin.appliesTo = schema.FoodEstablishmentReservation
-FoodEstablishmentReservationMixin.Class = FoodEstablishmentReservationImpl
-
-export const fromPointer = createFactory<FoodEstablishmentReservation>([ReservationMixin, FoodEstablishmentReservationMixin], { types: [schema.FoodEstablishmentReservation] });
+FoodEstablishmentReservationMixin.createFactory = (env: RdfineEnvironment) => createFactory<FoodEstablishmentReservation>([ReservationMixin, FoodEstablishmentReservationMixin], { types: [schema.FoodEstablishmentReservation] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { PriceSpecificationMixin } from './PriceSpecification.js';
 
@@ -12,6 +12,12 @@ export interface CompoundPriceSpecification<D extends RDF.DatasetCore = RDF.Data
   priceComponent: Schema.UnitPriceSpecification<D> | undefined;
   priceType: string | undefined;
   priceTypeTerm: Schema.PriceTypeEnumeration | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CompoundPriceSpecification: Factory<Schema.CompoundPriceSpecification>;
+  }
 }
 
 export function CompoundPriceSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CompoundPriceSpecification & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function CompoundPriceSpecificationMixin<Base extends rdfine.Constructor>
   }
   return CompoundPriceSpecificationClass as any
 }
-
-class CompoundPriceSpecificationImpl extends CompoundPriceSpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CompoundPriceSpecification>) {
-    super(arg, init)
-    this.types.add(schema.CompoundPriceSpecification)
-  }
-
-  static readonly __mixins: Mixin[] = [CompoundPriceSpecificationMixin, PriceSpecificationMixin];
-}
 CompoundPriceSpecificationMixin.appliesTo = schema.CompoundPriceSpecification
-CompoundPriceSpecificationMixin.Class = CompoundPriceSpecificationImpl
-
-export const fromPointer = createFactory<CompoundPriceSpecification>([PriceSpecificationMixin, CompoundPriceSpecificationMixin], { types: [schema.CompoundPriceSpecification] });
+CompoundPriceSpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<CompoundPriceSpecification>([PriceSpecificationMixin, CompoundPriceSpecificationMixin], { types: [schema.CompoundPriceSpecification] }, env)

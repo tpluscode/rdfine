@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
 export interface PlaceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, rdfine.RdfResource<D> {
   placeRelationHasSource: Rico.Place<D> | undefined;
   placeRelationHasTarget: Rico.Thing<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    PlaceRelation: Factory<Rico.PlaceRelation>;
+  }
 }
 
 export function PlaceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PlaceRelation & RdfResourceCore> & Base {
@@ -23,16 +29,5 @@ export function PlaceRelationMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return PlaceRelationClass as any
 }
-
-class PlaceRelationImpl extends PlaceRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PlaceRelation>) {
-    super(arg, init)
-    this.types.add(rico.PlaceRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [PlaceRelationMixin, RelationMixin];
-}
 PlaceRelationMixin.appliesTo = rico.PlaceRelation
-PlaceRelationMixin.Class = PlaceRelationImpl
-
-export const fromPointer = createFactory<PlaceRelation>([RelationMixin, PlaceRelationMixin], { types: [rico.PlaceRelation] });
+PlaceRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<PlaceRelation>([RelationMixin, PlaceRelationMixin], { types: [rico.PlaceRelation] }, env)

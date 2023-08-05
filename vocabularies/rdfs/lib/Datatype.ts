@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rdfs } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rdfs from '../index.js';
 import { ClassMixin } from './Class.js';
 
 export interface Datatype<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface RdfsVocabulary {
+    Datatype: Factory<Rdfs.Datatype>;
+  }
 }
 
 export function DatatypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Datatype & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function DatatypeMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return DatatypeClass as any
 }
-
-class DatatypeImpl extends DatatypeMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Datatype>) {
-    super(arg, init)
-    this.types.add(rdfs.Datatype)
-  }
-
-  static readonly __mixins: Mixin[] = [DatatypeMixin, ClassMixin];
-}
 DatatypeMixin.appliesTo = rdfs.Datatype
-DatatypeMixin.Class = DatatypeImpl
-
-export const fromPointer = createFactory<Datatype>([ClassMixin, DatatypeMixin], { types: [rdfs.Datatype] });
+DatatypeMixin.createFactory = (env: RdfineEnvironment) => createFactory<Datatype>([ClassMixin, DatatypeMixin], { types: [rdfs.Datatype] }, env)

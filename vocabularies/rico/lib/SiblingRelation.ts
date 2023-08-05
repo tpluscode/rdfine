@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { FamilyRelationMixin } from './FamilyRelation.js';
 
 export interface SiblingRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.FamilyRelation<D>, rdfine.RdfResource<D> {
   siblingRelationConnects: Rico.Person<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    SiblingRelation: Factory<Rico.SiblingRelation>;
+  }
 }
 
 export function SiblingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SiblingRelation & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function SiblingRelationMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return SiblingRelationClass as any
 }
-
-class SiblingRelationImpl extends SiblingRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SiblingRelation>) {
-    super(arg, init)
-    this.types.add(rico.SiblingRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [SiblingRelationMixin, FamilyRelationMixin];
-}
 SiblingRelationMixin.appliesTo = rico.SiblingRelation
-SiblingRelationMixin.Class = SiblingRelationImpl
-
-export const fromPointer = createFactory<SiblingRelation>([FamilyRelationMixin, SiblingRelationMixin], { types: [rico.SiblingRelation] });
+SiblingRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<SiblingRelation>([FamilyRelationMixin, SiblingRelationMixin], { types: [rico.SiblingRelation] }, env)

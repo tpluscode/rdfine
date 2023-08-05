@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MediaObjectMixin } from './MediaObject.js';
 
@@ -16,6 +16,12 @@ export interface ImageObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   exifDataLiteral: string | undefined;
   representativeOfPage: boolean | undefined;
   thumbnail: Schema.ImageObject<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ImageObject: Factory<Schema.ImageObject>;
+  }
 }
 
 export function ImageObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ImageObject & RdfResourceCore> & Base {
@@ -38,16 +44,5 @@ export function ImageObjectMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return ImageObjectClass as any
 }
-
-class ImageObjectImpl extends ImageObjectMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ImageObject>) {
-    super(arg, init)
-    this.types.add(schema.ImageObject)
-  }
-
-  static readonly __mixins: Mixin[] = [ImageObjectMixin, MediaObjectMixin];
-}
 ImageObjectMixin.appliesTo = schema.ImageObject
-ImageObjectMixin.Class = ImageObjectImpl
-
-export const fromPointer = createFactory<ImageObject>([MediaObjectMixin, ImageObjectMixin], { types: [schema.ImageObject] });
+ImageObjectMixin.createFactory = (env: RdfineEnvironment) => createFactory<ImageObject>([MediaObjectMixin, ImageObjectMixin], { types: [schema.ImageObject] }, env)

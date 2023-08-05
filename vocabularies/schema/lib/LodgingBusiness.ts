@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LocalBusinessMixin } from './LocalBusiness.js';
 
@@ -19,6 +19,12 @@ export interface LodgingBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   numberOfRoomsLiteral: number | undefined;
   petsAllowed: boolean | string | undefined;
   starRating: Schema.Rating<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    LodgingBusiness: Factory<Schema.LodgingBusiness>;
+  }
 }
 
 export function LodgingBusinessMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LodgingBusiness & RdfResourceCore> & Base {
@@ -47,16 +53,5 @@ export function LodgingBusinessMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return LodgingBusinessClass as any
 }
-
-class LodgingBusinessImpl extends LodgingBusinessMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<LodgingBusiness>) {
-    super(arg, init)
-    this.types.add(schema.LodgingBusiness)
-  }
-
-  static readonly __mixins: Mixin[] = [LodgingBusinessMixin, LocalBusinessMixin];
-}
 LodgingBusinessMixin.appliesTo = schema.LodgingBusiness
-LodgingBusinessMixin.Class = LodgingBusinessImpl
-
-export const fromPointer = createFactory<LodgingBusiness>([LocalBusinessMixin, LodgingBusinessMixin], { types: [schema.LodgingBusiness] });
+LodgingBusinessMixin.createFactory = (env: RdfineEnvironment) => createFactory<LodgingBusiness>([LocalBusinessMixin, LodgingBusinessMixin], { types: [schema.LodgingBusiness] }, env)

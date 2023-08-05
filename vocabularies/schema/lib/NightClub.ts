@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { EntertainmentBusinessMixin } from './EntertainmentBusiness.js';
 
 export interface NightClub<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.EntertainmentBusiness<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    NightClub: Factory<Schema.NightClub>;
+  }
 }
 
 export function NightClubMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NightClub & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function NightClubMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return NightClubClass as any
 }
-
-class NightClubImpl extends NightClubMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<NightClub>) {
-    super(arg, init)
-    this.types.add(schema.NightClub)
-  }
-
-  static readonly __mixins: Mixin[] = [NightClubMixin, EntertainmentBusinessMixin];
-}
 NightClubMixin.appliesTo = schema.NightClub
-NightClubMixin.Class = NightClubImpl
-
-export const fromPointer = createFactory<NightClub>([EntertainmentBusinessMixin, NightClubMixin], { types: [schema.NightClub] });
+NightClubMixin.createFactory = (env: RdfineEnvironment) => createFactory<NightClub>([EntertainmentBusinessMixin, NightClubMixin], { types: [schema.NightClub] }, env)

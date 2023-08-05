@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -12,6 +12,12 @@ export interface Grant<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   fundedItem: Schema.BioChemEntity<D> | Schema.CreativeWork<D> | Schema.Event<D> | Schema.MedicalEntity<D> | Schema.Organization<D> | Schema.Person<D> | Schema.Product<D> | undefined;
   funder: Schema.Organization<D> | Schema.Person<D> | undefined;
   sponsor: Schema.Organization<D> | Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Grant: Factory<Schema.Grant>;
+  }
 }
 
 export function GrantMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Grant & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function GrantMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return GrantClass as any
 }
-
-class GrantImpl extends GrantMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Grant>) {
-    super(arg, init)
-    this.types.add(schema.Grant)
-  }
-
-  static readonly __mixins: Mixin[] = [GrantMixin, IntangibleMixin];
-}
 GrantMixin.appliesTo = schema.Grant
-GrantMixin.Class = GrantImpl
-
-export const fromPointer = createFactory<Grant>([IntangibleMixin, GrantMixin], { types: [schema.Grant] });
+GrantMixin.createFactory = (env: RdfineEnvironment) => createFactory<Grant>([IntangibleMixin, GrantMixin], { types: [schema.Grant] }, env)

@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LocalBusinessMixin } from './LocalBusiness.js';
 
 export interface EntertainmentBusiness<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    EntertainmentBusiness: Factory<Schema.EntertainmentBusiness>;
+  }
 }
 
 export function EntertainmentBusinessMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EntertainmentBusiness & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function EntertainmentBusinessMixin<Base extends rdfine.Constructor>(Reso
   }
   return EntertainmentBusinessClass as any
 }
-
-class EntertainmentBusinessImpl extends EntertainmentBusinessMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<EntertainmentBusiness>) {
-    super(arg, init)
-    this.types.add(schema.EntertainmentBusiness)
-  }
-
-  static readonly __mixins: Mixin[] = [EntertainmentBusinessMixin, LocalBusinessMixin];
-}
 EntertainmentBusinessMixin.appliesTo = schema.EntertainmentBusiness
-EntertainmentBusinessMixin.Class = EntertainmentBusinessImpl
-
-export const fromPointer = createFactory<EntertainmentBusiness>([LocalBusinessMixin, EntertainmentBusinessMixin], { types: [schema.EntertainmentBusiness] });
+EntertainmentBusinessMixin.createFactory = (env: RdfineEnvironment) => createFactory<EntertainmentBusiness>([LocalBusinessMixin, EntertainmentBusinessMixin], { types: [schema.EntertainmentBusiness] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalOrganizationMixin } from './MedicalOrganization.js';
 
@@ -12,6 +12,12 @@ export interface Physician<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   availableService: Schema.MedicalProcedure<D> | Schema.MedicalTest<D> | Schema.MedicalTherapy<D> | undefined;
   hospitalAffiliation: Schema.Hospital<D> | undefined;
   medicalSpecialty: Schema.MedicalSpecialty | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Physician: Factory<Schema.Physician>;
+  }
 }
 
 export function PhysicianMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Physician & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function PhysicianMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return PhysicianClass as any
 }
-
-class PhysicianImpl extends PhysicianMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Physician>) {
-    super(arg, init)
-    this.types.add(schema.Physician)
-  }
-
-  static readonly __mixins: Mixin[] = [PhysicianMixin, MedicalOrganizationMixin];
-}
 PhysicianMixin.appliesTo = schema.Physician
-PhysicianMixin.Class = PhysicianImpl
-
-export const fromPointer = createFactory<Physician>([MedicalOrganizationMixin, PhysicianMixin], { types: [schema.Physician] });
+PhysicianMixin.createFactory = (env: RdfineEnvironment) => createFactory<Physician>([MedicalOrganizationMixin, PhysicianMixin], { types: [schema.Physician] }, env)

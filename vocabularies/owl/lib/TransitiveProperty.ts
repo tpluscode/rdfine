@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { owl } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '../index.js';
 import { ObjectPropertyMixin } from './ObjectProperty.js';
 
 export interface TransitiveProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface OwlVocabulary {
+    TransitiveProperty: Factory<Owl.TransitiveProperty>;
+  }
 }
 
 export function TransitivePropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TransitiveProperty & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function TransitivePropertyMixin<Base extends rdfine.Constructor>(Resourc
   }
   return TransitivePropertyClass as any
 }
-
-class TransitivePropertyImpl extends TransitivePropertyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<TransitiveProperty>) {
-    super(arg, init)
-    this.types.add(owl.TransitiveProperty)
-  }
-
-  static readonly __mixins: Mixin[] = [TransitivePropertyMixin, ObjectPropertyMixin];
-}
 TransitivePropertyMixin.appliesTo = owl.TransitiveProperty
-TransitivePropertyMixin.Class = TransitivePropertyImpl
-
-export const fromPointer = createFactory<TransitiveProperty>([ObjectPropertyMixin, TransitivePropertyMixin], { types: [owl.TransitiveProperty] });
+TransitivePropertyMixin.createFactory = (env: RdfineEnvironment) => createFactory<TransitiveProperty>([ObjectPropertyMixin, TransitivePropertyMixin], { types: [owl.TransitiveProperty] }, env)

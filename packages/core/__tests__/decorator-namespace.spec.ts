@@ -8,22 +8,10 @@ import builder, { NamespaceBuilder } from '@rdfjs/namespace'
 import { expect } from 'chai'
 import RdfResource from '../RdfResource.js'
 import { Constructor, namespace, property } from '../index.js'
+import environment from './_helpers/environment.js'
 
 describe('decorator', () => {
   describe('namespace', () => {
-    it('sets namespace property from string', () => {
-      // given
-      @namespace('http://foo/')
-      class WithNamespace extends RdfResource {
-      }
-
-      // when
-      const ns = WithNamespace.__ns!()
-
-      // then
-      expect(ns.value).to.eq('http://foo/')
-    })
-
     it('sets namespace property from builder', () => {
       // given
       @namespace(foaf)
@@ -66,7 +54,7 @@ describe('decorator', () => {
 
     describe('used on mixins', () => {
       function SchemaMixin<Base extends Constructor>(base: Base) {
-        @namespace(prefixes.schema)
+        @namespace(schema)
         class Schema extends base {
           @property.literal()
           public name!: string
@@ -76,7 +64,7 @@ describe('decorator', () => {
       }
 
       function RdfsMixin<Base extends Constructor>(base: Base) {
-        @namespace(prefixes.rdfs)
+        @namespace(rdfs)
         class Rdfs extends base {
           @property.literal()
           public label!: string
@@ -98,7 +86,7 @@ describe('decorator', () => {
           .addOut(rdfs('label'), 'rdfs label')
 
         // when
-        const resource = new TwoNamespaces(node as any)
+        const resource = new TwoNamespaces(node as any, environment)
 
         // then
         expect(resource.name).to.eq('schema name')

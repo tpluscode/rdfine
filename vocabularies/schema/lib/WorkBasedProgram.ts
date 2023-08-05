@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { EducationalOccupationalProgramMixin } from './EducationalOccupationalProgram.js';
 
@@ -12,6 +12,12 @@ export interface WorkBasedProgram<D extends RDF.DatasetCore = RDF.DatasetCore> e
   occupationalCategory: Schema.CategoryCode<D> | undefined;
   occupationalCategoryLiteral: string | undefined;
   trainingSalary: Schema.MonetaryAmountDistribution<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    WorkBasedProgram: Factory<Schema.WorkBasedProgram>;
+  }
 }
 
 export function WorkBasedProgramMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WorkBasedProgram & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function WorkBasedProgramMixin<Base extends rdfine.Constructor>(Resource:
   }
   return WorkBasedProgramClass as any
 }
-
-class WorkBasedProgramImpl extends WorkBasedProgramMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<WorkBasedProgram>) {
-    super(arg, init)
-    this.types.add(schema.WorkBasedProgram)
-  }
-
-  static readonly __mixins: Mixin[] = [WorkBasedProgramMixin, EducationalOccupationalProgramMixin];
-}
 WorkBasedProgramMixin.appliesTo = schema.WorkBasedProgram
-WorkBasedProgramMixin.Class = WorkBasedProgramImpl
-
-export const fromPointer = createFactory<WorkBasedProgram>([EducationalOccupationalProgramMixin, WorkBasedProgramMixin], { types: [schema.WorkBasedProgram] });
+WorkBasedProgramMixin.createFactory = (env: RdfineEnvironment) => createFactory<WorkBasedProgram>([EducationalOccupationalProgramMixin, WorkBasedProgramMixin], { types: [schema.WorkBasedProgram] }, env)

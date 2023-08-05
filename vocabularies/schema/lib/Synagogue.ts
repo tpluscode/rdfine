@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { PlaceOfWorshipMixin } from './PlaceOfWorship.js';
 
 export interface Synagogue<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.PlaceOfWorship<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Synagogue: Factory<Schema.Synagogue>;
+  }
 }
 
 export function SynagogueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Synagogue & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function SynagogueMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return SynagogueClass as any
 }
-
-class SynagogueImpl extends SynagogueMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Synagogue>) {
-    super(arg, init)
-    this.types.add(schema.Synagogue)
-  }
-
-  static readonly __mixins: Mixin[] = [SynagogueMixin, PlaceOfWorshipMixin];
-}
 SynagogueMixin.appliesTo = schema.Synagogue
-SynagogueMixin.Class = SynagogueImpl
-
-export const fromPointer = createFactory<Synagogue>([PlaceOfWorshipMixin, SynagogueMixin], { types: [schema.Synagogue] });
+SynagogueMixin.createFactory = (env: RdfineEnvironment) => createFactory<Synagogue>([PlaceOfWorshipMixin, SynagogueMixin], { types: [schema.Synagogue] }, env)

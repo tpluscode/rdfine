@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { EventMixin } from './Event.js';
 
@@ -13,6 +13,12 @@ export interface CourseInstance<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   courseModeTerm: RDF.NamedNode | undefined;
   courseWorkload: string | undefined;
   instructor: Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CourseInstance: Factory<Schema.CourseInstance>;
+  }
 }
 
 export function CourseInstanceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CourseInstance & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function CourseInstanceMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return CourseInstanceClass as any
 }
-
-class CourseInstanceImpl extends CourseInstanceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CourseInstance>) {
-    super(arg, init)
-    this.types.add(schema.CourseInstance)
-  }
-
-  static readonly __mixins: Mixin[] = [CourseInstanceMixin, EventMixin];
-}
 CourseInstanceMixin.appliesTo = schema.CourseInstance
-CourseInstanceMixin.Class = CourseInstanceImpl
-
-export const fromPointer = createFactory<CourseInstance>([EventMixin, CourseInstanceMixin], { types: [schema.CourseInstance] });
+CourseInstanceMixin.createFactory = (env: RdfineEnvironment) => createFactory<CourseInstance>([EventMixin, CourseInstanceMixin], { types: [schema.CourseInstance] }, env)

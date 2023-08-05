@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { hydra } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Hydra from '../index.js';
 
 export interface Status<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   description: string | undefined;
   statusCode: number | undefined;
   title: string | undefined;
+}
+
+declare global {
+  interface HydraVocabulary {
+    Status: Factory<Hydra.Status>;
+  }
 }
 
 export function StatusMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Status & RdfResourceCore> & Base {
@@ -25,16 +31,5 @@ export function StatusMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return StatusClass as any
 }
-
-class StatusImpl extends StatusMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Status>) {
-    super(arg, init)
-    this.types.add(hydra.Status)
-  }
-
-  static readonly __mixins: Mixin[] = [StatusMixin];
-}
 StatusMixin.appliesTo = hydra.Status
-StatusMixin.Class = StatusImpl
-
-export const fromPointer = createFactory<Status>([StatusMixin], { types: [hydra.Status] });
+StatusMixin.createFactory = (env: RdfineEnvironment) => createFactory<Status>([StatusMixin], { types: [hydra.Status] }, env)

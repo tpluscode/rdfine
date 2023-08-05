@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -14,6 +14,12 @@ export interface ComicStory<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   inker: Schema.Person<D> | undefined;
   letterer: Schema.Person<D> | undefined;
   penciler: Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ComicStory: Factory<Schema.ComicStory>;
+  }
 }
 
 export function ComicStoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ComicStory & RdfResourceCore> & Base {
@@ -32,16 +38,5 @@ export function ComicStoryMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return ComicStoryClass as any
 }
-
-class ComicStoryImpl extends ComicStoryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ComicStory>) {
-    super(arg, init)
-    this.types.add(schema.ComicStory)
-  }
-
-  static readonly __mixins: Mixin[] = [ComicStoryMixin, CreativeWorkMixin];
-}
 ComicStoryMixin.appliesTo = schema.ComicStory
-ComicStoryMixin.Class = ComicStoryImpl
-
-export const fromPointer = createFactory<ComicStory>([CreativeWorkMixin, ComicStoryMixin], { types: [schema.ComicStory] });
+ComicStoryMixin.createFactory = (env: RdfineEnvironment) => createFactory<ComicStory>([CreativeWorkMixin, ComicStoryMixin], { types: [schema.ComicStory] }, env)

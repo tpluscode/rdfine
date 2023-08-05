@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { doap } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Doap from '../index.js';
 
 export interface Repository<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
@@ -12,6 +12,12 @@ export interface Repository<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   browse: RDF.Term | undefined;
   location: RDF.Term | undefined;
   repositoryOf: Doap.Project<D> | undefined;
+}
+
+declare global {
+  interface DoapVocabulary {
+    Repository: Factory<Doap.Repository>;
+  }
 }
 
 export function RepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Repository & RdfResourceCore> & Base {
@@ -28,16 +34,5 @@ export function RepositoryMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return RepositoryClass as any
 }
-
-class RepositoryImpl extends RepositoryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Repository>) {
-    super(arg, init)
-    this.types.add(doap.Repository)
-  }
-
-  static readonly __mixins: Mixin[] = [RepositoryMixin];
-}
 RepositoryMixin.appliesTo = doap.Repository
-RepositoryMixin.Class = RepositoryImpl
-
-export const fromPointer = createFactory<Repository>([RepositoryMixin], { types: [doap.Repository] });
+RepositoryMixin.createFactory = (env: RdfineEnvironment) => createFactory<Repository>([RepositoryMixin], { types: [doap.Repository] }, env)

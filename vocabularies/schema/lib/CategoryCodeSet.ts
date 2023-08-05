@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { DefinedTermSetMixin } from './DefinedTermSet.js';
 
 export interface CategoryCodeSet<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DefinedTermSet<D>, rdfine.RdfResource<D> {
   hasCategoryCode: Schema.CategoryCode<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CategoryCodeSet: Factory<Schema.CategoryCodeSet>;
+  }
 }
 
 export function CategoryCodeSetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CategoryCodeSet & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function CategoryCodeSetMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return CategoryCodeSetClass as any
 }
-
-class CategoryCodeSetImpl extends CategoryCodeSetMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CategoryCodeSet>) {
-    super(arg, init)
-    this.types.add(schema.CategoryCodeSet)
-  }
-
-  static readonly __mixins: Mixin[] = [CategoryCodeSetMixin, DefinedTermSetMixin];
-}
 CategoryCodeSetMixin.appliesTo = schema.CategoryCodeSet
-CategoryCodeSetMixin.Class = CategoryCodeSetImpl
-
-export const fromPointer = createFactory<CategoryCodeSet>([DefinedTermSetMixin, CategoryCodeSetMixin], { types: [schema.CategoryCodeSet] });
+CategoryCodeSetMixin.createFactory = (env: RdfineEnvironment) => createFactory<CategoryCodeSet>([DefinedTermSetMixin, CategoryCodeSetMixin], { types: [schema.CategoryCodeSet] }, env)

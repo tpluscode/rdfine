@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { TransferActionMixin } from './TransferAction.js';
 
 export interface GiveAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TransferAction<D>, rdfine.RdfResource<D> {
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    GiveAction: Factory<Schema.GiveAction>;
+  }
 }
 
 export function GiveActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GiveAction & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function GiveActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return GiveActionClass as any
 }
-
-class GiveActionImpl extends GiveActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<GiveAction>) {
-    super(arg, init)
-    this.types.add(schema.GiveAction)
-  }
-
-  static readonly __mixins: Mixin[] = [GiveActionMixin, TransferActionMixin];
-}
 GiveActionMixin.appliesTo = schema.GiveAction
-GiveActionMixin.Class = GiveActionImpl
-
-export const fromPointer = createFactory<GiveAction>([TransferActionMixin, GiveActionMixin], { types: [schema.GiveAction] });
+GiveActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<GiveAction>([TransferActionMixin, GiveActionMixin], { types: [schema.GiveAction] }, env)

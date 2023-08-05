@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { ThingMixin } from './Thing.js';
 
@@ -15,6 +15,12 @@ export interface Coordinates<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   isOrWasCoordinatesOf: Rico.PhysicalLocation<D> | undefined;
   latitude: RDF.Literal | undefined;
   longitude: RDF.Literal | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    Coordinates: Factory<Rico.Coordinates>;
+  }
 }
 
 export function CoordinatesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Coordinates & RdfResourceCore> & Base {
@@ -35,16 +41,5 @@ export function CoordinatesMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return CoordinatesClass as any
 }
-
-class CoordinatesImpl extends CoordinatesMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Coordinates>) {
-    super(arg, init)
-    this.types.add(rico.Coordinates)
-  }
-
-  static readonly __mixins: Mixin[] = [CoordinatesMixin, ThingMixin];
-}
 CoordinatesMixin.appliesTo = rico.Coordinates
-CoordinatesMixin.Class = CoordinatesImpl
-
-export const fromPointer = createFactory<Coordinates>([ThingMixin, CoordinatesMixin], { types: [rico.Coordinates] });
+CoordinatesMixin.createFactory = (env: RdfineEnvironment) => createFactory<Coordinates>([ThingMixin, CoordinatesMixin], { types: [rico.Coordinates] }, env)

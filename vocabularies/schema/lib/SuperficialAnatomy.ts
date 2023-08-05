@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalEntityMixin } from './MedicalEntity.js';
 
@@ -14,6 +14,12 @@ export interface SuperficialAnatomy<D extends RDF.DatasetCore = RDF.DatasetCore>
   relatedCondition: Schema.MedicalCondition<D> | undefined;
   relatedTherapy: Schema.MedicalTherapy<D> | undefined;
   significance: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    SuperficialAnatomy: Factory<Schema.SuperficialAnatomy>;
+  }
 }
 
 export function SuperficialAnatomyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SuperficialAnatomy & RdfResourceCore> & Base {
@@ -32,16 +38,5 @@ export function SuperficialAnatomyMixin<Base extends rdfine.Constructor>(Resourc
   }
   return SuperficialAnatomyClass as any
 }
-
-class SuperficialAnatomyImpl extends SuperficialAnatomyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SuperficialAnatomy>) {
-    super(arg, init)
-    this.types.add(schema.SuperficialAnatomy)
-  }
-
-  static readonly __mixins: Mixin[] = [SuperficialAnatomyMixin, MedicalEntityMixin];
-}
 SuperficialAnatomyMixin.appliesTo = schema.SuperficialAnatomy
-SuperficialAnatomyMixin.Class = SuperficialAnatomyImpl
-
-export const fromPointer = createFactory<SuperficialAnatomy>([MedicalEntityMixin, SuperficialAnatomyMixin], { types: [schema.SuperficialAnatomy] });
+SuperficialAnatomyMixin.createFactory = (env: RdfineEnvironment) => createFactory<SuperficialAnatomy>([MedicalEntityMixin, SuperficialAnatomyMixin], { types: [schema.SuperficialAnatomy] }, env)

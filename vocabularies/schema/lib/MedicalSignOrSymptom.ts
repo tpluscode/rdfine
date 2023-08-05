@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MedicalConditionMixin } from './MedicalCondition.js';
 
 export interface MedicalSignOrSymptom<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalCondition<D>, rdfine.RdfResource<D> {
   possibleTreatment: Schema.MedicalTherapy<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MedicalSignOrSymptom: Factory<Schema.MedicalSignOrSymptom>;
+  }
 }
 
 export function MedicalSignOrSymptomMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalSignOrSymptom & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function MedicalSignOrSymptomMixin<Base extends rdfine.Constructor>(Resou
   }
   return MedicalSignOrSymptomClass as any
 }
-
-class MedicalSignOrSymptomImpl extends MedicalSignOrSymptomMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MedicalSignOrSymptom>) {
-    super(arg, init)
-    this.types.add(schema.MedicalSignOrSymptom)
-  }
-
-  static readonly __mixins: Mixin[] = [MedicalSignOrSymptomMixin, MedicalConditionMixin];
-}
 MedicalSignOrSymptomMixin.appliesTo = schema.MedicalSignOrSymptom
-MedicalSignOrSymptomMixin.Class = MedicalSignOrSymptomImpl
-
-export const fromPointer = createFactory<MedicalSignOrSymptom>([MedicalConditionMixin, MedicalSignOrSymptomMixin], { types: [schema.MedicalSignOrSymptom] });
+MedicalSignOrSymptomMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalSignOrSymptom>([MedicalConditionMixin, MedicalSignOrSymptomMixin], { types: [schema.MedicalSignOrSymptom] }, env)

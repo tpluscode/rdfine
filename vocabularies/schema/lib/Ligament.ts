@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { AnatomicalStructureMixin } from './AnatomicalStructure.js';
 
 export interface Ligament<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AnatomicalStructure<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Ligament: Factory<Schema.Ligament>;
+  }
 }
 
 export function LigamentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Ligament & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function LigamentMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return LigamentClass as any
 }
-
-class LigamentImpl extends LigamentMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Ligament>) {
-    super(arg, init)
-    this.types.add(schema.Ligament)
-  }
-
-  static readonly __mixins: Mixin[] = [LigamentMixin, AnatomicalStructureMixin];
-}
 LigamentMixin.appliesTo = schema.Ligament
-LigamentMixin.Class = LigamentImpl
-
-export const fromPointer = createFactory<Ligament>([AnatomicalStructureMixin, LigamentMixin], { types: [schema.Ligament] });
+LigamentMixin.createFactory = (env: RdfineEnvironment) => createFactory<Ligament>([AnatomicalStructureMixin, LigamentMixin], { types: [schema.Ligament] }, env)

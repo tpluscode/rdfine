@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { RecordResourceMixin } from './RecordResource.js';
 
@@ -26,6 +26,12 @@ export interface RecordSet<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   hasRecordSetType: Rico.RecordSetType<D> | undefined;
   includesOrIncluded: Rico.Record<D> | Rico.RecordSet<D> | undefined;
   isOrWasIncludedIn: Rico.RecordSet<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    RecordSet: Factory<Rico.RecordSet>;
+  }
 }
 
 export function RecordSetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordSet & RdfResourceCore> & Base {
@@ -68,16 +74,5 @@ export function RecordSetMixin<Base extends rdfine.Constructor>(Resource: Base):
   }
   return RecordSetClass as any
 }
-
-class RecordSetImpl extends RecordSetMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RecordSet>) {
-    super(arg, init)
-    this.types.add(rico.RecordSet)
-  }
-
-  static readonly __mixins: Mixin[] = [RecordSetMixin, RecordResourceMixin];
-}
 RecordSetMixin.appliesTo = rico.RecordSet
-RecordSetMixin.Class = RecordSetImpl
-
-export const fromPointer = createFactory<RecordSet>([RecordResourceMixin, RecordSetMixin], { types: [rico.RecordSet] });
+RecordSetMixin.createFactory = (env: RdfineEnvironment) => createFactory<RecordSet>([RecordResourceMixin, RecordSetMixin], { types: [rico.RecordSet] }, env)

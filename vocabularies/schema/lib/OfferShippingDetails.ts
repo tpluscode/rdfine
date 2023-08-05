@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -21,6 +21,12 @@ export interface OfferShippingDetails<D extends RDF.DatasetCore = RDF.DatasetCor
   transitTimeLabel: string | undefined;
   weight: Schema.QuantitativeValue<D> | undefined;
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    OfferShippingDetails: Factory<Schema.OfferShippingDetails>;
+  }
 }
 
 export function OfferShippingDetailsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OfferShippingDetails & RdfResourceCore> & Base {
@@ -53,16 +59,5 @@ export function OfferShippingDetailsMixin<Base extends rdfine.Constructor>(Resou
   }
   return OfferShippingDetailsClass as any
 }
-
-class OfferShippingDetailsImpl extends OfferShippingDetailsMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<OfferShippingDetails>) {
-    super(arg, init)
-    this.types.add(schema.OfferShippingDetails)
-  }
-
-  static readonly __mixins: Mixin[] = [OfferShippingDetailsMixin, StructuredValueMixin];
-}
 OfferShippingDetailsMixin.appliesTo = schema.OfferShippingDetails
-OfferShippingDetailsMixin.Class = OfferShippingDetailsImpl
-
-export const fromPointer = createFactory<OfferShippingDetails>([StructuredValueMixin, OfferShippingDetailsMixin], { types: [schema.OfferShippingDetails] });
+OfferShippingDetailsMixin.createFactory = (env: RdfineEnvironment) => createFactory<OfferShippingDetails>([StructuredValueMixin, OfferShippingDetailsMixin], { types: [schema.OfferShippingDetails] }, env)

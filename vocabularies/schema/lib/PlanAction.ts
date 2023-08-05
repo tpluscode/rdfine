@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { OrganizeActionMixin } from './OrganizeAction.js';
 
 export interface PlanAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.OrganizeAction<D>, rdfine.RdfResource<D> {
   scheduledTime: Date | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    PlanAction: Factory<Schema.PlanAction>;
+  }
 }
 
 export function PlanActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PlanAction & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function PlanActionMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return PlanActionClass as any
 }
-
-class PlanActionImpl extends PlanActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PlanAction>) {
-    super(arg, init)
-    this.types.add(schema.PlanAction)
-  }
-
-  static readonly __mixins: Mixin[] = [PlanActionMixin, OrganizeActionMixin];
-}
 PlanActionMixin.appliesTo = schema.PlanAction
-PlanActionMixin.Class = PlanActionImpl
-
-export const fromPointer = createFactory<PlanAction>([OrganizeActionMixin, PlanActionMixin], { types: [schema.PlanAction] });
+PlanActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<PlanAction>([OrganizeActionMixin, PlanActionMixin], { types: [schema.PlanAction] }, env)

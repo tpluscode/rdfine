@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { LandformMixin } from './Landform.js';
 
 export interface BodyOfWater<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Landform<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BodyOfWater: Factory<Schema.BodyOfWater>;
+  }
 }
 
 export function BodyOfWaterMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BodyOfWater & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function BodyOfWaterMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return BodyOfWaterClass as any
 }
-
-class BodyOfWaterImpl extends BodyOfWaterMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<BodyOfWater>) {
-    super(arg, init)
-    this.types.add(schema.BodyOfWater)
-  }
-
-  static readonly __mixins: Mixin[] = [BodyOfWaterMixin, LandformMixin];
-}
 BodyOfWaterMixin.appliesTo = schema.BodyOfWater
-BodyOfWaterMixin.Class = BodyOfWaterImpl
-
-export const fromPointer = createFactory<BodyOfWater>([LandformMixin, BodyOfWaterMixin], { types: [schema.BodyOfWater] });
+BodyOfWaterMixin.createFactory = (env: RdfineEnvironment) => createFactory<BodyOfWater>([LandformMixin, BodyOfWaterMixin], { types: [schema.BodyOfWater] }, env)

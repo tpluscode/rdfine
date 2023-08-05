@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { OrganizationMixin } from './Organization.js';
 
 export interface ResearchOrganization<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ResearchOrganization: Factory<Schema.ResearchOrganization>;
+  }
 }
 
 export function ResearchOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ResearchOrganization & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function ResearchOrganizationMixin<Base extends rdfine.Constructor>(Resou
   }
   return ResearchOrganizationClass as any
 }
-
-class ResearchOrganizationImpl extends ResearchOrganizationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ResearchOrganization>) {
-    super(arg, init)
-    this.types.add(schema.ResearchOrganization)
-  }
-
-  static readonly __mixins: Mixin[] = [ResearchOrganizationMixin, OrganizationMixin];
-}
 ResearchOrganizationMixin.appliesTo = schema.ResearchOrganization
-ResearchOrganizationMixin.Class = ResearchOrganizationImpl
-
-export const fromPointer = createFactory<ResearchOrganization>([OrganizationMixin, ResearchOrganizationMixin], { types: [schema.ResearchOrganization] });
+ResearchOrganizationMixin.createFactory = (env: RdfineEnvironment) => createFactory<ResearchOrganization>([OrganizationMixin, ResearchOrganizationMixin], { types: [schema.ResearchOrganization] }, env)

@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { OrganizationMixin } from './Organization.js';
 
 export interface Consortium<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Organization<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Consortium: Factory<Schema.Consortium>;
+  }
 }
 
 export function ConsortiumMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Consortium & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function ConsortiumMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return ConsortiumClass as any
 }
-
-class ConsortiumImpl extends ConsortiumMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Consortium>) {
-    super(arg, init)
-    this.types.add(schema.Consortium)
-  }
-
-  static readonly __mixins: Mixin[] = [ConsortiumMixin, OrganizationMixin];
-}
 ConsortiumMixin.appliesTo = schema.Consortium
-ConsortiumMixin.Class = ConsortiumImpl
-
-export const fromPointer = createFactory<Consortium>([OrganizationMixin, ConsortiumMixin], { types: [schema.Consortium] });
+ConsortiumMixin.createFactory = (env: RdfineEnvironment) => createFactory<Consortium>([OrganizationMixin, ConsortiumMixin], { types: [schema.Consortium] }, env)

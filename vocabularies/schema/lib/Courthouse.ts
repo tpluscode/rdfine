@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { GovernmentBuildingMixin } from './GovernmentBuilding.js';
 
 export interface Courthouse<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentBuilding<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Courthouse: Factory<Schema.Courthouse>;
+  }
 }
 
 export function CourthouseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Courthouse & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function CourthouseMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return CourthouseClass as any
 }
-
-class CourthouseImpl extends CourthouseMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Courthouse>) {
-    super(arg, init)
-    this.types.add(schema.Courthouse)
-  }
-
-  static readonly __mixins: Mixin[] = [CourthouseMixin, GovernmentBuildingMixin];
-}
 CourthouseMixin.appliesTo = schema.Courthouse
-CourthouseMixin.Class = CourthouseImpl
-
-export const fromPointer = createFactory<Courthouse>([GovernmentBuildingMixin, CourthouseMixin], { types: [schema.Courthouse] });
+CourthouseMixin.createFactory = (env: RdfineEnvironment) => createFactory<Courthouse>([GovernmentBuildingMixin, CourthouseMixin], { types: [schema.Courthouse] }, env)

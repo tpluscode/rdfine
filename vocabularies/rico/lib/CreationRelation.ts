@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { AgentOriginationRelationMixin } from './AgentOriginationRelation.js';
 
@@ -12,6 +12,12 @@ export interface CreationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> e
   creationRelationHasSource: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
   creationRelationHasTarget: Rico.Agent<D> | undefined;
   creationWithRole: Rico.RoleType<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    CreationRelation: Factory<Rico.CreationRelation>;
+  }
 }
 
 export function CreationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CreationRelation & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function CreationRelationMixin<Base extends rdfine.Constructor>(Resource:
   }
   return CreationRelationClass as any
 }
-
-class CreationRelationImpl extends CreationRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CreationRelation>) {
-    super(arg, init)
-    this.types.add(rico.CreationRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [CreationRelationMixin, AgentOriginationRelationMixin];
-}
 CreationRelationMixin.appliesTo = rico.CreationRelation
-CreationRelationMixin.Class = CreationRelationImpl
-
-export const fromPointer = createFactory<CreationRelation>([AgentOriginationRelationMixin, CreationRelationMixin], { types: [rico.CreationRelation] });
+CreationRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<CreationRelation>([AgentOriginationRelationMixin, CreationRelationMixin], { types: [rico.CreationRelation] }, env)

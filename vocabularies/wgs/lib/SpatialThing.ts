@@ -1,16 +1,22 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { wgs } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Wgs from '../index.js';
 
 export interface SpatialThing<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   alt: number | undefined;
   lat: number | undefined;
   long: number | undefined;
+}
+
+declare global {
+  interface WgsVocabulary {
+    SpatialThing: Factory<Wgs.SpatialThing>;
+  }
 }
 
 export function SpatialThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SpatialThing & RdfResourceCore> & Base {
@@ -25,16 +31,5 @@ export function SpatialThingMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return SpatialThingClass as any
 }
-
-class SpatialThingImpl extends SpatialThingMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SpatialThing>) {
-    super(arg, init)
-    this.types.add(wgs.SpatialThing)
-  }
-
-  static readonly __mixins: Mixin[] = [SpatialThingMixin];
-}
 SpatialThingMixin.appliesTo = wgs.SpatialThing
-SpatialThingMixin.Class = SpatialThingImpl
-
-export const fromPointer = createFactory<SpatialThing>([SpatialThingMixin], { types: [wgs.SpatialThing] });
+SpatialThingMixin.createFactory = (env: RdfineEnvironment) => createFactory<SpatialThing>([SpatialThingMixin], { types: [wgs.SpatialThing] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -21,6 +21,12 @@ export interface ParcelDelivery<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   provider: Schema.Organization<D> | Schema.Person<D> | undefined;
   trackingNumber: string | undefined;
   trackingUrl: RDF.NamedNode | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    ParcelDelivery: Factory<Schema.ParcelDelivery>;
+  }
 }
 
 export function ParcelDeliveryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ParcelDelivery & RdfResourceCore> & Base {
@@ -53,16 +59,5 @@ export function ParcelDeliveryMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return ParcelDeliveryClass as any
 }
-
-class ParcelDeliveryImpl extends ParcelDeliveryMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ParcelDelivery>) {
-    super(arg, init)
-    this.types.add(schema.ParcelDelivery)
-  }
-
-  static readonly __mixins: Mixin[] = [ParcelDeliveryMixin, IntangibleMixin];
-}
 ParcelDeliveryMixin.appliesTo = schema.ParcelDelivery
-ParcelDeliveryMixin.Class = ParcelDeliveryImpl
-
-export const fromPointer = createFactory<ParcelDelivery>([IntangibleMixin, ParcelDeliveryMixin], { types: [schema.ParcelDelivery] });
+ParcelDeliveryMixin.createFactory = (env: RdfineEnvironment) => createFactory<ParcelDelivery>([IntangibleMixin, ParcelDeliveryMixin], { types: [schema.ParcelDelivery] }, env)

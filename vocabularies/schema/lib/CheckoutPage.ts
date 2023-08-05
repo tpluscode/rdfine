@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { WebPageMixin } from './WebPage.js';
 
 export interface CheckoutPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    CheckoutPage: Factory<Schema.CheckoutPage>;
+  }
 }
 
 export function CheckoutPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CheckoutPage & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function CheckoutPageMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return CheckoutPageClass as any
 }
-
-class CheckoutPageImpl extends CheckoutPageMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CheckoutPage>) {
-    super(arg, init)
-    this.types.add(schema.CheckoutPage)
-  }
-
-  static readonly __mixins: Mixin[] = [CheckoutPageMixin, WebPageMixin];
-}
 CheckoutPageMixin.appliesTo = schema.CheckoutPage
-CheckoutPageMixin.Class = CheckoutPageImpl
-
-export const fromPointer = createFactory<CheckoutPage>([WebPageMixin, CheckoutPageMixin], { types: [schema.CheckoutPage] });
+CheckoutPageMixin.createFactory = (env: RdfineEnvironment) => createFactory<CheckoutPage>([WebPageMixin, CheckoutPageMixin], { types: [schema.CheckoutPage] }, env)

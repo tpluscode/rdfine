@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rdf } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rdf from '../index.js';
 
 export interface CompoundLiteral<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   direction: RDF.Term | undefined;
   language: RDF.Term | undefined;
+}
+
+declare global {
+  interface RdfVocabulary {
+    CompoundLiteral: Factory<Rdf.CompoundLiteral>;
+  }
 }
 
 export function CompoundLiteralMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CompoundLiteral & RdfResourceCore> & Base {
@@ -22,16 +28,5 @@ export function CompoundLiteralMixin<Base extends rdfine.Constructor>(Resource: 
   }
   return CompoundLiteralClass as any
 }
-
-class CompoundLiteralImpl extends CompoundLiteralMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CompoundLiteral>) {
-    super(arg, init)
-    this.types.add(rdf.CompoundLiteral)
-  }
-
-  static readonly __mixins: Mixin[] = [CompoundLiteralMixin];
-}
 CompoundLiteralMixin.appliesTo = rdf.CompoundLiteral
-CompoundLiteralMixin.Class = CompoundLiteralImpl
-
-export const fromPointer = createFactory<CompoundLiteral>([CompoundLiteralMixin], { types: [rdf.CompoundLiteral] });
+CompoundLiteralMixin.createFactory = (env: RdfineEnvironment) => createFactory<CompoundLiteral>([CompoundLiteralMixin], { types: [rdf.CompoundLiteral] }, env)

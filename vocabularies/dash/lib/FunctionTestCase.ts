@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { dash } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Dash from '../index.js';
 import { TestCaseMixin } from './TestCase.js';
 
 export interface FunctionTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.TestCase<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface DashVocabulary {
+    FunctionTestCase: Factory<Dash.FunctionTestCase>;
+  }
 }
 
 export function FunctionTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FunctionTestCase & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function FunctionTestCaseMixin<Base extends rdfine.Constructor>(Resource:
   }
   return FunctionTestCaseClass as any
 }
-
-class FunctionTestCaseImpl extends FunctionTestCaseMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<FunctionTestCase>) {
-    super(arg, init)
-    this.types.add(dash.FunctionTestCase)
-  }
-
-  static readonly __mixins: Mixin[] = [FunctionTestCaseMixin, TestCaseMixin];
-}
 FunctionTestCaseMixin.appliesTo = dash.FunctionTestCase
-FunctionTestCaseMixin.Class = FunctionTestCaseImpl
-
-export const fromPointer = createFactory<FunctionTestCase>([TestCaseMixin, FunctionTestCaseMixin], { types: [dash.FunctionTestCase] });
+FunctionTestCaseMixin.createFactory = (env: RdfineEnvironment) => createFactory<FunctionTestCase>([TestCaseMixin, FunctionTestCaseMixin], { types: [dash.FunctionTestCase] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -12,6 +12,12 @@ export interface HealthPlanNetwork<D extends RDF.DatasetCore = RDF.DatasetCore> 
   healthPlanCostSharing: boolean | undefined;
   healthPlanNetworkId: string | undefined;
   healthPlanNetworkTier: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    HealthPlanNetwork: Factory<Schema.HealthPlanNetwork>;
+  }
 }
 
 export function HealthPlanNetworkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HealthPlanNetwork & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function HealthPlanNetworkMixin<Base extends rdfine.Constructor>(Resource
   }
   return HealthPlanNetworkClass as any
 }
-
-class HealthPlanNetworkImpl extends HealthPlanNetworkMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<HealthPlanNetwork>) {
-    super(arg, init)
-    this.types.add(schema.HealthPlanNetwork)
-  }
-
-  static readonly __mixins: Mixin[] = [HealthPlanNetworkMixin, IntangibleMixin];
-}
 HealthPlanNetworkMixin.appliesTo = schema.HealthPlanNetwork
-HealthPlanNetworkMixin.Class = HealthPlanNetworkImpl
-
-export const fromPointer = createFactory<HealthPlanNetwork>([IntangibleMixin, HealthPlanNetworkMixin], { types: [schema.HealthPlanNetwork] });
+HealthPlanNetworkMixin.createFactory = (env: RdfineEnvironment) => createFactory<HealthPlanNetwork>([IntangibleMixin, HealthPlanNetworkMixin], { types: [schema.HealthPlanNetwork] }, env)

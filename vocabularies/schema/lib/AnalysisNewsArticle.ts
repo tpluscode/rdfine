@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { NewsArticleMixin } from './NewsArticle.js';
 
 export interface AnalysisNewsArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.NewsArticle<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    AnalysisNewsArticle: Factory<Schema.AnalysisNewsArticle>;
+  }
 }
 
 export function AnalysisNewsArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AnalysisNewsArticle & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function AnalysisNewsArticleMixin<Base extends rdfine.Constructor>(Resour
   }
   return AnalysisNewsArticleClass as any
 }
-
-class AnalysisNewsArticleImpl extends AnalysisNewsArticleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<AnalysisNewsArticle>) {
-    super(arg, init)
-    this.types.add(schema.AnalysisNewsArticle)
-  }
-
-  static readonly __mixins: Mixin[] = [AnalysisNewsArticleMixin, NewsArticleMixin];
-}
 AnalysisNewsArticleMixin.appliesTo = schema.AnalysisNewsArticle
-AnalysisNewsArticleMixin.Class = AnalysisNewsArticleImpl
-
-export const fromPointer = createFactory<AnalysisNewsArticle>([NewsArticleMixin, AnalysisNewsArticleMixin], { types: [schema.AnalysisNewsArticle] });
+AnalysisNewsArticleMixin.createFactory = (env: RdfineEnvironment) => createFactory<AnalysisNewsArticle>([NewsArticleMixin, AnalysisNewsArticleMixin], { types: [schema.AnalysisNewsArticle] }, env)

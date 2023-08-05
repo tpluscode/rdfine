@@ -1,13 +1,13 @@
 import type { Quad, Term } from '@rdfjs/types'
 import cf, { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import TermSet from '@rdfjs/term-set'
 import RdfResourceImpl, { RdfResourceCore } from '../../../RdfResource.js'
 import { ClassElement } from '../index.js'
 import { EdgeTraversal, toEdgeTraversals } from '../../path.js'
 import { enumerateList, isList } from '../../rdf-list.js'
 import { onlyUnique } from '../../filter.js'
 import type { Factory } from '../../../factory.js'
+import { RdfineEnvironment } from '../../../environment.js'
 import { AccessorOptions } from './index.js'
 
 export type PropertyReturnKind = 'single' | 'array' | 'list'
@@ -29,12 +29,12 @@ function getObjects(subjects: GraphPointer[], path: EdgeTraversal[]): GraphPoint
   }, [] as GraphPointer[])
 }
 
-function getNodeFromEveryGraph(node: GraphPointer): GraphPointer[] {
+function getNodeFromEveryGraph(node: GraphPointer, env: RdfineEnvironment): GraphPointer[] {
   const graphs = node.datasets.reduce<Set<Quad['graph']>>((set, dataset) => {
     return [...dataset].reduce((set, quad) => {
       return set.add(quad.graph)
     }, set)
-  }, new TermSet())
+  }, env.termSet())
 
   const graphNodes = [...graphs.values()]
   if (!graphNodes.length) {
@@ -77,14 +77,14 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
     values = [options.values]
   }
 
-  const getPath = () => Array.isArray(options.path)
-    ? toEdgeTraversals(proto, options.path)
-    : toEdgeTraversals(proto, [options.path || name])
+  const getPath = (resource: RdfResourceCore) => Array.isArray(options.path)
+    ? toEdgeTraversals(proto.constructor.__ns, resource.env, options.path)
+    : toEdgeTraversals(proto.constructor.__ns, resource.env, [options.path || name])
 
   Object.defineProperty(proto, name, {
     get(this: T & RdfResourceImpl): unknown {
-      const rootNode = subjectFromAllGraphs ? getNodeFromEveryGraph(this.pointer) : [this.pointer]
-      const path = getPath()
+      const rootNode = subjectFromAllGraphs ? getNodeFromEveryGraph(this.pointer, this.env) : [this.pointer]
+      const path = getPath(this)
       let nodes = getObjects(rootNode, path)
       const crossesBoundaries = path.some(edge => edge.crossesGraphBoundaries)
       if (subjectFromAllGraphs || crossesBoundaries) {
@@ -135,7 +135,7 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
         throw new Error(`${name}: Cannot set array to a non-array property`)
       }
 
-      const path = getPath()
+      const path = getPath(this)
       const subjects = path.length === 1
         ? this.pointer.toArray()
         : getObjects([this.pointer], path.slice(0, path.length - 1))

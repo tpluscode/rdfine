@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { StructuredValueMixin } from './StructuredValue.js';
 
@@ -14,6 +14,12 @@ export interface DatedMoneySpecification<D extends RDF.DatasetCore = RDF.Dataset
   currency: string | undefined;
   endDate: Date | undefined;
   startDate: Date | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DatedMoneySpecification: Factory<Schema.DatedMoneySpecification>;
+  }
 }
 
 export function DatedMoneySpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DatedMoneySpecification & RdfResourceCore> & Base {
@@ -32,16 +38,5 @@ export function DatedMoneySpecificationMixin<Base extends rdfine.Constructor>(Re
   }
   return DatedMoneySpecificationClass as any
 }
-
-class DatedMoneySpecificationImpl extends DatedMoneySpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DatedMoneySpecification>) {
-    super(arg, init)
-    this.types.add(schema.DatedMoneySpecification)
-  }
-
-  static readonly __mixins: Mixin[] = [DatedMoneySpecificationMixin, StructuredValueMixin];
-}
 DatedMoneySpecificationMixin.appliesTo = schema.DatedMoneySpecification
-DatedMoneySpecificationMixin.Class = DatedMoneySpecificationImpl
-
-export const fromPointer = createFactory<DatedMoneySpecification>([StructuredValueMixin, DatedMoneySpecificationMixin], { types: [schema.DatedMoneySpecification] });
+DatedMoneySpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<DatedMoneySpecification>([StructuredValueMixin, DatedMoneySpecificationMixin], { types: [schema.DatedMoneySpecification] }, env)

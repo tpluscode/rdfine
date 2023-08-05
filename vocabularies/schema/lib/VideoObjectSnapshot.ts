@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { VideoObjectMixin } from './VideoObject.js';
 
 export interface VideoObjectSnapshot<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.VideoObject<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    VideoObjectSnapshot: Factory<Schema.VideoObjectSnapshot>;
+  }
 }
 
 export function VideoObjectSnapshotMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VideoObjectSnapshot & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function VideoObjectSnapshotMixin<Base extends rdfine.Constructor>(Resour
   }
   return VideoObjectSnapshotClass as any
 }
-
-class VideoObjectSnapshotImpl extends VideoObjectSnapshotMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<VideoObjectSnapshot>) {
-    super(arg, init)
-    this.types.add(schema.VideoObjectSnapshot)
-  }
-
-  static readonly __mixins: Mixin[] = [VideoObjectSnapshotMixin, VideoObjectMixin];
-}
 VideoObjectSnapshotMixin.appliesTo = schema.VideoObjectSnapshot
-VideoObjectSnapshotMixin.Class = VideoObjectSnapshotImpl
-
-export const fromPointer = createFactory<VideoObjectSnapshot>([VideoObjectMixin, VideoObjectSnapshotMixin], { types: [schema.VideoObjectSnapshot] });
+VideoObjectSnapshotMixin.createFactory = (env: RdfineEnvironment) => createFactory<VideoObjectSnapshot>([VideoObjectMixin, VideoObjectSnapshotMixin], { types: [schema.VideoObjectSnapshot] }, env)

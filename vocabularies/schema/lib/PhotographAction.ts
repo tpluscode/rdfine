@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreateActionMixin } from './CreateAction.js';
 
 export interface PhotographAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreateAction<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    PhotographAction: Factory<Schema.PhotographAction>;
+  }
 }
 
 export function PhotographActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PhotographAction & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function PhotographActionMixin<Base extends rdfine.Constructor>(Resource:
   }
   return PhotographActionClass as any
 }
-
-class PhotographActionImpl extends PhotographActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<PhotographAction>) {
-    super(arg, init)
-    this.types.add(schema.PhotographAction)
-  }
-
-  static readonly __mixins: Mixin[] = [PhotographActionMixin, CreateActionMixin];
-}
 PhotographActionMixin.appliesTo = schema.PhotographAction
-PhotographActionMixin.Class = PhotographActionImpl
-
-export const fromPointer = createFactory<PhotographAction>([CreateActionMixin, PhotographActionMixin], { types: [schema.PhotographAction] });
+PhotographActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<PhotographAction>([CreateActionMixin, PhotographActionMixin], { types: [schema.PhotographAction] }, env)

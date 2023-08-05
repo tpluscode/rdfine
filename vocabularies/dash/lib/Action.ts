@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { dash } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Dash from '../index.js';
 import type * as Shacl from '@rdfine/shacl';
 import { ParameterizableMixin as ShaclParameterizableMixin } from '@rdfine/shacl/lib/Parameterizable';
@@ -13,6 +13,12 @@ import { ScriptMixin } from './Script.js';
 export interface Action<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.Parameterizable<D>, Dash.Script<D>, rdfine.RdfResource<D> {
   actionGroup: Dash.ActionGroup<D> | undefined;
   actionIconClass: string | undefined;
+}
+
+declare global {
+  interface DashVocabulary {
+    Action: Factory<Dash.Action>;
+  }
 }
 
 export function ActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Action & RdfResourceCore> & Base {
@@ -25,16 +31,5 @@ export function ActionMixin<Base extends rdfine.Constructor>(Resource: Base): rd
   }
   return ActionClass as any
 }
-
-class ActionImpl extends ActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Action>) {
-    super(arg, init)
-    this.types.add(dash.Action)
-  }
-
-  static readonly __mixins: Mixin[] = [ActionMixin, ShaclParameterizableMixin, ScriptMixin];
-}
 ActionMixin.appliesTo = dash.Action
-ActionMixin.Class = ActionImpl
-
-export const fromPointer = createFactory<Action>([ScriptMixin, ShaclParameterizableMixin, ActionMixin], { types: [dash.Action] });
+ActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<Action>([ScriptMixin, ShaclParameterizableMixin, ActionMixin], { types: [dash.Action] }, env)

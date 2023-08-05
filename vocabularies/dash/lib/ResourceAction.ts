@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { dash } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Dash from '../index.js';
 import { ActionMixin } from './Action.js';
 
 export interface ResourceAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Action<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface DashVocabulary {
+    ResourceAction: Factory<Dash.ResourceAction>;
+  }
 }
 
 export function ResourceActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ResourceAction & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function ResourceActionMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return ResourceActionClass as any
 }
-
-class ResourceActionImpl extends ResourceActionMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<ResourceAction>) {
-    super(arg, init)
-    this.types.add(dash.ResourceAction)
-  }
-
-  static readonly __mixins: Mixin[] = [ResourceActionMixin, ActionMixin];
-}
 ResourceActionMixin.appliesTo = dash.ResourceAction
-ResourceActionMixin.Class = ResourceActionImpl
-
-export const fromPointer = createFactory<ResourceAction>([ActionMixin, ResourceActionMixin], { types: [dash.ResourceAction] });
+ResourceActionMixin.createFactory = (env: RdfineEnvironment) => createFactory<ResourceAction>([ActionMixin, ResourceActionMixin], { types: [dash.ResourceAction] }, env)

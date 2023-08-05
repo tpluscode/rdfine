@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { owl } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '../index.js';
 import { ObjectPropertyMixin } from './ObjectProperty.js';
 
 export interface SymmetricProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface OwlVocabulary {
+    SymmetricProperty: Factory<Owl.SymmetricProperty>;
+  }
 }
 
 export function SymmetricPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SymmetricProperty & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function SymmetricPropertyMixin<Base extends rdfine.Constructor>(Resource
   }
   return SymmetricPropertyClass as any
 }
-
-class SymmetricPropertyImpl extends SymmetricPropertyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SymmetricProperty>) {
-    super(arg, init)
-    this.types.add(owl.SymmetricProperty)
-  }
-
-  static readonly __mixins: Mixin[] = [SymmetricPropertyMixin, ObjectPropertyMixin];
-}
 SymmetricPropertyMixin.appliesTo = owl.SymmetricProperty
-SymmetricPropertyMixin.Class = SymmetricPropertyImpl
-
-export const fromPointer = createFactory<SymmetricProperty>([ObjectPropertyMixin, SymmetricPropertyMixin], { types: [owl.SymmetricProperty] });
+SymmetricPropertyMixin.createFactory = (env: RdfineEnvironment) => createFactory<SymmetricProperty>([ObjectPropertyMixin, SymmetricPropertyMixin], { types: [owl.SymmetricProperty] }, env)

@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
 export interface DefinedTermSet<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   hasDefinedTerm: RDF.Term | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DefinedTermSet: Factory<Schema.DefinedTermSet>;
+  }
 }
 
 export function DefinedTermSetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DefinedTermSet & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function DefinedTermSetMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return DefinedTermSetClass as any
 }
-
-class DefinedTermSetImpl extends DefinedTermSetMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DefinedTermSet>) {
-    super(arg, init)
-    this.types.add(schema.DefinedTermSet)
-  }
-
-  static readonly __mixins: Mixin[] = [DefinedTermSetMixin, CreativeWorkMixin];
-}
 DefinedTermSetMixin.appliesTo = schema.DefinedTermSet
-DefinedTermSetMixin.Class = DefinedTermSetImpl
-
-export const fromPointer = createFactory<DefinedTermSet>([CreativeWorkMixin, DefinedTermSetMixin], { types: [schema.DefinedTermSet] });
+DefinedTermSetMixin.createFactory = (env: RdfineEnvironment) => createFactory<DefinedTermSet>([CreativeWorkMixin, DefinedTermSetMixin], { types: [schema.DefinedTermSet] }, env)

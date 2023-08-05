@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { ProductMixin } from './Product.js';
 import { SubstanceMixin } from './Substance.js';
@@ -21,6 +21,12 @@ export interface DietarySupplement<D extends RDF.DatasetCore = RDF.DatasetCore> 
   recommendedIntake: Schema.RecommendedDoseSchedule<D> | undefined;
   safetyConsideration: string | undefined;
   targetPopulation: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DietarySupplement: Factory<Schema.DietarySupplement>;
+  }
 }
 
 export function DietarySupplementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DietarySupplement & RdfResourceCore> & Base {
@@ -51,16 +57,5 @@ export function DietarySupplementMixin<Base extends rdfine.Constructor>(Resource
   }
   return DietarySupplementClass as any
 }
-
-class DietarySupplementImpl extends DietarySupplementMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DietarySupplement>) {
-    super(arg, init)
-    this.types.add(schema.DietarySupplement)
-  }
-
-  static readonly __mixins: Mixin[] = [DietarySupplementMixin, ProductMixin, SubstanceMixin];
-}
 DietarySupplementMixin.appliesTo = schema.DietarySupplement
-DietarySupplementMixin.Class = DietarySupplementImpl
-
-export const fromPointer = createFactory<DietarySupplement>([SubstanceMixin, ProductMixin, DietarySupplementMixin], { types: [schema.DietarySupplement] });
+DietarySupplementMixin.createFactory = (env: RdfineEnvironment) => createFactory<DietarySupplement>([SubstanceMixin, ProductMixin, DietarySupplementMixin], { types: [schema.DietarySupplement] }, env)

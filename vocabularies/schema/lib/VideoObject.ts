@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { MediaObjectMixin } from './MediaObject.js';
 
@@ -21,6 +21,12 @@ export interface VideoObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   transcript: string | undefined;
   videoFrameSize: string | undefined;
   videoQuality: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    VideoObject: Factory<Schema.VideoObject>;
+  }
 }
 
 export function VideoObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VideoObject & RdfResourceCore> & Base {
@@ -53,16 +59,5 @@ export function VideoObjectMixin<Base extends rdfine.Constructor>(Resource: Base
   }
   return VideoObjectClass as any
 }
-
-class VideoObjectImpl extends VideoObjectMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<VideoObject>) {
-    super(arg, init)
-    this.types.add(schema.VideoObject)
-  }
-
-  static readonly __mixins: Mixin[] = [VideoObjectMixin, MediaObjectMixin];
-}
 VideoObjectMixin.appliesTo = schema.VideoObject
-VideoObjectMixin.Class = VideoObjectImpl
-
-export const fromPointer = createFactory<VideoObject>([MediaObjectMixin, VideoObjectMixin], { types: [schema.VideoObject] });
+VideoObjectMixin.createFactory = (env: RdfineEnvironment) => createFactory<VideoObject>([MediaObjectMixin, VideoObjectMixin], { types: [schema.VideoObject] }, env)

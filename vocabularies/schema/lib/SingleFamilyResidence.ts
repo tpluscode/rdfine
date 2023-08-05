@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { HouseMixin } from './House.js';
 
@@ -12,6 +12,12 @@ export interface SingleFamilyResidence<D extends RDF.DatasetCore = RDF.DatasetCo
   numberOfRooms: Schema.QuantitativeValue<D> | undefined;
   numberOfRoomsLiteral: number | undefined;
   occupancy: Schema.QuantitativeValue<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    SingleFamilyResidence: Factory<Schema.SingleFamilyResidence>;
+  }
 }
 
 export function SingleFamilyResidenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SingleFamilyResidence & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function SingleFamilyResidenceMixin<Base extends rdfine.Constructor>(Reso
   }
   return SingleFamilyResidenceClass as any
 }
-
-class SingleFamilyResidenceImpl extends SingleFamilyResidenceMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SingleFamilyResidence>) {
-    super(arg, init)
-    this.types.add(schema.SingleFamilyResidence)
-  }
-
-  static readonly __mixins: Mixin[] = [SingleFamilyResidenceMixin, HouseMixin];
-}
 SingleFamilyResidenceMixin.appliesTo = schema.SingleFamilyResidence
-SingleFamilyResidenceMixin.Class = SingleFamilyResidenceImpl
-
-export const fromPointer = createFactory<SingleFamilyResidence>([HouseMixin, SingleFamilyResidenceMixin], { types: [schema.SingleFamilyResidence] });
+SingleFamilyResidenceMixin.createFactory = (env: RdfineEnvironment) => createFactory<SingleFamilyResidence>([HouseMixin, SingleFamilyResidenceMixin], { types: [schema.SingleFamilyResidence] }, env)

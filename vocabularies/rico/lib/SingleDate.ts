@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { DateMixin } from './Date.js';
 
 export interface SingleDate<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Date<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface RicoVocabulary {
+    SingleDate: Factory<Rico.SingleDate>;
+  }
 }
 
 export function SingleDateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SingleDate & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function SingleDateMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return SingleDateClass as any
 }
-
-class SingleDateImpl extends SingleDateMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<SingleDate>) {
-    super(arg, init)
-    this.types.add(rico.SingleDate)
-  }
-
-  static readonly __mixins: Mixin[] = [SingleDateMixin, DateMixin];
-}
 SingleDateMixin.appliesTo = rico.SingleDate
-SingleDateMixin.Class = SingleDateImpl
-
-export const fromPointer = createFactory<SingleDate>([DateMixin, SingleDateMixin], { types: [rico.SingleDate] });
+SingleDateMixin.createFactory = (env: RdfineEnvironment) => createFactory<SingleDate>([DateMixin, SingleDateMixin], { types: [rico.SingleDate] }, env)

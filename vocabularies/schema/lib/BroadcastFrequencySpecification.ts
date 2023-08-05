@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -14,6 +14,12 @@ export interface BroadcastFrequencySpecification<D extends RDF.DatasetCore = RDF
   broadcastSignalModulation: string | undefined;
   broadcastSignalModulationTerm: Schema.QualitativeValue | undefined;
   broadcastSubChannel: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    BroadcastFrequencySpecification: Factory<Schema.BroadcastFrequencySpecification>;
+  }
 }
 
 export function BroadcastFrequencySpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BroadcastFrequencySpecification & RdfResourceCore> & Base {
@@ -32,16 +38,5 @@ export function BroadcastFrequencySpecificationMixin<Base extends rdfine.Constru
   }
   return BroadcastFrequencySpecificationClass as any
 }
-
-class BroadcastFrequencySpecificationImpl extends BroadcastFrequencySpecificationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<BroadcastFrequencySpecification>) {
-    super(arg, init)
-    this.types.add(schema.BroadcastFrequencySpecification)
-  }
-
-  static readonly __mixins: Mixin[] = [BroadcastFrequencySpecificationMixin, IntangibleMixin];
-}
 BroadcastFrequencySpecificationMixin.appliesTo = schema.BroadcastFrequencySpecification
-BroadcastFrequencySpecificationMixin.Class = BroadcastFrequencySpecificationImpl
-
-export const fromPointer = createFactory<BroadcastFrequencySpecification>([IntangibleMixin, BroadcastFrequencySpecificationMixin], { types: [schema.BroadcastFrequencySpecification] });
+BroadcastFrequencySpecificationMixin.createFactory = (env: RdfineEnvironment) => createFactory<BroadcastFrequencySpecification>([IntangibleMixin, BroadcastFrequencySpecificationMixin], { types: [schema.BroadcastFrequencySpecification] }, env)

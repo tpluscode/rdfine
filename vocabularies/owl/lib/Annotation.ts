@@ -1,17 +1,23 @@
 import '../extensions/rdfs/Resource.js';
 import { ResourceMixinEx } from '../extensions/rdfs/Resource.js';
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { owl } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Owl from '../index.js';
 import type * as Rdfs from '@rdfine/rdfs';
 import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
 export interface Annotation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface OwlVocabulary {
+    Annotation: Factory<Owl.Annotation>;
+  }
 }
 
 export function AnnotationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Annotation & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function AnnotationMixin<Base extends rdfine.Constructor>(Resource: Base)
   }
   return AnnotationClass as any
 }
-
-class AnnotationImpl extends AnnotationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Annotation>) {
-    super(arg, init)
-    this.types.add(owl.Annotation)
-  }
-
-  static readonly __mixins: Mixin[] = [AnnotationMixin, RdfsResourceMixin];
-}
 AnnotationMixin.appliesTo = owl.Annotation
-AnnotationMixin.Class = AnnotationImpl
-
-export const fromPointer = createFactory<Annotation>([RdfsResourceMixin, AnnotationMixin], { types: [owl.Annotation] });
+AnnotationMixin.createFactory = (env: RdfineEnvironment) => createFactory<Annotation>([RdfsResourceMixin, AnnotationMixin], { types: [owl.Annotation] }, env)

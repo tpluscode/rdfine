@@ -1,12 +1,12 @@
-import type { DatasetCore, Term } from '@rdfjs/types'
-import cf, { GraphPointer } from 'clownface'
+import type { DataFactory, DatasetCore, Term } from '@rdfjs/types'
+import type { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
-import RDF from '@rdfjs/data-model'
+import { Environment } from '@rdfjs/environment/Environment'
 import type { RdfResourceCore, ResourceIdentifier } from '../RdfResource.js'
 import { onlyUnique } from './filter.js'
 import * as compare from './compare.js'
 
-function getNode(value: RdfResourceCore | ResourceIdentifier | string): ResourceIdentifier {
+function getNode(value: RdfResourceCore | ResourceIdentifier | string, RDF: Environment<DataFactory>): ResourceIdentifier {
   if (typeof value === 'string') {
     return RDF.namedNode(value)
   }
@@ -30,7 +30,7 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
   private __graph: GraphPointer<Term, D>
 
   add(value: RdfResourceCore<D> | ResourceIdentifier | string): this {
-    this.__resource.pointer.addOut(rdf.type, getNode(value))
+    this.__resource.pointer.addOut(rdf.type, getNode(value, this.__resource.env))
     return this
   }
 
@@ -39,7 +39,7 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
   }
 
   delete(value: RdfResourceCore<D> | ResourceIdentifier | string): boolean {
-    const deletedQuads = this.__graph.dataset.match(this.__resource.id, rdf.type, getNode(value))
+    const deletedQuads = this.__graph.dataset.match(this.__resource.id, rdf.type, getNode(value, this.__resource.env))
 
     for (const quad of deletedQuads) {
       this.__graph.dataset.delete(quad)
@@ -55,7 +55,7 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
   }
 
   has(value: RdfResourceCore<D> | ResourceIdentifier | string): boolean {
-    return this.__graph.has(rdf.type, getNode(value)).terms.length > 0
+    return this.__graph.has(rdf.type, getNode(value, this.__resource.env)).terms.length > 0
   }
 
   get size(): number {
@@ -87,7 +87,7 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
     this.__allGraphs = allGraphs
     // TODO: when clownface gets graph feature
     // this.__graph = allGraphs ? resource.pointer.fromUnionGraph() : resource.pointer
-    this.__graph = allGraphs ? cf({ dataset: resource.pointer.dataset, term: resource.pointer.term, graph: undefined }) : resource.pointer
+    this.__graph = allGraphs ? resource.env.clownface({ dataset: resource.pointer.dataset, term: resource.pointer.term, graph: undefined }) : resource.pointer
   }
 
   private get __values() {
@@ -99,7 +99,7 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
 
     const types = [...typeQuads]
       .map(quad => {
-        return cf({
+        return this.__resource.env.clownface({
           dataset: this.__graph.dataset,
           term: quad.object,
           graph: quad.graph,

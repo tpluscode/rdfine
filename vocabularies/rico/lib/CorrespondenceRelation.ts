@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { KnowingRelationMixin } from './KnowingRelation.js';
 
 export interface CorrespondenceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.KnowingRelation<D>, rdfine.RdfResource<D> {
   correspondenceRelationConnects: Rico.Person<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    CorrespondenceRelation: Factory<Rico.CorrespondenceRelation>;
+  }
 }
 
 export function CorrespondenceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CorrespondenceRelation & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function CorrespondenceRelationMixin<Base extends rdfine.Constructor>(Res
   }
   return CorrespondenceRelationClass as any
 }
-
-class CorrespondenceRelationImpl extends CorrespondenceRelationMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CorrespondenceRelation>) {
-    super(arg, init)
-    this.types.add(rico.CorrespondenceRelation)
-  }
-
-  static readonly __mixins: Mixin[] = [CorrespondenceRelationMixin, KnowingRelationMixin];
-}
 CorrespondenceRelationMixin.appliesTo = rico.CorrespondenceRelation
-CorrespondenceRelationMixin.Class = CorrespondenceRelationImpl
-
-export const fromPointer = createFactory<CorrespondenceRelation>([KnowingRelationMixin, CorrespondenceRelationMixin], { types: [rico.CorrespondenceRelation] });
+CorrespondenceRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<CorrespondenceRelation>([KnowingRelationMixin, CorrespondenceRelationMixin], { types: [rico.CorrespondenceRelation] }, env)

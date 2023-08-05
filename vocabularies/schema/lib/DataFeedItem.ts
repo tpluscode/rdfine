@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { IntangibleMixin } from './Intangible.js';
 
@@ -13,6 +13,12 @@ export interface DataFeedItem<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   dateDeleted: Date | undefined;
   dateModified: Date | undefined;
   item: Schema.Thing<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    DataFeedItem: Factory<Schema.DataFeedItem>;
+  }
 }
 
 export function DataFeedItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DataFeedItem & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function DataFeedItemMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return DataFeedItemClass as any
 }
-
-class DataFeedItemImpl extends DataFeedItemMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<DataFeedItem>) {
-    super(arg, init)
-    this.types.add(schema.DataFeedItem)
-  }
-
-  static readonly __mixins: Mixin[] = [DataFeedItemMixin, IntangibleMixin];
-}
 DataFeedItemMixin.appliesTo = schema.DataFeedItem
-DataFeedItemMixin.Class = DataFeedItemImpl
-
-export const fromPointer = createFactory<DataFeedItem>([IntangibleMixin, DataFeedItemMixin], { types: [schema.DataFeedItem] });
+DataFeedItemMixin.createFactory = (env: RdfineEnvironment) => createFactory<DataFeedItem>([IntangibleMixin, DataFeedItemMixin], { types: [schema.DataFeedItem] }, env)

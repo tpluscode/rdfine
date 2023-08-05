@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { IgnoreMixin } from './Ignore.js';
 
 export interface Block<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Ignore<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface AsVocabulary {
+    Block: Factory<As.Block>;
+  }
 }
 
 export function BlockMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Block & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function BlockMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
   }
   return BlockClass as any
 }
-
-class BlockImpl extends BlockMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Block>) {
-    super(arg, init)
-    this.types.add(as.Block)
-  }
-
-  static readonly __mixins: Mixin[] = [BlockMixin, IgnoreMixin];
-}
 BlockMixin.appliesTo = as.Block
-BlockMixin.Class = BlockImpl
-
-export const fromPointer = createFactory<Block>([IgnoreMixin, BlockMixin], { types: [as.Block] });
+BlockMixin.createFactory = (env: RdfineEnvironment) => createFactory<Block>([IgnoreMixin, BlockMixin], { types: [as.Block] }, env)

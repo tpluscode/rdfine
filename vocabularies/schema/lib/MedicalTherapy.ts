@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { TherapeuticProcedureMixin } from './TherapeuticProcedure.js';
 
@@ -13,6 +13,12 @@ export interface MedicalTherapy<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   contraindicationLiteral: string | undefined;
   duplicateTherapy: Schema.MedicalTherapy<D> | undefined;
   seriousAdverseOutcome: Schema.MedicalEntity<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    MedicalTherapy: Factory<Schema.MedicalTherapy>;
+  }
 }
 
 export function MedicalTherapyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalTherapy & RdfResourceCore> & Base {
@@ -29,16 +35,5 @@ export function MedicalTherapyMixin<Base extends rdfine.Constructor>(Resource: B
   }
   return MedicalTherapyClass as any
 }
-
-class MedicalTherapyImpl extends MedicalTherapyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<MedicalTherapy>) {
-    super(arg, init)
-    this.types.add(schema.MedicalTherapy)
-  }
-
-  static readonly __mixins: Mixin[] = [MedicalTherapyMixin, TherapeuticProcedureMixin];
-}
 MedicalTherapyMixin.appliesTo = schema.MedicalTherapy
-MedicalTherapyMixin.Class = MedicalTherapyImpl
-
-export const fromPointer = createFactory<MedicalTherapy>([TherapeuticProcedureMixin, MedicalTherapyMixin], { types: [schema.MedicalTherapy] });
+MedicalTherapyMixin.createFactory = (env: RdfineEnvironment) => createFactory<MedicalTherapy>([TherapeuticProcedureMixin, MedicalTherapyMixin], { types: [schema.MedicalTherapy] }, env)

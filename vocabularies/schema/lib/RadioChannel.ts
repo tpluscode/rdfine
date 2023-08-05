@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { BroadcastChannelMixin } from './BroadcastChannel.js';
 
 export interface RadioChannel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.BroadcastChannel<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface SchemaVocabulary {
+    RadioChannel: Factory<Schema.RadioChannel>;
+  }
 }
 
 export function RadioChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RadioChannel & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function RadioChannelMixin<Base extends rdfine.Constructor>(Resource: Bas
   }
   return RadioChannelClass as any
 }
-
-class RadioChannelImpl extends RadioChannelMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<RadioChannel>) {
-    super(arg, init)
-    this.types.add(schema.RadioChannel)
-  }
-
-  static readonly __mixins: Mixin[] = [RadioChannelMixin, BroadcastChannelMixin];
-}
 RadioChannelMixin.appliesTo = schema.RadioChannel
-RadioChannelMixin.Class = RadioChannelImpl
-
-export const fromPointer = createFactory<RadioChannel>([BroadcastChannelMixin, RadioChannelMixin], { types: [schema.RadioChannel] });
+RadioChannelMixin.createFactory = (env: RdfineEnvironment) => createFactory<RadioChannel>([BroadcastChannelMixin, RadioChannelMixin], { types: [schema.RadioChannel] }, env)

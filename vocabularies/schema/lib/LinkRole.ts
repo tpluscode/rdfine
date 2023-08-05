@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { RoleMixin } from './Role.js';
 
@@ -12,6 +12,12 @@ export interface LinkRole<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   inLanguage: Schema.Language<D> | undefined;
   inLanguageLiteral: string | undefined;
   linkRelationship: string | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    LinkRole: Factory<Schema.LinkRole>;
+  }
 }
 
 export function LinkRoleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LinkRole & RdfResourceCore> & Base {
@@ -26,16 +32,5 @@ export function LinkRoleMixin<Base extends rdfine.Constructor>(Resource: Base): 
   }
   return LinkRoleClass as any
 }
-
-class LinkRoleImpl extends LinkRoleMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<LinkRole>) {
-    super(arg, init)
-    this.types.add(schema.LinkRole)
-  }
-
-  static readonly __mixins: Mixin[] = [LinkRoleMixin, RoleMixin];
-}
 LinkRoleMixin.appliesTo = schema.LinkRole
-LinkRoleMixin.Class = LinkRoleImpl
-
-export const fromPointer = createFactory<LinkRole>([RoleMixin, LinkRoleMixin], { types: [schema.LinkRole] });
+LinkRoleMixin.createFactory = (env: RdfineEnvironment) => createFactory<LinkRole>([RoleMixin, LinkRoleMixin], { types: [schema.LinkRole] }, env)

@@ -1,10 +1,10 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { schema } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 import { CreativeWorkMixin } from './CreativeWork.js';
 
@@ -14,6 +14,12 @@ export interface Game<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   gameLocation: Schema.Place<D> | Schema.PostalAddress<D> | undefined;
   numberOfPlayers: Schema.QuantitativeValue<D> | undefined;
   quest: Schema.Thing<D> | undefined;
+}
+
+declare global {
+  interface SchemaVocabulary {
+    Game: Factory<Schema.Game>;
+  }
 }
 
 export function GameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Game & RdfResourceCore> & Base {
@@ -32,16 +38,5 @@ export function GameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return GameClass as any
 }
-
-class GameImpl extends GameMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Game>) {
-    super(arg, init)
-    this.types.add(schema.Game)
-  }
-
-  static readonly __mixins: Mixin[] = [GameMixin, CreativeWorkMixin];
-}
 GameMixin.appliesTo = schema.Game
-GameMixin.Class = GameImpl
-
-export const fromPointer = createFactory<Game>([CreativeWorkMixin, GameMixin], { types: [schema.Game] });
+GameMixin.createFactory = (env: RdfineEnvironment) => createFactory<Game>([CreativeWorkMixin, GameMixin], { types: [schema.Game] }, env)

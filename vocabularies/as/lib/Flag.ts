@@ -1,14 +1,20 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { as } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as As from '../index.js';
 import { ActivityMixin } from './Activity.js';
 
 export interface Flag<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Activity<D>, rdfine.RdfResource<D> {
+}
+
+declare global {
+  interface AsVocabulary {
+    Flag: Factory<As.Flag>;
+  }
 }
 
 export function FlagMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Flag & RdfResourceCore> & Base {
@@ -17,16 +23,5 @@ export function FlagMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
   }
   return FlagClass as any
 }
-
-class FlagImpl extends FlagMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<Flag>) {
-    super(arg, init)
-    this.types.add(as.Flag)
-  }
-
-  static readonly __mixins: Mixin[] = [FlagMixin, ActivityMixin];
-}
 FlagMixin.appliesTo = as.Flag
-FlagMixin.Class = FlagImpl
-
-export const fromPointer = createFactory<Flag>([ActivityMixin, FlagMixin], { types: [as.Flag] });
+FlagMixin.createFactory = (env: RdfineEnvironment) => createFactory<Flag>([ActivityMixin, FlagMixin], { types: [as.Flag] }, env)

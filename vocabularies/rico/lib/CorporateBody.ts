@@ -1,15 +1,21 @@
-import RdfResourceImpl, * as rdfine from '@tpluscode/rdfine';
-import { createFactory } from '@tpluscode/rdfine/factory';
+import * as rdfine from '@tpluscode/rdfine';
+import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
-import type { Initializer, ResourceNode, RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
-import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
+import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
 import { GroupMixin } from './Group.js';
 
 export interface CorporateBody<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Group<D>, rdfine.RdfResource<D> {
   hasOrHadCorporateBodyType: Rico.CorporateBodyType<D> | undefined;
+}
+
+declare global {
+  interface RicoVocabulary {
+    CorporateBody: Factory<Rico.CorporateBody>;
+  }
 }
 
 export function CorporateBodyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CorporateBody & RdfResourceCore> & Base {
@@ -20,16 +26,5 @@ export function CorporateBodyMixin<Base extends rdfine.Constructor>(Resource: Ba
   }
   return CorporateBodyClass as any
 }
-
-class CorporateBodyImpl extends CorporateBodyMixin(RdfResourceImpl) {
-  constructor(arg: ResourceNode, init?: Initializer<CorporateBody>) {
-    super(arg, init)
-    this.types.add(rico.CorporateBody)
-  }
-
-  static readonly __mixins: Mixin[] = [CorporateBodyMixin, GroupMixin];
-}
 CorporateBodyMixin.appliesTo = rico.CorporateBody
-CorporateBodyMixin.Class = CorporateBodyImpl
-
-export const fromPointer = createFactory<CorporateBody>([GroupMixin, CorporateBodyMixin], { types: [rico.CorporateBody] });
+CorporateBodyMixin.createFactory = (env: RdfineEnvironment) => createFactory<CorporateBody>([GroupMixin, CorporateBodyMixin], { types: [rico.CorporateBody] }, env)
