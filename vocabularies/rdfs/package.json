@@ -9,11 +9,15 @@
   "sideEffects": false,
   "exports": {
     ".": "./index.js",
-    "./Factory": "./bundles/Factory.js",
+    "./Factory": "./Factory.js",
     "./bundles": "./bundles/index.js",
     "./lib/*": "./lib/*.js",
     "./extensions/*": "./extensions/*.js"
   },
+  "files": [
+    "**/*.js",
+    "**/*.d.ts"
+  ],
   "scripts": {
     "prepack": "npm run build",
     "clean": "rimraf lib bundles",
