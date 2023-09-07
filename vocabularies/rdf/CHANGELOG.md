@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.1
+
+### Patch Changes
+
+- 0ab38e3b: Factory was missing from package and exports
+
 ## 0.7.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @rdfine/skos
 
+## 0.3.1
+
+### Patch Changes
+
+- 0ab38e3b: Factory was missing from package and exports
+- Updated dependencies [0ab38e3b]
+  - @rdfine/rdf@0.7.1
+
 ## 0.3.0
 
 ### Minor Changes

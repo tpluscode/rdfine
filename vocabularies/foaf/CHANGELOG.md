@@ -1,5 +1,14 @@
 # @rdfine/foaf
 
+## 2.0.1
+
+### Patch Changes
+
+- 0ab38e3b: Factory was missing from package and exports
+- Updated dependencies [0ab38e3b]
+  - @rdfine/skos@0.3.1
+  - @rdfine/wgs@0.3.1
+
 ## 2.0.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @rdfine/as
 
+## 0.4.1
+
+### Patch Changes
+
+- 0ab38e3b: Factory was missing from package and exports
+- Updated dependencies [0ab38e3b]
+  - @rdfine/rdf@0.7.1
+
 ## 0.4.0
 
 ### Minor Changes
