@@ -1,5 +1,5 @@
 import type { Environment } from '@rdfjs/environment/Environment.js'
-import { DataFactory } from '@rdfjs/types'
+import { DataFactory, DatasetCoreFactory } from '@rdfjs/types'
 import type TermSetFactory from '@rdfjs/term-set/Factory.js'
 import type { TermMapFactory } from '@rdfjs/term-map/Factory.js'
 import type { NamespaceFactory } from '@rdfjs/namespace/Factory.js'
@@ -57,4 +57,4 @@ export class RdfineFactory {
   }
 }
 
-export type RdfineEnvironment = Environment<RdfineFactory | DataFactory | TermSetFactory | TermMapFactory | NamespaceFactory | ClownfaceFactory>
+export type RdfineEnvironment = Environment<RdfineFactory | DatasetCoreFactory | DataFactory | TermSetFactory | TermMapFactory | NamespaceFactory | ClownfaceFactory>
