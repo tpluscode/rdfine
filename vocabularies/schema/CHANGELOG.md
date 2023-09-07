@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.8.1
+
+### Patch Changes
+
+- 0ab38e3b: Factory was missing from package and exports
+
 ## 0.8.0
 
 ### Minor Changes

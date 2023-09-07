@@ -1,5 +1,11 @@
 # @rdfine/prov
 
+## 0.3.1
+
+### Patch Changes
+
+- 0ab38e3b: Factory was missing from package and exports
+
 ## 0.3.0
 
 ### Minor Changes
