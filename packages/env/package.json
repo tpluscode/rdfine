@@ -4,7 +4,8 @@
   "type": "module",
   "main": "index.js",
   "files": [
-    "index.js"
+    "*.js",
+    "*.d.ts"
   ],
   "scripts": {
     "prepublishOnly": "tsc"
