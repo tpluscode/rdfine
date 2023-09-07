@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.1
+
+### Patch Changes
+
+- 3d337f9b: Missing dataset factory in `RdfineEnvironment` type
+
 ## 0.7.0
 
 ### Minor Changes
