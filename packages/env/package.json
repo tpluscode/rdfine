@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "type": "module",
   "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "prepublishOnly": "tsc"
+  },
   "dependencies": {
     "@tpluscode/rdfine": "^0.7.0",
     "@zazuko/env": "^1.0.1"
