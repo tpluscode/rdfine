@@ -1,5 +1,13 @@
 # @rdfine/env
 
+## 1.0.1
+
+### Patch Changes
+
+- 206076d0: Incomplete package
+- Updated dependencies [3d337f9b]
+  - @tpluscode/rdfine@0.7.1
+
 ## 1.0.0
 
 ### Major Changes
