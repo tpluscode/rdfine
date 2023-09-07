@@ -1,5 +1,11 @@
 # @rdfine/env
 
+## 1.0.2
+
+### Patch Changes
+
+- 39efb4cb: Missing types declarations
+
 ## 1.0.1
 
 ### Patch Changes
