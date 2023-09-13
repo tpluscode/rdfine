@@ -1,5 +1,13 @@
 # @rdfine/env
 
+## 1.0.3
+
+### Patch Changes
+
+- 959e53cf: There were factories missing in the environment
+- Updated dependencies [959e53cf]
+  - @tpluscode/rdfine@0.7.2
+
 ## 1.0.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.2
+
+### Patch Changes
+
+- 959e53cf: There were factories missing in the environment
+
 ## 0.7.1
 
 ### Patch Changes
