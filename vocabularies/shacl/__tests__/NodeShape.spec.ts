@@ -1,4 +1,4 @@
-import $rdf from 'rdf-ext';
+import $rdf from '@zazuko/env';
 import clownface from 'clownface';
 import RDF from '@rdfjs/data-model';
 import { rdfs } from '@tpluscode/rdf-ns-builders';
@@ -6,6 +6,7 @@ import chai, { expect } from 'chai';
 import ns from '@rdfjs/namespace';
 import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot';
 import environment from './environment.js';
+import toCanonical from 'rdf-dataset-ext/toCanonical.js';
 
 const ex = ns('http://example.com/')
 
@@ -36,7 +37,7 @@ describe('NodeShape', () => {
       })
 
       // then
-      expect(dataset.toCanonical()).toMatchSnapshot()
+      expect(toCanonical(dataset)).toMatchSnapshot()
     })
   })
 })

@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import cf, { AnyPointer, GraphPointer } from 'clownface'
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import type { NamedNode, Term, Literal } from '@rdfjs/types'
 import {
   skos,
@@ -14,6 +14,7 @@ import {
 } from '@tpluscode/rdf-ns-builders/loose'
 import chai, { expect } from 'chai'
 import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
+import toCanonical from 'rdf-dataset-ext/toCanonical.js'
 import RdfResource, { Initializer, RdfResourceCore, ResourceNode } from '../RdfResource.js'
 import { Constructor, crossBoundaries, namespace, property } from '../index.js'
 import * as initialize from '../initializer.js'
@@ -632,7 +633,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.pointer.dataset).to.matchSnapshot()
+      expect(toCanonical(resource.pointer.dataset)).to.matchSnapshot()
     })
 
     it('initializes annotated property with a resource using http properties', () => {
@@ -713,7 +714,7 @@ describe('RdfResource', () => {
       })
 
       // then
-      expect(resource.pointer.dataset).toMatchSnapshot()
+      expect(toCanonical(resource.pointer.dataset)).toMatchSnapshot()
     })
 
     it('can initialize child resource with object decomposition', () => {
@@ -747,7 +748,7 @@ describe('RdfResource', () => {
       )
 
       // then
-      expect(resource.pointer.dataset).toMatchSnapshot()
+      expect(toCanonical(resource.pointer.dataset)).toMatchSnapshot()
     })
 
     it('can initialize child resource with string blank node id', () => {
@@ -772,7 +773,7 @@ describe('RdfResource', () => {
       )
 
       // then
-      expect(resource.pointer.dataset).toMatchSnapshot()
+      expect(toCanonical(resource.pointer.dataset)).toMatchSnapshot()
     })
 
     it('can initialize child resource with string named node id', () => {
@@ -797,7 +798,7 @@ describe('RdfResource', () => {
       )
 
       // then
-      expect(resource.pointer.dataset).toMatchSnapshot()
+      expect(toCanonical(resource.pointer.dataset)).toMatchSnapshot()
     })
 
     it('uses implicitTypes of annotated properties to initialize child resources', () => {
@@ -819,7 +820,7 @@ describe('RdfResource', () => {
       )
 
       // then
-      expect(resource.pointer.dataset).toMatchSnapshot()
+      expect(toCanonical(resource.pointer.dataset)).toMatchSnapshot()
     })
 
     const nativeSetters: [string, any, Literal][] = [

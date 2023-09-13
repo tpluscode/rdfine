@@ -1,10 +1,11 @@
 import cf, { AnyPointer, GraphPointer } from 'clownface'
 import { Debugger } from 'debug'
 import { Stream } from '@rdfjs/types'
-import rdf from 'rdf-ext'
+import rdf from '@zazuko/env'
 import nsBuilder from '@rdfjs/namespace'
 import prefixes, { expand } from '@zazuko/prefixes'
 import { IndentationText, Project, QuoteKind, SourceFile } from 'ts-morph'
+import fromStream from 'rdf-dataset-ext/fromStream.js'
 import FileSystem from './util/FileSystem.js'
 import * as generator from './generator.js'
 import * as EnumerationGenerator from './EnumerationGenerator/index.js'
@@ -82,7 +83,7 @@ export async function generate(options: GeneratorOptions, logger: Debugger) {
     throw new Error(`The prefix ${options.prefix} is not known to @zazuko/prefixes. It has to provided as parameter`)
   }
 
-  const dataset = await rdf.dataset().import(options.stream)
+  const dataset = await fromStream(rdf.dataset(), options.stream)
   const vocabulary = cf({ dataset })
 
   const project = new Project({

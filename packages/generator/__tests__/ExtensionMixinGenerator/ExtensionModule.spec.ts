@@ -1,6 +1,6 @@
 import { Project, SourceFile } from 'ts-morph'
 import cf, { AnyPointer } from 'clownface'
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import { sh } from '@tpluscode/rdf-ns-builders'
 import chai, { expect } from 'chai'
 import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'

@@ -5,6 +5,8 @@ import ClownfaceFactory from 'clownface/Factory.js'
 import NamespaceFactory from '@rdfjs/namespace/Factory.js'
 import TermMapFactory from '@rdfjs/term-map/Factory.js'
 import TermSetFactory from '@rdfjs/term-set/Factory.js'
+import NsBuildersFactory from '@tpluscode/rdf-ns-builders'
+import FormatsFactory from '@rdfjs/environment/FormatsFactory.js'
 import { RdfineFactory } from '../../environment.js'
 
 export function createEnv() {
@@ -16,6 +18,8 @@ export function createEnv() {
     ClownfaceFactory,
     TermSetFactory,
     TermMapFactory,
+    NsBuildersFactory,
+    FormatsFactory,
   ])
 }
 

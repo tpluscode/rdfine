@@ -1,5 +1,5 @@
 import clownface from 'clownface'
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import { doap, as, rdfs, owl } from '@tpluscode/rdf-ns-builders'
 import { expect } from 'chai'
 import { toJavascriptProperties } from '../../lib/property/JsProperties.js'

@@ -1,5 +1,5 @@
 import cf, { AnyPointer } from 'clownface'
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import { rdf, rdfs } from '@tpluscode/rdf-ns-builders'
 import { expect } from 'chai'
 import { findTermsToGenerate } from '../../lib/EnumerationGenerator/index.js'

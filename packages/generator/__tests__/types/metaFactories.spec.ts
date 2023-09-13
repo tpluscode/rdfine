@@ -1,5 +1,5 @@
 import cf, { AnyPointer } from 'clownface'
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import { owl, rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
 import { schema } from '@tpluscode/rdf-ns-builders/loose'
 import { expect } from 'chai'

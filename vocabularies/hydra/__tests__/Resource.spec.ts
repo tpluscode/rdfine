@@ -1,14 +1,13 @@
 import cf, { GraphPointer } from 'clownface'
-import $rdf from 'rdf-ext'
-import DatasetExt from 'rdf-ext/lib/Dataset'
-import type { NamedNode } from '@rdfjs/types'
+import $rdf from '@zazuko/env'
+import type { DatasetCore, NamedNode } from '@rdfjs/types'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import { expect } from 'chai';
 import environment from './support/environment.js';
 
 describe('Resource', () => {
   let hydraResourceNode: GraphPointer<NamedNode>
-  let dataset: DatasetExt
+  let dataset: DatasetCore
 
   beforeEach(() => {
     dataset = $rdf.dataset()

@@ -1,5 +1,5 @@
 import { MemberAssertion } from '../../extensions/MemberAssertion.js';
-import $rdf from 'rdf-ext';
+import $rdf from '@zazuko/env';
 import { Initializer } from '@tpluscode/rdfine/RdfResource';
 import { schema, hydra } from '@tpluscode/rdf-ns-builders';
 import { expect } from 'chai';

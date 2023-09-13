@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import cf, { AnyPointer } from 'clownface'
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import { dash, rdfs, sh } from '@tpluscode/rdf-ns-builders'
 import { findTermsToGenerate } from '../../lib/ExtensionMixinGenerator/index.js'
 import { FakeTypeCollection } from '../_helpers/FakeTypeCollection.js'

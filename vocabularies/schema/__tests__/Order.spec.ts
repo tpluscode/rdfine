@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import clownface from 'clownface'
-import RDF from 'rdf-ext'
+import RDF from '@zazuko/env'
 import { schema } from '@tpluscode/rdf-ns-builders';
 import environment from './environment.js';
 

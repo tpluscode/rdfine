@@ -1,11 +1,12 @@
 import { turtle } from '@tpluscode/rdf-string'
 import namespace from '@rdfjs/namespace'
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import { owl, rdfs, schema, xsd } from '@tpluscode/rdf-ns-builders'
 import cf from 'clownface'
 import Parser from '@rdfjs/parser-n3'
 import stringToStream from 'string-to-stream'
 import { expect } from 'chai'
+import fromStream from 'rdf-dataset-ext/fromStream.js'
 import { findProperties } from '../../lib/property/index.js'
 
 const parser = new Parser()
@@ -22,7 +23,7 @@ describe('findProperties', () => {
                  ${rdfs.range} ${xsd.string} .      
     `.toString()
     const vocabulary = cf({
-      dataset: await $rdf.dataset().import(parser.import(stringToStream(triples))),
+      dataset: await fromStream($rdf.dataset(), parser.import(stringToStream(triples))),
     })
 
     // when
@@ -43,7 +44,7 @@ describe('findProperties', () => {
                  ${schema.rangeIncludes} ${ex.Range1}, ${ex.Range2} .      
     `.toString()
     const vocabulary = cf({
-      dataset: await $rdf.dataset().import(parser.import(stringToStream(triples))),
+      dataset: await fromStream($rdf.dataset(), parser.import(stringToStream(triples))),
     })
 
     // when
@@ -66,7 +67,7 @@ describe('findProperties', () => {
                                 ] .      
     `.toString()
     const vocabulary = cf({
-      dataset: await $rdf.dataset().import(parser.import(stringToStream(triples))),
+      dataset: await fromStream($rdf.dataset(), parser.import(stringToStream(triples))),
     })
 
     // when
@@ -90,7 +91,7 @@ describe('findProperties', () => {
                                 ] .      
     `.toString()
     const vocabulary = cf({
-      dataset: await $rdf.dataset().import(parser.import(stringToStream(triples))),
+      dataset: await fromStream($rdf.dataset(), parser.import(stringToStream(triples))),
     })
 
     // when
@@ -114,7 +115,7 @@ describe('findProperties', () => {
                                 ] .      
     `.toString()
     const vocabulary = cf({
-      dataset: await $rdf.dataset().import(parser.import(stringToStream(triples))),
+      dataset: await fromStream($rdf.dataset(), parser.import(stringToStream(triples))),
     })
 
     // when
