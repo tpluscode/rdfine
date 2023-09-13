@@ -6,6 +6,7 @@ import { foaf, schema, rdf } from '@tpluscode/rdf-ns-builders/loose'
 import { turtle } from '@tpluscode/rdf-string'
 import chai, { expect } from 'chai'
 import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
+import toCanonical from 'rdf-dataset-ext/toCanonical.js'
 import RdfResource from '../RdfResource.js'
 import { namespace, property, crossBoundaries, Constructor } from '../index.js'
 import type { AnyFactory } from '../factory.js'
@@ -289,7 +290,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).to.eq('bar')
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('array can be initialized', async () => {
@@ -308,7 +309,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).to.contain.members(['bar'])
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('array can be initialized with multiple values', async () => {
@@ -327,7 +328,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).to.deep.eq(['foo', 'bar'])
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('rdf list can be initialized', async () => {
@@ -346,7 +347,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).to.deep.eq(['bar'])
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('rdf list can be initialized with multiple values', async () => {
@@ -365,7 +366,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.foo).to.deep.eq(['foo', 'bar'])
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('returns rdf list array', async () => {
@@ -540,7 +541,7 @@ describe('decorator', () => {
         instance.name = cf({ dataset }).has(rdf.type, ex.BlankNodeName).term
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('can set empty array, removing objects', async () => {
@@ -566,7 +567,7 @@ describe('decorator', () => {
         instance.name = []
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('can set array', async () => {
@@ -595,7 +596,7 @@ describe('decorator', () => {
         ]
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('throws when setting array to non-array getter', async () => {
@@ -654,7 +655,7 @@ describe('decorator', () => {
         instance.friendsWorkplaceName = RDF.literal('Google')
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets nil for empty rdf list', async () => {
@@ -678,7 +679,7 @@ describe('decorator', () => {
         instance.friend = []
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets list when property allows list or single and setting array with multiple items', async () => {
@@ -702,7 +703,7 @@ describe('decorator', () => {
         instance.friend = [RDF.literal('bar'), RDF.literal('baz')]
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('setting null to rdf list removes triple', async () => {
@@ -726,7 +727,7 @@ describe('decorator', () => {
         instance.friend = null
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('can set an rdf resource', async () => {
@@ -825,7 +826,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.name.value).to.eq('foo')
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets initial value from clownface object', async () => {
@@ -847,7 +848,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.name.value).to.eq('foo')
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets initial value from function', async () => {
@@ -869,7 +870,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.child.value).to.eq('http://example.com/res/child')
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets all initial values from all mixins', async () => {
@@ -925,7 +926,7 @@ describe('decorator', () => {
           allKnownFriends!: Term[]
       }
 
-      function namedGraphTests(newResource: (dataset: DatasetExt, term: NamedNode, graph?: NamedNode | DefaultGraph) => Resource<DatasetExt>) {
+      function namedGraphTests(newResource: (dataset: DatasetCore, term: NamedNode, graph?: NamedNode | DefaultGraph) => Resource<DatasetCore>) {
         describe('getter', () => {
           it('returns value from same graph', async () => {
             // given
@@ -1030,7 +1031,7 @@ describe('decorator', () => {
             instance.friend = ex.Holly
 
             // then
-            expect(instance.unionGraphPointer.dataset.toCanonical()).toMatchSnapshot()
+            expect(toCanonical(instance.unionGraphPointer.dataset)).toMatchSnapshot()
           })
 
           it('sets value to default graph if unspecified', async () => {
@@ -1049,7 +1050,7 @@ describe('decorator', () => {
             instance.friend = ex.Holly
 
             // then
-            expect(instance.unionGraphPointer.dataset.toCanonical()).toMatchSnapshot()
+            expect(toCanonical(instance.unionGraphPointer.dataset)).toMatchSnapshot()
           })
         })
 
@@ -1063,7 +1064,7 @@ describe('decorator', () => {
             instance.friend = ex.Holly
 
             // then
-            expect(instance.unionGraphPointer.dataset.toCanonical()).toMatchSnapshot()
+            expect(toCanonical(instance.unionGraphPointer.dataset)).toMatchSnapshot()
           })
         })
       }

@@ -7,6 +7,7 @@ import rdfExt from '@zazuko/env'
 import { turtle } from '@tpluscode/rdf-string'
 import { foaf, schema, rdf } from '@tpluscode/rdf-ns-builders/loose'
 import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
+import toCanonical from 'rdf-dataset-ext/toCanonical.js'
 import {
   property,
   namespace,
@@ -188,7 +189,7 @@ describe('decorator', () => {
         john.spouse = jane
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('setting null removes relation', async () => {
@@ -213,7 +214,7 @@ describe('decorator', () => {
         john.spouse = null
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('accepts raw named node term', async () => {
@@ -236,7 +237,7 @@ describe('decorator', () => {
         john.spouse = ex.jane
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('accepts blank node context', async () => {
@@ -259,7 +260,7 @@ describe('decorator', () => {
         john.spouse = john.pointer.blankNode()
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets array to rdf list property', async () => {
@@ -287,7 +288,7 @@ describe('decorator', () => {
         ]
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets array to set property', async () => {
@@ -312,7 +313,7 @@ describe('decorator', () => {
         ]
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('accepts raw blank node term', async () => {
@@ -335,7 +336,7 @@ describe('decorator', () => {
         lois.spouse = cf({ dataset }).has(rdf.type, ex.Superman).term
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('accepts deep plain JS object', async () => {
@@ -381,7 +382,7 @@ describe('decorator', () => {
         })
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
     })
 
@@ -427,7 +428,7 @@ describe('decorator', () => {
         expect(name.first).to.eq('John')
         expect(name.last).to.eq('Doe')
         expect(name.person.id.value).to.eq(instance.id.value)
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('set by named node', async () => {
@@ -472,7 +473,7 @@ describe('decorator', () => {
         }), environment)
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
     })
 
@@ -663,7 +664,7 @@ describe('decorator', () => {
           john.friend = new Resource(cf({ dataset, term: ex.Will, graph: ex.Will }), environment)
 
           // then
-          expect(dataset.toCanonical()).toMatchSnapshot()
+          expect(toCanonical(dataset)).toMatchSnapshot()
         })
       })
     })

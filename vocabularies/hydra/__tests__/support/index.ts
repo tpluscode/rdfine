@@ -2,6 +2,7 @@ import stringToStream from 'string-to-stream'
 import rdf from '@zazuko/env'
 import Parser from '@rdfjs/parser-n3'
 import prefixes from '@zazuko/prefixes'
+import fromStream from 'rdf-dataset-ext/fromStream.js';
 
 const parser = new Parser()
 
@@ -16,6 +17,6 @@ export function createGraph(ntriples: string) {
     PREFIX hydra: <${prefixes.hydra}>
 
     ${ntriples}`)
-    return dataset.import(parser.import(stream as any))
+    return fromStream(dataset, parser.import(stream as any))
   }
 }

@@ -38,7 +38,7 @@
     "@tpluscode/rdf-string": "^1.0.3",
     "@types/node": "^18",
     "@types/once": "^1.4.0",
-    "@zazuko/env": "^1.3.0",
+    "@zazuko/env": "^1.3.1",
     "@zazuko/prefixes": ">=1",
     "chai": "^4.3.7",
     "clownface": "^2.0.0",

@@ -3,6 +3,7 @@ import cf, { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import chai, { expect } from 'chai'
 import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
+import toCanonical from 'rdf-dataset-ext/toCanonical.js'
 import TypeCollection from '../lib/TypeCollection.js'
 import RdfResourceImpl, { RdfResource, ResourceIdentifier } from '../RdfResource.js'
 import { parse, ex } from './_helpers/index.js'
@@ -204,7 +205,7 @@ describe('TypeCollection', () => {
 
       // then
       expect(dataset.size).to.eq(1)
-      expect(dataset.toCanonical()).toMatchSnapshot()
+      expect(toCanonical(dataset)).toMatchSnapshot()
     })
   })
 
@@ -221,7 +222,7 @@ describe('TypeCollection', () => {
       tc.add(ex.Type)
 
       // then
-      expect(dataset.toCanonical()).toMatchSnapshot()
+      expect(toCanonical(dataset)).toMatchSnapshot()
     })
 
     it('modifies the dataset when adding resource', () => {
@@ -240,7 +241,7 @@ describe('TypeCollection', () => {
       tc.add(newType)
 
       // then
-      expect(dataset.toCanonical()).toMatchSnapshot()
+      expect(toCanonical(dataset)).toMatchSnapshot()
     })
 
     it('does not modify the dataset when type already exists on resource', async () => {
@@ -263,7 +264,7 @@ describe('TypeCollection', () => {
       tc.add(newType)
 
       // then
-      expect(dataset.toCanonical()).toMatchSnapshot()
+      expect(toCanonical(dataset)).toMatchSnapshot()
     })
   })
 
@@ -286,7 +287,7 @@ describe('TypeCollection', () => {
 
       // then
       expect(dataset.size).to.eq(4)
-      expect(dataset.toCanonical()).toMatchSnapshot()
+      expect(toCanonical(dataset)).toMatchSnapshot()
     })
 
     it('returns true if deleted triples', async () => {

@@ -8,6 +8,7 @@ import { schema, xsd } from '@tpluscode/rdf-ns-builders'
 import { turtle } from '@tpluscode/rdf-string'
 import cf, { GraphPointer } from 'clownface'
 import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
+import toCanonical from 'rdf-dataset-ext/toCanonical.js'
 import RdfResource from '../RdfResource.js'
 import { property } from '../index.js'
 import { RdfineEnvironment } from '../environment.js'
@@ -279,7 +280,7 @@ describe('decorator', () => {
         instance.name = RDF.literal('John', 'en-gb')
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('replaces boolean object value', async () => {
@@ -306,7 +307,7 @@ describe('decorator', () => {
         instance.married = false
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets xsd:integer literal for int number', async () => {
@@ -327,7 +328,7 @@ describe('decorator', () => {
         instance.age = 30
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets xsd:float literal for float number', async () => {
@@ -348,7 +349,7 @@ describe('decorator', () => {
         instance.age = 30.4
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets xsd:long literal for bigint', async () => {
@@ -369,7 +370,7 @@ describe('decorator', () => {
         instance.age = BigInt(9007199254740991)
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets xsd:dateTime literal for Date', async () => {
@@ -442,7 +443,7 @@ describe('decorator', () => {
         instance.name = 'Jane'
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('replaces string literal node value', async () => {
@@ -469,7 +470,7 @@ describe('decorator', () => {
         instance.name = RDF.literal('Jane', ex.Name)
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('replaces string literal node value', async () => {
@@ -496,7 +497,7 @@ describe('decorator', () => {
         instance.name = instance.pointer.literal('Jane', ex.Name)
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('unsets string object when null is set', async () => {
@@ -523,7 +524,7 @@ describe('decorator', () => {
         instance.name = null
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('throws when trying to set a named node', async () => {
@@ -625,7 +626,7 @@ describe('decorator', () => {
         instance.age = '20'
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets a numeric literal with the annotated type', async () => {
@@ -649,7 +650,7 @@ describe('decorator', () => {
         instance.age = 20
 
         // then
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
     })
 
@@ -673,7 +674,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.name).to.eq('foo')
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('does not set initialized value when present in initial dataset', async () => {
@@ -701,7 +702,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.name).to.eq('bar')
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets initial value from node', async () => {
@@ -723,7 +724,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.name).to.eq('foo')
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
 
       it('sets initial value from function', async () => {
@@ -745,7 +746,7 @@ describe('decorator', () => {
 
         // then
         expect(instance.name).to.eq(instance.id.value)
-        expect(dataset.toCanonical()).toMatchSnapshot()
+        expect(toCanonical(dataset)).toMatchSnapshot()
       })
     })
   })

@@ -1,9 +1,10 @@
 import cf, { GraphPointer } from 'clownface'
 import $rdf from '@zazuko/env'
 import { schema } from '@tpluscode/rdf-ns-builders'
-import type { Literal, NamedNode } from '@rdfjs/types'
+import type { DatasetCore, Literal, NamedNode } from '@rdfjs/types'
 import chai, { expect } from 'chai'
 import { jestSnapshotPlugin } from 'mocha-chai-jest-snapshot'
+import toCanonical from 'rdf-dataset-ext/toCanonical.js'
 import { createProxy } from '../lib/proxy.js'
 import RdfResourceImpl, { RdfResource } from '../RdfResource.js'
 import { property, ResourceIndexer } from '../index.js'
@@ -12,7 +13,7 @@ import { ex } from './_helpers/index.js'
 import environment from './_helpers/environment.js'
 
 describe('proxy', () => {
-  let node: GraphPointer<NamedNode, DatasetExt>
+  let node: GraphPointer<NamedNode, DatasetCore>
   chai.use(jestSnapshotPlugin())
   before(() => import('../../../__tests__/helpers/matchers.js'))
 
@@ -167,7 +168,7 @@ describe('proxy', () => {
       proxy[ex.set.value] = $rdf.literal('foo')
 
       // then
-      expect(node.dataset.toCanonical()).toMatchSnapshot()
+      expect(toCanonical(node.dataset)).toMatchSnapshot()
     })
 
     it('single resource', () => {
@@ -179,7 +180,7 @@ describe('proxy', () => {
       proxy[ex.set.value] = new RdfResourceImpl(node.namedNode(ex.other), environment)
 
       // then
-      expect(node.dataset.toCanonical()).toMatchSnapshot()
+      expect(toCanonical(node.dataset)).toMatchSnapshot()
     })
 
     it('single factory', () => {
@@ -208,7 +209,7 @@ describe('proxy', () => {
       proxy[ex.set.value] = [$rdf.literal('foo'), $rdf.literal('bar')]
 
       // then
-      expect(node.dataset.toCanonical()).toMatchSnapshot()
+      expect(toCanonical(node.dataset)).toMatchSnapshot()
     })
 
     it('multiple resources', () => {
@@ -223,7 +224,7 @@ describe('proxy', () => {
       ]
 
       // then
-      expect(node.dataset.toCanonical()).toMatchSnapshot()
+      expect(toCanonical(node.dataset)).toMatchSnapshot()
     })
 
     it('multiple factories and values', () => {
@@ -255,7 +256,7 @@ describe('proxy', () => {
       proxy[ex.multi.value] = null
 
       // then
-      expect(node.dataset.toCanonical()).toMatchSnapshot()
+      expect(toCanonical(node.dataset)).toMatchSnapshot()
     })
 
     it('empty array removes triples', () => {
@@ -267,7 +268,7 @@ describe('proxy', () => {
       proxy[ex.multi.value] = []
 
       // then
-      expect(node.dataset.toCanonical()).toMatchSnapshot()
+      expect(toCanonical(node.dataset)).toMatchSnapshot()
     })
 
     it('does not proxy declared properties', () => {
@@ -282,7 +283,7 @@ describe('proxy', () => {
       proxy.foo = 10
 
       // then
-      expect(node.dataset.toCanonical()).toMatchSnapshot()
+      expect(toCanonical(node.dataset)).toMatchSnapshot()
     })
   })
 })

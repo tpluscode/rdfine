@@ -37,19 +37,6 @@ describe('decorator', () => {
       expect(ns.value).to.eq('http://example.com/')
     })
 
-    it('can be used on class extending specific dataset type', () => {
-      // given
-      @namespace(foaf)
-      class WithNamespace extends RdfResource<DatasetExt> {
-      }
-
-      // when
-      const ns = WithNamespace.__ns!()
-
-      // then
-      expect(ns.value).to.eq(foaf('').value)
-    })
-
     describe('used on mixins', () => {
       function SchemaMixin<Base extends Constructor>(base: Base) {
         @namespace(schema)
