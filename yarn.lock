@@ -1013,14 +1013,7 @@
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.5.tgz#ae69bcbb1bebb68c4ac0b11e9d8ed04526b3562b"
   integrity sha512-mEo1sAde+UCE6b2hxn332f1g1E8WfYRu6p5SvTKr2ZKC1f7gFJXk4h5PyGP9Dt6gCaG8y8XhwnXWC6Iy2cmBng==
 
-"@types/clownface@^2":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@types/clownface/-/clownface-2.0.0.tgz#e3d8d6faf0d5807b0a5103b05e275feac0ba1da1"
-  integrity sha512-4rvgWFPLPJPQHGXy5BXowDO7hvMKXVlED8ItXkUcNv4kvTnQ7q3UQeVYuJyT46JdxRdHU9hvqpHbIAJyPQUycw==
-  dependencies:
-    rdf-js "^4.0.2"
-
-"@types/clownface@^2.0.0":
+"@types/clownface@^2", "@types/clownface@^2.0.0":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@types/clownface/-/clownface-2.0.1.tgz#125433636a6382fdc7a638bf9b108b665415227c"
   integrity sha512-zn794UX/fXle6nZLlwrTAcXyq0JOS4dy/nmQFUgMD8gMSS1Fnm/PWRdWl+jOeWZRq+FM94fi0Wvdgub/LFAgcg==
@@ -1198,15 +1191,7 @@
     "@types/rdfjs__fetch-lite" "*"
     rdf-js "^4.0.2"
 
-"@types/rdfjs__formats-common@*":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@types/rdfjs__formats-common/-/rdfjs__formats-common-2.0.2.tgz#f5045da9bbffb9afa3701424116bd0e38b53f7f3"
-  integrity sha512-2h3Db8iaOZjJIc26R8fz0LzdX3arGwQf2MzsRd6slW0Lq3B01LIN3eMS/EcCftf+yYAB+qdpOxGkwKI4e3C0Bg==
-  dependencies:
-    "@types/rdfjs__sink-map" "*"
-    rdf-js "^4.0.2"
-
-"@types/rdfjs__formats-common@^3", "@types/rdfjs__formats-common@^3.1.0":
+"@types/rdfjs__formats-common@*", "@types/rdfjs__formats-common@^3", "@types/rdfjs__formats-common@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@types/rdfjs__formats-common/-/rdfjs__formats-common-3.1.0.tgz#088cd1c0465e024192e783516e532ac4cfbd1f4a"
   integrity sha512-9Hk275paHAu8oB6WSOO8zxQtap+RjIA3ZAQFlW+Cz+d5Z96/rmMz3sg80zUHHrdaHFvKe/VHuu69GeKPx8LLgw==
@@ -5318,21 +5303,13 @@ rdf-data-factory@^1.1.0:
   dependencies:
     "@rdfjs/types" "*"
 
-rdf-dataset-ext@^1:
+rdf-dataset-ext@^1, rdf-dataset-ext@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/rdf-dataset-ext/-/rdf-dataset-ext-1.1.0.tgz#bb796bdf50220ced78561ca32ac0eac0b962c723"
   integrity sha512-CH85RfRKN9aSlbju8T7aM8hgCSWMBsh2eh/tGxUUtWMN+waxi6iFDt8/r4PAEmKaEA82guimZJ4ISbmJ2rvWQg==
   dependencies:
     rdf-canonize "^3.0.0"
     readable-stream "3 - 4"
-
-rdf-dataset-ext@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/rdf-dataset-ext/-/rdf-dataset-ext-1.0.1.tgz#9df48566e57748f321e19c9ec713811badbd7ca5"
-  integrity sha512-I08/j+w0zqNRmFXbFhqxexmKsdS9nGDno/cG/OaF5sLxkDNrhyP82OxWx35ZPrjd4FG8T+TsGaxZFZkVIS85eA==
-  dependencies:
-    rdf-canonize "^3.0.0"
-    readable-stream "^3.4.0"
 
 rdf-js@^4.0.2:
   version "4.0.2"
@@ -5341,7 +5318,7 @@ rdf-js@^4.0.2:
   dependencies:
     "@rdfjs/types" "*"
 
-rdfxml-streaming-parser@>=2:
+rdfxml-streaming-parser@>=2, rdfxml-streaming-parser@^2.2.0:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/rdfxml-streaming-parser/-/rdfxml-streaming-parser-2.2.3.tgz#ca362b5557068b37334e44790912e7ca5b089a1a"
   integrity sha512-HoH8urnga+YQ5sDY9ufRb0wg6FvwR284sSXpZ+fJE5X5Oej6dfzkFer81uBNZzyNmzJR1TpMYMznyXEjPMLhCA==
@@ -5353,20 +5330,6 @@ rdfxml-streaming-parser@>=2:
     rdf-data-factory "^1.1.0"
     readable-stream "^4.0.0"
     relative-to-absolute-iri "^1.0.0"
-    validate-iri "^1.0.0"
-
-rdfxml-streaming-parser@^2.2.0:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/rdfxml-streaming-parser/-/rdfxml-streaming-parser-2.2.1.tgz#10c16ed3aabe88c59c0ba503b4c54cd8f4588649"
-  integrity sha512-1r7aXfSRCLkBYXGcko/GpSZdHxXKvYaeUi2ulEbB7cLvACD7DNoAA/uW6dsETEhgmsEipJZI7NLqBl2whOse8Q==
-  dependencies:
-    "@rdfjs/types" "*"
-    "@types/readable-stream" "^2.3.13"
-    buffer "^6.0.3"
-    rdf-data-factory "^1.1.0"
-    readable-stream "^4.0.0"
-    relative-to-absolute-iri "^1.0.0"
-    saxes "^6.0.0"
     validate-iri "^1.0.0"
 
 react-is@^16.13.1:
@@ -5417,7 +5380,7 @@ read-yaml-file@^1.1.0:
     pify "^4.0.1"
     strip-bom "^3.0.0"
 
-"readable-stream@3 - 4":
+"readable-stream@3 - 4", readable-stream@^4.0.0, readable-stream@^4.2.0, readable-stream@^4.3.0:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-4.4.2.tgz#e6aced27ad3b9d726d8308515b9a1b98dc1b9d13"
   integrity sha512-Lk/fICSyIhodxy1IDK2HazkeGjSmezAWX2egdtJnYhtzKEsBPJowlI6F6LPb5tqIQILrMbx22S5o3GuJavPusA==
@@ -5436,16 +5399,6 @@ readable-stream@^3.4.0:
     inherits "^2.0.3"
     string_decoder "^1.1.1"
     util-deprecate "^1.0.1"
-
-readable-stream@^4.0.0, readable-stream@^4.2.0, readable-stream@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-4.3.0.tgz#0914d0c72db03b316c9733bb3461d64a3cc50cba"
-  integrity sha512-MuEnA0lbSi7JS8XM+WNJlWZkHAAdm7gETHdFK//Q/mChGyj2akEFtdLZh32jSdkWGbRwCW9pn6g3LWDdDeZnBQ==
-  dependencies:
-    abort-controller "^3.0.0"
-    buffer "^6.0.3"
-    events "^3.3.0"
-    process "^0.11.10"
 
 readdirp@~3.6.0:
   version "3.6.0"
