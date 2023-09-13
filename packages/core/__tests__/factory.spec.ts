@@ -1,5 +1,5 @@
 import clownface from 'clownface'
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import { expect } from 'chai'
 import { createFactory } from '../factory.js'
 import { Constructor } from '../lib/ResourceFactory.js'

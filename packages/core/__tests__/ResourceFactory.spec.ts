@@ -1,7 +1,7 @@
 import cf from 'clownface'
 import { foaf, rdf, schema } from '@tpluscode/rdf-ns-builders'
 import { turtle } from '@tpluscode/rdf-string'
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import clownface from 'clownface'
 import { expect } from 'chai'
 import ResourceFactory, { Constructor } from '../lib/ResourceFactory.js'

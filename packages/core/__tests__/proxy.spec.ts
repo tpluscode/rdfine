@@ -1,6 +1,5 @@
 import cf, { GraphPointer } from 'clownface'
-import $rdf from 'rdf-ext'
-import DatasetExt from 'rdf-ext/lib/Dataset'
+import $rdf from '@zazuko/env'
 import { schema } from '@tpluscode/rdf-ns-builders'
 import type { Literal, NamedNode } from '@rdfjs/types'
 import chai, { expect } from 'chai'

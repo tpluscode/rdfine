@@ -1,6 +1,6 @@
 import { turtle } from '@tpluscode/rdf-string'
 import namespace from '@rdfjs/namespace'
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import { owl, rdfs, schema, xsd } from '@tpluscode/rdf-ns-builders'
 import cf from 'clownface'
 import Parser from '@rdfjs/parser-n3'

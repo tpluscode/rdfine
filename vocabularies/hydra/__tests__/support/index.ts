@@ -1,5 +1,5 @@
 import stringToStream from 'string-to-stream'
-import rdf from 'rdf-ext'
+import rdf from '@zazuko/env'
 import Parser from '@rdfjs/parser-n3'
 import prefixes from '@zazuko/prefixes'
 

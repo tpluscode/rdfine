@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import cf, { AnyPointer, GraphPointer } from 'clownface'
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import type { NamedNode, Term, Literal } from '@rdfjs/types'
 import {
   skos,

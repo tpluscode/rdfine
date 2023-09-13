@@ -1,9 +1,4 @@
-import type { Environment } from '@rdfjs/environment/Environment.js'
-import { DataFactory, DatasetCoreFactory } from '@rdfjs/types'
-import type TermSetFactory from '@rdfjs/term-set/Factory.js'
-import type { TermMapFactory } from '@rdfjs/term-map/Factory.js'
-import type { NamespaceFactory } from '@rdfjs/namespace/Factory.js'
-import type ClownfaceFactory from 'clownface/Factory.js'
+import type { DefaultEnv, DerivedEnvironment } from '@zazuko/env'
 import RdfResourceImpl from './RdfResource.js'
 import ResourceFactoryImpl, { Constructor, ResourceFactory } from './lib/ResourceFactory.js'
 
@@ -57,4 +52,4 @@ export class RdfineFactory {
   }
 }
 
-export type RdfineEnvironment = Environment<RdfineFactory | DatasetCoreFactory | DataFactory | TermSetFactory | TermMapFactory | NamespaceFactory | ClownfaceFactory>
+export type RdfineEnvironment = DerivedEnvironment<DefaultEnv, RdfineFactory>

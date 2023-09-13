@@ -1,13 +1,12 @@
 import cf, { GraphPointer } from 'clownface'
-import $rdf from 'rdf-ext'
-import DatasetExt from 'rdf-ext/lib/Dataset'
+import $rdf from '@zazuko/env'
 import type { NamedNode } from '@rdfjs/types'
 import { hydra } from '@tpluscode/rdf-ns-builders'
 import { expect } from 'chai';
 import environment from './support/environment.js';
 
 describe('IriTemplateMapping', () => {
-  let node: GraphPointer<NamedNode, DatasetExt>
+  let node: GraphPointer<NamedNode>
 
   beforeEach(() => {
     node = cf({ dataset: $rdf.dataset() })

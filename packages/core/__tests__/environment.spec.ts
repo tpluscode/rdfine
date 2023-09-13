@@ -1,4 +1,4 @@
-import { Environment } from 'rdf-ext'
+import { Environment } from '@zazuko/env'
 import { expect } from 'chai'
 import { RdfineFactory } from '../environment.js'
 

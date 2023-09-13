@@ -1,4 +1,4 @@
-import $rdf from 'rdf-ext';
+import $rdf from '@zazuko/env';
 import clownface from 'clownface';
 import RDF from '@rdfjs/data-model';
 import { rdfs } from '@tpluscode/rdf-ns-builders';

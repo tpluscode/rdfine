@@ -1,7 +1,5 @@
-import prefixes from '@zazuko/prefixes'
 import cf from 'clownface'
-import $rdf from 'rdf-ext'
-import DatasetExt from 'rdf-ext/lib/Dataset'
+import $rdf from '@zazuko/env'
 import { foaf } from '@tpluscode/rdf-ns-builders'
 import { rdfs, schema } from '@tpluscode/rdf-ns-builders/loose'
 import builder, { NamespaceBuilder } from '@rdfjs/namespace'

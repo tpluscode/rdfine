@@ -1,11 +1,13 @@
-import DatasetExt from 'rdf-ext/lib/Dataset'
 import { SourceFile } from 'ts-morph'
 import Parser from '@rdfjs/parser-jsonld'
 import toStream from 'string-to-stream'
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import { Assertion, AssertionError } from 'chai'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { addSerializer } from 'jest-snapshot'
+import { DatasetCore } from '@rdfjs/types'
+import toCanonical from 'rdf-dataset-ext/toCanonical.js'
+import fromStream from 'rdf-dataset-ext/fromStream.js'
 
 const parser = new Parser()
 
@@ -23,7 +25,7 @@ Assertion.addMethod('validJsonLd', async function (this: Chai.AssertionStatic) {
   const jsonld = typeof received === 'string' ? received : JSON.stringify(received)
 
   try {
-    await $rdf.dataset().import(parser.import(toStream(jsonld)))
+    await fromStream($rdf.dataset(), parser.import(toStream(jsonld)))
   } catch (e: any) {
     throw new AssertionError(`Failed to parse JSON-LD: ${e.message}`)
   }
@@ -33,8 +35,8 @@ addSerializer({
   test(val) {
     return typeof val === 'object' && val && 'toCanonical' in val
   },
-  serialize(val: DatasetExt) {
-    return val.toCanonical()
+  serialize(val: DatasetCore) {
+    return toCanonical(val)
   },
 })
 

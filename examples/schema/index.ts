@@ -1,6 +1,6 @@
 import factory from '@rdfjs/dataset'
 import fetch from '@rdfjs/fetch'
-import RDF from 'rdf-ext'
+import RDF from '@zazuko/env'
 import { turtle } from '@tpluscode/rdf-string'
 import * as Schema from '@rdfine/schema'
 import RdfResource from '@tpluscode/rdfine'

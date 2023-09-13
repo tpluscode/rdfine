@@ -1,5 +1,5 @@
 import clownface from 'clownface';
-import $rdf from 'rdf-ext';
+import $rdf from '@zazuko/env';
 import { schema } from '@tpluscode/rdf-ns-builders';
 import { expect } from 'chai';
 import environment from './environment.js';

@@ -1,4 +1,4 @@
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import cf, { GraphPointer } from 'clownface'
 import { rdf } from '@tpluscode/rdf-ns-builders'
 import chai, { expect } from 'chai'

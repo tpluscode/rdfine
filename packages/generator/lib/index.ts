@@ -1,7 +1,7 @@
 import cf, { AnyPointer, GraphPointer } from 'clownface'
 import { Debugger } from 'debug'
 import { Stream } from '@rdfjs/types'
-import rdf from 'rdf-ext'
+import rdf from '@zazuko/env'
 import nsBuilder from '@rdfjs/namespace'
 import prefixes, { expand } from '@zazuko/prefixes'
 import { IndentationText, Project, QuoteKind, SourceFile } from 'ts-morph'

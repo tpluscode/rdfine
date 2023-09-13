@@ -1,5 +1,5 @@
 import clownface from 'clownface'
-import $rdf from 'rdf-ext'
+import $rdf from '@zazuko/env'
 import { IriTemplate } from '../lib/IriTemplate.js'
 import { hydra } from '../lib/namespace.js';
 import namespace from '@rdfjs/namespace'

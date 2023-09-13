@@ -79,12 +79,6 @@ const dataset = john._selfGraph.dataset
 npm i @tpluscode/rdfine
 ```
 
-Also peer `@types` dependencies:
-
-```shell script
-npm i --save-dev @types/clownface @types/rdf-ext @types/rdfjs__namespace
-```
-
 ## Usage
 ### Define resource interfaces
 
@@ -130,7 +124,7 @@ export function PersonMixin<Base extends Constructor>(base: Base) {
     label: Term
     
     // use _selfGraph property to access raw triples
-    // by traversing the graph with https://github.com/rdf-ext/clownface
+    // by traversing the graph with https://github.com/zazuko/clownface
     get hasOccupation(): boolean {
       return this._selfGraph
         .out(namedNode('http://schema.org/hasOccupation'))
