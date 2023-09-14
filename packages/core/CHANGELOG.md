@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.3
+
+### Patch Changes
+
+- 3c90fafa: Use mapped type to declare vocabulary factory
+
 ## 0.7.2
 
 ### Patch Changes

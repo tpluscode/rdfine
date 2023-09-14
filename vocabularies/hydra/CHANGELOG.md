@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.10.2
+
+### Patch Changes
+
+- 3c90fafa: Use mapped type to declare vocabulary factory
+- Updated dependencies [3c90fafa]
+  - @tpluscode/rdfine@0.7.3
+  - @rdfine/rdf@0.7.2
+  - @rdfine/rdfs@0.8.2
+
 ## 0.10.1
 
 ### Patch Changes
