@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { SPARQLSelectExecutableMixin as ShaclSPARQLSelectExecutableMixin } from 
 import { TestCaseMixin } from './TestCase.js';
 
 export interface QueryTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.SPARQLSelectExecutable<D>, Dash.TestCase<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface DashVocabulary {
-    QueryTestCase: Factory<Dash.QueryTestCase>;
-  }
 }
 
 export function QueryTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<QueryTestCase & RdfResourceCore> & Base {

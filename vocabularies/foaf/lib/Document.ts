@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ export interface Document<D extends RDF.DatasetCore = RDF.DatasetCore> extends r
   primaryTopic: RDF.NamedNode | undefined;
   'sha1': RDF.Term | undefined;
   topic: RDF.NamedNode | undefined;
-}
-
-declare global {
-  interface FoafVocabulary {
-    Document: Factory<Foaf.Document>;
-  }
 }
 
 export function DocumentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Document & RdfResourceCore> & Base {

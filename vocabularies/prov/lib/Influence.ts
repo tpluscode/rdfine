@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ export interface Influence<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   hadActivity: Prov.Activity<D> | undefined;
   hadRole: Prov.Role<D> | undefined;
   influencer: RDF.NamedNode | undefined;
-}
-
-declare global {
-  interface ProvVocabulary {
-    Influence: Factory<Prov.Influence>;
-  }
 }
 
 export function InfluenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Influence & RdfResourceCore> & Base {

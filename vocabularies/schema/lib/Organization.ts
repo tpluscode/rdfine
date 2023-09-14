@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -82,12 +82,6 @@ export interface Organization<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   telephone: string | undefined;
   unnamedSourcesPolicy: Schema.CreativeWork<D> | undefined;
   vatID: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Organization: Factory<Schema.Organization>;
-  }
 }
 
 export function OrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Organization & RdfResourceCore> & Base {

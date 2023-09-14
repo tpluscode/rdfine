@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,12 +12,6 @@ export interface HealthPlanFormulary<D extends RDF.DatasetCore = RDF.DatasetCore
   healthPlanCostSharing: boolean | undefined;
   healthPlanDrugTier: string | undefined;
   offersPrescriptionByMail: boolean | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    HealthPlanFormulary: Factory<Schema.HealthPlanFormulary>;
-  }
 }
 
 export function HealthPlanFormularyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HealthPlanFormulary & RdfResourceCore> & Base {

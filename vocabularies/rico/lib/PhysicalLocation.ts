@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { ThingMixin } from './Thing.js';
 export interface PhysicalLocation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, rdfine.RdfResource<D> {
   hasOrHadCoordinates: Rico.Coordinates<D> | undefined;
   isOrWasPhysicalLocationOf: Rico.Place<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    PhysicalLocation: Factory<Rico.PhysicalLocation>;
-  }
 }
 
 export function PhysicalLocationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PhysicalLocation & RdfResourceCore> & Base {

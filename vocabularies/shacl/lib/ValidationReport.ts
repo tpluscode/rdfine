@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,12 +13,6 @@ export interface ValidationReport<D extends RDF.DatasetCore = RDF.DatasetCore> e
   conforms: boolean | undefined;
   result: Array<Sh.ValidationResult<D>>;
   shapesGraphWellFormed: boolean | undefined;
-}
-
-declare global {
-  interface ShVocabulary {
-    ValidationReport: Factory<Sh.ValidationReport>;
-  }
 }
 
 export function ValidationReportMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ValidationReport & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -23,12 +23,6 @@ export interface SpecialAnnouncement<D extends RDF.DatasetCore = RDF.DatasetCore
   schoolClosuresInfo: Schema.WebContent<D> | undefined;
   travelBans: Schema.WebContent<D> | undefined;
   webFeed: Schema.DataFeed<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    SpecialAnnouncement: Factory<Schema.SpecialAnnouncement>;
-  }
 }
 
 export function SpecialAnnouncementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SpecialAnnouncement & RdfResourceCore> & Base {

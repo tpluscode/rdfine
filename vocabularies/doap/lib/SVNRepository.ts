@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as Doap from '../index.js';
 import { RepositoryMixin } from './Repository.js';
 
 export interface SVNRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface DoapVocabulary {
-    SVNRepository: Factory<Doap.SVNRepository>;
-  }
 }
 
 export function SVNRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SVNRepository & RdfResourceCore> & Base {

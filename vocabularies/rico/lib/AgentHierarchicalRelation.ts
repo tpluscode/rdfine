@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { AgentToAgentRelationMixin } from './AgentToAgentRelation.js';
 export interface AgentHierarchicalRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, rdfine.RdfResource<D> {
   agentHierarchicalRelationHasSource: Rico.Agent<D> | undefined;
   agentHierarchicalRelationHasTarget: Rico.Agent<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    AgentHierarchicalRelation: Factory<Rico.AgentHierarchicalRelation>;
-  }
 }
 
 export function AgentHierarchicalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentHierarchicalRelation & RdfResourceCore> & Base {

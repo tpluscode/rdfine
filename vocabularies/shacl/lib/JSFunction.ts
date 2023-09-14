@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { FunctionMixin } from './Function.js';
 import { JSExecutableMixin } from './JSExecutable.js';
 
 export interface JSFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Function<D>, Sh.JSExecutable<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface ShVocabulary {
-    JSFunction: Factory<Sh.JSFunction>;
-  }
 }
 
 export function JSFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JSFunction & RdfResourceCore> & Base {

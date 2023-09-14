@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { EventRelationMixin } from './EventRelation.js';
 export interface PerformanceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.EventRelation<D>, rdfine.RdfResource<D> {
   performanceRelationHasSource: Rico.Activity<D> | undefined;
   performanceRelationHasTarget: Rico.Agent<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    PerformanceRelation: Factory<Rico.PerformanceRelation>;
-  }
 }
 
 export function PerformanceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PerformanceRelation & RdfResourceCore> & Base {

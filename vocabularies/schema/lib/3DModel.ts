@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { MediaObjectMixin } from './MediaObject.js';
 
 export interface _3DModel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MediaObject<D>, rdfine.RdfResource<D> {
   isResizable: boolean | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    _3DModel: Factory<Schema._3DModel>;
-  }
 }
 
 export function _3DModelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<_3DModel & RdfResourceCore> & Base {

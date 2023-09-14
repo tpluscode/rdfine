@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { RepositoryMixin } from './Repository.js';
 
 export interface ArchRepository<D extends RDF.DatasetCore = RDF.DatasetCore> extends Doap.Repository<D>, rdfine.RdfResource<D> {
   module: RDF.Term | undefined;
-}
-
-declare global {
-  interface DoapVocabulary {
-    ArchRepository: Factory<Doap.ArchRepository>;
-  }
 }
 
 export function ArchRepositoryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ArchRepository & RdfResourceCore> & Base {

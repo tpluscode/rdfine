@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -16,12 +16,6 @@ export interface DeliveryChargeSpecification<D extends RDF.DatasetCore = RDF.Dat
   eligibleRegionLiteral: string | undefined;
   ineligibleRegion: Schema.GeoShape<D> | Schema.Place<D> | undefined;
   ineligibleRegionLiteral: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    DeliveryChargeSpecification: Factory<Schema.DeliveryChargeSpecification>;
-  }
 }
 
 export function DeliveryChargeSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DeliveryChargeSpecification & RdfResourceCore> & Base {

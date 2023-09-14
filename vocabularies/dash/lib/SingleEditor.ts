@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as Dash from '../index.js';
 import { EditorMixin } from './Editor.js';
 
 export interface SingleEditor<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Editor<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface DashVocabulary {
-    SingleEditor: Factory<Dash.SingleEditor>;
-  }
 }
 
 export function SingleEditorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SingleEditor & RdfResourceCore> & Base {

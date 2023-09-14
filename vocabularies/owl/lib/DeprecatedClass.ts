@@ -1,7 +1,7 @@
 import '../extensions/rdfs/Class.js';
 import { ClassMixinEx } from '../extensions/rdfs/Class.js';
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,12 +12,6 @@ import type * as Rdfs from '@rdfine/rdfs';
 import { ClassMixin as RdfsClassMixin } from '@rdfine/rdfs/lib/Class';
 
 export interface DeprecatedClass<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Class<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface OwlVocabulary {
-    DeprecatedClass: Factory<Owl.DeprecatedClass>;
-  }
 }
 
 export function DeprecatedClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DeprecatedClass & RdfResourceCore> & Base {

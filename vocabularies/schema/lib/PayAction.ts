@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { TradeActionMixin } from './TradeAction.js';
 
 export interface PayAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.TradeAction<D>, rdfine.RdfResource<D> {
   recipient: Schema.Audience<D> | Schema.ContactPoint<D> | Schema.Organization<D> | Schema.Person<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    PayAction: Factory<Schema.PayAction>;
-  }
 }
 
 export function PayActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PayAction & RdfResourceCore> & Base {

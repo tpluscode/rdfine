@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { ArticleMixin } from './Article.js';
 
 export interface SocialMediaPosting<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Article<D>, rdfine.RdfResource<D> {
   sharedContent: Schema.CreativeWork<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    SocialMediaPosting: Factory<Schema.SocialMediaPosting>;
-  }
 }
 
 export function SocialMediaPostingMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SocialMediaPosting & RdfResourceCore> & Base {

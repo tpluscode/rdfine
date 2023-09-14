@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,12 +13,6 @@ export interface DeliveryEvent<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   availableFrom: Date | undefined;
   availableThrough: Date | undefined;
   hasDeliveryMethod: Schema.DeliveryMethod | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    DeliveryEvent: Factory<Schema.DeliveryEvent>;
-  }
 }
 
 export function DeliveryEventMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DeliveryEvent & RdfResourceCore> & Base {

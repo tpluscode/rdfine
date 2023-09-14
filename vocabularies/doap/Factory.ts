@@ -1,6 +1,7 @@
-import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
-import { Factory } from '@tpluscode/rdfine/factory';
+import type { RdfineEnvironment, Vocabulary } from '@tpluscode/rdfine/environment';
 import * as Doap from './index.js';
+
+type DoapVocabulary = Vocabulary<typeof Doap>;
 
 declare module '@tpluscode/rdfine/environment' {
   interface Rdfine {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ export interface Statement<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   object: RDF.Term | undefined;
   predicate: RDF.Term | undefined;
   subject: RDF.Term | undefined;
-}
-
-declare global {
-  interface RdfVocabulary {
-    Statement: Factory<Rdf.Statement>;
-  }
 }
 
 export function StatementMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Statement & RdfResourceCore> & Base {

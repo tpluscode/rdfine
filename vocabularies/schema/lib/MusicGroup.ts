@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -16,12 +16,6 @@ export interface MusicGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   musicGroupMember: Schema.Person<D> | undefined;
   track: Schema.ItemList<D> | Schema.MusicRecording<D> | undefined;
   tracks: Schema.MusicRecording<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    MusicGroup: Factory<Schema.MusicGroup>;
-  }
 }
 
 export function MusicGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MusicGroup & RdfResourceCore> & Base {

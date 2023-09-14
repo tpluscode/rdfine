@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,12 +12,6 @@ export interface Vein<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   drainsTo: Schema.Vessel<D> | undefined;
   regionDrained: Schema.AnatomicalStructure<D> | Schema.AnatomicalSystem<D> | undefined;
   tributary: Schema.AnatomicalStructure<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Vein: Factory<Schema.Vein>;
-  }
 }
 
 export function VeinMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Vein & RdfResourceCore> & Base {

@@ -1,6 +1,7 @@
-import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
-import { Factory } from '@tpluscode/rdfine/factory';
+import type { RdfineEnvironment, Vocabulary } from '@tpluscode/rdfine/environment';
 import * as Skos from './index.js';
+
+type SkosVocabulary = Vocabulary<typeof Skos>;
 
 declare module '@tpluscode/rdfine/environment' {
   interface Rdfine {

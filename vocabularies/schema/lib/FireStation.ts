@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { CivicStructureMixin } from './CivicStructure.js';
 import { EmergencyServiceMixin } from './EmergencyService.js';
 
 export interface FireStation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CivicStructure<D>, Schema.EmergencyService<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface SchemaVocabulary {
-    FireStation: Factory<Schema.FireStation>;
-  }
 }
 
 export function FireStationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FireStation & RdfResourceCore> & Base {

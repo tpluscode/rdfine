@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,12 +15,6 @@ export interface Extent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Ric
   quantity: number | undefined;
   textualValue: RDF.Literal | undefined;
   unitOfMeasurement: RDF.Literal | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    Extent: Factory<Rico.Extent>;
-  }
 }
 
 export function ExtentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Extent & RdfResourceCore> & Base {

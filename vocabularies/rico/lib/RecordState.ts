@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,12 +12,6 @@ export interface RecordState<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   isOrWasRecordStateOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasRecordStateOfSomeMembersOf: Rico.RecordSet<D> | undefined;
   isRecordStateOf: Rico.Record<D> | Rico.RecordPart<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    RecordState: Factory<Rico.RecordState>;
-  }
 }
 
 export function RecordStateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordState & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as As from '../index.js';
 import { IntransitiveActivityMixin } from './IntransitiveActivity.js';
 
 export interface Arrive<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.IntransitiveActivity<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface AsVocabulary {
-    Arrive: Factory<As.Arrive>;
-  }
 }
 
 export function ArriveMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Arrive & RdfResourceCore> & Base {

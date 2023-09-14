@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -19,12 +19,6 @@ export interface Dataset<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   measurementTechniqueTerm: RDF.NamedNode | undefined;
   variableMeasured: Schema.PropertyValue<D> | undefined;
   variableMeasuredLiteral: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Dataset: Factory<Schema.Dataset>;
-  }
 }
 
 export function DatasetMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Dataset & RdfResourceCore> & Base {

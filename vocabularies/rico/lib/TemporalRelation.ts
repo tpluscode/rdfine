@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { SequentialRelationMixin } from './SequentialRelation.js';
 export interface TemporalRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.SequentialRelation<D>, rdfine.RdfResource<D> {
   temporalRelationHasSource: Rico.Thing<D> | undefined;
   temporalRelationHasTarget: Rico.Thing<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    TemporalRelation: Factory<Rico.TemporalRelation>;
-  }
 }
 
 export function TemporalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TemporalRelation & RdfResourceCore> & Base {

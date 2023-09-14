@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { FinancialProductMixin } from './FinancialProduct.js';
 export interface InvestmentOrDeposit<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.FinancialProduct<D>, rdfine.RdfResource<D> {
   amount: Schema.MonetaryAmount<D> | undefined;
   amountLiteral: number | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    InvestmentOrDeposit: Factory<Schema.InvestmentOrDeposit>;
-  }
 }
 
 export function InvestmentOrDepositMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InvestmentOrDeposit & RdfResourceCore> & Base {

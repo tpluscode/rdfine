@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,12 +15,6 @@ export interface DefinedRegion<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   postalCode: string | undefined;
   postalCodePrefix: string | undefined;
   postalCodeRange: Schema.PostalCodeRangeSpecification<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    DefinedRegion: Factory<Schema.DefinedRegion>;
-  }
 }
 
 export function DefinedRegionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DefinedRegion & RdfResourceCore> & Base {

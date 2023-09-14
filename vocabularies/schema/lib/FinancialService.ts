@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 export interface FinancialService<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
   feesAndCommissionsSpecification: string | undefined;
   feesAndCommissionsSpecificationTerm: RDF.NamedNode | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    FinancialService: Factory<Schema.FinancialService>;
-  }
 }
 
 export function FinancialServiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FinancialService & RdfResourceCore> & Base {

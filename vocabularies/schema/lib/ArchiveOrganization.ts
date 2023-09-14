@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { LocalBusinessMixin } from './LocalBusiness.js';
 
 export interface ArchiveOrganization<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LocalBusiness<D>, rdfine.RdfResource<D> {
   archiveHeld: Schema.ArchiveComponent<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    ArchiveOrganization: Factory<Schema.ArchiveOrganization>;
-  }
 }
 
 export function ArchiveOrganizationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ArchiveOrganization & RdfResourceCore> & Base {

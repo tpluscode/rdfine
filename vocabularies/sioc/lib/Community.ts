@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,12 +8,6 @@ import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Sioc from '../index.js';
 
 export interface Community<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface SiocVocabulary {
-    Community: Factory<Sioc.Community>;
-  }
 }
 
 export function CommunityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Community & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { InstantiationToInstantiationRelationMixin } from './InstantiationToInst
 
 export interface FunctionalEquivalenceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.InstantiationToInstantiationRelation<D>, rdfine.RdfResource<D> {
   functionalEquivalenceRelationConnects: Rico.Instantiation<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    FunctionalEquivalenceRelation: Factory<Rico.FunctionalEquivalenceRelation>;
-  }
 }
 
 export function FunctionalEquivalenceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FunctionalEquivalenceRelation & RdfResourceCore> & Base {

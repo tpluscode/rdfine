@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,12 +12,6 @@ export interface BuyAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   seller: Schema.Organization<D> | Schema.Person<D> | undefined;
   vendor: Schema.Organization<D> | Schema.Person<D> | undefined;
   warrantyPromise: Schema.WarrantyPromise<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    BuyAction: Factory<Schema.BuyAction>;
-  }
 }
 
 export function BuyActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<BuyAction & RdfResourceCore> & Base {

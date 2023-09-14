@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { TypeMixin } from './Type.js';
 
 export interface PlaceType<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, rdfine.RdfResource<D> {
   isOrWasPlaceTypeOf: Rico.Place<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    PlaceType: Factory<Rico.PlaceType>;
-  }
 }
 
 export function PlaceTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PlaceType & RdfResourceCore> & Base {

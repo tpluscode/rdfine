@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as Prov from '../index.js';
 import { ActivityMixin } from './Activity.js';
 
 export interface Copyright<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Activity<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface ProvVocabulary {
-    Copyright: Factory<Prov.Copyright>;
-  }
 }
 
 export function CopyrightMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Copyright & RdfResourceCore> & Base {

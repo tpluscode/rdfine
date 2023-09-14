@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,12 +13,6 @@ export interface Question<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   answerCount: number | undefined;
   eduQuestionType: string | undefined;
   suggestedAnswer: Schema.Answer<D> | Schema.ItemList<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Question: Factory<Schema.Question>;
-  }
 }
 
 export function QuestionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Question & RdfResourceCore> & Base {

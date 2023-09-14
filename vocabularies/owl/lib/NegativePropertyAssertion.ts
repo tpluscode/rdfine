@@ -1,7 +1,7 @@
 import '../extensions/rdfs/Resource.js';
 import { ResourceMixinEx } from '../extensions/rdfs/Resource.js';
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -18,12 +18,6 @@ export interface NegativePropertyAssertion<D extends RDF.DatasetCore = RDF.Datas
   sourceIndividual: RDF.NamedNode | undefined;
   targetIndividual: RDF.NamedNode | undefined;
   targetValue: string | undefined;
-}
-
-declare global {
-  interface OwlVocabulary {
-    NegativePropertyAssertion: Factory<Owl.NegativePropertyAssertion>;
-  }
 }
 
 export function NegativePropertyAssertionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NegativePropertyAssertion & RdfResourceCore> & Base {

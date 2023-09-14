@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,12 +12,6 @@ export interface LocationFeatureSpecification<D extends RDF.DatasetCore = RDF.Da
   hoursAvailable: Schema.OpeningHoursSpecification<D> | undefined;
   validFrom: Date | undefined;
   validThrough: Date | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    LocationFeatureSpecification: Factory<Schema.LocationFeatureSpecification>;
-  }
 }
 
 export function LocationFeatureSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LocationFeatureSpecification & RdfResourceCore> & Base {

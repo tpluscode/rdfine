@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as As from '../index.js';
 import { DocumentMixin } from './Document.js';
 
 export interface Video<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Document<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface AsVocabulary {
-    Video: Factory<As.Video>;
-  }
 }
 
 export function VideoMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Video & RdfResourceCore> & Base {

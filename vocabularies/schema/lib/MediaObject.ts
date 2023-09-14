@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -32,12 +32,6 @@ export interface MediaObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   startTime: Date | undefined;
   uploadDate: Date | undefined;
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    MediaObject: Factory<Schema.MediaObject>;
-  }
 }
 
 export function MediaObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MediaObject & RdfResourceCore> & Base {

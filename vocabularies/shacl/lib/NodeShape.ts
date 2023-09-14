@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { ShapeMixin } from './Shape.js';
 
 export interface NodeShape<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.Shape<D>, rdfine.RdfResource<D> {
   ignoredProperties: Array<RDF.Term>;
-}
-
-declare global {
-  interface ShVocabulary {
-    NodeShape: Factory<Sh.NodeShape>;
-  }
 }
 
 export function NodeShapeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<NodeShape & RdfResourceCore> & Base {

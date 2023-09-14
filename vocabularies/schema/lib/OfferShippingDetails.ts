@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -21,12 +21,6 @@ export interface OfferShippingDetails<D extends RDF.DatasetCore = RDF.DatasetCor
   transitTimeLabel: string | undefined;
   weight: Schema.QuantitativeValue<D> | undefined;
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    OfferShippingDetails: Factory<Schema.OfferShippingDetails>;
-  }
 }
 
 export function OfferShippingDetailsMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OfferShippingDetails & RdfResourceCore> & Base {

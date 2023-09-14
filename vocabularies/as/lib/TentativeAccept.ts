@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as As from '../index.js';
 import { AcceptMixin } from './Accept.js';
 
 export interface TentativeAccept<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Accept<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface AsVocabulary {
-    TentativeAccept: Factory<As.TentativeAccept>;
-  }
 }
 
 export function TentativeAcceptMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TentativeAccept & RdfResourceCore> & Base {

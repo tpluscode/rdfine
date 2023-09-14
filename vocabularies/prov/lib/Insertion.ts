@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { DerivationMixin } from './Derivation.js';
 export interface Insertion<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Derivation<D>, rdfine.RdfResource<D> {
   dictionary: Prov.Dictionary<D> | undefined;
   insertedKeyEntityPair: Prov.KeyEntityPair<D> | undefined;
-}
-
-declare global {
-  interface ProvVocabulary {
-    Insertion: Factory<Prov.Insertion>;
-  }
 }
 
 export function InsertionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Insertion & RdfResourceCore> & Base {

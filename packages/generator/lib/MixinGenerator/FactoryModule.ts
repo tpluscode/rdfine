@@ -14,15 +14,18 @@ export class FactoryModule implements GeneratedModule<ResourceType> {
 
     factoryModule.addImportDeclaration({
       moduleSpecifier: '@tpluscode/rdfine/environment',
-      namedImports: ['RdfineEnvironment'],
-    })
-    factoryModule.addImportDeclaration({
-      moduleSpecifier: '@tpluscode/rdfine/factory',
-      namedImports: ['Factory'],
+      namedImports: ['RdfineEnvironment', 'Vocabulary'],
+      isTypeOnly: true,
     })
     factoryModule.addImportDeclaration({
       moduleSpecifier: './index.js',
       namespaceImport: context.defaultExport,
+    })
+
+    factoryModule.addTypeAlias({
+      kind: StructureKind.TypeAlias,
+      name: `${context.defaultExport}Vocabulary`,
+      type: `Vocabulary<typeof ${context.defaultExport}>`,
     })
 
     this.generateModuleAugmentation(factoryModule, context)

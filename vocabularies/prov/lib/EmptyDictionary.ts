@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { DictionaryMixin } from './Dictionary.js';
 import { EmptyCollectionMixin } from './EmptyCollection.js';
 
 export interface EmptyDictionary<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Dictionary<D>, Prov.EmptyCollection<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface ProvVocabulary {
-    EmptyDictionary: Factory<Prov.EmptyDictionary>;
-  }
 }
 
 export function EmptyDictionaryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EmptyDictionary & RdfResourceCore> & Base {

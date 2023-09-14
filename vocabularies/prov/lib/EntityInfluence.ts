@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { InfluenceMixin } from './Influence.js';
 
 export interface EntityInfluence<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Influence<D>, rdfine.RdfResource<D> {
   entity: Prov.Entity<D> | undefined;
-}
-
-declare global {
-  interface ProvVocabulary {
-    EntityInfluence: Factory<Prov.EntityInfluence>;
-  }
 }
 
 export function EntityInfluenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EntityInfluence & RdfResourceCore> & Base {

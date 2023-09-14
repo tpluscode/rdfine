@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,12 +12,6 @@ export interface IriTemplate<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   resolveRelativeUsing: RDF.NamedNode | undefined;
   template: string | undefined;
   variableRepresentation: Hydra.VariableRepresentation<D> | undefined;
-}
-
-declare global {
-  interface HydraVocabulary {
-    IriTemplate: Factory<Hydra.IriTemplate>;
-  }
 }
 
 export function IriTemplateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IriTemplate & RdfResourceCore> & Base {

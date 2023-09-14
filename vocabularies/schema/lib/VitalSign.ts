@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as Schema from '../index.js';
 import { MedicalSignMixin } from './MedicalSign.js';
 
 export interface VitalSign<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalSign<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface SchemaVocabulary {
-    VitalSign: Factory<Schema.VitalSign>;
-  }
 }
 
 export function VitalSignMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VitalSign & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { CreativeWorkMixin } from './CreativeWork.js';
 
 export interface WebSite<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   issn: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    WebSite: Factory<Schema.WebSite>;
-  }
 }
 
 export function WebSiteMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WebSite & RdfResourceCore> & Base {

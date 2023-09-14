@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,12 +15,6 @@ export interface MedicalStudy<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   statusTerm: Schema.EventStatusType | Schema.MedicalStudyStatus | undefined;
   studyLocation: Schema.AdministrativeArea<D> | undefined;
   studySubject: Schema.MedicalEntity<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    MedicalStudy: Factory<Schema.MedicalStudy>;
-  }
 }
 
 export function MedicalStudyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalStudy & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { ResourceMixin as RdfsResourceMixin } from '@rdfine/rdfs/lib/Resource';
 
 export interface JSLibrary<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
   jsLibraryURL: string | undefined;
-}
-
-declare global {
-  interface ShVocabulary {
-    JSLibrary: Factory<Sh.JSLibrary>;
-  }
 }
 
 export function JSLibraryMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<JSLibrary & RdfResourceCore> & Base {

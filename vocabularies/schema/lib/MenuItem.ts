@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,12 +13,6 @@ export interface MenuItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   nutrition: Schema.NutritionInformation<D> | undefined;
   offers: Schema.Demand<D> | Schema.Offer<D> | undefined;
   suitableForDiet: Schema.RestrictedDiet | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    MenuItem: Factory<Schema.MenuItem>;
-  }
 }
 
 export function MenuItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MenuItem & RdfResourceCore> & Base {

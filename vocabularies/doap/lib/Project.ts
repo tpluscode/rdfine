@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -44,12 +44,6 @@ export interface Project<D extends RDF.DatasetCore = RDF.DatasetCore> extends Fo
   translator: Foaf.Person<D> | undefined;
   vendor: Foaf.Organization<D> | undefined;
   wiki: RDF.NamedNode | undefined;
-}
-
-declare global {
-  interface DoapVocabulary {
-    Project: Factory<Doap.Project>;
-  }
 }
 
 export function ProjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Project & RdfResourceCore> & Base {

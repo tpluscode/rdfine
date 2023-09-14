@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -8,12 +8,6 @@ import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Schema from '../index.js';
 
 export interface Optician<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Optician: Factory<Schema.Optician>;
-  }
 }
 
 export function OpticianMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Optician & RdfResourceCore> & Base {

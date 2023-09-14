@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { CreativeWorkMixin } from './CreativeWork.js';
 export interface HyperToc<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   associatedMedia: Schema.MediaObject<D> | undefined;
   tocEntry: Schema.HyperTocEntry<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    HyperToc: Factory<Schema.HyperToc>;
-  }
 }
 
 export function HyperTocMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HyperToc & RdfResourceCore> & Base {

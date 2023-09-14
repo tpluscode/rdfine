@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { ListItemMixin } from './ListItem.js';
 export interface HowToItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ListItem<D>, rdfine.RdfResource<D> {
   requiredQuantity: Schema.QuantitativeValue<D> | undefined;
   requiredQuantityLiteral: number | string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    HowToItem: Factory<Schema.HowToItem>;
-  }
 }
 
 export function HowToItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowToItem & RdfResourceCore> & Base {

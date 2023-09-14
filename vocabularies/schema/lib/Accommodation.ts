@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -26,12 +26,6 @@ export interface Accommodation<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   petsAllowed: boolean | string | undefined;
   tourBookingPage: RDF.NamedNode | undefined;
   yearBuilt: number | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Accommodation: Factory<Schema.Accommodation>;
-  }
 }
 
 export function AccommodationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Accommodation & RdfResourceCore> & Base {

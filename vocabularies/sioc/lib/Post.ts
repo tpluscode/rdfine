@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -18,12 +18,6 @@ export interface Post<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.
   reference: RDF.Term | undefined;
   subject: RDF.Literal | undefined;
   title: RDF.Literal | undefined;
-}
-
-declare global {
-  interface SiocVocabulary {
-    Post: Factory<Sioc.Post>;
-  }
 }
 
 export function PostMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Post & RdfResourceCore> & Base {

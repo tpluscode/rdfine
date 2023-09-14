@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { TypeMixin } from './Type.js';
 
 export interface DemographicGroup<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Type<D>, rdfine.RdfResource<D> {
   isOrWasDemographicGroupOf: Rico.Group<D> | Rico.Person<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    DemographicGroup: Factory<Rico.DemographicGroup>;
-  }
 }
 
 export function DemographicGroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DemographicGroup & RdfResourceCore> & Base {

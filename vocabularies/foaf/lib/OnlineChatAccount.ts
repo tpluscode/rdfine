@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as Foaf from '../index.js';
 import { OnlineAccountMixin } from './OnlineAccount.js';
 
 export interface OnlineChatAccount<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foaf.OnlineAccount<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface FoafVocabulary {
-    OnlineChatAccount: Factory<Foaf.OnlineChatAccount>;
-  }
 }
 
 export function OnlineChatAccountMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OnlineChatAccount & RdfResourceCore> & Base {

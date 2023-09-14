@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -26,12 +26,6 @@ export interface Group<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico
   isOrWasHolderOfIntellectualPropertyRightsOf: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
   isOrWasOwnerOf: Rico.Thing<D> | undefined;
   isOrWasSubdivisionOf: Rico.Group<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    Group: Factory<Rico.Group>;
-  }
 }
 
 export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Group & RdfResourceCore> & Base {

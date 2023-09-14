@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { OrderedCollectionMixin } from './OrderedCollection.js';
 
 export interface OrderedCollectionPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.CollectionPage<D>, As.OrderedCollection<D>, rdfine.RdfResource<D> {
   startIndex: number | undefined;
-}
-
-declare global {
-  interface AsVocabulary {
-    OrderedCollectionPage: Factory<As.OrderedCollectionPage>;
-  }
 }
 
 export function OrderedCollectionPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OrderedCollectionPage & RdfResourceCore> & Base {

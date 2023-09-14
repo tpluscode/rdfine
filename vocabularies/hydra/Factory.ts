@@ -1,5 +1,7 @@
-import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
+import type { RdfineEnvironment, Vocabulary } from '@tpluscode/rdfine/environment';
 import * as Hydra from './index.js';
+
+type HydraVocabulary = Vocabulary<typeof Hydra>;
 
 declare module '@tpluscode/rdfine/environment' {
   interface Rdfine {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,12 +15,6 @@ export interface ApartmentComplex<D extends RDF.DatasetCore = RDF.DatasetCore> e
   numberOfBedroomsLiteral: number | undefined;
   petsAllowed: boolean | string | undefined;
   tourBookingPage: RDF.NamedNode | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    ApartmentComplex: Factory<Schema.ApartmentComplex>;
-  }
 }
 
 export function ApartmentComplexMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ApartmentComplex & RdfResourceCore> & Base {

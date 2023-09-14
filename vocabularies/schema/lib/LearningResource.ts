@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -18,12 +18,6 @@ export interface LearningResource<D extends RDF.DatasetCore = RDF.DatasetCore> e
   educationalUse: string | undefined;
   learningResourceType: string | undefined;
   teaches: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    LearningResource: Factory<Schema.LearningResource>;
-  }
 }
 
 export function LearningResourceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LearningResource & RdfResourceCore> & Base {

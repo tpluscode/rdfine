@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -17,12 +17,6 @@ export interface SupportedProperty<D extends RDF.DatasetCore = RDF.DatasetCore> 
   supportedOperation: Array<Hydra.Operation<D>>;
   title: string | undefined;
   writable: boolean | undefined;
-}
-
-declare global {
-  interface HydraVocabulary {
-    SupportedProperty: Factory<Hydra.SupportedProperty>;
-  }
 }
 
 export function SupportedPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SupportedProperty & RdfResourceCore> & Base {

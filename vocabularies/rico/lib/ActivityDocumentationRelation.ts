@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { ProvenanceRelationMixin } from './ProvenanceRelation.js';
 export interface ActivityDocumentationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.ProvenanceRelation<D>, rdfine.RdfResource<D> {
   activityDocumentationRelationHasSource: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
   activityDocumentationRelationHasTarget: Rico.Activity<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    ActivityDocumentationRelation: Factory<Rico.ActivityDocumentationRelation>;
-  }
 }
 
 export function ActivityDocumentationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ActivityDocumentationRelation & RdfResourceCore> & Base {

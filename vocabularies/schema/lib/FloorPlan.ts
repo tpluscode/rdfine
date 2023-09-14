@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -23,12 +23,6 @@ export interface FloorPlan<D extends RDF.DatasetCore = RDF.DatasetCore> extends 
   numberOfRooms: Schema.QuantitativeValue<D> | undefined;
   numberOfRoomsLiteral: number | undefined;
   petsAllowed: boolean | string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    FloorPlan: Factory<Schema.FloorPlan>;
-  }
 }
 
 export function FloorPlanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FloorPlan & RdfResourceCore> & Base {

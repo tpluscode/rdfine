@@ -1,7 +1,7 @@
 import '../extensions/sh/Function.js';
 import { FunctionMixinEx } from '../extensions/sh/Function.js';
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,12 +13,6 @@ import { FunctionMixin as ShaclFunctionMixin } from '@rdfine/shacl/lib/Function'
 import { ScriptMixin } from './Script.js';
 
 export interface ScriptFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.Function<D>, Dash.Script<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface DashVocabulary {
-    ScriptFunction: Factory<Dash.ScriptFunction>;
-  }
 }
 
 export function ScriptFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ScriptFunction & RdfResourceCore> & Base {

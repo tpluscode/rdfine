@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { AgentOriginationRelationMixin } from './AgentOriginationRelation.js';
 export interface AccumulationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentOriginationRelation<D>, rdfine.RdfResource<D> {
   accumulationRelationHasSource: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
   accumulationRelationHasTarget: Rico.Agent<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    AccumulationRelation: Factory<Rico.AccumulationRelation>;
-  }
 }
 
 export function AccumulationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AccumulationRelation & RdfResourceCore> & Base {

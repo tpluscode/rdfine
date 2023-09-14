@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -40,12 +40,6 @@ export interface EducationalOccupationalProgram<D extends RDF.DatasetCore = RDF.
   trainingSalary: Schema.MonetaryAmountDistribution<D> | undefined;
   typicalCreditsPerTerm: Schema.StructuredValue<D> | undefined;
   typicalCreditsPerTermLiteral: number | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    EducationalOccupationalProgram: Factory<Schema.EducationalOccupationalProgram>;
-  }
 }
 
 export function EducationalOccupationalProgramMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EducationalOccupationalProgram & RdfResourceCore> & Base {

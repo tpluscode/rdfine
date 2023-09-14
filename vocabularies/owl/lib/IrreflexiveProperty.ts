@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as Owl from '../index.js';
 import { ObjectPropertyMixin } from './ObjectProperty.js';
 
 export interface IrreflexiveProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Owl.ObjectProperty<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface OwlVocabulary {
-    IrreflexiveProperty: Factory<Owl.IrreflexiveProperty>;
-  }
 }
 
 export function IrreflexivePropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IrreflexiveProperty & RdfResourceCore> & Base {

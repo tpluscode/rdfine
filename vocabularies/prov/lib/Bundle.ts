@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as Prov from '../index.js';
 import { EntityMixin } from './Entity.js';
 
 export interface Bundle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.Entity<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface ProvVocabulary {
-    Bundle: Factory<Prov.Bundle>;
-  }
 }
 
 export function BundleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Bundle & RdfResourceCore> & Base {

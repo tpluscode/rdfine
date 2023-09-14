@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { ScholarlyArticleMixin } from './ScholarlyArticle.js';
 
 export interface MedicalScholarlyArticle<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ScholarlyArticle<D>, rdfine.RdfResource<D> {
   publicationType: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    MedicalScholarlyArticle: Factory<Schema.MedicalScholarlyArticle>;
-  }
 }
 
 export function MedicalScholarlyArticleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalScholarlyArticle & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { ItemListMixin } from './ItemList.js';
 import { ListItemMixin } from './ListItem.js';
 
 export interface HowToStep<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, Schema.ItemList<D>, Schema.ListItem<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface SchemaVocabulary {
-    HowToStep: Factory<Schema.HowToStep>;
-  }
 }
 
 export function HowToStepMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowToStep & RdfResourceCore> & Base {
