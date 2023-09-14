@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,12 +12,6 @@ export interface TradeAction<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   price: number | string | undefined;
   priceCurrency: string | undefined;
   priceSpecification: Schema.PriceSpecification<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    TradeAction: Factory<Schema.TradeAction>;
-  }
 }
 
 export function TradeActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TradeAction & RdfResourceCore> & Base {

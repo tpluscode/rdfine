@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -21,12 +21,6 @@ export interface VideoObject<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   transcript: string | undefined;
   videoFrameSize: string | undefined;
   videoQuality: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    VideoObject: Factory<Schema.VideoObject>;
-  }
 }
 
 export function VideoObjectMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VideoObject & RdfResourceCore> & Base {

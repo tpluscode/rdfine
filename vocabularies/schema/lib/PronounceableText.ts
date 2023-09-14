@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,12 +13,6 @@ export interface PronounceableText<D extends RDF.DatasetCore = RDF.DatasetCore> 
   phoneticText: string | undefined;
   speechToTextMarkup: string | undefined;
   textValue: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    PronounceableText: Factory<Schema.PronounceableText>;
-  }
 }
 
 export function PronounceableTextMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PronounceableText & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,12 +15,6 @@ export interface ComicIssue<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   letterer: Schema.Person<D> | undefined;
   penciler: Schema.Person<D> | undefined;
   variantCover: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    ComicIssue: Factory<Schema.ComicIssue>;
-  }
 }
 
 export function ComicIssueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ComicIssue & RdfResourceCore> & Base {

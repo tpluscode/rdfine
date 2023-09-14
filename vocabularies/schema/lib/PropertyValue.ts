@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -22,12 +22,6 @@ export interface PropertyValue<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   valueLiteral: boolean | number | string | undefined;
   valueReference: Schema.PropertyValue<D> | Schema.QuantitativeValue<D> | Schema.StructuredValue<D> | undefined;
   valueReferenceLiteral: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    PropertyValue: Factory<Schema.PropertyValue>;
-  }
 }
 
 export function PropertyValueMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PropertyValue & RdfResourceCore> & Base {

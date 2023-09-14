@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { AuthorityRelationMixin } from './AuthorityRelation.js';
 export interface OwnershipRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AuthorityRelation<D>, rdfine.RdfResource<D> {
   ownershipRelationHasSource: Rico.Group<D> | Rico.Person<D> | Rico.Position<D> | undefined;
   ownershipRelationHasTarget: Rico.Thing<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    OwnershipRelation: Factory<Rico.OwnershipRelation>;
-  }
 }
 
 export function OwnershipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OwnershipRelation & RdfResourceCore> & Base {

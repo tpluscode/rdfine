@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,12 +12,6 @@ import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List';
 
 export interface OrderedCollection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Skos.Collection<D>, rdfine.RdfResource<D> {
   memberList: Rdf.List<D> | undefined;
-}
-
-declare global {
-  interface SkosVocabulary {
-    OrderedCollection: Factory<Skos.OrderedCollection>;
-  }
 }
 
 export function OrderedCollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<OrderedCollection & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { ScriptMixin } from './Script.js';
 import { SuggestionGeneratorMixin } from './SuggestionGenerator.js';
 
 export interface ScriptSuggestionGenerator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, Dash.SuggestionGenerator<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface DashVocabulary {
-    ScriptSuggestionGenerator: Factory<Dash.ScriptSuggestionGenerator>;
-  }
 }
 
 export function ScriptSuggestionGeneratorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ScriptSuggestionGenerator & RdfResourceCore> & Base {

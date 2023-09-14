@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,12 +13,6 @@ export interface Joint<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   functionalClass: Schema.MedicalEntity<D> | undefined;
   functionalClassLiteral: string | undefined;
   structuralClass: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Joint: Factory<Schema.Joint>;
-  }
 }
 
 export function JointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Joint & RdfResourceCore> & Base {

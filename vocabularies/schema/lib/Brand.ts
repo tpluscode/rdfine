@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,12 +13,6 @@ export interface Brand<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   logo: Schema.ImageObject<D> | undefined;
   review: Schema.Review<D> | undefined;
   slogan: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Brand: Factory<Schema.Brand>;
-  }
 }
 
 export function BrandMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Brand & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as Schema from '../index.js';
 import { AdministrativeAreaMixin } from './AdministrativeArea.js';
 
 export interface City<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.AdministrativeArea<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface SchemaVocabulary {
-    City: Factory<Schema.City>;
-  }
 }
 
 export function CityMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<City & RdfResourceCore> & Base {

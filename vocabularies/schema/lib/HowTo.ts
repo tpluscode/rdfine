@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -24,12 +24,6 @@ export interface HowTo<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   totalTime: Schema.Duration<D> | undefined;
   yield: Schema.QuantitativeValue<D> | undefined;
   yieldLiteral: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    HowTo: Factory<Schema.HowTo>;
-  }
 }
 
 export function HowToMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<HowTo & RdfResourceCore> & Base {

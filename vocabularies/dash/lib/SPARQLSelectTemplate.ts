@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { ParameterizableMixin as ShaclParameterizableMixin } from '@rdfine/shacl
 import { SPARQLSelectExecutableMixin as ShaclSPARQLSelectExecutableMixin } from '@rdfine/shacl/lib/SPARQLSelectExecutable';
 
 export interface SPARQLSelectTemplate<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.Parameterizable<D>, Shacl.SPARQLSelectExecutable<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface DashVocabulary {
-    SPARQLSelectTemplate: Factory<Dash.SPARQLSelectTemplate>;
-  }
 }
 
 export function SPARQLSelectTemplateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLSelectTemplate & RdfResourceCore> & Base {

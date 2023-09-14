@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -19,12 +19,6 @@ export interface Rule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.
   regulatesOrRegulated: Rico.Thing<D> | undefined;
   ruleIsSourceOfRuleRelation: Rico.RuleRelation<D> | undefined;
   title: RDF.Literal | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    Rule: Factory<Rico.Rule>;
-  }
 }
 
 export function RuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Rule & RdfResourceCore> & Base {

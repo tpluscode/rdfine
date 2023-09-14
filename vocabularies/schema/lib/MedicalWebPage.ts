@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { WebPageMixin } from './WebPage.js';
 export interface MedicalWebPage<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.WebPage<D>, rdfine.RdfResource<D> {
   aspect: string | undefined;
   medicalAudience: Schema.MedicalAudience<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    MedicalWebPage: Factory<Schema.MedicalWebPage>;
-  }
 }
 
 export function MedicalWebPageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalWebPage & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,12 +13,6 @@ export interface MandateRelation<D extends RDF.DatasetCore = RDF.DatasetCore> ex
   authorizingAgent: Rico.Agent<D> | undefined;
   mandateRelationHasSource: Rico.Mandate<D> | undefined;
   mandateRelationHasTarget: Rico.Agent<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    MandateRelation: Factory<Rico.MandateRelation>;
-  }
 }
 
 export function MandateRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MandateRelation & RdfResourceCore> & Base {

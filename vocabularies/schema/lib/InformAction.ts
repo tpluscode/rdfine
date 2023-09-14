@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { CommunicateActionMixin } from './CommunicateAction.js';
 
 export interface InformAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CommunicateAction<D>, rdfine.RdfResource<D> {
   event: Schema.Event<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    InformAction: Factory<Schema.InformAction>;
-  }
 }
 
 export function InformActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<InformAction & RdfResourceCore> & Base {

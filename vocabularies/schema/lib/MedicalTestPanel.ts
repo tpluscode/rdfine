@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { MedicalTestMixin } from './MedicalTest.js';
 
 export interface MedicalTestPanel<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalTest<D>, rdfine.RdfResource<D> {
   subTest: Schema.MedicalTest<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    MedicalTestPanel: Factory<Schema.MedicalTestPanel>;
-  }
 }
 
 export function MedicalTestPanelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MedicalTestPanel & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import type * as Rdf from '../index.js';
 export interface CompoundLiteral<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   direction: RDF.Term | undefined;
   language: RDF.Term | undefined;
-}
-
-declare global {
-  interface RdfVocabulary {
-    CompoundLiteral: Factory<Rdf.CompoundLiteral>;
-  }
 }
 
 export function CompoundLiteralMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CompoundLiteral & RdfResourceCore> & Base {

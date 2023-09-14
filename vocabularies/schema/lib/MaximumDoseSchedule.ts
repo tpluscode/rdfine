@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as Schema from '../index.js';
 import { DoseScheduleMixin } from './DoseSchedule.js';
 
 export interface MaximumDoseSchedule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.DoseSchedule<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface SchemaVocabulary {
-    MaximumDoseSchedule: Factory<Schema.MaximumDoseSchedule>;
-  }
 }
 
 export function MaximumDoseScheduleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MaximumDoseSchedule & RdfResourceCore> & Base {

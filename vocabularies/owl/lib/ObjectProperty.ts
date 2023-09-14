@@ -1,7 +1,7 @@
 import '../extensions/rdf/Property.js';
 import { PropertyMixinEx } from '../extensions/rdf/Property.js';
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,12 +15,6 @@ import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List';
 export interface ObjectProperty<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdf.Property<D>, rdfine.RdfResource<D> {
   inverseOf: Owl.ObjectProperty<D> | undefined;
   propertyChainAxiom: Rdf.List<D> | undefined;
-}
-
-declare global {
-  interface OwlVocabulary {
-    ObjectProperty: Factory<Owl.ObjectProperty>;
-  }
 }
 
 export function ObjectPropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ObjectProperty & RdfResourceCore> & Base {

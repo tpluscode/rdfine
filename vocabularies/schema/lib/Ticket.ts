@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -19,12 +19,6 @@ export interface Ticket<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sch
   totalPrice: Schema.PriceSpecification<D> | undefined;
   totalPriceLiteral: number | string | undefined;
   underName: Schema.Organization<D> | Schema.Person<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Ticket: Factory<Schema.Ticket>;
-  }
 }
 
 export function TicketMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Ticket & RdfResourceCore> & Base {

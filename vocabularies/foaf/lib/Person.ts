@@ -1,7 +1,7 @@
 import '../extensions/wgs/SpatialThing.js';
 import { SpatialThingMixinEx } from '../extensions/wgs/SpatialThing.js';
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -29,12 +29,6 @@ export interface Person<D extends RDF.DatasetCore = RDF.DatasetCore> extends Foa
   surname: RDF.Literal | undefined;
   workInfoHomepage: Foaf.Document<D> | undefined;
   workplaceHomepage: Foaf.Document<D> | undefined;
-}
-
-declare global {
-  interface FoafVocabulary {
-    Person: Factory<Foaf.Person>;
-  }
 }
 
 export function PersonMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Person & RdfResourceCore> & Base {

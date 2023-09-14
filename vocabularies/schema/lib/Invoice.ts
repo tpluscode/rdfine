@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -27,12 +27,6 @@ export interface Invoice<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sc
   referencesOrder: Schema.Order<D> | undefined;
   scheduledPaymentDate: Date | undefined;
   totalPaymentDue: Schema.MonetaryAmount<D> | Schema.PriceSpecification<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Invoice: Factory<Schema.Invoice>;
-  }
 }
 
 export function InvoiceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Invoice & RdfResourceCore> & Base {

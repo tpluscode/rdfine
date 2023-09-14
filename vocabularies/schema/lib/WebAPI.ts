@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { ServiceMixin } from './Service.js';
 
 export interface WebAPI<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Service<D>, rdfine.RdfResource<D> {
   documentation: Schema.CreativeWork<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    WebAPI: Factory<Schema.WebAPI>;
-  }
 }
 
 export function WebAPIMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WebAPI & RdfResourceCore> & Base {

@@ -1,7 +1,7 @@
 import '../extensions/rdfs/Resource.js';
 import { ResourceMixinEx } from '../extensions/rdfs/Resource.js';
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -15,12 +15,6 @@ import { ListMixin as RdfListMixin } from '@rdfine/rdf/lib/List';
 
 export interface AllDifferent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rdfs.Resource<D>, rdfine.RdfResource<D> {
   distinctMembers: Rdf.List<D> | undefined;
-}
-
-declare global {
-  interface OwlVocabulary {
-    AllDifferent: Factory<Owl.AllDifferent>;
-  }
 }
 
 export function AllDifferentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AllDifferent & RdfResourceCore> & Base {

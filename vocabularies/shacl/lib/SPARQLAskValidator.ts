@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { SPARQLAskExecutableMixin } from './SPARQLAskExecutable.js';
 import { ValidatorMixin } from './Validator.js';
 
 export interface SPARQLAskValidator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLAskExecutable<D>, Sh.Validator<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface ShVocabulary {
-    SPARQLAskValidator: Factory<Sh.SPARQLAskValidator>;
-  }
 }
 
 export function SPARQLAskValidatorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLAskValidator & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,12 +14,6 @@ export interface DrugStrength<D extends RDF.DatasetCore = RDF.DatasetCore> exten
   maximumIntake: Schema.MaximumDoseSchedule<D> | undefined;
   strengthUnit: string | undefined;
   strengthValue: number | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    DrugStrength: Factory<Schema.DrugStrength>;
-  }
 }
 
 export function DrugStrengthMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DrugStrength & RdfResourceCore> & Base {

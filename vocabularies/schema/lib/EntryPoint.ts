@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -17,12 +17,6 @@ export interface EntryPoint<D extends RDF.DatasetCore = RDF.DatasetCore> extends
   encodingType: string | undefined;
   httpMethod: string | undefined;
   urlTemplate: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    EntryPoint: Factory<Schema.EntryPoint>;
-  }
 }
 
 export function EntryPointMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EntryPoint & RdfResourceCore> & Base {

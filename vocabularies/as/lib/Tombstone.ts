@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { ObjectMixin } from './Object.js';
 export interface Tombstone<D extends RDF.DatasetCore = RDF.DatasetCore> extends As.Object<D>, rdfine.RdfResource<D> {
   deleted: Date | undefined;
   formerType: As.Object<D> | undefined;
-}
-
-declare global {
-  interface AsVocabulary {
-    Tombstone: Factory<As.Tombstone>;
-  }
 }
 
 export function TombstoneMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Tombstone & RdfResourceCore> & Base {

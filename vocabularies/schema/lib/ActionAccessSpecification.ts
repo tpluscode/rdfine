@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -20,12 +20,6 @@ export interface ActionAccessSpecification<D extends RDF.DatasetCore = RDF.Datas
   ineligibleRegionLiteral: string | undefined;
   requiresSubscription: Schema.MediaSubscription<D> | undefined;
   requiresSubscriptionLiteral: boolean | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    ActionAccessSpecification: Factory<Schema.ActionAccessSpecification>;
-  }
 }
 
 export function ActionAccessSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ActionAccessSpecification & RdfResourceCore> & Base {

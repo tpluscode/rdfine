@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { StructuredValueMixin } from './StructuredValue.js';
 export interface WarrantyPromise<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.StructuredValue<D>, rdfine.RdfResource<D> {
   durationOfWarranty: Schema.QuantitativeValue<D> | undefined;
   warrantyScope: Schema.WarrantyScope | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    WarrantyPromise: Factory<Schema.WarrantyPromise>;
-  }
 }
 
 export function WarrantyPromiseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WarrantyPromise & RdfResourceCore> & Base {

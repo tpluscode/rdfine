@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -18,12 +18,6 @@ export interface ServiceChannel<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   servicePostalAddress: Schema.PostalAddress<D> | undefined;
   serviceSmsNumber: Schema.ContactPoint<D> | undefined;
   serviceUrl: RDF.NamedNode | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    ServiceChannel: Factory<Schema.ServiceChannel>;
-  }
 }
 
 export function ServiceChannelMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ServiceChannel & RdfResourceCore> & Base {

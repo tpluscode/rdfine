@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -17,12 +17,6 @@ export interface Datatype<D extends RDF.DatasetCore = RDF.DatasetCore> extends r
   minExclusive: number | undefined;
   minInclusive: number | undefined;
   minLength: number | undefined;
-}
-
-declare global {
-  interface CsvwVocabulary {
-    Datatype: Factory<Csvw.Datatype>;
-  }
 }
 
 export function DatatypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Datatype & RdfResourceCore> & Base {

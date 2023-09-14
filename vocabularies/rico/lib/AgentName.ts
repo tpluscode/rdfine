@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { NameMixin } from './Name.js';
 
 export interface AgentName<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Name<D>, rdfine.RdfResource<D> {
   isOrWasAgentNameOf: Rico.Agent<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    AgentName: Factory<Rico.AgentName>;
-  }
 }
 
 export function AgentNameMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentName & RdfResourceCore> & Base {

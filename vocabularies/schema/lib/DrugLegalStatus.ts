@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { MedicalIntangibleMixin } from './MedicalIntangible.js';
 
 export interface DrugLegalStatus<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.MedicalIntangible<D>, rdfine.RdfResource<D> {
   applicableLocation: Schema.AdministrativeArea<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    DrugLegalStatus: Factory<Schema.DrugLegalStatus>;
-  }
 }
 
 export function DrugLegalStatusMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DrugLegalStatus & RdfResourceCore> & Base {

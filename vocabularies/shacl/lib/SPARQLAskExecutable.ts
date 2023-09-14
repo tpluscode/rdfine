@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { SPARQLExecutableMixin } from './SPARQLExecutable.js';
 
 export interface SPARQLAskExecutable<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sh.SPARQLExecutable<D>, rdfine.RdfResource<D> {
   ask: string | undefined;
-}
-
-declare global {
-  interface ShVocabulary {
-    SPARQLAskExecutable: Factory<Sh.SPARQLAskExecutable>;
-  }
 }
 
 export function SPARQLAskExecutableMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLAskExecutable & RdfResourceCore> & Base {

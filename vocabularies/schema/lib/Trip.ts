@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -16,12 +16,6 @@ export interface Trip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schem
   partOfTrip: Schema.Trip<D> | undefined;
   provider: Schema.Organization<D> | Schema.Person<D> | undefined;
   subTrip: Schema.Trip<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Trip: Factory<Schema.Trip>;
-  }
 }
 
 export function TripMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Trip & RdfResourceCore> & Base {

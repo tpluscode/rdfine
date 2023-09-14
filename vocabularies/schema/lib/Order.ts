@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -31,12 +31,6 @@ export interface Order<D extends RDF.DatasetCore = RDF.DatasetCore> extends Sche
   paymentMethodId: string | undefined;
   paymentUrl: RDF.NamedNode | undefined;
   seller: Schema.Organization<D> | Schema.Person<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Order: Factory<Schema.Order>;
-  }
 }
 
 export function OrderMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Order & RdfResourceCore> & Base {

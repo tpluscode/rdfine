@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { ProductMixin } from './Product.js';
 
 export interface ProductCollection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Collection<D>, Schema.Product<D>, rdfine.RdfResource<D> {
   includesObject: Schema.TypeAndQuantityNode<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    ProductCollection: Factory<Schema.ProductCollection>;
-  }
 }
 
 export function ProductCollectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ProductCollection & RdfResourceCore> & Base {

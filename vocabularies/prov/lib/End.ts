@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { InstantaneousEventMixin } from './InstantaneousEvent.js';
 
 export interface End<D extends RDF.DatasetCore = RDF.DatasetCore> extends Prov.EntityInfluence<D>, Prov.InstantaneousEvent<D>, rdfine.RdfResource<D> {
   hadActivity: Prov.Activity<D> | undefined;
-}
-
-declare global {
-  interface ProvVocabulary {
-    End: Factory<Prov.End>;
-  }
 }
 
 export function EndMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<End & RdfResourceCore> & Base {

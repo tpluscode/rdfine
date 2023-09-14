@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,12 +12,6 @@ import { SPARQLUpdateExecutableMixin as ShaclSPARQLUpdateExecutableMixin } from 
 import { SuggestionGeneratorMixin } from './SuggestionGenerator.js';
 
 export interface SPARQLUpdateSuggestionGenerator<D extends RDF.DatasetCore = RDF.DatasetCore> extends Shacl.SPARQLSelectExecutable<D>, Shacl.SPARQLUpdateExecutable<D>, Dash.SuggestionGenerator<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface DashVocabulary {
-    SPARQLUpdateSuggestionGenerator: Factory<Dash.SPARQLUpdateSuggestionGenerator>;
-  }
 }
 
 export function SPARQLUpdateSuggestionGeneratorMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLUpdateSuggestionGenerator & RdfResourceCore> & Base {

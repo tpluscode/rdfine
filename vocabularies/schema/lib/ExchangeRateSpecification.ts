@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,12 +13,6 @@ export interface ExchangeRateSpecification<D extends RDF.DatasetCore = RDF.Datas
   currentExchangeRate: Schema.UnitPriceSpecification<D> | undefined;
   exchangeRateSpread: Schema.MonetaryAmount<D> | undefined;
   exchangeRateSpreadLiteral: number | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    ExchangeRateSpecification: Factory<Schema.ExchangeRateSpecification>;
-  }
 }
 
 export function ExchangeRateSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ExchangeRateSpecification & RdfResourceCore> & Base {

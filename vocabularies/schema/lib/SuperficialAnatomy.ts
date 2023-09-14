@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,12 +14,6 @@ export interface SuperficialAnatomy<D extends RDF.DatasetCore = RDF.DatasetCore>
   relatedCondition: Schema.MedicalCondition<D> | undefined;
   relatedTherapy: Schema.MedicalTherapy<D> | undefined;
   significance: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    SuperficialAnatomy: Factory<Schema.SuperficialAnatomy>;
-  }
 }
 
 export function SuperficialAnatomyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SuperficialAnatomy & RdfResourceCore> & Base {

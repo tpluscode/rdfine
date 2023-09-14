@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { PlaceMixin } from './Place.js';
 
 export interface Residence<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Place<D>, rdfine.RdfResource<D> {
   accommodationFloorPlan: Schema.FloorPlan<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Residence: Factory<Schema.Residence>;
-  }
 }
 
 export function ResidenceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Residence & RdfResourceCore> & Base {

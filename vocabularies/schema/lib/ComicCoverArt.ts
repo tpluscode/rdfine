@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { ComicStoryMixin } from './ComicStory.js';
 import { CoverArtMixin } from './CoverArt.js';
 
 export interface ComicCoverArt<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.ComicStory<D>, Schema.CoverArt<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface SchemaVocabulary {
-    ComicCoverArt: Factory<Schema.ComicCoverArt>;
-  }
 }
 
 export function ComicCoverArtMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ComicCoverArt & RdfResourceCore> & Base {

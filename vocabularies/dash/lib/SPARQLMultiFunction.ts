@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { MultiFunctionMixin } from './MultiFunction.js';
 import { SPARQLSelectExecutableMixin as ShaclSPARQLSelectExecutableMixin } from '@rdfine/shacl/lib/SPARQLSelectExecutable';
 
 export interface SPARQLMultiFunction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.MultiFunction<D>, Shacl.SPARQLSelectExecutable<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface DashVocabulary {
-    SPARQLMultiFunction: Factory<Dash.SPARQLMultiFunction>;
-  }
 }
 
 export function SPARQLMultiFunctionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SPARQLMultiFunction & RdfResourceCore> & Base {

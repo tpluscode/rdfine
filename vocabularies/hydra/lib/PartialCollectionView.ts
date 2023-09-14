@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as Hydra from '../index.js';
 import { ResourceMixin } from './Resource.js';
 
 export interface PartialCollectionView<D extends RDF.DatasetCore = RDF.DatasetCore> extends Hydra.Resource<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface HydraVocabulary {
-    PartialCollectionView: Factory<Hydra.PartialCollectionView>;
-  }
 }
 
 export function PartialCollectionViewMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PartialCollectionView & RdfResourceCore> & Base {

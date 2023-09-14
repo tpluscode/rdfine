@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { CreativeWorkMixin } from './CreativeWork.js';
 export interface MenuSection<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   hasMenuItem: Schema.MenuItem<D> | undefined;
   hasMenuSection: Schema.MenuSection<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    MenuSection: Factory<Schema.MenuSection>;
-  }
 }
 
 export function MenuSectionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MenuSection & RdfResourceCore> & Base {

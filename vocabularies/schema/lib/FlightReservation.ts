@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -14,12 +14,6 @@ export interface FlightReservation<D extends RDF.DatasetCore = RDF.DatasetCore> 
   passengerPriorityStatusTerm: Schema.QualitativeValue | undefined;
   passengerSequenceNumber: string | undefined;
   securityScreening: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    FlightReservation: Factory<Schema.FlightReservation>;
-  }
 }
 
 export function FlightReservationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<FlightReservation & RdfResourceCore> & Base {

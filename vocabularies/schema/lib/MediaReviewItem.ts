@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { CreativeWorkMixin } from './CreativeWork.js';
 
 export interface MediaReviewItem<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWork<D>, rdfine.RdfResource<D> {
   mediaItemAppearance: Schema.MediaObject<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    MediaReviewItem: Factory<Schema.MediaReviewItem>;
-  }
 }
 
 export function MediaReviewItemMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MediaReviewItem & RdfResourceCore> & Base {

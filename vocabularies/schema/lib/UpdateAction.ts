@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { ActionMixin } from './Action.js';
 export interface UpdateAction<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Action<D>, rdfine.RdfResource<D> {
   collection: Schema.Thing<D> | undefined;
   targetCollection: Schema.Thing<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    UpdateAction: Factory<Schema.UpdateAction>;
-  }
 }
 
 export function UpdateActionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<UpdateAction & RdfResourceCore> & Base {

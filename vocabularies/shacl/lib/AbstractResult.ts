@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -19,12 +19,6 @@ export interface AbstractResult<D extends RDF.DatasetCore = RDF.DatasetCore> ext
   sourceConstraintComponent: Sh.ConstraintComponent<D> | undefined;
   sourceShape: Sh.Shape<D> | undefined;
   value: RDF.Term | undefined;
-}
-
-declare global {
-  interface ShVocabulary {
-    AbstractResult: Factory<Sh.AbstractResult>;
-  }
 }
 
 export function AbstractResultMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AbstractResult & RdfResourceCore> & Base {

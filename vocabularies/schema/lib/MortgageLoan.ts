@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { LoanOrCreditMixin } from './LoanOrCredit.js';
 export interface MortgageLoan<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.LoanOrCredit<D>, rdfine.RdfResource<D> {
   domiciledMortgage: boolean | undefined;
   loanMortgageMandateAmount: Schema.MonetaryAmount<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    MortgageLoan: Factory<Schema.MortgageLoan>;
-  }
 }
 
 export function MortgageLoanMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MortgageLoan & RdfResourceCore> & Base {

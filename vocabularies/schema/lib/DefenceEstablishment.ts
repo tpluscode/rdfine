@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -9,12 +9,6 @@ import type * as Schema from '../index.js';
 import { GovernmentBuildingMixin } from './GovernmentBuilding.js';
 
 export interface DefenceEstablishment<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.GovernmentBuilding<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface SchemaVocabulary {
-    DefenceEstablishment: Factory<Schema.DefenceEstablishment>;
-  }
 }
 
 export function DefenceEstablishmentMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DefenceEstablishment & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -26,12 +26,6 @@ export interface Date<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.
   normalizedDateValue: RDF.Literal | undefined;
   normalizedValue: RDF.Literal | undefined;
   textualValue: RDF.Literal | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    Date: Factory<Rico.Date>;
-  }
 }
 
 export function DateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Date & RdfResourceCore> & Base {

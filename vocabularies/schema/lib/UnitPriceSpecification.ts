@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -20,12 +20,6 @@ export interface UnitPriceSpecification<D extends RDF.DatasetCore = RDF.DatasetC
   unitCode: string | undefined;
   unitCodeTerm: RDF.NamedNode | undefined;
   unitText: string | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    UnitPriceSpecification: Factory<Schema.UnitPriceSpecification>;
-  }
 }
 
 export function UnitPriceSpecificationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<UnitPriceSpecification & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { CreativeWorkSeriesMixin } from './CreativeWorkSeries.js';
 export interface PodcastSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.CreativeWorkSeries<D>, rdfine.RdfResource<D> {
   actor: Schema.Person<D> | undefined;
   webFeed: Schema.DataFeed<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    PodcastSeries: Factory<Schema.PodcastSeries>;
-  }
 }
 
 export function PodcastSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PodcastSeries & RdfResourceCore> & Base {

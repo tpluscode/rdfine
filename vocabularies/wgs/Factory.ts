@@ -1,6 +1,7 @@
-import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
-import { Factory } from '@tpluscode/rdfine/factory';
+import type { RdfineEnvironment, Vocabulary } from '@tpluscode/rdfine/environment';
 import * as Wgs from './index.js';
+
+type WgsVocabulary = Vocabulary<typeof Wgs>;
 
 declare module '@tpluscode/rdfine/environment' {
   interface Rdfine {

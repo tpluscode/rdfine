@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,12 +12,6 @@ export interface Language<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   isOrWasLanguageOf: Rico.Agent<D> | Rico.Record<D> | Rico.RecordPart<D> | undefined;
   isOrWasLanguageOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasLanguageOfSomeMembersOf: Rico.RecordSet<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    Language: Factory<Rico.Language>;
-  }
 }
 
 export function LanguageMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Language & RdfResourceCore> & Base {

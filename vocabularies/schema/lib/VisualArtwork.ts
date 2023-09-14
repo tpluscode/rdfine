@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -26,12 +26,6 @@ export interface VisualArtwork<D extends RDF.DatasetCore = RDF.DatasetCore> exte
   surface: string | undefined;
   surfaceTerm: RDF.NamedNode | undefined;
   width: Schema.Distance<D> | Schema.QuantitativeValue<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    VisualArtwork: Factory<Schema.VisualArtwork>;
-  }
 }
 
 export function VisualArtworkMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<VisualArtwork & RdfResourceCore> & Base {

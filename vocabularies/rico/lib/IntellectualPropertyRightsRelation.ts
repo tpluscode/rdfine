@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -11,12 +11,6 @@ import { AuthorityRelationMixin } from './AuthorityRelation.js';
 export interface IntellectualPropertyRightsRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AuthorityRelation<D>, rdfine.RdfResource<D> {
   intellectualPropertyRightsRelationHasSource: Rico.Group<D> | Rico.Person<D> | Rico.Position<D> | undefined;
   intellectualPropertyRightsRelationHasTarget: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    IntellectualPropertyRightsRelation: Factory<Rico.IntellectualPropertyRightsRelation>;
-  }
 }
 
 export function IntellectualPropertyRightsRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<IntellectualPropertyRightsRelation & RdfResourceCore> & Base {

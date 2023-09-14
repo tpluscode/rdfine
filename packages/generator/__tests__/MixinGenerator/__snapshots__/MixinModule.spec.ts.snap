@@ -2,7 +2,7 @@
 
 exports[`MixinModule does not add datatype annotation to literal property when datatype is ambiguous 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -12,12 +12,6 @@ import type * as Example from "../index.js";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
     foo: string | undefined;
-}
-
-declare global {
-    interface ExampleVocabulary {
-        Class: Factory<Example.Class>;
-    }
 }
 
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
@@ -35,7 +29,7 @@ ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Class>([Cla
 
 exports[`MixinModule does not try import self when property has range of enclosing class 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -45,12 +39,6 @@ import type * as Example from "../index.js";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
     foo: Example.Class<D> | undefined;
-}
-
-declare global {
-    interface ExampleVocabulary {
-        Class: Factory<Example.Class>;
-    }
 }
 
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
@@ -100,7 +88,7 @@ export { ClassBundle } from "./Class.js";
 
 exports[`MixinModule generates a mixin class where term is not safe identifier 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -109,12 +97,6 @@ import type { RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
 import type * as Example from "../index.js";
 
 export interface _3Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
-}
-
-declare global {
-    interface ExampleVocabulary {
-        _3Class: Factory<Example._3Class>;
-    }
 }
 
 export function _3ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<_3Class & RdfResourceCore> & Base {
@@ -130,7 +112,7 @@ _3ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<_3Class>(
 
 exports[`MixinModule generates a mixin class with external super classes 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -141,12 +123,6 @@ import type * as Schema from "@rdfine/schema";
 import { Person as PersonMixin } from "@rdfine/schema/Person";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Person<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-    interface ExampleVocabulary {
-        Class: Factory<Example.Class>;
-    }
 }
 
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
@@ -162,7 +138,7 @@ ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Class>([Per
 
 exports[`MixinModule generates a mixin class without props 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -171,12 +147,6 @@ import type { RdfResourceCore } from "@tpluscode/rdfine/RdfResource";
 import type * as Example from "../index.js";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
-}
-
-declare global {
-    interface ExampleVocabulary {
-        Class: Factory<Example.Class>;
-    }
 }
 
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
@@ -192,7 +162,7 @@ ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Class>([Cla
 
 exports[`MixinModule generates array property 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -202,12 +172,6 @@ import type * as Example from "../index.js";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
     foo: Array<Example.Foo<D>>;
-}
-
-declare global {
-    interface ExampleVocabulary {
-        Class: Factory<Example.Class>;
-    }
 }
 
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
@@ -225,7 +189,7 @@ ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Class>([Cla
 
 exports[`MixinModule generates date property 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -235,12 +199,6 @@ import type * as Example from "../index.js";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
     foo: Date | undefined;
-}
-
-declare global {
-    interface ExampleVocabulary {
-        Class: Factory<Example.Class>;
-    }
 }
 
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
@@ -258,7 +216,7 @@ ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Class>([Cla
 
 exports[`MixinModule generates list property 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -268,12 +226,6 @@ import type * as Example from "../index.js";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
     foo: Array<Example.Foo<D>>;
-}
-
-declare global {
-    interface ExampleVocabulary {
-        Class: Factory<Example.Class>;
-    }
 }
 
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
@@ -291,7 +243,7 @@ ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Class>([Cla
 
 exports[`MixinModule generates list/single property 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -301,12 +253,6 @@ import type * as Example from "../index.js";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
     foo: Example.Foo<D> | Array<Example.Foo<D>> | undefined;
-}
-
-declare global {
-    interface ExampleVocabulary {
-        Class: Factory<Example.Class>;
-    }
 }
 
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
@@ -324,7 +270,7 @@ ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Class>([Cla
 
 exports[`MixinModule generates literal property with unioned string return types 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -334,12 +280,6 @@ import type * as Example from "../index.js";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
     foo: 'bar' | 'baz' | 'foo' | undefined;
-}
-
-declare global {
-    interface ExampleVocabulary {
-        Class: Factory<Example.Class>;
-    }
 }
 
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
@@ -357,7 +297,7 @@ ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Class>([Cla
 
 exports[`MixinModule generates property with automatic external type cast when predicate has strict semantics 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -369,12 +309,6 @@ import { Foo as FooMixin } from "@rdfine/example/Foo";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
     foo: Example.Foo<D> | undefined;
-}
-
-declare global {
-    interface ExampleVocabulary {
-        Class: Factory<Example.Class>;
-    }
 }
 
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
@@ -392,7 +326,7 @@ ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Class>([Cla
 
 exports[`MixinModule generates property with automatic type cast when predicate has strict semantics 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -402,12 +336,6 @@ import type * as Example from "../index.js";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
     foo: Example.Foo<D> | undefined;
-}
-
-declare global {
-    interface ExampleVocabulary {
-        Class: Factory<Example.Class>;
-    }
 }
 
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
@@ -425,7 +353,7 @@ ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Class>([Cla
 
 exports[`MixinModule generates property with datatype-annotated literal 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -435,12 +363,6 @@ import type * as Example from "../index.js";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
     foo: string | undefined;
-}
-
-declare global {
-    interface ExampleVocabulary {
-        Class: Factory<Example.Class>;
-    }
 }
 
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {
@@ -458,7 +380,7 @@ ClassMixin.createFactory = (env: RdfineEnvironment) => createFactory<Class>([Cla
 
 exports[`MixinModule wraps property name in quotes when term has non-alpha characters 1`] = `
 import * as rdfine from "@tpluscode/rdfine";
-import { createFactory, Factory } from "@tpluscode/rdfine/factory";
+import { createFactory } from "@tpluscode/rdfine/factory";
 import { RdfineEnvironment } from "@tpluscode/rdfine/environment";
 import $rdf from "@rdfjs/data-model";
 import type * as RDF from "@rdfjs/types";
@@ -468,12 +390,6 @@ import type * as Example from "../index.js";
 
 export interface Class<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
     'foo-bar': string | undefined;
-}
-
-declare global {
-    interface ExampleVocabulary {
-        Class: Factory<Example.Class>;
-    }
 }
 
 export function ClassMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Class & RdfResourceCore> & Base {

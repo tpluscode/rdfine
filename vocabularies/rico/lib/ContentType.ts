@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -12,12 +12,6 @@ export interface ContentType<D extends RDF.DatasetCore = RDF.DatasetCore> extend
   isContentTypeOf: Rico.Record<D> | Rico.RecordPart<D> | undefined;
   isOrWasContentTypeOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasContentTypeOfSomeMembersOf: Rico.RecordSet<D> | undefined;
-}
-
-declare global {
-  interface RicoVocabulary {
-    ContentType: Factory<Rico.ContentType>;
-  }
 }
 
 export function ContentTypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ContentType & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { EventMixin } from './Event.js';
 import { SeriesMixin } from './Series.js';
 
 export interface EventSeries<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Event<D>, Schema.Series<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface SchemaVocabulary {
-    EventSeries: Factory<Schema.EventSeries>;
-  }
 }
 
 export function EventSeriesMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EventSeries & RdfResourceCore> & Base {

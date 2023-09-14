@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -13,12 +13,6 @@ export interface Property<D extends RDF.DatasetCore = RDF.DatasetCore> extends S
   inverseOf: Schema.Property<D> | undefined;
   rangeIncludes: RDF.Term | undefined;
   supersededBy: Schema.Property<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    Property: Factory<Schema.Property>;
-  }
 }
 
 export function PropertyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Property & RdfResourceCore> & Base {

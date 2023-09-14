@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -17,12 +17,6 @@ export interface SoftwareSourceCode<D extends RDF.DatasetCore = RDF.DatasetCore>
   runtimePlatform: string | undefined;
   sampleType: string | undefined;
   targetProduct: Schema.SoftwareApplication<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    SoftwareSourceCode: Factory<Schema.SoftwareSourceCode>;
-  }
 }
 
 export function SoftwareSourceCodeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SoftwareSourceCode & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { ScriptMixin } from './Script.js';
 import { TestCaseMixin } from './TestCase.js';
 
 export interface ScriptTestCase<D extends RDF.DatasetCore = RDF.DatasetCore> extends Dash.Script<D>, Dash.TestCase<D>, rdfine.RdfResource<D> {
-}
-
-declare global {
-  interface DashVocabulary {
-    ScriptTestCase: Factory<Dash.ScriptTestCase>;
-  }
 }
 
 export function ScriptTestCaseMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ScriptTestCase & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import { ClipMixin } from './Clip.js';
 
 export interface TVClip<D extends RDF.DatasetCore = RDF.DatasetCore> extends Schema.Clip<D>, rdfine.RdfResource<D> {
   partOfTVSeries: Schema.TVSeries<D> | undefined;
-}
-
-declare global {
-  interface SchemaVocabulary {
-    TVClip: Factory<Schema.TVClip>;
-  }
 }
 
 export function TVClipMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TVClip & RdfResourceCore> & Base {

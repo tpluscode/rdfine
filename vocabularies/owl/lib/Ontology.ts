@@ -1,7 +1,7 @@
 import '../extensions/rdfs/Resource.js';
 import { ResourceMixinEx } from '../extensions/rdfs/Resource.js';
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -17,12 +17,6 @@ export interface Ontology<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   incompatibleWith: Owl.Ontology<D> | undefined;
   priorVersion: Owl.Ontology<D> | undefined;
   versionIRI: Owl.Ontology<D> | undefined;
-}
-
-declare global {
-  interface OwlVocabulary {
-    Ontology: Factory<Owl.Ontology>;
-  }
 }
 
 export function OntologyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Ontology & RdfResourceCore> & Base {

@@ -1,5 +1,5 @@
 import * as rdfine from '@tpluscode/rdfine';
-import { createFactory, Factory } from '@tpluscode/rdfine/factory';
+import { createFactory } from '@tpluscode/rdfine/factory';
 import { RdfineEnvironment } from '@tpluscode/rdfine/environment';
 import $rdf from '@rdfjs/data-model';
 import type * as RDF from '@rdfjs/types';
@@ -10,12 +10,6 @@ import type * as Sioc from '../index.js';
 export interface Space<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfine.RdfResource<D> {
   'has_usergroup': Sioc.Usergroup<D> | undefined;
   'space_of': RDF.Term | undefined;
-}
-
-declare global {
-  interface SiocVocabulary {
-    Space: Factory<Sioc.Space>;
-  }
 }
 
 export function SpaceMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Space & RdfResourceCore> & Base {

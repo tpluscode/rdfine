@@ -1,6 +1,16 @@
 import type { DefaultEnv, DerivedEnvironment } from '@zazuko/env'
 import RdfResourceImpl from './RdfResource.js'
 import ResourceFactoryImpl, { Constructor, ResourceFactory } from './lib/ResourceFactory.js'
+import type { Factory } from './factory.js'
+
+type Name<T> = T extends `${infer Prefix}Mixin` ? Prefix : never;
+export type Vocabulary<T> = {
+  [p in keyof T as Name<p>]: T[p] extends (...args: any) => any
+    ? ReturnType<T[p]> extends Constructor<infer I>
+      ? Factory<I>
+      : never
+    : never
+}
 
 export interface Rdfine {
   (): {
