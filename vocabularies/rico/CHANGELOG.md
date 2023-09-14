@@ -1,5 +1,13 @@
 # @rdfine/rico
 
+## 0.3.2
+
+### Patch Changes
+
+- 3c90fafa: Use mapped type to declare vocabulary factory
+- Updated dependencies [3c90fafa]
+  - @tpluscode/rdfine@0.7.3
+
 ## 0.3.1
 
 ### Patch Changes

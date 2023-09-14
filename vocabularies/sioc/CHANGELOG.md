@@ -1,5 +1,14 @@
 # @rdfine/sioc
 
+## 0.3.2
+
+### Patch Changes
+
+- 3c90fafa: Use mapped type to declare vocabulary factory
+- Updated dependencies [3c90fafa]
+  - @tpluscode/rdfine@0.7.3
+  - @rdfine/foaf@2.0.2
+
 ## 0.3.1
 
 ### Patch Changes
