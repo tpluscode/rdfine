@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.4
+
+### Patch Changes
+
+- b110aab2: `toJSON` would not correctly serialise lists when the value did not match annotated property
+
 ## 0.7.3
 
 ### Patch Changes
