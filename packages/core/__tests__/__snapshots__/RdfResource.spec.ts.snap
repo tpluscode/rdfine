@@ -37,3 +37,28 @@ _:c14n1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.com/Fo
 _:c14n1 <http://www.w3.org/2000/01/rdf-schema#label> \\"foo\\" .
 "
 `;
+
+exports[`RdfResource toJSON serializes RDF list of property which is not explicitly annotated as list 1`] = `
+Object {
+  "@context": Object {
+    "foo": Object {
+      "@container": "@list",
+      "@id": "http://example.com/foo",
+    },
+    "id": "@id",
+    "type": "@type",
+  },
+  "foo": Array [
+    Object {
+      "id": "http://example.com/Foo",
+    },
+    Object {
+      "id": "http://example.com/Bar",
+    },
+    Object {
+      "id": "http://example.com/Baz",
+    },
+  ],
+  "id": "john",
+}
+`;

@@ -2379,6 +2379,37 @@ describe('RdfResource', () => {
       `)
     })
 
+    it('serializes RDF list of property which is not explicitly annotated as list', () => {
+      // given
+      const dataset = $rdf.dataset()
+      const node = cf({ dataset })
+        .namedNode('john')
+        .addList(ex.foo, [
+          ex.Foo,
+          ex.Bar,
+          ex.Baz,
+        ])
+
+      function PersonMixin<Base extends Constructor>(base: Base) {
+        @namespace(ex)
+        class NameClass extends base {
+          @property.resource()
+            foo!: RdfResourceCore
+        }
+
+        return NameClass
+      }
+
+      const resource = environment.rdfine().factory.createEntity(node, [PersonMixin])
+
+      // when
+      const json = resource.toJSON()
+
+      // then
+      expect(json).to.be.validJsonLd()
+      expect(json).toMatchSnapshot()
+    })
+
     it('serializes literal property', () => {
       // given
       const dataset = $rdf.dataset()
@@ -2406,7 +2437,10 @@ describe('RdfResource', () => {
       expect(json).toMatchInlineSnapshot(`
         Object {
           "@context": Object {
-            "foo": "http://example.com/foo",
+            "foo": Object {
+              "@container": "@list",
+              "@id": "http://example.com/foo",
+            },
             "id": "@id",
             "type": "@type",
           },
