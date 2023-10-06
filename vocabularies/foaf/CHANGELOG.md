@@ -1,5 +1,16 @@
 # @rdfine/foaf
 
+## 2.0.3
+
+### Patch Changes
+
+- 9a838dec: Missing `Factory.js` in package
+- 9a838dec: Added changelog to package
+- Updated dependencies [9a838dec]
+- Updated dependencies [9a838dec]
+  - @rdfine/skos@0.3.3
+  - @rdfine/wgs@0.3.3
+
 ## 2.0.2
 
 ### Patch Changes

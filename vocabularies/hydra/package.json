@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/hydra",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "main": "index.js",
   "module": "index.js",
   "browser": "index.js",
@@ -75,15 +75,15 @@
     }
   },
   "dependencies": {
-    "@rdfine/rdf": "^0.7.2",
-    "@rdfine/rdfs": "^0.8.2",
+    "@rdfine/rdf": "^0.7.3",
+    "@rdfine/rdfs": "^0.8.3",
     "@rdfjs/data-model": "^2",
     "@tpluscode/rdf-ns-builders": ">=3.0.2",
     "@tpluscode/rdfine": "^0.7.3",
     "es6-url-template": "^3.0.2"
   },
   "devDependencies": {
-    "@rdfine/generator": "^0.8.1",
+    "@rdfine/generator": "^0.8.2",
     "@rdfine/test-support": "*",
     "@rdfjs/namespace": "^2",
     "@rdfjs/parser-n3": "^2",

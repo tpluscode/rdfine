@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.8.3
+
+### Patch Changes
+
+- 9a838dec: Missing `Factory.js` in package
+- 9a838dec: Added changelog to package
+
 ## 0.8.2
 
 ### Patch Changes
