@@ -1,5 +1,15 @@
 # @rdfine/skos
 
+## 0.3.3
+
+### Patch Changes
+
+- 9a838dec: Missing `Factory.js` in package
+- 9a838dec: Added changelog to package
+- Updated dependencies [9a838dec]
+- Updated dependencies [9a838dec]
+  - @rdfine/rdf@0.7.3
+
 ## 0.3.2
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @rdfine/dash
 
+## 0.4.3
+
+### Patch Changes
+
+- 9a838dec: Missing `Factory.js` in package
+- 9a838dec: Added changelog to package
+- Updated dependencies [9a838dec]
+- Updated dependencies [9a838dec]
+  - @rdfine/rdf@0.7.3
+  - @rdfine/rdfs@0.8.3
+  - @rdfine/shacl@0.10.3
+
 ## 0.4.2
 
 ### Patch Changes

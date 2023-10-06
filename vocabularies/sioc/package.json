@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/sioc",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "main": "index.js",
   "module": "index.js",
   "browser": "index.js",
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@rdfjs/data-model": "^2",
-    "@rdfine/foaf": "^2.0.2",
+    "@rdfine/foaf": "^2.0.3",
     "@tpluscode/rdf-ns-builders": ">=3.0.2",
     "@tpluscode/rdfine": "^0.7.3"
   },
