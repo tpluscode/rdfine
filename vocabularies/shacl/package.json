@@ -16,7 +16,8 @@
   },
   "files": [
     "**/*.js",
-    "**/*.d.ts"
+    "**/*.d.ts",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "prepack": "npm run build",
