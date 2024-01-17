@@ -43,7 +43,7 @@
     "@types/debug": "^4.1.5",
     "@types/node": "^12",
     "@types/once": "^1.4.0",
-    "@types/rdfjs__formats-common": "^3",
+    "@types/rdfjs__formats": "^4",
     "@types/rdfjs__namespace": "^2.0.2",
     "@types/rdfjs__parser-n3": "^1.1.5",
     "@types/sinon": "^10.0.14",

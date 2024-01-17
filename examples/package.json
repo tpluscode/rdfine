@@ -28,7 +28,7 @@
     "@rdfjs/types": "*",
     "@types/rdfjs__dataset": "^2",
     "@types/rdfjs__fetch": "^3",
-    "@types/rdfjs__formats-common": "^3",
+    "@types/rdfjs__formats": "^4",
     "@types/rdfjs__namespace": "^2",
     "npm-run-all": "^4.1.5"
   }

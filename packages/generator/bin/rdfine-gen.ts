@@ -3,7 +3,7 @@
 import * as fs from 'fs'
 import path from 'path'
 import program from 'commander'
-import formats from '@rdfjs/formats-common'
+import formats from '@rdfjs/formats'
 import pkgUp from 'pkg-up'
 import debug from 'debug'
 
