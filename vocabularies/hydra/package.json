@@ -83,12 +83,12 @@
     "es6-url-template": "^3.0.2"
   },
   "devDependencies": {
+    "@rdfine/env": "^1.0.4",
     "@rdfine/generator": "^0.8.2",
-    "@rdfine/test-support": "*",
     "@rdfjs/namespace": "^2",
     "@rdfjs/parser-n3": "^2",
     "@tpluscode/rdf-string": "^1.0.3",
-    "@zazuko/env": "^1.3.1",
+    "@zazuko/env": "^2.0.2",
     "@zazuko/prefixes": ">=1",
     "chai": "^4.3.7",
     "clownface": "^2.0.0",

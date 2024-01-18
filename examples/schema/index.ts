@@ -2,11 +2,10 @@ import fetch from '@rdfjs/fetch'
 import { turtle } from '@tpluscode/rdf-string'
 import * as Schema from '@rdfine/schema'
 import cf from 'clownface'
-import { createEnv } from '@rdfine/env'
+import environment from '@rdfine/env'
 import { DatasetCore } from '@rdfjs/types'
 
 const howard = 'http://zazuko.github.io/tbbt-ld/data/person/howard-wolowitz.ttl'
-const environment = createEnv()
 
 // Have rdfine recognize required schema.org terms
 environment.rdfine().factory.addMixin(Schema.PersonMixin)

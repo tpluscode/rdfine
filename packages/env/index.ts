@@ -1,7 +1,5 @@
 import { RdfineFactory } from '@tpluscode/rdfine'
-import type { FactoryConstructor } from '@rdfjs/environment/Environment'
-import { create } from '@zazuko/env'
+import ZazukoEnv from '@zazuko/env/Environment.js'
+import baseEnv from '@zazuko/env'
 
-export function createEnv<T extends FactoryConstructor>(...factories: T[]) {
-  return create(...[RdfineFactory, ...factories])
-}
+export default new ZazukoEnv([RdfineFactory], { parent: baseEnv })

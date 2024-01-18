@@ -1,4 +1,5 @@
-import { environment } from '@rdfine/test-support'
 import { ShFactory } from '../Factory.js'
+import Environment from '@zazuko/env/Environment';
+import parent from '@rdfine/env';
 
-export default environment(ShFactory)
+export default new Environment([ShFactory], { parent })
