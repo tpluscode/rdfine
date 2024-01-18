@@ -763,14 +763,6 @@
     tiny-glob "^0.2.9"
     tslib "^2.4.0"
 
-"@rdfine/env@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@rdfine/env/-/env-1.0.4.tgz#2831a9a600e6d5fb5944bcdcb2dc9b61be91e243"
-  integrity sha512-+UDbVpVWeXRD6JBjJ1JHxEZzo3qjirGj910sHNzIhugQw0Js7mfu0C05bSEF+sj57dLl5kBd5+qHb2D4kwnVHA==
-  dependencies:
-    "@tpluscode/rdfine" "^0.7.2"
-    "@zazuko/env" "^1.3.1"
-
 "@rdfjs/data-model@^2", "@rdfjs/data-model@^2.0.0", "@rdfjs/data-model@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@rdfjs/data-model/-/data-model-2.0.1.tgz#410aeaea65de9bac605b63172baa64384b65ca98"
@@ -2050,24 +2042,6 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@yarnpkg/lockfile/-/lockfile-1.1.0.tgz#e77a97fbd345b76d83245edcd17d393b1b41fb31"
   integrity sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==
-
-"@zazuko/env@^1.3.1":
-  version "1.11.1"
-  resolved "https://registry.yarnpkg.com/@zazuko/env/-/env-1.11.1.tgz#77ddc52d6dc8c5fc1ea2f6dd4bc27d290a3530f1"
-  integrity sha512-8OeimO+kpMzWupz8YN+cy2sOLrYelZQTd7Uc0sK1/z88T5h44ZTYJQcEInHeVkpHoNrNjgaDtZ9y+0Kd71RKgQ==
-  dependencies:
-    "@rdfjs/data-model" "^2.0.1"
-    "@rdfjs/dataset" "^2.0.1"
-    "@rdfjs/environment" "^1.0.0"
-    "@rdfjs/namespace" "^2.0.0"
-    "@rdfjs/term-map" "^2.0.0"
-    "@rdfjs/term-set" "^2.0.1"
-    "@rdfjs/traverser" "^0.1.2"
-    "@tpluscode/rdf-ns-builders" "^4.1.0"
-    "@zazuko/prefixes" "^2.1.0"
-    clownface "^2.0.2"
-    get-stream "^8.0.1"
-    rdf-dataset-ext "^1.1.0"
 
 "@zazuko/env@^2.0.2":
   version "2.0.2"
