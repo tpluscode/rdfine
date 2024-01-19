@@ -1,5 +1,11 @@
 # @rdfine/prov
 
+## 0.3.4
+
+### Patch Changes
+
+- c8d796c4: Relax rdfine dependency
+
 ## 0.3.3
 
 ### Patch Changes

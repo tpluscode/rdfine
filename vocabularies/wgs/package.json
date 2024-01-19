@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/wgs",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "main": "index.js",
   "module": "index.js",
   "browser": "index.js",
@@ -30,8 +30,8 @@
   },
   "dependencies": {
     "@rdfjs/data-model": "^2",
-    "@rdfine/foaf": "^2.0.3",
-    "@rdfine/rdfs": "^0.8.3",
+    "@rdfine/foaf": "^2.0.4",
+    "@rdfine/rdfs": "^0.8.4",
     "@tpluscode/rdf-ns-builders": ">=3.0.2",
     "@tpluscode/rdfine": ">=0.6"
   },

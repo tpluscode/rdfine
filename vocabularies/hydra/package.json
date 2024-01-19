@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/hydra",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "main": "index.js",
   "module": "index.js",
   "browser": "index.js",
@@ -75,8 +75,8 @@
     }
   },
   "dependencies": {
-    "@rdfine/rdf": "^0.7.3",
-    "@rdfine/rdfs": "^0.8.3",
+    "@rdfine/rdf": "^0.7.4",
+    "@rdfine/rdfs": "^0.8.4",
     "@rdfjs/data-model": "^2",
     "@tpluscode/rdf-ns-builders": ">=3.0.2",
     "@tpluscode/rdfine": ">=0.6",
