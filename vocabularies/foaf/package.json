@@ -32,7 +32,7 @@
     "@rdfjs/data-model": "^2",
     "@rdfine/skos": "^0.3.3",
     "@tpluscode/rdf-ns-builders": ">=3.0.2",
-    "@tpluscode/rdfine": "^0.7.3"
+    "@tpluscode/rdfine": ">=0.6"
   },
   "peerDependencies": {
     "@rdfine/wgs": "^0.3.3"

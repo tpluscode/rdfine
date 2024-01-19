@@ -43,7 +43,7 @@
     "@rdfjs/data-model": "^2",
     "@rdfine/rdf": "^0.7.3",
     "@tpluscode/rdf-ns-builders": ">=3.0.2",
-    "@tpluscode/rdfine": "^0.7.3"
+    "@tpluscode/rdfine": ">=0.6"
   },
   "repository": {
     "type": "git",
