@@ -1,5 +1,15 @@
 # @rdfine/doap
 
+## 0.3.4
+
+### Patch Changes
+
+- c8d796c4: Relax rdfine dependency
+- Updated dependencies [c8d796c4]
+  - @rdfine/foaf@2.0.4
+  - @rdfine/rdfs@0.8.4
+  - @rdfine/sioc@0.3.4
+
 ## 0.3.3
 
 ### Patch Changes

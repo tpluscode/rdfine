@@ -1,5 +1,15 @@
 # @rdfine/dash
 
+## 0.4.4
+
+### Patch Changes
+
+- c8d796c4: Relax rdfine dependency
+- Updated dependencies [c8d796c4]
+  - @rdfine/rdf@0.7.4
+  - @rdfine/rdfs@0.8.4
+  - @rdfine/shacl@0.10.4
+
 ## 0.4.3
 
 ### Patch Changes

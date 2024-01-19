@@ -1,5 +1,14 @@
 # @rdfine/foaf
 
+## 2.0.4
+
+### Patch Changes
+
+- c8d796c4: Relax rdfine dependency
+- Updated dependencies [c8d796c4]
+  - @rdfine/skos@0.3.4
+  - @rdfine/wgs@0.3.4
+
 ## 2.0.3
 
 ### Patch Changes

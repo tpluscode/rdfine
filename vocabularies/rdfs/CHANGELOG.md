@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.8.4
+
+### Patch Changes
+
+- c8d796c4: Relax rdfine dependency
+- Updated dependencies [c8d796c4]
+  - @rdfine/rdf@0.7.4
+
 ## 0.8.3
 
 ### Patch Changes
