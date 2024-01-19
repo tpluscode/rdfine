@@ -1,4 +1,5 @@
 import type { DefaultEnv, DerivedEnvironment } from '@zazuko/env'
+import type { Environment } from '@rdfjs/environment/Environment.js'
 import RdfResourceImpl from './RdfResource.js'
 import ResourceFactoryImpl, { Constructor, ResourceFactory } from './lib/ResourceFactory.js'
 import type { Factory } from './factory.js'
@@ -62,4 +63,4 @@ export class RdfineFactory {
   }
 }
 
-export type RdfineEnvironment = DerivedEnvironment<DefaultEnv, RdfineFactory>
+export type RdfineEnvironment = DerivedEnvironment<DefaultEnv, Environment<RdfineFactory>>

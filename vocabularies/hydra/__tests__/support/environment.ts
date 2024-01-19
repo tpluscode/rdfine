@@ -1,4 +1,5 @@
-import { environment } from '@rdfine/test-support'
 import { HydraFactory } from '../../Factory.js'
+import Environment from '@zazuko/env/Environment.js';
+import parent from '@rdfine/env';
 
-export default environment(HydraFactory)
+export default new Environment([HydraFactory], { parent })

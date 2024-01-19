@@ -3,9 +3,10 @@ import * as Schema from '@rdfine/schema'
 import { SchemaFactory } from '@rdfine/schema/Factory'
 import { fromObject } from '@tpluscode/rdfine/RdfResource'
 import { schema } from '@tpluscode/rdf-ns-builders'
-import { createEnv } from '@rdfine/env'
+import Environment from '@zazuko/env/Environment.js'
+import ZazukoEnv from '@rdfine/env'
 
-const environment = createEnv(SchemaFactory)
+const environment = new Environment([SchemaFactory], { parent: ZazukoEnv })
 
 const bigBangTheory = environment.namespace('http://tbbt.example.com/')
 
