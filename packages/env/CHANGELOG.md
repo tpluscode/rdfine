@@ -1,5 +1,16 @@
 # @rdfine/env
 
+## 1.1.0
+
+### Minor Changes
+
+- 965859d7: Update to `@rdfjs/environment` v1 and `@zazuko/env` v2
+
+### Patch Changes
+
+- Updated dependencies [965859d7]
+  - @tpluscode/rdfine@0.7.5
+
 ## 1.0.4
 
 ### Patch Changes

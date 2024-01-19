@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.8.3
+
+### Patch Changes
+
+- 965859d7: Update to `@rdfjs/environment` v1 and `@zazuko/env` v2
+
 ## 0.8.2
 
 ### Patch Changes
