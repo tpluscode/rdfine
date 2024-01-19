@@ -2043,10 +2043,10 @@
   resolved "https://registry.yarnpkg.com/@yarnpkg/lockfile/-/lockfile-1.1.0.tgz#e77a97fbd345b76d83245edcd17d393b1b41fb31"
   integrity sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==
 
-"@zazuko/env@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@zazuko/env/-/env-2.0.2.tgz#b23505383d0c73b6c075a3fe21c29be6c60dea9d"
-  integrity sha512-qz6lpEUw75/wX/xV9BOwUGI66MrFlVx4ivrbA0iuz95+qArPqRKdamgMioQ0FweKhjjhxH0qNS3i+xjOnD575g==
+"@zazuko/env@^2.0.2", "@zazuko/env@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@zazuko/env/-/env-2.0.3.tgz#d70afeaa6edf1ecea29eec2fecb62ef08d1d8f56"
+  integrity sha512-KltMKz2WQs02gsDM5kJi1qI6ejejKjk1p7/tsNNaZM4Opd/5uxyDjsObt6WVbLsLrW2I7xNu31fdXzqfhpuRuA==
   dependencies:
     "@rdfjs/data-model" "^2.0.1"
     "@rdfjs/dataset" "^2.0.1"
