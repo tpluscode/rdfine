@@ -1,9 +1,8 @@
 /* eslint-disable camelcase,no-dupe-class-members,no-use-before-define */
 import type { NamespaceBuilder } from '@rdfjs/namespace'
 import type { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from '@rdfjs/types'
-import cf, { MultiPointer, GraphPointer, AnyPointer } from 'clownface'
+import type { MultiPointer, GraphPointer, AnyPointer } from 'clownface'
 import once from 'once'
-import { xsd } from '@tpluscode/rdf-ns-builders'
 import type {
   Constructor,
   Mixin,
@@ -16,7 +15,6 @@ import { toJSON } from './lib/toJSON.js'
 import type { Jsonified } from './lib/toJSON.js'
 import { fromInitializer } from './lib/resource.js'
 import { mixins } from './lib/mixins.js'
-import { toLiteral } from './lib/conversion.js'
 import { RdfineEnvironment } from './environment.js'
 
 export type ResourceIdentifier = BlankNode | NamedNode
@@ -131,9 +129,9 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
 
           let literal: Literal | undefined
           if (typeof value === 'object' && 'value' in value && 'datatype' in value) {
-            literal = toLiteral.call(resource.env, value.value, value.datatype)
+            literal = resource.env.rdfine().convert.toLiteral(value.value, value.datatype)
           } else {
-            literal = toLiteral.call(resource.env, value)
+            literal = resource.env.rdfine().convert.toLiteral(value)
           }
 
           if (literal) {
@@ -175,17 +173,17 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       this.unionGraphPointer = pointer
     } */
 
-    const selfGraph = cf({
+    const selfGraph = this.env.clownface({
       ...pointer,
       term: pointer.term,
     })
 
     if (selfGraph._context[0].graph) {
       this.pointer = selfGraph
-      this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: undefined })
+      this.unionGraphPointer = this.env.clownface({ dataset: selfGraph.dataset, term: selfGraph.term, graph: undefined })
     } else {
-      this.pointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: this.env.defaultGraph() })
-      this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term })
+      this.pointer = this.env.clownface({ dataset: selfGraph.dataset, term: selfGraph.term, graph: this.env.defaultGraph() })
+      this.unionGraphPointer = this.env.clownface({ dataset: selfGraph.dataset, term: selfGraph.term })
     }
 
     this.__initializeProperties = once(() => {
@@ -316,7 +314,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       return false
     }
 
-    if (value.term.termType === 'Literal' && xsd.boolean.equals(value.term.datatype)) {
+    if (value.term.termType === 'Literal' && this.env.ns.xsd.boolean.equals(value.term.datatype)) {
       return value.term.equals(this.pointer.literal(true).term)
     }
 

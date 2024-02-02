@@ -1,8 +1,8 @@
 import type { BlankNode, DatasetCore, Literal, NamedNode, Term } from '@rdfjs/types'
-import { rdf, xsd } from '@tpluscode/rdf-ns-builders'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
-import { GraphPointer } from 'clownface'
+import type { GraphPointer } from 'clownface'
 import type { RdfResource, ResourceIdentifier } from '../RdfResource.js'
+import type { RdfineEnvironment } from '../environment.js'
 import type { ResourceIndexer } from './ResourceFactory.js'
 import { enumerateList, isList } from './rdf-list.js'
 import { PropertyMeta } from './decorators/property/index.js'
@@ -70,7 +70,7 @@ function getObjectMap<D extends DatasetCore>(resource: RdfResource<D>) {
   const graph = resource.pointer._context[0].graph
 
   return [...resource.pointer.dataset.match(resource.id, null, null, graph)].reduce((map, quad) => {
-    if (rdf.type.equals(quad.predicate)) {
+    if (resource.env.ns.rdf.type.equals(quad.predicate)) {
       return map
     }
 
@@ -91,23 +91,23 @@ function alreadyMapped(parentContext: Record<string, unknown> | undefined, name:
   return false
 }
 
-function literalToJSON(obj: Literal): LiteralObject<any> {
-  if (xsd.string.equals(obj.datatype)) {
+function literalToJSON(obj: Literal, env: RdfineEnvironment): LiteralObject<any> {
+  if (env.ns.xsd.string.equals(obj.datatype)) {
     return obj.value
   }
-  if (xsd.integer.equals(obj.datatype)) {
+  if (env.ns.xsd.integer.equals(obj.datatype)) {
     const int = Number.parseInt(obj.value)
     if (int.toString() === obj.value) {
       return int
     }
   }
-  if (xsd.double.equals(obj.datatype)) {
+  if (env.ns.xsd.double.equals(obj.datatype)) {
     const dbl = Number.parseFloat(obj.value)
     if (dbl.toString() === obj.value) {
       return dbl
     }
   }
-  if (xsd.boolean.equals(obj.datatype)) {
+  if (env.ns.xsd.boolean.equals(obj.datatype)) {
     if (obj.value === 'true') {
       return true
     }
@@ -115,7 +115,7 @@ function literalToJSON(obj: Literal): LiteralObject<any> {
       return false
     }
   }
-  if (rdf.langString.equals(obj.datatype)) {
+  if (env.ns.rdf.langString.equals(obj.datatype)) {
     return {
       '@value': obj.value,
       '@language': obj.language,
@@ -141,7 +141,7 @@ function jsonifyQuads(resource: RdfResource, context: ToJsonContext) {
   return (json: Record<string, any>, [predicate, objects]: [Term, Array<GraphPointer<ResourceIdentifier | Literal>>]) => {
     const jsonifyObject: any = (pointer: GraphPointer) => {
       if (pointer.term.termType === 'Literal') {
-        return literalToJSON(pointer.term)
+        return literalToJSON(pointer.term, resource.env)
       }
 
       const list = pointer.list()
@@ -238,7 +238,7 @@ function jsonifyProperties(params: ToJsonContext & JsonifyPropertiesContext) {
       if ('termType' in obj) {
         switch (obj.termType) {
           case 'Literal':
-            return literalToJSON(obj)
+            return literalToJSON(obj, resource.env)
           case 'BlankNode':
           case 'NamedNode':
             return toJSON(resource._create(resource.pointer.node(obj)), {

@@ -1,6 +1,5 @@
 import type { DataFactory, DatasetCore, Term } from '@rdfjs/types'
 import type { GraphPointer } from 'clownface'
-import { rdf } from '@tpluscode/rdf-ns-builders'
 import { Environment } from '@rdfjs/environment/Environment'
 import type { RdfResourceCore, ResourceIdentifier } from '../RdfResource.js'
 import { onlyUnique } from './filter.js'
@@ -30,16 +29,16 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
   private __graph: GraphPointer<Term, D>
 
   add(value: RdfResourceCore<D> | ResourceIdentifier | string): this {
-    this.__resource.pointer.addOut(rdf.type, getNode(value, this.__resource.env))
+    this.__resource.pointer.addOut(this.__resource.env.ns.rdf.type, getNode(value, this.__resource.env))
     return this
   }
 
   clear(): void {
-    this.__graph.deleteOut(rdf.type)
+    this.__graph.deleteOut(this.__resource.env.ns.rdf.type)
   }
 
   delete(value: RdfResourceCore<D> | ResourceIdentifier | string): boolean {
-    const deletedQuads = this.__graph.dataset.match(this.__resource.id, rdf.type, getNode(value, this.__resource.env))
+    const deletedQuads = this.__graph.dataset.match(this.__resource.id, this.__resource.env.ns.rdf.type, getNode(value, this.__resource.env))
 
     for (const quad of deletedQuads) {
       this.__graph.dataset.delete(quad)
@@ -55,11 +54,11 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
   }
 
   has(value: RdfResourceCore<D> | ResourceIdentifier | string): boolean {
-    return this.__graph.has(rdf.type, getNode(value, this.__resource.env)).terms.length > 0
+    return this.__graph.has(this.__resource.env.ns.rdf.type, getNode(value, this.__resource.env)).terms.length > 0
   }
 
   get size(): number {
-    return this.__graph.out(rdf.type).terms.filter(onlyUnique(compare.terms)).length
+    return this.__graph.out(this.__resource.env.ns.rdf.type).terms.filter(onlyUnique(compare.terms)).length
   }
 
   [Symbol.iterator](): IterableIterator<RdfResourceCore<D>> {
@@ -95,7 +94,7 @@ export default class <D extends DatasetCore> implements Set<RdfResourceCore<D>> 
     // TODO: when clownface gets graph feature
     // const types: MultiPointer<Term, D> = this.__resource.pointer.from(graphId).out(rdf.type)
 
-    const typeQuads = this.__graph.dataset.match(this.__resource.id, rdf.type, null, graphId)
+    const typeQuads = this.__graph.dataset.match(this.__resource.id, this.__resource.env.ns.rdf.type, null, graphId)
 
     const types = [...typeQuads]
       .map(quad => {

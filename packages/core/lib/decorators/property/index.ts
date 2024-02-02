@@ -4,7 +4,6 @@ import { EdgeTraversalFactory, PropRef } from '../../path.js'
 import literalPropertyDecorator, { LiteralValues } from '../property/literal.js'
 import resourcePropertyDecorator from '../property/resource.js'
 import * as compare from '../../compare.js'
-import { toLiteral } from '../../conversion.js'
 import { Initializer } from '../../../RdfResource.js'
 import { fromInitializer } from '../../resource.js'
 import { propertyDecorator, ObjectOrFactory, PropertyReturnKind, ArrayOrSingle } from './decoratorFactory.js'
@@ -36,7 +35,7 @@ export function property<R extends RdfResourceCore<any>>(options: AccessorOption
         return fromInitializer(this, value).id
       }
 
-      return toLiteral.call(this.env, value) || this.env.literal(value.toString())
+      return this.env.rdfine().convert.toLiteral(value) || this.env.literal(value.toString())
     },
     valueTypeName: 'RDF/JS term object',
     assertSetValue: () => true,

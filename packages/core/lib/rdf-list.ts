@@ -1,7 +1,10 @@
-import { AnyPointer, GraphPointer } from 'clownface'
-import { rdf } from '@tpluscode/rdf-ns-builders'
+import type { AnyPointer, GraphPointer } from 'clownface'
+import type * as ns from '@tpluscode/rdf-ns-builders'
+import namespace from '@rdfjs/namespace'
 import type { NamedNode, DatasetCore, Term } from '@rdfjs/types'
 import type { RdfResource } from '../RdfResource.js'
+
+const rdf: typeof ns.rdf = namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#') as any
 
 function isLast(node: AnyPointer): boolean {
   return rdf.nil.equals(node.term)
@@ -18,7 +21,7 @@ export function enumerateList<T, D extends DatasetCore = DatasetCore>(parent: Rd
 
   let current = listNode
   while (!isLast(current)) {
-    const firstItem = current.out(rdf.first).map((first, index) => {
+    const firstItem = current.out(parent.env.ns.rdf.first).map((first, index) => {
       if (index > 0) {
         throw new Error('Malformed RDF List with multiple rdf:first objects')
       }
@@ -34,7 +37,7 @@ export function enumerateList<T, D extends DatasetCore = DatasetCore>(parent: Rd
       items.push(item)
     })
 
-    current = current.out(rdf.rest).map((quad, index) => {
+    current = current.out(parent.env.ns.rdf.rest).map((quad, index) => {
       if (index > 0) {
         throw new Error('Malformed RDF List with multiple rdf:rest objects')
       }
