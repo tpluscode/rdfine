@@ -15,7 +15,6 @@ import { toJSON } from './lib/toJSON.js'
 import type { Jsonified } from './lib/toJSON.js'
 import { fromInitializer } from './lib/resource.js'
 import { mixins } from './lib/mixins.js'
-import { toLiteral } from './lib/conversion.js'
 import { RdfineEnvironment } from './environment.js'
 
 export type ResourceIdentifier = BlankNode | NamedNode
@@ -130,9 +129,9 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
 
           let literal: Literal | undefined
           if (typeof value === 'object' && 'value' in value && 'datatype' in value) {
-            literal = toLiteral.call(resource.env, value.value, value.datatype)
+            literal = resource.env.rdfine().convert.toLiteral(value.value, value.datatype)
           } else {
-            literal = toLiteral.call(resource.env, value)
+            literal = resource.env.rdfine().convert.toLiteral(value)
           }
 
           if (literal) {
