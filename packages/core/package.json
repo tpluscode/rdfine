@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "@rdfjs/dataset": "^2.0.1",
-    "@rdfjs/namespace": "^2",
     "@rdfjs/parser-n3": "^2.0.1",
     "@rdfjs/term-map": "^2.0.0",
     "@rdfjs/term-set": "^2.0.1",
