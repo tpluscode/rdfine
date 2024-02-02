@@ -46,8 +46,10 @@ export class RdfineFactory {
     this.rdfine = () => ({
       factory,
       createEntity: factory.createEntity.bind(factory),
-      fromLiteral: fromLiteral.bind(null, env),
-      toLiteral: toLiteral.bind(null, env),
+      convert: {
+        toLiteral: toLiteral.bind(null, env),
+        fromLiteral: fromLiteral.bind(null, env),
+      },
     })
     this.rdfine.Resource = Base
     factory = new ResourceFactoryImpl(env)
