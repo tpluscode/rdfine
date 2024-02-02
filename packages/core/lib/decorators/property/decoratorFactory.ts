@@ -1,6 +1,5 @@
 import type { Quad, Term } from '@rdfjs/types'
-import cf, { GraphPointer } from 'clownface'
-import { rdf } from '@tpluscode/rdf-ns-builders'
+import type { GraphPointer } from 'clownface'
 import RdfResourceImpl, { RdfResourceCore } from '../../../RdfResource.js'
 import { ClassElement } from '../index.js'
 import { EdgeTraversal, toEdgeTraversals } from '../../path.js'
@@ -13,12 +12,12 @@ import { AccessorOptions } from './index.js'
 export type PropertyReturnKind = 'single' | 'array' | 'list'
 export type ArrayOrSingle<T> = T | T[]
 
-function getObjects(subjects: GraphPointer[], path: EdgeTraversal[]): GraphPointer[] {
+function getObjects(env: RdfineEnvironment, subjects: GraphPointer[], path: EdgeTraversal[]): GraphPointer[] {
   const nodes = path.reduce((subjects, edge) => {
     const objects: GraphPointer[] = []
 
     subjects.forEach(subject => {
-      objects.push(...edge(subject))
+      objects.push(...edge(subject, env))
     })
 
     return objects
@@ -43,7 +42,7 @@ function getNodeFromEveryGraph(node: GraphPointer, env: RdfineEnvironment): Grap
 
   // TODO: when clownface gets graph feature
   // return graphNodes.map(graph => node.fromGraph(graph))
-  return graphNodes.map(graph => cf({
+  return graphNodes.map(graph => env.clownface({
     dataset: node.dataset,
     term: node.term,
     graph,
@@ -85,7 +84,7 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
     get(this: T & RdfResourceImpl): unknown {
       const rootNode = subjectFromAllGraphs ? getNodeFromEveryGraph(this.pointer, this.env) : [this.pointer]
       const path = getPath(this)
-      let nodes = getObjects(rootNode, path)
+      let nodes = getObjects(this.env, rootNode, path)
       const crossesBoundaries = path.some(edge => edge.crossesGraphBoundaries)
       if (subjectFromAllGraphs || crossesBoundaries) {
         values = ['array']
@@ -138,7 +137,7 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
       const path = getPath(this)
       const subjects = path.length === 1
         ? this.pointer.toArray()
-        : getObjects([this.pointer], path.slice(0, path.length - 1))
+        : getObjects(this.env, [this.pointer], path.slice(0, path.length - 1))
 
       if (subjects.length > 1) {
         throw new Error('Cannot set value to multiple nodes at once')
@@ -206,7 +205,7 @@ function createProperty<T extends RdfResourceCore, TValue, TLegalAssigned, TTerm
       if (values.includes('list') && (values.length === 1 || initializedArray)) {
         // only set RDF List when property only allows lists or explicitly initialized with array
         if (termsArray.length === 0) {
-          subject.addOut(lastPredicate, rdf.nil)
+          subject.addOut(lastPredicate, this.env.ns.rdf.nil)
         } else {
           subject.addList(lastPredicate, termsArray)
         }

@@ -1,9 +1,8 @@
 /* eslint-disable camelcase,no-dupe-class-members,no-use-before-define */
 import type { NamespaceBuilder } from '@rdfjs/namespace'
 import type { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from '@rdfjs/types'
-import cf, { MultiPointer, GraphPointer, AnyPointer } from 'clownface'
+import type { MultiPointer, GraphPointer, AnyPointer } from 'clownface'
 import once from 'once'
-import { xsd } from '@tpluscode/rdf-ns-builders'
 import type {
   Constructor,
   Mixin,
@@ -175,17 +174,17 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       this.unionGraphPointer = pointer
     } */
 
-    const selfGraph = cf({
+    const selfGraph = this.env.clownface({
       ...pointer,
       term: pointer.term,
     })
 
     if (selfGraph._context[0].graph) {
       this.pointer = selfGraph
-      this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: undefined })
+      this.unionGraphPointer = this.env.clownface({ dataset: selfGraph.dataset, term: selfGraph.term, graph: undefined })
     } else {
-      this.pointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term, graph: this.env.defaultGraph() })
-      this.unionGraphPointer = cf({ dataset: selfGraph.dataset, term: selfGraph.term })
+      this.pointer = this.env.clownface({ dataset: selfGraph.dataset, term: selfGraph.term, graph: this.env.defaultGraph() })
+      this.unionGraphPointer = this.env.clownface({ dataset: selfGraph.dataset, term: selfGraph.term })
     }
 
     this.__initializeProperties = once(() => {
@@ -316,7 +315,7 @@ export default class RdfResourceImpl<D extends DatasetCore = DatasetCore> implem
       return false
     }
 
-    if (value.term.termType === 'Literal' && xsd.boolean.equals(value.term.datatype)) {
+    if (value.term.termType === 'Literal' && this.env.ns.xsd.boolean.equals(value.term.datatype)) {
       return value.term.equals(this.pointer.literal(true).term)
     }
 

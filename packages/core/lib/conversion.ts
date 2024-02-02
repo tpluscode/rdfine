@@ -1,11 +1,15 @@
 import type { Literal, NamedNode } from '@rdfjs/types'
-import { xsd } from '@tpluscode/rdf-ns-builders'
-import { GraphPointer } from 'clownface'
+import type { GraphPointer } from 'clownface'
 import rdf from '@rdfjs/data-model'
+import type { RdfineEnvironment } from '../environment.js'
 
-export function fromLiteral(type: BooleanConstructor | StringConstructor | NumberConstructor | DateConstructor, obj: GraphPointer) {
+export interface FromLiteral {
+  (type: BooleanConstructor | StringConstructor | NumberConstructor | DateConstructor, obj: GraphPointer): boolean | string | number | Date
+}
+
+export function fromLiteral(env: RdfineEnvironment, type: BooleanConstructor | StringConstructor | NumberConstructor | DateConstructor, obj: GraphPointer) {
   if (type === Boolean) {
-    return rdf.literal('true', xsd.boolean).equals(obj.term)
+    return rdf.literal('true', env.ns.xsd.boolean).equals(obj.term)
   }
 
   if (type === Number) {
@@ -19,24 +23,28 @@ export function fromLiteral(type: BooleanConstructor | StringConstructor | Numbe
   return obj.value
 }
 
-export function toLiteral(value: boolean | string | number | Date | bigint | unknown, datatype?: NamedNode): Literal | undefined {
+export interface ToLiteral {
+  (value: boolean | string | number | Date | bigint | unknown, datatype?: NamedNode): Literal | undefined
+}
+
+export function toLiteral(env: RdfineEnvironment, value: boolean | string | number | Date | bigint | unknown, datatype?: NamedNode): Literal | undefined {
   switch (typeof value) {
     case 'boolean':
-      return rdf.literal(value.toString(), datatype || xsd.boolean)
+      return rdf.literal(value.toString(), datatype || env.ns.xsd.boolean)
     case 'number':
-      return rdf.literal(value.toString(), datatype || (Number.isInteger(value) ? xsd.integer : xsd.float))
+      return rdf.literal(value.toString(), datatype || (Number.isInteger(value) ? env.ns.xsd.integer : env.ns.xsd.float))
     case 'bigint':
-      return rdf.literal(value.toString(), datatype || xsd.long)
+      return rdf.literal(value.toString(), datatype || env.ns.xsd.long)
     case 'string':
       return rdf.literal(value, datatype)
     case 'object':
       if (value instanceof Date) {
         const literal = value.toISOString()
-        if (xsd.date.equals(datatype)) {
-          return rdf.literal(literal.substr(0, 10), xsd.date)
+        if (env.ns.xsd.date.equals(datatype)) {
+          return rdf.literal(literal.substr(0, 10), env.ns.xsd.date)
         }
 
-        return rdf.literal(literal, datatype || xsd.dateTime)
+        return rdf.literal(literal, datatype || env.ns.xsd.dateTime)
       }
       break
   }

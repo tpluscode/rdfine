@@ -1,4 +1,4 @@
-import { AnyPointer, GraphPointer } from 'clownface'
+import type { AnyPointer, GraphPointer } from 'clownface'
 import type { BlankNode, NamedNode } from '@rdfjs/types'
 import type { Initializer, RdfResourceCore, ResourceIdentifier } from '../RdfResource.js'
 

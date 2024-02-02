@@ -1,6 +1,5 @@
 import type { Literal, NamedNode, Term } from '@rdfjs/types'
 import { RdfResourceCore } from '../../../RdfResource.js'
-import { fromLiteral, toLiteral } from '../../conversion.js'
 import { propertyDecorator, ObjectOrFactory } from './decoratorFactory.js'
 import type { AccessorOptions } from './index.js'
 
@@ -18,10 +17,10 @@ export default function<R extends RdfResourceCore> (options: AccessorOptions & L
   return propertyDecorator<R, LiteralValues, LiteralValues, Literal>({
     ...options,
     fromTerm(obj) {
-      return fromLiteral(type, obj)
+      return this.env.rdfine().convert.fromLiteral(type, obj)
     },
     toTerm(value) {
-      return toLiteral(value, options.datatype)!
+      return this.env.rdfine().convert.toLiteral(value, options.datatype)!
     },
     valueTypeName: type.name,
     assertSetValue: (value) => {

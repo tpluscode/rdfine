@@ -1,10 +1,10 @@
 import type { NamedNode } from '@rdfjs/types'
-import cf, { GraphPointer } from 'clownface'
+import type { GraphPointer } from 'clownface'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
 import { RdfineEnvironment } from '../environment.js'
 
 export interface EdgeTraversal {
-  (subject: GraphPointer): GraphPointer[]
+  (subject: GraphPointer, env: RdfineEnvironment): GraphPointer[]
   predicate: NamedNode
   crossesGraphBoundaries: boolean
 }
@@ -42,7 +42,7 @@ function sameGraph(prop: NamedNode): EdgeTraversal {
 }
 
 function anyGraph(prop: NamedNode): EdgeTraversal {
-  const edge: EdgeTraversal = subject => {
+  const edge: EdgeTraversal = (subject, env) => {
     const graphNodes = new Map<string, GraphPointer>()
 
     subject.out(prop).forEach(node => {
@@ -54,7 +54,7 @@ function anyGraph(prop: NamedNode): EdgeTraversal {
         if (!graphNodes.has(quad.graph.value)) {
           // TODO: when clownface gets graph feature
           // graphNodes.set(quad.graph.value, subject.from(quad.graph))
-          graphNodes.set(quad.graph.value, cf({
+          graphNodes.set(quad.graph.value, env.clownface({
             dataset: subject.dataset,
             term: quad.subject,
             graph: quad.graph,

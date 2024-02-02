@@ -1,7 +1,6 @@
 /* eslint-disable no-use-before-define */
 import type { DatasetCore, Literal, NamedNode, Term } from '@rdfjs/types'
 import type { GraphPointer } from 'clownface'
-import { rdf } from '@tpluscode/rdf-ns-builders'
 import type { NamespaceBuilder } from '@rdfjs/namespace'
 import type { Initializer, RdfResource, RdfResourceCore, ResourceNode } from '../RdfResource.js'
 import { RdfineEnvironment } from '../environment.js'
@@ -84,7 +83,7 @@ export default class <D extends DatasetCore = DatasetCore, R extends RdfResource
       }
     }
 
-    const types = pointer.out(rdf.type).values
+    const types = pointer.out(this.__env.ns.rdf.type).values
     for (const type of options.initializer?.types || []) {
       if ('termType' in type) {
         types.push(type.value)

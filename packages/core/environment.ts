@@ -3,6 +3,7 @@ import type { Environment } from '@rdfjs/environment/Environment.js'
 import RdfResourceImpl from './RdfResource.js'
 import ResourceFactoryImpl, { Constructor, ResourceFactory } from './lib/ResourceFactory.js'
 import type { Factory } from './factory.js'
+import { toLiteral, fromLiteral, ToLiteral, FromLiteral } from './lib/conversion.js'
 
 type Name<T> = T extends `${infer Prefix}Mixin` ? Prefix : never;
 export type Vocabulary<T> = {
@@ -17,6 +18,10 @@ export interface Rdfine {
   (): {
     createEntity: ResourceFactory['createEntity']
     factory: ResourceFactory
+    convert: {
+      toLiteral: ToLiteral
+      fromLiteral: FromLiteral
+    }
   }
   Resource: Constructor
 }
@@ -41,6 +46,8 @@ export class RdfineFactory {
     this.rdfine = () => ({
       factory,
       createEntity: factory.createEntity.bind(factory),
+      fromLiteral: fromLiteral.bind(null, env),
+      toLiteral: toLiteral.bind(null, env),
     })
     this.rdfine.Resource = Base
     factory = new ResourceFactoryImpl(env)
