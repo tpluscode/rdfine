@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.7.6
+
+### Patch Changes
+
+- 3dac56f6: Remove imports of `clownface`.
+  Remove dependency on `@tpluscode/rdf-ns-builders`.
+
 ## 0.7.5
 
 ### Patch Changes
