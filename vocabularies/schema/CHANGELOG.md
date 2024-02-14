@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.8.5
+
+### Patch Changes
+
+- 9b28f347: Updated dependencies to remove `rdf-js` references in compiled output
+- Updated dependencies [9b28f347]
+  - @tpluscode/rdfine@0.7.7
+
 ## 0.8.4
 
 ### Patch Changes

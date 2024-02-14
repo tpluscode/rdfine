@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/shacl",
-  "version": "0.10.4",
+  "version": "0.10.5",
   "type": "module",
   "main": "index.js",
   "module": "index.js",
@@ -77,11 +77,11 @@
   },
   "dependencies": {
     "@rdfjs/data-model": "^2",
-    "@rdfine/owl": "^0.6.4",
-    "@rdfine/rdf": "^0.7.4",
-    "@rdfine/rdfs": "^0.8.4",
+    "@rdfine/owl": "^0.6.5",
+    "@rdfine/rdf": "^0.7.5",
+    "@rdfine/rdfs": "^0.8.5",
     "@tpluscode/rdf-ns-builders": "^4.3.0",
-    "@tpluscode/rdfine": ">=0.6"
+    "@tpluscode/rdfine": ">=0.7.7"
   },
   "devDependencies": {
     "@rdfine/env": "^1.0.4",

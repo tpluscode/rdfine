@@ -1,5 +1,13 @@
 # @rdfine/rico
 
+## 0.3.4
+
+### Patch Changes
+
+- 9b28f347: Updated dependencies to remove `rdf-js` references in compiled output
+- Updated dependencies [9b28f347]
+  - @tpluscode/rdfine@0.7.7
+
 ## 0.3.3
 
 ### Patch Changes

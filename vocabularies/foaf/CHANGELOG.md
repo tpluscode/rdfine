@@ -1,5 +1,15 @@
 # @rdfine/foaf
 
+## 2.0.5
+
+### Patch Changes
+
+- 9b28f347: Updated dependencies to remove `rdf-js` references in compiled output
+- Updated dependencies [9b28f347]
+  - @tpluscode/rdfine@0.7.7
+  - @rdfine/skos@0.3.5
+  - @rdfine/wgs@0.3.5
+
 ## 2.0.4
 
 ### Patch Changes
