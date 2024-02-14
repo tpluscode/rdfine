@@ -80,14 +80,14 @@
     "@rdfine/owl": "^0.6.4",
     "@rdfine/rdf": "^0.7.4",
     "@rdfine/rdfs": "^0.8.4",
-    "@tpluscode/rdf-ns-builders": ">=3.0.2",
+    "@tpluscode/rdf-ns-builders": "^4.3.0",
     "@tpluscode/rdfine": ">=0.6"
   },
   "devDependencies": {
     "@rdfine/env": "^1.0.4",
     "@rdfjs/dataset": "^2",
     "@rdfjs/namespace": "^2",
-    "@types/rdf-dataset-ext": "^1.0.3",
+    "@types/rdf-dataset-ext": "^1.0.8",
     "@zazuko/env": "^2.0.2",
     "chai": "^4.3.7",
     "clownface": "^2.0.0",
