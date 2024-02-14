@@ -35,7 +35,7 @@
     "@rdfjs/parser-n3": "^2.0.1",
     "@rdfjs/term-map": "^2.0.0",
     "@rdfjs/term-set": "^2.0.1",
-    "@tpluscode/rdf-ns-builders": "^4.1.0",
+    "@tpluscode/rdf-ns-builders": "^4.3.0",
     "@tpluscode/rdf-string": "^1.0.3",
     "@types/node": "^18",
     "@types/once": "^1.4.0",
