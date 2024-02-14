@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.7
+
+### Patch Changes
+
+- 9b28f347: Updated dependencies to remove `rdf-js` references in compiled output
+
 ## 0.7.6
 
 ### Patch Changes
