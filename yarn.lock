@@ -808,7 +808,7 @@
     "@rdfjs/sink-map" "^2.0.0"
     rdfxml-streaming-parser "^2.2.0"
 
-"@rdfjs/formats@^4":
+"@rdfjs/formats@^4", "@rdfjs/formats@^4.0.0":
   version "4.0.0"
   resolved "https://registry.npmjs.org/@rdfjs/formats/-/formats-4.0.0.tgz"
   integrity sha512-9e0DX+iWi8d958Px6Ggb1otl/EhfyvlfWcop+lS0aZlsGV2YK9Phl5lzCUYTfTefSyyQk8tJd5XN52hhDLb5Wg==
@@ -2024,19 +2024,27 @@
   resolved "https://registry.npmjs.org/@yarnpkg/lockfile/-/lockfile-1.1.0.tgz"
   integrity sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==
 
-"@zazuko/env@^2.0.2", "@zazuko/env@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/@zazuko/env/-/env-2.0.3.tgz"
-  integrity sha512-KltMKz2WQs02gsDM5kJi1qI6ejejKjk1p7/tsNNaZM4Opd/5uxyDjsObt6WVbLsLrW2I7xNu31fdXzqfhpuRuA==
+"@zazuko/env-core@^1.0.0":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@zazuko/env-core/-/env-core-1.1.1.tgz#8e1761cd25c28e41e1635b9fd9b9fbe1d7b74f5f"
+  integrity sha512-O/ScJLuQFlT0DdQzjakgbAXAKAbClp7AfxS1DQJfR7oABHJxi4NsLmmpF8wcBvyjwMZdpIWwWVF080ChLnwTNA==
+  dependencies:
+    "@rdfjs/environment" "^1.0.0"
+
+"@zazuko/env@^2.0.2", "@zazuko/env@^2.0.3", "@zazuko/env@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@zazuko/env/-/env-2.1.0.tgz#502ca760765f0e28c97605f15fa22c6fca22f163"
+  integrity sha512-/0CYISlrDSbdoYFBKgczQMyF8aTioEt07LMNpmsfMbOSvAMXpCDkss4Q/9i3sX4YaV8DertQFS68HxW+aBazvQ==
   dependencies:
     "@rdfjs/data-model" "^2.0.1"
     "@rdfjs/dataset" "^2.0.1"
-    "@rdfjs/environment" "^1.0.0"
+    "@rdfjs/formats" "^4.0.0"
     "@rdfjs/namespace" "^2.0.0"
     "@rdfjs/term-map" "^2.0.0"
     "@rdfjs/term-set" "^2.0.1"
     "@rdfjs/traverser" "^0.1.2"
     "@tpluscode/rdf-ns-builders" "^4.1.0"
+    "@zazuko/env-core" "^1.0.0"
     "@zazuko/prefixes" "^2.1.0"
     clownface "^2.0.2"
     get-stream "^8.0.1"
