@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.8
+
+### Patch Changes
+
+- 0dfe5271: Use the slimmer `@zazuko/env` which works better in the browser
+
 ## 0.7.7
 
 ### Patch Changes

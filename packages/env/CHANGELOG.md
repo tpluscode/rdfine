@@ -1,5 +1,13 @@
 # @rdfine/env
 
+## 1.1.1
+
+### Patch Changes
+
+- 0dfe5271: Use the slimmer `@zazuko/env` which works better in the browser
+- Updated dependencies [0dfe5271]
+  - @tpluscode/rdfine@0.7.8
+
 ## 1.1.0
 
 ### Minor Changes
