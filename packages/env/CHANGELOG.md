@@ -1,5 +1,13 @@
 # @rdfine/env
 
+## 1.1.2
+
+### Patch Changes
+
+- 86de16ae: Fix imports to work with `moduleResolution: NodeNext`
+- Updated dependencies [86de16ae]
+  - @tpluscode/rdfine@0.7.9
+
 ## 1.1.1
 
 ### Patch Changes

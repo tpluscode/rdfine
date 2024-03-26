@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.9
+
+### Patch Changes
+
+- 86de16ae: Fix imports to work with `moduleResolution: NodeNext`
+
 ## 0.7.8
 
 ### Patch Changes
