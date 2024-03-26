@@ -798,7 +798,7 @@
 
 "@rdfjs/formats-common@^3.1.0":
   version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@rdfjs/formats-common/-/formats-common-3.1.0.tgz#da52c7b764240defb917635746e703c827af68a7"
+  resolved "https://registry.npmjs.org/@rdfjs/formats-common/-/formats-common-3.1.0.tgz"
   integrity sha512-wgz5za/Uls+pttLdLl/aH0m0LQNgjqpWwk9exNs2Smmb2CosynRo4S0+CxeNOVZh4zeUm7oAlr1CK/tyg4Ff6g==
   dependencies:
     "@rdfjs/parser-jsonld" "^2.0.0"
@@ -1202,7 +1202,7 @@
 
 "@types/rdf-dataset-ext@^1.0.8":
   version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@types/rdf-dataset-ext/-/rdf-dataset-ext-1.0.8.tgz#4a675180389db0a9dd7be9ba378f794f026f3c47"
+  resolved "https://registry.npmjs.org/@types/rdf-dataset-ext/-/rdf-dataset-ext-1.0.8.tgz"
   integrity sha512-ngMGOzAm+yvrfTzFhlmPNa9lfWO72IkdqYRR+HNIPX3x+RPLf6qRpAi8GAZCg0rkpGt2JJqDQF3FgVxE6ykr/w==
   dependencies:
     "@rdfjs/types" ">=1.0.0"
@@ -1249,7 +1249,7 @@
 
 "@types/rdfjs__formats-common@*":
   version "3.1.5"
-  resolved "https://registry.yarnpkg.com/@types/rdfjs__formats-common/-/rdfjs__formats-common-3.1.5.tgz#06620246a987abba62bc73c0206b8f819acfb2de"
+  resolved "https://registry.npmjs.org/@types/rdfjs__formats-common/-/rdfjs__formats-common-3.1.5.tgz"
   integrity sha512-Zt74nSd9NemOq90/2cMrBVwnHJIXHFFDS7tkY4Slei1eRoQJpws059Lx9O+mqaFspkD3r81Enu/5CiNfQg9V7g==
   dependencies:
     "@rdfjs/types" ">=1.0.0"
@@ -1294,7 +1294,7 @@
 
 "@types/rdfjs__parser-n3@*", "@types/rdfjs__parser-n3@^2.0.6":
   version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@types/rdfjs__parser-n3/-/rdfjs__parser-n3-2.0.6.tgz#ed35e9d239aba52a2c143309b8a6b746b95bb358"
+  resolved "https://registry.npmjs.org/@types/rdfjs__parser-n3/-/rdfjs__parser-n3-2.0.6.tgz"
   integrity sha512-VHfdq7BDV6iMCtHkzTFSOuUWnqGlMUmEF0UZyK4+g9SzLWvc6TMcU5TYwQPQIz/e0s7dZ+xomxx6mVtIzsRQ/A==
   dependencies:
     "@rdfjs/types" ">=1.0.0"
@@ -1317,14 +1317,14 @@
 
 "@types/rdfjs__serializer-jsonld@*":
   version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@types/rdfjs__serializer-jsonld/-/rdfjs__serializer-jsonld-2.0.5.tgz#9bcf9455e2e4e0218e5c62a131370011cdab4094"
+  resolved "https://registry.npmjs.org/@types/rdfjs__serializer-jsonld/-/rdfjs__serializer-jsonld-2.0.5.tgz"
   integrity sha512-ubdLD9QgZzAt+65NSPzh2qWCPWcGYlHEWgkP6uRwfm7JC48Xh/QjzwOTG13MTomOkQqcN4R7PIG0j3Ca8iyNWQ==
   dependencies:
     "@rdfjs/types" ">=1.0.0"
 
 "@types/rdfjs__serializer-ntriples@*":
   version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@types/rdfjs__serializer-ntriples/-/rdfjs__serializer-ntriples-2.0.6.tgz#e03198d6d078408eb85638b08abfd90e13f90bc2"
+  resolved "https://registry.npmjs.org/@types/rdfjs__serializer-ntriples/-/rdfjs__serializer-ntriples-2.0.6.tgz"
   integrity sha512-Nn3e3eyuymLvbI5MFzI7ODD/X6ZGpbB9fLaWOB00RtFHd2vttk3wQL2fzzsZZQPJ/ihC/xlFE4cNQkO6SoHa7w==
   dependencies:
     "@rdfjs/types" ">=1.0.0"
@@ -2026,14 +2026,14 @@
 
 "@zazuko/env-core@^1.0.0":
   version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@zazuko/env-core/-/env-core-1.1.1.tgz#8e1761cd25c28e41e1635b9fd9b9fbe1d7b74f5f"
+  resolved "https://registry.npmjs.org/@zazuko/env-core/-/env-core-1.1.1.tgz"
   integrity sha512-O/ScJLuQFlT0DdQzjakgbAXAKAbClp7AfxS1DQJfR7oABHJxi4NsLmmpF8wcBvyjwMZdpIWwWVF080ChLnwTNA==
   dependencies:
     "@rdfjs/environment" "^1.0.0"
 
 "@zazuko/env@^2.0.2", "@zazuko/env@^2.0.3", "@zazuko/env@^2.1.0":
   version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@zazuko/env/-/env-2.1.0.tgz#502ca760765f0e28c97605f15fa22c6fca22f163"
+  resolved "https://registry.npmjs.org/@zazuko/env/-/env-2.1.0.tgz"
   integrity sha512-/0CYISlrDSbdoYFBKgczQMyF8aTioEt07LMNpmsfMbOSvAMXpCDkss4Q/9i3sX4YaV8DertQFS68HxW+aBazvQ==
   dependencies:
     "@rdfjs/data-model" "^2.0.1"
@@ -6298,6 +6298,11 @@ typed-array-length@^1.0.4:
     call-bind "^1.0.2"
     for-each "^0.3.3"
     is-typed-array "^1.1.9"
+
+typescript@^5.4.3:
+  version "5.4.3"
+  resolved "https://registry.npmjs.org/typescript/-/typescript-5.4.3.tgz"
+  integrity sha512-KrPd3PKaCLr78MalgiwJnA25Nm8HAmdwN3mYUYZgG/wizIo9EainNVQI9/yDavtVFRN2h3k8uf3GLHuhDMgEHg==
 
 typescript@~4.2:
   version "4.2.4"

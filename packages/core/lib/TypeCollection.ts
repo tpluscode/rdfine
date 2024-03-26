@@ -1,6 +1,6 @@
 import type { DataFactory, DatasetCore, Term } from '@rdfjs/types'
 import type { GraphPointer } from 'clownface'
-import { Environment } from '@rdfjs/environment/Environment'
+import { Environment } from '@rdfjs/environment/Environment.js'
 import type { RdfResourceCore, ResourceIdentifier } from '../RdfResource.js'
 import { onlyUnique } from './filter.js'
 import * as compare from './compare.js'
