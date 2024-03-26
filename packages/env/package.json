@@ -8,12 +8,16 @@
     "*.d.ts",
     "CHANGELOG.md"
   ],
+  "license": "MIT",
   "scripts": {
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "./node_modules/.bin/tsc --project tsconfig.build.json"
   },
   "dependencies": {
     "@tpluscode/rdfine": "^0.7.8",
     "@zazuko/env": "^2.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.3"
   },
   "publishConfig": {
     "access": "public"
