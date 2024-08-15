@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.10
+
+### Patch Changes
+
+- 0d2863f0: Replace `once` with `onetime`
+
 ## 0.7.9
 
 ### Patch Changes
