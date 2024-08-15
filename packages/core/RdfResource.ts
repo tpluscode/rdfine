@@ -2,7 +2,7 @@
 import type { NamespaceBuilder } from '@rdfjs/namespace'
 import type { NamedNode, DatasetCore, BlankNode, Quad_Graph, Term, Literal } from '@rdfjs/types'
 import type { MultiPointer, GraphPointer, AnyPointer } from 'clownface'
-import once from 'once'
+import once from 'onetime'
 import type {
   Constructor,
   Mixin,

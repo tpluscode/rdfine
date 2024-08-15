@@ -28,7 +28,7 @@
     "@types/clownface": "^2",
     "@types/rdfjs__data-model": "^2.0.7",
     "@types/rdfjs__traverser": "^0.1.5",
-    "once": "^1.4.0"
+    "onetime": "^7.0.0"
   },
   "devDependencies": {
     "@rdfjs/dataset": "^2.0.1",
