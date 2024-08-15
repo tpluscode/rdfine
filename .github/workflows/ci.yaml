@@ -8,16 +8,16 @@ jobs:
 
     strategy:
       matrix:
-        node: [ '16', '18' ]
+        node: [ '20', '18', 'lts/*' ]
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
       - run: yarn
       - run: yarn test
       - name: Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -29,8 +29,8 @@ jobs:
         with:
           fetch-depth: 0
       - run: git fetch --prune
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: 'lts/*'
       - run: yarn
       - run: yarn wsrun --changedSince origin/master --no-prefix -rcm prepack
