@@ -1,6 +1,6 @@
 {
   "name": "@rdfine/sioc",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "main": "index.js",
   "module": "index.js",
   "browser": "index.js",
@@ -30,9 +30,9 @@
   },
   "dependencies": {
     "@rdfjs/data-model": "^2",
-    "@rdfine/foaf": "^2.0.5",
+    "@rdfine/foaf": "^2.0.6",
     "@tpluscode/rdf-ns-builders": "^5",
-    "@tpluscode/rdfine": ">=0.7.7"
+    "@tpluscode/rdfine": ">=0.7.11"
   },
   "repository": {
     "type": "git",

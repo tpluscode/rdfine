@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.7.6
+
+### Patch Changes
+
+- c41dbdd7: Updated `@tpluscode/rdf-ns-builders` to v5
+- Updated dependencies [c41dbdd7]
+  - @tpluscode/rdfine@0.7.11
+
 ## 0.7.5
 
 ### Patch Changes
