@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "run-s example:*",
-    "example:schema": "ts-node schema/index.ts",
-    "example:enumeration": "ts-node enumeration/index.ts",
-    "example:custom": "ts-node custom/index.ts -- https://sources.wikibus.org/brochures",
-    "example:deep": "ts-node deep-initialization/index.ts"
+    "example:schema": "tsx schema/index.ts",
+    "example:enumeration": "tsx enumeration/index.ts",
+    "example:custom": "tsx custom/index.ts -- https://sources.wikibus.org/brochures",
+    "example:deep": "tsx deep-initialization/index.ts"
   },
   "dependencies": {
     "@rdfine/env": "^1.0.0",
