@@ -1,5 +1,13 @@
 # @rdfine/env
 
+## 1.1.3
+
+### Patch Changes
+
+- c41dbdd7: Updated `@zazuko/env`
+- Updated dependencies [c41dbdd7]
+  - @tpluscode/rdfine@0.7.11
+
 ## 1.1.2
 
 ### Patch Changes

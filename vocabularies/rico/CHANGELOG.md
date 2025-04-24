@@ -1,5 +1,17 @@
 # @rdfine/rico
 
+## 0.4.0
+
+### Minor Changes
+
+- 00ee035c: Update to latest vocabulary
+
+### Patch Changes
+
+- c41dbdd7: Updated `@tpluscode/rdf-ns-builders` to v5
+- Updated dependencies [c41dbdd7]
+  - @tpluscode/rdfine@0.7.11
+
 ## 0.3.4
 
 ### Patch Changes

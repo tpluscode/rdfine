@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.8.5
+
+### Patch Changes
+
+- c41dbdd7: Updated `@zazuko/env`
+- c41dbdd7: Updated `@tpluscode/rdf-ns-builders` to v5
+
 ## 0.8.4
 
 ### Patch Changes

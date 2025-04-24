@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.11
+
+### Patch Changes
+
+- c41dbdd7: Updated `@zazuko/env`
+
 ## 0.7.10
 
 ### Patch Changes
