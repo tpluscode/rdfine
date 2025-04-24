@@ -59,12 +59,12 @@
   },
   "dependencies": {
     "@rdfjs/data-model": "^2",
-    "@tpluscode/rdf-ns-builders": "^4.3.0",
+    "@tpluscode/rdf-ns-builders": "^5",
     "@tpluscode/rdfine": ">=0.7.7"
   },
   "devDependencies": {
     "@rdfine/env": "^1.0.4",
-    "@zazuko/env": "^2.0.2",
+    "@zazuko/env": "^3",
     "chai": "^4.3.7",
     "clownface": "^2.0.0"
   },
