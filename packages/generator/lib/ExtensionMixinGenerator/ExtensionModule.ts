@@ -149,7 +149,6 @@ export class ExtensionModule extends MixinModuleBase<ExternalResourceType> {
       })
 
     this.mixinImports
-      .filter(imported => imported.type === 'ExternalResource')
       .forEach(imported => {
         if (imported.type === 'Resource') {
           mixinFile.addImportDeclaration({
