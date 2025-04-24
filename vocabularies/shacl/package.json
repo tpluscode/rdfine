@@ -80,7 +80,7 @@
     "@rdfine/owl": "^0.6.5",
     "@rdfine/rdf": "^0.7.5",
     "@rdfine/rdfs": "^0.8.5",
-    "@tpluscode/rdf-ns-builders": "^4.3.0",
+    "@tpluscode/rdf-ns-builders": "^5",
     "@tpluscode/rdfine": ">=0.7.7"
   },
   "devDependencies": {
@@ -88,7 +88,7 @@
     "@rdfjs/dataset": "^2",
     "@rdfjs/namespace": "^2",
     "@types/rdf-dataset-ext": "^1.0.8",
-    "@zazuko/env": "^2.0.2",
+    "@zazuko/env": "^3",
     "chai": "^4.3.7",
     "clownface": "^2.0.0",
     "mocha-chai-jest-snapshot": "^1.1.4",

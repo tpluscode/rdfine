@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@tpluscode/rdfine": "^0.7.9",
-    "@zazuko/env": "^2.1.0"
+    "@zazuko/env": "^3"
   },
   "devDependencies": {
     "typescript": "^5.4.3"

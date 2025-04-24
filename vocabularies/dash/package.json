@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@rdfjs/data-model": "^2",
-    "@tpluscode/rdf-ns-builders": "^4.3.0",
+    "@tpluscode/rdf-ns-builders": "^5",
     "@tpluscode/rdfine": ">=0.7.7",
     "@rdfine/rdf": "^0.7.5",
     "@rdfine/rdfs": "^0.8.5",

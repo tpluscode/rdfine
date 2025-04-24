@@ -32,7 +32,7 @@
     "@rdfjs/data-model": "^2",
     "@rdfine/foaf": "^2.0.5",
     "@rdfine/rdfs": "^0.8.5",
-    "@tpluscode/rdf-ns-builders": "^4.3.0",
+    "@tpluscode/rdf-ns-builders": "^5",
     "@tpluscode/rdfine": ">=0.7.7"
   },
   "repository": {

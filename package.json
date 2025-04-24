@@ -27,7 +27,7 @@
     "@types/rdfjs__parser-jsonld": "^2.1.6",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
-    "@zazuko/env": "^2.0.2",
+    "@zazuko/env": "^3",
     "c8": "^7.13.0",
     "chai-string": "^1.5.0",
     "chai-subset": "^1.6.0",
