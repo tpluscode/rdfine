@@ -6,22 +6,19 @@ import type * as RDF from '@rdfjs/types';
 import { rico } from './namespace.js';
 import type { RdfResourceCore } from '@tpluscode/rdfine/RdfResource';
 import type * as Rico from '../index.js';
-import { AgentOriginationRelationMixin } from './AgentOriginationRelation.js';
+import { OrganicProvenanceRelationMixin } from './OrganicProvenanceRelation.js';
 
-export interface AccumulationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentOriginationRelation<D>, rdfine.RdfResource<D> {
-  accumulationRelationHasSource: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
-  accumulationRelationHasTarget: Rico.Agent<D> | undefined;
+export interface AccumulationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.OrganicProvenanceRelation<D>, rdfine.RdfResource<D> {
+  'accumulationRelation_role': Rico.AccumulationRelation<D> | undefined;
 }
 
 export function AccumulationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AccumulationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
-  class AccumulationRelationClass extends AgentOriginationRelationMixin(Resource) {
-    @rdfine.property.resource()
-    accumulationRelationHasSource: Rico.Instantiation | Rico.RecordResource | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
-    accumulationRelationHasTarget: Rico.Agent | undefined;
+  class AccumulationRelationClass extends OrganicProvenanceRelationMixin(Resource) {
+    @rdfine.property.resource({ as: [AccumulationRelationMixin] })
+    'accumulationRelation_role': Rico.AccumulationRelation | undefined;
   }
   return AccumulationRelationClass as any
 }
 AccumulationRelationMixin.appliesTo = rico.AccumulationRelation
-AccumulationRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<AccumulationRelation>([AgentOriginationRelationMixin, AccumulationRelationMixin], { types: [rico.AccumulationRelation] }, env)
+AccumulationRelationMixin.createFactory = (env: RdfineEnvironment) => createFactory<AccumulationRelation>([OrganicProvenanceRelationMixin, AccumulationRelationMixin], { types: [rico.AccumulationRelation] }, env)

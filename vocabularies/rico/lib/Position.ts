@@ -9,9 +9,6 @@ import type * as Rico from '../index.js';
 import { AgentMixin } from './Agent.js';
 
 export interface Position<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Agent<D>, rdfine.RdfResource<D> {
-  agentIsSourceOfIntellectualPropertyRightsRelation: Rico.IntellectualPropertyRightsRelation<D> | undefined;
-  agentIsSourceOfOwnershipRelation: Rico.OwnershipRelation<D> | undefined;
-  agentIsTargetOfAuthorshipRelation: Rico.AuthorshipRelation<D> | undefined;
   existsOrExistedIn: Rico.Group<D> | undefined;
   isAuthorOf: Rico.Record<D> | undefined;
   isOrWasHolderOfIntellectualPropertyRightsOf: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
@@ -19,19 +16,11 @@ export interface Position<D extends RDF.DatasetCore = RDF.DatasetCore> extends R
   isOrWasOwnerOf: Rico.Thing<D> | undefined;
   positionIsContextOfLeadershipRelation: Rico.LeadershipRelation<D> | undefined;
   positionIsContextOfMembershipRelation: Rico.MembershipRelation<D> | undefined;
-  positionIsSourceOfPositionToGroupRelation: Rico.PositionToGroupRelation<D> | undefined;
-  positionIsTargetOfPositionHoldingRelation: Rico.PositionHoldingRelation<D> | undefined;
 }
 
 export function PositionMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Position & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class PositionClass extends AgentMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.IntellectualPropertyRightsRelation] })
-    agentIsSourceOfIntellectualPropertyRightsRelation: Rico.IntellectualPropertyRightsRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.OwnershipRelation] })
-    agentIsSourceOfOwnershipRelation: Rico.OwnershipRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.AuthorshipRelation] })
-    agentIsTargetOfAuthorshipRelation: Rico.AuthorshipRelation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Group] })
     existsOrExistedIn: Rico.Group | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Record] })
@@ -46,10 +35,6 @@ export function PositionMixin<Base extends rdfine.Constructor>(Resource: Base): 
     positionIsContextOfLeadershipRelation: Rico.LeadershipRelation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.MembershipRelation] })
     positionIsContextOfMembershipRelation: Rico.MembershipRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.PositionToGroupRelation] })
-    positionIsSourceOfPositionToGroupRelation: Rico.PositionToGroupRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.PositionHoldingRelation] })
-    positionIsTargetOfPositionHoldingRelation: Rico.PositionHoldingRelation | undefined;
   }
   return PositionClass as any
 }

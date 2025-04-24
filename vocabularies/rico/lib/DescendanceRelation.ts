@@ -10,17 +10,14 @@ import { AgentTemporalRelationMixin } from './AgentTemporalRelation.js';
 import { FamilyRelationMixin } from './FamilyRelation.js';
 
 export interface DescendanceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentTemporalRelation<D>, Rico.FamilyRelation<D>, rdfine.RdfResource<D> {
-  descendanceRelationHasSource: Rico.Person<D> | undefined;
-  descendanceRelationHasTarget: Rico.Person<D> | undefined;
+  'descendanceRelation_role': Rico.DescendanceRelation<D> | undefined;
 }
 
 export function DescendanceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DescendanceRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class DescendanceRelationClass extends FamilyRelationMixin(AgentTemporalRelationMixin(Resource)) {
-    @rdfine.property.resource({ implicitTypes: [rico.Person] })
-    descendanceRelationHasSource: Rico.Person | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Person] })
-    descendanceRelationHasTarget: Rico.Person | undefined;
+    @rdfine.property.resource({ as: [DescendanceRelationMixin] })
+    'descendanceRelation_role': Rico.DescendanceRelation | undefined;
   }
   return DescendanceRelationClass as any
 }

@@ -10,18 +10,15 @@ import { AgentToAgentRelationMixin } from './AgentToAgentRelation.js';
 import { TemporalRelationMixin } from './TemporalRelation.js';
 
 export interface AgentTemporalRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, Rico.TemporalRelation<D>, rdfine.RdfResource<D> {
-  agentTemporalRelationHasSource: Rico.Agent<D> | undefined;
-  agentTemporalRelationHasTarget: Rico.Agent<D> | undefined;
+  'agentTemporalRelation_role': Rico.AgentTemporalRelation<D> | undefined;
   asConcernsActivity: Rico.Activity<D> | undefined;
 }
 
 export function AgentTemporalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentTemporalRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class AgentTemporalRelationClass extends TemporalRelationMixin(AgentToAgentRelationMixin(Resource)) {
-    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
-    agentTemporalRelationHasSource: Rico.Agent | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
-    agentTemporalRelationHasTarget: Rico.Agent | undefined;
+    @rdfine.property.resource({ as: [AgentTemporalRelationMixin] })
+    'agentTemporalRelation_role': Rico.AgentTemporalRelation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Activity] })
     asConcernsActivity: Rico.Activity | undefined;
   }

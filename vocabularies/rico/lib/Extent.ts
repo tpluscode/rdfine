@@ -11,7 +11,7 @@ import { ThingMixin } from './Thing.js';
 export interface Extent<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Thing<D>, rdfine.RdfResource<D> {
   hasExtentType: Rico.ExtentType<D> | undefined;
   hasUnitOfMeasurement: Rico.UnitOfMeasurement<D> | undefined;
-  isExtentOf: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
+  isExtentOf: Rico.Thing<D> | undefined;
   quantity: number | undefined;
   textualValue: RDF.Literal | undefined;
   unitOfMeasurement: RDF.Literal | undefined;
@@ -24,8 +24,8 @@ export function ExtentMixin<Base extends rdfine.Constructor>(Resource: Base): rd
     hasExtentType: Rico.ExtentType | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.UnitOfMeasurement] })
     hasUnitOfMeasurement: Rico.UnitOfMeasurement | undefined;
-    @rdfine.property.resource()
-    isExtentOf: Rico.Instantiation | Rico.RecordResource | undefined;
+    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
+    isExtentOf: Rico.Thing | undefined;
     @rdfine.property.literal({ type: Number })
     quantity: number | undefined;
     @rdfine.property()

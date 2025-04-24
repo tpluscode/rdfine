@@ -11,13 +11,21 @@ export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   beginningDate: RDF.Literal | undefined;
   creationDate: RDF.Literal | undefined;
   date: RDF.Literal | undefined;
-  deletionDate: RDF.Literal | undefined;
-  descriptiveNote: RDF.Literal | undefined;
+  destructionDate: RDF.Literal | undefined;
+  directlyFollowsInSequence: Rico.Thing<D> | undefined;
+  directlyPrecedesInSequence: Rico.Thing<D> | undefined;
   endDate: RDF.Literal | undefined;
+  followedInSequence: Rico.Thing<D> | undefined;
+  followsInSequenceTransitive: Rico.Thing<D> | undefined;
   followsInTime: Rico.Thing<D> | undefined;
   followsOrFollowed: Rico.Thing<D> | undefined;
+  generalDescription: RDF.Literal | undefined;
+  hadPart: Rico.Thing<D> | undefined;
   hasBeginningDate: Rico.Date<D> | undefined;
+  hasDestructionDate: Rico.Date<D> | undefined;
+  hasDirectPart: Rico.Thing<D> | undefined;
   hasEndDate: Rico.Date<D> | undefined;
+  hasExtent: Rico.Extent<D> | undefined;
   hasModificationDate: Rico.Date<D> | undefined;
   hasOrHadAppellation: Rico.Appellation<D> | undefined;
   hasOrHadCategory: Rico.Type<D> | undefined;
@@ -26,12 +34,14 @@ export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   hasOrHadName: Rico.Name<D> | undefined;
   hasOrHadOwner: Rico.Group<D> | Rico.Person<D> | Rico.Position<D> | undefined;
   hasOrHadPart: Rico.Thing<D> | undefined;
+  hasPartTransitive: Rico.Thing<D> | undefined;
   height: RDF.Literal | undefined;
   identifier: RDF.Literal | undefined;
   isAssociatedWithDate: Rico.Date<D> | undefined;
   isAssociatedWithEvent: Rico.Event<D> | undefined;
   isAssociatedWithPlace: Rico.Place<D> | undefined;
   isAssociatedWithRule: Rico.Rule<D> | undefined;
+  isDirectPartOf: Rico.Thing<D> | undefined;
   isEquivalentTo: Rico.Thing<D> | undefined;
   isOrWasAffectedBy: Rico.Event<D> | undefined;
   isOrWasDescribedBy: Rico.RecordResource<D> | undefined;
@@ -41,11 +51,15 @@ export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   isOrWasRegulatedBy: Rico.Rule<D> | undefined;
   isOrWasSubjectOf: Rico.RecordResource<D> | undefined;
   isOrWasUnderAuthorityOf: Rico.Agent<D> | undefined;
+  isPartOfTransitive: Rico.Thing<D> | undefined;
   isRelatedTo: Rico.Thing<D> | undefined;
   lastModificationDate: RDF.Literal | undefined;
+  length: RDF.Literal | undefined;
   measure: RDF.Literal | undefined;
   modificationDate: RDF.Literal | undefined;
   name: RDF.Literal | undefined;
+  precededInSequence: Rico.Thing<D> | undefined;
+  precedesInSequenceTransitive: Rico.Thing<D> | undefined;
   precedesInTime: Rico.Thing<D> | undefined;
   precedesOrPreceded: Rico.Thing<D> | undefined;
   referenceSystem: RDF.Literal | undefined;
@@ -54,22 +68,10 @@ export interface Thing<D extends RDF.DatasetCore = RDF.DatasetCore> extends rdfi
   thingIsConnectedToRelation: Rico.Relation<D> | undefined;
   thingIsContextOfRelation: Rico.Relation<D> | undefined;
   thingIsSourceOfRelation: Rico.Relation<D> | undefined;
-  thingIsSourceOfSequentialRelation: Rico.SequentialRelation<D> | undefined;
-  thingIsSourceOfTemporalRelation: Rico.TemporalRelation<D> | undefined;
-  thingIsSourceOfWholePartRelation: Rico.WholePartRelation<D> | undefined;
-  thingIsTargetOfAppellationRelation: Rico.AppellationRelation<D> | undefined;
-  thingIsTargetOfAuthorityRelation: Rico.AuthorityRelation<D> | undefined;
-  thingIsTargetOfEventRelation: Rico.EventRelation<D> | undefined;
-  thingIsTargetOfOwnershipRelation: Rico.OwnershipRelation<D> | undefined;
-  thingIsTargetOfPlaceRelation: Rico.PlaceRelation<D> | undefined;
   thingIsTargetOfRelation: Rico.Relation<D> | undefined;
-  thingIsTargetOfRuleRelation: Rico.RuleRelation<D> | undefined;
-  thingIsTargetOfSequentialRelation: Rico.SequentialRelation<D> | undefined;
-  thingIsTargetOfTemporalRelation: Rico.TemporalRelation<D> | undefined;
-  thingIsTargetOfTypeRelation: Rico.TypeRelation<D> | undefined;
-  thingIsTargetOfWholePartRelation: Rico.WholePartRelation<D> | undefined;
   type: RDF.Literal | undefined;
   wasLastUpdatedAtDate: Rico.Date<D> | undefined;
+  wasPartOf: Rico.Thing<D> | undefined;
   width: RDF.Literal | undefined;
 }
 
@@ -83,19 +85,35 @@ export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property()
     date: RDF.Literal | undefined;
     @rdfine.property()
-    deletionDate: RDF.Literal | undefined;
-    @rdfine.property()
-    descriptiveNote: RDF.Literal | undefined;
+    destructionDate: RDF.Literal | undefined;
+    @rdfine.property.resource({ as: [ThingMixin] })
+    directlyFollowsInSequence: Rico.Thing | undefined;
+    @rdfine.property.resource({ as: [ThingMixin] })
+    directlyPrecedesInSequence: Rico.Thing | undefined;
     @rdfine.property()
     endDate: RDF.Literal | undefined;
+    @rdfine.property.resource({ as: [ThingMixin] })
+    followedInSequence: Rico.Thing | undefined;
+    @rdfine.property.resource({ as: [ThingMixin] })
+    followsInSequenceTransitive: Rico.Thing | undefined;
     @rdfine.property.resource({ as: [ThingMixin] })
     followsInTime: Rico.Thing | undefined;
     @rdfine.property.resource({ as: [ThingMixin] })
     followsOrFollowed: Rico.Thing | undefined;
+    @rdfine.property()
+    generalDescription: RDF.Literal | undefined;
+    @rdfine.property.resource({ as: [ThingMixin] })
+    hadPart: Rico.Thing | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Date] })
     hasBeginningDate: Rico.Date | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Date] })
+    hasDestructionDate: Rico.Date | undefined;
+    @rdfine.property.resource({ as: [ThingMixin] })
+    hasDirectPart: Rico.Thing | undefined;
+    @rdfine.property.resource({ implicitTypes: [rico.Date] })
     hasEndDate: Rico.Date | undefined;
+    @rdfine.property.resource({ implicitTypes: [rico.Extent] })
+    hasExtent: Rico.Extent | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Date] })
     hasModificationDate: Rico.Date | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Appellation] })
@@ -112,6 +130,8 @@ export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     hasOrHadOwner: Rico.Group | Rico.Person | Rico.Position | undefined;
     @rdfine.property.resource({ as: [ThingMixin] })
     hasOrHadPart: Rico.Thing | undefined;
+    @rdfine.property.resource({ as: [ThingMixin] })
+    hasPartTransitive: Rico.Thing | undefined;
     @rdfine.property()
     height: RDF.Literal | undefined;
     @rdfine.property()
@@ -124,6 +144,8 @@ export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     isAssociatedWithPlace: Rico.Place | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Rule] })
     isAssociatedWithRule: Rico.Rule | undefined;
+    @rdfine.property.resource({ as: [ThingMixin] })
+    isDirectPartOf: Rico.Thing | undefined;
     @rdfine.property.resource({ as: [ThingMixin] })
     isEquivalentTo: Rico.Thing | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Event] })
@@ -143,15 +165,23 @@ export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     isOrWasUnderAuthorityOf: Rico.Agent | undefined;
     @rdfine.property.resource({ as: [ThingMixin] })
+    isPartOfTransitive: Rico.Thing | undefined;
+    @rdfine.property.resource({ as: [ThingMixin] })
     isRelatedTo: Rico.Thing | undefined;
     @rdfine.property()
     lastModificationDate: RDF.Literal | undefined;
+    @rdfine.property()
+    length: RDF.Literal | undefined;
     @rdfine.property()
     measure: RDF.Literal | undefined;
     @rdfine.property()
     modificationDate: RDF.Literal | undefined;
     @rdfine.property()
     name: RDF.Literal | undefined;
+    @rdfine.property.resource({ as: [ThingMixin] })
+    precededInSequence: Rico.Thing | undefined;
+    @rdfine.property.resource({ as: [ThingMixin] })
+    precedesInSequenceTransitive: Rico.Thing | undefined;
     @rdfine.property.resource({ as: [ThingMixin] })
     precedesInTime: Rico.Thing | undefined;
     @rdfine.property.resource({ as: [ThingMixin] })
@@ -168,38 +198,14 @@ export function ThingMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     thingIsContextOfRelation: Rico.Relation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Relation] })
     thingIsSourceOfRelation: Rico.Relation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.SequentialRelation] })
-    thingIsSourceOfSequentialRelation: Rico.SequentialRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.TemporalRelation] })
-    thingIsSourceOfTemporalRelation: Rico.TemporalRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.WholePartRelation] })
-    thingIsSourceOfWholePartRelation: Rico.WholePartRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.AppellationRelation] })
-    thingIsTargetOfAppellationRelation: Rico.AppellationRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.AuthorityRelation] })
-    thingIsTargetOfAuthorityRelation: Rico.AuthorityRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.EventRelation] })
-    thingIsTargetOfEventRelation: Rico.EventRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.OwnershipRelation] })
-    thingIsTargetOfOwnershipRelation: Rico.OwnershipRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.PlaceRelation] })
-    thingIsTargetOfPlaceRelation: Rico.PlaceRelation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Relation] })
     thingIsTargetOfRelation: Rico.Relation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.RuleRelation] })
-    thingIsTargetOfRuleRelation: Rico.RuleRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.SequentialRelation] })
-    thingIsTargetOfSequentialRelation: Rico.SequentialRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.TemporalRelation] })
-    thingIsTargetOfTemporalRelation: Rico.TemporalRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.TypeRelation] })
-    thingIsTargetOfTypeRelation: Rico.TypeRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.WholePartRelation] })
-    thingIsTargetOfWholePartRelation: Rico.WholePartRelation | undefined;
     @rdfine.property()
     type: RDF.Literal | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Date] })
     wasLastUpdatedAtDate: Rico.Date | undefined;
+    @rdfine.property.resource({ as: [ThingMixin] })
+    wasPartOf: Rico.Thing | undefined;
     @rdfine.property()
     width: RDF.Literal | undefined;
   }

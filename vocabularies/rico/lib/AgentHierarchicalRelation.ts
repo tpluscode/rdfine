@@ -9,17 +9,14 @@ import type * as Rico from '../index.js';
 import { AgentToAgentRelationMixin } from './AgentToAgentRelation.js';
 
 export interface AgentHierarchicalRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, rdfine.RdfResource<D> {
-  agentHierarchicalRelationHasSource: Rico.Agent<D> | undefined;
-  agentHierarchicalRelationHasTarget: Rico.Agent<D> | undefined;
+  'agentHierarchicalRelation_role': Rico.AgentHierarchicalRelation<D> | undefined;
 }
 
 export function AgentHierarchicalRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AgentHierarchicalRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class AgentHierarchicalRelationClass extends AgentToAgentRelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
-    agentHierarchicalRelationHasSource: Rico.Agent | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
-    agentHierarchicalRelationHasTarget: Rico.Agent | undefined;
+    @rdfine.property.resource({ as: [AgentHierarchicalRelationMixin] })
+    'agentHierarchicalRelation_role': Rico.AgentHierarchicalRelation | undefined;
   }
   return AgentHierarchicalRelationClass as any
 }

@@ -9,17 +9,14 @@ import type * as Rico from '../index.js';
 import { CreationRelationMixin } from './CreationRelation.js';
 
 export interface AuthorshipRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.CreationRelation<D>, rdfine.RdfResource<D> {
-  authorshipRelationHasSource: Rico.Record<D> | undefined;
-  authorshipRelationHasTarget: Rico.Group<D> | Rico.Person<D> | Rico.Position<D> | undefined;
+  'authorshipRelation_role': Rico.AuthorshipRelation<D> | undefined;
 }
 
 export function AuthorshipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AuthorshipRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class AuthorshipRelationClass extends CreationRelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Record] })
-    authorshipRelationHasSource: Rico.Record | undefined;
-    @rdfine.property.resource()
-    authorshipRelationHasTarget: Rico.Group | Rico.Person | Rico.Position | undefined;
+    @rdfine.property.resource({ as: [AuthorshipRelationMixin] })
+    'authorshipRelation_role': Rico.AuthorshipRelation | undefined;
   }
   return AuthorshipRelationClass as any
 }

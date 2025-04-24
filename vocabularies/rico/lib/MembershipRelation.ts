@@ -9,18 +9,15 @@ import type * as Rico from '../index.js';
 import { AgentToAgentRelationMixin } from './AgentToAgentRelation.js';
 
 export interface MembershipRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, rdfine.RdfResource<D> {
-  membershipRelationHasSource: Rico.Group<D> | undefined;
-  membershipRelationHasTarget: Rico.Person<D> | undefined;
+  'membershipRelation_role': Rico.MembershipRelation<D> | undefined;
   membershipWithPosition: Rico.Position<D> | undefined;
 }
 
 export function MembershipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<MembershipRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class MembershipRelationClass extends AgentToAgentRelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Group] })
-    membershipRelationHasSource: Rico.Group | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Person] })
-    membershipRelationHasTarget: Rico.Person | undefined;
+    @rdfine.property.resource({ as: [MembershipRelationMixin] })
+    'membershipRelation_role': Rico.MembershipRelation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Position] })
     membershipWithPosition: Rico.Position | undefined;
   }

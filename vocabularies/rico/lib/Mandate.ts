@@ -10,7 +10,7 @@ import { RuleMixin } from './Rule.js';
 
 export interface Mandate<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Rule<D>, rdfine.RdfResource<D> {
   authorizes: Rico.Agent<D> | undefined;
-  mandateIsSourceOfMandateRelation: Rico.MandateRelation<D> | undefined;
+  hasOrHadMandateType: Rico.MandateType<D> | undefined;
 }
 
 export function MandateMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Mandate & RdfResourceCore> & Base {
@@ -18,8 +18,8 @@ export function MandateMixin<Base extends rdfine.Constructor>(Resource: Base): r
   class MandateClass extends RuleMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.Agent] })
     authorizes: Rico.Agent | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.MandateRelation] })
-    mandateIsSourceOfMandateRelation: Rico.MandateRelation | undefined;
+    @rdfine.property.resource({ implicitTypes: [rico.MandateType] })
+    hasOrHadMandateType: Rico.MandateType | undefined;
   }
   return MandateClass as any
 }

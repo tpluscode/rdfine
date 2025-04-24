@@ -9,17 +9,14 @@ import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
 export interface RecordResourceToInstantiationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, rdfine.RdfResource<D> {
-  recordResourceToInstantiationRelationHasSource: Rico.RecordResource<D> | undefined;
-  recordResourceToInstantiationRelationHasTarget: Rico.Instantiation<D> | undefined;
+  'recordResourceToInstantiationRelation_role': Rico.RecordResourceToInstantiationRelation<D> | undefined;
 }
 
 export function RecordResourceToInstantiationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RecordResourceToInstantiationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class RecordResourceToInstantiationRelationClass extends RelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.RecordResource] })
-    recordResourceToInstantiationRelationHasSource: Rico.RecordResource | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
-    recordResourceToInstantiationRelationHasTarget: Rico.Instantiation | undefined;
+    @rdfine.property.resource({ as: [RecordResourceToInstantiationRelationMixin] })
+    'recordResourceToInstantiationRelation_role': Rico.RecordResourceToInstantiationRelation | undefined;
   }
   return RecordResourceToInstantiationRelationClass as any
 }

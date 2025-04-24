@@ -1,5 +1,4 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
-import { AuthorshipRelationMixin } from '../lib/AuthorshipRelation.js';
 import { ContentTypeMixin } from '../lib/ContentType.js';
 import { DocumentaryFormTypeMixin } from '../lib/DocumentaryFormType.js';
 import { GroupMixin } from '../lib/Group.js';
@@ -14,7 +13,6 @@ import { RecordSetMixin } from '../lib/RecordSet.js';
 import { RecordStateMixin } from '../lib/RecordState.js';
 
 export const RecordBundle = [
-  AuthorshipRelationMixin as Mixin,
   ContentTypeMixin as Mixin,
   DocumentaryFormTypeMixin as Mixin,
   GroupMixin as Mixin,

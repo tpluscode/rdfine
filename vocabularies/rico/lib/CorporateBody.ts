@@ -10,6 +10,11 @@ import { GroupMixin } from './Group.js';
 
 export interface CorporateBody<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Group<D>, rdfine.RdfResource<D> {
   hasOrHadCorporateBodyType: Rico.CorporateBodyType<D> | undefined;
+  isOrWasEmployerOf: Rico.Person<D> | undefined;
+  resultedFromTheMergerOf: Rico.CorporateBody<D> | undefined;
+  resultedFromTheSplitOf: Rico.CorporateBody<D> | undefined;
+  wasMergedInto: Rico.CorporateBody<D> | undefined;
+  wasSplitInto: Rico.CorporateBody<D> | undefined;
 }
 
 export function CorporateBodyMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<CorporateBody & RdfResourceCore> & Base {
@@ -17,6 +22,16 @@ export function CorporateBodyMixin<Base extends rdfine.Constructor>(Resource: Ba
   class CorporateBodyClass extends GroupMixin(Resource) {
     @rdfine.property.resource({ implicitTypes: [rico.CorporateBodyType] })
     hasOrHadCorporateBodyType: Rico.CorporateBodyType | undefined;
+    @rdfine.property.resource({ implicitTypes: [rico.Person] })
+    isOrWasEmployerOf: Rico.Person | undefined;
+    @rdfine.property.resource({ as: [CorporateBodyMixin] })
+    resultedFromTheMergerOf: Rico.CorporateBody | undefined;
+    @rdfine.property.resource({ as: [CorporateBodyMixin] })
+    resultedFromTheSplitOf: Rico.CorporateBody | undefined;
+    @rdfine.property.resource({ as: [CorporateBodyMixin] })
+    wasMergedInto: Rico.CorporateBody | undefined;
+    @rdfine.property.resource({ as: [CorporateBodyMixin] })
+    wasSplitInto: Rico.CorporateBody | undefined;
   }
   return CorporateBodyClass as any
 }

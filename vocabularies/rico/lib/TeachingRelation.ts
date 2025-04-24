@@ -9,17 +9,14 @@ import type * as Rico from '../index.js';
 import { KnowingRelationMixin } from './KnowingRelation.js';
 
 export interface TeachingRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.KnowingRelation<D>, rdfine.RdfResource<D> {
-  teachingRelationHasSource: Rico.Person<D> | undefined;
-  teachingRelationHasTarget: Rico.Person<D> | undefined;
+  'teachingRelation_role': Rico.TeachingRelation<D> | undefined;
 }
 
 export function TeachingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<TeachingRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class TeachingRelationClass extends KnowingRelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Person] })
-    teachingRelationHasSource: Rico.Person | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Person] })
-    teachingRelationHasTarget: Rico.Person | undefined;
+    @rdfine.property.resource({ as: [TeachingRelationMixin] })
+    'teachingRelation_role': Rico.TeachingRelation | undefined;
   }
   return TeachingRelationClass as any
 }
