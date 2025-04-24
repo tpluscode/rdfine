@@ -9,17 +9,14 @@ import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
 export interface AppellationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, rdfine.RdfResource<D> {
-  appellationRelationHasSource: Rico.Appellation<D> | undefined;
-  appellationRelationHasTarget: Rico.Thing<D> | undefined;
+  'appellationRelation_role': Rico.AppellationRelation<D> | undefined;
 }
 
 export function AppellationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<AppellationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class AppellationRelationClass extends RelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Appellation] })
-    appellationRelationHasSource: Rico.Appellation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
-    appellationRelationHasTarget: Rico.Thing | undefined;
+    @rdfine.property.resource({ as: [AppellationRelationMixin] })
+    'appellationRelation_role': Rico.AppellationRelation | undefined;
   }
   return AppellationRelationClass as any
 }

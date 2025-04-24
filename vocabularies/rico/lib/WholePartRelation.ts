@@ -9,17 +9,14 @@ import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
 export interface WholePartRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, rdfine.RdfResource<D> {
-  wholePartRelationHasSource: Rico.Thing<D> | undefined;
-  wholePartRelationHasTarget: Rico.Thing<D> | undefined;
+  'wholePartRelation_role': Rico.WholePartRelation<D> | undefined;
 }
 
 export function WholePartRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WholePartRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class WholePartRelationClass extends RelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
-    wholePartRelationHasSource: Rico.Thing | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
-    wholePartRelationHasTarget: Rico.Thing | undefined;
+    @rdfine.property.resource({ as: [WholePartRelationMixin] })
+    'wholePartRelation_role': Rico.WholePartRelation | undefined;
   }
   return WholePartRelationClass as any
 }

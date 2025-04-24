@@ -9,14 +9,14 @@ import type * as Rico from '../index.js';
 import { AgentToAgentRelationMixin } from './AgentToAgentRelation.js';
 
 export interface WorkRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, rdfine.RdfResource<D> {
-  workRelationConnects: Rico.Agent<D> | undefined;
+  'workRelation_role': Rico.WorkRelation<D> | undefined;
 }
 
 export function WorkRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<WorkRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class WorkRelationClass extends AgentToAgentRelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
-    workRelationConnects: Rico.Agent | undefined;
+    @rdfine.property.resource({ as: [WorkRelationMixin] })
+    'workRelation_role': Rico.WorkRelation | undefined;
   }
   return WorkRelationClass as any
 }

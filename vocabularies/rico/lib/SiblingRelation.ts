@@ -9,14 +9,14 @@ import type * as Rico from '../index.js';
 import { FamilyRelationMixin } from './FamilyRelation.js';
 
 export interface SiblingRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.FamilyRelation<D>, rdfine.RdfResource<D> {
-  siblingRelationConnects: Rico.Person<D> | undefined;
+  'siblingRelation_role': Rico.SiblingRelation<D> | undefined;
 }
 
 export function SiblingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SiblingRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class SiblingRelationClass extends FamilyRelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Person] })
-    siblingRelationConnects: Rico.Person | undefined;
+    @rdfine.property.resource({ as: [SiblingRelationMixin] })
+    'siblingRelation_role': Rico.SiblingRelation | undefined;
   }
   return SiblingRelationClass as any
 }

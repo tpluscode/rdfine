@@ -10,17 +10,14 @@ import { AgentHierarchicalRelationMixin } from './AgentHierarchicalRelation.js';
 import { WholePartRelationMixin } from './WholePartRelation.js';
 
 export interface GroupSubdivisionRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentHierarchicalRelation<D>, Rico.WholePartRelation<D>, rdfine.RdfResource<D> {
-  groupSubdivisionRelationHasSource: Rico.Group<D> | undefined;
-  groupSubdivisionRelationHasTarget: Rico.Group<D> | undefined;
+  'groupSubdivisionRelation_role': Rico.GroupSubdivisionRelation<D> | undefined;
 }
 
 export function GroupSubdivisionRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<GroupSubdivisionRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class GroupSubdivisionRelationClass extends WholePartRelationMixin(AgentHierarchicalRelationMixin(Resource)) {
-    @rdfine.property.resource({ implicitTypes: [rico.Group] })
-    groupSubdivisionRelationHasSource: Rico.Group | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Group] })
-    groupSubdivisionRelationHasTarget: Rico.Group | undefined;
+    @rdfine.property.resource({ as: [GroupSubdivisionRelationMixin] })
+    'groupSubdivisionRelation_role': Rico.GroupSubdivisionRelation | undefined;
   }
   return GroupSubdivisionRelationClass as any
 }

@@ -9,17 +9,14 @@ import type * as Rico from '../index.js';
 import { EventRelationMixin } from './EventRelation.js';
 
 export interface PerformanceRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.EventRelation<D>, rdfine.RdfResource<D> {
-  performanceRelationHasSource: Rico.Activity<D> | undefined;
-  performanceRelationHasTarget: Rico.Agent<D> | undefined;
+  'performanceRelation_role': Rico.PerformanceRelation<D> | undefined;
 }
 
 export function PerformanceRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PerformanceRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class PerformanceRelationClass extends EventRelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Activity] })
-    performanceRelationHasSource: Rico.Activity | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Agent] })
-    performanceRelationHasTarget: Rico.Agent | undefined;
+    @rdfine.property.resource({ as: [PerformanceRelationMixin] })
+    'performanceRelation_role': Rico.PerformanceRelation | undefined;
   }
   return PerformanceRelationClass as any
 }

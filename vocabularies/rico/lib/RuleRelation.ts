@@ -9,17 +9,14 @@ import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
 export interface RuleRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, rdfine.RdfResource<D> {
-  ruleRelationHasSource: Rico.Rule<D> | undefined;
-  ruleRelationHasTarget: Rico.Thing<D> | undefined;
+  'ruleRelation_role': Rico.RuleRelation<D> | undefined;
 }
 
 export function RuleRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<RuleRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class RuleRelationClass extends RelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Rule] })
-    ruleRelationHasSource: Rico.Rule | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
-    ruleRelationHasTarget: Rico.Thing | undefined;
+    @rdfine.property.resource({ as: [RuleRelationMixin] })
+    'ruleRelation_role': Rico.RuleRelation | undefined;
   }
   return RuleRelationClass as any
 }

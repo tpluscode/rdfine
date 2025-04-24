@@ -9,17 +9,14 @@ import type * as Rico from '../index.js';
 import { AgentToAgentRelationMixin } from './AgentToAgentRelation.js';
 
 export interface KnowingOfRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, rdfine.RdfResource<D> {
-  knowingOfRelationHasSource: Rico.Person<D> | undefined;
-  knowingOfRelationHasTarget: Rico.Person<D> | undefined;
+  'knowingOfRelation_role': Rico.KnowingOfRelation<D> | undefined;
 }
 
 export function KnowingOfRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<KnowingOfRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class KnowingOfRelationClass extends AgentToAgentRelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Person] })
-    knowingOfRelationHasSource: Rico.Person | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Person] })
-    knowingOfRelationHasTarget: Rico.Person | undefined;
+    @rdfine.property.resource({ as: [KnowingOfRelationMixin] })
+    'knowingOfRelation_role': Rico.KnowingOfRelation | undefined;
   }
   return KnowingOfRelationClass as any
 }

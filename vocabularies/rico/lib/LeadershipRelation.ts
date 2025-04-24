@@ -9,18 +9,15 @@ import type * as Rico from '../index.js';
 import { AgentControlRelationMixin } from './AgentControlRelation.js';
 
 export interface LeadershipRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentControlRelation<D>, rdfine.RdfResource<D> {
-  leadershipRelationHasSource: Rico.Person<D> | undefined;
-  leadershipRelationHasTarget: Rico.Group<D> | undefined;
+  'leadershipRelation_role': Rico.LeadershipRelation<D> | undefined;
   leadershipWithPosition: Rico.Position<D> | undefined;
 }
 
 export function LeadershipRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<LeadershipRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class LeadershipRelationClass extends AgentControlRelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Person] })
-    leadershipRelationHasSource: Rico.Person | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Group] })
-    leadershipRelationHasTarget: Rico.Group | undefined;
+    @rdfine.property.resource({ as: [LeadershipRelationMixin] })
+    'leadershipRelation_role': Rico.LeadershipRelation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Position] })
     leadershipWithPosition: Rico.Position | undefined;
   }

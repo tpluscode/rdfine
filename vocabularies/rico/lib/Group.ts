@@ -9,44 +9,30 @@ import type * as Rico from '../index.js';
 import { AgentMixin } from './Agent.js';
 
 export interface Group<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Agent<D>, rdfine.RdfResource<D> {
-  agentIsSourceOfIntellectualPropertyRightsRelation: Rico.IntellectualPropertyRightsRelation<D> | undefined;
-  agentIsSourceOfOwnershipRelation: Rico.OwnershipRelation<D> | undefined;
-  agentIsTargetOfAuthorshipRelation: Rico.AuthorshipRelation<D> | undefined;
-  groupIsSourceOfGroupSubdivisionRelation: Rico.GroupSubdivisionRelation<D> | undefined;
-  groupIsSourceOfMembershipRelation: Rico.MembershipRelation<D> | undefined;
-  groupIsTargetOfGroupSubdivisionRelation: Rico.GroupSubdivisionRelation<D> | undefined;
-  groupIsTargetOfLeadershipRelation: Rico.LeadershipRelation<D> | undefined;
-  groupIsTargetOfPositionToGroupRelation: Rico.PositionToGroupRelation<D> | undefined;
+  hadSubdivision: Rico.Group<D> | undefined;
+  hasDirectSubdivision: Rico.Group<D> | undefined;
   hasOrHadDemographicGroup: Rico.DemographicGroup<D> | undefined;
   hasOrHadLeader: Rico.Person<D> | undefined;
   hasOrHadMember: Rico.Person<D> | undefined;
   hasOrHadPosition: Rico.Position<D> | undefined;
   hasOrHadSubdivision: Rico.Group<D> | undefined;
+  hasSubdivisionTransitive: Rico.Group<D> | undefined;
   isAuthorOf: Rico.Record<D> | undefined;
+  isDirectSubdivisionOf: Rico.Group<D> | undefined;
   isOrWasHolderOfIntellectualPropertyRightsOf: Rico.Instantiation<D> | Rico.RecordResource<D> | undefined;
   isOrWasOwnerOf: Rico.Thing<D> | undefined;
   isOrWasSubdivisionOf: Rico.Group<D> | undefined;
+  isSubdivisionOfTransitive: Rico.Group<D> | undefined;
+  wasSubdivisionOf: Rico.Group<D> | undefined;
 }
 
 export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Group & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class GroupClass extends AgentMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.IntellectualPropertyRightsRelation] })
-    agentIsSourceOfIntellectualPropertyRightsRelation: Rico.IntellectualPropertyRightsRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.OwnershipRelation] })
-    agentIsSourceOfOwnershipRelation: Rico.OwnershipRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.AuthorshipRelation] })
-    agentIsTargetOfAuthorshipRelation: Rico.AuthorshipRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.GroupSubdivisionRelation] })
-    groupIsSourceOfGroupSubdivisionRelation: Rico.GroupSubdivisionRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.MembershipRelation] })
-    groupIsSourceOfMembershipRelation: Rico.MembershipRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.GroupSubdivisionRelation] })
-    groupIsTargetOfGroupSubdivisionRelation: Rico.GroupSubdivisionRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.LeadershipRelation] })
-    groupIsTargetOfLeadershipRelation: Rico.LeadershipRelation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.PositionToGroupRelation] })
-    groupIsTargetOfPositionToGroupRelation: Rico.PositionToGroupRelation | undefined;
+    @rdfine.property.resource({ as: [GroupMixin] })
+    hadSubdivision: Rico.Group | undefined;
+    @rdfine.property.resource({ as: [GroupMixin] })
+    hasDirectSubdivision: Rico.Group | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.DemographicGroup] })
     hasOrHadDemographicGroup: Rico.DemographicGroup | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Person] })
@@ -57,14 +43,22 @@ export function GroupMixin<Base extends rdfine.Constructor>(Resource: Base): rdf
     hasOrHadPosition: Rico.Position | undefined;
     @rdfine.property.resource({ as: [GroupMixin] })
     hasOrHadSubdivision: Rico.Group | undefined;
+    @rdfine.property.resource({ as: [GroupMixin] })
+    hasSubdivisionTransitive: Rico.Group | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Record] })
     isAuthorOf: Rico.Record | undefined;
+    @rdfine.property.resource({ as: [GroupMixin] })
+    isDirectSubdivisionOf: Rico.Group | undefined;
     @rdfine.property.resource()
     isOrWasHolderOfIntellectualPropertyRightsOf: Rico.Instantiation | Rico.RecordResource | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isOrWasOwnerOf: Rico.Thing | undefined;
     @rdfine.property.resource({ as: [GroupMixin] })
     isOrWasSubdivisionOf: Rico.Group | undefined;
+    @rdfine.property.resource({ as: [GroupMixin] })
+    isSubdivisionOfTransitive: Rico.Group | undefined;
+    @rdfine.property.resource({ as: [GroupMixin] })
+    wasSubdivisionOf: Rico.Group | undefined;
   }
   return GroupClass as any
 }

@@ -10,17 +10,14 @@ import { InstantiationToInstantiationRelationMixin } from './InstantiationToInst
 import { TemporalRelationMixin } from './TemporalRelation.js';
 
 export interface DerivationRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.InstantiationToInstantiationRelation<D>, Rico.TemporalRelation<D>, rdfine.RdfResource<D> {
-  derivationRelationHasSource: Rico.Instantiation<D> | undefined;
-  derivationRelationHasTarget: Rico.Instantiation<D> | undefined;
+  'derivationRelation_role': Rico.DerivationRelation<D> | undefined;
 }
 
 export function DerivationRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<DerivationRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class DerivationRelationClass extends TemporalRelationMixin(InstantiationToInstantiationRelationMixin(Resource)) {
-    @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
-    derivationRelationHasSource: Rico.Instantiation | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Instantiation] })
-    derivationRelationHasTarget: Rico.Instantiation | undefined;
+    @rdfine.property.resource({ as: [DerivationRelationMixin] })
+    'derivationRelation_role': Rico.DerivationRelation | undefined;
   }
   return DerivationRelationClass as any
 }

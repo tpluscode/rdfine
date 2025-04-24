@@ -9,17 +9,14 @@ import type * as Rico from '../index.js';
 import { DescendanceRelationMixin } from './DescendanceRelation.js';
 
 export interface ChildRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.DescendanceRelation<D>, rdfine.RdfResource<D> {
-  childRelationHasSource: Rico.Person<D> | undefined;
-  childRelationHasTarget: Rico.Person<D> | undefined;
+  'childRelation_role': Rico.ChildRelation<D> | undefined;
 }
 
 export function ChildRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<ChildRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class ChildRelationClass extends DescendanceRelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Person] })
-    childRelationHasSource: Rico.Person | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Person] })
-    childRelationHasTarget: Rico.Person | undefined;
+    @rdfine.property.resource({ as: [ChildRelationMixin] })
+    'childRelation_role': Rico.ChildRelation | undefined;
   }
   return ChildRelationClass as any
 }

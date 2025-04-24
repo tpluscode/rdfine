@@ -9,17 +9,14 @@ import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
 export interface EventRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, rdfine.RdfResource<D> {
-  eventRelationHasSource: Rico.Event<D> | undefined;
-  eventRelationHasTarget: Rico.Thing<D> | undefined;
+  'eventRelation_role': Rico.EventRelation<D> | undefined;
 }
 
 export function EventRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<EventRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class EventRelationClass extends RelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Event] })
-    eventRelationHasSource: Rico.Event | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
-    eventRelationHasTarget: Rico.Thing | undefined;
+    @rdfine.property.resource({ as: [EventRelationMixin] })
+    'eventRelation_role': Rico.EventRelation | undefined;
   }
   return EventRelationClass as any
 }

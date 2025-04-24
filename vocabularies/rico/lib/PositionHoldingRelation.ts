@@ -9,17 +9,14 @@ import type * as Rico from '../index.js';
 import { AgentToAgentRelationMixin } from './AgentToAgentRelation.js';
 
 export interface PositionHoldingRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.AgentToAgentRelation<D>, rdfine.RdfResource<D> {
-  positionHoldingRelationHasSource: Rico.Person<D> | undefined;
-  positionHoldingRelationHasTarget: Rico.Position<D> | undefined;
+  'positionHoldingRelation_role': Rico.PositionHoldingRelation<D> | undefined;
 }
 
 export function PositionHoldingRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<PositionHoldingRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class PositionHoldingRelationClass extends AgentToAgentRelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Person] })
-    positionHoldingRelationHasSource: Rico.Person | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Position] })
-    positionHoldingRelationHasTarget: Rico.Position | undefined;
+    @rdfine.property.resource({ as: [PositionHoldingRelationMixin] })
+    'positionHoldingRelation_role': Rico.PositionHoldingRelation | undefined;
   }
   return PositionHoldingRelationClass as any
 }

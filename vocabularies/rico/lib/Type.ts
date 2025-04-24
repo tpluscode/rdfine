@@ -12,7 +12,6 @@ export interface Type<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.
   isOrWasCategoryOf: Rico.Thing<D> | undefined;
   isOrWasCategoryOfAllMembersOf: Rico.RecordSet<D> | undefined;
   isOrWasCategoryOfSomeMembersOf: Rico.RecordSet<D> | undefined;
-  typeIsSourceOfTypeRelation: Rico.TypeRelation<D> | undefined;
 }
 
 export function TypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Type & RdfResourceCore> & Base {
@@ -24,8 +23,6 @@ export function TypeMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     isOrWasCategoryOfAllMembersOf: Rico.RecordSet | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.RecordSet] })
     isOrWasCategoryOfSomeMembersOf: Rico.RecordSet | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.TypeRelation] })
-    typeIsSourceOfTypeRelation: Rico.TypeRelation | undefined;
   }
   return TypeClass as any
 }

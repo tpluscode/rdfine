@@ -1,5 +1,6 @@
 import type { Mixin } from '@tpluscode/rdfine/lib/ResourceFactory';
 import { ContentTypeMixin } from '../lib/ContentType.js';
+import { DateMixin } from '../lib/Date.js';
 import { DocumentaryFormTypeMixin } from '../lib/DocumentaryFormType.js';
 import { LanguageMixin } from '../lib/Language.js';
 import { LegalStatusMixin } from '../lib/LegalStatus.js';
@@ -12,6 +13,7 @@ import { TypeMixin } from '../lib/Type.js';
 
 export const RecordSetBundle = [
   ContentTypeMixin as Mixin,
+  DateMixin as Mixin,
   DocumentaryFormTypeMixin as Mixin,
   LanguageMixin as Mixin,
   LegalStatusMixin as Mixin,

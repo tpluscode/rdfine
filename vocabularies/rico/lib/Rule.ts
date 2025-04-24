@@ -17,7 +17,6 @@ export interface Rule<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.
   isRuleAssociatedWith: Rico.Thing<D> | undefined;
   issuedBy: Rico.Agent<D> | undefined;
   regulatesOrRegulated: Rico.Thing<D> | undefined;
-  ruleIsSourceOfRuleRelation: Rico.RuleRelation<D> | undefined;
   title: RDF.Literal | undefined;
 }
 
@@ -40,8 +39,6 @@ export function RuleMixin<Base extends rdfine.Constructor>(Resource: Base): rdfi
     issuedBy: Rico.Agent | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     regulatesOrRegulated: Rico.Thing | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.RuleRelation] })
-    ruleIsSourceOfRuleRelation: Rico.RuleRelation | undefined;
     @rdfine.property()
     title: RDF.Literal | undefined;
   }

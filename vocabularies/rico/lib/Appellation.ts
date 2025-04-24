@@ -9,7 +9,6 @@ import type * as Rico from '../index.js';
 import { ConceptMixin } from './Concept.js';
 
 export interface Appellation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Concept<D>, rdfine.RdfResource<D> {
-  appellationIsSourceOfAppellationRelation: Rico.AppellationRelation<D> | undefined;
   isOrWasAppellationOf: Rico.Thing<D> | undefined;
   normalizedValue: RDF.Literal | undefined;
   textualValue: RDF.Literal | undefined;
@@ -22,8 +21,6 @@ export interface Appellation<D extends RDF.DatasetCore = RDF.DatasetCore> extend
 export function AppellationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<Appellation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class AppellationClass extends ConceptMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.AppellationRelation] })
-    appellationIsSourceOfAppellationRelation: Rico.AppellationRelation | undefined;
     @rdfine.property.resource({ implicitTypes: [rico.Thing] })
     isOrWasAppellationOf: Rico.Thing | undefined;
     @rdfine.property()

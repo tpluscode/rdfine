@@ -9,17 +9,14 @@ import type * as Rico from '../index.js';
 import { RelationMixin } from './Relation.js';
 
 export interface SequentialRelation<D extends RDF.DatasetCore = RDF.DatasetCore> extends Rico.Relation<D>, rdfine.RdfResource<D> {
-  sequentialRelationHasSource: Rico.Thing<D> | undefined;
-  sequentialRelationHasTarget: Rico.Thing<D> | undefined;
+  'sequentialRelation_role': Rico.SequentialRelation<D> | undefined;
 }
 
 export function SequentialRelationMixin<Base extends rdfine.Constructor>(Resource: Base): rdfine.Constructor<SequentialRelation & RdfResourceCore> & Base {
   @rdfine.namespace(rico)
   class SequentialRelationClass extends RelationMixin(Resource) {
-    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
-    sequentialRelationHasSource: Rico.Thing | undefined;
-    @rdfine.property.resource({ implicitTypes: [rico.Thing] })
-    sequentialRelationHasTarget: Rico.Thing | undefined;
+    @rdfine.property.resource({ as: [SequentialRelationMixin] })
+    'sequentialRelation_role': Rico.SequentialRelation | undefined;
   }
   return SequentialRelationClass as any
 }
